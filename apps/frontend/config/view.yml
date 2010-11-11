@@ -1,0 +1,13 @@
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        iRanking
+    language:     pt
+
+  stylesheets:    [frontend/main, frontend/form]
+  javascripts:    [phpEquivalents, util, frontend/form, /sf/prototype/js/prototype]
+
+  has_layout:     on
+  layout:         layout

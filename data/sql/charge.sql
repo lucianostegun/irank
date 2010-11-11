@@ -1,0 +1,2 @@
+INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'peopleType', 'Usuário administrativo', 'userAdmin', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'peopleType', 'Usuário do site', 'userSite', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
