@@ -1,0 +1,62 @@
+.button {
+
+	cursor: 			pointer;
+	-moz-user-select: 	none;
+}
+
+.button .buttonLeft {
+	
+	float: 			left;
+	height: 		22px;
+	width: 			7px;
+	background: 	url('/images/button/bgLeft.png');
+}
+
+.button .buttonMiddle {
+
+	float: 			left;
+	height: 		22px;
+	font-weight: 	bold;
+	background: 	url('/images/button/bgMiddle.png');
+}
+
+.button .buttonRight {
+
+	margin-right: 	10px;
+	float: 			left;
+	height: 		22px;
+	width: 			7px;
+	background: 	url('/images/button/bgRight.png');
+}
+
+.buttonDisabled {
+
+	cursor: 			pointer;
+	-moz-user-select: 	none
+}
+
+.buttonDisabled .buttonLeft {
+	
+	float: 			left;
+	height: 		22px;
+	width: 			7px;
+	background: 	url('/images/button/bgLeftDisabled.png');
+}
+
+.buttonDisabled .buttonMiddle {
+
+	float: 			left;
+	height: 		22px;
+	font-weight: 	bold;
+	color: 			#AAAAAA;
+	background: 	url('/images/button/bgMiddleDisabled.png');
+}
+
+.buttonDisabled .buttonRight {
+
+	margin-right: 	10px;
+	float: 			left;
+	height: 		22px;
+	width: 			7px;
+	background: 	url('/images/button/bgRightDisabled.png');
+}
