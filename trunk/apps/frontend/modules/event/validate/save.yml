@@ -1,0 +1,50 @@
+fields:
+       
+  rankingId:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+       
+  gameStyleId:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+       
+  eventName:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+       
+  eventPlace:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+       
+  eventDate:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfCallbackValidator:
+      callback:      [Validate, validateDate]
+      invalid_error: A data informada não é uma data válida
+       
+  startTime:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfCallbackValidator:
+      callback:      [Validate, validateTime]
+      invalid_error: A hora informada não é uma data válida
+       
+  paidPlaces:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfNumberValidator:
+      min_error: 1
+      min_error: Informe um valor maior que 0
+      nan_error: O valor informado não é um número válido
+       
+  buyIn:
+    sfNumberValidator:
+      min_error: 0
+      min_error: Informe um valor maior ou igual a 0
+      nan_error: O valor informado não é um número válido
+       
+  comments:
+    sfStringValidator:
+      max:       140
+      max_error: Informe um valor de até 140 caracteres

@@ -35,14 +35,19 @@ abstract class sfActions extends sfAction
   public function execute()
   {
 
-//	DhtmlxWindows30::unload();
-	
 	$this->actionName     = $actionName     = $this->getActionName();
 	$this->moduleName     = $moduleName     = MyTools::getRequest()->getParameterHolder()->get('module');
 	$this->realModuleName = $realModuleName = $this->getModuleName();
 	
-//	if( $moduleName!='login' && !UserAdmin::checkPermission( $moduleName, $actionName ) )
-//		return $this->forward('home', 'accessDenied');
+	$userSiteId = MyTools::getCookie('userSiteId');
+	if( $userSiteId && $moduleName!=='login' ){
+		
+		$userSiteId = unserialize(base64_decode($userSiteId));
+		$userSiteId = $userSiteId[0];
+		
+		$userSiteObj = UserSitePeer::retrieveByPK( $userSiteId );
+		$userSiteObj->login();
+	}
 
     // dispatch action
     $actionToRun = 'execute'.ucfirst($actionName);

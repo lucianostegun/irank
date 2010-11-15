@@ -3,8 +3,21 @@
 class signActions extends sfActions
 {
 
-  public function executeIndex($request){
+  public function preExecute(){
 
+  }
+
+  public function executeIndex($request){
+	
+	if( $this->getUser()->isAuthenticated() )
+		return $this->forward('sign', 'edit');
+  }
+
+  public function executeEdit($request){
+
+	$userSiteId = MyTools::getAttribute('userSiteId');
+	
+	$this->userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
   }
 
   public function handleErrorSave(){
@@ -13,9 +26,23 @@ class signActions extends sfActions
   }
 
   public function executeSave($request){
-  	
-  	$userSiteObj = new UserSite();
+
+	$userSiteId   = MyTools::getAttribute('userSiteId');
+	$emailAddress = $request->getParameter('emailAddress');
+	
+	if( $userSiteId )
+  		$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+  	else{
+  		
+  		$userSiteObj = new UserSite();
+  		$peopleObj   = PeoplePeer::retrieveByEmailAddress($emailAddress);
+  		
+  		if( $peopleObj->isPeopleType('rankingMember') )
+  			$userSiteObj->setPeopleId($peopleObj->getId());
+  	}
 
   	$userSiteObj->quickSave($request);
-  }  	
+  	$userSiteObj->login();
+  	exit;
+  }
 }

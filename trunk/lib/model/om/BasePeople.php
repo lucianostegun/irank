@@ -29,6 +29,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 
 	
+	protected $email_address;
+
+
+	
 	protected $birthday;
 
 
@@ -59,10 +63,22 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $aVirtualTable;
 
 	
-	protected $collUserSites;
+	protected $collUserSiteList;
 
 	
 	protected $lastUserSiteCriteria = null;
+
+	
+	protected $collRankingMemberList;
+
+	
+	protected $lastRankingMemberCriteria = null;
+
+	
+	protected $collEventMemberList;
+
+	
+	protected $lastEventMemberCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -103,6 +119,13 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	{
 
 		return $this->full_name;
+	}
+
+	
+	public function getEmailAddress()
+	{
+
+		return $this->email_address;
 	}
 
 	
@@ -284,6 +307,22 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setEmailAddress($v)
+	{
+
+		
+		
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->email_address !== $v) {
+			$this->email_address = $v;
+			$this->modifiedColumns[] = PeoplePeer::EMAIL_ADDRESS;
+		}
+
+	} 
+	
 	public function setBirthday($v)
 	{
 
@@ -389,25 +428,27 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			$this->full_name = $rs->getString($startcol + 4);
 
-			$this->birthday = $rs->getDate($startcol + 5, null);
+			$this->email_address = $rs->getString($startcol + 5);
 
-			$this->enabled = $rs->getBoolean($startcol + 6);
+			$this->birthday = $rs->getDate($startcol + 6, null);
 
-			$this->visible = $rs->getBoolean($startcol + 7);
+			$this->enabled = $rs->getBoolean($startcol + 7);
 
-			$this->deleted = $rs->getBoolean($startcol + 8);
+			$this->visible = $rs->getBoolean($startcol + 8);
 
-			$this->locked = $rs->getBoolean($startcol + 9);
+			$this->deleted = $rs->getBoolean($startcol + 9);
 
-			$this->created_at = $rs->getTimestamp($startcol + 10, null);
+			$this->locked = $rs->getBoolean($startcol + 10);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 11, null);
+			$this->created_at = $rs->getTimestamp($startcol + 11, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 12, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 12; 
+						return $startcol + 13; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating People object", $e);
 		}
@@ -494,8 +535,24 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
-			if ($this->collUserSites !== null) {
-				foreach($this->collUserSites as $referrerFK) {
+			if ($this->collUserSiteList !== null) {
+				foreach($this->collUserSiteList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collRankingMemberList !== null) {
+				foreach($this->collRankingMemberList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collEventMemberList !== null) {
+				foreach($this->collEventMemberList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -551,8 +608,24 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collUserSites !== null) {
-					foreach($this->collUserSites as $referrerFK) {
+				if ($this->collUserSiteList !== null) {
+					foreach($this->collUserSiteList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingMemberList !== null) {
+					foreach($this->collRankingMemberList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventMemberList !== null) {
+					foreach($this->collEventMemberList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -593,24 +666,27 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				return $this->getFullName();
 				break;
 			case 5:
-				return $this->getBirthday();
+				return $this->getEmailAddress();
 				break;
 			case 6:
-				return $this->getEnabled();
+				return $this->getBirthday();
 				break;
 			case 7:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 8:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 9:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 10:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 11:
+				return $this->getCreatedAt();
+				break;
+			case 12:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -628,13 +704,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$keys[2]=>$this->getFirstName(),
 			$keys[3]=>$this->getLastName(),
 			$keys[4]=>$this->getFullName(),
-			$keys[5]=>$this->getBirthday(),
-			$keys[6]=>$this->getEnabled(),
-			$keys[7]=>$this->getVisible(),
-			$keys[8]=>$this->getDeleted(),
-			$keys[9]=>$this->getLocked(),
-			$keys[10]=>$this->getCreatedAt(),
-			$keys[11]=>$this->getUpdatedAt(),
+			$keys[5]=>$this->getEmailAddress(),
+			$keys[6]=>$this->getBirthday(),
+			$keys[7]=>$this->getEnabled(),
+			$keys[8]=>$this->getVisible(),
+			$keys[9]=>$this->getDeleted(),
+			$keys[10]=>$this->getLocked(),
+			$keys[11]=>$this->getCreatedAt(),
+			$keys[12]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -666,24 +743,27 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				$this->setFullName($value);
 				break;
 			case 5:
-				$this->setBirthday($value);
+				$this->setEmailAddress($value);
 				break;
 			case 6:
-				$this->setEnabled($value);
+				$this->setBirthday($value);
 				break;
 			case 7:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 8:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 9:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 10:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 11:
+				$this->setCreatedAt($value);
+				break;
+			case 12:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -698,13 +778,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setFirstName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setLastName($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setFullName($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setBirthday($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setEnabled($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setVisible($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setDeleted($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setLocked($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setUpdatedAt($arr[$keys[11]]);
+		if (array_key_exists($keys[5], $arr)) $this->setEmailAddress($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setBirthday($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEnabled($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setVisible($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setDeleted($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setLocked($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
 	}
 
 	
@@ -717,6 +798,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PeoplePeer::FIRST_NAME)) $criteria->add(PeoplePeer::FIRST_NAME, $this->first_name);
 		if ($this->isColumnModified(PeoplePeer::LAST_NAME)) $criteria->add(PeoplePeer::LAST_NAME, $this->last_name);
 		if ($this->isColumnModified(PeoplePeer::FULL_NAME)) $criteria->add(PeoplePeer::FULL_NAME, $this->full_name);
+		if ($this->isColumnModified(PeoplePeer::EMAIL_ADDRESS)) $criteria->add(PeoplePeer::EMAIL_ADDRESS, $this->email_address);
 		if ($this->isColumnModified(PeoplePeer::BIRTHDAY)) $criteria->add(PeoplePeer::BIRTHDAY, $this->birthday);
 		if ($this->isColumnModified(PeoplePeer::ENABLED)) $criteria->add(PeoplePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(PeoplePeer::VISIBLE)) $criteria->add(PeoplePeer::VISIBLE, $this->visible);
@@ -762,6 +844,8 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 		$copyObj->setFullName($this->full_name);
 
+		$copyObj->setEmailAddress($this->email_address);
+
 		$copyObj->setBirthday($this->birthday);
 
 		$copyObj->setEnabled($this->enabled);
@@ -780,8 +864,16 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach($this->getUserSites() as $relObj) {
+			foreach($this->getUserSiteList() as $relObj) {
 				$copyObj->addUserSite($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingMemberList() as $relObj) {
+				$copyObj->addRankingMember($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEventMemberList() as $relObj) {
+				$copyObj->addEventMember($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -839,15 +931,15 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initUserSites()
+	public function initUserSiteList()
 	{
-		if ($this->collUserSites === null) {
-			$this->collUserSites = array();
+		if ($this->collUserSiteList === null) {
+			$this->collUserSiteList = array();
 		}
 	}
 
 	
-	public function getUserSites($criteria = null, $con = null)
+	public function getUserSiteList($criteria = null, $con = null)
 	{
 				include_once 'lib/model/om/BaseUserSitePeer.php';
 		if ($criteria === null) {
@@ -858,15 +950,15 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collUserSites === null) {
+		if ($this->collUserSiteList === null) {
 			if ($this->isNew()) {
-			   $this->collUserSites = array();
+			   $this->collUserSiteList = array();
 			} else {
 
 				$criteria->add(UserSitePeer::PEOPLE_ID, $this->getId());
 
 				UserSitePeer::addSelectColumns($criteria);
-				$this->collUserSites = UserSitePeer::doSelect($criteria, $con);
+				$this->collUserSiteList = UserSitePeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
@@ -876,16 +968,16 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 				UserSitePeer::addSelectColumns($criteria);
 				if (!isset($this->lastUserSiteCriteria) || !$this->lastUserSiteCriteria->equals($criteria)) {
-					$this->collUserSites = UserSitePeer::doSelect($criteria, $con);
+					$this->collUserSiteList = UserSitePeer::doSelect($criteria, $con);
 				}
 			}
 		}
 		$this->lastUserSiteCriteria = $criteria;
-		return $this->collUserSites;
+		return $this->collUserSiteList;
 	}
 
 	
-	public function countUserSites($criteria = null, $distinct = false, $con = null)
+	public function countUserSiteList($criteria = null, $distinct = false, $con = null)
 	{
 				include_once 'lib/model/om/BaseUserSitePeer.php';
 		if ($criteria === null) {
@@ -904,8 +996,218 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	
 	public function addUserSite(UserSite $l)
 	{
-		$this->collUserSites[] = $l;
+		$this->collUserSiteList[] = $l;
 		$l->setPeople($this);
+	}
+
+	
+	public function initRankingMemberList()
+	{
+		if ($this->collRankingMemberList === null) {
+			$this->collRankingMemberList = array();
+		}
+	}
+
+	
+	public function getRankingMemberList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingMemberPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingMemberList === null) {
+			if ($this->isNew()) {
+			   $this->collRankingMemberList = array();
+			} else {
+
+				$criteria->add(RankingMemberPeer::PEOPLE_ID, $this->getId());
+
+				RankingMemberPeer::addSelectColumns($criteria);
+				$this->collRankingMemberList = RankingMemberPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingMemberPeer::PEOPLE_ID, $this->getId());
+
+				RankingMemberPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingMemberCriteria) || !$this->lastRankingMemberCriteria->equals($criteria)) {
+					$this->collRankingMemberList = RankingMemberPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingMemberCriteria = $criteria;
+		return $this->collRankingMemberList;
+	}
+
+	
+	public function countRankingMemberList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingMemberPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingMemberPeer::PEOPLE_ID, $this->getId());
+
+		return RankingMemberPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingMember(RankingMember $l)
+	{
+		$this->collRankingMemberList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getRankingMemberListJoinRanking($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingMemberPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingMemberList === null) {
+			if ($this->isNew()) {
+				$this->collRankingMemberList = array();
+			} else {
+
+				$criteria->add(RankingMemberPeer::PEOPLE_ID, $this->getId());
+
+				$this->collRankingMemberList = RankingMemberPeer::doSelectJoinRanking($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingMemberPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastRankingMemberCriteria) || !$this->lastRankingMemberCriteria->equals($criteria)) {
+				$this->collRankingMemberList = RankingMemberPeer::doSelectJoinRanking($criteria, $con);
+			}
+		}
+		$this->lastRankingMemberCriteria = $criteria;
+
+		return $this->collRankingMemberList;
+	}
+
+	
+	public function initEventMemberList()
+	{
+		if ($this->collEventMemberList === null) {
+			$this->collEventMemberList = array();
+		}
+	}
+
+	
+	public function getEventMemberList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventMemberPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventMemberList === null) {
+			if ($this->isNew()) {
+			   $this->collEventMemberList = array();
+			} else {
+
+				$criteria->add(EventMemberPeer::PEOPLE_ID, $this->getId());
+
+				EventMemberPeer::addSelectColumns($criteria);
+				$this->collEventMemberList = EventMemberPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventMemberPeer::PEOPLE_ID, $this->getId());
+
+				EventMemberPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventMemberCriteria) || !$this->lastEventMemberCriteria->equals($criteria)) {
+					$this->collEventMemberList = EventMemberPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventMemberCriteria = $criteria;
+		return $this->collEventMemberList;
+	}
+
+	
+	public function countEventMemberList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventMemberPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventMemberPeer::PEOPLE_ID, $this->getId());
+
+		return EventMemberPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventMember(EventMember $l)
+	{
+		$this->collEventMemberList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getEventMemberListJoinEvent($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventMemberPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventMemberList === null) {
+			if ($this->isNew()) {
+				$this->collEventMemberList = array();
+			} else {
+
+				$criteria->add(EventMemberPeer::PEOPLE_ID, $this->getId());
+
+				$this->collEventMemberList = EventMemberPeer::doSelectJoinEvent($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventMemberPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastEventMemberCriteria) || !$this->lastEventMemberCriteria->equals($criteria)) {
+				$this->collEventMemberList = EventMemberPeer::doSelectJoinEvent($criteria, $con);
+			}
+		}
+		$this->lastEventMemberCriteria = $criteria;
+
+		return $this->collEventMemberList;
 	}
 
 } 

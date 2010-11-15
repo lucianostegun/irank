@@ -1,23 +1,9 @@
 function showFormErrorDetails(form, field){
 	
-	$('formTable'+ucfirst(form)).style.width        = '515px';
-	$('formErrorDetails'+ucfirst(form)).style.width = '200px';
-	
-	var formHeight = $(form+'FormDiv').offsetHeight-22;
-	
 	var errorMessage = $(form+ucfirst(field)+'Label').innerHTML+':</b><br/><br/>'+$(form+ucfirst(field)).title;
 	errorMessage = errorMessage.replace(/\n/g, '<br/><br/>');
 
 	$('formErrorDetails'+ucfirst(form)).innerHTML = '<h1 class="formDetailsTitle">Detalhes do erro</h1><b>'+errorMessage;
-
-	showDiv('formErrorDetails'+ucfirst(form));
-	
-	$(form+'FormDiv').style.height = 'auto';
-	
-	if( formHeight < $('formErrorDetails'+ucfirst(form)).offsetHeight-2 )
-		$(form+'FormDiv').style.height = $('formErrorDetails'+ucfirst(form)).offsetHeight-22;
-	else
-		$('formErrorDetails'+ucfirst(form)).style.height     = formHeight;
 }
 
 function handleFormFieldError( content, formId, prefix, alertMessage, indicatorId ){
@@ -76,7 +62,7 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 				var className = (isDiv?objectForm.className:'formField');
 				className     = className.replace(/Error/g, '');
 				className    += 'Error';
-				
+
 				formFieldMessage = formFieldMessage.replace(/\\n/g, ' '+chr(10));
 
 				objectForm.className = className;
@@ -89,7 +75,7 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 		if(alertMessage)
 			alert('Ocorreu um erro ao salvar as informações!\nVerifique e corrija os campos em destaque e tente novamente');
 		else
-			showFormStatusError(formId);
+			showFormStatusError(prefix);
 	}else{
 
 		if( isDebug() )
@@ -100,7 +86,7 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 function showFormStatusError(formId){
 	
 	var divError = $('formStatusError'+ucfirst(formId)+'Div')
-	
+
 	if( divError==null )
 		formId = false;
 	
@@ -111,25 +97,10 @@ function showFormStatusError(formId){
 		hideDiv('formStatusSuccessDiv');
 		showDiv('formStatusErrorDiv');
 		hideDiv('actionDescriptionDiv');
-		
-		toggleToolbar('red');
 	}else{
 	
-		var buttonBar = $('buttonBar'+ucfirst(formId));
-
-		if( /^[a-zA-Z]*Window(Error)?$/.test(buttonBar.className) )
-			buttonBar.className = 'buttonBarWindowError';
-		else
-			buttonBar.className = 'buttonBarFormError';
-		
 		hideDiv('formStatusSuccess'+ucfirst(formId)+'Div');
 		showDiv('formStatusError'+ucfirst(formId)+'Div');
-		
-		try{
-			
-			tabId = formId.replace('Form', '');
-			tabBarMainObj.setCustomStyle(tabId, "red", "red", "font-weight: bold; font-style: italic");
-		}catch( error ){}
 	}
 }
 
@@ -139,15 +110,9 @@ function hideFormStatusError(formId){
 
 		hideDiv('formStatusErrorDiv');
 		showDiv('actionDescriptionDiv');
-		toggleToolbar();
 	}else{
-	
-		var buttonBar = $('buttonBar'+ucfirst(formId));
 		
-		if( buttonBar!=null)
-			buttonBar.className = buttonBar.className.replace('Error', '');
-		
-	hideDiv('formStatusError'+ucfirst(formId)+'Div');
+		hideDiv('formStatusError'+ucfirst(formId)+'Div');
 	}
 }
 
@@ -199,12 +164,8 @@ function showFormStatusSuccess(formId){
 		hideDiv('formStatusErrorDiv');
 		showDiv('formStatusSuccessDiv');
 		hideDiv('actionDescriptionDiv');
-		toggleToolbar('blue');
 	}else{
 	
-		if( $('buttonBar'+ucfirst(formId))!=null )
-			$('buttonBar'+ucfirst(formId)).className = 'buttonBarFormSuccess';
-		
 		clearFormFieldErrors( formId );
 		
 		hideIndicator(formId);
@@ -241,14 +202,7 @@ function hideFormStatusSuccess(formId){
 		if( isVisible('formStatusErrorDiv') )
 			return;
 		showDiv('actionDescriptionDiv');
-		toggleToolbar();
 	}else{
-		var buttonBar = $('buttonBar'+ucfirst(formId));
-		
-		if( /^[a-zA-Z]*Window$/.test(buttonBar.className) )
-			buttonBar.className = 'buttonBarWindow';
-		else
-			buttonBar.className = 'buttonBarForm';
 		
 		hideDiv('formStatusSuccess'+ucfirst(formId)+'Div');
 	}

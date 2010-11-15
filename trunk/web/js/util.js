@@ -46,6 +46,7 @@ function showIndicator( indicatorId ){
 	indicatorId = (indicatorId?ucfirst(indicatorId):'');
 	
 	showDiv('indicator'+indicatorId);
+	hideFormStatusError(indicatorId);
 }
 
 function hideIndicator( indicatorId ){
@@ -140,6 +141,11 @@ function linkTo(linkText, url, target){
 	return '<a href="'+_webRoot+'/'+url+'" target="_'+target+'">'+truncate(linkText, 30)+'</a>';
 }
 
+function linkToFunction(label, module, action, fieldName, fieldValue){
+	
+	return '<a href="javascript:void(0)" onclick="goModule(\''+module+'\', \''+action+'\', \''+fieldName+'\', \''+fieldValue+'\')">'+label+'</a>';
+}
+
 function toFloat( value ){
 
 	if( !value )
@@ -196,4 +202,22 @@ function Trim( value, char ){
 	}
 	
 	return value;
+}
+
+function replaceChar( value, char, newChar) {
+
+    for (i=0; i < value.length; i++) {
+    
+    	if (value.substring(i, i+1) == char){
+
+            value = value.replace(char, newChar);
+        }
+    }
+    
+    return value;
+}
+
+function getSelectText(fieldId){
+
+	return $(fieldId).options[$(fieldId).selectedIndex].text;
 }

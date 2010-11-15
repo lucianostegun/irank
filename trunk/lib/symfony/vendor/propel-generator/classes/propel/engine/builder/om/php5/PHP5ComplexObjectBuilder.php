@@ -177,7 +177,7 @@ class PHP5ComplexObjectBuilder extends PHP5BasicObjectBuilder {
 	public function getFKPhpNameAffix(ForeignKey $fk, $plural = false)
 	{
 		$className = $this->getForeignTable($fk)->getPhpName();
-		return $className . ($plural ? 's' : '') . $this->getRelatedBySuffix($fk);
+		return $className . ($plural ? 'List' : '') . $this->getRelatedBySuffix($fk);
 	}
 
 	/**
@@ -193,7 +193,7 @@ class PHP5ComplexObjectBuilder extends PHP5BasicObjectBuilder {
 	public function getRefFKPhpNameAffix(ForeignKey $fk, $plural = false)
 	{
 		$className = $fk->getTable()->getPhpName();
-		return $className . ($plural ? 's' : '') . $this->getRelatedBySuffix($fk);
+		return $className . ($plural ? 'List' : '') . $this->getRelatedBySuffix($fk);
 	}
 
 	/**

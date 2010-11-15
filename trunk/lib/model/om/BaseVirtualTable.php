@@ -48,10 +48,22 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
-	protected $collPeoples;
+	protected $collPeopleList;
 
 	
 	protected $lastPeopleCriteria = null;
+
+	
+	protected $collRankingList;
+
+	
+	protected $lastRankingCriteria = null;
+
+	
+	protected $collEventList;
+
+	
+	protected $lastEventCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -404,8 +416,24 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
-			if ($this->collPeoples !== null) {
-				foreach($this->collPeoples as $referrerFK) {
+			if ($this->collPeopleList !== null) {
+				foreach($this->collPeopleList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collRankingList !== null) {
+				foreach($this->collRankingList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collEventList !== null) {
+				foreach($this->collEventList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -453,8 +481,24 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collPeoples !== null) {
-					foreach($this->collPeoples as $referrerFK) {
+				if ($this->collPeopleList !== null) {
+					foreach($this->collPeopleList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingList !== null) {
+					foreach($this->collRankingList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventList !== null) {
+					foreach($this->collEventList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -660,8 +704,16 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach($this->getPeoples() as $relObj) {
+			foreach($this->getPeopleList() as $relObj) {
 				$copyObj->addPeople($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingList() as $relObj) {
+				$copyObj->addRanking($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEventList() as $relObj) {
+				$copyObj->addEvent($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -690,15 +742,15 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initPeoples()
+	public function initPeopleList()
 	{
-		if ($this->collPeoples === null) {
-			$this->collPeoples = array();
+		if ($this->collPeopleList === null) {
+			$this->collPeopleList = array();
 		}
 	}
 
 	
-	public function getPeoples($criteria = null, $con = null)
+	public function getPeopleList($criteria = null, $con = null)
 	{
 				include_once 'lib/model/om/BasePeoplePeer.php';
 		if ($criteria === null) {
@@ -709,15 +761,15 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collPeoples === null) {
+		if ($this->collPeopleList === null) {
 			if ($this->isNew()) {
-			   $this->collPeoples = array();
+			   $this->collPeopleList = array();
 			} else {
 
 				$criteria->add(PeoplePeer::PEOPLE_TYPE_ID, $this->getId());
 
 				PeoplePeer::addSelectColumns($criteria);
-				$this->collPeoples = PeoplePeer::doSelect($criteria, $con);
+				$this->collPeopleList = PeoplePeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
@@ -727,16 +779,16 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 				PeoplePeer::addSelectColumns($criteria);
 				if (!isset($this->lastPeopleCriteria) || !$this->lastPeopleCriteria->equals($criteria)) {
-					$this->collPeoples = PeoplePeer::doSelect($criteria, $con);
+					$this->collPeopleList = PeoplePeer::doSelect($criteria, $con);
 				}
 			}
 		}
 		$this->lastPeopleCriteria = $criteria;
-		return $this->collPeoples;
+		return $this->collPeopleList;
 	}
 
 	
-	public function countPeoples($criteria = null, $distinct = false, $con = null)
+	public function countPeopleList($criteria = null, $distinct = false, $con = null)
 	{
 				include_once 'lib/model/om/BasePeoplePeer.php';
 		if ($criteria === null) {
@@ -755,8 +807,218 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	
 	public function addPeople(People $l)
 	{
-		$this->collPeoples[] = $l;
+		$this->collPeopleList[] = $l;
 		$l->setVirtualTable($this);
+	}
+
+	
+	public function initRankingList()
+	{
+		if ($this->collRankingList === null) {
+			$this->collRankingList = array();
+		}
+	}
+
+	
+	public function getRankingList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingList === null) {
+			if ($this->isNew()) {
+			   $this->collRankingList = array();
+			} else {
+
+				$criteria->add(RankingPeer::RANKING_TYPE_ID, $this->getId());
+
+				RankingPeer::addSelectColumns($criteria);
+				$this->collRankingList = RankingPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingPeer::RANKING_TYPE_ID, $this->getId());
+
+				RankingPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingCriteria) || !$this->lastRankingCriteria->equals($criteria)) {
+					$this->collRankingList = RankingPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingCriteria = $criteria;
+		return $this->collRankingList;
+	}
+
+	
+	public function countRankingList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingPeer::RANKING_TYPE_ID, $this->getId());
+
+		return RankingPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRanking(Ranking $l)
+	{
+		$this->collRankingList[] = $l;
+		$l->setVirtualTable($this);
+	}
+
+
+	
+	public function getRankingListJoinUserSite($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingList === null) {
+			if ($this->isNew()) {
+				$this->collRankingList = array();
+			} else {
+
+				$criteria->add(RankingPeer::RANKING_TYPE_ID, $this->getId());
+
+				$this->collRankingList = RankingPeer::doSelectJoinUserSite($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingPeer::RANKING_TYPE_ID, $this->getId());
+
+			if (!isset($this->lastRankingCriteria) || !$this->lastRankingCriteria->equals($criteria)) {
+				$this->collRankingList = RankingPeer::doSelectJoinUserSite($criteria, $con);
+			}
+		}
+		$this->lastRankingCriteria = $criteria;
+
+		return $this->collRankingList;
+	}
+
+	
+	public function initEventList()
+	{
+		if ($this->collEventList === null) {
+			$this->collEventList = array();
+		}
+	}
+
+	
+	public function getEventList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventList === null) {
+			if ($this->isNew()) {
+			   $this->collEventList = array();
+			} else {
+
+				$criteria->add(EventPeer::GAME_STYLE_ID, $this->getId());
+
+				EventPeer::addSelectColumns($criteria);
+				$this->collEventList = EventPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventPeer::GAME_STYLE_ID, $this->getId());
+
+				EventPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventCriteria) || !$this->lastEventCriteria->equals($criteria)) {
+					$this->collEventList = EventPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventCriteria = $criteria;
+		return $this->collEventList;
+	}
+
+	
+	public function countEventList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventPeer::GAME_STYLE_ID, $this->getId());
+
+		return EventPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEvent(Event $l)
+	{
+		$this->collEventList[] = $l;
+		$l->setVirtualTable($this);
+	}
+
+
+	
+	public function getEventListJoinRanking($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventList === null) {
+			if ($this->isNew()) {
+				$this->collEventList = array();
+			} else {
+
+				$criteria->add(EventPeer::GAME_STYLE_ID, $this->getId());
+
+				$this->collEventList = EventPeer::doSelectJoinRanking($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventPeer::GAME_STYLE_ID, $this->getId());
+
+			if (!isset($this->lastEventCriteria) || !$this->lastEventCriteria->equals($criteria)) {
+				$this->collEventList = EventPeer::doSelectJoinRanking($criteria, $con);
+			}
+		}
+		$this->lastEventCriteria = $criteria;
+
+		return $this->collEventList;
 	}
 
 } 

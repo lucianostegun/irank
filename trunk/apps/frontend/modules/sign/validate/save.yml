@@ -23,6 +23,9 @@ fields:
     sfEmailValidator:
       strict:       true
       email_error:  O e-mail informado não é um e-mail válido
+    sfCallbackValidator:
+      callback:      [UserSitePeer, uniqueEmailAddress]
+      invalid_error: Este e-mail já está em uso por outro usuário
        
   firstName:
     required:
@@ -35,7 +38,7 @@ fields:
     required:
       msg:       Este campo é obrigatório e não foi preenchido
     sfStringValidator:
-      max:       15
+      max:       32
       max_error: Informe um valor entre 5 e 15 caracteres
       min:       6
       min_error: Informe um valor entre 5 e 15 caracteres

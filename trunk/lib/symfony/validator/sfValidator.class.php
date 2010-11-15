@@ -81,7 +81,7 @@ abstract class sfValidator
    *
    * @return mixed A parameter value
    */
-  public function getParameter($name, $default = null, $ns = 'taskManager2')
+  public function getParameter($name, $default = null, $ns = 'iRanking')
   {
     return $this->parameterHolder->get($name, $default, $ns);
   }
@@ -94,7 +94,7 @@ abstract class sfValidator
    *
    * @return boolean true, if parameter exists, otherwise false
    */
-  public function hasParameter($name, $ns = 'taskManager2')
+  public function hasParameter($name, $ns = 'iRanking')
   {
     return $this->parameterHolder->has($name, $ns);
   }
@@ -106,7 +106,7 @@ abstract class sfValidator
    * @param mixed A parameter value
    * @param string A parameter namespace
    */
-  public function setParameter($name, $value, $ns = 'taskManager2')
+  public function setParameter($name, $value, $ns = 'iRanking')
   {
     $this->parameterHolder->set($name, $value, $ns);
   }
