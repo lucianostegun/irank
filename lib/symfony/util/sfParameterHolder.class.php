@@ -77,7 +77,7 @@ class sfParameterHolder
    *
    * @return mixed A parameter value, if the parameter exists, otherwise null.
    */
-  public function & get($name, $default = null, $ns = 'taskManager2')
+  public function & get($name, $default = null, $ns = 'iRanking')
   {
     if (!$ns)
     {
@@ -107,7 +107,7 @@ class sfParameterHolder
    *
    * @return array An indexed array of parameter names, if the namespace exists, otherwise null.
    */
-  public function getNames($ns = 'taskManager2')
+  public function getNames($ns = 'iRanking')
   {
     if (!$ns)
     {
@@ -144,7 +144,7 @@ class sfParameterHolder
    *
    * @return array An associative array of parameters.
    */
-  public function & getAll($ns = 'taskManager2')
+  public function & getAll($ns = 'iRanking')
   {
     if (!$ns)
     {
@@ -169,7 +169,7 @@ class sfParameterHolder
    *
    * @return bool true, if the parameter exists, otherwise false.
    */
-  public function has($name, $ns = 'taskManager2')
+  public function has($name, $ns = 'iRanking')
   {
     if (!$ns)
     {
@@ -229,7 +229,7 @@ class sfParameterHolder
    *
    * @return string A parameter value, if the parameter was removed, otherwise null.
    */
-  public function & remove($name, $ns = 'taskManager2')
+  public function & remove($name, $ns = 'iRanking')
   {
     if (!$ns)
     {
@@ -254,7 +254,7 @@ class sfParameterHolder
    *
    * @return void
    */
-  public function & removeNamespace($ns = 'taskManager2')
+  public function & removeNamespace($ns = 'iRanking')
   {
     if (!$ns)
     {
@@ -283,7 +283,7 @@ class sfParameterHolder
    *
    * @return void
    */
-  public function set($name, $value, $ns = 'taskManager2')
+  public function set($name, $value, $ns = 'iRanking')
   {
     if (!$ns)
     {
@@ -309,7 +309,7 @@ class sfParameterHolder
    *
    * @return void
    */
-  public function setByRef($name, & $value, $ns = 'taskManager2')
+  public function setByRef($name, & $value, $ns = 'iRanking')
   {
     if (!$ns)
     {
@@ -335,7 +335,7 @@ class sfParameterHolder
    *
    * @return void
    */
-  public function add($parameters, $ns = 'taskManager2')
+  public function add($parameters, $ns = 'iRanking')
   {
     if ($parameters === null) return;
 
@@ -366,7 +366,7 @@ class sfParameterHolder
    *
    * @return void
    */
-  public function addByRef(& $parameters, $ns = 'taskManager2')
+  public function addByRef(& $parameters, $ns = 'iRanking')
   {
     if (!$ns)
     {

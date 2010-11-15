@@ -1,0 +1,31 @@
+fields:
+       
+  rankingName:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfCallbackValidator:
+      callback:      [RankingPeer, uniqueRankingName]
+      invalid_error: Já existe um ranking cadastrado com esse nome
+    sfStringValidator:
+      max:       25
+      max_error: Informe um valor de até 25 caracteres
+    sfRegexValidator:
+      match:        Yes
+      match_error:  O username informado não é válido.\nO nome deve iniciar com uma letra, e pode conter apenas letras, números e os caracteres ()-_
+      pattern:      /^[a-zA-Z]+[)(\a-zA-Z0-9_-]*$/si
+       
+  startDate:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfCallbackValidator:
+      callback:      [Validate, validateDate]
+      invalid_error: A data informada não é uma data válida
+       
+  finishDate:
+    sfCallbackValidator:
+      callback:      [Validate, validateDate]
+      invalid_error: A data informada não é uma data válida
+       
+  rankingTypeId:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido

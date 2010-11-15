@@ -28,6 +28,7 @@ CREATE TABLE people (
     first_name VARCHAR(100),
     last_name VARCHAR(100),
     full_name VARCHAR(200),
+    email_address VARCHAR(200),
     birthday DATE NULL,
     enabled BOOLEAN DEFAULT FALSE,
     visible BOOLEAN DEFAULT TRUE,
@@ -44,9 +45,8 @@ CREATE TABLE user_site (
     people_id INTEGER,
     username VARCHAR(20),
     password VARCHAR(32),
-    email_address VARCHAR(150),
     last_access_date TIMESTAMP,
-    active BOOLEAN DEFAULT TRUE,
+    active BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     CONSTRAINT user_site_FK_1 FOREIGN KEY (people_id) REFERENCES people (id)

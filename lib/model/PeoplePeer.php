@@ -10,6 +10,16 @@
 class PeoplePeer extends BasePeoplePeer
 {
 	
+	public static function retrieveByEmailAddress($emailAddress){
+		
+		$criteria = new Criteria();
+		$criteria->add( PeoplePeer::ENABLED, true );
+		$criteria->add( PeoplePeer::VISIBLE, true );
+		$criteria->add( PeoplePeer::DELETED, false );
+		$criteria->add( PeoplePeer::EMAIL_ADDRESS, $emailAddress, Criteria::ILIKE );
+   		return PeoplePeer::doSelectOne( $criteria );
+	}
+	
     public static function search( $request, $count ){
     
     	$fullName = $request->getParameter('fullName');

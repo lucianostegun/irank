@@ -142,7 +142,7 @@ abstract class sfStorage
    *
    * @return mixed A parameter value
    */
-  public function getParameter($name, $default = null, $ns = 'taskManager2')
+  public function getParameter($name, $default = null, $ns = 'iRanking')
   {
     return $this->parameterHolder->get($name, $default, $ns);
   }
@@ -155,7 +155,7 @@ abstract class sfStorage
    *
    * @return boolean true, if parameter exists, otherwise false
    */
-  public function hasParameter($name, $ns = 'taskManager2')
+  public function hasParameter($name, $ns = 'iRanking')
   {
     return $this->parameterHolder->has($name, $ns);
   }
@@ -167,7 +167,7 @@ abstract class sfStorage
    * @param mixed A parameter value
    * @param string Namespace for the current storage
    */
-  public function setParameter($name, $value, $ns = 'taskManager2')
+  public function setParameter($name, $value, $ns = 'iRanking')
   {
     return $this->parameterHolder->set($name, $value, $ns);
   }

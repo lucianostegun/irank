@@ -369,7 +369,7 @@ abstract class BaseVirtualTablePeer {
 		}
 
 		$criteria = new Criteria(VirtualTablePeer::DATABASE_NAME);
-		$criteria->setNoCustomer(true);
+		$criteria->setNoFilter(true);
 
 		$criteria->add(VirtualTablePeer::ID, $pk);
 

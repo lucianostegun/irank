@@ -13,7 +13,7 @@ abstract class BasePeoplePeer {
 	const CLASS_DEFAULT = 'lib.model.People';
 
 	
-	const NUM_COLUMNS = 12;
+	const NUM_COLUMNS = 13;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -33,6 +33,9 @@ abstract class BasePeoplePeer {
 
 	
 	const FULL_NAME = 'people.FULL_NAME';
+
+	
+	const EMAIL_ADDRESS = 'people.EMAIL_ADDRESS';
 
 	
 	const BIRTHDAY = 'people.BIRTHDAY';
@@ -61,19 +64,19 @@ abstract class BasePeoplePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleTypeId', 'FirstName', 'LastName', 'FullName', 'Birthday', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (PeoplePeer::ID, PeoplePeer::PEOPLE_TYPE_ID, PeoplePeer::FIRST_NAME, PeoplePeer::LAST_NAME, PeoplePeer::FULL_NAME, PeoplePeer::BIRTHDAY, PeoplePeer::ENABLED, PeoplePeer::VISIBLE, PeoplePeer::DELETED, PeoplePeer::LOCKED, PeoplePeer::CREATED_AT, PeoplePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_type_id', 'first_name', 'last_name', 'full_name', 'birthday', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_TYPE_ID'=>'Tipo de pessoa', 'FIRST_NAME'=>'Nome', 'LAST_NAME'=>'Sobrenome', 'FULL_NAME'=>'', 'BIRTHDAY'=>'Nascimento', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleTypeId', 'FirstName', 'LastName', 'FullName', 'EmailAddress', 'Birthday', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (PeoplePeer::ID, PeoplePeer::PEOPLE_TYPE_ID, PeoplePeer::FIRST_NAME, PeoplePeer::LAST_NAME, PeoplePeer::FULL_NAME, PeoplePeer::EMAIL_ADDRESS, PeoplePeer::BIRTHDAY, PeoplePeer::ENABLED, PeoplePeer::VISIBLE, PeoplePeer::DELETED, PeoplePeer::LOCKED, PeoplePeer::CREATED_AT, PeoplePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_type_id', 'first_name', 'last_name', 'full_name', 'email_address', 'birthday', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_TYPE_ID'=>'Tipo de pessoa', 'FIRST_NAME'=>'Nome', 'LAST_NAME'=>'Sobrenome', 'FULL_NAME'=>'', 'EMAIL_ADDRESS'=>'E-mail', 'BIRTHDAY'=>'Nascimento', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleTypeId'=>1, 'FirstName'=>2, 'LastName'=>3, 'FullName'=>4, 'Birthday'=>5, 'Enabled'=>6, 'Visible'=>7, 'Deleted'=>8, 'Locked'=>9, 'CreatedAt'=>10, 'UpdatedAt'=>11, ),
-		BasePeer::TYPE_COLNAME=>array (PeoplePeer::ID=>0, PeoplePeer::PEOPLE_TYPE_ID=>1, PeoplePeer::FIRST_NAME=>2, PeoplePeer::LAST_NAME=>3, PeoplePeer::FULL_NAME=>4, PeoplePeer::BIRTHDAY=>5, PeoplePeer::ENABLED=>6, PeoplePeer::VISIBLE=>7, PeoplePeer::DELETED=>8, PeoplePeer::LOCKED=>9, PeoplePeer::CREATED_AT=>10, PeoplePeer::UPDATED_AT=>11, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_type_id'=>1, 'first_name'=>2, 'last_name'=>3, 'full_name'=>4, 'birthday'=>5, 'enabled'=>6, 'visible'=>7, 'deleted'=>8, 'locked'=>9, 'created_at'=>10, 'updated_at'=>11, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleTypeId'=>1, 'FirstName'=>2, 'LastName'=>3, 'FullName'=>4, 'EmailAddress'=>5, 'Birthday'=>6, 'Enabled'=>7, 'Visible'=>8, 'Deleted'=>9, 'Locked'=>10, 'CreatedAt'=>11, 'UpdatedAt'=>12, ),
+		BasePeer::TYPE_COLNAME=>array (PeoplePeer::ID=>0, PeoplePeer::PEOPLE_TYPE_ID=>1, PeoplePeer::FIRST_NAME=>2, PeoplePeer::LAST_NAME=>3, PeoplePeer::FULL_NAME=>4, PeoplePeer::EMAIL_ADDRESS=>5, PeoplePeer::BIRTHDAY=>6, PeoplePeer::ENABLED=>7, PeoplePeer::VISIBLE=>8, PeoplePeer::DELETED=>9, PeoplePeer::LOCKED=>10, PeoplePeer::CREATED_AT=>11, PeoplePeer::UPDATED_AT=>12, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_type_id'=>1, 'first_name'=>2, 'last_name'=>3, 'full_name'=>4, 'email_address'=>5, 'birthday'=>6, 'enabled'=>7, 'visible'=>8, 'deleted'=>9, 'locked'=>10, 'created_at'=>11, 'updated_at'=>12, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
@@ -136,6 +139,8 @@ abstract class BasePeoplePeer {
 		$criteria->addSelectColumn(PeoplePeer::LAST_NAME);
 
 		$criteria->addSelectColumn(PeoplePeer::FULL_NAME);
+
+		$criteria->addSelectColumn(PeoplePeer::EMAIL_ADDRESS);
 
 		$criteria->addSelectColumn(PeoplePeer::BIRTHDAY);
 
@@ -296,7 +301,7 @@ abstract class BasePeoplePeer {
 				}
 			}
 			if ($newObject) {
-				$obj2->initPeoples();
+				$obj2->initPeopleList();
 				$obj2->addPeople($obj1); 			}
 			$results[] = $obj1;
 		}
@@ -380,7 +385,7 @@ abstract class BasePeoplePeer {
 			}
 
 			if ($newObject) {
-				$obj2->initPeoples();
+				$obj2->initPeopleList();
 				$obj2->addPeople($obj1);
 			}
 
@@ -540,7 +545,7 @@ abstract class BasePeoplePeer {
 		}
 
 		$criteria = new Criteria(PeoplePeer::DATABASE_NAME);
-		$criteria->setNoCustomer(true);
+		$criteria->setNoFilter(true);
 
 		$criteria->add(PeoplePeer::ID, $pk);
 

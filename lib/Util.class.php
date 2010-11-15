@@ -7,6 +7,62 @@
  * @author     Luciano Stegun
  */
 class Util {
+
+	/**
+	 * Método responsável por criar e retornar um nobo objeto de uma
+	 * determinada classe de acordo com o parâmetro.
+	 * Utilizado no cadastro de novos registros dos módulos regulares 
+	 *
+	 * @author     Luciano Stegun
+	 * @param      String: Nome da classe da qual será gerado um noo objeto
+	 * @param      Array: Array bidimensional contendo a lista de campos obrigatórios na tabela que 
+	 * 				precisam ser preenchidos para que o registro seja salvo
+	 * @return     Object
+	 */
+	public static function getNewObject( $className, $requiredFieldList=array() ){
+		
+		$className = ucfirst($className);
+		$classNamePeer = $className.'Peer';
+		
+		$criteria = new Criteria();
+		$criteria->setNoFilter(true);
+		eval('$criteria->add( '.$classNamePeer.'::LOCKED, false );');
+		eval('$criteria->add( '.$classNamePeer.'::ENABLED, false );');
+		eval('$criteria->add( '.$classNamePeer.'::DELETED, false );');
+		eval('$criteria->add( '.$classNamePeer.'::VISIBLE, false );');
+		eval('$criteria->add( '.$classNamePeer.'::CREATED_AT, time()-86400, Criteria::LESS_EQUAL );');
+		eval('$criteria->addAscendingOrderByColumn( '.$classNamePeer.'::CREATED_AT );');
+		eval('$newObj = '.$classNamePeer.'::doSelectOne( $criteria );');
+		
+		if( is_object($newObj) ){
+			
+			$newObj->setLocked( true );
+			$newObj->setCreatedAt( time() );
+			$newObj->setUpdatedAt( time() );
+		}else{
+		
+			$newObj = new $className();
+			$newObj->setVisible( false );
+			$newObj->setEnabled( false );
+			$newObj->setDeleted( false );
+		}
+		
+		foreach($requiredFieldList as $key=>$requiredField){
+			
+			$funcName = 'set'.ucfirst($key);
+			$newObj->$funcName($requiredField);
+		}
+			
+		$newObj->save();
+		
+		if( method_exists($newObj, 'setActive') )
+			$newObj->setActive(true);
+	
+		if( method_exists($newObj, 'cleanRecord'))
+			$newObj->cleanRecord();
+		
+		return $newObj;
+	}
 	
 	/**
 	 * Método que força o envio de um cabeçalho de erro ao browser
@@ -53,12 +109,14 @@ class Util {
 	 * @param      String: Comando SQL a ser executado na base de dados, deve ser um comando único
 	 * @return     Object: ResultSet
 	 */
-	public static function executeOne( $query ){
+	public static function executeOne( $query, $returnType='int' ){
 
 		$resultset  = self::executeQuery($query);
     	
+    	$function = 'get'.ucfirst($returnType);
+    	
     	while( $resultset->next() )
-    		return $resultset->getInt(1);
+    		return $resultset->$function(1);
 	}
 	
 	/**

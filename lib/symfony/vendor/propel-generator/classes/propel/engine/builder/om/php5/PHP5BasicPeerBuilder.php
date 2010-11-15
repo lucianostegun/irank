@@ -1329,7 +1329,7 @@ if (Propel::isInit()) {
 		}
 
 		\$criteria = new Criteria(".$this->getPeerClassname()."::DATABASE_NAME);
-		\$criteria->setNoCustomer(true);
+		\$criteria->setNoFilter(true);
 ";
 		if (count($table->getPrimaryKey()) === 1) {
 			$pkey = $table->getPrimaryKey();

@@ -17,6 +17,12 @@ class MyTools
         return sfContext::getInstance()->getRequest();
     }
  
+    /** Get request singleton */
+    public static function getResponse()
+    {
+        return sfContext::getInstance()->getResponse();
+    }
+ 
     /** Request parameter holder */
     public static function getRequestParameterHolder()
     {
@@ -94,53 +100,53 @@ class MyTools
     }
  
     /** User attribute parameters (stored in the session until removed) */
-    public static function getAttribute($name, $default = null, $ns = 'taskManager2')
+    public static function getAttribute($name, $default = null, $ns = 'iRanking')
     {
         return sfContext::getInstance()->getUser()->getAttribute($name, $default, $ns);
     }
  
-    public static function setAttribute($name, $value, $ns = 'taskManager2')
+    public static function setAttribute($name, $value, $ns = 'iRanking')
     {
         sfContext::getInstance()->getUser()->setAttribute($name, $value, $ns);
     }
  
-    public static function removeAttribute($name, $ns = 'taskManager2')
+    public static function removeAttribute($name, $ns = 'iRanking')
     {
         sfContext::getInstance()->getUser()->removeAttribute($name, $ns);
     }
  
-    public static function getAttributes($ns = 'taskManager2')
+    public static function getAttributes($ns = 'iRanking')
     {
         return sfContext::getInstance()->getUser()->getAttributes($ns);
     }
  
-    public static function removeAttributes($ns = 'taskManager2')
+    public static function removeAttributes($ns = 'iRanking')
     {
         sfContext::getInstance()->getUser()->removeAttributes($ns);
     }
  
     /** User parameter parameters (erased after every request) */
-    public static function getParameter($name, $default = null, $ns = 'taskManager2')
+    public static function getParameter($name, $default = null, $ns = 'iRanking')
     {
         return sfContext::getInstance()->getUser()->getParameter($name, $default, $ns);
     }
  
-    public static function setParameter($name, $value, $ns = 'taskManager2')
+    public static function setParameter($name, $value, $ns = 'iRanking')
     {
         sfContext::getInstance()->getUser()->setParameter($name, $value, $ns);
     }
  
-    public static function removeParameter($name, $ns = 'taskManager2')
+    public static function removeParameter($name, $ns = 'iRanking')
     {
         sfContext::getInstance()->getUser()->removeParameter($name, $ns);
     }
  
-    public static function getParameters($ns = 'taskManager2')
+    public static function getParameters($ns = 'iRanking')
     {
         return sfContext::getInstance()->getUser()->getParameters($ns);
     }
  
-    public static function removeParameters($ns = 'taskManager2')
+    public static function removeParameters($ns = 'iRanking')
     {
         sfContext::getInstance()->getUser()->removeParameters($ns);
     }
@@ -210,6 +216,17 @@ class MyTools
 	
 	  return $controller->genUrl($internalUri, $absolute);
 	}
+ 
+    /** User attribute parameters (stored in the session until removed) */
+    public static function getCookie($name, $default = null)
+    {
+        return MyTools::getRequest()->getCookie($name, $default);
+    }
+ 
+    public static function setCookie($name, $value, $expire=null)
+    {
+        MyTools::getResponse()->setCookie($name, $value, $expire);
+    }
 
 }
 ?>

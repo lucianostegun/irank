@@ -1,19 +1,19 @@
 .formLoading {
-	
-	float: 			left;
-	width: 			200px;
+
+	float: 			right;
 	height: 		25px;
 	font-weight: 	normal;
-	display: 		none;
 	margin-top: 	0px;
 	margin-top: 	-3px !ie;
 	margin-left: 	10px;
+	margin-left: 	10px;
+	display: 		none;
 }
 
 .formLoading .message {
 	
 	float: 			left;
-	margin-top: 	5px;
+	margin-top: 	3px;
 	margin-left: 	6px;
 	color: 			#AAAAAA;
 }

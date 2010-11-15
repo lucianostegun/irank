@@ -624,12 +624,16 @@ function input_date_range_tag($name, $value, $options = array())
  */
 function input_date_tag($name, $value = null, $options = array())
 {
+  $options['rich'] = true;
+  $options['format'] = 'dd/MM/Y';
+  $options['onkeyup'] = 'maskDate(event)';
   $options['autocomplete'] = 'off';
   $options = _parse_attributes($options);
 
   $context = sfContext::getInstance();
 
-  $culture = _get_option($options, 'culture', $context->getUser()->getCulture());
+//  $culture = _get_option($options, 'culture', $context->getUser()->getCulture());
+  $culture = 'pt_BR';
 
   $withTime = _get_option($options, 'withtime', false);
   
@@ -747,7 +751,7 @@ function input_date_tag($name, $value = null, $options = array())
 
   if ($calendar_button_type == 'img')
   {
-    $html .= image_tag($calendar_button, array('id'=>$id_calendarButton, 'style'=>'cursor: pointer; vertical-align: middle; margin-top: -5px'));
+    $html .= image_tag($calendar_button, array('id'=>$id_calendarButton, 'style'=>'cursor: pointer; vertical-align: middle; margin-top: -3px'));
   }
   else
   {
@@ -944,9 +948,6 @@ function _convert_include_custom_for_select($options, &$select_options)
 
 function button_tag( $buttonId, $text, $options=array() ){
 
-	sfContext::getInstance()->getResponse()->addStylesheet( 'button' );
-	sfContext::getInstance()->getResponse()->addJavascript( 'button' );
-
 	$buttonId = ucfirst($buttonId);
 	$nl       = chr(10);
 	$visible  = array_key_exists('visible', $options)?$options['visible']:true;
@@ -973,11 +974,16 @@ function button_tag( $buttonId, $text, $options=array() ){
 	$html = $nl;
 	$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft"></div>'.$nl;
-	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div style="margin-top: 4px">'.$image.$text.'</div></div>'.$nl;
+	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div style="margin-top: 2px">'.$image.$text.'</div></div>'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 	$html .= '</div>';
 	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));
 	return $html;
+}
+
+function getPageHeader($pageTitle){
+	
+	include_partial('home/include/pageHeader', array('pageTitle'=>$pageTitle));
 }
 
 function text_button_tag( $buttonId, $text, $options=array() ){
@@ -1041,9 +1047,9 @@ function getLoading( $indicatorId=null ){
  * @author     Luciano Stegun
  * @param      String: ID do indicador para o caso de mais de uma janela renderizada na mesma página
  */
-function getFormLoading( $indicatorId ){
+function getFormLoading( $indicatorId, $message='Processando, aguarde...' ){
 	
-	echo get_partial( 'home/include/formLoading', array('indicatorId'=>$indicatorId) );
+	echo get_partial( 'home/include/formLoading', array('indicatorId'=>$indicatorId, 'message'=>$message) );
 }
 
 /**
@@ -1052,7 +1058,7 @@ function getFormLoading( $indicatorId ){
  * @author     Luciano Stegun
  * @param      String: ID do indicador para o caso de mais de uma janela renderizada na mesma página
  */
-function getStatus( $statusId=null, $window=false ){
+function getFormStatus( $statusId=null, $window=false ){
 	
 	echo get_partial( 'home/include/formStatus', array('statusId'=>$statusId, 'window'=>$window) );
 }

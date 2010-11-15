@@ -130,7 +130,7 @@ class Criteria implements IteratorAggregate {
 	/** FUNÇÃO PERSONALIZADA PARA PESQUISA DE DATA PARCIAL */
 	const TO_CHAR_MONTHDAY = 'TO_CHAR';
 
-	private $noCustomer = false;
+	private $noFilter = false;
 	private $ignoreCase = false;
 	private $singleRecord = false;
 	private $selectModifiers = array();
@@ -665,14 +665,14 @@ class Criteria implements IteratorAggregate {
 		return $this->ignoreCase;
 	}
 	
-	public function setNoCustomer($b)
+	public function setNoFilter($b)
 	{
-		$this->noCustomer = (boolean) $b;
+		$this->noFilter = (boolean) $b;
 	}
 	
-	public function isNoCustomer()
+	public function isNoFilter()
 	{
-		return $this->noCustomer;
+		return $this->noFilter;
 	}
 
 	/**

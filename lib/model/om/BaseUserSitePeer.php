@@ -13,7 +13,7 @@ abstract class BaseUserSitePeer {
 	const CLASS_DEFAULT = 'lib.model.UserSite';
 
 	
-	const NUM_COLUMNS = 9;
+	const NUM_COLUMNS = 8;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -30,9 +30,6 @@ abstract class BaseUserSitePeer {
 
 	
 	const PASSWORD = 'user_site.PASSWORD';
-
-	
-	const EMAIL_ADDRESS = 'user_site.EMAIL_ADDRESS';
 
 	
 	const ACTIVE = 'user_site.ACTIVE';
@@ -52,19 +49,19 @@ abstract class BaseUserSitePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'Username', 'Password', 'EmailAddress', 'Active', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID, UserSitePeer::PEOPLE_ID, UserSitePeer::USERNAME, UserSitePeer::PASSWORD, UserSitePeer::EMAIL_ADDRESS, UserSitePeer::ACTIVE, UserSitePeer::LAST_ACCESS_DATE, UserSitePeer::CREATED_AT, UserSitePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'username', 'password', 'email_address', 'active', 'last_access_date', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'Username', 'PASSWORD'=>'', 'EMAIL_ADDRESS'=>'E-mail', 'ACTIVE'=>'Ativo', 'LAST_ACCESS_DATE'=>'Último acesso', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'Username', 'Password', 'Active', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID, UserSitePeer::PEOPLE_ID, UserSitePeer::USERNAME, UserSitePeer::PASSWORD, UserSitePeer::ACTIVE, UserSitePeer::LAST_ACCESS_DATE, UserSitePeer::CREATED_AT, UserSitePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'username', 'password', 'active', 'last_access_date', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'Username', 'PASSWORD'=>'', 'ACTIVE'=>'Ativo', 'LAST_ACCESS_DATE'=>'Último acesso', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'Username'=>2, 'Password'=>3, 'EmailAddress'=>4, 'Active'=>5, 'LastAccessDate'=>6, 'CreatedAt'=>7, 'UpdatedAt'=>8, ),
-		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID=>0, UserSitePeer::PEOPLE_ID=>1, UserSitePeer::USERNAME=>2, UserSitePeer::PASSWORD=>3, UserSitePeer::EMAIL_ADDRESS=>4, UserSitePeer::ACTIVE=>5, UserSitePeer::LAST_ACCESS_DATE=>6, UserSitePeer::CREATED_AT=>7, UserSitePeer::UPDATED_AT=>8, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'username'=>2, 'password'=>3, 'email_address'=>4, 'active'=>5, 'last_access_date'=>6, 'created_at'=>7, 'updated_at'=>8, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'Username'=>2, 'Password'=>3, 'Active'=>4, 'LastAccessDate'=>5, 'CreatedAt'=>6, 'UpdatedAt'=>7, ),
+		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID=>0, UserSitePeer::PEOPLE_ID=>1, UserSitePeer::USERNAME=>2, UserSitePeer::PASSWORD=>3, UserSitePeer::ACTIVE=>4, UserSitePeer::LAST_ACCESS_DATE=>5, UserSitePeer::CREATED_AT=>6, UserSitePeer::UPDATED_AT=>7, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'username'=>2, 'password'=>3, 'active'=>4, 'last_access_date'=>5, 'created_at'=>6, 'updated_at'=>7, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
@@ -125,8 +122,6 @@ abstract class BaseUserSitePeer {
 		$criteria->addSelectColumn(UserSitePeer::USERNAME);
 
 		$criteria->addSelectColumn(UserSitePeer::PASSWORD);
-
-		$criteria->addSelectColumn(UserSitePeer::EMAIL_ADDRESS);
 
 		$criteria->addSelectColumn(UserSitePeer::ACTIVE);
 
@@ -281,7 +276,7 @@ abstract class BaseUserSitePeer {
 				}
 			}
 			if ($newObject) {
-				$obj2->initUserSites();
+				$obj2->initUserSiteList();
 				$obj2->addUserSite($obj1); 			}
 			$results[] = $obj1;
 		}
@@ -365,7 +360,7 @@ abstract class BaseUserSitePeer {
 			}
 
 			if ($newObject) {
-				$obj2->initUserSites();
+				$obj2->initUserSiteList();
 				$obj2->addUserSite($obj1);
 			}
 
@@ -525,7 +520,7 @@ abstract class BaseUserSitePeer {
 		}
 
 		$criteria = new Criteria(UserSitePeer::DATABASE_NAME);
-		$criteria->setNoCustomer(true);
+		$criteria->setNoFilter(true);
 
 		$criteria->add(UserSitePeer::ID, $pk);
 

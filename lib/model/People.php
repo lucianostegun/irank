@@ -53,21 +53,19 @@ class People extends BasePeople
 		return $firstName.($lastName?' '.$lastName:'');
 	}
 	
-	public static function getQuickPeople($fullName, $peopleType){
+	public static function getQuickPeople($firstName, $lastName=null, $peopleType, $peopleId=null){
 
-		$peopleNameList = explode(' ', $fullName);
+		$peopleTypeId = VirtualTable::getIdByTagName('peopleType', $peopleType);
 
-		$firstName = $peopleNameList[0];
-		unset($peopleNameList[0]);
-		$lastName = implode(' ', $peopleNameList);
-		
-		$peopleTypeId = VirtualTable::getIdByTagName($peopleType);
-		
-		$peopleObj = new People();
+		if( $peopleId )
+			$peopleObj = PeoplePeer::retrieveByPK($peopleId);
+		else
+			$peopleObj = new People();
+
 		$peopleObj->setPeopleTypeId($peopleTypeId);
 		$peopleObj->setFirstName($firstName);
 		$peopleObj->setLastName($lastName);
-		$peopleObj->setFullName($fullName);
+		$peopleObj->setFullName($firstName.($lastName?' '.$lastName:''));
 		$peopleObj->setEnabled(true);
 		$peopleObj->setVisible(true);
 		$peopleObj->save();
@@ -112,6 +110,11 @@ class People extends BasePeople
 			return $optionList;
 
 		return options_for_select( $optionList, $defaultValue );
+	}
+	
+	public function isPeopleType($tagName){
+		
+		return $this->getVirtualTable()->getTagName()==$tagName;
 	}
 	
 	public function getInfo(){

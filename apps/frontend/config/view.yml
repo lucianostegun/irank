@@ -6,8 +6,8 @@ default:
     title:        iRanking
     language:     pt
 
-  stylesheets:    [frontend/main, frontend/form]
-  javascripts:    [phpEquivalents, util, frontend/form, /sf/prototype/js/prototype]
+  stylesheets:    [main, frontend/layout, frontend/form, button, loading, frontend/login]
+  javascripts:    [phpEquivalents, /sf/prototype/js/prototype, button, frontend/form, util, frontend/login, frontend/record, mask]
 
   has_layout:     on
   layout:         layout

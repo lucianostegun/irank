@@ -1,30 +1,15 @@
-<script>
-function handleSuccessSign(content){
-	alert(content);
-}
-
-function doSubmitSign(){
-	
-	showIndicator('sign');
-	disableButton('mainSubmit');
-	$('signForm').onsubmit();
-}
-</script>
 <?php
 	echo form_remote_tag(array(
 		'url'=>'sign/save',
-		'success'=>'handleSuccessSign( request.responseText )',
+		'success'=>'handleSuccessSign( request.responseText, true )',
 		'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "signForm", "sign", false, "sign" )',
 		'encoding'=>'utf8',
 		'loading'=>'showIndicator()'
 		), array( 'id'=>'signForm' ));
 ?>
-	<div class="leftPanel"></div>
-	<div class="rightPanel">
-<table width="100%" cellspacing="0" cellpadding="0">
-	<tr>
-		<td valign="top" width="715" id="formTableSign">
-			<div class="defaultForm" id="signFormDiv">
+	<table width="100%" cellspacing="1" cellpadding="0" class="defaultForm">
+		<tr>
+			<td valign="top">
 				<div class="row">
 					<div class="label" id="signUsernameLabel">Username</div>
 					<div class="field"><?php echo input_tag('username', null, array('size'=>15, 'maxlength'=>15, 'class'=>'required', 'id'=>'signUsername')) ?></div>
@@ -55,14 +40,12 @@ function doSubmitSign(){
 					<div class="field"><?php echo input_password_tag('passwordConfirm', null, array('size'=>15, 'maxlength'=>15, 'class'=>'required', 'id'=>'signPasswordConfirm')) ?></div>
 					<div class="error" id="signPasswordConfirmError" onclick="showFormErrorDetails('sign', 'passwordConfirm')"></div>
 				</div>
-			</div>
-		</td>
-		<td valign="top"><div class="defaultFormErrorDetails" id="formErrorDetailsSign"><h1>Detalhes do erro</h1></div></td>
-	</tr>
-</table>
-<div class="buttonBarForm">
-	<?php echo button_tag('mainSubmit', 'Enviar', array('onclick'=>'doSubmitSign()')) ?>
-	<?php echo getFormLoading('sign') ?>
-</div>
+			</td>
+			<td valign="top" width="200" class="defaultFormErrorDetails"><div id="formErrorDetailsSign"><h1>Detalhes</h1></div></td>
+		</tr>
+	</table>
+	<div class="buttonBarForm">
+		<?php echo button_tag('mainSubmit', 'Enviar', array('onclick'=>'doSubmitSign()')) ?>
+		<?php echo getFormLoading('sign') ?>
 	</div>
 </form>

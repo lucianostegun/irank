@@ -340,7 +340,7 @@ abstract class sfView
    *
    * @return mixed Attribute
    */
-  public function getAttribute($name, $default = null, $ns = 'taskManager2')
+  public function getAttribute($name, $default = null, $ns = 'iRanking')
   {
     return $this->attributeHolder->get($name, $default, $ns);
   }
@@ -353,7 +353,7 @@ abstract class sfView
    *
    * @return mixed Attribute of the view
    */
-  public function hasAttribute($name, $ns = 'taskManager2')
+  public function hasAttribute($name, $ns = 'iRanking')
   {
     return $this->attributeHolder->has($name, $ns);
   }
@@ -365,7 +365,7 @@ abstract class sfView
    * @param string Value for the attribute
    * @param string Namespace for the current
    */
-  public function setAttribute($name, $value, $ns = 'taskManager2')
+  public function setAttribute($name, $value, $ns = 'iRanking')
   {
     $this->attributeHolder->set($name, $value, $ns);
   }
@@ -389,7 +389,7 @@ abstract class sfView
    *
    * @return mixed A parameter value
    */
-  public function getParameter($name, $default = null, $ns = 'taskManager2')
+  public function getParameter($name, $default = null, $ns = 'iRanking')
   {
     return $this->parameterHolder->get($name, $default, $ns);
   }
@@ -402,7 +402,7 @@ abstract class sfView
    *
    * @return boolean true, if the parameter exists otherwise false
    */
-  public function hasParameter($name, $ns = 'taskManager2')
+  public function hasParameter($name, $ns = 'iRanking')
   {
     return $this->parameterHolder->has($name, $ns);
   }
@@ -414,7 +414,7 @@ abstract class sfView
    * @param string The parameter value
    * @param string Namespace for the current view
    */
-  public function setParameter($name, $value, $ns = 'taskManager2')
+  public function setParameter($name, $value, $ns = 'iRanking')
   {
     $this->parameterHolder->set($name, $value, $ns);
   }
