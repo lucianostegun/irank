@@ -127,10 +127,15 @@ class Ranking extends BaseRanking
 	
 	public function getRankingType($returnTagName=false){
 		
+		$virtualTableObj = $this->getVirtualTable();
+		
+		if( !is_object($virtualTableObj) )
+			$virtualTableObj = new VirtualTable();
+		
 		if( $returnTagName )
-			return $this->getVirtualTable()->getTagName();
+			return $virtualTableObj->getTagName();
 		else
-			return $this->getVirtualTable();
+			return $virtualTableObj;
 	}
 	
 	public function isRankingType($tagName){
