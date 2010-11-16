@@ -135,8 +135,6 @@ class Event extends BaseEvent
 		return $currentDateTime > strtotime($eventDateTime);
 	}
 	
-	
-	
 	public function isMyEvent(){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
@@ -145,5 +143,134 @@ class Event extends BaseEvent
 		if( !is_object($rankingObj) )
 			return true;
 		return ($rankingObj->getUserSiteId()==$userSiteId);
+	}
+	
+	public function getGameStyle(){
+		
+		return $this->getVirtualTable();
+	}
+	
+	public function getEmailAddresList(){
+		
+		$emailAddressList = array();
+		
+		foreach( $this->getPeopleList(true) as $peopleObj )
+			$emailAddressList[] = $peopleObj->getEmailAddress();
+		
+		return $emailAddressList;
+	}
+	
+	public function getClassify(){
+		
+		$orderByList = array(EventMemberPeer::ENABLED=>'desc',
+	  						 EventMemberPeer::EVENT_POSITION=>'asc');
+	  	
+	  	$eventMemberObjList = $this->getMemberList($orderByList);
+
+	  	$lastList = array();
+	  	foreach($eventMemberObjList as $key=>$eventMemberObj){
+	  		
+	  		if( $eventMemberObj->getEventPosition()==0 ){
+	  			
+	  			$lastList[] = $eventMemberObj;
+	  			unset($eventMemberObjList[$key]);
+	  		}
+	  	}
+	  	
+	  	return array_merge($eventMemberObjList, $lastList);
+	}
+	
+	public function notify(){
+
+		if( $this->getSentEmail() ){
+			
+			$emailContent = AuxiliarText::getContentByTagName('eventChangeNotify');
+			$emailSubject = 'Notificação de alteração de evento';
+		}else{
+			
+			$emailContent = AuxiliarText::getContentByTagName('eventCreateNotify');
+			$emailSubject = 'Notificação de evento';
+		}
+
+		$emailContent = str_replace('<eventName>', $this->getEventName(), $emailContent);
+		$emailContent = str_replace('<rankingName>', $this->getRanking()->getRankingName(), $emailContent);
+		$emailContent = str_replace('<gameStyle>', $this->getGameStyle()->getDescription(), $emailContent);
+		$emailContent = str_replace('<eventPlace>', $this->getEventPlace(), $emailContent);
+		$emailContent = str_replace('<eventDate>', $this->getEventDate('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<startTime>', $this->getStartTime('H:i'), $emailContent);
+		$emailContent = str_replace('<paidPlaces>', $this->getPaidPlaces(), $emailContent);
+		$emailContent = str_replace('<buyIn>', Util::formatFloat($this->getBuyIn(), true), $emailContent);
+		$emailContent = str_replace('<comments>', $this->getComments(), $emailContent);
+		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
+		$emailContent = str_replace('<members>', $this->getMembers(), $emailContent);
+
+		$emailAddressList = $this->getEmailAddresList();
+		
+		Report::sendMail($emailSubject, $emailAddressList, $emailContent);
+		
+		$this->setSentEmail(true);
+		$this->save();
+	}
+	
+	public function notifyResult(){
+
+		$emailContent = AuxiliarText::getContentByTagName('eventResult');
+
+		$emailContent = str_replace('<eventName>', $this->getEventName(), $emailContent);
+		$emailContent = str_replace('<rankingName>', $this->getRanking()->getRankingName(), $emailContent);
+		$emailContent = str_replace('<gameStyle>', $this->getGameStyle()->getDescription(), $emailContent);
+		$emailContent = str_replace('<eventPlace>', $this->getEventPlace(), $emailContent);
+		$emailContent = str_replace('<eventDate>', $this->getEventDate('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<startTime>', $this->getStartTime('H:i'), $emailContent);
+		$emailContent = str_replace('<paidPlaces>', $this->getPaidPlaces(), $emailContent);
+		$emailContent = str_replace('<buyIn>', Util::formatFloat($this->getBuyIn(), true), $emailContent);
+		$emailContent = str_replace('<comments>', $this->getComments(), $emailContent);
+		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
+		$emailContent = str_replace('<members>', $this->getMembers(), $emailContent);
+
+		$resultList = '';
+		$nl         = chr(10);
+		
+		$eventMemberObjList = $this->getClassify();
+	  	foreach($eventMemberObjList as $key=>$eventMemberObj){
+		
+			if( $eventMemberObj->getEventPosition()==0 )
+				continue;
+			
+			$peopleObj = $eventMemberObj->getPeople();
+			
+			$resultList .= '  <tr class="boxcontent">'.$nl;
+			$resultList .= '    <td style="background: #1B4315">#'.$eventMemberObj->getEventPosition().'</td>'.$nl;
+			$resultList .= '    <td style="background: #1B4315">'.$peopleObj->getFullName().'</td>'.$nl;
+			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventMemberObj->getBuyIn(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventMemberObj->getPrizeValue(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #1B4315">'.$eventMemberObj->getRebuys().'</td>'.$nl;
+			$resultList .= '    <td style="background: #1B4315">'.$eventMemberObj->getAddons().'</td>'.$nl;
+			$resultList .= '  </tr>'.$nl;
+	  	}
+		
+		$emailContent = str_replace('<resultList>', $resultList, $emailContent);
+
+		$eventMemberObjList = $this->getMemberList();
+		foreach($eventMemberObjList as $eventMemberObj){
+			
+			$eventPosition   = $eventMemberObj->getEventPosition();
+			
+			if( $eventPosition==0 )
+				continue;
+			
+			$peopleObj = $eventMemberObj->getPeople();
+			
+			$emailContentTmp = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
+			
+			$congratsMessage = '';
+			
+			if( $eventPosition <= $this->getPaidPlaces() && $eventPosition > 0 )
+				$congratsMessage = 'Parabéns, você ficou em '.$eventPosition.'º lugar no evento<br/><br/>';
+				
+			$emailContentTmp = str_replace('<congratsMessage>', $congratsMessage, $emailContentTmp);
+			if( $eventPosition==1 )
+			Report::sendMail('Resultado de evento @ '.$this->getEventName(), $peopleObj->getEmailAddress(), $emailContentTmp);
+		}
 	}
 }

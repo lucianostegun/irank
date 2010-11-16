@@ -3,7 +3,7 @@ function handleSuccessEvent(content){
 	clearFormFieldErrors('eventForm');
 	showFormStatusSuccess();
 	
-	if( $('eventSendEmail').checked ){
+	if( $('eventSendEmail')!=null && $('eventSendEmail').checked ){
 		
 		showDiv('sentEmailDiv');
 		$('eventSendEmail').checked = false;
@@ -34,6 +34,8 @@ function handleSuccessEventResult(content){
 
 	clearFormFieldErrors('eventForm');
 	showFormStatusSuccess();
+
+	$('sendResultMail').checked = false;
 	
 	enableButton('mainSubmit');
 	hideIndicator('event');
@@ -135,17 +137,27 @@ function togglePresence(peopleId){
 
 			$('presenceImage'+peopleId).src = $('presenceImage'+peopleId).src.replace('nok', 'ok');
 			
-			$('eventResultPeopleName'+peopleId).style.color = '';
+			if( $('eventResultPeopleName'+peopleId)!=null )
+				$('eventResultPeopleName'+peopleId).style.color = '';
+			
+			showButton('cancelPresence');
+			hideButton('confirmPresence');
 		}else{
 			
 			$('presenceImage'+peopleId).src = $('presenceImage'+peopleId).src.replace('ok', 'nok');
 			
-			$('eventResultPeopleName'+peopleId).style.color = '#555555';
+			if( $('eventResultPeopleName'+peopleId)!=null ){
+				
+				$('eventResultPeopleName'+peopleId).style.color = '#555555';
 
-			$('eventEventPosition'+peopleId).value = '0';
-			$('eventPrizeValue'+peopleId).value    = '0,00';
-			$('eventRebuys'+peopleId).value        = '0';
-			$('eventAddons'+peopleId).value        = '0';
+				$('eventEventPosition'+peopleId).value = '0';
+				$('eventPrizeValue'+peopleId).value    = '0,00';
+				$('eventRebuys'+peopleId).value        = '0';
+				$('eventAddons'+peopleId).value        = '0';
+			}
+			
+			showButton('confirmPresence');
+			hideButton('cancelPresence');
 		}
 		
 		hideIndicator('event');

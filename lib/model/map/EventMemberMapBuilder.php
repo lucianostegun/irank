@@ -46,6 +46,8 @@ class EventMemberMapBuilder {
 
 		$tMap->addColumn('PRIZE_VALUE', 'PrizeValue', 'double', CreoleTypes::FLOAT, false, null);
 
+		$tMap->addColumn('EMAIL_SENT', 'EmailSent', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

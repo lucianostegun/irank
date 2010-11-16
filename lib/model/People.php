@@ -15,32 +15,6 @@ class People extends BasePeople
 		return $this->getName();
 	}
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isColumnModified( PeoplePeer::VISIBLE );
-//			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-//        	Log::quickLog('people', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-   
-        } catch ( Exception $e ) {
-        	
-//            Log::quickLogError('people', $this->getPrimaryKey(), $e);
-        }
-    }
-    
-	public function delete($con = null){
-
-		$this->setDeleted( true );
-		$this->setVisible( false );
-		$this->setActive( false );
-		$this->save();
-		
-//		Log::quickLogDelete('people', $this->getPrimaryKey());
-	}
-	
 	public function cleanRecord(){
 		
 	}
@@ -115,6 +89,29 @@ class People extends BasePeople
 	public function isPeopleType($tagName){
 		
 		return $this->getVirtualTable()->getTagName()==$tagName;
+	}
+	
+	public function sendMemberNotify($rankingObj){
+
+		if( $rankingObj->getUserSite()->getPeopleId()==$this->getId() )
+			return true;
+
+		$rankingOwner = $rankingObj->getUserSite()->getPeople()->getFullName();
+		
+		$emailContent = AuxiliarText::getContentByTagName('rankingMemberAdd');
+		
+		$emailContent = str_replace('<peopleName>', $this->getFirstName(), $emailContent);
+		$emailContent = str_replace('<rankingName>', $rankingObj->getRankingName(), $emailContent);
+		$emailContent = str_replace('<createdAt>', $rankingObj->getCreatedAt('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<startDate>', $rankingObj->getStartDate('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<rankingType>', $rankingObj->getRankingType()->getDescription(), $emailContent);
+		$emailContent = str_replace('<members>', $rankingObj->getMembers(), $emailContent);
+		$emailContent = str_replace('<events>', $rankingObj->getEvents(), $emailContent);
+		$emailContent = str_replace('<rankingOwner>', $rankingOwner, $emailContent);
+		
+		$emailAddress = $this->getEmailAddress();
+		
+		Report::sendMail('Inclusão em ranking', $emailAddress, $emailContent);
 	}
 	
 	public function getInfo(){

@@ -86,6 +86,11 @@ class Ranking extends BaseRanking
 			$rankingMemberObj = new RankingMember();
 			$rankingMemberObj->setRankingId( $this->getId() );
 			$rankingMemberObj->setPeopleId( $peopleId );
+		}
+
+		if( !$rankingMemberObj->getEnabled() ){
+			
+			$rankingMemberObj->getPeople()->sendMemberNotify($this);
 			
 			$this->setMembers( $this->getMembers()+1 );
 			$this->save();
@@ -155,7 +160,7 @@ class Ranking extends BaseRanking
 		}
 		
 		$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getId(), $peopleId);
-		$rankingMemberObj->setScore($totalScore);
+		$rankingMemberObj->setScore($totalScore+0);
 		$rankingMemberObj->save(); 
 	}
 	

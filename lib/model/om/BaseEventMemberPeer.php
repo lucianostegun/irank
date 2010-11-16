@@ -13,7 +13,7 @@ abstract class BaseEventMemberPeer {
 	const CLASS_DEFAULT = 'lib.model.EventMember';
 
 	
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 11;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -41,6 +41,9 @@ abstract class BaseEventMemberPeer {
 	const PRIZE_VALUE = 'event_member.PRIZE_VALUE';
 
 	
+	const EMAIL_SENT = 'event_member.EMAIL_SENT';
+
+	
 	const ENABLED = 'event_member.ENABLED';
 
 	
@@ -55,19 +58,19 @@ abstract class BaseEventMemberPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventId', 'PeopleId', 'Buyin', 'Rebuys', 'Addons', 'EventPosition', 'PrizeValue', 'Enabled', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventMemberPeer::EVENT_ID, EventMemberPeer::PEOPLE_ID, EventMemberPeer::BUYIN, EventMemberPeer::REBUYS, EventMemberPeer::ADDONS, EventMemberPeer::EVENT_POSITION, EventMemberPeer::PRIZE_VALUE, EventMemberPeer::ENABLED, EventMemberPeer::CREATED_AT, EventMemberPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_id', 'people_id', 'buyin', 'rebuys', 'addons', 'event_position', 'prize_value', 'enabled', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('EVENT_ID'=>'', 'PEOPLE_ID'=>'', 'BUYIN'=>'', 'REBUYS'=>'', 'ADDONS'=>'', 'EVENT_POSITION'=>'', 'PRIZE_VALUE'=>'', 'ENABLED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME=>array ('EventId', 'PeopleId', 'Buyin', 'Rebuys', 'Addons', 'EventPosition', 'PrizeValue', 'EmailSent', 'Enabled', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventMemberPeer::EVENT_ID, EventMemberPeer::PEOPLE_ID, EventMemberPeer::BUYIN, EventMemberPeer::REBUYS, EventMemberPeer::ADDONS, EventMemberPeer::EVENT_POSITION, EventMemberPeer::PRIZE_VALUE, EventMemberPeer::EMAIL_SENT, EventMemberPeer::ENABLED, EventMemberPeer::CREATED_AT, EventMemberPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('event_id', 'people_id', 'buyin', 'rebuys', 'addons', 'event_position', 'prize_value', 'email_sent', 'enabled', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('EVENT_ID'=>'', 'PEOPLE_ID'=>'', 'BUYIN'=>'', 'REBUYS'=>'', 'ADDONS'=>'', 'EVENT_POSITION'=>'', 'PRIZE_VALUE'=>'', 'EMAIL_SENT'=>'', 'ENABLED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventId'=>0, 'PeopleId'=>1, 'Buyin'=>2, 'Rebuys'=>3, 'Addons'=>4, 'EventPosition'=>5, 'PrizeValue'=>6, 'Enabled'=>7, 'CreatedAt'=>8, 'UpdatedAt'=>9, ),
-		BasePeer::TYPE_COLNAME=>array (EventMemberPeer::EVENT_ID=>0, EventMemberPeer::PEOPLE_ID=>1, EventMemberPeer::BUYIN=>2, EventMemberPeer::REBUYS=>3, EventMemberPeer::ADDONS=>4, EventMemberPeer::EVENT_POSITION=>5, EventMemberPeer::PRIZE_VALUE=>6, EventMemberPeer::ENABLED=>7, EventMemberPeer::CREATED_AT=>8, EventMemberPeer::UPDATED_AT=>9, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_id'=>0, 'people_id'=>1, 'buyin'=>2, 'rebuys'=>3, 'addons'=>4, 'event_position'=>5, 'prize_value'=>6, 'enabled'=>7, 'created_at'=>8, 'updated_at'=>9, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME=>array ('EventId'=>0, 'PeopleId'=>1, 'Buyin'=>2, 'Rebuys'=>3, 'Addons'=>4, 'EventPosition'=>5, 'PrizeValue'=>6, 'EmailSent'=>7, 'Enabled'=>8, 'CreatedAt'=>9, 'UpdatedAt'=>10, ),
+		BasePeer::TYPE_COLNAME=>array (EventMemberPeer::EVENT_ID=>0, EventMemberPeer::PEOPLE_ID=>1, EventMemberPeer::BUYIN=>2, EventMemberPeer::REBUYS=>3, EventMemberPeer::ADDONS=>4, EventMemberPeer::EVENT_POSITION=>5, EventMemberPeer::PRIZE_VALUE=>6, EventMemberPeer::EMAIL_SENT=>7, EventMemberPeer::ENABLED=>8, EventMemberPeer::CREATED_AT=>9, EventMemberPeer::UPDATED_AT=>10, ),
+		BasePeer::TYPE_FIELDNAME=>array ('event_id'=>0, 'people_id'=>1, 'buyin'=>2, 'rebuys'=>3, 'addons'=>4, 'event_position'=>5, 'prize_value'=>6, 'email_sent'=>7, 'enabled'=>8, 'created_at'=>9, 'updated_at'=>10, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
@@ -134,6 +137,8 @@ abstract class BaseEventMemberPeer {
 		$criteria->addSelectColumn(EventMemberPeer::EVENT_POSITION);
 
 		$criteria->addSelectColumn(EventMemberPeer::PRIZE_VALUE);
+
+		$criteria->addSelectColumn(EventMemberPeer::EMAIL_SENT);
 
 		$criteria->addSelectColumn(EventMemberPeer::ENABLED);
 

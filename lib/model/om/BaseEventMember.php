@@ -37,6 +37,10 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 
 
 	
+	protected $email_sent;
+
+
+	
 	protected $enabled;
 
 
@@ -106,6 +110,13 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 	{
 
 		return $this->prize_value;
+	}
+
+	
+	public function getEmailSent()
+	{
+
+		return $this->email_sent;
 	}
 
 	
@@ -268,6 +279,16 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setEmailSent($v)
+	{
+
+		if ($this->email_sent !== $v) {
+			$this->email_sent = $v;
+			$this->modifiedColumns[] = EventMemberPeer::EMAIL_SENT;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -330,17 +351,19 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 
 			$this->prize_value = $rs->getFloat($startcol + 6);
 
-			$this->enabled = $rs->getBoolean($startcol + 7);
+			$this->email_sent = $rs->getBoolean($startcol + 7);
 
-			$this->created_at = $rs->getTimestamp($startcol + 8, null);
+			$this->enabled = $rs->getBoolean($startcol + 8);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 9, null);
+			$this->created_at = $rs->getTimestamp($startcol + 9, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 10, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 10; 
+						return $startcol + 11; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventMember object", $e);
 		}
@@ -528,12 +551,15 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 				return $this->getPrizeValue();
 				break;
 			case 7:
-				return $this->getEnabled();
+				return $this->getEmailSent();
 				break;
 			case 8:
-				return $this->getCreatedAt();
+				return $this->getEnabled();
 				break;
 			case 9:
+				return $this->getCreatedAt();
+				break;
+			case 10:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -553,9 +579,10 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 			$keys[4]=>$this->getAddons(),
 			$keys[5]=>$this->getEventPosition(),
 			$keys[6]=>$this->getPrizeValue(),
-			$keys[7]=>$this->getEnabled(),
-			$keys[8]=>$this->getCreatedAt(),
-			$keys[9]=>$this->getUpdatedAt(),
+			$keys[7]=>$this->getEmailSent(),
+			$keys[8]=>$this->getEnabled(),
+			$keys[9]=>$this->getCreatedAt(),
+			$keys[10]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -593,12 +620,15 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 				$this->setPrizeValue($value);
 				break;
 			case 7:
-				$this->setEnabled($value);
+				$this->setEmailSent($value);
 				break;
 			case 8:
-				$this->setCreatedAt($value);
+				$this->setEnabled($value);
 				break;
 			case 9:
+				$this->setCreatedAt($value);
+				break;
+			case 10:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -615,9 +645,10 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setAddons($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setEventPosition($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setPrizeValue($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setEnabled($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setCreatedAt($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setUpdatedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEmailSent($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setEnabled($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
 	}
 
 	
@@ -632,6 +663,7 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventMemberPeer::ADDONS)) $criteria->add(EventMemberPeer::ADDONS, $this->addons);
 		if ($this->isColumnModified(EventMemberPeer::EVENT_POSITION)) $criteria->add(EventMemberPeer::EVENT_POSITION, $this->event_position);
 		if ($this->isColumnModified(EventMemberPeer::PRIZE_VALUE)) $criteria->add(EventMemberPeer::PRIZE_VALUE, $this->prize_value);
+		if ($this->isColumnModified(EventMemberPeer::EMAIL_SENT)) $criteria->add(EventMemberPeer::EMAIL_SENT, $this->email_sent);
 		if ($this->isColumnModified(EventMemberPeer::ENABLED)) $criteria->add(EventMemberPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventMemberPeer::CREATED_AT)) $criteria->add(EventMemberPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EventMemberPeer::UPDATED_AT)) $criteria->add(EventMemberPeer::UPDATED_AT, $this->updated_at);
@@ -685,6 +717,8 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 		$copyObj->setEventPosition($this->event_position);
 
 		$copyObj->setPrizeValue($this->prize_value);
+
+		$copyObj->setEmailSent($this->email_sent);
 
 		$copyObj->setEnabled($this->enabled);
 
