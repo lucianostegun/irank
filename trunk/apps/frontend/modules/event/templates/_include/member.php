@@ -24,7 +24,7 @@
     <td align="center">
     	<?php
     		$image = image_tag('icon/'.($eventMemberObj->getEnabled()?'ok':'nok'), array('id'=>'presenceImage'.$peopleId));
-    		if( $myEvent && $peopleId!=$peopleIdMe )
+    		if( $myEvent )
     			echo link_to($image, '#togglePresence('.$peopleId.')', array('title'=>'Confirmar/Cancelar presença'));
     		else
     			echo $image;

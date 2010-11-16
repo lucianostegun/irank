@@ -30,12 +30,15 @@ class signActions extends sfActions
 	$userSiteId   = MyTools::getAttribute('userSiteId');
 	$emailAddress = $request->getParameter('emailAddress');
 	
-	if( $userSiteId )
-  		$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
-  	else{
+	if( $userSiteId ){
+		
+  		$userSiteObj  = UserSitePeer::retrieveByPK($userSiteId);
+  		$welcomeEmail = false;
+	}else{
   		
-  		$userSiteObj = new UserSite();
-  		$peopleObj   = PeoplePeer::retrieveByEmailAddress($emailAddress);
+  		$userSiteObj  = new UserSite();
+  		$peopleObj    = PeoplePeer::retrieveByEmailAddress($emailAddress);
+  		$welcomeEmail = true;
   		
   		if( is_object($peopleObj) && $peopleObj->isPeopleType('rankingMember') )
   			$userSiteObj->setPeopleId($peopleObj->getId());
@@ -43,6 +46,9 @@ class signActions extends sfActions
 
   	$userSiteObj->quickSave($request);
   	$userSiteObj->login();
+  	
+  	if( $welcomeEmail )
+  		$userSiteObj->sendWelcomeMail($request);
   	exit;
   }
 }

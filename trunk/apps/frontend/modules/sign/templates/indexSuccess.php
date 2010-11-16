@@ -41,7 +41,6 @@
 					<div class="error" id="signPasswordConfirmError" onclick="showFormErrorDetails('sign', 'passwordConfirm')"></div>
 				</div>
 			</td>
-			<td valign="top" width="200" class="defaultFormErrorDetails"><div id="formErrorDetailsSign"><h1>Detalhes</h1></div></td>
 		</tr>
 	</table>
 	<div class="buttonBarForm">

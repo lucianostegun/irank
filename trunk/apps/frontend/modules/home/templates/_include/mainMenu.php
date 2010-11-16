@@ -31,38 +31,13 @@
 	        <td align="left" valign="top" class="poker" style="padding:11px 0px 20px 12px;">
 		        <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		          <tr>
-		            <td align="left" valign="top"><a href="#">Jackpot City</a></td>
+		            <td align="left" valign="top"><?php echo link_to('PokerStars', 'http://www.pokerstars.net', array('target'=>'_blank')) ?></td>
 		          </tr>
 		          <tr>
-		            <td align="left" valign="top"><a href="#">Pure Vegas Casino</a></td>
-		          </tr>
-		
-		          <tr>
-		            <td align="left" valign="top"><a href="#">Rushmore Casino</a></td>
+		            <td align="left" valign="top"><?php echo link_to('Party Poker', 'http://www.partypoker.net', array('target'=>'_blank')) ?></td>
 		          </tr>
 		          <tr>
-		            <td align="left" valign="top"><a href="#">Chips Talk</a></td>
-		          </tr>
-		          <tr>
-		            <td align="left" valign="top"><a href="#">Poker Rooms</a></td>
-		
-		          </tr>
-		          <tr>
-		            <td align="left" valign="top"><a href="#">Poker Videos</a></td>
-		          </tr>
-		          <tr>
-		            <td align="left" valign="top"><a href="#">Casino Club</a></td>
-		          </tr>
-		          <tr>
-		
-		            <td align="left" valign="top"><a href="#">Strategies from Stars</a></td>
-		          </tr>
-		          <tr>
-		            <td align="left" valign="top"><a href="#">Grand Play Casino</a></td>
-		          </tr>
-		          <tr>
-		            <td align="left" valign="top"><a href="#">WannaBet Casino</a></td>
-		
+		            <td align="left" valign="top"><?php echo link_to('Fulltilt Poker', 'http://www.fulltiltpoker.net', array('target'=>'_blank')) ?></td>
 		          </tr>
 		        </table>
 	        </td>

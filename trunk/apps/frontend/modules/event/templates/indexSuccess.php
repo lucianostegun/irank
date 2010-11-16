@@ -13,7 +13,9 @@
 	        <td>Convidados</td>
 	      </tr>
 	      <?php
-	      	foreach(Event::getList() as $eventObj):
+	      	$eventObjList = Event::getList();
+	      	
+	      	foreach($eventObjList as $eventObj):
 	      		$myEvent = $eventObj->isMyEvent();
 	      ?>
 	      <tr class="boxcontent">
@@ -23,7 +25,15 @@
 	        <td><?php echo $eventObj->getEventPlace() ?></td>
 	        <td align="center"><?php echo sprintf('%02d', $eventObj->getInvites()).' ('.sprintf('%02d', $eventObj->getMembers()).')' ?></td>
 	      </tr>
-	      <?php endforeach; ?>
+	      <?php
+	      	endforeach;
+	      	
+	      	if( count($eventObjList)==0 ):
+	      ?>
+		  <tr class="boxcontent">
+		    <td colspan="5">Não existem eventos disponíveis para seus rankings</td>
+		  </tr>
+	      <?php endif; ?>
 	    </table>
 	    * Eventos criados para seus rankings
 	</td>

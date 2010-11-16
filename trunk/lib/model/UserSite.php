@@ -27,7 +27,7 @@ class UserSite extends BaseUserSite
 		}
 	
 	  	$peopleObj->setEmailAddress( $emailAddress );
-	  	$this->setPassword( md5($password) );
+	  	$this->setPassword( (strlen($password)==32?$password:md5($password)) );
 	  	$this->setActive(true);
 	  	$this->save();
 	  	$peopleObj->save();
@@ -77,5 +77,18 @@ class UserSite extends BaseUserSite
 		$criteria->addJoin( RankingPeer::ID, RankingMemberPeer::RANKING_ID, Criteria::INNER_JOIN );
 		$criteria->addAscendingOrderByColumn( RankingPeer::RANKING_NAME );
 		return RankingPeer::doSelect($criteria);
+	}
+	
+	public function sendWelcomeMail($request){
+
+		$emailContent  = AuxiliarText::getContentByTagName('signWelcome');
+		
+		$emailContent = str_replace('<password>', $request->getParameter('password'), $emailContent);
+		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
+		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent); 		
+		
+		$emailAddress = $this->getPeople()->getEmailAddress();
+		
+		Report::sendMail('Seja bem vindo', $emailAddress, $emailContent);
 	}
 }

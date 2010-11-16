@@ -12,7 +12,7 @@ class loginActions extends sfActions
 	$username  = $request->getParameter('username');
 	$password  = $request->getParameter('password');
 	$keepLogin = $request->getParameter('keepLogin');
-	
+
 	$statusMessage = false;
 	
 	if( $username && $password ){

@@ -39,7 +39,6 @@
 				</div>
 				<div id="passwordAreaDiv"></div>
 			</td>
-			<td valign="top" width="200" class="defaultFormErrorDetails"><div id="formErrorDetailsSign"><h1>Detalhes</h1></div></td>
 		</tr>
 	</table>
 	<div class="buttonBarForm">

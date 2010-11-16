@@ -10,10 +10,7 @@
   <?php
   	$buyIn = $eventObj->getBuyIn();
   	
-  	$orderByList = array(EventMemberPeer::ENABLED=>'desc',
-  						 EventMemberPeer::EVENT_POSITION=>'asc');
-  	
-  	$eventMemberObjList = $eventObj->getMemberList($orderByList);
+  	$eventMemberObjList = $eventObj->getClassify();
   	$recordCount        = count($eventMemberObjList);
   	foreach($eventMemberObjList as $key=>$eventMemberObj):
   	
@@ -38,4 +35,12 @@
     <td colspan="6">Este ranking não possui convidados para compor os resultados</td>
   </tr>
   <?php endif; ?>
+  <tr class="boxcontent">
+    <td colspan="6" class="defaultForm">
+    	<div class="row" style="margin-top: 3px">
+    		<div class="fieldCheckbox"><?php echo checkbox_tag('sendResultMail', true, false) ?></div>
+    		<div class="label"><label for="sendResultMail">Enviar resultado por e-mail</label></div>
+    	</div>
+    </td>
+  </tr>
 </table>

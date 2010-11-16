@@ -81,7 +81,6 @@ class eventActions extends sfActions
 	$eventObj->setPaidPlaces( ($paidPlaces?$paidPlaces:null) );
 	$eventObj->setBuyIn( Util::formatFloat($buyIn) );
 	$eventObj->setComments( ($comments?$comments:null) );
-	$eventObj->setSentEmail( ($sendEmail || $eventObj->getSentEmail()?true:false) );
 	$eventObj->setVisible(true);
 	$eventObj->setEnabled(true);
 	$eventObj->save();
@@ -99,7 +98,9 @@ class eventActions extends sfActions
 	if( $confirmPresence )
 		$eventObj->addMember( $rankingObj->getUserSite()->getPeopleId(), true );
 
-	
+	if( $sendEmail )
+		$eventObj->notify();
+
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	return $this->renderText(get_partial('event/include/member', array('eventObj'=>$eventObj)));
@@ -162,7 +163,8 @@ class eventActions extends sfActions
   
   public function executeSaveResult($request){
 
-	$eventId = $request->getParameter('eventId');
+	$eventId        = $request->getParameter('eventId');
+	$sendResultMail = $request->getParameter('sendResultMail');
 
 	$eventObj   = EventPeer::retrieveByPK($eventId);
 	$rankingObj = $eventObj->getRanking();
@@ -198,6 +200,9 @@ class eventActions extends sfActions
 			$rankingObj->updateScore($peopleId);
 		}
 	}
+	
+	if( $sendResultMail )
+		$eventObj->notifyResult();
 	
 	exit;
   }
