@@ -4,13 +4,12 @@ fields:
     required:
       msg:       Este campo é obrigatório e não foi preenchido
        
-  gameStyleId:
-    required:
-      msg:       Este campo é obrigatório e não foi preenchido
-       
   eventName:
     required:
       msg:       Este campo é obrigatório e não foi preenchido
+    sfCallbackValidator:
+      callback:      [EventPeer, uniqueEventName]
+      invalid_error: Já existe um evento cadastrado com este nome para esta mesma data
        
   eventPlace:
     required:
@@ -38,11 +37,13 @@ fields:
       min_error: Informe um valor maior que 0
       nan_error: O valor informado não é um número válido
        
-  buyIn:
+  buyin:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
     sfNumberValidator:
-      min_error: 0
+      min:       0
       min_error: Informe um valor maior ou igual a 0
-      nan_error: O valor informado não é um número válido
+      nan_error: Informe um número válido maior ou igual a 0
        
   comments:
     sfStringValidator:

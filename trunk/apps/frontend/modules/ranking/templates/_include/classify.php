@@ -2,10 +2,12 @@
   <tr class="rank_heading">
     <td>#</td>
     <td>Nome</td>
-    <td>Sobrenome</td>
     <td>E-mail</td>
     <td>Eventos</td>
-    <td>Pontuação</td>
+    <td>Pontos</td>
+    <td>B+R+A</td>
+    <td>Ganhos</td>
+    <td>Balanço</td>
   </tr>
   <?php
   	$rankingType          = $rankingObj->getRankingType(true);
@@ -14,15 +16,16 @@
   	foreach($rankingMemberObjList as $rankingMemberObj):
   		
   		$peopleObj = $rankingMemberObj->getPeople();
-  		$score     = $rankingMemberObj->getScore();
   ?>
   <tr class="boxcontent">
     <td>#<?php echo (($position++)+1) ?></td>
-    <td><?php echo $peopleObj->getFirstName() ?></td>
-    <td><?php echo $peopleObj->getLastName() ?></td>
+    <td><?php echo $peopleObj->getFullName() ?></td>
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
-    <td><?php echo $rankingMemberObj->getEvents() ?></td>
-    <td align="right"><?php echo ($rankingType=='value'?Util::formatFloat($score, true):$score) ?></td>
+    <td align="right"><?php echo $rankingMemberObj->getEvents() ?></td>
+    <td align="right"><?php echo $rankingMemberObj->getScore() ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingMemberObj->getTotalPaid(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingMemberObj->getTotalPrize(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingMemberObj->getBalance(), true) ?></td>
   </tr>
   <?php
   	endforeach;
@@ -34,3 +37,5 @@
   </tr>
   <?php endif; ?>
 </table>
+<br/>
+<b>B+R+A</b> = Buy-in + Rebuys + Add-ons

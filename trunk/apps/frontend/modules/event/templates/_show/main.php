@@ -6,10 +6,6 @@
 				<div class="textFlex"><?php echo $eventObj->getRanking()->getRankingName() ?></div>
 			</div>
 			<div class="row">
-				<div class="label">Estilo</div>
-				<div class="textFlex"><?php echo $eventObj->getVirtualTable()->getDescription() ?></div>
-			</div>
-			<div class="row">
 				<div class="label">Título</div>
 				<div class="textFlex"><?php echo $eventObj->getEventName() ?></div>
 			</div>
@@ -31,7 +27,7 @@
 			</div>
 			<div class="row">
 				<div class="label">Buy-in</div>
-				<div class="textFlex">R$ <?php echo Util::formatFloat($eventObj->getBuyIn(), true) ?></div>
+				<div class="textFlex">R$ <?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></div>
 			</div>
 			<div class="rowTextArea">
 				<div class="label">Observações</div>

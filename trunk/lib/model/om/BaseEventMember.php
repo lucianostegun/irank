@@ -21,11 +21,11 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 
 
 	
-	protected $rebuys;
+	protected $rebuy;
 
 
 	
-	protected $addons;
+	protected $addon;
 
 
 	
@@ -33,11 +33,7 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 
 
 	
-	protected $prize_value;
-
-
-	
-	protected $email_sent;
+	protected $prize;
 
 
 	
@@ -85,17 +81,17 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getRebuys()
+	public function getRebuy()
 	{
 
-		return $this->rebuys;
+		return $this->rebuy;
 	}
 
 	
-	public function getAddons()
+	public function getAddon()
 	{
 
-		return $this->addons;
+		return $this->addon;
 	}
 
 	
@@ -106,17 +102,10 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getPrizeValue()
+	public function getPrize()
 	{
 
-		return $this->prize_value;
-	}
-
-	
-	public function getEmailSent()
-	{
-
-		return $this->email_sent;
+		return $this->prize;
 	}
 
 	
@@ -221,34 +210,22 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setRebuys($v)
+	public function setRebuy($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->rebuys !== $v) {
-			$this->rebuys = $v;
-			$this->modifiedColumns[] = EventMemberPeer::REBUYS;
+		if ($this->rebuy !== $v) {
+			$this->rebuy = $v;
+			$this->modifiedColumns[] = EventMemberPeer::REBUY;
 		}
 
 	} 
 	
-	public function setAddons($v)
+	public function setAddon($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->addons !== $v) {
-			$this->addons = $v;
-			$this->modifiedColumns[] = EventMemberPeer::ADDONS;
+		if ($this->addon !== $v) {
+			$this->addon = $v;
+			$this->modifiedColumns[] = EventMemberPeer::ADDON;
 		}
 
 	} 
@@ -269,22 +246,12 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setPrizeValue($v)
+	public function setPrize($v)
 	{
 
-		if ($this->prize_value !== $v) {
-			$this->prize_value = $v;
-			$this->modifiedColumns[] = EventMemberPeer::PRIZE_VALUE;
-		}
-
-	} 
-	
-	public function setEmailSent($v)
-	{
-
-		if ($this->email_sent !== $v) {
-			$this->email_sent = $v;
-			$this->modifiedColumns[] = EventMemberPeer::EMAIL_SENT;
+		if ($this->prize !== $v) {
+			$this->prize = $v;
+			$this->modifiedColumns[] = EventMemberPeer::PRIZE;
 		}
 
 	} 
@@ -343,27 +310,25 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 
 			$this->buyin = $rs->getFloat($startcol + 2);
 
-			$this->rebuys = $rs->getInt($startcol + 3);
+			$this->rebuy = $rs->getFloat($startcol + 3);
 
-			$this->addons = $rs->getInt($startcol + 4);
+			$this->addon = $rs->getFloat($startcol + 4);
 
 			$this->event_position = $rs->getInt($startcol + 5);
 
-			$this->prize_value = $rs->getFloat($startcol + 6);
+			$this->prize = $rs->getFloat($startcol + 6);
 
-			$this->email_sent = $rs->getBoolean($startcol + 7);
+			$this->enabled = $rs->getBoolean($startcol + 7);
 
-			$this->enabled = $rs->getBoolean($startcol + 8);
+			$this->created_at = $rs->getTimestamp($startcol + 8, null);
 
-			$this->created_at = $rs->getTimestamp($startcol + 9, null);
-
-			$this->updated_at = $rs->getTimestamp($startcol + 10, null);
+			$this->updated_at = $rs->getTimestamp($startcol + 9, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 11; 
+						return $startcol + 10; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventMember object", $e);
 		}
@@ -539,27 +504,24 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 				return $this->getBuyin();
 				break;
 			case 3:
-				return $this->getRebuys();
+				return $this->getRebuy();
 				break;
 			case 4:
-				return $this->getAddons();
+				return $this->getAddon();
 				break;
 			case 5:
 				return $this->getEventPosition();
 				break;
 			case 6:
-				return $this->getPrizeValue();
+				return $this->getPrize();
 				break;
 			case 7:
-				return $this->getEmailSent();
-				break;
-			case 8:
 				return $this->getEnabled();
 				break;
-			case 9:
+			case 8:
 				return $this->getCreatedAt();
 				break;
-			case 10:
+			case 9:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -575,14 +537,13 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 			$keys[0]=>$this->getEventId(),
 			$keys[1]=>$this->getPeopleId(),
 			$keys[2]=>$this->getBuyin(),
-			$keys[3]=>$this->getRebuys(),
-			$keys[4]=>$this->getAddons(),
+			$keys[3]=>$this->getRebuy(),
+			$keys[4]=>$this->getAddon(),
 			$keys[5]=>$this->getEventPosition(),
-			$keys[6]=>$this->getPrizeValue(),
-			$keys[7]=>$this->getEmailSent(),
-			$keys[8]=>$this->getEnabled(),
-			$keys[9]=>$this->getCreatedAt(),
-			$keys[10]=>$this->getUpdatedAt(),
+			$keys[6]=>$this->getPrize(),
+			$keys[7]=>$this->getEnabled(),
+			$keys[8]=>$this->getCreatedAt(),
+			$keys[9]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -608,27 +569,24 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 				$this->setBuyin($value);
 				break;
 			case 3:
-				$this->setRebuys($value);
+				$this->setRebuy($value);
 				break;
 			case 4:
-				$this->setAddons($value);
+				$this->setAddon($value);
 				break;
 			case 5:
 				$this->setEventPosition($value);
 				break;
 			case 6:
-				$this->setPrizeValue($value);
+				$this->setPrize($value);
 				break;
 			case 7:
-				$this->setEmailSent($value);
-				break;
-			case 8:
 				$this->setEnabled($value);
 				break;
-			case 9:
+			case 8:
 				$this->setCreatedAt($value);
 				break;
-			case 10:
+			case 9:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -641,14 +599,13 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setEventId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setBuyin($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRebuys($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setAddons($arr[$keys[4]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRebuy($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setAddon($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setEventPosition($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setPrizeValue($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setEmailSent($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setEnabled($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[6], $arr)) $this->setPrize($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEnabled($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setCreatedAt($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setUpdatedAt($arr[$keys[9]]);
 	}
 
 	
@@ -659,11 +616,10 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventMemberPeer::EVENT_ID)) $criteria->add(EventMemberPeer::EVENT_ID, $this->event_id);
 		if ($this->isColumnModified(EventMemberPeer::PEOPLE_ID)) $criteria->add(EventMemberPeer::PEOPLE_ID, $this->people_id);
 		if ($this->isColumnModified(EventMemberPeer::BUYIN)) $criteria->add(EventMemberPeer::BUYIN, $this->buyin);
-		if ($this->isColumnModified(EventMemberPeer::REBUYS)) $criteria->add(EventMemberPeer::REBUYS, $this->rebuys);
-		if ($this->isColumnModified(EventMemberPeer::ADDONS)) $criteria->add(EventMemberPeer::ADDONS, $this->addons);
+		if ($this->isColumnModified(EventMemberPeer::REBUY)) $criteria->add(EventMemberPeer::REBUY, $this->rebuy);
+		if ($this->isColumnModified(EventMemberPeer::ADDON)) $criteria->add(EventMemberPeer::ADDON, $this->addon);
 		if ($this->isColumnModified(EventMemberPeer::EVENT_POSITION)) $criteria->add(EventMemberPeer::EVENT_POSITION, $this->event_position);
-		if ($this->isColumnModified(EventMemberPeer::PRIZE_VALUE)) $criteria->add(EventMemberPeer::PRIZE_VALUE, $this->prize_value);
-		if ($this->isColumnModified(EventMemberPeer::EMAIL_SENT)) $criteria->add(EventMemberPeer::EMAIL_SENT, $this->email_sent);
+		if ($this->isColumnModified(EventMemberPeer::PRIZE)) $criteria->add(EventMemberPeer::PRIZE, $this->prize);
 		if ($this->isColumnModified(EventMemberPeer::ENABLED)) $criteria->add(EventMemberPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventMemberPeer::CREATED_AT)) $criteria->add(EventMemberPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EventMemberPeer::UPDATED_AT)) $criteria->add(EventMemberPeer::UPDATED_AT, $this->updated_at);
@@ -710,15 +666,13 @@ abstract class BaseEventMember extends BaseObject  implements Persistent {
 
 		$copyObj->setBuyin($this->buyin);
 
-		$copyObj->setRebuys($this->rebuys);
+		$copyObj->setRebuy($this->rebuy);
 
-		$copyObj->setAddons($this->addons);
+		$copyObj->setAddon($this->addon);
 
 		$copyObj->setEventPosition($this->event_position);
 
-		$copyObj->setPrizeValue($this->prize_value);
-
-		$copyObj->setEmailSent($this->email_sent);
+		$copyObj->setPrize($this->prize);
 
 		$copyObj->setEnabled($this->enabled);
 

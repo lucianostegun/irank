@@ -19,6 +19,9 @@ class loginActions extends sfActions
 		
 		$criteria = new Criteria();
 		$criteria->add( UserSitePeer::ACTIVE, true );
+		$criteria->add( UserSitePeer::ENABLED, true );
+		$criteria->add( UserSitePeer::VISIBLE, true );
+		$criteria->add( UserSitePeer::DELETED, false );
 		$criterion = $criteria->getNewCriterion( UserSitePeer::USERNAME, $username );
 		$criterion->addOr( $criteria->getNewCriterion( PeoplePeer::EMAIL_ADDRESS, $username ) );
 		$criteria->add($criterion);

@@ -1,5 +1,11 @@
-<?php echo getPageHeader('Cadastro de ranking') ?>
 <?php
+	echo getPageHeader('Cadastro de ranking');
+	if( !$rankingObj->getEnabled() ):
+?>
+<script>setRecordSaved(false);</script>
+<?php
+	endif;
+	
 	echo form_remote_tag(array(
 		'url'=>'ranking/save',
 		'success'=>'handleSuccessRanking( request.responseText )',

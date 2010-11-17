@@ -1,3 +1,10 @@
+DROP TABLE IF EXISTS auxiliar_text;
+DROP SEQUENCE IF EXISTS auxiliar_text_seq;
+DROP TABLE IF EXISTS file;
+DROP SEQUENCE IF EXISTS file_seq;
+
+DROP TABLE IF EXISTS config;
+
 CREATE TABLE config (
 	config_name VARCHAR(50) NOT NULL PRIMARY KEY,
     description VARCHAR(150),

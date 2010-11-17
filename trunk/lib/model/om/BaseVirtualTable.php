@@ -54,16 +54,16 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	protected $lastPeopleCriteria = null;
 
 	
-	protected $collRankingList;
+	protected $collRankingListRelatedByRankingTypeId;
 
 	
-	protected $lastRankingCriteria = null;
+	protected $lastRankingRelatedByRankingTypeIdCriteria = null;
 
 	
-	protected $collEventList;
+	protected $collRankingListRelatedByGameStyleId;
 
 	
-	protected $lastEventCriteria = null;
+	protected $lastRankingRelatedByGameStyleIdCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -424,16 +424,16 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collRankingList !== null) {
-				foreach($this->collRankingList as $referrerFK) {
+			if ($this->collRankingListRelatedByRankingTypeId !== null) {
+				foreach($this->collRankingListRelatedByRankingTypeId as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
 				}
 			}
 
-			if ($this->collEventList !== null) {
-				foreach($this->collEventList as $referrerFK) {
+			if ($this->collRankingListRelatedByGameStyleId !== null) {
+				foreach($this->collRankingListRelatedByGameStyleId as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -489,16 +489,16 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collRankingList !== null) {
-					foreach($this->collRankingList as $referrerFK) {
+				if ($this->collRankingListRelatedByRankingTypeId !== null) {
+					foreach($this->collRankingListRelatedByRankingTypeId as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
 					}
 				}
 
-				if ($this->collEventList !== null) {
-					foreach($this->collEventList as $referrerFK) {
+				if ($this->collRankingListRelatedByGameStyleId !== null) {
+					foreach($this->collRankingListRelatedByGameStyleId as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -708,12 +708,12 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				$copyObj->addPeople($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getRankingList() as $relObj) {
-				$copyObj->addRanking($relObj->copy($deepCopy));
+			foreach($this->getRankingListRelatedByRankingTypeId() as $relObj) {
+				$copyObj->addRankingRelatedByRankingTypeId($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getEventList() as $relObj) {
-				$copyObj->addEvent($relObj->copy($deepCopy));
+			foreach($this->getRankingListRelatedByGameStyleId() as $relObj) {
+				$copyObj->addRankingRelatedByGameStyleId($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -812,15 +812,15 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initRankingList()
+	public function initRankingListRelatedByRankingTypeId()
 	{
-		if ($this->collRankingList === null) {
-			$this->collRankingList = array();
+		if ($this->collRankingListRelatedByRankingTypeId === null) {
+			$this->collRankingListRelatedByRankingTypeId = array();
 		}
 	}
 
 	
-	public function getRankingList($criteria = null, $con = null)
+	public function getRankingListRelatedByRankingTypeId($criteria = null, $con = null)
 	{
 				include_once 'lib/model/om/BaseRankingPeer.php';
 		if ($criteria === null) {
@@ -831,15 +831,15 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collRankingList === null) {
+		if ($this->collRankingListRelatedByRankingTypeId === null) {
 			if ($this->isNew()) {
-			   $this->collRankingList = array();
+			   $this->collRankingListRelatedByRankingTypeId = array();
 			} else {
 
 				$criteria->add(RankingPeer::RANKING_TYPE_ID, $this->getId());
 
 				RankingPeer::addSelectColumns($criteria);
-				$this->collRankingList = RankingPeer::doSelect($criteria, $con);
+				$this->collRankingListRelatedByRankingTypeId = RankingPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
@@ -848,17 +848,17 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				$criteria->add(RankingPeer::RANKING_TYPE_ID, $this->getId());
 
 				RankingPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRankingCriteria) || !$this->lastRankingCriteria->equals($criteria)) {
-					$this->collRankingList = RankingPeer::doSelect($criteria, $con);
+				if (!isset($this->lastRankingRelatedByRankingTypeIdCriteria) || !$this->lastRankingRelatedByRankingTypeIdCriteria->equals($criteria)) {
+					$this->collRankingListRelatedByRankingTypeId = RankingPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastRankingCriteria = $criteria;
-		return $this->collRankingList;
+		$this->lastRankingRelatedByRankingTypeIdCriteria = $criteria;
+		return $this->collRankingListRelatedByRankingTypeId;
 	}
 
 	
-	public function countRankingList($criteria = null, $distinct = false, $con = null)
+	public function countRankingListRelatedByRankingTypeId($criteria = null, $distinct = false, $con = null)
 	{
 				include_once 'lib/model/om/BaseRankingPeer.php';
 		if ($criteria === null) {
@@ -875,15 +875,15 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	}
 
 	
-	public function addRanking(Ranking $l)
+	public function addRankingRelatedByRankingTypeId(Ranking $l)
 	{
-		$this->collRankingList[] = $l;
-		$l->setVirtualTable($this);
+		$this->collRankingListRelatedByRankingTypeId[] = $l;
+		$l->setVirtualTableRelatedByRankingTypeId($this);
 	}
 
 
 	
-	public function getRankingListJoinUserSite($criteria = null, $con = null)
+	public function getRankingListRelatedByRankingTypeIdJoinUserSite($criteria = null, $con = null)
 	{
 				include_once 'lib/model/om/BaseRankingPeer.php';
 		if ($criteria === null) {
@@ -894,40 +894,40 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collRankingList === null) {
+		if ($this->collRankingListRelatedByRankingTypeId === null) {
 			if ($this->isNew()) {
-				$this->collRankingList = array();
+				$this->collRankingListRelatedByRankingTypeId = array();
 			} else {
 
 				$criteria->add(RankingPeer::RANKING_TYPE_ID, $this->getId());
 
-				$this->collRankingList = RankingPeer::doSelectJoinUserSite($criteria, $con);
+				$this->collRankingListRelatedByRankingTypeId = RankingPeer::doSelectJoinUserSite($criteria, $con);
 			}
 		} else {
 									
 			$criteria->add(RankingPeer::RANKING_TYPE_ID, $this->getId());
 
-			if (!isset($this->lastRankingCriteria) || !$this->lastRankingCriteria->equals($criteria)) {
-				$this->collRankingList = RankingPeer::doSelectJoinUserSite($criteria, $con);
+			if (!isset($this->lastRankingRelatedByRankingTypeIdCriteria) || !$this->lastRankingRelatedByRankingTypeIdCriteria->equals($criteria)) {
+				$this->collRankingListRelatedByRankingTypeId = RankingPeer::doSelectJoinUserSite($criteria, $con);
 			}
 		}
-		$this->lastRankingCriteria = $criteria;
+		$this->lastRankingRelatedByRankingTypeIdCriteria = $criteria;
 
-		return $this->collRankingList;
+		return $this->collRankingListRelatedByRankingTypeId;
 	}
 
 	
-	public function initEventList()
+	public function initRankingListRelatedByGameStyleId()
 	{
-		if ($this->collEventList === null) {
-			$this->collEventList = array();
+		if ($this->collRankingListRelatedByGameStyleId === null) {
+			$this->collRankingListRelatedByGameStyleId = array();
 		}
 	}
 
 	
-	public function getEventList($criteria = null, $con = null)
+	public function getRankingListRelatedByGameStyleId($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventPeer.php';
+				include_once 'lib/model/om/BaseRankingPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -936,36 +936,36 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collEventList === null) {
+		if ($this->collRankingListRelatedByGameStyleId === null) {
 			if ($this->isNew()) {
-			   $this->collEventList = array();
+			   $this->collRankingListRelatedByGameStyleId = array();
 			} else {
 
-				$criteria->add(EventPeer::GAME_STYLE_ID, $this->getId());
+				$criteria->add(RankingPeer::GAME_STYLE_ID, $this->getId());
 
-				EventPeer::addSelectColumns($criteria);
-				$this->collEventList = EventPeer::doSelect($criteria, $con);
+				RankingPeer::addSelectColumns($criteria);
+				$this->collRankingListRelatedByGameStyleId = RankingPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(EventPeer::GAME_STYLE_ID, $this->getId());
+				$criteria->add(RankingPeer::GAME_STYLE_ID, $this->getId());
 
-				EventPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventCriteria) || !$this->lastEventCriteria->equals($criteria)) {
-					$this->collEventList = EventPeer::doSelect($criteria, $con);
+				RankingPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingRelatedByGameStyleIdCriteria) || !$this->lastRankingRelatedByGameStyleIdCriteria->equals($criteria)) {
+					$this->collRankingListRelatedByGameStyleId = RankingPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastEventCriteria = $criteria;
-		return $this->collEventList;
+		$this->lastRankingRelatedByGameStyleIdCriteria = $criteria;
+		return $this->collRankingListRelatedByGameStyleId;
 	}
 
 	
-	public function countEventList($criteria = null, $distinct = false, $con = null)
+	public function countRankingListRelatedByGameStyleId($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventPeer.php';
+				include_once 'lib/model/om/BaseRankingPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -974,23 +974,23 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(EventPeer::GAME_STYLE_ID, $this->getId());
+		$criteria->add(RankingPeer::GAME_STYLE_ID, $this->getId());
 
-		return EventPeer::doCount($criteria, $distinct, $con);
+		return RankingPeer::doCount($criteria, $distinct, $con);
 	}
 
 	
-	public function addEvent(Event $l)
+	public function addRankingRelatedByGameStyleId(Ranking $l)
 	{
-		$this->collEventList[] = $l;
-		$l->setVirtualTable($this);
+		$this->collRankingListRelatedByGameStyleId[] = $l;
+		$l->setVirtualTableRelatedByGameStyleId($this);
 	}
 
 
 	
-	public function getEventListJoinRanking($criteria = null, $con = null)
+	public function getRankingListRelatedByGameStyleIdJoinUserSite($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventPeer.php';
+				include_once 'lib/model/om/BaseRankingPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -999,26 +999,26 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collEventList === null) {
+		if ($this->collRankingListRelatedByGameStyleId === null) {
 			if ($this->isNew()) {
-				$this->collEventList = array();
+				$this->collRankingListRelatedByGameStyleId = array();
 			} else {
 
-				$criteria->add(EventPeer::GAME_STYLE_ID, $this->getId());
+				$criteria->add(RankingPeer::GAME_STYLE_ID, $this->getId());
 
-				$this->collEventList = EventPeer::doSelectJoinRanking($criteria, $con);
+				$this->collRankingListRelatedByGameStyleId = RankingPeer::doSelectJoinUserSite($criteria, $con);
 			}
 		} else {
 									
-			$criteria->add(EventPeer::GAME_STYLE_ID, $this->getId());
+			$criteria->add(RankingPeer::GAME_STYLE_ID, $this->getId());
 
-			if (!isset($this->lastEventCriteria) || !$this->lastEventCriteria->equals($criteria)) {
-				$this->collEventList = EventPeer::doSelectJoinRanking($criteria, $con);
+			if (!isset($this->lastRankingRelatedByGameStyleIdCriteria) || !$this->lastRankingRelatedByGameStyleIdCriteria->equals($criteria)) {
+				$this->collRankingListRelatedByGameStyleId = RankingPeer::doSelectJoinUserSite($criteria, $con);
 			}
 		}
-		$this->lastEventCriteria = $criteria;
+		$this->lastRankingRelatedByGameStyleIdCriteria = $criteria;
 
-		return $this->collEventList;
+		return $this->collRankingListRelatedByGameStyleId;
 	}
 
 } 

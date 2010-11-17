@@ -21,10 +21,10 @@ $moduleName = $sf_context->getModuleName();
     <td align="center" valign="top" class="header_bg"><table width="950" border="0" cellspacing="0" cellpadding="0">
       <tr>
 
-        <td width="230" align="left" valign="top" style="padding:18px 0px 0px 18px;"><a href="index.html"><img src="/images/frontend/layout/logo.gif" alt="" width="181" height="116" border="0" /></a></td>
+        <td width="230" align="left" valign="top" style="padding:18px 0px 0px 18px;"><?php echo link_to(image_tag('frontend/layout/logo.gif'), '/home') ?></td>
         <td width="380" align="left" valign="top"><img src="/images/frontend/layout/header_img.png" alt="" width="380" height="156" /></td>
         <td align="left" valign="middle">
-        <table width="324%" border="0" cellspacing="4" cellpadding="0">
+        <table width="324" border="0" cellspacing="4" cellpadding="0">
           <tr>
             <td width="68" align="left" valign="top">
 				<div id="quickLogin">
@@ -68,10 +68,10 @@ $moduleName = $sf_context->getModuleName();
     <td align="center" valign="top">
 		<table width="950" border="0" cellspacing="0" cellpadding="0">
 		      <tr>
-		        <td width="250" align="left" valign="top" style="padding-right:46px">
+		        <td width="200" align="left" valign="top" style="padding-right:10px">
 		        	<?php include_partial('home/include/mainMenu') ?>
 		        </td>
-		        <td width="700" align="left" valign="top">
+		        <td width="740" align="left" valign="top">
 		        	<?php echo $sf_content ?>
 		        </td>
 		      </tr>

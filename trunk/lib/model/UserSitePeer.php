@@ -27,6 +27,10 @@ class UserSitePeer extends BaseUserSitePeer
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		
 		$criteria = new Criteria();
+		$criteria->add( UserSitePeer::ACTIVE, true );
+		$criteria->add( UserSitePeer::ENABLED, true );
+		$criteria->add( UserSitePeer::VISIBLE, true );
+		$criteria->add( UserSitePeer::DELETED, false );
 		$criteria->add( UserSitePeer::ID, $userSiteId, Criteria::NOT_EQUAL );
 		$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$criteria->add( PeoplePeer::EMAIL_ADDRESS, $emailAddress, Criteria::ILIKE );

@@ -1,8 +1,13 @@
+var _RecordSaved = null;
+
 function goModule(module, action, fieldName, fieldValue ){
 	
 	if( isDebug() ){
 		
-		window.location = _webRoot+'/'+module+'/'+action+'/'+fieldName+'/'+fieldValue;
+		var urlLocation = _webRoot+'/'+module+'/'+action;
+		urlLocation    += (fieldName?'/'+fieldName:'');
+		urlLocation    += (fieldValue?'/'+fieldValue:'');
+		window.location = urlLocation;
 	}else{
 	
 		var form    = document.createElement('form');
@@ -19,3 +24,32 @@ function goModule(module, action, fieldName, fieldValue ){
 		form.submit();
 	}
 }
+
+function setRecordSaved( value ){
+	
+	_RecordSaved = value;
+}
+
+function isRecordSaved(){
+	
+	return _RecordSaved;
+}
+
+function checkClosingRecord(e) {
+	
+	if( isRecordSaved()==false ){
+	
+		if(!e) e = window.event;
+		//e.cancelBubble is supported by IE - this will kill the bubbling process.
+		e.cancelBubble = true;
+		e.returnValue = 'O registro ainda não foi salvo!'; //This is displayed on the dialog
+	
+		//e.stopPropagation works in Firefox.
+		if (e.stopPropagation) {
+			e.stopPropagation();
+			e.preventDefault();
+		}
+	}
+}
+
+window.onbeforeunload=checkClosingRecord;

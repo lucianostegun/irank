@@ -22,30 +22,38 @@ class EventMemberPeer extends BaseEventMemberPeer
   			
   			$peopleId = $eventMemberObj->getPeopleId();
   			
-			$rebuys        = $request->getParameter('rebuys'.$peopleId);
-			$addons        = $request->getParameter('addons'.$peopleId);
+			$buyin         = $request->getParameter('buyin'.$peopleId);
+			$rebuy         = $request->getParameter('rebuy'.$peopleId);
+			$addon         = $request->getParameter('addon'.$peopleId);
 			$eventPosition = $request->getParameter('eventPosition'.$peopleId);
-			$prizeValue    = $request->getParameter('prizeValue'.$peopleId);
+			$prize    = $request->getParameter('prize'.$peopleId);
 			
-			if( !$rebuys && $rebuys!=='0' )
-				MyTools::setError('rebuys'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
-			elseif( !Validate::isInteger($rebuys) || $rebuys < 0 )
-				MyTools::setError('rebuys'.$peopleId, 'O valor informado não é um número inteiro válido');
+			if( !$buyin && $buyin!=='0' )
+				MyTools::setError('buyin'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
+			elseif( !Validate::isFloat($buyin) || $buyin < 0 )
+				MyTools::setError('buyin'.$peopleId, 'O valor informado não é um número válido');
+			elseif( $eventPosition && $buyin <= 0 )
+				MyTools::setError('buyin'.$peopleId, 'Informe um valor maior que 0,00');
+			
+			if( !$rebuy && $rebuy!=='0' )
+				MyTools::setError('rebuy'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
+			elseif( !Validate::isFloat($rebuy) || $rebuy < 0 )
+				MyTools::setError('rebuy'.$peopleId, 'O valor informado não é um número válido');
 				
-			if( !$addons && $addons!=='0' )
-				MyTools::setError('addons'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
-			elseif( !Validate::isInteger($addons) || $addons < 0 )
-				MyTools::setError('addons'.$peopleId, 'O valor informado não é um número inteiro válido');
+			if( !$addon && $addon!=='0' )
+				MyTools::setError('addon'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
+			elseif( !Validate::isFloat($addon) || $addon < 0 )
+				MyTools::setError('addon'.$peopleId, 'O valor informado não é um número válido');
 				
 			if( !$eventPosition && $eventPosition!=='0' )
 				MyTools::setError('eventPosition'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
 			elseif( !Validate::isInteger($eventPosition) || $eventPosition < 0 )
 				MyTools::setError('eventPosition'.$peopleId, 'O valor informado não é um número inteiro válido');
 			
-			if( !$prizeValue && $prizeValue!=='0' )
-				MyTools::setError('prizeValue'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
-			elseif( !Validate::isFloat($prizeValue) || $prizeValue < 0 )
-				MyTools::setError('prizeValue'.$peopleId, 'O valor informado não é um número válido');
+			if( !$prize && $prize!=='0' )
+				MyTools::setError('prize'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
+			elseif( !Validate::isFloat($prize) || $prize < 0 )
+				MyTools::setError('prize'.$peopleId, 'O valor informado não é um número válido');
 			
 			if( $eventPosition!=-'0' && $peopleIdConflict = array_search($eventPosition, $eventPositionList) ){
 				

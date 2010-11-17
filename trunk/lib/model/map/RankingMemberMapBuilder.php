@@ -40,6 +40,12 @@ class RankingMemberMapBuilder {
 
 		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::FLOAT, false, null);
 
+		$tMap->addColumn('TOTAL_PAID', 'TotalPaid', 'double', CreoleTypes::FLOAT, false, null);
+
+		$tMap->addColumn('TOTAL_PRIZE', 'TotalPrize', 'double', CreoleTypes::FLOAT, false, null);
+
+		$tMap->addColumn('BALANCE', 'Balance', 'double', CreoleTypes::FLOAT, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

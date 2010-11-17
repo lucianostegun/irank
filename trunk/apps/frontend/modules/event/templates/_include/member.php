@@ -3,7 +3,6 @@
     <td>Nome</td>
     <td>Sobrenome</td>
     <td>E-mail</td>
-    <td>Pontuação</td>
     <td></td>
   </tr>
   <?php
@@ -20,7 +19,6 @@
     <td><?php echo $peopleObj->getFirstName() ?></td>
     <td><?php echo $peopleObj->getLastName() ?></td>
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
-    <td><?php echo '-' ?></td>
     <td align="center">
     	<?php
     		$image = image_tag('icon/'.($eventMemberObj->getEnabled()?'ok':'nok'), array('id'=>'presenceImage'.$peopleId));

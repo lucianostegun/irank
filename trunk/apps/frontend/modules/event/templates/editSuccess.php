@@ -1,5 +1,9 @@
-<?php echo getPageHeader('Cadastro de evento') ?>
+<?php echo getPageHeader('Cadastro de evento');
+	if( !$eventObj->getEnabled() || $isClone ):
+?>
+<script>setRecordSaved(false);</script>
 <?php
+	endif;
 	
 	$pastDate = $eventObj->isPastDate(); 
 	$eventId  = $eventObj->getId();
@@ -34,6 +38,7 @@
 				echo button_tag('confirmPresence', 'Confirmar presença', array('onclick'=>'doConfirmPresence()', 'image'=>'../icon/ok.png', 'visible'=>(!$confirmedPresence && $eventObj->getEnabled())));
 				echo button_tag('cancelPresence', 'Cancelar presença', array('onclick'=>'doCancelPresence()', 'image'=>'../icon/nok.png', 'visible'=>($confirmedPresence)));
 			}
+			echo button_tag('deleteEvent', 'Excluir evento', array('onclick'=>'doDeleteEvent()', 'image'=>'../icon/delete'));
 		?>
 		<?php echo getFormLoading('event') ?>
 		<?php echo getFormStatus(); ?>

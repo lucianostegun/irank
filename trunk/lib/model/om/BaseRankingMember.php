@@ -25,6 +25,18 @@ abstract class BaseRankingMember extends BaseObject  implements Persistent {
 
 
 	
+	protected $total_paid;
+
+
+	
+	protected $total_prize;
+
+
+	
+	protected $balance;
+
+
+	
 	protected $enabled;
 
 
@@ -73,6 +85,27 @@ abstract class BaseRankingMember extends BaseObject  implements Persistent {
 	{
 
 		return $this->score;
+	}
+
+	
+	public function getTotalPaid()
+	{
+
+		return $this->total_paid;
+	}
+
+	
+	public function getTotalPrize()
+	{
+
+		return $this->total_prize;
+	}
+
+	
+	public function getBalance()
+	{
+
+		return $this->balance;
 	}
 
 	
@@ -193,6 +226,36 @@ abstract class BaseRankingMember extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setTotalPaid($v)
+	{
+
+		if ($this->total_paid !== $v) {
+			$this->total_paid = $v;
+			$this->modifiedColumns[] = RankingMemberPeer::TOTAL_PAID;
+		}
+
+	} 
+	
+	public function setTotalPrize($v)
+	{
+
+		if ($this->total_prize !== $v) {
+			$this->total_prize = $v;
+			$this->modifiedColumns[] = RankingMemberPeer::TOTAL_PRIZE;
+		}
+
+	} 
+	
+	public function setBalance($v)
+	{
+
+		if ($this->balance !== $v) {
+			$this->balance = $v;
+			$this->modifiedColumns[] = RankingMemberPeer::BALANCE;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -249,17 +312,23 @@ abstract class BaseRankingMember extends BaseObject  implements Persistent {
 
 			$this->score = $rs->getFloat($startcol + 3);
 
-			$this->enabled = $rs->getBoolean($startcol + 4);
+			$this->total_paid = $rs->getFloat($startcol + 4);
 
-			$this->created_at = $rs->getTimestamp($startcol + 5, null);
+			$this->total_prize = $rs->getFloat($startcol + 5);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 6, null);
+			$this->balance = $rs->getFloat($startcol + 6);
+
+			$this->enabled = $rs->getBoolean($startcol + 7);
+
+			$this->created_at = $rs->getTimestamp($startcol + 8, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 9, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 7; 
+						return $startcol + 10; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating RankingMember object", $e);
 		}
@@ -438,12 +507,21 @@ abstract class BaseRankingMember extends BaseObject  implements Persistent {
 				return $this->getScore();
 				break;
 			case 4:
-				return $this->getEnabled();
+				return $this->getTotalPaid();
 				break;
 			case 5:
-				return $this->getCreatedAt();
+				return $this->getTotalPrize();
 				break;
 			case 6:
+				return $this->getBalance();
+				break;
+			case 7:
+				return $this->getEnabled();
+				break;
+			case 8:
+				return $this->getCreatedAt();
+				break;
+			case 9:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -460,9 +538,12 @@ abstract class BaseRankingMember extends BaseObject  implements Persistent {
 			$keys[1]=>$this->getPeopleId(),
 			$keys[2]=>$this->getEvents(),
 			$keys[3]=>$this->getScore(),
-			$keys[4]=>$this->getEnabled(),
-			$keys[5]=>$this->getCreatedAt(),
-			$keys[6]=>$this->getUpdatedAt(),
+			$keys[4]=>$this->getTotalPaid(),
+			$keys[5]=>$this->getTotalPrize(),
+			$keys[6]=>$this->getBalance(),
+			$keys[7]=>$this->getEnabled(),
+			$keys[8]=>$this->getCreatedAt(),
+			$keys[9]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -491,12 +572,21 @@ abstract class BaseRankingMember extends BaseObject  implements Persistent {
 				$this->setScore($value);
 				break;
 			case 4:
-				$this->setEnabled($value);
+				$this->setTotalPaid($value);
 				break;
 			case 5:
-				$this->setCreatedAt($value);
+				$this->setTotalPrize($value);
 				break;
 			case 6:
+				$this->setBalance($value);
+				break;
+			case 7:
+				$this->setEnabled($value);
+				break;
+			case 8:
+				$this->setCreatedAt($value);
+				break;
+			case 9:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -510,9 +600,12 @@ abstract class BaseRankingMember extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setEvents($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setScore($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setEnabled($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[4], $arr)) $this->setTotalPaid($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setTotalPrize($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setBalance($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEnabled($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setCreatedAt($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setUpdatedAt($arr[$keys[9]]);
 	}
 
 	
@@ -524,6 +617,9 @@ abstract class BaseRankingMember extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RankingMemberPeer::PEOPLE_ID)) $criteria->add(RankingMemberPeer::PEOPLE_ID, $this->people_id);
 		if ($this->isColumnModified(RankingMemberPeer::EVENTS)) $criteria->add(RankingMemberPeer::EVENTS, $this->events);
 		if ($this->isColumnModified(RankingMemberPeer::SCORE)) $criteria->add(RankingMemberPeer::SCORE, $this->score);
+		if ($this->isColumnModified(RankingMemberPeer::TOTAL_PAID)) $criteria->add(RankingMemberPeer::TOTAL_PAID, $this->total_paid);
+		if ($this->isColumnModified(RankingMemberPeer::TOTAL_PRIZE)) $criteria->add(RankingMemberPeer::TOTAL_PRIZE, $this->total_prize);
+		if ($this->isColumnModified(RankingMemberPeer::BALANCE)) $criteria->add(RankingMemberPeer::BALANCE, $this->balance);
 		if ($this->isColumnModified(RankingMemberPeer::ENABLED)) $criteria->add(RankingMemberPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(RankingMemberPeer::CREATED_AT)) $criteria->add(RankingMemberPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(RankingMemberPeer::UPDATED_AT)) $criteria->add(RankingMemberPeer::UPDATED_AT, $this->updated_at);
@@ -571,6 +667,12 @@ abstract class BaseRankingMember extends BaseObject  implements Persistent {
 		$copyObj->setEvents($this->events);
 
 		$copyObj->setScore($this->score);
+
+		$copyObj->setTotalPaid($this->total_paid);
+
+		$copyObj->setTotalPrize($this->total_prize);
+
+		$copyObj->setBalance($this->balance);
 
 		$copyObj->setEnabled($this->enabled);
 

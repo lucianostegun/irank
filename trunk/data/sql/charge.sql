@@ -17,3 +17,4 @@ INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'gameStyle', 'Sit
 DELETE FROM virtual_table WHERE virtual_table_name = 'rankingType';
 INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Valor', 'value', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Posição', 'position', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Balanço', 'balance', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

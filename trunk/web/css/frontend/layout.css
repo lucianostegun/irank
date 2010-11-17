@@ -204,6 +204,12 @@ height:50px;
 	background: 	#292929;	 
 }
 
+.boxcontentOver td{
+	padding: 		3 10 3 10 ;
+	color: 			#BABABA;	 
+	background: 	#393939;	 
+}
+
  .readreviewlink{
 	font-size:12px;
 	color:#BABABA;

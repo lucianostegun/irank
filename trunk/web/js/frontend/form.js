@@ -1,9 +1,11 @@
 function showFormErrorDetails(form, field){
 	
-	var errorMessage = $(form+ucfirst(field)+'Label').innerHTML+':</b><br/><br/>'+$(form+ucfirst(field)).title;
-	errorMessage = errorMessage.replace(/\n/g, '<br/><br/>');
+//	var errorMessage = $(form+ucfirst(field)+'Label').innerHTML+':</b><br/><br/>'+$(form+ucfirst(field)).title;
+	var errorMessage = $(form+ucfirst(field)+'Label').innerHTML+':\n'+$(form+ucfirst(field)).title;
+//	errorMessage = errorMessage.replace(/\n/g, '<br/><br/>');
 
-	$('formErrorDetails'+ucfirst(form)).innerHTML = '<h1 class="formDetailsTitle">Detalhes do erro</h1><b>'+errorMessage;
+	alert(errorMessage);
+//	$('formErrorDetails'+ucfirst(form)).innerHTML = '<h1 class="formDetailsTitle">Detalhes do erro</h1><b>'+errorMessage;
 }
 
 function handleFormFieldError( content, formId, prefix, alertMessage, indicatorId ){

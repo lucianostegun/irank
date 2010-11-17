@@ -17,10 +17,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	
-	protected $game_style_id;
-
-
-	
 	protected $event_name;
 
 
@@ -29,7 +25,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	
-	protected $buy_in;
+	protected $buyin;
 
 
 	
@@ -61,6 +57,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	
+	protected $saved_result;
+
+
+	
 	protected $enabled;
 
 
@@ -85,9 +85,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	
 	protected $aRanking;
-
-	
-	protected $aVirtualTable;
 
 	
 	protected $collEventMemberList;
@@ -116,13 +113,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getGameStyleId()
-	{
-
-		return $this->game_style_id;
-	}
-
-	
 	public function getEventName()
 	{
 
@@ -137,10 +127,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getBuyIn()
+	public function getBuyin()
 	{
 
-		return $this->buy_in;
+		return $this->buyin;
 	}
 
 	
@@ -220,6 +210,13 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	{
 
 		return $this->members;
+	}
+
+	
+	public function getSavedResult()
+	{
+
+		return $this->saved_result;
 	}
 
 	
@@ -331,26 +328,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setGameStyleId($v)
-	{
-
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->game_style_id !== $v) {
-			$this->game_style_id = $v;
-			$this->modifiedColumns[] = EventPeer::GAME_STYLE_ID;
-		}
-
-		if ($this->aVirtualTable !== null && $this->aVirtualTable->getId() !== $v) {
-			$this->aVirtualTable = null;
-		}
-
-	} 
-	
 	public function setEventName($v)
 	{
 
@@ -383,12 +360,12 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setBuyIn($v)
+	public function setBuyin($v)
 	{
 
-		if ($this->buy_in !== $v) {
-			$this->buy_in = $v;
-			$this->modifiedColumns[] = EventPeer::BUY_IN;
+		if ($this->buyin !== $v) {
+			$this->buyin = $v;
+			$this->modifiedColumns[] = EventPeer::BUYIN;
 		}
 
 	} 
@@ -501,6 +478,16 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setSavedResult($v)
+	{
+
+		if ($this->saved_result !== $v) {
+			$this->saved_result = $v;
+			$this->modifiedColumns[] = EventPeer::SAVED_RESULT;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -583,27 +570,27 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 			$this->ranking_id = $rs->getInt($startcol + 1);
 
-			$this->game_style_id = $rs->getInt($startcol + 2);
+			$this->event_name = $rs->getString($startcol + 2);
 
-			$this->event_name = $rs->getString($startcol + 3);
+			$this->event_place = $rs->getString($startcol + 3);
 
-			$this->event_place = $rs->getString($startcol + 4);
+			$this->buyin = $rs->getFloat($startcol + 4);
 
-			$this->buy_in = $rs->getFloat($startcol + 5);
+			$this->paid_places = $rs->getInt($startcol + 5);
 
-			$this->paid_places = $rs->getInt($startcol + 6);
+			$this->event_date = $rs->getDate($startcol + 6, null);
 
-			$this->event_date = $rs->getDate($startcol + 7, null);
+			$this->start_time = $rs->getTime($startcol + 7, null);
 
-			$this->start_time = $rs->getTime($startcol + 8, null);
+			$this->comments = $rs->getString($startcol + 8);
 
-			$this->comments = $rs->getString($startcol + 9);
+			$this->sent_email = $rs->getBoolean($startcol + 9);
 
-			$this->sent_email = $rs->getBoolean($startcol + 10);
+			$this->invites = $rs->getInt($startcol + 10);
 
-			$this->invites = $rs->getInt($startcol + 11);
+			$this->members = $rs->getInt($startcol + 11);
 
-			$this->members = $rs->getInt($startcol + 12);
+			$this->saved_result = $rs->getBoolean($startcol + 12);
 
 			$this->enabled = $rs->getBoolean($startcol + 13);
 
@@ -696,13 +683,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				$this->setRanking($this->aRanking);
 			}
 
-			if ($this->aVirtualTable !== null) {
-				if ($this->aVirtualTable->isModified()) {
-					$affectedRows += $this->aVirtualTable->save($con);
-				}
-				$this->setVirtualTable($this->aVirtualTable);
-			}
-
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
@@ -766,12 +746,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->aVirtualTable !== null) {
-				if (!$this->aVirtualTable->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aVirtualTable->getValidationFailures());
-				}
-			}
-
 
 			if (($retval = EventPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -811,37 +785,37 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				return $this->getRankingId();
 				break;
 			case 2:
-				return $this->getGameStyleId();
-				break;
-			case 3:
 				return $this->getEventName();
 				break;
-			case 4:
+			case 3:
 				return $this->getEventPlace();
 				break;
-			case 5:
-				return $this->getBuyIn();
+			case 4:
+				return $this->getBuyin();
 				break;
-			case 6:
+			case 5:
 				return $this->getPaidPlaces();
 				break;
-			case 7:
+			case 6:
 				return $this->getEventDate();
 				break;
-			case 8:
+			case 7:
 				return $this->getStartTime();
 				break;
-			case 9:
+			case 8:
 				return $this->getComments();
 				break;
-			case 10:
+			case 9:
 				return $this->getSentEmail();
 				break;
-			case 11:
+			case 10:
 				return $this->getInvites();
 				break;
-			case 12:
+			case 11:
 				return $this->getMembers();
+				break;
+			case 12:
+				return $this->getSavedResult();
 				break;
 			case 13:
 				return $this->getEnabled();
@@ -873,17 +847,17 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getRankingId(),
-			$keys[2]=>$this->getGameStyleId(),
-			$keys[3]=>$this->getEventName(),
-			$keys[4]=>$this->getEventPlace(),
-			$keys[5]=>$this->getBuyIn(),
-			$keys[6]=>$this->getPaidPlaces(),
-			$keys[7]=>$this->getEventDate(),
-			$keys[8]=>$this->getStartTime(),
-			$keys[9]=>$this->getComments(),
-			$keys[10]=>$this->getSentEmail(),
-			$keys[11]=>$this->getInvites(),
-			$keys[12]=>$this->getMembers(),
+			$keys[2]=>$this->getEventName(),
+			$keys[3]=>$this->getEventPlace(),
+			$keys[4]=>$this->getBuyin(),
+			$keys[5]=>$this->getPaidPlaces(),
+			$keys[6]=>$this->getEventDate(),
+			$keys[7]=>$this->getStartTime(),
+			$keys[8]=>$this->getComments(),
+			$keys[9]=>$this->getSentEmail(),
+			$keys[10]=>$this->getInvites(),
+			$keys[11]=>$this->getMembers(),
+			$keys[12]=>$this->getSavedResult(),
 			$keys[13]=>$this->getEnabled(),
 			$keys[14]=>$this->getVisible(),
 			$keys[15]=>$this->getDeleted(),
@@ -912,37 +886,37 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				$this->setRankingId($value);
 				break;
 			case 2:
-				$this->setGameStyleId($value);
-				break;
-			case 3:
 				$this->setEventName($value);
 				break;
-			case 4:
+			case 3:
 				$this->setEventPlace($value);
 				break;
-			case 5:
-				$this->setBuyIn($value);
+			case 4:
+				$this->setBuyin($value);
 				break;
-			case 6:
+			case 5:
 				$this->setPaidPlaces($value);
 				break;
-			case 7:
+			case 6:
 				$this->setEventDate($value);
 				break;
-			case 8:
+			case 7:
 				$this->setStartTime($value);
 				break;
-			case 9:
+			case 8:
 				$this->setComments($value);
 				break;
-			case 10:
+			case 9:
 				$this->setSentEmail($value);
 				break;
-			case 11:
+			case 10:
 				$this->setInvites($value);
 				break;
-			case 12:
+			case 11:
 				$this->setMembers($value);
+				break;
+			case 12:
+				$this->setSavedResult($value);
 				break;
 			case 13:
 				$this->setEnabled($value);
@@ -971,17 +945,17 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setRankingId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setGameStyleId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setEventName($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setEventPlace($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setBuyIn($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setPaidPlaces($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setEventDate($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setStartTime($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setComments($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setSentEmail($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setInvites($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setMembers($arr[$keys[12]]);
+		if (array_key_exists($keys[2], $arr)) $this->setEventName($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setEventPlace($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setBuyin($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setPaidPlaces($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEventDate($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setStartTime($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setComments($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setSentEmail($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setInvites($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setMembers($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setSavedResult($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setEnabled($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setVisible($arr[$keys[14]]);
 		if (array_key_exists($keys[15], $arr)) $this->setDeleted($arr[$keys[15]]);
@@ -997,10 +971,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(EventPeer::ID)) $criteria->add(EventPeer::ID, $this->id);
 		if ($this->isColumnModified(EventPeer::RANKING_ID)) $criteria->add(EventPeer::RANKING_ID, $this->ranking_id);
-		if ($this->isColumnModified(EventPeer::GAME_STYLE_ID)) $criteria->add(EventPeer::GAME_STYLE_ID, $this->game_style_id);
 		if ($this->isColumnModified(EventPeer::EVENT_NAME)) $criteria->add(EventPeer::EVENT_NAME, $this->event_name);
 		if ($this->isColumnModified(EventPeer::EVENT_PLACE)) $criteria->add(EventPeer::EVENT_PLACE, $this->event_place);
-		if ($this->isColumnModified(EventPeer::BUY_IN)) $criteria->add(EventPeer::BUY_IN, $this->buy_in);
+		if ($this->isColumnModified(EventPeer::BUYIN)) $criteria->add(EventPeer::BUYIN, $this->buyin);
 		if ($this->isColumnModified(EventPeer::PAID_PLACES)) $criteria->add(EventPeer::PAID_PLACES, $this->paid_places);
 		if ($this->isColumnModified(EventPeer::EVENT_DATE)) $criteria->add(EventPeer::EVENT_DATE, $this->event_date);
 		if ($this->isColumnModified(EventPeer::START_TIME)) $criteria->add(EventPeer::START_TIME, $this->start_time);
@@ -1008,6 +981,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPeer::SENT_EMAIL)) $criteria->add(EventPeer::SENT_EMAIL, $this->sent_email);
 		if ($this->isColumnModified(EventPeer::INVITES)) $criteria->add(EventPeer::INVITES, $this->invites);
 		if ($this->isColumnModified(EventPeer::MEMBERS)) $criteria->add(EventPeer::MEMBERS, $this->members);
+		if ($this->isColumnModified(EventPeer::SAVED_RESULT)) $criteria->add(EventPeer::SAVED_RESULT, $this->saved_result);
 		if ($this->isColumnModified(EventPeer::ENABLED)) $criteria->add(EventPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventPeer::VISIBLE)) $criteria->add(EventPeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(EventPeer::DELETED)) $criteria->add(EventPeer::DELETED, $this->deleted);
@@ -1046,13 +1020,11 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		$copyObj->setRankingId($this->ranking_id);
 
-		$copyObj->setGameStyleId($this->game_style_id);
-
 		$copyObj->setEventName($this->event_name);
 
 		$copyObj->setEventPlace($this->event_place);
 
-		$copyObj->setBuyIn($this->buy_in);
+		$copyObj->setBuyin($this->buyin);
 
 		$copyObj->setPaidPlaces($this->paid_places);
 
@@ -1067,6 +1039,8 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		$copyObj->setInvites($this->invites);
 
 		$copyObj->setMembers($this->members);
+
+		$copyObj->setSavedResult($this->saved_result);
 
 		$copyObj->setEnabled($this->enabled);
 
@@ -1140,35 +1114,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aRanking;
-	}
-
-	
-	public function setVirtualTable($v)
-	{
-
-
-		if ($v === null) {
-			$this->setGameStyleId(NULL);
-		} else {
-			$this->setGameStyleId($v->getId());
-		}
-
-
-		$this->aVirtualTable = $v;
-	}
-
-
-	
-	public function getVirtualTable($con = null)
-	{
-		if ($this->aVirtualTable === null && ($this->game_style_id !== null)) {
-						include_once 'lib/model/om/BaseVirtualTablePeer.php';
-
-			$this->aVirtualTable = VirtualTablePeer::retrieveByPK($this->game_style_id, $con);
-
-			
-		}
-		return $this->aVirtualTable;
 	}
 
 	
