@@ -100,6 +100,9 @@ class People extends BasePeople
 		
 		$emailContent = AuxiliarText::getContentByTagName('rankingMemberAdd');
 		
+		if( !$this->isUserSite() )
+			$emailContent .= AuxiliarText::getContentByTagName('newUserInvite');
+		
 		$emailContent = str_replace('<peopleName>', $this->getFirstName(), $emailContent);
 		$emailContent = str_replace('<rankingName>', $rankingObj->getRankingName(), $emailContent);
 		$emailContent = str_replace('<createdAt>', $rankingObj->getCreatedAt('d/m/Y'), $emailContent);
@@ -110,8 +113,20 @@ class People extends BasePeople
 		$emailContent = str_replace('<rankingOwner>', $rankingOwner, $emailContent);
 		
 		$emailAddress = $this->getEmailAddress();
-		
 		Report::sendMail('Inclusão em ranking', $emailAddress, $emailContent);
+	}
+	
+	public function isUserSite(){
+		
+		$criteria = new Criteria();
+		$criteria->add( UserSitePeer::ACTIVE, true );
+		$criteria->add( UserSitePeer::ENABLED, true );
+		$criteria->add( UserSitePeer::VISIBLE, true );
+		$criteria->add( UserSitePeer::DELETED, false );
+		$criteria->add( UserSitePeer::PEOPLE_ID, $this->getId() );
+		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
+		
+		return is_object($userSiteObj);
 	}
 	
 	public function getInfo(){

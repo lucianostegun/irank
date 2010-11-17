@@ -1,5 +1,6 @@
 function handleSuccessRanking(content){
 
+	setRecordSaved(true);
 	clearFormFieldErrors('rankingForm');
 	showFormStatusSuccess();
 	hideIndicator('ranking');

@@ -74,7 +74,7 @@ class UserSite extends BaseUserSite
 		$criteria->add( RankingPeer::VISIBLE, true );
 		$criteria->add( RankingPeer::DELETED, false );
 		$criteria->add( RankingMemberPeer::PEOPLE_ID, $this->getPeopleId() );
-		$criteria->addJoin( RankingPeer::ID, RankingMemberPeer::RANKING_ID, Criteria::INNER_JOIN );
+//		$criteria->addJoin( RankingPeer::ID, RankingMemberPeer::RANKING_ID, Criteria::INNER_JOIN );
 		$criteria->addAscendingOrderByColumn( RankingPeer::RANKING_NAME );
 		return RankingPeer::doSelect($criteria);
 	}

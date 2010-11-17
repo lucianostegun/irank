@@ -13,7 +13,7 @@ abstract class BaseRankingMemberPeer {
 	const CLASS_DEFAULT = 'lib.model.RankingMember';
 
 	
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 10;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -32,6 +32,15 @@ abstract class BaseRankingMemberPeer {
 	const SCORE = 'ranking_member.SCORE';
 
 	
+	const TOTAL_PAID = 'ranking_member.TOTAL_PAID';
+
+	
+	const TOTAL_PRIZE = 'ranking_member.TOTAL_PRIZE';
+
+	
+	const BALANCE = 'ranking_member.BALANCE';
+
+	
 	const ENABLED = 'ranking_member.ENABLED';
 
 	
@@ -46,19 +55,19 @@ abstract class BaseRankingMemberPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('RankingId', 'PeopleId', 'Events', 'Score', 'Enabled', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (RankingMemberPeer::RANKING_ID, RankingMemberPeer::PEOPLE_ID, RankingMemberPeer::EVENTS, RankingMemberPeer::SCORE, RankingMemberPeer::ENABLED, RankingMemberPeer::CREATED_AT, RankingMemberPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('ranking_id', 'people_id', 'events', 'score', 'enabled', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('RANKING_ID'=>'', 'PEOPLE_ID'=>'', 'EVENTS'=>'', 'SCORE'=>'', 'ENABLED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('RankingId', 'PeopleId', 'Events', 'Score', 'TotalPaid', 'TotalPrize', 'Balance', 'Enabled', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (RankingMemberPeer::RANKING_ID, RankingMemberPeer::PEOPLE_ID, RankingMemberPeer::EVENTS, RankingMemberPeer::SCORE, RankingMemberPeer::TOTAL_PAID, RankingMemberPeer::TOTAL_PRIZE, RankingMemberPeer::BALANCE, RankingMemberPeer::ENABLED, RankingMemberPeer::CREATED_AT, RankingMemberPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('ranking_id', 'people_id', 'events', 'score', 'total_paid', 'total_prize', 'balance', 'enabled', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('RANKING_ID'=>'', 'PEOPLE_ID'=>'', 'EVENTS'=>'', 'SCORE'=>'', 'TOTAL_PAID'=>'', 'TOTAL_PRIZE'=>'', 'BALANCE'=>'', 'ENABLED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('RankingId'=>0, 'PeopleId'=>1, 'Events'=>2, 'Score'=>3, 'Enabled'=>4, 'CreatedAt'=>5, 'UpdatedAt'=>6, ),
-		BasePeer::TYPE_COLNAME=>array (RankingMemberPeer::RANKING_ID=>0, RankingMemberPeer::PEOPLE_ID=>1, RankingMemberPeer::EVENTS=>2, RankingMemberPeer::SCORE=>3, RankingMemberPeer::ENABLED=>4, RankingMemberPeer::CREATED_AT=>5, RankingMemberPeer::UPDATED_AT=>6, ),
-		BasePeer::TYPE_FIELDNAME=>array ('ranking_id'=>0, 'people_id'=>1, 'events'=>2, 'score'=>3, 'enabled'=>4, 'created_at'=>5, 'updated_at'=>6, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('RankingId'=>0, 'PeopleId'=>1, 'Events'=>2, 'Score'=>3, 'TotalPaid'=>4, 'TotalPrize'=>5, 'Balance'=>6, 'Enabled'=>7, 'CreatedAt'=>8, 'UpdatedAt'=>9, ),
+		BasePeer::TYPE_COLNAME=>array (RankingMemberPeer::RANKING_ID=>0, RankingMemberPeer::PEOPLE_ID=>1, RankingMemberPeer::EVENTS=>2, RankingMemberPeer::SCORE=>3, RankingMemberPeer::TOTAL_PAID=>4, RankingMemberPeer::TOTAL_PRIZE=>5, RankingMemberPeer::BALANCE=>6, RankingMemberPeer::ENABLED=>7, RankingMemberPeer::CREATED_AT=>8, RankingMemberPeer::UPDATED_AT=>9, ),
+		BasePeer::TYPE_FIELDNAME=>array ('ranking_id'=>0, 'people_id'=>1, 'events'=>2, 'score'=>3, 'total_paid'=>4, 'total_prize'=>5, 'balance'=>6, 'enabled'=>7, 'created_at'=>8, 'updated_at'=>9, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	
@@ -119,6 +128,12 @@ abstract class BaseRankingMemberPeer {
 		$criteria->addSelectColumn(RankingMemberPeer::EVENTS);
 
 		$criteria->addSelectColumn(RankingMemberPeer::SCORE);
+
+		$criteria->addSelectColumn(RankingMemberPeer::TOTAL_PAID);
+
+		$criteria->addSelectColumn(RankingMemberPeer::TOTAL_PRIZE);
+
+		$criteria->addSelectColumn(RankingMemberPeer::BALANCE);
 
 		$criteria->addSelectColumn(RankingMemberPeer::ENABLED);
 

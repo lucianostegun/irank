@@ -38,15 +38,13 @@ class EventMemberMapBuilder {
 
 		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('REBUYS', 'Rebuys', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addColumn('REBUY', 'Rebuy', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('ADDONS', 'Addons', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addColumn('ADDON', 'Addon', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('EVENT_POSITION', 'EventPosition', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('PRIZE_VALUE', 'PrizeValue', 'double', CreoleTypes::FLOAT, false, null);
-
-		$tMap->addColumn('EMAIL_SENT', 'EmailSent', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('PRIZE', 'Prize', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

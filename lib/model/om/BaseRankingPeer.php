@@ -13,7 +13,7 @@ abstract class BaseRankingPeer {
 	const CLASS_DEFAULT = 'lib.model.Ranking';
 
 	
-	const NUM_COLUMNS = 15;
+	const NUM_COLUMNS = 17;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -32,6 +32,9 @@ abstract class BaseRankingPeer {
 	const RANKING_TYPE_ID = 'ranking.RANKING_TYPE_ID';
 
 	
+	const GAME_STYLE_ID = 'ranking.GAME_STYLE_ID';
+
+	
 	const START_DATE = 'ranking.START_DATE';
 
 	
@@ -39,6 +42,9 @@ abstract class BaseRankingPeer {
 
 	
 	const IS_PRIVATE = 'ranking.IS_PRIVATE';
+
+	
+	const DEFAULT_BUYIN = 'ranking.DEFAULT_BUYIN';
 
 	
 	const MEMBERS = 'ranking.MEMBERS';
@@ -70,19 +76,19 @@ abstract class BaseRankingPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingName', 'UserSiteId', 'RankingTypeId', 'StartDate', 'FinishDate', 'IsPrivate', 'Members', 'Events', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (RankingPeer::ID, RankingPeer::RANKING_NAME, RankingPeer::USER_SITE_ID, RankingPeer::RANKING_TYPE_ID, RankingPeer::START_DATE, RankingPeer::FINISH_DATE, RankingPeer::IS_PRIVATE, RankingPeer::MEMBERS, RankingPeer::EVENTS, RankingPeer::ENABLED, RankingPeer::VISIBLE, RankingPeer::DELETED, RankingPeer::LOCKED, RankingPeer::CREATED_AT, RankingPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_name', 'user_site_id', 'ranking_type_id', 'start_date', 'finish_date', 'is_private', 'members', 'events', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_NAME'=>'', 'USER_SITE_ID'=>'', 'RANKING_TYPE_ID'=>'', 'START_DATE'=>'', 'FINISH_DATE'=>'', 'IS_PRIVATE'=>'', 'MEMBERS'=>'', 'EVENTS'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingName', 'UserSiteId', 'RankingTypeId', 'GameStyleId', 'StartDate', 'FinishDate', 'IsPrivate', 'DefaultBuyin', 'Members', 'Events', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (RankingPeer::ID, RankingPeer::RANKING_NAME, RankingPeer::USER_SITE_ID, RankingPeer::RANKING_TYPE_ID, RankingPeer::GAME_STYLE_ID, RankingPeer::START_DATE, RankingPeer::FINISH_DATE, RankingPeer::IS_PRIVATE, RankingPeer::DEFAULT_BUYIN, RankingPeer::MEMBERS, RankingPeer::EVENTS, RankingPeer::ENABLED, RankingPeer::VISIBLE, RankingPeer::DELETED, RankingPeer::LOCKED, RankingPeer::CREATED_AT, RankingPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_name', 'user_site_id', 'ranking_type_id', 'game_style_id', 'start_date', 'finish_date', 'is_private', 'default_buyin', 'members', 'events', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_NAME'=>'', 'USER_SITE_ID'=>'', 'RANKING_TYPE_ID'=>'', 'GAME_STYLE_ID'=>'', 'START_DATE'=>'', 'FINISH_DATE'=>'', 'IS_PRIVATE'=>'', 'DEFAULT_BUYIN'=>'', 'MEMBERS'=>'', 'EVENTS'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingName'=>1, 'UserSiteId'=>2, 'RankingTypeId'=>3, 'StartDate'=>4, 'FinishDate'=>5, 'IsPrivate'=>6, 'Members'=>7, 'Events'=>8, 'Enabled'=>9, 'Visible'=>10, 'Deleted'=>11, 'Locked'=>12, 'CreatedAt'=>13, 'UpdatedAt'=>14, ),
-		BasePeer::TYPE_COLNAME=>array (RankingPeer::ID=>0, RankingPeer::RANKING_NAME=>1, RankingPeer::USER_SITE_ID=>2, RankingPeer::RANKING_TYPE_ID=>3, RankingPeer::START_DATE=>4, RankingPeer::FINISH_DATE=>5, RankingPeer::IS_PRIVATE=>6, RankingPeer::MEMBERS=>7, RankingPeer::EVENTS=>8, RankingPeer::ENABLED=>9, RankingPeer::VISIBLE=>10, RankingPeer::DELETED=>11, RankingPeer::LOCKED=>12, RankingPeer::CREATED_AT=>13, RankingPeer::UPDATED_AT=>14, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_name'=>1, 'user_site_id'=>2, 'ranking_type_id'=>3, 'start_date'=>4, 'finish_date'=>5, 'is_private'=>6, 'members'=>7, 'events'=>8, 'enabled'=>9, 'visible'=>10, 'deleted'=>11, 'locked'=>12, 'created_at'=>13, 'updated_at'=>14, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingName'=>1, 'UserSiteId'=>2, 'RankingTypeId'=>3, 'GameStyleId'=>4, 'StartDate'=>5, 'FinishDate'=>6, 'IsPrivate'=>7, 'DefaultBuyin'=>8, 'Members'=>9, 'Events'=>10, 'Enabled'=>11, 'Visible'=>12, 'Deleted'=>13, 'Locked'=>14, 'CreatedAt'=>15, 'UpdatedAt'=>16, ),
+		BasePeer::TYPE_COLNAME=>array (RankingPeer::ID=>0, RankingPeer::RANKING_NAME=>1, RankingPeer::USER_SITE_ID=>2, RankingPeer::RANKING_TYPE_ID=>3, RankingPeer::GAME_STYLE_ID=>4, RankingPeer::START_DATE=>5, RankingPeer::FINISH_DATE=>6, RankingPeer::IS_PRIVATE=>7, RankingPeer::DEFAULT_BUYIN=>8, RankingPeer::MEMBERS=>9, RankingPeer::EVENTS=>10, RankingPeer::ENABLED=>11, RankingPeer::VISIBLE=>12, RankingPeer::DELETED=>13, RankingPeer::LOCKED=>14, RankingPeer::CREATED_AT=>15, RankingPeer::UPDATED_AT=>16, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_name'=>1, 'user_site_id'=>2, 'ranking_type_id'=>3, 'game_style_id'=>4, 'start_date'=>5, 'finish_date'=>6, 'is_private'=>7, 'default_buyin'=>8, 'members'=>9, 'events'=>10, 'enabled'=>11, 'visible'=>12, 'deleted'=>13, 'locked'=>14, 'created_at'=>15, 'updated_at'=>16, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
 	);
 
 	
@@ -144,11 +150,15 @@ abstract class BaseRankingPeer {
 
 		$criteria->addSelectColumn(RankingPeer::RANKING_TYPE_ID);
 
+		$criteria->addSelectColumn(RankingPeer::GAME_STYLE_ID);
+
 		$criteria->addSelectColumn(RankingPeer::START_DATE);
 
 		$criteria->addSelectColumn(RankingPeer::FINISH_DATE);
 
 		$criteria->addSelectColumn(RankingPeer::IS_PRIVATE);
+
+		$criteria->addSelectColumn(RankingPeer::DEFAULT_BUYIN);
 
 		$criteria->addSelectColumn(RankingPeer::MEMBERS);
 
@@ -273,7 +283,7 @@ abstract class BaseRankingPeer {
 
 
 	
-	public static function doCountJoinVirtualTable(Criteria $criteria, $distinct = false, $con = null)
+	public static function doCountJoinVirtualTableRelatedByRankingTypeId(Criteria $criteria, $distinct = false, $con = null)
 	{
 				$criteria = clone $criteria;
 
@@ -290,6 +300,34 @@ abstract class BaseRankingPeer {
 		}
 
 		$criteria->addJoin(RankingPeer::RANKING_TYPE_ID, VirtualTablePeer::ID);
+
+		$rs = RankingPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doCountJoinVirtualTableRelatedByGameStyleId(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(RankingPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(RankingPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(RankingPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
 
 		$rs = RankingPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -348,7 +386,7 @@ abstract class BaseRankingPeer {
 
 
 	
-	public static function doSelectJoinVirtualTable(Criteria $c, $con = null)
+	public static function doSelectJoinVirtualTableRelatedByRankingTypeId(Criteria $c, $con = null)
 	{
 		$c = clone $c;
 
@@ -380,14 +418,61 @@ abstract class BaseRankingPeer {
 
 			$newObject = true;
 			foreach($results as $temp_obj1) {
-				$temp_obj2 = $temp_obj1->getVirtualTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+				$temp_obj2 = $temp_obj1->getVirtualTableRelatedByRankingTypeId(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-										$temp_obj2->addRanking($obj1); 					break;
+										$temp_obj2->addRankingRelatedByRankingTypeId($obj1); 					break;
 				}
 			}
 			if ($newObject) {
-				$obj2->initRankingList();
-				$obj2->addRanking($obj1); 			}
+				$obj2->initRankingListRelatedByRankingTypeId();
+				$obj2->addRankingRelatedByRankingTypeId($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinVirtualTableRelatedByGameStyleId(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		RankingPeer::addSelectColumns($c);
+		$startcol = (RankingPeer::NUM_COLUMNS - RankingPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		VirtualTablePeer::addSelectColumns($c);
+
+		$c->addJoin(RankingPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = RankingPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = VirtualTablePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getVirtualTableRelatedByGameStyleId(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addRankingRelatedByGameStyleId($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initRankingListRelatedByGameStyleId();
+				$obj2->addRankingRelatedByGameStyleId($obj1); 			}
 			$results[] = $obj1;
 		}
 		return $results;
@@ -414,6 +499,8 @@ abstract class BaseRankingPeer {
 		$criteria->addJoin(RankingPeer::USER_SITE_ID, UserSitePeer::ID);
 
 		$criteria->addJoin(RankingPeer::RANKING_TYPE_ID, VirtualTablePeer::ID);
+
+		$criteria->addJoin(RankingPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
 
 		$rs = RankingPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -442,9 +529,14 @@ abstract class BaseRankingPeer {
 		VirtualTablePeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + VirtualTablePeer::NUM_COLUMNS;
 
+		VirtualTablePeer::addSelectColumns($c);
+		$startcol5 = $startcol4 + VirtualTablePeer::NUM_COLUMNS;
+
 		$c->addJoin(RankingPeer::USER_SITE_ID, UserSitePeer::ID);
 
 		$c->addJoin(RankingPeer::RANKING_TYPE_ID, VirtualTablePeer::ID);
+
+		$c->addJoin(RankingPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -493,15 +585,38 @@ abstract class BaseRankingPeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj3 = $temp_obj1->getVirtualTable(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+				$temp_obj3 = $temp_obj1->getVirtualTableRelatedByRankingTypeId(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj3->addRanking($obj1); 					break;
+					$temp_obj3->addRankingRelatedByRankingTypeId($obj1); 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj3->initRankingList();
-				$obj3->addRanking($obj1);
+				$obj3->initRankingListRelatedByRankingTypeId();
+				$obj3->addRankingRelatedByRankingTypeId($obj1);
+			}
+
+
+					
+			$omClass = VirtualTablePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj4 = new $cls();
+			$obj4->hydrate($rs, $startcol4);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj4 = $temp_obj1->getVirtualTableRelatedByGameStyleId(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj4->addRankingRelatedByGameStyleId($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj4->initRankingListRelatedByGameStyleId();
+				$obj4->addRankingRelatedByGameStyleId($obj1);
 			}
 
 			$results[] = $obj1;
@@ -529,6 +644,8 @@ abstract class BaseRankingPeer {
 
 		$criteria->addJoin(RankingPeer::RANKING_TYPE_ID, VirtualTablePeer::ID);
 
+		$criteria->addJoin(RankingPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
+
 		$rs = RankingPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
@@ -539,7 +656,35 @@ abstract class BaseRankingPeer {
 
 
 	
-	public static function doCountJoinAllExceptVirtualTable(Criteria $criteria, $distinct = false, $con = null)
+	public static function doCountJoinAllExceptVirtualTableRelatedByRankingTypeId(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(RankingPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(RankingPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(RankingPeer::USER_SITE_ID, UserSitePeer::ID);
+
+		$rs = RankingPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doCountJoinAllExceptVirtualTableRelatedByGameStyleId(Criteria $criteria, $distinct = false, $con = null)
 	{
 				$criteria = clone $criteria;
 
@@ -581,7 +726,12 @@ abstract class BaseRankingPeer {
 		VirtualTablePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + VirtualTablePeer::NUM_COLUMNS;
 
+		VirtualTablePeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + VirtualTablePeer::NUM_COLUMNS;
+
 		$c->addJoin(RankingPeer::RANKING_TYPE_ID, VirtualTablePeer::ID);
+
+		$c->addJoin(RankingPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -605,7 +755,86 @@ abstract class BaseRankingPeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getVirtualTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+				$temp_obj2 = $temp_obj1->getVirtualTableRelatedByRankingTypeId(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addRankingRelatedByRankingTypeId($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initRankingListRelatedByRankingTypeId();
+				$obj2->addRankingRelatedByRankingTypeId($obj1);
+			}
+
+			$omClass = VirtualTablePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getVirtualTableRelatedByGameStyleId(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addRankingRelatedByGameStyleId($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initRankingListRelatedByGameStyleId();
+				$obj3->addRankingRelatedByGameStyleId($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptVirtualTableRelatedByRankingTypeId(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		RankingPeer::addSelectColumns($c);
+		$startcol2 = (RankingPeer::NUM_COLUMNS - RankingPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		UserSitePeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + UserSitePeer::NUM_COLUMNS;
+
+		$c->addJoin(RankingPeer::USER_SITE_ID, UserSitePeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = RankingPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = UserSitePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getUserSite(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
 					$temp_obj2->addRanking($obj1);
 					break;
@@ -624,7 +853,7 @@ abstract class BaseRankingPeer {
 
 
 	
-	public static function doSelectJoinAllExceptVirtualTable(Criteria $c, $con = null)
+	public static function doSelectJoinAllExceptVirtualTableRelatedByGameStyleId(Criteria $c, $con = null)
 	{
 		$c = clone $c;
 

@@ -20,6 +20,11 @@ class Ranking extends BaseRanking
 		Util::executeQuery('UPDATE event SET ranking_id = null WHERE ranking_id = '.$this->getId());
 	}
 	
+	public function getCode(){
+		
+		return '#'.sprintf('%04d', $this->getId());
+	}
+	
 	public static function getList(){
 		
 		$criteria = new Criteria();
@@ -119,7 +124,7 @@ class Ranking extends BaseRanking
 	
 	public function getEventList($criteria=null, $con=null){
 		
-		$criteria = new Criteria();
+		$criteria = (is_object($criteria)?$criteria:new Criteria());
 		$criteria->add( EventPeer::ENABLED, true );
 		$criteria->add( EventPeer::VISIBLE, true );
 		$criteria->add( EventPeer::DELETED, false );
@@ -132,7 +137,20 @@ class Ranking extends BaseRanking
 	
 	public function getRankingType($returnTagName=false){
 		
-		$virtualTableObj = $this->getVirtualTable();
+		$virtualTableObj = $this->getVirtualTableRelatedByRankingTypeId();
+		
+		if( !is_object($virtualTableObj) )
+			$virtualTableObj = new VirtualTable();
+		
+		if( $returnTagName )
+			return $virtualTableObj->getTagName();
+		else
+			return $virtualTableObj;
+	}
+	
+	public function getGameStyle($returnTagName=false){
+		
+		$virtualTableObj = $this->getVirtualTableRelatedByGameStyleId();
 		
 		if( !is_object($virtualTableObj) )
 			$virtualTableObj = new VirtualTable();
@@ -148,19 +166,13 @@ class Ranking extends BaseRanking
 		return $this->getRankingType()->isTagName($tagName);
 	}
 	
-	public function updateScore($peopleId){
-		
-		switch($this->getRankingType(true)){
-			case 'value':
-				$totalScore = Util::executeOne('SELECT SUM(prize_value) FROM event_member INNER JOIN event ON event_member.EVENT_ID=event.ID WHERE event.RANKING_ID='.$this->getId().' AND event_member.PEOPLE_ID='.$peopleId);
-				break;
-			case 'position':
-				$totalScore = Util::executeOne('SELECT SUM(event_position) FROM event_member INNER JOIN event ON event_member.EVENT_ID=event.ID WHERE event.RANKING_ID='.$this->getId().' AND event_member.PEOPLE_ID='.$peopleId);
-				break;
-		}
-		
+	public function updateInfo($peopleId){
+
 		$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getId(), $peopleId);
-		$rankingMemberObj->setScore($totalScore+0);
+		
+		$rankingMemberObj->updateScore( $this->getRankingType(true) );
+		$rankingMemberObj->updateBalance();
+		$rankingMemberObj->updateEvents();
 		$rankingMemberObj->save(); 
 	}
 	
@@ -168,7 +180,7 @@ class Ranking extends BaseRanking
 		
 	  	$rankingMemberObjList = $this->getMemberList();
 	  	foreach( $rankingMemberObjList as $rankingMemberObj )
-	  		$this->updateScore($rankingMemberObj->getPeopleId());
+	  		$this->updateInfo($rankingMemberObj->getPeopleId());
 	}
 	
 	public function getClassify(){
@@ -178,8 +190,12 @@ class Ranking extends BaseRanking
 				$orderByList = array(RankingMemberPeer::SCORE=>'desc',
 									 RankingMemberPeer::EVENTS=>'desc');
 				break;
-			case 'position':
-				$orderByList = array(RankingMemberPeer::SCORE=>'asc',
+			case 'balance':
+				$orderByList = array(RankingMemberPeer::BALANCE=>'desc',
+									 RankingMemberPeer::EVENTS=>'desc');
+				break;
+			default:
+				$orderByList = array(RankingMemberPeer::SCORE=>'desc',
 									 RankingMemberPeer::EVENTS=>'desc');
 				break;
 		}
@@ -203,5 +219,15 @@ class Ranking extends BaseRanking
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		
 		return $this->getUserSiteId()==$userSiteId;
+	}
+	
+	public function addToOpenEvents($peopleId){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+		$eventObjList = $this->getEventList($criteria);
+		
+		foreach($eventObjList as $eventObj)
+			$eventObj->addMember($peopleId);
 	}		
 }

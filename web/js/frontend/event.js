@@ -1,5 +1,11 @@
 function handleSuccessEvent(content){
 
+	var infoObj = parseInfo(content);
+
+	updateMemberContent(infoObj.eventId);
+	updateResultContent(infoObj.eventId);
+	
+	setRecordSaved(true);
 	clearFormFieldErrors('eventForm');
 	showFormStatusSuccess();
 	
@@ -9,21 +15,18 @@ function handleSuccessEvent(content){
 		$('eventSendEmail').checked = false;
 	}
 	
-	if( $('eventConfirmPresence')!=null && $('eventConfirmPresence').checked ){
-		
-		$('confirmPresenceDiv').className = 'textFlex';
-		$('confirmPresenceDiv').innerHTML = 'Presença confirmada';
+	if( infoObj.isConfirmed ){
 		
 		hideButton('confirmPresence');
 		showButton('cancelPresence');
+	}else{
 		
-		doConfirmPresence(true);
+		showButton('confirmPresence');
+		hideButton('cancelPresence');
 	}
 	
 	lockRanking();
 	
-	$('eventMemberDiv').innerHTML = content;
-
 	adjustContentTab();
 	
 	enableButton('mainSubmit');
@@ -48,7 +51,7 @@ function doSubmitEvent(content){
 	$('eventForm').onsubmit();
 }
 
-function doConfirmPresence(supressMessage){
+function doConfirmPresence(){
 	
 	showIndicator('event');
 	
@@ -66,8 +69,6 @@ function doConfirmPresence(supressMessage){
 		hideButton('confirmPresence');
 		
 		hideIndicator('event');
-		if( !supressMessage )
-			alert('Presença confirmada com sucesso!');
 	};
 		
 	var failureFunc = function(t){
@@ -75,9 +76,6 @@ function doConfirmPresence(supressMessage){
 		var content = t.responseText;
 
 		hideIndicator('event');
-		
-		if( !supressMessage )
-			alert('Ocorreu um erro ao confirmar sua presença!\nTente novamente mais tarde.');
 		
 		if( isDebug() )
 			debug(content);
@@ -106,8 +104,6 @@ function doCancelPresence(){
 		hideButton('cancelPresence');
 		
 		hideIndicator('event');
-		
-		alert('Presença cancelada com sucesso!\nVocê poderá confirmar presença novamente clicando no botão "Confirmar presença".');
 	};
 		
 	var failureFunc = function(t){
@@ -198,4 +194,103 @@ function lockRanking(){
 	rankingIdField.value = rankingId;
 	
 	$('eventForm').appendChild(rankingIdField);
+}
+
+function loadDefaultBuyin(rankingId){
+	
+	if( $('eventBuyin').value!='0,00' && $('eventBuyin').value!='' )
+		return false;
+	
+	showIndicator('event');
+	
+	$('eventBuyin').disabled = true;
+	
+	var successFunc = function(t){
+
+		var content = t.responseText;
+		
+		$('eventBuyin').disabled = false;
+		$('eventBuyin').value    = content;
+		
+		hideIndicator('event');
+	};
+		
+	var failureFunc = function(t){
+
+		$('eventBuyin').disabled = false;
+
+		hideIndicator('event');
+		
+		if( isDebug() ){
+
+			var content = t.responseText;
+			debug(content);
+		}
+	};
+	
+	var urlAjax = _webRoot+'/ranking/getDefaultBuyin/rankingId/'+rankingId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
+}
+
+function cloneEvent(eventId){
+	
+	if( !confirm('Ao clonar um evento você será direcionado para a edição do evento clonado e deverá editar as informações antes de salvar.\n\nDeseja realmente clonar este evento?') )
+		return false;
+	goModule('event', 'cloneEvent', 'eventId', eventId);
+}
+
+function doDeleteEvent(){
+	
+	if( !confirm('ATENÇÃO!\n\nAo excluir o evento todas as informações de resultados serão perdidas e isso afetará o ranking.\nOs participantes do evento serão notificados da exclusão.\n\n Deseja realmente excluir este evento?') )
+		return false;
+	
+	showIndicator('event');
+	
+	disableButton('mainSubmit');
+	disableButton('confirmPresence');
+	disableButton('cancelPresence');
+	disableButton('deleteEvent');
+	
+	var eventId = $('eventId').value;
+	
+	var successFunc = function(t){
+
+		goModule('event', 'index')
+		hideIndicator('event');
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		hideIndicator('event');
+		
+		enableButton('mainSubmit');
+		enableButton('confirmPresence');
+		enableButton('cancelPresence');
+		enableButton('deleteEvent');
+		
+		alert('Não foi possível excluir o evento!\nTente novamente mais tarde.');
+		
+		if( isDebug() )
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/event/delete/eventId/'+eventId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function updateMemberContent(eventId){
+	
+	var urlAjax = _webRoot+'/event/getMemberList/eventId/'+eventId;
+	new Ajax.Updater('eventMemberDiv', urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function updateResultContent(eventId){
+	
+	if( $('sendResultMail')==null )
+		return false;
+
+	var urlAjax = _webRoot+'/event/getResult/eventId/'+eventId;
+	new Ajax.Updater('rankingClassifyDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }

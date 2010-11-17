@@ -610,6 +610,12 @@ class Util {
 		use_helper('Url');
 	}
 	
+	public static function getHelper($helper){
+		
+		require_once ('symfony/helper/HelperHelper.php');
+		use_helper($helper);
+	}
+	
 	/**
 	 * Método que retorna o nome do arquivo baseado em seu endereço
 	 * 

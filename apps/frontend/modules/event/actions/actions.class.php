@@ -21,11 +21,15 @@ class eventActions extends sfActions
   
   public function executeEdit($request){
   	
-  	$eventId = $request->getParameter('eventId');
+  	$eventId       = $request->getParameter('eventId');
+  	$this->isClone = $request->getParameter('isClone');
   	
   	if( $eventId ){
   		
 		$this->eventObj = EventPeer::retrieveByPK( $eventId );
+
+		if( !is_object($this->eventObj) )
+			return $this->redirect('event/index');
 		
 		if( !$this->eventObj->isMyEvent() )
 			$this->setTemplate('show');
@@ -42,6 +46,9 @@ class eventActions extends sfActions
   	if( $eventId ){
   		
 		$this->eventObj = EventPeer::retrieveByPK( $eventId );
+
+		if( !is_object($this->eventObj) )
+			return $this->redirect('event/index');
   	}else{
 		
 		$this->eventObj = Util::getNewObject('event');
@@ -57,13 +64,12 @@ class eventActions extends sfActions
 
 	$eventId         = $request->getParameter('eventId');
 	$rankingId       = $request->getParameter('rankingId');
-	$gameStyleId     = $request->getParameter('gameStyleId');
 	$eventName       = $request->getParameter('eventName');
 	$eventPlace      = $request->getParameter('eventPlace');
 	$eventDate       = $request->getParameter('eventDate');
 	$startTime       = $request->getParameter('startTime');
 	$paidPlaces      = $request->getParameter('paidPlaces');
-	$buyIn           = $request->getParameter('buyIn');
+	$buyin           = $request->getParameter('buyin');
 	$comments        = $request->getParameter('comments');
 	$sendEmail       = $request->getParameter('sendEmail');
 	$confirmPresence = $request->getParameter('confirmPresence');
@@ -73,13 +79,12 @@ class eventActions extends sfActions
 	$firstSave = !$eventObj->getEnabled();
 
 	$eventObj->setRankingId( $rankingId );
-	$eventObj->setGameStyleId( $gameStyleId );
 	$eventObj->setEventName( $eventName );
 	$eventObj->setEventPlace( $eventPlace );
 	$eventObj->setEventDate( Util::formatDate($eventDate) );
 	$eventObj->setStartTime( $startTime );
 	$eventObj->setPaidPlaces( ($paidPlaces?$paidPlaces:null) );
-	$eventObj->setBuyIn( Util::formatFloat($buyIn) );
+	$eventObj->setBuyin( Util::formatFloat($buyin) );
 	$eventObj->setComments( ($comments?$comments:null) );
 	$eventObj->setVisible(true);
 	$eventObj->setEnabled(true);
@@ -101,9 +106,24 @@ class eventActions extends sfActions
 	if( $sendEmail )
 		$eventObj->notify();
 
-    sfConfig::set('sf_web_debug', false);
-	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/include/member', array('eventObj'=>$eventObj)));
+	$infoList = array();
+	$infoList['eventId']     = $eventObj->getId();
+	$infoList['isConfirmed'] = $eventObj->isConfirmed($this->peopleId);
+
+    echo Util::parseInfo($infoList);
+    exit;
+  }
+  
+  public function executeDelete($request){
+
+	$eventId  = $request->getParameter('eventId');
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+	
+	if( !is_object($eventObj) )
+		throw new Exception('Evento não encontrado!');
+	
+	$eventObj->delete();
+	exit;
   }
   
   public function executeAddMember($request){
@@ -161,6 +181,18 @@ class eventActions extends sfActions
   	$this->handleFormFieldError( $this->getRequest()->getErrors() );
   }
   
+  public function executeCloneEvent($request){
+  	
+  	$eventId = $request->getParameter('eventId');
+  	
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+	$eventObj = $eventObj->getClone();
+	
+	$request->setParameter('eventId', $eventObj->getId());
+	$request->setParameter('isClone', true);
+	return $this->forward('event', 'edit');
+  }
+  
   public function executeSaveResult($request){
 
 	$eventId        = $request->getParameter('eventId');
@@ -168,16 +200,18 @@ class eventActions extends sfActions
 
 	$eventObj   = EventPeer::retrieveByPK($eventId);
 	$rankingObj = $eventObj->getRanking();
-	$buyIn      = $eventObj->getBuyIn();
+	
+	$paidPlaces = 0;
 	
 	$eventMemberObjList = $eventObj->getMemberList();
 	foreach($eventMemberObjList as $eventMemberObj){
 		
 		$peopleId      = $eventMemberObj->getPeopleId();
-		$rebuy         = $request->getParameter('rebuys'.$peopleId);
-		$addon         = $request->getParameter('addons'.$peopleId);
+		$buyin         = $request->getParameter('buyin'.$peopleId);
+		$rebuy         = $request->getParameter('rebuy'.$peopleId);
+		$addon         = $request->getParameter('addon'.$peopleId);
 		$eventPosition = $request->getParameter('eventPosition'.$peopleId);
-		$prizeValue    = $request->getParameter('prizeValue'.$peopleId);
+		$prize    = $request->getParameter('prize'.$peopleId);
 		
 		$eventMemberObj = EventMemberPeer::retrieveByPK($eventId, $peopleId);
 		$enabled        = $eventMemberObj->getEnabled();
@@ -190,16 +224,23 @@ class eventActions extends sfActions
 		
 		if( $enabled ){
 			
+			if( $prize > 0 )
+				$paidPlaces++;
+
 			$eventMemberObj->setEventPosition($eventPosition);
-			$eventMemberObj->setPrizeValue( Util::formatFloat($prizeValue) );
-			$eventMemberObj->setRebuys($rebuy);
-			$eventMemberObj->setAddons($addon);
-			$eventMemberObj->setBuyIn($buyIn);
+			$eventMemberObj->setPrize( Util::formatFloat($prize) );
+			$eventMemberObj->setRebuy( Util::formatFloat($rebuy) );
+			$eventMemberObj->setAddon( Util::formatFloat($addon) );
+			$eventMemberObj->setBuyin( Util::formatFloat($buyin) );
 			$eventMemberObj->save();
-			
-			$rankingObj->updateScore($peopleId);
 		}
 	}
+	
+	$eventObj->setPaidPlaces($paidPlaces);
+	$eventObj->setSavedResult(true);
+	$eventObj->save();
+	
+	$rankingObj->updateScores($peopleId);
 	
 	if( $sendResultMail )
 		$eventObj->notifyResult();
@@ -209,5 +250,8 @@ class eventActions extends sfActions
   
   public function executeJavascript($request){
   	
+    header('Content-type: text/x-javascript');
+		
+  	$nl = chr(10);
   }
 }

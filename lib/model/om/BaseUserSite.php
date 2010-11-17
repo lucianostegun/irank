@@ -29,6 +29,22 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 
 	
+	protected $enabled;
+
+
+	
+	protected $visible;
+
+
+	
+	protected $deleted;
+
+
+	
+	protected $locked;
+
+
+	
 	protected $last_access_date;
 
 
@@ -87,6 +103,34 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	{
 
 		return $this->active;
+	}
+
+	
+	public function getEnabled()
+	{
+
+		return $this->enabled;
+	}
+
+	
+	public function getVisible()
+	{
+
+		return $this->visible;
+	}
+
+	
+	public function getDeleted()
+	{
+
+		return $this->deleted;
+	}
+
+	
+	public function getLocked()
+	{
+
+		return $this->locked;
 	}
 
 	
@@ -234,6 +278,46 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setEnabled($v)
+	{
+
+		if ($this->enabled !== $v) {
+			$this->enabled = $v;
+			$this->modifiedColumns[] = UserSitePeer::ENABLED;
+		}
+
+	} 
+	
+	public function setVisible($v)
+	{
+
+		if ($this->visible !== $v) {
+			$this->visible = $v;
+			$this->modifiedColumns[] = UserSitePeer::VISIBLE;
+		}
+
+	} 
+	
+	public function setDeleted($v)
+	{
+
+		if ($this->deleted !== $v) {
+			$this->deleted = $v;
+			$this->modifiedColumns[] = UserSitePeer::DELETED;
+		}
+
+	} 
+	
+	public function setLocked($v)
+	{
+
+		if ($this->locked !== $v) {
+			$this->locked = $v;
+			$this->modifiedColumns[] = UserSitePeer::LOCKED;
+		}
+
+	} 
+	
 	public function setLastAccessDate($v)
 	{
 
@@ -299,17 +383,25 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			$this->active = $rs->getBoolean($startcol + 4);
 
-			$this->last_access_date = $rs->getTimestamp($startcol + 5, null);
+			$this->enabled = $rs->getBoolean($startcol + 5);
 
-			$this->created_at = $rs->getTimestamp($startcol + 6, null);
+			$this->visible = $rs->getBoolean($startcol + 6);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 7, null);
+			$this->deleted = $rs->getBoolean($startcol + 7);
+
+			$this->locked = $rs->getBoolean($startcol + 8);
+
+			$this->last_access_date = $rs->getTimestamp($startcol + 9, null);
+
+			$this->created_at = $rs->getTimestamp($startcol + 10, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 11, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 8; 
+						return $startcol + 12; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserSite object", $e);
 		}
@@ -495,12 +587,24 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				return $this->getActive();
 				break;
 			case 5:
-				return $this->getLastAccessDate();
+				return $this->getEnabled();
 				break;
 			case 6:
-				return $this->getCreatedAt();
+				return $this->getVisible();
 				break;
 			case 7:
+				return $this->getDeleted();
+				break;
+			case 8:
+				return $this->getLocked();
+				break;
+			case 9:
+				return $this->getLastAccessDate();
+				break;
+			case 10:
+				return $this->getCreatedAt();
+				break;
+			case 11:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -518,9 +622,13 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$keys[2]=>$this->getUsername(),
 			$keys[3]=>$this->getPassword(),
 			$keys[4]=>$this->getActive(),
-			$keys[5]=>$this->getLastAccessDate(),
-			$keys[6]=>$this->getCreatedAt(),
-			$keys[7]=>$this->getUpdatedAt(),
+			$keys[5]=>$this->getEnabled(),
+			$keys[6]=>$this->getVisible(),
+			$keys[7]=>$this->getDeleted(),
+			$keys[8]=>$this->getLocked(),
+			$keys[9]=>$this->getLastAccessDate(),
+			$keys[10]=>$this->getCreatedAt(),
+			$keys[11]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -552,12 +660,24 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$this->setActive($value);
 				break;
 			case 5:
-				$this->setLastAccessDate($value);
+				$this->setEnabled($value);
 				break;
 			case 6:
-				$this->setCreatedAt($value);
+				$this->setVisible($value);
 				break;
 			case 7:
+				$this->setDeleted($value);
+				break;
+			case 8:
+				$this->setLocked($value);
+				break;
+			case 9:
+				$this->setLastAccessDate($value);
+				break;
+			case 10:
+				$this->setCreatedAt($value);
+				break;
+			case 11:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -572,9 +692,13 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setUsername($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPassword($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setActive($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setLastAccessDate($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[5], $arr)) $this->setEnabled($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setVisible($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setDeleted($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setLocked($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setLastAccessDate($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setUpdatedAt($arr[$keys[11]]);
 	}
 
 	
@@ -587,6 +711,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserSitePeer::USERNAME)) $criteria->add(UserSitePeer::USERNAME, $this->username);
 		if ($this->isColumnModified(UserSitePeer::PASSWORD)) $criteria->add(UserSitePeer::PASSWORD, $this->password);
 		if ($this->isColumnModified(UserSitePeer::ACTIVE)) $criteria->add(UserSitePeer::ACTIVE, $this->active);
+		if ($this->isColumnModified(UserSitePeer::ENABLED)) $criteria->add(UserSitePeer::ENABLED, $this->enabled);
+		if ($this->isColumnModified(UserSitePeer::VISIBLE)) $criteria->add(UserSitePeer::VISIBLE, $this->visible);
+		if ($this->isColumnModified(UserSitePeer::DELETED)) $criteria->add(UserSitePeer::DELETED, $this->deleted);
+		if ($this->isColumnModified(UserSitePeer::LOCKED)) $criteria->add(UserSitePeer::LOCKED, $this->locked);
 		if ($this->isColumnModified(UserSitePeer::LAST_ACCESS_DATE)) $criteria->add(UserSitePeer::LAST_ACCESS_DATE, $this->last_access_date);
 		if ($this->isColumnModified(UserSitePeer::CREATED_AT)) $criteria->add(UserSitePeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(UserSitePeer::UPDATED_AT)) $criteria->add(UserSitePeer::UPDATED_AT, $this->updated_at);
@@ -627,6 +755,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		$copyObj->setPassword($this->password);
 
 		$copyObj->setActive($this->active);
+
+		$copyObj->setEnabled($this->enabled);
+
+		$copyObj->setVisible($this->visible);
+
+		$copyObj->setDeleted($this->deleted);
+
+		$copyObj->setLocked($this->locked);
 
 		$copyObj->setLastAccessDate($this->last_access_date);
 
@@ -768,7 +904,7 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 
 	
-	public function getRankingListJoinVirtualTable($criteria = null, $con = null)
+	public function getRankingListJoinVirtualTableRelatedByRankingTypeId($criteria = null, $con = null)
 	{
 				include_once 'lib/model/om/BaseRankingPeer.php';
 		if ($criteria === null) {
@@ -786,14 +922,49 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 				$criteria->add(RankingPeer::USER_SITE_ID, $this->getId());
 
-				$this->collRankingList = RankingPeer::doSelectJoinVirtualTable($criteria, $con);
+				$this->collRankingList = RankingPeer::doSelectJoinVirtualTableRelatedByRankingTypeId($criteria, $con);
 			}
 		} else {
 									
 			$criteria->add(RankingPeer::USER_SITE_ID, $this->getId());
 
 			if (!isset($this->lastRankingCriteria) || !$this->lastRankingCriteria->equals($criteria)) {
-				$this->collRankingList = RankingPeer::doSelectJoinVirtualTable($criteria, $con);
+				$this->collRankingList = RankingPeer::doSelectJoinVirtualTableRelatedByRankingTypeId($criteria, $con);
+			}
+		}
+		$this->lastRankingCriteria = $criteria;
+
+		return $this->collRankingList;
+	}
+
+
+	
+	public function getRankingListJoinVirtualTableRelatedByGameStyleId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingList === null) {
+			if ($this->isNew()) {
+				$this->collRankingList = array();
+			} else {
+
+				$criteria->add(RankingPeer::USER_SITE_ID, $this->getId());
+
+				$this->collRankingList = RankingPeer::doSelectJoinVirtualTableRelatedByGameStyleId($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingPeer::USER_SITE_ID, $this->getId());
+
+			if (!isset($this->lastRankingCriteria) || !$this->lastRankingCriteria->equals($criteria)) {
+				$this->collRankingList = RankingPeer::doSelectJoinVirtualTableRelatedByGameStyleId($criteria, $con);
 			}
 		}
 		$this->lastRankingCriteria = $criteria;

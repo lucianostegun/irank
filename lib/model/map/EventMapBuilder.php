@@ -38,13 +38,11 @@ class EventMapBuilder {
 
 		$tMap->addForeignKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, 'ranking', 'ID', true, null);
 
-		$tMap->addForeignKey('GAME_STYLE_ID', 'GameStyleId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', true, null);
-
 		$tMap->addColumn('EVENT_NAME', 'EventName', 'string', CreoleTypes::VARCHAR, false, 25);
 
 		$tMap->addColumn('EVENT_PLACE', 'EventPlace', 'string', CreoleTypes::VARCHAR, false, 250);
 
-		$tMap->addColumn('BUY_IN', 'BuyIn', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('PAID_PLACES', 'PaidPlaces', 'int', CreoleTypes::INTEGER, false, null);
 
@@ -59,6 +57,8 @@ class EventMapBuilder {
 		$tMap->addColumn('INVITES', 'Invites', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('MEMBERS', 'Members', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('SAVED_RESULT', 'SavedResult', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

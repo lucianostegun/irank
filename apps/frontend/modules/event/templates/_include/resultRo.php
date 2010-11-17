@@ -4,11 +4,11 @@
     <td>Buy-in</td>
     <td>Posição</td>
     <td>Prêmio</td>
-    <td>Rebuys</td>
-    <td>Add-ons</td>
+    <td>Rebuy</td>
+    <td>Add-on</td>
   </tr>
   <?php
-  	$buyIn = $eventObj->getBuyIn();
+  	$buyin = $eventObj->getBuyin();
   	
   	$orderByList = array(EventMemberPeer::ENABLED=>'desc',
   						 EventMemberPeer::EVENT_POSITION=>'asc');
@@ -24,11 +24,11 @@
   ?>
   <tr class="boxcontent">
     <td><?php echo $peopleObj->getFullName() ?></td>
-    <td align="right"><?php echo Util::formatFloat($buyIn, true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($buyin, true) ?></td>
     <td>#<?php echo $eventMemberObj->getEventPosition() ?></td>
-    <td align="right"><?php echo Util::formatFloat($eventMemberObj->getPrizeValue(), true) ?></td>
-    <td><?php echo $eventMemberObj->getRebuys() ?></td>
-    <td><?php echo $eventMemberObj->getAddons() ?></td>
+    <td align="right"><?php echo Util::formatFloat($eventMemberObj->getPrize(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($eventMemberObj->getRebuy(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($eventMemberObj->getAddon(), true) ?></td>
   </tr>
   <?php
   	endforeach;

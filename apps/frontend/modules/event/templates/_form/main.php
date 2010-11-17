@@ -4,17 +4,12 @@
 			<div class="row">
 				<div class="label" id="eventRankingIdLabel">Ranking</div>
 				<?php if( !$eventObj->getEnabled() ): ?>
-					<div class="field" id="rankinkIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($eventObj->getRankingId()), array('class'=>'required', 'id'=>'eventRankingId')) ?></div>
+					<div class="field" id="rankinkIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($eventObj->getRankingId()), array('class'=>'required', 'onchange'=>'loadDefaultBuyin(this.value)', 'id'=>'eventRankingId')) ?></div>
 					<div class="error" id="eventRankingIdError" onclick="showFormErrorDetails('event', 'rankingId')"></div>
 				<?php else: ?>
 					<?php echo input_hidden_tag('rankingId', $eventObj->getRankingId()) ?>
 					<div class="textFlex"><?php echo link_to($eventObj->getRanking()->getRankingName(), '#goModule("ranking", "edit", "rankingId", '.$eventObj->getRankingId().')') ?></div>
 				<?php endif; ?>
-			</div>
-			<div class="row">
-				<div class="label" id="eventGameStyleIdLabel">Estilo</div>
-				<div class="field"><?php echo select_tag('gameStyleId', VirtualTable::getOptionsForSelect('gameStyle', $eventObj->getGameStyleId()), array('class'=>'required', 'id'=>'eventGameStyleId')) ?></div>
-				<div class="error" id="eventGameStyleIdError" onclick="showFormErrorDetails('event', 'gameStyleId')"></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventEventNameLabel">Título</div>
@@ -42,9 +37,9 @@
 				<div class="error" id="eventPaidPlacesError" onclick="showFormErrorDetails('event', 'paidPlaces')"></div>
 			</div>
 			<div class="row">
-				<div class="label" id="eventBuyInLabel">Buy-in</div>
-				<div class="field"><?php echo input_tag('buyIn', Util::formatFloat($eventObj->getBuyIn(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventBuyIn')) ?></div>
-				<div class="error" id="eventBuyInError" onclick="showFormErrorDetails('event', 'buyIn')"></div>
+				<div class="label" id="eventBuyinLabel">Buy-in</div>
+				<div class="field"><?php echo input_tag('buyin', Util::formatFloat($eventObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventBuyin')) ?></div>
+				<div class="error" id="eventBuyinError" onclick="showFormErrorDetails('event', 'buyin')"></div>
 				<div class="textFlex">Ex: 0,00</div>
 			</div>
 			<div class="rowTextArea">
@@ -57,12 +52,6 @@
 				<div class="field"><?php echo checkbox_tag('sendEmail', true, false, array('id'=>'eventSendEmail')) ?></div>
 				<div class="textFlex" style="display: <?php echo ($eventObj->getSentEmail()?'block':'none') ?>" id="sentEmailDiv">Notificação já enviada</div>
 			</div>
-			<?php if( !$eventObj->getEnabled() ): ?>
-			<div class="row">
-				<div class="label">Confirmar presença</div>
-				<div class="field" id="confirmPresenceDiv"><?php echo checkbox_tag('confirmPresence', true, false, array('id'=>'eventConfirmPresence')) ?></div>
-			</div>
-			<?php endif; ?>
 		</td>
 	</tr>
 </table>

@@ -5,7 +5,9 @@
       <tr>
         <td width="245" align="left" valign="top"><img src="/images/frontend/layout/welcome_img.jpg" alt="" width="245" height="162" /></td>
         <td align="left" valign="top" style="padding:28px 10px 0px 21px;"><p><img src="/images/frontend/layout/welcome_heading.gif" alt="" width="284" height="15" /></p>
-          <p>But the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly If you are going to use a passage of Lorem Ipsum, you need to be sure if a there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators.on the Internet tend to repeat predefined chunks as necessary.</p></td>
+          <p>O iRanking é um site gratuito para criação e gerenciamento de rankings online para jogos de Poker.</p>
+		  <p>Aqui você poderá criar seus próprios rankings, definir as configurações de jogo e organizar os eventos, classificações e estatísticas dos torneios entre seus amigos.</p>
+		  <p>Se você ainda não é cadastrado, <?php echo link_to('clique aqui', 'sign') ?> e comece agora mesmo a controlar seus jogos!</p></td>
       </tr>
     </table></td>
   </tr>

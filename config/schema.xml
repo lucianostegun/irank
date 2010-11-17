@@ -39,6 +39,10 @@
 		<column name="username" type="VARCHAR" size="50" description="Username" />
 		<column name="password" type="VARCHAR" size="40" />
 		<column name="active" type="BOOLEAN" description="Ativo" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
 		<column name="last_access_date" type="TIMESTAMP" description="Último acesso" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -52,9 +56,11 @@
 		<column name="ranking_name" type="VARCHAR" size="25" />
 		<column name="user_site_id" type="INTEGER" />
 		<column name="ranking_type_id" type="INTEGER" />
+		<column name="game_style_id" type="INTEGER" required="true" />
 		<column name="start_date" type="DATE" />
 		<column name="finish_date" type="DATE" />
 		<column name="is_private" type="BOOLEAN" />
+		<column name="default_buyin" type="FLOAT" />
 		<column name="members" type="INTEGER" />
 		<column name="events" type="INTEGER" />
 		<column name="enabled" type="BOOLEAN" />
@@ -69,6 +75,9 @@
 		  <foreign-key foreignTable="virtual_table">
 		    <reference local="ranking_type_id" foreign="id" />
 		  </foreign-key>
+		  <foreign-key foreignTable="virtual_table">
+		    <reference local="game_style_id" foreign="id" />
+		  </foreign-key>
 	</table>
 
 	<table name="ranking_member" phpName="RankingMember">
@@ -76,6 +85,9 @@
 		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="events" type="INTEGER" />
 		<column name="score" type="FLOAT" />
+		<column name="total_paid" type="FLOAT" />
+		<column name="total_prize" type="FLOAT" />
+		<column name="balance" type="FLOAT" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -90,10 +102,9 @@
 	<table name="event" phpName="Event">
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
 		<column name="ranking_id" type="INTEGER" required="true" />
-		<column name="game_style_id" type="INTEGER" required="true" />
 		<column name="event_name" type="VARCHAR" size="25" />
 		<column name="event_place" type="VARCHAR" size="250" />
-		<column name="buy_in" type="FLOAT" />
+		<column name="buyin" type="FLOAT" />
 		<column name="paid_places" type="INTEGER" />
 		<column name="event_date" type="DATE" />
 		<column name="start_time" type="TIME" />
@@ -101,6 +112,7 @@
 		<column name="sent_email" type="BOOLEAN" />
 		<column name="invites" type="INTEGER" />
 		<column name="members" type="INTEGER" />
+		<column name="saved_result" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -110,20 +122,16 @@
 		  <foreign-key foreignTable="ranking">
 		    <reference local="ranking_id" foreign="id" />
 		  </foreign-key>
-		  <foreign-key foreignTable="virtual_table">
-		    <reference local="game_style_id" foreign="id" />
-		  </foreign-key>
 	</table>
 
 	<table name="event_member" phpName="EventMember">
 		<column name="event_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="buyin" type="FLOAT" />
-		<column name="rebuys" type="INTEGER" />
-		<column name="addons" type="INTEGER" />
+		<column name="rebuy" type="FLOAT" />
+		<column name="addon" type="FLOAT" />
 		<column name="event_position" type="INTEGER" />
-		<column name="prize_value" type="FLOAT" />
-		<column name="email_sent" type="BOOLEAN" />
+		<column name="prize" type="FLOAT" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />

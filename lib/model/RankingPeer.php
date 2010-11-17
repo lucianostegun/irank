@@ -12,11 +12,22 @@ class RankingPeer extends BaseRankingPeer
 	
 	public static function doSelectRS(Criteria $criteria, $con = null){
 		
-		if( !$criteria->isNoFilter() ){
+		$userSiteId = MyTools::getAttribute('userSiteId');
+		$peopleId   = MyTools::getAttribute('peopleId');
 			
-			$userSiteId = MyTools::getAttribute('userSiteId');
-			$criteria->addAnd( self::USER_SITE_ID, $userSiteId );
+		if( !$criteria->isNoFilter() ){
+
+			$criterion = $criteria->getNewCriterion( RankingMemberPeer::PEOPLE_ID, $peopleId );
+			$criterion->addOr( $criteria->getNewCriterion( self::USER_SITE_ID, $userSiteId ) );
+			$criteria->add($criterion);
+			
+			$criteria->addAnd( self::DELETED, false );
+		}else{
+		
+			$criteria->add( RankingMemberPeer::PEOPLE_ID, $peopleId );
 		}
+		
+		$criteria->addJoin( RankingPeer::ID, RankingMemberPeer::RANKING_ID, Criteria::INNER_JOIN );
 		
 		return parent::doSelectRS($criteria, $con);
 	}

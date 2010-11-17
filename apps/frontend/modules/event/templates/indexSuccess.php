@@ -6,11 +6,12 @@
     <td align="left" valign="top" style="padding:15px 23px 16px 20px;">
     	<table width="100%" border="0" cellspacing="1" cellpadding="0">
 	      <tr class="rank_heading">
-	        <td width="200">Evento</td>
-	        <td>Data</td>
-	        <td>Hora</td>
+	        <td>Evento</td>
+	        <td>Ranking</td>
+	        <td>Data/Hora</td>
 	        <td>Local</td>
 	        <td>Convidados</td>
+	        <td></td>
 	      </tr>
 	      <?php
 	      	$eventObjList = Event::getList();
@@ -18,12 +19,13 @@
 	      	foreach($eventObjList as $eventObj):
 	      		$myEvent = $eventObj->isMyEvent();
 	      ?>
-	      <tr class="boxcontent">
+	      <tr class="boxcontent" onmouseover="this.className='boxcontentOver'" onmouseout="this.className='boxcontent'">
 	        <td><?php echo link_to($eventObj->getEventName(), '#goModule(\'event\', \'edit\', \'eventId\', '.$eventObj->getId().')').($myEvent?'*':'') ?></td>
-	        <td align="center"><?php echo $eventObj->getEventDate('d/m/Y') ?></td>
-	        <td align="center"><?php echo $eventObj->getStartTime('H:i') ?></td>
+	        <td><?php echo $eventObj->getRanking()->getRankingName() ?></td>
+	        <td align="center"><?php echo $eventObj->getEventDate('d/m/Y').' '.$eventObj->getStartTime('H:i') ?></td>
 	        <td><?php echo $eventObj->getEventPlace() ?></td>
 	        <td align="center"><?php echo sprintf('%02d', $eventObj->getInvites()).' ('.sprintf('%02d', $eventObj->getMembers()).')' ?></td>
+	        <td style="padding: 3px 0px 3px 6px"><?php echo link_to(image_tag('icon/clone'), '#cloneEvent('.$eventObj->getId().')', array('title'=>'Duplicar evento a partir deste')) ?></td>
 	      </tr>
 	      <?php
 	      	endforeach;

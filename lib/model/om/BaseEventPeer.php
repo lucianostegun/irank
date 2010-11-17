@@ -26,16 +26,13 @@ abstract class BaseEventPeer {
 	const RANKING_ID = 'event.RANKING_ID';
 
 	
-	const GAME_STYLE_ID = 'event.GAME_STYLE_ID';
-
-	
 	const EVENT_NAME = 'event.EVENT_NAME';
 
 	
 	const EVENT_PLACE = 'event.EVENT_PLACE';
 
 	
-	const BUY_IN = 'event.BUY_IN';
+	const BUYIN = 'event.BUYIN';
 
 	
 	const PAID_PLACES = 'event.PAID_PLACES';
@@ -57,6 +54,9 @@ abstract class BaseEventPeer {
 
 	
 	const MEMBERS = 'event.MEMBERS';
+
+	
+	const SAVED_RESULT = 'event.SAVED_RESULT';
 
 	
 	const ENABLED = 'event.ENABLED';
@@ -82,18 +82,18 @@ abstract class BaseEventPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'GameStyleId', 'EventName', 'EventPlace', 'BuyIn', 'PaidPlaces', 'EventDate', 'StartTime', 'Comments', 'SentEmail', 'Invites', 'Members', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventPeer::ID, EventPeer::RANKING_ID, EventPeer::GAME_STYLE_ID, EventPeer::EVENT_NAME, EventPeer::EVENT_PLACE, EventPeer::BUY_IN, EventPeer::PAID_PLACES, EventPeer::EVENT_DATE, EventPeer::START_TIME, EventPeer::COMMENTS, EventPeer::SENT_EMAIL, EventPeer::INVITES, EventPeer::MEMBERS, EventPeer::ENABLED, EventPeer::VISIBLE, EventPeer::DELETED, EventPeer::LOCKED, EventPeer::CREATED_AT, EventPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'game_style_id', 'event_name', 'event_place', 'buy_in', 'paid_places', 'event_date', 'start_time', 'comments', 'sent_email', 'invites', 'members', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'GAME_STYLE_ID'=>'', 'EVENT_NAME'=>'', 'EVENT_PLACE'=>'', 'BUY_IN'=>'', 'PAID_PLACES'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'COMMENTS'=>'', 'SENT_EMAIL'=>'', 'INVITES'=>'', 'MEMBERS'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'EventName', 'EventPlace', 'Buyin', 'PaidPlaces', 'EventDate', 'StartTime', 'Comments', 'SentEmail', 'Invites', 'Members', 'SavedResult', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventPeer::ID, EventPeer::RANKING_ID, EventPeer::EVENT_NAME, EventPeer::EVENT_PLACE, EventPeer::BUYIN, EventPeer::PAID_PLACES, EventPeer::EVENT_DATE, EventPeer::START_TIME, EventPeer::COMMENTS, EventPeer::SENT_EMAIL, EventPeer::INVITES, EventPeer::MEMBERS, EventPeer::SAVED_RESULT, EventPeer::ENABLED, EventPeer::VISIBLE, EventPeer::DELETED, EventPeer::LOCKED, EventPeer::CREATED_AT, EventPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'event_name', 'event_place', 'buyin', 'paid_places', 'event_date', 'start_time', 'comments', 'sent_email', 'invites', 'members', 'saved_result', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'EVENT_NAME'=>'', 'EVENT_PLACE'=>'', 'BUYIN'=>'', 'PAID_PLACES'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'COMMENTS'=>'', 'SENT_EMAIL'=>'', 'INVITES'=>'', 'MEMBERS'=>'', 'SAVED_RESULT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'GameStyleId'=>2, 'EventName'=>3, 'EventPlace'=>4, 'BuyIn'=>5, 'PaidPlaces'=>6, 'EventDate'=>7, 'StartTime'=>8, 'Comments'=>9, 'SentEmail'=>10, 'Invites'=>11, 'Members'=>12, 'Enabled'=>13, 'Visible'=>14, 'Deleted'=>15, 'Locked'=>16, 'CreatedAt'=>17, 'UpdatedAt'=>18, ),
-		BasePeer::TYPE_COLNAME=>array (EventPeer::ID=>0, EventPeer::RANKING_ID=>1, EventPeer::GAME_STYLE_ID=>2, EventPeer::EVENT_NAME=>3, EventPeer::EVENT_PLACE=>4, EventPeer::BUY_IN=>5, EventPeer::PAID_PLACES=>6, EventPeer::EVENT_DATE=>7, EventPeer::START_TIME=>8, EventPeer::COMMENTS=>9, EventPeer::SENT_EMAIL=>10, EventPeer::INVITES=>11, EventPeer::MEMBERS=>12, EventPeer::ENABLED=>13, EventPeer::VISIBLE=>14, EventPeer::DELETED=>15, EventPeer::LOCKED=>16, EventPeer::CREATED_AT=>17, EventPeer::UPDATED_AT=>18, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'game_style_id'=>2, 'event_name'=>3, 'event_place'=>4, 'buy_in'=>5, 'paid_places'=>6, 'event_date'=>7, 'start_time'=>8, 'comments'=>9, 'sent_email'=>10, 'invites'=>11, 'members'=>12, 'enabled'=>13, 'visible'=>14, 'deleted'=>15, 'locked'=>16, 'created_at'=>17, 'updated_at'=>18, ),
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'EventName'=>2, 'EventPlace'=>3, 'Buyin'=>4, 'PaidPlaces'=>5, 'EventDate'=>6, 'StartTime'=>7, 'Comments'=>8, 'SentEmail'=>9, 'Invites'=>10, 'Members'=>11, 'SavedResult'=>12, 'Enabled'=>13, 'Visible'=>14, 'Deleted'=>15, 'Locked'=>16, 'CreatedAt'=>17, 'UpdatedAt'=>18, ),
+		BasePeer::TYPE_COLNAME=>array (EventPeer::ID=>0, EventPeer::RANKING_ID=>1, EventPeer::EVENT_NAME=>2, EventPeer::EVENT_PLACE=>3, EventPeer::BUYIN=>4, EventPeer::PAID_PLACES=>5, EventPeer::EVENT_DATE=>6, EventPeer::START_TIME=>7, EventPeer::COMMENTS=>8, EventPeer::SENT_EMAIL=>9, EventPeer::INVITES=>10, EventPeer::MEMBERS=>11, EventPeer::SAVED_RESULT=>12, EventPeer::ENABLED=>13, EventPeer::VISIBLE=>14, EventPeer::DELETED=>15, EventPeer::LOCKED=>16, EventPeer::CREATED_AT=>17, EventPeer::UPDATED_AT=>18, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'event_name'=>2, 'event_place'=>3, 'buyin'=>4, 'paid_places'=>5, 'event_date'=>6, 'start_time'=>7, 'comments'=>8, 'sent_email'=>9, 'invites'=>10, 'members'=>11, 'saved_result'=>12, 'enabled'=>13, 'visible'=>14, 'deleted'=>15, 'locked'=>16, 'created_at'=>17, 'updated_at'=>18, ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
 	);
 
@@ -152,13 +152,11 @@ abstract class BaseEventPeer {
 
 		$criteria->addSelectColumn(EventPeer::RANKING_ID);
 
-		$criteria->addSelectColumn(EventPeer::GAME_STYLE_ID);
-
 		$criteria->addSelectColumn(EventPeer::EVENT_NAME);
 
 		$criteria->addSelectColumn(EventPeer::EVENT_PLACE);
 
-		$criteria->addSelectColumn(EventPeer::BUY_IN);
+		$criteria->addSelectColumn(EventPeer::BUYIN);
 
 		$criteria->addSelectColumn(EventPeer::PAID_PLACES);
 
@@ -173,6 +171,8 @@ abstract class BaseEventPeer {
 		$criteria->addSelectColumn(EventPeer::INVITES);
 
 		$criteria->addSelectColumn(EventPeer::MEMBERS);
+
+		$criteria->addSelectColumn(EventPeer::SAVED_RESULT);
 
 		$criteria->addSelectColumn(EventPeer::ENABLED);
 
@@ -293,34 +293,6 @@ abstract class BaseEventPeer {
 
 
 	
-	public static function doCountJoinVirtualTable(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(EventPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(EventPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
-
-		$rs = EventPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
 	public static function doSelectJoinRanking(Criteria $c, $con = null)
 	{
 		$c = clone $c;
@@ -368,53 +340,6 @@ abstract class BaseEventPeer {
 
 
 	
-	public static function doSelectJoinVirtualTable(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-				if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		EventPeer::addSelectColumns($c);
-		$startcol = (EventPeer::NUM_COLUMNS - EventPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-		VirtualTablePeer::addSelectColumns($c);
-
-		$c->addJoin(EventPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = EventPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = VirtualTablePeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj2 = new $cls();
-			$obj2->hydrate($rs, $startcol);
-
-			$newObject = true;
-			foreach($results as $temp_obj1) {
-				$temp_obj2 = $temp_obj1->getVirtualTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-										$temp_obj2->addEvent($obj1); 					break;
-				}
-			}
-			if ($newObject) {
-				$obj2->initEventList();
-				$obj2->addEvent($obj1); 			}
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
 	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
 	{
 		$criteria = clone $criteria;
@@ -432,8 +357,6 @@ abstract class BaseEventPeer {
 		}
 
 		$criteria->addJoin(EventPeer::RANKING_ID, RankingPeer::ID);
-
-		$criteria->addJoin(EventPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
 
 		$rs = EventPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -459,12 +382,7 @@ abstract class BaseEventPeer {
 		RankingPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + RankingPeer::NUM_COLUMNS;
 
-		VirtualTablePeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + VirtualTablePeer::NUM_COLUMNS;
-
 		$c->addJoin(EventPeer::RANKING_ID, RankingPeer::ID);
-
-		$c->addJoin(EventPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -493,199 +411,6 @@ abstract class BaseEventPeer {
 				$temp_obj2 = $temp_obj1->getRanking(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
 					$temp_obj2->addEvent($obj1); 					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj2->initEventList();
-				$obj2->addEvent($obj1);
-			}
-
-
-					
-			$omClass = VirtualTablePeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj3 = new $cls();
-			$obj3->hydrate($rs, $startcol3);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj3 = $temp_obj1->getVirtualTable(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj3->addEvent($obj1); 					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj3->initEventList();
-				$obj3->addEvent($obj1);
-			}
-
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
-	public static function doCountJoinAllExceptRanking(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(EventPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(EventPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
-
-		$rs = EventPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
-	public static function doCountJoinAllExceptVirtualTable(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(EventPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(EventPeer::RANKING_ID, RankingPeer::ID);
-
-		$rs = EventPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
-	public static function doSelectJoinAllExceptRanking(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		EventPeer::addSelectColumns($c);
-		$startcol2 = (EventPeer::NUM_COLUMNS - EventPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-
-		VirtualTablePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + VirtualTablePeer::NUM_COLUMNS;
-
-		$c->addJoin(EventPeer::GAME_STYLE_ID, VirtualTablePeer::ID);
-
-
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = EventPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = VirtualTablePeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj2  = new $cls();
-			$obj2->hydrate($rs, $startcol2);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getVirtualTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj2->addEvent($obj1);
-					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj2->initEventList();
-				$obj2->addEvent($obj1);
-			}
-
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
-	public static function doSelectJoinAllExceptVirtualTable(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		EventPeer::addSelectColumns($c);
-		$startcol2 = (EventPeer::NUM_COLUMNS - EventPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-
-		RankingPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + RankingPeer::NUM_COLUMNS;
-
-		$c->addJoin(EventPeer::RANKING_ID, RankingPeer::ID);
-
-
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = EventPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = RankingPeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj2  = new $cls();
-			$obj2->hydrate($rs, $startcol2);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getRanking(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj2->addEvent($obj1);
-					break;
 				}
 			}
 

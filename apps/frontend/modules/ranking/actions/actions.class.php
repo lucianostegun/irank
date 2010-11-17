@@ -33,9 +33,13 @@ class rankingActions extends sfActions
 			$this->setTemplate('show');
   	}else{
 		
-		$requiredFieldList = array('userSiteId'=>$this->userSiteId );
+		$rankingTypeId     = VirtualTable::getIdByTagName('rankingType', 'position');
+		$requiredFieldList = array('userSiteId'=>$this->userSiteId, 'rankingTypeId'=>$rankingTypeId );
 		
 		$this->rankingObj = Util::getNewObject('ranking', $requiredFieldList);
+		
+		if( !is_object($this->rankingObj) )
+			return $this->redirect('ranking/index');
   	}
 	
 	$this->rankingObj->addMember( $this->rankingObj->getUserSite()->getPeopleId() );
@@ -50,17 +54,21 @@ class rankingActions extends sfActions
 
 	$rankingId     = $request->getParameter('rankingId');
 	$rankingName   = $request->getParameter('rankingName');
+	$gameStyleId   = $request->getParameter('gameStyleId');
 	$startDate     = $request->getParameter('startDate');
 	$finishDate    = $request->getParameter('finishDate');
 	$isPrivate     = $request->getParameter('isPrivate');
 	$rankingTypeId = $request->getParameter('rankingTypeId');
+	$defaultBuyin  = $request->getParameter('defaultBuyin');
 
 	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
 
 	$rankingObj->setRankingName( $rankingName );
+	$rankingObj->setGameStyleId( $gameStyleId );
 	$rankingObj->setUserSiteId( $this->userSiteId );
 	$rankingObj->setStartDate( Util::formatDate($startDate) );
 	$rankingObj->setFinishDate( Util::formatDate($finishDate) );
+	$rankingObj->setDefaultBuyin( Util::formatFloat($defaultBuyin) );
 	$rankingObj->setIsPrivate( $isPrivate );
 	$rankingObj->setRankingTypeId( $rankingTypeId );
 	$rankingObj->setVisible(true);
@@ -99,6 +107,7 @@ class rankingActions extends sfActions
 	}
 	
 	$rankingObj->addMember( $peopleObj->getId() );
+	$rankingObj->addToOpenEvents($peopleObj->getId());
 	
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
@@ -110,14 +119,28 @@ class rankingActions extends sfActions
 
 	$rankingId = $request->getParameter('rankingId');
 	$peopleId  = $request->getParameter('peopleId');
-
+	
 	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
+	
+	if( $rankingObj->getUserSite()->getPeopleId()==$peopleId )
+		throw new Exception('Não é possível remover este membro do ranking');
+	
 	$rankingObj->deleteMember( $peopleId );
 	
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
 	return $this->renderText(get_partial('ranking/include/member', array('rankingObj'=>$rankingObj)));
+  }
+  
+  public function executeGetDefaultBuyin($request){
+
+	$rankingId  = $request->getParameter('rankingId');
+	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
+
+	echo Util::formatFloat($rankingObj->getDefaultBuyIn(), true);
+	
+	exit;
   }
   
   public function executeJavascript($request){
