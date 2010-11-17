@@ -21,7 +21,7 @@ $moduleName = $sf_context->getModuleName();
     <td align="center" valign="top" class="header_bg"><table width="950" border="0" cellspacing="0" cellpadding="0">
       <tr>
 
-        <td width="230" align="left" valign="top" style="padding:18px 0px 0px 18px;"><?php echo link_to(image_tag('frontend/layout/logo.gif'), '/home') ?></td>
+        <td width="230" align="left" valign="top" style="padding:25px 20px 0px 18px;"><?php echo link_to(image_tag('frontend/layout/logo'), '/home') ?></td>
         <td width="380" align="left" valign="top"><img src="/images/frontend/layout/header_img.png" alt="" width="380" height="156" /></td>
         <td align="left" valign="middle">
         <table width="324" border="0" cellspacing="4" cellpadding="0">

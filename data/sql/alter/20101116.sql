@@ -15,7 +15,7 @@ UPDATE event SET saved_result = TRUE WHERE event_date <= '2010-11-16';
 
 ALTER TABLE event DROP COLUMN game_style_id;
 ALTER TABLE ranking ADD COLUMN game_style_id INTEGER;
-ALTER TABLE ranking ADD CONSTRAINT ranking_FK_2 FOREIGN KEY (game_style_id) REFERENCES virtual_table (id);
+ALTER TABLE ranking ADD CONSTRAINT ranking_FK_3 FOREIGN KEY (game_style_id) REFERENCES virtual_table (id);
 
 ALTER TABLE ranking_member ADD COLUMN balance FLOAT DEFAULT 0;
 ALTER TABLE ranking_member ADD COLUMN total_paid FLOAT DEFAULT 0;

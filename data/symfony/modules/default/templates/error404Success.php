@@ -12,10 +12,10 @@
   <dd>Você pode ter digitado o endereço (URL) incorretamente. Verifique-o para ter certeza de que você digitou corretamente a ortografia, acentuação, etc.</dd>
 
   <dt>Você chegou aqui por um link de algum lugar deste site?</dt>
-  <dd>Se você encontrou esta página através de outra página deste sita, por favor envie um e-mail para nós pelo <?php echo mail_to('lucianostegun@gmail.com') ?> para que nos possamos corrigi-lo.</dd>
+  <dd>Se você encontrou esta página através de outra página deste sita, por favor envie um e-mail para nós pelo <?php echo link_to('formulário de contato', '/contact') ?> para que nos possamos corrigi-lo.</dd>
 
   <dt>Você chegou aqui por um link de outro site?</dt>
-  <dd>Links de outros sites as vezes podem estar desatualizados ou incorretos. Envie-nos um e-mail para <?php echo mail_to('lucianostegun@gmail.com') ?> informando o site por onde você chegou aqui para que nós possamos entrar em contato para a correção do problema.</dd>
+  <dd>Links de outros sites as vezes podem estar desatualizados ou incorretos. Envie-nos um e-mail para <?php echo link_to('formulário de contato', '/contact') ?> informando o site por onde você chegou aqui para que nós possamos entrar em contato para a correção do problema.</dd>
 
   <dt>O que fazer agora?</dt>
   <dd>

@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="sfTContainer">
-  <a title="symfony website" href="http://www.symfony-project.org/"><img alt="symfony PHP Framework" class="sfTLogo" src="<?php echo $path ?>/sf/sf_default/images/sfTLogo.png" height="39" width="186" /></a>
+  <a title="symfony website" href="http://www.symfony-project.org/"><img alt="symfony PHP Framework" class="sfTLogo" src="<?php echo $path ?>/sf/sf_default/images/sfTLogo.png" /></a>
   <div class="sfTMessageContainer sfTAlert">
     <img alt="page not found" class="sfTMessageIcon" src="<?php echo $path ?>/sf/sf_default/images/icons/tools48.png" height="48" width="48" />
     <div class="sfTMessageWrap">
@@ -33,7 +33,7 @@
 
   <dl class="sfTMessageInfo">
     <dt>Alguma coisa está com problemas</dt>
-    <dd>Por favor, envie-nos um e-mail para <a href="mailto:webmaster@esferas.com.br">webmaster@esferas.com.br</a> e conte-nos exatamente o que aconteceu para que esse erro ocorresse. Nós iremos corrigi-lo o mais rápido possível.
+    <dd>Por favor, envie-nos um e-mail pelo <?php echo link_to('formulário de contato', '/contact') ?> e conte-nos exatamente o que aconteceu para que esse erro ocorresse. Nós iremos corrigi-lo o mais rápido possível.
     Desculpe-nos pelo inconveniente.</dd>
 
   <dt>O que fazer agora?</dt>

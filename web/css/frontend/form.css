@@ -161,6 +161,47 @@
 	border:			1px solid transparent;
 }
 
+
+
+
+
+.defaultForm .rowCheckbox {
+
+	overflow: 		hidden;
+	height: 		20px;
+	clear: 			both;
+	margin-bottom: 	3px;
+	whitespace: 	nowrap;
+}
+
+.defaultForm .rowCheckbox .label {
+
+	float: 			left;
+	padding: 		3 0 1 5;
+	height: 		15px;
+	height: 		21px !ie;
+	text-align: 	left;
+	color: 			#AAAAAA;
+	font-weight: 	normal;
+	margin-right: 	10px;
+}
+
+.defaultForm .rowCheckbox .field {
+
+	width: 			60px;
+	float: 			left;
+	padding: 		3 0 0 0;
+	height: 		15px;
+	height: 		21px !ie;
+	text-align: 	right;
+	font-weight: 	bold;
+	color: 			#666666;
+	margin-right: 	10px;
+}
+
+
+
+
 .defaultForm input, .windowForm input {
 
 	font-size: 		8pt;

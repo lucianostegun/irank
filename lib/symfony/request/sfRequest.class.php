@@ -342,7 +342,7 @@ abstract class sfRequest
    *
    * @return mixed An attribute value
    */
-  public function getAttribute($name, $default = null, $ns = 'iRanking')
+  public function getAttribute($name, $default = null, $ns = 'iRank')
   {
     return $this->attributeHolder->get($name, $default, $ns);
   }
@@ -355,7 +355,7 @@ abstract class sfRequest
    *
    * @return boolean true, if the attribute exists otherwise false
    */
-  public function hasAttribute($name, $ns = 'iRanking')
+  public function hasAttribute($name, $ns = 'iRank')
   {
     return $this->attributeHolder->has($name, $ns);
   }
@@ -368,7 +368,7 @@ abstract class sfRequest
    * @param string Namespace for the current request
    *
    */
-  public function setAttribute($name, $value, $ns = 'iRanking')
+  public function setAttribute($name, $value, $ns = 'iRank')
   {
     $this->attributeHolder->set($name, $value, $ns);
   }
@@ -381,7 +381,7 @@ abstract class sfRequest
    * @param string Namespace for the current request
    *
    */
-  public function getParameter($name, $default = null, $ns = 'iRanking')
+  public function getParameter($name, $default = null, $ns = 'iRank')
   {
     return $this->parameterHolder->get($name, $default, $ns);
   }
@@ -394,7 +394,7 @@ abstract class sfRequest
    *
    * @return boolean true, if the paramater exists otherwise false
    */
-  public function hasParameter($name, $ns = 'iRanking')
+  public function hasParameter($name, $ns = 'iRank')
   {
     return $this->parameterHolder->has($name, $ns);
   }
@@ -407,7 +407,7 @@ abstract class sfRequest
    * @param string Namespace for the current request
    *
    */
-  public function setParameter($name, $value, $ns = 'iRanking')
+  public function setParameter($name, $value, $ns = 'iRank')
   {
     $this->parameterHolder->set($name, $value, $ns);
   }

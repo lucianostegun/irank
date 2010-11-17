@@ -51,4 +51,8 @@ class signActions extends sfActions
   		$userSiteObj->sendWelcomeMail($request);
   	exit;
   }
+
+  public function executeOptions(){
+
+  }
 }
