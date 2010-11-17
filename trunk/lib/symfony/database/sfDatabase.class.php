@@ -110,7 +110,7 @@ abstract class sfDatabase
    *
    * @see sfParameterHolder
    */
-  public function getParameter($name, $default = null, $ns = 'iRanking')
+  public function getParameter($name, $default = null, $ns = 'iRank')
   {
     return $this->parameterHolder->get($name, $default, $ns);
   }
@@ -129,7 +129,7 @@ abstract class sfDatabase
    *
    * @see sfParameterHolder
    */
-  public function hasParameter($name, $ns = 'iRanking')
+  public function hasParameter($name, $ns = 'iRank')
   {
     return $this->parameterHolder->has($name, $ns);
   }
@@ -147,7 +147,7 @@ abstract class sfDatabase
    *
    * @see sfParameterHolder
    */
-  public function setParameter($name, $value, $ns = 'iRanking')
+  public function setParameter($name, $value, $ns = 'iRank')
   {
     $this->parameterHolder->set($name, $value, $ns);
   }

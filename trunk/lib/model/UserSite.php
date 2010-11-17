@@ -50,7 +50,7 @@ class UserSite extends BaseUserSite
         MyTools::getUser()->setAttribute('firstName', $peopleObj->getFirstName());
         MyTools::getUser()->setAttribute('lastName', $peopleObj->getLastName());
         MyTools::getUser()->setAuthenticated( true );
-        MyTools::getUser()->addCredential('iRankingSite');
+        MyTools::getUser()->addCredential('iRankSite');
 	}
 	
 	public static function logout(){
@@ -62,7 +62,7 @@ class UserSite extends BaseUserSite
 		MyTools::getUser()->getAttributeHolder()->remove('fullName');
 		MyTools::getUser()->getAttributeHolder()->remove('firstName');
 		MyTools::getUser()->getAttributeHolder()->remove('lastName');
-		MyTools::getUser()->removeCredential('iRankingSite');
+		MyTools::getUser()->removeCredential('iRankSite');
 		MyTools::getUser()->setAuthenticated( false );
 	}
 	

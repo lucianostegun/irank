@@ -13,6 +13,7 @@
 		          <tr><td><?php echo link_to('Meus rankings', 'ranking/index') ?></td></tr>
 		          <tr><td style="font-weight: bold"><?php echo link_to('Novo evento', 'event/new') ?></td></tr>
 		          <tr><td><?php echo link_to('Eventos', 'event/index') ?></td></tr>
+		          <tr><td style="padding-top: 20px"><?php echo link_to('Configurações', 'sign/options') ?></td></tr>
 		        </table>
 	        </td>
 	      </tr>

@@ -139,7 +139,7 @@ abstract class sfResponse
    *
    * @return mixed A parameter value
    */
-  public function getParameter($name, $default = null, $ns = 'iRanking')
+  public function getParameter($name, $default = null, $ns = 'iRank')
   {
     return $this->parameterHolder->get($name, $default, $ns);
   }
@@ -152,7 +152,7 @@ abstract class sfResponse
    *
    * @return boolean true, if the parameter exists otherwise false
    */
-  public function hasParameter($name, $ns = 'iRanking')
+  public function hasParameter($name, $ns = 'iRank')
   {
     return $this->parameterHolder->has($name, $ns);
   }
@@ -164,7 +164,7 @@ abstract class sfResponse
    * @param string The parameter value to be set
    * @param string Namespace for the current response
    */
-  public function setParameter($name, $value, $ns = 'iRanking')
+  public function setParameter($name, $value, $ns = 'iRank')
   {
     $this->parameterHolder->set($name, $value, $ns);
   }

@@ -6,8 +6,8 @@ body
   font-size: 80%;
   background-image: url(../images/bg_body.jpg);
   background-repeat: repeat-x;
-  background-color: #E4D7C5;
-  color: #81571F;
+  background-color: #151615;
+  color: #AAAAAA;
   text-align: center;
 }
 
@@ -18,13 +18,13 @@ img
 
 a
 {
-  color: #81571F;
+  color: #FFFFFF;
   text-decoration: underline;
 }
 
 a:hover
 {
-  color: #CC0000;
+  color: #f32126;
   text-decoration: none;
 }
 
@@ -67,8 +67,8 @@ code
   background-repeat: repeat-x;
   background-color: #F8E1D1;
   border: 1px solid #FFFFFF;
-  border-bottom-color: #F0B17C;
-  border-right-color: #F0B17C;
+  border-bottom-color: #909090;
+  border-right-color: #909090;
 }
 
 .sfTLock
@@ -87,9 +87,15 @@ code
   width: 440px;
 }
 
+.sfTLogo {
+
+	margin-top: -50px;
+	margin-bottom: -10px	
+}
+
 .sfTMessageContainer .sfTMessageWrap h1
 {
-  color: #503512;
+  color: #FFFFFF;
   font-weight: normal;
   font-size: 165%;
   padding: 0;

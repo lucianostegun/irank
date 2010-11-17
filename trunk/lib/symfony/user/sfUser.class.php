@@ -160,32 +160,32 @@ class sfUser
     return $this->attributeHolder;
   }
 
-  public function getAttribute($name, $default = null, $ns = 'iRanking')
+  public function getAttribute($name, $default = null, $ns = 'iRank')
   {
     return $this->attributeHolder->get($name, $default, $ns);
   }
 
-  public function hasAttribute($name, $ns = 'iRanking')
+  public function hasAttribute($name, $ns = 'iRank')
   {
     return $this->attributeHolder->has($name, $ns);
   }
 
-  public function setAttribute($name, $value, $ns = 'iRanking')
+  public function setAttribute($name, $value, $ns = 'iRank')
   {
     return $this->attributeHolder->set($name, $value, $ns);
   }
 
-  public function getParameter($name, $default = null, $ns = 'iRanking')
+  public function getParameter($name, $default = null, $ns = 'iRank')
   {
     return $this->parameterHolder->get($name, $default, $ns);
   }
 
-  public function hasParameter($name, $ns = 'iRanking')
+  public function hasParameter($name, $ns = 'iRank')
   {
     return $this->parameterHolder->has($name, $ns);
   }
 
-  public function setParameter($name, $value, $ns = 'iRanking')
+  public function setParameter($name, $value, $ns = 'iRank')
   {
     return $this->parameterHolder->set($name, $value, $ns);
   }

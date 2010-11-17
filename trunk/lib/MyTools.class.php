@@ -100,53 +100,53 @@ class MyTools
     }
  
     /** User attribute parameters (stored in the session until removed) */
-    public static function getAttribute($name, $default = null, $ns = 'iRanking')
+    public static function getAttribute($name, $default = null, $ns = 'iRank')
     {
         return sfContext::getInstance()->getUser()->getAttribute($name, $default, $ns);
     }
  
-    public static function setAttribute($name, $value, $ns = 'iRanking')
+    public static function setAttribute($name, $value, $ns = 'iRank')
     {
         sfContext::getInstance()->getUser()->setAttribute($name, $value, $ns);
     }
  
-    public static function removeAttribute($name, $ns = 'iRanking')
+    public static function removeAttribute($name, $ns = 'iRank')
     {
         sfContext::getInstance()->getUser()->removeAttribute($name, $ns);
     }
  
-    public static function getAttributes($ns = 'iRanking')
+    public static function getAttributes($ns = 'iRank')
     {
         return sfContext::getInstance()->getUser()->getAttributes($ns);
     }
  
-    public static function removeAttributes($ns = 'iRanking')
+    public static function removeAttributes($ns = 'iRank')
     {
         sfContext::getInstance()->getUser()->removeAttributes($ns);
     }
  
     /** User parameter parameters (erased after every request) */
-    public static function getParameter($name, $default = null, $ns = 'iRanking')
+    public static function getParameter($name, $default = null, $ns = 'iRank')
     {
         return sfContext::getInstance()->getUser()->getParameter($name, $default, $ns);
     }
  
-    public static function setParameter($name, $value, $ns = 'iRanking')
+    public static function setParameter($name, $value, $ns = 'iRank')
     {
         sfContext::getInstance()->getUser()->setParameter($name, $value, $ns);
     }
  
-    public static function removeParameter($name, $ns = 'iRanking')
+    public static function removeParameter($name, $ns = 'iRank')
     {
         sfContext::getInstance()->getUser()->removeParameter($name, $ns);
     }
  
-    public static function getParameters($ns = 'iRanking')
+    public static function getParameters($ns = 'iRank')
     {
         return sfContext::getInstance()->getUser()->getParameters($ns);
     }
  
-    public static function removeParameters($ns = 'iRanking')
+    public static function removeParameters($ns = 'iRank')
     {
         sfContext::getInstance()->getUser()->removeParameters($ns);
     }

@@ -102,7 +102,7 @@ abstract class sfFilter
    *
    * @see sfParameterHolder
    */
-  public function getParameter($name, $default = null, $ns = 'iRanking')
+  public function getParameter($name, $default = null, $ns = 'iRank')
   {
     return $this->parameterHolder->get($name, $default, $ns);
   }
@@ -121,7 +121,7 @@ abstract class sfFilter
    *
    * @see sfParameterHolder
    */
-  public function hasParameter($name, $ns = 'iRanking')
+  public function hasParameter($name, $ns = 'iRank')
   {
     return $this->parameterHolder->has($name, $ns);
   }
@@ -139,7 +139,7 @@ abstract class sfFilter
    *
    * @see sfParameterHolder
    */
-  public function setParameter($name, $value, $ns = 'iRanking')
+  public function setParameter($name, $value, $ns = 'iRank')
   {
     return $this->parameterHolder->set($name, $value, $ns);
   }
