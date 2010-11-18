@@ -6,6 +6,11 @@ INSERT INTO file(file_name, file_path, description, file_size, created_at, updat
 INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
     VALUES('Template padrão de e-mail', (SELECT MAX(id) FROM file), 'emailTemplate', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
+    VALUES('emailTemplateAdmin.htm', 'templates/emailTemplateAdmin.htm', 'Template de e-mail para administração', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
+    VALUES('Template de e-mail para administração', (SELECT MAX(id) FROM file), 'emailTemplateAdmin', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at) 
     VALUES('signWelcome.htm', 'templates/signWelcome.htm', 'E-mail de boas vindas', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
@@ -50,3 +55,8 @@ INSERT INTO file(file_name, file_path, description, file_size, created_at, updat
     VALUES('eventReminder.htm', 'templates/eventReminder.htm', 'Lembrete de evento', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
     VALUES('Lembrete de evento', (SELECT MAX(id) FROM file), 'eventReminder', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
+    VALUES('contactMessage.htm', 'templates/contactMessage.htm', 'E-mail para notificação de contato', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
+    VALUES('E-mail para notificação de contato', (SELECT MAX(id) FROM file), 'contactMessage', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
