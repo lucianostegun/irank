@@ -129,6 +129,18 @@ class People extends BasePeople
 		return is_object($userSiteObj);
 	}
 	
+	public function getOptionValue($userSiteOptionId, $defaultValue=null){
+		
+		$userSiteOptionObj = UserSiteOptionPeer::retrieveByPK($this->getId(), $userSiteOptionId);
+		
+		$optionValue = $userSiteOptionObj->getOptionValue();
+		
+		if( $optionValue===null && $defaultValue!==null )
+			return $defaultValue;
+		else
+			return $optionValue;
+	}
+	
 	public function getInfo(){
 		
 		$infoList = array();

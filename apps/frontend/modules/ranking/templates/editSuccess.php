@@ -37,5 +37,5 @@
 	</div>
 </form>
 <?php
-	DhtmlxWindows::createWindow('rankingMemberAdd', 'Cadastro de membros', 380, 115, 'ranking/dialog/memberAdd', array('rankingId'=>$rankingId));
+	DhtmlxWindows::createWindow('rankingMemberAdd', 'Cadastro de membros', 380, 125, 'ranking/dialog/memberAdd', array('rankingId'=>$rankingId));
 ?>

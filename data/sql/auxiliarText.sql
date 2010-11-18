@@ -40,3 +40,13 @@ INSERT INTO file(file_name, file_path, description, file_size, created_at, updat
     VALUES('newUserInvite.htm', 'templates/newUserInvite.htm', 'Convite de cadastro para novos usuários', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
     VALUES('Convite de cadastro para novos usuários', (SELECT MAX(id) FROM file), 'newUserInvite', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
+    VALUES('confirmPresenceNotify.htm', 'templates/confirmPresenceNotify.htm', 'Notificação de confirmação de presença', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
+    VALUES('Notificação de confirmação de presença', (SELECT MAX(id) FROM file), 'confirmPresenceNotify', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
+    VALUES('eventReminder.htm', 'templates/eventReminder.htm', 'Lembrete de evento', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
+    VALUES('Lembrete de evento', (SELECT MAX(id) FROM file), 'eventReminder', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

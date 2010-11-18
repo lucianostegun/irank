@@ -70,13 +70,16 @@
 		font-weight:bold;
 }
 .dhx_tabbar_zone_dark_blue .dhx_tab_element,.dhx_tabbar_zone_dhx_black .dhx_tab_element{
-		color:white;
+		color:#333333;
 }
 .dhx_tabbar_zone_dhx_black .dhx_tablist_line{
-		background-color:#626262;
+		background-color:#888A88;
 }
 .dhx_tabbar_zone_dhx_black .dhx_tabcontent_zone{
-		border-color:#151615;
+		border-top: 0px transparent;
+		border-left: 1px solid #888a88;
+		border-bottom: 1px solid #888a88;
+		border-right: 1px solid #888a88;
 }
 
 .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_row{
@@ -88,7 +91,7 @@
 	background-color: #D2E3EA;
 }
 .dhx_tabbar_zone_dhx_black .dhx_tabbar_row{
-	background-color: black;
+	background-color: #FFFFFF;
 }
 .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineA{
 	position:absolute; 

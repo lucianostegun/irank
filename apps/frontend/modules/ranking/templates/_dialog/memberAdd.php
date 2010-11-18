@@ -10,7 +10,7 @@
 	echo input_hidden_tag('peopleId', null, array('id'=>'rankingMemberPeopleId'));
 	echo input_hidden_tag('rankingId', $rankingId);
 ?>
-	<table width="100%" height="<?php echo $windowHeight-9 ?>" cellspacing="1" cellpadding="0" class="windowForm">
+	<table width="100%" height="<?php echo $windowHeight-17 ?>" cellspacing="1" cellpadding="0" class="windowForm">
 		<tr>
 			<td valign="top">
 				<div class="row">

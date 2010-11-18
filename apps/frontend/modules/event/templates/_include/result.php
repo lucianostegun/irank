@@ -18,7 +18,7 @@
   	
   		$peopleObj = $eventMemberObj->getPeople();
   		$peopleId  = $peopleObj->getId();
-  		$style     = ($eventMemberObj->getEnabled()?'':'color: #555555');
+  		$style     = ($eventMemberObj->getEnabled()?'':'color: #F5F5F5');
   ?>
   <tr class="boxcontent">
     <td id="eventResultPeopleName<?php echo $peopleId ?>" style="<?php echo $style ?>"><?php echo $peopleObj->getFullName() ?></td>

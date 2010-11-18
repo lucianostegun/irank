@@ -18,3 +18,9 @@ DELETE FROM virtual_table WHERE virtual_table_name = 'rankingType';
 INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Valor', 'value', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Posição', 'position', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Balanço', 'balance', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+DELETE FROM virtual_table WHERE virtual_table_name = 'userSiteOption';
+INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'userSiteOption', 'Receber confirmação de presença dos convidados para os eventos', 'receiveFriendEventConfirmNotify', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'userSiteOption', 'Notificar eventos agendados para o dia', 'receiveEventReminder0', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'userSiteOption', 'Notificar eventos agendados para 3 dias', 'receiveEventReminder3', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'userSiteOption', 'Notificar eventos agendados para 7 dias', 'receiveEventReminder7', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -66,6 +66,12 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	protected $lastRankingRelatedByGameStyleIdCriteria = null;
 
 	
+	protected $collUserSiteOptionList;
+
+	
+	protected $lastUserSiteOptionCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -440,6 +446,14 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collUserSiteOptionList !== null) {
+				foreach($this->collUserSiteOptionList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -499,6 +513,14 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 				if ($this->collRankingListRelatedByGameStyleId !== null) {
 					foreach($this->collRankingListRelatedByGameStyleId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collUserSiteOptionList !== null) {
+					foreach($this->collUserSiteOptionList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -714,6 +736,10 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 			foreach($this->getRankingListRelatedByGameStyleId() as $relObj) {
 				$copyObj->addRankingRelatedByGameStyleId($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getUserSiteOptionList() as $relObj) {
+				$copyObj->addUserSiteOption($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1019,6 +1045,111 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 		$this->lastRankingRelatedByGameStyleIdCriteria = $criteria;
 
 		return $this->collRankingListRelatedByGameStyleId;
+	}
+
+	
+	public function initUserSiteOptionList()
+	{
+		if ($this->collUserSiteOptionList === null) {
+			$this->collUserSiteOptionList = array();
+		}
+	}
+
+	
+	public function getUserSiteOptionList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseUserSiteOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collUserSiteOptionList === null) {
+			if ($this->isNew()) {
+			   $this->collUserSiteOptionList = array();
+			} else {
+
+				$criteria->add(UserSiteOptionPeer::USER_SITE_OPTION_ID, $this->getId());
+
+				UserSiteOptionPeer::addSelectColumns($criteria);
+				$this->collUserSiteOptionList = UserSiteOptionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(UserSiteOptionPeer::USER_SITE_OPTION_ID, $this->getId());
+
+				UserSiteOptionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastUserSiteOptionCriteria) || !$this->lastUserSiteOptionCriteria->equals($criteria)) {
+					$this->collUserSiteOptionList = UserSiteOptionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastUserSiteOptionCriteria = $criteria;
+		return $this->collUserSiteOptionList;
+	}
+
+	
+	public function countUserSiteOptionList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseUserSiteOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(UserSiteOptionPeer::USER_SITE_OPTION_ID, $this->getId());
+
+		return UserSiteOptionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addUserSiteOption(UserSiteOption $l)
+	{
+		$this->collUserSiteOptionList[] = $l;
+		$l->setVirtualTable($this);
+	}
+
+
+	
+	public function getUserSiteOptionListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseUserSiteOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collUserSiteOptionList === null) {
+			if ($this->isNew()) {
+				$this->collUserSiteOptionList = array();
+			} else {
+
+				$criteria->add(UserSiteOptionPeer::USER_SITE_OPTION_ID, $this->getId());
+
+				$this->collUserSiteOptionList = UserSiteOptionPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(UserSiteOptionPeer::USER_SITE_OPTION_ID, $this->getId());
+
+			if (!isset($this->lastUserSiteOptionCriteria) || !$this->lastUserSiteOptionCriteria->equals($criteria)) {
+				$this->collUserSiteOptionList = UserSiteOptionPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastUserSiteOptionCriteria = $criteria;
+
+		return $this->collUserSiteOptionList;
 	}
 
 } 

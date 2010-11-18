@@ -44,11 +44,11 @@ class loginActions extends sfActions
 			return $this->renderText(get_partial('login/include/userMenu', $options));
 		}else{
 			
-			$statusMessage = '<b>ACESSO NEGADO!</b><br/>O login/senha inválidos</br>Tente novamente';
+			$statusMessage = '<b>ACESSO NEGADO!</b> O login/senha inválidos';
 		}
 	}else{
 		
-		$statusMessage = '<b>ACESSO NEGADO!</b><br/>O login/senha inválidos</br>Tente novamente';
+		$statusMessage = '<b>ACESSO NEGADO!</b> O login/senha inválidos';
 	}
 	
 	if( $statusMessage )

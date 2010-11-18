@@ -11,6 +11,21 @@ function handleSuccessSign(content, isNew){
 	enableButton('mainSubmit');
 }
 
+function doSubmitUserOptions(){
+	
+	showIndicator('userOptions');
+	disableButton('mainSubmit');
+	$('userOptionsForm').onsubmit();
+}
+
+function handleSuccessUserOptions(content, isNew){
+	
+	clearFormFieldErrors('signForm');
+	showFormStatusSuccess();
+	hideIndicator('userOptions');
+	enableButton('mainSubmit');
+}
+
 function doSubmitSign(){
 	
 	showIndicator('sign');
