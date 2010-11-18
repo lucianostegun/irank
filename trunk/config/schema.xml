@@ -179,4 +179,18 @@
 		<column name="updated_at" type="TIMESTAMP" />
 	</table>
 
+	<table name="user_site_option" phpName="UserSiteOption">
+		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="user_site_option_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="option_value" type="VARCHAR" size="20" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="virtual_table">
+		    <reference local="user_site_option_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
 </database>

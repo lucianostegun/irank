@@ -144,7 +144,7 @@ function togglePresence(peopleId){
 			
 			if( $('eventResultPeopleName'+peopleId)!=null ){
 				
-				$('eventResultPeopleName'+peopleId).style.color = '#555555';
+				$('eventResultPeopleName'+peopleId).style.color = '#F5F5F5';
 
 				$('eventEventPosition'+peopleId).value = '0';
 				$('eventPrizeValue'+peopleId).value    = '0,00';

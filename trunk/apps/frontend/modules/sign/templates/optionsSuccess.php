@@ -10,10 +10,9 @@
 		), array( 'id'=>'userOptionsForm' ));
 	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
-	$dhtmlxTabBarObj->addTab('email', 'E-mail', 'sign/options/email', array());
+	$dhtmlxTabBarObj->addTab('email', 'E-mail', 'sign/options/email', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
-	
 ?>
 	<div class="buttonBarForm" id="eventMainButtonBar">
 		<?php echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitUserOptions()')); ?>

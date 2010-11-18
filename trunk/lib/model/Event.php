@@ -110,16 +110,18 @@ class Event extends BaseEvent
 		
 		if( $confirm && !$eventMemberObj->getEnabled() ){
 		
-			$eventMemberObj->setEnabled(true);
-			$this->setMembers( $this->getMembers()+1 );
-			$this->save();
+//			$eventMemberObj->setEnabled(true);
+//			$this->setMembers( $this->getMembers()+1 );
+//			$this->save();
 			
-			$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getRankingId(), $peopleId);
-			$rankingMemberObj->setEvents($rankingMemberObj->getEvents()+1);
-			$rankingMemberObj->save();
+//			$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getRankingId(), $peopleId);
+//			$rankingMemberObj->setEvents($rankingMemberObj->getEvents()+1);
+//			$rankingMemberObj->save();
+			
+			$eventMemberObj->notifyConfirm();
 		}
 		
-		$eventMemberObj->save();
+//		$eventMemberObj->save();
 	}
 	
 	public function deleteMember($peopleId){
@@ -188,12 +190,21 @@ class Event extends BaseEvent
 		return $this->getRanking()->getGameStyle($returnTagName);
 	}
 	
-	public function getEmailAddresList(){
+	public function getEmailAddressList($tagName=null){
 		
 		$emailAddressList = array();
 		
-		foreach( $this->getPeopleList(true) as $peopleObj )
+		if( $tagName )
+			$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', $tagName);
+		
+		foreach( $this->getPeopleList(true) as $peopleObj ){
+			
+			if( $tagName )
+				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
+					continue;
+					
 			$emailAddressList[] = $peopleObj->getEmailAddress();
+		}
 		
 		return $emailAddressList;
 	}
@@ -242,7 +253,7 @@ class Event extends BaseEvent
 		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
 		$emailContent = str_replace('<members>', $this->getMembers(), $emailContent);
 
-		$emailAddressList = $this->getEmailAddresList();
+		$emailAddressList = $this->getEmailAddressList();
 		
 		Report::sendMail($emailSubject, $emailAddressList, $emailContent);
 		
@@ -294,12 +305,24 @@ class Event extends BaseEvent
 		$emailContent = $this->getEmailContent($emailContent);
 	  	$classifyList = $this->getEmailClassifyList();
 		
-		$emailContent = str_replace('<resultList>', $resultList, $emailContent);
 		$emailContent = str_replace('<classifyList>', $classifyList, $emailContent);
 		
-		$emailAddressList = $this->getEmailAddresList();
+		$emailAddressList = $this->getEmailAddressList();
 		
 		Report::sendMail('Exclusão do evento @ '.$this->getEventName(), $emailAddressList, $emailContent);
+	}
+	
+	public function notifyReminder($days=7){
+
+		$emailContent = AuxiliarText::getContentByTagName('eventReminder');
+		$emailContent = $this->getEmailContent($emailContent);
+		
+		$eventSchedule = ($days==0?'hoje':'em '.$days.' dias');
+		$emailContent = str_replace('<eventSchedule>', $eventSchedule, $emailContent);
+		
+		$emailAddressList = $this->getEmailAddressList('receiveEventReminder'.$days);
+		
+		Report::sendMail('Lembrete de evento @ '.$this->getEventName(), $emailAddressList, $emailContent);
 	}
 	
 	public function getEmailContent($emailContent){

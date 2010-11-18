@@ -11,7 +11,7 @@
 	echo input_hidden_tag('password', $userSiteObj->getPassword(), array('id'=>'signPassword'));
 	echo input_hidden_tag('passwordConfirm', $userSiteObj->getPassword(), array('id'=>'signPasswordConfirm'));
 ?>
-	<table width="100%" cellspacing="1" cellpadding="0" class="defaultForm">
+	<table width="100%" cellspacing="1" cellpadding="0" class="defaultForm" style="border: 1px solid #888A88;">
 		<tr>
 			<td valign="top">
 				<div class="row">

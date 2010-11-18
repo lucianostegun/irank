@@ -91,4 +91,27 @@ class UserSite extends BaseUserSite
 		
 		Report::sendMail('Seja bem vindo', $emailAddress, $emailContent);
 	}
+	
+	public function setOptionValue($tagName, $optionValue){
+		
+		$userSiteOptionId  = VirtualTable::getIdByTagName('userSiteOption', $tagName);
+		$userSiteOptionObj = UserSiteOptionPeer::retrieveByPK($this->getPeopleId(), $userSiteOptionId);
+		$userSiteOptionObj->setOptionValue($optionValue);
+		$userSiteOptionObj->save();
+	}
+	
+	public function getOptionValue($tagName){
+		
+		$userSiteOptionId  = VirtualTable::getIdByTagName('userSiteOption', $tagName);
+		$userSiteOptionObj = UserSiteOptionPeer::retrieveByPK($this->getPeopleId(), $userSiteOptionId);
+		return $userSiteOptionObj->getOptionValue();
+	}
+	
+	public function resetOptions(){
+		
+		$this->setOptionValue('receiveFriendEventConfirmNotify', '1');
+		$this->setOptionValue('receiveEventReminder0', '1');
+		$this->setOptionValue('receiveEventReminder3', '1');
+		$this->setOptionValue('receiveEventReminder7', '1');
+	}
 }

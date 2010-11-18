@@ -1,3 +1,4 @@
+<div align="center" style="margin-left: 20px; width: 300px; padding: 5px; color: #000000; background: #FFFFFF; border: 1px solid #333">
 				Se você já é cadastrado entre com seu usuário e senha
 				<div id="quickLoginStatus"></div>
 				<table border="0" width="100%" cellspacing="2" cellpadding="0">
@@ -16,12 +17,10 @@
 					<tr>
 						<th></th>
 						<td><?php echo button_tag('submitLogin', 'Logar', array('onclick'=>'doQuickLogin()')) ?></td>
-						<td style="width: 100px"><?php echo image_tag('ajaxLoaderForm.gif', array('style'=>'display: none', 'id'=>'indicatorLogin')) ?></td>
-					</tr>
-					<tr>
-						<td colspan="3" style="text-align: center; padding-top: 5px">
+							<td style="text-align: center; padding-top: 5px">
 							<?php echo link_to('Novo cadastro', '/sign') ?>
 							<?php echo link_to('Esqueci a senha', '/login/retrievePassword', array('style'=>'margin-left: 15px')) ?>
 						</td>
 					</tr>
 				</table>
+</div>
