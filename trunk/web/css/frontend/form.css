@@ -211,23 +211,23 @@
 	height: 		17px;
 	border:			1px solid #8A8A8A;
 	padding: 		0 0 1 3;
-	background: 	#DDDDDD;
+	background: 	#F0F0F0;
 }
 
 .defaultForm input.required, .windowForm input.required {
 
-	background: 	#DDDDDD url('/images/frontend/formRequired.png') no-repeat;
+	background: 	#F0F0F0 url('/images/frontend/formRequired.png') no-repeat;
 }
 
 .defaultForm input:focus, .windowForm input:focus {
 
-	background: 	#AAAAAA;
+	background: 	#C0C0C0;
 	border: 		1px solid #666666;
 }
 
 .defaultForm input.required:focus, .windowForm input.required:focus {
 
-	background: 	#AAAAAA url('/images/frontend/formRequired.png') no-repeat;
+	background: 	#C0C0C0 url('/images/frontend/formRequired.png') no-repeat;
 }
 
 .defaultForm .checkbox, .windowForm .checkbox {
@@ -332,12 +332,12 @@
 	padding-left: 	3px;
 	resize: 		none;
 	border:			1px solid #8A8A8A;
-	background: 	#DDDDDD;
+	background: 	#F0F0F0;
 }
 
 .defaultForm .rowTextArea .field textarea:focus {
 
-	background: 	#AAAAAA;
+	background: 	#C0C0C0;
 	border:			1px solid #8A8A8A;
 }
 

@@ -1058,7 +1058,7 @@ function getFormLoading( $indicatorId, $message='Processando, aguarde...' ){
  * @author     Luciano Stegun
  * @param      String: ID do indicador para o caso de mais de uma janela renderizada na mesma página
  */
-function getFormStatus( $statusId=null, $window=false ){
+function getFormStatus( $statusId=null, $window=false, $errorMessage=null ){
 	
-	echo get_partial( 'home/include/formStatus', array('statusId'=>$statusId, 'window'=>$window) );
+	echo get_partial( 'home/include/formStatus', array('statusId'=>$statusId, 'window'=>$window, 'errorMessage'=>$errorMessage) );
 }

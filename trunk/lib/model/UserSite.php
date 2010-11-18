@@ -33,6 +33,13 @@ class UserSite extends BaseUserSite
 	  	$peopleObj->save();
 	}
 	
+	public static function getCurrentUser(){
+		
+		$userSiteId = MyTools::getAttribute('userSiteId');
+		
+		return UserSitePeer::retrieveByPK($userSiteId);
+	}
+	
 	public function login($keepLogin=false){
 		
         $peopleObj = $this->getPeople();

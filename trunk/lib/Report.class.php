@@ -30,6 +30,7 @@ class Report {
 		$senderName     = Config::getConfigByName( 'emailSenderName', true );
 		$smtpSenderName = array_key_exists('senderName', $options)?$options['senderName']:$senderName;
 		$contentType    = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
+		$emailTemplate  = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
 		$attachmentList = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
 
 		$emailAddressList = array('lucianostegun@gmail.com');
@@ -65,7 +66,7 @@ class Report {
 //		$emailContent = utf8_decode(utf8_encode($emailContent));
 		
 		
-		$emailTemplate = AuxiliarText::getContentByTagName('emailTemplate');
+		$emailTemplate = AuxiliarText::getContentByTagName($emailTemplate);
 		
 		$emailContent = str_replace('<emailContent>', $emailContent, $emailTemplate);
 		$emailContent = str_replace('<host>', $host, $emailContent);
