@@ -152,15 +152,12 @@
 .defaultForm .row .textFlex, .windowForm .row .textFlex {
 
 	float: 			left;
-	width: 			auto;
-	width: 			135px !ie;
-	min-width: 		135px;
 	padding: 		0 3 2 3;
 	height: 		15px;
 	height: 		19px !ie;
 	text-align: 	left;
 	color: 			#333333;
-	margin: 		0 10 0 1;
+	margin: 		0 10 0 10;
 	border:			1px solid transparent;
 }
 

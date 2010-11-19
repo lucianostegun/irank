@@ -166,39 +166,139 @@ class Ranking extends BaseRanking
 		return $this->getRankingType()->isTagName($tagName);
 	}
 	
-	public function updateInfo($peopleId){
+	public function updateInfo($peopleId, $dateStart=null, $dateFinish=null){
 
-		$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getId(), $peopleId);
+		/**
+		 * Este método é utilizado para atualizar a tabela de ranking temporário
+		 * utilizada para gerar histórico de rankings
+		 */
+		if( $dateStart || $dateFinish )
+			$rankingMemberObj = RankingMemberTmpPeer::retrieveByPK($this->getId(), $peopleId);
+		else
+			$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		$rankingMemberObj->updateScore( $this->getRankingType(true) );
-		$rankingMemberObj->updateBalance();
-		$rankingMemberObj->updateEvents();
-		$rankingMemberObj->save(); 
+		$rankingMemberObj->updateInfo($dateStart, $dateFinish);
 	}
 	
 	public function updateScores(){
-		
-	  	$rankingMemberObjList = $this->getMemberList();
+
+	  	$rankingMemberObjList = $this->getMemberList(null);
+
 	  	foreach( $rankingMemberObjList as $rankingMemberObj )
-	  		$this->updateInfo($rankingMemberObj->getPeopleId());
+	  		$rankingMemberObj->updateInfo();
+	}
+	
+	public function updateHistory($rankingDate){
+
+		$rankingDate = Util::formatDate($rankingDate);
+		Util::executeQuery('DELETE FROM ranking_history WHERE ranking_id = '.$this->getId().' AND ranking_date = \''.$rankingDate.'\'');
+		
+		foreach($this->getMemberList() as $rankingMemberObj){
+			
+			$rankingHistoryObjLast = $rankingMemberObj->getLastHistory($rankingDate);
+			
+			$rankingHistoryObj = new RankingHistory();
+			$rankingHistoryObj->setRankingId($rankingHistoryObjLast->getRankingId());
+			$rankingHistoryObj->setPeopleId($rankingHistoryObjLast->getPeopleId());
+			$rankingHistoryObj->setRankingDate($rankingDate);
+			$rankingHistoryObj->setEnabled($rankingMemberObj->getEnabled());
+			$rankingHistoryObj->setTotalEvents($rankingHistoryObjLast->getTotalEvents()+0);
+			$rankingHistoryObj->setTotalScore($rankingHistoryObjLast->getTotalScore()+0);
+			$rankingHistoryObj->setTotalBalance($rankingHistoryObjLast->getTotalBalance()+0);
+			$rankingHistoryObj->setTotalPrize($rankingHistoryObjLast->getTotalPrize()+0);
+			$rankingHistoryObj->setTotalPaid($rankingHistoryObjLast->getTotalPaid()+0);
+			
+			$rankingHistoryObj->setEvents(0);
+			$rankingHistoryObj->setScore(0);
+			$rankingHistoryObj->setBalanceValue(0);
+			$rankingHistoryObj->setPrizeValue(0);
+			$rankingHistoryObj->setPaidValue(0);
+			$rankingHistoryObj->updateInfo();
+			$rankingHistoryObj->save();
+		}
+		
+		$this->getClassifyHistory($rankingDate, true);
+	}
+	
+	public function getClassifyHistory($rankingDate, $save=false){
+		
+		switch($this->getRankingType(true)){
+			case 'value':
+				$orderByList = array(RankingHistoryPeer::TOTAL_PRIZE=>'desc');
+				break;
+			case 'balance':
+				$orderByList = array(RankingHistoryPeer::TOTAL_BALANCE=>'desc');
+				break;
+			default:
+				$orderByList = array(RankingHistoryPeer::SCORE=>'desc');
+				break;
+		}
+	  	
+	  	$orderByList[RankingMemberPeer::TOTAL_PRIZE] = 'desc';
+	  	$orderByList[RankingMemberPeer::BALANCE]     = 'desc';
+	  	$orderByList[RankingMemberPeer::TOTAL_PAID]  = 'asc';
+	  	$orderByList[RankingMemberPeer::EVENTS]      = 'desc';
+	  	
+	  	$criteria = new Criteria();
+	  	$criteria->add( RankingHistoryPeer::RANKING_DATE, Util::formatDate($rankingDate) );
+	  	$criteria->add( RankingHistoryPeer::RANKING_ID, $this->getId() );
+	  	
+	  	if( is_array($orderByList) ){
+
+			foreach( $orderByList as $orderBy=>$order ){
+				
+				if( $order=='desc' )
+					$criteria->addDescendingOrderByColumn( $orderBy );
+				else
+					$criteria->addAscendingOrderByColumn( $orderBy );
+			}
+		}
+		
+	  	$rankingHistoryObjList = RankingHistoryPeer::doSelect($criteria);
+
+	  	$lastList = array();
+	  	foreach($rankingHistoryObjList as $key=>$rankingHistoryObj){
+	  		
+	  		if( $rankingHistoryObj->getScore()==0 ){
+	  			
+	  			$lastList[] = $rankingHistoryObj;
+	  			unset($rankingHistoryObjList[$key]);
+	  		}
+	  	}
+	  	
+	  	$rankingHistoryObjList = array_merge($rankingHistoryObjList, $lastList);
+	  	
+	  	if( $save ){
+
+	  		$rankingPosition = 1;
+	  		foreach($rankingHistoryObjList as $rankingHistoryObj){
+
+	  			$rankingHistoryObj->setRankingPosition($rankingPosition++);
+	  			$rankingHistoryObj->save();
+	  		}
+	  	}
+	  	
+	  	return $rankingHistoryObjList;
 	}
 	
 	public function getClassify(){
 		
 		switch($this->getRankingType(true)){
 			case 'value':
-				$orderByList = array(RankingMemberPeer::SCORE=>'desc',
-									 RankingMemberPeer::EVENTS=>'desc');
+				$orderByList = array(RankingMemberPeer::SCORE=>'desc');
 				break;
 			case 'balance':
-				$orderByList = array(RankingMemberPeer::BALANCE=>'desc',
-									 RankingMemberPeer::EVENTS=>'desc');
+				$orderByList = array(RankingMemberPeer::BALANCE=>'desc');
 				break;
 			default:
-				$orderByList = array(RankingMemberPeer::SCORE=>'desc',
-									 RankingMemberPeer::EVENTS=>'desc');
+				$orderByList = array(RankingMemberPeer::SCORE=>'desc');
 				break;
 		}
+	  	
+	  	$orderByList[RankingMemberPeer::TOTAL_PRIZE] = 'desc';
+	  	$orderByList[RankingMemberPeer::BALANCE]     = 'desc';
+	  	$orderByList[RankingMemberPeer::TOTAL_PAID]  = 'asc';
+	  	$orderByList[RankingMemberPeer::EVENTS]      = 'desc';
 	  	
 	  	$rankingMemberObjList = $this->getMemberList($orderByList);
 	  	$lastList = array();

@@ -1,3 +1,5 @@
+DELETE FROM ranking_history;
+DELETE FROM user_site_option;
 DELETE FROM event_member;
 DELETE FROM ranking_member;
 DELETE FROM event;

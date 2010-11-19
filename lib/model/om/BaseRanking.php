@@ -91,6 +91,12 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	protected $lastRankingMemberCriteria = null;
 
 	
+	protected $collRankingHistoryList;
+
+	
+	protected $lastRankingHistoryCriteria = null;
+
+	
 	protected $collEventList;
 
 	
@@ -685,6 +691,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collRankingHistoryList !== null) {
+				foreach($this->collRankingHistoryList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collEventList !== null) {
 				foreach($this->collEventList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -756,6 +770,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 				if ($this->collRankingMemberList !== null) {
 					foreach($this->collRankingMemberList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingHistoryList !== null) {
+					foreach($this->collRankingHistoryList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1050,6 +1072,10 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				$copyObj->addRankingMember($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getRankingHistoryList() as $relObj) {
+				$copyObj->addRankingHistory($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getEventList() as $relObj) {
 				$copyObj->addEvent($relObj->copy($deepCopy));
 			}
@@ -1269,6 +1295,111 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 		$this->lastRankingMemberCriteria = $criteria;
 
 		return $this->collRankingMemberList;
+	}
+
+	
+	public function initRankingHistoryList()
+	{
+		if ($this->collRankingHistoryList === null) {
+			$this->collRankingHistoryList = array();
+		}
+	}
+
+	
+	public function getRankingHistoryList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingHistoryPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingHistoryList === null) {
+			if ($this->isNew()) {
+			   $this->collRankingHistoryList = array();
+			} else {
+
+				$criteria->add(RankingHistoryPeer::RANKING_ID, $this->getId());
+
+				RankingHistoryPeer::addSelectColumns($criteria);
+				$this->collRankingHistoryList = RankingHistoryPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingHistoryPeer::RANKING_ID, $this->getId());
+
+				RankingHistoryPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingHistoryCriteria) || !$this->lastRankingHistoryCriteria->equals($criteria)) {
+					$this->collRankingHistoryList = RankingHistoryPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingHistoryCriteria = $criteria;
+		return $this->collRankingHistoryList;
+	}
+
+	
+	public function countRankingHistoryList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingHistoryPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingHistoryPeer::RANKING_ID, $this->getId());
+
+		return RankingHistoryPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingHistory(RankingHistory $l)
+	{
+		$this->collRankingHistoryList[] = $l;
+		$l->setRanking($this);
+	}
+
+
+	
+	public function getRankingHistoryListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingHistoryPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingHistoryList === null) {
+			if ($this->isNew()) {
+				$this->collRankingHistoryList = array();
+			} else {
+
+				$criteria->add(RankingHistoryPeer::RANKING_ID, $this->getId());
+
+				$this->collRankingHistoryList = RankingHistoryPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingHistoryPeer::RANKING_ID, $this->getId());
+
+			if (!isset($this->lastRankingHistoryCriteria) || !$this->lastRankingHistoryCriteria->equals($criteria)) {
+				$this->collRankingHistoryList = RankingHistoryPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastRankingHistoryCriteria = $criteria;
+
+		return $this->collRankingHistoryList;
 	}
 
 	

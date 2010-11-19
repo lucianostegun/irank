@@ -5,7 +5,7 @@
       <tr>
         <td width="245" align="left" valign="top">
         	<img src="/images/frontend/layout/welcome_img.jpg" alt="" width="245" height="162" /></td>
-        <td align="left" valign="top" style="padding:8px 10px 0px 21px;">
+        <td align="left" valign="top" style="padding:8px 10px 0px 21px; color: #DADADA">
         	<p><img src="/images/frontend/layout/welcome_heading.gif" alt="" />
         		<img src="/images/frontend/layout/welcomeLogo.png" align="right"/></p>
         	
@@ -48,7 +48,7 @@
                     <td width="159" align="left" valign="top">100% up to $600</td>
                     <td width="126" align="left" valign="top" ><a href="#" class="readreviewlink">Read Review</a></td>
                     <td width="90" align="left" valign="top">88%</td>
-                    <td width="116" align="left" valign="top"><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /></td>
+                    <td width="116" align="left" valign="top"><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /></td>
                   </tr>
                   <tr class="boxcontent">
 
@@ -57,7 +57,7 @@
                     <td width="159" align="left" valign="top">100% up to $600</td>
                     <td width="126" align="left" valign="top" ><a href="#" class="readreviewlink">Read Review</a></td>
                     <td width="90" align="left" valign="top">87%</td>
-                    <td width="116" align="left" valign="top"><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star5.gif" alt="" width="14" height="13" /></td>
+                    <td width="116" align="left" valign="top"><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star5.png" alt="" width="14" height="13" /></td>
 
                   </tr>
                   <tr class="boxcontent">
@@ -67,7 +67,7 @@
                     <td width="126" align="left" valign="top" ><a href="#" class="readreviewlink">Read Review</a></td>
                     <td width="90" align="left" valign="top">86%</td>
 
-                    <td width="116" align="left" valign="top"><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star5.gif" alt="" width="14" height="13" /><img src="/images/frontend/layout/star5.gif" alt="" width="14" height="13" /></td>
+                    <td width="116" align="left" valign="top"><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star4.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star5.png" alt="" width="14" height="13" /><img src="/images/frontend/layout/star5.png" alt="" width="14" height="13" /></td>
                   </tr>
                   
                 </table></td>

@@ -6,8 +6,8 @@ body
   font-size: 80%;
   background-image: url(../images/bg_body.jpg);
   background-repeat: repeat-x;
-  background-color: #151615;
-  color: #AAAAAA;
+  background-color: #F5F5F5;
+  color: #222222;
   text-align: center;
 }
 
@@ -18,13 +18,13 @@ img
 
 a
 {
-  color: #FFFFFF;
+  color: #F32126;
   text-decoration: underline;
 }
 
 a:hover
 {
-  color: #f32126;
+  color: #000000;
   text-decoration: none;
 }
 
