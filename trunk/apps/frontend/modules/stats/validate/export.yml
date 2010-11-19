@@ -1,0 +1,13 @@
+fields:
+       
+  rankingId:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+       
+  format:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+       
+  reportType:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido

@@ -99,6 +99,32 @@
 		  </foreign-key>
 	</table>
 
+	<table name="ranking_history" phpName="RankingHistory">
+		<column name="ranking_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="ranking_date" type="DATE" required="true" primaryKey="true" />
+		<column name="ranking_position" type="INTEGER" />
+		<column name="events" type="INTEGER" />
+		<column name="score" type="FLOAT" />
+		<column name="paid_value" type="FLOAT" />
+		<column name="prize_value" type="FLOAT" />
+		<column name="balance_value" type="FLOAT" />
+		<column name="total_events" type="INTEGER" />
+		<column name="total_score" type="FLOAT" />
+		<column name="total_paid" type="FLOAT" />
+		<column name="total_prize" type="FLOAT" />
+		<column name="total_balance" type="FLOAT" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
 	<table name="event" phpName="Event">
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
 		<column name="ranking_id" type="INTEGER" required="true" />

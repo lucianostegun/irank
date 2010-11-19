@@ -240,7 +240,8 @@ class eventActions extends sfActions
 	$eventObj->setSavedResult(true);
 	$eventObj->save();
 	
-	$rankingObj->updateScores($peopleId);
+	$rankingObj->updateScores();
+	$rankingObj->updateHistory($eventObj->getEventDate('d/m/Y'));
 	
 	if( $sendResultMail )
 		$eventObj->notifyResult();

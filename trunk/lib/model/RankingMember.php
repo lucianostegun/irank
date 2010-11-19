@@ -10,7 +10,7 @@
 class RankingMember extends BaseRankingMember
 {
 	
-	public function updateScore($rankingType){
+	public function updateScore(){
 		
 		$score = 0;
 		
@@ -43,5 +43,33 @@ class RankingMember extends BaseRankingMember
 		
 		$events = Util::executeOne('SELECT COUNT(1) FROM event_member, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_member.ENABLED AND event_member.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_member.PEOPLE_ID='.$this->getPeopleId(), 'int');
 		$this->setEvents($events);
+	}
+	
+	public function updateInfo(){
+
+		$this->updateScore();
+		$this->updateBalance();
+		$this->updateEvents();
+		$this->save(); 
+	}
+	
+	public function getLastHistory($eventDate){
+		
+		// Pega o último histórico de ranking
+		$criteria = new Criteria();
+		$criteria->add( RankingHistoryPeer::RANKING_ID, $this->getRankingId() );
+		$criteria->add( RankingHistoryPeer::PEOPLE_ID, $this->getPeopleId() );
+		$criteria->add( RankingHistoryPeer::RANKING_DATE, $eventDate, Criteria::LESS_THAN );
+		$criteria->addDescendingOrderByColumn( RankingHistoryPeer::RANKING_DATE );
+		$rankingHistoryObj = RankingHistoryPeer::doSelectOne($criteria);
+		
+		if( !is_object($rankingHistoryObj) ){
+			
+			$rankingHistoryObj = new RankingHistory();
+			$rankingHistoryObj->setRankingId($this->getRankingId());
+			$rankingHistoryObj->setPeopleId($this->getPeopleId());
+		}
+		
+		return $rankingHistoryObj;
 	}
 }
