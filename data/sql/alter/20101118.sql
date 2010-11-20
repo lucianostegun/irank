@@ -1,3 +1,4 @@
+DROP TABLE ranking_history;
 CREATE TABLE ranking_history ( 
 	ranking_id INTEGER NOT NULL,
 	people_id INTEGER NOT NULL,
