@@ -12,7 +12,8 @@ class RankingHistory extends BaseRankingHistory
 	
 	public function updateScore(){
 		
-		$score = 0;
+		$score           = 0;
+//		$rankingPosition = 0;
 		
 		$criteria = new Criteria();
 		$criteria->add( EventPeer::EVENT_DATE, $this->getRankingDate() );
@@ -26,8 +27,8 @@ class RankingHistory extends BaseRankingHistory
 			$score += ($paidPlaces-($eventPosition-1));
 		}
 		
-		
-		$this->setTotalScore($this->getScore()+$score);
+//		$this->setRankingPosition($rankingPosition);
+		$this->setTotalScore($this->getTotalScore()+$score);
 		$this->setScore($score);
 	}
 	

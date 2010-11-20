@@ -170,6 +170,14 @@ function parseInfo(infoList){
 	return obj;
 }
 
+function parseMessage(errorMessage){
+
+	if( (errorMessage).match(/^!/) )
+		return errorMessage.replace('!', '');
+	else
+		return false;
+}
+
 function getScreenWidth(){
 
 	return document.body.offsetWidth;
@@ -180,7 +188,7 @@ function getScreenHeight(){
 	return document.body.offsetHeight;
 }
 
-function isIe(){
+function isIE(){
 	
 	return (navigator.appName.indexOf("Microsoft")!= -1)
 }

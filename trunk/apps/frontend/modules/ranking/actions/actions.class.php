@@ -63,6 +63,8 @@ class rankingActions extends sfActions
 
 	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
 
+	$updateHistory = ($rankingTypeId!=$rankingObj->getRankingTypeId());
+
 	$rankingObj->setRankingName( $rankingName );
 	$rankingObj->setGameStyleId( $gameStyleId );
 	$rankingObj->setUserSiteId( $this->userSiteId );
@@ -76,6 +78,9 @@ class rankingActions extends sfActions
 	$rankingObj->save();
 	
 	$rankingObj->updateScores();
+	
+	if( $updateHistory )
+		$rankingObj->updateWholeHistory();
 
 	echo $rankingObj->getId();
 	exit;

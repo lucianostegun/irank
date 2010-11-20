@@ -2,6 +2,7 @@
 
 	cursor: 			pointer;
 	-moz-user-select: 	none;
+	line-height:		16px;
 }
 
 .button .buttonLeft {
@@ -15,6 +16,7 @@
 .button .buttonMiddle {
 
 	float: 			left;
+	font-size: 		8pt;
 	height: 		22px;
 	font-weight: 	bold;
 	color: 			#000;

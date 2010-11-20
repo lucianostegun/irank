@@ -1,6 +1,6 @@
 <?php
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
-$peopleObj  = PeoplePeer::retrieveByPK(peopleId);
+$peopleObj  = PeoplePeer::retrieveByPK($peopleId);
 
 
 $libDir = sfConfig::get('sf_lib_dir');
@@ -97,7 +97,7 @@ $DataSet->AddSerie('balanceValue');
 $Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
 $Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255);
 
-$Test->setLineStyle(2);
+$Test->setLineStyle(1.5);
 $DataSet->AddSerie('totalPaid');
 $DataSet->AddSerie('totalPrize');
 $DataSet->AddSerie('totalBalance');
@@ -115,12 +115,13 @@ header('Content-Disposition: attachment; filename=meu_balanco.png');
 header('Expires: 0');
 header('Pragma: no-cache');
 
-
 // Finish the graph
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawLegend($width-135,35,$DataSet->GetDataDescription(),255,255,255);
-$Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',10);
-$Test->drawTitle(60,30,'Meu balanço no ranking '.$rankingObj->getRankingName(),50,50,50,370);
+$Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',11);
+$Test->drawTitle(100,30,'Meu balanço - '.$rankingObj->getRankingName(),50,50,50);
+$Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
+$Test->drawCredits($width, $height);
 $Test->Stroke();
    	
 exit;

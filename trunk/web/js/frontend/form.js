@@ -80,8 +80,11 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 			showFormStatusError(prefix);
 	}else{
 
-		if( isDebug() )
-			debug( content );
+		if( errorMessage=parseMessage(content) )
+			alert(errorMessage);
+		else
+			if( isDebug() )
+				debug( content );
 	}	
 }
 

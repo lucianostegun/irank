@@ -311,3 +311,24 @@ color:#666666;
 .playpoker_text{
 color:#C7C8C6;
 }
+
+input {
+
+	font-size: 		8pt;
+	height: 		17px;
+	border:			1px solid #8A8A8A;
+	padding: 		0 0 1 3;
+	background: 	#F0F0F0;
+}
+
+select {
+
+	font-size: 		8pt;
+	height: 		18px;
+	height: 		17px;
+	padding: 		0px;
+	padding-left: 	0px;
+	text-align: 	left;
+	border:			1px solid #8A8A8A;
+	padding: 		0;
+}

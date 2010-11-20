@@ -103,6 +103,7 @@
 		<column name="ranking_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="ranking_date" type="DATE" required="true" primaryKey="true" />
+		<column name="total_ranking_position" type="INTEGER" />
 		<column name="ranking_position" type="INTEGER" />
 		<column name="events" type="INTEGER" />
 		<column name="score" type="FLOAT" />
