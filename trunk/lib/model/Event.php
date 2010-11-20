@@ -112,18 +112,18 @@ class Event extends BaseEvent
 		
 		if( $confirm && !$eventMemberObj->getEnabled() ){
 		
-//			$eventMemberObj->setEnabled(true);
-//			$this->setMembers( $this->getMembers()+1 );
-//			$this->save();
+			$eventMemberObj->setEnabled(true);
+			$this->setMembers( $this->getMembers()+1 );
+			$this->save();
 			
-//			$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getRankingId(), $peopleId);
-//			$rankingMemberObj->setEvents($rankingMemberObj->getEvents()+1);
-//			$rankingMemberObj->save();
+			$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getRankingId(), $peopleId);
+			$rankingMemberObj->setEvents($rankingMemberObj->getEvents()+1);
+			$rankingMemberObj->save();
 			
 			$eventMemberObj->notifyConfirm();
 		}
 		
-//		$eventMemberObj->save();
+		$eventMemberObj->save();
 	}
 	
 	public function deleteMember($peopleId){
