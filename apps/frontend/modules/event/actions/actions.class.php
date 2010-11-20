@@ -257,7 +257,7 @@ class eventActions extends sfActions
 		$eventObj->notifyResult();
 	
 	exit;
-  }
+  }  
   
   public function executeSearch($request){
   	
@@ -293,5 +293,18 @@ class eventActions extends sfActions
     header('Content-type: text/x-javascript');
 		
   	$nl = chr(10);
+  }
+  
+  
+  
+  public function executeDebug($request){
+  	
+  	$rankingObj = RankingPeer::retrieveByPK(1);
+  	
+  	foreach($rankingObj->getEventDateList() as $eventDate)
+  		$rankingObj->updateHistory($eventDate);
+  	
+  	echo 'ok '.date('d/m/D H:i:s');
+  	exit;
   }
 }

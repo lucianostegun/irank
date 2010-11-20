@@ -150,4 +150,16 @@ class rankingActions extends sfActions
   
   public function executeJavascript($request){
   }
+  
+  
+  
+  public function executeDebug($request){
+  	
+  	$rankingObj = RankingPeer::retrieveByPK(1);
+  	
+  	$rankingObj->updateWholeHistory();
+  	
+  	echo 'ok '.date('d/m/D H:i:s');
+  	exit;
+  }
 }
