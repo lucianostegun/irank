@@ -246,6 +246,7 @@ class Ranking extends BaseRanking
 	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_BALANCE] = 'desc';
 	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_PAID]    = 'asc';
 	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_EVENTS]  = 'asc';
+	  	$defaultOrderByList[RankingHistoryPeer::PEOPLE_ID]     = 'asc';
 	  	
 	  	$rankingType = $this->getRankingType(true);
 	  	
@@ -256,7 +257,7 @@ class Ranking extends BaseRanking
 			case 'balance':
 				$orderByList = array(RankingHistoryPeer::TOTAL_BALANCE=>'desc');
 				break;
-			default:
+			case 'score':
 				$orderByList = array(RankingHistoryPeer::TOTAL_SCORE=>'desc');
 				break;
 		}
@@ -316,6 +317,11 @@ class Ranking extends BaseRanking
 		  	$defaultOrderByList[RankingHistoryPeer::BALANCE_VALUE] = 'desc';
 		  	$defaultOrderByList[RankingHistoryPeer::PAID_VALUE]    = 'asc';
 		  	$defaultOrderByList[RankingHistoryPeer::EVENTS]        = 'asc';
+		  	$defaultOrderByList[RankingHistoryPeer::TOTAL_PRIZE]   = 'desc';
+		  	$defaultOrderByList[RankingHistoryPeer::TOTAL_BALANCE] = 'desc';
+		  	$defaultOrderByList[RankingHistoryPeer::TOTAL_PAID]    = 'asc';
+		  	$defaultOrderByList[RankingHistoryPeer::TOTAL_EVENTS]  = 'asc';
+		  	$defaultOrderByList[RankingHistoryPeer::PEOPLE_ID]     = 'asc';
 	
 			switch($rankingType){
 				case 'value':
@@ -324,7 +330,7 @@ class Ranking extends BaseRanking
 				case 'balance':
 					$orderByList = array(RankingHistoryPeer::BALANCE_VALUE=>'desc');
 					break;
-				default:
+				case 'score':
 					$orderByList = array(RankingHistoryPeer::SCORE=>'desc');
 					break;
 			}
@@ -383,7 +389,7 @@ class Ranking extends BaseRanking
 			case 'balance':
 				$orderByList = array(RankingMemberPeer::BALANCE=>'desc');
 				break;
-			default:
+			case 'score':
 				$orderByList = array(RankingMemberPeer::SCORE=>'desc');
 				break;
 		}
@@ -392,6 +398,7 @@ class Ranking extends BaseRanking
 	  	$orderByList[RankingMemberPeer::BALANCE]     = 'desc';
 	  	$orderByList[RankingMemberPeer::TOTAL_PAID]  = 'asc';
 	  	$orderByList[RankingMemberPeer::EVENTS]      = 'asc';
+	  	$orderByList[RankingMemberPeer::PEOPLE_ID]   = 'asc';
 	  	
 	  	$rankingMemberObjList = $this->getMemberList($orderByList);
 	  	$lastList = array();
