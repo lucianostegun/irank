@@ -110,10 +110,10 @@ $DataSet->RemoveSerie('myPositionProgress');
 $Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
 $Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255);
 
-//header('Content-Type: image/jpeg');
-//header('Content-Disposition: attachment; filename=meu_desempenho.png');
-//header('Expires: 0');
-//header('Pragma: no-cache');
+header('Content-Type: image/jpeg');
+header('Content-Disposition: attachment; filename=meu_desempenho.png');
+header('Expires: 0');
+header('Pragma: no-cache');
 
 // Finish the graph
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
