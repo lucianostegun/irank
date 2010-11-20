@@ -582,7 +582,7 @@
        else
         imagettftext($this->Picture,$this->FontSize,90,$XMin-$this->FontSize,$TextTop,$C_TextColor,$this->FontName,$DataDescription["Axis"]["Y"]);
       }
-
+      
      /* Horizontal Axis */
      $XPos = $this->GArea_X1 + $this->GAreaXOffset;
      $ID = 1; $YMax = NULL;
@@ -1023,6 +1023,13 @@
        $ID++;
       }
     }
+    
+    function drawCredits($width, $height){
+    	
+    	$C_TextColor =$this->AllocateColor($this->Picture,100,100,100);
+
+    	imagettftext($this->Picture,$this->FontSize,90,$width-20,$height-10,$C_TextColor,$this->FontName,'iRank - Todos os direitos reservados');
+    }
 
    /* Draw the data legends */
    function drawPieLegend($XPos,$YPos,$Data,$DataDescription,$R,$G,$B)
@@ -1069,7 +1076,7 @@
     }
 
    /* Draw the graph title */
-   function drawTitle($XPos,$YPos,$Value,$R,$G,$B,$XPos2=-1,$YPos2=-1,$Shadow=FALSE)
+   function drawTitle($XPos,$YPos,$Value,$R,$G,$B,$XPos2=-1,$YPos2=-1,$Shadow=FALSE, $angle=0)
     {
      $C_TextColor = $this->AllocateColor($this->Picture,$R,$G,$B);
 
@@ -1090,7 +1097,7 @@
      if ( $Shadow )
       {
        $C_ShadowColor = $this->AllocateColor($this->Picture,$this->ShadowRColor,$this->ShadowGColor,$this->ShadowBColor);
-       imagettftext($this->Picture,$this->FontSize,0,$XPos+$this->ShadowXDistance,$YPos+$this->ShadowYDistance,$C_ShadowColor,$this->FontName,$Value);     
+       imagettftext($this->Picture,$this->FontSize,$angle,$XPos+$this->ShadowXDistance,$YPos+$this->ShadowYDistance,$C_ShadowColor,$this->FontName,$Value);     
       }
 
      imagettftext($this->Picture,$this->FontSize,0,$XPos,$YPos,$C_TextColor,$this->FontName,$Value);     

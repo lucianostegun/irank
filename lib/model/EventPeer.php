@@ -52,8 +52,24 @@ class EventPeer extends BaseEventPeer
 		$criteria->add( EventPeer::ID, $eventId, Criteria::NOT_EQUAL );
 		$criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
 		$criteria->add( EventPeer::EVENT_NAME, $eventName, Criteria::ILIKE );
-		$eventObj = EventPeer::doSelectOne( $criteria );
+		$eventCount = EventPeer::doCount($criteria);
 		
-		return !is_object( $eventObj );
+		return ($eventCount==0);
+	}
+	
+	public static function validateEventDate($eventDate){
+		
+		$rankingId = MyTools::getRequestParameter('rankingId');
+
+		$criteria = new Criteria();
+		$criteria->add( EventPeer::RANKING_ID, $rankingId );
+		$criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate), Criteria::GREATER_THAN );
+		$criteria->add( EventPeer::SAVED_RESULT, true );
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::DELETED, false );
+		$eventCount = EventPeer::doCount($criteria);
+
+		return ($eventCount==0);
 	}
 }

@@ -21,6 +21,10 @@ abstract class BaseRankingHistory extends BaseObject  implements Persistent {
 
 
 	
+	protected $total_ranking_position;
+
+
+	
 	protected $ranking_position;
 
 
@@ -121,6 +125,13 @@ abstract class BaseRankingHistory extends BaseObject  implements Persistent {
 		} else {
 			return date($format, $ts);
 		}
+	}
+
+	
+	public function getTotalRankingPosition()
+	{
+
+		return $this->total_ranking_position;
 	}
 
 	
@@ -309,6 +320,22 @@ abstract class BaseRankingHistory extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setTotalRankingPosition($v)
+	{
+
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->total_ranking_position !== $v) {
+			$this->total_ranking_position = $v;
+			$this->modifiedColumns[] = RankingHistoryPeer::TOTAL_RANKING_POSITION;
+		}
+
+	} 
+	
 	public function setRankingPosition($v)
 	{
 
@@ -491,39 +518,41 @@ abstract class BaseRankingHistory extends BaseObject  implements Persistent {
 
 			$this->ranking_date = $rs->getDate($startcol + 2, null);
 
-			$this->ranking_position = $rs->getInt($startcol + 3);
+			$this->total_ranking_position = $rs->getInt($startcol + 3);
 
-			$this->events = $rs->getInt($startcol + 4);
+			$this->ranking_position = $rs->getInt($startcol + 4);
 
-			$this->score = $rs->getFloat($startcol + 5);
+			$this->events = $rs->getInt($startcol + 5);
 
-			$this->paid_value = $rs->getFloat($startcol + 6);
+			$this->score = $rs->getFloat($startcol + 6);
 
-			$this->prize_value = $rs->getFloat($startcol + 7);
+			$this->paid_value = $rs->getFloat($startcol + 7);
 
-			$this->balance_value = $rs->getFloat($startcol + 8);
+			$this->prize_value = $rs->getFloat($startcol + 8);
 
-			$this->total_events = $rs->getInt($startcol + 9);
+			$this->balance_value = $rs->getFloat($startcol + 9);
 
-			$this->total_score = $rs->getFloat($startcol + 10);
+			$this->total_events = $rs->getInt($startcol + 10);
 
-			$this->total_paid = $rs->getFloat($startcol + 11);
+			$this->total_score = $rs->getFloat($startcol + 11);
 
-			$this->total_prize = $rs->getFloat($startcol + 12);
+			$this->total_paid = $rs->getFloat($startcol + 12);
 
-			$this->total_balance = $rs->getFloat($startcol + 13);
+			$this->total_prize = $rs->getFloat($startcol + 13);
 
-			$this->enabled = $rs->getBoolean($startcol + 14);
+			$this->total_balance = $rs->getFloat($startcol + 14);
 
-			$this->created_at = $rs->getTimestamp($startcol + 15, null);
+			$this->enabled = $rs->getBoolean($startcol + 15);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 16, null);
+			$this->created_at = $rs->getTimestamp($startcol + 16, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 17, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 17; 
+						return $startcol + 18; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating RankingHistory object", $e);
 		}
@@ -699,45 +728,48 @@ abstract class BaseRankingHistory extends BaseObject  implements Persistent {
 				return $this->getRankingDate();
 				break;
 			case 3:
-				return $this->getRankingPosition();
+				return $this->getTotalRankingPosition();
 				break;
 			case 4:
-				return $this->getEvents();
+				return $this->getRankingPosition();
 				break;
 			case 5:
-				return $this->getScore();
+				return $this->getEvents();
 				break;
 			case 6:
-				return $this->getPaidValue();
+				return $this->getScore();
 				break;
 			case 7:
-				return $this->getPrizeValue();
+				return $this->getPaidValue();
 				break;
 			case 8:
-				return $this->getBalanceValue();
+				return $this->getPrizeValue();
 				break;
 			case 9:
-				return $this->getTotalEvents();
+				return $this->getBalanceValue();
 				break;
 			case 10:
-				return $this->getTotalScore();
+				return $this->getTotalEvents();
 				break;
 			case 11:
-				return $this->getTotalPaid();
+				return $this->getTotalScore();
 				break;
 			case 12:
-				return $this->getTotalPrize();
+				return $this->getTotalPaid();
 				break;
 			case 13:
-				return $this->getTotalBalance();
+				return $this->getTotalPrize();
 				break;
 			case 14:
-				return $this->getEnabled();
+				return $this->getTotalBalance();
 				break;
 			case 15:
-				return $this->getCreatedAt();
+				return $this->getEnabled();
 				break;
 			case 16:
+				return $this->getCreatedAt();
+				break;
+			case 17:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -753,20 +785,21 @@ abstract class BaseRankingHistory extends BaseObject  implements Persistent {
 			$keys[0]=>$this->getRankingId(),
 			$keys[1]=>$this->getPeopleId(),
 			$keys[2]=>$this->getRankingDate(),
-			$keys[3]=>$this->getRankingPosition(),
-			$keys[4]=>$this->getEvents(),
-			$keys[5]=>$this->getScore(),
-			$keys[6]=>$this->getPaidValue(),
-			$keys[7]=>$this->getPrizeValue(),
-			$keys[8]=>$this->getBalanceValue(),
-			$keys[9]=>$this->getTotalEvents(),
-			$keys[10]=>$this->getTotalScore(),
-			$keys[11]=>$this->getTotalPaid(),
-			$keys[12]=>$this->getTotalPrize(),
-			$keys[13]=>$this->getTotalBalance(),
-			$keys[14]=>$this->getEnabled(),
-			$keys[15]=>$this->getCreatedAt(),
-			$keys[16]=>$this->getUpdatedAt(),
+			$keys[3]=>$this->getTotalRankingPosition(),
+			$keys[4]=>$this->getRankingPosition(),
+			$keys[5]=>$this->getEvents(),
+			$keys[6]=>$this->getScore(),
+			$keys[7]=>$this->getPaidValue(),
+			$keys[8]=>$this->getPrizeValue(),
+			$keys[9]=>$this->getBalanceValue(),
+			$keys[10]=>$this->getTotalEvents(),
+			$keys[11]=>$this->getTotalScore(),
+			$keys[12]=>$this->getTotalPaid(),
+			$keys[13]=>$this->getTotalPrize(),
+			$keys[14]=>$this->getTotalBalance(),
+			$keys[15]=>$this->getEnabled(),
+			$keys[16]=>$this->getCreatedAt(),
+			$keys[17]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -792,45 +825,48 @@ abstract class BaseRankingHistory extends BaseObject  implements Persistent {
 				$this->setRankingDate($value);
 				break;
 			case 3:
-				$this->setRankingPosition($value);
+				$this->setTotalRankingPosition($value);
 				break;
 			case 4:
-				$this->setEvents($value);
+				$this->setRankingPosition($value);
 				break;
 			case 5:
-				$this->setScore($value);
+				$this->setEvents($value);
 				break;
 			case 6:
-				$this->setPaidValue($value);
+				$this->setScore($value);
 				break;
 			case 7:
-				$this->setPrizeValue($value);
+				$this->setPaidValue($value);
 				break;
 			case 8:
-				$this->setBalanceValue($value);
+				$this->setPrizeValue($value);
 				break;
 			case 9:
-				$this->setTotalEvents($value);
+				$this->setBalanceValue($value);
 				break;
 			case 10:
-				$this->setTotalScore($value);
+				$this->setTotalEvents($value);
 				break;
 			case 11:
-				$this->setTotalPaid($value);
+				$this->setTotalScore($value);
 				break;
 			case 12:
-				$this->setTotalPrize($value);
+				$this->setTotalPaid($value);
 				break;
 			case 13:
-				$this->setTotalBalance($value);
+				$this->setTotalPrize($value);
 				break;
 			case 14:
-				$this->setEnabled($value);
+				$this->setTotalBalance($value);
 				break;
 			case 15:
-				$this->setCreatedAt($value);
+				$this->setEnabled($value);
 				break;
 			case 16:
+				$this->setCreatedAt($value);
+				break;
+			case 17:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -843,20 +879,21 @@ abstract class BaseRankingHistory extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setRankingId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setRankingDate($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRankingPosition($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setEvents($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setScore($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setPaidValue($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setPrizeValue($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setBalanceValue($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setTotalEvents($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setTotalScore($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setTotalPaid($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setTotalPrize($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setTotalBalance($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setEnabled($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setCreatedAt($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setUpdatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[3], $arr)) $this->setTotalRankingPosition($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setRankingPosition($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setEvents($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setScore($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setPaidValue($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setPrizeValue($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setBalanceValue($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setTotalEvents($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setTotalScore($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setTotalPaid($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setTotalPrize($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setTotalBalance($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setEnabled($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setCreatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setUpdatedAt($arr[$keys[17]]);
 	}
 
 	
@@ -867,6 +904,7 @@ abstract class BaseRankingHistory extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RankingHistoryPeer::RANKING_ID)) $criteria->add(RankingHistoryPeer::RANKING_ID, $this->ranking_id);
 		if ($this->isColumnModified(RankingHistoryPeer::PEOPLE_ID)) $criteria->add(RankingHistoryPeer::PEOPLE_ID, $this->people_id);
 		if ($this->isColumnModified(RankingHistoryPeer::RANKING_DATE)) $criteria->add(RankingHistoryPeer::RANKING_DATE, $this->ranking_date);
+		if ($this->isColumnModified(RankingHistoryPeer::TOTAL_RANKING_POSITION)) $criteria->add(RankingHistoryPeer::TOTAL_RANKING_POSITION, $this->total_ranking_position);
 		if ($this->isColumnModified(RankingHistoryPeer::RANKING_POSITION)) $criteria->add(RankingHistoryPeer::RANKING_POSITION, $this->ranking_position);
 		if ($this->isColumnModified(RankingHistoryPeer::EVENTS)) $criteria->add(RankingHistoryPeer::EVENTS, $this->events);
 		if ($this->isColumnModified(RankingHistoryPeer::SCORE)) $criteria->add(RankingHistoryPeer::SCORE, $this->score);
@@ -926,6 +964,8 @@ abstract class BaseRankingHistory extends BaseObject  implements Persistent {
 	
 	public function copyInto($copyObj, $deepCopy = false)
 	{
+
+		$copyObj->setTotalRankingPosition($this->total_ranking_position);
 
 		$copyObj->setRankingPosition($this->ranking_position);
 

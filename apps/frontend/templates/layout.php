@@ -85,7 +85,7 @@ $moduleName = $sf_context->getModuleName();
 
     <td height="111" align="center" valign="top" class="footer" style="padding-top:23px;"><table width="950" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td align="center" valign="top"><a href="index.html">Home</a>   |  <a href="playpoker.html">Play Poker</a>   |  <a href="#">Download Poker</a>   |  <a href="#">Free Poker</a>   |  <a href="#">Poker Tips</a>   |  <a href="#">Poker Strategy</a>   ||  <a href="#">Contact</a>
+        <td align="center" valign="top"><a href="index.html">Home</a>   |  <a href="playpoker.html">Play Poker</a>   |  <a href="#">Download Poker</a>   |  <a href="#">Free Poker</a>   |  <a href="#">Poker Tips</a>   |  <a href="#">Poker Strategy</a>   |  <a href="#">Contact</a>
 
         </td>
       </tr>

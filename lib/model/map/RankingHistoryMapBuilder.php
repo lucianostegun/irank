@@ -38,6 +38,8 @@ class RankingHistoryMapBuilder {
 
 		$tMap->addPrimaryKey('RANKING_DATE', 'RankingDate', 'int', CreoleTypes::DATE, true, null);
 
+		$tMap->addColumn('TOTAL_RANKING_POSITION', 'TotalRankingPosition', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('RANKING_POSITION', 'RankingPosition', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('EVENTS', 'Events', 'int', CreoleTypes::INTEGER, false, null);

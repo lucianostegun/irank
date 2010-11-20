@@ -4,7 +4,7 @@
 	</tr>
 	<tr>
 		<td valign="top" class="defaultForm" id="eventMemberDiv">
-			<?php include_partial('event/include/member', array('eventObj'=>$eventObj)) ?>
+			<?php include_partial('event/include/memberRo', array('eventObj'=>$eventObj)) ?>
 			</td>
 	</tr>
 </table>

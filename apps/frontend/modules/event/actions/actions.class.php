@@ -12,6 +12,7 @@ class eventActions extends sfActions
   public function executeIndex($request){
 
 	$this->userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
+	$this->criteria    = new Criteria();
   }
   
   public function executeNew($request){
@@ -71,10 +72,12 @@ class eventActions extends sfActions
 	$paidPlaces      = $request->getParameter('paidPlaces');
 	$buyin           = $request->getParameter('buyin');
 	$comments        = $request->getParameter('comments');
-	$sendEmail       = $request->getParameter('sendEmail');
 	$confirmPresence = $request->getParameter('confirmPresence');
 
 	$eventObj = EventPeer::retrieveByPK( $eventId );
+	
+	if( !$eventObj->isEditable() )
+		Util::forceError('!Este evento está bloqueado para edição', true);
 	
 	$firstSave = !$eventObj->getEnabled();
 
@@ -103,14 +106,9 @@ class eventActions extends sfActions
 	if( $confirmPresence )
 		$eventObj->addMember( $rankingObj->getUserSite()->getPeopleId(), true );
 
-	if( $sendEmail )
-		$eventObj->notify();
+	$eventObj->notify();
 
-	$infoList = array();
-	$infoList['eventId']     = $eventObj->getId();
-	$infoList['isConfirmed'] = $eventObj->isConfirmed($this->peopleId);
-
-    echo Util::parseInfo($infoList);
+    echo Util::parseInfo($eventObj->getInfo());
     exit;
   }
   
@@ -121,6 +119,9 @@ class eventActions extends sfActions
 	
 	if( !is_object($eventObj) )
 		throw new Exception('Evento não encontrado!');
+	
+	if( !$eventObj->isEditable() )
+		Util::forceError('!Este evento está bloqueado para exclusão', true);
 	
 	$eventObj->delete();
 	exit;
@@ -144,8 +145,10 @@ class eventActions extends sfActions
 	
 	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
 	$eventObj    = EventPeer::retrieveByPK( $eventId );
+	
+	if( !$eventObj->isEditable() )
+		Util::forceError('!Este evento está bloqueado para edição', true);
 
-	$eventObj = EventPeer::retrieveByPK( $eventId );
 	$eventObj->deleteMember( $userSiteObj->getPeopleId() );
     
     return $this->forward('event', 'getMemberList');
@@ -157,6 +160,9 @@ class eventActions extends sfActions
 	$peopleId = $request->getParameter('peopleId');
 	
 	$eventObj = EventPeer::retrieveByPK( $eventId );
+	
+	if( !$eventObj->isEditable() )
+		Util::forceError('!Este evento está bloqueado para edição', true);
 	
 	if( !$eventObj->isConfirmed($peopleId) )
 		$eventObj->addMember( $peopleId, true );
@@ -199,6 +205,10 @@ class eventActions extends sfActions
 	$sendResultMail = $request->getParameter('sendResultMail');
 
 	$eventObj   = EventPeer::retrieveByPK($eventId);
+	
+	if( !$eventObj->isEditable() )
+		Util::forceError('!Este evento está bloqueado para edição', true);
+
 	$rankingObj = $eventObj->getRanking();
 	
 	$paidPlaces = 0;
@@ -247,6 +257,35 @@ class eventActions extends sfActions
 		$eventObj->notifyResult();
 	
 	exit;
+  }
+  
+  public function executeSearch($request){
+  	
+  	$renderize  = $request->getParameter('isIE');
+  	$eventName  = $request->getParameter('eventName');
+  	$eventPlace = $request->getParameter('eventPlace');
+  	$eventDate  = $request->getParameter('eventDate');
+  	$rankingId  = $request->getParameter('rankingId');
+  	
+  	if( !Validate::validateDate($eventDate) )
+  		$eventDate = null;
+
+  	$criteria = new Criteria();
+  	if( $eventName ) $criteria->addAnd( EventPeer::EVENT_NAME, '%'.$eventName.'%', Criteria::ILIKE );
+  	if( $eventDate ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
+  	if( $eventPlace ) $criteria->addAnd( EventPeer::EVENT_PLACE, '%'.$eventPlace.'%', Criteria::ILIKE );
+  	if( $rankingId ) $criteria->addAnd( EventPeer::RANKING_ID, $rankingId );
+
+	if( $renderize ){
+		
+		$this->criteria = $criteria;
+		$this->setTemplate('index');
+	}else{
+	  	
+	  	sfConfig::set('sf_web_debug', false);
+		sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+		return $this->renderText(get_partial('event/include/search', array('criteria'=>$criteria)));
+	}  	
   }
   
   public function executeJavascript($request){

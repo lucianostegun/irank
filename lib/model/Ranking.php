@@ -188,6 +188,25 @@ class Ranking extends BaseRanking
 	  		$rankingMemberObj->updateInfo();
 	}
 	
+	public function getEventDateList($format='d/m/Y'){
+		
+		$criteria = new Criteria();
+		$criteria->addAscendingOrderByColumn( EventPeer::EVENT_DATE );
+		$eventObjList = $this->getEventList($criteria);
+		
+		$eventDateList = array();
+		foreach($eventObjList as $eventObj)
+			$eventDateList[] = $eventObj->getEventDate($format);
+		
+		return $eventDateList;
+	}
+	
+	public function updateWholeHistory(){
+		
+		foreach($this->getEventDateList() as $eventDate)
+			$this->getClassifyHistory($eventDate, true);
+	}
+	
 	public function updateHistory($rankingDate){
 
 		$rankingDate = Util::formatDate($rankingDate);
@@ -221,8 +240,16 @@ class Ranking extends BaseRanking
 	}
 	
 	public function getClassifyHistory($rankingDate, $save=false){
-		
-		switch($this->getRankingType(true)){
+
+	  	$defaultOrderByList = array();
+	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_PRIZE]   = 'desc';
+	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_BALANCE] = 'desc';
+	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_PAID]    = 'asc';
+	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_EVENTS]  = 'asc';
+	  	
+	  	$rankingType = $this->getRankingType(true);
+	  	
+		switch($rankingType){
 			case 'value':
 				$orderByList = array(RankingHistoryPeer::TOTAL_PRIZE=>'desc');
 				break;
@@ -230,14 +257,11 @@ class Ranking extends BaseRanking
 				$orderByList = array(RankingHistoryPeer::TOTAL_BALANCE=>'desc');
 				break;
 			default:
-				$orderByList = array(RankingHistoryPeer::SCORE=>'desc');
+				$orderByList = array(RankingHistoryPeer::TOTAL_SCORE=>'desc');
 				break;
 		}
 	  	
-	  	$orderByList[RankingMemberPeer::TOTAL_PRIZE] = 'desc';
-	  	$orderByList[RankingMemberPeer::BALANCE]     = 'desc';
-	  	$orderByList[RankingMemberPeer::TOTAL_PAID]  = 'asc';
-	  	$orderByList[RankingMemberPeer::EVENTS]      = 'desc';
+	  	$orderByList = array_merge($orderByList, $defaultOrderByList);
 	  	
 	  	$criteria = new Criteria();
 	  	$criteria->add( RankingHistoryPeer::RANKING_DATE, Util::formatDate($rankingDate) );
@@ -259,16 +283,80 @@ class Ranking extends BaseRanking
 	  	$lastList = array();
 	  	foreach($rankingHistoryObjList as $key=>$rankingHistoryObj){
 	  		
-	  		if( $rankingHistoryObj->getScore()==0 ){
+	  		if( $rankingHistoryObj->getTotalPaid()==0 ){
 	  			
 	  			$lastList[] = $rankingHistoryObj;
 	  			unset($rankingHistoryObjList[$key]);
 	  		}
 	  	}
 	  	
-	  	$rankingHistoryObjList = array_merge($rankingHistoryObjList, $lastList);
+	  	$rankingHistoryObjListReturn = array_merge($rankingHistoryObjList, $lastList);
 	  	
 	  	if( $save ){
+
+			$members         = $this->getMembers();
+	  		$rankingPosition = 1;
+	  		foreach($rankingHistoryObjList as $rankingHistoryObj){
+
+	  			$rankingHistoryObj->setTotalRankingPosition($rankingPosition++);
+	  			$rankingHistoryObj->save();
+	  		}
+	  		
+	  		foreach($lastList as $rankingHistoryObj){
+
+	  			$rankingHistoryObj->setTotalRankingPosition($members);
+	  			$rankingHistoryObj->save();
+	  		}
+
+	
+			// Salva a posição de cada jogador na data do evento
+	
+		  	$defaultOrderByList = array();
+		  	$defaultOrderByList[RankingHistoryPeer::PRIZE_VALUE]   = 'desc';
+		  	$defaultOrderByList[RankingHistoryPeer::BALANCE_VALUE] = 'desc';
+		  	$defaultOrderByList[RankingHistoryPeer::PAID_VALUE]    = 'asc';
+		  	$defaultOrderByList[RankingHistoryPeer::EVENTS]        = 'asc';
+	
+			switch($rankingType){
+				case 'value':
+					$orderByList = array(RankingHistoryPeer::PRIZE_VALUE=>'desc');
+					break;
+				case 'balance':
+					$orderByList = array(RankingHistoryPeer::BALANCE_VALUE=>'desc');
+					break;
+				default:
+					$orderByList = array(RankingHistoryPeer::SCORE=>'desc');
+					break;
+			}
+			
+			$orderByList = array_merge($orderByList, $defaultOrderByList);
+		  	
+		  	$criteria = new Criteria();
+		  	$criteria->add( RankingHistoryPeer::RANKING_DATE, Util::formatDate($rankingDate) );
+		  	$criteria->add( RankingHistoryPeer::RANKING_ID, $this->getId() );
+		  	
+		  	if( is_array($orderByList) ){
+	
+				foreach( $orderByList as $orderBy=>$order ){
+					
+					if( $order=='desc' )
+						$criteria->addDescendingOrderByColumn( $orderBy );
+					else
+						$criteria->addAscendingOrderByColumn( $orderBy );
+				}
+			}
+			
+		  	$rankingHistoryObjList = RankingHistoryPeer::doSelect($criteria);
+	
+		  	$lastList = array();
+		  	foreach($rankingHistoryObjList as $key=>$rankingHistoryObj){
+		  		
+		  		if( $rankingHistoryObj->getPaidValue()==0 ){
+		  			
+		  			$lastList[] = $rankingHistoryObj;
+		  			unset($rankingHistoryObjList[$key]);
+		  		}
+		  	} 	
 
 	  		$rankingPosition = 1;
 	  		foreach($rankingHistoryObjList as $rankingHistoryObj){
@@ -276,16 +364,21 @@ class Ranking extends BaseRanking
 	  			$rankingHistoryObj->setRankingPosition($rankingPosition++);
 	  			$rankingHistoryObj->save();
 	  		}
-	  	}
-	  	
-	  	return $rankingHistoryObjList;
+	  		
+	  		foreach($lastList as $rankingHistoryObj){
+
+	  			$rankingHistoryObj->setRankingPosition($members);
+	  			$rankingHistoryObj->save();
+	  		}
+	  	}	  	
+	  	return $rankingHistoryObjListReturn;
 	}
 	
 	public function getClassify(){
 		
 		switch($this->getRankingType(true)){
 			case 'value':
-				$orderByList = array(RankingMemberPeer::SCORE=>'desc');
+				$orderByList = array(RankingMemberPeer::TOTAL_PRIZE=>'desc');
 				break;
 			case 'balance':
 				$orderByList = array(RankingMemberPeer::BALANCE=>'desc');
@@ -298,13 +391,13 @@ class Ranking extends BaseRanking
 	  	$orderByList[RankingMemberPeer::TOTAL_PRIZE] = 'desc';
 	  	$orderByList[RankingMemberPeer::BALANCE]     = 'desc';
 	  	$orderByList[RankingMemberPeer::TOTAL_PAID]  = 'asc';
-	  	$orderByList[RankingMemberPeer::EVENTS]      = 'desc';
+	  	$orderByList[RankingMemberPeer::EVENTS]      = 'asc';
 	  	
 	  	$rankingMemberObjList = $this->getMemberList($orderByList);
 	  	$lastList = array();
 	  	foreach($rankingMemberObjList as $key=>$rankingMemberObj){
 	  		
-	  		if( $rankingMemberObj->getScore()==0 ){
+	  		if( $rankingMemberObj->getTotalPaid()==0 ){
 	  			
 	  			$lastList[] = $rankingMemberObj;
 	  			unset($rankingMemberObjList[$key]);
@@ -329,5 +422,15 @@ class Ranking extends BaseRanking
 		
 		foreach($eventObjList as $eventObj)
 			$eventObj->addMember($peopleId);
+	}
+	
+	public function getByPlace($place){
+		
+		$rankingPosition = 1;
+		foreach($this->getClassify() as $rankingMemberObj)
+			if( ($rankingPosition++)==$place )
+				return $rankingMemberObj;
+		
+		return null;
 	}		
 }

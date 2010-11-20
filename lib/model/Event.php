@@ -48,11 +48,13 @@ class Event extends BaseEvent
 		return '#'.sprintf('%04d', $this->getId());
 	}
 	
-	public static function getList(){
+	public static function getList($criteria=null){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		
-		$criteria = new Criteria();
+		if( !is_object($criteria) )
+			$criteria = new Criteria();
+
 		$criteria->add( EventPeer::ENABLED, true );
 		$criteria->add( EventPeer::VISIBLE, true );
 		$criteria->add( EventPeer::DELETED, false );
@@ -434,5 +436,33 @@ class Event extends BaseEvent
 		}
 
 		return $eventObj;
+	}
+	
+	public function isEditable(){
+
+		$eventDate = $this->getEventDate();
+		if( $eventDate==null )
+			return true;
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPeer::RANKING_ID, $this->getRankingId() );
+		$criteria->add( EventPeer::EVENT_DATE, $eventDate, Criteria::GREATER_THAN );
+		$criteria->add( EventPeer::SAVED_RESULT, true );
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::DELETED, false );
+		$eventCount = EventPeer::doCount($criteria);
+		
+		return ($eventCount==0);
+	}
+	
+	public function getInfo(){
+		
+		$infoList = array();
+		$infoList['eventId']     = $eventObj->getId();
+		$infoList['isConfirmed'] = $eventObj->isConfirmed($this->peopleId);
+		$infoList['isEditable']  = $eventObj->isEditable();
+		
+		return $infoList;
 	}
 }

@@ -41,7 +41,7 @@ $Test = new pChart($width,$height);
 $Test->loadColorPalette($libDir.'/pChart/sample/softtones.txt');
 $Test->setFixedScale($minValue, $maxValue, 20);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
-$Test->setGraphArea(65,30,$width-88,$height-80);
+$Test->setGraphArea(65,45,$width-88,$height-80);
 $Test->drawFilledRoundedRectangle(7,7,$width-7,$height-7,5,240,240,240);
 $Test->drawRoundedRectangle(5,5,$width-5,$height-5,5,230,230,230);
 $Test->drawGraphArea(255,255,255,TRUE);
@@ -64,8 +64,10 @@ header('Pragma: no-cache');
 // Finish the graph
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawLegend($width-82,30,$DataSet->GetDataDescription(),255,255,255);
-$Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',10);
-$Test->drawTitle(00,22,'Balanço dos jogadores - '.$rankingObj->getRankingName(),50,50,50,585);
+$Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',11);
+$Test->drawTitle(100,30,'Balanço dos jogadores - '.$rankingObj->getRankingName(),50,50,50);
+$Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
+$Test->drawCredits($width, $height-40);
 $Test->Stroke();
    	
 exit;

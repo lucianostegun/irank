@@ -74,3 +74,21 @@ function hideButton( buttonId ){
 	buttonId = ucfirst(buttonId);
 	hideDiv('button'+buttonId);
 }
+
+
+
+function setButtonLabel( buttonId, label, icon ){
+
+	buttonId = ucfirst(buttonId);
+	
+	if( $('button'+buttonId)!=null ){
+		
+		var button = '';
+		if( icon )
+			button = '<img id="EventFilterSubmitImage" align="absmiddle" style="margin-top: -2px; margin-right: 5px" src="/images/button/'+icon+'" alt="AjaxLoader" />';
+		
+		$('button'+buttonId+'Label').innerHTML = button+label;
+	}
+	
+	
+}

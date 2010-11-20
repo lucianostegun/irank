@@ -53,9 +53,9 @@
   <tr class="boxcontent">
     <td colspan="6" class="defaultForm">
     	<div class="row" style="margin-top: 3px">
-    		<div class="fieldCheckbox"><?php echo checkbox_tag('sendResultMail', true, false) ?></div>
-    		<div class="label"><label for="sendResultMail">Enviar resultado por e-mail</label></div>
+    		<div class="text">Os resultados serão enviados por e-mail a todos os convidados</div>
     	</div>
     </td>
   </tr>
 </table>
+<?php echo input_hidden_tag('resultTab', true) ?>

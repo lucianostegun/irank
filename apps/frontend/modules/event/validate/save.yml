@@ -1,3 +1,15 @@
+validators:      
+  validateDate:
+    class:           sfCallbackValidator
+    param:
+      callback:      [Validate, validateDate]
+      invalid_error: A data informada não é uma data válida
+  validateEventDate:
+    class:           sfCallbackValidator
+    param:
+      callback:      [EventPeer, validateEventDate]
+      invalid_error: A data informada não pode mais ser utilizada para eventos
+      
 fields:
        
   rankingId:
@@ -18,9 +30,8 @@ fields:
   eventDate:
     required:
       msg:       Este campo é obrigatório e não foi preenchido
-    sfCallbackValidator:
-      callback:      [Validate, validateDate]
-      invalid_error: A data informada não é uma data válida
+    validateDate:
+    validateEventDate:
        
   startTime:
     required:

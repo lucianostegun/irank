@@ -7,7 +7,8 @@
 		'loading'=>'showIndicator()'
 		), array( 'id'=>'contactForm' ));
 ?>
-<?php echo image_tag('at', array('align'=>'left', 'style'=>'margin-right: 10px; margin-bottom: 20px')) ?>
+<div id="contactFormDiv">
+	<?php echo image_tag('at', array('align'=>'left', 'style'=>'margin-right: 10px; margin-bottom: 20px')) ?>
 		Você pode entrar em contato conosco preenchendo o<br/>formulário abaixo e nos enviando sua mensagem.
 		<br/><br/>
 		
@@ -41,4 +42,23 @@
 		<?php echo getFormStatus(null, null, 'Erro ao enviar a mensagem') ?>
 		<?php echo getFormLoading('contact') ?>
 	</div>
+</div>
+<div id="successDiv" style="display: none">
+	<table width="500" border="0" cellspacing="0" cellpadding="0" class="onlinepokerrooms_bg2">
+	  <tr>
+		<td align="left" valign="middle" class="poker_heading" style="color: #5a5aFF"><?php echo image_tag('frontend/layout/bullet.gif') ?>Mensagem enviada!</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top" style="padding:15px 23px 16px 20px; color: #333333">
+		<?php echo image_tag('frontend/success', array('align'=>'left', 'style'=>'margin: 0 15 15 15')) ?>
+		Sua mensagem foi enviada com sucesso!<br/>
+		Assim que possível estaremos entrando com contato para respondê-la.<br/><br/>
+		
+		<?php echo link_to('clique aqui', '#newMessage()', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> para enviar uma nova mensagem.<br/>
+		<?php echo link_to('clique aqui', 'sign', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> e cadastre-se gratuitamente.<br/><br/>
+		Caso você já seja um usuário utilize o login no topo da página.	
+		</td>
+	  </tr>
+	</table>
+</div>
 </form>

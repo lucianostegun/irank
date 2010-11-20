@@ -1,3 +1,7 @@
+<?php
+	echo form_tag('event/search', array('id'=>'eventSearchForm', 'onsubmit'=>'doEventSearch(); return false'));
+		echo input_hidden_tag('isIE', null);
+?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="onlinepokerrooms_bg2">
   <tr>
 	<td align="left" valign="middle" class="poker_heading"><?php echo image_tag('frontend/layout/bullet.gif') ?>Eventos</td>
@@ -13,35 +17,25 @@
 	        <td>Convidados</td>
 	        <td></td>
 	      </tr>
-	      <?php
-	      	$eventObjList = Event::getList();
-	      	
-	      	foreach($eventObjList as $eventObj):
-	      		$myEvent = $eventObj->isMyEvent();
-	      ?>
-	      <tr class="boxcontent" onmouseover="this.className='boxcontentOver'" onmouseout="this.className='boxcontent'">
-	        <td><?php echo link_to($eventObj->getEventName(), '#goModule(\'event\', \'edit\', \'eventId\', '.$eventObj->getId().')').($myEvent?'*':'') ?></td>
-	        <td><?php echo $eventObj->getRanking()->getRankingName() ?></td>
-	        <td align="center"><?php echo $eventObj->getEventDate('d/m/Y').' '.$eventObj->getStartTime('H:i') ?></td>
-	        <td><?php echo $eventObj->getEventPlace() ?></td>
-	        <td align="center"><?php echo sprintf('%02d', $eventObj->getInvites()).' ('.sprintf('%02d', $eventObj->getMembers()).')' ?></td>
-	        <td style="padding: 3px 0px 3px 6px"><?php echo link_to(image_tag('icon/clone'), '#cloneEvent('.$eventObj->getId().')', array('title'=>'Duplicar evento a partir deste')) ?></td>
+	      <tr class="rank_heading">
+	        <td><?php echo input_tag('eventName', $sf_request->getParameter('eventName'), array('size'=>15)) ?></td>
+	        <td><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($sf_request->getParameter('rankingId'))) ?></td>
+	        <td><?php echo input_date_tag('eventDate', Util::formatDate($sf_request->getParameter('eventDate')), array('size'=>10, 'maxlength'=>10)) ?></td>
+	        <td><?php echo input_tag('eventPlace', $sf_request->getParameter('eventPlace'), array('size'=>15)) ?></td>
+	        <td width="100" colspan="2"><?php echo button_tag('eventFilterSubmit', 'pesquisar', array('onclick'=>'doEventSearch()')) ?></td>
 	      </tr>
+	      <tbody id="eventListContent">
 	      <?php
-	      	endforeach;
-	      	
-	      	if( count($eventObjList)==0 ):
+			include_partial('event/include/search', array('criteria'=>$criteria));
 	      ?>
-		  <tr class="boxcontent">
-		    <td colspan="6">Não existem eventos disponíveis para seus rankings</td>
-		  </tr>
-	      <?php endif; ?>
+	      </tbody>
 	    </table>
 	    * Eventos criados para seus rankings
 	</td>
   </tr>
 </table>
-<div class="buttonBarForm">
+</form>
+<div class="buttonBarForm" style="border: 0px transparent">
 	<?php echo button_tag('addEvent', 'Novo evento', array('onclick'=>'goModule("event", "new")')) ?>
 	<?php echo getFormLoading('event') ?>
 </div>
