@@ -119,6 +119,15 @@
 	white-space: 	nowrap;
 }
 
+.defaultForm .row .image {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		2 3 2 3;
+	text-align: 	left;
+}
+
 .defaultForm .row .fieldCheckbox, .windowForm .row .fieldCheckbox {
 
 	float: 			left;

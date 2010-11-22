@@ -5,21 +5,7 @@ $peopleObj  = PeoplePeer::retrieveByPK($peopleId);
 
 $libDir = sfConfig::get('sf_lib_dir');
 
-
-$players = $rankingObj->getMembers();
-
-
-$criteria = new Criteria();
-$criteria->add( EventPeer::SAVED_RESULT, true );
-$criteria->addAscendingOrderByColumn( EventPeer::EVENT_DATE );
-$criteria->addAscendingOrderByColumn( EventPeer::START_TIME );
-$eventObjList  = $rankingObj->getEventList($criteria);
-$eventDateList = array();
-foreach($eventObjList as $eventObj){
-	
-	$eventDate       = $eventObj->getEventDate('d/m/Y');
-	$eventDateList[] = $eventDate;
-}
+$eventDateList = $rankingObj->getEventDateList();
 
 $eventDateList    = array_unique($eventDateList);
 $totalPaidList    = array();

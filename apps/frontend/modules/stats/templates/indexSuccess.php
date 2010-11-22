@@ -28,18 +28,24 @@
 				<div class="field" id="rankingIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect(), array('class'=>'required', 'id'=>'statsRankingId')) ?></div>
 			</div>
 			<div class="row">
-				<div class="label" id="statsFormatLabel">Formato</div>
-				<div class="field" id="formatFieldDiv"><?php echo select_tag('format', array(''=>'Selecione', 'chart'=>'Gráfico', 'report'=>'Relatório'), array('class'=>'required', 'id'=>'statsFormat')) ?></div>
+				<div class="label" id="statsReportTypeLabel">Tipo de relatório</div>
+				<div class="field" id="reportTypeFieldDiv">
+					<?php
+						$optionList = array(''=>'Selecione');
+						$optionList['playersBalance'] = 'Balanço dos jogadores';
+						$optionList['myPerformance']  = 'Meu desempenho';
+						$optionList['myBalance']      = 'Meu balanço';
+						$optionList['rankHistory']    = 'Histórico de classificação';
+						
+						echo select_tag('reportType', $optionList, array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statsReportType')) ?></div>
 			</div>
 			<div class="row">
-				<div class="label" id="statsReportTypeLabel">Tipo de informação</div>
-				<div class="field" id="reportTypeFieldDiv"><?php echo select_tag('reportType', array(''=>'Selecione', 'playersBalance'=>'Balanço dos jogadores', 'myPerformance'=>'Meu desempenho', 'myBalance'=>'Meu balanço'), array('class'=>'required', 'id'=>'statsReportType')) ?></div>
-			</div>
-			<div class="row" style="display: none">
-				<div class="label" id="statsPeriodLabel">Período</div>
-				<div class="field"><?php echo input_date_tag('periodStart', null, array('size'=>10, 'maxlength'=>10, 'class'=>'required', 'id'=>'statsPeriodStart')) ?></div>
-				<div class="textFlex">a</div>
-				<div class="field"><?php echo input_date_tag('periodFinish', null, array('size'=>10, 'maxlength'=>10, 'class'=>'required', 'id'=>'statsPeriodStart')) ?></div>
+				<div class="label" id="statsFormatLabel">Formato</div>
+				<div class="field" id="formatFieldDiv">
+					<?php
+						echo select_tag('format', array(''=>'Selecione', 'chart'=>'Gráfico', 'report'=>'Relatório'), array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statsFormat'));
+					?>
+				</div>
 			</div>
     	
 	</td>

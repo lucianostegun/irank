@@ -16,24 +16,14 @@ $libDir = sfConfig::get('sf_lib_dir');
 
 $players = $rankingObj->getMembers();
 
+$eventDateList = $rankingObj->getEventDateList();
 
-$criteria = new Criteria();
-$criteria->add( EventPeer::SAVED_RESULT, true );
-$criteria->addAscendingOrderByColumn( EventPeer::EVENT_DATE );
-$criteria->addAscendingOrderByColumn( EventPeer::START_TIME );
-$eventObjList  = $rankingObj->getEventList($criteria);
-$eventDateList = array();
-foreach($eventObjList as $eventObj){
-	
-	$eventDate       = $eventObj->getEventDate('d/m/Y');
-	$eventDateList[] = $eventDate;
-}
 
 $eventDateList       = array_unique($eventDateList);
 $myPositionByDayList = array();
 $myPositionProgressList = array();
 $otherPlaceByDayList    = array();
-$otherPlaceProgressDayList    = array();
+$otherPlaceProgressList = array();
 
 foreach($eventDateList as $key=>$eventDate){
 
@@ -51,6 +41,7 @@ foreach($eventDateList as $key=>$eventDate){
 	$otherPlaceByDayList[] = ($position?$position:null);
 	$otherPlaceProgressList[] = ($totalPosition?$totalPosition:null);
 }
+
 //
 // Dataset definition
 $DataSet = new pData;

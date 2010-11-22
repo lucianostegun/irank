@@ -299,7 +299,7 @@ class eventActions extends sfActions
   
   public function executeDebug($request){
   	
-  	$rankingObj = RankingPeer::retrieveByPK(1);
+  	$rankingObj = RankingPeer::retrieveByPK(2);
   	
   	foreach($rankingObj->getEventDateList() as $eventDate)
   		$rankingObj->updateHistory($eventDate);

@@ -38,4 +38,27 @@ class UserSitePeer extends BaseUserSitePeer
 
 		return !is_object( $userSiteObj );
 	}
+	
+	public static function validateEmailList(){
+		
+		$pattern = '/^[a-z]([a-z-_\.A-Z0-9])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)+/';
+
+		for($i=1; $i<=10; $i++){
+			
+			$emailAddress = MyTools::getRequestParameter('emailAddress'.$i);
+			$friendName   = MyTools::getRequestParameter('friendName'.$i);
+			
+			if( $emailAddress && !preg_match($pattern, $emailAddress))
+				MyTools::setError('emailAddress'.$i, 'O e-mail informado não é um e-mail válido');
+			
+			if( $emailAddress xor $friendName ){
+				if( $emailAddress )
+					MyTools::setError('friendName'.$i, 'Informe o nome de seu amigo');
+				else
+					MyTools::setError('emailAddress'.$i, 'Informe o e-mail de seu amigo');
+			}
+		}
+		
+		return !MyTools::getRequest()->hasErrors();
+	}
 }
