@@ -21,8 +21,6 @@ class Report {
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
     	
-    	
-    	
 		$smtpHostname   = Config::getConfigByName( 'smtpHostname', true );
 		$smtpUsername   = Config::getConfigByName( 'smtpUsername', true );
 		$smtpPassword   = Config::getConfigByName( 'smtpPassword', true );
@@ -95,6 +93,8 @@ class Report {
 		foreach( $attachmentList as $fileName=>$attachment )
 			$mail->addAttachment( $attachment, $fileName );
 
+		$sendResult = true;
+
 		$emailAddressError = array();
 		foreach( $emailAddressList as $emailAddress ){
 		
@@ -109,9 +109,12 @@ class Report {
 				$mail->send();
 			}catch(Exception $e){
 			
+				$sendResult = false;
 				$emailAddressError[] = $emailAddress;
 			}
 		}
+		
+		return $sendResult;
     }
 }
 ?>

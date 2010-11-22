@@ -66,6 +66,9 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 				className    += 'Error';
 
 				formFieldMessage = formFieldMessage.replace(/\\n/g, ' '+chr(10));
+				
+				if( formFieldMessage=='nullError' )
+					continue;
 
 				objectForm.className = className;
 				objectForm.title     = formFieldMessage;

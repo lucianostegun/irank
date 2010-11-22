@@ -54,9 +54,8 @@ $moduleName = $sf_context->getModuleName();
             <td align="center" valign="middle" class="border_menu_right"><?php echo link_to('Home', 'home') ?></td>
             <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Cadastro', 'sign') ?></td>
             <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Meu ranking', 'ranking') ?></td>
-            <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Encontrar amigos', 'myRanking') ?></td>
-            <td align="center" valign="middle" class="border_menu_right border_menu_right"><a href="#">Poker Tips</a></td>
-            <td align="center" valign="middle" class="border_menu_right border_menu_right"><a href="#">Poker Strategy</a></td>
+            <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Convidar amigos', 'friendInvite') ?></td>
+            <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Feedback', 'feedback') ?></td>
             <td align="center" valign="middle" class="border_menu_right"><?php echo link_to('Contato', 'contact') ?></td>
           </tr>
         </table>
@@ -85,8 +84,12 @@ $moduleName = $sf_context->getModuleName();
 
     <td height="111" align="center" valign="top" class="footer" style="padding-top:23px;"><table width="950" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td align="center" valign="top"><a href="index.html">Home</a>   |  <a href="playpoker.html">Play Poker</a>   |  <a href="#">Download Poker</a>   |  <a href="#">Free Poker</a>   |  <a href="#">Poker Tips</a>   |  <a href="#">Poker Strategy</a>   |  <a href="#">Contact</a>
-
+        <td align="center" valign="top">
+        	<?php echo link_to('home', '/') ?> | 
+        	<?php echo link_to('cadastro', '/sign') ?> | 
+        	<?php echo link_to('meu ranking', '/ranking') ?> | 
+        	<?php echo link_to('convidar amigos', '/friendInvite') ?> | 
+        	<?php echo link_to('contato', '/contact') ?> | 
         </td>
       </tr>
     </table></td>
@@ -96,7 +99,7 @@ $moduleName = $sf_context->getModuleName();
 <!-- Begin http://www.casinotemplates.org | http://www.gamingguide.net Code | Do Not Remove -->
 <table width="950" border="0" align="center" cellpadding="0" cellspacing="0">
 <tr><td align="left" valign="middle">
-      <div align="center">Template by <a href="http://www.casinotemplates.org" target="_blank"><font color="#FFFFFF">Poker Templates</font></a> &amp; <a href="http://www.gamingguide.net" target="_blank"><font color="#FFFFFF">USA Online Casino</font></a></div>
+      <div align="center">Template by <a href="http://www.casinotemplates.org" target="_blank"><font color="#000000">Poker Templates</font></a> &amp; <a href="http://www.gamingguide.net" target="_blank"><font color="#000000">USA Online Casino</font></a></div>
 
 </td></tr></table>
 <!-- End http://www.casinotemplates.org | http://www.gamingguide.net Code | Do Not Remove -->

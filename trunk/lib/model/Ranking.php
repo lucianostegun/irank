@@ -188,9 +188,10 @@ class Ranking extends BaseRanking
 	  		$rankingMemberObj->updateInfo();
 	}
 	
-	public function getEventDateList($format='d/m/Y'){
+	public function getEventDateList($format='d/m/Y', $saved=true){
 		
 		$criteria = new Criteria();
+		$criteria->add( EventPeer::SAVED_RESULT, $saved );
 		$criteria->addAscendingOrderByColumn( EventPeer::EVENT_DATE );
 		$eventObjList = $this->getEventList($criteria);
 		
@@ -198,7 +199,7 @@ class Ranking extends BaseRanking
 		foreach($eventObjList as $eventObj)
 			$eventDateList[] = $eventObj->getEventDate($format);
 		
-		return $eventDateList;
+		return array_unique($eventDateList);
 	}
 	
 	public function updateWholeHistory(){

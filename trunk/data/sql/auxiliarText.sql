@@ -60,3 +60,8 @@ INSERT INTO file(file_name, file_path, description, file_size, created_at, updat
     VALUES('contactMessage.htm', 'templates/contactMessage.htm', 'E-mail para notificação de contato', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
     VALUES('E-mail para notificação de contato', (SELECT MAX(id) FROM file), 'contactMessage', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
+    VALUES('friendInvite.htm', 'templates/friendInvite.htm', 'Convite para ingressar ao site', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
+    VALUES('Convite para ingressar ao site', (SELECT MAX(id) FROM file), 'friendInvite', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

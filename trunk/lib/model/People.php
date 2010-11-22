@@ -141,6 +141,24 @@ class People extends BasePeople
 			return $optionValue;
 	}
 	
+	public static function getCurrentPeople(){
+		
+		$peopleId = MyTools::getAttribute('peopleId');
+		
+		return PeoplePeer::retrieveByPK($peopleId);
+	}
+	
+	public function getUserSite(){
+		
+		$criteria = new Criteria();
+		$criteria->add( UserSitePeer::PEOPLE_ID, $this->getId() );
+		$criteria->add( UserSitePeer::ACTIVE, true );
+		$criteria->add( UserSitePeer::ENABLED, true );
+		$criteria->add( UserSitePeer::VISIBLE, true );
+		$criteria->add( UserSitePeer::DELETED, false );
+		return UserSitePeer::doSelectOne( $criteria );
+	}
+	
 	public function getInfo(){
 		
 		$infoList = array();

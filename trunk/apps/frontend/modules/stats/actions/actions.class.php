@@ -30,8 +30,36 @@ class statsActions extends sfActions
   		exit;
   	}
   	
+  	if( $format=='report' )
+  		return $this->forward('stats', 'exportReport');
   	if( $format=='chart' )
   		return $this->forward('stats', 'exportChart');
+  }
+  
+  public function executeExportReport($request){
+  	
+  	$reportType = $request->getParameter('reportType');
+
+  	$this->rankingId = $request->getParameter('rankingId');
+  	
+  	switch($reportType){
+  		case 'rankHistory':
+  			$reportTemplate = 'rankHistory';
+  			break;
+  		case 'playersBalance':
+  			$reportTemplate = 'playersBalance';
+  			break;
+  		case 'myPerformance':
+  			$reportTemplate = 'myPerformance';
+  			break;
+  		case 'myBalance':
+  			$reportTemplate = 'myBalance';
+  			break;
+  		default:
+  			throw new Exception('Relatório "'.$reportType.'" não encontrado');
+  	}
+  	
+  	$this->setTemplate('report/'.$reportTemplate);
   }
   
   public function executeExportChart($request){
@@ -41,18 +69,19 @@ class statsActions extends sfActions
   	$this->rankingId = $request->getParameter('rankingId');
   	
   	switch($reportType){
-  		case 'rankHistory':
-  			return $this->setTemplate('rankHistoryChart');
   		case 'playersBalance':
-  			return $this->setTemplate('playersBalanceChart');
+  			$reportTemplate = 'playersBalance';
+  			break;
   		case 'myPerformance':
-  			return $this->setTemplate('myPerformanceChart');
+  			$reportTemplate = 'myPerformance';
+  			break;
   		case 'myBalance':
-  			return $this->setTemplate('myBalanceChart');
+  			$reportTemplate = 'myBalance';
+  			break;
   		default:
-  			throw new Exception('Relatório "'.$reportType.'" não encontrado');
-  			exit;
+  			throw new Exception('Gráfico "'.$reportType.'" não encontrado');
   	}
   	
+  	$this->setTemplate('chart/'.$reportTemplate);
   }
 }
