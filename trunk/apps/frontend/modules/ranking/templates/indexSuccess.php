@@ -40,3 +40,7 @@
 	</td>
   </tr>
 </table>
+<div class="buttonBarForm" style="border: 0px transparent">
+	<?php echo button_tag('addRanking', 'Novo ranking', array('onclick'=>'goModule("ranking", "new")')) ?>
+	<?php echo getFormLoading('ranking') ?>
+</div>

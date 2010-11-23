@@ -42,6 +42,7 @@ class EventPeer extends BaseEventPeer
 	}
 	public static function uniqueEventName($eventName){
 
+		$rankingId = MyTools::getRequestParameter('rankingId');
 		$eventId   = MyTools::getRequestParameter('eventId');
 		$eventDate = MyTools::getRequestParameter('eventDate');
 		
@@ -49,6 +50,7 @@ class EventPeer extends BaseEventPeer
 		$criteria->add( EventPeer::VISIBLE, true );
 		$criteria->add( EventPeer::ENABLED, true );
 		$criteria->add( EventPeer::DELETED, false );
+		$criteria->add( EventPeer::RANKING_ID, $rankingId );
 		$criteria->add( EventPeer::ID, $eventId, Criteria::NOT_EQUAL );
 		$criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
 		$criteria->add( EventPeer::EVENT_NAME, $eventName, Criteria::ILIKE );

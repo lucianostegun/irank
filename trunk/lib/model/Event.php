@@ -450,8 +450,9 @@ class Event extends BaseEvent
 	public function isEditable(){
 
 		$userSiteId = MyTools::getAttribute('userSiteId');
+		$rankingObj = $this->getRanking();
 		
-		if($this->getRanking()->getUserSiteId()!=$userSiteId)
+		if(is_object($rankingObj) && $rankingObj->getUserSiteId()!=$userSiteId)
 			return false;
 		
 		$eventDate = $this->getEventDate();
@@ -472,10 +473,12 @@ class Event extends BaseEvent
 	
 	public function getInfo(){
 		
+		$peopleId = MyTools::getAttribute('peopleId');
+		
 		$infoList = array();
-		$infoList['eventId']     = $eventObj->getId();
-		$infoList['isConfirmed'] = $eventObj->isConfirmed($this->peopleId);
-		$infoList['isEditable']  = $eventObj->isEditable();
+		$infoList['eventId']     = $this->getId();
+		$infoList['isConfirmed'] = $this->isConfirmed($peopleId);
+		$infoList['isEditable']  = $this->isEditable();
 		
 		return $infoList;
 	}

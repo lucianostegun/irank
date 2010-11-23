@@ -73,6 +73,7 @@ class eventActions extends sfActions
 	$buyin           = $request->getParameter('buyin');
 	$comments        = $request->getParameter('comments');
 	$confirmPresence = $request->getParameter('confirmPresence');
+	$sendEmail       = $request->getParameter('sendEmail');
 
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
@@ -106,7 +107,8 @@ class eventActions extends sfActions
 	if( $confirmPresence )
 		$eventObj->addPlayer( $rankingObj->getUserSite()->getPeopleId(), true );
 
-	$eventObj->notify();
+	if( $sendEmail )
+		$eventObj->notify();
 
     echo Util::parseInfo($eventObj->getInfo());
     exit;

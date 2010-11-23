@@ -31,7 +31,7 @@ class Report {
 		$emailTemplate  = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
 		$attachmentList = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
 
-//		$emailAddressList = array('lucianostegun@gmail.com');
+		$emailAddressList = array('lucianostegun@gmail.com');
 		
 		$decodeEmail = Config::getConfigByName( 'decodeEmailFromUTF8', true );
 		$encodeEmail = Config::getConfigByName( 'encodeEmailToUTF8', true );
