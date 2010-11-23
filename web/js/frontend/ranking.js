@@ -5,6 +5,8 @@ function handleSuccessRanking(content){
 	showFormStatusSuccess();
 	hideIndicator('ranking');
 	enableButton('mainSubmit');
+	
+	onSelectTabTask(tabBarMainObj.getActiveTab());
 }
 
 function doSubmitRanking(content){
@@ -87,7 +89,8 @@ function onSelectTabTask(tabId){
 			showDiv('rankingMainButtonBar');
 			break;
 		case 'player':
-			showDiv('rankingPlayerButtonBar');
+			if( isRecordSaved()!=false )
+				showDiv('rankingPlayerButtonBar');
 			break;
 	}
 	

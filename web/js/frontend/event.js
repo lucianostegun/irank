@@ -335,7 +335,7 @@ function updatePlayerContent(eventId){
 
 function updateResultContent(eventId){
 	
-	if( hasResult() )
+	if( !hasResult() )
 		return false;
 
 	var urlAjax = _webRoot+'/event/getResult/eventId/'+eventId;

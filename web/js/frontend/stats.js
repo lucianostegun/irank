@@ -31,11 +31,5 @@ function checkReportType(){
 
 function checkRankingType(){
 	
-	if( $('statsFormat').value != 'report' ){
-		
-		alert('Este tipo de relatório não é compatível com o formato selecionado!');
-		return false;
-	}
-	
 	return true;
 }

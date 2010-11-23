@@ -7,8 +7,16 @@ $otherPlace    = '1';
 
 if( $peopleIdOther==$peopleId ){
 	
-	$peopleIdOther = $rankingObj->getByPlace(2)->getPeopleId();
-	$otherPlace    = '2';
+	$peopleObjOther = $rankingObj->getByPlace(2);
+	
+	if( is_object($peopleObjOther) ){
+		
+		$peopleIdOther = $peopleObjOther->getPeopleId();
+		$otherPlace    = '2';
+	}else{
+		
+		$peopleIdOther = $peopleId;
+	}
 }
 
 $inputFilePath  = Util::getFilePath('/templates/myBalance.xls');
