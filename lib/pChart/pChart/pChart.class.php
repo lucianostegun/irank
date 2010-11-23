@@ -202,7 +202,8 @@
 
      $C_White =$this->AllocateColor($this->Picture,255,255,255);
      imagefilledrectangle($this->Picture,0,0,$XSize,$YSize,$C_White);
-     imagecolortransparent($this->Picture,$C_White);
+     
+//     imagecolortransparent($this->Picture,$C_White);
 
      $this->setFontProperties("tahoma.ttf",8);
     }
