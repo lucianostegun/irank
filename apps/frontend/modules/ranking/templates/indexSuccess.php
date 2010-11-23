@@ -24,7 +24,7 @@
 	        <td><?php echo $rankingObj->getStartDate('d/m/Y') ?></td>
 	        <td><?php echo $rankingObj->getFinishDate('d/m/Y') ?></td>
 	        <td align="right"><?php echo Util::formatFloat($rankingObj->getDefaultBuyin(), true) ?></td>
-	        <td><?php echo $rankingObj->getMembers() ?></td>
+	        <td><?php echo $rankingObj->getPlayers() ?></td>
 	        <td><?php echo $rankingObj->getEvents() ?></td>
 	      </tr>
 	      <?php

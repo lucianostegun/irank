@@ -1,0 +1,575 @@
+.defaultForm {
+
+	padding: 	5 0 0 5;
+}
+
+.defaultForm .row {
+
+	height: 		auto;
+	min-height: 	22px;
+	clear: 			both;
+	margin-top: 	3px;
+	whitespace: 	nowrap;
+	width:			100%;
+	z-index: 		10;
+
+}
+
+.defaultForm .row .label {
+
+	width: 			120px;
+	float: 			left;
+	padding: 		4 5 0 0;
+	height: 		17px;
+	height: 		23px !ie;
+	text-align: 	right;
+	background: 	#DADADA;
+	font-weight: 	bold;
+	color: 			#333333;
+	border-top: 	1px solid #CCCCCC;
+	border-left: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;
+}
+
+.defaultForm .row .labelFlex {
+
+	float: 			left;
+	padding: 		4 5 0 0;
+	height: 		17px;
+	height: 		23px !ie;
+	text-align: 	right;
+	background: 	#DADADA;
+	font-weight: 	bold;
+	color: 			#333333;
+	border-top: 	1px solid #CCCCCC;
+	border-left: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;
+}
+
+.defaultForm .row .labelRo {
+
+	width: 			120px;
+	float: 			left;
+	padding: 		4 5 0 0;
+	height: 		17px;
+	height: 		23px !ie;
+	text-align: 	right;
+	background: 	#FFFFFF;
+	font-weight: 	bold;
+	color: 			#333333;
+	border-top: 	1px solid #CCCCCC;
+	border-left: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;
+}
+
+.defaultForm .row .labelRoEdit {
+
+	width: 			120px;
+	float: 			left;
+	padding: 		4 5 0 0;
+	height: 		17px;
+	height: 		23px !ie;
+	text-align: 	right;
+	background: 	#FFFFFF;
+	font-weight: 	bold;
+	color: 			#333333;
+	border-top: 	1px solid #CCCCCC;
+	border-left: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;
+}
+
+.defaultForm .row .field {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		1 1 0 1;
+	padding: 		0px !ie;
+	height: 		20px;
+	height: 		23px !ie;
+	
+	text-align: 	left;
+	border-top: 	1px solid #D5D5D5;
+	border-right: 	1px solid #D5D5D5;
+	border-left: 	1px solid #D5D5D5;
+	border-bottom: 	1px solid #D5D5D5;
+	white-space: 	nowrap;
+}
+
+.defaultForm .row .fieldCheckbox {
+
+	float: 			left;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	padding: 		2 4 1 4;
+	border-left: 	1px solid #D5D5D5;
+	border-top: 	1px solid #CCCCCC;
+	border-right: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;
+}
+
+
+.defaultForm .row .text {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		4px;
+	padding-left: 	6px;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	width: 			auto;
+	min-width: 		150px !important;
+	border: 		1px solid #D5D5D5;
+}
+
+.defaultForm .row .textFlex {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		4px;
+	padding-left: 	6px;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	border: 		1px solid #D5D5D5;
+}
+
+.defaultForm .row .image {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		3 3 2 3;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	border: 		1px solid #D5D5D5;
+}
+
+.defaultForm .row .button {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		1 2 1 2;
+	padding: 		2 2 1 2 !ie;
+	height: 		20px;
+	height: 		23px !ie;
+}
+
+.defaultForm .row .image img {
+
+	border: 	0px solid #FFFFFF;
+}
+
+.defaultForm .rowCheckbox {
+
+	overflow: 		hidden;
+	height: 		23px;
+	clear: 			both;
+	margin-top: 	3px;
+	whitespace: 	nowrap;
+
+}
+
+.defaultForm .rowCheckbox .label {
+
+	float: 			left;
+	width: 			auto;
+	min-width: 		150px !important;
+	padding: 		4px;
+	padding-left: 	5px;
+	text-align: 	left;
+	margin-right: 	2px;
+	background: 	#FFFFFF;
+	color: 			#333333;
+	border-top: 	1px solid #CCCCCC;
+	border-right: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;
+}
+
+.defaultForm .rowCheckbox .field {
+
+	float: 			left;
+	text-align: 	left;
+	background: 	#DADADA;
+	padding: 		2 4 1 3;
+	border-top: 	1px solid #CCCCCC;
+	border-left: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;
+}
+
+.defaultForm .rowCheckbox .textField {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		1 1 0 1;
+	padding: 		0px !ie;
+	height: 		20px;
+	height: 		23px !ie;
+	
+	text-align: 	left;
+	border-top: 	1px solid #D5D5D5;
+	border-right: 	1px solid #D5D5D5;
+	border-left: 	1px solid #D5D5D5;
+	border-bottom: 	1px solid #D5D5D5;
+}
+
+.defaultForm .rowCheckbox .text {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		4px;
+	padding-left: 	6px;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	width: 			auto;
+	min-width: 		150px !important;
+	border: 		1px solid #D5D5D5;
+}
+
+.defaultForm .rowCheckbox .textFlex {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		4px;
+	padding-left: 	6px;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	border: 		1px solid #D5D5D5;
+}
+
+.defaultForm .rowCheckbox .image {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		3 3 2 3;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	border: 		1px solid #D5D5D5;
+}
+
+.defaultForm .rowCheckbox .image img {
+
+	border: 	0px solid #FFFFFF;
+}
+
+.defaultForm input {
+
+	font-size: 	8pt;
+	height: 	19px;
+	border:		1px solid #FFFFFF;
+	padding: 	2 0 1 3;
+}
+
+.defaultForm input:focus {
+
+	background: 	#E5E5E5;
+	border:			1px solid #E5E5E5;
+}
+
+.defaultForm .checkbox {
+
+	margin: 	0px;
+	border: 	0px solid;
+	height: 	18px;
+}
+
+.defaultForm select {
+
+	font-size: 	8pt;
+	font-size: 	8pt !ie;
+	
+	max-width: 	250px;
+	height: 	19px;
+	height: 	18px !ie;
+	
+	margin: 	1px !ie;
+}
+
+.defaultForm .rowTextArea {
+
+	height: 		73px;
+	height: 		73px !ie;
+	clear: 			both;
+	margin-top: 	3px;
+	whitespace: 	nowrap;
+}
+
+.defaultForm .rowTextArea .label {
+
+	width: 			156px;
+	width: 			160px !ie;
+	height: 		64px;
+	height: 		75px !ie;
+	float: 			left;
+	padding: 		4px;
+	padding-right: 	5px;
+	text-align: 	right;
+	background: 	#DADADA;
+	font-weight: 	bold;
+	color: 			#333333;
+	border-top: 	1px solid #CCCCCC;
+	border-left: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;
+}
+
+.defaultForm .rowTextArea .labelRo {
+
+	width: 			160px;
+	height: 		64px;
+	*height: 		75px;
+	_height: 		75px;
+	float: 			left;
+	padding: 		4px;
+	padding-right: 	5px;
+	text-align: 	right;
+	background: 	#FFFFFF;
+	font-weight: 	bold;
+	color: 			#333333;
+	border-top: 	1px solid #CCCCCC;
+	border-left: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;
+}
+
+.defaultForm .rowTextArea .field {
+
+	float: 			left;
+	height: 		70px;
+	padding: 		1px;
+	margin-right: 	2px;
+	padding-left: 	2px;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	border-top: 	1px solid #D5D5D5;
+	border-right: 	1px solid #D5D5D5;
+	border-bottom: 	1px solid #D5D5D5;
+	border-left: 	1px solid #D5D5D5;
+}
+
+.defaultForm .rowTextArea .text {
+
+	height: 		64px;
+	height: 		75px !ie;
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		4px;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	border: 		1px solid #D5D5D5;
+	width: 			330px;
+	overflow: 		auto;
+}
+
+.defaultForm .rowTextArea .field textarea {
+
+	width: 		250px;
+	height: 	70px;
+	height: 	71px !ie;
+	margin: 	0 0 0 -1;
+	margin: 	-1 -2 -1 -1 !ie;
+	border: 	1px solid transparent;
+}
+
+.defaultForm fieldset {
+
+	height: 		auto;
+	border: 		1px solid #2E5F95;
+	padding: 		5px;
+}
+
+.defaultForm fieldset legend {
+
+	font-weight: 		bold;
+	color: 				#2E5F95;
+	padding-left: 		3px;
+	padding-right: 		3px;
+	padding-top: 		2px;
+	padding-bottom: 	2px;
+	border: 			1px solid #2E5F95;
+	background: 		#C8DAEE;
+}
+
+.defaultForm .row .buttons {
+
+	padding: 	10px;
+}
+
+.defaultForm .row .buttons input {
+
+	height: 		20px;
+}
+
+.defaultForm .row .buttons .delete {
+
+	color: 	#800000;
+}
+
+
+
+.defaultForm .formFieldError {
+
+	font-size: 		8pt;
+	height: 		19px;
+	padding: 		0px;
+	padding-left: 	0px;
+	text-align: 	left;
+	border:			1px solid #DE7A7B;
+	padding: 		2 0 1 3;
+	background: 	#E6C0C0;
+}
+
+.defaultForm .formFieldError:focus {
+
+	font-size: 		8pt;
+	height: 		19px;
+	padding: 		0px;
+	padding-left: 	0px;
+	text-align: 	left;
+	border:			1px solid #DE7A7B;
+	padding: 		2 0 1 3;
+	background: 	#d6a9a9;
+}
+
+.defaultForm .formFieldErrorDiv {
+
+	font-size: 		8pt;
+	padding: 		2 4 2 4;
+	text-align: 	left;
+	margin: 		-3 -3 -3 -5;
+	background: 	#E6C0C0;
+	border:			1px solid #DE7A7B;
+}
+
+
+#formStatusSuccessDiv {
+
+	position: 				absolute;
+	width: 					320px;
+	height: 				25px;
+	top: 					0px;
+	left: 					0px;
+	background: 			#D0D0D0;
+	border-bottom: 			1px solid #63b03d;
+	color: 					#667076;
+	font-weight: 			bold;
+	z-index: 				2;
+	display: 				none;
+	
+	background: 			url(/images/backend/success20.png) #b7ddb1 no-repeat;
+	background-position: 	7 2;	
+	color: 					#407c23;
+}
+
+#formStatusErrorDiv {
+
+	position: 				absolute;
+	width: 					320px;
+	height: 				25px;
+	top: 					0px;
+	left: 					0px;
+	background: 			#D0D0D0;
+	border-bottom: 			1px solid #DE7A7B;
+	color: 					#667076;
+	font-weight: 			bold;
+	z-index: 				2;
+	display: 				none;
+	
+	background: 			url(/images/backend/error20.png) #E6C0C0 no-repeat;
+	background-position: 	10 3;	
+	color: 					#CC3300;
+}
+
+.formStatus .message {
+	
+	float: 			left;
+	margin-top: 	5px;
+	margin-left: 	40px;
+	width: 			200px;
+}
+
+.formStatus .close {
+	
+	float: 			left;
+	width: 			25px;
+	margin-top: 	5px;
+	text-align: 	right;
+}
+
+.formStatus .close a {
+
+	text-decoration: 	none;
+	font-size: 			8pt;
+	color: 				#81571F
+}
+
+.defaultForm .formHelp {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	margin-left: 	1px;
+	padding: 		3 3 2 3;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	border: 		1px solid #D5D5D5;
+}
+
+.defaultForm .formHelpDescription {
+
+	float: 			left;
+	position: 		absolute;
+	display: 		none;
+	width: 			350px;
+	padding: 		5px;
+	border: 		1px solid #426D89;
+	background: 	#C7DBE8;
+	z-index: 		5000;
+	font-weight: 	normal;
+}
+
+.defaultForm .title {
+
+	margin-top: 	20px;
+	margin-bottom: 	5px;
+	padding: 		3px;
+	border-bottom: 	1px solid #5C6D7B;
+	color: 			#414D58;
+	font-weight: 	bold;
+}
+
+.formTable th {
+
+	padding: 		4 4 4 4;
+	height: 		17px;
+	height: 		23px !ie;
+	text-align: 	left;
+	background: 	#DADADA;
+	font-weight: 	bold;
+	color: 			#333333;
+	border-top: 	1px solid #CCCCCC;
+	border-left: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;	
+}
+
+.formTable td {
+
+	margin-right: 	2px;
+	padding: 		1 1 1 1;
+	padding: 		0px !ie;
+	height: 		20px;
+	height: 		23px !ie;
+	
+	text-align: 	left;
+	border-top: 	1px solid #D5D5D5;
+	border-right: 	1px solid #D5D5D5;
+	border-left: 	1px solid #D5D5D5;
+	border-bottom: 	1px solid #D5D5D5;
+	white-space: 	nowrap;
+	background: 	#FFFFFF;
+}

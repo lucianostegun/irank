@@ -18,14 +18,14 @@ class EventPeer extends BaseEventPeer
 		
 		if( !$criteria->isNoFilter() ){
 		
-			$criterion = $criteria->getNewCriterion( EventMemberPeer::PEOPLE_ID, $peopleId );
-			$criterion2 = $criteria->getNewCriterion( EventMemberPeer::PEOPLE_ID, null );
+			$criterion = $criteria->getNewCriterion( EventPlayerPeer::PEOPLE_ID, $peopleId );
+			$criterion2 = $criteria->getNewCriterion( EventPlayerPeer::PEOPLE_ID, null );
 			$criterion2->addAnd( $criteria->getNewCriterion( EventPeer::ENABLED, false ) );
 			
 			$criterion2->addOr($criterion);
 			$criteria->add($criterion2);
 			
-			$criteria->addJoin( EventPeer::ID, EventMemberPeer::EVENT_ID, Criteria::LEFT_JOIN );
+			$criteria->addJoin( EventPeer::ID, EventPlayerPeer::EVENT_ID, Criteria::LEFT_JOIN );
 		}
 		
 		return parent::doSelectRS($criteria, $con);

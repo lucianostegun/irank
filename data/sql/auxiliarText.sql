@@ -17,9 +17,9 @@ INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, lock
     VALUES('E-mail de boas vindas', (SELECT MAX(id) FROM file), 'signWelcome', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
-    VALUES('rankingMemberAdd.htm', 'templates/rankingMemberAdd.htm', 'E-mail de notificação inclusão em ranking', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    VALUES('rankingPlayerAdd.htm', 'templates/rankingPlayerAdd.htm', 'E-mail de notificação inclusão em ranking', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
-    VALUES('E-mail de notificação inclusão em ranking', (SELECT MAX(id) FROM file), 'rankingMemberAdd', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    VALUES('E-mail de notificação inclusão em ranking', (SELECT MAX(id) FROM file), 'rankingPlayerAdd', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
     VALUES('eventCreateNotify.htm', 'templates/eventCreateNotify.htm', 'E-mail de notificação de criação de evento', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
@@ -60,6 +60,11 @@ INSERT INTO file(file_name, file_path, description, file_size, created_at, updat
     VALUES('contactMessage.htm', 'templates/contactMessage.htm', 'E-mail para notificação de contato', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
     VALUES('E-mail para notificação de contato', (SELECT MAX(id) FROM file), 'contactMessage', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
+    VALUES('feedbackMessage.htm', 'templates/feedbackMessage.htm', 'E-mail de contato para feedback', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
+    VALUES('E-mail de contato para feedback', (SELECT MAX(id) FROM file), 'feedbackMessage', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
     VALUES('friendInvite.htm', 'templates/friendInvite.htm', 'Convite para ingressar ao site', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -24,7 +24,7 @@
 
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 	$dhtmlxTabBarObj->addTab('main', 'Evento', 'event/'.$mode.'/main', array('eventObj'=>$eventObj));
-	$dhtmlxTabBarObj->addTab('member', 'Convidados', 'event/'.$mode.'/member', array('eventObj'=>$eventObj));
+	$dhtmlxTabBarObj->addTab('player', 'Convidados', 'event/'.$mode.'/player', array('eventObj'=>$eventObj));
 	if( $pastDate )
 		$dhtmlxTabBarObj->addTab('result', 'Resultado', 'event/'.$resultMode.'/result', array('eventObj'=>$eventObj));
 	$dhtmlxTabBarObj->setHeight(250);

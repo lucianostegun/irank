@@ -19,7 +19,7 @@
 
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 	$dhtmlxTabBarObj->addTab('main', 'Ranking', 'ranking/form/main', array('rankingObj'=>$rankingObj));
-	$dhtmlxTabBarObj->addTab('member', 'Membros', 'ranking/form/member', array('rankingObj'=>$rankingObj));
+	$dhtmlxTabBarObj->addTab('player', 'Membros', 'ranking/form/player', array('rankingObj'=>$rankingObj));
 	$dhtmlxTabBarObj->addTab('event', 'Eventos', 'ranking/form/event', array('rankingObj'=>$rankingObj));
 	$dhtmlxTabBarObj->addTab('classify', 'Classificação', 'ranking/form/classify', array('rankingObj'=>$rankingObj));
 	$dhtmlxTabBarObj->setHeight(250);
@@ -31,11 +31,11 @@
 		<?php echo getFormLoading('ranking') ?>
 		<?php echo getFormStatus(); ?>
 	</div>
-	<div class="buttonBarForm" id="rankingMemberButtonBar" style="display: none">
-		<?php echo button_tag('addRankingMember', 'Novo membro', array('onclick'=>'addRankingMember()')) ?>
-		<?php echo getFormLoading('rankingMemberList') ?>
+	<div class="buttonBarForm" id="rankingPlayerButtonBar" style="display: none">
+		<?php echo button_tag('addRankingPlayer', 'Novo membro', array('onclick'=>'addRankingPlayer()')) ?>
+		<?php echo getFormLoading('rankingPlayerList') ?>
 	</div>
 </form>
 <?php
-	DhtmlxWindows::createWindow('rankingMemberAdd', 'Cadastro de membros', 380, 125, 'ranking/dialog/memberAdd', array('rankingId'=>$rankingId));
+	DhtmlxWindows::createWindow('rankingPlayerAdd', 'Cadastro de membros', 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$rankingId));
 ?>

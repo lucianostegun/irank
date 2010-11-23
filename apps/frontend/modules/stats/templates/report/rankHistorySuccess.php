@@ -6,7 +6,7 @@ $inputFilePath  = Util::getFilePath('/templates/rankHistory.xls');
 $outputFilePath = Util::getFilePath('/temp/rankHistory-'.microtime().'.xls');
 
 $eventDateList = $rankingObj->getEventDateList();
-$players       = $rankingObj->getMembers();
+$players       = $rankingObj->getPlayers();
 
 // Dataset definition
 $DataSet = new pData;
@@ -21,7 +21,7 @@ if( $events > 5 )
 
 $phpExcelObj->setActiveSheetIndex(0)->insertNewRowBefore(8, $players-2);
 
-$rankingMemberObjList = $rankingObj->getMemberList();
+$rankingPlayerObjList = $rankingObj->getPlayerList();
 
 foreach($eventDateList as $key=>$eventDate){
 	
@@ -35,17 +35,17 @@ foreach($eventDateList as $key=>$eventDate){
 
 
 $currentLine = 7;
-foreach($rankingMemberObjList as $key=>$rankingMemberObj){
+foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 
 	$phpExcelObj->setActiveSheetIndex(0)
-				->setCellValue('A'.$currentLine, $rankingMemberObj->getPeople()->getName())
+				->setCellValue('A'.$currentLine, $rankingPlayerObj->getPeople()->getName())
 				;
 					
 	foreach($eventDateList as $key=>$eventDate){
 		
 		$colName = PHPExcel_Cell::stringFromColumnIndex(($key+1));
 	
-		$rankingHistoryObj = RankingHistoryPeer::retrieveByPK($rankingObj->getId(), $rankingMemberObj->getPeopleId(), Util::formatDate($eventDate));
+		$rankingHistoryObj = RankingHistoryPeer::retrieveByPK($rankingObj->getId(), $rankingPlayerObj->getPeopleId(), Util::formatDate($eventDate));
 	
 		$phpExcelObj->setActiveSheetIndex(0)
 					->setCellValue($colName.$currentLine, $rankingHistoryObj->getTotalRankingPosition())
@@ -65,7 +65,7 @@ for($line=7; $line <= 7+$players-1; $line++)
 
 $phpExcelObj->setActiveSheetIndex(0)
 			->setCellValue('C2', $rankingObj->getRankingName())
-			->setCellValue('C3', $rankingObj->getMembers())
+			->setCellValue('C3', $rankingObj->getPlayers())
 			->setCellValue('C4', $rankingObj->getEvents())
 			->setCellValue('E4', $rankingObj->getRankingType()->getDescription())
 			;

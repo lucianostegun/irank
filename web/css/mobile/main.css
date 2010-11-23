@@ -1,0 +1,115 @@
+* {
+
+	font-family: 	Verdana, Arial, sans-serif;
+	font-size: 		8pt;
+}
+
+html, body {
+	
+	width: 		100%;
+	height: 	100%;
+	margin: 	0px;
+	background: 	#F5F5F5
+}
+
+form {
+
+	border:		1px solid ffffff;
+	height: 	100%;
+}
+
+a {
+
+	text-decoration: 	underline;
+	font-size: 			8pt;
+	color: 				#81571F
+}
+
+a:hover {
+
+	color: 	#FF0000
+}
+
+img {
+
+	border: 	0px solid;	
+}
+
+#header {
+
+	height: 		45px;
+	background: 	url('/images/mobile/layout/headerBg.png') repeat-x;
+}
+
+#mainContent {
+	
+	padding-top: 	3px	
+}
+
+.toolbarDiv {
+
+	border-top: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;
+	padding: 		1 0 1 0;
+	background: 	url('/images/backend/layout/toolbarBg.png') repeat-x;	
+}
+
+.footer {
+
+	height: 		30px;
+	background: 	url('/images/mobile/layout/footerBg.png') repeat-x;
+	text-align: 	right;
+	padding-right: 	30px;
+}
+
+.footerBack {
+
+	height: 		30px;
+	background: 	url('/images/mobile/layout/footerBg.png') repeat-x;
+	padding-left: 	30px;
+}
+
+.footerBack a {
+
+	text-decoration: 	none;
+	color: 				#F32126;
+	font-weight: 		bold;
+}
+
+.moduleName {
+
+	color: 			#5D5D75;
+	font-size: 		12pt;
+	font-weight: 	bold
+}
+
+.moduleName img {
+
+	margin-top: 	-2px;
+	margin-top: 	0px !ie;
+	margin-right: 	10px	
+}
+
+.rank_heading td{
+	padding:3px 0 3px 10px ;
+	font-size:12px;
+	line-height:27px;
+	color:#F0F0F0;
+	font-weight:bold;
+	background:#5a5a5a;	 
+	}
+	
+.boxcontent td{
+	padding: 		3 10 3 10 ;
+	color: 			#000000;	 
+	background: 	#C0C0C0;	 
+}
+
+.poker_heading{
+	padding:6px 0px 19px 0px;
+	color:#d21d24;
+	font-size:13px;
+	font-weight:bold;
+	text-transform:uppercase;
+	border-bottom:#999999 2px solid;
+}

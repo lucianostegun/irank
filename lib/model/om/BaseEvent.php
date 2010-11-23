@@ -53,7 +53,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	
-	protected $members;
+	protected $players;
 
 
 	
@@ -87,10 +87,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	protected $aRanking;
 
 	
-	protected $collEventMemberList;
+	protected $collEventPlayerList;
 
 	
-	protected $lastEventMemberCriteria = null;
+	protected $lastEventPlayerCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -206,10 +206,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getMembers()
+	public function getPlayers()
 	{
 
-		return $this->members;
+		return $this->players;
 	}
 
 	
@@ -462,7 +462,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setMembers($v)
+	public function setPlayers($v)
 	{
 
 		
@@ -471,9 +471,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->members !== $v) {
-			$this->members = $v;
-			$this->modifiedColumns[] = EventPeer::MEMBERS;
+		if ($this->players !== $v) {
+			$this->players = $v;
+			$this->modifiedColumns[] = EventPeer::PLAYERS;
 		}
 
 	} 
@@ -588,7 +588,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 			$this->invites = $rs->getInt($startcol + 10);
 
-			$this->members = $rs->getInt($startcol + 11);
+			$this->players = $rs->getInt($startcol + 11);
 
 			$this->saved_result = $rs->getBoolean($startcol + 12);
 
@@ -695,8 +695,8 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
-			if ($this->collEventMemberList !== null) {
-				foreach($this->collEventMemberList as $referrerFK) {
+			if ($this->collEventPlayerList !== null) {
+				foreach($this->collEventPlayerList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -752,8 +752,8 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collEventMemberList !== null) {
-					foreach($this->collEventMemberList as $referrerFK) {
+				if ($this->collEventPlayerList !== null) {
+					foreach($this->collEventPlayerList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -812,7 +812,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				return $this->getInvites();
 				break;
 			case 11:
-				return $this->getMembers();
+				return $this->getPlayers();
 				break;
 			case 12:
 				return $this->getSavedResult();
@@ -856,7 +856,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$keys[8]=>$this->getComments(),
 			$keys[9]=>$this->getSentEmail(),
 			$keys[10]=>$this->getInvites(),
-			$keys[11]=>$this->getMembers(),
+			$keys[11]=>$this->getPlayers(),
 			$keys[12]=>$this->getSavedResult(),
 			$keys[13]=>$this->getEnabled(),
 			$keys[14]=>$this->getVisible(),
@@ -913,7 +913,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				$this->setInvites($value);
 				break;
 			case 11:
-				$this->setMembers($value);
+				$this->setPlayers($value);
 				break;
 			case 12:
 				$this->setSavedResult($value);
@@ -954,7 +954,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[8], $arr)) $this->setComments($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setSentEmail($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setInvites($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setMembers($arr[$keys[11]]);
+		if (array_key_exists($keys[11], $arr)) $this->setPlayers($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setSavedResult($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setEnabled($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setVisible($arr[$keys[14]]);
@@ -980,7 +980,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPeer::COMMENTS)) $criteria->add(EventPeer::COMMENTS, $this->comments);
 		if ($this->isColumnModified(EventPeer::SENT_EMAIL)) $criteria->add(EventPeer::SENT_EMAIL, $this->sent_email);
 		if ($this->isColumnModified(EventPeer::INVITES)) $criteria->add(EventPeer::INVITES, $this->invites);
-		if ($this->isColumnModified(EventPeer::MEMBERS)) $criteria->add(EventPeer::MEMBERS, $this->members);
+		if ($this->isColumnModified(EventPeer::PLAYERS)) $criteria->add(EventPeer::PLAYERS, $this->players);
 		if ($this->isColumnModified(EventPeer::SAVED_RESULT)) $criteria->add(EventPeer::SAVED_RESULT, $this->saved_result);
 		if ($this->isColumnModified(EventPeer::ENABLED)) $criteria->add(EventPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventPeer::VISIBLE)) $criteria->add(EventPeer::VISIBLE, $this->visible);
@@ -1038,7 +1038,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		$copyObj->setInvites($this->invites);
 
-		$copyObj->setMembers($this->members);
+		$copyObj->setPlayers($this->players);
 
 		$copyObj->setSavedResult($this->saved_result);
 
@@ -1058,8 +1058,8 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach($this->getEventMemberList() as $relObj) {
-				$copyObj->addEventMember($relObj->copy($deepCopy));
+			foreach($this->getEventPlayerList() as $relObj) {
+				$copyObj->addEventPlayer($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1117,17 +1117,17 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initEventMemberList()
+	public function initEventPlayerList()
 	{
-		if ($this->collEventMemberList === null) {
-			$this->collEventMemberList = array();
+		if ($this->collEventPlayerList === null) {
+			$this->collEventPlayerList = array();
 		}
 	}
 
 	
-	public function getEventMemberList($criteria = null, $con = null)
+	public function getEventPlayerList($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventMemberPeer.php';
+				include_once 'lib/model/om/BaseEventPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1136,36 +1136,36 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collEventMemberList === null) {
+		if ($this->collEventPlayerList === null) {
 			if ($this->isNew()) {
-			   $this->collEventMemberList = array();
+			   $this->collEventPlayerList = array();
 			} else {
 
-				$criteria->add(EventMemberPeer::EVENT_ID, $this->getId());
+				$criteria->add(EventPlayerPeer::EVENT_ID, $this->getId());
 
-				EventMemberPeer::addSelectColumns($criteria);
-				$this->collEventMemberList = EventMemberPeer::doSelect($criteria, $con);
+				EventPlayerPeer::addSelectColumns($criteria);
+				$this->collEventPlayerList = EventPlayerPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(EventMemberPeer::EVENT_ID, $this->getId());
+				$criteria->add(EventPlayerPeer::EVENT_ID, $this->getId());
 
-				EventMemberPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventMemberCriteria) || !$this->lastEventMemberCriteria->equals($criteria)) {
-					$this->collEventMemberList = EventMemberPeer::doSelect($criteria, $con);
+				EventPlayerPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventPlayerCriteria) || !$this->lastEventPlayerCriteria->equals($criteria)) {
+					$this->collEventPlayerList = EventPlayerPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastEventMemberCriteria = $criteria;
-		return $this->collEventMemberList;
+		$this->lastEventPlayerCriteria = $criteria;
+		return $this->collEventPlayerList;
 	}
 
 	
-	public function countEventMemberList($criteria = null, $distinct = false, $con = null)
+	public function countEventPlayerList($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventMemberPeer.php';
+				include_once 'lib/model/om/BaseEventPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1174,23 +1174,23 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(EventMemberPeer::EVENT_ID, $this->getId());
+		$criteria->add(EventPlayerPeer::EVENT_ID, $this->getId());
 
-		return EventMemberPeer::doCount($criteria, $distinct, $con);
+		return EventPlayerPeer::doCount($criteria, $distinct, $con);
 	}
 
 	
-	public function addEventMember(EventMember $l)
+	public function addEventPlayer(EventPlayer $l)
 	{
-		$this->collEventMemberList[] = $l;
+		$this->collEventPlayerList[] = $l;
 		$l->setEvent($this);
 	}
 
 
 	
-	public function getEventMemberListJoinPeople($criteria = null, $con = null)
+	public function getEventPlayerListJoinPeople($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventMemberPeer.php';
+				include_once 'lib/model/om/BaseEventPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1199,26 +1199,26 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collEventMemberList === null) {
+		if ($this->collEventPlayerList === null) {
 			if ($this->isNew()) {
-				$this->collEventMemberList = array();
+				$this->collEventPlayerList = array();
 			} else {
 
-				$criteria->add(EventMemberPeer::EVENT_ID, $this->getId());
+				$criteria->add(EventPlayerPeer::EVENT_ID, $this->getId());
 
-				$this->collEventMemberList = EventMemberPeer::doSelectJoinPeople($criteria, $con);
+				$this->collEventPlayerList = EventPlayerPeer::doSelectJoinPeople($criteria, $con);
 			}
 		} else {
 									
-			$criteria->add(EventMemberPeer::EVENT_ID, $this->getId());
+			$criteria->add(EventPlayerPeer::EVENT_ID, $this->getId());
 
-			if (!isset($this->lastEventMemberCriteria) || !$this->lastEventMemberCriteria->equals($criteria)) {
-				$this->collEventMemberList = EventMemberPeer::doSelectJoinPeople($criteria, $con);
+			if (!isset($this->lastEventPlayerCriteria) || !$this->lastEventPlayerCriteria->equals($criteria)) {
+				$this->collEventPlayerList = EventPlayerPeer::doSelectJoinPeople($criteria, $con);
 			}
 		}
-		$this->lastEventMemberCriteria = $criteria;
+		$this->lastEventPlayerCriteria = $criteria;
 
-		return $this->collEventMemberList;
+		return $this->collEventPlayerList;
 	}
 
 } 

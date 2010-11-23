@@ -56,7 +56,7 @@ class EventMapBuilder {
 
 		$tMap->addColumn('INVITES', 'Invites', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('MEMBERS', 'Members', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addColumn('PLAYERS', 'Players', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('SAVED_RESULT', 'SavedResult', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

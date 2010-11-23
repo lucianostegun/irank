@@ -4,14 +4,14 @@
 				<table border="0" width="100%" cellspacing="2" cellpadding="0">
 					<tr>
 						<th>E-mail</th>
-						<td colspan="2"><?php echo input_tag('username', 'lstegun', array('size'=>20, 'maxlength'=>150, 'id'=>'loginUsername')) ?></td>
+						<td colspan="2"><?php echo input_tag('username', null, array('size'=>20, 'maxlength'=>150, 'id'=>'loginUsername')) ?></td>
 					</tr>
 					<tr>
 						<th>Senha</th>
-						<td colspan="2"><?php echo input_password_tag('password', 'unidunite', array('size'=>15, 'maxlength'=>15, 'id'=>'loginPassword')) ?></td>
+						<td colspan="2"><?php echo input_password_tag('password', null, array('size'=>15, 'maxlength'=>15, 'id'=>'loginPassword')) ?></td>
 					</tr>
 					<tr>
-						<th><?php echo checkbox_tag('keepLogin', true, true, array('id'=>'loginKeepLogin')) ?></th>
+						<th><?php echo checkbox_tag('keepLogin', false, true, array('id'=>'loginKeepLogin')) ?></th>
 						<td colspan="2"><label for="loginKeepLogin">Manter conectado</label></td>
 					</tr>
 					<tr>

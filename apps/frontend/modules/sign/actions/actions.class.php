@@ -40,7 +40,7 @@ class signActions extends sfActions
   		$peopleObj   = PeoplePeer::retrieveByEmailAddress($emailAddress);
   		$firstSave   = true;
   		
-  		if( is_object($peopleObj) && $peopleObj->isPeopleType('rankingMember') )
+  		if( is_object($peopleObj) && $peopleObj->isPeopleType('rankingPlayer') )
   			$userSiteObj->setPeopleId($peopleObj->getId());
   	}
 

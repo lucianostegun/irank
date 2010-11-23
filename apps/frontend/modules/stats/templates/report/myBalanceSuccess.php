@@ -31,7 +31,7 @@ for($line=7; $line <= 7+$events-1; $line++)
 
 $phpExcelObj->setActiveSheetIndex(0)
 			->setCellValue('D2', $rankingObj->getRankingName())
-			->setCellValue('D3', $rankingObj->getMembers())
+			->setCellValue('D3', $rankingObj->getPlayers())
 			->setCellValue('D4', $rankingObj->getEvents())
 			->setCellValue('F4', $rankingObj->getRankingType()->getDescription())
 			;

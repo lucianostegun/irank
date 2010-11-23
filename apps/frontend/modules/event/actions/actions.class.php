@@ -101,10 +101,10 @@ class eventActions extends sfActions
 		$rankingObj->save();
 	}
 	
-	$eventObj->importMembers();
+	$eventObj->importPlayers();
 
 	if( $confirmPresence )
-		$eventObj->addMember( $rankingObj->getUserSite()->getPeopleId(), true );
+		$eventObj->addPlayer( $rankingObj->getUserSite()->getPeopleId(), true );
 
 	$eventObj->notify();
 
@@ -127,21 +127,21 @@ class eventActions extends sfActions
 	exit;
   }
   
-  public function executeAddMember($request){
+  public function executeAddPlayer($request){
 
 	$eventId  = $request->getParameter('eventId');
 	
 	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
 	$eventObj    = EventPeer::retrieveByPK( $eventId );
 	
-	$eventObj->addMember( $userSiteObj->getPeopleId(), true );
+	$eventObj->addPlayer( $userSiteObj->getPeopleId(), true );
     
-    return $this->forward('event', 'getMemberList');
+    return $this->forward('event', 'getPlayerList');
   }
   
-  public function executeDeleteMember($request){
+  public function executeDeletePlayer($request){
 
-	$eventId  = $request->getParameter('eventId');
+	$eventId = $request->getParameter('eventId');
 	
 	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
 	$eventObj    = EventPeer::retrieveByPK( $eventId );
@@ -149,9 +149,25 @@ class eventActions extends sfActions
 	if( !$eventObj->isEditable() )
 		Util::forceError('!Este evento está bloqueado para edição', true);
 
-	$eventObj->deleteMember( $userSiteObj->getPeopleId() );
+	$eventObj->deletePlayer( $userSiteObj->getPeopleId() );
     
-    return $this->forward('event', 'getMemberList');
+    return $this->forward('event', 'getPlayerList');
+  }
+
+  public function executeRemovePlayer($request){
+
+	$eventId  = $request->getParameter('eventId');
+	$peopleId = $request->getParameter('peopleId');
+	
+	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
+	$eventObj    = EventPeer::retrieveByPK( $eventId );
+	
+	if( !$eventObj->isEditable() )
+		Util::forceError('!Este evento está bloqueado para edição', true);
+
+	$eventObj->removePlayer( $peopleId );
+    
+    return $this->forward('event', 'getPlayerList');
   }
   
   public function executeTogglePresence($request){
@@ -165,21 +181,21 @@ class eventActions extends sfActions
 		Util::forceError('!Este evento está bloqueado para edição', true);
 	
 	if( !$eventObj->isConfirmed($peopleId) )
-		$eventObj->addMember( $peopleId, true );
+		$eventObj->addPlayer( $peopleId, true );
 	else
-		$eventObj->deleteMember( $peopleId );
+		$eventObj->deletePlayer( $peopleId );
     
     exit;
   }
 
-  public function executeGetMemberList($request){
+  public function executeGetPlayerList($request){
 
 	$eventId  = $request->getParameter('eventId');
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/include/member', array('eventObj'=>$eventObj)));
+	return $this->renderText(get_partial('event/include/player', array('eventObj'=>$eventObj)));
   }
 
   public function handleErrorSaveResult(){
@@ -201,10 +217,8 @@ class eventActions extends sfActions
   
   public function executeSaveResult($request){
 
-	$eventId        = $request->getParameter('eventId');
-	$sendResultMail = $request->getParameter('sendResultMail');
-
-	$eventObj   = EventPeer::retrieveByPK($eventId);
+	$eventId  = $request->getParameter('eventId');
+	$eventObj = EventPeer::retrieveByPK($eventId);
 	
 	if( !$eventObj->isEditable() )
 		Util::forceError('!Este evento está bloqueado para edição', true);
@@ -213,22 +227,22 @@ class eventActions extends sfActions
 	
 	$paidPlaces = 0;
 	
-	$eventMemberObjList = $eventObj->getMemberList();
-	foreach($eventMemberObjList as $eventMemberObj){
+	$eventPlayerObjList = $eventObj->getPlayerList();
+	foreach($eventPlayerObjList as $eventPlayerObj){
 		
-		$peopleId      = $eventMemberObj->getPeopleId();
+		$peopleId      = $eventPlayerObj->getPeopleId();
 		$buyin         = $request->getParameter('buyin'.$peopleId);
 		$rebuy         = $request->getParameter('rebuy'.$peopleId);
 		$addon         = $request->getParameter('addon'.$peopleId);
 		$eventPosition = $request->getParameter('eventPosition'.$peopleId);
 		$prize    = $request->getParameter('prize'.$peopleId);
 		
-		$eventMemberObj = EventMemberPeer::retrieveByPK($eventId, $peopleId);
-		$enabled        = $eventMemberObj->getEnabled();
+		$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
+		$enabled        = $eventPlayerObj->getEnabled();
 		
 		if( !$enabled && $eventPosition > 0 ){
 			
-			$eventObj->addMember($peopleId, true);
+			$eventObj->addPlayer($peopleId, true);
 			$enabled = true;
 		}
 		
@@ -237,12 +251,12 @@ class eventActions extends sfActions
 			if( $prize > 0 )
 				$paidPlaces++;
 
-			$eventMemberObj->setEventPosition($eventPosition);
-			$eventMemberObj->setPrize( Util::formatFloat($prize) );
-			$eventMemberObj->setRebuy( Util::formatFloat($rebuy) );
-			$eventMemberObj->setAddon( Util::formatFloat($addon) );
-			$eventMemberObj->setBuyin( Util::formatFloat($buyin) );
-			$eventMemberObj->save();
+			$eventPlayerObj->setEventPosition($eventPosition);
+			$eventPlayerObj->setPrize( Util::formatFloat($prize) );
+			$eventPlayerObj->setRebuy( Util::formatFloat($rebuy) );
+			$eventPlayerObj->setAddon( Util::formatFloat($addon) );
+			$eventPlayerObj->setBuyin( Util::formatFloat($buyin) );
+			$eventPlayerObj->save();
 		}
 	}
 	
@@ -253,8 +267,7 @@ class eventActions extends sfActions
 	$rankingObj->updateScores();
 	$rankingObj->updateHistory($eventObj->getEventDate('d/m/Y'));
 	
-	if( $sendResultMail )
-		$eventObj->notifyResult();
+	$eventObj->notifyResult();
 	
 	exit;
   }  

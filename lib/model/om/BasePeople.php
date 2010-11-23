@@ -69,10 +69,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastUserSiteCriteria = null;
 
 	
-	protected $collRankingMemberList;
+	protected $collRankingPlayerList;
 
 	
-	protected $lastRankingMemberCriteria = null;
+	protected $lastRankingPlayerCriteria = null;
 
 	
 	protected $collRankingHistoryList;
@@ -81,10 +81,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastRankingHistoryCriteria = null;
 
 	
-	protected $collEventMemberList;
+	protected $collEventPlayerList;
 
 	
-	protected $lastEventMemberCriteria = null;
+	protected $lastEventPlayerCriteria = null;
 
 	
 	protected $collUserSiteOptionList;
@@ -555,8 +555,8 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collRankingMemberList !== null) {
-				foreach($this->collRankingMemberList as $referrerFK) {
+			if ($this->collRankingPlayerList !== null) {
+				foreach($this->collRankingPlayerList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -571,8 +571,8 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collEventMemberList !== null) {
-				foreach($this->collEventMemberList as $referrerFK) {
+			if ($this->collEventPlayerList !== null) {
+				foreach($this->collEventPlayerList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -644,8 +644,8 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collRankingMemberList !== null) {
-					foreach($this->collRankingMemberList as $referrerFK) {
+				if ($this->collRankingPlayerList !== null) {
+					foreach($this->collRankingPlayerList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -660,8 +660,8 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collEventMemberList !== null) {
-					foreach($this->collEventMemberList as $referrerFK) {
+				if ($this->collEventPlayerList !== null) {
+					foreach($this->collEventPlayerList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -912,16 +912,16 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				$copyObj->addUserSite($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getRankingMemberList() as $relObj) {
-				$copyObj->addRankingMember($relObj->copy($deepCopy));
+			foreach($this->getRankingPlayerList() as $relObj) {
+				$copyObj->addRankingPlayer($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getRankingHistoryList() as $relObj) {
 				$copyObj->addRankingHistory($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getEventMemberList() as $relObj) {
-				$copyObj->addEventMember($relObj->copy($deepCopy));
+			foreach($this->getEventPlayerList() as $relObj) {
+				$copyObj->addEventPlayer($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getUserSiteOptionList() as $relObj) {
@@ -1053,17 +1053,17 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initRankingMemberList()
+	public function initRankingPlayerList()
 	{
-		if ($this->collRankingMemberList === null) {
-			$this->collRankingMemberList = array();
+		if ($this->collRankingPlayerList === null) {
+			$this->collRankingPlayerList = array();
 		}
 	}
 
 	
-	public function getRankingMemberList($criteria = null, $con = null)
+	public function getRankingPlayerList($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseRankingMemberPeer.php';
+				include_once 'lib/model/om/BaseRankingPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1072,36 +1072,36 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collRankingMemberList === null) {
+		if ($this->collRankingPlayerList === null) {
 			if ($this->isNew()) {
-			   $this->collRankingMemberList = array();
+			   $this->collRankingPlayerList = array();
 			} else {
 
-				$criteria->add(RankingMemberPeer::PEOPLE_ID, $this->getId());
+				$criteria->add(RankingPlayerPeer::PEOPLE_ID, $this->getId());
 
-				RankingMemberPeer::addSelectColumns($criteria);
-				$this->collRankingMemberList = RankingMemberPeer::doSelect($criteria, $con);
+				RankingPlayerPeer::addSelectColumns($criteria);
+				$this->collRankingPlayerList = RankingPlayerPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(RankingMemberPeer::PEOPLE_ID, $this->getId());
+				$criteria->add(RankingPlayerPeer::PEOPLE_ID, $this->getId());
 
-				RankingMemberPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRankingMemberCriteria) || !$this->lastRankingMemberCriteria->equals($criteria)) {
-					$this->collRankingMemberList = RankingMemberPeer::doSelect($criteria, $con);
+				RankingPlayerPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingPlayerCriteria) || !$this->lastRankingPlayerCriteria->equals($criteria)) {
+					$this->collRankingPlayerList = RankingPlayerPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastRankingMemberCriteria = $criteria;
-		return $this->collRankingMemberList;
+		$this->lastRankingPlayerCriteria = $criteria;
+		return $this->collRankingPlayerList;
 	}
 
 	
-	public function countRankingMemberList($criteria = null, $distinct = false, $con = null)
+	public function countRankingPlayerList($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseRankingMemberPeer.php';
+				include_once 'lib/model/om/BaseRankingPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1110,23 +1110,23 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(RankingMemberPeer::PEOPLE_ID, $this->getId());
+		$criteria->add(RankingPlayerPeer::PEOPLE_ID, $this->getId());
 
-		return RankingMemberPeer::doCount($criteria, $distinct, $con);
+		return RankingPlayerPeer::doCount($criteria, $distinct, $con);
 	}
 
 	
-	public function addRankingMember(RankingMember $l)
+	public function addRankingPlayer(RankingPlayer $l)
 	{
-		$this->collRankingMemberList[] = $l;
+		$this->collRankingPlayerList[] = $l;
 		$l->setPeople($this);
 	}
 
 
 	
-	public function getRankingMemberListJoinRanking($criteria = null, $con = null)
+	public function getRankingPlayerListJoinRanking($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseRankingMemberPeer.php';
+				include_once 'lib/model/om/BaseRankingPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1135,26 +1135,26 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collRankingMemberList === null) {
+		if ($this->collRankingPlayerList === null) {
 			if ($this->isNew()) {
-				$this->collRankingMemberList = array();
+				$this->collRankingPlayerList = array();
 			} else {
 
-				$criteria->add(RankingMemberPeer::PEOPLE_ID, $this->getId());
+				$criteria->add(RankingPlayerPeer::PEOPLE_ID, $this->getId());
 
-				$this->collRankingMemberList = RankingMemberPeer::doSelectJoinRanking($criteria, $con);
+				$this->collRankingPlayerList = RankingPlayerPeer::doSelectJoinRanking($criteria, $con);
 			}
 		} else {
 									
-			$criteria->add(RankingMemberPeer::PEOPLE_ID, $this->getId());
+			$criteria->add(RankingPlayerPeer::PEOPLE_ID, $this->getId());
 
-			if (!isset($this->lastRankingMemberCriteria) || !$this->lastRankingMemberCriteria->equals($criteria)) {
-				$this->collRankingMemberList = RankingMemberPeer::doSelectJoinRanking($criteria, $con);
+			if (!isset($this->lastRankingPlayerCriteria) || !$this->lastRankingPlayerCriteria->equals($criteria)) {
+				$this->collRankingPlayerList = RankingPlayerPeer::doSelectJoinRanking($criteria, $con);
 			}
 		}
-		$this->lastRankingMemberCriteria = $criteria;
+		$this->lastRankingPlayerCriteria = $criteria;
 
-		return $this->collRankingMemberList;
+		return $this->collRankingPlayerList;
 	}
 
 	
@@ -1263,17 +1263,17 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initEventMemberList()
+	public function initEventPlayerList()
 	{
-		if ($this->collEventMemberList === null) {
-			$this->collEventMemberList = array();
+		if ($this->collEventPlayerList === null) {
+			$this->collEventPlayerList = array();
 		}
 	}
 
 	
-	public function getEventMemberList($criteria = null, $con = null)
+	public function getEventPlayerList($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventMemberPeer.php';
+				include_once 'lib/model/om/BaseEventPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1282,36 +1282,36 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collEventMemberList === null) {
+		if ($this->collEventPlayerList === null) {
 			if ($this->isNew()) {
-			   $this->collEventMemberList = array();
+			   $this->collEventPlayerList = array();
 			} else {
 
-				$criteria->add(EventMemberPeer::PEOPLE_ID, $this->getId());
+				$criteria->add(EventPlayerPeer::PEOPLE_ID, $this->getId());
 
-				EventMemberPeer::addSelectColumns($criteria);
-				$this->collEventMemberList = EventMemberPeer::doSelect($criteria, $con);
+				EventPlayerPeer::addSelectColumns($criteria);
+				$this->collEventPlayerList = EventPlayerPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(EventMemberPeer::PEOPLE_ID, $this->getId());
+				$criteria->add(EventPlayerPeer::PEOPLE_ID, $this->getId());
 
-				EventMemberPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventMemberCriteria) || !$this->lastEventMemberCriteria->equals($criteria)) {
-					$this->collEventMemberList = EventMemberPeer::doSelect($criteria, $con);
+				EventPlayerPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventPlayerCriteria) || !$this->lastEventPlayerCriteria->equals($criteria)) {
+					$this->collEventPlayerList = EventPlayerPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastEventMemberCriteria = $criteria;
-		return $this->collEventMemberList;
+		$this->lastEventPlayerCriteria = $criteria;
+		return $this->collEventPlayerList;
 	}
 
 	
-	public function countEventMemberList($criteria = null, $distinct = false, $con = null)
+	public function countEventPlayerList($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventMemberPeer.php';
+				include_once 'lib/model/om/BaseEventPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1320,23 +1320,23 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(EventMemberPeer::PEOPLE_ID, $this->getId());
+		$criteria->add(EventPlayerPeer::PEOPLE_ID, $this->getId());
 
-		return EventMemberPeer::doCount($criteria, $distinct, $con);
+		return EventPlayerPeer::doCount($criteria, $distinct, $con);
 	}
 
 	
-	public function addEventMember(EventMember $l)
+	public function addEventPlayer(EventPlayer $l)
 	{
-		$this->collEventMemberList[] = $l;
+		$this->collEventPlayerList[] = $l;
 		$l->setPeople($this);
 	}
 
 
 	
-	public function getEventMemberListJoinEvent($criteria = null, $con = null)
+	public function getEventPlayerListJoinEvent($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventMemberPeer.php';
+				include_once 'lib/model/om/BaseEventPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1345,26 +1345,26 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collEventMemberList === null) {
+		if ($this->collEventPlayerList === null) {
 			if ($this->isNew()) {
-				$this->collEventMemberList = array();
+				$this->collEventPlayerList = array();
 			} else {
 
-				$criteria->add(EventMemberPeer::PEOPLE_ID, $this->getId());
+				$criteria->add(EventPlayerPeer::PEOPLE_ID, $this->getId());
 
-				$this->collEventMemberList = EventMemberPeer::doSelectJoinEvent($criteria, $con);
+				$this->collEventPlayerList = EventPlayerPeer::doSelectJoinEvent($criteria, $con);
 			}
 		} else {
 									
-			$criteria->add(EventMemberPeer::PEOPLE_ID, $this->getId());
+			$criteria->add(EventPlayerPeer::PEOPLE_ID, $this->getId());
 
-			if (!isset($this->lastEventMemberCriteria) || !$this->lastEventMemberCriteria->equals($criteria)) {
-				$this->collEventMemberList = EventMemberPeer::doSelectJoinEvent($criteria, $con);
+			if (!isset($this->lastEventPlayerCriteria) || !$this->lastEventPlayerCriteria->equals($criteria)) {
+				$this->collEventPlayerList = EventPlayerPeer::doSelectJoinEvent($criteria, $con);
 			}
 		}
-		$this->lastEventMemberCriteria = $criteria;
+		$this->lastEventPlayerCriteria = $criteria;
 
-		return $this->collEventMemberList;
+		return $this->collEventPlayerList;
 	}
 
 	

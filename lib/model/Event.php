@@ -13,10 +13,10 @@ class Event extends BaseEvent
 	public function cleanRecord(){
 		
 		$this->setInvites(0);
-		$this->setMembers(0);
+		$this->setPlayers(0);
 		$this->save();
 		
-		Util::executeQuery('DELETE FROM event_member WHERE event_id = '.$this->getId());
+		Util::executeQuery('DELETE FROM event_player WHERE event_id = '.$this->getId());
 	}
 	
 	public function delete($con=null){
@@ -60,8 +60,8 @@ class Event extends BaseEvent
 		$criteria->add( EventPeer::DELETED, false );
 		$criteria->add( UserSitePeer::ID, $userSiteId );
 		$criteria->addJoin( EventPeer::RANKING_ID, RankingPeer::ID, Criteria::INNER_JOIN );
-		$criteria->addJoin( RankingPeer::ID, RankingMemberPeer::RANKING_ID, Criteria::INNER_JOIN );
-		$criteria->addJoin( RankingMemberPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( RankingPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$criteria->addJoin( PeoplePeer::ID, UserSitePeer::PEOPLE_ID, Criteria::INNER_JOIN );
 		$criteria->addDescendingOrderByColumn( EventPeer::EVENT_DATE );
 		$criteria->addDescendingOrderByColumn( EventPeer::START_TIME );
@@ -72,8 +72,8 @@ class Event extends BaseEvent
 	public function getPeopleList($returnPeople=false, $orderByList=null){
 		
 		$criteria = new Criteria();
-		$criteria->add( EventMemberPeer::EVENT_ID, $this->getId() );
-		$criteria->addJoin( EventMemberPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		$criteria->add( EventPlayerPeer::EVENT_ID, $this->getId() );
+		$criteria->addJoin( EventPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		
 		if( is_array($orderByList) ){
 
@@ -91,81 +91,90 @@ class Event extends BaseEvent
 		if( $returnPeople )
 			return PeoplePeer::doSelect($criteria);
 		else
-			return EventMemberPeer::doSelect($criteria);
+			return EventPlayerPeer::doSelect($criteria);
 	}
 	
-	public function getMemberList($orderByList=null){
+	public function getPlayerList($orderByList=null){
 		
 		return $this->getPeopleList(false, $orderByList);
 	}
 	
-	public function addMember($peopleId, $confirm=false){
+	public function addPlayer($peopleId, $confirm=false){
 		
-		$eventMemberObj = EventMemberPeer::retrieveByPK($this->getId(), $peopleId);
+		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		if( !is_object($eventMemberObj) ){
+		if( !is_object($eventPlayerObj) ){
 			
-			$eventMemberObj = new EventMember();
-			$eventMemberObj->setEventId( $this->getId() );
-			$eventMemberObj->setPeopleId( $peopleId );
+			$eventPlayerObj = new EventPlayer();
+			$eventPlayerObj->setEventId( $this->getId() );
+			$eventPlayerObj->setPeopleId( $peopleId );
+			$eventPlayerObj->setDeleted(false);
 		}
 		
-		if( $confirm && !$eventMemberObj->getEnabled() ){
+		if( $confirm && !$eventPlayerObj->getEnabled() ){
 		
-			$eventMemberObj->setEnabled(true);
-			$this->setMembers( $this->getMembers()+1 );
+			$eventPlayerObj->setEnabled(true);
+			$this->setPlayers( $this->getPlayers()+1 );
 			$this->save();
 			
-			$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getRankingId(), $peopleId);
-			$rankingMemberObj->setEvents($rankingMemberObj->getEvents()+1);
-			$rankingMemberObj->save();
+			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $peopleId);
+			$rankingPlayerObj->setEvents($rankingPlayerObj->getEvents()+1);
+			$rankingPlayerObj->save();
 			
-			$eventMemberObj->notifyConfirm();
+			$eventPlayerObj->notifyConfirm();
 		}
 		
-		$eventMemberObj->save();
+		$eventPlayerObj->save();
 	}
 	
-	public function deleteMember($peopleId){
+	public function deletePlayer($peopleId){
 
-		$eventMemberObj = EventMemberPeer::retrieveByPK($this->getId(), $peopleId);
+		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		if( is_object($eventMemberObj) && $eventMemberObj->getEnabled() ){
+		if( is_object($eventPlayerObj) && $eventPlayerObj->getEnabled() ){
 			
 			
-			$eventMemberObj->setEventPosition(0);
-			$eventMemberObj->setPrize(0);
-			$eventMemberObj->setRebuy(0);
-			$eventMemberObj->setAddon(0);
-			$eventMemberObj->setBuyin(0);
-			$eventMemberObj->setEnabled(false);
-			$eventMemberObj->save();
+			$eventPlayerObj->setEventPosition(0);
+			$eventPlayerObj->setPrize(0);
+			$eventPlayerObj->setRebuy(0);
+			$eventPlayerObj->setAddon(0);
+			$eventPlayerObj->setBuyin(0);
+			$eventPlayerObj->setEnabled(false);
+			$eventPlayerObj->save();
 			
-			$this->setMembers( $this->getMembers()-1 );
+			$this->setPlayers( $this->getPlayers()-1 );
 			$this->save();
 			
-			$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getRankingId(), $peopleId);
-			$rankingMemberObj->setEvents($rankingMemberObj->getEvents()-1);
-			$rankingMemberObj->save();
+			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $peopleId);
+			$rankingPlayerObj->setEvents($rankingPlayerObj->getEvents()-1);
+			$rankingPlayerObj->save();
 		}
+	}
+	
+	public function removePlayer($peopleId){
+
+		$this->deletePlayer($peopleId);
+
+		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
+		$eventPlayerObj->delete();
 	}
 	
 	public function isConfirmed($peopleId){
 		
-		$eventMemberObj = EventMemberPeer::retrieveByPK($this->getId(), $peopleId);
+		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		return is_object($eventMemberObj) && $eventMemberObj->getEnabled();
+		return is_object($eventPlayerObj) && $eventPlayerObj->getEnabled();
 	}
 	
-	public function importMembers(){
+	public function importPlayers(){
 
-		$rankingMemberObjList = $this->getRanking()->getMemberList();
+		$rankingPlayerObjList = $this->getRanking()->getPlayerList();
 		
-		foreach( $rankingMemberObjList as $rankingMemberObj )
-			$this->addMember( $rankingMemberObj->getPeopleId() );
+		foreach( $rankingPlayerObjList as $rankingPlayerObj )
+			$this->addPlayer( $rankingPlayerObj->getPeopleId() );
 			
 		
-		$this->setInvites( count($rankingMemberObjList) );
+		$this->setInvites( count($rankingPlayerObjList) );
 		$this->save();
 	}
 	
@@ -213,22 +222,22 @@ class Event extends BaseEvent
 	
 	public function getClassify(){
 		
-		$orderByList = array(EventMemberPeer::ENABLED=>'desc',
-	  						 EventMemberPeer::EVENT_POSITION=>'asc');
+		$orderByList = array(EventPlayerPeer::ENABLED=>'desc',
+	  						 EventPlayerPeer::EVENT_POSITION=>'asc');
 	  	
-	  	$eventMemberObjList = $this->getMemberList($orderByList);
+	  	$eventPlayerObjList = $this->getPlayerList($orderByList);
 
 	  	$lastList = array();
-	  	foreach($eventMemberObjList as $key=>$eventMemberObj){
+	  	foreach($eventPlayerObjList as $key=>$eventPlayerObj){
 	  		
-	  		if( $eventMemberObj->getEventPosition()==0 ){
+	  		if( $eventPlayerObj->getEventPosition()==0 ){
 	  			
-	  			$lastList[] = $eventMemberObj;
-	  			unset($eventMemberObjList[$key]);
+	  			$lastList[] = $eventPlayerObj;
+	  			unset($eventPlayerObjList[$key]);
 	  		}
 	  	}
 	  	
-	  	return array_merge($eventMemberObjList, $lastList);
+	  	return array_merge($eventPlayerObjList, $lastList);
 	}
 	
 	public function notify(){
@@ -253,7 +262,7 @@ class Event extends BaseEvent
 		$emailContent = str_replace('<buyin>', Util::formatFloat($this->getBuyin(), true), $emailContent);
 		$emailContent = str_replace('<comments>', $this->getComments(), $emailContent);
 		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
-		$emailContent = str_replace('<members>', $this->getMembers(), $emailContent);
+		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
 
 		$emailAddressList = $this->getEmailAddressList();
 		
@@ -276,15 +285,15 @@ class Event extends BaseEvent
 		
 		$isDebug = Util::isDebug();
 
-		$eventMemberObjList = $this->getMemberList();
-		foreach($eventMemberObjList as $eventMemberObj){
+		$eventPlayerObjList = $this->getPlayerList();
+		foreach($eventPlayerObjList as $eventPlayerObj){
 			
-			$eventPosition   = $eventMemberObj->getEventPosition();
+			$eventPosition   = $eventPlayerObj->getEventPosition();
 			
 			if( $eventPosition==0 )
 				continue;
 			
-			$peopleObj = $eventMemberObj->getPeople();
+			$peopleObj = $eventPlayerObj->getPeople();
 			
 			$emailContentTmp = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
 			
@@ -341,7 +350,7 @@ class Event extends BaseEvent
 		$emailContent = str_replace('<buyin>', Util::formatFloat($this->getBuyin(), true), $emailContent);
 		$emailContent = str_replace('<comments>', $this->getComments(), $emailContent);
 		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
-		$emailContent = str_replace('<members>', $this->getMembers(), $emailContent);
+		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
 		$emailContent = str_replace('<rankingType>', strtolower($rankingObj->getRankingType()->getDescription()), $emailContent);
 		
 		return $emailContent;
@@ -352,23 +361,23 @@ class Event extends BaseEvent
 		$resultList = '';
 		$nl         = chr(10);
 		
-		$eventMemberObjList = $this->getClassify();
-	  	foreach($eventMemberObjList as $key=>$eventMemberObj){
+		$eventPlayerObjList = $this->getClassify();
+	  	foreach($eventPlayerObjList as $key=>$eventPlayerObj){
 		
-			$eventPosition = $eventMemberObj->getEventPosition();
+			$eventPosition = $eventPlayerObj->getEventPosition();
 			
 			if( $eventPosition==0 )
 				continue;
 			
-			$peopleObj = $eventMemberObj->getPeople();
+			$peopleObj = $eventPlayerObj->getPeople();
 			
 			$resultList .= '  <tr class="boxcontent">'.$nl;
 			$resultList .= '    <td style="background: #1B4315">#'.$eventPosition.'</td>'.$nl;
 			$resultList .= '    <td style="background: #1B4315">'.$peopleObj->getFullName().'</td>'.$nl;
-			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventMemberObj->getBuyin(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventMemberObj->getPrize(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventMemberObj->getRebuy(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventMemberObj->getAddon(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getBuyin(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getPrize(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getRebuy(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getAddon(), true).'</td>'.$nl;
 			$resultList .= '  </tr>'.$nl;
 	  	}
 	  	
@@ -382,19 +391,19 @@ class Event extends BaseEvent
 		$nl           = chr(10);
 		$position     = 0;
 		
-		$rankingMemberObjList = $rankingObj->getClassify();
-	  	foreach($rankingMemberObjList as $key=>$rankingMemberObj){
+		$rankingPlayerObjList = $rankingObj->getClassify();
+	  	foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 		
-			$peopleObj = $rankingMemberObj->getPeople();
+			$peopleObj = $rankingPlayerObj->getPeople();
 			
 			$classifyList .= '  <tr class="boxcontent">'.$nl;
 			$classifyList .= '    <td style="background: #1B4315">#'.(($position++)+1).'</td>'.$nl;
 			$classifyList .= '    <td style="background: #1B4315">'.$peopleObj->getFullName().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingMemberObj->getEvents().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingMemberObj->getScore().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingMemberObj->getTotalPaid(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingMemberObj->getTotalPrize(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingMemberObj->getBalance(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingPlayerObj->getEvents().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingPlayerObj->getScore().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getBalance(), true).'</td>'.$nl;
 			$classifyList .= '  </tr>'.$nl;
 	  	}
 	  	
@@ -403,10 +412,10 @@ class Event extends BaseEvent
 	
 	public function getPosition($peopleId){
 		
-		$eventMemberObj = EventMemberPeer::retrieveByPK($this->getId(), $peopleId);
+		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		if( is_object($eventMemberObj) )
-			return $eventMemberObj->getEventPosition();
+		if( is_object($eventPlayerObj) )
+			return $eventPlayerObj->getEventPosition();
 		else
 			return 0;
 	}
@@ -427,12 +436,12 @@ class Event extends BaseEvent
 		$eventObj->setLocked(true);
 		$eventObj->save();
 		
-		foreach( $this->getMemberList() as $eventMemberObj ){
+		foreach( $this->getPlayerList() as $eventPlayerObj ){
 			
-			$eventMemberNewObj = new EventMember();
-			$eventMemberNewObj->setEventId( $eventObj->getId() );
-			$eventMemberNewObj->setPeopleId( $eventMemberObj->getPeopleId() );
-			$eventMemberNewObj->save();
+			$eventPlayerNewObj = new EventPlayer();
+			$eventPlayerNewObj->setEventId( $eventObj->getId() );
+			$eventPlayerNewObj->setPeopleId( $eventPlayerObj->getPeopleId() );
+			$eventPlayerNewObj->save();
 		}
 
 		return $eventObj;
@@ -440,6 +449,11 @@ class Event extends BaseEvent
 	
 	public function isEditable(){
 
+		$userSiteId = MyTools::getAttribute('userSiteId');
+		
+		if($this->getRanking()->getUserSiteId()!=$userSiteId)
+			return false;
+		
 		$eventDate = $this->getEventDate();
 		if( $eventDate==null )
 			return true;
