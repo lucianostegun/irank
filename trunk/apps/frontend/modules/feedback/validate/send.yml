@@ -1,0 +1,16 @@
+fields:
+       
+  fullName:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+       
+  emailAddress:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfEmailValidator:
+      strict:       true
+      email_error:  O e-mail informado não é um e-mail válido
+       
+  message:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido

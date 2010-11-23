@@ -42,7 +42,7 @@ class rankingActions extends sfActions
 			return $this->redirect('ranking/index');
   	}
 	
-	$this->rankingObj->addMember( $this->rankingObj->getUserSite()->getPeopleId() );
+	$this->rankingObj->addPlayer( $this->rankingObj->getUserSite()->getPeopleId() );
   }
 
   public function handleErrorSave(){
@@ -86,12 +86,12 @@ class rankingActions extends sfActions
 	exit;
   }
 
-  public function handleErrorSaveMember(){
+  public function handleErrorSavePlayer(){
 
   	$this->handleFormFieldError( $this->getRequest()->getErrors() );
   }
   
-  public function executeSaveMember($request){
+  public function executeSavePlayer($request){
 
 	$rankingId    = $request->getParameter('rankingId');
 	$peopleId     = $request->getParameter('peopleId');
@@ -105,22 +105,22 @@ class rankingActions extends sfActions
 	
 	if( !is_object($peopleObj) ){
 		
-		$peopleObj = People::getQuickPeople($firstName, $lastName, 'rankingMember', $peopleId );
+		$peopleObj = People::getQuickPeople($firstName, $lastName, 'rankingPlayer', $peopleId );
 		
 		$peopleObj->setEmailAddress($emailAddress);
 		$peopleObj->save();
 	}
 	
-	$rankingObj->addMember( $peopleObj->getId() );
+	$rankingObj->addPlayer( $peopleObj->getId() );
 	$rankingObj->addToOpenEvents($peopleObj->getId());
 	
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-	return $this->renderText(get_partial('ranking/include/member', array('rankingObj'=>$rankingObj)));
+	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
   }
   
-  public function executeDeleteMember($request){
+  public function executeDeletePlayer($request){
 
 	$rankingId = $request->getParameter('rankingId');
 	$peopleId  = $request->getParameter('peopleId');
@@ -130,12 +130,12 @@ class rankingActions extends sfActions
 	if( $rankingObj->getUserSite()->getPeopleId()==$peopleId )
 		throw new Exception('Não é possível remover este membro do ranking');
 	
-	$rankingObj->deleteMember( $peopleId );
+	$rankingObj->deletePlayer( $peopleId );
 	
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-	return $this->renderText(get_partial('ranking/include/member', array('rankingObj'=>$rankingObj)));
+	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
   }
   
   public function executeGetDefaultBuyin($request){

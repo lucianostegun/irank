@@ -2,17 +2,17 @@
 $libDir = sfConfig::get('sf_lib_dir');
 
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
-$rankingMemberObjList = $rankingObj->getClassify();
+$rankingPlayerObjList = $rankingObj->getClassify();
 $playerNameList = array();
 $totalPaidList = array();
 $totalPrizeList = array();
 $balanceList = array();
-foreach($rankingMemberObjList as $rankingMemberObj){
+foreach($rankingPlayerObjList as $rankingPlayerObj){
 	
-	$totalPaidList[]      = $rankingMemberObj->getTotalPaid();
-	$totalPrizeList[]      = $rankingMemberObj->getTotalPrize();
-	$balanceList[]      = $rankingMemberObj->getBalance();
-	$playerNameList[] = $rankingMemberObj->getPeople()->getFirstName();
+	$totalPaidList[]      = $rankingPlayerObj->getTotalPaid();
+	$totalPrizeList[]      = $rankingPlayerObj->getTotalPrize();
+	$balanceList[]      = $rankingPlayerObj->getBalance();
+	$playerNameList[] = $rankingPlayerObj->getPeople()->getFirstName();
 }
 
 $allValues = array_merge($totalPaidList, $totalPrizeList, $balanceList);

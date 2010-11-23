@@ -11,26 +11,26 @@
   </tr>
   <?php
   	$rankingType          = $rankingObj->getRankingType(true);
-	$rankingMemberObjList = $rankingObj->getClassify();
+	$rankingPlayerObjList = $rankingObj->getClassify();
   	$position = 0;
-  	foreach($rankingMemberObjList as $rankingMemberObj):
+  	foreach($rankingPlayerObjList as $rankingPlayerObj):
   		
-  		$peopleObj = $rankingMemberObj->getPeople();
+  		$peopleObj = $rankingPlayerObj->getPeople();
   ?>
   <tr class="boxcontent">
     <td>#<?php echo (($position++)+1) ?></td>
     <td><?php echo $peopleObj->getFullName() ?></td>
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
-    <td align="right"><?php echo $rankingMemberObj->getEvents() ?></td>
-    <td align="right"><?php echo $rankingMemberObj->getScore() ?></td>
-    <td align="right"><?php echo Util::formatFloat($rankingMemberObj->getTotalPaid(), true) ?></td>
-    <td align="right"><?php echo Util::formatFloat($rankingMemberObj->getTotalPrize(), true) ?></td>
-    <td align="right"><?php echo Util::formatFloat($rankingMemberObj->getBalance(), true) ?></td>
+    <td align="right"><?php echo $rankingPlayerObj->getEvents() ?></td>
+    <td align="right"><?php echo $rankingPlayerObj->getScore() ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPaid(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPrize(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getBalance(), true) ?></td>
   </tr>
   <?php
   	endforeach;
   	
-  	if( count($rankingMemberObjList)==0 ):
+  	if( count($rankingPlayerObjList)==0 ):
   ?>
   <tr class="boxcontent">
     <td colspan="5">Este ranking ainda não possui membros cadastrados</td>

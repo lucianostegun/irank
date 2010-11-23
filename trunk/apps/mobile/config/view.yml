@@ -1,0 +1,14 @@
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        iRank
+    language:     pt
+    viewport:     width=device-width; initial-scale=1.0; maximum-scale=1.0;
+
+  stylesheets:    [button, mobile/main, mobile/loading, frontend/form]
+  javascripts:    [phpEquivalents, /sf/prototype/js/prototype, button, mobile/record, util, frontend/form]
+
+  has_layout:     on
+  layout:         layout

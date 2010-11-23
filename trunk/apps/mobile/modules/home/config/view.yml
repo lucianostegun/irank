@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [mobile/home]
+  javascripts:    []

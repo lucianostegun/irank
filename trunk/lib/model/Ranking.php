@@ -12,11 +12,11 @@ class Ranking extends BaseRanking
 	
 	public function cleanRecord(){
 		
-		$this->setMembers(0);
+		$this->setPlayers(0);
 		$this->setEvents(0);
 		$this->save();
 		
-		Util::executeQuery('DELETE FROM ranking_member WHERE ranking_id = '.$this->getId());
+		Util::executeQuery('DELETE FROM ranking_player WHERE ranking_id = '.$this->getId());
 		Util::executeQuery('UPDATE event SET ranking_id = null WHERE ranking_id = '.$this->getId());
 	}
 	
@@ -54,9 +54,9 @@ class Ranking extends BaseRanking
 	public function getPeopleList($returnPeople=false, $orderByList=null){
 		
 		$criteria = new Criteria();
-		$criteria->add( RankingMemberPeer::ENABLED, true );
-		$criteria->add( RankingMemberPeer::RANKING_ID, $this->getId() );
-		$criteria->addJoin( RankingMemberPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		$criteria->add( RankingPlayerPeer::ENABLED, true );
+		$criteria->add( RankingPlayerPeer::RANKING_ID, $this->getId() );
+		$criteria->addJoin( RankingPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		
 		if( is_array($orderByList) ){
 
@@ -74,47 +74,47 @@ class Ranking extends BaseRanking
 		if( $returnPeople )
 			return PeoplePeer::doSelect($criteria);
 		else
-			return RankingMemberPeer::doSelect($criteria);
+			return RankingPlayerPeer::doSelect($criteria);
 	}
 	
-	public function getMemberList($orderByList=null){
+	public function getPlayerList($orderByList=null){
 		
 		return $this->getPeopleList(false, $orderByList);
 	}
 	
-	public function addMember($peopleId){
+	public function addPlayer($peopleId){
 		
-		$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getId(), $peopleId);
+		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		if( !is_object($rankingMemberObj) ){
+		if( !is_object($rankingPlayerObj) ){
 			
-			$rankingMemberObj = new RankingMember();
-			$rankingMemberObj->setRankingId( $this->getId() );
-			$rankingMemberObj->setPeopleId( $peopleId );
+			$rankingPlayerObj = new RankingPlayer();
+			$rankingPlayerObj->setRankingId( $this->getId() );
+			$rankingPlayerObj->setPeopleId( $peopleId );
 		}
 
-		if( !$rankingMemberObj->getEnabled() ){
+		if( !$rankingPlayerObj->getEnabled() ){
 			
-			$rankingMemberObj->getPeople()->sendMemberNotify($this);
+			$rankingPlayerObj->getPeople()->sendPlayerNotify($this);
 			
-			$this->setMembers( $this->getMembers()+1 );
+			$this->setPlayers( $this->getPlayers()+1 );
 			$this->save();
 		}
 		
-		$rankingMemberObj->setEnabled( true );
-		$rankingMemberObj->save();
+		$rankingPlayerObj->setEnabled( true );
+		$rankingPlayerObj->save();
 	}
 	
-	public function deleteMember($peopleId){
+	public function deletePlayer($peopleId){
 
-		$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getId(), $peopleId);
+		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		if( is_object($rankingMemberObj) ){
+		if( is_object($rankingPlayerObj) ){
 			
-			$rankingMemberObj->setEnabled( false );
-			$rankingMemberObj->save();
+			$rankingPlayerObj->setEnabled( false );
+			$rankingPlayerObj->save();
 			
-			$this->setMembers( $this->getMembers()-1 );
+			$this->setPlayers( $this->getPlayers()-1 );
 			$this->save();
 		}else{
 			
@@ -173,19 +173,19 @@ class Ranking extends BaseRanking
 		 * utilizada para gerar histórico de rankings
 		 */
 		if( $dateStart || $dateFinish )
-			$rankingMemberObj = RankingMemberTmpPeer::retrieveByPK($this->getId(), $peopleId);
+			$rankingPlayerObj = RankingPlayerTmpPeer::retrieveByPK($this->getId(), $peopleId);
 		else
-			$rankingMemberObj = RankingMemberPeer::retrieveByPK($this->getId(), $peopleId);
+			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		$rankingMemberObj->updateInfo($dateStart, $dateFinish);
+		$rankingPlayerObj->updateInfo($dateStart, $dateFinish);
 	}
 	
 	public function updateScores(){
 
-	  	$rankingMemberObjList = $this->getMemberList(null);
+	  	$rankingPlayerObjList = $this->getPlayerList(null);
 
-	  	foreach( $rankingMemberObjList as $rankingMemberObj )
-	  		$rankingMemberObj->updateInfo();
+	  	foreach( $rankingPlayerObjList as $rankingPlayerObj )
+	  		$rankingPlayerObj->updateInfo();
 	}
 	
 	public function getEventDateList($format='d/m/Y', $saved=true){
@@ -213,15 +213,15 @@ class Ranking extends BaseRanking
 		$rankingDate = Util::formatDate($rankingDate);
 		Util::executeQuery('DELETE FROM ranking_history WHERE ranking_id = '.$this->getId().' AND ranking_date = \''.$rankingDate.'\'');
 		
-		foreach($this->getMemberList() as $rankingMemberObj){
+		foreach($this->getPlayerList() as $rankingPlayerObj){
 			
-			$rankingHistoryObjLast = $rankingMemberObj->getLastHistory($rankingDate);
+			$rankingHistoryObjLast = $rankingPlayerObj->getLastHistory($rankingDate);
 			
 			$rankingHistoryObj = new RankingHistory();
 			$rankingHistoryObj->setRankingId($rankingHistoryObjLast->getRankingId());
 			$rankingHistoryObj->setPeopleId($rankingHistoryObjLast->getPeopleId());
 			$rankingHistoryObj->setRankingDate($rankingDate);
-			$rankingHistoryObj->setEnabled($rankingMemberObj->getEnabled());
+			$rankingHistoryObj->setEnabled($rankingPlayerObj->getEnabled());
 			$rankingHistoryObj->setTotalEvents($rankingHistoryObjLast->getTotalEvents()+0);
 			$rankingHistoryObj->setTotalScore($rankingHistoryObjLast->getTotalScore()+0);
 			$rankingHistoryObj->setTotalBalance($rankingHistoryObjLast->getTotalBalance()+0);
@@ -296,7 +296,7 @@ class Ranking extends BaseRanking
 	  	
 	  	if( $save ){
 
-			$members         = $this->getMembers();
+			$players         = $this->getPlayers();
 	  		$rankingPosition = 1;
 	  		foreach($rankingHistoryObjList as $rankingHistoryObj){
 
@@ -306,7 +306,7 @@ class Ranking extends BaseRanking
 	  		
 	  		foreach($lastList as $rankingHistoryObj){
 
-	  			$rankingHistoryObj->setTotalRankingPosition($members);
+	  			$rankingHistoryObj->setTotalRankingPosition($players);
 	  			$rankingHistoryObj->save();
 	  		}
 
@@ -374,7 +374,7 @@ class Ranking extends BaseRanking
 	  		
 	  		foreach($lastList as $rankingHistoryObj){
 
-	  			$rankingHistoryObj->setRankingPosition($members);
+	  			$rankingHistoryObj->setRankingPosition($players);
 	  			$rankingHistoryObj->save();
 	  		}
 	  	}	  	
@@ -385,34 +385,34 @@ class Ranking extends BaseRanking
 		
 		switch($this->getRankingType(true)){
 			case 'value':
-				$orderByList = array(RankingMemberPeer::TOTAL_PRIZE=>'desc');
+				$orderByList = array(RankingPlayerPeer::TOTAL_PRIZE=>'desc');
 				break;
 			case 'balance':
-				$orderByList = array(RankingMemberPeer::BALANCE=>'desc');
+				$orderByList = array(RankingPlayerPeer::BALANCE=>'desc');
 				break;
 			case 'score':
-				$orderByList = array(RankingMemberPeer::SCORE=>'desc');
+				$orderByList = array(RankingPlayerPeer::SCORE=>'desc');
 				break;
 		}
 	  	
-	  	$orderByList[RankingMemberPeer::TOTAL_PRIZE] = 'desc';
-	  	$orderByList[RankingMemberPeer::BALANCE]     = 'desc';
-	  	$orderByList[RankingMemberPeer::TOTAL_PAID]  = 'asc';
-	  	$orderByList[RankingMemberPeer::EVENTS]      = 'asc';
-	  	$orderByList[RankingMemberPeer::PEOPLE_ID]   = 'asc';
+	  	$orderByList[RankingPlayerPeer::TOTAL_PRIZE] = 'desc';
+	  	$orderByList[RankingPlayerPeer::BALANCE]     = 'desc';
+	  	$orderByList[RankingPlayerPeer::TOTAL_PAID]  = 'asc';
+	  	$orderByList[RankingPlayerPeer::EVENTS]      = 'asc';
+	  	$orderByList[RankingPlayerPeer::PEOPLE_ID]   = 'asc';
 	  	
-	  	$rankingMemberObjList = $this->getMemberList($orderByList);
+	  	$rankingPlayerObjList = $this->getPlayerList($orderByList);
 	  	$lastList = array();
-	  	foreach($rankingMemberObjList as $key=>$rankingMemberObj){
+	  	foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 	  		
-	  		if( $rankingMemberObj->getTotalPaid()==0 ){
+	  		if( $rankingPlayerObj->getTotalPaid()==0 ){
 	  			
-	  			$lastList[] = $rankingMemberObj;
-	  			unset($rankingMemberObjList[$key]);
+	  			$lastList[] = $rankingPlayerObj;
+	  			unset($rankingPlayerObjList[$key]);
 	  		}
 	  	}
 	  	
-	  	return array_merge($rankingMemberObjList, $lastList);
+	  	return array_merge($rankingPlayerObjList, $lastList);
 	}
 	
 	public function isMyRanking(){
@@ -429,15 +429,15 @@ class Ranking extends BaseRanking
 		$eventObjList = $this->getEventList($criteria);
 		
 		foreach($eventObjList as $eventObj)
-			$eventObj->addMember($peopleId);
+			$eventObj->addPlayer($peopleId);
 	}
 	
 	public function getByPlace($place){
 		
 		$rankingPosition = 1;
-		foreach($this->getClassify() as $rankingMemberObj)
+		foreach($this->getClassify() as $rankingPlayerObj)
 			if( ($rankingPosition++)==$place )
-				return $rankingMemberObj;
+				return $rankingPlayerObj;
 		
 		return null;
 	}		

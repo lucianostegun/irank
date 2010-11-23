@@ -12,9 +12,11 @@ $firstName = MyTools::getAttribute('firstName', MyTools::getCookie('firstName', 
 <table border="0" width="200" cellspacing="2" cellpadding="0" style="margin-top: 4px">
 	<tr>
 		<td><?php echo link_to('Meus rankings', 'ranking/index') ?></td>
+		<td style="text-align: right"><?php echo link_to('Meu cadastro', 'sign/index') ?></td>
 	</tr>
 	<tr>
 		<td><?php echo link_to('Novo ranking', 'ranking/new') ?></td>
+		<td style="text-align: right"><?php echo link_to('Configurações', 'sign/options') ?></td>
 	</tr>
 </table>
 </div>

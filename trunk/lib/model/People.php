@@ -91,14 +91,14 @@ class People extends BasePeople
 		return $this->getVirtualTable()->getTagName()==$tagName;
 	}
 	
-	public function sendMemberNotify($rankingObj){
+	public function sendPlayerNotify($rankingObj){
 
 		if( $rankingObj->getUserSite()->getPeopleId()==$this->getId() )
 			return true;
 
 		$rankingOwner = $rankingObj->getUserSite()->getPeople()->getFullName();
 		
-		$emailContent = AuxiliarText::getContentByTagName('rankingMemberAdd');
+		$emailContent = AuxiliarText::getContentByTagName('rankingPlayerAdd');
 		
 		if( !$this->isUserSite() )
 			$emailContent .= AuxiliarText::getContentByTagName('newUserInvite');
@@ -108,7 +108,7 @@ class People extends BasePeople
 		$emailContent = str_replace('<createdAt>', $rankingObj->getCreatedAt('d/m/Y'), $emailContent);
 		$emailContent = str_replace('<startDate>', $rankingObj->getStartDate('d/m/Y'), $emailContent);
 		$emailContent = str_replace('<rankingType>', $rankingObj->getRankingType()->getDescription(), $emailContent);
-		$emailContent = str_replace('<members>', $rankingObj->getMembers(), $emailContent);
+		$emailContent = str_replace('<players>', $rankingObj->getPlayers(), $emailContent);
 		$emailContent = str_replace('<events>', $rankingObj->getEvents(), $emailContent);
 		$emailContent = str_replace('<rankingOwner>', $rankingOwner, $emailContent);
 		

@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    []
-  javascripts:    [frontend/friendSearch]
+  javascripts:    []

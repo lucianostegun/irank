@@ -52,7 +52,7 @@
 	    <td align="left" valign="top" style="padding:15px 23px 16px 20px; color: #333333">
 		<?php echo image_tag('frontend/success', array('align'=>'left', 'style'=>'margin: 0 15 15 15')) ?>
 		Sua mensagem foi enviada com sucesso!<br/>
-		Assim que possível estaremos entrando com contato para respondê-la.<br/><br/>
+		Assim que possível entraremos em contato para respondê-la.<br/><br/>
 		
 		<?php echo link_to('clique aqui', '#newMessage()', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> para enviar uma nova mensagem.<br/>
 		<?php echo link_to('clique aqui', 'sign', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> e cadastre-se gratuitamente.<br/><br/>

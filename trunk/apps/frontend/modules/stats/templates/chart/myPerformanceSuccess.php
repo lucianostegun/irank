@@ -14,7 +14,7 @@ if( $peopleIdOther==$peopleId ){
 $libDir = sfConfig::get('sf_lib_dir');
 
 
-$players = $rankingObj->getMembers();
+$players = $rankingObj->getPlayers();
 
 $eventDateList = $rankingObj->getEventDateList();
 

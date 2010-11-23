@@ -55,7 +55,7 @@ $moduleName = $sf_context->getModuleName();
             <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Cadastro', 'sign') ?></td>
             <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Meu ranking', 'ranking') ?></td>
             <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Convidar amigos', 'friendInvite') ?></td>
-            <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Feedback', 'feedback') ?></td>
+            <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Feedback', 'feedback', array('style'=>'color: #F32126')) ?></td>
             <td align="center" valign="middle" class="border_menu_right"><?php echo link_to('Contato', 'contact') ?></td>
           </tr>
         </table>

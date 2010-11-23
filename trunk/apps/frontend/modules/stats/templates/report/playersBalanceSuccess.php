@@ -2,8 +2,8 @@
 
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
 
-$rankingMemberObjList = $rankingObj->getClassify();
-$players = $rankingObj->getMembers();
+$rankingPlayerObjList = $rankingObj->getClassify();
+$players = $rankingObj->getPlayers();
 
 $inputFilePath  = Util::getFilePath('/templates/playersBalance.xls');
 $outputFilePath = Util::getFilePath('/temp/playersBalance-'.microtime().'.xls');
@@ -22,22 +22,22 @@ for($line=7; $line <= 7+$players-1; $line++)
 
 $phpExcelObj->setActiveSheetIndex(0)
 			->setCellValue('D2', $rankingObj->getRankingName())
-			->setCellValue('D3', $rankingObj->getMembers())
+			->setCellValue('D3', $rankingObj->getPlayers())
 			->setCellValue('D4', $rankingObj->getEvents())
 			->setCellValue('F4', $rankingObj->getRankingType()->getDescription());
 						
 $currentLine = 7;
 $position    = 1;
-foreach($rankingMemberObjList as $rankingMemberObj):
+foreach($rankingPlayerObjList as $rankingPlayerObj):
 	
 	$phpExcelObj->setActiveSheetIndex(0)
 				->setCellValue('A'.$currentLine, $position++)
-				->setCellValue('B'.$currentLine, $rankingMemberObj->getPeople()->getName())
-				->setCellValue('C'.$currentLine, $rankingMemberObj->getTotalPaid())
-				->setCellValue('D'.$currentLine, $rankingMemberObj->getTotalPrize())
-				->setCellValue('E'.$currentLine, $rankingMemberObj->getBalance())
+				->setCellValue('B'.$currentLine, $rankingPlayerObj->getPeople()->getName())
+				->setCellValue('C'.$currentLine, $rankingPlayerObj->getTotalPaid())
+				->setCellValue('D'.$currentLine, $rankingPlayerObj->getTotalPrize())
+				->setCellValue('E'.$currentLine, $rankingPlayerObj->getBalance())
 				->setCellValue('F'.$currentLine, '=D'.$currentLine.'/C'.$currentLine)
-				->setCellValue('G'.$currentLine, $rankingMemberObj->getEvents());
+				->setCellValue('G'.$currentLine, $rankingPlayerObj->getEvents());
 				
 	$currentLine++;
 endforeach;

@@ -664,6 +664,17 @@ class Util {
 	  	
 	  	return $html;
 	 }
+	
+	/**
+	 * Método que inclui um indicador visual de informação de processamento
+	 * em progresso, utilizado no layout principal 
+	 *
+	 * @author     Luciano Stegun
+	 */
+	public static function getLoading(){
+		
+		echo get_partial( 'home/include/loading' );
+	}
 	 
 	 public static function convertTimeToSeconds( $time ){
 	 	

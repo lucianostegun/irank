@@ -4,7 +4,7 @@ function handleSuccessEvent(content){
 
 	var infoObj = parseInfo(content);
 
-	updateMemberContent(infoObj.eventId);
+	updatePlayerContent(infoObj.eventId);
 	updateResultContent(infoObj.eventId);
 	
 	setRecordSaved(true);
@@ -71,7 +71,7 @@ function doConfirmPresence(){
 
 		var content = t.responseText;
 		
-		$('eventMemberDiv').innerHTML = content;
+		$('eventPlayerDiv').innerHTML = content;
 
 		adjustContentTab();
 		
@@ -91,7 +91,7 @@ function doConfirmPresence(){
 			debug(content);
 	};
 	
-	var urlAjax = _webRoot+'/event/addMember/eventId/'+eventId;
+	var urlAjax = _webRoot+'/event/addPlayer/eventId/'+eventId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
@@ -108,7 +108,7 @@ function doCancelPresence(){
 
 		var content = t.responseText;
 		
-		$('eventMemberDiv').innerHTML = content;
+		$('eventPlayerDiv').innerHTML = content;
 		
 		showButton('confirmPresence');
 		hideButton('cancelPresence');
@@ -127,7 +127,43 @@ function doCancelPresence(){
 			debug(content);
 	};
 	
-	var urlAjax = _webRoot+'/event/deleteMember/eventId/'+eventId;
+	var urlAjax = _webRoot+'/event/deletePlayer/eventId/'+eventId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function removePlayer(peopleId){
+	
+	if( !confirm('Deseja realmente remover este jogador do evento?') )
+		return false;
+	
+	showIndicator('event');
+	
+	var eventId = $('eventId').value;
+	
+	var successFunc = function(t){
+
+		var content = t.responseText;
+		
+		$('eventPlayerDiv').innerHTML = content;
+		
+		showButton('confirmPresence');
+		hideButton('cancelPresence');
+		
+		hideIndicator('event');
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		hideIndicator('event');
+		alert('Ocorreu um erro ao remover o jogador do evento!\nTente novamente mais tarde.');
+		
+		if( isDebug() )
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/event/removePlayer/eventId/'+eventId+'/peopleId/'+peopleId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
@@ -291,10 +327,10 @@ function doDeleteEvent(){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
-function updateMemberContent(eventId){
+function updatePlayerContent(eventId){
 	
-	var urlAjax = _webRoot+'/event/getMemberList/eventId/'+eventId;
-	new Ajax.Updater('eventMemberDiv', urlAjax, {asynchronous:true, evalScripts:false});
+	var urlAjax = _webRoot+'/event/getPlayerList/eventId/'+eventId;
+	new Ajax.Updater('eventPlayerDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }
 
 function updateResultContent(eventId){

@@ -36,8 +36,8 @@ class RankingHistory extends BaseRankingHistory
 			
 		$rankingDate = $this->getRankingDate('Y-m-d');
 		
-		$totalPaid  = Util::executeOne('SELECT SUM(event_member.BUYIN+event_member.REBUY+event_member.ADDON) FROM event_member, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_member.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_member.PEOPLE_ID='.$this->getPeopleId(), 'float');
-		$totalPrize = Util::executeOne('SELECT SUM(event_member.PRIZE) FROM event_member, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_member.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_member.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$totalPaid  = Util::executeOne('SELECT SUM(event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$totalPrize = Util::executeOne('SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
 		
 		$balanceValue = $totalPrize-$totalPaid;
 		
@@ -60,7 +60,7 @@ class RankingHistory extends BaseRankingHistory
 		
 		$rankingDate = $this->getRankingDate('Y-m-d');
 		
-		$events = Util::executeOne('SELECT COUNT(1) FROM event_member, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_member.ENABLED AND event_member.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_member.PEOPLE_ID='.$this->getPeopleId(), 'int');
+		$events = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.ENABLED AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'int');
 		
 		$this->setEvents($events);
 		$this->setTotalEvents($this->getEvents()+$events);
@@ -82,7 +82,7 @@ class RankingHistory extends BaseRankingHistory
 		$criteria->addAscendingOrderByColumn( EventPeer::START_TIME );
 		
 		$eventObjList         = $rankingObj->getEventList($criteria);
-		$rankingMemberObjList = $rankingObj->getMemberList();
+		$rankingPlayerObjList = $rankingObj->getPlayerList();
 		$rankingType          = $rankingObj->getRankingType(true);
 
 		$eventDateList = array();
@@ -94,11 +94,11 @@ class RankingHistory extends BaseRankingHistory
 
 		foreach( $eventDateList as $eventDate){
 			
-			foreach($rankingMemberObjList as $rankingMemberObj){
+			foreach($rankingPlayerObjList as $rankingPlayerObj){
 				
 				$rankingHistoryObj = new RankingHistory();
-				$rankingHistoryObj->setPeopleId( $rankingMemberObj->getPeopleId() );
-				$rankingHistoryObj->setRankingId( $rankingMemberObj->getRankingId() );
+				$rankingHistoryObj->setPeopleId( $rankingPlayerObj->getPeopleId() );
+				$rankingHistoryObj->setRankingId( $rankingPlayerObj->getRankingId() );
 				$rankingHistoryObj->setRankingDate( $eventDate );
 				$rankingHistoryObj->updateInfo($firstDate, $eventDate);
 				$rankingHistoryObj->save();

@@ -44,7 +44,7 @@ function hideDiv( divId ){
 function showIndicator( indicatorId ){
 	
 	indicatorId = (indicatorId?ucfirst(indicatorId):'');
-	
+
 	showDiv('indicator'+indicatorId);
 	hideFormStatusError(indicatorId);
 }

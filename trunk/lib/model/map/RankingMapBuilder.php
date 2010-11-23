@@ -52,7 +52,7 @@ class RankingMapBuilder {
 
 		$tMap->addColumn('DEFAULT_BUYIN', 'DefaultBuyin', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('MEMBERS', 'Members', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addColumn('PLAYERS', 'Players', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('EVENTS', 'Events', 'int', CreoleTypes::INTEGER, false, null);
 

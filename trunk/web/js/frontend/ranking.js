@@ -14,45 +14,45 @@ function doSubmitRanking(content){
 	$('rankingForm').onsubmit();
 }
 
-function handleSuccessRankingMember(content){
+function handleSuccessRankingPlayer(content){
 
-	clearFormFieldErrors('rankingMemberForm');
-	showFormStatusSuccess('rankingMember');
-	hideIndicator('rankingMember');
-	enableButton('rankingMemberSubmit');
+	clearFormFieldErrors('rankingPlayerForm');
+	showFormStatusSuccess('rankingPlayer');
+	hideIndicator('rankingPlayer');
+	enableButton('rankingPlayerSubmit');
 }
 
-function doSubmitRankingMember(content){
+function doSubmitRankingPlayer(content){
 
-	showIndicator('rankingMember');
-	disableButton('rankingMemberSubmit');
-	$('rankingMemberForm').onsubmit();
+	showIndicator('rankingPlayer');
+	disableButton('rankingPlayerSubmit');
+	$('rankingPlayerForm').onsubmit();
 }
 
-function addRankingMember(){
+function addRankingPlayer(){
 	
-	clearFormFieldErrors('rankingMemberForm');
-	hideFormStatusError('rankingMember');
-	hideFormStatusSuccess('rankingMember');
-	hideIndicator('rankingMember');
-	enableButton('rankingMemberSubmit');
-	windowRankingMemberAddShow();
+	clearFormFieldErrors('rankingPlayerForm');
+	hideFormStatusError('rankingPlayer');
+	hideFormStatusSuccess('rankingPlayer');
+	hideIndicator('rankingPlayer');
+	enableButton('rankingPlayerSubmit');
+	windowRankingPlayerAddShow();
 	
-	$('rankingMemberFirstName').focus();
+	$('rankingPlayerFirstName').focus();
 }
 
-function handleSuccessRankingMember(content){
+function handleSuccessRankingPlayer(content){
 	
-	$('rankingMemberForm').reset();
-	$('rankingMemberDiv').innerHTML = content;
+	$('rankingPlayerForm').reset();
+	$('rankingPlayerDiv').innerHTML = content;
 	
 	adjustContentTab();
-	windowRankingMemberAddHide();
+	windowRankingPlayerAddHide();
 }
 
-function deleteRankingMember(peopleId){
+function deleteRankingPlayer(peopleId){
 	
-	showIndicator('rankingMemberList');
+	showIndicator('rankingPlayerList');
 	
 	var rankingId = $('rankingId').value;
 	
@@ -60,9 +60,9 @@ function deleteRankingMember(peopleId){
 
 		var content = t.responseText;
 		
-		$('rankingMemberDiv').innerHTML = content;
+		$('rankingPlayerDiv').innerHTML = content;
 		
-		hideIndicator('rankingMemberList');
+		hideIndicator('rankingPlayerList');
 	};
 		
 	var failureFunc = function(t){
@@ -70,24 +70,24 @@ function deleteRankingMember(peopleId){
 		var content = t.responseText;
 
 		alert('Não foi possível excluir o membro do grupo!\nTente novamente mais tarde.')
-		hideIndicator('rankingMemberList');
+		hideIndicator('rankingPlayerList');
 	};
 	
-	var urlAjax = _webRoot+'/ranking/deleteMember/rankingId/'+rankingId+'/peopleId/'+peopleId;
+	var urlAjax = _webRoot+'/ranking/deletePlayer/rankingId/'+rankingId+'/peopleId/'+peopleId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
 function onSelectTabTask(tabId){
 
 	hideDiv('rankingMainButtonBar');
-	hideDiv('rankingMemberButtonBar');
+	hideDiv('rankingPlayerButtonBar');
 	
 	switch( tabId ){
 		case 'main':
 			showDiv('rankingMainButtonBar');
 			break;
-		case 'member':
-			showDiv('rankingMemberButtonBar');
+		case 'player':
+			showDiv('rankingPlayerButtonBar');
 			break;
 	}
 	

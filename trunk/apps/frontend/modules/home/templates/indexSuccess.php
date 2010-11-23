@@ -9,7 +9,7 @@
         	<p><img src="/images/frontend/layout/welcome_heading.gif" alt="" />
         		<img src="/images/frontend/layout/welcomeLogo.png" align="right"/></p>
         	
-          <p>O iRank é um site gratuito para criação e gerenciamento de rankings online para jogos de Poker.</p>
+          <p>O iRank é um site gratuito para criação e organização de rankings online para jogos de Poker.</p>
 		  <p>Aqui você poderá criar seus próprios rankings, definir as configurações de jogo e organizar os eventos, classificações e estatísticas dos torneios entre seus amigos.</p>
 		  <p>Se você ainda não é cadastrado, <?php echo link_to('clique aqui', 'sign', array('class'=>'white', 'style'=>'font-weight: bold')) ?> e comece agora mesmo a controlar seus jogos!</p></td>
       </tr>
