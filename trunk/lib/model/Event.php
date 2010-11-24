@@ -99,7 +99,7 @@ class Event extends BaseEvent
 		return $this->getPeopleList(false, $orderByList);
 	}
 	
-	public function addPlayer($peopleId, $confirm=false){
+	public function addPlayer($peopleId, $confirm=false, $sendNotify=true){
 		
 		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
@@ -121,7 +121,8 @@ class Event extends BaseEvent
 			$rankingPlayerObj->setEvents($rankingPlayerObj->getEvents()+1);
 			$rankingPlayerObj->save();
 			
-			$eventPlayerObj->notifyConfirm();
+			if( $sendNotify )
+				$eventPlayerObj->notifyConfirm();
 		}
 		
 		$eventPlayerObj->save();

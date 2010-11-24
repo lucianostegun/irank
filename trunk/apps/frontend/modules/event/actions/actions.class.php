@@ -136,7 +136,9 @@ class eventActions extends sfActions
 	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
 	$eventObj    = EventPeer::retrieveByPK( $eventId );
 	
-	$eventObj->addPlayer( $userSiteObj->getPeopleId(), true );
+	$sendNotify = ($eventObj->getEventDate(null) > time());
+	
+	$eventObj->addPlayer( $userSiteObj->getPeopleId(), $sendNotify );
     
     return $this->forward('event', 'getPlayerList');
   }
@@ -244,7 +246,7 @@ class eventActions extends sfActions
 		
 		if( !$enabled && $eventPosition > 0 ){
 			
-			$eventObj->addPlayer($peopleId, true);
+			$eventObj->addPlayer($peopleId, true, false);
 			$enabled = true;
 		}
 		
