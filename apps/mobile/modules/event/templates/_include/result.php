@@ -28,7 +28,7 @@
     		$buyin = Util::formatFloat($buyin, true);
     		if( $isRing ){
     			
-    			echo input_tag('buyin'.$peopleId, $buyin, array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1), 'style'=>'text-align: right', 'onkeyup'=>'maskCurrency(event)', 'id'=>'eventBuyin'.$peopleId));
+    			echo input_tag('buyin'.$peopleId, $buyin, array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1), 'style'=>'text-align: right', 'id'=>'eventBuyin'.$peopleId));
     		}else{
     			
     			echo input_hidden_tag('buyin'.$peopleId, $buyin, array('style'=>'text-align: right', 'id'=>'eventBuyin'.$peopleId));
@@ -37,9 +37,9 @@
     	?>
     </td>
     <td><?php echo input_tag('eventPosition'.$peopleId, $eventPlayerObj->getEventPosition(), array('size'=>2, 'maxlength'=>2, 'tabindex'=>($key+1+$recordCount), 'id'=>'eventEventPosition'.$peopleId)) ?></td>
-    <td><?php echo input_tag('prize'.$peopleId, Util::formatFloat($eventPlayerObj->getPrize(), true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*2), 'style'=>'text-align: right', 'onkeyup'=>'maskCurrency(event)', 'id'=>'eventPrize'.$peopleId)) ?></td>
-    <td><?php echo input_tag('rebuy'.$peopleId, Util::formatFloat($eventPlayerObj->getRebuy(), true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*3), 'style'=>'text-align: right', 'onkeyup'=>'maskCurrency(event)', 'id'=>'eventRebuy'.$peopleId)) ?></td>
-    <td><?php echo input_tag('addon'.$peopleId, Util::formatFloat($eventPlayerObj->getAddon(), true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*4), 'style'=>'text-align: right', 'onkeyup'=>'maskCurrency(event)', 'id'=>'eventAddon'.$peopleId)) ?></td>
+    <td><?php echo input_tag('prize'.$peopleId, Util::formatFloat($eventPlayerObj->getPrize(), true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*2), 'style'=>'text-align: right', 'id'=>'eventPrize'.$peopleId)) ?></td>
+    <td><?php echo input_tag('rebuy'.$peopleId, Util::formatFloat($eventPlayerObj->getRebuy(), true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*3), 'style'=>'text-align: right', 'id'=>'eventRebuy'.$peopleId)) ?></td>
+    <td><?php echo input_tag('addon'.$peopleId, Util::formatFloat($eventPlayerObj->getAddon(), true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*4), 'style'=>'text-align: right', 'id'=>'eventAddon'.$peopleId)) ?></td>
   </tr>
   <?php
   	endforeach;

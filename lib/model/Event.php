@@ -284,8 +284,6 @@ class Event extends BaseEvent
 		$emailContent = str_replace('<resultList>', $resultList, $emailContent);
 		$emailContent = str_replace('<classifyList>', $classifyList, $emailContent);
 		
-		$isDebug = Util::isDebug();
-
 		$eventPlayerObjList = $this->getPlayerList();
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
@@ -305,8 +303,7 @@ class Event extends BaseEvent
 				
 			$emailContentTmp = str_replace('<congratsMessage>', $congratsMessage, $emailContentTmp);
 			
-			if( $isDebug && $eventPosition==1 || !$isDebug  )
-				Report::sendMail('Resultado de evento @ '.$this->getEventName(), $peopleObj->getEmailAddress(), $emailContentTmp);
+			Report::sendMail('Resultado de evento @ '.$this->getEventName(), $peopleObj->getEmailAddress(), $emailContentTmp);
 		}
 	}
 	
