@@ -155,7 +155,8 @@ class rankingActions extends sfActions
   
   public function executeDebug($request){
   	
-  	$rankingObj = RankingPeer::retrieveByPK(1);
+  	$rankingId  = $request->getParameter('rankingId');
+  	$rankingObj = RankingPeer::retrieveByPK($rankingId);
   	
   	$rankingObj->updateWholeHistory();
   	

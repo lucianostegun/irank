@@ -71,6 +71,11 @@ class Report {
 		$emailContent = str_replace('<emailTitle>', $emailSubject, $emailContent);
 		
 		$emailContent = utf8_decode($emailContent);
+		$emailContent = htmlentities($emailContent, ENT_NOQUOTES);
+		$emailContent = str_replace('&gt;', '>', $emailContent);
+		$emailContent = str_replace('&lt;', '<', $emailContent);
+		
+//		Util::forceError($emailContent);exit;
 			
 		$mail->setContentType( $contentType );
 		$mail->setDomain( $smtpHostname );

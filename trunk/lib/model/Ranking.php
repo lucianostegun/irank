@@ -246,6 +246,7 @@ class Ranking extends BaseRanking
 	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_PRIZE]   = 'desc';
 	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_BALANCE] = 'desc';
 	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_PAID]    = 'asc';
+	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_AVERAGE] = 'desc';
 	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_EVENTS]  = 'asc';
 	  	$defaultOrderByList[RankingHistoryPeer::PEOPLE_ID]     = 'asc';
 	  	
@@ -260,6 +261,9 @@ class Ranking extends BaseRanking
 				break;
 			case 'score':
 				$orderByList = array(RankingHistoryPeer::TOTAL_SCORE=>'desc');
+				break;
+			case 'average':
+				$orderByList = array(RankingHistoryPeer::TOTAL_AVERAGE=>'desc');
 				break;
 		}
 	  	
@@ -317,10 +321,12 @@ class Ranking extends BaseRanking
 		  	$defaultOrderByList[RankingHistoryPeer::PRIZE_VALUE]   = 'desc';
 		  	$defaultOrderByList[RankingHistoryPeer::BALANCE_VALUE] = 'desc';
 		  	$defaultOrderByList[RankingHistoryPeer::PAID_VALUE]    = 'asc';
+		  	$defaultOrderByList[RankingHistoryPeer::AVERAGE]       = 'desc';
 		  	$defaultOrderByList[RankingHistoryPeer::EVENTS]        = 'asc';
 		  	$defaultOrderByList[RankingHistoryPeer::TOTAL_PRIZE]   = 'desc';
 		  	$defaultOrderByList[RankingHistoryPeer::TOTAL_BALANCE] = 'desc';
 		  	$defaultOrderByList[RankingHistoryPeer::TOTAL_PAID]    = 'asc';
+		  	$defaultOrderByList[RankingHistoryPeer::TOTAL_AVERAGE] = 'desc';
 		  	$defaultOrderByList[RankingHistoryPeer::TOTAL_EVENTS]  = 'asc';
 		  	$defaultOrderByList[RankingHistoryPeer::PEOPLE_ID]     = 'asc';
 	
@@ -333,6 +339,9 @@ class Ranking extends BaseRanking
 					break;
 				case 'score':
 					$orderByList = array(RankingHistoryPeer::SCORE=>'desc');
+					break;
+				case 'average':
+					$orderByList = array(RankingHistoryPeer::AVERAGE=>'desc');
 					break;
 			}
 			
@@ -393,12 +402,16 @@ class Ranking extends BaseRanking
 			case 'score':
 				$orderByList = array(RankingPlayerPeer::SCORE=>'desc');
 				break;
+			case 'average':
+				$orderByList = array(RankingPlayerPeer::AVERAGE=>'desc');
+				break;
 		}
 	  	
 	  	$orderByList[RankingPlayerPeer::TOTAL_PRIZE] = 'desc';
 	  	$orderByList[RankingPlayerPeer::BALANCE]     = 'desc';
 	  	$orderByList[RankingPlayerPeer::TOTAL_PAID]  = 'asc';
-	  	$orderByList[RankingPlayerPeer::EVENTS]      = 'asc';
+	  	$orderByList[RankingPlayerPeer::TOTAL_PAID]  = 'asc';
+	  	$orderByList[RankingPlayerPeer::AVERAGE]     = 'desc';
 	  	$orderByList[RankingPlayerPeer::PEOPLE_ID]   = 'asc';
 	  	
 	  	$rankingPlayerObjList = $this->getPlayerList($orderByList);

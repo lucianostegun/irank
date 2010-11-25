@@ -12,8 +12,18 @@ class RankingHistory extends BaseRankingHistory
 	
 	public function updateScore(){
 		
+		$events       = $this->getEvents();
+		$totalEvents  = $this->getTotalEvents();
+		$average      = $this->getAverage();
+		$totalAverage = $this->getTotalAverage();
+		
+		$this->setScore( $average*$events*10 );
+		$this->setTotalScore( $totalAverage*$totalEvents*10 );
+	}
+	
+	public function updateScoreOld(){
+		
 		$score           = 0;
-//		$rankingPosition = 0;
 		
 		$criteria = new Criteria();
 		$criteria->add( EventPeer::EVENT_DATE, $this->getRankingDate() );
@@ -27,7 +37,6 @@ class RankingHistory extends BaseRankingHistory
 			$score += ($paidPlaces-($eventPosition-1));
 		}
 		
-//		$this->setRankingPosition($rankingPosition);
 		$this->setTotalScore($this->getTotalScore()+$score);
 		$this->setScore($score);
 	}
@@ -41,19 +50,16 @@ class RankingHistory extends BaseRankingHistory
 		
 		$balanceValue = $totalPrize-$totalPaid;
 		
-//		if( $this->getPeopleId()==1){
-//			Util::forceError('');
-//			echo $totalPaid;
-//			exit;
-//		}
-		
 		$this->setTotalPaid( $this->getTotalPaid()+$totalPaid );
 		$this->setTotalPrize( $this->getTotalPrize()+$totalPrize );
 		$this->setTotalBalance( $this->getTotalBalance()+$balanceValue );
 		
+		$this->setTotalAverage( ($this->getTotalPaid()>0?($this->getTotalPrize()/$this->getTotalPaid()):0) );
+		
 		$this->setPaidValue( $totalPaid );
 		$this->setPrizeValue( $totalPrize );
 		$this->setBalanceValue( $balanceValue );
+		$this->setAverage( ($this->getPaidValue()>0?($this->getPrizeValue()/$this->getPaidValue()):0) );
 	}
 	
 	public function updateEvents(){
@@ -68,9 +74,9 @@ class RankingHistory extends BaseRankingHistory
 	
 	public function updateInfo(){
 
-		$this->updateScore();
 		$this->updateBalance();
 		$this->updateEvents();
+		$this->updateScore();
 	}
 	
 	// Função que atualiza todos as datas do ranking

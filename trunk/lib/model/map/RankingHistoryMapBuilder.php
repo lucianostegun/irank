@@ -46,6 +46,8 @@ class RankingHistoryMapBuilder {
 
 		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::FLOAT, false, null);
 
+		$tMap->addColumn('AVERAGE', 'Average', 'double', CreoleTypes::FLOAT, false, null);
+
 		$tMap->addColumn('PAID_VALUE', 'PaidValue', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('PRIZE_VALUE', 'PrizeValue', 'double', CreoleTypes::FLOAT, false, null);
@@ -61,6 +63,8 @@ class RankingHistoryMapBuilder {
 		$tMap->addColumn('TOTAL_PRIZE', 'TotalPrize', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('TOTAL_BALANCE', 'TotalBalance', 'double', CreoleTypes::FLOAT, false, null);
+
+		$tMap->addColumn('TOTAL_AVERAGE', 'TotalAverage', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

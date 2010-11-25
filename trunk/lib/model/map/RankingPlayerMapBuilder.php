@@ -46,6 +46,8 @@ class RankingPlayerMapBuilder {
 
 		$tMap->addColumn('BALANCE', 'Balance', 'double', CreoleTypes::FLOAT, false, null);
 
+		$tMap->addColumn('AVERAGE', 'Average', 'double', CreoleTypes::FLOAT, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

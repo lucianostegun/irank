@@ -13,7 +13,7 @@ abstract class BaseRankingHistoryPeer {
 	const CLASS_DEFAULT = 'lib.model.RankingHistory';
 
 	
-	const NUM_COLUMNS = 18;
+	const NUM_COLUMNS = 20;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -41,6 +41,9 @@ abstract class BaseRankingHistoryPeer {
 	const SCORE = 'ranking_history.SCORE';
 
 	
+	const AVERAGE = 'ranking_history.AVERAGE';
+
+	
 	const PAID_VALUE = 'ranking_history.PAID_VALUE';
 
 	
@@ -65,6 +68,9 @@ abstract class BaseRankingHistoryPeer {
 	const TOTAL_BALANCE = 'ranking_history.TOTAL_BALANCE';
 
 	
+	const TOTAL_AVERAGE = 'ranking_history.TOTAL_AVERAGE';
+
+	
 	const ENABLED = 'ranking_history.ENABLED';
 
 	
@@ -79,19 +85,19 @@ abstract class BaseRankingHistoryPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('RankingId', 'PeopleId', 'RankingDate', 'TotalRankingPosition', 'RankingPosition', 'Events', 'Score', 'PaidValue', 'PrizeValue', 'BalanceValue', 'TotalEvents', 'TotalScore', 'TotalPaid', 'TotalPrize', 'TotalBalance', 'Enabled', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (RankingHistoryPeer::RANKING_ID, RankingHistoryPeer::PEOPLE_ID, RankingHistoryPeer::RANKING_DATE, RankingHistoryPeer::TOTAL_RANKING_POSITION, RankingHistoryPeer::RANKING_POSITION, RankingHistoryPeer::EVENTS, RankingHistoryPeer::SCORE, RankingHistoryPeer::PAID_VALUE, RankingHistoryPeer::PRIZE_VALUE, RankingHistoryPeer::BALANCE_VALUE, RankingHistoryPeer::TOTAL_EVENTS, RankingHistoryPeer::TOTAL_SCORE, RankingHistoryPeer::TOTAL_PAID, RankingHistoryPeer::TOTAL_PRIZE, RankingHistoryPeer::TOTAL_BALANCE, RankingHistoryPeer::ENABLED, RankingHistoryPeer::CREATED_AT, RankingHistoryPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('ranking_id', 'people_id', 'ranking_date', 'total_ranking_position', 'ranking_position', 'events', 'score', 'paid_value', 'prize_value', 'balance_value', 'total_events', 'total_score', 'total_paid', 'total_prize', 'total_balance', 'enabled', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('RANKING_ID'=>'', 'PEOPLE_ID'=>'', 'RANKING_DATE'=>'', 'TOTAL_RANKING_POSITION'=>'', 'RANKING_POSITION'=>'', 'EVENTS'=>'', 'SCORE'=>'', 'PAID_VALUE'=>'', 'PRIZE_VALUE'=>'', 'BALANCE_VALUE'=>'', 'TOTAL_EVENTS'=>'', 'TOTAL_SCORE'=>'', 'TOTAL_PAID'=>'', 'TOTAL_PRIZE'=>'', 'TOTAL_BALANCE'=>'', 'ENABLED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+		BasePeer::TYPE_PHPNAME=>array ('RankingId', 'PeopleId', 'RankingDate', 'TotalRankingPosition', 'RankingPosition', 'Events', 'Score', 'Average', 'PaidValue', 'PrizeValue', 'BalanceValue', 'TotalEvents', 'TotalScore', 'TotalPaid', 'TotalPrize', 'TotalBalance', 'TotalAverage', 'Enabled', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (RankingHistoryPeer::RANKING_ID, RankingHistoryPeer::PEOPLE_ID, RankingHistoryPeer::RANKING_DATE, RankingHistoryPeer::TOTAL_RANKING_POSITION, RankingHistoryPeer::RANKING_POSITION, RankingHistoryPeer::EVENTS, RankingHistoryPeer::SCORE, RankingHistoryPeer::AVERAGE, RankingHistoryPeer::PAID_VALUE, RankingHistoryPeer::PRIZE_VALUE, RankingHistoryPeer::BALANCE_VALUE, RankingHistoryPeer::TOTAL_EVENTS, RankingHistoryPeer::TOTAL_SCORE, RankingHistoryPeer::TOTAL_PAID, RankingHistoryPeer::TOTAL_PRIZE, RankingHistoryPeer::TOTAL_BALANCE, RankingHistoryPeer::TOTAL_AVERAGE, RankingHistoryPeer::ENABLED, RankingHistoryPeer::CREATED_AT, RankingHistoryPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('ranking_id', 'people_id', 'ranking_date', 'total_ranking_position', 'ranking_position', 'events', 'score', 'average', 'paid_value', 'prize_value', 'balance_value', 'total_events', 'total_score', 'total_paid', 'total_prize', 'total_balance', 'total_average', 'enabled', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('RANKING_ID'=>'', 'PEOPLE_ID'=>'', 'RANKING_DATE'=>'', 'TOTAL_RANKING_POSITION'=>'', 'RANKING_POSITION'=>'', 'EVENTS'=>'', 'SCORE'=>'', 'AVERAGE'=>'', 'PAID_VALUE'=>'', 'PRIZE_VALUE'=>'', 'BALANCE_VALUE'=>'', 'TOTAL_EVENTS'=>'', 'TOTAL_SCORE'=>'', 'TOTAL_PAID'=>'', 'TOTAL_PRIZE'=>'', 'TOTAL_BALANCE'=>'', 'TOTAL_AVERAGE'=>'', 'ENABLED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('RankingId'=>0, 'PeopleId'=>1, 'RankingDate'=>2, 'TotalRankingPosition'=>3, 'RankingPosition'=>4, 'Events'=>5, 'Score'=>6, 'PaidValue'=>7, 'PrizeValue'=>8, 'BalanceValue'=>9, 'TotalEvents'=>10, 'TotalScore'=>11, 'TotalPaid'=>12, 'TotalPrize'=>13, 'TotalBalance'=>14, 'Enabled'=>15, 'CreatedAt'=>16, 'UpdatedAt'=>17, ),
-		BasePeer::TYPE_COLNAME=>array (RankingHistoryPeer::RANKING_ID=>0, RankingHistoryPeer::PEOPLE_ID=>1, RankingHistoryPeer::RANKING_DATE=>2, RankingHistoryPeer::TOTAL_RANKING_POSITION=>3, RankingHistoryPeer::RANKING_POSITION=>4, RankingHistoryPeer::EVENTS=>5, RankingHistoryPeer::SCORE=>6, RankingHistoryPeer::PAID_VALUE=>7, RankingHistoryPeer::PRIZE_VALUE=>8, RankingHistoryPeer::BALANCE_VALUE=>9, RankingHistoryPeer::TOTAL_EVENTS=>10, RankingHistoryPeer::TOTAL_SCORE=>11, RankingHistoryPeer::TOTAL_PAID=>12, RankingHistoryPeer::TOTAL_PRIZE=>13, RankingHistoryPeer::TOTAL_BALANCE=>14, RankingHistoryPeer::ENABLED=>15, RankingHistoryPeer::CREATED_AT=>16, RankingHistoryPeer::UPDATED_AT=>17, ),
-		BasePeer::TYPE_FIELDNAME=>array ('ranking_id'=>0, 'people_id'=>1, 'ranking_date'=>2, 'total_ranking_position'=>3, 'ranking_position'=>4, 'events'=>5, 'score'=>6, 'paid_value'=>7, 'prize_value'=>8, 'balance_value'=>9, 'total_events'=>10, 'total_score'=>11, 'total_paid'=>12, 'total_prize'=>13, 'total_balance'=>14, 'enabled'=>15, 'created_at'=>16, 'updated_at'=>17, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+		BasePeer::TYPE_PHPNAME=>array ('RankingId'=>0, 'PeopleId'=>1, 'RankingDate'=>2, 'TotalRankingPosition'=>3, 'RankingPosition'=>4, 'Events'=>5, 'Score'=>6, 'Average'=>7, 'PaidValue'=>8, 'PrizeValue'=>9, 'BalanceValue'=>10, 'TotalEvents'=>11, 'TotalScore'=>12, 'TotalPaid'=>13, 'TotalPrize'=>14, 'TotalBalance'=>15, 'TotalAverage'=>16, 'Enabled'=>17, 'CreatedAt'=>18, 'UpdatedAt'=>19, ),
+		BasePeer::TYPE_COLNAME=>array (RankingHistoryPeer::RANKING_ID=>0, RankingHistoryPeer::PEOPLE_ID=>1, RankingHistoryPeer::RANKING_DATE=>2, RankingHistoryPeer::TOTAL_RANKING_POSITION=>3, RankingHistoryPeer::RANKING_POSITION=>4, RankingHistoryPeer::EVENTS=>5, RankingHistoryPeer::SCORE=>6, RankingHistoryPeer::AVERAGE=>7, RankingHistoryPeer::PAID_VALUE=>8, RankingHistoryPeer::PRIZE_VALUE=>9, RankingHistoryPeer::BALANCE_VALUE=>10, RankingHistoryPeer::TOTAL_EVENTS=>11, RankingHistoryPeer::TOTAL_SCORE=>12, RankingHistoryPeer::TOTAL_PAID=>13, RankingHistoryPeer::TOTAL_PRIZE=>14, RankingHistoryPeer::TOTAL_BALANCE=>15, RankingHistoryPeer::TOTAL_AVERAGE=>16, RankingHistoryPeer::ENABLED=>17, RankingHistoryPeer::CREATED_AT=>18, RankingHistoryPeer::UPDATED_AT=>19, ),
+		BasePeer::TYPE_FIELDNAME=>array ('ranking_id'=>0, 'people_id'=>1, 'ranking_date'=>2, 'total_ranking_position'=>3, 'ranking_position'=>4, 'events'=>5, 'score'=>6, 'average'=>7, 'paid_value'=>8, 'prize_value'=>9, 'balance_value'=>10, 'total_events'=>11, 'total_score'=>12, 'total_paid'=>13, 'total_prize'=>14, 'total_balance'=>15, 'total_average'=>16, 'enabled'=>17, 'created_at'=>18, 'updated_at'=>19, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
@@ -159,6 +165,8 @@ abstract class BaseRankingHistoryPeer {
 
 		$criteria->addSelectColumn(RankingHistoryPeer::SCORE);
 
+		$criteria->addSelectColumn(RankingHistoryPeer::AVERAGE);
+
 		$criteria->addSelectColumn(RankingHistoryPeer::PAID_VALUE);
 
 		$criteria->addSelectColumn(RankingHistoryPeer::PRIZE_VALUE);
@@ -174,6 +182,8 @@ abstract class BaseRankingHistoryPeer {
 		$criteria->addSelectColumn(RankingHistoryPeer::TOTAL_PRIZE);
 
 		$criteria->addSelectColumn(RankingHistoryPeer::TOTAL_BALANCE);
+
+		$criteria->addSelectColumn(RankingHistoryPeer::TOTAL_AVERAGE);
 
 		$criteria->addSelectColumn(RankingHistoryPeer::ENABLED);
 
