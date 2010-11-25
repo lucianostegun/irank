@@ -11,7 +11,7 @@ CREATE SEQUENCE virtual_table_seq;
 CREATE TABLE virtual_table (
     id INTEGER NOT NULL DEFAULT nextval('virtual_table_seq'::regclass) PRIMARY KEY,
     virtual_table_name VARCHAR(20) NOT NULL,
-    description VARCHAR(50),
+    description VARCHAR(100),
     tag_name VARCHAR(50),
     enabled BOOLEAN DEFAULT FALSE,
     visible BOOLEAN DEFAULT TRUE,
@@ -52,6 +52,8 @@ CREATE TABLE user_site (
     CONSTRAINT user_site_FK_1 FOREIGN KEY (people_id) REFERENCES people (id)
 );
 
-DROP FUNCTION IF EXISTS to_ascii(bytea, name);
-CREATE FUNCTION to_ascii(bytea, name)
-RETURNS text AS 'to_ascii_encname' LANGUAGE internal;
+/**
+ * DROP FUNCTION IF EXISTS to_ascii(bytea, name);
+ * CREATE FUNCTION to_ascii(bytea, name)
+ * RETURNS text AS 'to_ascii_encname' LANGUAGE internal;
+ */

@@ -13,22 +13,22 @@
 
 	<?php
 		echo form_remote_tag(array(
-			'url'=>'stats/export',
+			'url'=>'statistic/export',
 			'success'=>'handleSuccessStats( request.responseText )',
-			'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "statsForm", "stats", false, "stats" )',
+			'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "statisticForm", "statistic", false, "statistic" )',
 			'encoding'=>'utf8',
 			'loading'=>'showIndicator()'
-			), array( 'id'=>'statsForm' ));
+			), array( 'id'=>'statisticForm' ));
 			
 			echo input_hidden_tag('export', null);
 	?>			
 			
 			<div class="row">
-				<div class="label" id="statsRankingIdLabel">Ranking</div>
-				<div class="field" id="rankingIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect(), array('class'=>'required', 'id'=>'statsRankingId')) ?></div>
+				<div class="label" id="statisticRankingIdLabel">Ranking</div>
+				<div class="field" id="rankingIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect(), array('class'=>'required', 'id'=>'statisticRankingId')) ?></div>
 			</div>
 			<div class="row">
-				<div class="label" id="statsReportTypeLabel">Tipo de relatório</div>
+				<div class="label" id="statisticReportTypeLabel">Tipo de relatório</div>
 				<div class="field" id="reportTypeFieldDiv">
 					<?php
 						$optionList = array(''=>'Selecione');
@@ -37,13 +37,13 @@
 						$optionList['myBalance']      = 'Meu balanço';
 						$optionList['rankHistory']    = 'Histórico de classificação';
 						
-						echo select_tag('reportType', $optionList, array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statsReportType')) ?></div>
+						echo select_tag('reportType', $optionList, array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statisticReportType')) ?></div>
 			</div>
 			<div class="row">
-				<div class="label" id="statsFormatLabel">Formato</div>
+				<div class="label" id="statisticFormatLabel">Formato</div>
 				<div class="field" id="formatFieldDiv">
 					<?php
-						echo select_tag('format', array(''=>'Selecione', 'chart'=>'Gráfico', 'report'=>'Relatório'), array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statsFormat'));
+						echo select_tag('format', array(''=>'Selecione', 'chart'=>'Gráfico', 'report'=>'Relatório'), array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statisticFormat'));
 					?>
 				</div>
 			</div>
@@ -52,8 +52,8 @@
   </tr>
 </table>
 
-	<div class="buttonBarForm" id="statsMainButtonBar" style="border: 0px transparent">
+	<div class="buttonBarForm" id="statisticMainButtonBar" style="border: 0px transparent">
 		<?php echo button_tag('mainSubmit', 'Gerar estatísticas', array('onclick'=>'doSubmitStats()')); ?>
-		<?php echo getFormLoading('stats') ?>
+		<?php echo getFormLoading('statistic') ?>
 		<?php echo getFormStatus(null, null, 'Preencha todos os campos obrigatórios'); ?>
 	</div>

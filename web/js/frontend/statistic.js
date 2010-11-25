@@ -1,13 +1,13 @@
 function handleSuccessStats(content){
 
-	var format = $('statsFormat').value;
+	var format = $('statisticFormat').value;
 	
 	$('export').value     = '1';
-	$('statsForm').submit();
+	$('statisticForm').submit();
 	$('export').value     = '0';
 	
 	enableButton('mainSubmit');
-	hideIndicator('stats');
+	hideIndicator('statistic');
 }
 
 function doSubmitStats(content){
@@ -15,18 +15,18 @@ function doSubmitStats(content){
 	if( !checkRankingType() )
 		return false;
 	
-	showIndicator('stats');
+	showIndicator('statistic');
 	disableButton('mainSubmit');
-	$('statsForm').onsubmit();
+	$('statisticForm').onsubmit();
 }
 
 function checkReportType(){
 	
-	var reportType  = $('statsReportType').value;
-	var rankingType = $('statsFormat').value;
+	var reportType  = $('statisticReportType').value;
+	var rankingType = $('statisticFormat').value;
 	
 	if( reportType=='rankHistory' )
-		$('statsFormat').value = 'report';
+		$('statisticFormat').value = 'report';
 }
 
 function checkRankingType(){
