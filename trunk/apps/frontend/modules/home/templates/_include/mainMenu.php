@@ -38,7 +38,7 @@
 		          <tr><td><?php echo link_to('Meus rankings', 'ranking/index') ?></td></tr>
 		          <tr><td style="font-weight: bold"><?php echo link_to('Novo evento', 'event/new') ?></td></tr>
 		          <tr><td><?php echo link_to('Eventos', 'event/index') ?></td></tr>
-		          <tr><td style="padding-top: 20px; background: url('/images/icon/stats.png') left 26px no-repeat"><?php echo link_to('Estatísticas', 'stats/index', array('style'=>'background: none')) ?></td></tr>
+		          <tr><td style="padding-top: 20px; background: url('/images/icon/stats.png') left 26px no-repeat"><?php echo link_to('Estatísticas', 'statistic/index', array('style'=>'background: none')) ?></td></tr>
 		          <tr><td style="background: url('/images/icon/options.png') left 7px no-repeat"><?php echo link_to('Configurações', 'sign/options', array('style'=>'background: none')) ?></td></tr>
 		        </table>
 	        </td>

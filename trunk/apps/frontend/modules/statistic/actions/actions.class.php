@@ -1,6 +1,6 @@
 <?php
 
-class statsActions extends sfActions
+class statisticActions extends sfActions
 {
 
   public function preExecute(){
@@ -31,9 +31,9 @@ class statsActions extends sfActions
   	}
   	
   	if( $format=='report' )
-  		return $this->forward('stats', 'exportReport');
+  		return $this->forward('statistic', 'exportReport');
   	if( $format=='chart' )
-  		return $this->forward('stats', 'exportChart');
+  		return $this->forward('statistic', 'exportChart');
   }
   
   public function executeExportReport($request){

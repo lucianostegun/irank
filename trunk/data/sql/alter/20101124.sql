@@ -16,4 +16,3 @@ UPDATE ranking_history SET score = (average*events*10);
 UPDATE ranking_history SET total_score = (total_average*total_events*10);
 
 UPDATE virtual_table SET description = 'Pontos' WHERE virtual_table_name = 'rankingType' AND tag_name = 'score';
-INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Média', 'average', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
