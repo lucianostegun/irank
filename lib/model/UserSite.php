@@ -58,6 +58,9 @@ class UserSite extends BaseUserSite
         MyTools::getUser()->setAttribute('lastName', $peopleObj->getLastName());
         MyTools::getUser()->setAuthenticated( true );
         MyTools::getUser()->addCredential('iRankSite');
+        
+        $this->setLastAccessDate(time());
+        $this->save();
 	}
 	
 	public static function logout(){
