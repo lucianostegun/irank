@@ -18,7 +18,7 @@ DELETE FROM virtual_table WHERE virtual_table_name = 'rankingType';
 INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Valor', 'value', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Posição', 'score', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Balanço', 'balance', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Média x Eventos', 'average', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'rankingType', 'Média', 'average', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 DELETE FROM virtual_table WHERE virtual_table_name = 'userSiteOption';
 INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'userSiteOption', 'Receber confirmação de presença dos convidados para os eventos', 'receiveFriendEventConfirmNotify', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

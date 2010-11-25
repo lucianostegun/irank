@@ -12,9 +12,11 @@ class friendInviteActions extends sfActions
 	
 	$peopleObj = People::getCurrentPeople();
 	
-	if( is_object($peopleObj) )
+	if( is_object($peopleObj) ){
+		
 		$this->peopleName   = $peopleObj->getFullName();
 		$this->emailAddress = $peopleObj->getEmailAddress();
+	}
   }
 
   public function handleErrorSendInvite(){

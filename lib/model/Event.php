@@ -25,13 +25,14 @@ class Event extends BaseEvent
 		$rankingObj->setEvents($rankingObj->getEvents()-1);
 		$rankingObj->save();
 		
-		$rankingObj->updateScores();
 		
 		$deleted = $this->getDeleted();
 		
 		$this->setVisible(false);
 		$this->setDeleted(true);
 		$this->save();
+		
+		$rankingObj->updateScores();
 		
 		/**
 		 * Envia a notificação nas seguintes condições:
@@ -338,6 +339,8 @@ class Event extends BaseEvent
 		
 		$rankingObj = $this->getRanking();
 		
+		$rankingType = $rankingObj->getRankingType()->getDescription();
+		
 		$emailContent = str_replace('<eventName>', $this->getEventName(), $emailContent);
 		$emailContent = str_replace('<rankingName>', $this->getRanking()->getRankingName(), $emailContent);
 		$emailContent = str_replace('<gameStyle>', $this->getGameStyle()->getDescription(), $emailContent);
@@ -349,7 +352,7 @@ class Event extends BaseEvent
 		$emailContent = str_replace('<comments>', $this->getComments(), $emailContent);
 		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
 		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
-		$emailContent = str_replace('<rankingType>', strtolower($rankingObj->getRankingType()->getDescription()), $emailContent);
+		$emailContent = str_replace('<rankingType>', $rankingType, $emailContent);
 		
 		return $emailContent;
 	}
@@ -398,7 +401,7 @@ class Event extends BaseEvent
 			$classifyList .= '    <td style="background: #1B4315">#'.(($position++)+1).'</td>'.$nl;
 			$classifyList .= '    <td style="background: #1B4315">'.$peopleObj->getFullName().'</td>'.$nl;
 			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingPlayerObj->getEvents().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingPlayerObj->getScore().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getScore(), true).'</td>'.$nl;
 			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
 			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
 			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getBalance(), true).'</td>'.$nl;

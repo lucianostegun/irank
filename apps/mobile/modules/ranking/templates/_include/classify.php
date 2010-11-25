@@ -6,6 +6,7 @@
     <td>BRA</td>
     <td>$$$</td>
     <td>Bal</td>
+    <td>Méd</td>
   </tr>
   <?php
   	$rankingType          = $rankingObj->getRankingType(true);
@@ -20,10 +21,11 @@
   <tr class="boxcontent">
     <td>#<?php echo (($position++)+1) ?></td>
     <td><?php echo mail_to($peopleObj->getEmailAddress(), $peopleObj->getFirstName()) ?></td>
-    <td align="right"><?php echo $rankingPlayerObj->getScore() ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getScore(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPaid(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPrize(), true) ?></td>
     <td align="right" style="color: <?php echo ($balance<0?'#800000':'000000') ?>"><?php echo Util::formatFloat($balance, true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getAverage(), true) ?></td>
   </tr>
   <?php
   	endforeach;
@@ -39,4 +41,5 @@
 <b>Pts</b> = Pontos ganhos<br/>
 <b>BRA</b> = Buy-in + Rebuys + Add-ons<br/>
 <b>$$$</b> = Ganhos<br/>
-<b>Bal</b> = Balanço
+<b>Bal</b> = Balanço<br/>
+<b>Méd</b> = Média (Ganhos/BRA)

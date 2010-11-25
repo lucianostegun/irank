@@ -12,6 +12,14 @@ class RankingPlayer extends BaseRankingPlayer
 	
 	public function updateScore(){
 		
+		$events  = $this->getEvents();
+		$average = $this->getAverage();
+		
+		$this->setScore( $average*$events*10 );
+	}
+	
+	public function updateScoreOld(){
+		
 		$score = 0;
 		
 		foreach($this->getRanking()->getEventList() as $eventObj){
@@ -37,6 +45,7 @@ class RankingPlayer extends BaseRankingPlayer
 		$this->setTotalPaid($totalPaid);
 		$this->setTotalPrize($totalPrize);
 		$this->setBalance($balanceValue);
+		$this->setAverage($totalPrize/$totalPaid);
 	}
 	
 	public function updateEvents(){
@@ -47,9 +56,9 @@ class RankingPlayer extends BaseRankingPlayer
 	
 	public function updateInfo(){
 
-		$this->updateScore();
 		$this->updateBalance();
 		$this->updateEvents();
+		$this->updateScore();
 		$this->save(); 
 	}
 	

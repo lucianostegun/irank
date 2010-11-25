@@ -88,6 +88,7 @@
 		<column name="total_paid" type="FLOAT" />
 		<column name="total_prize" type="FLOAT" />
 		<column name="balance" type="FLOAT" />
+		<column name="average" type="FLOAT" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -107,6 +108,7 @@
 		<column name="ranking_position" type="INTEGER" />
 		<column name="events" type="INTEGER" />
 		<column name="score" type="FLOAT" />
+		<column name="average" type="FLOAT" />
 		<column name="paid_value" type="FLOAT" />
 		<column name="prize_value" type="FLOAT" />
 		<column name="balance_value" type="FLOAT" />
@@ -115,6 +117,7 @@
 		<column name="total_paid" type="FLOAT" />
 		<column name="total_prize" type="FLOAT" />
 		<column name="total_balance" type="FLOAT" />
+		<column name="total_average" type="FLOAT" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
