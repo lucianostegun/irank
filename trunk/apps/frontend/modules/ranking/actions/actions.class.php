@@ -148,6 +148,19 @@ class rankingActions extends sfActions
 	exit;
   }
   
+  public function executeGetRankingHistory($request){
+
+	$rankingId   = $request->getParameter('rankingId');
+	$rankingDate = $request->getParameter('rankingDate');
+	
+	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
+
+    sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+
+	return $this->renderText(get_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$rankingDate)));
+  }
+  
   public function executeJavascript($request){
   }
   

@@ -11,7 +11,7 @@ foreach($rankingPlayerObjList as $rankingPlayerObj){
 	
 	$totalPaidList[]      = $rankingPlayerObj->getTotalPaid();
 	$totalPrizeList[]      = $rankingPlayerObj->getTotalPrize();
-	$balanceList[]      = $rankingPlayerObj->getBalance();
+	$balanceList[]      = $rankingPlayerObj->getTotalBalance();
 	$playerNameList[] = $rankingPlayerObj->getPeople()->getFirstName();
 }
 

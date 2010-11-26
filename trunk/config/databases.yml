@@ -2,5 +2,5 @@ all:
   propel:
     class:          sfPropelDatabase
     param:
-#      dsn:          pgsql://stegun2:unidunite@pgsql.stegun.com/stegun2
-      dsn:          pgsql://postgres:unidunite@localhost/iranking
+#      dsn:          pgsql://irank:ir4nkc0mbr2010@pgsql.irank.com.br/irank
+      dsn:          pgsql://postgres:unidunite@localhost/irank

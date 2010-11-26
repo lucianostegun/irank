@@ -1,0 +1,8 @@
+fields:
+       
+  question:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfStringValidator:
+      max:       140
+      max_error: Sua questão deve ter no máximo 140 caracteres

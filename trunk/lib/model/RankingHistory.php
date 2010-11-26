@@ -45,19 +45,19 @@ class RankingHistory extends BaseRankingHistory
 			
 		$rankingDate = $this->getRankingDate('Y-m-d');
 		
-		$totalPaid  = Util::executeOne('SELECT SUM(event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
-		$totalPrize = Util::executeOne('SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$paidValue  = Util::executeOne('SELECT SUM(event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$prizeValue = Util::executeOne('SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
 		
-		$balanceValue = $totalPrize-$totalPaid;
+		$balanceValue = $prizeValue-$paidValue;
 		
-		$this->setTotalPaid( $this->getTotalPaid()+$totalPaid );
-		$this->setTotalPrize( $this->getTotalPrize()+$totalPrize );
+		$this->setTotalPaid( $this->getTotalPaid()+$paidValue );
+		$this->setTotalPrize( $this->getTotalPrize()+$prizeValue );
 		$this->setTotalBalance( $this->getTotalBalance()+$balanceValue );
 		
 		$this->setTotalAverage( ($this->getTotalPaid()>0?($this->getTotalPrize()/$this->getTotalPaid()):0) );
 		
-		$this->setPaidValue( $totalPaid );
-		$this->setPrizeValue( $totalPrize );
+		$this->setPaidValue( $paidValue );
+		$this->setPrizeValue( $prizeValue );
 		$this->setBalanceValue( $balanceValue );
 		$this->setAverage( ($this->getPaidValue()>0?($this->getPrizeValue()/$this->getPaidValue()):0) );
 	}
@@ -69,7 +69,7 @@ class RankingHistory extends BaseRankingHistory
 		$events = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.ENABLED AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'int');
 		
 		$this->setEvents($events);
-		$this->setTotalEvents($this->getEvents()+$events);
+		$this->setTotalEvents($this->getTotalEvents()+$events);
 	}
 	
 	public function updateInfo(){

@@ -36,17 +36,17 @@ class RankingPlayerMapBuilder {
 
 		$tMap->addForeignPrimaryKey('PEOPLE_ID', 'PeopleId', 'int' , CreoleTypes::INTEGER, 'people', 'ID', true, null);
 
-		$tMap->addColumn('EVENTS', 'Events', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addColumn('TOTAL_EVENTS', 'TotalEvents', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('TOTAL_SCORE', 'TotalScore', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('TOTAL_PAID', 'TotalPaid', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('TOTAL_PRIZE', 'TotalPrize', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('BALANCE', 'Balance', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('TOTAL_BALANCE', 'TotalBalance', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('AVERAGE', 'Average', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('TOTAL_AVERAGE', 'TotalAverage', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

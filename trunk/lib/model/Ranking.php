@@ -188,10 +188,13 @@ class Ranking extends BaseRanking
 	  		$rankingPlayerObj->updateInfo();
 	}
 	
-	public function getEventDateList($format='d/m/Y', $saved=true){
+	public function getEventDateList($format='d/m/Y', $saved=true, $orderByList=array()){
 		
 		$criteria = new Criteria();
 		$criteria->add( EventPeer::SAVED_RESULT, $saved );
+		
+		$criteria->addOrderBy($orderByList);
+		
 		$criteria->addAscendingOrderByColumn( EventPeer::EVENT_DATE );
 		$eventObjList = $this->getEventList($criteria);
 		
@@ -390,29 +393,32 @@ class Ranking extends BaseRanking
 	  	return $rankingHistoryObjListReturn;
 	}
 	
-	public function getClassify(){
+	public function getClassify($rankingDate=null){
+		
+		if( $rankingDate )
+			return $this->getRankingHistoryByDate($rankingDate);
 		
 		switch($this->getRankingType(true)){
 			case 'value':
 				$orderByList = array(RankingPlayerPeer::TOTAL_PRIZE=>'desc');
 				break;
 			case 'balance':
-				$orderByList = array(RankingPlayerPeer::BALANCE=>'desc');
+				$orderByList = array(RankingPlayerPeer::TOTAL_BALANCE=>'desc');
 				break;
 			case 'score':
-				$orderByList = array(RankingPlayerPeer::SCORE=>'desc');
+				$orderByList = array(RankingPlayerPeer::TOTAL_SCORE=>'desc');
 				break;
 			case 'average':
-				$orderByList = array(RankingPlayerPeer::AVERAGE=>'desc');
+				$orderByList = array(RankingPlayerPeer::TOTAL_AVERAGE=>'desc');
 				break;
 		}
 	  	
-	  	$orderByList[RankingPlayerPeer::TOTAL_PRIZE] = 'desc';
-	  	$orderByList[RankingPlayerPeer::BALANCE]     = 'desc';
-	  	$orderByList[RankingPlayerPeer::TOTAL_PAID]  = 'asc';
-	  	$orderByList[RankingPlayerPeer::TOTAL_PAID]  = 'asc';
-	  	$orderByList[RankingPlayerPeer::AVERAGE]     = 'desc';
-	  	$orderByList[RankingPlayerPeer::PEOPLE_ID]   = 'asc';
+	  	$orderByList[RankingPlayerPeer::TOTAL_PRIZE]   = 'desc';
+	  	$orderByList[RankingPlayerPeer::TOTAL_BALANCE] = 'desc';
+	  	$orderByList[RankingPlayerPeer::TOTAL_PAID]    = 'asc';
+	  	$orderByList[RankingPlayerPeer::TOTAL_PAID]    = 'asc';
+	  	$orderByList[RankingPlayerPeer::TOTAL_AVERAGE] = 'desc';
+	  	$orderByList[RankingPlayerPeer::PEOPLE_ID]     = 'asc';
 	  	
 	  	$rankingPlayerObjList = $this->getPlayerList($orderByList);
 	  	$lastList = array();
@@ -426,6 +432,20 @@ class Ranking extends BaseRanking
 	  	}
 	  	
 	  	return array_merge($rankingPlayerObjList, $lastList);
+	}
+	
+	public function getRankingHistoryByDate($rankingDate){
+		
+		$criteria = new Criteria();
+		$criteria->add( RankingHistoryPeer::RANKING_ID, $this->getId() );
+		$criteria->add( RankingHistoryPeer::RANKING_DATE, Util::formatDate($rankingDate) );
+		$criteria->addAscendingOrderByColumn( RankingHistoryPeer::TOTAL_RANKING_POSITION );
+		$rankingHistoryObjList = RankingHistoryPeer::doSelect($criteria);
+		
+		if( count($rankingHistoryObjList)==0 )
+			throw new Exception('Não existe histórico para este ranking na data '.$rankingDate);
+		else
+			return $rankingHistoryObjList;
 	}
 	
 	public function isMyRanking(){

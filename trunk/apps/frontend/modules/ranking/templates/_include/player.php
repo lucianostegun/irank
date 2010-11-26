@@ -17,10 +17,10 @@
     <td><?php echo $peopleObj->getFirstName() ?></td>
     <td><?php echo $peopleObj->getLastName() ?></td>
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
-    <td align="right"><?php echo $rankingPlayerObj->getEvents() ?></td>
+    <td align="right"><?php echo $rankingPlayerObj->getTotalEvents() ?></td>
     <td align="center">
     	<?php 
-    		if( $rankingPlayerObj->getEvents()==0 && $peopleObj->getId()!==$peopleIdMe )
+    		if( $rankingPlayerObj->getTotalEvents()==0 && $peopleObj->getId()!==$peopleIdMe )
     			echo link_to(image_tag('icon/delete'), '#deleteRankingPlayer('.$peopleObj->getId().')', array('title'=>'Remover este membro do grupo'));
     		else
     			echo image_tag('icon/disabled/delete', array('title'=>'Não é possível remover este membro do grupo'));

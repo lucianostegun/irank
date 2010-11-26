@@ -1,0 +1,26 @@
+.faqTable th {
+	
+	font-size: 		9pt;
+	font-weight: 	bold;
+	color: 			#f32126;
+	text-align: 	left;
+	background: 	#F0F0F0;
+	padding: 		3 0 3 7;
+	cursor: 		pointer;
+	border-bottom: 	1px solid #AAA
+}
+
+.faqTable td.answer {
+	
+	font-size: 		8pt;
+	font-weight: 	normal;
+	color: 			#000000;
+	text-align: 	left;
+	background: 	#F9F9F9;
+	padding: 		10 15 7 18;
+}
+
+#faqFormDiv, #faqSuccessDiv {
+
+	display: 	none;
+}

@@ -803,6 +803,20 @@ class Criteria implements IteratorAggregate {
 		$this->groupByColumns[] = $groupBy;
 		return $this;
 	}
+	
+	public function addOrderBy($orderByList=array()){
+		
+		if( is_array($orderByList) ){
+
+			foreach( $orderByList as $orderBy=>$order ){
+				
+				if( $order=='desc' )
+					$this->addDescendingOrderByColumn( $orderBy );
+				else
+					$this->addAscendingOrderByColumn( $orderBy );
+			}
+		}
+	}
 
 	/**
 	 * Add order by column name, explicitly specifying ascending.

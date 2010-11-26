@@ -11,8 +11,8 @@
   </tr>
   <?php
   	$rankingType          = $rankingObj->getRankingType(true);
-	$rankingPlayerObjList = $rankingObj->getClassify();
-  	$position = 0;
+	$rankingPlayerObjList = $rankingObj->getClassify($rankingDate);
+  	$position             = 0;
   	foreach($rankingPlayerObjList as $rankingPlayerObj):
   		
   		$peopleObj = $rankingPlayerObj->getPeople();
@@ -20,12 +20,12 @@
   <tr class="boxcontent">
     <td>#<?php echo (($position++)+1) ?></td>
     <td><?php echo mail_to($peopleObj->getEmailAddress(), $peopleObj->getFullName()) ?></td>
-    <td align="right"><?php echo $rankingPlayerObj->getEvents() ?></td>
-    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getScore(), true) ?></td>
+    <td align="right"><?php echo $rankingPlayerObj->getTotalEvents() ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalScore(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPaid(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPrize(), true) ?></td>
-    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getBalance(), true) ?></td>
-    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getAverage(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalBalance(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalAverage(), true) ?></td>
   </tr>
   <?php
   	endforeach;

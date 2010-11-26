@@ -63,6 +63,26 @@ function isVisible( divId ){
 		return (div.style.display != 'none' || div.style.display == '' || div.style.display == 'block');
 }
 
+function putLoading(divId, message){
+	
+	if( !message )
+		message = 'Carregando,<br/>aguarde...';
+	
+	var html = '';
+	
+	html += '<center>\n';
+	html += '<br/>\n';
+	html += '	<table>\n';
+	html += '		<tr>\n';
+	html += '			<td><img src="'+_imageRoot+'/ajaxLoader32.gif"></td>\n';
+	html += '			<td style="font-weight: bold; font-size: 10pt; padding-left: 15px">'+message+'</td>\n';
+	html += '		</tr>\n';
+	html += '	</table>\n';
+	html += '<center>\n';
+
+	$(divId).innerHTML = html;
+}
+
 function isArray(obj) {
 
 	return obj.constructor == Array;

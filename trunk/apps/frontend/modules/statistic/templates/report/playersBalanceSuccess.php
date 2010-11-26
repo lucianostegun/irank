@@ -35,9 +35,9 @@ foreach($rankingPlayerObjList as $rankingPlayerObj):
 				->setCellValue('B'.$currentLine, $rankingPlayerObj->getPeople()->getName())
 				->setCellValue('C'.$currentLine, $rankingPlayerObj->getTotalPaid())
 				->setCellValue('D'.$currentLine, $rankingPlayerObj->getTotalPrize())
-				->setCellValue('E'.$currentLine, $rankingPlayerObj->getBalance())
+				->setCellValue('E'.$currentLine, $rankingPlayerObj->getTotalBalance())
 				->setCellValue('F'.$currentLine, '=D'.$currentLine.'/C'.$currentLine)
-				->setCellValue('G'.$currentLine, $rankingPlayerObj->getEvents());
+				->setCellValue('G'.$currentLine, $rankingPlayerObj->getTotalEvents());
 				
 	$currentLine++;
 endforeach;

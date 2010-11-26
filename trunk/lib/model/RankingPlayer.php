@@ -15,7 +15,7 @@ class RankingPlayer extends BaseRankingPlayer
 		$events  = $this->getEvents();
 		$average = $this->getAverage();
 		
-		$this->setScore( $average*$events*10 );
+		$this->setTotalScore( $average*$events*10 );
 	}
 	
 	public function updateScoreOld(){
@@ -33,7 +33,7 @@ class RankingPlayer extends BaseRankingPlayer
 		}
 		
 		
-		$this->setScore($score);
+		$this->setTotalScore($score);
 	}
 	
 	public function updateBalance(){
@@ -44,14 +44,14 @@ class RankingPlayer extends BaseRankingPlayer
 		$balanceValue = $totalPrize-$totalPaid;
 		$this->setTotalPaid($totalPaid);
 		$this->setTotalPrize($totalPrize);
-		$this->setBalance($balanceValue);
-		$this->setAverage($totalPrize/$totalPaid);
+		$this->setTotalBalance($balanceValue);
+		$this->setTotalAverage($totalPrize/$totalPaid);
 	}
 	
 	public function updateEvents(){
 		
 		$events = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.ENABLED AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'int');
-		$this->setEvents($events);
+		$this->setTotalEvents($events);
 	}
 	
 	public function updateInfo(){
