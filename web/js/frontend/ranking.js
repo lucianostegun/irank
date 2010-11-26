@@ -96,3 +96,20 @@ function onSelectTabTask(tabId){
 	
 	return true;
 }
+
+function loadRankingHistory(rankingDate){
+	
+	var rankingId = $('rankingId').value;
+	
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		alert('Não foi possível carregar o histórico de classificação!\nTente novamente mais tarde.')
+	};
+	
+	putLoading('rankingClassifyDiv');
+	
+	var urlAjax = _webRoot+'/ranking/getRankingHistory/rankingId/'+rankingId+'?rankingDate='+rankingDate;
+	new Ajax.Updater('rankingClassifyDiv', urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc});	
+}

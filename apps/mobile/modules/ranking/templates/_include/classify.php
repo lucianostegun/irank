@@ -16,16 +16,16 @@
   		
   		$peopleObj = $rankingPlayerObj->getPeople();
   		
-  		$balance = $rankingPlayerObj->getBalance();
+  		$balance = $rankingPlayerObj->getTotalBalance();
   ?>
   <tr class="boxcontent">
     <td>#<?php echo (($position++)+1) ?></td>
     <td><?php echo mail_to($peopleObj->getEmailAddress(), $peopleObj->getFirstName()) ?></td>
-    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getScore(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalScore(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPaid(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPrize(), true) ?></td>
     <td align="right" style="color: <?php echo ($balance<0?'#800000':'000000') ?>"><?php echo Util::formatFloat($balance, true) ?></td>
-    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getAverage(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalAverage(), true) ?></td>
   </tr>
   <?php
   	endforeach;

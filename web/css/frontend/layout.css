@@ -136,8 +136,13 @@ height:50px;
 	text-decoration:none;
 	}
 	
-.border_menu_left{ border-left:#1A1A1A 1px solid;}
-.border_menu_right{ border-right:#393838 1px solid;}
+.border_menu_left{ border-left:#1A1A1A 1px solid}
+.border_menu_right{
+	
+	border-right: 	#393838 1px solid;
+	padding-left: 	20px;
+	padding-right: 	20px;
+}
 
 
 
@@ -166,6 +171,10 @@ height:50px;
 	font-weight:bold;
 	text-transform:uppercase;
 	border-bottom:#999999 2px solid;
+}
+
+.moduleText {
+	padding:15px 23px 16px 20px;
 }
 
 
@@ -241,7 +250,7 @@ height:50px;
 	}	
 	
 .gray_border{
-border-left:#2E2E2E 2px solid;}
+border-left:#4E4E4E 2px solid;}
 
 .gray_border2{
 border:#2E2E2E 1px solid;}

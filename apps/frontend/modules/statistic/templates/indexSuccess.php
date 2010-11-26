@@ -43,7 +43,7 @@
 				<div class="label" id="statisticFormatLabel">Formato</div>
 				<div class="field" id="formatFieldDiv">
 					<?php
-						echo select_tag('format', array(''=>'Selecione', 'chart'=>'Gráfico', 'report'=>'Relatório'), array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statisticFormat'));
+						echo select_tag('format', array(''=>'Selecione', 'chart'=>'Gráfico', 'report'=>'Planilha'), array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statisticFormat'));
 					?>
 				</div>
 			</div>

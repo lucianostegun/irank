@@ -17,11 +17,11 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 
 
 	
-	protected $events;
+	protected $total_events;
 
 
 	
-	protected $score;
+	protected $total_score;
 
 
 	
@@ -33,11 +33,11 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 
 
 	
-	protected $balance;
+	protected $total_balance;
 
 
 	
-	protected $average;
+	protected $total_average;
 
 
 	
@@ -78,17 +78,17 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getEvents()
+	public function getTotalEvents()
 	{
 
-		return $this->events;
+		return $this->total_events;
 	}
 
 	
-	public function getScore()
+	public function getTotalScore()
 	{
 
-		return $this->score;
+		return $this->total_score;
 	}
 
 	
@@ -106,17 +106,17 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getBalance()
+	public function getTotalBalance()
 	{
 
-		return $this->balance;
+		return $this->total_balance;
 	}
 
 	
-	public function getAverage()
+	public function getTotalAverage()
 	{
 
-		return $this->average;
+		return $this->total_average;
 	}
 
 	
@@ -211,7 +211,7 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setEvents($v)
+	public function setTotalEvents($v)
 	{
 
 		
@@ -220,19 +220,19 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->events !== $v) {
-			$this->events = $v;
-			$this->modifiedColumns[] = RankingPlayerPeer::EVENTS;
+		if ($this->total_events !== $v) {
+			$this->total_events = $v;
+			$this->modifiedColumns[] = RankingPlayerPeer::TOTAL_EVENTS;
 		}
 
 	} 
 	
-	public function setScore($v)
+	public function setTotalScore($v)
 	{
 
-		if ($this->score !== $v) {
-			$this->score = $v;
-			$this->modifiedColumns[] = RankingPlayerPeer::SCORE;
+		if ($this->total_score !== $v) {
+			$this->total_score = $v;
+			$this->modifiedColumns[] = RankingPlayerPeer::TOTAL_SCORE;
 		}
 
 	} 
@@ -257,22 +257,22 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setBalance($v)
+	public function setTotalBalance($v)
 	{
 
-		if ($this->balance !== $v) {
-			$this->balance = $v;
-			$this->modifiedColumns[] = RankingPlayerPeer::BALANCE;
+		if ($this->total_balance !== $v) {
+			$this->total_balance = $v;
+			$this->modifiedColumns[] = RankingPlayerPeer::TOTAL_BALANCE;
 		}
 
 	} 
 	
-	public function setAverage($v)
+	public function setTotalAverage($v)
 	{
 
-		if ($this->average !== $v) {
-			$this->average = $v;
-			$this->modifiedColumns[] = RankingPlayerPeer::AVERAGE;
+		if ($this->total_average !== $v) {
+			$this->total_average = $v;
+			$this->modifiedColumns[] = RankingPlayerPeer::TOTAL_AVERAGE;
 		}
 
 	} 
@@ -329,17 +329,17 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 
 			$this->people_id = $rs->getInt($startcol + 1);
 
-			$this->events = $rs->getInt($startcol + 2);
+			$this->total_events = $rs->getInt($startcol + 2);
 
-			$this->score = $rs->getFloat($startcol + 3);
+			$this->total_score = $rs->getFloat($startcol + 3);
 
 			$this->total_paid = $rs->getFloat($startcol + 4);
 
 			$this->total_prize = $rs->getFloat($startcol + 5);
 
-			$this->balance = $rs->getFloat($startcol + 6);
+			$this->total_balance = $rs->getFloat($startcol + 6);
 
-			$this->average = $rs->getFloat($startcol + 7);
+			$this->total_average = $rs->getFloat($startcol + 7);
 
 			$this->enabled = $rs->getBoolean($startcol + 8);
 
@@ -524,10 +524,10 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 				return $this->getPeopleId();
 				break;
 			case 2:
-				return $this->getEvents();
+				return $this->getTotalEvents();
 				break;
 			case 3:
-				return $this->getScore();
+				return $this->getTotalScore();
 				break;
 			case 4:
 				return $this->getTotalPaid();
@@ -536,10 +536,10 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 				return $this->getTotalPrize();
 				break;
 			case 6:
-				return $this->getBalance();
+				return $this->getTotalBalance();
 				break;
 			case 7:
-				return $this->getAverage();
+				return $this->getTotalAverage();
 				break;
 			case 8:
 				return $this->getEnabled();
@@ -562,12 +562,12 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getRankingId(),
 			$keys[1]=>$this->getPeopleId(),
-			$keys[2]=>$this->getEvents(),
-			$keys[3]=>$this->getScore(),
+			$keys[2]=>$this->getTotalEvents(),
+			$keys[3]=>$this->getTotalScore(),
 			$keys[4]=>$this->getTotalPaid(),
 			$keys[5]=>$this->getTotalPrize(),
-			$keys[6]=>$this->getBalance(),
-			$keys[7]=>$this->getAverage(),
+			$keys[6]=>$this->getTotalBalance(),
+			$keys[7]=>$this->getTotalAverage(),
 			$keys[8]=>$this->getEnabled(),
 			$keys[9]=>$this->getCreatedAt(),
 			$keys[10]=>$this->getUpdatedAt(),
@@ -593,10 +593,10 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 				$this->setPeopleId($value);
 				break;
 			case 2:
-				$this->setEvents($value);
+				$this->setTotalEvents($value);
 				break;
 			case 3:
-				$this->setScore($value);
+				$this->setTotalScore($value);
 				break;
 			case 4:
 				$this->setTotalPaid($value);
@@ -605,10 +605,10 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 				$this->setTotalPrize($value);
 				break;
 			case 6:
-				$this->setBalance($value);
+				$this->setTotalBalance($value);
 				break;
 			case 7:
-				$this->setAverage($value);
+				$this->setTotalAverage($value);
 				break;
 			case 8:
 				$this->setEnabled($value);
@@ -628,12 +628,12 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setRankingId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setEvents($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setScore($arr[$keys[3]]);
+		if (array_key_exists($keys[2], $arr)) $this->setTotalEvents($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setTotalScore($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setTotalPaid($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setTotalPrize($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setBalance($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setAverage($arr[$keys[7]]);
+		if (array_key_exists($keys[6], $arr)) $this->setTotalBalance($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setTotalAverage($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setEnabled($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
@@ -646,12 +646,12 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(RankingPlayerPeer::RANKING_ID)) $criteria->add(RankingPlayerPeer::RANKING_ID, $this->ranking_id);
 		if ($this->isColumnModified(RankingPlayerPeer::PEOPLE_ID)) $criteria->add(RankingPlayerPeer::PEOPLE_ID, $this->people_id);
-		if ($this->isColumnModified(RankingPlayerPeer::EVENTS)) $criteria->add(RankingPlayerPeer::EVENTS, $this->events);
-		if ($this->isColumnModified(RankingPlayerPeer::SCORE)) $criteria->add(RankingPlayerPeer::SCORE, $this->score);
+		if ($this->isColumnModified(RankingPlayerPeer::TOTAL_EVENTS)) $criteria->add(RankingPlayerPeer::TOTAL_EVENTS, $this->total_events);
+		if ($this->isColumnModified(RankingPlayerPeer::TOTAL_SCORE)) $criteria->add(RankingPlayerPeer::TOTAL_SCORE, $this->total_score);
 		if ($this->isColumnModified(RankingPlayerPeer::TOTAL_PAID)) $criteria->add(RankingPlayerPeer::TOTAL_PAID, $this->total_paid);
 		if ($this->isColumnModified(RankingPlayerPeer::TOTAL_PRIZE)) $criteria->add(RankingPlayerPeer::TOTAL_PRIZE, $this->total_prize);
-		if ($this->isColumnModified(RankingPlayerPeer::BALANCE)) $criteria->add(RankingPlayerPeer::BALANCE, $this->balance);
-		if ($this->isColumnModified(RankingPlayerPeer::AVERAGE)) $criteria->add(RankingPlayerPeer::AVERAGE, $this->average);
+		if ($this->isColumnModified(RankingPlayerPeer::TOTAL_BALANCE)) $criteria->add(RankingPlayerPeer::TOTAL_BALANCE, $this->total_balance);
+		if ($this->isColumnModified(RankingPlayerPeer::TOTAL_AVERAGE)) $criteria->add(RankingPlayerPeer::TOTAL_AVERAGE, $this->total_average);
 		if ($this->isColumnModified(RankingPlayerPeer::ENABLED)) $criteria->add(RankingPlayerPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(RankingPlayerPeer::CREATED_AT)) $criteria->add(RankingPlayerPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(RankingPlayerPeer::UPDATED_AT)) $criteria->add(RankingPlayerPeer::UPDATED_AT, $this->updated_at);
@@ -696,17 +696,17 @@ abstract class BaseRankingPlayer extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setEvents($this->events);
+		$copyObj->setTotalEvents($this->total_events);
 
-		$copyObj->setScore($this->score);
+		$copyObj->setTotalScore($this->total_score);
 
 		$copyObj->setTotalPaid($this->total_paid);
 
 		$copyObj->setTotalPrize($this->total_prize);
 
-		$copyObj->setBalance($this->balance);
+		$copyObj->setTotalBalance($this->total_balance);
 
-		$copyObj->setAverage($this->average);
+		$copyObj->setTotalAverage($this->total_average);
 
 		$copyObj->setEnabled($this->enabled);
 

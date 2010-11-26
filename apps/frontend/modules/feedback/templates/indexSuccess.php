@@ -55,7 +55,7 @@
 	  <tr>
 	    <td align="left" valign="top" style="padding:15px 23px 16px 20px; color: #333333">
 		<?php echo image_tag('frontend/success', array('align'=>'left', 'style'=>'margin: 0 15 15 15')) ?>
-		Seu feed foi enviado com sucesso!<br/>
+		Seu feedback foi enviado com sucesso!<br/>
 		Ele será muito importante para que possamos corrigir falhas e melhorar<br/>
 		os serviços oferecidos.<br/><br/>
 		
