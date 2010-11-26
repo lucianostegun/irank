@@ -1,4 +1,4 @@
-.faqTable th {
+.faqTable th.question {
 	
 	font-size: 		9pt;
 	font-weight: 	bold;
@@ -23,4 +23,11 @@
 #faqFormDiv, #faqSuccessDiv {
 
 	display: 	none;
+}
+
+.faqTable table th, .faqTable table td {
+
+	font-size: 		8pt;
+	background: 	#FFFFFF;
+	padding: 		2 4 2 4
 }
