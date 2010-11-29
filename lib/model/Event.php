@@ -119,7 +119,7 @@ class Event extends BaseEvent
 			$this->save();
 			
 			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $peopleId);
-			$rankingPlayerObj->setEvents($rankingPlayerObj->getEvents()+1);
+			$rankingPlayerObj->setTotalEvents($rankingPlayerObj->getTotalEvents()+1);
 			$rankingPlayerObj->save();
 			
 			if( $sendNotify )
@@ -148,7 +148,7 @@ class Event extends BaseEvent
 			$this->save();
 			
 			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $peopleId);
-			$rankingPlayerObj->setEvents($rankingPlayerObj->getEvents()-1);
+			$rankingPlayerObj->setTotalEvents($rankingPlayerObj->getTotalEvents()-1);
 			$rankingPlayerObj->save();
 		}
 	}
