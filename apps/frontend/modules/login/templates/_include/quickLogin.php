@@ -4,11 +4,11 @@
 				<table border="0" width="100%" cellspacing="2" cellpadding="0">
 					<tr>
 						<th>E-mail</th>
-						<td colspan="2"><?php echo input_tag('username', null, array('size'=>20, 'maxlength'=>150, 'id'=>'loginUsername')) ?></td>
+						<td colspan="2"><?php echo input_tag('username', null, array('size'=>20, 'maxlength'=>150, 'onkeyup'=>'handleSubmitEnter(event, doQuickLogin)', 'id'=>'loginUsername')) ?></td>
 					</tr>
 					<tr>
 						<th>Senha</th>
-						<td colspan="2"><?php echo input_password_tag('password', null, array('size'=>15, 'maxlength'=>15, 'id'=>'loginPassword')) ?></td>
+						<td colspan="2"><?php echo input_password_tag('password', null, array('size'=>15, 'maxlength'=>15, 'onkeyup'=>'handleSubmitEnter(event, doQuickLogin)', 'id'=>'loginPassword')) ?></td>
 					</tr>
 					<tr>
 						<th><?php echo checkbox_tag('keepLogin', false, true, array('id'=>'loginKeepLogin')) ?></th>
@@ -16,8 +16,10 @@
 					</tr>
 					<tr>
 						<th></th>
-						<td><?php echo button_tag('submitLogin', 'Logar', array('onclick'=>'doQuickLogin()')) ?></td>
-							<td style="text-align: center; padding-top: 5px">
+						<td>
+							<?php echo button_tag('submitLogin', 'Logar', array('onclick'=>'doQuickLogin()')) ?>
+						</td>
+						<td style="text-align: center; padding-top: 5px">
 							<?php echo link_to('Novo cadastro', '/sign') ?>
 							<?php echo link_to('Esqueci a senha', '/login/retrievePassword', array('style'=>'margin-left: 15px; display: none')) ?>
 						</td>

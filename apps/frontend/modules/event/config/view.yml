@@ -1,4 +1,4 @@
 all:
 
-  stylesheets:    []
+  stylesheets:    [frontend/event]
   javascripts:    [frontend/event]

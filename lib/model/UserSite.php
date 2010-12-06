@@ -42,6 +42,9 @@ class UserSite extends BaseUserSite
 	
 	public function login($keepLogin=false){
 		
+		if( MyTools::getUser()->isAuthenticated() )
+			return true;
+		
         $peopleObj = $this->getPeople();
         
         if( $keepLogin ){

@@ -12,10 +12,10 @@ class RankingPlayer extends BaseRankingPlayer
 	
 	public function updateScore(){
 		
-		$events  = $this->getEvents();
-		$average = $this->getAverage();
+		$totalEvents  = $this->getTotalEvents();
+		$totalAverage = $this->getTotalAverage();
 		
-		$this->setTotalScore( $average*$events*10 );
+		$this->setTotalScore( ($totalAverage*$totalEvents*10)+($totalEvents*10) );
 	}
 	
 	public function updateScoreOld(){

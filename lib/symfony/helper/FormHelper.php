@@ -969,12 +969,12 @@ function button_tag( $buttonId, $text, $options=array() ){
 	}catch(Exception $e){}
 		
 	if( $image )
-		$image = image_tag('button/'.($disabled?'disabled/':'').$image, array('id'=>$buttonId.'Image', 'align'=>'absmiddle', 'style'=>'margin-top: -2px; margin-right: 5px'));
+		$image = image_tag('button/'.($disabled?'disabled/':'').$image, array('id'=>$buttonId.'Image', 'align'=>'absmiddle'));
 	
 	$html = $nl;
 	$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft"></div>'.$nl;
-	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div style="margin-top: 2px" id="button'.$buttonId.'Label">'.$image.$text.'</div></div>'.$nl;
+	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.$text.'</div></div>'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 	$html .= '</div>';
 	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));

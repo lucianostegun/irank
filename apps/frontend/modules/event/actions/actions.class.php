@@ -4,7 +4,7 @@ class eventActions extends sfActions
 {
 
   public function preExecute(){
-	
+
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
 	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
   }
@@ -305,14 +305,34 @@ class eventActions extends sfActions
 	}  	
   }
   
+  public function executeConfirmPresence($request){
+  	
+  	$confirmCode = $request->getParameter('confirmCode');
+
+	$eventPlayerObj = EventPlayerPeer::retrieveByConfirmCode($confirmCode);
+  	
+  	if( !$confirmCode || !is_object($eventPlayerObj) )
+  		return $this->redirect('event/index');
+  	
+  	$peopleIdTmp = $this->getUser()->getAttribute('peopleId');
+  	$this->getUser()->setAttribute('peopleId', $eventPlayerObj->getPeopleId());
+  	
+  	$eventPlayerObj->confirmPresence();
+  	
+  	if( $eventPlayerObj->getPeople()->isPeopleType('userSite') )
+  		$eventPlayerObj->getPeople()->getUserSite()->login();
+  	
+  	$this->getUser()->setAttribute('peopleId', $peopleIdTmp);
+  	
+  	$this->eventObj = $eventPlayerObj->getEvent();
+  }
+  
   public function executeJavascript($request){
   	
     header('Content-type: text/x-javascript');
 		
   	$nl = chr(10);
   }
-  
-  
   
   public function executeDebug($request){
   	

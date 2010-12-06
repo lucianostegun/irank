@@ -359,3 +359,16 @@ function parseError( message ){
 	
 	return '';
 }
+
+function handleSubmitEnter(evt, executeFunction){
+	
+	var obj;
+    
+    if( navigator.appName.indexOf('Netscape') != -1 )
+    	obj = evt.target;
+    else
+    	obj = evt.srcElement;
+    
+	if( evt.keyCode==13 )
+		executeFunction();
+}
