@@ -17,8 +17,8 @@ class RankingHistory extends BaseRankingHistory
 		$average      = $this->getAverage();
 		$totalAverage = $this->getTotalAverage();
 		
-		$this->setScore( $average*$events*10 );
-		$this->setTotalScore( $totalAverage*$totalEvents*10 );
+		$this->setScore( ($average*$events*10)+($events*10) );
+		$this->setTotalScore( ($totalAverage*$totalEvents*10)+($totalEvents*10) );
 	}
 	
 	public function updateScoreOld(){

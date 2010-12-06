@@ -110,6 +110,7 @@ class Event extends BaseEvent
 			$eventPlayerObj->setEventId( $this->getId() );
 			$eventPlayerObj->setPeopleId( $peopleId );
 			$eventPlayerObj->setDeleted(false);
+			$eventPlayerObj->setConfirmCode( $eventPlayerObj->getConfirmCode() );
 		}
 		
 		if( $confirm && !$eventPlayerObj->getEnabled() ){
@@ -117,6 +118,7 @@ class Event extends BaseEvent
 			$eventPlayerObj->setEnabled(true);
 			$this->setPlayers( $this->getPlayers()+1 );
 			$this->save();
+			$eventPlayerObj->save();
 			
 			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $peopleId);
 			$rankingPlayerObj->setTotalEvents($rankingPlayerObj->getTotalEvents()+1);
@@ -266,10 +268,15 @@ class Event extends BaseEvent
 		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
 		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
 
-		$emailAddressList = $this->getEmailAddressList();
-		
-		Report::sendMail($emailSubject, $emailAddressList, $emailContent);
-		
+		foreach($this->getEventPlayerList() as $eventPlayerObj){
+			
+			$peopleObj       = $eventPlayerObj->getPeople();
+			$emailAddress    = $peopleObj->getEmailAddress();
+			$emailContentTmp = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
+			$emailContentTmp = str_replace('<confirmCode>', $eventPlayerObj->getConfirmCode(), $emailContentTmp);
+			
+			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp);
+		}
 		$this->setSentEmail(true);
 		$this->save();
 	}
@@ -336,9 +343,9 @@ class Event extends BaseEvent
 	}
 	
 	public function getEmailContent($emailContent){
-		
+
 		$rankingObj = $this->getRanking();
-		
+
 		$rankingType = $rankingObj->getRankingType()->getDescription();
 		
 		$emailContent = str_replace('<eventName>', $this->getEventName(), $emailContent);

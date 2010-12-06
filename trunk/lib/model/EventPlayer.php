@@ -47,4 +47,19 @@ class EventPlayer extends BaseEventPlayer
 		
 		Report::sendMail('Confirmação de presença', $emailAddressList, $emailContent);
 	}
+	
+	public function confirmPresence(){
+		
+		$this->getEvent()->addPlayer( $this->getPeopleId(), true );
+	}
+	
+	public function getConfirmCode(){
+		
+		$confirmCode = parent::getConfirmCode();
+		
+		if( !$confirmCode )
+			$confirmCode = base64_encode(strrev(md5($this->getEvent()->getRankingId().'.'.$this->getEventId().'.'.$this->getPeopleId())));
+		
+		return $confirmCode;
+	}
 }

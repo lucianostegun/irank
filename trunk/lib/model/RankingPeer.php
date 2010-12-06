@@ -15,7 +15,7 @@ class RankingPeer extends BaseRankingPeer
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$peopleId   = MyTools::getAttribute('peopleId');
 		$cron       = MyTools::getAttribute('cron');
-		
+
 		if(!$cron){
 			
 			if( !$criteria->isNoFilter() ){

@@ -1320,7 +1320,7 @@ function onTabContentLoaded(tabId, dhtmlXTabBarObj){
 }
 
 function adjustContentTab(){
-	
+
 	onTabContentLoaded(tabBarMainObj.getActiveTab(), tabBarMainObj);
 }
 // v.2.5 build 090904

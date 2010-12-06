@@ -63,6 +63,7 @@ class DhtmlxTabBar30 {
 //		$html .= '    '.$objectName.'.attachEvent("onTabContentLoaded", onTabContentLoaded);'.$nl;
     
     	$html .= '    '.$objectName.'.setTabActive(\''.$this->getSelectedTabBarId().'\');'.$nl.$nl;
+    	$html .= '    window.onload = adjustContentTab;'.$nl.$nl;
 		$html .= '</script>'.$nl.$nl;
 		
 		echo $html;

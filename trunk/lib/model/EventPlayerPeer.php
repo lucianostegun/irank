@@ -86,4 +86,11 @@ class EventPlayerPeer extends BaseEventPlayerPeer
   		
 		return !$request->hasErrors();
 	}
+	
+	public static function retrieveByConfirmCode($confirmCode){
+
+		$criteria = new Criteria();
+		$criteria->add( EventPlayerPeer::CONFIRM_CODE, $confirmCode );
+		return EventPlayerPeer::doSelectOne($criteria);
+	}
 }
