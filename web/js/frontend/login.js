@@ -6,7 +6,7 @@ function doQuickLogin(){
 	
 	var username  = $('loginUsername').value;
 	var password  = $('loginPassword').value;
-	var keepLogin = $('loginKeepLogin').value;
+	var keepLogin = $('loginKeepLogin').checked;
 
 	var successFunc = function(t){
 
