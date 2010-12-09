@@ -115,11 +115,11 @@ class RankingHistory extends BaseRankingHistory
 	// Sobrescreve os métodos para formatar os valores com duas casas decimais
 	public function setAverage($average){
 		
-		parent::setAverage( Util::formatFloat($average) );
+		parent::setAverage( Util::formatFloat($average, false, 3) );
 	}
 	
 	public function setTotalAverage($totalAverage){
 		
-		parent::setTotalAverage( Util::formatFloat($totalAverage) );
+		parent::setTotalAverage( Util::formatFloat($totalAverage, false, 3) );
 	}
 }
