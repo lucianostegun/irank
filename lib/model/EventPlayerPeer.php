@@ -10,6 +10,22 @@
 class EventPlayerPeer extends BaseEventPlayerPeer
 {
 	
+	public static function retrieveByPK($eventId, $peopleId, $con=null){
+		
+		$eventPlayerObj = parent::retrieveByPK($eventId, $peopleId, $con);
+		
+		if( !is_object($eventPlayerObj) ){
+			
+			$eventPlayerObj = new EventPlayer();
+			$eventPlayerObj->setEventId( $eventId );
+			$eventPlayerObj->setPeopleId( $peopleId );
+			$eventPlayerObj->setDeleted(false);
+			$eventPlayerObj->setConfirmCode( $eventPlayerObj->getConfirmCode() );
+		}
+		
+		return $eventPlayerObj;
+	}
+	
 	public static function doSelectRS(Criteria $criteria, $con = null){
 		
 		$criteria->addAnd( self::DELETED, false );

@@ -20,7 +20,7 @@ class Report {
 	 * @param      Array: Array de opções gerais do módulo
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
-return true;    	
+
 		$smtpHostname   = Config::getConfigByName( 'smtpHostname', true );
 		$smtpUsername   = Config::getConfigByName( 'smtpUsername', true );
 		$smtpPassword   = Config::getConfigByName( 'smtpPassword', true );
@@ -36,7 +36,6 @@ return true;
 		$decodeEmail = Config::getConfigByName( 'decodeEmailFromUTF8', true );
 		$encodeEmail = Config::getConfigByName( 'encodeEmailToUTF8', true );
 		
-		
 		if( !is_array($emailAddressList) )
 			$emailAddressList = array($emailAddressList);
 
@@ -46,6 +45,9 @@ return true;
 		$mail->setCharset('UTF-8');
 		
 		$host = MyTools::getRequest()->getHost();
+		
+		if( Util::isDebug() )
+			$emailSubject = 'DEV: '.$emailSubject;
 		
 		if( $encodeEmail ){
 			

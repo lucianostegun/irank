@@ -163,6 +163,7 @@
 		<column name="event_position" type="INTEGER" />
 		<column name="prize" type="FLOAT" />
 		<column name="confirm_code" type="VARCHAR" size="50" />
+		<column name="invite_status" type="VARCHAR" size="5" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />

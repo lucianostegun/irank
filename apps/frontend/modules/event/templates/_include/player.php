@@ -25,7 +25,10 @@
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
     <td align="center">
     	<?php
-    		$image = image_tag('icon/'.($eventPlayerObj->getEnabled()?'ok':'nok'), array('id'=>'presenceImage'.$peopleId));
+    		$inviteStatus = $eventPlayerObj->getInviteStatus();
+    		$icon = ($inviteStatus=='yes'?'ok':($inviteStatus=='no'?'nok':'help'));
+    		$image = image_tag('icon/'.$icon, array('id'=>'presenceImage'.$peopleId));
+    		
     		if( $myEvent )
     			echo link_to($image, '#togglePresence('.$peopleId.')', array('title'=>'Confirmar/Cancelar presença'));
     		else

@@ -170,8 +170,9 @@ class rankingActions extends sfActions
   	
   	$rankingId  = $request->getParameter('rankingId');
   	$rankingObj = RankingPeer::retrieveByPK($rankingId);
-  	
+
   	$rankingObj->updateWholeHistory();
+  	$rankingObj->updateScores();
   	
   	echo 'ok '.date('d/m/D H:i:s');
   	exit;

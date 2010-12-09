@@ -48,6 +48,8 @@ class EventPlayerMapBuilder {
 
 		$tMap->addColumn('CONFIRM_CODE', 'ConfirmCode', 'string', CreoleTypes::VARCHAR, false, 50);
 
+		$tMap->addColumn('INVITE_STATUS', 'InviteStatus', 'string', CreoleTypes::VARCHAR, false, 5);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);

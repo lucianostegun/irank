@@ -967,9 +967,20 @@ function button_tag( $buttonId, $text, $options=array() ){
 		
 		unset($options['noCkeck']);
 	}catch(Exception $e){}
+	
+	$imagePath = 'button/'.$image;
+	
+	if( $disabled ){
 		
+		$imagePathList = split('/', $imagePath);
+		
+		$imagePathList[count($imagePathList)-1] = 'disabled/'.end($imagePathList);
+		
+		$imagePath = implode('/', $imagePathList);
+	}
+	
 	if( $image )
-		$image = image_tag('button/'.($disabled?'disabled/':'').$image, array('id'=>$buttonId.'Image', 'align'=>'absmiddle'));
+		$image = image_tag($imagePath, array('id'=>$buttonId.'Image', 'align'=>'absmiddle'));
 	
 	$html = $nl;
 	$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;

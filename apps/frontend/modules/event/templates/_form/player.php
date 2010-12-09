@@ -5,6 +5,14 @@
 	<tr>
 		<td valign="top" class="defaultForm" id="eventPlayerDiv">
 			<?php include_partial('event/include/player', array('eventObj'=>$eventObj)) ?>
-			</td>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" class="defaultForm">
+			<div class="row">
+				<div class="halfLabel">Notificar</div>
+				<div class="field"><?php echo select_tag('sendNotify', array('ask'=>'Perguntar', '1'=>'Sim', '0'=>'Não')) ?></div>
+			</div>
+		</td>
 	</tr>
 </table>

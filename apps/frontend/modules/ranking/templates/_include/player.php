@@ -17,7 +17,7 @@
     <td><?php echo $peopleObj->getFirstName() ?></td>
     <td><?php echo $peopleObj->getLastName() ?></td>
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
-    <td align="right"><?php echo $rankingPlayerObj->getTotalEvents() ?></td>
+    <td align="center"><?php echo sprintf('%02d', $rankingPlayerObj->getTotalEvents()) ?></td>
     <td align="center">
     	<?php 
     		if( $rankingPlayerObj->getTotalEvents()==0 && $peopleObj->getId()!==$peopleIdMe )

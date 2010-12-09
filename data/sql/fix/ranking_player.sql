@@ -13,7 +13,8 @@ SET
                         AND event.DELETED = FALSE
                         AND event.VISIBLE = TRUE
                         AND event.ENABLED = TRUE
-                        AND event_date < '2010-11-30');
+                        AND event.SAVED_RESULT = TRUE
+                        AND event.EVENT_DATE < CURRENT_DATE);
 
 
 UPDATE 
@@ -24,7 +25,22 @@ SET
                 FROM 
                     event
                 WHERE
-                    event.RANKING_ID=ranking.ID
+                    event.RANKING_ID = ranking.ID
                     AND event.DELETED = FALSE
                     AND event.VISIBLE = TRUE
                     AND event.ENABLED = TRUE);
+
+UPDATE
+    event
+SET
+    players = (SELECT
+                    COUNT(1)
+               FROM
+                    event_player
+               WHERE
+                    event_player.EVENT_ID = event.ID
+                    AND event_player.ENABLED = TRUE
+                    AND event_player.DELETED = FALSE);
+
+
+UPDATE ranking_player SET total_score = (total_average*total_events*10)+(total_events*10);
