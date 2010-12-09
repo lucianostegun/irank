@@ -48,9 +48,10 @@ class UserSite extends BaseUserSite
         $peopleObj = $this->getPeople();
         
         if( $keepLogin ){
-        
+
         	$userSiteId = base64_encode(serialize(array($this->getId())));
-	        MyTools::setCookie('userSiteId', $userSiteId, (time()+(86400*15)), '/home/irank/.sessions/', '.irank.com.br', true);
+//	        MyTools::setCookie('userSiteId', $userSiteId, (time()+(86400*15)), '/home/irank/.sessions/', '.irank.com.br', true);
+	        MyTools::setCookie('userSiteId', $userSiteId, (time()+(86400*15)), '/');
         }
         	
         MyTools::getUser()->setAttribute('userSiteId', $this->getId());
@@ -68,7 +69,7 @@ class UserSite extends BaseUserSite
 	
 	public static function logout(){
 		
-		MyTools::setCookie('userSiteId', null);
+		MyTools::setCookie('userSiteId', null, time(), '/home/irank/.sessions/', '.irank.com.br', true);
 		MyTools::getUser()->getAttributeHolder()->remove('userSiteId');
 		MyTools::getUser()->getAttributeHolder()->remove('peopleId');
 		MyTools::getUser()->getAttributeHolder()->remove('username');

@@ -11,7 +11,7 @@
 						<td colspan="2"><?php echo input_password_tag('password', null, array('size'=>15, 'maxlength'=>15, 'onkeyup'=>'handleSubmitEnter(event, doQuickLogin)', 'id'=>'loginPassword')) ?></td>
 					</tr>
 					<tr>
-						<th><?php echo checkbox_tag('keepLogin', false, true, array('id'=>'loginKeepLogin')) ?></th>
+						<th><?php echo checkbox_tag('keepLogin', true, true, array('id'=>'loginKeepLogin')) ?></th>
 						<td colspan="2"><label for="loginKeepLogin">Manter conectado</label></td>
 					</tr>
 					<tr>
