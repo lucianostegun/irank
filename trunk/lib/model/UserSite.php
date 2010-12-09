@@ -50,7 +50,7 @@ class UserSite extends BaseUserSite
         if( $keepLogin ){
         
         	$userSiteId = base64_encode(serialize(array($this->getId())));
-	        MyTools::setCookie('userSiteId', $userSiteId, time()+60*60*24*15, '/');
+	        MyTools::setCookie('userSiteId', $userSiteId, (time()+(86400*15)), '/home/irank/.sessions/', '.irank.com.br', true);
         }
         	
         MyTools::getUser()->setAttribute('userSiteId', $this->getId());
