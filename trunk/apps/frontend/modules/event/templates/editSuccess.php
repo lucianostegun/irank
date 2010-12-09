@@ -1,11 +1,20 @@
-<?php echo getPageHeader('Cadastro de evento');
+<?php
+	$pastDate          = $eventObj->isPastDate() && !$isClone;
+	$confirmedPresence = $eventObj->isConfirmed($peopleId);
+	$inviteStatus      = $eventObj->getInviteStatus($peopleId);
+	$visibleButtons    = $eventObj->getEnabled();
+	
+	if( !$pastDate )	
+		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
+
+	echo getPageHeader('Cadastro de evento');
+	
 	if( !$eventObj->getEnabled() || $isClone ):
 ?>
 <script>setRecordSaved(false);</script>
 <?php
 	endif;
-	
-	$pastDate = $eventObj->isPastDate(); 
+	 
 	$eventId  = $eventObj->getId();
 	
 	echo form_remote_tag(array(
@@ -19,31 +28,23 @@
 	echo input_hidden_tag('eventId', $eventId);
 	
 	$isEditable = $eventObj->isEditable();
-	$mode       = ($pastDate?'show':'form');
+	$mode       = ($pastDate && !$isClone?'show':'form');
 	$resultMode = ($isEditable?'form':'show');
-
+	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
-	$dhtmlxTabBarObj->addTab('main', 'Evento', 'event/'.$mode.'/main', array('eventObj'=>$eventObj));
+	$dhtmlxTabBarObj->addTab('main', 'Evento', 'event/'.$mode.'/main', array('eventObj'=>$eventObj, 'pastDate'=>$pastDate, 'confirmedPresence'=>$confirmedPresence));
 	$dhtmlxTabBarObj->addTab('player', 'Convidados', 'event/'.$mode.'/player', array('eventObj'=>$eventObj));
 	if( $pastDate )
 		$dhtmlxTabBarObj->addTab('result', 'Resultado', 'event/'.$resultMode.'/result', array('eventObj'=>$eventObj));
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 	
-	$confirmedPresence = $eventObj->isConfirmed($peopleId);
-	
 	if( $isEditable ):
 ?>
 	<div class="buttonBarForm" id="eventMainButtonBar">
 		<?php
 			echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitEvent()'));
-			if( !$pastDate ){
-				
-				echo button_tag('confirmPresence', 'Confirmar presença', array('onclick'=>'doConfirmPresence()', 'image'=>'../icon/ok.png', 'visible'=>(!$confirmedPresence && $eventObj->getEnabled())));
-				echo button_tag('cancelPresence', 'Cancelar presença', array('onclick'=>'doCancelPresence()', 'image'=>'../icon/nok.png', 'visible'=>($confirmedPresence)));
-			}
-			
-			echo button_tag('deleteEvent', 'Excluir evento', array('onclick'=>'doDeleteEvent()', 'image'=>'../icon/delete'));
+			echo button_tag('deleteEvent', 'Excluir evento', array('onclick'=>'doDeleteEvent()', 'image'=>'../icon/delete', 'style'=>'float: right'));
 		?>
 		<?php echo getFormLoading('event') ?>
 		<?php echo getFormStatus(); ?>

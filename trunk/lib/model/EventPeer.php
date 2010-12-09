@@ -40,6 +40,7 @@ class EventPeer extends BaseEventPeer
 		else
 			return $eventObj;
 	}
+	
 	public static function uniqueEventName($eventName){
 
 		$rankingId = MyTools::getRequestParameter('rankingId');

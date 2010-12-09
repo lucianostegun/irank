@@ -232,6 +232,24 @@ height:50px;
 	background: 	#AAAAAA;	 
 }
 
+.recordRow td {
+	
+	padding: 		3 10 3 10 ;
+	color: 			#000000;	 
+	background: 	#C0C0C0;	
+}
+
+.recordCell {
+
+	cursor: 		pointer;
+}
+
+.recordRowOver td{
+	padding: 		3 10 3 10 ;
+	color: 			#000000;	 
+	background: 	#AAAAAA;	 
+}
+
 .boxcontent td a:hover, .boxcontentOver td a:hover {
 
 	color: 	#FFFFFF;

@@ -16,16 +16,18 @@ function handleSuccessEvent(content){
 		showDiv('sentEmailDiv');
 		$('eventSendEmail').checked = false;
 	}
+
+	showButton('confirmPresence');
+	showButton('declinePresence');
+	showButton('maybePresence');
 	
-	if( infoObj.isConfirmed ){
-		
-		hideButton('confirmPresence');
-		showButton('cancelPresence');
-	}else{
-		
-		showButton('confirmPresence');
-		hideButton('cancelPresence');
-	}
+	enableButton('confirmPresence');
+	enableButton('declinePresence');
+	enableButton('maybePresence');
+	
+	if( infoObj.inviteStatus=='yes' )   disableButton('confirmPresence');
+	if( infoObj.inviteStatus=='no' )    disableButton('declinePresence');
+	if( infoObj.inviteStatus=='maybe' ) disableButton('maybePresence');
 	
 	lockRanking();
 	
@@ -61,7 +63,7 @@ function doSubmitEvent(content){
 	$('eventForm').onsubmit();
 }
 
-function doConfirmPresence(){
+function chooseMyPresence(choice){
 	
 	showIndicator('event');
 	
@@ -70,14 +72,19 @@ function doConfirmPresence(){
 	var successFunc = function(t){
 
 		var content = t.responseText;
-		
-		$('eventPlayerDiv').innerHTML = content;
 
+		$('eventPlayerDiv').innerHTML = content;
+		
+		enableButton('confirmPresence');
+		enableButton('declinePresence');
+		enableButton('maybePresence');
+		
+		if( choice=='yes' )   disableButton('confirmPresence');
+		if( choice=='no' )    disableButton('declinePresence');
+		if( choice=='maybe' ) disableButton('maybePresence');
+		
 		adjustContentTab();
 		
-		showButton('cancelPresence');
-		hideButton('confirmPresence');
-		
 		hideIndicator('event');
 	};
 		
@@ -87,47 +94,13 @@ function doConfirmPresence(){
 
 		hideIndicator('event');
 		
-		if( isDebug() )
-			debug(content);
-	};
-	
-	var urlAjax = _webRoot+'/event/addPlayer/eventId/'+eventId;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
-}
-
-function doCancelPresence(){
-	
-	if( !confirm('Deseja realmente cancelar a confirmação de sua presença neste evento?') )
-		return false;
-	
-	showIndicator('event');
-	
-	var eventId = $('eventId').value;
-	
-	var successFunc = function(t){
-
-		var content = t.responseText;
-		
-		$('eventPlayerDiv').innerHTML = content;
-		
-		showButton('confirmPresence');
-		hideButton('cancelPresence');
-		
-		hideIndicator('event');
-	};
-		
-	var failureFunc = function(t){
-
-		var content = t.responseText;
-
-		hideIndicator('event');
-		alert('Ocorreu um erro ao confirmar sua presença!\nTente novamente mais tarde.');
+		alert('Não foi possível definir sua presença no evento!Tente novamente em alguns instantes.')
 		
 		if( isDebug() )
 			debug(content);
 	};
 	
-	var urlAjax = _webRoot+'/event/deletePlayer/eventId/'+eventId;
+	var urlAjax = _webRoot+'/event/choosePresence/eventId/'+eventId+'/choice/'+choice;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
@@ -145,9 +118,13 @@ function removePlayer(peopleId){
 		var content = t.responseText;
 		
 		$('eventPlayerDiv').innerHTML = content;
-		
-		showButton('confirmPresence');
-		hideButton('cancelPresence');
+
+		if( peopleId==_CurrentPeopleId ){
+			
+			hideButton('confirmPresence');
+			hideButton('declinePresence');
+			hideButton('maybePresence');
+		}
 		
 		hideIndicator('event');
 	};
@@ -175,18 +152,22 @@ function togglePresence(peopleId){
 	
 	var successFunc = function(t){
 
-		if( $('presenceImage'+peopleId).src.match(/nok\.png/) ){
+		if( $('presenceImage'+peopleId).src.match(/(nok|help)\.png$/) ){
 
-			$('presenceImage'+peopleId).src = $('presenceImage'+peopleId).src.replace('nok', 'ok');
+			$('presenceImage'+peopleId).src = $('presenceImage'+peopleId).src.replace(/\/(nok|help)\.png$/, '/ok.png');
 			
 			if( $('eventResultPeopleName'+peopleId)!=null )
 				$('eventResultPeopleName'+peopleId).style.color = '';
 			
-			showButton('cancelPresence');
-			hideButton('confirmPresence');
+			if( peopleId==_CurrentPeopleId ){
+
+				disableButton('confirmPresence');
+				enableButton('declinePresence');
+				enableButton('maybePresence');
+			}
 		}else{
-			
-			$('presenceImage'+peopleId).src = $('presenceImage'+peopleId).src.replace('ok', 'nok');
+
+			$('presenceImage'+peopleId).src = $('presenceImage'+peopleId).src.replace(/\/(ok|help)\.png$/, '/nok.png');
 			
 			if( $('eventResultPeopleName'+peopleId)!=null ){
 				
@@ -198,8 +179,12 @@ function togglePresence(peopleId){
 				$('eventAddons'+peopleId).value        = '0';
 			}
 			
-			showButton('confirmPresence');
-			hideButton('cancelPresence');
+			if( peopleId==_CurrentPeopleId ){
+
+				enableButton('confirmPresence');
+				disableButton('declinePresence');
+				enableButton('maybePresence');
+			}
 		}
 		
 		hideIndicator('event');
@@ -216,7 +201,14 @@ function togglePresence(peopleId){
 			debug(content);
 	};
 	
-	var urlAjax = _webRoot+'/event/togglePresence/eventId/'+eventId+'/peopleId/'+peopleId;
+	var notify = $('sendNotify').value;
+	
+	if( notify=='ask' )
+		notify = confirm('Deseja que os convidados sejam notificados?');
+	
+	notify = (notify=='0'?false:notify);
+	
+	var urlAjax = _webRoot+'/event/togglePresence/eventId/'+eventId+'/peopleId/'+peopleId+'/notify/'+(notify?'1':'0');
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 

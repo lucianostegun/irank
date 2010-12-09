@@ -57,9 +57,12 @@ function disableButton( buttonId ){
 
 	image = $(buttonId+'Image');
 	if( image!=null ){
-		
-		image.src = image.src.replace(/\/disabled/g, '');
-		image.src = image.src.replace('/button/', '/button/disabled/');
+
+		var imagePath = image.src.replace(/\/disabled/g, '');
+
+		var lastPath = imagePath.match(/\/[a-zA-Z0-9-_\.]+$/);
+		imagePath = imagePath.replace(lastPath, '/disabled'+lastPath);
+		image.src = imagePath;
 	}
 }
 

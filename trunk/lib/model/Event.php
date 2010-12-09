@@ -25,10 +25,8 @@ class Event extends BaseEvent
 		$rankingObj->setEvents($rankingObj->getEvents()-1);
 		$rankingObj->save();
 		
-		
 		$deleted = $this->getDeleted();
 		
-		$this->setVisible(false);
 		$this->setDeleted(true);
 		$this->save();
 		
@@ -102,62 +100,17 @@ class Event extends BaseEvent
 	
 	public function addPlayer($peopleId, $confirm=false, $sendNotify=true){
 		
-		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
-		
-		if( !is_object($eventPlayerObj) ){
-			
-			$eventPlayerObj = new EventPlayer();
-			$eventPlayerObj->setEventId( $this->getId() );
-			$eventPlayerObj->setPeopleId( $peopleId );
-			$eventPlayerObj->setDeleted(false);
-			$eventPlayerObj->setConfirmCode( $eventPlayerObj->getConfirmCode() );
-		}
-		
-		if( $confirm && !$eventPlayerObj->getEnabled() ){
-		
-			$eventPlayerObj->setEnabled(true);
-			$this->setPlayers( $this->getPlayers()+1 );
-			$this->save();
-			$eventPlayerObj->save();
-			
-			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $peopleId);
-			$rankingPlayerObj->setTotalEvents($rankingPlayerObj->getTotalEvents()+1);
-			$rankingPlayerObj->save();
-			
-			if( $sendNotify )
-				$eventPlayerObj->notifyConfirm();
-		}
-		
-		$eventPlayerObj->save();
+		throw new Exception('Implementar aqui. Linha 105');
 	}
 	
 	public function deletePlayer($peopleId){
 
-		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
-		
-		if( is_object($eventPlayerObj) && $eventPlayerObj->getEnabled() ){
-			
-			
-			$eventPlayerObj->setEventPosition(0);
-			$eventPlayerObj->setPrize(0);
-			$eventPlayerObj->setRebuy(0);
-			$eventPlayerObj->setAddon(0);
-			$eventPlayerObj->setBuyin(0);
-			$eventPlayerObj->setEnabled(false);
-			$eventPlayerObj->save();
-			
-			$this->setPlayers( $this->getPlayers()-1 );
-			$this->save();
-			
-			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $peopleId);
-			$rankingPlayerObj->setTotalEvents($rankingPlayerObj->getTotalEvents()-1);
-			$rankingPlayerObj->save();
-		}
+		throw new Exception('Implementar aqui. Linha 110');
 	}
 	
 	public function removePlayer($peopleId){
 
-		$this->deletePlayer($peopleId);
+		$this->togglePresence($peopleId, 'no');
 
 		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		$eventPlayerObj->delete();
@@ -169,14 +122,23 @@ class Event extends BaseEvent
 		
 		return is_object($eventPlayerObj) && $eventPlayerObj->getEnabled();
 	}
+
+	public function getInviteStatus($peopleId){
+		
+		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
+		
+		if( !is_object($eventPlayerObj) )
+			return 'nok';
+		else
+			return $eventPlayerObj->getInviteStatus();
+	}
 	
 	public function importPlayers(){
 
 		$rankingPlayerObjList = $this->getRanking()->getPlayerList();
 		
 		foreach( $rankingPlayerObjList as $rankingPlayerObj )
-			$this->addPlayer( $rankingPlayerObj->getPeopleId() );
-			
+			$this->togglePresence( $rankingPlayerObj->getPeopleId(), 'none' );
 		
 		$this->setInvites( count($rankingPlayerObjList) );
 		$this->save();
@@ -407,11 +369,11 @@ class Event extends BaseEvent
 			$classifyList .= '  <tr class="boxcontent">'.$nl;
 			$classifyList .= '    <td style="background: #1B4315">#'.(($position++)+1).'</td>'.$nl;
 			$classifyList .= '    <td style="background: #1B4315">'.$peopleObj->getFullName().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingPlayerObj->getEvents().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getScore(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
 			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
 			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getBalance(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
 			$classifyList .= '  </tr>'.$nl;
 	  	}
 	  	
@@ -437,6 +399,8 @@ class Event extends BaseEvent
 		$eventObj->setEventDate($this->getEventDate());
 		$eventObj->setStartTime($this->getStartTime());
 		$eventObj->setPaidPlaces($this->getPaidPlaces());
+		$eventObj->setInvites($this->getInvites());
+		$eventObj->setPlayers($this->getPlayers());
 		$eventObj->setBuyin($this->getBuyin());
 		$eventObj->setComments($this->getComments());
 		$eventObj->setVisible(false);
@@ -449,6 +413,8 @@ class Event extends BaseEvent
 			$eventPlayerNewObj = new EventPlayer();
 			$eventPlayerNewObj->setEventId( $eventObj->getId() );
 			$eventPlayerNewObj->setPeopleId( $eventPlayerObj->getPeopleId() );
+			$eventPlayerNewObj->setInviteStatus( $eventPlayerObj->getInviteStatus() );
+			$eventPlayerNewObj->setEnabled( $eventPlayerObj->getEnabled() );
 			$eventPlayerNewObj->save();
 		}
 
@@ -462,7 +428,7 @@ class Event extends BaseEvent
 		
 		if(is_object($rankingObj) && $rankingObj->getUserSiteId()!=$userSiteId)
 			return false;
-		
+
 		$eventDate = $this->getEventDate();
 		if( $eventDate==null )
 			return true;
@@ -479,14 +445,22 @@ class Event extends BaseEvent
 		return ($eventCount==0);
 	}
 	
+	public function togglePresence($peopleId, $choice, $forceNotify=null){
+		
+		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
+		
+		$eventPlayerObj->togglePresence($choice, $forceNotify);
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
 		
 		$infoList = array();
-		$infoList['eventId']     = $this->getId();
-		$infoList['isConfirmed'] = $this->isConfirmed($peopleId);
-		$infoList['isEditable']  = $this->isEditable();
+		$infoList['eventId']      = $this->getId();
+		$infoList['isConfirmed']  = $this->isConfirmed($peopleId);
+		$infoList['isEditable']   = $this->isEditable();
+		$infoList['inviteStatus'] = $this->getInviteStatus($peopleId);
 		
 		return $infoList;
 	}

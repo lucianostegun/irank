@@ -17,15 +17,17 @@
 	      <?php
 	      	$rankingObjList = $userSiteObj->getRankingList();
 	      	foreach($rankingObjList as $rankingObj):
+	      		
+	      		$link = 'goModule(\'ranking\', \'edit\', \'rankingId\', '.$rankingObj->getId().')';
 	      ?>
-	      <tr class="boxcontent" onmouseover="this.className='boxcontentOver'" onmouseout="this.className='boxcontent'">
-	        <td><?php echo link_to($rankingObj->getRankingName(), '#goModule(\'ranking\', \'edit\', \'rankingId\', '.$rankingObj->getId().')') ?></td>
-	        <td><?php echo $rankingObj->getGameStyle()->getDescription() ?></td>
-	        <td><?php echo $rankingObj->getStartDate('d/m/Y') ?></td>
-	        <td><?php echo $rankingObj->getFinishDate('d/m/Y') ?></td>
-	        <td align="right"><?php echo Util::formatFloat($rankingObj->getDefaultBuyin(), true) ?></td>
-	        <td><?php echo $rankingObj->getPlayers() ?></td>
-	        <td><?php echo $rankingObj->getEvents() ?></td>
+	      <tr class="recordRow" onclick="<?php echo $link ?>" onmouseover="this.className='recordRowOver'" onmouseout="this.className='recordRow'">
+	        <td class="recordCell" align="left"><?php echo $rankingObj->getRankingName() ?></td>
+	        <td class="recordCell" align="left"><?php echo $rankingObj->getGameStyle()->getDescription() ?></td>
+	        <td class="recordCell" align="left"><?php echo $rankingObj->getStartDate('d/m/Y') ?></td>
+	        <td class="recordCell" align="left"><?php echo $rankingObj->getFinishDate('d/m/Y') ?></td>
+	        <td class="recordCell" align="right"><?php echo Util::formatFloat($rankingObj->getDefaultBuyin(), true) ?></td>
+	        <td class="recordCell" align="left"><?php echo $rankingObj->getPlayers() ?></td>
+	        <td class="recordCell" align="left"><?php echo $rankingObj->getEvents() ?></td>
 	      </tr>
 	      <?php
 	      	endforeach;

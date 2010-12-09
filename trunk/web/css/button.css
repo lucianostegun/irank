@@ -45,10 +45,21 @@
 	background: 	url('/images/button/bgRight.png');
 }
 
+
+
+
+
+
+
+
+
+
+
 .buttonDisabled {
 
 	cursor: 			pointer;
-	-moz-user-select: 	none
+	-moz-user-select: 	none;
+	line-height:		16px;
 }
 
 .buttonDisabled .buttonLeft {
@@ -62,10 +73,25 @@
 .buttonDisabled .buttonMiddle {
 
 	float: 			left;
+	font-size: 		8pt;
 	height: 		22px;
 	font-weight: 	bold;
-	color: 			#AAAAAA;
+	color: 			#000;
 	background: 	url('/images/button/bgMiddleDisabled.png');
+}
+
+.buttonDisabled .buttonMiddle .label {
+
+	margin-top: 	2px;
+	margin-top: 	3px !ie;
+	color: 			#AAAAAA;
+}
+
+.buttonDisabled .buttonMiddle .label img {
+
+	margin-top: 	-2px;
+	margin-top: 	0px !ie;
+	margin-right: 	5px
 }
 
 .buttonDisabled .buttonRight {
@@ -76,3 +102,24 @@
 	width: 			7px;
 	background: 	url('/images/button/bgRightDisabled.png');
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

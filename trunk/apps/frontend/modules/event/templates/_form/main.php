@@ -1,6 +1,13 @@
 <table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px" class="defaultForm">
 	<tr>
 		<td valign="top">
+			<?php if( Util::isDebug() ): ?>
+			<div class="row">
+				<div class="label">Cód.</div>
+				<div class="text"><?php echo $eventObj->getCode() ?></div>
+			</div>
+			<?php endif; ?>
+			
 			<div class="row">
 				<div class="label" id="eventRankingIdLabel">Ranking</div>
 				<?php if( !$eventObj->getEnabled() ): ?>

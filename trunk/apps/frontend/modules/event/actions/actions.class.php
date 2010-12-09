@@ -129,32 +129,17 @@ class eventActions extends sfActions
 	exit;
   }
   
-  public function executeAddPlayer($request){
-
-	$eventId  = $request->getParameter('eventId');
-	
-	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
-	$eventObj    = EventPeer::retrieveByPK( $eventId );
-	
-	$sendNotify = ($eventObj->getEventDate(null) > time());
-	
-	$eventObj->addPlayer( $userSiteObj->getPeopleId(), $sendNotify );
-    
-    return $this->forward('event', 'getPlayerList');
-  }
-  
-  public function executeDeletePlayer($request){
+  public function executeChoosePresence($request){
 
 	$eventId = $request->getParameter('eventId');
-	
-	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
+	$choice  = $request->getParameter('choice');
+
 	$eventObj    = EventPeer::retrieveByPK( $eventId );
 	
-	if( !$eventObj->isEditable() )
-		Util::forceError('!Este evento está bloqueado para edição', true);
+//	if( !$eventObj->isEditable() )
+//		Util::forceError('!Este evento está bloqueado para edição', true);
 
-	$eventObj->deletePlayer( $userSiteObj->getPeopleId() );
-    
+	$eventObj->togglePresence( $this->peopleId, $choice );
     return $this->forward('event', 'getPlayerList');
   }
 
@@ -178,16 +163,15 @@ class eventActions extends sfActions
 
 	$eventId  = $request->getParameter('eventId');
 	$peopleId = $request->getParameter('peopleId');
+	$notify   = $request->getParameter('notify');
+	$notify   = ($notify?true:false);
 	
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
-	if( !$eventObj->isEditable() )
-		Util::forceError('!Este evento está bloqueado para edição', true);
-	
 	if( !$eventObj->isConfirmed($peopleId) )
-		$eventObj->addPlayer( $peopleId, true );
+		$eventObj->togglePresence($peopleId, 'yes', $notify);
 	else
-		$eventObj->deletePlayer( $peopleId );
+		$eventObj->togglePresence($peopleId, 'no', $notify);
     
     exit;
   }
@@ -269,6 +253,7 @@ class eventActions extends sfActions
 	$eventObj->save();
 	
 	$rankingObj->updateScores();
+	$rankingObj->updatePlayerEvents();
 	$rankingObj->updateHistory($eventObj->getEventDate('d/m/Y'));
 	
 	$eventObj->notifyResult();
@@ -338,7 +323,7 @@ class eventActions extends sfActions
   	
   	$rankingId  = $request->getParameter('rankingId');
   	$rankingObj = RankingPeer::retrieveByPK($rankingId);
-  	
+
   	foreach($rankingObj->getEventDateList() as $eventDate)
   		$rankingObj->updateHistory($eventDate);
   	
