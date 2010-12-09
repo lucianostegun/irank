@@ -293,7 +293,7 @@ class Util {
 	
 		if( $display ){
 			
-			$value = self::formatFloat($value, false);
+			$value = self::formatFloat($value, false, $decimalPlaces);
 			$value = number_format($value, $decimalPlaces, ',', '.');
 		}else{
 			

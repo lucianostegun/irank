@@ -25,7 +25,7 @@
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPaid(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPrize(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalBalance(), true) ?></td>
-    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalAverage(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalAverage(), true, 3) ?></td>
   </tr>
   <?php
   	endforeach;

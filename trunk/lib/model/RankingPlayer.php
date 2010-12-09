@@ -84,6 +84,6 @@ class RankingPlayer extends BaseRankingPlayer
 	
 	public function setTotalAverage($totalAverage){
 		
-		parent::setTotalAverage( Util::formatFloat($totalAverage) );
+		parent::setTotalAverage( Util::formatFloat($totalAverage, false, 3) );
 	}
 }
