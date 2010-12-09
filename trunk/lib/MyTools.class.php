@@ -223,9 +223,9 @@ class MyTools
         return MyTools::getRequest()->getCookie($name, $default);
     }
  
-    public static function setCookie($name, $value, $expire=null)
+    public static function setCookie($name, $value, $expire=null, $path='/')
     {
-        MyTools::getResponse()->setCookie($name, $value, $expire);
+        MyTools::getResponse()->setCookie($name, $value, $expire, $path);
     }
 
 }
