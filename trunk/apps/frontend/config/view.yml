@@ -9,7 +9,7 @@ default:
     keywords:     poker, ranking, classificação, torneio, holdem, amigos, historico, jogo
     language:     pt
 
-  stylesheets:    [main, frontend/layout, frontend/form, button, loading, frontend/login]
+  stylesheets:    [main, frontend/layout, frontend/form, button, frontend/loading, frontend/login]
   javascripts:    [phpEquivalents, /sf/prototype/js/prototype, button, frontend/form, util, frontend/login, frontend/record, mask, frontend/friendSearch, /index.php/home/javascript/js]
 
   has_layout:     on

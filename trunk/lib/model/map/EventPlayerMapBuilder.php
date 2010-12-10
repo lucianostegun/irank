@@ -50,6 +50,8 @@ class EventPlayerMapBuilder {
 
 		$tMap->addColumn('INVITE_STATUS', 'InviteStatus', 'string', CreoleTypes::VARCHAR, false, 5);
 
+		$tMap->addColumn('ALLOW_EDIT', 'AllowEdit', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);

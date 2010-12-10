@@ -12,12 +12,26 @@ class Event extends BaseEvent
 	
 	public function cleanRecord(){
 		
-		$this->setInvites(0);
-		$this->setPlayers(0);
-		$this->save();
-		
+		Util::executeQuery('UPDATE event SET invites=0, players=0 WHERE id = '.$this->getId());
 		Util::executeQuery('DELETE FROM event_player WHERE event_id = '.$this->getId());
 	}
+	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isColumnModified( EventPeer::VISIBLE );
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+			if( $this->getVisible() )
+        		Log::quickLog('event', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('event', $this->getPrimaryKey(), $e);
+        }
+    }
 	
 	public function delete($con=null){
 		
@@ -100,12 +114,12 @@ class Event extends BaseEvent
 	
 	public function addPlayer($peopleId, $confirm=false, $sendNotify=true){
 		
-		throw new Exception('Implementar aqui. Linha 105');
+		$this->togglePresence( $peopleId, ($confirm?'yes':'none'), $sendNotify );
 	}
 	
 	public function deletePlayer($peopleId){
 
-		throw new Exception('Implementar aqui. Linha 110');
+		throw new Exception('Implementar aqui. Linha 108');
 	}
 	
 	public function removePlayer($peopleId){
@@ -141,7 +155,6 @@ class Event extends BaseEvent
 			$this->togglePresence( $rankingPlayerObj->getPeopleId(), 'none' );
 		
 		$this->setInvites( count($rankingPlayerObjList) );
-		$this->save();
 	}
 	
 	public function isPastDate(){
@@ -159,7 +172,17 @@ class Event extends BaseEvent
 		
 		if( !is_object($rankingObj) )
 			return true;
-		return ($rankingObj->getUserSiteId()==$userSiteId);
+			
+		return ($rankingObj->isMyRanking() || $this->isAllowEdit());
+	}
+	
+	public function isAllowEdit(){
+		
+		$peopleId = MyTools::getAttribute('peopleId');
+		
+		$eventPlayerObj = EventPlayerPeer::retrieveByPK( $this->getId(), $peopleId );
+		
+		return $eventPlayerObj->getAllowEdit();
 	}
 	
 	public function getGameStyle($returnTagName=false){
@@ -426,7 +449,7 @@ class Event extends BaseEvent
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$rankingObj = $this->getRanking();
 		
-		if(is_object($rankingObj) && $rankingObj->getUserSiteId()!=$userSiteId)
+		if( is_object($rankingObj) && !$rankingObj->isMyRanking() )
 			return false;
 
 		$eventDate = $this->getEventDate();

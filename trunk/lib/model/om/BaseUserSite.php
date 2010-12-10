@@ -65,6 +65,12 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	protected $lastRankingCriteria = null;
 
 	
+	protected $collLogList;
+
+	
+	protected $lastLogCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -496,6 +502,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collLogList !== null) {
+				foreach($this->collLogList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -547,6 +561,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 				if ($this->collRankingList !== null) {
 					foreach($this->collRankingList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collLogList !== null) {
+					foreach($this->collLogList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -778,6 +800,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$copyObj->addRanking($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getLogList() as $relObj) {
+				$copyObj->addLog($relObj->copy($deepCopy));
+			}
+
 		} 
 
 		$copyObj->setNew(true);
@@ -970,6 +996,76 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		$this->lastRankingCriteria = $criteria;
 
 		return $this->collRankingList;
+	}
+
+	
+	public function initLogList()
+	{
+		if ($this->collLogList === null) {
+			$this->collLogList = array();
+		}
+	}
+
+	
+	public function getLogList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseLogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collLogList === null) {
+			if ($this->isNew()) {
+			   $this->collLogList = array();
+			} else {
+
+				$criteria->add(LogPeer::USER_SITE_ID, $this->getId());
+
+				LogPeer::addSelectColumns($criteria);
+				$this->collLogList = LogPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(LogPeer::USER_SITE_ID, $this->getId());
+
+				LogPeer::addSelectColumns($criteria);
+				if (!isset($this->lastLogCriteria) || !$this->lastLogCriteria->equals($criteria)) {
+					$this->collLogList = LogPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastLogCriteria = $criteria;
+		return $this->collLogList;
+	}
+
+	
+	public function countLogList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseLogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(LogPeer::USER_SITE_ID, $this->getId());
+
+		return LogPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addLog(Log $l)
+	{
+		$this->collLogList[] = $l;
+		$l->setUserSite($this);
 	}
 
 } 

@@ -1,16 +1,18 @@
 <?php
-	$myEvent    = $eventObj->isMyEvent();
-  	$peopleIdMe = MyTools::getAttribute('peopleId');
+	$isMyEvent     = $eventObj->isMyEvent();
+  	$peopleIdMe    = MyTools::getAttribute('peopleId');
+  	$peopleIdOwner = null;
+  	
+  	$rankingObj = $eventObj->getRanking();
+  	
+  	if( is_object($rankingObj) )
+  		$peopleIdOwner = $rankingObj->getUserSite()->getPeopleId();
 ?>
 <table width="100%" border="0" cellspacing="1" cellpadding="0">
   <tr class="rank_heading">
     <td>Nome</td>
-    <td>Sobrenome</td>
     <td>E-mail</td>
-    <td></td>
-    <?php if( $myEvent ): ?>
-    <td></td>
-    <?php endif; ?>
+    <td colspan="3"></td>
   </tr>
   <?php
   	$eventPlayerObjList = $eventObj->getPlayerList();
@@ -20,24 +22,35 @@
   		$peopleId  = $peopleObj->getId();
   ?>
   <tr class="boxcontent">
-    <td><?php echo $peopleObj->getFirstName() ?></td>
-    <td><?php echo $peopleObj->getLastName() ?></td>
+    <td><?php echo $peopleObj->getFullName() ?></td>
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
-    <td align="center">
+    <td align="center" style="padding-left: 0; padding-right: 0">
     	<?php
     		$inviteStatus = $eventPlayerObj->getInviteStatus();
     		$icon = ($inviteStatus=='yes'?'ok':($inviteStatus=='no'?'nok':'help'));
     		$image = image_tag('icon/'.$icon, array('id'=>'presenceImage'.$peopleId));
     		
-    		if( $myEvent )
+    		if( $isMyEvent )
     			echo link_to($image, '#togglePresence('.$peopleId.')', array('title'=>'Confirmar/Cancelar presença'));
     		else
     			echo $image;
     	?>
     </td>
-    <?php if( $myEvent ): ?>
-    <td align="center">
-    	<?php echo link_to(image_tag('icon/delete'), '#removePlayer('.$peopleId.')', array('title'=>'Remover jogador do evento', 'style'=>'margin-left: 5px')); ?>
+    <?php if( $isMyEvent ): ?>
+    <td align="center" style="padding-left: 0; padding-right: 0">
+    	<?php echo link_to(image_tag('icon/delete'), '#removePlayer('.$peopleId.')', array('title'=>'Remover jogador do evento')); ?>
+    </td>
+    <td align="center" style="padding-left: 0; padding-right: 0">
+    	<?php
+    		$allowEdit    = $eventPlayerObj->getAllowEdit();
+    		$icon         = ($allowEdit?'unlock':'lock');
+    		$shareMessage = ($allowEdit?'Desabilitar':'Habilitar');
+    		
+    		if( $peopleId==$peopleIdMe || $peopleId==$peopleIdOwner )
+				echo image_tag('icon/disabled/unlock', array('title'=>'Não é possível desabilitar este convidado para edição do evento'));
+			else
+				echo link_to(image_tag('icon/'.$icon, array('title'=>$shareMessage.' convidado para edição do evento', 'id'=>'eventShare'.$peopleId)), '#toggleEventShare('.$peopleId.')', array());
+    	?>
     </td>
     <?php endif; ?>
   </tr>

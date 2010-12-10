@@ -46,6 +46,7 @@ function showIndicator( indicatorId ){
 	indicatorId = (indicatorId?ucfirst(indicatorId):'');
 
 	showDiv('indicator'+indicatorId);
+	showDiv('indicator');
 	hideFormStatusError(indicatorId);
 }
 
@@ -54,6 +55,7 @@ function hideIndicator( indicatorId ){
 	indicatorId = (indicatorId?ucfirst(indicatorId):'');
 	
 	hideDiv('indicator'+indicatorId);
+	hideDiv('indicator');
 }
 
 function isVisible( divId ){

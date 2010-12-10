@@ -369,3 +369,58 @@ function doEventSearch(){
 	var urlAjax = _webRoot+'/event/search';
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize(form)});
 }
+
+function toggleEventShare(peopleId){
+	
+	showIndicator('eventPlayerList');
+	
+	var eventId = $('eventId').value;
+	
+	var successFunc = function(t){
+
+		var content = t.responseText;
+		
+		if( content=='lock' ){
+			
+			$('eventShare'+peopleId).src   = $('eventShare'+peopleId).src.replace('lock', 'unlock');
+			$('eventShare'+peopleId).title = $('eventShare'+peopleId).title.replace('Habilitar', 'Desabilitar');
+		}else{
+			
+			$('eventShare'+peopleId).src   = $('eventShare'+peopleId).src.replace('unlock', 'lock');
+			$('eventShare'+peopleId).title = $('eventShare'+peopleId).title.replace('Desabilitar', 'Habilitar');
+		}
+		
+		hideIndicator('eventPlayerList');
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		alert('Não foi possível habilitar o convidado para edição do evento!\nTente novamente mais tarde.')
+		hideIndicator('eventPlayerList');
+		
+		if( isDebug() )
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/event/toggleShare/eventId/'+eventId+'/peopleId/'+peopleId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function handleOnFocus(fieldObj){
+	
+	var value = fieldObj.value;
+	if( value.match(/^0(,00)?/) )
+		fieldObj.value = '';
+}
+
+function handleOnBlur(fieldObj){
+	
+	var value = fieldObj.value;
+	if( value=='' )
+		if( fieldObj.maxLength > 5 )
+			fieldObj.value = '0,00';
+		else
+			fieldObj.value = '0';
+}

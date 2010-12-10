@@ -1,7 +1,6 @@
 <table width="100%" border="0" cellspacing="1" cellpadding="0">
   <tr class="rank_heading">
     <td>Nome</td>
-    <td>Sobrenome</td>
     <td>E-mail</td>
     <td></td>
   </tr>
@@ -16,8 +15,7 @@
   		$peopleId  = $peopleObj->getId();
   ?>
   <tr class="boxcontent">
-    <td><?php echo $peopleObj->getFirstName() ?></td>
-    <td><?php echo $peopleObj->getLastName() ?></td>
+    <td><?php echo $peopleObj->getFullName() ?></td>
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
     <td align="center">
     	<?php echo image_tag('icon/'.($eventPlayerObj->getEnabled()?'ok':'nok'), array('id'=>'presenceImage'.$peopleId)); ?>

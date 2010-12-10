@@ -17,6 +17,11 @@ $moduleName = $sf_context->getModuleName();
 
 <body>
 	<div id="debugDiv"></div>
+	<div class="mainLoading" id="indicator">
+		<div class="image"><?php echo image_tag('ajaxLoaderForm.gif') ?></div>
+		<div class="message">Processando, aguarde...</div>
+	</div>
+	
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top" class="header_bg"><table width="950" border="0" cellspacing="0" cellpadding="0">

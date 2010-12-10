@@ -53,7 +53,7 @@
   <tr class="boxcontent">
     <td colspan="6" class="defaultForm">
     	<div class="row" style="margin-top: 3px">
-    		<div class="text">Os resultados serão enviados por e-mail a todos os convidados</div>
+    		<div class="text">Os resultados serão enviados por e-mail a todos os participantes</div>
     	</div>
     </td>
   </tr>

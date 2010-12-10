@@ -89,6 +89,7 @@
 		<column name="total_prize" type="FLOAT" />
 		<column name="total_balance" type="FLOAT" />
 		<column name="total_average" type="FLOAT" />
+		<column name="allow_edit" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -164,6 +165,7 @@
 		<column name="prize" type="FLOAT" />
 		<column name="confirm_code" type="VARCHAR" size="50" />
 		<column name="invite_status" type="VARCHAR" size="5" />
+		<column name="allow_edit" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
@@ -234,6 +236,33 @@
 		<column name="visible" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+
+	<table name="log" phpName="Log"> 
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" required="true" />
+		<column name="app" type="VARCHAR" size="10"/>
+		<column name="module_name" type="VARCHAR" size="30"/>
+		<column name="action_name" type="VARCHAR" size="20"/>
+		<column name="class_name" type="VARCHAR" size="30"/>
+		<column name="severity" type="INTEGER"/>
+		<column name="message" type="VARCHAR" size="255"/>
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="user_site">
+			<reference local="user_site_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="log_field" phpName="LogField"> 
+		<column name="log_id" type="INTEGER" required="true" />
+		<column name="field_name" type="VARCHAR" size="32"/>
+		<column name="field_value" type="VARCHAR" size="255"/>
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="log">
+			<reference local="log_id" foreign="id" />
+		  </foreign-key>
 	</table>
 
 </database>
