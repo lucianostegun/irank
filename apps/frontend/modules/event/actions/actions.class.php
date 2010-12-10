@@ -92,7 +92,6 @@ class eventActions extends sfActions
 	$eventObj->setComments( ($comments?$comments:null) );
 	$eventObj->setVisible(true);
 	$eventObj->setEnabled(true);
-	$eventObj->save();
 	
 	$rankingObj = $eventObj->getRanking();
 	
@@ -105,10 +104,12 @@ class eventActions extends sfActions
 	$eventObj->importPlayers();
 
 	if( $confirmPresence )
-		$eventObj->addPlayer( $rankingObj->getUserSite()->getPeopleId(), true );
+		$eventObj->addPlayer( $this->peopleId, true );
 
 	if( $sendEmail )
 		$eventObj->notify();
+		
+	$eventObj->save();
 
     echo Util::parseInfo($eventObj->getInfo());
     exit;
@@ -168,6 +169,9 @@ class eventActions extends sfActions
 	
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
+	if( !$eventObj->isMyEvent() )
+		throw new Exception('Você não está autorizado a editar as informações deste evento!');
+	
 	if( !$eventObj->isConfirmed($peopleId) )
 		$eventObj->togglePresence($peopleId, 'yes', $notify);
 	else
@@ -201,6 +205,24 @@ class eventActions extends sfActions
 	$request->setParameter('eventId', $eventObj->getId());
 	$request->setParameter('isClone', true);
 	return $this->forward('event', 'edit');
+  }
+  
+  public function executeToggleShare($request){
+
+	$eventId  = $request->getParameter('eventId');
+	$peopleId = $request->getParameter('peopleId');
+	
+	$eventPlayerObj = EventPlayerPeer::retrieveByPK( $eventId, $peopleId );
+	$peopleIdOwner  = $eventPlayerObj->getEvent()->getRanking()->getUserSite()->getPeopleId();
+	
+	if( $peopleIdOwner==$peopleId || $peopleId==$this->peopleId || !is_object($eventPlayerObj) )
+		throw new Exception('Não é possível habilitar/desabilitar a edição do evento para esta pessoa');
+	
+	$eventPlayerObj->setAllowEdit( !$eventPlayerObj->getAllowEdit() );
+	$eventPlayerObj->save();
+	
+    echo ($eventPlayerObj->getAllowEdit()?'lock':'unlock');
+    exit;
   }
   
   public function executeSaveResult($request){

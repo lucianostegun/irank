@@ -12,33 +12,63 @@ class Ranking extends BaseRanking
 	
 	public function cleanRecord(){
 		
-		$this->setPlayers(0);
-		$this->setEvents(0);
-		$this->save();
-		
 		Util::executeQuery('DELETE FROM ranking_player WHERE ranking_id = '.$this->getId());
 		Util::executeQuery('UPDATE event SET ranking_id = null WHERE ranking_id = '.$this->getId());
+		Util::executeQuery('UPDATE ranking SET players=0, events=0 WHERE id = '.$this->getId());
 	}
+	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isColumnModified( RankingPeer::VISIBLE );
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+			if( $this->getVisible() )
+        		Log::quickLog('ranking', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('ranking', $this->getPrimaryKey(), $e);
+        }
+    }
 	
 	public function getCode(){
 		
 		return '#'.sprintf('%04d', $this->getId());
 	}
 	
-	public static function getList(){
+	public static function getList($onlyMine=false){
+		
+		$userSiteId = MyTools::getAttribute('userSiteId');
+		$peopleId   = MyTools::getAttribute('peopleId');
 		
 		$criteria = new Criteria();
 		$criteria->add( RankingPeer::ENABLED, true );
 		$criteria->add( RankingPeer::VISIBLE, true );
 		$criteria->add( RankingPeer::DELETED, false );
+		
+		if( $onlyMine ){
+		
+			$criterion = $criteria->getNewCriterion( RankingPeer::USER_SITE_ID, $userSiteId );
+			
+			$criterion2 = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
+			$criterion2->addAnd( $criteria->getNewCriterion( RankingPlayerPeer::ALLOW_EDIT, true ) );
+			
+			$criterion->addOr($criterion2);
+			
+			$criteria->add($criterion);
+		}
+		
 		$criteria->addAscendingOrderByColumn( RankingPeer::RANKING_NAME );
 		
 		return RankingPeer::doSelect( $criteria );
 	}
 
-	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false ){
+	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false, $onlyMine=false ){
 		
-		$rankingObjList = self::getList();
+		$rankingObjList = self::getList($onlyMine);
 
 		$optionList = array();
 		$optionList[''] = 'Selecione';
@@ -91,6 +121,9 @@ class Ranking extends BaseRanking
 			$rankingPlayerObj = new RankingPlayer();
 			$rankingPlayerObj->setRankingId( $this->getId() );
 			$rankingPlayerObj->setPeopleId( $peopleId );
+			$rankingPlayerObj->setTotalPaid( 0.00 );
+			$rankingPlayerObj->setTotalPrize( 0.00 );
+			$rankingPlayerObj->setTotalBalance( 0.00 );
 		}
 
 		if( !$rankingPlayerObj->getEnabled() ){
@@ -474,7 +507,16 @@ class Ranking extends BaseRanking
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		
-		return $this->getUserSiteId()==$userSiteId;
+		return ($this->getUserSiteId()==$userSiteId || $this->isAllowEdit());
+	}
+	
+	public function isAllowEdit(){
+		
+		$peopleId = MyTools::getAttribute('peopleId');
+		
+		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK( $this->getId(), $peopleId );
+		
+		return $rankingPlayerObj->getAllowEdit();
 	}
 	
 	public function addToOpenEvents($peopleId){

@@ -11,7 +11,7 @@
 			<div class="row">
 				<div class="label" id="eventRankingIdLabel">Ranking</div>
 				<?php if( !$eventObj->getEnabled() ): ?>
-					<div class="field" id="rankinkIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($eventObj->getRankingId()), array('class'=>'required', 'onchange'=>'loadDefaultBuyin(this.value)', 'id'=>'eventRankingId')) ?></div>
+					<div class="field" id="rankinkIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($eventObj->getRankingId(), false, true), array('class'=>'required', 'onchange'=>'loadDefaultBuyin(this.value)', 'id'=>'eventRankingId')) ?></div>
 					<div class="error" id="eventRankingIdError" onclick="showFormErrorDetails('event', 'rankingId')"></div>
 				<?php else: ?>
 					<?php echo input_hidden_tag('rankingId', $eventObj->getRankingId()) ?>

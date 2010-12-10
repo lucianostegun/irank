@@ -10,6 +10,22 @@
 class RankingPlayer extends BaseRankingPlayer
 {
 	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+       		Log::quickLog('ranking_player', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('ranking_player', $this->getPrimaryKey(), $e);
+        }
+    }
+	
 	public function updateScore(){
 		
 		$totalEvents  = $this->getTotalEvents();
@@ -42,9 +58,9 @@ class RankingPlayer extends BaseRankingPlayer
 		$totalPrize = Util::executeOne('SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
 		
 		$balanceValue = $totalPrize-$totalPaid;
-		$this->setTotalPaid($totalPaid);
-		$this->setTotalPrize($totalPrize);
-		$this->setTotalBalance($balanceValue);
+		$this->setTotalPaid(($totalPaid?$totalPaid:0.00));
+		$this->setTotalPrize(($totalPrize?$totalPrize:0.00));
+		$this->setTotalBalance(($balanceValue?$balanceValue:0.00));
 		$this->setTotalAverage(($totalPaid?($totalPrize/$totalPaid):0));
 	}
 	

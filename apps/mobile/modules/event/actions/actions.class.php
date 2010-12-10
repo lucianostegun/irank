@@ -47,43 +47,6 @@ class eventActions extends sfActions
 		$this->eventObj = Util::getNewObject('event');
   	}
   }
-  
-  public function executeAddPlayer($request){
-
-	$eventId  = $request->getParameter('eventId');
-	
-	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
-	$eventObj    = EventPeer::retrieveByPK( $eventId );
-	
-	$eventObj->addPlayer( $userSiteObj->getPeopleId(), true );
-    
-    return $this->forward('event', 'getPlayerList');
-  }
-  
-  public function executeDeletePlayer($request){
-
-	$eventId  = $request->getParameter('eventId');
-	
-	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
-	$eventObj    = EventPeer::retrieveByPK( $eventId );
-	
-	if( !$eventObj->isEditable() )
-		Util::forceError('!Este evento está bloqueado para edição', true);
-
-	$eventObj->deletePlayer( $userSiteObj->getPeopleId() );
-    
-    return $this->forward('event', 'getPlayerList');
-  }
-
-  public function executeGetPlayerList($request){
-
-	$eventId  = $request->getParameter('eventId');
-	$eventObj = EventPeer::retrieveByPK( $eventId );
-
-  	sfConfig::set('sf_web_debug', false);
-	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/include/playerRo', array('eventObj'=>$eventObj)));
-  }
 
   public function handleErrorSaveResult(){
 
@@ -92,9 +55,8 @@ class eventActions extends sfActions
   
   public function executeSaveResult($request){
 
-	$eventId = $request->getParameter('eventId');
-
-	$eventObj   = EventPeer::retrieveByPK($eventId);
+	$eventId  = $request->getParameter('eventId');
+	$eventObj = EventPeer::retrieveByPK($eventId);
 	
 	if( !$eventObj->isEditable() )
 		Util::forceError('!Este evento está bloqueado para edição', true);
@@ -118,7 +80,7 @@ class eventActions extends sfActions
 		
 		if( !$enabled && $eventPosition > 0 ){
 			
-			$eventObj->addPlayer($peopleId, true);
+			$eventObj->addPlayer($peopleId, true, false);
 			$enabled = true;
 		}
 		
@@ -141,40 +103,12 @@ class eventActions extends sfActions
 	$eventObj->save();
 	
 	$rankingObj->updateScores();
+	$rankingObj->updatePlayerEvents();
 	$rankingObj->updateHistory($eventObj->getEventDate('d/m/Y'));
 	
 	$eventObj->notifyResult();
 	
 	exit;
-  }  
-  
-  public function executeSearch($request){
-  	
-  	$renderize  = $request->getParameter('isIE');
-  	$eventName  = $request->getParameter('eventName');
-  	$eventPlace = $request->getParameter('eventPlace');
-  	$eventDate  = $request->getParameter('eventDate');
-  	$rankingId  = $request->getParameter('rankingId');
-  	
-  	if( !Validate::validateDate($eventDate) )
-  		$eventDate = null;
-
-  	$criteria = new Criteria();
-  	if( $eventName ) $criteria->addAnd( EventPeer::EVENT_NAME, '%'.$eventName.'%', Criteria::ILIKE );
-  	if( $eventDate ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
-  	if( $eventPlace ) $criteria->addAnd( EventPeer::EVENT_PLACE, '%'.$eventPlace.'%', Criteria::ILIKE );
-  	if( $rankingId ) $criteria->addAnd( EventPeer::RANKING_ID, $rankingId );
-
-	if( $renderize ){
-		
-		$this->criteria = $criteria;
-		$this->setTemplate('index');
-	}else{
-	  	
-	  	sfConfig::set('sf_web_debug', false);
-		sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-		return $this->renderText(get_partial('event/include/search', array('criteria'=>$criteria)));
-	}  	
   }
   
   public function executeJavascript($request){
@@ -182,18 +116,5 @@ class eventActions extends sfActions
     header('Content-type: text/x-javascript');
 		
   	$nl = chr(10);
-  }
-  
-  
-  
-  public function executeDebug($request){
-  	
-  	$rankingObj = RankingPeer::retrieveByPK(2);
-  	
-  	foreach($rankingObj->getEventDateList() as $eventDate)
-  		$rankingObj->updateHistory($eventDate);
-  	
-  	echo 'ok '.date('d/m/D H:i:s');
-  	exit;
   }
 }

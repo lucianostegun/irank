@@ -10,6 +10,22 @@
 class EventPlayer extends BaseEventPlayer
 {
 	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+       		Log::quickLog('event_player', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('event_player', $this->getPrimaryKey(), $e);
+        }
+    }
+	
 	public function delete($con=null){
 		
 		$this->setDeleted(true);

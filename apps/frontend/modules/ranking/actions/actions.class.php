@@ -4,8 +4,22 @@ class rankingActions extends sfActions
 {
 
   public function preExecute(){
-	
+
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
+	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
+	
+	$freeActionList = array('edit', 'getDefaultBuyin', 'getRankingHistory');
+	$actionName     = sfContext::getInstance()->getActionName();
+		
+	$rankingId  = $this->getRequestParameter('rankingId');
+	
+	if( $rankingId && !in_array( $actionName, $freeActionList ) ){
+
+		$this->rankingObj = RankingPeer::retrieveByPK( $rankingId );
+		
+		if( !$this->rankingObj->isMyRanking() )
+			throw new Exception('Você não está autorizado a editar as informações deste ranking!');
+	}
   }
 
   public function executeIndex($request){
@@ -41,8 +55,6 @@ class rankingActions extends sfActions
 		if( !is_object($this->rankingObj) )
 			return $this->redirect('ranking/index');
   	}
-	
-	$this->rankingObj->addPlayer( $this->rankingObj->getUserSite()->getPeopleId() );
   }
 
   public function handleErrorSave(){
@@ -52,7 +64,6 @@ class rankingActions extends sfActions
   
   public function executeSave($request){
 
-	$rankingId     = $request->getParameter('rankingId');
 	$rankingName   = $request->getParameter('rankingName');
 	$gameStyleId   = $request->getParameter('gameStyleId');
 	$startDate     = $request->getParameter('startDate');
@@ -61,20 +72,25 @@ class rankingActions extends sfActions
 	$rankingTypeId = $request->getParameter('rankingTypeId');
 	$defaultBuyin  = $request->getParameter('defaultBuyin');
 
-	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
-
+	$rankingObj = $this->rankingObj;
+	
 	$updateHistory = ($rankingTypeId!=$rankingObj->getRankingTypeId());
 
 	$rankingObj->setRankingName( $rankingName );
 	$rankingObj->setGameStyleId( $gameStyleId );
-	$rankingObj->setUserSiteId( $this->userSiteId );
 	$rankingObj->setStartDate( Util::formatDate($startDate) );
 	$rankingObj->setFinishDate( Util::formatDate($finishDate) );
 	$rankingObj->setDefaultBuyin( Util::formatFloat($defaultBuyin) );
-	$rankingObj->setIsPrivate( $isPrivate );
+	$rankingObj->setIsPrivate( ($isPrivate?true:false) );
 	$rankingObj->setRankingTypeId( $rankingTypeId );
 	$rankingObj->setVisible(true);
 	$rankingObj->setEnabled(true);
+	
+	if( !$rankingObj->getUserSiteId() )
+		$rankingObj->setUserSiteId( $this->userSiteId );
+	
+	$this->rankingObj->addPlayer( $this->peopleId );
+	
 	$rankingObj->save();
 	
 	$rankingObj->updateScores();
@@ -93,13 +109,12 @@ class rankingActions extends sfActions
   
   public function executeSavePlayer($request){
 
-	$rankingId    = $request->getParameter('rankingId');
 	$peopleId     = $request->getParameter('peopleId');
   	$firstName    = $request->getParameter('firstName');
   	$lastName     = $request->getParameter('lastName');
   	$emailAddress = $request->getParameter('emailAddress');
 	
-	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
+	$rankingObj = $this->rankingObj;
 
 	$peopleObj = PeoplePeer::retrieveByEmailAddress($emailAddress);
 	
@@ -122,10 +137,9 @@ class rankingActions extends sfActions
   
   public function executeDeletePlayer($request){
 
-	$rankingId = $request->getParameter('rankingId');
 	$peopleId  = $request->getParameter('peopleId');
 	
-	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
+	$rankingObj = $this->rankingObj;
 	
 	if( $rankingObj->getUserSite()->getPeopleId()==$peopleId )
 		throw new Exception('Não é possível remover este membro do ranking');
@@ -136,6 +150,24 @@ class rankingActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
 	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
+  }
+  
+  public function executeToggleShare($request){
+
+	$rankingId = $request->getParameter('rankingId');
+	$peopleId  = $request->getParameter('peopleId');
+	
+	$rankingPlayerObj = RankingPlayerPeer::retrieveByPK( $rankingId, $peopleId );
+	$peopleIdOwner    = $rankingPlayerObj->getRanking()->getUserSite()->getPeopleId();
+	
+	if( $peopleIdOwner==$peopleId || $peopleId==$this->peopleId || !is_object($rankingPlayerObj) )
+		throw new Exception('Não é possível habilitar/desabilitar a edição do ranking para esta pessoa');
+	
+	$rankingPlayerObj->setAllowEdit( !$rankingPlayerObj->getAllowEdit() );
+	$rankingPlayerObj->save();
+	
+    echo ($rankingPlayerObj->getAllowEdit()?'lock':'unlock');
+    exit;
   }
   
   public function executeGetDefaultBuyin($request){
@@ -168,8 +200,7 @@ class rankingActions extends sfActions
   
   public function executeDebug($request){
   	
-  	$rankingId  = $request->getParameter('rankingId');
-  	$rankingObj = RankingPeer::retrieveByPK($rankingId);
+  	$rankingObj = $this->rankingObj;
 
   	$rankingObj->updateWholeHistory();
   	$rankingObj->updateScores();

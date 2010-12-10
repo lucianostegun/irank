@@ -23,3 +23,31 @@
 	float: 			left;
 	margin: 		4px;
 }
+
+.mainLoading {
+
+	position: 		fixed;
+	top: 			0px;
+	right: 			0px;
+	width: 			170px;
+	font-weight: 	bold;
+	display: 		none;
+	background: 	#C0C0C0;
+	padding: 		2 10 2 10;
+	border-left: 	1px solid #999999;
+	border-bottom: 	1px solid #999999;
+	z-index: 		100;
+}
+
+.mainLoading .message {
+	
+	float: 			left;
+	margin-left: 	6px;
+	color: 			#333333;
+}
+
+.mainLoading .image {
+	
+	float: 			left;
+	margin: 		0 4 0 4;
+}

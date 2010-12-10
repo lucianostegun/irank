@@ -27,10 +27,12 @@ class RankingPeer extends BaseRankingPeer
 				$criteria->addAnd( self::DELETED, false );
 			}else{
 			
-				$criteria->add( RankingPlayerPeer::PEOPLE_ID, $peopleId );
+				$criterion = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
+				$criterion->addOr( $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, null ) );
+				$criteria->add($criterion);
 			}
 			
-			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::INNER_JOIN );
+			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
 		}
 		
 		return parent::doSelectRS($criteria, $con);
