@@ -4,7 +4,7 @@
 <table width="422" cellspacing="1" cellpadding="3" style="background: #FFFFFF; border: 1px solid #BBB; <?php echo $style ?>" id="commentForm<?php echo $eventCommentId ?>Table">
 	<tr>
 		<td valign="top" colspan="2">
-			<?php echo textarea_tag('comment', 'Clique aqui para enviar seu comentário', array('onfocus'=>'handleCommentFocus(this)', 'onkeypress'=>'handleTab(event);', 'onkeyup'=>'countChars(this)', 'class'=>'eventComment', 'id'=>'commentsComment'.$eventCommentId)) ?>
+			<?php echo textarea_tag('comment', 'Clique aqui para enviar seu comentário', array('onfocus'=>'handleCommentFocus(this)', 'onkeyup'=>'countChars(this)', 'class'=>'eventComment', 'id'=>'commentsComment'.$eventCommentId)) ?>
 		</td>
 	<tr>
 	</tr>
