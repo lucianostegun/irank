@@ -20,7 +20,7 @@ class Log extends BaseLog
 
     	$userSiteId = sfContext::getInstance()->getUser()->getAttribute('userSiteId');
     	
-    	$app = self::getEnvironment($app);
+    	$app = self::getEnvironment('frontend');
         
         $moduleName = sfContext::getInstance()->getModuleName();
         $actionName = sfContext::getInstance()->getActionName();

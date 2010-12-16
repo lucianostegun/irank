@@ -97,6 +97,15 @@
 		                      
 		                      <tr>
 		                        <td width="122" height="105" align="left" valign="top">
+		                        <img src="/images/frontend/news/photo.png" alt="" width="111" height="86" /></td>
+		                        <td align="left" valign="top"><p style="font-weight: bold"><?php echo link_to('Fotos das jogadas', '/gamePhoto') ?></p>
+		
+		                          <p>Bad beats? Jogadas impossíveis? Blefes? Cliquie aqui e compartilhe as fotos das jogadas em seus eventos.</p>
+		                          </td>
+		                      </tr>
+		                      
+		                      <tr>
+		                        <td width="122" height="105" align="left" valign="top">
 		                        <img src="/images/frontend/layout/rankingHistory.jpg" alt="" width="111" height="96" /></td>
 		                        <td align="left" valign="top"><p style="font-weight: bold">Histórico de classificação</p>
 		

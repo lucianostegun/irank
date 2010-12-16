@@ -1,15 +1,11 @@
 function goModule(module, action, fieldName, fieldValue ){
 	
-	var form    = document.createElement('form');
-	form.action = _webRoot+'/'+module+'/'+action
-	form.method = 'POST';
+	var url = _webRoot+'/'+module+'/'+action;
+	if( fieldName )
+		url += '/'+fieldName;
 	
-	var fieldId   = document.createElement('input');
-	fieldId.type  = 'hidden';
-	fieldId.name  = fieldName;
-	fieldId.value = fieldValue;
+	if( fieldValue )
+		url += '/'+fieldValue;
 	
-	form.appendChild(fieldId);
-	document.body.appendChild(form);
-	form.submit();
+	window.location = url;
 }

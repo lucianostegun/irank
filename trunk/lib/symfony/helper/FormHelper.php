@@ -981,14 +981,15 @@ function button_tag( $buttonId, $text, $options=array() ){
 	
 	if( $image )
 		$image = image_tag($imagePath, array('id'=>$buttonId.'Image', 'align'=>'absmiddle'));
+		
+	$submit = submit_image_tag('blank.gif', array('style'=>'border: 0px; background: transparent; position: absolute; z-index: -100; width: 0px; height: 0px', 'onclick'=>$options['onclick'], 'id'=>'button'.$buttonId.'Submit'));
 	
 	$html = $nl;
 	$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft"></div>'.$nl;
-	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.$text.'</div></div>'.$nl;
+	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 	$html .= '</div>';
-	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));
 	return $html;
 }
 

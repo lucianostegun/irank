@@ -30,7 +30,7 @@
 	      ?>
 	      </tbody>
 	    </table>
-	    * Eventos criados para seus rankings
+	    * Eventos habilitados para edição
 	</td>
   </tr>
 </table>

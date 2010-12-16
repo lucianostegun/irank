@@ -7,7 +7,7 @@
 	if( !$pastDate )	
 		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
 
-	echo getPageHeader('Cadastro de evento');
+	echo getPageHeader('Eventos');
 	
 	if( !$eventObj->getEnabled() || $isClone ):
 ?>
@@ -36,6 +36,8 @@
 	$dhtmlxTabBarObj->addTab('player', 'Convidados', 'event/'.$mode.'/player', array('eventObj'=>$eventObj));
 	if( $pastDate )
 		$dhtmlxTabBarObj->addTab('result', 'Resultado', 'event/'.$resultMode.'/result', array('eventObj'=>$eventObj));
+	$dhtmlxTabBarObj->addTab('comments', 'Comentários', 'event/form/comments', array('eventObj'=>$eventObj, 'hidden'=>!$eventObj->getVisible()));
+	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabEvent');
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 	

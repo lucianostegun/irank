@@ -1,20 +1,21 @@
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="onlinepokerrooms_bg2">
-  <tr>
-	<td align="left" valign="middle" class="poker_heading"><?php echo image_tag('frontend/layout/bullet.gif') ?>Eventos</td>
-  </tr>
-  <tr>
-    <td align="left" valign="top">
-    	<table width="100%" border="0" cellspacing="1" cellpadding="0">
-	      <tr class="rank_heading">
-	        <td>Evento</td>
-	        <td>Ranking</td>
-	        <td>Data/Hora</td>
-	      </tr>
-	      <?php
-			include_partial('event/include/search', array('criteria'=>$criteria));
-	      ?>
-	    </table>
-	    * Eventos criados para seus rankings
-	</td>
-  </tr>
+<div class="text">
+Selecione o ranking para visualizar os eventos
+</div>
+<br/>
+<table width="100%" cellpadding="0" cellspacing="0" class="tableMenu">
+  <?php
+  	$rankingObjList = $userSiteObj->getRankingList();
+  	foreach($rankingObjList as $rankingObj):
+  	
+  		$events = $rankingObj->getEvents();
+  ?>
+	<tr onclick="goModule('event', 'search', 'rankingId', <?php echo $rankingObj->getId() ?>)">
+		<td>
+			<?php echo $rankingObj->getRankingName() ?><br/>
+			<span><?php echo $events ?> evento<?php echo ($events==1?'':'s') ?></span>
+		</td>
+	</tr>
+
+  <?php endforeach; ?>
+  
 </table>

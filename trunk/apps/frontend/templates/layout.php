@@ -12,6 +12,7 @@ $moduleName = $sf_context->getModuleName();
 	var _webRoot   = '<?php echo $sf_request->getScriptName() ?>';
 	var _imageRoot = '<?php echo 'http://'.$sf_request->getHost() .'/images'; ?>';
 	var _isDebug   = <?php echo (Util::isDebug()?'true':'false') ?>;
+	var _isMobile  = false;
 </script>
 </head>
 
@@ -24,11 +25,13 @@ $moduleName = $sf_context->getModuleName();
 	
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" valign="top" class="header_bg"><table width="950" border="0" cellspacing="0" cellpadding="0">
+    <td align="center" valign="top" class="header_bg">
+    <table width="950" border="0" cellspacing="0" cellpadding="0">
       <tr>
-
-        <td width="230" align="left" valign="top" style="padding:25px 20px 0px 18px;"><?php echo link_to(image_tag('frontend/layout/logo'), '/home') ?></td>
-        <td width="380" align="left" valign="top"><img src="/images/frontend/layout/header_img.png" alt="" width="380" height="156" /></td>
+        <td width="230" align="left" valign="top" style="padding:0px 20px 0px 18px;"><?php echo link_to(image_tag('frontend/layout/logo'), '/home') ?></td>
+        <td width="380" align="left" valign="top">
+        	<img src="/images/frontend/layout/header_img.png" alt="" width="380" height="156" />
+        </td>
         <td align="left" valign="middle">
         <table width="324" border="0" cellspacing="4" cellpadding="0">
           <tr>

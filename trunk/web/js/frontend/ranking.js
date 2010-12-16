@@ -6,7 +6,7 @@ function handleSuccessRanking(content){
 	hideIndicator('ranking');
 	enableButton('mainSubmit');
 	
-	onSelectTabTask(tabBarMainObj.getActiveTab());
+	onSelectTabRanking(tabBarMainObj.getActiveTab());
 }
 
 function doSubmitRanking(content){
@@ -81,7 +81,7 @@ function deleteRankingPlayer(peopleId){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
-function onSelectTabTask(tabId){
+function onSelectTabRanking(tabId){
 
 	hideDiv('rankingMainButtonBar');
 	hideDiv('rankingPlayerButtonBar');

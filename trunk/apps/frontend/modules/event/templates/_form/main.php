@@ -56,7 +56,7 @@
 			</div>
 			<div class="row">
 				<div class="label">Notificar por email</div>
-				<div class="field"><?php echo checkbox_tag('sendEmail', true, false, array('id'=>'eventSendEmail')) ?></div>
+				<div class="field"><?php echo checkbox_tag('sendEmail', true, !$eventObj->getSentEmail(), array('id'=>'eventSendEmail')) ?></div>
 				<div class="textFlex" style="display: <?php echo ($eventObj->getSentEmail()?'block':'none') ?>" id="sentEmailDiv">Notificação já enviada</div>
 			</div>
 		</td>

@@ -1,11 +1,12 @@
 .mainLoading {
 	
-	position: 				absolute;
-	width: 					320px;
-	height: 				25px;
+	position: 				fixed;
+	width: 					360px;
+	height: 				45px;
 	top: 					0px;
-	left: 					0px;
+	right: 					0px;
 	background: 			#D0D0D0;
+	border-left: 			1px solid #000000;
 	border-bottom: 			1px solid #000000;
 	color: 					#667076;
 	font-weight: 			bold;
@@ -16,7 +17,7 @@
 .mainLoading .message {
 	
 	float: 			left;
-	margin-top: 	5px;
+	margin-top: 	10px;
 	margin-left: 	12px;
 }
 

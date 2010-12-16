@@ -19,6 +19,8 @@
 	$dhtmlxTabBarObj->addTab('player', 'Convidados', 'event/show/player', array('eventObj'=>$eventObj));
 	if( $pastDate )
 		$dhtmlxTabBarObj->addTab('result', 'Resultado', 'event/show/result', array('eventObj'=>$eventObj));
+	$dhtmlxTabBarObj->addTab('comments', 'Comentários', 'event/form/comments', array('eventObj'=>$eventObj));
+	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabEvent');
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 ?>

@@ -1,34 +1,77 @@
-<table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px" class="defaultForm">
-	<tr>
-		<td valign="top">
-			<div class="row">
-				<div class="halfLabel" id="eventRankingIdLabel">Ranking</div>
-				<div class="textFlex"><?php echo $eventObj->getRanking()->getRankingName() ?></div>
-			</div>
-			<div class="row">
-				<div class="halfLabel">Título</div>
-				<div class="textFlex"><?php echo $eventObj->getEventName() ?></div>
-			</div>
-			<div class="row">
-				<div class="halfLabel">Local</div>
-				<div class="textFlex"><?php echo $eventObj->getEventPlace() ?></div>
-			</div>
-			<div class="row">
-				<div class="halfLabel">Data</div>
-				<div class="textFlex"><?php echo $eventObj->getEventDate('d/m/Y') ?></div>
-			</div>
-			<div class="row">
-				<div class="halfLabel">Horário</div>
-				<div class="textFlex"><?php echo $eventObj->getStartTime('H:i') ?></div>
-			</div>
-			<div class="row">
-				<div class="halfLabel">ITM</div>
-				<div class="textFlex"><?php echo $eventObj->getPaidPlaces() ?></div>
-			</div>
-			<div class="row">
-				<div class="halfLabel">Buy-in</div>
-				<div class="textFlex">R$ <?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></div>
-			</div>
-		</td>
-	</tr>
-</table>
+<div id="infoDiv" align="center">
+	
+	<br/><br/>
+	
+	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
+		<tr>
+			<td width="0" class="topLeft"><?php echo image_tag('mobile/form/topLeft') ?></td>
+			<td width="100%" class="topMiddle"></td>
+			<td width="0" class="topRight"><?php echo image_tag('mobile/form/topRight') ?></td>
+		</tr>
+	</table>
+	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
+		<tr>
+			<td colspan="3" class="formContent">
+			
+				<table cellpadding="0" cellspacing="0" width="100%" class="formTable">
+					<tr>
+						<th class="firstLine">Ranking</th>
+						<td class="firstLine"><?php echo $eventObj->getRanking()->getRankingName() ?></td>
+					</tr>
+					<tr>
+						<th>Título</th>
+						<td><?php echo $eventObj->getEventName() ?></td>
+					</tr>
+					<tr>
+						<th>Local</th>
+						<td><?php echo $eventObj->getEventPlace() ?></td>
+					</tr>
+					<tr>
+						<th>Data</th>
+						<td><?php echo $eventObj->getEventDate('d/m/Y') ?></td>
+					</tr>
+					<tr>
+						<th>Horário</th>
+						<td><?php echo $eventObj->getStartTime('H:i') ?></td>
+					</tr>
+					<tr>
+						<th>ITM</th>
+						<td><?php echo $eventObj->getPaidPlaces() ?></td>
+					</tr>
+					<tr>
+						<th>Bui-in</th>
+						<td><?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></td>
+					</tr>
+					<tr>
+						<th>Convidados</th>
+						<td><?php echo sprintf('%02d', $eventObj->getInvites()) ?></td>
+					</tr>
+					<tr>
+						<th class="lastLine">Participantes</th>
+						<td class="lastLine"><?php echo sprintf('%02d', $eventObj->getPlayers()) ?></td>
+					</tr>
+				</table>
+							
+			</td>
+		</tr>
+	</table>
+	
+	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
+		<tr>
+			<td class="baseLeft" width="0" valign="bottom"><?php echo image_tag('mobile/form/baseLeft') ?></td>
+			<td width="100%" class="baseMiddle"></td>
+			<td class="baseRight" width="0" valign="bottom"><?php echo image_tag('mobile/form/baseRight') ?></td>
+		</tr>
+	</table>
+
+</div>
+
+
+
+
+
+
+
+
+
+

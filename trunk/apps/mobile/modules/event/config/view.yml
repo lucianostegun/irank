@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    []
-  javascripts:    [frontend/event]
+  javascripts:    [mobile/mobile, mobile/event]

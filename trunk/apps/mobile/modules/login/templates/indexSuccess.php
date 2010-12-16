@@ -6,74 +6,62 @@
 		'encoding'=>'UTF8',
 		'loading'=>'showIndicator()'
 		), array( 'id'=>'mainForm' ));
-?> 
-<div align="center" class="login">
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
-		<tr>
-			<td valign="bottom" height="60">
-				<div id="formStatusDiv">
-					<div id="statusMessage"></div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td align="center">
-				<table border="0" cellpadding="0" cellspacing="0">
-					<tr>
-						<td valign="top" style="padding-top: 15px">
-							<div align="center" style="background: #FFFFFF">
-								<table border="0" cellpadding="0" cellspacing="0" width="240">
-									<tr>
-										<td width="10" height="10">
-										<img border="0" src="/images/mobile/login/borderTopLeft.png" width="10" height="10"></td>
-										<td height="10" background="/images/mobile/login/borderTop.png"></td>
-										<td width="10" height="10">
-										<img border="0" src="/images/mobile/login/borderTopRight.png" width="10" height="10"></td>
-									</tr>
-									<tr>
-										<td width="10" background="/images/mobile/login/borderLeft.png">&nbsp;</td>
-										<td>
+?>
 
-										<table border="0" cellpadding="0" cellspacing="0" width="100%">
-											<tr>
-												<td class="label">Usuário</td>
-												<td width="128"><?php echo input_tag( 'username', null, array( 'size'=>20 ) ) ?></td>
-											</tr>
-											<tr>
-												<td class="label">Senha</td>
-												<td width="128"><?php echo input_tag( 'password', null, array( 'size'=>20, 'type'=>'password' ) ) ?></td>
-											</tr>
-											<tr>
-												<td colspan="2" class="button">
-													<?php echo button_tag('mainSubmit', 'Logar', array('style'=>'float: right', 'onclick'=>'doLogin()')) ?>
-												</td>
-											</tr>
-										</table>
-										</td>
-										<td width="10" background="/images/mobile/login/borderRight.png"></td>
-									</tr>
-									<tr>
-										<td width="10" height="10"><img border="0" src="/images/mobile/login/borderBaseLeft.png" width="10" height="10"></td>
-										<td height="10" background="/images/mobile/login/borderBase.png"></td>
-										<td width="10" height="10"><img border="0" src="/images/mobile/login/borderBaseRight.png" width="10" height="10"></td>
-									</tr>
-								</table>
-							</div>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
+
+<div id="errorMessage" class="text" align="center" style="display: none; font-weight: bold; color: #AA0000">
+Usuário/Senha inválidos!<br/>Verifique as informações e tente novamente.
+</div>
+<br/>
+
+<div align="center">
+	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
 		<tr>
-			<td></td>
+			<td width="0" class="topLeft"><?php echo image_tag('mobile/form/topLeft') ?></td>
+			<td width="100%" class="topMiddle"></td>
+			<td width="0" class="topRight"><?php echo image_tag('mobile/form/topRight') ?></td>
 		</tr>
 	</table>
+	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
+		<tr>
+			<td colspan="3" class="formContent">
+			
+				<table cellpadding="0" cellspacing="0" width="100%" class="formTable">
+					<tr>
+						<th class="firstLine">Usuário</th>
+						<td class="firstLine"><?php echo input_tag('username', null, array('size'=>20, 'id'=>'loginUsername')) ?></td>
+					</tr>
+					<tr>
+						<th class="lastLine">Senha</th>
+						<td class="lastLine"><?php echo input_tag('password', null, array('size'=>20, 'type'=>'password', 'id'=>'loginPassword')) ?></td>
+					</tr>
+				</table>
+							
+			</td>
+		</tr>
+	</table>
+	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
+		<tr>
+			<td class="baseLeft" width="0" valign="bottom"><?php echo image_tag('mobile/form/baseLeft') ?></td>
+			<td width="100%" class="baseMiddle"></td>
+			<td class="baseRight" width="0" valign="bottom"><?php echo image_tag('mobile/form/baseRight') ?></td>
+		</tr>
+	</table>
+
+<br/><br/>
+
+<table width="100%" cellspacing="0" cellpadding="0">
+	<tr>
+		<td align="right" style="padding-right: 20px"><?php echo image_tag('mobile/button/conclude', array('onclick'=>'doLogin()')) ?></div>
+	</tr>
+</table>
 </div>
+
 </form>
 <script>
 function setFocus(){
-	
-	$('username').focus();
+
+	$('loginUsername').focus();
 }
 
 setFocus();
