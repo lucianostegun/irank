@@ -53,9 +53,9 @@ $title = (isset($title)?$title:false);
 
 <table width="100%" cellspacing="0" cellpadding="0">
 	<tr>
-		<td width="33%" class="footerBack"><?php echo link_to(image_tag('mobile/layout/back'), '#history.back()') ?></td>
-		<td width="33%" class="footer" align="center"><?php echo link_to('Versão normal', 'home/classic') ?></td>
-		<td width="33%" class="footer" align="right"><?php echo image_tag('mobile/layout/logoFooter') ?></td>
+		<td class="footerBack"><?php echo link_to(image_tag('mobile/layout/back'), '#history.back()') ?></td>
+		<td width="100%" class="footer" style="text-align: center"><?php echo link_to('Versão completa', 'home/classic') ?></td>
+		<td class="footer" align="right"><?php echo image_tag('mobile/layout/logoFooter') ?></td>
 	</tr>
 </table>
 

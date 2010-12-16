@@ -9,7 +9,7 @@
 	<?php else: ?>
 	
 		<div class="text">
-			Resultado do evento----
+			Resultado do evento
 		</div>
 		<br/>
 	

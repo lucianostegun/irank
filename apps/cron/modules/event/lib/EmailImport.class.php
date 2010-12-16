@@ -45,10 +45,25 @@ class EmailImport
 		}
 	}
 	
+	public function disconnect(){
+	
+		switch( $this->getProtocol() ){
+			case 'imap':
+				imap_close($this->getConnection());
+				break;
+			case 'pop3':
+				$this->getPop3Connection();
+				break;
+		}
+	}
+	
 	public function getImapConnection(){
 	
 		$server = '{'.$this->getServer().':'.$this->getPort().$this->getImapParameters().'}'.$this->getDefaultFolder();
 		$this->connection = imap_open($server, $this->getUsername(), $this->getPassword());
+//		echo '<pre>';
+//		print_r(imap_getmailboxes($this->connection, '{imap.irank.com.br}', '*'));
+//		exit;
 	}
 	
 	public function getPopConnection(){
@@ -161,7 +176,7 @@ class EmailImport
 				return imap_num_msg($this->getConnection());
 				break;
 			case 'pop3':
-				return popimap_num_msg($this->getConnection())
+				return popimap_num_msg($this->getConnection());
 				break;
 		}
 	}
@@ -180,7 +195,7 @@ class EmailImport
 
 	        switch ( $this->getProtocol() ) {
 				case 'imap':
-					$genericMessageObj = new ImapMessage( $i, $this->getConnection(), $messageHeader );
+					$genericMessageObj = new ImapMessage( $i, $this->getConnection(), $messageHeader, $this->getServer() );
 					break;
 			}
 			
@@ -203,8 +218,9 @@ class ImapMessage {
 	private $body;
 	private $connection;
 	private $deleted = false;
+	private $server;
 	
-	public function __construct( $index, $connection, $messageHeader ){
+	public function __construct( $index, $connection, $messageHeader, $server ){
 		
 		$this->connection = $connection;
 		
@@ -217,24 +233,27 @@ class ImapMessage {
         
         $body = imap_fetchbody($connection, $index, 1);
         
-        
         $this->setIndex( $index );
 		$this->setSubject( $subject );
 		$this->setSenderName( $senderName );
 		$this->setSenderAddress( $senderAddress );
 		$this->setDate( $date );
 		$this->setBody( $body );
+		$this->setServer( $server );
 	}
 	
 	public function move( $newFolder ){
 		
-		imap_mail_move( $this->connection, $this->getIndex(), $newFolder); 
+		$server = '{'.$this->getServer().'}';
+		imap_mail_move( $this->connection, $this->getIndex(), $newFolder);
+		imap_expunge($this->connection); 
 	}
 	
 	public function delete(){
 
 		imap_delete( $this->connection, $this->getMessageNumber());
 		$this->setDeleted( true );
+		imap_expunge($this->connection);
 	}
 	
 	public function setIndex( $index ){
@@ -251,8 +270,13 @@ class ImapMessage {
 	
 	public function setSubject( $subject ){
 	
-		$subject = imap_mime_header_decode($subject);
-		$this->subject = $subject[0]->text;
+		$subjectList = imap_mime_header_decode($subject);
+		$subject     = '';
+
+		foreach($subjectList as $subjectItem)
+			$subject .= $subjectItem->text;
+		
+		$this->subject = $subject;
 	}
 	
 	public function setSenderName( $senderName ){
@@ -286,6 +310,11 @@ class ImapMessage {
 	private function setDeleted( $deleted ){
 		
 		$this->deleted = $deleted;
+	}
+	
+	private function setServer( $server ){
+		
+		$this->server = $server;
 	}
 	
 	
@@ -337,5 +366,10 @@ class ImapMessage {
 	private function isDeleted(){
 		
 		return $this->deleted;
+	}
+	
+	private function getServer(){
+		
+		return $this->server;
 	}
 }

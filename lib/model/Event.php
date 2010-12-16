@@ -558,6 +558,13 @@ class Event extends BaseEvent
 		$this->notifyResult();
 	}
 	
+	public function isInvited($peopleId){
+		
+		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
+		
+		return (is_object($eventPlayerObj) && !$eventPlayerObj->getDeleted());
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
