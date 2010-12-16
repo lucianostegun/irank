@@ -1,27 +1,30 @@
-<?php echo getPageHeader('Visualização de evento') ?>
 <?php
-	$eventId = $eventObj->getId();
-	echo input_hidden_tag('eventId', $eventId);
+	$pastDate = $eventObj->isPastDate();
 	
-	$confirmedPresence = $eventObj->isConfirmed($peopleId);
-	$pastDate          = $eventObj->isPastDate();
-	
-	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
-	$dhtmlxTabBarObj->addTab('main', 'Evento', 'event/show/main', array('eventObj'=>$eventObj));
-	$dhtmlxTabBarObj->addTab('player', 'Convidados', 'event/show/player', array('eventObj'=>$eventObj));
-	if( $pastDate )
-		$dhtmlxTabBarObj->addTab('result', 'Resultado', 'event/show/result', array('eventObj'=>$eventObj));
-	$dhtmlxTabBarObj->setHeight(250);
-	$dhtmlxTabBarObj->build();
-	
-	if( !$pastDate ):
+	echo get_partial('event/show/main', array('eventObj'=>$eventObj));
+	echo get_partial('event/show/player', array('eventObj'=>$eventObj));
+	echo get_partial('event/show/result', array('eventObj'=>$eventObj));
 ?>
-	<div class="buttonBarForm" id="eventMainButtonBar">
-		<?php echo button_tag('resultSubmit', 'Salvar', array('onclick'=>'doSubmitEventResult()')) ?>
-		<?php echo button_tag('confirmPresence', 'Confirmar presença', array('onclick'=>'doConfirmPresence()', 'image'=>'../icon/ok.png', 'visible'=>!$confirmedPresence)) ?>
-		<?php echo button_tag('cancelPresence', 'Cancelar presença', array('onclick'=>'doCancelPresence()', 'image'=>'../icon/nok.png', 'visible'=>$confirmedPresence)) ?>
-		<?php echo getFormLoading('event') ?>
-		<?php echo getFormStatus(); ?>
-	</div>
-<?php endif; ?>
-</form>
+<br/>
+<div align="center">
+<table width="95%" cellpadding="0" cellspacing="0" class="menu">
+	<tr onclick="hideDiv('playerListDiv'); hideDiv('resultDiv'); showDiv('infoDiv'); goTop()">
+		<td width="20" class="topLeft">&nbsp;</td>
+		<td class="middle label">Informações</td>
+		<td width="20" class="topRight">&nbsp;</td>
+	</tr>
+	<tr onclick="hideDiv('infoDiv'); hideDiv('resultDiv'); showDiv('playerListDiv'); goTop()">
+		<td width="20" class="<?php echo ($pastDate?'left':'baseLeft') ?>">&nbsp;</td>
+		<td class="<?php echo ($pastDate?'middle':'base') ?> label">Convidados</td>
+		<td width="20" class="<?php echo ($pastDate?'right':'baseRight') ?>">&nbsp;</td>
+	</tr>
+	<?php if( $pastDate ): ?>
+	<tr onclick="hideDiv('infoDiv'); hideDiv('playerListDiv'); showDiv('resultDiv'); goTop()">
+		<td width="20" class="baseLeft">&nbsp;</td>
+		<td class="base label">Resultado</td>
+		<td width="20" class="baseRight">&nbsp;</td>
+	</tr>
+	<?php endif; ?>
+</table>
+</div>
+<br/><br/>

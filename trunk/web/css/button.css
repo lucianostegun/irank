@@ -39,7 +39,8 @@
 .button .buttonMiddle .label .submit {
 
 	position: 		absolute;
-	border: 		1px solid;
+	left: 			-1;
+	border: 		0px transparent;
 	background: 	transparent;
 	width: 			0px;
 	height: 		0px;

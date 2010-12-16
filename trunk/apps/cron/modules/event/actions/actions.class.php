@@ -34,57 +34,67 @@ class eventActions extends sfActions
   
   public function executeImportEmailComments($request){
 	
+		$emailAddress = 'event_comment@irank.com.br';
+		$password     = 'K33p0utme';
+		$server       = 'imap.irank.com.br';
+		$port         = 993;
+		$protocol     = 'imap';
 		
+		$emailImportObj = new EmailImport($protocol, false);
+		$emailImportObj->setServer( $server );
+		$emailImportObj->setPort($port);
+		$emailImportObj->setImapParameters('/ssl/novalidate-cert');
+		$emailImportObj->setDefaultFolder('INBOX');
+		$emailImportObj->setUsername( $emailAddress );
+		$emailImportObj->setPassword( $password );
+		$emailImportObj->connect();
+		$connection = $emailImportObj->getConnection();
+
+		$successCount = 0;
+
+		foreach( $emailImportObj->getNewMessages() as $messageObj ){
+
+			$subject      = $messageObj->getSubject();
+			$comment      = $messageObj->getBody();
+			$emailAddress = $messageObj->getSenderAddress();
+			$createdAt    = $messageObj->getDate();
+
+			$comment  = substr($comment, 0, 140);
+			$comment  = str_replace(chr(13).chr(10), chr(10), $comment);
+			$encoding = mb_detect_encoding($comment);
+			
+			if( strtoupper($encoding)!='UTF-8' )
+				$comment  = utf8_encode($comment);
+			
+			$eventCommentId = ereg_replace('^.*#', '', $subject);
+			$eventCommentId = $eventCommentId-1985;
+			
+			$eventCommentObj = EventCommentPeer::retrieveByPK($eventCommentId);
+			$peopleObj       = PeoplePeer::retrieveByEmailAddress($emailAddress);
+
+			if( !is_object($eventCommentObj) || !is_object($peopleObj) )
+				continue;
+			
+			$eventObj = $eventCommentObj->getEvent();
+			
+			if( !$eventObj->isInvited($peopleObj->getId()) )
+				continue;
+				
+			$eventCommentObj = new EventComment();
+			$eventCommentObj->setPeopleId( $peopleObj->getId() );
+			$eventCommentObj->setEventId( $eventObj->getId() );
+			$eventCommentObj->setComment( $comment );
+			$eventCommentObj->setCreatedAt( $createdAt );
+			$eventCommentObj->save();
+			
+	  	    $messageObj->move('INBOX.Antigos');
+//	  	    $messageObj->delete();
+	  	    
+	  	    $successCount++;
+		}
 		
-		
-		
-		
-		
-		
-		
-	$bUseSockets = FALSE;
-	$bUseTLS = TRUE;
-	$bIPv6 = FALSE;
-	$arrConnectionTimeout = array( "sec" => 10,
-	                               "usec" => 500 );
-	// POP3 Options
-	$strProtocol= "ssl";
-	$strHost = "pop.irank.com.br";
-	$intPort = 995;
-	$strUser = "event_comment@irank.com.br";
-	$strPass = "K33p0utme";
-	$bAPopAutoDetect = TRUE;
-	$bHideUsernameAtLog = FALSE;
-	
-	echo '<pre>';
-	
-	try
-	{
-	    $objPOP3 = new POP3Import( null, $bAPopAutoDetect, $bHideUsernameAtLog, $strProtocol, $bUseSockets );
-	    $objPOP3->connect($strHost,$intPort,$arrConnectionTimeout,$bIPv6);
-	    $objPOP3->login($strUser, $strPass);
-	    $arrOfficeStatus = $objPOP3->getOfficeStatus();
-		    
-	    for($intMsgNum = 1; $intMsgNum <= $arrOfficeStatus["count"]; $intMsgNum++ ){
-	    	
-			$message = $objPOP3->getMsg($intMsgNum);
-//			$message = explode(chr(10), $message);
-			print_r($message);
-			echo '<hr>';
-	//        $objPOP3->deleteMsg($intMsgNum);
-	    }
-	
-	    $objPOP3->quit();
-	    $objPOP3->disconnect();
-	}
-	catch( POP3_Exception $e )
-	{
-	    die($e);
-	}
-		
-		
+		echo 'Importação concluída com sucesso! E-mails importados: '.$successCount;
 		
 		exit;
-		
   }
 }
