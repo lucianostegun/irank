@@ -99,7 +99,8 @@ class EventComment extends BaseEventComment
 	
 	public function notify(){
 
-		$eventId = strrev(base64_encode($this->getEventId()));
+		$eventCommentId = $this->getId();
+		$eventCommentId = (1985+$eventCommentId);
 		
 		$eventObj     = $this->getEvent();
 		$emailContent = AuxiliarText::getContentByTagName('eventCommentNotify');
@@ -107,10 +108,14 @@ class EventComment extends BaseEventComment
 		$emailContent = str_replace('<eventName>', $eventObj->getEventName(), $emailContent);
 		$emailContent = str_replace('<rankingName>', $eventObj->getRanking()->getRankingName(), $emailContent);
 		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
-		$emailContent = str_replace('<eventId>', $eventId, $emailContent);
+		$emailContent = str_replace('<comment>', $this->getComment(), $emailContent);
 		
 		$emailAddressList = $eventObj->getEmailAddressList('receiveEventCommentNotify', true);
 		
-		Report::sendMail('Comentários do evento @ '.$eventObj->getEventName(), $emailAddressList, $emailContent);
+		$options = array();
+		$options['emailTemplate'] = null;
+		$options['replyTo']       = 'event_comment@irank.com.br';
+		
+		Report::sendMail('Comentários do evento #'.$eventCommentId, $emailAddressList, $emailContent, $options);
 	}
 }

@@ -1,7 +1,34 @@
-Olá,<br/><br/>
+<html>
 
-<peopleName> postou um comentário no evento <b><eventName></b> valendo pelo ranking <b><rankingName></b>.<br/><br/> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-Para visualizar o comentário, clique no link abaixo:<br/><br/>
-
-<a href="http://<host>/event/edit/viewComment/<eventId>" target="_blank" style="border: 0px none; font-weight: bold; color: #FFFFFF">Visualizar comentários</a>
+<body>
+	<div style="color: #FFFFFF; font-family: Sans serif, Arial, Verdana, Tahoma; font-size: 8pt">
+		<table width="532" cellspacing="0" cellpadding="0" border="0" style="font-size: 8pt" style="color: #FFFFFF">
+			<tr>
+				<td><img src="http://<host>/images/email/top.png" width="534" height="22"></td>
+			</tr>
+			<tr>
+				<td style="color: #FFFFFF; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; background: #14310F; text-transform: uppercase; font-weight: bold; border-bottom: 1px solid #ccc"><emailTitle></td>
+			</tr>
+			<tr>
+				<td style="color: #F5F5F5; padding: 10px; line-height: 150%; background: #14310F">
+					<peopleName> postou o comentário abaixo no evento <b><eventName></b>:<br/><br/><hr/> 
+					
+					<pre style="text-align: left; font-weight: bold; font-family: Sans serif, Arial, Verdana, Tahoma; font-style: italic"><comment></pre>
+					
+					<hr/><br/>
+					
+					Você pode responder* este e-mail para responder diretamente ao comentário.<br/>
+				</td>
+			</tr>
+			<tr>
+				<td><img src="http://<host>/images/email/base.png" width="534" height="22"></td>
+			</tr>
+			<tr>
+				<td style="padding: 10px; color: #000000">* Apenas os primeiros 140 caracteres serão considerados</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
