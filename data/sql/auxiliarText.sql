@@ -75,3 +75,8 @@ INSERT INTO file(file_name, file_path, description, file_size, created_at, updat
     VALUES('faqQuestion.htm', 'templates/faqQuestion.htm', 'Nova dúvida do FAQ', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
     VALUES('Nova dúvida do FAQ', (SELECT MAX(id) FROM file), 'faqQuestion', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
+    VALUES('eventCommentNotify.htm', 'templates/eventCommentNotify.htm', 'Comentários no evento', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
+    VALUES('Comentários no evento', (SELECT MAX(id) FROM file), 'eventCommentNotify', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

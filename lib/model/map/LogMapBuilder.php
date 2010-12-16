@@ -48,7 +48,7 @@ class LogMapBuilder {
 
 		$tMap->addColumn('SEVERITY', 'Severity', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('MESSAGE', 'Message', 'string', CreoleTypes::LONGVARCHAR, false, null);
+		$tMap->addColumn('MESSAGE', 'Message', 'string', CreoleTypes::VARCHAR, false, 255);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

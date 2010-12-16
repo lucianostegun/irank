@@ -68,14 +68,16 @@ class signActions extends sfActions
 	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
 	
 	$receiveFriendEventConfirmNotify = $request->getParameter('receiveFriendEventConfirmNotify');
-	$receiveEventReminder0 = $request->getParameter('receiveEventReminder0');
-	$receiveEventReminder3 = $request->getParameter('receiveEventReminder3');
-	$receiveEventReminder7 = $request->getParameter('receiveEventReminder7');
+	$receiveEventReminder0           = $request->getParameter('receiveEventReminder0');
+	$receiveEventReminder3           = $request->getParameter('receiveEventReminder3');
+	$receiveEventReminder7           = $request->getParameter('receiveEventReminder7');
+	$receiveEventCommentNotify       = $request->getParameter('receiveEventCommentNotify');
 	
 	$userSiteObj->setOptionValue('receiveFriendEventConfirmNotify', ($receiveFriendEventConfirmNotify?'1':'0'));
 	$userSiteObj->setOptionValue('receiveEventReminder0', ($receiveEventReminder0?'1':'0'));
 	$userSiteObj->setOptionValue('receiveEventReminder3', ($receiveEventReminder3?'1':'0'));
 	$userSiteObj->setOptionValue('receiveEventReminder7', ($receiveEventReminder7?'1':'0'));
+	$userSiteObj->setOptionValue('receiveEventCommentNotify', ($receiveEventCommentNotify?'1':'0'));
 	exit;
   }
 }

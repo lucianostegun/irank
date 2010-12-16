@@ -12,6 +12,5 @@ function handleLoginSuccess( content ){
 function handleLoginFailure( content ){
 
 	hideIndicator();
-	$('statusMessage').innerHTML = content;
-	showDiv('formStatusDiv');
+	showDiv('errorMessage');
 }

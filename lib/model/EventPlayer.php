@@ -30,6 +30,8 @@ class EventPlayer extends BaseEventPlayer
 		
 		$this->setDeleted(true);
 		$this->save();
+		
+		Log::quickLogDelete('event_player', $this->getPrimaryKey());
 	}
 	
 	public function notifyConfirm(){
@@ -139,5 +141,15 @@ class EventPlayer extends BaseEventPlayer
 			$confirmCode = base64_encode(strrev(md5($this->getEvent()->getRankingId().'.'.$this->getEventId().'.'.$this->getPeopleId())));
 		
 		return $confirmCode;
+	}
+
+	public function getInviteStatusDescription(){
+		
+		switch($this->getInviteStatus()){
+			case 'yes':
+				return 'Confirmado';
+			default:
+				return 'Não confirmado';
+		}
 	}
 }

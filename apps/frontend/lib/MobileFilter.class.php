@@ -7,9 +7,11 @@ class MobileFilter extends sfFilter {
         $smartPhoneList = array('iPhone', 'windows ce', 'netfront', 'palmos', 'blazer', 'elaine', 'plucker', 'avantgo', 'wap');
         
         $browser = $_SERVER['HTTP_USER_AGENT'];
+        
+        $forceClassic = MyTools::getAttribute('forceClassic');
 
         foreach ($smartPhoneList as $smartPhone)            
-            if ( stristr( $browser, $smartPhone ) )
+            if ( !$forceClassic && stristr( $browser, $smartPhone ) )
 				return sfContext::getInstance()->getController()->redirect('/mobile.php');
         
         $filterChain->execute();

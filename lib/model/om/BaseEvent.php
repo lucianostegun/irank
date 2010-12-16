@@ -93,6 +93,12 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	protected $lastEventPlayerCriteria = null;
 
 	
+	protected $collEventCommentList;
+
+	
+	protected $lastEventCommentCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -703,6 +709,14 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEventCommentList !== null) {
+				foreach($this->collEventCommentList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -754,6 +768,14 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 				if ($this->collEventPlayerList !== null) {
 					foreach($this->collEventPlayerList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventCommentList !== null) {
+					foreach($this->collEventCommentList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1062,6 +1084,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				$copyObj->addEventPlayer($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getEventCommentList() as $relObj) {
+				$copyObj->addEventComment($relObj->copy($deepCopy));
+			}
+
 		} 
 
 		$copyObj->setNew(true);
@@ -1219,6 +1245,111 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		$this->lastEventPlayerCriteria = $criteria;
 
 		return $this->collEventPlayerList;
+	}
+
+	
+	public function initEventCommentList()
+	{
+		if ($this->collEventCommentList === null) {
+			$this->collEventCommentList = array();
+		}
+	}
+
+	
+	public function getEventCommentList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventCommentPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventCommentList === null) {
+			if ($this->isNew()) {
+			   $this->collEventCommentList = array();
+			} else {
+
+				$criteria->add(EventCommentPeer::EVENT_ID, $this->getId());
+
+				EventCommentPeer::addSelectColumns($criteria);
+				$this->collEventCommentList = EventCommentPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventCommentPeer::EVENT_ID, $this->getId());
+
+				EventCommentPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventCommentCriteria) || !$this->lastEventCommentCriteria->equals($criteria)) {
+					$this->collEventCommentList = EventCommentPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventCommentCriteria = $criteria;
+		return $this->collEventCommentList;
+	}
+
+	
+	public function countEventCommentList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventCommentPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventCommentPeer::EVENT_ID, $this->getId());
+
+		return EventCommentPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventComment(EventComment $l)
+	{
+		$this->collEventCommentList[] = $l;
+		$l->setEvent($this);
+	}
+
+
+	
+	public function getEventCommentListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventCommentPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventCommentList === null) {
+			if ($this->isNew()) {
+				$this->collEventCommentList = array();
+			} else {
+
+				$criteria->add(EventCommentPeer::EVENT_ID, $this->getId());
+
+				$this->collEventCommentList = EventCommentPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventCommentPeer::EVENT_ID, $this->getId());
+
+			if (!isset($this->lastEventCommentCriteria) || !$this->lastEventCommentCriteria->equals($criteria)) {
+				$this->collEventCommentList = EventCommentPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastEventCommentCriteria = $criteria;
+
+		return $this->collEventCommentList;
 	}
 
 } 

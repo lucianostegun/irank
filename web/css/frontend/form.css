@@ -327,7 +327,7 @@
 	color: 			#333333;
 }
 
-.defaultForm .rowTextArea .field textarea {
+.defaultForm .rowTextArea .field textarea, .defaultForm textarea {
 
 	font-size: 		8pt;
 	width: 			250px;
@@ -347,9 +347,9 @@
 	border:			1px solid #8A8A8A;
 }
 
-.defaultForm .rowTextArea .field textarea.formFieldError {
+.defaultForm .rowTextArea .field textarea.formFieldError, textarea.formFieldError {
 
-	background: 	#fb8f7e;
+	background: 	#FB8F7E;
 	border:			1px solid #333333;
 }
 

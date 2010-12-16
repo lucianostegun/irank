@@ -22,7 +22,10 @@ class eventActions extends sfActions
   
   public function executeEdit($request){
   	
-  	$eventId       = $request->getParameter('eventId');
+  	$viewComment   = $request->getParameter('viewComment');
+  	$viewComment   = base64_decode(strrev($viewComment));
+  	
+  	$eventId       = $request->getParameter('eventId', $viewComment);
   	$this->isClone = $request->getParameter('isClone');
   	
   	if( $eventId ){
@@ -232,54 +235,9 @@ class eventActions extends sfActions
 	
 	if( !$eventObj->isEditable() )
 		Util::forceError('!Este evento está bloqueado para edição', true);
+		
+	$eventObj->saveResult($request);
 
-	$rankingObj = $eventObj->getRanking();
-	
-	$paidPlaces = 0;
-	
-	$eventPlayerObjList = $eventObj->getPlayerList();
-	foreach($eventPlayerObjList as $eventPlayerObj){
-		
-		$peopleId      = $eventPlayerObj->getPeopleId();
-		$buyin         = $request->getParameter('buyin'.$peopleId);
-		$rebuy         = $request->getParameter('rebuy'.$peopleId);
-		$addon         = $request->getParameter('addon'.$peopleId);
-		$eventPosition = $request->getParameter('eventPosition'.$peopleId);
-		$prize    = $request->getParameter('prize'.$peopleId);
-		
-		$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
-		$enabled        = $eventPlayerObj->getEnabled();
-		
-		if( !$enabled && $eventPosition > 0 ){
-			
-			$eventObj->addPlayer($peopleId, true, false);
-			$enabled = true;
-		}
-		
-		if( $enabled ){
-			
-			if( $prize > 0 )
-				$paidPlaces++;
-
-			$eventPlayerObj->setEventPosition($eventPosition);
-			$eventPlayerObj->setPrize( Util::formatFloat($prize) );
-			$eventPlayerObj->setRebuy( Util::formatFloat($rebuy) );
-			$eventPlayerObj->setAddon( Util::formatFloat($addon) );
-			$eventPlayerObj->setBuyin( Util::formatFloat($buyin) );
-			$eventPlayerObj->save();
-		}
-	}
-	
-	$eventObj->setPaidPlaces($paidPlaces);
-	$eventObj->setSavedResult(true);
-	$eventObj->save();
-	
-	$rankingObj->updateScores();
-	$rankingObj->updatePlayerEvents();
-	$rankingObj->updateHistory($eventObj->getEventDate('d/m/Y'));
-	
-	$eventObj->notifyResult();
-	
 	exit;
   }  
   
@@ -332,6 +290,63 @@ class eventActions extends sfActions
   	$this->getUser()->setAttribute('peopleId', $peopleIdTmp);
   	
   	$this->eventObj = $eventPlayerObj->getEvent();
+  }
+
+  public function handleErrorSaveComment(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
+  
+  public function executeSaveComment($request){
+
+	$eventId = $request->getParameter('eventId');
+	$comment = $request->getParameter('comment');
+	$comment = urldecode($comment);
+
+	$comment = str_replace('|n', chr(10), $comment);
+
+	$eventCommentObj = new EventComment();
+	$eventCommentObj->setPeopleId( $this->peopleId );
+	$eventCommentObj->setEventId( $eventId );
+	$eventCommentObj->setComment( $comment );
+	$eventCommentObj->save();
+	
+	$eventCommentObj->notify();
+	
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj)));
+	exit;
+  }
+  
+  public function executeDeleteComment($request){
+
+	$eventCommentId = $request->getParameter('eventCommentId');
+	
+	$eventCommentObj = EventCommentPeer::retrieveByPK($eventCommentId);
+	
+	if( !$eventCommentObj->isMyComment() )
+		throw new Exception('Este comentário não foi escrito por você!');
+	
+	$eventCommentObj->delete();
+	exit;
+  }
+  
+  public function executeGetCommentList($request){
+
+	$eventId = $request->getParameter('eventId');
+	
+	$eventObj = EventPeer::retrieveByPK($eventId);
+	$eventCommentObjList = $eventObj->getCommentList();
+	$eventCommentObjList = array_reverse($eventCommentObjList);
+	
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	
+	foreach($eventCommentObjList as $eventCommentObj)
+		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj)));
+		
+	exit;
   }
   
   public function executeJavascript($request){

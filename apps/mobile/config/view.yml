@@ -5,10 +5,10 @@ default:
   metas:
     title:        iRank
     language:     pt
-    viewport:     width=device-width; initial-scale=1.0; maximum-scale=1.0;
+    viewport:     width=device-width; initial-scale=0.5; maximum-scale=0.5; user-scalable=no
 
-  stylesheets:    [button, mobile/main, mobile/loading, frontend/form]
-  javascripts:    [phpEquivalents, /sf/prototype/js/prototype, button, mobile/record, util, frontend/form]
+  stylesheets:    [button, mobile/main, mobile/menu, mobile/loading, mobile/form]
+  javascripts:    [phpEquivalents, mobile/main, /sf/prototype/js/prototype, button, mobile/record, util, frontend/form]
 
   has_layout:     on
   layout:         layout

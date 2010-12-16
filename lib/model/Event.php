@@ -44,6 +44,8 @@ class Event extends BaseEvent
 		$this->setDeleted(true);
 		$this->save();
 		
+		Log::quickLogDelete('event', $this->getPrimaryKey());
+		
 		$rankingObj->updateScores();
 		
 		/**
@@ -105,6 +107,31 @@ class Event extends BaseEvent
 			return PeoplePeer::doSelect($criteria);
 		else
 			return EventPlayerPeer::doSelect($criteria);
+	}
+	
+	public function getCommentList($limit=null){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventCommentPeer::EVENT_ID, $this->getId() );
+		$criteria->add( EventCommentPeer::DELETED, false );
+		$criteria->addJoin( EventCommentPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		
+		$criteria->addDescendingOrderByColumn( EventCommentPeer::CREATED_AT );
+
+		if( $limit )
+			$criteria->setLimit($limit);
+		
+		return EventCommentPeer::doSelect($criteria);
+	}
+	
+	public function getCommentCount(){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventCommentPeer::EVENT_ID, $this->getId() );
+		$criteria->add( EventCommentPeer::DELETED, false );
+		$criteria->addJoin( EventCommentPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		
+		return EventCommentPeer::doCount($criteria);
 	}
 	
 	public function getPlayerList($orderByList=null){
@@ -473,6 +500,57 @@ class Event extends BaseEvent
 		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
 		$eventPlayerObj->togglePresence($choice, $forceNotify);
+	}
+	
+	public function saveResult($request){
+		
+		$eventId    = $this->getId();
+		$rankingObj = $this->getRanking();
+		
+		$paidPlaces = 0;
+		
+		$eventPlayerObjList = $this->getPlayerList();
+		foreach($eventPlayerObjList as $eventPlayerObj){
+			
+			$peopleId      = $eventPlayerObj->getPeopleId();
+			$buyin         = $request->getParameter('buyin'.$peopleId);
+			$rebuy         = $request->getParameter('rebuy'.$peopleId);
+			$addon         = $request->getParameter('addon'.$peopleId);
+			$eventPosition = $request->getParameter('eventPosition'.$peopleId);
+			$prize    = $request->getParameter('prize'.$peopleId);
+			
+			$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
+			$enabled        = $eventPlayerObj->getEnabled();
+			
+			if( !$enabled && $eventPosition > 0 ){
+				
+				$this->addPlayer($peopleId, true, false);
+				$enabled = true;
+			}
+			
+			if( $enabled ){
+				
+				if( $prize > 0 )
+					$paidPlaces++;
+	
+				$eventPlayerObj->setEventPosition($eventPosition);
+				$eventPlayerObj->setPrize( Util::formatFloat($prize) );
+				$eventPlayerObj->setRebuy( Util::formatFloat($rebuy) );
+				$eventPlayerObj->setAddon( Util::formatFloat($addon) );
+				$eventPlayerObj->setBuyin( Util::formatFloat($buyin) );
+				$eventPlayerObj->save();
+			}
+		}
+		
+		$this->setPaidPlaces($paidPlaces);
+		$this->setSavedResult(true);
+		$this->save();
+		
+		$rankingObj->updateScores();
+		$rankingObj->updatePlayerEvents();
+		$rankingObj->updateHistory($this->getEventDate('d/m/Y'));
+		
+		$this->notifyResult();
 	}
 	
 	public function getInfo(){

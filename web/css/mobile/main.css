@@ -1,27 +1,44 @@
 * {
 
 	font-family: 	Verdana, Arial, sans-serif;
-	font-size: 		8pt;
+	font-size: 		14pt;
 }
 
 html, body {
 	
-	width: 		100%;
-	height: 	100%;
-	margin: 	0px;
-	background: 	#F5F5F5
+	width: 			100%;
+	height: 		100%;
+	margin: 		0px;
+	background: 	#F5F5F5 url('/images/mobile/layout/mainBg.png');
+}
+
+.text {
+
+	font-size: 		18pt;
+	text-shadow: 	white 1px 1px;
+	padding: 		20 20 0 20;
+}
+
+h1 {
+
+	text-align: 	left;
+	font-size: 		20pt;
+	text-shadow: 	white 1px 1px;
+	padding: 		20 20 0 20;
+	color: 			#4c566c;
 }
 
 form {
 
-	border:		1px solid ffffff;
+	border:		0px solid #FFFFFF;
 	height: 	100%;
 }
 
 a {
 
 	text-decoration: 	underline;
-	font-size: 			8pt;
+	font-size: 			14pt;
+	text-shadow: 		white 1px 1px;
 	color: 				#81571F
 }
 
@@ -35,59 +52,51 @@ img {
 	border: 	0px solid;	
 }
 
-#header {
+.header {
 
-	height: 		45px;
+	height: 		86px;
 	background: 	url('/images/mobile/layout/headerBg.png') repeat-x;
+	border-bottom: 	2px solid #2D3033;
 }
 
-#mainContent {
-	
-	padding-top: 	3px	
+
+.buttonBar {
+
+	margin: 		-20 -20 0 -10;
+	border-bottom: 	2px solid #2D3033;
+	height: 		88px;
+	background: 	url('/images/mobile/buttonBarBg.png') repeat-x;
+	text-align: 	right;
 }
 
-.toolbarDiv {
+.titleBar {
 
-	border-top: 	1px solid #CCCCCC;
-	border-bottom: 	1px solid #CCCCCC;
-	padding: 		1 0 1 0;
-	background: 	url('/images/backend/layout/toolbarBg.png') repeat-x;	
+	border-bottom: 	2px solid #2D3033;
+	height: 		47px;
+	background: 	url('/images/mobile/title/mainBg.png') repeat-x;
 }
+
 
 .footer {
 
-	height: 		30px;
+	border-top: 	2px solid #2D3033;
+	height: 		86px;
 	background: 	url('/images/mobile/layout/footerBg.png') repeat-x;
 	text-align: 	right;
-	padding-right: 	30px;
+}
+
+.footer a {
+
+	font-size: 			18pt;
+	text-decoration: 	none;
+	color: 				#333;
 }
 
 .footerBack {
 
+	border-top: 	2px solid #2D3033;
 	height: 		30px;
 	background: 	url('/images/mobile/layout/footerBg.png') repeat-x;
-	padding-left: 	30px;
-}
-
-.footerBack a {
-
-	text-decoration: 	none;
-	color: 				#F32126;
-	font-weight: 		bold;
-}
-
-.moduleName {
-
-	color: 			#5D5D75;
-	font-size: 		12pt;
-	font-weight: 	bold
-}
-
-.moduleName img {
-
-	margin-top: 	-2px;
-	margin-top: 	0px !ie;
-	margin-right: 	10px	
 }
 
 .rank_heading td{

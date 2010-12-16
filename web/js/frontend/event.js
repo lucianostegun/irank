@@ -29,6 +29,8 @@ function handleSuccessEvent(content){
 	if( infoObj.inviteStatus=='no' )    disableButton('declinePresence');
 	if( infoObj.inviteStatus=='maybe' ) disableButton('maybePresence');
 	
+	tabBarMainObj.showTab('comments');
+	
 	lockRanking();
 	
 	adjustContentTab();
@@ -423,4 +425,17 @@ function handleOnBlur(fieldObj){
 			fieldObj.value = '0,00';
 		else
 			fieldObj.value = '0';
+}
+
+function onSelectTabEvent(tabId){
+
+	showDiv('actionBarDiv');
+	
+	switch( tabId ){
+		case 'comments':
+			hideDiv('actionBarDiv');
+			break;
+	}
+	
+	return true;
 }

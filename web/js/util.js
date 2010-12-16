@@ -3,6 +3,11 @@ function isDebug(){
 	return _isDebug;
 }
 
+function isMobile(){
+	
+	return _isMobile;
+}
+
 function debug( value ){
 	
 	clearDebug();
@@ -27,11 +32,11 @@ function clearDebug(){
 	hideDiv('debugDiv');
 }
 
-function showDiv( divId ){
+function showDiv( divId, tableCell ){
 
 	var div = $( divId );
 	if( div && div!='undefined' )
-		div.style.display = 'block';
+		div.style.display = (tableCell?'table-cell':'block');
 }
 
 function hideDiv( divId ){
@@ -44,6 +49,9 @@ function hideDiv( divId ){
 function showIndicator( indicatorId ){
 	
 	indicatorId = (indicatorId?ucfirst(indicatorId):'');
+	
+	if( isMobile() )
+		$('indicator').style.top = window.pageYOffset;
 
 	showDiv('indicator'+indicatorId);
 	showDiv('indicator');

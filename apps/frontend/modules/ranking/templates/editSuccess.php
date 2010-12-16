@@ -23,7 +23,7 @@
 	$dhtmlxTabBarObj->addTab('event', 'Eventos', 'ranking/form/event', array('rankingObj'=>$rankingObj));
 	$dhtmlxTabBarObj->addTab('classify', 'Classificação', 'ranking/form/classify', array('rankingObj'=>$rankingObj));
 	$dhtmlxTabBarObj->setHeight(250);
-	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabTask');
+	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabRanking');
 	$dhtmlxTabBarObj->build();
 ?>
 	<div class="buttonBarForm" id="rankingMainButtonBar">

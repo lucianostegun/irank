@@ -12,27 +12,19 @@
 class loginActions extends sfActions
 {
 
-  /**
-   * Método reponsável pela renderização da página inicial do módulo
-   *
-   * @author     Luciano Stegun
-   * @param      Object: Objeto da classe sfRequest nativa do framework
-   */
+  public function preExecute(){
+	
+	$this->title = 'Login';
+	
+	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
+  }
+
   public function executeIndex($request)
   {
 	if ( $this->getContext()->getUser()->isAuthenticated() && $this->getUser()->hasCredential('iRankSite'))
 	  return $this->redirect( 'home/index' );
   }
   
-  /**
-   * Método responsável por verificar as informações originadas do
-   * formulário de login e execução da identificação do usuário no sistema
-   * ou rejeição da tentativa de acesso.
-   * 
-   *
-   * @author     Luciano Stegun
-   * @param      Object: Objeto da classe sfRequest nativa do framework
-   */
   public function executeLogin($request)
   {
 
@@ -73,14 +65,6 @@ class loginActions extends sfActions
 	exit;
   }
 
-  /**
-   * Método responsável por realizar o logout do usuário no sistema
-   * excluindo todas as variáveis de sessão que armazenam informações
-   * sobre o acesso e o usuário
-   * 
-   *
-   * @author     Luciano Stegun
-   */
   public function executeLogout()
   {
     
