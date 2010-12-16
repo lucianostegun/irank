@@ -36,6 +36,21 @@
 	margin-right: 	5px
 }
 
+.button .buttonMiddle .label .submit {
+
+	position: 		absolute;
+	border: 		1px solid;
+	background: 	transparent;
+	width: 			0px;
+	height: 		0px;
+	z-index: 		-100;
+}
+
+.button .buttonMiddle .label a {
+
+	background: none;	
+}
+
 .button .buttonRight {
 
 	margin-right: 	10px;

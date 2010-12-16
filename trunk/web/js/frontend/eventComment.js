@@ -178,18 +178,3 @@ function replyComment(eventCommentId){
 	
 	adjustContentTab();
 }
-
-function handleTab(event){
-
-	if( event.keyCode!= 9)
-		return true;
-	
-	var fieldObj;
-
-	if( navigator.appName.indexOf("Netscape") != -1 )		
-		fieldObj = event.target;
-	else
-		fieldObj = event.srcElement;
-
-	var eventCommentId = fieldObj.id.replace('commentsComment', '');
-}

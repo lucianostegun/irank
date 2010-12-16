@@ -217,7 +217,9 @@ class Event extends BaseEvent
 		return $this->getRanking()->getGameStyle($returnTagName);
 	}
 	
-	public function getEmailAddressList($tagName=null){
+	public function getEmailAddressList($tagName=null, $supressMe=false){
+		
+		$peopleId = MyTools::getAttribute('peopleId');
 		
 		$emailAddressList = array();
 		
@@ -226,6 +228,9 @@ class Event extends BaseEvent
 		
 		foreach( $this->getPeopleList(true) as $peopleObj ){
 			
+			if( $supressMe && $peopleId==$peopleObj->getId() )
+				continue;
+
 			if( $tagName )
 				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
 					continue;

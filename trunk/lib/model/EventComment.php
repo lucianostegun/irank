@@ -109,7 +109,7 @@ class EventComment extends BaseEventComment
 		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
 		$emailContent = str_replace('<eventId>', $eventId, $emailContent);
 		
-		$emailAddressList = $eventObj->getEmailAddressList('receiveEventCommentNotify');
+		$emailAddressList = $eventObj->getEmailAddressList('receiveEventCommentNotify', true);
 		
 		Report::sendMail('Comentários do evento @ '.$eventObj->getEventName(), $emailAddressList, $emailContent);
 	}
