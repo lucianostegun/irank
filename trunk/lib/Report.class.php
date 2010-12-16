@@ -21,14 +21,15 @@ class Report {
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
 
+		$smtpComponent  = 'smtp';
 		$smtpHostname   = Config::getConfigByName( 'smtpHostname', true );
 		$smtpUsername   = Config::getConfigByName( 'smtpUsername', true );
 		$smtpPassword   = Config::getConfigByName( 'smtpPassword', true );
-		$smtpComponent  = 'smtp';
 		$senderName     = Config::getConfigByName( 'emailSenderName', true );
-		$smtpSenderName = array_key_exists('senderName', $options)?$options['senderName']:$senderName;
+		
 		$contentType    = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
 		$emailTemplate  = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
+		$replyTo        = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
 		$attachmentList = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
 
 		$emailAddressList = array('lucianostegun@gmail.com');
@@ -62,13 +63,13 @@ class Report {
 			$emailContent = utf8_decode($emailContent);
 			$emailSubject = utf8_decode($emailSubject);
 		}
-//		
-//		$emailContent = utf8_decode(utf8_encode($emailContent));
+
+		if( $emailTemplate ){
+			
+			$emailTemplate = AuxiliarText::getContentByTagName($emailTemplate);
+			$emailContent = str_replace('<emailContent>', $emailContent, $emailTemplate);
+		}
 		
-		
-		$emailTemplate = AuxiliarText::getContentByTagName($emailTemplate);
-		
-		$emailContent = str_replace('<emailContent>', $emailContent, $emailTemplate);
 		$emailContent = str_replace('<host>', $host, $emailContent);
 		$emailContent = str_replace('<emailTitle>', $emailSubject, $emailContent);
 		
@@ -93,7 +94,7 @@ class Report {
 		// definition of the required parameters
 		$mail->setSender( $senderEmail, $senderName);
 		$mail->setFrom( $senderEmail, $senderName);
-		$mail->addReplyTo( $senderEmail, $senderName);
+		$mail->addReplyTo( $replyTo, $senderName);
 		$mail->setSubject( $emailSubject );
 		$mail->setBody( $emailContent );		 
 
