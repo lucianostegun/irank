@@ -216,7 +216,7 @@ class ImapMessage {
 	private $senderAddress;
 	private $date;
 	private $body;
-	private $connection;
+	public $connection;
 	private $deleted = false;
 	private $server;
 	
