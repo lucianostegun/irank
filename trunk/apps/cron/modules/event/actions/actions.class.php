@@ -51,8 +51,11 @@ class eventActions extends sfActions
 		$connection = $emailImportObj->getConnection();
 
 		$successCount = 0;
+		
+		$messageObjList = $emailImportObj->getNewMessages();
+		$messageObjList = array_reverse($messageObjList);
 
-		foreach( $emailImportObj->getNewMessages() as $messageObj ){
+		foreach( $messageObjList as $messageObj ){
 
 			$subject      = $messageObj->getSubject();
 			$comment      = $messageObj->getBody();
@@ -60,12 +63,13 @@ class eventActions extends sfActions
 			$createdAt    = $messageObj->getDate();
 
 			$comment  = substr($comment, 0, 140);
+			$comment  = ereg_replace(chr(13).chr(10).chr(13).chr(10).'.*', '', $comment);
 			$comment  = str_replace(chr(13).chr(10), chr(10), $comment);
 			$encoding = mb_detect_encoding($comment);
 			
 			if( strtoupper($encoding)!='UTF-8' )
 				$comment  = utf8_encode($comment);
-			
+				
 			$eventCommentId = ereg_replace('^.*#', '', $subject);
 			$eventCommentId = $eventCommentId-1985;
 			
@@ -85,7 +89,22 @@ class eventActions extends sfActions
 			$eventCommentObj->setEventId( $eventObj->getId() );
 			$eventCommentObj->setComment( $comment );
 			$eventCommentObj->setCreatedAt( $createdAt );
-			$eventCommentObj->save();
+			
+			try{
+				
+				$eventCommentObj->save();
+				$eventCommentObj->notify();
+			}catch(Exception $e){
+
+				try{
+					
+					$eventCommentObj->setComment( utf8_decode($comment) );
+					$eventCommentObj->save();
+					$eventCommentObj->notify();
+				}catch(Exception $e){
+					
+				}
+			}
 			
 	  	    $messageObj->move('INBOX.Antigos');
 //	  	    $messageObj->delete();
