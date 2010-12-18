@@ -32,8 +32,11 @@ Usuário/Senha inválidos!<br/>Verifique as informações e tente novamente.
 						<td class="firstLine"><?php echo input_tag('username', null, array('size'=>20, 'id'=>'loginUsername')) ?></td>
 					</tr>
 					<tr>
-						<th class="lastLine">Senha</th>
-						<td class="lastLine"><?php echo input_tag('password', null, array('size'=>20, 'type'=>'password', 'id'=>'loginPassword')) ?></td>
+						<th class="lastLineBar" class="">Senha</th>
+						<td class="lastLineBar" class=""><?php echo input_tag('password', null, array('size'=>20, 'type'=>'password', 'id'=>'loginPassword')) ?></td>
+					</tr>
+					<tr>
+						<td class="actionBar" colspan="2" align="right"><?php echo image_tag('mobile/button/connect', array('onclick'=>'doLogin()')) ?></td>
 					</tr>
 				</table>
 							
@@ -42,19 +45,11 @@ Usuário/Senha inválidos!<br/>Verifique as informações e tente novamente.
 	</table>
 	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
 		<tr>
-			<td class="baseLeft" width="0" valign="bottom"><?php echo image_tag('mobile/form/baseLeft') ?></td>
-			<td width="100%" class="baseMiddle"></td>
-			<td class="baseRight" width="0" valign="bottom"><?php echo image_tag('mobile/form/baseRight') ?></td>
+			<td class="baseLeft" width="0" valign="bottom"><?php echo image_tag('mobile/form/baseLeftGray') ?></td>
+			<td width="100%" class="baseMiddleGray"></td>
+			<td class="baseRight" width="0" valign="bottom"><?php echo image_tag('mobile/form/baseRightGray') ?></td>
 		</tr>
 	</table>
-
-<br/><br/>
-
-<table width="100%" cellspacing="0" cellpadding="0">
-	<tr>
-		<td align="right" style="padding-right: 20px"><?php echo image_tag('mobile/button/conclude', array('onclick'=>'doLogin()')) ?></div>
-	</tr>
-</table>
 </div>
 
 </form>

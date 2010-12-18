@@ -39,7 +39,7 @@ function doSubmitEvent(content){
 }
 
 function handleOnFocus(fieldObj){
-	
+alert('--')	
 	var value = fieldObj.value;
 	
 	_lastFieldValue = value;
@@ -49,7 +49,7 @@ function handleOnFocus(fieldObj){
 }
 
 function handleOnBlur(fieldObj){
-	
+	alert('22')	
 	var value = fieldObj.value;
 	if( value=='' )
 		fieldObj.value = _lastFieldValue;

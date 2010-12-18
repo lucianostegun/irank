@@ -1,6 +1,6 @@
 function autoScrool(){
 	
-	setTimeout(goTop, 100);
+//	setTimeout(goTop, 100);
 }
 
 function goTop(){

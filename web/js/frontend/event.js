@@ -439,3 +439,20 @@ function onSelectTabEvent(tabId){
 	
 	return true;
 }
+
+function handleOnFocus(fieldObj){
+
+	var value = fieldObj.value;
+	
+	_lastFieldValue = value;
+	
+	if( value.match(/^0(,00)?/) )
+		fieldObj.value = '';
+}
+
+function handleOnBlur(fieldObj){
+	
+	var value = fieldObj.value;
+	if( value=='' )
+		fieldObj.value = _lastFieldValue;
+}

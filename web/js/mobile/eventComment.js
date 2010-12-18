@@ -1,19 +1,24 @@
-var _LastFormReplyId = null
+var _LastFormReplyId = null;
+var _IsPublishing    = false;
 
 function sendComment(eventCommentId){
 
-	eventCommentId = (eventCommentId?eventCommentId:'');
+	if( _IsPublishing ){
 	
+		alert('Aguarde a publicação do comentário atual');
+		return false;
+	}
+	
+	_IsPublishing = true;
+	eventCommentId = (eventCommentId?eventCommentId:'');
+
 	var fieldObj = $('commentsComment'+eventCommentId)
 	var comment  = fieldObj.value;
 	var eventId  = $('eventId').value;
 	
-	fieldObj.className = 'eventComment';
-	
 	if( !comment || comment=='Clique aqui para enviar seu comentário' ){
 		
-		fieldObj.className = 'eventCommentError';
-		fieldObj.title     = 'Digite alguma mensagem para publicar';
+		alert('Digite alguma mensagem para publicar');
 		return false;
 	}
 	
@@ -24,25 +29,25 @@ function sendComment(eventCommentId){
 	$('commentsCharCount'+eventCommentId).innerHTML = 'Publicando...';
 	
 	fieldObj.disabled = true;
-	
+
 	var successFunc = function(t){
 
 		var content = t.responseText;
 
 		var eventCommentIdNew = content.match(/eventComment[0-9]*Div/)+'';
-
-		eventCommentIdNew = eventCommentIdNew.replace(/[^0-9]/, '');
+		eventCommentIdNew = eventCommentIdNew.replace(/[^0-9]/gi, '');
 
 		var commentDiv = document.createElement('div');
-		commentDiv.id = 'eventComment'+eventCommentIdNew+'TmpDiv';		
+		commentDiv.id = 'eventComment'+eventCommentIdNew+'TmpDiv';
+		
+		commentDiv.innerHTML = content;
 		
 		$('commentListDiv').appendChild(commentDiv);
 		
-		removeLastReplyForm();
+		$('commentsCharCount'+eventCommentId).innerHTML = 'Comentário postado';
+		window.setTimeout('resetCommentForm('+eventCommentId+')', 1000);
 		
-		adjustContentTab();
-		
-		resetCommentForm(eventCommentId);
+		_IsPublishing = false;
 	};
 		
 	var failureFunc = function(t){
@@ -53,6 +58,7 @@ function sendComment(eventCommentId){
 		$('commentsCharCount'+eventCommentId).innerHTML = 'Erro ao publicar o comentário!';
 		
 		fieldObj.disabled = false;
+		_IsPublishing     = false;
 		
 		if( isDebug() )
 			debug(content);
@@ -70,7 +76,7 @@ function deleteComment(eventCommentId){
 	var successFunc = function(t){
 
 		try{
-		
+			
 			$('commentListDiv').removeChild( $('eventComment'+eventCommentId+'Div') );
 		}catch(e){
 			
@@ -97,12 +103,16 @@ function deleteComment(eventCommentId){
 
 function resetCommentForm(eventCommentId){
 	
-	enableButton('postComment');
-	hideDiv('commentsCharCount');
-	hideDiv('commentsPostButton');
+	eventCommentId = (eventCommentId?eventCommentId:'');
+	
+	hideDiv('commentButtonBarDiv');
 	$('commentsCharCount'+eventCommentId).innerHTML = '140 caracteres restantes';
 	$('commentsComment'+eventCommentId).disabled    = false;
 	$('commentsComment'+eventCommentId).value       = 'Clique aqui para enviar seu comentário';
+	
+	$('commentBaseLeft').src         = $('commentBaseLeft').src.replace('Gray', '');
+	$('commentBaseRight').src        = $('commentBaseRight').src.replace('Gray', '');
+	$('commentBaseMiddle').className = 'baseMiddle';
 }
 
 function handleCommentFocus(fieldObj){
@@ -113,10 +123,10 @@ function handleCommentFocus(fieldObj){
 	
 	var eventCommentId = fieldObj.id.replace('commentsComment', '');
 		
-	showDiv('commentsCharCount'+eventCommentId, true);
-	showDiv('commentsPostButton'+eventCommentId, true);
-	
-	adjustContentTab();
+	showDiv('commentButtonBarDiv', true);
+	$('commentBaseLeft').src         = $('commentBaseLeft').src.replace('baseLeft.png', 'baseLeftGray.png');
+	$('commentBaseRight').src        = $('commentBaseRight').src.replace('baseRight.png', 'baseRightGray.png');
+	$('commentBaseMiddle').className = 'baseMiddleGray'
 }
 
 function countChars(fieldObj){
@@ -138,54 +148,25 @@ function showAllComments(){
 	
 	var eventId = $('eventId').value;
 	
-	putLoading('commentListDiv');
+	putLoading('commentListDiv', false, true);
 	
 	var successFunc = function(t){
 
 		var content = t.responseText;
 		$('commentListDiv').innerHTML = content;
-		
-		adjustContentTab();
 	};
 	
 	var urlAjax = _webRoot+'/event/getCommentList/eventId/'+eventId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
 }
 
-function changeIcon(linkObj, over){
+function confirmDelete(eventCommentId){
 	
-	if( over )
-		linkObj.src = linkObj.src.replace('light', '');
-	else
-		linkObj.src = linkObj.src.replace('delete10', 'delete10light');
-}
-
-function removeLastReplyForm(){
-
-	if( _LastFormReplyId )
-		$('eventComment'+_LastFormReplyId+'Div').removeChild($('replyForm'+_LastFormReplyId+'Div'));
-}
-
-function replyComment(eventCommentId){
-
-	if( eventCommentId==_LastFormReplyId )
-		return false;
+	var onclick = function(){
+		
+		deleteComment(eventCommentId);
+	}
 	
-	removeLastReplyForm();
-	
-	_LastFormReplyId = eventCommentId;
-	
-	var formContent = $('extraCommentFormDiv').innerHTML;
-	formContent     = formContent.replace(/%eventCommentId%/gi, eventCommentId);
-	
-	var formDiv = document.createElement('div');
-	formDiv.className = 'replyFormDiv';
-	formDiv.id        = 'replyForm'+eventCommentId+'Div';
-	formDiv.innerHTML = formContent;
-	
-	$('eventComment'+eventCommentId+'Div').appendChild(formDiv);
-	showDiv('commentsCharCount'+eventCommentId, true);
-	showDiv('commentsPostButton'+eventCommentId, true);
-	
-	adjustContentTab();
+	$('deleteIcon'+eventCommentId).src     = $('deleteIcon'+eventCommentId).src.replace('icon/delete', 'button/delete');
+	$('deleteIcon'+eventCommentId).onclick = onclick
 }

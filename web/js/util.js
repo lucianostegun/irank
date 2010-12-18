@@ -73,19 +73,22 @@ function isVisible( divId ){
 		return (div.style.display != 'none' || div.style.display == '' || div.style.display == 'block');
 }
 
-function putLoading(divId, message){
+function putLoading(divId, message, mobile){
 	
 	if( !message )
-		message = 'Carregando,<br/>aguarde...';
+		message = 'Carregando,'+(mobile?' ':'<br/>')+'aguarde...';
 	
 	var html = '';
+	
+	var fontSize = (mobile?'16':'10');
 	
 	html += '<center>\n';
 	html += '<br/>\n';
 	html += '	<table>\n';
 	html += '		<tr>\n';
+	if( !mobile )
 	html += '			<td><img src="'+_imageRoot+'/ajaxLoader32.gif"></td>\n';
-	html += '			<td style="font-weight: bold; font-size: 10pt; padding-left: 15px">'+message+'</td>\n';
+	html += '			<td style="font-weight: bold; font-size: '+fontSize+'pt; padding-left: 15px">'+message+'</td>\n';
 	html += '		</tr>\n';
 	html += '	</table>\n';
 	html += '<center>\n';
