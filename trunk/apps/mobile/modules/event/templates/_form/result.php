@@ -1,6 +1,6 @@
 <div id="resultDiv" style="display: none">
 	<div class="text">
-		Utilize o dispositivo na posição horizontal para visualizar todos os campos de edição.
+		Utilize o dispositivo na posição horizontal para visualizar todos os campos de edição
 	</div>
 	<br/>
 			
