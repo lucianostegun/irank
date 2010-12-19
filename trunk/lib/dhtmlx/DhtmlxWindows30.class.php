@@ -140,7 +140,12 @@ class DhtmlxWindows30 {
 			$html .= '	'.$windowName.'Obj.button("park").hide();'.$nl;
 			$html .= '	'.$windowName.'Obj.button("close").hide();'.$nl;
 			$html .= '	'.$windowName.'Obj.button("minmax1").hide();'.$nl;
+			
 			$html .= '	'.$windowName.'Obj.setText(\''.$title.'\');'.$nl;
+			
+			if( !$title )
+				$html .= '	'.$windowName.'Obj.hideHeader();'.$nl;
+				
 			$html .= '	'.$windowName.'Obj.attachObject("'.$windowName.'Div");'.$nl;
 			if( $visible )
 				$html .= '	'.$windowName.'Show();'.$nl;

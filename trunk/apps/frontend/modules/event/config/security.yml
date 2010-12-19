@@ -4,3 +4,6 @@ default:
 
 confirmPresence:
   is_secure: off
+  
+uploadPhoto:
+  is_secure: off

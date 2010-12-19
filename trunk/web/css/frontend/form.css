@@ -17,10 +17,24 @@
 .defaultForm h1 {
 	
 	font-weight: 			bold;
-	background: 			#1A1A1A;
-	padding: 				5 0 4 30;
-	border-bottom: 			1px solid #333333;
-	color: 					#333333;
+	padding: 				5 0 4 8;
+	border-bottom: 			1px solid #666666;
+	color: 					#444444;
+	font-size: 				10pt;
+}
+
+.defaultForm h1 a {
+	
+	outline: 			none;
+	text-decoration: 	none;
+	color: 				#2126F3;
+	font-size: 			8pt;
+	font-weight: 		normal;
+}
+
+.defaultForm h1 a:hover {
+	
+	color: 	#000000;
 }
 
 .defaultFormErrorDetails {

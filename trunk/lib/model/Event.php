@@ -565,6 +565,16 @@ class Event extends BaseEvent
 		return (is_object($eventPlayerObj) && !$eventPlayerObj->getDeleted());
 	}
 	
+	public function getPhotoList(){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPhotoPeer::EVENT_ID, $this->getId() );
+		$criteria->add( EventPhotoPeer::DELETED, false );
+		$criteria->addAscendingOrderByColumn( EventPhotoPeer::ID );
+		
+		return EventPhotoPeer::doSelect($criteria);
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');

@@ -1,0 +1,33 @@
+.eventPhotoTable td {
+	
+	padding: 		5px;
+	background: 	#FFFFFF;
+	border: 		1px solid #BBB;
+	
+	filter: 		alpha(opacity=75);
+	-moz-opacity: 	0.75;
+	opacity: 		0.75;
+}
+
+.eventPhotoTable td.over {
+	
+	padding: 		5px;
+	background: 	#FFFFFF;
+	border: 		1px solid #BBB;
+	cursor: 		pointer;
+	filter: 		alpha(opacity=100);
+	-moz-opacity: 	1;
+	opacity: 		1;
+}
+
+.eventPhotoTable td img {
+	
+	
+}
+
+.eventPhotoTable .deleteImage {
+	
+	position: 		absolute;
+	margin-left: 	75px;
+	margin-top: 	-5px	
+}

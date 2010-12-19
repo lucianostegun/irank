@@ -25,3 +25,6 @@
 	$dhtmlxTabBarObj->build();
 ?>
 </form>
+<?php
+	DhtmlxWindows::createWindow('eventPhotoView', '', 380, 125, 'event/dialog/photoView', array());
+?>
