@@ -73,6 +73,8 @@ function viewEventPhoto(eventPhotoId, direction){
 		hideIndicator();
 	};
 
+	showIndicator();
+	
 	var urlAjax = _webRoot+'/event/getPhoto/eventId/'+eventId+'/eventPhotoId/'+eventPhotoId+'/direction/'+direction;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
 }
