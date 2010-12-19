@@ -16,8 +16,12 @@
 		?>
 		<td onmouseover="this.className='over'" onmouseout="this.className=''">
 			
-			<?php echo image_tag('icon/delete12', array('onclick'=>'deleteEventPhoto('.$eventPhotoId.')', 'class'=>'deleteImage', 'title'=>'Excluir imagem')) ?>
-			<?php echo image_tag('/uploads/eventPhoto/event-'.$eventId.'/thumb/'.$fileName, array('width'=>80, 'onclick'=>'viewEventPhoto('.$eventPhotoId.')')) ?>
+			<?php
+				if( !$eventObj->isMyEvent() )
+					echo image_tag('icon/delete12', array('onclick'=>'deleteEventPhoto('.$eventPhotoId.')', 'class'=>'deleteImage', 'title'=>'Excluir imagem'));
+					
+				echo image_tag('/uploads/eventPhoto/event-'.$eventId.'/thumb/'.$fileName, array('width'=>80, 'onclick'=>'viewEventPhoto('.$eventPhotoId.')'));
+			?>
 		</td>
 		<?php endforeach ?>
 	</tr>
