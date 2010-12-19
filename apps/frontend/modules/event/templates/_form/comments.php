@@ -1,6 +1,11 @@
 <table width="100%" cellspacing="0" cellpadding="0" style="margin-top: 5px">
 	<tr>
 		<td valign="top" style="padding: 5 5 5 15">Comentários dos convidados para o evento</td>
+		<?php if( $eventObj->isPastDate() ): ?>
+		<td valign="top" rowspan="3" align="left" class="defaultForm" style="padding-bottom: 30px">
+			<?php include_partial('event/include/photo', array('eventObj'=>$eventObj)) ?>			
+		</td>
+		<?php endif; ?>
 	</tr>
 	<tr>
 		<td valign="top" class="defaultForm">
@@ -14,7 +19,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" class="defaultForm" id="commentListDiv" style="padding-bottom: 30px">
+		<td valign="top" width="420" class="defaultForm" id="commentListDiv" style="padding-bottom: 30px">
 
 			<?php
 				$commentCount        = $eventObj->getCommentCount();

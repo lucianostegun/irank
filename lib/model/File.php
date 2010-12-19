@@ -10,6 +10,22 @@
 class File extends BaseFile
 {
 	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+       		Log::quickLog('file', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('file', $this->getPrimaryKey(), $e);
+        }
+    }
+	
 	public function toString(){
 		
 		return $this->getFileName();
@@ -105,62 +121,82 @@ class File extends BaseFile
 		header('Content-type: file/jpeg');
 	}
 	
-	public static function upload( $request, $filePathName, $fieldName='filePath', $subPath=null, $fileId=null ){
+	public static function upload( $request, $fieldName, $destinationPath, $options=array() ){
 		
-		$fileObj = ($fileId?FilePeer::retrieveByPK($fileId):new File());
-		$isNew   = $fileObj->isNew();
-		
-		if( $isNew )
-			$fileObj->setFileName( time() );
-			
-		$fileObj->save();
-		
-		$objectId    = $request->getParameter( 'objectId' );
-		$description = $request->getParameter( 'description' );
+		$fileId               = (array_key_exists('fileId', $options)?$options['fileId']:null);
+		$allowedExtensionList = (array_key_exists('allowedExtensionList', $options)?$options['allowedExtensionList']:array());
+		$maxFileSize          = (array_key_exists('maxFileSize', $options)?$options['maxFileSize']:null);
 		
 		$fileName  = $request->getFileName($fieldName);
 		$fileSize  = $request->getFileSize($fieldName);
 		$fileType  = $request->getFileType($fieldName);
 		$extension = explode('.', $fileName);
 		$extension = strtolower(end($extension));
+		
+		if( $fileSize > $maxFileSize )
+			throw new Exception('Tamanho máximo de arquivo excedido');
+		
+		if( count($allowedExtensionList) > 0 && !in_array($extension, $allowedExtensionList) )
+			throw new Exception('Formato de arquivo inválido. Formatos permitidos: '.implode(', ', $allowedExtensionList));
+
+		$fileObj = ($fileId?FilePeer::retrieveByPK($fileId):new File());
+		$fileObj->setFileName($fileName);
+		$isNew   = $fileObj->isNew();		
+		
+		$fileName = ereg_replace('[^0-9]', '', microtime()).'.'.$extension;
 
 		$extensionImageList = array('jpg', 'png', 'jpeg', 'bmp', 'gif');
 
-		$filePathName .= '.'.$extension;
-		$path          = Util::getFilePath('uploads/'.$subPath); 
-		
-		if( !is_dir($path) )
-			mkdir($path, 0755);
+		$destinationPath = Util::getFilePath('uploads/'.$destinationPath); 
+
+		if( !is_dir($destinationPath) )
+			mkdir($destinationPath, 0755);
 		
 		if( $isNew )
-			$filePath = $path . DIRECTORY_SEPARATOR . $filePathName;
+			$filePath = $destinationPath.DIRECTORY_SEPARATOR.$fileName;
 		else
 			$filePath = $fileObj->getFilePath(true);
 
 		$request->moveFile($fieldName, $filePath);
 
-		$fileObj->setFileName( $fileName );
-		$fileObj->setFilePath( $filePath );
-		$fileObj->setDescription( $description );
+		
+		$fileObj->setFilePath($filePath);
 		$fileObj->setFileSize($fileSize);
 		
 		if( in_array($extension, $extensionImageList) )
-			$fileObj->setImage();		
+			$fileObj->setIsImage(true);		
 		
 		$fileObj->save();
+		
+		Log::doLog('Upload do arquivo '.$fileObj->getId(), 'File');
 		
 		return $fileObj;
 	}
 	
-	public function setImage(){
-		
-		$this->setIsImage(true);
-		
-		$imageObj = new Image();
-		$this->addImage($imageObj);
-		$imageObj->setDimension(); 
+	public function getDimensions(){
+   	
+   		return File::getFileDimension($this->getFilePath(true));
 	}
-	
+   	
+	public static function getFileDimension( $filePath ){
+   	
+		$fileInfo = array();
+		
+		$fileInfo['width']  = null;
+		$fileInfo['height'] = null;
+		   	
+	   	try{
+		   	$fileDimension = getimagesize( $filePath );
+	   
+		   	$fileInfo['width']  = $fileDimension[0];
+			$fileInfo['height'] = $fileDimension[1];
+		}catch( Exception $e ){
+
+		}
+		   	
+		return $fileInfo;
+	}
+   	
 	public static function getFileByPath( $filePath ){
 		
 		$criteria = new Criteria();
@@ -279,5 +315,111 @@ class File extends BaseFile
 		
 		$extension = $this->getExtension();
 		return ($extension=='pdf');
+	}
+	
+	public function createThumbnail($destinationPath, $minWidth=false, $minHeight=false){
+		
+		$filePath        = $this->getFilePath(true);
+		$fileName        = Util::getFileName($filePath);
+		$thumbFilePath   = Util::getFilePath($destinationPath.'/'.$fileName);
+		$destinationPath = Util::getFilePath($destinationPath);
+		$extension       = $this->getExtension();
+		$fileDimensions  = $this->getDimensions();
+		
+		switch( $extension ){
+			case 'jpg':
+				$newImg = imagecreatefromjpeg( $filePath );
+				break;
+			case 'png':
+				$newImg = imagecreatefrompng( $filePath );
+				break;
+			case 'gif':
+				$newImg = imagecreatefromgif( $filePath );
+				break;	
+		}
+
+		if( !is_dir($destinationPath) )
+			mkdir($destinationPath, 0755);
+			
+		$width  = $fileDimensions['width'];
+		$height = $fileDimensions['height'];
+		
+		$newHeight = round($height*$minWidth/$width);
+		
+		if( $newHeight < $minHeight ){
+			
+			$newHeight = $minHeight;
+			$newWidth  = round($width*$minHeight/$height);
+		}
+		
+		$srcW = imagesx($newImg);
+		$srcH = imagesy($newImg);
+	
+		$top  = ($newHeight>$minHeight?$height/6:0);
+		$left = 0;
+	
+		$new = imagecreatetruecolor($minWidth, $minHeight);
+		imagecopyresampled($new, $newImg, 0, 0, $left, $top, $minWidth, $newHeight, $srcW, $srcH);
+
+//		header('Content-Type: image/jpeg');
+
+		imagejpeg($new, $thumbFilePath, 100);
+//		imagejpeg($new, ''	, 100);
+		imagedestroy($new);
+		imagedestroy($newImg);
+	}
+	
+	public function resizeMAx($maxWidth=false, $maxHeight=false){
+		
+		$filePath       = $this->getFilePath(true);
+		$fileName       = Util::getFileName($filePath);
+		$extension      = $this->getExtension();
+		$fileDimensions = $this->getDimensions();
+		
+		switch( $extension ){
+			case 'jpg':
+				$newImg = imagecreatefromjpeg( $filePath );
+				break;
+			case 'png':
+				$newImg = imagecreatefrompng( $filePath );
+				break;
+			case 'gif':
+				$newImg = imagecreatefromgif( $filePath );
+				break;	
+		}
+			
+		$width  = $fileDimensions['width'];
+		$height = $fileDimensions['height'];
+		
+		if( $width < $maxWidth && $height < $maxHeight )
+			return false;
+		
+		if( $width >= $height ){
+			
+			$newWidth  = $maxWidth;
+			$newHeight = round($height*$maxWidth/$width);
+		}else{
+			
+//			$widthTmp  = $maxHeight;
+//			$maxHeight = $maxWidth;
+//			$maxWidth  = $widthTmp;
+			
+			$newHeight = $maxHeight;
+			$newWidth  = round($width*$maxHeight/$height);
+		}
+
+		$srcW = imagesx($newImg);
+		$srcH = imagesy($newImg);
+	
+	
+		$new = imagecreatetruecolor($newWidth, $newHeight);
+		imagecopyresampled($new, $newImg, 0, 0, 0, 0, $newWidth, $newHeight, $srcW, $srcH);
+
+//		header('Content-Type: image/jpeg');
+
+		imagejpeg($new, $filePath, 100);
+//		imagejpeg($new, ''	, 100);
+		imagedestroy($new);
+		imagedestroy($newImg);
 	}
 }

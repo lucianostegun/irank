@@ -15,7 +15,7 @@ class Log extends BaseLog
     	return '#'.sprintf('%05d', $this->getId());
     }
     
-    public static function doLog($message, $className=null) 
+    public static function doLog($message, $className=null, $columnModifiedList=array()) 
     {
 
     	$userSiteId = sfContext::getInstance()->getUser()->getAttribute('userSiteId');
@@ -39,7 +39,20 @@ class Log extends BaseLog
         $logObj->setMessage( $message );
         $logObj->save();
         
-        return $logObj->getId();
+        $logId = $logObj->getId();
+        
+        if( count($columnModifiedList) ){
+		
+			$sql     = 'INSERT INTO log_field VALUES';
+			$sqlList = array();
+			foreach($columnModifiedList as $fieldName=>$fieldValue)
+				$sqlList[] = "($logId, '$fieldName', '".addslashes($fieldValue)."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";	    	
+		    
+		    $sql .= chr(10).chr(9).implode(','.chr(10).chr(9), $sqlList);
+		    Util::executeQuery($sql);
+        }
+        
+        return $logId;
     }
     
     public static function quickLog($tableName, $primaryKey, $isNew, $columnModifiedList, $className=null) {
@@ -51,17 +64,9 @@ class Log extends BaseLog
     		$primaryKey = implode(' e ', $primaryKey);
     	
     	if( $isNew )
-	       	$logId = self::doLog('Inseriu o registro '.$primaryKey.' na tabela '.$tableName, $className);
+	       	self::doLog('Inseriu o registro '.$primaryKey.' na tabela '.$tableName, $className, $columnModifiedList);
 	    else
-	    	$logId = self::doLog('Editou o registro '.$primaryKey.' na tabela '.$tableName, $className);
-
-		$sql     = 'INSERT INTO log_field VALUES';
-		$sqlList = array();
-		foreach($columnModifiedList as $fieldName=>$fieldValue)
-			$sqlList[] = "($logId, '$fieldName', '$fieldValue', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";	    	
-	    
-	    $sql .= chr(10).chr(9).implode(','.chr(10).chr(9), $sqlList);
-	    Util::executeQuery($sql);
+	    	self::doLog('Editou o registro '.$primaryKey.' na tabela '.$tableName, $className, $columnModifiedList);
     }
     
     public static function quickLogError($tableName, $primaryKey, $e) {

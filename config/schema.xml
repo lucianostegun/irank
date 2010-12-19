@@ -281,4 +281,19 @@
 		  </foreign-key>
 	</table>
 
+	<table name="event_photo" phpName="EventPhoto">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="event_id" type="INTEGER" required="true" />
+		<column name="file_id" type="INTEGER" required="true" />
+		<column name="deleted" type="BOOLEAN" required="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="event">
+		    <reference local="event_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="file">
+		    <reference local="file_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
 </database>

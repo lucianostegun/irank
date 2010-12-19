@@ -349,6 +349,100 @@ class eventActions extends sfActions
 	exit;
   }
   
+  public function executeUploadPhoto($request){
+
+	$eventId              = $request->getParameter('eventId');
+	$allowedExtensionList = array('jpg', 'jpeg', 'png');
+	$maxFileSize          = (1024*1024*2);
+	
+	$options = array('allowedExtensionList'=>$allowedExtensionList,
+					 'maxFileSize'=>$maxFileSize);
+
+	try {
+		
+		$fileObj = File::upload( $request, 'Filedata', 'eventPhoto/event-'.$eventId, $options );
+	}catch( Exception $e ){
+	
+		Util::forceError($e);	
+	}
+	
+	$thumbPath = '/uploads/eventPhoto/event-'.$eventId.'/thumb';
+	$fileObj->createThumbnail($thumbPath, 80, 60);
+	$fileObj->resizeMax(800,600);
+	
+	$eventPhotoObj = new EventPhoto();
+	$eventPhotoObj->setEventId($eventId);
+	$eventPhotoObj->setFileId($fileObj->getId());
+	$eventPhotoObj->save();
+  	
+  	exit;
+  }
+  
+  public function executeGetPhotoList($request){
+
+	$eventId  = $request->getParameter('eventId');
+	$eventObj = EventPeer::retrieveByPK($eventId);
+	
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	
+	$this->renderText(include_partial('event/include/photoList', array('eventObj'=>$eventObj)));
+		
+	exit;
+  }
+  
+  public function executeGetPhoto($request){
+
+	$eventId      = $request->getParameter('eventId');
+	$eventPhotoId = $request->getParameter('eventPhotoId');
+	$direction    = $request->getParameter('direction');
+	
+	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
+	
+	if( $direction=='next' )
+		$eventPhotoObj = $eventPhotoObj->getNextPhoto();
+	
+	if( $direction=='previous' )
+		$eventPhotoObj = $eventPhotoObj->getPreviousPhoto();
+
+	if( !is_object($eventPhotoObj) )
+		Util::forceError('Fim das imagens', true);
+				
+	if( $eventPhotoObj->getEventId()!=$eventId )
+		throw new Exception('Esta imagem não pertence ao evento informado!');
+	
+	echo Util::parseInfo($eventPhotoObj->getInfo());
+		
+	exit;
+  }
+  
+  public function executeDeletePhoto($request){
+
+	$eventId      = $request->getParameter('eventId');
+	$eventPhotoId = $request->getParameter('eventPhotoId');
+	
+	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
+	
+	if( $eventPhotoObj->getEventId()!=$eventId )
+		throw new Exception('Esta imagem não pertence ao evento informado!');
+	
+	if( !$eventPhotoObj->getEvent()->isMyEvent() )
+		throw new Exception('Você não tem permissão para excluir esta imagem!');
+	
+	$eventPhotoObj->delete();
+	
+	return $this->forward('event', 'getPhotoList');
+		
+	exit;
+  }
+  
+  public function executeResize($request){
+
+	$fileObj = FilePeer::retrieveByPK(97);
+	$fileObj->resizeMax(800, 600);
+	exit;
+  }
+  
   public function executeJavascript($request){
   	
     header('Content-type: text/x-javascript');
