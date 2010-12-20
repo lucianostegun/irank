@@ -19,6 +19,8 @@
 			<?php
 				if( $eventObj->isMyEvent() )
 					echo image_tag('icon/delete12', array('onclick'=>'deleteEventPhoto('.$eventPhotoId.')', 'class'=>'deleteImage', 'title'=>'Excluir imagem'));
+				
+				echo image_tag('misc/comments', array('onclick'=>'loadEventPhotoComments('.$eventPhotoId.')', 'class'=>'commentImage', 'title'=>'Ver comentários desta foto'));
 					
 				echo image_tag('/uploads/eventPhoto/event-'.$eventId.'/thumb/'.$fileName, array('width'=>80, 'onclick'=>'viewEventPhoto('.$eventPhotoId.')'));
 			?>

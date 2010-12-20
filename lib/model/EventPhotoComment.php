@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Subclasse de representação de objetos da tabela 'event_comment'.
+ * Subclasse de representação de objetos da tabela 'event_photo_comment'.
  *
  * 
  *
  * @package lib.model
  */ 
-class EventComment extends BaseEventComment
+class EventPhotoComment extends BaseEventPhotoComment
 {
 	
 	public function delete($con=null){
@@ -15,7 +15,7 @@ class EventComment extends BaseEventComment
 		$this->setDeleted(true);
 		$this->save();
 		
-		Log::quickLogDelete('event_comment', $this->getPrimaryKey());
+		Log::quickLogDelete('event_photo_comment', $this->getPrimaryKey());
 	}
 
     public function save($con=null){
@@ -27,10 +27,10 @@ class EventComment extends BaseEventComment
 
 			parent::save();
 			
-       		Log::quickLog('event_comment', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+       		Log::quickLog('event_photo_comment', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
         } catch ( Exception $e ) {
         	
-            Log::quickLogError('event_comment', $this->getPrimaryKey(), $e);
+            Log::quickLogError('event_photo_comment', $this->getPrimaryKey(), $e);
         }
     }
     
@@ -100,10 +100,10 @@ class EventComment extends BaseEventComment
 	public function notify(){
 
 		$eventCommentId = $this->getId();
-		$eventCommentId = (1985+$eventCommentId);
+		$eventCommentId = (1983+$eventCommentId);
 		
-		$eventObj     = $this->getEvent();
-		$emailContent = AuxiliarText::getContentByTagName('eventCommentNotify');
+		$eventObj     = $this->getEventPhoto()->getEvent();
+		$emailContent = AuxiliarText::getContentByTagName('eventPhotoCommentNotify');
 
 		$emailContent = str_replace('<eventName>', $eventObj->getEventName(), $emailContent);
 		$emailContent = str_replace('<rankingName>', $eventObj->getRanking()->getRankingName(), $emailContent);
@@ -114,8 +114,8 @@ class EventComment extends BaseEventComment
 		
 		$options = array();
 		$options['emailTemplate'] = null;
-		$options['replyTo']       = 'event_comment@irank.com.br';
+		$options['replyTo']       = 'event_photo_comment@irank.com.br';
 		
-		Report::sendMail('Comentários do evento #'.$eventCommentId, $emailAddressList, $emailContent, $options);
+		Report::sendMail('Comentários em foto do evento #'.$eventCommentId, $emailAddressList, $emailContent, $options);
 	}
 }

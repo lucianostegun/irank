@@ -351,9 +351,12 @@ class eventActions extends sfActions
   
   public function executeUploadPhoto($request){
 
+	$publish              = $request->getParameter('publish');
 	$eventId              = $request->getParameter('eventId');
 	$allowedExtensionList = array('jpg', 'jpeg', 'png');
 	$maxFileSize          = (1024*1024*2);
+	
+	Log::doLog('Publicar: '.($publish?'Sim':'Não'));
 	
 	$options = array('allowedExtensionList'=>$allowedExtensionList,
 					 'maxFileSize'=>$maxFileSize);
@@ -390,8 +393,66 @@ class eventActions extends sfActions
 		
 	exit;
   }
+
+  public function handleErrorSavePhotoComment(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
   
-  public function executeGetPhoto($request){
+  public function executeSavePhotoComment($request){
+
+	$eventPhotoId = $request->getParameter('eventPhotoId');
+	$eventId      = $request->getParameter('eventId');
+	$comment      = $request->getParameter('comment');
+	$comment      = urldecode($comment);
+
+	$comment = str_replace('|n', chr(10), $comment);
+
+	$eventPhotoCommentObj = new EventPhotoComment();
+	$eventPhotoCommentObj->setPeopleId( $this->peopleId );
+	$eventPhotoCommentObj->setEventPhotoId( $eventPhotoId );
+	$eventPhotoCommentObj->setComment( $comment );
+	$eventPhotoCommentObj->save();
+	
+	$eventPhotoCommentObj->notify();
+	
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj)));
+	exit;
+  }
+  
+  public function executeDeletePhotoComment($request){
+
+	$eventPhotoCommentId = $request->getParameter('eventPhotoCommentId');
+	
+	$eventPhotoCommentObj = EventCommentPeer::retrieveByPK($eventPhotoCommentId);
+	
+	if( !$eventPhotoCommentObj->isMyComment() )
+		throw new Exception('Este comentário não foi escrito por você!');
+	
+	$eventPhotoCommentObj->delete();
+	exit;
+  }
+  
+  public function executeGetPhotoCommentList($request){
+
+	$eventPhotoId = $request->getParameter('eventPhotoId');
+
+	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
+	$eventPhotoCommentObjList = $eventPhotoObj->getCommentList();
+	$eventPhotoCommentObjList = array_reverse($eventPhotoCommentObjList);
+	
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	
+	foreach($eventPhotoCommentObjList as $eventPhotoCommentObj)
+		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj)));
+		
+	exit;
+  }
+  
+  public function executeGetPhotoInfo($request){
 
 	$eventId      = $request->getParameter('eventId');
 	$eventPhotoId = $request->getParameter('eventPhotoId');
@@ -412,6 +473,24 @@ class eventActions extends sfActions
 		throw new Exception('Esta imagem não pertence ao evento informado!');
 	
 	echo Util::parseInfo($eventPhotoObj->getInfo());
+		
+	exit;
+  }
+  
+  public function executeGetPhoto($request){
+
+	$eventId      = $request->getParameter('eventId');
+	$eventPhotoId = $request->getParameter('eventPhotoId');
+	$maxWidth     = $request->getParameter('maxWidth');
+	
+	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
+	
+	if( $eventPhotoObj->getEventId()!=$eventId )
+		throw new Exception('Esta imagem não pertence ao evento informado!');
+	
+
+	$fileObj = $eventPhotoObj->getFile();
+	$fileObj->getResized($maxWidth);
 		
 	exit;
   }

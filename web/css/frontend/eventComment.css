@@ -1,9 +1,9 @@
-#commentListDiv .commentArea .comment {
+.commentList .commentArea .comment {
 	
 	margin-bottom: 	4px;
 }
 
-#commentListDiv .comment {
+.commentList .comment {
 	
 	background: 	#FFFFFF;
 	padding: 		0 0 5 0;
@@ -12,42 +12,42 @@
 	overflow-x: 	hidden;
 }
 
-#commentListDiv .commentArea .comment .header {
+.commentList .commentArea .comment .header {
 
 	background: 	#F5F5F5;
 	overflow-x: 	hidden;
 }
 
-#commentListDiv .commentArea .comment .header .senderInfo {
+.commentList .commentArea .comment .header .senderInfo {
 
 	float: 		left;
 	padding: 	2 5 2 5;
 }
 
-#commentListDiv .commentArea .comment .header .reply {
+.commentList .commentArea .comment .header .reply {
 
 	float: 		right;
 	padding: 	1 5 2 5;
 }
 
-#commentListDiv .commentArea .comment .header .reply a {
+.commentList .commentArea .comment .header .reply a {
 	
 	color: 	#98090C
 }
 
-#commentListDiv .commentArea .comment .header .reply a:hover {
+.commentList .commentArea .comment .header .reply a:hover {
 	
 	color: 	#000000
 }
 
-#commentListDiv .commentArea .comment .header .delete {
+.commentList .commentArea .comment .header .delete {
 
 	float: 		right;
 	padding: 	5 7 0 7;
 	width: 		12px;
 }
 
-#commentListDiv .commentArea .comment .message {
+.commentList .commentArea .comment .message {
 	
 	clear: 	both;
 	margin: 5 10 0 15;

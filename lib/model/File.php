@@ -369,7 +369,7 @@ class File extends BaseFile
 		imagedestroy($newImg);
 	}
 	
-	public function resizeMAx($maxWidth=false, $maxHeight=false){
+	public function resizeMax($maxWidth=false, $maxHeight=false){
 		
 		$filePath       = $this->getFilePath(true);
 		$fileName       = Util::getFileName($filePath);
@@ -419,6 +419,48 @@ class File extends BaseFile
 
 		imagejpeg($new, $filePath, 100);
 //		imagejpeg($new, ''	, 100);
+		imagedestroy($new);
+		imagedestroy($newImg);
+	}
+	
+	public function getResized($maxWidth=false, $maxHeight=false){
+		
+		$filePath       = $this->getFilePath(true);
+		$fileName       = Util::getFileName($filePath);
+		$extension      = $this->getExtension();
+		$fileDimensions = $this->getDimensions();
+
+		$newImg = imagecreatefromjpeg( $filePath );
+			
+		$width  = $fileDimensions['width'];
+		$height = $fileDimensions['height'];
+		
+		if( $width < $maxWidth && $height < $maxHeight )
+			return false;
+			
+		$maxWidth  = ($maxWidth?$maxWidth:$width);
+		$maxHeight = ($maxHeight?$maxHeight:$height);
+		
+		if( $width >= $height ){
+			
+			$newWidth  = $maxWidth;
+			$newHeight = round($height*$maxWidth/$width);
+		}else{
+
+			$newHeight = $maxHeight;
+			$newWidth  = round($width*$maxHeight/$height);
+		}
+
+		$srcW = imagesx($newImg);
+		$srcH = imagesy($newImg);
+	
+	
+		$new = imagecreatetruecolor($newWidth, $newHeight);
+		imagecopyresampled($new, $newImg, 0, 0, 0, 0, $newWidth, $newHeight, $srcW, $srcH);
+
+		header('Content-Type: image/jpeg');
+
+		imagejpeg($new, ''	, 100);
 		imagedestroy($new);
 		imagedestroy($newImg);
 	}

@@ -18,6 +18,7 @@ function updateEventPhotoList(){
 	
 	var successFunc = function(t){
 
+		closeEventPhotoComments();
 		hideIndicator();
 	};
 		
@@ -51,7 +52,13 @@ function viewEventPhoto(eventPhotoId, direction){
 		windowEventPhotoViewObj.center();
 		windowEventPhotoViewShow();
 		
-		var onclick = function(){ windowEventPhotoViewHide() }
+		var hidePhotoView = function(){
+		
+			windowEventPhotoViewHide();
+			window.onclick = null;
+			window.onkeyup = null;
+		}
+		
 		var onkeyup = function(event){
 			
 			if(event.keyCode==37)
@@ -59,10 +66,10 @@ function viewEventPhoto(eventPhotoId, direction){
 			if(event.keyCode==39)
 				viewEventPhoto(eventPhotoId, 'next');
 			if(event.keyCode==27)
-				windowEventPhotoViewHide();
+				hidePhotoView();
 		}
 		
-		window.onclick = onclick;
+		window.onclick = hidePhotoView;
 		window.onkeyup = onkeyup;
 		
 		hideIndicator();
@@ -75,11 +82,14 @@ function viewEventPhoto(eventPhotoId, direction){
 
 	showIndicator();
 	
-	var urlAjax = _webRoot+'/event/getPhoto/eventId/'+eventId+'/eventPhotoId/'+eventPhotoId+'/direction/'+direction;
+	var urlAjax = _webRoot+'/event/getPhotoInfo/eventId/'+eventId+'/eventPhotoId/'+eventPhotoId+'/direction/'+direction;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
 }
 
 function deleteEventPhoto(eventPhotoId){
+	
+	if( !confirm('Deseja realmente remover esta foto?') )
+		return false;
 	
 	var eventId = $('eventId').value;
 	
@@ -100,4 +110,70 @@ function deleteEventPhoto(eventPhotoId){
 
 	var urlAjax = _webRoot+'/event/deletePhoto/eventId/'+eventId+'/eventPhotoId/'+eventPhotoId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
+}
+
+function confirmPublish(){
+	
+	var publish = confirm('Deseja publicar esta foto na área pública do site?');
+	
+	return (publish?'true':'false');
+}
+
+function loadEventPhotoComments(eventPhotoId){
+	
+	var eventId = $('eventId').value;
+	
+	$('eventPhotoPreviewDiv').innerHTML = '<img width="280" src="'+_webRoot+'/event/getPhoto/eventId/'+eventId+'/eventPhotoId/'+eventPhotoId+'/maxWidth/280"/>';
+	
+	putLoading('commentPhotoListDiv');
+	
+	var successFunc = function(t){
+
+		var content = t.responseText;
+		
+		$('commentPhotoListDiv').innerHTML = content;
+		
+		resetCommentForm();
+
+		hideDiv('eventPhotoListDiv');
+		hideDiv('commentListDiv');
+		showDiv('commentPhotoListDiv');
+		showDiv('eventPhotoPreviewDiv');
+		showDiv('eventPhotoBackDiv');
+		
+		$('eventCommentEventPhotoId').value = eventPhotoId;
+		
+		$('commentTitleDiv').innerHTML = 'Exibindo comentários enviados para a foto selecionada.';
+		
+		adjustContentTab();
+		
+		hideIndicator();
+	};
+	
+	var failureFunc = function(t){
+
+		hideIndicator();
+	};
+
+	showIndicator();
+	
+	var urlAjax = _webRoot+'/event/getPhotoCommentList/eventId/'+eventId+'/eventPhotoId/'+eventPhotoId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function closeEventPhotoComments(){
+	
+	resetCommentForm();
+
+	showDiv('eventPhotoListDiv');
+	showDiv('commentListDiv');
+	hideDiv('commentPhotoListDiv');
+	hideDiv('eventPhotoPreviewDiv');
+	hideDiv('eventPhotoBackDiv');
+	
+	$('eventCommentEventPhotoId').value = '';
+	
+	$('commentTitleDiv').innerHTML = 'Comentários dos convidados para o evento';
+	
+	adjustContentTab();
 }

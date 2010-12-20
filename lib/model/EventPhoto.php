@@ -18,6 +18,21 @@ class EventPhoto extends BaseEventPhoto
 		Log::quickLogDelete('event_photo', $this->getPrimaryKey());
 	}
 	
+	public function getCommentList($limit=null){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPhotoCommentPeer::EVENT_PHOTO_ID, $this->getId() );
+		$criteria->add( EventPhotoCommentPeer::DELETED, false );
+		$criteria->addJoin( EventPhotoCommentPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		
+		$criteria->addDescendingOrderByColumn( EventPhotoCommentPeer::CREATED_AT );
+
+		if( $limit )
+			$criteria->setLimit($limit);
+		
+		return EventPhotoCommentPeer::doSelect($criteria);
+	}
+	
 	public function getNextPhoto(){
 		
 		$criteria = new Criteria();

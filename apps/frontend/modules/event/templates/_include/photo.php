@@ -1,5 +1,6 @@
 <?php
 	$eventId = $eventObj->getId();
+	echo input_hidden_tag('eventPhotoId', null, array('id'=>'eventCommentEventPhotoId'));
 ?>
 <h1>
 	<?php echo image_tag('icon/photo', array('align'=>'absmiddle', 'style'=>'margin-right: 10px')) ?> Fotos do evento
@@ -20,3 +21,6 @@
 <div id="eventPhotoListDiv" align="center">
 	<?php include_partial('event/include/photoList', array('eventObj'=>$eventObj)); ?>
 </div>
+
+<div id="eventPhotoBackDiv"><?php echo link_to('<b>Clique aqui</b>', '#closeEventPhotoComments()') ?> para retornar as comentários do evento</div>
+<div id="eventPhotoPreviewDiv" align="center"></div>
