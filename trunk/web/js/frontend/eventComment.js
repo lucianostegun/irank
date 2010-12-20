@@ -4,9 +4,11 @@ function sendComment(eventCommentId){
 
 	eventCommentId = (eventCommentId?eventCommentId:'');
 	
-	var fieldObj = $('commentsComment'+eventCommentId)
-	var comment  = fieldObj.value;
-	var eventId  = $('eventId').value;
+	var fieldObj     = $('eventCommentComment'+eventCommentId)
+	var comment      = fieldObj.value;
+	var eventId      = $('eventId').value;
+	var eventPhotoId = $('eventCommentEventPhotoId').value;
+	var isPhoto      = (eventPhotoId!='');
 	
 	fieldObj.className = 'eventComment';
 	
@@ -34,9 +36,11 @@ function sendComment(eventCommentId){
 		eventCommentIdNew = eventCommentIdNew.replace(/[^0-9]/, '');
 
 		var commentDiv = document.createElement('div');
-		commentDiv.id = 'eventComment'+eventCommentIdNew+'TmpDiv';		
+		commentDiv.id = 'event'+(isPhoto?'Photo':'')+'Comment'+eventCommentIdNew+'TmpDiv';
 		
-		$('commentListDiv').appendChild(commentDiv);
+		commentDiv.innerHTML = content;		
+
+		$('comment'+(isPhoto?'Photo':'')+'ListDiv').appendChild(commentDiv);
 		
 		removeLastReplyForm();
 		
@@ -58,23 +62,26 @@ function sendComment(eventCommentId){
 			debug(content);
 	};
 	
-	var urlAjax = _webRoot+'/event/saveComment/eventId/'+eventId+'?comment='+comment;
+	var urlAjax = _webRoot+'/event/save'+(isPhoto?'Photo':'')+'Comment/eventId/'+eventId+'?eventPhotoId='+eventPhotoId+'&comment='+comment;
 
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
 function deleteComment(eventCommentId){
 
+	var eventPhotoId = $('eventCommentEventPhotoId').value;
+	var isPhoto      = (eventPhotoId!='');
+	
 	showIndicator();
 	
 	var successFunc = function(t){
 
 		try{
 		
-			$('commentListDiv').removeChild( $('eventComment'+eventCommentId+'Div') );
+			$('comment'+(isPhoto?'Photo':'')+'ListDiv').removeChild( $('event'+(isPhoto?'Photo':'')+'Comment'+eventCommentId+'Div') );
 		}catch(e){
 			
-			$('commentListDiv').removeChild( $('eventComment'+eventCommentId+'TmpDiv') );
+			$('comment'+(isPhoto?'Photo':'')+'ListDiv').removeChild( $('event'+(isPhoto?'Photo':'')+'Comment'+eventCommentId+'TmpDiv') );
 		}
 		
 		hideIndicator();
@@ -91,18 +98,20 @@ function deleteComment(eventCommentId){
 			debug(content);
 	};
 	
-	var urlAjax = _webRoot+'/event/deleteComment/eventCommentId/'+eventCommentId;
+	var urlAjax = _webRoot+'/event/delete'+(isPhoto?'Photo':'')+'Comment/event'+(isPhoto?'Photo':'')+'CommentId/'+eventCommentId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
 function resetCommentForm(eventCommentId){
 	
+	eventCommentId = (eventCommentId?eventCommentId:'');
+	
 	enableButton('postComment');
 	hideDiv('commentsCharCount');
 	hideDiv('commentsPostButton');
-	$('commentsCharCount'+eventCommentId).innerHTML = '140 caracteres restantes';
-	$('commentsComment'+eventCommentId).disabled    = false;
-	$('commentsComment'+eventCommentId).value       = 'Clique aqui para enviar seu comentário';
+	$('commentsCharCount'+eventCommentId).innerHTML  = '140 caracteres restantes';
+	$('eventCommentComment'+eventCommentId).disabled = false;
+	$('eventCommentComment'+eventCommentId).value    = 'Clique aqui para enviar seu comentário';
 }
 
 function handleCommentFocus(fieldObj){
@@ -111,7 +120,7 @@ function handleCommentFocus(fieldObj){
 	if( comment=='Clique aqui para enviar seu comentário' )
 		fieldObj.value = '';
 	
-	var eventCommentId = fieldObj.id.replace('commentsComment', '');
+	var eventCommentId = fieldObj.id.replace('eventCommentComment', '');
 		
 	showDiv('commentsCharCount'+eventCommentId, true);
 	showDiv('commentsPostButton'+eventCommentId, true);
@@ -126,7 +135,7 @@ function countChars(fieldObj){
 	if( leftChars < 0 )
 		leftChars = 0;
 	
-	var eventCommentId = fieldObj.id.replace('commentsComment', '');
+	var eventCommentId = fieldObj.id.replace('eventCommentComment', '');
 		
 	$('commentsCharCount'+eventCommentId).innerHTML = leftChars+' caracter'+(leftChars==1?'':'es')+' restante'+(leftChars==1?'':'s');
 	

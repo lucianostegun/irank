@@ -296,4 +296,20 @@
 		  </foreign-key>
 	</table>
 
+	<table name="event_photo_comment" phpName="EventPhotoComment">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="event_photo_id" type="INTEGER" required="true" />
+		<column name="people_id" type="INTEGER" required="true" />
+		<column name="comment" type="VARCHAR" size="140" />
+		<column name="deleted" type="BOOLEAN" required="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="event_photo">
+		    <reference local="event_photo_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
 </database>

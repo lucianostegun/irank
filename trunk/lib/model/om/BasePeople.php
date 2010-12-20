@@ -99,6 +99,12 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastEventCommentCriteria = null;
 
 	
+	protected $collEventPhotoCommentList;
+
+	
+	protected $lastEventPhotoCommentCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -601,6 +607,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEventPhotoCommentList !== null) {
+				foreach($this->collEventPhotoCommentList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -692,6 +706,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 				if ($this->collEventCommentList !== null) {
 					foreach($this->collEventCommentList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventPhotoCommentList !== null) {
+					foreach($this->collEventPhotoCommentList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -952,6 +974,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			foreach($this->getEventCommentList() as $relObj) {
 				$copyObj->addEventComment($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEventPhotoCommentList() as $relObj) {
+				$copyObj->addEventPhotoComment($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1601,6 +1627,111 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$this->lastEventCommentCriteria = $criteria;
 
 		return $this->collEventCommentList;
+	}
+
+	
+	public function initEventPhotoCommentList()
+	{
+		if ($this->collEventPhotoCommentList === null) {
+			$this->collEventPhotoCommentList = array();
+		}
+	}
+
+	
+	public function getEventPhotoCommentList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPhotoCommentPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventPhotoCommentList === null) {
+			if ($this->isNew()) {
+			   $this->collEventPhotoCommentList = array();
+			} else {
+
+				$criteria->add(EventPhotoCommentPeer::PEOPLE_ID, $this->getId());
+
+				EventPhotoCommentPeer::addSelectColumns($criteria);
+				$this->collEventPhotoCommentList = EventPhotoCommentPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventPhotoCommentPeer::PEOPLE_ID, $this->getId());
+
+				EventPhotoCommentPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventPhotoCommentCriteria) || !$this->lastEventPhotoCommentCriteria->equals($criteria)) {
+					$this->collEventPhotoCommentList = EventPhotoCommentPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventPhotoCommentCriteria = $criteria;
+		return $this->collEventPhotoCommentList;
+	}
+
+	
+	public function countEventPhotoCommentList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPhotoCommentPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventPhotoCommentPeer::PEOPLE_ID, $this->getId());
+
+		return EventPhotoCommentPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventPhotoComment(EventPhotoComment $l)
+	{
+		$this->collEventPhotoCommentList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getEventPhotoCommentListJoinEventPhoto($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPhotoCommentPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventPhotoCommentList === null) {
+			if ($this->isNew()) {
+				$this->collEventPhotoCommentList = array();
+			} else {
+
+				$criteria->add(EventPhotoCommentPeer::PEOPLE_ID, $this->getId());
+
+				$this->collEventPhotoCommentList = EventPhotoCommentPeer::doSelectJoinEventPhoto($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventPhotoCommentPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastEventPhotoCommentCriteria) || !$this->lastEventPhotoCommentCriteria->equals($criteria)) {
+				$this->collEventPhotoCommentList = EventPhotoCommentPeer::doSelectJoinEventPhoto($criteria, $con);
+			}
+		}
+		$this->lastEventPhotoCommentCriteria = $criteria;
+
+		return $this->collEventPhotoCommentList;
 	}
 
 } 

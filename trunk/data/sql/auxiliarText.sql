@@ -80,3 +80,8 @@ INSERT INTO file(file_name, file_path, description, file_size, created_at, updat
     VALUES('eventCommentNotify.htm', 'templates/eventCommentNotify.htm', 'Comentários no evento', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
     VALUES('Comentários no evento', (SELECT MAX(id) FROM file), 'eventCommentNotify', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
+    VALUES('eventPhotoCommentNotify.htm', 'templates/eventPhotoCommentNotify.htm', 'Comentários nas fotos do evento', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
+    VALUES('Comentários nas fotos do evento', (SELECT MAX(id) FROM file), 'eventPhotoCommentNotify', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

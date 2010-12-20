@@ -33,13 +33,14 @@ class eventActions extends sfActions
   }
   
   public function executeImportEmailComments($request){
-	
-		$emailAddress = 'event_comment@irank.com.br';
+
+		$isPhoto      = $request->getParameter('photo');
+		$emailAddress = 'event_'.($isPhoto?'photo_':'').'comment@irank.com.br';
 		$password     = 'K33p0utme';
 		$server       = 'imap.irank.com.br';
 		$port         = 993;
 		$protocol     = 'imap';
-		
+
 		$emailImportObj = new EmailImport($protocol, false);
 		$emailImportObj->setServer( $server );
 		$emailImportObj->setPort($port);
@@ -70,23 +71,36 @@ class eventActions extends sfActions
 			if( strtoupper($encoding)!='UTF-8' )
 				$comment  = utf8_encode($comment);
 				
-			$eventCommentId = ereg_replace('^.*#', '', $subject);
-			$eventCommentId = $eventCommentId-1985;
+			$eventCommentId      = ereg_replace('^.*#', '', $subject);
+			$eventCommentId      = $eventCommentId-1985;
+			$eventPhotoCommentId = $eventCommentId-1983;
 			
-			$eventCommentObj = EventCommentPeer::retrieveByPK($eventCommentId);
-			$peopleObj       = PeoplePeer::retrieveByEmailAddress($emailAddress);
+			if( $isPhoto )
+				$eventCommentObj = EventPhotoCommentPeer::retrieveByPK($eventPhotoCommentId);
+			else
+				$eventCommentObj = EventCommentPeer::retrieveByPK($eventCommentId);
+				
+			$peopleObj = PeoplePeer::retrieveByEmailAddress($emailAddress);
 
 			if( !is_object($eventCommentObj) || !is_object($peopleObj) )
 				continue;
 			
-			$eventObj = $eventCommentObj->getEvent();
+			if( $isPhoto )
+				$eventPhotoObj = $eventCommentObj->getEventPhoto();
+			else
+				$eventObj = $eventCommentObj->getEvent();
 			
 			if( !$eventObj->isInvited($peopleObj->getId()) )
 				continue;
 				
 			$eventCommentObj = new EventComment();
 			$eventCommentObj->setPeopleId( $peopleObj->getId() );
-			$eventCommentObj->setEventId( $eventObj->getId() );
+			
+			if( $isPhoto )
+				$eventCommentObj->setEventPhotoId( $eventPhotoObj->getId() );
+			else
+				$eventCommentObj->setEventId( $eventObj->getId() );
+				
 			$eventCommentObj->setComment( $comment );
 			$eventCommentObj->setCreatedAt( $createdAt );
 			
@@ -106,8 +120,8 @@ class eventActions extends sfActions
 				}
 			}
 			
-	  	    $messageObj->move('INBOX.Antigos');
-//	  	    $messageObj->delete();
+//	  	    $messageObj->move('INBOX.Antigos');
+	  	    $messageObj->delete();
 	  	    
 	  	    $successCount++;
 		}
