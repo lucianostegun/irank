@@ -45,7 +45,11 @@ function viewEventPhoto(eventPhotoId, direction){
 		var width  = fileObj.width*1;
 		var height = fileObj.height*1;
 		
-		$('eventPhotoDiv').innerHTML = '<img src="/'+fileObj.filePath+'"/>';
+		var content = '<img src="/'+fileObj.filePath+'"/>';
+		content += '<a href="javascript:void(0)" onclick="loadEventPhotoComments('+eventPhotoId+')" style="cursor: pointer; position: absolute; right: 0; bottom: 0; z-index: 150"><img src="'+_imageRoot+'/misc/comments32.png" title="Ver comentários desta foto" />';
+//		alert(content);
+//		 margin-left: '+width+'px; margin-top: '+height+'px;
+		$('eventPhotoDiv').innerHTML = content;
 
 		windowEventPhotoViewShow();
 		windowEventPhotoViewObj.setDimension(width+15, height+15);
