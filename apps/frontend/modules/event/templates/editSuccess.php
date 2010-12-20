@@ -32,10 +32,10 @@
 	$resultMode = ($isEditable?'form':'show');
 	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
-//	$dhtmlxTabBarObj->addTab('main', 'Evento', 'event/'.$mode.'/main', array('eventObj'=>$eventObj, 'pastDate'=>$pastDate, 'confirmedPresence'=>$confirmedPresence));
-//	$dhtmlxTabBarObj->addTab('player', 'Convidados', 'event/'.$mode.'/player', array('eventObj'=>$eventObj));
-//	if( $pastDate )
-//		$dhtmlxTabBarObj->addTab('result', 'Resultado', 'event/'.$resultMode.'/result', array('eventObj'=>$eventObj));
+	$dhtmlxTabBarObj->addTab('main', 'Evento', 'event/'.$mode.'/main', array('eventObj'=>$eventObj, 'pastDate'=>$pastDate, 'confirmedPresence'=>$confirmedPresence));
+	$dhtmlxTabBarObj->addTab('player', 'Convidados', 'event/'.$mode.'/player', array('eventObj'=>$eventObj));
+	if( $pastDate )
+		$dhtmlxTabBarObj->addTab('result', 'Resultado', 'event/'.$resultMode.'/result', array('eventObj'=>$eventObj));
 	$dhtmlxTabBarObj->addTab('comments', 'Comentários', 'event/form/comments', array('eventObj'=>$eventObj, 'hidden'=>!$eventObj->getVisible()));
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabEvent');
 	$dhtmlxTabBarObj->setHeight(250);
