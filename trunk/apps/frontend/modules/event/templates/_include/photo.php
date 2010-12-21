@@ -1,6 +1,5 @@
 <?php
 	$eventId = $eventObj->getId();
-	echo input_hidden_tag('eventPhotoId', null, array('id'=>'eventCommentEventPhotoId'));
 ?>
 <h1>
 	<?php echo image_tag('icon/photo', array('align'=>'absmiddle', 'style'=>'margin-right: 10px')) ?> Fotos do evento
