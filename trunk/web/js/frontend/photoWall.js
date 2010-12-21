@@ -11,7 +11,7 @@ function viewEventPhoto(eventPhotoId, direction){
 		var height = fileObj.height*1;
 		
 		var content = '<img src="/'+fileObj.filePath+'"/>';
-		content += '<a href="javascript:void(0)" onclick="loadEventPhotoComments('+eventPhotoId+')" style="cursor: pointer; position: absolute; right: 0; bottom: 0; z-index: 150"><img src="'+_imageRoot+'/misc/comments32.png" title="Ver comentários desta foto" />';
+//		content += '<a href="javascript:void(0)" onclick="loadEventPhotoComments('+eventPhotoId+')" style="cursor: pointer; position: absolute; right: 0; bottom: 0; z-index: 150"><img src="'+_imageRoot+'/misc/comments32.png" title="Ver comentários desta foto" />';
 
 		$('photoWallDiv').innerHTML = content;
 
