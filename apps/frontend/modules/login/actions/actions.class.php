@@ -66,4 +66,30 @@ class loginActions extends sfActions
 		
 	return $this->renderText(get_partial('login/include/quickLogin'));
   }
+
+  public function executePasswordRecovery($request){
+	
+  }
+
+  public function handleErrorResetPassword(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
+  
+  public function executeResetPassword($request){
+
+	$username     = $request->getParameter('username');
+	$emailAddress = $request->getParameter('emailAddress');
+	
+	$criteria = new Criteria();
+	$criteria->add( UserSitePeer::USERNAME, $username, Criteria::ILIKE );
+	$criteria->add( PeoplePeer::EMAIL_ADDRESS, $emailAddress, Criteria::ILIKE );
+	$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+	$criteria->add( UserSitePeer::ACTIVE, true );
+	$userSiteObj = UserSitePeer::doSelectOne( $criteria );
+	
+	$userSiteObj->resetPassword();
+	
+	exit;
+  }
 }

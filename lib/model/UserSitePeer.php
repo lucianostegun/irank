@@ -61,4 +61,24 @@ class UserSitePeer extends BaseUserSitePeer
 		
 		return !MyTools::getRequest()->hasErrors();
 	}
+	
+	public static function checkUsernameRecovery( $username ){
+		
+		$emailAddress = MyTools::getRequestParameter('emailAddress');
+		
+		if( !$emailAddress )
+			return true;
+		
+		$criteria = new Criteria();
+		$criteria->add( UserSitePeer::USERNAME, $username, Criteria::ILIKE );
+		$criteria->add( PeoplePeer::EMAIL_ADDRESS, $emailAddress, Criteria::ILIKE );
+		$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		$criteria->add( UserSitePeer::ACTIVE, true );
+		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
+		
+		if( !$userSiteObj )
+			MyTools::setError('emailAddress', 'Usuário/E-mail não encontrados');
+
+		return is_object( $userSiteObj );
+	}
 }

@@ -285,7 +285,8 @@
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
 		<column name="event_id" type="INTEGER" required="true" />
 		<column name="file_id" type="INTEGER" required="true" />
-		<column name="deleted" type="BOOLEAN" required="true" />
+		<column name="is_shared" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
 		  <foreign-key foreignTable="event">
@@ -301,7 +302,7 @@
 		<column name="event_photo_id" type="INTEGER" required="true" />
 		<column name="people_id" type="INTEGER" required="true" />
 		<column name="comment" type="VARCHAR" size="140" />
-		<column name="deleted" type="BOOLEAN" required="true" />
+		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
 		  <foreign-key foreignTable="event_photo">

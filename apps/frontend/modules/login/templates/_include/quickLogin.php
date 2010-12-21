@@ -21,7 +21,7 @@
 						</td>
 						<td style="text-align: center; padding-top: 5px">
 							<?php echo link_to('Novo cadastro', '/sign') ?>
-							<?php echo link_to('Esqueci a senha', '/login/retrievePassword', array('style'=>'margin-left: 15px; display: none')) ?>
+							<?php echo link_to('Esqueci a senha', '/login/passwordRecovery', array('style'=>'margin-left: 15px')) ?>
 						</td>
 					</tr>
 				</table>

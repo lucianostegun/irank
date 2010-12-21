@@ -53,19 +53,13 @@
     <td align="left" valign="top" bgcolor="#F0F0F0">
 	    <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	      <tr>
-	        <td align="left" valign="middle" class="poker_heading"><img src="/images/frontend/layout/bullet.gif" alt="" width="40" height="10" />Sites parceiros</td>
+	        <td align="left" valign="middle" class="poker_heading"><img src="/images/frontend/layout/bullet.gif" alt="" width="40" height="10" />Canais iRank</td>
 	      </tr>
 	      <tr>
 	        <td align="left" valign="top" class="poker" style="padding:11px 0px 20px 12px;">
 		        <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		          <tr>
-		            <td align="left" valign="top"><?php echo link_to('PokerStars', 'http://www.pokerstars.net', array('target'=>'_blank')) ?></td>
-		          </tr>
-		          <tr>
-		            <td align="left" valign="top"><?php echo link_to('Party Poker', 'http://www.partypoker.net', array('target'=>'_blank')) ?></td>
-		          </tr>
-		          <tr>
-		            <td align="left" valign="top"><?php echo link_to('Fulltilt Poker', 'http://www.fulltiltpoker.net', array('target'=>'_blank')) ?></td>
+		          	<td style="background: url('/images/icon/photo.png') left 6px no-repeat"><?php echo link_to('Mural de fotos', 'photoWall/index', array('style'=>'background: none')) ?></td>
 		          </tr>
 		        </table>
 	        </td>

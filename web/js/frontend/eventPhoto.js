@@ -18,7 +18,11 @@ function updateEventPhotoList(){
 	
 	var successFunc = function(t){
 
+		var content = t.responseText;
+		
+		$('eventPhotoListDiv').innerHTML = content;
 		closeEventPhotoComments();
+		adjustContentTab();
 		hideIndicator();
 	};
 		
@@ -28,7 +32,7 @@ function updateEventPhotoList(){
 	};
 	
 	var urlAjax = _webRoot+'/event/getPhotoList/eventId/'+eventId;
-	new Ajax.Updater('eventPhotoListDiv', urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
 function viewEventPhoto(eventPhotoId, direction){
@@ -47,8 +51,7 @@ function viewEventPhoto(eventPhotoId, direction){
 		
 		var content = '<img src="/'+fileObj.filePath+'"/>';
 		content += '<a href="javascript:void(0)" onclick="loadEventPhotoComments('+eventPhotoId+')" style="cursor: pointer; position: absolute; right: 0; bottom: 0; z-index: 150"><img src="'+_imageRoot+'/misc/comments32.png" title="Ver comentários desta foto" />';
-//		alert(content);
-//		 margin-left: '+width+'px; margin-top: '+height+'px;
+
 		$('eventPhotoDiv').innerHTML = content;
 
 		windowEventPhotoViewShow();
