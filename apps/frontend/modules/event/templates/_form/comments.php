@@ -1,3 +1,6 @@
+<?php
+	echo input_hidden_tag('eventPhotoId', null, array('id'=>'eventCommentEventPhotoId'));
+?>
 <table width="100%" cellspacing="0" cellpadding="0" style="margin-top: 5px">
 	<tr>
 		<td valign="top" height="20" style="padding: 5 5 5 15"><div id="commentTitleDiv">Comentários dos convidados para o evento</div></td>
