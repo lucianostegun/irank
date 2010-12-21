@@ -13,7 +13,7 @@ abstract class BaseEventPhotoPeer {
 	const CLASS_DEFAULT = 'lib.model.EventPhoto';
 
 	
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 7;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -27,6 +27,9 @@ abstract class BaseEventPhotoPeer {
 
 	
 	const FILE_ID = 'event_photo.FILE_ID';
+
+	
+	const IS_SHARED = 'event_photo.IS_SHARED';
 
 	
 	const DELETED = 'event_photo.DELETED';
@@ -43,19 +46,19 @@ abstract class BaseEventPhotoPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventId', 'FileId', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID, EventPhotoPeer::EVENT_ID, EventPhotoPeer::FILE_ID, EventPhotoPeer::DELETED, EventPhotoPeer::CREATED_AT, EventPhotoPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_id', 'file_id', 'deleted', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_ID'=>'', 'FILE_ID'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventId', 'FileId', 'IsShared', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID, EventPhotoPeer::EVENT_ID, EventPhotoPeer::FILE_ID, EventPhotoPeer::IS_SHARED, EventPhotoPeer::DELETED, EventPhotoPeer::CREATED_AT, EventPhotoPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_id', 'file_id', 'is_shared', 'deleted', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_ID'=>'', 'FILE_ID'=>'', 'IS_SHARED'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventId'=>1, 'FileId'=>2, 'Deleted'=>3, 'CreatedAt'=>4, 'UpdatedAt'=>5, ),
-		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID=>0, EventPhotoPeer::EVENT_ID=>1, EventPhotoPeer::FILE_ID=>2, EventPhotoPeer::DELETED=>3, EventPhotoPeer::CREATED_AT=>4, EventPhotoPeer::UPDATED_AT=>5, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_id'=>1, 'file_id'=>2, 'deleted'=>3, 'created_at'=>4, 'updated_at'=>5, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventId'=>1, 'FileId'=>2, 'IsShared'=>3, 'Deleted'=>4, 'CreatedAt'=>5, 'UpdatedAt'=>6, ),
+		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID=>0, EventPhotoPeer::EVENT_ID=>1, EventPhotoPeer::FILE_ID=>2, EventPhotoPeer::IS_SHARED=>3, EventPhotoPeer::DELETED=>4, EventPhotoPeer::CREATED_AT=>5, EventPhotoPeer::UPDATED_AT=>6, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_id'=>1, 'file_id'=>2, 'is_shared'=>3, 'deleted'=>4, 'created_at'=>5, 'updated_at'=>6, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	
@@ -114,6 +117,8 @@ abstract class BaseEventPhotoPeer {
 		$criteria->addSelectColumn(EventPhotoPeer::EVENT_ID);
 
 		$criteria->addSelectColumn(EventPhotoPeer::FILE_ID);
+
+		$criteria->addSelectColumn(EventPhotoPeer::IS_SHARED);
 
 		$criteria->addSelectColumn(EventPhotoPeer::DELETED);
 

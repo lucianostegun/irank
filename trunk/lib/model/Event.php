@@ -352,6 +352,12 @@ class Event extends BaseEvent
 		$emailContent = $this->getEmailContent($emailContent);
 		
 		$eventSchedule = ($days==0?'hoje':'em '.$days.' dias');
+		switch($days){
+			case 1:
+				$eventSchedule = ' amanhã';
+				break;	
+		}
+		
 		$emailContent = str_replace('<eventSchedule>', $eventSchedule, $emailContent);
 		
 		$emailAddressList = $this->getEmailAddressList('receiveEventReminder'.$days);

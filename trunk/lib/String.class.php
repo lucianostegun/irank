@@ -12,7 +12,7 @@ class String
 	public static $translateTable = array(	'from' => 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåªæçèéêëìíîïðñòóôõöøùúûüýÿ',
 											'to'   => 'AAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaaceeeeiiiionoooooouuuuyy' );
 
-    public static function createRandom($length, $upper=false, $chars='abc2de3f3gh9j4kmn5pq8r6stu7vwx8yz'){
+    public static function createRandom($length, $upper=true, $chars='abc2de3f3gh9j4kmn5pq8r6stu7vwx8yz'){
     
         srand((double)microtime()*1000000);
         $i = 0;

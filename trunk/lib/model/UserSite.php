@@ -104,6 +104,27 @@ class UserSite extends BaseUserSite
 		
 		Report::sendMail('Seja bem vindo', $emailAddress, $emailContent);
 	}
+
+	public function resetPassword(){
+
+		$emailContent  = AuxiliarText::getContentByTagName('passwordRecovery');
+		
+		$newPassword = String::createRandom(7);
+		
+		$emailContent = str_replace('<password>', $newPassword, $emailContent);
+		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
+		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent); 		
+		
+		$emailAddress = $this->getPeople()->getEmailAddress();
+		
+		$this->setPassword( md5($newPassword) );
+		$this->save();
+		
+		$options = array();
+		$options['emailTemplate'] = null;
+		
+		Report::sendMail('Recuperação de senha', $emailAddress, $emailContent, $options);
+	}
 	
 	public function setOptionValue($tagName, $optionValue){
 		

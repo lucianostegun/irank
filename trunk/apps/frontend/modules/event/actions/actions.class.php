@@ -376,6 +376,7 @@ class eventActions extends sfActions
 	$eventPhotoObj = new EventPhoto();
 	$eventPhotoObj->setEventId($eventId);
 	$eventPhotoObj->setFileId($fileObj->getId());
+	$eventPhotoObj->setIsShared($publish);
 	$eventPhotoObj->save();
   	
   	exit;
