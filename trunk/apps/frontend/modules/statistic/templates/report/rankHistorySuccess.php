@@ -23,6 +23,8 @@ $phpExcelObj->setActiveSheetIndex(0)->insertNewRowBefore(8, $players-2);
 
 $rankingPlayerObjList = $rankingObj->getPlayerList();
 
+$eventDateList = array_merge(array(), $eventDateList);
+
 foreach($eventDateList as $key=>$eventDate){
 	
 	$colName = PHPExcel_Cell::stringFromColumnIndex(($key+1));
@@ -40,16 +42,23 @@ foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 	$phpExcelObj->setActiveSheetIndex(0)
 				->setCellValue('A'.$currentLine, $rankingPlayerObj->getPeople()->getName())
 				;
-					
+
 	foreach($eventDateList as $key=>$eventDate){
 		
 		$colName = PHPExcel_Cell::stringFromColumnIndex(($key+1));
 	
 		$rankingHistoryObj = RankingHistoryPeer::retrieveByPK($rankingObj->getId(), $rankingPlayerObj->getPeopleId(), Util::formatDate($eventDate));
 	
+		if( is_object($rankingHistoryObj) )
+			$totalRankingPosition = $rankingHistoryObj->getRankingPosition();
+		else
+			$totalRankingPosition = ' - ';
+	
 		$phpExcelObj->setActiveSheetIndex(0)
-					->setCellValue($colName.$currentLine, $rankingHistoryObj->getTotalRankingPosition())
-					;
+					->setCellValue($colName.$currentLine, $totalRankingPosition);
+		
+		if( $totalRankingPosition == ' - ' )
+		$phpExcelObj->setActiveSheetIndex(0)->getStyle($colName.$currentLine)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 	}
 	
 	$currentLine++;
