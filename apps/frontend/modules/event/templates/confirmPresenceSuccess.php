@@ -12,7 +12,7 @@
 	
 	Você pode cancelar sua presença ou ainda informar que sua presença não está 100% confirmada.<br/><br/>
 	
-	<b><?php echo link_to('Clique aqui', '#goModule("event", "show", "eventId", '.$eventObj->getId().')') ?></b> aqui para visualizar os detalhes do evento. 	
+	<b><?php echo link_to('Clique aqui', '#goModule(\'event\', \'show\', \'eventId\', '.$eventObj->getId().')') ?></b> aqui para visualizar os detalhes do evento. 	
 	</td>
   </tr>
 </table>
