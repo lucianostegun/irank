@@ -162,6 +162,7 @@
 		<column name="rebuy" type="FLOAT" />
 		<column name="addon" type="FLOAT" />
 		<column name="event_position" type="INTEGER" />
+		<column name="score" type="FLOAT" />
 		<column name="prize" type="FLOAT" />
 		<column name="confirm_code" type="VARCHAR" size="50" />
 		<column name="invite_status" type="VARCHAR" size="5" />

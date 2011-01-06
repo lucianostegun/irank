@@ -13,7 +13,7 @@ abstract class BaseEventPlayerPeer {
 	const CLASS_DEFAULT = 'lib.model.EventPlayer';
 
 	
-	const NUM_COLUMNS = 14;
+	const NUM_COLUMNS = 15;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -36,6 +36,9 @@ abstract class BaseEventPlayerPeer {
 
 	
 	const EVENT_POSITION = 'event_player.EVENT_POSITION';
+
+	
+	const SCORE = 'event_player.SCORE';
 
 	
 	const PRIZE = 'event_player.PRIZE';
@@ -67,19 +70,19 @@ abstract class BaseEventPlayerPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventId', 'PeopleId', 'Buyin', 'Rebuy', 'Addon', 'EventPosition', 'Prize', 'ConfirmCode', 'InviteStatus', 'AllowEdit', 'Enabled', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventPlayerPeer::EVENT_ID, EventPlayerPeer::PEOPLE_ID, EventPlayerPeer::BUYIN, EventPlayerPeer::REBUY, EventPlayerPeer::ADDON, EventPlayerPeer::EVENT_POSITION, EventPlayerPeer::PRIZE, EventPlayerPeer::CONFIRM_CODE, EventPlayerPeer::INVITE_STATUS, EventPlayerPeer::ALLOW_EDIT, EventPlayerPeer::ENABLED, EventPlayerPeer::DELETED, EventPlayerPeer::CREATED_AT, EventPlayerPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_id', 'people_id', 'buyin', 'rebuy', 'addon', 'event_position', 'prize', 'confirm_code', 'invite_status', 'allow_edit', 'enabled', 'deleted', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('EVENT_ID'=>'', 'PEOPLE_ID'=>'', 'BUYIN'=>'', 'REBUY'=>'', 'ADDON'=>'', 'EVENT_POSITION'=>'', 'PRIZE'=>'', 'CONFIRM_CODE'=>'', 'INVITE_STATUS'=>'', 'ALLOW_EDIT'=>'', 'ENABLED'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+		BasePeer::TYPE_PHPNAME=>array ('EventId', 'PeopleId', 'Buyin', 'Rebuy', 'Addon', 'EventPosition', 'Score', 'Prize', 'ConfirmCode', 'InviteStatus', 'AllowEdit', 'Enabled', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventPlayerPeer::EVENT_ID, EventPlayerPeer::PEOPLE_ID, EventPlayerPeer::BUYIN, EventPlayerPeer::REBUY, EventPlayerPeer::ADDON, EventPlayerPeer::EVENT_POSITION, EventPlayerPeer::SCORE, EventPlayerPeer::PRIZE, EventPlayerPeer::CONFIRM_CODE, EventPlayerPeer::INVITE_STATUS, EventPlayerPeer::ALLOW_EDIT, EventPlayerPeer::ENABLED, EventPlayerPeer::DELETED, EventPlayerPeer::CREATED_AT, EventPlayerPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('event_id', 'people_id', 'buyin', 'rebuy', 'addon', 'event_position', 'score', 'prize', 'confirm_code', 'invite_status', 'allow_edit', 'enabled', 'deleted', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('EVENT_ID'=>'', 'PEOPLE_ID'=>'', 'BUYIN'=>'', 'REBUY'=>'', 'ADDON'=>'', 'EVENT_POSITION'=>'', 'SCORE'=>'', 'PRIZE'=>'', 'CONFIRM_CODE'=>'', 'INVITE_STATUS'=>'', 'ALLOW_EDIT'=>'', 'ENABLED'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventId'=>0, 'PeopleId'=>1, 'Buyin'=>2, 'Rebuy'=>3, 'Addon'=>4, 'EventPosition'=>5, 'Prize'=>6, 'ConfirmCode'=>7, 'InviteStatus'=>8, 'AllowEdit'=>9, 'Enabled'=>10, 'Deleted'=>11, 'CreatedAt'=>12, 'UpdatedAt'=>13, ),
-		BasePeer::TYPE_COLNAME=>array (EventPlayerPeer::EVENT_ID=>0, EventPlayerPeer::PEOPLE_ID=>1, EventPlayerPeer::BUYIN=>2, EventPlayerPeer::REBUY=>3, EventPlayerPeer::ADDON=>4, EventPlayerPeer::EVENT_POSITION=>5, EventPlayerPeer::PRIZE=>6, EventPlayerPeer::CONFIRM_CODE=>7, EventPlayerPeer::INVITE_STATUS=>8, EventPlayerPeer::ALLOW_EDIT=>9, EventPlayerPeer::ENABLED=>10, EventPlayerPeer::DELETED=>11, EventPlayerPeer::CREATED_AT=>12, EventPlayerPeer::UPDATED_AT=>13, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_id'=>0, 'people_id'=>1, 'buyin'=>2, 'rebuy'=>3, 'addon'=>4, 'event_position'=>5, 'prize'=>6, 'confirm_code'=>7, 'invite_status'=>8, 'allow_edit'=>9, 'enabled'=>10, 'deleted'=>11, 'created_at'=>12, 'updated_at'=>13, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+		BasePeer::TYPE_PHPNAME=>array ('EventId'=>0, 'PeopleId'=>1, 'Buyin'=>2, 'Rebuy'=>3, 'Addon'=>4, 'EventPosition'=>5, 'Score'=>6, 'Prize'=>7, 'ConfirmCode'=>8, 'InviteStatus'=>9, 'AllowEdit'=>10, 'Enabled'=>11, 'Deleted'=>12, 'CreatedAt'=>13, 'UpdatedAt'=>14, ),
+		BasePeer::TYPE_COLNAME=>array (EventPlayerPeer::EVENT_ID=>0, EventPlayerPeer::PEOPLE_ID=>1, EventPlayerPeer::BUYIN=>2, EventPlayerPeer::REBUY=>3, EventPlayerPeer::ADDON=>4, EventPlayerPeer::EVENT_POSITION=>5, EventPlayerPeer::SCORE=>6, EventPlayerPeer::PRIZE=>7, EventPlayerPeer::CONFIRM_CODE=>8, EventPlayerPeer::INVITE_STATUS=>9, EventPlayerPeer::ALLOW_EDIT=>10, EventPlayerPeer::ENABLED=>11, EventPlayerPeer::DELETED=>12, EventPlayerPeer::CREATED_AT=>13, EventPlayerPeer::UPDATED_AT=>14, ),
+		BasePeer::TYPE_FIELDNAME=>array ('event_id'=>0, 'people_id'=>1, 'buyin'=>2, 'rebuy'=>3, 'addon'=>4, 'event_position'=>5, 'score'=>6, 'prize'=>7, 'confirm_code'=>8, 'invite_status'=>9, 'allow_edit'=>10, 'enabled'=>11, 'deleted'=>12, 'created_at'=>13, 'updated_at'=>14, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
 	
@@ -144,6 +147,8 @@ abstract class BaseEventPlayerPeer {
 		$criteria->addSelectColumn(EventPlayerPeer::ADDON);
 
 		$criteria->addSelectColumn(EventPlayerPeer::EVENT_POSITION);
+
+		$criteria->addSelectColumn(EventPlayerPeer::SCORE);
 
 		$criteria->addSelectColumn(EventPlayerPeer::PRIZE);
 

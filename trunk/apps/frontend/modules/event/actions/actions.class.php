@@ -279,15 +279,12 @@ class eventActions extends sfActions
   	if( !$confirmCode || !is_object($eventPlayerObj) )
   		return $this->redirect('event/index');
   	
-  	$peopleIdTmp = $this->getUser()->getAttribute('peopleId');
   	$this->getUser()->setAttribute('peopleId', $eventPlayerObj->getPeopleId());
   	
   	$eventPlayerObj->confirmPresence();
   	
   	if( $eventPlayerObj->getPeople()->isPeopleType('userSite') )
   		$eventPlayerObj->getPeople()->getUserSite()->login();
-  	
-  	$this->getUser()->setAttribute('peopleId', $peopleIdTmp);
   	
   	$this->eventObj = $eventPlayerObj->getEvent();
   }
@@ -538,7 +535,7 @@ class eventActions extends sfActions
   	foreach($rankingObj->getEventDateList() as $eventDate)
   		$rankingObj->updateHistory($eventDate);
   	
-  	echo 'ok '.date('d/m/D H:i:s');
+  	echo 'ok event '.date('d/m/Y H:i:s');
   	exit;
   }
 }

@@ -44,6 +44,8 @@ class EventPlayerMapBuilder {
 
 		$tMap->addColumn('EVENT_POSITION', 'EventPosition', 'int', CreoleTypes::INTEGER, false, null);
 
+		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::FLOAT, false, null);
+
 		$tMap->addColumn('PRIZE', 'Prize', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('CONFIRM_CODE', 'ConfirmCode', 'string', CreoleTypes::VARCHAR, false, 50);

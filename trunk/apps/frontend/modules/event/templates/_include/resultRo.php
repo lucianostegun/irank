@@ -6,6 +6,7 @@
     <td>Prêmio</td>
     <td>Rebuy</td>
     <td>Add-on</td>
+    <td>Pontos</td>
   </tr>
   <?php
   	$buyin = $eventObj->getBuyin();
@@ -29,6 +30,7 @@
     <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getPrize(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getRebuy(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getAddon(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getScore(), true, 3) ?></td>
   </tr>
   <?php
   	endforeach;

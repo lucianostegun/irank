@@ -28,28 +28,9 @@ class RankingPlayer extends BaseRankingPlayer
 	
 	public function updateScore(){
 		
-		$totalEvents  = $this->getTotalEvents();
-		$totalAverage = $this->getTotalAverage();
+		$totalScore = Util::executeOne('SELECT SUM(event_player.SCORE) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
 		
-		$this->setTotalScore( ($totalAverage*$totalEvents*10)+($totalEvents*10) );
-	}
-	
-	public function updateScoreOld(){
-		
-		$score = 0;
-		
-		foreach($this->getRanking()->getEventList() as $eventObj){
-			
-			$paidPlaces    = $eventObj->getPaidPlaces();
-			$eventPosition = $eventObj->getPosition($this->getPeopleId());
-			if( $eventPosition > $paidPlaces || $eventPosition==0 )
-				continue;
-				
-			$score += ($paidPlaces-($eventPosition-1));
-		}
-		
-		
-		$this->setTotalScore($score);
+		$this->setTotalScore( $totalScore );
 	}
 	
 	public function updateBalance(){
