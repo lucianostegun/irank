@@ -21,7 +21,7 @@
     <td>#<?php echo (($position++)+1) ?></td>
     <td><?php echo mail_to($peopleObj->getEmailAddress(), $peopleObj->getFullName()) ?></td>
     <td align="right"><?php echo $rankingPlayerObj->getTotalEvents() ?></td>
-    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalScore(), true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalScore(), true, 3) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPaid(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPrize(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalBalance(), true) ?></td>

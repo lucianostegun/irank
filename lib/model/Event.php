@@ -520,6 +520,9 @@ class Event extends BaseEvent
 		
 		$paidPlaces = 0;
 		
+		$totalBuyin = Util::executeOne('SELECT SUM(event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player WHERE event_id = '.$this->getId(), 'float');
+		$players    = 0;
+		
 		$eventPlayerObjList = $this->getPlayerList();
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
@@ -537,6 +540,7 @@ class Event extends BaseEvent
 				
 				$this->addPlayer($peopleId, true, false);
 				$enabled = true;
+				$players++;
 			}
 			
 			if( $enabled ){
@@ -549,10 +553,12 @@ class Event extends BaseEvent
 				$eventPlayerObj->setRebuy( Util::formatFloat($rebuy) );
 				$eventPlayerObj->setAddon( Util::formatFloat($addon) );
 				$eventPlayerObj->setBuyin( Util::formatFloat($buyin) );
+				$eventPlayerObj->setScore( $totalBuyin/$eventPosition/$buyin );
 				$eventPlayerObj->save();
 			}
 		}
 		
+		$this->setPlayers($players);
 		$this->setPaidPlaces($paidPlaces);
 		$this->setSavedResult(true);
 		$this->save();

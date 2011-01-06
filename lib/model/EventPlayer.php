@@ -79,7 +79,10 @@ class EventPlayer extends BaseEventPlayer
 		
 		if( $choice=='yes' && !$this->getEnabled() ){
 		
-			$sendNotify = ($eventObj->getEventDate(null) > time());
+			$eventDate = $eventObj->getEventDate('Y-m-d').' '.$eventObj->getStartTime('H:i');
+		
+			$sendNotify = (strtotime($eventDate) > time());
+
 			$this->setEnabled(true);
 			
 			$eventObj->setPlayers( $eventObj->getPlayers()+1 );

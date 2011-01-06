@@ -205,7 +205,7 @@ class rankingActions extends sfActions
   	$rankingObj->updateWholeHistory();
   	$rankingObj->updateScores();
   	
-  	echo 'ok '.date('d/m/D H:i:s');
+  	echo 'ok ranking '.date('d/m/Y H:i:s');
   	exit;
   }
 }

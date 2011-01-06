@@ -41,9 +41,9 @@ class Report {
 			$emailAddressList = array($emailAddressList);
 
 		// class initialization
-		$mail = new sfMail();
-		$mail->initialize();
-		$mail->setCharset('UTF-8');
+		$sfMailObj = new sfMail();
+		$sfMailObj->initialize();
+		$sfMailObj->setCharset('UTF-8');
 		
 		$host = MyTools::getRequest()->getHost();
 		
@@ -80,46 +80,45 @@ class Report {
 		
 //		Util::forceError($emailContent);exit;
 			
-		$mail->setContentType( $contentType );
-		$mail->setDomain( $smtpHostname );
-		$mail->setHostname( $smtpHostname );
+		$sfMailObj->setContentType( $contentType );
+		$sfMailObj->setDomain( $smtpHostname );
+		$sfMailObj->setHostname( $smtpHostname );
 		
-		if( $smtpUsername ) $mail->setUsername( $smtpUsername );
-		if( $smtpPassword ) $mail->setPassword( $smtpPassword );
+		if( $smtpUsername ) $sfMailObj->setUsername( $smtpUsername );
+		if( $smtpPassword ) $sfMailObj->setPassword( $smtpPassword );
 
-		$mail->setMailer( $smtpComponent );
+		$sfMailObj->setMailer( $smtpComponent );
 		
 		$senderEmail = $smtpUsername;
 
 		// definition of the required parameters
-		$mail->setSender( $senderEmail, $senderName);
-		$mail->setFrom( $senderEmail, $senderName);
-		$mail->addReplyTo( $replyTo, $senderName);
-		$mail->setSubject( $emailSubject );
-		$mail->setBody( $emailContent );		 
+		$sfMailObj->setSender( $senderEmail, $senderName);
+		$sfMailObj->setFrom( $senderEmail, $senderName);
+		$sfMailObj->addReplyTo( $replyTo, $senderName);
+		$sfMailObj->setSubject( $emailSubject );
+		$sfMailObj->setBody( $emailContent );		 
 
 		foreach( $attachmentList as $fileName=>$attachment )
-			$mail->addAttachment( $attachment, $fileName );
+			$sfMailObj->addAttachment( $attachment, $fileName );
 
 		$sendResult = true;
-
-		$emailAddressError = array();
-		foreach( $emailAddressList as $emailAddress ){
 		
+		$sfMailObj->clearAddresses();
+
+		foreach( $emailAddressList as $emailAddress ){
+			
 			if( !$emailAddress )
 				continue;
+				
+			$sfMailObj->addAddress( $emailAddress );
+		}
 		
-			$mail->clearAddresses();	
-			$mail->addAddress( $emailAddress );
+		try{ 
 		
-			try{ 
-			
-				$mail->send();
-			}catch(Exception $e){
-			
-				$sendResult = false;
-				$emailAddressError[] = $emailAddress;
-			}
+			$sfMailObj->send();
+		}catch(Exception $e){
+		
+			$sendResult = false;
 		}
 		
 		return $sendResult;

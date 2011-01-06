@@ -33,6 +33,10 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 
 
 	
+	protected $score;
+
+
+	
 	protected $prize;
 
 
@@ -115,6 +119,13 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 	{
 
 		return $this->event_position;
+	}
+
+	
+	public function getScore()
+	{
+
+		return $this->score;
 	}
 
 	
@@ -290,6 +301,16 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setScore($v)
+	{
+
+		if ($this->score !== $v) {
+			$this->score = $v;
+			$this->modifiedColumns[] = EventPlayerPeer::SCORE;
+		}
+
+	} 
+	
 	public function setPrize($v)
 	{
 
@@ -412,27 +433,29 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 
 			$this->event_position = $rs->getInt($startcol + 5);
 
-			$this->prize = $rs->getFloat($startcol + 6);
+			$this->score = $rs->getFloat($startcol + 6);
 
-			$this->confirm_code = $rs->getString($startcol + 7);
+			$this->prize = $rs->getFloat($startcol + 7);
 
-			$this->invite_status = $rs->getString($startcol + 8);
+			$this->confirm_code = $rs->getString($startcol + 8);
 
-			$this->allow_edit = $rs->getBoolean($startcol + 9);
+			$this->invite_status = $rs->getString($startcol + 9);
 
-			$this->enabled = $rs->getBoolean($startcol + 10);
+			$this->allow_edit = $rs->getBoolean($startcol + 10);
 
-			$this->deleted = $rs->getBoolean($startcol + 11);
+			$this->enabled = $rs->getBoolean($startcol + 11);
 
-			$this->created_at = $rs->getTimestamp($startcol + 12, null);
+			$this->deleted = $rs->getBoolean($startcol + 12);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 13, null);
+			$this->created_at = $rs->getTimestamp($startcol + 13, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 14, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 14; 
+						return $startcol + 15; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventPlayer object", $e);
 		}
@@ -617,27 +640,30 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 				return $this->getEventPosition();
 				break;
 			case 6:
-				return $this->getPrize();
+				return $this->getScore();
 				break;
 			case 7:
-				return $this->getConfirmCode();
+				return $this->getPrize();
 				break;
 			case 8:
-				return $this->getInviteStatus();
+				return $this->getConfirmCode();
 				break;
 			case 9:
-				return $this->getAllowEdit();
+				return $this->getInviteStatus();
 				break;
 			case 10:
-				return $this->getEnabled();
+				return $this->getAllowEdit();
 				break;
 			case 11:
-				return $this->getDeleted();
+				return $this->getEnabled();
 				break;
 			case 12:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 13:
+				return $this->getCreatedAt();
+				break;
+			case 14:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -656,14 +682,15 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 			$keys[3]=>$this->getRebuy(),
 			$keys[4]=>$this->getAddon(),
 			$keys[5]=>$this->getEventPosition(),
-			$keys[6]=>$this->getPrize(),
-			$keys[7]=>$this->getConfirmCode(),
-			$keys[8]=>$this->getInviteStatus(),
-			$keys[9]=>$this->getAllowEdit(),
-			$keys[10]=>$this->getEnabled(),
-			$keys[11]=>$this->getDeleted(),
-			$keys[12]=>$this->getCreatedAt(),
-			$keys[13]=>$this->getUpdatedAt(),
+			$keys[6]=>$this->getScore(),
+			$keys[7]=>$this->getPrize(),
+			$keys[8]=>$this->getConfirmCode(),
+			$keys[9]=>$this->getInviteStatus(),
+			$keys[10]=>$this->getAllowEdit(),
+			$keys[11]=>$this->getEnabled(),
+			$keys[12]=>$this->getDeleted(),
+			$keys[13]=>$this->getCreatedAt(),
+			$keys[14]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -698,27 +725,30 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 				$this->setEventPosition($value);
 				break;
 			case 6:
-				$this->setPrize($value);
+				$this->setScore($value);
 				break;
 			case 7:
-				$this->setConfirmCode($value);
+				$this->setPrize($value);
 				break;
 			case 8:
-				$this->setInviteStatus($value);
+				$this->setConfirmCode($value);
 				break;
 			case 9:
-				$this->setAllowEdit($value);
+				$this->setInviteStatus($value);
 				break;
 			case 10:
-				$this->setEnabled($value);
+				$this->setAllowEdit($value);
 				break;
 			case 11:
-				$this->setDeleted($value);
+				$this->setEnabled($value);
 				break;
 			case 12:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 13:
+				$this->setCreatedAt($value);
+				break;
+			case 14:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -734,14 +764,15 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setRebuy($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setAddon($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setEventPosition($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setPrize($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setConfirmCode($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setInviteStatus($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setAllowEdit($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setEnabled($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setCreatedAt($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setUpdatedAt($arr[$keys[13]]);
+		if (array_key_exists($keys[6], $arr)) $this->setScore($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setPrize($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setConfirmCode($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setInviteStatus($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setAllowEdit($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setEnabled($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setDeleted($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
 	}
 
 	
@@ -755,6 +786,7 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPlayerPeer::REBUY)) $criteria->add(EventPlayerPeer::REBUY, $this->rebuy);
 		if ($this->isColumnModified(EventPlayerPeer::ADDON)) $criteria->add(EventPlayerPeer::ADDON, $this->addon);
 		if ($this->isColumnModified(EventPlayerPeer::EVENT_POSITION)) $criteria->add(EventPlayerPeer::EVENT_POSITION, $this->event_position);
+		if ($this->isColumnModified(EventPlayerPeer::SCORE)) $criteria->add(EventPlayerPeer::SCORE, $this->score);
 		if ($this->isColumnModified(EventPlayerPeer::PRIZE)) $criteria->add(EventPlayerPeer::PRIZE, $this->prize);
 		if ($this->isColumnModified(EventPlayerPeer::CONFIRM_CODE)) $criteria->add(EventPlayerPeer::CONFIRM_CODE, $this->confirm_code);
 		if ($this->isColumnModified(EventPlayerPeer::INVITE_STATUS)) $criteria->add(EventPlayerPeer::INVITE_STATUS, $this->invite_status);
@@ -811,6 +843,8 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 		$copyObj->setAddon($this->addon);
 
 		$copyObj->setEventPosition($this->event_position);
+
+		$copyObj->setScore($this->score);
 
 		$copyObj->setPrize($this->prize);
 

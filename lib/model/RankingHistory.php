@@ -28,30 +28,9 @@ class RankingHistory extends BaseRankingHistory
 	
 	public function updateScore(){
 		
-		$events       = $this->getEvents();
-		$totalEvents  = $this->getTotalEvents();
-		$average      = $this->getAverage();
-		$totalAverage = $this->getTotalAverage();
+		$rankingDate = $this->getRankingDate('Y-m-d');
 		
-		$this->setScore( ($average*$events*10)+($events*10) );
-		$this->setTotalScore( ($totalAverage*$totalEvents*10)+($totalEvents*10) );
-	}
-	
-	public function updateScoreOld(){
-		
-		$score           = 0;
-		
-		$criteria = new Criteria();
-		$criteria->add( EventPeer::EVENT_DATE, $this->getRankingDate() );
-		foreach($this->getRanking()->getEventList($criteria) as $eventObj){
-			
-			$paidPlaces    = $eventObj->getPaidPlaces();
-			$eventPosition = $eventObj->getPosition($this->getPeopleId());
-			if( $eventPosition > $paidPlaces || $eventPosition==0 )
-				continue;
-				
-			$score += ($paidPlaces-($eventPosition-1));
-		}
+		$score = Util::executeOne('SELECT SUM(event_player.SCORE) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
 		
 		$this->setTotalScore($this->getTotalScore()+$score);
 		$this->setScore($score);
