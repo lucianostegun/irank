@@ -38,7 +38,7 @@
 		          	<td width="60%" align="center" class="group">Eventos</td>
 		          </tr>
 		          <tr>
-		          	<td align="center" valign="top"><?php include_partial('home/resume/bankroll', $resumeList); ?></td>
+		          	<td align="center" valign="top"><?php include_partial('home/resume/bankRoll', $resumeList); ?></td>
 		          	<td align="center" valign="top" style="border-left: 1px solid #FFFFFF; border-right: 1px solid #FFFFFF"><?php include_partial('home/resume/numbers', $resumeList); ?></td>
 		          	<td align="left" valign="top"><?php include_partial('home/resume/events'); ?></td>
 		          </tr>
