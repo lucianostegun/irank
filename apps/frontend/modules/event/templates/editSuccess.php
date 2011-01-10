@@ -28,6 +28,7 @@
 	echo input_hidden_tag('eventId', $eventId);
 	
 	$isEditable = $eventObj->isEditable();
+	$isMyEvent  = $eventObj->isMyEvent();
 	$mode       = ($pastDate && !$isClone?'show':'form');
 	$resultMode = ($isEditable?'form':'show');
 	
@@ -41,12 +42,18 @@
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 	
-	if( $isEditable ):
+	if( $isEditable || $isMyEvent ):
 ?>
 	<div class="buttonBarForm" id="eventMainButtonBar">
 		<?php
-			echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitEvent()'));
-			echo button_tag('deleteEvent', 'Excluir evento', array('onclick'=>'doDeleteEvent()', 'image'=>'../icon/delete', 'style'=>'float: right'));
+			if( $isEditable)				
+				echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitEvent()'));
+			
+			if( $isMyEvent )
+				echo button_tag('cloneEvent', 'Clonar evento', array('onclick'=>'cloneEvent('.$eventId.')', 'image'=>'../icon/clone'));
+				
+			if( $isEditable)				
+				echo button_tag('deleteEvent', 'Excluir evento', array('onclick'=>'doDeleteEvent()', 'image'=>'../icon/delete', 'style'=>'float: right'));
 		?>
 		<?php echo getFormLoading('event') ?>
 		<?php echo getFormStatus(); ?>

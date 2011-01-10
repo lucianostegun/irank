@@ -26,7 +26,7 @@ function doSubmitEvent(content){
 		alert('A atualização do resultado está em andamento!\nPor favor, aguarde.');
 		return false;
 	}
-	
+
 	if( !_SaveResultAlert && !confirm('ATENÇÃO!\n\nOs resultados salvos serão enviados por e-mail a todos os convidados e estarão disponíveis para edição até que outro evento posterior seja criado.\n\nDeseja prosseguir?') )
 		return false;
 	

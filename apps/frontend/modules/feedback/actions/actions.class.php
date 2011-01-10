@@ -18,7 +18,6 @@ class feedbackActions extends sfActions
 	$fullName     = $request->getParameter('fullName');
 	$emailAddress = $request->getParameter('emailAddress');
 	$message      = $request->getParameter('message');
-	$message      = str_replace(chr(10), '<br/>', $message);
 	
 	$emailContent = AuxiliarText::getContentByTagName('feedbackMessage');
 	$emailContent = str_replace('<fullName>', $fullName, $emailContent);
@@ -31,7 +30,9 @@ class feedbackActions extends sfActions
 	$emailAddress = 'lucianostegun@gmail.com';
 	$options      = array();
 	
-	$options['emailTemplate'] = 'emailTemplateAdmin';
+	$options['emailTemplate']  = 'emailTemplateAdmin';
+	$options['contentType']    = 'text/plain';
+	$options['entitiesEncode'] = false;
 	
 	Report::sendMail('Feedback iRank', $emailAddress, $emailContent, $options);
 	exit;

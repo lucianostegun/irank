@@ -1483,4 +1483,39 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		return $this->collEventPhotoList;
 	}
 
+
+	
+	public function getEventPhotoListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventPhotoList === null) {
+			if ($this->isNew()) {
+				$this->collEventPhotoList = array();
+			} else {
+
+				$criteria->add(EventPhotoPeer::EVENT_ID, $this->getId());
+
+				$this->collEventPhotoList = EventPhotoPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventPhotoPeer::EVENT_ID, $this->getId());
+
+			if (!isset($this->lastEventPhotoCriteria) || !$this->lastEventPhotoCriteria->equals($criteria)) {
+				$this->collEventPhotoList = EventPhotoPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastEventPhotoCriteria = $criteria;
+
+		return $this->collEventPhotoList;
+	}
+
 } 

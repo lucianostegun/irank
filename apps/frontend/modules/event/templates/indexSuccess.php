@@ -14,15 +14,14 @@
 	        <td>Ranking</td>
 	        <td>Data/Hora</td>
 	        <td>Local</td>
-	        <td>Convidados</td>
-	        <td></td>
+	        <td colspan="3">Convidados</td>
 	      </tr>
 	      <tr class="rank_heading">
 	        <td><?php echo input_tag('eventName', $sf_request->getParameter('eventName'), array('size'=>15)) ?></td>
 	        <td><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($sf_request->getParameter('rankingId'))) ?></td>
 	        <td><?php echo input_date_tag('eventDate', Util::formatDate($sf_request->getParameter('eventDate')), array('size'=>10, 'maxlength'=>10)) ?></td>
 	        <td><?php echo input_tag('eventPlace', $sf_request->getParameter('eventPlace'), array('size'=>15)) ?></td>
-	        <td width="100" colspan="2"><?php echo button_tag('eventFilterSubmit', 'pesquisar', array('onclick'=>'doEventSearch()')) ?></td>
+	        <td width="100" colspan="4"><?php echo button_tag('eventFilterSubmit', 'pesquisar', array('onclick'=>'doEventSearch()')) ?></td>
 	      </tr>
 	      <tbody id="eventListContent">
 	      <?php

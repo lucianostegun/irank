@@ -34,6 +34,16 @@ class Ranking extends BaseRanking
         }
     }
 	
+	public function delete($con=null){
+		
+		$this->setDeleted(true);
+		$this->save();
+		
+		Log::quickLogDelete('ranking', $this->getPrimaryKey());
+		
+		$this->notifyDelete();
+	}
+	
 	public function getCode(){
 		
 		return '#'.sprintf('%04d', $this->getId());
@@ -537,5 +547,77 @@ class Ranking extends BaseRanking
 				return $rankingPlayerObj;
 		
 		return null;
+	}
+	
+	public function getEmailAddressList($tagName=null, $supressMe=false){
+		
+		$peopleId = MyTools::getAttribute('peopleId');
+		
+		$emailAddressList = array();
+		
+		if( $tagName )
+			$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', $tagName);
+		
+		foreach( $this->getPeopleList(true) as $peopleObj ){
+			
+			if( $supressMe && $peopleId==$peopleObj->getId() )
+				continue;
+
+			if( $tagName )
+				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
+					continue;
+					
+			$emailAddressList[] = $peopleObj->getEmailAddress();
+		}
+		
+		return $emailAddressList;
+	}
+	
+	public function notifyDelete(){
+
+		$emailContent = AuxiliarText::getContentByTagName('rankingDeleteNotify');
+
+		$peopleObj    = People::getCurrentPeople();
+	  	$classifyList = $this->getEmailClassifyList();
+	  	$rankingOwner = $this->getUserSite()->getPeople()->getFullName();
+		
+		$emailContent = str_replace('<classifyList>', $classifyList, $emailContent);
+		$emailContent = str_replace('<peopleName>', $peopleObj->getName(), $emailContent);
+		$emailContent = str_replace('<rankingName>', $this->getRankingName(), $emailContent);
+		$emailContent = str_replace('<createdAt>', $this->getCreatedAt('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<startDate>', $this->getStartDate('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<rankingType>', $this->getRankingType()->getDescription(), $emailContent);
+		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
+		$emailContent = str_replace('<events>', $this->getEvents(), $emailContent);
+		$emailContent = str_replace('<rankingOwner>', $rankingOwner, $emailContent);
+		
+		$emailAddressList = $this->getEmailAddressList();
+		
+		Report::sendMail('Exclusão do ranking @ '.$this->getRankingName(), $emailAddressList, $emailContent);
+	}
+	
+	public function getEmailClassifyList(){
+		
+		$classifyList = '';
+		$nl           = chr(10);
+		$position     = 0;
+		
+		$rankingPlayerObjList = $this->getClassify();
+	  	foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
+		
+			$peopleObj = $rankingPlayerObj->getPeople();
+			
+			$classifyList .= '  <tr class="boxcontent">'.$nl;
+			$classifyList .= '    <td style="background: #1B4315">#'.(($position++)+1).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315">'.$peopleObj->getFullName().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
+			$classifyList .= '  </tr>'.$nl;
+	  	}
+	  	
+	  	return $classifyList;
 	}		
 }

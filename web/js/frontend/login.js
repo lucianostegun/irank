@@ -18,6 +18,9 @@ function doQuickLogin(){
 		hideIndicator('login');
 		hideDiv('quickLoginStatus');
 		hideDiv('quickLoginHello');
+		
+		if( $('homeResumeDiv')!=null )
+			loadHomeResume();
 	};
 		
 	var failureFunc = function(t){
@@ -53,4 +56,15 @@ function doQuickLogout(){
 
 	var urlAjax = _webRoot+'/login/logout';
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function loadHomeResume(){
+	
+	var successFunc = function(t){
+		
+		$('homeResumeDiv').className = '';
+	};
+	
+	var urlAjax = _webRoot+'/home/resume';
+	new Ajax.Updater('homeResumeDiv', urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
 }

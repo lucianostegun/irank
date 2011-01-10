@@ -101,6 +101,24 @@ class rankingActions extends sfActions
 	echo $rankingObj->getId();
 	exit;
   }
+  
+  public function executeDelete($request){
+
+	$rankingId  = $request->getParameter('rankingId');
+	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
+	
+	if( !is_object($rankingObj) )
+		throw new Exception('Ranking não encontrado!');
+	
+	if( !$rankingObj->isMyRanking() ){
+	
+		Log::doLog('Tentou excluir ranking sem permissão', 'Ranking', array('PEOPLE_ID'=>$this->peopleId, 'RANKING_ID'=>$rankingId), array('severity'=>Log::LOG_CRITICAL));	
+		Util::forceError('Você não tem permissão para excluir este ranking', true);
+	}
+	
+	$rankingObj->delete();
+	exit;
+  }
 
   public function handleErrorSavePlayer(){
 

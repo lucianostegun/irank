@@ -40,6 +40,8 @@ class EventPhotoMapBuilder {
 
 		$tMap->addForeignKey('FILE_ID', 'FileId', 'int', CreoleTypes::INTEGER, 'file', 'ID', true, null);
 
+		$tMap->addForeignKey('PEOPLE_ID', 'PeopleId', 'int', CreoleTypes::INTEGER, 'people', 'ID', true, null);
+
 		$tMap->addColumn('IS_SHARED', 'IsShared', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
