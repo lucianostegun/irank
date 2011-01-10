@@ -26,7 +26,7 @@ class Faq extends BaseFaq
 		$emailAddress = '-';
 		$username     = '-';
 		$ipAddress    = $_SERVER['REMOTE_ADDR'];
-		$question     = str_replace(chr(10), '<br/>', $this->getQuestion());
+		$question     = $this->getQuestion();
 		
 		$emailContent = AuxiliarText::getContentByTagName('faqQuestion');
 		
@@ -47,7 +47,9 @@ class Faq extends BaseFaq
 		$emailAddress = 'lucianostegun@gmail.com';
 		$options      = array();
 		
-		$options['emailTemplate'] = 'emailTemplateAdmin';
+		$options['emailTemplate']  = 'emailTemplateAdmin';
+		$options['contentType']    = 'text/plain';
+		$options['entitiesEncode'] = false;
 		
 		Report::sendMail('Dúvida FAQ iRank', $emailAddress, $emailContent, $options);
 	}

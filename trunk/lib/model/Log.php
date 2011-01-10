@@ -10,13 +10,21 @@
 class Log extends BaseLog
 {
 	
+    const LOG_EMERGENCY     = 4;     # System is unusable
+    const LOG_CRITICAL      = 3;     # Critical conditions
+    const LOG_ERROR         = 2;     # Error conditions
+    const LOG_WARN          = 1;     # Warning conditions
+    const LOG_INFORMATION   = 0;     # Informational
+	
     public function getCode(){
     	
     	return '#'.sprintf('%05d', $this->getId());
     }
     
-    public static function doLog($message, $className=null, $columnModifiedList=array()) 
+    public static function doLog($message, $className=null, $columnModifiedList=array(), $optionList=array()) 
     {
+
+		$severity = (array_key_exists('severity', $optionList)?$optionList['severity']:self::LOG_INFORMATION);
 
     	$userSiteId = sfContext::getInstance()->getUser()->getAttribute('userSiteId');
     	
@@ -37,6 +45,7 @@ class Log extends BaseLog
         $logObj->setActionName( $actionName );
         $logObj->setClassName( $className );
         $logObj->setMessage( $message );
+        $logObj->setSeverity( $severity );
         $logObj->save();
         
         $logId = $logObj->getId();

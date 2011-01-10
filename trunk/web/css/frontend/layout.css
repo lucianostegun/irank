@@ -173,6 +173,16 @@ height:50px;
 	border-bottom:#999999 2px solid;
 }
 
+.poker_credit{
+	
+	padding:6px 0px 6px 0px;
+	color:#d21d24;
+	font-size:13px;
+	font-weight:bold;
+	text-transform:uppercase;
+	border-bottom:#999999 2px solid;
+}
+
 .moduleText {
 	padding:15px 23px 16px 20px;
 }

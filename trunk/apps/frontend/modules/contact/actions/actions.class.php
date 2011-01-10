@@ -19,7 +19,6 @@ class contactActions extends sfActions
 	$emailAddress = $request->getParameter('emailAddress');
 	$subject      = $request->getParameter('subject');
 	$message      = $request->getParameter('message');
-	$message      = str_replace(chr(10), '<br/>', $message);
 	
 	$emailContent = AuxiliarText::getContentByTagName('contactMessage');
 	$emailContent = str_replace('<fullName>', $fullName, $emailContent);
@@ -33,7 +32,9 @@ class contactActions extends sfActions
 	$emailAddress = 'lucianostegun@gmail.com';
 	$options      = array();
 	
-	$options['emailTemplate'] = 'emailTemplateAdmin';
+	$options['emailTemplate']  = 'emailTemplateAdmin';
+	$options['contentType']    = 'text/plain';
+	$options['entitiesEncode'] = false;
 	
 	Report::sendMail('Contato iRank', $emailAddress, $emailContent, $options);
 	exit;

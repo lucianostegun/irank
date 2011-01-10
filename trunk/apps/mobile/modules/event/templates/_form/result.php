@@ -64,7 +64,7 @@
 	
 	<table width="100%" cellspacing="0" cellpadding="0">
 		<tr>
-			<td align="right" style="padding-right: 20px"><?php echo image_tag('mobile/button/conclude', array('onclick'=>'doSubmitEvent()')) ?></div>
+			<td align="right" style="padding-right: 20px"><?php echo image_tag('mobile/button/saveResult', array('onclick'=>'doSubmitEvent()')) ?></div>
 		</tr>
 	</table>
 	

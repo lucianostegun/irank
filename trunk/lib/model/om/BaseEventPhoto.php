@@ -21,6 +21,10 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 
 	
+	protected $people_id;
+
+
+	
 	protected $is_shared;
 
 
@@ -40,6 +44,9 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 	
 	protected $aFile;
+
+	
+	protected $aPeople;
 
 	
 	protected $collEventPhotoCommentList;
@@ -72,6 +79,13 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	{
 
 		return $this->file_id;
+	}
+
+	
+	public function getPeopleId()
+	{
+
+		return $this->people_id;
 	}
 
 	
@@ -189,6 +203,26 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setPeopleId($v)
+	{
+
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->people_id !== $v) {
+			$this->people_id = $v;
+			$this->modifiedColumns[] = EventPhotoPeer::PEOPLE_ID;
+		}
+
+		if ($this->aPeople !== null && $this->aPeople->getId() !== $v) {
+			$this->aPeople = null;
+		}
+
+	} 
+	
 	public function setIsShared($v)
 	{
 
@@ -253,19 +287,21 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 			$this->file_id = $rs->getInt($startcol + 2);
 
-			$this->is_shared = $rs->getBoolean($startcol + 3);
+			$this->people_id = $rs->getInt($startcol + 3);
 
-			$this->deleted = $rs->getBoolean($startcol + 4);
+			$this->is_shared = $rs->getBoolean($startcol + 4);
 
-			$this->created_at = $rs->getTimestamp($startcol + 5, null);
+			$this->deleted = $rs->getBoolean($startcol + 5);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 6, null);
+			$this->created_at = $rs->getTimestamp($startcol + 6, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 7, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 7; 
+						return $startcol + 8; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventPhoto object", $e);
 		}
@@ -347,6 +383,13 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 				$this->setFile($this->aFile);
 			}
 
+			if ($this->aPeople !== null) {
+				if ($this->aPeople->isModified()) {
+					$affectedRows += $this->aPeople->save($con);
+				}
+				$this->setPeople($this->aPeople);
+			}
+
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
@@ -416,6 +459,12 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aPeople !== null) {
+				if (!$this->aPeople->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aPeople->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = EventPhotoPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -458,15 +507,18 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 				return $this->getFileId();
 				break;
 			case 3:
-				return $this->getIsShared();
+				return $this->getPeopleId();
 				break;
 			case 4:
-				return $this->getDeleted();
+				return $this->getIsShared();
 				break;
 			case 5:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 6:
+				return $this->getCreatedAt();
+				break;
+			case 7:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -482,10 +534,11 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getEventId(),
 			$keys[2]=>$this->getFileId(),
-			$keys[3]=>$this->getIsShared(),
-			$keys[4]=>$this->getDeleted(),
-			$keys[5]=>$this->getCreatedAt(),
-			$keys[6]=>$this->getUpdatedAt(),
+			$keys[3]=>$this->getPeopleId(),
+			$keys[4]=>$this->getIsShared(),
+			$keys[5]=>$this->getDeleted(),
+			$keys[6]=>$this->getCreatedAt(),
+			$keys[7]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -511,15 +564,18 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 				$this->setFileId($value);
 				break;
 			case 3:
-				$this->setIsShared($value);
+				$this->setPeopleId($value);
 				break;
 			case 4:
-				$this->setDeleted($value);
+				$this->setIsShared($value);
 				break;
 			case 5:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 6:
+				$this->setCreatedAt($value);
+				break;
+			case 7:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -532,10 +588,11 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setEventId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setFileId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setIsShared($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setDeleted($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[3], $arr)) $this->setPeopleId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setIsShared($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setDeleted($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
 	}
 
 	
@@ -546,6 +603,7 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPhotoPeer::ID)) $criteria->add(EventPhotoPeer::ID, $this->id);
 		if ($this->isColumnModified(EventPhotoPeer::EVENT_ID)) $criteria->add(EventPhotoPeer::EVENT_ID, $this->event_id);
 		if ($this->isColumnModified(EventPhotoPeer::FILE_ID)) $criteria->add(EventPhotoPeer::FILE_ID, $this->file_id);
+		if ($this->isColumnModified(EventPhotoPeer::PEOPLE_ID)) $criteria->add(EventPhotoPeer::PEOPLE_ID, $this->people_id);
 		if ($this->isColumnModified(EventPhotoPeer::IS_SHARED)) $criteria->add(EventPhotoPeer::IS_SHARED, $this->is_shared);
 		if ($this->isColumnModified(EventPhotoPeer::DELETED)) $criteria->add(EventPhotoPeer::DELETED, $this->deleted);
 		if ($this->isColumnModified(EventPhotoPeer::CREATED_AT)) $criteria->add(EventPhotoPeer::CREATED_AT, $this->created_at);
@@ -583,6 +641,8 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 		$copyObj->setEventId($this->event_id);
 
 		$copyObj->setFileId($this->file_id);
+
+		$copyObj->setPeopleId($this->people_id);
 
 		$copyObj->setIsShared($this->is_shared);
 
@@ -681,6 +741,35 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aFile;
+	}
+
+	
+	public function setPeople($v)
+	{
+
+
+		if ($v === null) {
+			$this->setPeopleId(NULL);
+		} else {
+			$this->setPeopleId($v->getId());
+		}
+
+
+		$this->aPeople = $v;
+	}
+
+
+	
+	public function getPeople($con = null)
+	{
+		if ($this->aPeople === null && ($this->people_id !== null)) {
+						include_once 'lib/model/om/BasePeoplePeer.php';
+
+			$this->aPeople = PeoplePeer::retrieveByPK($this->people_id, $con);
+
+			
+		}
+		return $this->aPeople;
 	}
 
 	

@@ -13,7 +13,7 @@ abstract class BaseEventPhotoPeer {
 	const CLASS_DEFAULT = 'lib.model.EventPhoto';
 
 	
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 8;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -27,6 +27,9 @@ abstract class BaseEventPhotoPeer {
 
 	
 	const FILE_ID = 'event_photo.FILE_ID';
+
+	
+	const PEOPLE_ID = 'event_photo.PEOPLE_ID';
 
 	
 	const IS_SHARED = 'event_photo.IS_SHARED';
@@ -46,19 +49,19 @@ abstract class BaseEventPhotoPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventId', 'FileId', 'IsShared', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID, EventPhotoPeer::EVENT_ID, EventPhotoPeer::FILE_ID, EventPhotoPeer::IS_SHARED, EventPhotoPeer::DELETED, EventPhotoPeer::CREATED_AT, EventPhotoPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_id', 'file_id', 'is_shared', 'deleted', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_ID'=>'', 'FILE_ID'=>'', 'IS_SHARED'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventId', 'FileId', 'PeopleId', 'IsShared', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID, EventPhotoPeer::EVENT_ID, EventPhotoPeer::FILE_ID, EventPhotoPeer::PEOPLE_ID, EventPhotoPeer::IS_SHARED, EventPhotoPeer::DELETED, EventPhotoPeer::CREATED_AT, EventPhotoPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_id', 'file_id', 'people_id', 'is_shared', 'deleted', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_ID'=>'', 'FILE_ID'=>'', 'PEOPLE_ID'=>'', 'IS_SHARED'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventId'=>1, 'FileId'=>2, 'IsShared'=>3, 'Deleted'=>4, 'CreatedAt'=>5, 'UpdatedAt'=>6, ),
-		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID=>0, EventPhotoPeer::EVENT_ID=>1, EventPhotoPeer::FILE_ID=>2, EventPhotoPeer::IS_SHARED=>3, EventPhotoPeer::DELETED=>4, EventPhotoPeer::CREATED_AT=>5, EventPhotoPeer::UPDATED_AT=>6, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_id'=>1, 'file_id'=>2, 'is_shared'=>3, 'deleted'=>4, 'created_at'=>5, 'updated_at'=>6, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventId'=>1, 'FileId'=>2, 'PeopleId'=>3, 'IsShared'=>4, 'Deleted'=>5, 'CreatedAt'=>6, 'UpdatedAt'=>7, ),
+		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID=>0, EventPhotoPeer::EVENT_ID=>1, EventPhotoPeer::FILE_ID=>2, EventPhotoPeer::PEOPLE_ID=>3, EventPhotoPeer::IS_SHARED=>4, EventPhotoPeer::DELETED=>5, EventPhotoPeer::CREATED_AT=>6, EventPhotoPeer::UPDATED_AT=>7, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_id'=>1, 'file_id'=>2, 'people_id'=>3, 'is_shared'=>4, 'deleted'=>5, 'created_at'=>6, 'updated_at'=>7, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
@@ -117,6 +120,8 @@ abstract class BaseEventPhotoPeer {
 		$criteria->addSelectColumn(EventPhotoPeer::EVENT_ID);
 
 		$criteria->addSelectColumn(EventPhotoPeer::FILE_ID);
+
+		$criteria->addSelectColumn(EventPhotoPeer::PEOPLE_ID);
 
 		$criteria->addSelectColumn(EventPhotoPeer::IS_SHARED);
 
@@ -261,6 +266,34 @@ abstract class BaseEventPhotoPeer {
 
 
 	
+	public static function doCountJoinPeople(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(EventPhotoPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(EventPhotoPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(EventPhotoPeer::PEOPLE_ID, PeoplePeer::ID);
+
+		$rs = EventPhotoPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
 	public static function doSelectJoinEvent(Criteria $c, $con = null)
 	{
 		$c = clone $c;
@@ -355,6 +388,53 @@ abstract class BaseEventPhotoPeer {
 
 
 	
+	public static function doSelectJoinPeople(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		EventPhotoPeer::addSelectColumns($c);
+		$startcol = (EventPhotoPeer::NUM_COLUMNS - EventPhotoPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		PeoplePeer::addSelectColumns($c);
+
+		$c->addJoin(EventPhotoPeer::PEOPLE_ID, PeoplePeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = EventPhotoPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = PeoplePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getPeople(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addEventPhoto($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initEventPhotoList();
+				$obj2->addEventPhoto($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
 	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
 	{
 		$criteria = clone $criteria;
@@ -374,6 +454,8 @@ abstract class BaseEventPhotoPeer {
 		$criteria->addJoin(EventPhotoPeer::EVENT_ID, EventPeer::ID);
 
 		$criteria->addJoin(EventPhotoPeer::FILE_ID, FilePeer::ID);
+
+		$criteria->addJoin(EventPhotoPeer::PEOPLE_ID, PeoplePeer::ID);
 
 		$rs = EventPhotoPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -402,9 +484,14 @@ abstract class BaseEventPhotoPeer {
 		FilePeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + FilePeer::NUM_COLUMNS;
 
+		PeoplePeer::addSelectColumns($c);
+		$startcol5 = $startcol4 + PeoplePeer::NUM_COLUMNS;
+
 		$c->addJoin(EventPhotoPeer::EVENT_ID, EventPeer::ID);
 
 		$c->addJoin(EventPhotoPeer::FILE_ID, FilePeer::ID);
+
+		$c->addJoin(EventPhotoPeer::PEOPLE_ID, PeoplePeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -464,6 +551,29 @@ abstract class BaseEventPhotoPeer {
 				$obj3->addEventPhoto($obj1);
 			}
 
+
+					
+			$omClass = PeoplePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj4 = new $cls();
+			$obj4->hydrate($rs, $startcol4);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj4 = $temp_obj1->getPeople(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj4->addEventPhoto($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj4->initEventPhotoList();
+				$obj4->addEventPhoto($obj1);
+			}
+
 			$results[] = $obj1;
 		}
 		return $results;
@@ -488,6 +598,8 @@ abstract class BaseEventPhotoPeer {
 		}
 
 		$criteria->addJoin(EventPhotoPeer::FILE_ID, FilePeer::ID);
+
+		$criteria->addJoin(EventPhotoPeer::PEOPLE_ID, PeoplePeer::ID);
 
 		$rs = EventPhotoPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -517,6 +629,38 @@ abstract class BaseEventPhotoPeer {
 
 		$criteria->addJoin(EventPhotoPeer::EVENT_ID, EventPeer::ID);
 
+		$criteria->addJoin(EventPhotoPeer::PEOPLE_ID, PeoplePeer::ID);
+
+		$rs = EventPhotoPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doCountJoinAllExceptPeople(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(EventPhotoPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(EventPhotoPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(EventPhotoPeer::EVENT_ID, EventPeer::ID);
+
+		$criteria->addJoin(EventPhotoPeer::FILE_ID, FilePeer::ID);
+
 		$rs = EventPhotoPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
@@ -541,7 +685,12 @@ abstract class BaseEventPhotoPeer {
 		FilePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + FilePeer::NUM_COLUMNS;
 
+		PeoplePeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + PeoplePeer::NUM_COLUMNS;
+
 		$c->addJoin(EventPhotoPeer::FILE_ID, FilePeer::ID);
+
+		$c->addJoin(EventPhotoPeer::PEOPLE_ID, PeoplePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -577,6 +726,28 @@ abstract class BaseEventPhotoPeer {
 				$obj2->addEventPhoto($obj1);
 			}
 
+			$omClass = PeoplePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getPeople(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addEventPhoto($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initEventPhotoList();
+				$obj3->addEventPhoto($obj1);
+			}
+
 			$results[] = $obj1;
 		}
 		return $results;
@@ -598,7 +769,12 @@ abstract class BaseEventPhotoPeer {
 		EventPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + EventPeer::NUM_COLUMNS;
 
+		PeoplePeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + PeoplePeer::NUM_COLUMNS;
+
 		$c->addJoin(EventPhotoPeer::EVENT_ID, EventPeer::ID);
+
+		$c->addJoin(EventPhotoPeer::PEOPLE_ID, PeoplePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -632,6 +808,112 @@ abstract class BaseEventPhotoPeer {
 			if ($newObject) {
 				$obj2->initEventPhotoList();
 				$obj2->addEventPhoto($obj1);
+			}
+
+			$omClass = PeoplePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getPeople(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addEventPhoto($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initEventPhotoList();
+				$obj3->addEventPhoto($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptPeople(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		EventPhotoPeer::addSelectColumns($c);
+		$startcol2 = (EventPhotoPeer::NUM_COLUMNS - EventPhotoPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		EventPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + EventPeer::NUM_COLUMNS;
+
+		FilePeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + FilePeer::NUM_COLUMNS;
+
+		$c->addJoin(EventPhotoPeer::EVENT_ID, EventPeer::ID);
+
+		$c->addJoin(EventPhotoPeer::FILE_ID, FilePeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = EventPhotoPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = EventPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getEvent(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addEventPhoto($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initEventPhotoList();
+				$obj2->addEventPhoto($obj1);
+			}
+
+			$omClass = FilePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getFile(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addEventPhoto($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initEventPhotoList();
+				$obj3->addEventPhoto($obj1);
 			}
 
 			$results[] = $obj1;

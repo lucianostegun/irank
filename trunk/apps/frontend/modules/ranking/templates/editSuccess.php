@@ -27,7 +27,10 @@
 	$dhtmlxTabBarObj->build();
 ?>
 	<div class="buttonBarForm" id="rankingMainButtonBar">
-		<?php echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitRanking()')) ?>
+		<?php
+			echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitRanking()'));
+			echo button_tag('deleteRanking', 'Excluir ranking', array('onclick'=>'doDeleteRanking()', 'image'=>'../icon/delete', 'style'=>'float: right'));
+		?>
 		<?php echo getFormLoading('ranking') ?>
 		<?php echo getFormStatus(); ?>
 	</div>

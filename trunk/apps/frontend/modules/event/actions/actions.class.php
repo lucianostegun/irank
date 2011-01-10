@@ -350,6 +350,7 @@ class eventActions extends sfActions
 
 	$publish              = $request->getParameter('publish');
 	$eventId              = $request->getParameter('eventId');
+	$peopleId             = $this->getUser()->getAttribute('peopleId');
 	$allowedExtensionList = array('jpg', 'jpeg', 'png');
 	$maxFileSize          = (1024*1024*2);
 	
@@ -373,6 +374,7 @@ class eventActions extends sfActions
 	$eventPhotoObj = new EventPhoto();
 	$eventPhotoObj->setEventId($eventId);
 	$eventPhotoObj->setFileId($fileObj->getId());
+	$eventPhotoObj->setPeopleId($peopleId);
 	$eventPhotoObj->setIsShared($publish);
 	$eventPhotoObj->save();
   	

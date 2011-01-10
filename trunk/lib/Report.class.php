@@ -31,6 +31,8 @@ class Report {
 		$emailTemplate  = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
 		$replyTo        = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
 		$attachmentList = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
+		$attachmentList = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
+		$entitiesEncode = array_key_exists('entitiesEncode', $options)?$options['entitiesEncode']:true;
 
 		$emailAddressList = array('lucianostegun@gmail.com');
 		
@@ -74,9 +76,11 @@ class Report {
 		$emailContent = str_replace('<emailTitle>', $emailSubject, $emailContent);
 		
 		$emailContent = utf8_decode($emailContent);
-		$emailContent = htmlentities($emailContent, ENT_NOQUOTES);
 		$emailContent = str_replace('&gt;', '>', $emailContent);
 		$emailContent = str_replace('&lt;', '<', $emailContent);
+		
+		if( $entitiesEncode )
+			$emailContent = htmlentities($emailContent, ENT_NOQUOTES);
 		
 //		Util::forceError($emailContent);exit;
 			

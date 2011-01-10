@@ -90,3 +90,8 @@ INSERT INTO file(file_name, file_path, description, file_size, created_at, updat
     VALUES('passwordRecovery.htm', 'templates/passwordRecovery.htm', 'E-mail de recuperação de senha', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
     VALUES('E-mail de recuperação de senha', (SELECT MAX(id) FROM file), 'passwordRecovery', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
+    VALUES('rankingDeleteNotify.htm', 'templates/rankingDeleteNotify.htm', 'E-mail de notificação de exclusão de ranking', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO auxiliar_text(description, file_id, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
+    VALUES('E-mail de notificação de exclusão de ranking', (SELECT MAX(id) FROM file), 'rankingDeleteNotify', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

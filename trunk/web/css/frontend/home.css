@@ -1,0 +1,14 @@
+.homeResume .eventTable .nextEvent a {
+
+	color: 	#000000;
+}
+
+.homeResume .eventTable .lastEvent a {
+
+	color: 	#666666;
+}
+
+.homeResume .eventTable a:hover {
+
+	color: 	#F32126;
+}

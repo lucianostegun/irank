@@ -153,3 +153,42 @@ function toggleRankingShare(peopleId){
 	var urlAjax = _webRoot+'/ranking/toggleShare/rankingId/'+rankingId+'/peopleId/'+peopleId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
+
+function doDeleteRanking(){
+	
+	if( !confirm('ATENÇÃO!\n\nAo excluir o ranking todas as informações de eventos e resultados serão perdidas.\nOs participantes do ranking serão notificados da exclusão.\n\n Deseja realmente excluir este ranking?') )
+		return false;
+	
+	showIndicator('ranking');
+	
+	disableButton('mainSubmit');
+	disableButton('deleteRanking');
+	
+	var rankingId = $('rankingId').value;
+	
+	var successFunc = function(t){
+
+		goModule('ranking', 'index')
+		hideIndicator('ranking');
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		hideIndicator('ranking');
+		
+		enableButton('mainSubmit');
+		enableButton('deleteRanking');
+		
+		var errorMessage = parseMessage(content);
+		alert('Não foi possível excluir o ranking!\n'+(errorMessage?errorMessage:'Tente novamente mais tarde.'));
+		
+		if( !errorMessage && isDebug() )
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/ranking/delete/rankingId/'+rankingId;
+	alert(urlAjax);
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}

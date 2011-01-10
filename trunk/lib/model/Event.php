@@ -63,7 +63,7 @@ class Event extends BaseEvent
 		return '#'.sprintf('%04d', $this->getId());
 	}
 	
-	public static function getList($criteria=null){
+	public static function getList($criteria=null, $limit=null){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		
@@ -73,6 +73,7 @@ class Event extends BaseEvent
 		$criteria->add( EventPeer::ENABLED, true );
 		$criteria->add( EventPeer::VISIBLE, true );
 		$criteria->add( EventPeer::DELETED, false );
+		$criteria->add( RankingPeer::DELETED, false );
 		$criteria->add( UserSitePeer::ID, $userSiteId );
 		$criteria->addJoin( EventPeer::RANKING_ID, RankingPeer::ID, Criteria::INNER_JOIN );
 		$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::INNER_JOIN );
@@ -80,6 +81,33 @@ class Event extends BaseEvent
 		$criteria->addJoin( PeoplePeer::ID, UserSitePeer::PEOPLE_ID, Criteria::INNER_JOIN );
 		$criteria->addDescendingOrderByColumn( EventPeer::EVENT_DATE );
 		$criteria->addDescendingOrderByColumn( EventPeer::START_TIME );
+		
+		$criteria->setLimit($limit);
+		
+		return EventPeer::doSelect( $criteria );
+	}
+	
+	public static function getNextList($criteria=null, $limit=null){
+		
+		$userSiteId = MyTools::getAttribute('userSiteId');
+		
+		if( !is_object($criteria) )
+			$criteria = new Criteria();
+
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::DELETED, false );
+		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+		$criteria->add( RankingPeer::DELETED, false );
+		$criteria->add( UserSitePeer::ID, $userSiteId );
+		$criteria->addJoin( EventPeer::RANKING_ID, RankingPeer::ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( RankingPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( PeoplePeer::ID, UserSitePeer::PEOPLE_ID, Criteria::INNER_JOIN );
+		$criteria->addDescendingOrderByColumn( EventPeer::EVENT_DATE );
+		$criteria->addDescendingOrderByColumn( EventPeer::START_TIME );
+		
+		$criteria->setLimit($limit);
 		
 		return EventPeer::doSelect( $criteria );
 	}
@@ -419,24 +447,7 @@ class Event extends BaseEvent
 		
 		$rankingObj   = $this->getRanking();
 		$classifyList = '';
-		$nl           = chr(10);
-		$position     = 0;
-		
-		$rankingPlayerObjList = $rankingObj->getClassify();
-	  	foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
-		
-			$peopleObj = $rankingPlayerObj->getPeople();
-			
-			$classifyList .= '  <tr class="boxcontent">'.$nl;
-			$classifyList .= '    <td style="background: #1B4315">#'.(($position++)+1).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315">'.$peopleObj->getFullName().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
-			$classifyList .= '  </tr>'.$nl;
-	  	}
+		$rankingObj->getEmailClassifyList();
 	  	
 	  	return $classifyList;
 	}
