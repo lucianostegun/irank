@@ -76,11 +76,12 @@ class Report {
 		$emailContent = str_replace('<emailTitle>', $emailSubject, $emailContent);
 		
 		$emailContent = utf8_decode($emailContent);
-		$emailContent = str_replace('&gt;', '>', $emailContent);
-		$emailContent = str_replace('&lt;', '<', $emailContent);
 		
 		if( $entitiesEncode )
 			$emailContent = htmlentities($emailContent, ENT_NOQUOTES);
+			
+		$emailContent = str_replace('&gt;', '>', $emailContent);
+		$emailContent = str_replace('&lt;', '<', $emailContent);
 		
 //		Util::forceError($emailContent);exit;
 			
