@@ -11,10 +11,10 @@
 			<div class="row">
 				<div class="label" id="eventRankingIdLabel">Ranking</div>
 				<?php if( !$eventObj->getEnabled() ): ?>
-					<div class="field" id="rankinkIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($eventObj->getRankingId(), false, true), array('class'=>'required', 'onchange'=>'loadDefaultBuyin(this.value)', 'id'=>'eventRankingId')) ?></div>
+					<div class="field" id="rankinkIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($eventObj->getRankingId(), false, true), array('class'=>'required', 'onchange'=>'loadDefaultBuyin(this.value); loadRankingPlaceList(this.value)', 'id'=>'eventRankingId')) ?></div>
 					<div class="error" id="eventRankingIdError" onclick="showFormErrorDetails('event', 'rankingId')"></div>
 				<?php else: ?>
-					<?php echo input_hidden_tag('rankingId', $eventObj->getRankingId()) ?>
+					<?php echo input_hidden_tag('rankingId', $eventObj->getRankingId(), array('id'=>'eventRankingId')) ?>
 					<div class="textFlex"><?php echo link_to($eventObj->getRanking()->getRankingName(), '#goModule("ranking", "edit", "rankingId", '.$eventObj->getRankingId().')') ?></div>
 				<?php endif; ?>
 			</div>
@@ -24,9 +24,9 @@
 				<div class="error" id="eventEventNameError" onclick="showFormErrorDetails('event', 'eventName')"></div>
 			</div>
 			<div class="row">
-				<div class="label" id="eventEventPlaceLabel">Local</div>
-				<div class="field"><?php echo input_tag('eventPlace', $eventObj->getEventPlace(), array('size'=>30, 'maxlength'=>250, 'class'=>'required', 'id'=>'eventEventPlace')) ?></div>
-				<div class="error" id="eventEventPlaceError" onclick="showFormErrorDetails('event', 'eventPlace')"></div>
+				<div class="label" id="eventRankingPlaceIdLabel">Local</div>
+				<div class="field" id="eventRankingPlaceIdDiv"><?php echo select_tag('rankingPlaceId', RankingPlace::getOptionsForSelect($eventObj->getRankingId(), $eventObj->getRankingPlaceId()), array('class'=>'required', 'onchange'=>'checkRankingPlace(this.value)', 'id'=>'eventRankingPlaceId')) ?></div>
+				<div class="error" id="eventRankingPlaceIdError" onclick="showFormErrorDetails('event', 'rankingPlaceId')"></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventEventDateLabel">Data</div>

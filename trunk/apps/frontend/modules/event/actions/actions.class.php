@@ -69,7 +69,7 @@ class eventActions extends sfActions
 	$eventId         = $request->getParameter('eventId');
 	$rankingId       = $request->getParameter('rankingId');
 	$eventName       = $request->getParameter('eventName');
-	$eventPlace      = $request->getParameter('eventPlace');
+	$rankingPlaceId  = $request->getParameter('rankingPlaceId');
 	$eventDate       = $request->getParameter('eventDate');
 	$startTime       = $request->getParameter('startTime');
 	$paidPlaces      = $request->getParameter('paidPlaces');
@@ -87,7 +87,7 @@ class eventActions extends sfActions
 
 	$eventObj->setRankingId( $rankingId );
 	$eventObj->setEventName( $eventName );
-	$eventObj->setEventPlace( $eventPlace );
+	$eventObj->setRankingPlaceId( $rankingPlaceId );
 	$eventObj->setEventDate( Util::formatDate($eventDate) );
 	$eventObj->setStartTime( $startTime );
 	$eventObj->setPaidPlaces( ($paidPlaces?$paidPlaces:null) );
@@ -255,8 +255,12 @@ class eventActions extends sfActions
   	$criteria = new Criteria();
   	if( $eventName ) $criteria->addAnd( EventPeer::EVENT_NAME, '%'.$eventName.'%', Criteria::ILIKE );
   	if( $eventDate ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
-  	if( $eventPlace ) $criteria->addAnd( EventPeer::EVENT_PLACE, '%'.$eventPlace.'%', Criteria::ILIKE );
   	if( $rankingId ) $criteria->addAnd( EventPeer::RANKING_ID, $rankingId );
+  	if( $eventPlace ){
+  		
+  		$criteria->addAnd( RankingPlacePeer::PLACE_NAME, '%'.$eventPlace.'%', Criteria::ILIKE );	
+  		$criteria->addJoin( EventPeer::RANKING_PLACE_ID, RankingPlacePeer::ID, Criteria::INNER_JOIN );	
+  	}
 
 	if( $renderize ){
 		
@@ -519,6 +523,17 @@ class eventActions extends sfActions
 
 	$fileObj = FilePeer::retrieveByPK(97);
 	$fileObj->resizeMax(800, 600);
+	exit;
+  }
+
+  public function executeGetRankingPlaceList($request){
+
+	$rankingId      = $request->getParameter('rankingId');
+	$rankingPlaceId = $request->getParameter('rankingPlaceId');
+
+  	sfConfig::set('sf_web_debug', false);
+	Util::getHelpers();
+	echo select_tag('rankingPlaceId', RankingPlace::getOptionsForSelect($rankingId, $rankingPlaceId), array('class'=>'required', 'id'=>'eventRankingPlaceId'));
 	exit;
   }
   

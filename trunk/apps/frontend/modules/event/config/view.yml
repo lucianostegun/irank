@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    [frontend/event, frontend/eventComment, frontend/eventPhoto]
-  javascripts:    [frontend/event, frontend/eventComment, frontend/eventPhoto]
+  javascripts:    [frontend/event, frontend/eventComment, frontend/eventPhoto, frontend/rankingPlace]

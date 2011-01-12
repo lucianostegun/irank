@@ -114,8 +114,11 @@ class Report {
 			
 			if( !$emailAddress )
 				continue;
-				
-			$sfMailObj->addAddress( $emailAddress );
+			
+			if( count($emailAddressList) > 1 )
+				$sfMailObj->addBcc( $emailAddress );
+			else
+				$sfMailObj->addAddress( $emailAddress );
 		}
 		
 		try{ 

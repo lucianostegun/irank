@@ -169,6 +169,35 @@ class rankingActions extends sfActions
 
 	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
   }
+
+  public function handleErrorSavePlace(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
+  
+  public function executeSavePlace($request){
+
+  	$rankingPlaceId = $request->getParameter('rankingPlaceId');
+  	$rankingId      = $request->getParameter('rankingId');
+  	$placeName      = $request->getParameter('placeName');
+  	$mapsLink       = $request->getParameter('mapsLink');
+	
+	if( $rankingPlaceId ){
+		
+		$rankingPlaceObj = RankingPlacePeer::retrieveByPK($rankingPlaceId);
+	}else{
+		
+		$rankingPlaceObj = new RankingPlace();
+		$rankingPlaceObj->setRankingId( $rankingId );
+	}
+		
+	$rankingPlaceObj->setPlaceName( $placeName );
+	$rankingPlaceObj->setMapsLink( $mapsLink );
+	$rankingPlaceObj->save();
+	
+	echo $rankingPlaceObj->getId();
+	exit;	
+  }
   
   public function executeToggleShare($request){
 
@@ -213,8 +242,6 @@ class rankingActions extends sfActions
   
   public function executeJavascript($request){
   }
-  
-  
   
   public function executeDebug($request){
   	

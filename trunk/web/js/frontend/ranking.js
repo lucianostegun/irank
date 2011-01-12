@@ -16,14 +16,6 @@ function doSubmitRanking(content){
 	$('rankingForm').onsubmit();
 }
 
-function handleSuccessRankingPlayer(content){
-
-	clearFormFieldErrors('rankingPlayerForm');
-	showFormStatusSuccess('rankingPlayer');
-	hideIndicator('rankingPlayer');
-	enableButton('rankingPlayerSubmit');
-}
-
 function doSubmitRankingPlayer(content){
 
 	showIndicator('rankingPlayer');
@@ -47,6 +39,8 @@ function handleSuccessRankingPlayer(content){
 	
 	$('rankingPlayerForm').reset();
 	$('rankingPlayerDiv').innerHTML = content;
+	
+	enableButton('rankingPlayerSubmit');
 	
 	hideIndicator('rankingPlayer');
 	

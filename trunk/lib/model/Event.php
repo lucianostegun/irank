@@ -305,6 +305,7 @@ class Event extends BaseEvent
 		$emailContent = str_replace('<rankingName>', $this->getRanking()->getRankingName(), $emailContent);
 		$emailContent = str_replace('<gameStyle>', $this->getGameStyle()->getDescription(), $emailContent);
 		$emailContent = str_replace('<eventPlace>', $this->getEventPlace(), $emailContent);
+		$emailContent = str_replace('<mapsLink>', $this->getRankingPlace()->getMapsLink(), $emailContent);
 		$emailContent = str_replace('<eventDate>', $this->getEventDate('d/m/Y'), $emailContent);
 		$emailContent = str_replace('<startTime>', $this->getStartTime('H:i'), $emailContent);
 		$emailContent = str_replace('<paidPlaces>', $this->getPaidPlaces(), $emailContent);
@@ -403,6 +404,7 @@ class Event extends BaseEvent
 		$emailContent = str_replace('<rankingName>', $this->getRanking()->getRankingName(), $emailContent);
 		$emailContent = str_replace('<gameStyle>', $this->getGameStyle()->getDescription(), $emailContent);
 		$emailContent = str_replace('<eventPlace>', $this->getEventPlace(), $emailContent);
+		$emailContent = str_replace('<mapsLink>', $this->getRankingPlace()->getMapsLink(), $emailContent);
 		$emailContent = str_replace('<eventDate>', $this->getEventDate('d/m/Y'), $emailContent);
 		$emailContent = str_replace('<startTime>', $this->getStartTime('H:i'), $emailContent);
 		$emailContent = str_replace('<paidPlaces>', $this->getPaidPlaces(), $emailContent);
@@ -467,7 +469,7 @@ class Event extends BaseEvent
 		$eventObj = new Event();
 		$eventObj->setRankingId($this->getRankingId());
 		$eventObj->setEventName($this->getEventName());
-		$eventObj->setEventPlace($this->getEventPlace());
+		$eventObj->setRankingPlaceId($this->getRankingPlaceId());
 		$eventObj->setEventDate($this->getEventDate());
 		$eventObj->setStartTime($this->getStartTime());
 		$eventObj->setPaidPlaces($this->getPaidPlaces());
@@ -613,6 +615,16 @@ class Event extends BaseEvent
 		$criteria->addAscendingOrderByColumn( EventPhotoPeer::ID );
 		
 		return EventPhotoPeer::doSelect($criteria);
+	}
+	
+	public function getEventPlace(){
+
+		$rankingPlaceObj = $this->getRankingPlace();
+
+		if( !is_object($rankingPlaceObj) )
+			return null;
+		
+		return $rankingPlaceObj->getPlaceName();
 	}
 	
 	public function getInfo(){

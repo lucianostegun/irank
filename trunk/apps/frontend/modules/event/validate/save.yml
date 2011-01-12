@@ -23,7 +23,7 @@ fields:
       callback:      [EventPeer, uniqueEventName]
       invalid_error: Já existe um evento cadastrado com este nome para esta mesma data
        
-  eventPlace:
+  rankingPlaceId:
     required:
       msg:       Este campo é obrigatório e não foi preenchido
        

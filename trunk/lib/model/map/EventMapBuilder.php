@@ -40,7 +40,7 @@ class EventMapBuilder {
 
 		$tMap->addColumn('EVENT_NAME', 'EventName', 'string', CreoleTypes::VARCHAR, false, 25);
 
-		$tMap->addColumn('EVENT_PLACE', 'EventPlace', 'string', CreoleTypes::VARCHAR, false, 250);
+		$tMap->addForeignKey('RANKING_PLACE_ID', 'RankingPlaceId', 'int', CreoleTypes::INTEGER, 'ranking_place', 'ID', true, null);
 
 		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::FLOAT, false, null);
 

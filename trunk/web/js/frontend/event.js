@@ -272,6 +272,46 @@ function loadDefaultBuyin(rankingId){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
 }
 
+function loadRankingPlaceList(rankingId, rankingPlaceId){
+	
+	var onchangeFunc = $('eventRankingPlaceId').onchange;
+	$('eventRankingPlaceIdDiv').innerHTML = getWaitSelect();
+	
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		
+		$('eventRankingPlaceIdDiv').innerHTML = content;
+		$('eventRankingPlaceId').onchange     = onchangeFunc;
+	};
+	
+	var failureFunc = function(t){
+		
+		alert('Não foi possível carregar as opções de locais!\nSelecione o ranking novamente.');
+		$('eventRankingPlaceIdDiv').innerHTML = getEmptySelect;
+		
+		if( isDebug() ){
+			
+			var content = t.responseText;
+			debug(content);
+		}
+	};
+	
+	var urlAjax = _webRoot+'/event/getRankingPlaceList/rankingId/'+rankingId+'/rankingPlaceId/'+rankingPlaceId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
+}
+
+function checkRankingPlace(rankingPlaceId){
+	
+	var rankingId = $('eventRankingId').value;
+	
+	if( rankingPlaceId=='new' ){
+		
+		_RankingPlaceSuccessFunc = function(rankingPlaceId){ loadRankingPlaceList(rankingId, rankingPlaceId); }
+		addRankingPlace(rankingId);
+	}
+}
+
 function cloneEvent(eventId){
 	
 	if( !confirm('Ao clonar um evento você será direcionado para a edição do evento clonado e deverá editar as informações antes de salvar.\n\nDeseja realmente clonar este evento?') )

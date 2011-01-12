@@ -21,7 +21,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	
-	protected $event_place;
+	protected $ranking_place_id;
 
 
 	
@@ -87,6 +87,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	protected $aRanking;
 
 	
+	protected $aRankingPlace;
+
+	
 	protected $collEventPlayerList;
 
 	
@@ -132,10 +135,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getEventPlace()
+	public function getRankingPlaceId()
 	{
 
-		return $this->event_place;
+		return $this->ranking_place_id;
 	}
 
 	
@@ -356,18 +359,22 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setEventPlace($v)
+	public function setRankingPlaceId($v)
 	{
 
 		
 		
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
 		}
 
-		if ($this->event_place !== $v) {
-			$this->event_place = $v;
-			$this->modifiedColumns[] = EventPeer::EVENT_PLACE;
+		if ($this->ranking_place_id !== $v) {
+			$this->ranking_place_id = $v;
+			$this->modifiedColumns[] = EventPeer::RANKING_PLACE_ID;
+		}
+
+		if ($this->aRankingPlace !== null && $this->aRankingPlace->getId() !== $v) {
+			$this->aRankingPlace = null;
 		}
 
 	} 
@@ -584,7 +591,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 			$this->event_name = $rs->getString($startcol + 2);
 
-			$this->event_place = $rs->getString($startcol + 3);
+			$this->ranking_place_id = $rs->getInt($startcol + 3);
 
 			$this->buyin = $rs->getFloat($startcol + 4);
 
@@ -695,6 +702,13 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				$this->setRanking($this->aRanking);
 			}
 
+			if ($this->aRankingPlace !== null) {
+				if ($this->aRankingPlace->isModified()) {
+					$affectedRows += $this->aRankingPlace->save($con);
+				}
+				$this->setRankingPlace($this->aRankingPlace);
+			}
+
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
@@ -774,6 +788,12 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aRankingPlace !== null) {
+				if (!$this->aRankingPlace->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aRankingPlace->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = EventPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -832,7 +852,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				return $this->getEventName();
 				break;
 			case 3:
-				return $this->getEventPlace();
+				return $this->getRankingPlaceId();
 				break;
 			case 4:
 				return $this->getBuyin();
@@ -892,7 +912,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getRankingId(),
 			$keys[2]=>$this->getEventName(),
-			$keys[3]=>$this->getEventPlace(),
+			$keys[3]=>$this->getRankingPlaceId(),
 			$keys[4]=>$this->getBuyin(),
 			$keys[5]=>$this->getPaidPlaces(),
 			$keys[6]=>$this->getEventDate(),
@@ -933,7 +953,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				$this->setEventName($value);
 				break;
 			case 3:
-				$this->setEventPlace($value);
+				$this->setRankingPlaceId($value);
 				break;
 			case 4:
 				$this->setBuyin($value);
@@ -990,7 +1010,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setRankingId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setEventName($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setEventPlace($arr[$keys[3]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRankingPlaceId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setBuyin($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setPaidPlaces($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setEventDate($arr[$keys[6]]);
@@ -1016,7 +1036,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPeer::ID)) $criteria->add(EventPeer::ID, $this->id);
 		if ($this->isColumnModified(EventPeer::RANKING_ID)) $criteria->add(EventPeer::RANKING_ID, $this->ranking_id);
 		if ($this->isColumnModified(EventPeer::EVENT_NAME)) $criteria->add(EventPeer::EVENT_NAME, $this->event_name);
-		if ($this->isColumnModified(EventPeer::EVENT_PLACE)) $criteria->add(EventPeer::EVENT_PLACE, $this->event_place);
+		if ($this->isColumnModified(EventPeer::RANKING_PLACE_ID)) $criteria->add(EventPeer::RANKING_PLACE_ID, $this->ranking_place_id);
 		if ($this->isColumnModified(EventPeer::BUYIN)) $criteria->add(EventPeer::BUYIN, $this->buyin);
 		if ($this->isColumnModified(EventPeer::PAID_PLACES)) $criteria->add(EventPeer::PAID_PLACES, $this->paid_places);
 		if ($this->isColumnModified(EventPeer::EVENT_DATE)) $criteria->add(EventPeer::EVENT_DATE, $this->event_date);
@@ -1066,7 +1086,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		$copyObj->setEventName($this->event_name);
 
-		$copyObj->setEventPlace($this->event_place);
+		$copyObj->setRankingPlaceId($this->ranking_place_id);
 
 		$copyObj->setBuyin($this->buyin);
 
@@ -1166,6 +1186,35 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aRanking;
+	}
+
+	
+	public function setRankingPlace($v)
+	{
+
+
+		if ($v === null) {
+			$this->setRankingPlaceId(NULL);
+		} else {
+			$this->setRankingPlaceId($v->getId());
+		}
+
+
+		$this->aRankingPlace = $v;
+	}
+
+
+	
+	public function getRankingPlace($con = null)
+	{
+		if ($this->aRankingPlace === null && ($this->ranking_place_id !== null)) {
+						include_once 'lib/model/om/BaseRankingPlacePeer.php';
+
+			$this->aRankingPlace = RankingPlacePeer::retrieveByPK($this->ranking_place_id, $con);
+
+			
+		}
+		return $this->aRankingPlace;
 	}
 
 	
