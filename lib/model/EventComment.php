@@ -116,6 +116,6 @@ class EventComment extends BaseEventComment
 		$options['emailTemplate'] = null;
 		$options['replyTo']       = 'event_comment@irank.com.br';
 		
-		Report::sendMail('Comentários do evento #'.$eventCommentId, $emailAddressList, $emailContent, $options);
+		Report::sendMail('Comentários do evento #'.$eventObj->getCode(), $emailAddressList, $emailContent, $options);
 	}
 }
