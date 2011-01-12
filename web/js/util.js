@@ -262,3 +262,18 @@ function getSelectText(fieldId){
 
 	return $(fieldId).options[$(fieldId).selectedIndex].text;
 }
+
+function getWaitSelect(){
+	
+	return '<select disabled><option>Carregando...</option></select>';
+}
+
+function getEmptySelect(fieldName, fieldId){
+	
+	var selectEmpty = '<select name="fieldName" id="fieldId"><option value="">Selecione</option></select>';
+	
+	selectEmpty = selectEmpty.replace('fieldName', fieldName);
+	selectEmpty = selectEmpty.replace('fieldId', fieldId);
+	
+	return selectEmpty;
+}

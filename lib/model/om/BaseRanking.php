@@ -103,6 +103,12 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	protected $lastEventCriteria = null;
 
 	
+	protected $collRankingPlaceList;
+
+	
+	protected $lastRankingPlaceCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -707,6 +713,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collRankingPlaceList !== null) {
+				foreach($this->collRankingPlaceList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -786,6 +800,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 				if ($this->collEventList !== null) {
 					foreach($this->collEventList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingPlaceList !== null) {
+					foreach($this->collRankingPlaceList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1078,6 +1100,10 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 			foreach($this->getEventList() as $relObj) {
 				$copyObj->addEvent($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingPlaceList() as $relObj) {
+				$copyObj->addRankingPlace($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1469,6 +1495,111 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function addEvent(Event $l)
 	{
 		$this->collEventList[] = $l;
+		$l->setRanking($this);
+	}
+
+
+	
+	public function getEventListJoinRankingPlace($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventList === null) {
+			if ($this->isNew()) {
+				$this->collEventList = array();
+			} else {
+
+				$criteria->add(EventPeer::RANKING_ID, $this->getId());
+
+				$this->collEventList = EventPeer::doSelectJoinRankingPlace($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventPeer::RANKING_ID, $this->getId());
+
+			if (!isset($this->lastEventCriteria) || !$this->lastEventCriteria->equals($criteria)) {
+				$this->collEventList = EventPeer::doSelectJoinRankingPlace($criteria, $con);
+			}
+		}
+		$this->lastEventCriteria = $criteria;
+
+		return $this->collEventList;
+	}
+
+	
+	public function initRankingPlaceList()
+	{
+		if ($this->collRankingPlaceList === null) {
+			$this->collRankingPlaceList = array();
+		}
+	}
+
+	
+	public function getRankingPlaceList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingPlacePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingPlaceList === null) {
+			if ($this->isNew()) {
+			   $this->collRankingPlaceList = array();
+			} else {
+
+				$criteria->add(RankingPlacePeer::RANKING_ID, $this->getId());
+
+				RankingPlacePeer::addSelectColumns($criteria);
+				$this->collRankingPlaceList = RankingPlacePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingPlacePeer::RANKING_ID, $this->getId());
+
+				RankingPlacePeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingPlaceCriteria) || !$this->lastRankingPlaceCriteria->equals($criteria)) {
+					$this->collRankingPlaceList = RankingPlacePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingPlaceCriteria = $criteria;
+		return $this->collRankingPlaceList;
+	}
+
+	
+	public function countRankingPlaceList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingPlacePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingPlacePeer::RANKING_ID, $this->getId());
+
+		return RankingPlacePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingPlace(RankingPlace $l)
+	{
+		$this->collRankingPlaceList[] = $l;
 		$l->setRanking($this);
 	}
 

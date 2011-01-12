@@ -29,7 +29,7 @@ abstract class BaseEventPeer {
 	const EVENT_NAME = 'event.EVENT_NAME';
 
 	
-	const EVENT_PLACE = 'event.EVENT_PLACE';
+	const RANKING_PLACE_ID = 'event.RANKING_PLACE_ID';
 
 	
 	const BUYIN = 'event.BUYIN';
@@ -82,18 +82,18 @@ abstract class BaseEventPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'EventName', 'EventPlace', 'Buyin', 'PaidPlaces', 'EventDate', 'StartTime', 'Comments', 'SentEmail', 'Invites', 'Players', 'SavedResult', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventPeer::ID, EventPeer::RANKING_ID, EventPeer::EVENT_NAME, EventPeer::EVENT_PLACE, EventPeer::BUYIN, EventPeer::PAID_PLACES, EventPeer::EVENT_DATE, EventPeer::START_TIME, EventPeer::COMMENTS, EventPeer::SENT_EMAIL, EventPeer::INVITES, EventPeer::PLAYERS, EventPeer::SAVED_RESULT, EventPeer::ENABLED, EventPeer::VISIBLE, EventPeer::DELETED, EventPeer::LOCKED, EventPeer::CREATED_AT, EventPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'event_name', 'event_place', 'buyin', 'paid_places', 'event_date', 'start_time', 'comments', 'sent_email', 'invites', 'players', 'saved_result', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'EVENT_NAME'=>'', 'EVENT_PLACE'=>'', 'BUYIN'=>'', 'PAID_PLACES'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'COMMENTS'=>'', 'SENT_EMAIL'=>'', 'INVITES'=>'', 'PLAYERS'=>'', 'SAVED_RESULT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'EventName', 'RankingPlaceId', 'Buyin', 'PaidPlaces', 'EventDate', 'StartTime', 'Comments', 'SentEmail', 'Invites', 'Players', 'SavedResult', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventPeer::ID, EventPeer::RANKING_ID, EventPeer::EVENT_NAME, EventPeer::RANKING_PLACE_ID, EventPeer::BUYIN, EventPeer::PAID_PLACES, EventPeer::EVENT_DATE, EventPeer::START_TIME, EventPeer::COMMENTS, EventPeer::SENT_EMAIL, EventPeer::INVITES, EventPeer::PLAYERS, EventPeer::SAVED_RESULT, EventPeer::ENABLED, EventPeer::VISIBLE, EventPeer::DELETED, EventPeer::LOCKED, EventPeer::CREATED_AT, EventPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'event_name', 'ranking_place_id', 'buyin', 'paid_places', 'event_date', 'start_time', 'comments', 'sent_email', 'invites', 'players', 'saved_result', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'EVENT_NAME'=>'', 'RANKING_PLACE_ID'=>'', 'BUYIN'=>'', 'PAID_PLACES'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'COMMENTS'=>'', 'SENT_EMAIL'=>'', 'INVITES'=>'', 'PLAYERS'=>'', 'SAVED_RESULT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'EventName'=>2, 'EventPlace'=>3, 'Buyin'=>4, 'PaidPlaces'=>5, 'EventDate'=>6, 'StartTime'=>7, 'Comments'=>8, 'SentEmail'=>9, 'Invites'=>10, 'Players'=>11, 'SavedResult'=>12, 'Enabled'=>13, 'Visible'=>14, 'Deleted'=>15, 'Locked'=>16, 'CreatedAt'=>17, 'UpdatedAt'=>18, ),
-		BasePeer::TYPE_COLNAME=>array (EventPeer::ID=>0, EventPeer::RANKING_ID=>1, EventPeer::EVENT_NAME=>2, EventPeer::EVENT_PLACE=>3, EventPeer::BUYIN=>4, EventPeer::PAID_PLACES=>5, EventPeer::EVENT_DATE=>6, EventPeer::START_TIME=>7, EventPeer::COMMENTS=>8, EventPeer::SENT_EMAIL=>9, EventPeer::INVITES=>10, EventPeer::PLAYERS=>11, EventPeer::SAVED_RESULT=>12, EventPeer::ENABLED=>13, EventPeer::VISIBLE=>14, EventPeer::DELETED=>15, EventPeer::LOCKED=>16, EventPeer::CREATED_AT=>17, EventPeer::UPDATED_AT=>18, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'event_name'=>2, 'event_place'=>3, 'buyin'=>4, 'paid_places'=>5, 'event_date'=>6, 'start_time'=>7, 'comments'=>8, 'sent_email'=>9, 'invites'=>10, 'players'=>11, 'saved_result'=>12, 'enabled'=>13, 'visible'=>14, 'deleted'=>15, 'locked'=>16, 'created_at'=>17, 'updated_at'=>18, ),
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'EventName'=>2, 'RankingPlaceId'=>3, 'Buyin'=>4, 'PaidPlaces'=>5, 'EventDate'=>6, 'StartTime'=>7, 'Comments'=>8, 'SentEmail'=>9, 'Invites'=>10, 'Players'=>11, 'SavedResult'=>12, 'Enabled'=>13, 'Visible'=>14, 'Deleted'=>15, 'Locked'=>16, 'CreatedAt'=>17, 'UpdatedAt'=>18, ),
+		BasePeer::TYPE_COLNAME=>array (EventPeer::ID=>0, EventPeer::RANKING_ID=>1, EventPeer::EVENT_NAME=>2, EventPeer::RANKING_PLACE_ID=>3, EventPeer::BUYIN=>4, EventPeer::PAID_PLACES=>5, EventPeer::EVENT_DATE=>6, EventPeer::START_TIME=>7, EventPeer::COMMENTS=>8, EventPeer::SENT_EMAIL=>9, EventPeer::INVITES=>10, EventPeer::PLAYERS=>11, EventPeer::SAVED_RESULT=>12, EventPeer::ENABLED=>13, EventPeer::VISIBLE=>14, EventPeer::DELETED=>15, EventPeer::LOCKED=>16, EventPeer::CREATED_AT=>17, EventPeer::UPDATED_AT=>18, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'event_name'=>2, 'ranking_place_id'=>3, 'buyin'=>4, 'paid_places'=>5, 'event_date'=>6, 'start_time'=>7, 'comments'=>8, 'sent_email'=>9, 'invites'=>10, 'players'=>11, 'saved_result'=>12, 'enabled'=>13, 'visible'=>14, 'deleted'=>15, 'locked'=>16, 'created_at'=>17, 'updated_at'=>18, ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
 	);
 
@@ -154,7 +154,7 @@ abstract class BaseEventPeer {
 
 		$criteria->addSelectColumn(EventPeer::EVENT_NAME);
 
-		$criteria->addSelectColumn(EventPeer::EVENT_PLACE);
+		$criteria->addSelectColumn(EventPeer::RANKING_PLACE_ID);
 
 		$criteria->addSelectColumn(EventPeer::BUYIN);
 
@@ -293,6 +293,34 @@ abstract class BaseEventPeer {
 
 
 	
+	public static function doCountJoinRankingPlace(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(EventPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(EventPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(EventPeer::RANKING_PLACE_ID, RankingPlacePeer::ID);
+
+		$rs = EventPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
 	public static function doSelectJoinRanking(Criteria $c, $con = null)
 	{
 		$c = clone $c;
@@ -340,6 +368,53 @@ abstract class BaseEventPeer {
 
 
 	
+	public static function doSelectJoinRankingPlace(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		EventPeer::addSelectColumns($c);
+		$startcol = (EventPeer::NUM_COLUMNS - EventPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		RankingPlacePeer::addSelectColumns($c);
+
+		$c->addJoin(EventPeer::RANKING_PLACE_ID, RankingPlacePeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = EventPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = RankingPlacePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getRankingPlace(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addEvent($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initEventList();
+				$obj2->addEvent($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
 	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
 	{
 		$criteria = clone $criteria;
@@ -357,6 +432,8 @@ abstract class BaseEventPeer {
 		}
 
 		$criteria->addJoin(EventPeer::RANKING_ID, RankingPeer::ID);
+
+		$criteria->addJoin(EventPeer::RANKING_PLACE_ID, RankingPlacePeer::ID);
 
 		$rs = EventPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -382,7 +459,12 @@ abstract class BaseEventPeer {
 		RankingPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + RankingPeer::NUM_COLUMNS;
 
+		RankingPlacePeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + RankingPlacePeer::NUM_COLUMNS;
+
 		$c->addJoin(EventPeer::RANKING_ID, RankingPeer::ID);
+
+		$c->addJoin(EventPeer::RANKING_PLACE_ID, RankingPlacePeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -411,6 +493,199 @@ abstract class BaseEventPeer {
 				$temp_obj2 = $temp_obj1->getRanking(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
 					$temp_obj2->addEvent($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initEventList();
+				$obj2->addEvent($obj1);
+			}
+
+
+					
+			$omClass = RankingPlacePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3 = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getRankingPlace(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addEvent($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initEventList();
+				$obj3->addEvent($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doCountJoinAllExceptRanking(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(EventPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(EventPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(EventPeer::RANKING_PLACE_ID, RankingPlacePeer::ID);
+
+		$rs = EventPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doCountJoinAllExceptRankingPlace(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(EventPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(EventPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(EventPeer::RANKING_ID, RankingPeer::ID);
+
+		$rs = EventPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doSelectJoinAllExceptRanking(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		EventPeer::addSelectColumns($c);
+		$startcol2 = (EventPeer::NUM_COLUMNS - EventPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		RankingPlacePeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + RankingPlacePeer::NUM_COLUMNS;
+
+		$c->addJoin(EventPeer::RANKING_PLACE_ID, RankingPlacePeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = EventPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = RankingPlacePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getRankingPlace(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addEvent($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initEventList();
+				$obj2->addEvent($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptRankingPlace(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		EventPeer::addSelectColumns($c);
+		$startcol2 = (EventPeer::NUM_COLUMNS - EventPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		RankingPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + RankingPeer::NUM_COLUMNS;
+
+		$c->addJoin(EventPeer::RANKING_ID, RankingPeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = EventPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = RankingPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getRanking(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addEvent($obj1);
+					break;
 				}
 			}
 

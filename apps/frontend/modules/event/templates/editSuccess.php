@@ -62,4 +62,5 @@
 </form>
 <?php
 	DhtmlxWindows::createWindow('eventPhotoView', '', 380, 125, 'event/dialog/photoView', array());
+	DhtmlxWindows::createWindow('rankingPlaceAdd', 'Cadastro de locais', 550, 125, 'ranking/dialog/placeAdd', array());
 ?>

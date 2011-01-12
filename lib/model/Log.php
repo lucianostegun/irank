@@ -54,9 +54,12 @@ class Log extends BaseLog
 		
 			$sql     = 'INSERT INTO log_field VALUES';
 			$sqlList = array();
-			foreach($columnModifiedList as $fieldName=>$fieldValue)
-				$sqlList[] = "($logId, '$fieldName', '".addslashes($fieldValue)."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";	    	
-		    
+			foreach($columnModifiedList as $fieldName=>$fieldValue){
+			
+				$fieldValue = substr($fieldValue,0,255);
+				$sqlList[]  = "($logId, '$fieldName', '".addslashes($fieldValue)."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";	    	
+			}
+			
 		    $sql .= chr(10).chr(9).implode(','.chr(10).chr(9), $sqlList);
 		    Util::executeQuery($sql);
         }

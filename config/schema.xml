@@ -134,7 +134,7 @@
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
 		<column name="ranking_id" type="INTEGER" required="true" />
 		<column name="event_name" type="VARCHAR" size="25" />
-		<column name="event_place" type="VARCHAR" size="250" />
+		<column name="ranking_place_id" type="INTEGER" required="true" />
 		<column name="buyin" type="FLOAT" />
 		<column name="paid_places" type="INTEGER" />
 		<column name="event_date" type="DATE" />
@@ -152,6 +152,9 @@
 		<column name="updated_at" type="TIMESTAMP" />
 		  <foreign-key foreignTable="ranking">
 		    <reference local="ranking_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="ranking_place">
+		    <reference local="ranking_place_id" foreign="id" />
 		  </foreign-key>
 	</table>
 
@@ -315,6 +318,19 @@
 		  </foreign-key>
 		  <foreign-key foreignTable="people">
 		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="ranking_place" phpName="RankingPlace">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="ranking_id" type="INTEGER" required="true" />
+		<column name="place_name" type="VARCHAR" size="20" />
+		<column name="maps_link" type="LONGVARCHAR" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id" foreign="id" />
 		  </foreign-key>
 	</table>
 
