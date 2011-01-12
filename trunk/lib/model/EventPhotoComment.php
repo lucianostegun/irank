@@ -116,6 +116,6 @@ class EventPhotoComment extends BaseEventPhotoComment
 		$options['emailTemplate'] = null;
 		$options['replyTo']       = 'event_photo_comment@irank.com.br';
 		
-		Report::sendMail('Comentários em foto do evento #'.$eventCommentId, $emailAddressList, $emailContent, $options);
+		Report::sendMail('Comentários em foto do evento #'.$eventObj->getCode(), $emailAddressList, $emailContent, $options);
 	}
 }
