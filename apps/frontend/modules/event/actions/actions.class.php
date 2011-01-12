@@ -192,11 +192,6 @@ class eventActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	return $this->renderText(get_partial('event/include/player', array('eventObj'=>$eventObj)));
   }
-
-  public function handleErrorSaveResult(){
-
-  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
-  }
   
   public function executeCloneEvent($request){
   	
@@ -226,6 +221,11 @@ class eventActions extends sfActions
 	
     echo ($eventPlayerObj->getAllowEdit()?'lock':'unlock');
     exit;
+  }
+
+  public function handleErrorSaveResult(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
   }
   
   public function executeSaveResult($request){
