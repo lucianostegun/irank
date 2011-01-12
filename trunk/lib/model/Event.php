@@ -174,7 +174,7 @@ class Event extends BaseEvent
 	
 	public function deletePlayer($peopleId){
 
-		throw new Exception('Implementar aqui. Linha 108');
+		$this->togglePresence( $peopleId, 'no', false );
 	}
 	
 	public function removePlayer($peopleId){
@@ -437,6 +437,7 @@ class Event extends BaseEvent
 			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getPrize(), true).'</td>'.$nl;
 			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getRebuy(), true).'</td>'.$nl;
 			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getAddon(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getScore(), true, 3).'</td>'.$nl;
 			$resultList .= '  </tr>'.$nl;
 	  	}
 	  	
@@ -446,8 +447,7 @@ class Event extends BaseEvent
 	public function getEmailClassifyList(){
 		
 		$rankingObj   = $this->getRanking();
-		$classifyList = '';
-		$rankingObj->getEmailClassifyList();
+		$classifyList = $rankingObj->getEmailClassifyList();
 	  	
 	  	return $classifyList;
 	}
@@ -530,11 +530,10 @@ class Event extends BaseEvent
 		$rankingObj = $this->getRanking();
 		
 		$paidPlaces = 0;
-		
-		$totalBuyin = Util::executeOne('SELECT SUM(event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player WHERE event_id = '.$this->getId(), 'float');
 		$players    = 0;
 		
 		$eventPlayerObjList = $this->getPlayerList();
+		$totalBuyin         = 0;
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
 			$peopleId      = $eventPlayerObj->getPeopleId();
@@ -542,7 +541,19 @@ class Event extends BaseEvent
 			$rebuy         = $request->getParameter('rebuy'.$peopleId);
 			$addon         = $request->getParameter('addon'.$peopleId);
 			$eventPosition = $request->getParameter('eventPosition'.$peopleId);
-			$prize    = $request->getParameter('prize'.$peopleId);
+			
+			if( $eventPosition > 0 )
+				$totalBuyin += Util::formatFloat($buyin)+Util::formatFloat($rebuy)+Util::formatFloat($addon);
+		}
+		
+		foreach($eventPlayerObjList as $eventPlayerObj){
+			
+			$peopleId      = $eventPlayerObj->getPeopleId();
+			$buyin         = $request->getParameter('buyin'.$peopleId);
+			$rebuy         = $request->getParameter('rebuy'.$peopleId);
+			$addon         = $request->getParameter('addon'.$peopleId);
+			$eventPosition = $request->getParameter('eventPosition'.$peopleId);
+			$prize         = $request->getParameter('prize'.$peopleId);
 			
 			$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
 			$enabled        = $eventPlayerObj->getEnabled();
@@ -551,7 +562,12 @@ class Event extends BaseEvent
 				
 				$this->addPlayer($peopleId, true, false);
 				$enabled = true;
-				$players++;
+			}
+			
+			if( $enabled && $eventPosition == 0 ){
+				
+				$this->deletePlayer($peopleId);
+				$enabled = false;
 			}
 			
 			if( $enabled ){
@@ -566,6 +582,7 @@ class Event extends BaseEvent
 				$eventPlayerObj->setBuyin( Util::formatFloat($buyin) );
 				$eventPlayerObj->setScore( $totalBuyin/$eventPosition/$buyin );
 				$eventPlayerObj->save();
+				$players++;
 			}
 		}
 		

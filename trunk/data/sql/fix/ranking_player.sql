@@ -42,5 +42,43 @@ SET
                     AND event_player.ENABLED = TRUE
                     AND event_player.DELETED = FALSE);
 
+UPDATE
+    event_player
+SET
+    score = (SELECT SUM(buyin+rebuy+addon) FROM event_player ep WHERE ep.EVENT_ID = event_player.EVENT_ID) / event_position / buyin
+WHERE
+    buyin > 0
+    AND event_position > 0;
 
-UPDATE ranking_player SET total_score = (total_average*total_events*10)+(total_events*10);
+UPDATE 
+    ranking_history
+SET
+    score = (SELECT 
+                SUM(score) 
+             FROM 
+                event_player
+                INNER JOIN event ON event_player.EVENT_ID = event.ID
+             WHERE
+                people_id = ranking_history.PEOPLE_ID
+                AND event.RANKING_ID = ranking_history.RANKING_ID
+                AND event.EVENT_DATE = ranking_history.RANKING_DATE),
+    total_score = (SELECT 
+                      SUM(score) 
+                   FROM 
+                      event_player
+                      INNER JOIN event ON event_player.EVENT_ID = event.ID
+                   WHERE
+                      people_id = ranking_history.PEOPLE_ID
+                      AND event.RANKING_ID = ranking_history.RANKING_ID
+                      AND event.EVENT_DATE <= ranking_history.RANKING_DATE),
+    paid_value = (SELECT 
+                      SUM(event_player.BUYIN+event_player.REBUY+event_player.ADDON) 
+                   FROM 
+                      event_player
+                      INNER JOIN event ON event_player.EVENT_ID = event.ID
+                   WHERE
+                      people_id = ranking_history.PEOPLE_ID
+                      AND event.RANKING_ID = ranking_history.RANKING_ID
+                      AND event.EVENT_DATE <= ranking_history.RANKING_DATE);
+
+UPDATE ranking_player SET total_score = (SELECT SUM(score) FROM ranking_history WHERE ranking_id = ranking_player.RANKING_ID AND people_id = ranking_player.PEOPLE_ID);
