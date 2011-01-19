@@ -1,0 +1,152 @@
+.mobileForm .topLeft {
+	
+	height: 				20px;
+	background: 			url('/images/mobile/form/topMiddle.png') no-repeat;
+	background-position: 	15 0;
+}
+
+.mobileForm .topRight {
+	
+	text-align: 			right;
+	height: 				20px;
+	background: 			url('/images/mobile/form/topMiddle.png') no-repeat -15;
+	background-position: 	-15 0;
+}
+
+.mobileForm .baseLeft {
+	
+	height: 				20px;
+	background: 			url('/images/mobile/form/baseMiddle.png') no-repeat;
+	background-position: 	15 0;
+}
+
+.mobileForm .baseRight {
+	
+	text-align: 			right;
+	height: 				20px;
+	background: 			url('/images/mobile/form/baseMiddle.png') no-repeat -15;
+	background-position: 	-15 0;
+}
+
+.mobileForm .topMiddle {
+	
+	height: 		20px;
+	background: 	url('/images/mobile/form/topMiddle.png') repeat-x;
+}
+
+.mobileForm .baseMiddle {
+	
+	height: 		20px;
+	background: 	url('/images/mobile/form/baseMiddle.png') repeat-x;
+}
+
+.mobileForm .baseMiddleGray {
+	
+	height: 		20px;
+	background: 	url('/images/mobile/form/baseMiddleGray.png') repeat-x;
+}
+
+.mobileForm .formContent {
+	
+	background: 	#FFFFFF url('/images/mobile/form/right.png') repeat-y right;
+}
+
+.mobileForm .formTable th {
+	
+	background: 	#FFFFFF url('/images/mobile/form/left.png') repeat-y;
+}
+
+.mobileForm .formTable .actionBar img {
+	
+	margin-right: 	25px;
+}
+
+
+
+.mobileForm .formContent th {
+	
+	text-align: 		right;
+	font-size: 			18pt;
+	color: 				#384D82;
+	padding-top: 		25px;
+	padding-bottom: 	25px;
+	border-bottom: 		2px solid #abadb0;
+}
+
+.mobileForm .formContent td {
+	
+	padding-left: 		15px;
+	padding-top: 		25px;
+	padding-bottom: 	25px;
+	border-bottom: 		2px solid #abadb0;
+	font-size: 			18pt;
+}
+
+.mobileForm .formContent .clean td {
+	
+	font-size: 			18pt;
+	color: 				#384D82;
+	padding-top: 		0px;
+	padding-bottom: 	0px;
+	border-bottom: 		0px;
+}
+
+
+.mobileForm .formContent .firstLine {
+	
+	padding-top: 	8px;
+}
+
+.mobileForm .formContent .lastLine {
+	
+	padding-left: 		15px;
+	border-bottom: 		0px;
+	padding-bottom: 	8px;
+}
+
+.mobileForm .formContent .lastLineBar {
+	
+	padding-left: 		15px;
+	border-bottom: 		0px;
+	padding-bottom: 	25px;
+}
+
+.mobileForm .formContent .actionBar {
+	
+	background: 		#F0F0F0;
+	padding-left: 		15px;
+	border-bottom: 		0px;
+	border-top: 		2px solid #C0C0C0;
+	border-left: 		2px solid #C0C0C0;
+	border-right: 		2px solid #C0C0C0;
+	padding-bottom: 	8px;
+	height: 			20px;
+	padding-top: 		20px;
+	padding-bottom: 	0px;
+}
+
+.mobileForm input {
+
+	font-size: 		20pt;
+	height: 		40px;
+	border:			0px solid #FFFFFF;
+	padding: 		2 0 1 3;
+	background: 	url('/images/mobile/form/fieldBg.png');
+}
+
+.mobileForm textarea {
+
+	font-size: 		20pt;
+	height: 		40px;
+	border:			0px solid #FFFFFF;
+	padding: 		2 0 1 3;
+	background: 	url('/images/mobile/form/fieldBg.png');
+	height: 		150px;
+	width: 			90%;
+}
+
+.formContent .editable {
+	
+	border-right:	2px solid #C0C0C0;
+	background: 	#FFFFFF url('/images/mobile/form/arrow.png') no-repeat right;
+}

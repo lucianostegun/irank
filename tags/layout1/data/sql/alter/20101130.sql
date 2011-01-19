@@ -1,0 +1,1 @@
+ALTER TABLE event_player ADD COLUMN confirm_code VARCHAR(50);

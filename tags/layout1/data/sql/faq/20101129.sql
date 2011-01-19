@@ -1,0 +1,3 @@
+INSERT INTO faq(question, order_seq, visible, created_at, updated_at, answer)
+    VALUES('Posso mudar meu e-mail após o cadastro?', 2, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Sim! Mesmo quando você ainda não é cadastrado no site, seus amigos podem adicioná-lo aos eventos através de seu e-mail.<br/><br/>
+Quando você faz o cadastro utilizando esse mesmo, seu cadastro é automaticamente relacionado aos eventos aos quais você já foi incluído. A partir daí você pode alterar seu e-mail e continuará fazendo parte dos rankings e eventos já inscritos');

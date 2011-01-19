@@ -1,0 +1,7 @@
+options:
+  is_secure: on
+  credentials: iRankSite
+
+saveOptions:
+  is_secure: on
+  credentials: iRankSite

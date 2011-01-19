@@ -1,0 +1,54 @@
+fields:
+       
+  username:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfStringValidator:
+      max:       15
+      max_error: Informe um valor de até 15 caracteres
+    sfCallbackValidator:
+      callback:      [UserSitePeer, uniqueUsername]
+      invalid_error: Este username já está em uso por outro usuário
+    sfRegexValidator:
+      match:        Yes
+      match_error:  O username informado não é válido.\nO username deve iniciar com uma letra, e pode conter apenas letras, números e hífen
+      pattern:      /^[a-zA-Z]+[a-zA-Z0-9_-]$/si
+       
+  emailAddress:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfStringValidator:
+      max:       150
+      max_error: Informe um valor de até 150 caracteres
+    sfEmailValidator:
+      strict:       true
+      email_error:  O e-mail informado não é um e-mail válido
+    sfCallbackValidator:
+      callback:      [UserSitePeer, uniqueEmailAddress]
+      invalid_error: Este e-mail já está em uso por outro usuário
+       
+  firstName:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfStringValidator:
+      max:       25
+      max_error: Informe um valor de até 25 caracteres
+  
+  password:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfStringValidator:
+      max:       32
+      max_error: Informe um valor entre 5 e 15 caracteres
+      min:       6
+      min_error: Informe um valor entre 5 e 15 caracteres
+      
+  passwordConfirm:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfStringValidator:
+      max:       32
+      max_error: Informe um valor entre 5 e 15 caracteres
+    sfCompareValidator:
+      check:    password
+      compare_error: A confirmação deve ser igual a senha

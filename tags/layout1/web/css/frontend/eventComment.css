@@ -1,0 +1,79 @@
+.commentList .commentArea .comment {
+	
+	margin-bottom: 	4px;
+}
+
+.commentList .comment {
+	
+	background: 	#FFFFFF;
+	padding: 		0 0 5 0;
+	border:			1px solid #AAAAAA;
+	width: 			420px;
+	overflow-x: 	hidden;
+}
+
+.commentList .commentArea .comment .header {
+
+	background: 	#F5F5F5;
+	overflow-x: 	hidden;
+}
+
+.commentList .commentArea .comment .header .senderInfo {
+
+	float: 		left;
+	padding: 	2 5 2 5;
+}
+
+.commentList .commentArea .comment .header .reply {
+
+	float: 		right;
+	padding: 	1 5 2 5;
+}
+
+.commentList .commentArea .comment .header .reply a {
+	
+	color: 	#98090C
+}
+
+.commentList .commentArea .comment .header .reply a:hover {
+	
+	color: 	#000000
+}
+
+.commentList .commentArea .comment .header .delete {
+
+	float: 		right;
+	padding: 	5 7 0 7;
+	width: 		12px;
+}
+
+.commentList .commentArea .comment .message {
+	
+	clear: 	both;
+	margin: 5 10 0 15;
+}
+
+textarea.eventComment {
+	
+	color: 			#444444;
+	width: 			100%;
+	height: 		46px;
+	font-family: 	Arial, Verdana, Sans serif
+}
+
+textarea.eventCommentError {
+
+	background: 	#FB8F7E;
+	border:			1px solid #333333;
+	color: 			#444444;
+	width: 			100%;
+	height: 		46px;
+	font-family: 	Arial, Verdana, Sans serif
+}
+
+.replyFormDiv {
+
+	width: 			420px;
+	margin-top: 	-10px;
+	margin-bottom: 	4px;
+}

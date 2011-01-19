@@ -1,0 +1,135 @@
+.menu img {
+	
+	margin: 	-20 25 0 -3;
+}
+
+.menu .topLeft {
+	
+	height: 		88px;
+	background: 	url('/images/mobile/layout/menuTopLeft.png') no-repeat
+}
+
+.menu .middle {
+	
+	height: 		88px;
+	background: 	url('/images/mobile/layout/menuBg.png');
+}
+
+.menu .topRight {
+	
+	height: 		88px;
+	background: 	url('/images/mobile/layout/menuTopRight.png') no-repeat
+}
+
+.menu .left {
+	
+	height: 		88px;
+	background: 	url('/images/mobile/layout/menuLeft.png') no-repeat
+}
+
+.menu .right {
+	
+	height: 		88px;
+	background: 	url('/images/mobile/layout/menuRight.png') no-repeat
+}
+
+.menu .baseLeft {
+	
+	height: 		88px;
+	background: 	url('/images/mobile/layout/menuBaseLeft.png') no-repeat
+}
+
+.menu .base {
+	
+	height: 		88px;
+	background: 	url('/images/mobile/layout/menuBaseBg.png');
+}
+
+.menu .baseRight {
+	
+	height: 		88px;
+	background: 	url('/images/mobile/layout/menuBaseRight.png') no-repeat
+}
+
+.menu .label {
+	
+	font-size: 		26pt;
+	color: 			#000000;
+	font-weight: 	bold;
+	padding-top: 	9px
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.tableMenu td {
+	
+	border-bottom: 	2px solid #C0C0C0;
+	font-size: 		22pt;
+	color: 			#000000;
+	font-weight: 	bold;
+	height: 		85px;
+	padding-left: 	20px;
+	background: 	#FFFFFF url('/images/mobile/form/arrow.png') no-repeat right;
+	overflow: 		hidden;
+}
+
+.tableMenu td span {
+	
+	font-size: 		15pt;
+	font-weight: 	normal;
+}
+
+
+.gridTable th {
+	
+	border-bottom: 	2px solid #C0C0C0;
+	font-size: 		18pt;
+	color: 			#000000;
+	font-weight: 	bold;
+	height: 		85px;
+	padding-left: 	20px;
+	overflow: 		hidden;
+	background: 	#FFFFFF;
+}
+
+.gridTable td {
+	
+	border-bottom: 	2px solid #C0C0C0;
+	font-size: 		18pt;
+	color: 			#000000;
+	font-weight: 	normal;
+	height: 		85px;
+	padding-left: 	20px;
+	overflow: 		hidden;
+	background: 	#FFFFFF;
+}
+
+.gridTable td span {
+	
+	font-size: 		15pt;
+	font-weight: 	normal;
+}
+
+.gridTable .hiddenColumn {
+	
+	display: 	none;
+}

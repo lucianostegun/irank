@@ -1,0 +1,16 @@
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        iRank - Poker Ranking
+    robots:       index, follow
+    description:  iRank - O primeiro site de gerenciamento de rankings de poker para você e seus amigos
+    keywords:     poker, ranking, classificação, torneio, holdem, amigos, historico, jogo
+    language:     pt
+
+  stylesheets:    [main, frontend/layout, frontend/form, button, frontend/loading, frontend/login]
+  javascripts:    [phpEquivalents, /sf/prototype/js/prototype, button, frontend/form, util, frontend/login, frontend/record, mask, frontend/friendSearch, /index.php/home/javascript/js]
+
+  has_layout:     on
+  layout:         layout

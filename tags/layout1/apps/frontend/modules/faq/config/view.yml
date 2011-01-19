@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [frontend/faq]
+  javascripts:    [frontend/faq]

@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [mobile/eventComment]
+  javascripts:    [mobile/event, mobile/eventComment]

@@ -1,0 +1,11 @@
+.actionBar {
+	
+	z-Index: 			2;
+	margin-left: 		407px;
+	margin-left: 		405px !ie;
+	width: 				340px;
+	height: 			22px;
+	position: 			absolute;
+	margin-bottom: 		-22px;
+	top: 				325px
+}

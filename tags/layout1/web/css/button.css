@@ -1,0 +1,120 @@
+.button {
+
+	cursor: 			pointer;
+	-moz-user-select: 	none;
+	line-height:		16px;
+}
+
+.button .buttonLeft {
+	
+	float: 			left;
+	height: 		22px;
+	width: 			7px;
+	background: 	url('/images/button/bgLeft.png');
+}
+
+.button .buttonMiddle {
+
+	float: 			left;
+	font-size: 		8pt;
+	height: 		22px;
+	font-weight: 	bold;
+	color: 			#000;
+	background: 	url('/images/button/bgMiddle.png');
+}
+
+.button .buttonMiddle .label {
+
+	margin-top: 	2px;
+	margin-top: 	3px !ie;
+}
+
+.button .buttonMiddle .label img {
+
+	margin-top: 	-2px;
+	margin-top: 	0px !ie;
+	margin-right: 	5px
+}
+
+.button .buttonMiddle .label .submit {
+
+	position: 		absolute;
+	left: 			-1;
+	border: 		0px transparent;
+	background: 	transparent;
+	width: 			0px;
+	height: 		0px;
+	z-index: 		-100;
+}
+
+.button .buttonMiddle .label a {
+
+	background: none;	
+}
+
+.button .buttonRight {
+
+	margin-right: 	10px;
+	float: 			left;
+	height: 		22px;
+	width: 			7px;
+	background: 	url('/images/button/bgRight.png');
+}
+
+
+
+
+
+
+
+
+
+
+
+.buttonDisabled {
+
+	cursor: 			pointer;
+	-moz-user-select: 	none;
+	line-height:		16px;
+}
+
+.buttonDisabled .buttonLeft {
+	
+	float: 			left;
+	height: 		22px;
+	width: 			7px;
+	background: 	url('/images/button/bgLeftDisabled.png');
+}
+
+.buttonDisabled .buttonMiddle {
+
+	float: 			left;
+	font-size: 		8pt;
+	height: 		22px;
+	font-weight: 	bold;
+	color: 			#000;
+	background: 	url('/images/button/bgMiddleDisabled.png');
+}
+
+.buttonDisabled .buttonMiddle .label {
+
+	margin-top: 	2px;
+	margin-top: 	3px !ie;
+	color: 			#AAAAAA;
+}
+
+.buttonDisabled .buttonMiddle .label img {
+
+	margin-top: 	-2px;
+	margin-top: 	0px !ie;
+	margin-right: 	5px
+}
+
+.buttonDisabled .buttonRight {
+
+	margin-right: 	10px;
+	float: 			left;
+	height: 		22px;
+	width: 			7px;
+	background: 	url('/images/button/bgRightDisabled.png');
+}

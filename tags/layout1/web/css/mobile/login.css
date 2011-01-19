@@ -1,0 +1,49 @@
+.login {
+
+}
+
+.login .label {
+	
+	height: 		22px;
+	font-weight: 	bold;
+	color: 			#666666;
+	padding-right: 	5px;
+	text-align: 	right;
+}
+
+.login .button {
+	
+	padding: 		10px;
+	text-align: 	right;
+}
+
+.login .info {
+	
+	color: 			#333333;
+	padding: 		5px;
+	padding-top: 	10px;
+}
+
+.login a {
+	
+	color: 	#3F64CF;
+	text-decoration: 	none;
+}
+
+#formStatusDiv {
+
+	margin-top:				10px;
+	border-top: 			3px solid #DE7A7B;
+	border-bottom: 			3px solid #DE7A7B;
+	padding-top:			6px;
+	padding-bottom: 		6px;
+	padding-left: 			45px;
+	background: 			url(/images/backend/error30.png) #E6C0C0 no-repeat;
+	background-position: 	7 3;	
+	color: 					#CC3300;
+	display: 				none;
+}
+
+#formStatusDiv #statusMessage {
+
+}
