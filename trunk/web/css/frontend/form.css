@@ -1,23 +1,31 @@
 .defaultForm {
 
-	padding: 		10 5 10 5;
-	margin: 		-5 -2 0 0;
-	background: 	#d9d8d9;
+	padding: 		10px 0px 10px 0px;
+	margin: 		-5px -2px 0px 0px;
+	background: 	#E6E6E6;
+	color: 			#333333;
+}
+
+.gridTable .defaultForm {
+
+	padding: 		0px;
+	margin: 		15px 0px 0px 0px;
+	background: 	#E6E6E6;
 	color: 			#333333;
 }
 
 .windowForm {
 
-	padding: 		10 5 10 5;
-	margin: 		0 -2 0 0;
-	background: 	#d9d8d9;
-	border: 		1px solid #888A88;
+	padding: 		10px 5px 10px 5px;
+	margin: 		0px -2px 0px 0px;
+	background: 	#E6E6E6;
+	border: 		1px solid #B0B0B0;
 }
 
 .defaultForm h1 {
 	
 	font-weight: 			bold;
-	padding: 				5 0 4 8;
+	padding: 				5px 0px 4px 8px;
 	border-bottom: 			1px solid #666666;
 	color: 					#444444;
 	font-size: 				10pt;
@@ -39,7 +47,7 @@
 
 .defaultFormErrorDetails {
 
-	padding: 		10 5 10 5;
+	padding: 		10px 5px 10px 5px;
 	background: 	#414143;
 	border-left: 	1px solid #000000;
 	color: 			#333333;
@@ -50,25 +58,34 @@
 	font-weight: 			bold;
 	font-size: 				10pt;
 	background: 			#1A1A1A url('/images/frontend/formInfo.png') no-repeat;
-	background-position: 	5 3;
-	padding: 				5 0 4 30;
-	margin: 				-10 -5 10 -5;
+	background-position: 	5px 3px;
+	padding: 				5px 0px 4px 30px;
+	margin: 				-10px -5px 10px -5px;
 	border-bottom: 			1px solid #333333;
 }
 
 .buttonBarForm {
 
 	height: 		22px;
-	padding: 		7 5 7 5;
-	margin: 		1 0 0 0;
-	background: 	#d9d8d9;
-	border: 		1px solid #888A88;
+	padding: 		7px 5px 7px 5px;
+	margin: 		-5px 12px 7px 12px;
+	background: 	#F0F0F0;
+	border: 		1px solid #AAAAAA;
+}
+
+.buttonTabBar {
+
+	height: 		22px;
+	padding: 		7px 5px 7px 5px;
+	margin: 		-5px 7px 7px 7px;
+	background: 	#E6E6E6;
+	border: 		1px solid #AAAAAA;
 }
 
 .buttonBarFormError {
 
 	height: 		22px;
-	padding: 		7 5 7 5;
+	padding: 		7px 5px 7px 5px;
 	background: 	#CE545C;
 	border: 		1px solid #333333;
 }
@@ -76,7 +93,7 @@
 .buttonBarFormSuccess {
 
 	height: 		22px;
-	padding: 		7 5 7 5;
+	padding: 		7px 5px 7px 5px;
 	background: 	#CE545C;
 	border: 		1px solid #333333;
 }
@@ -97,7 +114,7 @@
 
 	width: 			160px;
 	float: 			left;
-	padding: 		1 0 2 0;
+	padding: 		1px 0px 2px 0px;
 	height: 		15px;
 	height: 		21px !ie;
 	text-align: 	right;
@@ -110,7 +127,7 @@
 
 	width: 			80px;
 	float: 			left;
-	padding: 		1 0 2 0;
+	padding: 		1px 0px 2px 0px;
 	height: 		15px;
 	height: 		21px !ie;
 	text-align: 	right;
@@ -124,7 +141,7 @@
 	float: 			left;
 	padding: 		0px;
 	margin-right: 	2px;
-	padding: 		1 1 0 1;
+	padding: 		1px 1px 0px 1px;
 	padding: 		0px !ie;
 	height: 		20px;
 	height: 		23px !ie;
@@ -138,7 +155,7 @@
 	float: 			left;
 	padding: 		0px;
 	margin-right: 	2px;
-	padding: 		2 3 2 3;
+	padding: 		0px 3px 2px 3px;
 	text-align: 	left;
 }
 
@@ -146,15 +163,15 @@
 
 	float: 			left;
 	text-align: 	left;
-	padding: 		2 2 0 2;
+	padding: 		2px 2px 0px 2px;
 }
 
 .defaultForm .row .fieldRadio, .windowForm .row .fieldRadio {
 
 	float: 			left;
 	text-align: 	left;
-	padding: 		0 0 0 0;
-	margin: 		-1 0 0 2;
+	padding: 		0px 0px 0px 0px;
+	margin: 		-1px 0px 0px 2px;
 }
 
 .defaultForm .row .text, .windowForm .row .text {
@@ -163,24 +180,24 @@
 	width: 			auto;
 	width: 			135px !ie;
 	min-width: 		135px;
-	padding: 		0 3 2 3;
+	padding: 		0px 3px 2px 3px;
 	height: 		15px;
 	height: 		19px !ie;
 	text-align: 	left;
 	color: 			#333333;
-	margin: 		0 10 0 1;
+	margin: 		0px 10px 0px 1px;
 	border:			1px solid transparent;
 }
 
 .defaultForm .row .textFlex, .windowForm .row .textFlex {
 
 	float: 			left;
-	padding: 		0 3 2 3;
+	padding: 		0px 3px 2px 3px;
 	height: 		15px;
 	height: 		19px !ie;
 	text-align: 	left;
 	color: 			#333333;
-	margin: 		0 10 0 0;
+	margin: 		0px 10px 0px 0px;
 	border:			1px solid transparent;
 }
 
@@ -200,7 +217,7 @@
 .defaultForm .rowCheckbox .label {
 
 	float: 			left;
-	padding: 		3 0 1 5;
+	padding: 		3px 0px 1px 5px;
 	height: 		15px;
 	height: 		21px !ie;
 	text-align: 	left;
@@ -213,7 +230,7 @@
 
 	width: 			60px;
 	float: 			left;
-	padding: 		3 0 0 0;
+	padding: 		3px 0px 0px 0px;
 	height: 		15px;
 	height: 		21px !ie;
 	text-align: 	right;
@@ -227,10 +244,11 @@
 
 .defaultForm input, .windowForm input {
 
+	color: 			#444444;
 	font-size: 		8pt;
-	height: 		17px;
+	height: 		14px;
+	padding: 		1px 1px 1px 4px;
 	border:			1px solid #8A8A8A;
-	padding: 		0 0 1 3;
 	background: 	#F0F0F0;
 }
 
@@ -243,6 +261,7 @@
 
 	background: 	#C0C0C0;
 	border: 		1px solid #666666;
+	color: 			#303030;
 }
 
 .defaultForm input.required:focus, .windowForm input.required:focus {
@@ -261,12 +280,11 @@
 
 	font-size: 		8pt;
 	height: 		18px;
-	height: 		17px;
-	padding: 		0px;
+	height: 		19px;
+	padding: 		1px;
 	padding-left: 	0px;
 	text-align: 	left;
 	border:			1px solid #8A8A8A;
-	padding: 		0;
 }
 
 .defaultForm .rowTextArea {
@@ -282,7 +300,7 @@
 
 	width: 			160px;
 	float: 			left;
-	padding: 		3 0 0 0;
+	padding: 		3px 0px 0px 0px;
 	height: 		75px;
 	height: 		75px !ie;
 	text-align: 	right;
@@ -295,7 +313,7 @@
 
 	width: 			160px;
 	float: 			left;
-	padding: 		3 0 0 0;
+	padding: 		3px 0px 0px 0px;
 	height: 		64px;
 	height: 		75px !ie;
 	text-align: 	right;
@@ -347,8 +365,8 @@
 	width: 			250px;
 	height: 		70px;
 	height: 		71px !ie;
-	margin: 		0 0 0 -1;
-	margin: 		-1 -2 -1 -1 !ie;
+	margin: 		0px 0px 0px -1px;
+	margin: 		-1px -2px -1px -1px !ie;
 	padding-left: 	3px;
 	resize: 		none;
 	border:			1px solid #8A8A8A;
@@ -403,26 +421,52 @@
 .defaultForm .formFieldError, .windowForm .formFieldError {
 
 	font-size: 		8pt;
-	height: 		17px;
+	height: 		14px;
+	padding: 		1px 1px 1px 4px;
 	border:			1px solid #333333;
-	padding: 		0 0 1 3;
-	background: 	#fb8f7e;
+	background: 	#Fb8F7E;
 }
 
 .defaultForm .formFieldError:focus, .windowForm .formFieldError:focus {
 
 	font-size: 		8pt;
-	height: 		17px;
+	height: 		14px;
+	padding: 		1px 1px 1px 4px;
 	border:			1px solid #333333;
-	padding: 		0 0 1 3;
-	background: 	#e0695a;
+	background: 	#E0695A;
 }
+
+.defaultForm select.formFieldError, .windowForm select.formFieldError {
+
+	font-size: 		8pt;
+	height: 		18px;
+	height: 		19px;
+	padding: 		1px;
+	padding-left: 	0px;
+	text-align: 	left;
+	border:			1px solid #333333;
+	background: 	#Fb8F7E;
+}
+
+.defaultForm select.formFieldError:focus, .windowForm select.formFieldError:focus {
+
+	font-size: 		8pt;
+	height: 		18px;
+	height: 		19px;
+	padding: 		1px;
+	padding-left: 	0px;
+	text-align: 	left;
+	border:			1px solid #333333;
+	background: 	#E0695A;
+}
+
+
 
 .formStatusDiv {
 
 	padding: 		5px;
 	height: 		22px;
-	margin: 		-3 1 1 1;
+	margin: 		-3px 1px 1px 1px;
 	color: 			#333333;
 	display: 		none;
 	font-weight: 	bold;

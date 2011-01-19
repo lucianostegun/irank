@@ -1,15 +1,18 @@
 <?php
 	$isLogged = true;
+	
+	if( MyTools::isAuthenticated() )
+		include_partial('home/component/resume');
+	else
+		include_partial('home/component/welcome');
 ?>
+<div style="display: none">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td align="left" valign="top" id="homeResumeDiv" class="<?php echo ($isLogged?'':'welcome_bg') ?>">
     
 		<?php
-			if( MyTools::isAuthenticated() )
-				include_partial('home/component/resume');
-			else
-				include_partial('home/component/welcome');
+			
 		?>
 		    
     </td>
@@ -133,3 +136,4 @@
     </td>
   </tr>
 </table>
+</div>

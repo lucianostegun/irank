@@ -1,11 +1,11 @@
-<table width="100%" border="0" cellspacing="1" cellpadding="0">
-  <tr class="rank_heading">
-    <td>Nome</td>
-    <td>Buy-in</td>
-    <td>Posição</td>
-    <td>Prêmio</td>
-    <td>Rebuy</td>
-    <td>Add-on</td>
+<table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
+  <tr class="header">
+    <th>Nome</th>
+    <th>Buy-in</th>
+    <th>Posição</th>
+    <th>Prêmio</th>
+    <th>Rebuy</th>
+    <th>Add-on</th>
   </tr>
   <?php
   	$eventBuyin  = $eventObj->getBuyin();
@@ -18,9 +18,9 @@
   	
   		$peopleObj = $eventPlayerObj->getPeople();
   		$peopleId  = $peopleObj->getId();
-  		$style     = ($eventPlayerObj->getEnabled()?'':'color: #F5F5F5');
+  		$style     = ($eventPlayerObj->getEnabled()?'':'color: #BABABA');
   ?>
-  <tr class="boxcontent">
+  <tr>
     <td id="eventResultPeopleName<?php echo $peopleId ?>" style="<?php echo $style ?>"><?php echo $peopleObj->getFullName() ?></td>
     <td align="<?php echo ($isRing?'left':'right') ?>">
     	<?php
@@ -46,11 +46,11 @@
   	
   	if( count($eventPlayerObjList)==0 ):
   ?>
-  <tr class="boxcontent">
+  <tr>
     <td colspan="6">Este ranking não possui convidados para compor os resultados</td>
   </tr>
   <?php endif; ?>
-  <tr class="boxcontent">
+  <tr>
     <td colspan="6" class="defaultForm">
     	<div class="row" style="margin-top: 3px">
     		<div class="text">Os resultados serão enviados por e-mail a todos os participantes</div>

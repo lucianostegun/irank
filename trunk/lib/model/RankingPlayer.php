@@ -83,4 +83,12 @@ class RankingPlayer extends BaseRankingPlayer
 		
 		parent::setTotalAverage( Util::formatFloat($totalAverage, false, 3) );
 	}
+	
+	public function getPosition($peopleId=null){
+		
+		if( !$peopleId )
+			$peopleId = MyTools::getAttribute('peopleId');
+			
+		return Util::executeOne('SELECT total_ranking_position FROM ranking_history WHERE ranking_id = '.$this->getRankingId().' AND people_id = '.$this->getPeopleId().' ORDER BY ranking_date DESC LIMIT 1', 'int');
+	}
 }

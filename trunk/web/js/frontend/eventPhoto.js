@@ -64,9 +64,13 @@ function viewEventPhoto(eventPhotoId, direction){
 			windowEventPhotoViewHide();
 			window.onclick = null;
 			window.onkeyup = null;
+			document.onclick = null;
+			document.onkeyup = null;
 		}
 		
 		var onkeyup = function(event){
+			if( !event )
+				event = window.event;
 			
 			if(event.keyCode==37)
 				viewEventPhoto(eventPhotoId, 'previous');
@@ -78,6 +82,8 @@ function viewEventPhoto(eventPhotoId, direction){
 		
 		window.onclick = hidePhotoView;
 		window.onkeyup = onkeyup;
+		document.onclick = hidePhotoView;
+		document.onkeyup = onkeyup;
 		
 		hideIndicator();
 	};

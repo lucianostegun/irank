@@ -1,4 +1,4 @@
-<?php echo getPageHeader('Configurações'); ?>
+<div class="commonBar"><span>Configurações</span></div>
 <?php
 	
 	echo form_remote_tag(array(

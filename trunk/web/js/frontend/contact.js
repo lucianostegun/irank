@@ -7,6 +7,7 @@ function handleSuccessContact(content){
 	
 	showDiv('successDiv');
 	hideDiv('contactFormDiv');
+	hideDiv('contactFormBar');
 }
 
 function doSubmitContact(){
@@ -22,6 +23,7 @@ function newMessage(){
 	
 	hideDiv('successDiv');
 	showDiv('contactFormDiv');
+	showDiv('contactFormBar');
 	
 	$('contactFullName').focus()
 }

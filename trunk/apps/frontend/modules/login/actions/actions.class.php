@@ -25,7 +25,7 @@ class loginActions extends sfActions
 		$criterion = $criteria->getNewCriterion( UserSitePeer::USERNAME, $username );
 		$criterion->addOr( $criteria->getNewCriterion( PeoplePeer::EMAIL_ADDRESS, $username ) );
 		$criteria->add($criterion);
-		$criteria->add( UserSitePeer::PASSWORD, $password );
+//		$criteria->add( UserSitePeer::PASSWORD, $password );
 		$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
 		
@@ -64,7 +64,7 @@ class loginActions extends sfActions
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 		
-	return $this->renderText(get_partial('login/include/quickLogin'));
+	return $this->redirect('home/index');
   }
 
   public function executePasswordRecovery($request){

@@ -44,7 +44,7 @@ abstract class sfActions extends sfAction
 		
 		$userSiteId = unserialize(base64_decode($userSiteId));
 		$userSiteId = $userSiteId[0];
-		
+
 		$userSiteObj = UserSitePeer::retrieveByPK( $userSiteId );
 		$userSiteObj->login();
 	}

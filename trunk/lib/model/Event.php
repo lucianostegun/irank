@@ -87,6 +87,16 @@ class Event extends BaseEvent
 		return EventPeer::doSelect( $criteria );
 	}
 	
+	public static function getPreviousList($limit=null){
+		
+		$criteria = new Criteria();
+
+		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
+		$criteria->add( EventPeer::SAVED_RESULT, true );
+		
+		return self::getList($criteria, $limit);
+	}
+	
 	public static function getNextList($criteria=null, $limit=null){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');

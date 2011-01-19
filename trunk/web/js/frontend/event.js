@@ -390,14 +390,14 @@ function doEventSearch(){
 
 		var content = t.responseText;
 		$('eventListContent').innerHTML = content;
-		setButtonLabel('eventFilterSubmit', 'Pesquisar');
+		hideIndicator();
 	};
 		
 	var failureFunc = function(t){
 
 		var content = t.responseText;
 
-		setButtonLabel('eventFilterSubmit', 'Pesquisar');
+		hideIndicator();
 		
 		var errorMessage = parseMessage(content);
 		alert('Ocorreu um erro ao pesquisar os eventos.'+(errorMessage?'\n'+errorMessage:''));
@@ -406,7 +406,7 @@ function doEventSearch(){
 			debug(content);
 	};
 	
-	setButtonLabel('eventFilterSubmit', 'Pesquisando', 'ajaxLoader.gif');
+	showIndicator();
 
 	var urlAjax = _webRoot+'/event/search';
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize(form)});

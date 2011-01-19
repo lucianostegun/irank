@@ -7,14 +7,16 @@
 	if( !$pastDate )	
 		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
 
-	echo getPageHeader('Eventos');
+	$pageAction = ($isClone?'Clonagem':($eventObj->getEnabled()?'Edição':'Criação'));
 	
 	if( !$eventObj->getEnabled() || $isClone ):
 ?>
 <script>setRecordSaved(false);</script>
 <?php
 	endif;
-	 
+?>
+<div class="commonBar"><span>Eventos/<?php echo $pageAction ?></span></div>
+<?php
 	$eventId  = $eventObj->getId();
 	
 	echo form_remote_tag(array(
@@ -44,7 +46,7 @@
 	
 	if( $isEditable || $isMyEvent ):
 ?>
-	<div class="buttonBarForm" id="eventMainButtonBar">
+	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php
 			if( $isEditable)				
 				echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitEvent()'));

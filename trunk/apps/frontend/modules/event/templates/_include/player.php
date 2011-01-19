@@ -8,11 +8,11 @@
   	if( is_object($rankingObj) )
   		$peopleIdOwner = $rankingObj->getUserSite()->getPeopleId();
 ?>
-<table width="100%" border="0" cellspacing="1" cellpadding="0">
-  <tr class="rank_heading">
-    <td>Nome</td>
-    <td>E-mail</td>
-    <td colspan="3"></td>
+<table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
+  <tr class="header">
+    <th>Nome</th>
+    <th>E-mail</th>
+    <th colspan="3"></th>
   </tr>
   <?php
   	$eventPlayerObjList = $eventObj->getPlayerList();
@@ -21,10 +21,10 @@
   		$peopleObj = $eventPlayerObj->getPeople();
   		$peopleId  = $peopleObj->getId();
   ?>
-  <tr class="boxcontent">
+  <tr>
     <td><?php echo $peopleObj->getFullName() ?></td>
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
-    <td align="center" style="padding-left: 0; padding-right: 0">
+    <td align="center" class="icon">
     	<?php
     		$inviteStatus = $eventPlayerObj->getInviteStatus();
     		$icon = ($inviteStatus=='yes'?'ok':($inviteStatus=='no'?'nok':'help'));
@@ -37,10 +37,10 @@
     	?>
     </td>
     <?php if( $isMyEvent ): ?>
-    <td align="center" style="padding-left: 0; padding-right: 0">
+    <td align="center" class="icon">
     	<?php echo link_to(image_tag('icon/delete'), '#removePlayer('.$peopleId.')', array('title'=>'Remover jogador do evento')); ?>
     </td>
-    <td align="center" style="padding-left: 0; padding-right: 0">
+    <td align="center" class="icon">
     	<?php
     		$allowEdit    = $eventPlayerObj->getAllowEdit();
     		$icon         = ($allowEdit?'unlock':'lock');
