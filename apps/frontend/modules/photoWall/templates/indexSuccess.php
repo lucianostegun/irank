@@ -1,15 +1,11 @@
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="onlinepokerrooms_bg2">
-  <tr>
-	<td align="left" valign="middle" class="poker_heading"><?php echo image_tag('icon/photo', array('style'=>'margin: 2 8 0 10')) ?>Mural de fotos</td>
-  </tr>
-  <tr>
-    <td align="left" valign="top" style="padding:15px 23px 16px 20px;">
-		Clique sobre as minuaturas abaixo para<br/>
-		visualizar as fotos compartilhadas pelos jogadores
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="top" style="padding:0px 23px 16px 20px;">
+<div class="commonBar"><span>Mural de fotos</span></div>
+
+<div class="innerContent">
+	<?php echo image_tag('photos', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
+	Clique sobre as minuaturas abaixo para<br/>
+	visualizar as fotos compartilhadas pelos jogadores
+	<br/><br/>
+</div>
 
 		<table cellspacing="15" cellpadding="0" border="0">
 			<tr>

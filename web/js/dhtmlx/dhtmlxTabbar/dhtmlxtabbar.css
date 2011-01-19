@@ -84,34 +84,34 @@
 
 .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_row{
 	background-image:url(./imgs/dhx_skyblue/bg_top.png);
-	border-right:1px solid #B6CBDD;
-	border-left:1px solid #B6CBDD;
+	border-right:1px solid #FFFFFF;
+	border-left:1px solid #FFFFFF;
 }
 .dhx_tabbar_zone_dhx_blue .dhx_tabbar_row{
 	background-color: #D2E3EA;
 }
 .dhx_tabbar_zone_dhx_black .dhx_tabbar_row{
-	background-color: #FFFFFF;
+	background-color: #E6E6E6;
 }
 .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineA{
 	position:absolute; 
 	left:0px; width:1px; height:3px; 
 	background-color:white; 
 	z-index:999; 
-	border-left:1px solid #A4BED4; 
-	border-right:1px solid #A4BED4; 
+	border-left:1px solid #B0B0B0; 
+	border-right:1px solid #B0B0B0; 
 	overflow:hidden;	
 }
 .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineB{
 	position:absolute; left:2px; width:100px; height:3px; 
-	background-color: #D0E5FF; 
+	background-color: #E2E2E2; 
 	z-index:999; overflow:hidden;
 }
 .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineC{
 	position:absolute; right:0px;  width:1px; height:21px; 
 	background-color: white; 
 	z-index:999; overflow:hidden;
-	border-right:1px solid #A4BED4;
+	border-right:1px solid #FFFFFF;
 }
 .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineD{
 	position:absolute; left:1px;  width:1px; height:21px; 
@@ -152,12 +152,12 @@
 }
 .dhx_tabbar_zone_left .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineA{
 	width:3px;
-	border:1px solid #A4BED4;
+	border:1px solid #B0B0B0;
 	border-width:1px 0px 1px 0px;
 }
 .dhx_tabbar_zone_left .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineD{
 	height:1px; width:21px; right:auto; bottom:0px; left:1px;
-	border:1px solid #A4BED4;
+	border:1px solid #B0B0B0;
 	border-width:0px 0px 1px 0px;
 }
 .dhx_tabbar_zone_left .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineC{
@@ -165,7 +165,7 @@
 }
 .dhx_tabbar_zone_left .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_row{
 	background-image:url(./imgs/dhx_skyblue/bg_left.png);
-	border:1px solid #B6CBDD;
+	border:1px solid #FFFFFF;
 	border-width:1px 0px 1px 0px;
 }
 .dhx_tabbar_zone_left .dhx_tabbar_zone_dhx_skyblue .dhx_tablist_line {
@@ -183,7 +183,7 @@
 
 .dhx_tabbar_zone_right .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineA{
 	left:auto; width:3px;
-	border:1px solid #A4BED4;
+	border:1px solid #B0B0B0;
 	border-width:1px 0px 1px 0px;
 }
 .dhx_tabbar_zone_right .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineB{
@@ -191,7 +191,7 @@
 }
 .dhx_tabbar_zone_right .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineD{
 	height:1px; width:21px; left:auto; bottom:0px; right:1px;
-	border:1px solid #A4BED4;
+	border:1px solid #B0B0B0;
 	border-width:0px 0px 1px 0px;
 }
 .dhx_tabbar_zone_right .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineC{
@@ -200,7 +200,7 @@
 .dhx_tabbar_zone_right .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_row{
 	background-image:url(./imgs/dhx_skyblue/bg_right.png);
 	background-position:right;
-	border:1px solid #B6CBDD;
+	border:1px solid #FFFFFF;
 	border-width:1px 0px 1px 0px;
 }
 .dhx_tabbar_zone_right .dhx_tabbar_zone_dhx_skyblue .dhx_tablist_line {
@@ -218,10 +218,10 @@
 
 
 .dhx_tabbar_zone_dhx_skyblue .dhx_tablist_line{
-	height:3px; border:1px solid #A4BED4; background-color:white; border-width:1px 1px 0px 0px;
+	height:3px; border:1px solid #B0B0B0; background-color:white; border-width:1px 1px 0px 0px;
 }
 .dhx_tabbar_zone_dhx_skyblue .dhx_tabcontent_zone{
-  border-color:#A4BED4;
+  border-color:#B0B0B0;
 }
 
 /* common */
@@ -240,7 +240,7 @@ div.dhxcont_content_blocker {
 	filter: alpha(opacity=0);
 	-moz-opacity: 0;
 	opacity: 0;
-	background: #FFFFFF;
+	background: #E6E6E6;
 	z-index: 1;
 	-moz-user-select: none;
 }
@@ -261,8 +261,8 @@ div.dhxcont_sb_container div.dhxcont_statusbar {
 	white-space: nowrap;
 	border-top: none;
 	border-bottom: none;
-	border-left: #a4bed4 1px solid;
-	border-right: #a4bed4 1px solid;
+	border-left: #B0B0B0 1px solid;
+	border-right: #B0B0B0 1px solid;
 	font-family: Tahoma;
 	font-size: 11px;
 	vertical-align: middle;

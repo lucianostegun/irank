@@ -1,4 +1,3 @@
 all:
-
-  stylesheets:    [frontend/event, frontend/eventComment, frontend/eventPhoto]
+  stylesheets:    [frontend/table, frontend/form, frontend/event, frontend/eventComment, frontend/eventPhoto]
   javascripts:    [frontend/event, frontend/eventComment, frontend/eventPhoto, frontend/rankingPlace]

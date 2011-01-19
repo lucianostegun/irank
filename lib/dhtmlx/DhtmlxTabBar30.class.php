@@ -47,13 +47,13 @@ class DhtmlxTabBar30 {
     	
     	$objectName = $this->getName();
     	
-    	$html  = '<div id="'.$objectName.'Div" style="margin-top: 1px; height: '.$this->getHeight().'px;"></div>'.$nl;
+    	$html  = '<div id="'.$objectName.'Div" style="margin: 7px; height: '.$this->getHeight().'px;"></div>'.$nl;
     	$html .= $this->getTabBarListContent();
     	$html .= '<script>'.$nl;
 		$html .= '    '.$objectName.' = new dhtmlXTabBar("'.$objectName.'Div", "top");'.$nl;
 
     	$html .= '    '.$objectName.'.setHrefMode("ajax-html");'.$nl;
-    	$html .= '    '.$objectName.'.setSkin("dhx_black");'.$nl;
+    	$html .= '    '.$objectName.'.setSkin("dhx_skyblue");'.$nl;
 		$html .= '    '.$objectName.'.setImagePath("/js/dhtmlx/dhtmlxTabbar/imgs/");'.$nl;
 
 		$html .= $this->getTabBarListScript();

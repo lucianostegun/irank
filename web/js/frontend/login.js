@@ -1,6 +1,6 @@
 function doQuickLogin(){
 
-	showIndicator('login');
+	showIndicator();
 	
 	disableButton('submitLogin');
 	
@@ -15,12 +15,11 @@ function doQuickLogin(){
 		$('quickLoginContent').innerHTML = content;
 		
 		enableButton('submitLogin');
-		hideIndicator('login');
-		hideDiv('quickLoginStatus');
-		hideDiv('quickLoginHello');
 		
 		if( $('homeResumeDiv')!=null )
 			loadHomeResume();
+		
+		hideIndicator();
 	};
 		
 	var failureFunc = function(t){
@@ -28,12 +27,9 @@ function doQuickLogin(){
 		var content = t.responseText;
 		
 		enableButton('submitLogin');
-		
-		$('quickLoginStatus').innerHTML = content;
-		showDiv('quickLoginStatus');
-		hideDiv('quickLoginHello');
-		
-		hideIndicator('login');
+
+		showDiv('loginStatus', true);
+		hideIndicator();
 	};
 
 	var urlAjax = _webRoot+'/login/login/username/'+username+'/password/'+md5(password)+'/keepLogin/'+(keepLogin?'1':'0');

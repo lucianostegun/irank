@@ -1,3 +1,4 @@
+<div class="commonBar"><span>Eventos/Visualização</span></div>
 <?php
 
 	$pastDate          = $eventObj->isPastDate();
@@ -7,8 +8,6 @@
 	if( !$pastDate )	
 		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
 		
-	echo getPageHeader('Visualização de evento');
-
 	$eventId = $eventObj->getId();
 	echo input_hidden_tag('eventId', $eventId);
 	

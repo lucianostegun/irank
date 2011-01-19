@@ -196,5 +196,7 @@ function replyComment(eventCommentId){
 	showDiv('commentsCharCount'+eventCommentId, true);
 	showDiv('commentsPostButton'+eventCommentId, true);
 	
+	$('eventCommentComment'+eventCommentId).focus();
+	
 	adjustContentTab();
 }

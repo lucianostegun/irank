@@ -1,10 +1,14 @@
 <?php
-	echo getPageHeader('Cadastro de ranking');
+	$pageAction = ($rankingObj->getEnabled()?'Edição':'Criação');
+	
 	if( !$rankingObj->getEnabled() ):
 ?>
 <script>setRecordSaved(false);</script>
 <?php
 	endif;
+?>
+<div class="commonBar"><span>Rankings/<?php echo $pageAction ?></span></div>
+<?php
 	
 	echo form_remote_tag(array(
 		'url'=>'ranking/save',
@@ -26,7 +30,7 @@
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabRanking');
 	$dhtmlxTabBarObj->build();
 ?>
-	<div class="buttonBarForm" id="rankingMainButtonBar">
+	<div class="buttonTabBar" id="rankingMainButtonBar">
 		<?php
 			echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitRanking()'));
 			echo button_tag('deleteRanking', 'Excluir ranking', array('onclick'=>'doDeleteRanking()', 'image'=>'../icon/delete', 'style'=>'float: right'));
@@ -34,7 +38,7 @@
 		<?php echo getFormLoading('ranking') ?>
 		<?php echo getFormStatus(); ?>
 	</div>
-	<div class="buttonBarForm" id="rankingPlayerButtonBar" style="display: none">
+	<div class="buttonTabBar" id="rankingPlayerButtonBar" style="display: none">
 		<?php echo button_tag('addRankingPlayer', 'Novo membro', array('onclick'=>'addRankingPlayer()')) ?>
 		<?php echo getFormLoading('rankingPlayerList') ?>
 	</div>

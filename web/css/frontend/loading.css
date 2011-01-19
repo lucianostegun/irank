@@ -24,29 +24,26 @@
 	margin: 		4px;
 }
 
-.mainLoading {
+#indicator {
 
-	position: 		fixed;
-	top: 			0px;
-	right: 			0px;
-	width: 			170px;
+	position: 		absolute;
+	top: 			117px;
 	font-weight: 	bold;
 	display: 		none;
-	background: 	#C0C0C0;
 	padding: 		2 10 2 10;
-	border-left: 	1px solid #999999;
-	border-bottom: 	1px solid #999999;
 	z-index: 		100;
+	width: 			200px;
+	margin-left: 	630px;
 }
 
-.mainLoading .message {
+#indicator .message {
 	
 	float: 			left;
 	margin-left: 	6px;
 	color: 			#333333;
 }
 
-.mainLoading .image {
+#indicator .image {
 	
 	float: 			left;
 	margin: 		0 4 0 4;

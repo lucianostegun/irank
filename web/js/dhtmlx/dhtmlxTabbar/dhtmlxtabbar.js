@@ -59,7 +59,7 @@ function dhtmlXTabBar(parentObject, mode, height) {
 			margin :1,
 			offset :5,
 			tab_color :"#333333",
-			data_color :"#d9d8d9"
+			data_color :"#E6E6E6"
 		},
 		"winbiscarf" : {
 			left :18,
@@ -85,7 +85,7 @@ function dhtmlXTabBar(parentObject, mode, height) {
 			margin :1,
 			offset :5,
 			tab_color :"#333333",
-			data_color :"#d9d8d9"
+			data_color :"#E6E6E6"
 		},
 		"silver" : {
 			left :7,
@@ -95,7 +95,7 @@ function dhtmlXTabBar(parentObject, mode, height) {
 			margin :1,
 			offset :5,
 			tab_color :"#333333",
-			data_color :"#d9d8d9"
+			data_color :"#E6E6E6"
 		},
 		"dark_blue" : {
 			left :2,
@@ -130,7 +130,7 @@ function dhtmlXTabBar(parentObject, mode, height) {
 			margin :1,
 			offset :5,
 			tab_color :"#333333",
-			data_color :"#d9d8d9"
+			data_color :"#E6E6E6"
 		},
 		"dhx_skyblue" : {
 			left :3,
@@ -139,7 +139,7 @@ function dhtmlXTabBar(parentObject, mode, height) {
 			select_top :0,
 			margin :-1,
 			offset :5,
-			data_color :"white",
+			data_color :"#E6E6E6",
 			hover :true
 		}
 	};

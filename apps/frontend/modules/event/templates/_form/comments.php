@@ -1,17 +1,17 @@
 <?php
 	echo input_hidden_tag('eventPhotoId', null, array('id'=>'eventCommentEventPhotoId'));
 ?>
-<table width="100%" cellspacing="0" cellpadding="0" style="margin-top: 5px">
+<table cellspacing="0" cellpadding="0" style="margin-top: 5px;">
 	<tr>
-		<td valign="top" height="20" style="padding: 5 5 5 15"><div id="commentTitleDiv">Comentários dos convidados para o evento</div></td>
+		<td valign="top" height="20" style="width: 300px; padding: 5px 5px 5px 15px"><div id="commentTitleDiv">Comentários dos convidados para o evento</div></td>
 		<?php if( $eventObj->isPastDate() ): ?>
-		<td valign="top" rowspan="3" align="left" class="defaultForm" style="padding-bottom: 30px">
+		<td valign="top" rowspan="3" align="left" class="defaultForm" style="width: 300px; padding-bottom: 10px 10px 30px 10px">
 			<?php include_partial('event/include/photo', array('eventObj'=>$eventObj)) ?>			
 		</td>
 		<?php endif; ?>
 	</tr>
 	<tr>
-		<td valign="top" height="50" class="defaultForm">
+		<td valign="top" height="50" class="defaultForm" style="padding: 10px">
 
 			<?php include_partial('event/include/commentForm', array('eventCommentId'=>'')) ?>
 			
@@ -22,7 +22,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" width="420" class="defaultForm" style="padding-bottom: 30px">
+		<td valign="top" width="450" class="defaultForm" style="padding: 10px 10px 30px 10px">
 			<div id="commentListDiv" class="commentList">
 			<?php include_partial('event/include/commentList', array('eventObj'=>$eventObj)); ?>
 			</div>

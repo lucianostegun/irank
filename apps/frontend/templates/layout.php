@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <?php
@@ -6,7 +6,11 @@ include_http_metas();
 include_metas();
 include_title();
 
-$moduleName = $sf_context->getModuleName();
+$moduleName      = $sf_context->getModuleName();
+$isAuthenticated = MyTools::isAuthenticated();
+	
+if( $isAuthenticated )
+	$balance = People::getBalance();
 ?>
 <script>
 	var _webRoot   = '<?php echo $sf_request->getScriptName() ?>';
@@ -15,112 +19,79 @@ $moduleName = $sf_context->getModuleName();
 	var _isMobile  = false;
 </script>
 </head>
-
 <body>
-	<div id="debugDiv"></div>
-	<div class="mainLoading" id="indicator">
-		<div class="image"><?php echo image_tag('ajaxLoaderForm.gif') ?></div>
-		<div class="message">Processando, aguarde...</div>
+
+<div id="contentArea">
+	<div id="innerContent">
+    	<div id="header">
+    		<div id="logo"><?php echo link_to(image_tag('layout/logo', array('alt'=>'Voltar para a página inicial')), '/home') ?></div>
+    		<div id="search">
+    			<?php
+    				echo form_tag('search/result', array('id'=>'mainSearchForm'));
+    				echo input_tag('mainSearch', 'Procurar jogadores e eventos', array('onfocus'=>'handleMainSearchFocus(this)', 'onblur'=>'handleMainSearchBlur(this)'));
+    				echo '</form>';
+    			?>
+    			<div class="mainSearchButton" onmouseover="this.className='mainSearchButtonHover'" onmouseout="this.className='mainSearchButton'"><?php echo link_to(image_tag('blank.gif', array('width'=>23, 'height'=>19)), '#doQuickSearch()') ?></div>
+			</div>
+    	</div>
+    	<div id="mainContent">
+    		
+    		<table width="100%" cellspacing="0" cellpadding="0">
+    			<tr>
+    				<td valign="top" width="200" id="leftContent">
+				    	<div id="leftBar">
+				    		<div id="topBar">
+					    		<?php if( $isAuthenticated ): ?>
+				    			<span>SALDO GERAL:</span> <span class="<?php echo ($balance<0?'negative':'positive') ?>Credit"><?php echo Util::formatFloat($balance, true) ?></span>
+					    		<?php else: ?>
+					    		<?php echo link_to(image_tag('layout/signIn'), '/sign') ?>
+					    		<?php endif; ?>
+				    		</div>
+			    			<?php
+			    				if( !$isAuthenticated )
+			    					include_partial('login/include/login');
+			    			?>
+				    		<div id="leftMenu">
+				    			<?php
+				    				if( $isAuthenticated )
+				    					include_partial('home/include/mainMenu');
+			    					include_partial('home/include/leftBar');
+				    			?>
+				    		</div>
+				    	</div>
+    				</td>
+    				<td valign="top" id="rightContent">
+    				
+			    		<div id="topMenu">
+							<?php include_partial('home/include/topMenu') ?>
+			    		</div>
+					
+						<div id="middleContent">
+							<?php echo Util::getLoading(); ?>
+							<?php echo $sf_content ?>
+						</div>	    
+    				
+    				</td>
+    			</tr>
+    		</table>
+	    		
+    	</div>
 	</div>
-	
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td align="center" valign="top" class="header_bg">
-    <table width="950" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td width="230" align="left" valign="top" style="padding:0px 20px 0px 18px;"><?php echo link_to(image_tag('frontend/layout/logo'), '/home') ?></td>
-        <td width="380" align="left" valign="top">
-        	<img src="/images/frontend/layout/header_img.png" alt="" width="380" height="156" />
-        </td>
-        <td align="left" valign="middle">
-        <table width="324" border="0" cellspacing="4" cellpadding="0">
-          <tr>
-            <td width="68" align="left" valign="top">
-				<div id="quickLogin">
-					<div class="middle" id="quickLoginContent">
-						<?php
-							if( MyTools::isAuthenticated() )
-								include_partial('login/include/userMenu');
-							else
-								include_partial('login/include/quickLogin');
-						?>
-					</div>
-					<div class="base"></div>
-				</div>
-            </td>
-          </tr>
-        </table>
-        </td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td height="79" align="center" valign="top" class="menu_bg menu" style="padding-top:18px;"><table width="950" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td align="center" valign="top">
-        <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td align="center" valign="middle" class="border_menu_right"><?php echo link_to('Home', 'home') ?></td>
-            <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Cadastro', 'sign') ?></td>
-            <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Meu ranking', 'ranking') ?></td>
-            <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Convidar amigos', 'friendInvite') ?></td>
-            <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('Feedback', 'feedback', array('style'=>'color: #F32126')) ?></td>
-            <td align="center" valign="middle" class="border_menu_right border_menu_right"><?php echo link_to('F.A.Q.', 'faq') ?></td>
-            <td align="center" valign="middle" class="border_menu_right"><?php echo link_to('Contato', 'contact') ?></td>
-          </tr>
-        </table>
-        </td>
-      </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td align="center" valign="top">
-		<table width="950" border="0" cellspacing="0" cellpadding="0">
-		      <tr>
-		        <td width="200" align="left" valign="top" style="padding-right:10px">
-		        	<?php include_partial('home/include/mainMenu') ?>
-		        </td>
-		        <td width="740" align="left" valign="top">
-		        	<?php echo $sf_content ?>
-		        </td>
-		      </tr>
-		    </table>
-    </td>
-  </tr>
-  <tr>
-    <td height="27" align="center" valign="top"></td>
-  </tr>
-  <tr>
+</div>
 
-    <td height="111" align="center" valign="top" class="footer" style="padding-top:23px;"><table width="950" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td align="center" valign="top">
-        	<?php echo link_to('home', '/') ?> | 
-        	<?php echo link_to('cadastro', '/sign') ?> | 
-        	<?php echo link_to('meu ranking', '/ranking') ?> | 
-        	<?php echo link_to('convidar amigos', '/friendInvite') ?> | 
-        	<?php echo link_to('feedback', '/feedBack') ?> | 
-        	<?php echo link_to('f.a.q.', '/faq') ?> | 
-        	<?php echo link_to('contato', '/contact') ?> | 
-        </td>
-      </tr>
-    </table></td>
-  </tr>
-</table> 
-
-<!-- Begin http://www.casinotemplates.org | http://www.gamingguide.net Code | Do Not Remove -->
-<table width="950" border="0" align="center" cellpadding="0" cellspacing="0">
-<tr><td align="left" valign="middle">
-      <div align="center" style="color: #DDDDDD">Template by <a href="http://www.casinotemplates.org" target="_blank"><font color="#DDDDDD">Poker Templates</font></a> &amp; <a href="http://www.gamingguide.net" target="_blank"><font color="#DDDDDD">USA Online Casino</font></a></div>
-
-</td></tr></table>
-<!-- End http://www.casinotemplates.org | http://www.gamingguide.net Code | Do Not Remove -->
-
+<div id="footer">
+	<?php echo link_to('home', '/') ?> | 
+	<?php echo link_to('cadastro', '/sign') ?> | 
+	<?php echo link_to('meu irank', '/myAccount') ?> | 
+	<?php echo link_to('convidar amigos', '/friendInvite') ?> | 
+	<?php echo link_to('feedback', '/feedBack') ?> | 
+	<?php echo link_to('ajuda', '/help') ?> | 
+	<?php echo link_to('contato', '/contact') ?> 
+</div>
 
 <?php
 	$dhtmlxWindowsObj = new DhtmlxWindows();
 	$dhtmlxWindowsObj->build();
 ?>
-
 </body>
 </html>

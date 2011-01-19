@@ -32,11 +32,11 @@ function clearDebug(){
 	hideDiv('debugDiv');
 }
 
-function showDiv( divId, tableCell ){
+function showDiv( divId, isTableCell ){
 
 	var div = $( divId );
 	if( div && div!='undefined' )
-		div.style.display = (tableCell?'table-cell':'block');
+		div.style.display = (isTableCell?'table-cell':'block');
 }
 
 function hideDiv( divId ){

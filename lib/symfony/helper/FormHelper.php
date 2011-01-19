@@ -960,6 +960,8 @@ function button_tag( $buttonId, $text, $options=array() ){
 	
 	$style = '';
 	
+	unset($options['disabled']);
+	
 	if( !$visible )
 		$style = 'style="display: none"';
 
@@ -991,6 +993,10 @@ function button_tag( $buttonId, $text, $options=array() ){
 	$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 	$html .= '</div>';
 	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));
+	
+	sfContext::getInstance()->getResponse()->addStylesheet( 'button' );
+	sfContext::getInstance()->getResponse()->addJavascript( 'button' );
+	
 	return $html;
 }
 

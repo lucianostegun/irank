@@ -1,4 +1,4 @@
-<?php echo getPageHeader('Visualização de ranking') ?>
+<div class="commonBar"><span>Rankings/Visualização</span></div>
 <?php
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 	$dhtmlxTabBarObj->addTab('event', 'Eventos', 'ranking/form/event', array('rankingObj'=>$rankingObj));

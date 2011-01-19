@@ -1,6 +1,6 @@
 <table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px">
 	<tr>
-		<td valign="top" style="padding: 5 5 5 15">Resultado do evento</td>
+		<td valign="top" style="padding: 5px 5px 5px 15px">Resultado do evento</td>
 	</tr>
 	<tr>
 		<td valign="top" class="defaultForm" id="eventResultDiv">

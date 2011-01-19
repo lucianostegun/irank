@@ -270,15 +270,6 @@ function image_tag($source, $options = array())
 
   $options['src'] = image_path($source, $absolute);
 
-  if (!isset($options['alt']))
-  {
-    $path_pos = strrpos($source, '/');
-    $dot_pos = strrpos($source, '.');
-    $begin = $path_pos ? $path_pos + 1 : 0;
-    $nb_str = ($dot_pos ? $dot_pos : strlen($source)) - $begin;
-    $options['alt'] = ucfirst(substr($source, $begin, $nb_str));
-  }
-
   if (isset($options['size']))
   {
     list($options['width'], $options['height']) = split('x', $options['size'], 2);
