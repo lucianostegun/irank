@@ -25,7 +25,7 @@ class loginActions extends sfActions
 		$criterion = $criteria->getNewCriterion( UserSitePeer::USERNAME, $username );
 		$criterion->addOr( $criteria->getNewCriterion( PeoplePeer::EMAIL_ADDRESS, $username ) );
 		$criteria->add($criterion);
-//		$criteria->add( UserSitePeer::PASSWORD, $password );
+		$criteria->add( UserSitePeer::PASSWORD, $password );
 		$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
 		
@@ -34,14 +34,16 @@ class loginActions extends sfActions
 	        UserSite::logout();
 	        $userSiteObj->login($keepLogin);
 	        
-	        $options              = array();
-	        $options['username']  = $userSiteObj->getUsername();
-	        $options['firstName'] = $userSiteObj->getPeople()->getFirstName();
+	        $options                    = array();
+	        $options['username']        = $userSiteObj->getUsername();
+	        $options['firstName']       = $userSiteObj->getPeople()->getFirstName();
+	        $options['isAuthenticated'] = true;
+	        $options['balance']         = $balance = People::getBalance();
 	        
 	        sfConfig::set('sf_web_debug', false);
 			sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-			return $this->renderText(get_partial('login/include/userMenu', $options));
+			return $this->renderText(get_partial('home/include/leftBar', $options));
 		}else{
 			
 			$statusMessage = '<b>ACESSO NEGADO!</b> O login/senha inválidos';

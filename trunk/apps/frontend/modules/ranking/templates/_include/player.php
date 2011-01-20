@@ -4,7 +4,7 @@
 		<th>Sobrenome</th>
 		<th>E-mail</th>
 		<th>Eventos</th>
-		<th colspan="2"></th>
+		<th colspan="2">&nbsp;</th>
 	</tr>
 	<?php
 		$peopleIdMe    = MyTools::getAttribute('peopleId');

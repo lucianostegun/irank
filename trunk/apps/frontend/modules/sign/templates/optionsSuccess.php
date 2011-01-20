@@ -14,7 +14,7 @@
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 ?>
-	<div class="buttonBarForm" id="eventMainButtonBar">
+	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitUserOptions()')); ?>
 		<?php echo getFormLoading('userOptions') ?>
 		<?php echo getFormStatus(); ?>

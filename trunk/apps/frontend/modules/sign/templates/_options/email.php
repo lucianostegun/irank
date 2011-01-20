@@ -6,14 +6,12 @@
 	$receiveEventCommentNotify       = $userSiteObj->getOptionValue('receiveEventCommentNotify');
 ?>
 
-<table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px" class="defaultForm">
+<table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px">
 	<tr>
-		<td valign="top">
-			<div class="row">
-				<div class="text">Selecione abaixo as notificações que deseja ou não receber por e-mail</b></div>
-				<br/>
-				<br/>
-			</div>
+		<td valign="top" style="padding: 5px 5px 5px 15px">Selecione abaixo as notificações que deseja ou não receber por e-mail</td>
+	</tr>
+	<tr>
+		<td valign="top" class="defaultForm">
 			<div class="rowCheckbox">
 				<div class="field"><?php echo checkbox_tag('receiveFriendEventConfirmNotify', true, $receiveFriendEventConfirmNotify) ?></div>
 				<div class="label"><label for="receiveFriendEventConfirmNotify">Confirmação de presença dos convidados para os eventos</label></div>

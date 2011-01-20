@@ -1,3 +1,4 @@
+<div id="homeTopContentDiv">
 <?php
 	$isLogged = true;
 	
@@ -6,6 +7,8 @@
 	else
 		include_partial('home/component/welcome');
 ?>
+</div>
+
 <div style="display: none">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
