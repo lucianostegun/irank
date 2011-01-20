@@ -4,3 +4,44 @@
 	border: 	1px solid #606060;
 	margin: 	10px;
 }
+
+.homeDistinct {
+	
+	margin-left: 	8px;
+}
+	
+.homeDistinct td span {
+
+	font-size: 		10pt;
+	font-weight: 	bold;
+	color: 			#344f7c;
+}
+
+.homeDistinct td {
+
+	background: 	#FFFFFF;
+	padding: 		5px 5px 5px 10px;
+	border-top: 	1px solid #FFFFFF;
+	border-right: 	1px solid #FFFFFF;
+	border-bottom: 	1px solid #FFFFFF;
+}
+
+.homeDistinct .separator {
+
+	background: 	#FFFFFF;
+	border: 		0px solid;
+	height: 		3px;
+	width: 			3px;
+	padding: 		0px;
+	empty-cells: 	show;
+}
+
+.homeDistinct th {
+
+	background: 	#FFFFFF;
+	padding: 		5px;
+	border-top: 	1px solid #FFFFFF;
+	border-left: 	1px solid #FFFFFF;
+	border-right: 	1px solid #FFFFFF;
+	border-bottom: 	1px solid #FFFFFF;
+}
