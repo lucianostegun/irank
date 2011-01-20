@@ -1,9 +1,11 @@
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="welcome_bg2">
+<div class="commonBar"><span>Home</span></div>
+    
+    <table border="0" cellspacing="0" cellpadding="0" class="welcome">
 
       <tr>
-        <td width="245" align="left" valign="top">
+        <td width="245" align="left" valign="top" bgcolor="#173211">
         	<img src="/images/frontend/layout/welcome_img.jpg" alt="" width="245" height="162" /></td>
-        <td align="left" valign="top" style="padding:8px 10px 0px 21px; color: #DADADA">
+        <td align="left" valign="top" style="padding:8px 10px 0px 21px; color: #DADADA" bgcolor="#173211">
         	<p><img src="/images/frontend/layout/welcome_heading.gif" alt="" />
         		<img src="/images/frontend/layout/welcomeLogo.png" align="right"/></p>
         	

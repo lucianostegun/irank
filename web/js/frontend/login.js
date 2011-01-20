@@ -12,11 +12,10 @@ function doQuickLogin(){
 
 		var content = t.responseText;
 		
-		$('quickLoginContent').innerHTML = content;
-		
-		enableButton('submitLogin');
-		
-		if( $('homeResumeDiv')!=null )
+		$('leftBar').innerHTML = content;
+		hideDiv('login');
+
+		if( $('homeTopContentDiv')!=null )
 			loadHomeResume();
 		
 		hideIndicator();
@@ -55,12 +54,7 @@ function doQuickLogout(){
 }
 
 function loadHomeResume(){
-	
-	var successFunc = function(t){
-		
-		$('homeResumeDiv').className = '';
-	};
-	
+
 	var urlAjax = _webRoot+'/home/resume';
-	new Ajax.Updater('homeResumeDiv', urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
+	new Ajax.Updater('homeTopContentDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }

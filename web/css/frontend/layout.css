@@ -5,7 +5,7 @@ body {
 	font: 			11px/15px Tahoma, Arial, Helvetica, sans-serif;
 	color: 			#333333;
 	line-height: 	16px;
-	background: 	#F0F0F0 url('/images/layout/mainBg.gif') repeat-x;
+	background: 	#F6F6F6 url('/images/temp/bg.png') repeat-x;
 	text-align: 	center;
 }
 
@@ -38,25 +38,24 @@ img {
 	width: 			1000px;
 	clear: 			both;
 	border-left: 	1px solid #404040;
-	border-right: 	1px solid #404040;
-	border-bottom: 	1px solid #404040;
+	background: 	url('/images/layout/headerBg.png') repeat-x;
 }
 
 #contentArea #innerContent #header {
 
 	clear: 			both;
-	background: 	#D1D1D1;
 	height: 		69px;
-	background: 	url('/images/layout/headerBg.gif') repeat-x;
+	border-right: 	1px solid #909090;
+	border-bottom: 	1px solid #909090;
+	background: 	url('/images/layout/headerRightBg.png') right center no-repeat;
 }
 
 #contentArea #innerContent #header #logo {
 
 	float: 			left;
-	background: 	#DDDDDD;
 	width: 			200px;
 	height: 		69px;
-	border-right: 	1px solid #E9E9E9;
+	border-right: 	1px solid #823D2B;
 }
 
 #contentArea #innerContent #header #search {
@@ -91,7 +90,7 @@ img {
 
 	position: 		relative;
 	top: 			-16px;
-	top: 			-17px !ie;
+	top: 			-36px !ie;
 	width: 			23px;
 	height: 		19px;
 	left: 			210px;
@@ -102,7 +101,7 @@ img {
 
 	position: 		relative;
 	top: 			-16px;
-	top: 			-17px !ie;
+	top: 			-36px !ie;
 	width: 			23px;
 	height: 		19px;
 	left: 			210px;
@@ -113,7 +112,6 @@ img {
 
 	width: 			1000px;
 	clear: 			both;
-	margin-top: 	1px;
 	background: 	#FFFFFF;
 }
 
@@ -252,7 +250,8 @@ img {
 
 	width: 			799px;
 	border-top: 	1px solid #FFFFFF;
-	background: 	#FFFFFF
+	border-right: 	1px solid #909090;
+	background: 	#FFFFFF;
 }
 
 #contentArea #innerContent #rightContent #topMenu {
@@ -342,7 +341,8 @@ select {
 #footer {
 
 	clear: 			both;
-	margin-top: 	20px;
-	padding: 		20px 0px 20px 0px;
+	margin-top: 	35px;
+	height: 		50px;
+	padding: 		20px 0px 0px 0px;
 	background: 	url('/images/layout/footerBg.gif') repeat-x;
 }

@@ -5,7 +5,7 @@
 
 .resumeEventTable {
 	
-	width: 			783px;
+	width: 			782px;
 	border: 		1px solid #AAAAAA;
 }
 
@@ -16,6 +16,7 @@
 	padding-left: 	18px;
 	height: 		21px;
 	background: 	#E0E0E0 url('/images/layout/bullet.png') 6px 7px no-repeat;
+	text-align: 	left;
 }
 
 .resumeEventTable th.icon {
@@ -116,7 +117,7 @@
 
 .resumeRankingTable {
 	
-	width: 			531px;
+	width: 			530px;
 	border: 		1px solid #AAAAAA;
 }
 

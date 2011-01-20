@@ -1,14 +1,6 @@
-.homeResume .eventTable .nextEvent a {
+.welcome {
 
-	color: 	#000000;
-}
-
-.homeResume .eventTable .lastEvent a {
-
-	color: 	#666666;
-}
-
-.homeResume .eventTable a:hover {
-
-	color: 	#F32126;
+	width: 		778px;
+	border: 	1px solid #606060;
+	margin: 	10px;
 }

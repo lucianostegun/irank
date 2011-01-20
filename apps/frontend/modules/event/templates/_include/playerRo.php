@@ -2,7 +2,7 @@
   <tr class="header">
     <th>Nome</th>
     <th>E-mail</th>
-    <th></th>
+    <th>&nbsp;</th>
   </tr>
   <?php
   	$myEvent    = $eventObj->isMyEvent();

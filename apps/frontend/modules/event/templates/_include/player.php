@@ -12,7 +12,7 @@
   <tr class="header">
     <th>Nome</th>
     <th>E-mail</th>
-    <th colspan="3"></th>
+    <th colspan="3">&nbsp;</th>
   </tr>
   <?php
   	$eventPlayerObjList = $eventObj->getPlayerList();

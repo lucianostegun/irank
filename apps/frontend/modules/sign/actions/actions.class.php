@@ -18,6 +18,7 @@ class signActions extends sfActions
 	$userSiteId = MyTools::getAttribute('userSiteId');
 	
 	$this->userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+	$this->showSuccess = $this->getFlash('showSuccess');
   }
 
   public function handleErrorSave(){
@@ -34,6 +35,7 @@ class signActions extends sfActions
 		
   		$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
   		$firstSave   = false;
+  		$this->setFlash('showSuccess', true);
 	}else{
   		
   		$userSiteObj = new UserSite();
