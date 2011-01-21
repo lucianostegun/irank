@@ -44,6 +44,10 @@ else
 				    	<div id="leftBar">
 				    		<?php include_partial('home/include/leftBar', array('isAuthenticated'=>$isAuthenticated, 'balance'=>$balance)) ?>
 				    	</div>
+				    	<div id="socialNetwork">
+				    		<?php include_partial('home/include/facebook', array()) ?>
+				    		<?php include_partial('home/include/addthis', array()) ?>
+				    	</div>
     				</td>
     				<td valign="top" id="rightContent">
     				

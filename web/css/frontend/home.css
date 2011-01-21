@@ -45,3 +45,12 @@
 	border-right: 	1px solid #FFFFFF;
 	border-bottom: 	1px solid #FFFFFF;
 }
+
+h1 {
+
+	margin: 		20px 10px;
+	font-size: 		12pt;
+	font-weight: 	bold;
+	border-bottom: 	1px solid #344f7C;
+	color: 			#344f7C;
+}

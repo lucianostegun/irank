@@ -11,23 +11,6 @@ body
   text-align: center;
 }
 
-img
-{
-  border: none;
-}
-
-a
-{
-  color: #F32126;
-  text-decoration: underline;
-}
-
-a:hover
-{
-  color: #000000;
-  text-decoration: none;
-}
-
 code
 {
   font-size:120%;
@@ -47,8 +30,10 @@ code
 {
   padding: 5px;
   margin-top: 25px;
+  margin-left: 25px;
   float: left;
   width: 515px;
+  height: 	27px;
 }
 
 .sfTMessage
@@ -87,6 +72,11 @@ code
   width: 440px;
 }
 
+.sfTMessageContainer .sfTMessageWrap h4
+{
+  margin-top: 	8px;
+}
+
 .sfTLogo {
 
 	margin-top: -50px;
@@ -123,11 +113,11 @@ code
 
 .sfTMessageInfo
 {
-  margin: 0;
-  padding: 0;
-  margin-top: 15px;
+  margin: 40px 0px 10px 25px;
+  padding: 0px;
   float: left;
   width: 440px;
+  font-size: 	9pt;
 }
 
 .sfTMessageInfo dt
