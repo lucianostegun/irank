@@ -1,5 +1,5 @@
 <!-- AddThis Button BEGIN -->
-<div id="shareIt">Comaprtilhe...</div>
+<div id="shareIt">Compartilhe...</div>
 <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
 <a class="addthis_button_preferred_1"></a>
 <a class="addthis_button_preferred_2"></a>
