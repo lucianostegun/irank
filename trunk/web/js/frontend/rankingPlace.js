@@ -1,11 +1,11 @@
 var _RankingPlaceSuccessFunc = null;
 
 function addRankingPlace(rankingId){
-	
+
 	clearFormFieldErrors('rankingPlaceForm');
 	hideFormStatusError('rankingPlace');
 	hideFormStatusSuccess('rankingPlace');
-	hideIndicator('rankingPlace');
+//	hideIndicator('rankingPlace');
 	enableButton('rankingPlaceSubmit');
 	
 	$('rankingPlaceRankingPlaceId').value = '';

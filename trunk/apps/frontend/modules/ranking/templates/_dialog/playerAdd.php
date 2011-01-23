@@ -8,7 +8,7 @@
 		), array( 'id'=>'rankingPlayerForm' ));
 	
 	echo input_hidden_tag('peopleId', null, array('id'=>'rankingPlayerPeopleId'));
-	echo input_hidden_tag('rankingId', $rankingId);
+	echo input_hidden_tag('rankingId', $rankingId, array('id'=>'rankingPlayerRankingId'));
 ?>
 	<table width="100%" height="<?php echo $windowHeight-17 ?>" cellspacing="1" cellpadding="0" class="windowForm">
 		<tr>
@@ -28,10 +28,12 @@
 			</td>
 		</tr>
 	</table>
-	<div class="buttonBarForm">
-		<?php echo button_tag('rankingPlayerSubmit', 'Gravar alterações', array('onclick'=>'doSubmitRankingPlayer()')) ?>
-		<?php echo button_tag('rankingPlayerCancel', 'Cancelar', array('onclick'=>'windowRankingPlayerAddHide()')) ?>
-		<?php echo getFormLoading('rankingPlayer') ?>
-		<?php echo getFormStatus('rankingPlayer') ?>
+	<div class="windowButtonBar">
+		<?php
+			echo button_tag('rankingPlayerCancel', 'Cancelar', array('onclick'=>'windowRankingPlayerAddHide()'));
+			echo button_tag('rankingPlayerSubmit', 'Salvar', array('onclick'=>'doSubmitRankingPlayer()'));
+			echo getFormWindowLoading('rankingPlayer');
+			echo getFormStatus('rankingPlayer');
+		?>
 	</div>
 </form>

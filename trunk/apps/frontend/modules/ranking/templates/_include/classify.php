@@ -33,7 +33,7 @@
 		if( count($rankingPlayerObjList)==0 ):
 	?>
 	<tr>
-		<td colspan="5">Este ranking ainda não possui membros cadastrados</td>
+		<td colspan="8">Este ranking ainda não possui membros cadastrados</td>
 	</tr>
 	<?php endif; ?>
 </table>

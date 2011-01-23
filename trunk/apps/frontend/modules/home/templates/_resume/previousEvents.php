@@ -30,7 +30,7 @@
 	if( empty($eventObjList) ):
 ?>
 	<tr>
-		<td>Nenhum evento realizado</td>
+		<td colspan="7">Nenhum evento realizado</td>
 	</tr>
 <?php endif; ?>
 </table>

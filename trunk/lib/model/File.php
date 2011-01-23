@@ -132,7 +132,7 @@ class File extends BaseFile
 		$fileType  = $request->getFileType($fieldName);
 		$extension = explode('.', $fileName);
 		$extension = strtolower(end($extension));
-		
+
 		if( $fileSize > $maxFileSize )
 			throw new Exception('Tamanho máximo de arquivo excedido');
 		

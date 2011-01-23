@@ -334,4 +334,19 @@
 		  </foreign-key>
 	</table>
 
+	<table name="home_wall" phpName="HomeWall">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="people_name" type="VARCHAR" size="20" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="message" type="VARCHAR" size="200" />
+		<column name="icon" type="VARCHAR" size="10" />
+		<column name="show_who" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="user_site">
+		    <reference local="user_site_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
 </database>

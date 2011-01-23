@@ -4,7 +4,10 @@
 	</tr>
 	<tr>
 		<td valign="top" class="defaultForm" id="rankingPlayerDiv">
-			<?php include_partial('ranking/include/player', array('rankingObj'=>$rankingObj)) ?>
-			</td>
+			<?php
+				if( !$rankingObj->isNew() )
+					include_partial('ranking/include/player', array('rankingObj'=>$rankingObj));
+			?>
+		</td>
 	</tr>
 </table>

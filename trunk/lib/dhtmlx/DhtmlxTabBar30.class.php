@@ -224,7 +224,7 @@ class DhtmlxTabBar30 {
         
     /* SETTERS */
 	
-	private function setSelectedTabBarId( $selectedTabBarId ){
+	public function setSelectedTabBarId( $selectedTabBarId ){
 		
 		if( !$selectedTabBarId )
 			return false;

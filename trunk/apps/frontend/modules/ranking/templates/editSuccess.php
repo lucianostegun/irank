@@ -1,5 +1,5 @@
 <?php
-	$pageAction = ($rankingObj->getEnabled()?'Edição':'Criação');
+	$pageAction = ($rankingObj->isNew()?'Edição':'Criação');
 	
 	if( !$rankingObj->getEnabled() ):
 ?>
@@ -19,13 +19,14 @@
 		), array( 'id'=>'rankingForm' ));
 	
 	$rankingId = $rankingObj->getId();
+	$isNew     = $rankingObj->isNew();
 	echo input_hidden_tag('rankingId', $rankingId);
 
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 	$dhtmlxTabBarObj->addTab('main', 'Ranking', 'ranking/form/main', array('rankingObj'=>$rankingObj));
-	$dhtmlxTabBarObj->addTab('player', 'Membros', 'ranking/form/player', array('rankingObj'=>$rankingObj));
-	$dhtmlxTabBarObj->addTab('event', 'Eventos', 'ranking/form/event', array('rankingObj'=>$rankingObj));
-	$dhtmlxTabBarObj->addTab('classify', 'Classificação', 'ranking/form/classify', array('rankingObj'=>$rankingObj));
+	$dhtmlxTabBarObj->addTab('player', 'Membros', 'ranking/form/player', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
+	$dhtmlxTabBarObj->addTab('event', 'Eventos', 'ranking/form/event', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
+	$dhtmlxTabBarObj->addTab('classify', 'Classificação', 'ranking/form/classify', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabRanking');
 	$dhtmlxTabBarObj->build();
@@ -33,7 +34,9 @@
 	<div class="buttonTabBar" id="rankingMainButtonBar">
 		<?php
 			echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitRanking()'));
-			echo button_tag('deleteRanking', 'Excluir ranking', array('onclick'=>'doDeleteRanking()', 'image'=>'../icon/delete', 'style'=>'float: right'));
+			
+			if( $rankingObj->getVisible() )
+				echo button_tag('deleteRanking', 'Excluir ranking', array('onclick'=>'doDeleteRanking()', 'image'=>'../icon/delete', 'style'=>'float: right'));
 		?>
 		<?php echo getFormLoading('ranking') ?>
 		<?php echo getFormStatus(); ?>

@@ -10,6 +10,23 @@
 class People extends BasePeople
 {
 	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isColumnModified( PeoplePeer::VISIBLE );
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+			if( $this->getVisible() )				
+        		Log::quickLog('people', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('people', $this->getPrimaryKey(), $e);
+        }
+    }
+	
 	public function toString(){
 		
 		return $this->getName();
@@ -166,6 +183,11 @@ class People extends BasePeople
 		return Util::executeOne('SELECT SUM(event_player.PRIZE-(event_player.BUYIN+event_player.ADDON+event_player.REBUY)) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID', 'float');
 	}
 	
+	public function getUserSiteId(){
+		
+		return $this->getUserSite()->getId();
+	}
+	
 	public static function getResumeBalance(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
@@ -177,8 +199,11 @@ class People extends BasePeople
 		$resumeList['rebuy']   = Util::executeOne('SELECT SUM(event_player.REBUY) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID', 'float');
 		$resumeList['prize']   = Util::executeOne('SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID', 'float');
 		$resumeList['score']   = Util::executeOne('SELECT SUM(event_player.SCORE) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID', 'float');
+		
+		$bra = $resumeList['buyin']+$resumeList['rebuy']+$resumeList['addon'];
+		
 		$resumeList['balance'] = $resumeList['prize']-$resumeList['buyin']-$resumeList['rebuy']-$resumeList['addon'];
-		$resumeList['average'] = $resumeList['prize']/($resumeList['buyin']-$resumeList['rebuy']-$resumeList['addon']);
+		$resumeList['average'] = ($bra?$resumeList['prize']/$bra:0);
 		
 		$resumeList['rankings'] = Util::executeOne('SELECT COUNT(1) FROM ranking_player, ranking WHERE ranking_player.PEOPLE_ID = \''.$peopleId.'\' AND ranking.VISIBLE=TRUE AND ranking.DELETED=FALSE AND ranking_player.RANKING_ID=ranking.ID', 'float');
 		$resumeList['events']   = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID', 'float');

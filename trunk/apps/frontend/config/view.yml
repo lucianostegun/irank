@@ -10,7 +10,7 @@ default:
     language:     pt
 
   stylesheets:    [frontend/layout, frontend/loading]
-  javascripts:    [phpEquivalents, main, util, frontend/form, /sf/prototype/js/prototype, frontend/record]
+  javascripts:    [phpEquivalents, main, util, frontend/form, /sf/prototype/js/prototype, frontend/record, /index.php/home/javascript/js]
 
   has_layout:     on
   layout:         layout

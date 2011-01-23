@@ -4,7 +4,8 @@ function goModule(module, action, fieldName, fieldValue ){
 	
 	if( isDebug() ){
 		
-		var urlLocation = _webRoot+'/'+module+'/'+action;
+		var urlLocation = _webRoot+'/'+module;
+		urlLocation    += (action?'/'+action:'');
 		urlLocation    += (fieldName?'/'+fieldName:'');
 		urlLocation    += (fieldValue?'/'+fieldValue:'');
 		window.location = urlLocation;

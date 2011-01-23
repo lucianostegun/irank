@@ -4,7 +4,7 @@
 	</tr>
 	<tr>
 		<td valign="top" class="defaultForm" id="rankingPlayerDiv">
-			<?php include_partial('ranking/include/event', array('rankingObj'=>$rankingObj)) ?>
-			</td>
+			<?php include_partial('ranking/include/event', array('rankingObj'=>$rankingObj)); ?>
+		</td>
 	</tr>
 </table>

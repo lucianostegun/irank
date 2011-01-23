@@ -21,13 +21,14 @@ class Ranking extends BaseRanking
     	
     	try{
 			
-			$isNew              = $this->isColumnModified( RankingPeer::VISIBLE );
+			$isNew              = $this->isNew();
 			$columnModifiedList = Log::getModifiedColumnList($this);
 
+    		$this->postOnWall();
+    		
 			parent::save();
 			
-			if( $this->getVisible() )
-        		Log::quickLog('ranking', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+       		Log::quickLog('ranking', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
         } catch ( Exception $e ) {
         	
             Log::quickLogError('ranking', $this->getPrimaryKey(), $e);
@@ -619,5 +620,24 @@ class Ranking extends BaseRanking
 	  	}
 	  	
 	  	return $classifyList;
-	}		
+	}
+	
+	public function postOnWall(){
+		
+		if( $this->getDeleted() || !$this->getVisible() )
+			return false;
+			
+		$isNew     = $this->isNew();
+		$classify  = $this->isColumnModified( RankingPeer::RANKING_TYPE_ID );
+		$gameStyle = $this->isColumnModified( RankingPeer::GAME_STYLE_ID );
+		
+		if( $isNew )
+    		HomeWall::doLog('criado novo ranking <b>'.$this->getRankingName().'</b>', 'ranking');
+		
+		if( !$isNew && $classify )
+    		HomeWall::doLog('classificação do ranking <b>'.$this->getRankingName().'</b> alterada para <b>'.$this->getRankingType()->getDescription().'</b>', 'ranking');
+		
+		if( !$isNew && $gameStyle )
+    		HomeWall::doLog('estilo do ranking <b>'.$this->getRankingName().'</b> alterado para <b>'.$this->getGameStyle()->getDescription().'</b>', 'ranking');
+	}
 }

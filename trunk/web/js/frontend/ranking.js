@@ -1,10 +1,20 @@
-function handleSuccessRanking(content){
+function handleSuccessRanking(rankingId){
 
 	setRecordSaved(true);
 	clearFormFieldErrors('rankingForm');
 	showFormStatusSuccess();
 	hideIndicator('ranking');
 	enableButton('mainSubmit');
+	
+	var isNew = ($('rankingId').value=='');
+	$('rankingId').value = rankingId;
+	
+	if( isNew ){
+		
+		reloadPlayerTab();
+		tabBarMainObj.showTab('event');
+		reloadClassifyTab();
+	}
 	
 	onSelectTabRanking(tabBarMainObj.getActiveTab());
 }
@@ -32,13 +42,47 @@ function addRankingPlayer(){
 	enableButton('rankingPlayerSubmit');
 	windowRankingPlayerAddShow();
 	
+	$('rankingPlayerRankingId').value = $('rankingId').value;
+	
 	$('rankingPlayerFirstName').focus();
+}
+
+function reloadPlayerTab(){
+
+	var rankingId = $('rankingId').value;
+	
+	tabBarMainObj.showTab('player');
+	
+	var failureFunc = function(){
+		
+		$('rankingPlayerDiv').innerHTML = 'Não foi possível carregar a lista de jogadores!';
+	}
+	
+	var urlAjax = _webRoot+'/ranking/getPlayerList/rankingId/'+rankingId;
+	new Ajax.Updater('rankingPlayerDiv', urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function reloadClassifyTab(){
+	
+	var rankingId = $('rankingId').value;
+	
+	tabBarMainObj.showTab('classify');
+	
+	var failureFunc = function(){
+		
+		$('rankingClassifyDiv').innerHTML = 'Não foi possível carregar a lista de jogadores!';
+	}
+	
+	var urlAjax = _webRoot+'/ranking/getClassifyList/rankingId/'+rankingId;
+	new Ajax.Updater('rankingClassifyDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }
 
 function handleSuccessRankingPlayer(content){
 	
 	$('rankingPlayerForm').reset();
 	$('rankingPlayerDiv').innerHTML = content;
+	
+	reloadClassifyTab()
 	
 	enableButton('rankingPlayerSubmit');
 	

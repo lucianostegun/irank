@@ -4,7 +4,9 @@
 	</tr>
 	<tr>
 		<td valign="top" class="defaultForm" id="eventPlayerDiv">
-			<?php include_partial('event/include/player', array('eventObj'=>$eventObj)) ?>
+			<?php
+				if( !$eventObj->isNew() )
+					include_partial('event/include/player', array('eventObj'=>$eventObj)) ?>
 		</td>
 	</tr>
 	<tr>

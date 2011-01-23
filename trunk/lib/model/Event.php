@@ -10,27 +10,23 @@
 class Event extends BaseEvent
 {
 	
-	public function cleanRecord(){
-		
-		Util::executeQuery('UPDATE event SET invites=0, players=0 WHERE id = '.$this->getId());
-		Util::executeQuery('DELETE FROM event_player WHERE event_id = '.$this->getId());
-	}
-	
     public function save($con=null){
     	
     	try{
 			
-			$isNew              = $this->isColumnModified( EventPeer::VISIBLE );
+			$isNew              = $this->isNew();
 			$columnModifiedList = Log::getModifiedColumnList($this);
+
+    		$this->postOnWall();
 
 			parent::save();
 			
-			if( $this->getVisible() )
-        		Log::quickLog('event', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        	Log::quickLog('event', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
         } catch ( Exception $e ) {
         	
             Log::quickLogError('event', $this->getPrimaryKey(), $e);
         }
+        
     }
 	
 	public function delete($con=null){
@@ -635,6 +631,21 @@ class Event extends BaseEvent
 			return null;
 		
 		return $rankingPlaceObj->getPlaceName();
+	}
+	
+	public function postOnWall(){
+		
+		if( $this->getDeleted() || !$this->getVisible() )
+			return false;
+			
+		$isNew       = $this->isNew();
+		$savedResult = $this->isColumnModified( EventPeer::SAVED_RESULT );
+		
+		if( $isNew )
+        	HomeWall::doLog('criado novo evento <b>'.$this->getEventName().'</b>', 'event');
+		
+		if( $savedResult && $this->getSavedResult() )
+    		HomeWall::doLog('o resultado do evento <b>'.$this->getEventName().'</b> foi atualizado', 'event');
 	}
 	
 	public function getInfo(){

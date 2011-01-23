@@ -10,7 +10,7 @@
 	display: 		none;
 }
 
-.formLoading .message {
+.formLoading .message, .formLoadingWindow .message {
 	
 	float: 			left;
 	margin-top: 	3px;
@@ -18,7 +18,7 @@
 	color: 			#333333;
 }
 
-.formLoading .image {
+.formLoading .image, .formLoadingWindow .image {
 	
 	float: 			left;
 	margin: 		4px;
