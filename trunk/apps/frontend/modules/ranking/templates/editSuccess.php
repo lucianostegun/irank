@@ -35,7 +35,7 @@
 		<?php
 			echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitRanking()'));
 			
-			if( $rankingObj->getVisible() )
+			if( !$isNew )
 				echo button_tag('deleteRanking', 'Excluir ranking', array('onclick'=>'doDeleteRanking()', 'image'=>'../icon/delete', 'style'=>'float: right'));
 		?>
 		<?php echo getFormLoading('ranking') ?>
