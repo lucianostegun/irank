@@ -1,7 +1,7 @@
 function handleSuccessSign(content, isNew){
 	
 	if( isNew )
-		goModule('myAccount', null, null, null);
+		goModule('myAccount', false, false, false);
 
 	clearFormFieldErrors('signForm');
 	showFormStatusSuccess();
