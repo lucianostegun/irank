@@ -68,8 +68,3 @@
 	DhtmlxWindows::createWindow('eventPhotoView', '', 380, 125, 'event/dialog/photoView', array());
 	DhtmlxWindows::createWindow('rankingPlaceAdd', 'Cadastro de locais', 550, 125, 'ranking/dialog/placeAdd', array());
 ?>
-<?php echo form_tag('event/uploadPhoto', array('multipart'=>'form/data')) ?>
-<input type="text" name="eventId" value="49">
-<input type="file" name="Filedata">
-<input type="submit">
-</form>
