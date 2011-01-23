@@ -24,10 +24,12 @@
 			</td>
 		</tr>
 	</table>
-	<div class="buttonBarForm">
-		<?php echo button_tag('rankingPlaceSubmit', 'Gravar alterações', array('onclick'=>'doSubmitRankingPlace()')) ?>
-		<?php echo button_tag('rankingPlaceCancel', 'Cancelar', array('onclick'=>'windowRankingPlaceAddHide()')) ?>
-		<?php echo getFormLoading('rankingPlace') ?>
-		<?php echo getFormStatus('rankingPlace') ?>
+	<div class="windowButtonBar">
+		<?php
+			echo button_tag('rankingPlaceCancel', 'Cancelar', array('onclick'=>'windowRankingPlaceAddHide()'));
+			echo button_tag('rankingPlaceSubmit', 'Salvar', array('onclick'=>'doSubmitRankingPlace()'));
+			echo getFormWindowLoading('rankingPlace');
+			echo getFormStatus('rankingPlace');
+		?>
 	</div>
 </form>

@@ -11,7 +11,7 @@ class rankingActions extends sfActions
 	$freeActionList = array('edit', 'getDefaultBuyin', 'getRankingHistory');
 	$actionName     = sfContext::getInstance()->getActionName();
 		
-	$rankingId  = $this->getRequestParameter('rankingId');
+	$rankingId = $this->getRequestParameter('rankingId');
 	
 	if( $rankingId && !in_array( $actionName, $freeActionList ) ){
 
@@ -50,10 +50,7 @@ class rankingActions extends sfActions
 		$rankingTypeId     = VirtualTable::getIdByTagName('rankingType', 'position');
 		$requiredFieldList = array('userSiteId'=>$this->userSiteId, 'rankingTypeId'=>$rankingTypeId );
 		
-		$this->rankingObj = Util::getNewObject('ranking', $requiredFieldList);
-		
-		if( !is_object($this->rankingObj) )
-			return $this->redirect('ranking/index');
+		$this->rankingObj = new Ranking();
   	}
   }
 
@@ -64,6 +61,7 @@ class rankingActions extends sfActions
   
   public function executeSave($request){
 
+	$rankingId     = $this->getRequestParameter('rankingId');
 	$rankingName   = $request->getParameter('rankingName');
 	$gameStyleId   = $request->getParameter('gameStyleId');
 	$startDate     = $request->getParameter('startDate');
@@ -73,7 +71,15 @@ class rankingActions extends sfActions
 	$defaultBuyin  = $request->getParameter('defaultBuyin');
 
 	$rankingObj = $this->rankingObj;
+
+	if( !$rankingId ){
+		
+		$rankingObj = new Ranking();
+		$rankingObj->setUserSiteId($this->userSiteId);
+	}
 	
+	$isNew = $rankingObj->isNew();
+
 	$updateHistory = ($rankingTypeId!=$rankingObj->getRankingTypeId());
 
 	$rankingObj->setRankingName( $rankingName );
@@ -85,19 +91,18 @@ class rankingActions extends sfActions
 	$rankingObj->setRankingTypeId( $rankingTypeId );
 	$rankingObj->setVisible(true);
 	$rankingObj->setEnabled(true);
-	
-	if( !$rankingObj->getUserSiteId() )
-		$rankingObj->setUserSiteId( $this->userSiteId );
-	
-	$this->rankingObj->addPlayer( $this->peopleId );
-	
 	$rankingObj->save();
 	
-	$rankingObj->updateScores();
+	$rankingObj->addPlayer( $this->peopleId );
 	
-	if( $updateHistory )
-		$rankingObj->updateWholeHistory();
-
+	if( !$isNew ){
+		
+		$rankingObj->updateScores();
+		
+		if( $updateHistory )
+			$rankingObj->updateWholeHistory();
+	}
+	
 	echo $rankingObj->getId();
 	exit;
   }
@@ -168,6 +173,27 @@ class rankingActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
 	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
+  }
+  
+  public function executeGetPlayerList($request){
+
+	$rankingObj = $this->rankingObj;
+	
+    sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+
+	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
+  }
+
+  public function executeGetClassifyList($request){
+
+	$rankingDate = $request->getParameter('rankingDate', null);
+	$rankingObj  = $this->rankingObj;
+	
+    sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+
+	return $this->renderText(get_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$rankingDate)));
   }
 
   public function handleErrorSavePlace(){

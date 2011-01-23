@@ -244,7 +244,7 @@
 
 .defaultForm input, .windowForm input {
 
-	color: 			#444444;
+	color: 			#1A1A1A;
 	font-size: 		8pt;
 	height: 		14px;
 	padding: 		1px 1px 1px 4px;
@@ -261,7 +261,7 @@
 
 	background: 	#C0C0C0;
 	border: 		1px solid #666666;
-	color: 			#303030;
+	color: 			#000000;
 }
 
 .defaultForm input.required:focus, .windowForm input.required:focus {
@@ -424,7 +424,8 @@
 	height: 		14px;
 	padding: 		1px 1px 1px 4px;
 	border:			1px solid #333333;
-	background: 	#Fb8F7E;
+	background: 	#FB8F7E;
+	color: 			#000000;
 }
 
 .defaultForm .formFieldError:focus, .windowForm .formFieldError:focus {
@@ -434,6 +435,7 @@
 	padding: 		1px 1px 1px 4px;
 	border:			1px solid #333333;
 	background: 	#E0695A;
+	color: 			#000000;
 }
 
 .defaultForm select.formFieldError, .windowForm select.formFieldError {
@@ -445,7 +447,8 @@
 	padding-left: 	0px;
 	text-align: 	left;
 	border:			1px solid #333333;
-	background: 	#Fb8F7E;
+	background: 	#FB8F7E;
+	color: 			#000000;
 }
 
 .defaultForm select.formFieldError:focus, .windowForm select.formFieldError:focus {
@@ -458,12 +461,24 @@
 	text-align: 	left;
 	border:			1px solid #333333;
 	background: 	#E0695A;
+	color: 			#000000;
 }
 
 
 
 .formStatusDiv {
 
+	padding: 		5px;
+	height: 		22px;
+	margin: 		-3px 1px 1px 1px;
+	color: 			#333333;
+	display: 		none;
+	font-weight: 	bold;
+}
+
+.windowButtonBar .formStatusDiv {
+
+	float: 			left;
 	padding: 		5px;
 	height: 		22px;
 	margin: 		-3px 1px 1px 1px;

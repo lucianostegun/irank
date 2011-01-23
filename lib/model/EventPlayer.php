@@ -17,6 +17,8 @@ class EventPlayer extends BaseEventPlayer
 			$isNew              = $this->isNew();
 			$columnModifiedList = Log::getModifiedColumnList($this);
 
+			$this->postOnWall();
+			
 			parent::save();
 			
        		Log::quickLog('event_player', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
@@ -144,6 +146,17 @@ class EventPlayer extends BaseEventPlayer
 			$confirmCode = base64_encode(strrev(md5($this->getEvent()->getRankingId().'.'.$this->getEventId().'.'.$this->getPeopleId())));
 		
 		return $confirmCode;
+	}
+	
+	public function postOnWall(){
+
+		$inviteStatus = $this->isColumnModified( EventPlayerPeer::INVITE_STATUS );
+		
+		if( $inviteStatus && $this->getEnabled() )
+       		HomeWall::doLog('confirmou presença no evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', true, $this->getPeople()->getUserSiteId());
+		
+		if( $inviteStatus && $this->getInviteStatus()=='no' )
+       		HomeWall::doLog('não vai ao evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', true, $this->getPeople()->getUserSiteId());
 	}
 
 	public function getInviteStatusDescription(){

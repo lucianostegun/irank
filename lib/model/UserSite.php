@@ -10,6 +10,25 @@
 class UserSite extends BaseUserSite
 {
 	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+			if( $this->getVisible() )				
+        		Log::quickLog('userSite', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        		
+        	$this->postOnWall($isNew);
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('userSite', $this->getPrimaryKey(), $e);
+        }
+    }
+	
 	public function quickSave($request){
 		
 		$username     = $request->getParameter('username');
@@ -30,7 +49,23 @@ class UserSite extends BaseUserSite
 	  	$this->setPassword( (strlen($password)==32?$password:md5($password)) );
 	  	$this->setActive(true);
 	  	$this->save();
+	  	
 	  	$peopleObj->save();
+	}
+	
+	public function saveEmailOptions($request){
+		
+		$receiveFriendEventConfirmNotify = $request->getParameter('receiveFriendEventConfirmNotify');
+		$receiveEventReminder0           = $request->getParameter('receiveEventReminder0');
+		$receiveEventReminder3           = $request->getParameter('receiveEventReminder3');
+		$receiveEventReminder7           = $request->getParameter('receiveEventReminder7');
+		$receiveEventCommentNotify       = $request->getParameter('receiveEventCommentNotify');
+		
+		$this->setOptionValue('receiveFriendEventConfirmNotify', ($receiveFriendEventConfirmNotify?'1':'0'));
+		$this->setOptionValue('receiveEventReminder0', ($receiveEventReminder0?'1':'0'));
+		$this->setOptionValue('receiveEventReminder3', ($receiveEventReminder3?'1':'0'));
+		$this->setOptionValue('receiveEventReminder7', ($receiveEventReminder7?'1':'0'));
+		$this->setOptionValue('receiveEventCommentNotify', ($receiveEventCommentNotify?'1':'0'));
 	}
 	
 	public static function getCurrentUser(){
@@ -147,5 +182,13 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('receiveEventReminder0', '1');
 		$this->setOptionValue('receiveEventReminder3', '1');
 		$this->setOptionValue('receiveEventReminder7', '1');
+		$this->setOptionValue('receiveEventReminder7', '1');
+		$this->setOptionValue('receiveEventCommentNotify', '1');
+	}
+	
+	public function postOnWall($isNew){
+		
+		if( $isNew )
+   			HomeWall::doLog('juntou-se aos jogadores do <b>iRank</b>. Seja bem vindo!', 'userSite', true, $this->getId());
 	}
 }

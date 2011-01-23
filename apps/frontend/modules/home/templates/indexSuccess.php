@@ -58,3 +58,5 @@
 		</td>
 	</tr>
 </table>
+
+<?php include_partial('home/include/homeWall'); ?>

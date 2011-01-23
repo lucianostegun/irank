@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    [frontend/form, frontend/table]
-  javascripts:    []
+  javascripts:    [frontend/myAccount]

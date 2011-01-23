@@ -25,10 +25,12 @@
 			
 			$totalPaidFinal  += $totalPaid;
 			$totalPrizeFinal += $totalPrize;
+			
+			$position = $rankingPlayerObj->getPosition();
 	?>
 	<tr>
 		<th><?php echo $rankingObj->getRankingName() ?></th>
-		<td><?php echo '#'.$rankingPlayerObj->getPosition() ?></td>
+		<td><?php echo ($position?'#'.$position:'-') ?></td>
 		<td><?php echo Util::formatFloat($rankingPlayerObj->getTotalScore(), true, 3) ?></td>
 		<td><?php echo Util::formatFloat($totalPaid, true) ?></td>
 		<td><?php echo Util::formatFloat($totalPrize, true) ?></td>
@@ -45,7 +47,7 @@
 	</tr>
 	<?php else: ?>
 	<tr>
-		<td>Você não está participando de nenhum ranking</td>
+		<td style="text-align: left">Você não está participando de nenhum ranking</td>
 	</tr>
 	<?php endif; ?>
 </table>

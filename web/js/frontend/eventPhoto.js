@@ -3,11 +3,13 @@ function updatePhotoUploadStatus(status){
 	switch(status){
 		case 'error':
 			alert('Não foi possível carregar a imagem selecionada!\nVerifique o formato e o tamanho do arquivo enviado.\n\nFormato: JPG ou PNG, até 2Mb');
+			hideIndicator();
 			break;
 		case 'loading':
 			showIndicator();
 			break;
 		default:
+			alert(status)
 			break;
 	}
 }

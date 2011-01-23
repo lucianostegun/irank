@@ -71,6 +71,12 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	protected $lastLogCriteria = null;
 
 	
+	protected $collHomeWallList;
+
+	
+	protected $lastHomeWallCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -510,6 +516,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collHomeWallList !== null) {
+				foreach($this->collHomeWallList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -569,6 +583,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 				if ($this->collLogList !== null) {
 					foreach($this->collLogList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collHomeWallList !== null) {
+					foreach($this->collHomeWallList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -802,6 +824,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			foreach($this->getLogList() as $relObj) {
 				$copyObj->addLog($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getHomeWallList() as $relObj) {
+				$copyObj->addHomeWall($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1065,6 +1091,76 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	public function addLog(Log $l)
 	{
 		$this->collLogList[] = $l;
+		$l->setUserSite($this);
+	}
+
+	
+	public function initHomeWallList()
+	{
+		if ($this->collHomeWallList === null) {
+			$this->collHomeWallList = array();
+		}
+	}
+
+	
+	public function getHomeWallList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseHomeWallPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collHomeWallList === null) {
+			if ($this->isNew()) {
+			   $this->collHomeWallList = array();
+			} else {
+
+				$criteria->add(HomeWallPeer::USER_SITE_ID, $this->getId());
+
+				HomeWallPeer::addSelectColumns($criteria);
+				$this->collHomeWallList = HomeWallPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(HomeWallPeer::USER_SITE_ID, $this->getId());
+
+				HomeWallPeer::addSelectColumns($criteria);
+				if (!isset($this->lastHomeWallCriteria) || !$this->lastHomeWallCriteria->equals($criteria)) {
+					$this->collHomeWallList = HomeWallPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastHomeWallCriteria = $criteria;
+		return $this->collHomeWallList;
+	}
+
+	
+	public function countHomeWallList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseHomeWallPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(HomeWallPeer::USER_SITE_ID, $this->getId());
+
+		return HomeWallPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addHomeWall(HomeWall $l)
+	{
+		$this->collHomeWallList[] = $l;
 		$l->setUserSite($this);
 	}
 

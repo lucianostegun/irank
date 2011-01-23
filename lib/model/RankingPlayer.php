@@ -17,6 +17,8 @@ class RankingPlayer extends BaseRankingPlayer
 			$isNew              = $this->isNew();
 			$columnModifiedList = Log::getModifiedColumnList($this);
 
+			$this->postOnWall();
+
 			parent::save();
 			
        		Log::quickLog('ranking_player', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
@@ -90,5 +92,14 @@ class RankingPlayer extends BaseRankingPlayer
 			$peopleId = MyTools::getAttribute('peopleId');
 			
 		return Util::executeOne('SELECT total_ranking_position FROM ranking_history WHERE ranking_id = '.$this->getRankingId().' AND people_id = '.$this->getPeopleId().' ORDER BY ranking_date DESC LIMIT 1', 'int');
+	}
+	
+	public function postOnWall(){
+		
+		$isNew    = $this->isNew();
+		$peopleId = MyTools::getAttribute('peopleId');
+		
+		if( $isNew && $peopleId!=$this->getPeopleId() )
+        	HomeWall::doLog('agora é jogador do ranking <b>'.$this->getRanking()->getRankingName().'</b>', 'rankingPlayer', true, false, $this->getPeople()->getFirstName());		
 	}
 }

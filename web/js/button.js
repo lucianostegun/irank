@@ -7,14 +7,14 @@ function toggleButton(buttonId, type){
 	
 	if( type=='over' ){
 
-		$('button'+buttonId+'Left').style.backgroundPosition   = '0 -22';
-		$('button'+buttonId+'Middle').style.backgroundPosition = '0 -22';
-		$('button'+buttonId+'Right').style.backgroundPosition  = '0 -22';
+		$('button'+buttonId+'Left').style.backgroundPosition   = '0px -22px';
+		$('button'+buttonId+'Middle').style.backgroundPosition = '0px -22px';
+		$('button'+buttonId+'Right').style.backgroundPosition  = '0px -22px';
 	}else{
 		
-		$('button'+buttonId+'Left').style.backgroundPosition   = '0 0';
-		$('button'+buttonId+'Middle').style.backgroundPosition = '0 0';
-		$('button'+buttonId+'Right').style.backgroundPosition  = '0 0';
+		$('button'+buttonId+'Left').style.backgroundPosition   = '0px 0px';
+		$('button'+buttonId+'Middle').style.backgroundPosition = '0px 0px';
+		$('button'+buttonId+'Right').style.backgroundPosition  = '0px 0px';
 	}
 }
 

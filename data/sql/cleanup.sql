@@ -1,11 +1,18 @@
-DELETE FROM ranking_history;
-DELETE FROM user_site_option;
 DELETE FROM event_player;
-DELETE FROM ranking_player;
+DELETE FROM event_comment;
+DELETE FROM event_photo_comment;
+DELETE FROM event_photo;
 DELETE FROM event;
+DELETE FROM ranking_history;
+DELETE FROM ranking_player;
+DELETE FROM ranking_place;
 DELETE FROM ranking;
+DELETE FROM home_wall;
+DELETE FROM log;
 DELETE FROM user_site;
+DELETE FROM user_site_option;
 DELETE FROM people;
+
 DELETE FROM virtual_table;
 
 SELECT SETVAL('event_seq', (SELECT MAX(id) FROM event));

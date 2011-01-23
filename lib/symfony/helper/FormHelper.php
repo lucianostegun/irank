@@ -1068,7 +1068,12 @@ function getLoading( $indicatorId=null ){
  */
 function getFormLoading( $indicatorId, $message='Processando, aguarde...' ){
 	
-	echo get_partial( 'home/include/formLoading', array('indicatorId'=>$indicatorId, 'message'=>$message) );
+	echo get_partial( 'home/include/formLoading', array('indicatorId'=>$indicatorId, 'message'=>$message, 'isWindow'=>false) );
+}
+
+function getFormWindowLoading( $indicatorId, $message='Processando, aguarde...' ){
+	
+	echo get_partial( 'home/include/formLoading', array('indicatorId'=>$indicatorId, 'message'=>$message, 'isWindow'=>true) );
 }
 
 /**

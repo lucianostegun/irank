@@ -2,10 +2,12 @@ var _SaveResultAlert = false;
 
 function handleSuccessEvent(content){
 
-	var infoObj = parseInfo(content);
+	var eventObj = parseInfo(content);
+	
+	$('eventId').value = eventObj.eventId;
 
-	updatePlayerContent(infoObj.eventId);
-	updateResultContent(infoObj.eventId);
+	updatePlayerContent(eventObj.eventId);
+	updateResultContent(eventObj.eventId);
 	
 	setRecordSaved(true);
 	clearFormFieldErrors('eventForm');
@@ -25,11 +27,12 @@ function handleSuccessEvent(content){
 	enableButton('declinePresence');
 	enableButton('maybePresence');
 	
-	if( infoObj.inviteStatus=='yes' )   disableButton('confirmPresence');
-	if( infoObj.inviteStatus=='no' )    disableButton('declinePresence');
-	if( infoObj.inviteStatus=='maybe' ) disableButton('maybePresence');
+	if( eventObj.inviteStatus=='yes' )   disableButton('confirmPresence');
+	if( eventObj.inviteStatus=='no' )    disableButton('declinePresence');
+	if( eventObj.inviteStatus=='maybe' ) disableButton('maybePresence');
 	
 	tabBarMainObj.showTab('comments');
+	tabBarMainObj.showTab('player');
 	
 	lockRanking();
 	

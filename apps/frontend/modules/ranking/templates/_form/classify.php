@@ -16,7 +16,7 @@
 	</tr>
 	<tr>
 		<td valign="top" colspan="3" class="defaultForm" id="rankingClassifyDiv">
-			<?php include_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>null)) ?>
-			</td>
+			<?php include_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>null)); ?>
+		</td>
 	</tr>
 </table>

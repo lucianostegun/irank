@@ -39,7 +39,7 @@ class eventActions extends sfActions
 			$this->setTemplate('show');
   	}else{
 		
-		$this->eventObj = Util::getNewObject('event');
+		$this->eventObj = new Event();
   	}
   }
   
@@ -47,16 +47,10 @@ class eventActions extends sfActions
   	
   	$eventId = $request->getParameter('eventId');
   	
-  	if( $eventId ){
-  		
-		$this->eventObj = EventPeer::retrieveByPK( $eventId );
+	$this->eventObj = EventPeer::retrieveByPK( $eventId );
 
-		if( !is_object($this->eventObj) )
-			return $this->redirect('event/index');
-  	}else{
-		
-		$this->eventObj = Util::getNewObject('event');
-  	}
+	if( !is_object($this->eventObj) )
+		return $this->redirect('event/index');
   }
 
   public function handleErrorSave(){
@@ -78,13 +72,19 @@ class eventActions extends sfActions
 	$confirmPresence = $request->getParameter('confirmPresence');
 	$sendEmail       = $request->getParameter('sendEmail');
 
-	$eventObj = EventPeer::retrieveByPK( $eventId );
+	if( $eventId ){
+		
+		$eventObj  = EventPeer::retrieveByPK( $eventId );
+	}else{
+		
+		$eventObj = new Event();
+	}
+	
+	$isNew = $eventObj->isNew();
 	
 	if( !$eventObj->isEditable() )
 		Util::forceError('!Este evento está bloqueado para edição', true);
 	
-	$firstSave = !$eventObj->getEnabled();
-
 	$eventObj->setRankingId( $rankingId );
 	$eventObj->setEventName( $eventName );
 	$eventObj->setRankingPlaceId( $rankingPlaceId );
@@ -95,10 +95,11 @@ class eventActions extends sfActions
 	$eventObj->setComments( ($comments?$comments:null) );
 	$eventObj->setVisible(true);
 	$eventObj->setEnabled(true);
+	$eventObj->save();
 	
 	$rankingObj = $eventObj->getRanking();
 	
-	if( $firstSave ){
+	if( $isNew ){
 		
 		$rankingObj->setEvents($rankingObj->getEvents()+1);
 		$rankingObj->save();
@@ -111,8 +112,6 @@ class eventActions extends sfActions
 
 	if( $sendEmail )
 		$eventObj->notify();
-		
-	$eventObj->save();
 
     echo Util::parseInfo($eventObj->getInfo());
     exit;
@@ -357,8 +356,6 @@ class eventActions extends sfActions
 	$peopleId             = $this->getUser()->getAttribute('peopleId');
 	$allowedExtensionList = array('jpg', 'jpeg', 'png');
 	$maxFileSize          = (1024*1024*2);
-	
-	Log::doLog('Publicar: '.($publish?'Sim':'Não'));
 	
 	$options = array('allowedExtensionList'=>$allowedExtensionList,
 					 'maxFileSize'=>$maxFileSize);

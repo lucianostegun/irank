@@ -25,6 +25,8 @@ class EventComment extends BaseEventComment
 			$isNew              = $this->isNew();
 			$columnModifiedList = Log::getModifiedColumnList($this);
 
+    		$this->postOnWall();
+
 			parent::save();
 			
        		Log::quickLog('event_comment', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
@@ -49,45 +51,7 @@ class EventComment extends BaseEventComment
     
     public function getTimeAgo(){
     	
-    	$minutes = 60;
-    	$hours   = $minutes*60;
-    	$days    = $hours*24;
-    	$weeks   = $days*7;
-    	$months  = $days*30;
-    	$years   = $months*12;
-    	
-    	$timeAgo = time()-$this->getCreatedAt(null);
-    	
-    	if( $timeAgo >= $years ){
-    		
-    		$timeAgo = ceil($timeAgo/$years);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'ano':'anos');
-    	}elseif( $timeAgo >= $months ){
-    		
-    		$timeAgo = ceil($timeAgo/$months);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'mês':'meses');
-    	}elseif( $timeAgo >= $weeks ){
-    		
-    		$timeAgo = ceil($timeAgo/$weeks);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'semana':'semanas');
-    	}elseif( $timeAgo >= $days ){
-    		
-    		$timeAgo = ceil($timeAgo/$days);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'dia':'dias');
-    	}elseif( $timeAgo >= $hours ){
-    		
-    		$timeAgo = ceil($timeAgo/$hours);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'hora':'horas');
-    	}elseif( $timeAgo >= $minutes ){
-    		
-    		$timeAgo = ceil($timeAgo/$minutes);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'minuto':'minutos');
-    	}else{
-    		
-    		$timeAgo = 'menos de 1 minuto';
-    	}
-    	
-    	return $timeAgo;
+    	return Util::getTimeAgo($this->getCreatedAt(null));
     }
 	
 	public function isMyComment(){
@@ -95,6 +59,14 @@ class EventComment extends BaseEventComment
 		$peopleId = MyTools::getAttribute('peopleId');
 			
 		return ($this->getPeopleId()==$peopleId);
+	}
+	
+	public function postOnWall(){
+		
+		if( !$this->isNew() )
+			return false;
+			
+       	HomeWall::doLog('postou um comentário no evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventComment', true);
 	}
 	
 	public function notify(){

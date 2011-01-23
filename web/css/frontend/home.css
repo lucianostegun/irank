@@ -46,11 +46,54 @@
 	border-bottom: 	1px solid #FFFFFF;
 }
 
-h1 {
 
-	margin: 		20px 10px;
-	font-size: 		12pt;
+
+
+
+
+#homeWall {
+
+	float: 			right;
+	width: 			430px;
+	margin: 		-10px 10px 0px 0px;
+}
+
+#homeWall #postList {
+
+	float: 			right;
+	width: 			430px;
+	margin: 		-10px 0px 0px 10px;
+}
+
+#homeWall #postList .post {
+
+	clear: 					both;
+	margin-top: 			2px;
+	border-top: 			1px solid #EAEAEA;
+	background: 			#F9F9F9 url('/images/homeWall/event.png') no-repeat;
+	background-position: 	4px 10px;
+	padding: 				3px 3px 3px 23px;
+	width: 					400px;
+	overflow: 				hidden;
+	color: 					#333333;
+}
+
+#homeWall #postList .post .who {
+
 	font-weight: 	bold;
-	border-bottom: 	1px solid #344f7C;
-	color: 			#344f7C;
+}
+
+#homeWall #postList .post .when {
+
+	color: 		#999999
+}
+
+#homeWall h1 {
+
+	margin: 			20px 10px;
+	font-size: 			12pt;
+	font-weight: 		bold;
+	padding-bottom: 	3px;
+	border-bottom: 		1px solid #344f7C;
+	color: 				#344f7C;
 }

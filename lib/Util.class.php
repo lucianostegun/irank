@@ -699,5 +699,48 @@ class Util {
 	 	$revision = $file[3];
 	 	return sprintf('%04d', $revision);
 	 }
+	 
+	public static function getTimeAgo($timeAgo){
+
+    	$minutes = 60;
+    	$hours   = $minutes*60;
+    	$days    = $hours*24;
+    	$weeks   = $days*7;
+    	$months  = $days*30;
+    	$years   = $months*12;
+    	
+    	$timeAgo = time()-$timeAgo;
+    	
+    	if( $timeAgo >= $years ){
+    		
+    		$timeAgo = ceil($timeAgo/$years);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'ano':'anos');
+    	}elseif( $timeAgo >= $months ){
+    		
+    		$timeAgo = ceil($timeAgo/$months);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'mês':'meses');
+    	}elseif( $timeAgo >= $weeks ){
+    		
+    		$timeAgo = ceil($timeAgo/$weeks);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'semana':'semanas');
+    	}elseif( $timeAgo >= $days ){
+    		
+    		$timeAgo = ceil($timeAgo/$days);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'dia':'dias');
+    	}elseif( $timeAgo >= $hours ){
+    		
+    		$timeAgo = ceil($timeAgo/$hours);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'hora':'horas');
+    	}elseif( $timeAgo >= $minutes ){
+    		
+    		$timeAgo = ceil($timeAgo/$minutes);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'minuto':'minutos');
+    	}else{
+    		
+    		$timeAgo = 'menos de 1 minuto';
+    	}
+    	
+    	return $timeAgo;
+	}
 }
 ?>
