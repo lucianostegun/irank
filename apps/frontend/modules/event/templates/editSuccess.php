@@ -49,13 +49,13 @@
 ?>
 	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php
-			if( $isEditable)				
+			if( $isEditable )				
 				echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitEvent()'));
 			
 			if( $isMyEvent && !$isNew )
 				echo button_tag('cloneEvent', 'Clonar evento', array('onclick'=>'cloneEvent('.$eventId.')', 'image'=>'../icon/clone'));
 				
-			if( $isEditable )				
+			if( $isEditable && !$isNew )				
 				echo button_tag('deleteEvent', 'Excluir evento', array('onclick'=>'doDeleteEvent()', 'image'=>'../icon/delete', 'style'=>'float: right'));
 		
 			echo getFormLoading('event');
