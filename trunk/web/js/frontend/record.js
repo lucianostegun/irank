@@ -12,7 +12,11 @@ function goModule(module, action, fieldName, fieldValue ){
 	}else{
 	
 		var form    = document.createElement('form');
-		form.action = _webRoot+'/'+module+'/'+action
+		
+		var urlLocation = _webRoot+'/'+module;
+		urlLocation    += (action?'/'+action:'');
+		
+		form.action = urlLocation;
 		form.method = 'POST';
 		
 		var fieldId   = document.createElement('input');
