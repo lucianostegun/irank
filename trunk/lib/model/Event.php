@@ -104,7 +104,8 @@ class Event extends BaseEvent
 		$criteria->add( EventPeer::VISIBLE, true );
 		$criteria->add( EventPeer::DELETED, false );
 		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
-		$criteria->add( RankingPeer::DELETED, false );
+		$criteria->add( EventPeer::START_TIME, date('H:i:s'), Criteria::GREATER_EQUAL );
+		$criteria->add( EventPeer::SAVED_RESULT, false );
 		$criteria->add( UserSitePeer::ID, $userSiteId );
 		$criteria->addJoin( EventPeer::RANKING_ID, RankingPeer::ID, Criteria::INNER_JOIN );
 		$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::INNER_JOIN );

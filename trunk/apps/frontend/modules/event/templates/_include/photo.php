@@ -1,5 +1,6 @@
 <?php
-	$eventId = $eventObj->getId();
+	$eventId    = $eventObj->getId();
+	$userSiteId = MyTools::getAttribute('userSiteId');
 ?>
 <h1>
 	<?php echo image_tag('icon/photo', array('align'=>'absmiddle', 'style'=>'margin-right: 10px')) ?> Fotos do evento
@@ -8,10 +9,11 @@
 		<param name="allowScriptAccess" value="sameDomain" />
 		<param name="allowFullScreen" value="false" />
 		<param name="FlashVars" value="eventId=<?php echo $eventId ?>" />
-		<param name="movie" value="/uploads/eventPhoto.swf?eventId=<?php echo $eventId ?>&time=<?php echo time() ?>" />
+		<param name="FlashVars" value="usid=<?php echo $userSiteId ?>" />
+		<param name="movie" value="/uploads/eventPhoto.swf?eventId=<?php echo $eventId ?>&usid=<?php echo $userSiteId ?>&time=<?php echo time() ?>" />
 		<param name="quality" value="high" />
 		<param name="bgcolor" value="#d9d8d9" />
-		<embed src="/uploads/eventPhoto.swf?eventId=<?php echo $eventId ?>&time=<?php echo time() ?>" quality="high" bgcolor="#ffffff" width="85" height="22" name="uploadEventPhoto" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" />
+		<embed src="/uploads/eventPhoto.swf?eventId=<?php echo $eventId ?>&usid=<?php echo $userSiteId ?>&time=<?php echo time() ?>" quality="high" bgcolor="#ffffff" width="85" height="22" name="uploadEventPhoto" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" />
 		</object>
 	</div>
 </h1>
