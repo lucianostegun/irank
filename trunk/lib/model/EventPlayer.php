@@ -153,10 +153,10 @@ class EventPlayer extends BaseEventPlayer
 		$inviteStatus = $this->isColumnModified( EventPlayerPeer::INVITE_STATUS );
 		
 		if( $inviteStatus && $this->getEnabled() )
-       		HomeWall::doLog('confirmou presença no evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', true, $this->getPeople()->getUserSiteId());
+       		HomeWall::doLog('confirmou presença no evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', true, null, $this->getPeople()->getFirstName());
 		
 		if( $inviteStatus && $this->getInviteStatus()=='no' )
-       		HomeWall::doLog('não vai ao evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', true, $this->getPeople()->getUserSiteId());
+       		HomeWall::doLog('não vai ao evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', null, $this->getPeople()->getFirstName());
 	}
 
 	public function getInviteStatusDescription(){

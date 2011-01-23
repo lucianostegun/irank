@@ -5,7 +5,7 @@ function addRankingPlace(rankingId){
 	clearFormFieldErrors('rankingPlaceForm');
 	hideFormStatusError('rankingPlace');
 	hideFormStatusSuccess('rankingPlace');
-//	hideIndicator('rankingPlace');
+	hideIndicator('rankingPlace');
 	enableButton('rankingPlaceSubmit');
 	
 	$('rankingPlaceRankingPlaceId').value = '';
@@ -33,4 +33,10 @@ function handleSuccessRankingPlace(rankingPlaceId){
 	
 	adjustContentTab();
 	windowRankingPlaceAddHide();
+}
+
+function rankingPlaceOnClose(){
+	
+	if( $('eventRankingPlaceId').value=='new' )
+		$('eventRankingPlaceId').value = '';
 }
