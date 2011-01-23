@@ -26,7 +26,7 @@
 	</table>
 	<div class="windowButtonBar">
 		<?php
-			echo button_tag('rankingPlaceCancel', 'Cancelar', array('onclick'=>'windowRankingPlaceAddHide()'));
+			echo button_tag('rankingPlaceCancel', 'Cancelar', array('onclick'=>'windowRankingPlaceAddHide(); rankingPlaceOnClose()'));
 			echo button_tag('rankingPlaceSubmit', 'Salvar', array('onclick'=>'doSubmitRankingPlace()'));
 			echo getFormWindowLoading('rankingPlace');
 			echo getFormStatus('rankingPlace');

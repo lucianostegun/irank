@@ -25,6 +25,6 @@
 	if( count($eventObjList)==0 ):
 ?>
 <tr class="boxcontent">
-	<td colspan="6">Não existem eventos disponíveis para seus rankings</td>
+	<td colspan="7">Não existem eventos disponíveis para seus rankings</td>
 </tr>
 <?php endif; ?>
