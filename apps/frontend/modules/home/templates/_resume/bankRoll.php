@@ -15,11 +15,11 @@
 		<td><?php echo Util::formatFloat($addon, true) ?></td>
 	</tr>
 	<tr>
-		<th>Ganhos</th>
+		<th><?php echo __('resume.prizes') ?></th>
 		<td><?php echo Util::formatFloat($prize, true) ?></td>
 	</tr>
 	<tr>
-		<th>SALDO</th>
+		<th><?php echo __('resume.credits') ?></th>
 		<td><?php echo Util::formatFloat($balance, true) ?></td>
 	</tr>
 </table>

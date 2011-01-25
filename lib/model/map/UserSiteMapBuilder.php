@@ -42,6 +42,8 @@ class UserSiteMapBuilder {
 
 		$tMap->addColumn('PASSWORD', 'Password', 'string', CreoleTypes::VARCHAR, false, 40);
 
+		$tMap->addColumn('IMAGE_PATH', 'ImagePath', 'string', CreoleTypes::VARCHAR, false, 50);
+
 		$tMap->addColumn('ACTIVE', 'Active', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);

@@ -25,6 +25,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 
 	
+	protected $image_path;
+
+
+	
 	protected $active;
 
 
@@ -108,6 +112,13 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	{
 
 		return $this->password;
+	}
+
+	
+	public function getImagePath()
+	{
+
+		return $this->image_path;
 	}
 
 	
@@ -280,6 +291,22 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setImagePath($v)
+	{
+
+		
+		
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->image_path !== $v) {
+			$this->image_path = $v;
+			$this->modifiedColumns[] = UserSitePeer::IMAGE_PATH;
+		}
+
+	} 
+	
 	public function setActive($v)
 	{
 
@@ -393,27 +420,29 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			$this->password = $rs->getString($startcol + 3);
 
-			$this->active = $rs->getBoolean($startcol + 4);
+			$this->image_path = $rs->getString($startcol + 4);
 
-			$this->enabled = $rs->getBoolean($startcol + 5);
+			$this->active = $rs->getBoolean($startcol + 5);
 
-			$this->visible = $rs->getBoolean($startcol + 6);
+			$this->enabled = $rs->getBoolean($startcol + 6);
 
-			$this->deleted = $rs->getBoolean($startcol + 7);
+			$this->visible = $rs->getBoolean($startcol + 7);
 
-			$this->locked = $rs->getBoolean($startcol + 8);
+			$this->deleted = $rs->getBoolean($startcol + 8);
 
-			$this->last_access_date = $rs->getTimestamp($startcol + 9, null);
+			$this->locked = $rs->getBoolean($startcol + 9);
 
-			$this->created_at = $rs->getTimestamp($startcol + 10, null);
+			$this->last_access_date = $rs->getTimestamp($startcol + 10, null);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 11, null);
+			$this->created_at = $rs->getTimestamp($startcol + 11, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 12, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 12; 
+						return $startcol + 13; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserSite object", $e);
 		}
@@ -628,27 +657,30 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				return $this->getPassword();
 				break;
 			case 4:
-				return $this->getActive();
+				return $this->getImagePath();
 				break;
 			case 5:
-				return $this->getEnabled();
+				return $this->getActive();
 				break;
 			case 6:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 7:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 8:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 9:
-				return $this->getLastAccessDate();
+				return $this->getLocked();
 				break;
 			case 10:
-				return $this->getCreatedAt();
+				return $this->getLastAccessDate();
 				break;
 			case 11:
+				return $this->getCreatedAt();
+				break;
+			case 12:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -665,14 +697,15 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$keys[1]=>$this->getPeopleId(),
 			$keys[2]=>$this->getUsername(),
 			$keys[3]=>$this->getPassword(),
-			$keys[4]=>$this->getActive(),
-			$keys[5]=>$this->getEnabled(),
-			$keys[6]=>$this->getVisible(),
-			$keys[7]=>$this->getDeleted(),
-			$keys[8]=>$this->getLocked(),
-			$keys[9]=>$this->getLastAccessDate(),
-			$keys[10]=>$this->getCreatedAt(),
-			$keys[11]=>$this->getUpdatedAt(),
+			$keys[4]=>$this->getImagePath(),
+			$keys[5]=>$this->getActive(),
+			$keys[6]=>$this->getEnabled(),
+			$keys[7]=>$this->getVisible(),
+			$keys[8]=>$this->getDeleted(),
+			$keys[9]=>$this->getLocked(),
+			$keys[10]=>$this->getLastAccessDate(),
+			$keys[11]=>$this->getCreatedAt(),
+			$keys[12]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -701,27 +734,30 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$this->setPassword($value);
 				break;
 			case 4:
-				$this->setActive($value);
+				$this->setImagePath($value);
 				break;
 			case 5:
-				$this->setEnabled($value);
+				$this->setActive($value);
 				break;
 			case 6:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 7:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 8:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 9:
-				$this->setLastAccessDate($value);
+				$this->setLocked($value);
 				break;
 			case 10:
-				$this->setCreatedAt($value);
+				$this->setLastAccessDate($value);
 				break;
 			case 11:
+				$this->setCreatedAt($value);
+				break;
+			case 12:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -735,14 +771,15 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setUsername($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPassword($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setActive($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setEnabled($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setVisible($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setDeleted($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setLocked($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setLastAccessDate($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setUpdatedAt($arr[$keys[11]]);
+		if (array_key_exists($keys[4], $arr)) $this->setImagePath($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setActive($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEnabled($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setVisible($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setDeleted($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setLocked($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setLastAccessDate($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
 	}
 
 	
@@ -754,6 +791,7 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserSitePeer::PEOPLE_ID)) $criteria->add(UserSitePeer::PEOPLE_ID, $this->people_id);
 		if ($this->isColumnModified(UserSitePeer::USERNAME)) $criteria->add(UserSitePeer::USERNAME, $this->username);
 		if ($this->isColumnModified(UserSitePeer::PASSWORD)) $criteria->add(UserSitePeer::PASSWORD, $this->password);
+		if ($this->isColumnModified(UserSitePeer::IMAGE_PATH)) $criteria->add(UserSitePeer::IMAGE_PATH, $this->image_path);
 		if ($this->isColumnModified(UserSitePeer::ACTIVE)) $criteria->add(UserSitePeer::ACTIVE, $this->active);
 		if ($this->isColumnModified(UserSitePeer::ENABLED)) $criteria->add(UserSitePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(UserSitePeer::VISIBLE)) $criteria->add(UserSitePeer::VISIBLE, $this->visible);
@@ -797,6 +835,8 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		$copyObj->setUsername($this->username);
 
 		$copyObj->setPassword($this->password);
+
+		$copyObj->setImagePath($this->image_path);
 
 		$copyObj->setActive($this->active);
 

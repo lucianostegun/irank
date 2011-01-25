@@ -1,5 +1,5 @@
 <div id="homeWall">
-<h1>O que está rolando...</h1>
+<h1><?php echo __('home.whatsGoingOn') ?>...</h1>
 	<div id="postList">
 		<?php
 			foreach(HomeWall::getLastPosts(10) as $homeWallObj):

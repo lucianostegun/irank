@@ -1,4 +1,4 @@
-<div class="commonBar"><span>Resumo da conta</span></div>
+<div class="commonBar"><span><?php echo __('resume.accountResume'); ?></span></div>
 
 <?php
 	$peopleId = MyTools::getAttribute('peopleId');

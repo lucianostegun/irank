@@ -186,6 +186,28 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('receiveEventCommentNotify', '1');
 	}
 	
+	public function getImagePath(){
+		
+		$imagePath = parent::getImagePath();
+		
+		if( !$imagePath || !file_exists(Util::getFilePath($imagePath)) )
+			$imagePath = '/images/unavailable65.png';
+		
+		return $imagePath;
+	}
+	
+	public function getId($encode=false){
+		
+		$id = parent::getId();
+		
+		if( $encode ){
+			
+			
+		}
+		
+		return $id;
+	}
+	
 	public function postOnWall($isNew){
 		
 		if( $isNew )

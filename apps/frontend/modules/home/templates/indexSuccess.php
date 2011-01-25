@@ -1,11 +1,12 @@
 <div id="homeTopContentDiv">
 <?php
 	$isLogged = true;
+	$culture  = MyTools::getCulture();
 	
 	if( MyTools::isAuthenticated() )
 		include_partial('home/component/resume');
 	else
-		include_partial('home/component/welcome');
+		include_partial('home/component/welcome', (array('culture'=>$culture)));
 ?>
 </div>
 
@@ -17,16 +18,16 @@
 				<tr>
 					<th valign="top"><?php echo image_tag('layout/stats.png', array('align'=>'left')) ?></th>
 					<td>
-						<span>Estatísticas</span><br/>
-						Gere gráficos de gastos, lucros, balanço e desempenho dos jogadores.
+						<span><?php echo __('home.statistics') ?></span><br/>
+						<?php echo __('home.statistics.description') ?>
 					</td>
 					
 					<td rowspan="3" class="separator"></td>
 
 					<th valign="top"><?php echo image_tag('layout/event.png', array('align'=>'left')) ?></th>
 					<td>
-						<span>Notificação de eventos</span><br/>
-						Notificação instantânea da criação/edição dos eventos e lembrete dos jogos agendados.
+						<span><?php echo __('home.eventNotify') ?></span><br/>
+						<?php echo __('home.eventNotify.description') ?>
 					</td>
 				</tr>
 				<tr>
@@ -35,14 +36,14 @@
 				<tr>
 					<th valign="top"><?php echo image_tag('layout/photo.png', array('align'=>'left')) ?></th>
 					<td>
-						<span>Mural de fotos</span><br/>
-						Compartilhar os melhores momentos dos eventos postando suas fotos no mural.
+						<span><?php echo link_to(__('home.photoWall'), 'photoWall') ?></span><br/>
+						<?php echo __('home.photoWall.description') ?>
 					</td>
 
 					<th valign="top"><?php echo image_tag('layout/rankingHistory.png', array('align'=>'left')) ?></th>
 					<td>
-						<span>Histórico</span><br/>
-						Histórico de posições, total gastos, prêmios e tudo sobre os rankings nas datas que houveram eventos.
+						<span><?php echo __('home.history') ?></span><br/>
+						<?php echo __('home.history.description') ?>
 					</td>
 				</tr>
 			</table>
@@ -51,9 +52,8 @@
 		<div style="width: 275px; margin-left: 15px">
 		<?php echo image_tag('iphone', array('align'=>'right', 'style'=>'margin-left: 10px')) ?>
 		<p align="right"><span style="font-size: 11pt; font-weight: bold; color: #b61515">iRank Mobile</span><br/><br/>
-		Conheça a versão móvel do site.<br/>
-		Lá você encontra tudo sobre rankings além de poder<br/>
-		postar o resultado dos eventos em tempo real.</p>
+		<?php echo __('home.mobile'); ?>
+		</p>
 		</div>
 		</td>
 	</tr>

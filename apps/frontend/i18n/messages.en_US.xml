@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+	<file orginal="global" source-language="pt_BR" datatype="plaintext" date="">
+		<body>
+			<trans-unit>
+				<source>generalCredit</source>
+				<target>GENERAL CREDIT</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>home.welcome</source>
+				<target>
+					&lt;p&gt;iRank is a free website for creation and organization of online rankings for Poker games.&lt;/p&gt;
+					&lt;p&gt;Here you can create your own rankings, define the game settings and manage events, classify and statistics of the tournaments between your friends.&lt;/p&gt;
+					&lt;p&gt;If you are not a user yet, %link% and start to control your games right now!&lt;/p&gt;
+				</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>clickHere</source>
+				<target>click here</target>
+			</trans-unit>
+			
+			
+			<trans-unit>
+				<source>layout.backHome</source>
+				<target>Back to home page</target>
+			</trans-unit>
+			<trans-unit>
+				<source>layout.search</source>
+				<target>Search for friends and events</target>
+			</trans-unit>
+			
+			
+			<trans-unit>
+				<source>ago</source>
+				<target>ago</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>year</source>
+				<target>year</target>
+			</trans-unit>
+			<trans-unit>
+				<source>years</source>
+				<target>year</target>
+			</trans-unit>
+			<trans-unit>
+				<source>month</source>
+				<target>month</target>
+			</trans-unit>
+			<trans-unit>
+				<source>months</source>
+				<target>months</target>
+			</trans-unit>
+			<trans-unit>
+				<source>week</source>
+				<target>week</target>
+			</trans-unit>
+			<trans-unit>
+				<source>weeks</source>
+				<target>weeks</target>
+			</trans-unit>
+			<trans-unit>
+				<source>day</source>
+				<target>day</target>
+			</trans-unit>
+			<trans-unit>
+				<source>days</source>
+				<target>days</target>
+			</trans-unit>
+			<trans-unit>
+				<source>hour</source>
+				<target>hour</target>
+			</trans-unit>
+			<trans-unit>
+				<source>hours</source>
+				<target>hours</target>
+			</trans-unit>
+			<trans-unit>
+				<source>minute</source>
+				<target>minute</target>
+			</trans-unit>
+			<trans-unit>
+				<source>minutes</source>
+				<target>minutes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>less1Minute</source>
+				<target>less then 1 minute</target>
+			</trans-unit>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<trans-unit>
+				<source>login.errorMessage</source>
+				<target>&lt;b&gt;ACCESS DENIED&lt;/b&gt;&lt;br/&gt;Invalid user/password!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>login.password</source>
+				<target>Password</target>
+			</trans-unit>
+			<trans-unit>
+				<source>login.keepLogin</source>
+				<target>Keep login</target>
+			</trans-unit>
+			<trans-unit>
+				<source>login.enter</source>
+				<target>Enter</target>
+			</trans-unit>
+			<trans-unit>
+				<source>login.signIn</source>
+				<target>Sign in</target>
+			</trans-unit>
+			<trans-unit>
+				<source>login.forgotPassword</source>
+				<target>Retrieve password</target>
+			</trans-unit>
+			
+			
+			<trans-unit>
+				<source>home.statistics</source>
+				<target>Statistics</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.statistics.description</source>
+				<target>Build charts of player's spending, profits, balance and performance.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.photoWall</source>
+				<target>Photo wall</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.photoWall.description</source>
+				<target>Post and share picures of the best moments of your events on the photo wall.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.history</source>
+				<target>History</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.history.description</source>
+				<target>Log of position, spending and prize on every date you ever played with your friends.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.eventNotify</source>
+				<target>Event notify</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.eventNotify.description</source>
+				<target>Instant notification of the creation/editing of events and a reminder of the games scheduled.</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>home.mobile</source>
+				<target>Access the iRank's mobile version.<br/>
+						There you can find everything about your rankings,&lt;br/&gt;
+						beside posting the event's results in real time.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.whatsGoingOn</source>
+				<target>What's going on</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>resume.accountResume</source>
+				<target>Account resume</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.prizes</source>
+				<target>Prizes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.position</source>
+				<target>Position</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.score</source>
+				<target>Score</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.balance</source>
+				<target>Balance</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.credits</source>
+				<target>CREDIT</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.nextEvents</source>
+				<target>Next events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.lastEvents</source>
+				<target>Last events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.noScheduledEvents</source>
+				<target>No scheduled events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.noRealizedEvents</source>
+				<target>No realized events</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>numbers.numbers</source>
+				<target>Numbers</target>
+			</trans-unit>
+			<trans-unit>
+				<source>numbers.events</source>
+				<target>Events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>numbers.comments</source>
+				<target>Comments</target>
+			</trans-unit>
+			<trans-unit>
+				<source>numbers.photos</source>
+				<target>Pictures</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>leftBar.hello</source>
+				<target>Hi</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftBar.newRanking</source>
+				<target>New ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftBar.myRankings</source>
+				<target>My rankings</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftBar.newEvent</source>
+				<target>New evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftBar.events</source>
+				<target>Events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftBar.config</source>
+				<target>Options</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftBar.logout</source>
+				<target>Logout</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftBar.shareIt</source>
+				<target>Share it</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>topMenu.myiRank</source>
+				<target>MY iRANK</target>
+			</trans-unit>
+			<trans-unit>
+				<source>topMenu.inviteFriends</source>
+				<target>INVITE FRIENDS</target>
+			</trans-unit>
+			<trans-unit>
+				<source>topMenu.help</source>
+				<target>HELP</target>
+			</trans-unit>
+			<trans-unit>
+				<source>topMenu.contact</source>
+				<target>CONTACT</target>
+			</trans-unit>
+			
+			
+			<trans-unit>
+				<source>footerMenu.signIn</source>
+				<target>sign</target>
+			</trans-unit>
+			<trans-unit>
+				<source>footerMenu.myiRank</source>
+				<target>my iRank</target>
+			</trans-unit>
+			<trans-unit>
+				<source>footerMenu.inviteFriends</source>
+				<target>invite friends</target>
+			</trans-unit>
+			<trans-unit>
+				<source>footerMenu.help</source>
+				<target>help</target>
+			</trans-unit>
+			<trans-unit>
+				<source>footerMenu.contact</source>
+				<target>contact</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

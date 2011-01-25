@@ -1,12 +1,12 @@
 <table border="0" cellspacing="1" cellpadding="2" class="resumeEventTable">
 	<tr>
-		<th>Últimos eventos</th>
-		<th class="icon"><?php echo image_tag('icon/positionGray', array('title'=>'Posição')) ?></th>
-		<th class="icon"><?php echo image_tag('icon/scoreGray', array('title'=>'Pontos')) ?></th>
+		<th><?php echo __('resume.lastEvents') ?></th>
+		<th class="icon"><?php echo image_tag('icon/positionGray', array('title'=>__('resume.position'))) ?></th>
+		<th class="icon"><?php echo image_tag('icon/scoreGray', array('title'=>__('resume.score'))) ?></th>
 		<th class="icon"><?php echo image_tag('icon/buyinGray', array('title'=>'Buyin')) ?></th>
 		<th class="icon"><?php echo image_tag('icon/rebuyGray', array('title'=>'Rebuy')) ?></th>
 		<th class="icon"><?php echo image_tag('icon/addonGray', array('title'=>'Addon')) ?></th>
-		<th class="icon"><?php echo image_tag('icon/prizeGray', array('title'=>'Ganhos')) ?></th>
+		<th class="icon"><?php echo image_tag('icon/prizeGray', array('title'=>__('resume.prizes'))) ?></th>
 	</tr>
 <?php	
 	foreach($eventObjList as $eventObj):
@@ -30,7 +30,7 @@
 	if( empty($eventObjList) ):
 ?>
 	<tr>
-		<td colspan="7">Nenhum evento realizado</td>
+		<td colspan="7"><?php echo __('resume.noRealizedEvents') ?></td>
 	</tr>
 <?php endif; ?>
 </table>
