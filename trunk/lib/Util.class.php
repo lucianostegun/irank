@@ -291,10 +291,16 @@ class Util {
 	 */	
 	public static function formatFloat( $value, $display=false, $decimalPlaces=2 ){
 	
+		$culture = MyTools::getCulture();
+		
 		if( $display ){
 			
 			$value = self::formatFloat($value, false, $decimalPlaces);
-			$value = number_format($value, $decimalPlaces, ',', '.');
+			
+			if( $culture=='pt_BR' )
+				$value = number_format($value, $decimalPlaces, ',', '.');
+			else
+				$value = number_format($value, $decimalPlaces, '.', ',');
 		}else{
 			
 			if( ereg('^[0-9]+\.[0-9]{1,2}$', $value) )		
@@ -314,6 +320,7 @@ class Util {
 				$value = $value*1.0;
 			}
 		}
+		
 		return $value;
 	}
 	
@@ -711,33 +718,35 @@ class Util {
     	
     	$timeAgo = time()-$timeAgo;
     	
+    	self::getHelper('I18N');
+    	
     	if( $timeAgo >= $years ){
     		
     		$timeAgo = ceil($timeAgo/$years);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'ano':'anos');
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?__('year'):__('years'));
     	}elseif( $timeAgo >= $months ){
     		
     		$timeAgo = ceil($timeAgo/$months);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'mês':'meses');
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?__('month'):__('months'));
     	}elseif( $timeAgo >= $weeks ){
     		
     		$timeAgo = ceil($timeAgo/$weeks);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'semana':'semanas');
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?__('semana'):__('semanas'));
     	}elseif( $timeAgo >= $days ){
     		
     		$timeAgo = ceil($timeAgo/$days);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'dia':'dias');
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?__('day'):__('days'));
     	}elseif( $timeAgo >= $hours ){
     		
     		$timeAgo = ceil($timeAgo/$hours);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'hora':'horas');
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?__('hour'):__('hours'));
     	}elseif( $timeAgo >= $minutes ){
     		
     		$timeAgo = ceil($timeAgo/$minutes);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?'minuto':'minutos');
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?__('minute'):__('minutes'));
     	}else{
     		
-    		$timeAgo = 'menos de 1 minuto';
+    		$timeAgo = __('less1minute');
     	}
     	
     	return $timeAgo;

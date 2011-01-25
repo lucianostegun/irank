@@ -5,11 +5,11 @@
 	<?php if( count($rankingObjList) ): ?>
 	<tr>
 		<td></td>
-		<th class="icon"><?php echo image_tag('icon/position', array('title'=>'Posição')) ?></th>
-		<th class="icon"><?php echo image_tag('icon/score', array('title'=>'Pontos')) ?></th>
+		<th class="icon"><?php echo image_tag('icon/position', array('title'=>__('resume.position'))) ?></th>
+		<th class="icon"><?php echo image_tag('icon/score', array('title'=>__('resume.score'))) ?></th>
 		<th class="icon"><?php echo image_tag('icon/bra', array('title'=>'BRA = Buyin+Rebuy+Addon')) ?></th>
-		<th class="icon"><?php echo image_tag('icon/prize', array('title'=>'Ganhos')) ?></th>
-		<th class="icon"><?php echo image_tag('icon/balance', array('title'=>'Balanço')) ?></th>
+		<th class="icon"><?php echo image_tag('icon/prize', array('title'=>__('resume.prizes'))) ?></th>
+		<th class="icon"><?php echo image_tag('icon/balance', array('title'=>__('resume.balance'))) ?></th>
 	</tr>
 	
 	<?php

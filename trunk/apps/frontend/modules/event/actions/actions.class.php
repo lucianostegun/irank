@@ -353,7 +353,7 @@ class eventActions extends sfActions
 
 	$publish              = $request->getParameter('publish');
 	$eventId              = $request->getParameter('eventId');
-	$userSiteId           = $this->getUser()->getAttribute('userSiteId');
+	$userSiteId           = $request->getParameter('userSiteId');
 	$allowedExtensionList = array('jpg', 'jpeg', 'png');
 	$maxFileSize          = (1024*1024*2);
 	

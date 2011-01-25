@@ -8,6 +8,7 @@ include_title();
 
 $moduleName      = $sf_context->getModuleName();
 $isAuthenticated = MyTools::isAuthenticated();
+$culture         = $sf_user->getCulture();
 
 if( $isAuthenticated )
 	$balance = People::getBalance();
@@ -26,11 +27,15 @@ else
 <div id="contentArea">
 	<div id="innerContent">
     	<div id="header">
-    		<div id="logo"><?php echo link_to(image_tag('layout/logo', array('alt'=>'Voltar para a página inicial')), '/home') ?></div>
+    		<div id="logo"><?php echo link_to(image_tag('layout/logo', array('title'=>__('layout.backHome'))), '/home') ?></div>
+    		<div id="flagList">
+	    		<?php echo link_to(image_tag('flagBrazil'), '#changeLanguage("pt_BR")'); ?>
+	    		<?php echo link_to(image_tag('flagUS'), '#changeLanguage("en_US")'); ?>
+	    	</div>
     		<div id="search">
     			<?php
     				echo form_tag('search/result', array('id'=>'mainSearchForm'));
-    				echo input_tag('mainSearch', 'Procurar jogadores e eventos', array('onfocus'=>'handleMainSearchFocus(this)', 'onblur'=>'handleMainSearchBlur(this)'));
+    				echo input_tag('mainSearch', __('layout.search'), array('onfocus'=>'handleMainSearchFocus(this)', 'onblur'=>'handleMainSearchBlur(this)'));
     				echo '</form>';
     			?>
     			<div class="mainSearchButton" onmouseover="this.className='mainSearchButtonHover'" onmouseout="this.className='mainSearchButton'"><?php echo link_to(image_tag('blank.gif', array('width'=>23, 'height'=>19)), '#doQuickSearch()') ?></div>
@@ -42,7 +47,7 @@ else
     			<tr>
     				<td valign="top" width="200" id="leftContent">
 				    	<div id="leftBar">
-				    		<?php include_partial('home/include/leftBar', array('isAuthenticated'=>$isAuthenticated, 'balance'=>$balance)) ?>
+				    		<?php include_partial('home/include/leftBar', array('isAuthenticated'=>$isAuthenticated, 'balance'=>$balance, 'culture'=>$culture)) ?>
 				    	</div>
 				    	<div id="socialNetwork">
 				    		<?php include_partial('home/include/facebook', array()) ?>
@@ -78,12 +83,12 @@ else
 			<td width="33%" align="left"><?php echo image_tag('layout/chips', array('style'=>'position: relative; left: 20px; top: -45px; margin-bottom: -45px')) ?></td>
 			<td>
 				<?php echo link_to('home', '/') ?> | 
-				<?php echo link_to('cadastro', '/sign') ?> | 
-				<?php echo link_to('meu irank', '/myAccount') ?> | 
-				<?php echo link_to('convidar amigos', '/friendInvite') ?> | 
+				<?php echo link_to(__('footerMenu.signIn'), '/sign') ?> | 
+				<?php echo link_to(__('footerMenu.myiRank'), '/myAccount') ?> | 
+				<?php echo link_to(__('footerMenu.inviteFriends'), '/friendInvite') ?> | 
 				<?php echo link_to('feedback', '/feedBack') ?> | 
-				<?php echo link_to('ajuda', '/help') ?> | 
-				<?php echo link_to('contato', '/contact') ?>
+				<?php echo link_to(__('footerMenu.help'), '/help') ?> | 
+				<?php echo link_to(__('footerMenu.contact'), '/contact') ?>
 			</td> 
 			<td width="33%">&nbsp;</td>
 		</tr>

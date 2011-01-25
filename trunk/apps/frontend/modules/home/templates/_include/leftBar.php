@@ -3,7 +3,7 @@
 		if( $isAuthenticated )
 			include_partial('home/component/generalCredit', array('balance'=>$balance));
 		else
-			echo link_to(image_tag('layout/signIn'), '/sign');
+			echo link_to(image_tag($culture.'/layout/signIn'), '/sign');
 	?>
 </div>
 <?php
@@ -17,6 +17,6 @@
 	?>
 
 	<div class="separator"></div>
-	<div class="item" style="background: url('/images/icon/photo.png') 10px 4px no-repeat"><?php echo link_to('Mural de fotos', 'photoWall/index', array('style'=>'background: none')) ?></div>
+	<div class="item" style="background: url('/images/icon/photo.png') 10px 4px no-repeat"><?php echo link_to(__('home.photoWall'), 'photoWall/index', array('style'=>'background: none')) ?></div>
 	<div class="separator"></div>
 </div>

@@ -954,9 +954,10 @@ function button_tag( $buttonId, $text, $options=array() ){
 	$disabled = array_key_exists('disabled', $options)?$options['disabled']:false;
 	$noCkeck  = array_key_exists('noCkeck', $options)?$options['noCkeck']:false;
 	$image    = array_key_exists('image', $options)?$options['image']:false;
+	$onclick  = array_key_exists('onclick', $options)?$options['onclick']:false;
 
 	if( array_key_exists('onclick', $options) && !$noCkeck )
-		$options['onclick'] = 'if( checkButton(\''.$buttonId.'\') ){ '.$options['onclick'].'; }';
+		$onclick = 'if( checkButton(\''.$buttonId.'\') ){ '.$onclick.'; }';
 	
 	$style = '';
 	
@@ -984,7 +985,7 @@ function button_tag( $buttonId, $text, $options=array() ){
 	if( $image )
 		$image = image_tag($imagePath, array('id'=>$buttonId.'Image', 'align'=>'absmiddle'));
 		
-	$submit = link_to(image_tag('blank.gif', array('class'=>'submit')), '#'.$options['onclick']);
+	$submit = link_to(image_tag('blank.gif', array('class'=>'submit')), '#'.$onclick);
 	
 	$html = $nl;
 	$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;

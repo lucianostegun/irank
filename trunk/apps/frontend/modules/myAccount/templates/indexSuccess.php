@@ -10,9 +10,10 @@
 		), array( 'id'=>'myAccountForm' ));
 	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
-	$dhtmlxTabBarObj->setSelectedTabBarId($selectedTab);
-	$dhtmlxTabBarObj->addTab('main', 'Principal', 'myAccount/options/main', array('userSiteObj'=>$userSiteObj));
-	$dhtmlxTabBarObj->addTab('options', 'E-mail', 'myAccount/options/email', array('userSiteObj'=>$userSiteObj));
+	$dhtmlxTabBarObj->setSelectedTabBarId('profile');
+	$dhtmlxTabBarObj->addTab('main', 'Principal', 'myAccount/form/main', array('userSiteObj'=>$userSiteObj));
+	$dhtmlxTabBarObj->addTab('profile', 'Perfil', 'myAccount/form/profile', array('userSiteObj'=>$userSiteObj));
+	$dhtmlxTabBarObj->addTab('options', 'E-mail', 'myAccount/form/email', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 ?>

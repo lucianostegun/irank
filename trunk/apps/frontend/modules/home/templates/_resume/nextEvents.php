@@ -1,6 +1,6 @@
 <table border="0" cellspacing="1" cellpadding="2" class="resumeEventTable">
 	<tr>
-		<th>Próximos eventos</th>
+		<th><?php echo __('resume.nextEvents') ?></th>
 	</tr>
 <?php
 	foreach($eventObjList as $eventObj):
@@ -16,7 +16,7 @@
 	if( empty($eventObjList) ):
 ?>
   <tr>
-  	<td>Nenhum evento agendado</td>
+  	<td><?php echo __('resume.noScheduledEvents') ?></td>
   </tr>
 <?php endif; ?>
 </table>

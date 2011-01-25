@@ -198,6 +198,11 @@ class MyTools
     {
         sfContext::getInstance()->getUser()->setCulture($culture);
     }
+    
+    public static function getCulture()
+    {
+        return sfContext::getInstance()->getUser()->getCulture();
+    }
  
     public static function setError( $errorName, $errorMessage )
     {

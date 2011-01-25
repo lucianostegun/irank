@@ -13,7 +13,7 @@ abstract class BaseUserSitePeer {
 	const CLASS_DEFAULT = 'lib.model.UserSite';
 
 	
-	const NUM_COLUMNS = 12;
+	const NUM_COLUMNS = 13;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -30,6 +30,9 @@ abstract class BaseUserSitePeer {
 
 	
 	const PASSWORD = 'user_site.PASSWORD';
+
+	
+	const IMAGE_PATH = 'user_site.IMAGE_PATH';
 
 	
 	const ACTIVE = 'user_site.ACTIVE';
@@ -61,19 +64,19 @@ abstract class BaseUserSitePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'Username', 'Password', 'Active', 'Enabled', 'Visible', 'Deleted', 'Locked', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID, UserSitePeer::PEOPLE_ID, UserSitePeer::USERNAME, UserSitePeer::PASSWORD, UserSitePeer::ACTIVE, UserSitePeer::ENABLED, UserSitePeer::VISIBLE, UserSitePeer::DELETED, UserSitePeer::LOCKED, UserSitePeer::LAST_ACCESS_DATE, UserSitePeer::CREATED_AT, UserSitePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'username', 'password', 'active', 'enabled', 'visible', 'deleted', 'locked', 'last_access_date', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'Username', 'PASSWORD'=>'', 'ACTIVE'=>'Ativo', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'LAST_ACCESS_DATE'=>'Último acesso', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'Username', 'Password', 'ImagePath', 'Active', 'Enabled', 'Visible', 'Deleted', 'Locked', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID, UserSitePeer::PEOPLE_ID, UserSitePeer::USERNAME, UserSitePeer::PASSWORD, UserSitePeer::IMAGE_PATH, UserSitePeer::ACTIVE, UserSitePeer::ENABLED, UserSitePeer::VISIBLE, UserSitePeer::DELETED, UserSitePeer::LOCKED, UserSitePeer::LAST_ACCESS_DATE, UserSitePeer::CREATED_AT, UserSitePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'username', 'password', 'image_path', 'active', 'enabled', 'visible', 'deleted', 'locked', 'last_access_date', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'Username', 'PASSWORD'=>'', 'IMAGE_PATH'=>'', 'ACTIVE'=>'Ativo', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'LAST_ACCESS_DATE'=>'Último acesso', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'Username'=>2, 'Password'=>3, 'Active'=>4, 'Enabled'=>5, 'Visible'=>6, 'Deleted'=>7, 'Locked'=>8, 'LastAccessDate'=>9, 'CreatedAt'=>10, 'UpdatedAt'=>11, ),
-		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID=>0, UserSitePeer::PEOPLE_ID=>1, UserSitePeer::USERNAME=>2, UserSitePeer::PASSWORD=>3, UserSitePeer::ACTIVE=>4, UserSitePeer::ENABLED=>5, UserSitePeer::VISIBLE=>6, UserSitePeer::DELETED=>7, UserSitePeer::LOCKED=>8, UserSitePeer::LAST_ACCESS_DATE=>9, UserSitePeer::CREATED_AT=>10, UserSitePeer::UPDATED_AT=>11, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'username'=>2, 'password'=>3, 'active'=>4, 'enabled'=>5, 'visible'=>6, 'deleted'=>7, 'locked'=>8, 'last_access_date'=>9, 'created_at'=>10, 'updated_at'=>11, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'Username'=>2, 'Password'=>3, 'ImagePath'=>4, 'Active'=>5, 'Enabled'=>6, 'Visible'=>7, 'Deleted'=>8, 'Locked'=>9, 'LastAccessDate'=>10, 'CreatedAt'=>11, 'UpdatedAt'=>12, ),
+		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID=>0, UserSitePeer::PEOPLE_ID=>1, UserSitePeer::USERNAME=>2, UserSitePeer::PASSWORD=>3, UserSitePeer::IMAGE_PATH=>4, UserSitePeer::ACTIVE=>5, UserSitePeer::ENABLED=>6, UserSitePeer::VISIBLE=>7, UserSitePeer::DELETED=>8, UserSitePeer::LOCKED=>9, UserSitePeer::LAST_ACCESS_DATE=>10, UserSitePeer::CREATED_AT=>11, UserSitePeer::UPDATED_AT=>12, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'username'=>2, 'password'=>3, 'image_path'=>4, 'active'=>5, 'enabled'=>6, 'visible'=>7, 'deleted'=>8, 'locked'=>9, 'last_access_date'=>10, 'created_at'=>11, 'updated_at'=>12, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
@@ -134,6 +137,8 @@ abstract class BaseUserSitePeer {
 		$criteria->addSelectColumn(UserSitePeer::USERNAME);
 
 		$criteria->addSelectColumn(UserSitePeer::PASSWORD);
+
+		$criteria->addSelectColumn(UserSitePeer::IMAGE_PATH);
 
 		$criteria->addSelectColumn(UserSitePeer::ACTIVE);
 

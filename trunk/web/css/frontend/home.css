@@ -14,7 +14,19 @@
 
 	font-size: 		10pt;
 	font-weight: 	bold;
-	color: 			#344f7c;
+	color: 			#344f7C;
+}
+
+.homeDistinct td span a {
+
+	color: 				#344f7C;
+	text-decoration: 	none
+}
+
+.homeDistinct td span a:hover {
+
+	color: 				#E82314;
+	text-decoration: 	underline
 }
 
 .homeDistinct td {
