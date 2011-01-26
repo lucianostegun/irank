@@ -22,7 +22,7 @@
 		</tr>
 		<tr>
 			<td style="padding-top: 10px; text-align: center" colspan="2">
-				<?php echo link_to(__('login.signIn'), 'sign/index') ?>
+				<?php echo link_to(__('login.signUp'), 'sign/index') ?>
 				<?php echo link_to(__('login.forgotPassword'), 'login/passwordRecovery', array('style'=>'margin-left: 20px')) ?>
 			</td>
 		</tr>

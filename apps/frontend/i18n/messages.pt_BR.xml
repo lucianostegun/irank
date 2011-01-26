@@ -30,6 +30,19 @@
 				<source>layout.search</source>
 				<target>Procurar jogadores e eventos</target>
 			</trans-unit>
+			<trans-unit>
+				<source>layout.loading</source>
+				<target>Processando, aguarde...</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>form.error.requiredField</source>
+				<target>Este campo é obrigatório e não foi preenchido</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidEmail</source>
+				<target>O e-mail informado não é um e-mail válido</target>
+			</trans-unit>
 			
 			
 			<trans-unit>
@@ -115,7 +128,7 @@
 				<target>Entrar</target>
 			</trans-unit>
 			<trans-unit>
-				<source>login.signIn</source>
+				<source>login.signUp</source>
 				<target>Novo cadastro</target>
 			</trans-unit>
 			<trans-unit>
@@ -278,7 +291,7 @@
 			
 			
 			<trans-unit>
-				<source>footerMenu.signIn</source>
+				<source>footerMenu.signUp</source>
 				<target>cadastro</target>
 			</trans-unit>
 			<trans-unit>
@@ -297,6 +310,70 @@
 				<source>footerMenu.contact</source>
 				<target>contato</target>
 			</trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+			<trans-unit>
+				<source>contact.intro</source>
+				<target>
+					Você pode entrar em contato conosco preenchendo o&lt;br/&gt;formulário abaixo e nos enviando sua mensagem.&lt;br/&gt;&lt;br/&gt;
+					Você também pode esclarecer suas dúvidas através de nosso &lt;/b&gt;&lt;/u&gt;%link%&lt;/u&gt;&lt;/b&gt;
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm</source>
+				<target>Formulário de contato</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.name</source>
+				<target>Nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.subject</source>
+				<target>Assunto</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.message</source>
+				<target>Mensagem</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.send</source>
+				<target>Enviar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.errorMessage</source>
+				<target>Erro ao enviar a mensagem</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.messageSent</source>
+				<target>Mensagem enviada</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.successMessage</source>
+				<target>Sua mensagem foi enviada com sucesso!&lt;br/&gt;
+				Assim que possível entraremos em contato para respondê-la.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.newMessageLink</source>
+				<target>para enviar uma nova mensagem</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.signUp</source>
+				<target>e cadastre-se gratuitamente</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.successFooterMessage</source>
+				<target>Caso você já seja um usuário utilize o login na barra lateral à esquerda da página</target>
+			</trans-unit>
+			
 		</body>
 	</file>
 </xliff>

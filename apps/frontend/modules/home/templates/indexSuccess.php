@@ -59,4 +59,4 @@
 	</tr>
 </table>
 
-<?php include_partial('home/include/homeWall'); ?>
+<?php #include_partial('home/include/homeWall'); ?>

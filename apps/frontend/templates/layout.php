@@ -83,7 +83,7 @@ else
 			<td width="33%" align="left"><?php echo image_tag('layout/chips', array('style'=>'position: relative; left: 20px; top: -45px; margin-bottom: -45px')) ?></td>
 			<td>
 				<?php echo link_to('home', '/') ?> | 
-				<?php echo link_to(__('footerMenu.signIn'), '/sign') ?> | 
+				<?php echo link_to(__('footerMenu.signUp'), '/sign') ?> | 
 				<?php echo link_to(__('footerMenu.myiRank'), '/myAccount') ?> | 
 				<?php echo link_to(__('footerMenu.inviteFriends'), '/friendInvite') ?> | 
 				<?php echo link_to('feedback', '/feedBack') ?> | 
