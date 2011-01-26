@@ -30,6 +30,19 @@
 				<source>layout.search</source>
 				<target>Search for friends and events</target>
 			</trans-unit>
+			<trans-unit>
+				<source>layout.loading</source>
+				<target>Processing, please wait...</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>form.error.requiredField</source>
+				<target>This field is required and has not been completed</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidEmail</source>
+				<target>This is not a valie e-mail</target>
+			</trans-unit>
 			
 			
 			<trans-unit>
@@ -115,8 +128,8 @@
 				<target>Enter</target>
 			</trans-unit>
 			<trans-unit>
-				<source>login.signIn</source>
-				<target>Sign in</target>
+				<source>login.signUp</source>
+				<target>Sign up</target>
 			</trans-unit>
 			<trans-unit>
 				<source>login.forgotPassword</source>
@@ -278,7 +291,7 @@
 			
 			
 			<trans-unit>
-				<source>footerMenu.signIn</source>
+				<source>footerMenu.signUp</source>
 				<target>sign</target>
 			</trans-unit>
 			<trans-unit>
@@ -296,6 +309,69 @@
 			<trans-unit>
 				<source>footerMenu.contact</source>
 				<target>contact</target>
+			</trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+			<trans-unit>
+				<source>contact.intro</source>
+				<target>
+					You can contact us filling the&lt;br/&gt;below form and sending us a message.&lt;br/&gt;&lt;br/&gt;
+					You can also clarify your doubts through our &lt;/b&gt;&lt;/u&gt;%link%&lt;/u&gt;&lt;/b&gt;
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm</source>
+				<target>Contact form</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.subject</source>
+				<target>Subject</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.message</source>
+				<target>Message</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.send</source>
+				<target>Send</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.errorMessage</source>
+				<target>Error sending the message</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.messageSent</source>
+				<target>Message sent</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.successMessage</source>
+				<target>Your message has been successfully sent!&lt;br/&gt;
+				As soon as possible we'll contact you back.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.newMessageLink</source>
+				<target>to send another message</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.contactForm.signUp</source>
+				<target>and sign up for free</target>
+			</trans-unit>
+			<trans-unit>
+				<source>contact.successFooterMessage</source>
+				<target>If you are already a user, login on the left bar form</target>
 			</trans-unit>
 		</body>
 	</file>

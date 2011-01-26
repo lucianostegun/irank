@@ -1067,7 +1067,13 @@ function getLoading( $indicatorId=null ){
  * @author     Luciano Stegun
  * @param      String: ID do indicador para o caso de mais de uma janela renderizada na mesma página
  */
-function getFormLoading( $indicatorId, $message='Processando, aguarde...' ){
+function getFormLoading( $indicatorId, $message=null ){
+	
+	if( !$message ){
+		
+		Util::getHelper('I18N');
+		$message = __('layout.loading');
+	}
 	
 	echo get_partial( 'home/include/formLoading', array('indicatorId'=>$indicatorId, 'message'=>$message, 'isWindow'=>false) );
 }

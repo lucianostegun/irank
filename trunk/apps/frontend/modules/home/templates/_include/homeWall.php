@@ -10,7 +10,7 @@
 		<?php if( $homeWallObj->getShowWho() ): ?>
 			<span class="who"><?php echo $homeWallObj->getPeopleName() ?></span> -
 		<?php endif; ?> 
-		<span class="when"><?php echo $homeWallObj->getTimeAgo() ?> atrás</span><br/>
+		<span class="when"><?php echo $homeWallObj->getTimeAgo() ?> <?php echo __('ago') ?></span><br/>
 		<?php echo $homeWallObj->getMessage() ?></div>
 		<?php endforeach; ?>
 	</div>
