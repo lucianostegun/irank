@@ -533,9 +533,10 @@ class eventActions extends sfActions
 
 	$rankingId      = $request->getParameter('rankingId');
 	$rankingPlaceId = $request->getParameter('rankingPlaceId');
-
+	
   	sfConfig::set('sf_web_debug', false);
 	Util::getHelpers();
+	Util::getHelper('i18n');
 	echo select_tag('rankingPlaceId', RankingPlace::getOptionsForSelect($rankingId, $rankingPlaceId), array('class'=>'required', 'id'=>'eventRankingPlaceId'));
 	exit;
   }

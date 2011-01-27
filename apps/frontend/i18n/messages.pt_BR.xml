@@ -35,6 +35,8 @@
 				<target>Processando, aguarde...</target>
 			</trans-unit>
 			
+			
+			
 			<trans-unit>
 				<source>form.error.requiredField</source>
 				<target>Este campo é obrigatório e não foi preenchido</target>
@@ -42,6 +44,38 @@
 			<trans-unit>
 				<source>form.error.invalidEmail</source>
 				<target>O e-mail informado não é um e-mail válido</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenEmail</source>
+				<target>Este e-mail já está em uso por outro usuário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenUsername</source>
+				<target>Este username já está em uso por outro usuário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidUsername</source>
+				<target>O username informado não é válido.\nO username deve iniciar com uma letra, e pode conter apenas letras, números e hífen</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max15</source>
+				<target>Informe um valor de até 15 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max150</source>
+				<target>Informe um valor de até 150 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max25</source>
+				<target>Informe um valor de até 25 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.between5and15</source>
+				<target>Informe um valor entre 5 e 15 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.passwordConfirm</source>
+				<target>A confirmação deve ser igual a senha</target>
 			</trans-unit>
 			
 			
@@ -186,6 +220,10 @@
 				<target>Resumo da conta</target>
 			</trans-unit>
 			<trans-unit>
+				<source>resume.myRankings</source>
+				<target>Meus rankings</target>
+			</trans-unit>
+			<trans-unit>
 				<source>resume.position</source>
 				<target>Posição</target>
 			</trans-unit>
@@ -320,7 +358,10 @@
 
 
 
-
+			<trans-unit>
+				<source>contact.title</source>
+				<target>Contato</target>
+			</trans-unit>
 			<trans-unit>
 				<source>contact.intro</source>
 				<target>
@@ -372,6 +413,414 @@
 			<trans-unit>
 				<source>contact.successFooterMessage</source>
 				<target>Caso você já seja um usuário utilize o login na barra lateral à esquerda da página</target>
+			</trans-unit>
+			
+			
+			
+			<trans-unit>
+				<source>help.title</source>
+				<target>Ajuda</target>
+			</trans-unit>
+			<trans-unit>
+				<source>help.intro</source>
+				<target>
+				Se você está com alguma dúvida em relação ao funcionamento,&lt;br/&gt;
+				utilização ou qualquer característica do site &lt;b&gt;iRank&lt;/b&gt;,&lt;br/&gt;
+				utilize uma de nossas ferramentas de ajuda.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>help.faq.description</source>
+				<target>
+				Utilize nosso FAQ para esclarecer rapidamente suas dúvidas&lt;br/&gt;
+				em relação ao funcionamento e usabilidade do site.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>help.contact</source>
+				<target>Contato</target>
+			</trans-unit>
+			<trans-unit>
+				<source>help.contact.description</source>
+				<target>
+				Se sua dúvida não estiver listada em nosso FAQ&lt;br/&gt;
+				utilize o formulário de contato para enviar sua mensagem&lt;br/&gt;
+				à equipe do site.
+				</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>sign.title</source>
+				<target>Cadastro de usuário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.intro</source>
+				<target>
+				Para criar seus rankings, participar e visualizar&lt;br/&gt;
+				todas as informações dos eventos&lt;br/&gt;
+				é necessário se cadastrar no site.&lt;br/&gt;&lt;br/&gt;
+	
+				O cadastro é simples, rápido e gratuito.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.signUpForm</source>
+				<target>Formulário de cadastro</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.firstName</source>
+				<target>Nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.lastName</source>
+				<target>Sobrenome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.password</source>
+				<target>Senha</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.passwordConfirm</source>
+				<target>Confirmação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.send</source>
+				<target>Enviar</target>
+			</trans-unit>
+			
+			
+			<trans-unit>
+				<source>email.subject.welcome</source>
+				<target>Seja bem-vindo</target>
+			</trans-unit>
+			<trans-unit>
+				<source>tab.main</source>
+				<target>Principal</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.save</source>
+				<target>Salvar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.title</source>
+				<target>Edição de perfil</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.changePassword</source>
+				<target>Trocar senha de acesso</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.intro</source>
+				<target>Selecione abaixo as notificações que deseja ou não receber por e-mail</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>myAccount.email.receiveFriendEventConfirmNotify</source>
+				<target>Confirmação de presença dos convidados para os eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.receiveEventReminder0</source>
+				<target>Notificar eventos agendados para o dia</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.receiveEventReminder3</source>
+				<target>Notificar eventos agendados para o dia</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.receiveEventReminder7</source>
+				<target>Notificar eventos agendados para 7 dias</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.receiveEventCommentNotify</source>
+				<target>Notificar novo comentário nos eventos</target>
+			</trans-unit>
+			
+			
+			
+			
+			
+			<trans-unit>
+				<source>ranking.name</source>
+				<target>Nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.style</source>
+				<target>Estilo</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.start</source>
+				<target>Início</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.finish</source>
+				<target>Término</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.players</source>
+				<target>Membros</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.events</source>
+				<target>Eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.classify</source>
+				<target>Classificação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.noRankings</source>
+				<target>Você não está inscrito em nenhum ranking</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>record.exitAlert</source>
+				<target>O registro ainda não foi salvo!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.creating</source>
+				<target>Criação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.editing</source>
+				<target>Edição</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.deleteRanking</source>
+				<target>Excluir ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.newPlayer</source>
+				<target>Novo membro</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.playerRegister</source>
+				<target>Cadastro de membros</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.display</source>
+				<target>Exibição</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.defaultBuyin</source>
+				<target>Buy-in padrão</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidDate</source>
+				<target>A data informada não é uma data válida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>dateFormat</source>
+				<target>dd/mm/aaaa</target>
+			</trans-unit>
+			<trans-unit>
+				<source>select</source>
+				<target>Selecione</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.public</source>
+				<target>Público</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.private</source>
+				<target>Privado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.statusErrorMessage</source>
+				<target>Erro ao salvar o registro!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.statusSuccessMessage</source>
+				<target>Registro salvo com sucesso!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.statusSuccessMessage</source>
+				<target>Registro salvo com sucesso!</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>form.error.invalidRankingName</source>
+				<target>O nome informado não é válido.\nO nome deve iniciar com uma letra, e pode conter apenas letras, números e os caracteres ()-_</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenRankingName</source>
+				<target>Já existe um ranking cadastrado com esse nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidNumber</source>
+				<target>O valor informado não é um número válido</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual0</source>
+				<target>Informe um valor maior ou igual a 0</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual0</source>
+				<target>Informe um valor maior ou igual a 0</target>
+			</trans-unit>
+			<trans-unit>
+				<source>FirstName</source>
+				<target>Nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>LastName</source>
+				<target>Sobrenome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Events</source>
+				<target>Eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.intro</source>
+				<target>Cadastre os membros que farão parte do ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.intro</source>
+				<target>Cadastre os membros que farão parte do ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.hint.removePlayer</source>
+				<target>Remover este membro do grupo</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.hint.removePlayerUnabled</source>
+				<target>Não é possível remover este membro do grupo</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Allow</source>
+				<target>Habilitar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Deny</source>
+				<target>Desabilitar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.hint.allowPlayerEdit</source>
+				<target>%message% membro para edição do ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.hint.allowPlayerEditUnabled</source>
+				<target>Não é possível desabilitar este membro para edição do ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.cancel</source>
+				<target>Cancelar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playerRegister</source>
+				<target>Cadastro de membros</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.playerAdd</source>
+				<target>Inclusão em ranking</target>
+			</trans-unit>
+
+
+
+			<trans-unit>
+				<source>ranking.eventsTab.intro</source>
+				<target>Lista de eventos já agendados e realizados para este ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Event</source>
+				<target>Evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>DateTime</source>
+				<target>Data/Hora</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Place</source>
+				<target>Local</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Guests</source>
+				<target>Convidados</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.eventsTab.noEvents</source>
+				<target>
+				Este ranking ainda não possui eventos cadastrados.&lt;br/&gt;&lt;br/&gt;
+				&lt;b&gt;%link%&lt;/b&gt; para cadastrar um novo evento.
+				</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>ranking.classifyTab.intro</source>
+				<target>Classificação atual do ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.classifyTab.log</source>
+				<target>Histórico</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.classifyTab.log</source>
+				<target>Histórico</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>ranking.classifyTab.noPlayers</source>
+				<target>Este ranking ainda não possui membros cadastrados</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Player</source>
+				<target>Jogador</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Events</source>
+				<target>Eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Score</source>
+				<target>Pontos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Profit</source>
+				<target>Ganhos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Balance</source>
+				<target>Balanço</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Average</source>
+				<target>Média</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>event.footer</source>
+				<target>Eventos habilitados para edição</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.createNewPlace</source>
+				<target>Cadastrar novo local</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.search</source>
+				<target>Pesquisar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.noEvents</source>
+				<target>Não existem eventos disponíveis para seus rankings</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.hint.eventComment</source>
+				<target>Este evento possui 1 comentário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.hint.eventComments</source>
+				<target>Este evento possui %comments% comentários</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.hint.eventPicture</source>
+				<target>Este evento possui 1 foto</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.hint.eventPictures</source>
+				<target>Este evento possui %comments% fotos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.title</source>
+				<target>Eventos</target>
 			</trans-unit>
 			
 		</body>

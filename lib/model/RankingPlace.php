@@ -49,12 +49,12 @@ class RankingPlace extends BaseRankingPlace
 		$rankingPlaceObjList = self::getList($rankingId);
 
 		$optionList = array();
-		$optionList[''] = 'Selecione';
+		$optionList[''] = __('select');
 		foreach( $rankingPlaceObjList as $rankingPlaceObj )			
 			$optionList[$rankingPlaceObj->getId()] = $rankingPlaceObj->getPlaceName();
 			
 		if( $rankingId )
-			$optionList['new'] = 'Cadastrar novo local';
+			$optionList['new'] = __('event.createNewPlace');
 		
 		if( $returnArray )
 			return $optionList;

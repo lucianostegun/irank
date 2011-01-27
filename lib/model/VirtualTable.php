@@ -15,6 +15,12 @@ class VirtualTable extends BaseVirtualTable
 		return $this->getDescription();
 	}
 	
+	public function getDescription(){
+		
+		$this->setCulture(MyTools::getCulture());
+		return $this->getDescriptionI18n();
+	}
+	
 	public static function getList( $virtualTableName, $orderBy=null ){
 		
 		if( $orderBy==null )
@@ -35,7 +41,7 @@ class VirtualTable extends BaseVirtualTable
 		$virtualTableObjList = self::getList( $virtualTableName, $orderBy );
 		
 		$optionList = array();
-		$optionList[''] = 'Selecione';
+		$optionList[''] = __('select');
 		foreach( $virtualTableObjList as $virtualTableObj )			
 			$optionList[$virtualTableObj->getId()] = $virtualTableObj->getDescription();
 		

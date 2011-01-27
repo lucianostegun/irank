@@ -3,7 +3,7 @@ validators:
     class:           sfCallbackValidator
     param:
       callback:      [Validate, validateDate]
-      invalid_error: A data informada não é uma data válida
+      invalid_error: form.error.invalidDate
   validateEventDate:
     class:           sfCallbackValidator
     param:
@@ -14,35 +14,35 @@ fields:
        
   rankingId:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
        
   eventName:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfCallbackValidator:
       callback:      [EventPeer, uniqueEventName]
       invalid_error: Já existe um evento cadastrado com este nome para esta mesma data
        
   rankingPlaceId:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
        
   eventDate:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     validateDate:
     validateEventDate:
        
   startTime:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfCallbackValidator:
       callback:      [Validate, validateTime]
       invalid_error: A hora informada não é uma data válida
        
   paidPlaces:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfNumberValidator:
       min_error: 1
       min_error: Informe um valor maior que 0
@@ -50,7 +50,7 @@ fields:
        
   buyin:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfNumberValidator:
       min:       0
       min_error: Informe um valor maior ou igual a 0

@@ -1,9 +1,9 @@
 <table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
 	<tr class="header">
-		<th>Nome</th>
-		<th>Sobrenome</th>
+		<th><?php echo __('FirstName') ?></th>
+		<th><?php echo __('LastName') ?></th>
 		<th>E-mail</th>
-		<th>Eventos</th>
+		<th><?php echo __('Events') ?></th>
 		<th colspan="2">&nbsp;</th>
 	</tr>
 	<?php
@@ -24,21 +24,21 @@
 		<td align="center" style="padding-left: 0; padding-right: 0">
 			<?php 
 				if( $rankingPlayerObj->getTotalEvents()==0 && $peopleId!==$peopleIdMe )
-					echo link_to(image_tag('icon/delete'), '#deleteRankingPlayer('.$peopleId.')', array('title'=>'Remover este membro do grupo'));
+					echo link_to(image_tag('icon/delete'), '#deleteRankingPlayer('.$peopleId.')', array('title'=>__('ranking.playersTab.hint.removePlayer')));
 				else
-					echo image_tag('icon/disabled/delete', array('title'=>'Não é possível remover este membro do grupo'));
+					echo image_tag('icon/disabled/delete', array('title'=>__('ranking.playersTab.hint.removePlayerUnabled')));
 			?>
 		</td>
 		<td align="center" style="padding-left: 0; padding-right: 0">
 			<?php
 				$allowEdit    = $rankingPlayerObj->getAllowEdit();
 				$icon         = ($allowEdit?'unlock':'lock');
-				$shareMessage = ($allowEdit?'Desabilitar':'Habilitar');
+				$shareMessage = ($allowEdit?'Deny':'Allow');
 				
 				if( $peopleId==$peopleIdMe || $peopleId==$peopleIdOwner )
-				echo image_tag('icon/disabled/unlock', array('title'=>'Não é possível desabilitar este membro para edição do ranking'));
+				echo image_tag('icon/disabled/unlock', array('title'=>__('ranking.playersTab.hint.allowPlayerEditUnabled')));
 			else
-				echo link_to(image_tag('icon/'.$icon, array('title'=>$shareMessage.' membro para edição do ranking', 'id'=>'rankingShare'.$peopleId)), '#toggleRankingShare('.$peopleId.')', array());
+				echo link_to(image_tag('icon/'.$icon, array('title'=>__('ranking.playersTab.hint.allowPlayerEdit', array('%message%'=>__($shareMessage))), 'id'=>'rankingShare'.$peopleId)), '#toggleRankingShare('.$peopleId.')', array());
 			?>
 		</td>
 	</tr>

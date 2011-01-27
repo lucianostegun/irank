@@ -2,12 +2,12 @@ fields:
        
   rankingId:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
        
   format:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
        
   reportType:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField

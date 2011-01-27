@@ -664,14 +664,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 			}
 
 			if ($this->aVirtualTableRelatedByRankingTypeId !== null) {
-				if ($this->aVirtualTableRelatedByRankingTypeId->isModified()) {
+				if ($this->aVirtualTableRelatedByRankingTypeId->isModified() || $this->aVirtualTableRelatedByRankingTypeId->getCurrentVirtualTableI18n()->isModified()) {
 					$affectedRows += $this->aVirtualTableRelatedByRankingTypeId->save($con);
 				}
 				$this->setVirtualTableRelatedByRankingTypeId($this->aVirtualTableRelatedByRankingTypeId);
 			}
 
 			if ($this->aVirtualTableRelatedByGameStyleId !== null) {
-				if ($this->aVirtualTableRelatedByGameStyleId->isModified()) {
+				if ($this->aVirtualTableRelatedByGameStyleId->isModified() || $this->aVirtualTableRelatedByGameStyleId->getCurrentVirtualTableI18n()->isModified()) {
 					$affectedRows += $this->aVirtualTableRelatedByGameStyleId->save($con);
 				}
 				$this->setVirtualTableRelatedByGameStyleId($this->aVirtualTableRelatedByGameStyleId);

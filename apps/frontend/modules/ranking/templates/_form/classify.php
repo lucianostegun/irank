@@ -1,7 +1,7 @@
 <table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px">
 	<tr>
-		<td valign="top" style="padding: 5px 5px 5px 15px">Classificação atual do ranking</td>
-		<td valign="top" style="padding: 5px 5px 5px 15px; text-align: right; font-weight: bold">Data/Histórico:</td> 
+		<td valign="top" style="padding: 5px 5px 5px 15px"><?php echo __('ranking.classifyTab.intro') ?></td>
+		<td valign="top" style="padding: 5px 5px 5px 15px; text-align: right; font-weight: bold"><?php echo __('ranking.classifyTab.log') ?>:</td> 
 		<td valign="top" style="padding: 5px 5px 5px 15px;">
 			<?php
 				$orderByList   = array(EventPeer::EVENT_DATE=>'desc');

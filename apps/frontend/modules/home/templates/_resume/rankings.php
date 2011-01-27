@@ -1,6 +1,6 @@
 <table border="0" cellspacing="1" cellpadding="2" class="resumeRankingTable">
 	<tr>
-		<th colspan="8" class="title">Meus rankings</th>
+		<th colspan="8" class="title"><?php echo __('resume.myRankings') ?></th>
 	</tr>
 	<?php if( count($rankingObjList) ): ?>
 	<tr>

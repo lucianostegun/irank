@@ -47,7 +47,7 @@ function checkClosingRecord(e) {
 		if(!e) e = window.event;
 		//e.cancelBubble is supported by IE - this will kill the bubbling process.
 		e.cancelBubble = true;
-		e.returnValue = 'O registro ainda não foi salvo!'; //This is displayed on the dialog
+		e.returnValue = i18n_record_exitAlert; //This is displayed on the dialog
 	
 		//e.stopPropagation works in Firefox.
 		if (e.stopPropagation) {

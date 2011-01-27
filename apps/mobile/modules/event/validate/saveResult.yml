@@ -2,7 +2,7 @@ fields:
        
   eventId:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfCallbackValidator:
       callback:      [EventPlayerPeer, validateResult]
       invalid_error: erro

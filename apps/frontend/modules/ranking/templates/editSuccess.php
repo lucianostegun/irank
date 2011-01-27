@@ -1,5 +1,5 @@
 <?php
-	$pageAction = ($rankingObj->isNew()?'Edição':'Criação');
+	$pageAction = ($rankingObj->isNew()?__('ranking.creating'):__('ranking.editing'));
 	
 	if( !$rankingObj->getEnabled() ):
 ?>
@@ -24,28 +24,28 @@
 
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 	$dhtmlxTabBarObj->addTab('main', 'Ranking', 'ranking/form/main', array('rankingObj'=>$rankingObj));
-	$dhtmlxTabBarObj->addTab('player', 'Membros', 'ranking/form/player', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
-	$dhtmlxTabBarObj->addTab('event', 'Eventos', 'ranking/form/event', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
-	$dhtmlxTabBarObj->addTab('classify', 'Classificação', 'ranking/form/classify', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
+	$dhtmlxTabBarObj->addTab('player', __('ranking.players'), 'ranking/form/player', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
+	$dhtmlxTabBarObj->addTab('event', __('ranking.events'), 'ranking/form/event', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
+	$dhtmlxTabBarObj->addTab('classify', __('ranking.classify'), 'ranking/form/classify', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabRanking');
 	$dhtmlxTabBarObj->build();
 ?>
 	<div class="buttonTabBar" id="rankingMainButtonBar">
 		<?php
-			echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitRanking()'));
+			echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitRanking()'));
 			
 			if( !$isNew )
-				echo button_tag('deleteRanking', 'Excluir ranking', array('onclick'=>'doDeleteRanking()', 'image'=>'../icon/delete', 'style'=>'float: right'));
+				echo button_tag('deleteRanking', __('button.deleteRanking'), array('onclick'=>'doDeleteRanking()', 'image'=>'../icon/delete', 'style'=>'float: right'));
 		?>
 		<?php echo getFormLoading('ranking') ?>
 		<?php echo getFormStatus(); ?>
 	</div>
 	<div class="buttonTabBar" id="rankingPlayerButtonBar" style="display: none">
-		<?php echo button_tag('addRankingPlayer', 'Novo membro', array('onclick'=>'addRankingPlayer()')) ?>
+		<?php echo button_tag('addRankingPlayer', __('button.newPlayer'), array('onclick'=>'addRankingPlayer()')) ?>
 		<?php echo getFormLoading('rankingPlayerList') ?>
 	</div>
 </form>
 <?php
-	DhtmlxWindows::createWindow('rankingPlayerAdd', 'Cadastro de membros', 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$rankingId));
+	DhtmlxWindows::createWindow('rankingPlayerAdd', __('ranking.playerRegister'), 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$rankingId));
 ?>

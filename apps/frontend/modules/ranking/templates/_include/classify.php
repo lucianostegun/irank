@@ -1,13 +1,13 @@
 <table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
 	<tr class="header">
 		<th>#</th>
-		<th>Nome</th>
-		<th>Eventos</th>
-		<th>Pontos</th>
+		<th><?php echo __('Player') ?></th>
+		<th><?php echo __('Events') ?></th>
+		<th><?php echo __('Score') ?></th>
 		<th>B+R+A</th>
-		<th>Ganhos</th>
-		<th>Balanço</th>
-		<th>Média</th>
+		<th><?php echo __('Profit') ?></th>
+		<th><?php echo __('Balance') ?></th>
+		<th><?php echo __('Average') ?></th>
 	</tr>
 	<?php
 		$rankingType          = $rankingObj->getRankingType(true);
@@ -33,7 +33,7 @@
 		if( count($rankingPlayerObjList)==0 ):
 	?>
 	<tr>
-		<td colspan="8">Este ranking ainda não possui membros cadastrados</td>
+		<td colspan="8"><?php echo __('ranking.classifyTab.noPlayers') ?></td>
 	</tr>
 	<?php endif; ?>
 </table>

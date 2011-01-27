@@ -129,15 +129,16 @@ class UserSite extends BaseUserSite
 	
 	public function sendWelcomeMail($request){
 
-		$emailContent  = AuxiliarText::getContentByTagName('signWelcome');
+		Util::getHelper('I18N');
 		
+		$emailContent = AuxiliarText::getContentByTagName('signWelcome');
 		$emailContent = str_replace('<password>', $request->getParameter('password'), $emailContent);
 		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
 		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent); 		
-		
+
 		$emailAddress = $this->getPeople()->getEmailAddress();
 		
-		Report::sendMail('Seja bem vindo', $emailAddress, $emailContent);
+		Report::sendMail(__('email.subject.welcome'), $emailAddress, $emailContent);
 	}
 
 	public function resetPassword(){

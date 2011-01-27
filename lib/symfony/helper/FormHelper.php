@@ -1078,7 +1078,13 @@ function getFormLoading( $indicatorId, $message=null ){
 	echo get_partial( 'home/include/formLoading', array('indicatorId'=>$indicatorId, 'message'=>$message, 'isWindow'=>false) );
 }
 
-function getFormWindowLoading( $indicatorId, $message='Processando, aguarde...' ){
+function getFormWindowLoading( $indicatorId, $message=null ){
+	
+	if( !$message ){
+		
+		Util::getHelper('I18N');
+		$message = __('layout.loading');
+	}
 	
 	echo get_partial( 'home/include/formLoading', array('indicatorId'=>$indicatorId, 'message'=>$message, 'isWindow'=>true) );
 }

@@ -2,13 +2,13 @@ fields:
        
   rankingName:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfCallbackValidator:
       callback:      [RankingPeer, uniqueRankingName]
       invalid_error: Já existe um ranking cadastrado com esse nome
     sfStringValidator:
       max:       25
-      max_error: Informe um valor de até 25 caracteres
+      max_error: form.error.max25
     sfRegexValidator:
       match:        Yes
       match_error:  O username informado não é válido.\nO nome deve iniciar com uma letra, e pode conter apenas letras, números e os caracteres ()-_
@@ -16,27 +16,27 @@ fields:
        
   gameStyleId:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
        
   startDate:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfCallbackValidator:
       callback:      [Validate, validateDate]
-      invalid_error: A data informada não é uma data válida
+      invalid_error: form.error.invalidDate
        
   finishDate:
     sfCallbackValidator:
       callback:      [Validate, validateDate]
-      invalid_error: A data informada não é uma data válida
+      invalid_error: form.error.invalidDate
        
   rankingTypeId:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
        
   defaultBuyin:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfNumberValidator:
       min:       0
       min_error: Informe um valor maior ou igual a 0
