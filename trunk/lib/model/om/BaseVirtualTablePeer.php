@@ -218,6 +218,55 @@ abstract class BaseVirtualTablePeer {
 		}
 		return $results;
 	}
+
+  
+  public static function doSelectWithI18n(Criteria $c, $culture = null, $con = null)
+  {
+        $c = clone $c;
+    if ($culture === null)
+    {
+      $culture = sfContext::getInstance()->getUser()->getCulture();
+    }
+
+        if ($c->getDbName() == Propel::getDefaultDB())
+    {
+      $c->setDbName(self::DATABASE_NAME);
+    }
+
+    VirtualTablePeer::addSelectColumns($c);
+    $startcol = (VirtualTablePeer::NUM_COLUMNS - VirtualTablePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+    VirtualTableI18nPeer::addSelectColumns($c);
+
+    $c->addJoin(VirtualTablePeer::ID, VirtualTableI18nPeer::VIRTUAL_TABLE_ID);
+    $c->add(VirtualTableI18nPeer::CULTURE, $culture);
+
+    $rs = BasePeer::doSelect($c, $con);
+    $results = array();
+
+    while($rs->next()) {
+
+      $omClass = VirtualTablePeer::getOMClass();
+
+      $cls = Propel::import($omClass);
+      $obj1 = new $cls();
+      $obj1->hydrate($rs);
+      $obj1->setCulture($culture);
+
+      $omClass = VirtualTableI18nPeer::getOMClass($rs, $startcol);
+
+      $cls = Propel::import($omClass);
+      $obj2 = new $cls();
+      $obj2->hydrate($rs, $startcol);
+
+      $obj1->setVirtualTableI18nForCulture($obj2, $culture);
+      $obj2->setVirtualTable($obj1);
+
+      $results[] = $obj1;
+    }
+    return $results;
+  }
+
 	
 	public static function getTableMap()
 	{

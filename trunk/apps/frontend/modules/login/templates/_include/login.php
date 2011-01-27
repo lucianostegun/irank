@@ -6,7 +6,7 @@
 		</tr>
 		<tr>
 			<th>Username</th>
-			<td class="field"><?php echo input_tag('username', null, array('maxlength'=>15, 'onkeyup'=>'handleSubmitEnter(event, doQuickLogin)', 'id'=>'loginUsername')) ?></td>
+			<td class="field"><?php echo input_tag('username', null, array('maxlength'=>150, 'onkeyup'=>'handleSubmitEnter(event, doQuickLogin)', 'id'=>'loginUsername')) ?></td>
 		</tr>
 		<tr>
 			<th><?php echo __('login.password') ?></th>

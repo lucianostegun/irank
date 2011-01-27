@@ -31,4 +31,17 @@ class myAccountActions extends sfActions
   	$userSiteObj->saveEmailOptions($request);
   	exit;
   }
+  
+  public function executeJavascript($request){
+
+	Util::getHelper('i18n');
+	
+    header('Content-type: text/x-javascript');
+		
+	$nl = chr(10);
+	
+	echo 'var passwordLabel        = "'.__('sign.form.password').'"'.$nl;
+	echo 'var passwordConfirmLabel = "'.__('sign.form.passwordConfirm').'";'.$nl;
+	exit;
+  }
 }

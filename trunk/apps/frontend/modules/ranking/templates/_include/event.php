@@ -1,9 +1,9 @@
 <table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
 	<tr class="header">
-		<th width="200">Evento</th>
-		<th>Data/Hora</th>
-		<th>Local</th>
-		<th>Convidados</th>
+		<th width="200"><?php echo __('Event') ?></th>
+		<th><?php echo __('DateTime') ?></th>
+		<th><?php echo __('Place') ?></th>
+		<th><?php echo __('Guests') ?></th>
 	</tr>
 	<?php
 		$eventObjList = $rankingObj->getEventList();
@@ -21,8 +21,7 @@
 	?>
 	<tr>
 		<td colspan="4">
-			Este ranking ainda não possui eventos cadastrados<br/><br/>
-			<b><?php echo link_to('Clique aqui', 'event/new') ?></b> para cadastrar um novo evento.
+			<?php echo __('ranking.eventsTab.noEvents', array('%link%'=>link_to(__('clickHere'), 'event/new'))) ?>
 		</td>
 	</tr>
 	<?php

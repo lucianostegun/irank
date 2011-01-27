@@ -14,11 +14,11 @@
 		<tr>
 			<td valign="top">
 				<div class="row">
-					<div class="halfLabel" id="rankingPlayerFirstNameLabel">Nome</div>
+					<div class="halfLabel" id="rankingPlayerFirstNameLabel"><?php echo __('FirstName') ?></div>
 					<div class="field"><?php echo input_tag('firstName', null, array('size'=>20, 'maxlength'=>25, 'class'=>'required', 'id'=>'rankingPlayerFirstName')) ?></div>
 				</div>
 				<div class="row">
-					<div class="halfLabel" id="rankingPlayerLastNameLabel">Sobrenome</div>
+					<div class="halfLabel" id="rankingPlayerLastNameLabel"><?php echo __('LastName') ?></div>
 					<div class="field"><?php echo input_tag('lastName', null, array('size'=>20, 'maxlength'=>25, 'id'=>'rankingPlayerLastName')) ?></div>
 				</div>
 				<div class="row">
@@ -30,8 +30,8 @@
 	</table>
 	<div class="windowButtonBar">
 		<?php
-			echo button_tag('rankingPlayerCancel', 'Cancelar', array('onclick'=>'windowRankingPlayerAddHide()'));
-			echo button_tag('rankingPlayerSubmit', 'Salvar', array('onclick'=>'doSubmitRankingPlayer()'));
+			echo button_tag('rankingPlayerCancel', __('button.cancel'), array('onclick'=>'windowRankingPlayerAddHide()'));
+			echo button_tag('rankingPlayerSubmit', __('button.save'), array('onclick'=>'doSubmitRankingPlayer()'));
 			echo getFormWindowLoading('rankingPlayer');
 			echo getFormStatus('rankingPlayer');
 		?>

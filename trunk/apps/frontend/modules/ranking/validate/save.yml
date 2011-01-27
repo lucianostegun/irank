@@ -2,42 +2,42 @@ fields:
        
   rankingName:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfCallbackValidator:
       callback:      [RankingPeer, uniqueRankingName]
-      invalid_error: Já existe um ranking cadastrado com esse nome
+      invalid_error: form.error.takenRankingName
     sfStringValidator:
       max:       25
-      max_error: Informe um valor de até 25 caracteres
+      max_error: form.error.max25
     sfRegexValidator:
       match:        Yes
-      match_error:  O username informado não é válido.\nO nome deve iniciar com uma letra, e pode conter apenas letras, números e os caracteres ()-_
-      pattern:      /^[a-zA-Z]+[)(\a-zA-Z0-9_-]*$/si
+      match_error:  form.error.invalidRankingName
+      pattern:      /^[a-zA-Z]+[)(a-zA-Z 0-9_-]*$/si
        
   gameStyleId:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
        
   startDate:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfCallbackValidator:
       callback:      [Validate, validateDate]
-      invalid_error: A data informada não é uma data válida
+      invalid_error: form.error.invalidDate
        
   finishDate:
     sfCallbackValidator:
       callback:      [Validate, validateDate]
-      invalid_error: A data informada não é uma data válida
+      invalid_error: form.error.invalidDate
        
   rankingTypeId:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
        
   defaultBuyin:
     required:
-      msg:       Este campo é obrigatório e não foi preenchido
+      msg:       form.error.requiredField
     sfNumberValidator:
       min:       0
-      min_error: Informe um valor maior ou igual a 0
-      nan_error: Informe um número válido maior ou igual a 0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.invalidNumber

@@ -8,29 +8,29 @@
 
 <table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px">
 	<tr>
-		<td valign="top" style="padding: 5px 5px 5px 15px">Selecione abaixo as notificações que deseja ou não receber por e-mail</td>
+		<td valign="top" style="padding: 5px 5px 5px 15px"><?php echo __('myAccount.email.intro') ?></td>
 	</tr>
 	<tr>
 		<td valign="top" class="defaultForm">
 			<div class="rowCheckbox">
 				<div class="field"><?php echo checkbox_tag('receiveFriendEventConfirmNotify', true, $receiveFriendEventConfirmNotify) ?></div>
-				<div class="label"><label for="receiveFriendEventConfirmNotify">Confirmação de presença dos convidados para os eventos</label></div>
+				<div class="label"><label for="receiveFriendEventConfirmNotify"><?php echo __('myAccount.email.receiveFriendEventConfirmNotify') ?></label></div>
 			</div>
 			<div class="rowCheckbox">
 				<div class="field"><?php echo checkbox_tag('receiveEventReminder0', true, $receiveEventReminder0) ?></div>
-				<div class="label"><label for="receiveEventReminder0">Notificar eventos agendados para o dia</label></div>
+				<div class="label"><label for="receiveEventReminder0"><?php echo __('myAccount.email.receiveEventReminder0') ?></label></div>
 			</div>
 			<div class="rowCheckbox">
 				<div class="field"><?php echo checkbox_tag('receiveEventReminder3', true, $receiveEventReminder3) ?></div>
-				<div class="label"><label for="receiveEventReminder3">Notificar eventos agendados para 3 dias</label></div>
+				<div class="label"><label for="receiveEventReminder3"><?php echo __('myAccount.email.receiveEventReminder3') ?></label></div>
 			</div>
 			<div class="rowCheckbox">
 				<div class="field"><?php echo checkbox_tag('receiveEventReminder7', true, $receiveEventReminder7) ?></div>
-				<div class="label"><label for="receiveEventReminder7">Notificar eventos agendados para 7 dias</label></div>
+				<div class="label"><label for="receiveEventReminder7"><?php echo __('myAccount.email.receiveEventReminder7') ?></label></div>
 			</div>
 			<div class="rowCheckbox">
 				<div class="field"><?php echo checkbox_tag('receiveEventCommentNotify', true, $receiveEventCommentNotify) ?></div>
-				<div class="label"><label for="receiveEventCommentNotify">Notificar novo comentário nos eventos</label></div>
+				<div class="label"><label for="receiveEventCommentNotify"><?php echo __('myAccount.email.receiveEventCommentNotify') ?></label></div>
 			</div>
 		</td>
 	</tr>

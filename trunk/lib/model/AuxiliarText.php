@@ -58,7 +58,7 @@ class AuxiliarText extends BaseAuxiliarText
 		$auxiliarTextObjList = self::getList();
 		
 		$optionList = array();
-		$optionList[''] = 'Selecione';
+		$optionList[''] = __('select');
 		foreach( $auxiliarTextObjList as $auxiliarTextObj ){
 			
 			$optionList[$auxiliarTextObj->getId()] = $auxiliarTextObj->getDescription();
@@ -70,7 +70,7 @@ class AuxiliarText extends BaseAuxiliarText
 		return options_for_select( $optionList, $defaultValue );
 	}
 	
-	public static function getContentByTagName($tagName, $encodeUTF8=false){
+	public static function getContentByTagName($tagName, $encodeUTF8=false, $noCulture=false){
 		
 		$criteria = new Criteria();
 		$criteria->add( AuxiliarTextPeer::VISIBLE, true );
@@ -81,7 +81,7 @@ class AuxiliarText extends BaseAuxiliarText
 		if( !is_object($auxiliarTextObj) )
 			return null;
 		
-		$content = $auxiliarTextObj->getContent();
+		$content = $auxiliarTextObj->getContent($noCulture);
 		
 		if( $encodeUTF8 )
 			$content = utf8_encode($content);
@@ -89,9 +89,16 @@ class AuxiliarText extends BaseAuxiliarText
 		return $content;
 	}
 	
-	public function getContent(){
+	public function getContent($noCulture=false){
 		
 		$filePath = $this->getFilePath(true);
+		
+		if( !$noCulture ){
+			
+			$culture  = MyTools::getCulture();
+			$filePath = str_replace('templates', 'templates'.DIRECTORY_SEPARATOR.$culture, $filePath);
+		}
+		
 		return file_get_contents($filePath);
 	}
 	

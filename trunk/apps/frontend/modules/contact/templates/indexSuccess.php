@@ -1,4 +1,4 @@
-<div class="commonBar"><span>Contato</span></div>
+<div class="commonBar"><span><?php echo __('contact.title') ?></span></div>
 <div class="innerContent">
 	<?php echo image_tag('at', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
 	<?php echo __('contact.intro', array('%link%'=>link_to('FAQ', 'faq/index'))) ?></u>.

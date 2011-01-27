@@ -1,6 +1,6 @@
 <?php
-	$successMessage = 'Registro salvo com sucesso!';
-	$errorMessage   = ($errorMessage?$errorMessage:'Erro ao salvar o registro!')
+	$successMessage = __('form.statusSuccessMessage');
+	$errorMessage   = ($errorMessage?$errorMessage:__('form.statusErrorMessage'))
 ?>
 <div id="formStatusError<?php echo ucfirst($statusId) ?>Div" class="formStatusDiv">
 	<div class="message"><?php echo $errorMessage ?></div>

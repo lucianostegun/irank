@@ -10,7 +10,7 @@ class signActions extends sfActions
   public function executeIndex($request){
 	
 	if( $this->getUser()->isAuthenticated() )
-		return $this->forward('sign', 'edit');
+		return $this->forward('myAccount', 'index');
   }
 
   public function handleErrorSave(){
@@ -25,14 +25,15 @@ class signActions extends sfActions
 	
 	$userSiteObj = new UserSite();
 	$peopleObj   = PeoplePeer::retrieveByEmailAddress($emailAddress);
+	
 	$this->setFlash('showSuccess', true);
 	
 	if( is_object($peopleObj) && $peopleObj->isPeopleType('rankingPlayer') )
 		$userSiteObj->setPeopleId($peopleObj->getId());
-
+  	
   	$userSiteObj->quickSave($request);
   	$userSiteObj->login();
-  	
+
 	$userSiteObj->resetOptions();
 	$userSiteObj->sendWelcomeMail($request);
   	exit;

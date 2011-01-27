@@ -82,7 +82,7 @@ class Ranking extends BaseRanking
 		$rankingObjList = self::getList($onlyMine);
 
 		$optionList = array();
-		$optionList[''] = 'Selecione';
+		$optionList[''] = __('select');
 		foreach( $rankingObjList as $rankingObj )			
 			$optionList[$rankingObj->getId()] = $rankingObj->getRankingName();
 		

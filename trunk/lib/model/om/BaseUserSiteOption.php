@@ -289,7 +289,7 @@ abstract class BaseUserSiteOption extends BaseObject  implements Persistent {
 			}
 
 			if ($this->aVirtualTable !== null) {
-				if ($this->aVirtualTable->isModified()) {
+				if ($this->aVirtualTable->isModified() || $this->aVirtualTable->getCurrentVirtualTableI18n()->isModified()) {
 					$affectedRows += $this->aVirtualTable->save($con);
 				}
 				$this->setVirtualTable($this->aVirtualTable);

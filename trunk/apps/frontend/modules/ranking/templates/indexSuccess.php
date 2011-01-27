@@ -1,13 +1,13 @@
 <div class="commonBar"><span>Rankings</span></div>
 <table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTable">
 	<tr class="header">
-		<th width="200">Nome</th>
-		<th>Estilo</th>
-		<th>Início</th>
-		<th>Término</th>
+		<th width="200"><?php echo __('ranking.name') ?></th>
+		<th><?php echo __('ranking.style') ?></th>
+		<th><?php echo __('ranking.start') ?></th>
+		<th><?php echo __('ranking.finish') ?></th>
 		<th>Buy-in</th>
-		<th>Membros</th>
-		<th>Eventos</th>
+		<th><?php echo __('ranking.players') ?></th>
+		<th><?php echo __('ranking.events') ?></th>
 	</tr>
 	<?php
 		$rankingObjList = $userSiteObj->getRankingList();
@@ -30,7 +30,7 @@
 		if( count($rankingObjList)==0 ):
 	?>
 	<tr>
-		<td colspan="7">Você não está inscrito em nenhum ranking</td>
+		<td colspan="7"><?php echo __('ranking.noRankings') ?></td>
 	</tr>
 	<?php endif; ?>
 </table>

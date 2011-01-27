@@ -93,7 +93,7 @@ class People extends BasePeople
 		$peopleObjList = self::getList();
 		
 		$optionList = array();
-		$optionList[''] = 'Selecione';
+		$optionList[''] = __('select');
 		foreach( $peopleObjList as $peopleObj )			
 			$optionList[$peopleObj->getId()] = $peopleObj->getFirstName();
 		
@@ -110,6 +110,8 @@ class People extends BasePeople
 	
 	public function sendPlayerNotify($rankingObj){
 
+		Util::getHelper('I18N');
+		
 		if( $rankingObj->getUserSite()->getPeopleId()==$this->getId() )
 			return true;
 
@@ -130,7 +132,7 @@ class People extends BasePeople
 		$emailContent = str_replace('<rankingOwner>', $rankingOwner, $emailContent);
 		
 		$emailAddress = $this->getEmailAddress();
-		Report::sendMail('Inclusão em ranking', $emailAddress, $emailContent);
+		Report::sendMail(__('email.subject.playerAdd'), $emailAddress, $emailContent);
 	}
 	
 	public function isUserSite(){

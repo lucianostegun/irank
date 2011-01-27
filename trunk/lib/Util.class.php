@@ -619,8 +619,7 @@ class Util {
 	
 	public static function getHelper($helper){
 		
-		require_once ('symfony/helper/HelperHelper.php');
-		use_helper($helper);
+		sfLoader::loadHelpers($helper);
 	}
 	
 	/**

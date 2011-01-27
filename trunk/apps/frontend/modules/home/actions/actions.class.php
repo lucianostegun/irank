@@ -25,6 +25,8 @@ class homeActions extends sfActions
   
   public function executeJavascript($request){
 	
+	Util::getHelper('i18n');
+	
     header('Content-type: text/x-javascript');
 		
 	$nl = chr(10);
@@ -33,6 +35,8 @@ class homeActions extends sfActions
 	
 	echo 'var _imageRoot = "http://'.$request->getHost() .'/images";'.$nl;
 	echo 'var _CurrentPeopleId = "'.$peopleId.'";'.$nl;
+	
+	echo 'var i18n_record_exitAlert = "'.__('record.exitAlert').'";'.$nl;
 	exit;
   }
 }

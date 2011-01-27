@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database name="propel" defaultIdMethod="native" noXsd="true" package="lib.model" schema="public">
 
-	<table name="virtual_table" phpName="VirtualTable">
+	<table name="virtual_table" phpName="VirtualTable" isI18n="true" i18nTable="virtual_table_i18n">
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
 		<column name="virtual_table_name" type="VARCHAR" size="50" required="true" />
 		<column name="description" type="VARCHAR" size="50" />
@@ -12,6 +12,15 @@
 		<column name="locked" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="virtual_table_i18n" phpName="VirtualTableI18n">
+		<column name="virtual_table_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="culture" type="CHAR" size="5" required="true" primaryKey="true" isCulture="true" />
+		<column name="description_i18n" type="VARCHAR" size="150" />
+		  <foreign-key foreignTable="virtual_table">
+		    <reference local="virtual_table_id" foreign="id" />
+		  </foreign-key>
 	</table>
 	
 	<table name="people" phpName="People">

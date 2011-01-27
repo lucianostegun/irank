@@ -11,7 +11,7 @@
 				<source>home.welcome</source>
 				<target>
 					&lt;p&gt;iRank is a free website for creation and organization of online rankings for Poker games.&lt;/p&gt;
-					&lt;p&gt;Here you can create your own rankings, define the game settings and manage events, classify and statistics of the tournaments between your friends.&lt;/p&gt;
+					&lt;p&gt;Here you can create your own rankings, define the game settings and manage events, rating and statistics of the tournaments between your friends.&lt;/p&gt;
 					&lt;p&gt;If you are not a user yet, %link% and start to control your games right now!&lt;/p&gt;
 				</target>
 			</trans-unit>
@@ -41,7 +41,39 @@
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.invalidEmail</source>
-				<target>This is not a valie e-mail</target>
+				<target>This is not a valid e-mail</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenEmail</source>
+				<target>This e-mail is already in use by another user</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenUsername</source>
+				<target>This username is already in use by another user</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidUsername</source>
+				<target>The username typed is not valid.\nThe username must start with a letter, and may have only letters, numbers and hifen</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max15</source>
+				<target>Enter a value of up to 15 characters</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max150</source>
+				<target>Enter a value of up to 150 characters</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max25</source>
+				<target>Enter a value of up to 25 characters</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.between5and15</source>
+				<target>Enter a value between 5 and 15 characters</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.passwordConfirm</source>
+				<target>Password confirmation must be identical to password</target>
 			</trans-unit>
 			
 			
@@ -186,6 +218,10 @@
 				<target>Account resume</target>
 			</trans-unit>
 			<trans-unit>
+				<source>resume.myRankings</source>
+				<target>My rankings</target>
+			</trans-unit>
+			<trans-unit>
 				<source>resume.prizes</source>
 				<target>Prizes</target>
 			</trans-unit>
@@ -219,7 +255,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>resume.noRealizedEvents</source>
-				<target>No realized events</target>
+				<target>No performed events</target>
 			</trans-unit>
 
 			<trans-unit>
@@ -253,7 +289,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>leftBar.newEvent</source>
-				<target>New evento</target>
+				<target>New event</target>
 			</trans-unit>
 			<trans-unit>
 				<source>leftBar.events</source>
@@ -322,6 +358,10 @@
 
 
 			<trans-unit>
+				<source>contact.title</source>
+				<target>Contato</target>
+			</trans-unit>
+			<trans-unit>
 				<source>contact.intro</source>
 				<target>
 					You can contact us filling the&lt;br/&gt;below form and sending us a message.&lt;br/&gt;&lt;br/&gt;
@@ -373,6 +413,414 @@
 				<source>contact.successFooterMessage</source>
 				<target>If you are already a user, login on the left bar form</target>
 			</trans-unit>
+			
+			
+			
+			<trans-unit>
+				<source>help.title</source>
+				<target>Help</target>
+			</trans-unit>
+			<trans-unit>
+				<source>help.intro</source>
+				<target>
+				If you have some doubt related to any feature of &lt;b&gt;iRank&lt;/b&gt;,&lt;br/&gt;
+				use one of our help tools.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>help.faq.description</source>
+				<target>
+				Use our FAQ to quickly clarify your doubts&lt;br/&gt;
+				about &lt;b&gt;iRank&lt;/b&gt;'s usability and features.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>help.contact</source>
+				<target>Contact</target>
+			</trans-unit>
+			<trans-unit>
+				<source>help.contact.description</source>
+				<target>
+				If your doubt is not listed on FAQ&lt;br/&gt;
+				use the contact form to send your a message&lt;br/&gt;
+				to &lt;b&gt;iRank&lt;/b&gt; Team.
+				</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>sign.title</source>
+				<target>Sign up</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.intro</source>
+				<target>
+				To create you own rankings, participate and visualize&lt;br/&gt;
+				all event's information&lt;br/&gt;
+				you need to register into the website.&lt;br/&gt;&lt;br/&gt;
+	
+				Register process is pretty simple, fast and free.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.signUpForm</source>
+				<target>Sign up form</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.firstName</source>
+				<target>First name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.lastName</source>
+				<target>Last name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.password</source>
+				<target>Password</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.passwordConfirm</source>
+				<target>Confirm</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.send</source>
+				<target>Send</target>
+			</trans-unit>
+			
+			
+			<trans-unit>
+				<source>email.subject.welcome</source>
+				<target>Welcome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>tab.main</source>
+				<target>Main</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.save</source>
+				<target>Save</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.title</source>
+				<target>Edit profile</target>
+			</trans-unit>
+			<trans-unit>
+				<source>sign.form.changePassword</source>
+				<target>Change password</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.intro</source>
+				<target>You can change all the e-mail notifications you want to receive by selecting the fields below</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>myAccount.email.receiveFriendEventConfirmNotify</source>
+				<target>Confirmation of guest's presence on events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.receiveEventReminder0</source>
+				<target>Notify scheduled events for the day</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.receiveEventReminder3</source>
+				<target>Notify scheduled events for next 3 days</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.receiveEventReminder7</source>
+				<target>Notify scheduled events for next 7 days</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.receiveEventCommentNotify</source>
+				<target>Notify new event comments</target>
+			</trans-unit>
+			
+			
+			
+			
+			
+			<trans-unit>
+				<source>ranking.name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.style</source>
+				<target>Style</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.start</source>
+				<target>Start</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.finish</source>
+				<target>Finish</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.players</source>
+				<target>Players</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.events</source>
+				<target>Events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.classify</source>
+				<target>Rating</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.noRankings</source>
+				<target>You are not subscribed to any ranking</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>record.exitAlert</source>
+				<target>The record has not been saved yet!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.creating</source>
+				<target>Creating</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.editing</source>
+				<target>Editing</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.deleteRanking</source>
+				<target>Delete ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.newPlayer</source>
+				<target>New player</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.playerRegister</source>
+				<target>Player register</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.display</source>
+				<target>Display</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.defaultBuyin</source>
+				<target>Default buy-in</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidDate</source>
+				<target>This is not a valid date. Enter a dd/mm/yyyy format date</target>
+			</trans-unit>
+			<trans-unit>
+				<source>dateFormat</source>
+				<target>dd/mm/yyyy</target>
+			</trans-unit>
+			<trans-unit>
+				<source>select</source>
+				<target>Select</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.public</source>
+				<target>Public</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.private</source>
+				<target>Private</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.statusErrorMessage</source>
+				<target>Error saving the record!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.statusSuccessMessage</source>
+				<target>The record has been saved successfully!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.statusSuccessMessage</source>
+				<target>The record has been saved successfully!</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>form.error.invalidRankingName</source>
+				<target>The ranking name typed is not valid.\nThe ranking must start with a letter, and may have only letters, numbers and ()-_ chars</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenRankingName</source>
+				<target>You already own a ranking with this same name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidNumber</source>
+				<target>This is not a valid number</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual0</source>
+				<target>Enter a value greater or equal to 0</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual0</source>
+				<target>Enter a value greater or equal to 0</target>
+			</trans-unit>
+			<trans-unit>
+				<source>FirstName</source>
+				<target>First name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>LastName</source>
+				<target>Last name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Events</source>
+				<target>Events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.intro</source>
+				<target>Register the players will be part of this ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.intro</source>
+				<target>Register the players will be part of this ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.hint.removePlayer</source>
+				<target>Remove this player from this ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.hint.removePlayerUnabled</source>
+				<target>Unable to remove this player from this ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Allow</source>
+				<target>Allow</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Deny</source>
+				<target>Disable</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.hint.allowPlayerEdit</source>
+				<target>%message% player for editing this ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.hint.allowPlayerEditUnabled</source>
+				<target>Unable to disable this player for editing this ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.cancel</source>
+				<target>Cancel</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playerRegister</source>
+				<target>Player register</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.playerAdd</source>
+				<target>Ranking subscription</target>
+			</trans-unit>
+
+
+
+			<trans-unit>
+				<source>ranking.eventsTab.intro</source>
+				<target>Listing all events already performed and scheduled for this ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Event</source>
+				<target>Event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>DateTime</source>
+				<target>Date/Time</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Place</source>
+				<target>Place</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Guests</source>
+				<target>Guests</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.eventsTab.noEvents</source>
+				<target>
+				This ranking has no performed or scheduled events yet.&lt;br/&gt;&lt;br/&gt;
+				&lt;b&gt;%link%&lt;/b&gt; to create a new event.
+				</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>ranking.classifyTab.intro</source>
+				<target>Current ranking rating</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.classifyTab.log</source>
+				<target>Log</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.classifyTab.log</source>
+				<target>Log</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>ranking.classifyTab.noPlayers</source>
+				<target>This ranking has no registred players yet</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Player</source>
+				<target>Player</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Events</source>
+				<target>Events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Score</source>
+				<target>Score</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Profit</source>
+				<target>Profit</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Balance</source>
+				<target>Balance</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Average</source>
+				<target>Average</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>event.footer</source>
+				<target>Events you can edit</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.createNewPlace</source>
+				<target>Create new place</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.search</source>
+				<target>Search</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.noEvents</source>
+				<target>There is no events yet</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.hint.eventComment</source>
+				<target>This event has 1 comment</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.hint.eventComments</source>
+				<target>This event has %comments% comments</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.hint.eventPicture</source>
+				<target>This event has 1 picture</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.hint.eventPictures</source>
+				<target>This event has %comments% pictures</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.title</source>
+				<target>Events</target>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>
