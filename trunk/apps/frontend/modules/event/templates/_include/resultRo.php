@@ -1,12 +1,12 @@
 <table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
   <tr class="header">
-    <th>Nome</th>
+    <th><?php echo __('Player') ?></th>
     <th>Buy-in</th>
-    <th>Posição</th>
-    <th>Prêmio</th>
+    <th><?php echo __('Position') ?></th>
+    <th><?php echo __('Prize') ?></th>
     <th>Rebuy</th>
     <th>Add-on</th>
-    <th>Pontos</th>
+    <th><?php echo __('Score') ?></th>
   </tr>
   <?php
   	$buyin = $eventObj->getBuyin();

@@ -8,6 +8,6 @@
 		<?php echo __('help.faq.description') ?>
 		<br/><br/><br/>
 		
-		<b><?php echo link_to('Contato', '/contact'); ?></b><br/>
+		<b><?php echo link_to(__('help.contact'), '/contact'); ?></b><br/>
 		<?php echo __('help.contact.description') ?>
 </div>

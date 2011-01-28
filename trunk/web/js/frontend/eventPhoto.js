@@ -2,7 +2,7 @@ function updatePhotoUploadStatus(status){
 	
 	switch(status){
 		case 'error':
-			alert('Não foi possível carregar a imagem selecionada!\nVerifique o formato e o tamanho do arquivo enviado.\n\nFormato: JPG ou PNG, até 2Mb');
+			alert(i18n_event_commentsTab_photoUploadError);
 			hideIndicator();
 			break;
 		case 'loading':
@@ -52,7 +52,7 @@ function viewEventPhoto(eventPhotoId, direction){
 		var height = fileObj.height*1;
 		
 		var content = '<img src="/'+fileObj.filePath+'"/>';
-		content += '<a href="javascript:void(0)" onclick="loadEventPhotoComments('+eventPhotoId+')" style="cursor: pointer; position: absolute; right: 0; bottom: 0; z-index: 150"><img src="'+_imageRoot+'/misc/comments32.png" title="Ver comentários desta foto" />';
+		content += '<a href="javascript:void(0)" onclick="loadEventPhotoComments('+eventPhotoId+')" style="cursor: pointer; position: absolute; right: 0; bottom: 0; z-index: 150"><img src="'+_imageRoot+'/misc/comments32.png" title="'+i18n_event_commentsTab_showPhotoComments+'" />';
 
 		$('eventPhotoDiv').innerHTML = content;
 
@@ -103,7 +103,7 @@ function viewEventPhoto(eventPhotoId, direction){
 
 function deleteEventPhoto(eventPhotoId){
 	
-	if( !confirm('Deseja realmente remover esta foto?') )
+	if( !confirm(i18n_event_commentsTab_photoDeleteConfirm) )
 		return false;
 	
 	var eventId = $('eventId').value;
@@ -119,7 +119,7 @@ function deleteEventPhoto(eventPhotoId){
 	
 	var failureFunc = function(t){
 
-		alert('Não foi possível excluir a imagem selecionada!');
+		alert(i18n_event_commentsTab_photoDeleteError);
 		hideIndicator();
 	};
 
@@ -129,7 +129,7 @@ function deleteEventPhoto(eventPhotoId){
 
 function confirmPublish(){
 	
-	var publish = confirm('Deseja publicar esta foto na área pública do site?');
+	var publish = confirm(i18n_event_commentsTab_photoPublishConfirm);
 	
 	return (publish?'true':'false');
 }
@@ -158,7 +158,7 @@ function loadEventPhotoComments(eventPhotoId){
 		
 		$('eventCommentEventPhotoId').value = eventPhotoId;
 		
-		$('commentTitleDiv').innerHTML = 'Exibindo comentários enviados para a foto selecionada.';
+		$('commentTitleDiv').innerHTML = i18n_event_commentsTab_photoIntro;
 		
 		adjustContentTab();
 		
@@ -188,7 +188,7 @@ function closeEventPhotoComments(){
 	
 	$('eventCommentEventPhotoId').value = '';
 	
-	$('commentTitleDiv').innerHTML = 'Comentários dos convidados para o evento';
+	$('commentTitleDiv').innerHTML = i18n_event_commentsTab_intro;
 	
 	adjustContentTab();
 }

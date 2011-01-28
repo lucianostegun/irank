@@ -20,6 +20,10 @@
 				<source>clickHere</source>
 				<target>click here</target>
 			</trans-unit>
+			<trans-unit>
+				<source>ClickHere</source>
+				<target>Click here</target>
+			</trans-unit>
 			
 			
 			<trans-unit>
@@ -132,7 +136,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>less1Minute</source>
-				<target>less then 1 minute</target>
+				<target>less than 1 minute</target>
 			</trans-unit>
 			
 			
@@ -359,7 +363,7 @@
 
 			<trans-unit>
 				<source>contact.title</source>
-				<target>Contato</target>
+				<target>Contact</target>
 			</trans-unit>
 			<trans-unit>
 				<source>contact.intro</source>
@@ -809,16 +813,182 @@
 				<target>This event has %comments% comments</target>
 			</trans-unit>
 			<trans-unit>
-				<source>event.hint.eventPicture</source>
+				<source>event.hint.eventPhoto</source>
 				<target>This event has 1 picture</target>
 			</trans-unit>
 			<trans-unit>
-				<source>event.hint.eventPictures</source>
-				<target>This event has %comments% pictures</target>
+				<source>event.hint.eventPhotos</source>
+				<target>This event has %photos% pictures</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.title</source>
 				<target>Events</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>ranking.Viewing</source>
+				<target>Viewing</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>event.eventName</source>
+				<target>Title</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.eventPlace</source>
+				<target>Place</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.date</source>
+				<target>Date</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.startTime</source>
+				<target>Start time</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.paidPlaces</source>
+				<target>Paid places</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.comments</source>
+				<target>Comments</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.emailNotify</source>
+				<target>Notify by e-mail</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.sentNotify</source>
+				<target>Notify already sent</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Editing</source>
+				<target>Editing</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Creating</source>
+				<target>Creating</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.deleteEvent</source>
+				<target>Delete event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.cloneEvent</source>
+				<target>Clone event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.gamePlaceRegister</source>
+				<target>Game place register</target>
+			</trans-unit>
+			<trans-unit>
+				<source>currency</source>
+				<target>US$</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.intro</source>
+				<target>Guest list for this event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.noPlayers</source>
+				<target>This event has no guest players yet</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.resultTab.intro</source>
+				<target>Event result</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Prize</source>
+				<target>Prizes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Reply</source>
+				<target>Reply</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.intro</source>
+				<target>Comments posted by guests for this event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.deleteComment</source>
+				<target>Delete this comment</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftChars</source>
+				<target>left chars</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftChar</source>
+				<target>left char</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentTab.commentText</source>
+				<target>Click here to post your comment</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentTab.publishing</source>
+				<target>Publishing...</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentTab.publishingError</source>
+				<target>Error publishing the comment!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentTab.commentDeleteError</source>
+				<target>The comment could not be deleted!\nTry again later.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.publish</source>
+				<target>Publish</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.showAllComments</source>
+				<target>Show all %commentsCount% comments</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.eventPhotos</source>
+				<target>Event pictures</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.returnLink</source>
+				<target>%link% to return to event comments</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.deletePhoto</source>
+				<target>Delete picure</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.showPhotoComments</source>
+				<target>Show comments of this picture</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.photoIntro</source>
+				<target>Listing comments sent for the selected picture.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.notYourComment</source>
+				<target>This comment has not been written by you!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.photoUploadError</source>
+				<target>The selected picture could no be uploaded!\nCheck the size and format of the file.\n\nFormat: JPG or PNG, up to 2Mb</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.photoDeleteError</source>
+				<target>This picture could not be deleted!\nTry again later.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.photoDeleteConfirm</source>
+				<target>Do you really want to delete this picture?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.photoPublishConfirm</source>
+				<target>Do you want to publish this picture on the public photo wall?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventComment</source>
+				<target>Comments on event %eventCode%</target>
 			</trans-unit>
 
 		</body>

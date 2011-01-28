@@ -299,6 +299,7 @@ class eventActions extends sfActions
   
   public function executeSaveComment($request){
 
+
 	$eventId = $request->getParameter('eventId');
 	$comment = $request->getParameter('comment');
 	$comment = urldecode($comment);
@@ -311,12 +312,12 @@ class eventActions extends sfActions
 	$eventCommentObj->setComment( $comment );
 	$eventCommentObj->save();
 	
-	$eventCommentObj->notify();
+	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text', 'I18n');
 	
-  	sfConfig::set('sf_web_debug', false);
-	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	$eventCommentObj->notify();
+
 	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj)));
-	exit;
   }
   
   public function executeDeleteComment($request){
@@ -324,9 +325,11 @@ class eventActions extends sfActions
 	$eventCommentId = $request->getParameter('eventCommentId');
 	
 	$eventCommentObj = EventCommentPeer::retrieveByPK($eventCommentId);
+
+	Util::getHelper('i18n');
 	
 	if( !$eventCommentObj->isMyComment() )
-		throw new Exception('Este comentário não foi escrito por você!');
+		throw new Exception(__('event.notYourComment'));
 	
 	$eventCommentObj->delete();
 	exit;
@@ -543,9 +546,27 @@ class eventActions extends sfActions
   
   public function executeJavascript($request){
   	
+  	Util::getHelper('i18n');
+  	
     header('Content-type: text/x-javascript');
-		
+	
   	$nl = chr(10);
+  	
+  	echo 'var i18n_event_commentsTab_intro               = "'.__('event.commentsTab.intro').'";';
+  	echo 'var i18n_event_commentsTab_photoIntro          = "'.__('event.commentsTab.photoIntro').'";';
+  	echo 'var i18n_event_commentTab_commentText          = "'.__('event.commentTab.commentText').'";';
+  	echo 'var i18n_event_commentTab_typeSomething        = "'.__('event.commentTab.typeSomething').'";';
+  	echo 'var i18n_event_commentTab_publishing           = "'.__('event.commentTab.publishing').'";';
+  	echo 'var i18n_event_commentTab_publishingError      = "'.__('event.commentTab.publishingError').'";';
+  	echo 'var i18n_event_commentsTab_commentDeleteError  = "'.__('event.commentTab.commentDeleteError').'";';
+  	echo 'var i18n_event_commentsTab_photoUploadError    = "'.__('event.commentsTab.photoUploadError').'";';
+  	echo 'var i18n_event_commentsTab_photoDeleteError    = "'.__('event.commentsTab.photoDeleteError').'";';
+  	echo 'var i18n_event_commentsTab_photoDeleteConfirm  = "'.__('event.commentsTab.photoDeleteConfirm').'";';
+  	echo 'var i18n_event_commentsTab_photoPublishConfirm = "'.__('event.commentsTab.photoPublishConfirm').'";';
+  	echo 'var i18n_event_commentsTab_showPhotoComments   = "'.__('event.commentsTab.showPhotoComments').'";';
+  	echo 'var i18n_leftChar                              = "'.__('leftChar').'";';
+  	echo 'var i18n_leftChars                             = "'.__('leftChars').'";';
+  	exit;
   }
   
   public function executeDebug($request){
