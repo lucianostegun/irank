@@ -3,7 +3,7 @@
 ?>
 <table cellspacing="0" cellpadding="0" style="margin-top: 5px;">
 	<tr>
-		<td valign="top" height="20" style="width: 300px; padding: 5px 5px 5px 15px"><div id="commentTitleDiv">Comentários dos convidados para o evento</div></td>
+		<td valign="top" height="20" style="width: 300px; padding: 5px 5px 5px 15px"><div id="commentTitleDiv"><?php echo __('event.commentsTab.intro') ?></div></td>
 		<?php if( $eventObj->isPastDate() ): ?>
 		<td valign="top" rowspan="3" align="left" class="defaultForm" style="width: 300px; padding-bottom: 10px 10px 30px 10px">
 			<?php include_partial('event/include/photo', array('eventObj'=>$eventObj)) ?>			

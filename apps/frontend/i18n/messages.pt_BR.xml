@@ -20,6 +20,10 @@
 				<source>clickHere</source>
 				<target>clique aqui</target>
 			</trans-unit>
+			<trans-unit>
+				<source>ClickHere</source>
+				<target>Clique aqui</target>
+			</trans-unit>
 			
 			
 			<trans-unit>
@@ -811,16 +815,182 @@
 				<target>Este evento possui %comments% comentários</target>
 			</trans-unit>
 			<trans-unit>
-				<source>event.hint.eventPicture</source>
+				<source>event.hint.eventPhoto</source>
 				<target>Este evento possui 1 foto</target>
 			</trans-unit>
 			<trans-unit>
-				<source>event.hint.eventPictures</source>
-				<target>Este evento possui %comments% fotos</target>
+				<source>event.hint.eventPhotos</source>
+				<target>Este evento possui %photos% fotos</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.title</source>
 				<target>Eventos</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>ranking.Viewing</source>
+				<target>Visualizando</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>event.eventName</source>
+				<target>Título</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.eventPlace</source>
+				<target>Local</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.date</source>
+				<target>Data</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.startTime</source>
+				<target>Hora</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.paidPlaces</source>
+				<target>Posições pagas</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.comments</source>
+				<target>Observações</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.emailNotify</source>
+				<target>Notificar por e-mail</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.sentNotify</source>
+				<target>Notificação já enviada</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Editing</source>
+				<target>Editando</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Creating</source>
+				<target>Criação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.deleteEvent</source>
+				<target>Excluir evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.cloneEvent</source>
+				<target>Clonar evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.gamePlaceRegister</source>
+				<target>Cadastro de locais</target>
+			</trans-unit>
+			<trans-unit>
+				<source>currency</source>
+				<target>R$</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.intro</source>
+				<target>Lista dos convidados para este evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.noPlayers</source>
+				<target>Este ranking ainda não possui convidados</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.resultTab.intro</source>
+				<target>Resultado do evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Prize</source>
+				<target>Prêmio</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Reply</source>
+				<target>Responder</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.intro</source>
+				<target>Comentários dos convidados para o evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.deleteComment</source>
+				<target>Excluir este comentário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftChars</source>
+				<target>caracteres restantes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftChar</source>
+				<target>caracter restante</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentTab.commentText</source>
+				<target>Clique aqui para enviar seu comentário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentTab.publishing</source>
+				<target>Publicando...</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentTab.publishingError</source>
+				<target>Erro ao publicar o comentário!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentTab.commentDeleteError</source>
+				<target>Não foi possível excluir o comentário!\nTente novamente mais tarde.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.publish</source>
+				<target>Publicar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.showAllComments</source>
+				<target>Exibir todos os %commentsCount% comentários</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.eventPhotos</source>
+				<target>Fotos do evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.returnLink</source>
+				<target>%link% para retornar as comentários do evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.deletePhoto</source>
+				<target>Excluir imagem</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.showPhotoComments</source>
+				<target>Ver comentários desta foto</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.photoIntro</source>
+				<target>Exibindo comentários enviados para a foto selecionada.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.notYourComment</source>
+				<target>Este comentário não foi escrito por você!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.photoUploadError</source>
+				<target>Não foi possível carregar a imagem selecionada!\nVerifique o formato e o tamanho do arquivo enviado.\n\nFormato: JPG ou PNG, até 2Mb</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.photoDeleteError</source>
+				<target>Erro ao excluir a foto!\nTente novamente mais tarde.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.photoDeleteConfirm</source>
+				<target>Deseja realmente remover esta foto?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.commentsTab.photoPublishConfirm</source>
+				<target>Deseja publicar esta foto na área pública do site?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventComment</source>
+				<target>Comentários do evento %eventCode%</target>
 			</trans-unit>
 			
 		</body>

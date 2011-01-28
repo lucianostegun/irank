@@ -6,31 +6,31 @@
 				<div class="textFlex"><?php echo $eventObj->getRanking()->getRankingName() ?></div>
 			</div>
 			<div class="row">
-				<div class="label">Título</div>
+				<div class="label"><?php echo __('event.eventName') ?></div>
 				<div class="textFlex"><?php echo $eventObj->getEventName() ?></div>
 			</div>
 			<div class="row">
-				<div class="label">Local</div>
+				<div class="label"><?php echo __('event.eventPlace') ?></div>
 				<div class="textFlex"><?php echo $eventObj->getEventPlace() ?></div>
 			</div>
 			<div class="row">
-				<div class="label">Data</div>
+				<div class="label"><?php echo __('event.date') ?></div>
 				<div class="textFlex"><?php echo $eventObj->getEventDate('d/m/Y') ?></div>
 			</div>
 			<div class="row">
-				<div class="label">Horário</div>
+				<div class="label"><?php echo __('event.startTime') ?></div>
 				<div class="textFlex"><?php echo $eventObj->getStartTime('H:i') ?></div>
 			</div>
 			<div class="row">
-				<div class="label">Posições pagas</div>
+				<div class="label"><?php echo __('event.paidPlaces') ?></div>
 				<div class="textFlex"><?php echo $eventObj->getPaidPlaces() ?></div>
 			</div>
 			<div class="row">
 				<div class="label">Buy-in</div>
-				<div class="textFlex">R$ <?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></div>
+				<div class="textFlex"><?php echo __('currency') ?> <?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></div>
 			</div>
 			<div class="rowTextArea">
-				<div class="label">Observações</div>
+				<div class="label"><?php echo __('event.comments') ?></div>
 				<div class="textFlex"><?php echo $eventObj->getComments() ?></div>
 			</div>
 		</td>

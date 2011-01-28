@@ -3,7 +3,7 @@ var _LastFormReplyId = null
 function sendComment(eventCommentId){
 
 	eventCommentId = (eventCommentId?eventCommentId:'');
-	
+
 	var fieldObj     = $('eventCommentComment'+eventCommentId)
 	var comment      = fieldObj.value;
 	var eventId      = $('eventId').value;
@@ -12,10 +12,10 @@ function sendComment(eventCommentId){
 	
 	fieldObj.className = 'eventComment';
 	
-	if( !comment || comment=='Clique aqui para enviar seu comentário' ){
+	if( !comment || comment==i18n_event_commentTab_commentText ){
 		
 		fieldObj.className = 'eventCommentError';
-		fieldObj.title     = 'Digite alguma mensagem para publicar';
+		fieldObj.title     = i18n_event_commentTab_typeSomething;
 		return false;
 	}
 	
@@ -23,7 +23,7 @@ function sendComment(eventCommentId){
 	comment = urlencode(comment);
 	
 	disableButton('postComment'+eventCommentId);
-	$('commentsCharCount'+eventCommentId).innerHTML = 'Publicando...';
+	$('commentsCharCount'+eventCommentId).innerHTML = i18n_event_commentTab_publishing;
 	
 	fieldObj.disabled = true;
 	
@@ -32,8 +32,7 @@ function sendComment(eventCommentId){
 		var content = t.responseText;
 
 		var eventCommentIdNew = content.match(/eventComment[0-9]*Div/)+'';
-
-		eventCommentIdNew = eventCommentIdNew.replace(/[^0-9]/, '');
+		eventCommentIdNew     = eventCommentIdNew.replace(/[^0-9]/gi, '');
 
 		var commentDiv = document.createElement('div');
 		commentDiv.id = 'event'+(isPhoto?'Photo':'')+'Comment'+eventCommentIdNew+'TmpDiv';
@@ -41,7 +40,7 @@ function sendComment(eventCommentId){
 		commentDiv.innerHTML = content;		
 
 		$('comment'+(isPhoto?'Photo':'')+'ListDiv').appendChild(commentDiv);
-		
+
 		removeLastReplyForm();
 		
 		adjustContentTab();
@@ -54,7 +53,7 @@ function sendComment(eventCommentId){
 		var content = t.responseText;
 		
 		enableButton('postComment'+eventCommentId);
-		$('commentsCharCount'+eventCommentId).innerHTML = 'Erro ao publicar o comentário!';
+		$('commentsCharCount'+eventCommentId).innerHTML = i18n_event_commentTab_publishingError;
 		
 		fieldObj.disabled = false;
 		
@@ -77,12 +76,15 @@ function deleteComment(eventCommentId){
 	var successFunc = function(t){
 
 		try{
-		
+
 			$('comment'+(isPhoto?'Photo':'')+'ListDiv').removeChild( $('event'+(isPhoto?'Photo':'')+'Comment'+eventCommentId+'Div') );
 		}catch(e){
 			
 			$('comment'+(isPhoto?'Photo':'')+'ListDiv').removeChild( $('event'+(isPhoto?'Photo':'')+'Comment'+eventCommentId+'TmpDiv') );
 		}
+		
+		if( eventCommentId==_LastFormReplyId )
+			_LastFormReplyId = null;
 		
 		hideIndicator();
 	};
@@ -92,7 +94,7 @@ function deleteComment(eventCommentId){
 		var content = t.responseText;
 		
 		hideIndicator();
-		alert('Não foi possível excluir o comentário!\nTente novamente mais tarde.');
+		alert(i18n_event_commentsTab_commentDeleteError);
 		
 		if( isDebug() )
 			debug(content);
@@ -109,15 +111,15 @@ function resetCommentForm(eventCommentId){
 	enableButton('postComment');
 	hideDiv('commentsCharCount');
 	hideDiv('commentsPostButton');
-	$('commentsCharCount'+eventCommentId).innerHTML  = '140 caracteres restantes';
+	$('commentsCharCount'+eventCommentId).innerHTML  = '140 '+i18n_leftChars;
 	$('eventCommentComment'+eventCommentId).disabled = false;
-	$('eventCommentComment'+eventCommentId).value    = 'Clique aqui para enviar seu comentário';
+	$('eventCommentComment'+eventCommentId).value    = i18n_event_commentTab_commentText;
 }
 
 function handleCommentFocus(fieldObj){
 	
 	var comment = fieldObj.value;
-	if( comment=='Clique aqui para enviar seu comentário' )
+	if( comment==i18n_event_commentTab_commentText )
 		fieldObj.value = '';
 	
 	var eventCommentId = fieldObj.id.replace('eventCommentComment', '');
@@ -137,7 +139,7 @@ function countChars(fieldObj){
 	
 	var eventCommentId = fieldObj.id.replace('eventCommentComment', '');
 		
-	$('commentsCharCount'+eventCommentId).innerHTML = leftChars+' caracter'+(leftChars==1?'':'es')+' restante'+(leftChars==1?'':'s');
+	$('commentsCharCount'+eventCommentId).innerHTML = leftChars+' '+(leftChars==1?i18n_leftChar:i18n_leftChars);
 	
 	if( leftChars==0 )
 		fieldObj.value = fieldObj.value.substring(0,140);

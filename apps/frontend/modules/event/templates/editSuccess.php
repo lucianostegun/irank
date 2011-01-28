@@ -8,7 +8,7 @@
 	if( !$pastDate )	
 		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
 
-	$pageAction = ($isClone?'Clonagem':($eventObj->isNew()?'Edição':'Criação'));
+	$pageAction = ($isClone?'Clonagem':($eventObj->isNew()?__('Editing'):__('Creating')));
 	
 	if( !$eventObj->getEnabled() || $isClone ):
 ?>
@@ -16,7 +16,7 @@
 <?php
 	endif;
 ?>
-<div class="commonBar"><span>Eventos/<?php echo $pageAction ?></span></div>
+<div class="commonBar"><span><?php echo __('event.title') ?>/<?php echo $pageAction ?></span></div>
 <?php
 	$eventId  = $eventObj->getId();
 	
@@ -36,11 +36,11 @@
 	$resultMode = ($isEditable?'form':'show');
 	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
-	$dhtmlxTabBarObj->addTab('main', 'Evento', 'event/'.$mode.'/main', array('eventObj'=>$eventObj, 'pastDate'=>$pastDate, 'confirmedPresence'=>$confirmedPresence));
-	$dhtmlxTabBarObj->addTab('player', 'Convidados', 'event/'.$mode.'/player', array('eventObj'=>$eventObj, 'hidden'=>$isNew));
+	$dhtmlxTabBarObj->addTab('main', __('Event'), 'event/'.$mode.'/main', array('eventObj'=>$eventObj, 'pastDate'=>$pastDate, 'confirmedPresence'=>$confirmedPresence));
+	$dhtmlxTabBarObj->addTab('player', __('Guests'), 'event/'.$mode.'/player', array('eventObj'=>$eventObj, 'hidden'=>$isNew));
 	if( $pastDate )
-		$dhtmlxTabBarObj->addTab('result', 'Resultado', 'event/'.$resultMode.'/result', array('eventObj'=>$eventObj));
-	$dhtmlxTabBarObj->addTab('comments', 'Comentários', 'event/form/comments', array('eventObj'=>$eventObj, 'hidden'=>!$eventObj->getVisible()));
+		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/'.$resultMode.'/result', array('eventObj'=>$eventObj));
+	$dhtmlxTabBarObj->addTab('comments', __('Comments'), 'event/form/comments', array('eventObj'=>$eventObj, 'hidden'=>!$eventObj->getVisible()));
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabEvent');
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
@@ -50,13 +50,13 @@
 	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php
 			if( $isEditable )				
-				echo button_tag('mainSubmit', 'Salvar', array('onclick'=>'doSubmitEvent()'));
+				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()'));
 			
 			if( $isMyEvent && !$isNew )
-				echo button_tag('cloneEvent', 'Clonar evento', array('onclick'=>'cloneEvent('.$eventId.')', 'image'=>'../icon/clone'));
+				echo button_tag('cloneEvent', __('button.cloneEvent'), array('onclick'=>'cloneEvent('.$eventId.')', 'image'=>'../icon/clone'));
 				
 			if( $isEditable && !$isNew )				
-				echo button_tag('deleteEvent', 'Excluir evento', array('onclick'=>'doDeleteEvent()', 'image'=>'../icon/delete', 'style'=>'float: right'));
+				echo button_tag('deleteEvent', __('button.deleteEvent'), array('onclick'=>'doDeleteEvent()', 'image'=>'../icon/delete', 'style'=>'float: right'));
 		
 			echo getFormLoading('event');
 			echo getFormStatus();
@@ -66,5 +66,5 @@
 </form>
 <?php
 	DhtmlxWindows::createWindow('eventPhotoView', '', 380, 125, 'event/dialog/photoView', array());
-	DhtmlxWindows::createWindow('rankingPlaceAdd', 'Cadastro de locais', 550, 125, 'ranking/dialog/placeAdd', array());
+	DhtmlxWindows::createWindow('rankingPlaceAdd', __('event.gamePlaceRegister'), 550, 125, 'ranking/dialog/placeAdd', array());
 ?>

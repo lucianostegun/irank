@@ -1,6 +1,6 @@
 <table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
   <tr class="header">
-    <th>Nome</th>
+    <th><?php echo __('Player') ?></th>
     <th>E-mail</th>
     <th>&nbsp;</th>
   </tr>
@@ -27,7 +27,7 @@
   	if( count($eventPlayerObjList)==0 ):
   ?>
   <tr>
-    <td colspan="5">Este ranking ainda não possui convidados</td>
+    <td colspan="5"><?php echo __('event.playersTab.noPlayer') ?></td>
   </tr>
   <?php endif; ?>
 </table>

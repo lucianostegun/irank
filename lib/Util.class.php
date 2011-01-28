@@ -730,7 +730,7 @@ class Util {
     	}elseif( $timeAgo >= $weeks ){
     		
     		$timeAgo = ceil($timeAgo/$weeks);
-    		$timeAgo = $timeAgo.' '.($timeAgo==1?__('semana'):__('semanas'));
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?__('week'):__('weeks'));
     	}elseif( $timeAgo >= $days ){
     		
     		$timeAgo = ceil($timeAgo/$days);
@@ -745,7 +745,7 @@ class Util {
     		$timeAgo = $timeAgo.' '.($timeAgo==1?__('minute'):__('minutes'));
     	}else{
     		
-    		$timeAgo = __('less1minute');
+    		$timeAgo = __('less1Minute');
     	}
     	
     	return $timeAgo;

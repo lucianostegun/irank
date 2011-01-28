@@ -3,7 +3,7 @@
 	$userSiteId = MyTools::getAttribute('userSiteId');
 ?>
 <h1>
-	<?php echo image_tag('icon/photo', array('align'=>'absmiddle', 'style'=>'margin-right: 10px')) ?> Fotos do evento
+	<?php echo image_tag('icon/photo', array('align'=>'absmiddle', 'style'=>'margin-right: 10px')) ?> <?php echo __('event.commentsTab.eventPhotos') ?>
 	<div style="float: right; margin-top: -10px; margin-top: -25px !ie">
 		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="85" height="22" id="uploadEventPhoto" align="middle">
 		<param name="allowScriptAccess" value="sameDomain" />
@@ -21,5 +21,5 @@
 	<?php include_partial('event/include/photoList', array('eventObj'=>$eventObj)); ?>
 </div>
 
-<div id="eventPhotoBackDiv"><?php echo link_to('<b>Clique aqui</b>', '#closeEventPhotoComments()') ?> para retornar as comentários do evento</div>
+<div id="eventPhotoBackDiv"><?php echo __('event.commentsTab.returnLink', array('%link%'=>link_to('<b>'.__('ClickHere').'</b>', '#closeEventPhotoComments()'))) ?></div>
 <div id="eventPhotoPreviewDiv" align="center"></div>

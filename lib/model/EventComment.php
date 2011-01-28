@@ -71,6 +71,8 @@ class EventComment extends BaseEventComment
 	
 	public function notify(){
 
+		Util::getHelper('I18N');
+
 		$eventCommentId = $this->getId();
 		$eventCommentId = (1985+$eventCommentId);
 		
@@ -88,6 +90,6 @@ class EventComment extends BaseEventComment
 		$options['emailTemplate'] = null;
 		$options['replyTo']       = 'event_comment@irank.com.br';
 		
-		Report::sendMail('Comentários do evento '.$eventObj->getCode(), $emailAddressList, $emailContent, $options);
+		Report::sendMail(__('email.subject.eventComment', array('%eventCode%'=>$eventObj->getCode())), $emailAddressList, $emailContent, $options);
 	}
 }
