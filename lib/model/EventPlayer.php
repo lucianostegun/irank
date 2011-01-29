@@ -38,6 +38,8 @@ class EventPlayer extends BaseEventPlayer
 	
 	public function notifyConfirm(){
 
+		Util::getPartial('I18N');
+
 		$eventObj     = $this->getEvent();
 		$emailContent = AuxiliarText::getContentByTagName('confirmPresenceNotify');
 
@@ -66,7 +68,7 @@ class EventPlayer extends BaseEventPlayer
 		
 		$emailAddressList = $eventObj->getEmailAddressList('receiveFriendEventConfirmNotify');
 		
-		Report::sendMail('Confirmação de presença', $emailAddressList, $emailContent);
+		Report::sendMail(__('email.subject.presenceConfirm'), $emailAddressList, $emailContent);
 	}
 	
 	public function confirmPresence(){

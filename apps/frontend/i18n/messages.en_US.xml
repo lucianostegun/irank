@@ -1357,6 +1357,10 @@
 				<source>ranking.mapsLink</source>
 				<target>Google maps link</target>
 			</trans-unit>
+			<trans-unit>
+				<source>email.subject.presenceConfirm</source>
+				<target>Presence notify</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

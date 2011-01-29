@@ -47,7 +47,7 @@
 				<div class="label" id="eventBuyinLabel">Buy-in</div>
 				<div class="field"><?php echo input_tag('buyin', Util::formatFloat($eventObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventBuyin')) ?></div>
 				<div class="error" id="eventBuyinError" onclick="showFormErrorDetails('event', 'buyin')"></div>
-				<div class="textFlex">Ex: <?php echo Util::formatFloat('0,00') ?></div>
+				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 			<div class="rowTextArea">
 				<div class="label" id="eventCommentsLabel"><?php echo __('event.comments') ?></div>

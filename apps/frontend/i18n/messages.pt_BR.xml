@@ -1360,6 +1360,10 @@
 				<source>ranking.mapsLink</source>
 				<target>Link Google maps</target>
 			</trans-unit>
+			<trans-unit>
+				<source>email.subject.presenceConfirm</source>
+				<target>Confirmação de presença</target>
+			</trans-unit>
 			
 		</body>
 	</file>
