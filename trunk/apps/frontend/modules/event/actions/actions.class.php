@@ -228,8 +228,10 @@ class eventActions extends sfActions
 	if( $peopleIdOwner==$peopleId || $peopleId==$this->peopleId || !is_object($eventPlayerObj) )
 		throw new Exception(__('event.exception.shareError'));
 	
-	$eventPlayerObj->setAllowEdit( !$eventPlayerObj->getAllowEdit() );
-	$eventPlayerObj->save();
+	if( $eventPlayerObj->getAllowEdit() )
+		$eventPlayerObj->share();
+	else
+		$eventPlayerObj->unshare();
 	
     echo ($eventPlayerObj->getAllowEdit()?'lock':'unlock');
     exit;

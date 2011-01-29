@@ -160,6 +160,19 @@ class EventPlayer extends BaseEventPlayer
 		if( $inviteStatus && $this->getInviteStatus()=='no' )
        		HomeWall::doLog('não vai ao evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', true, null, $this->getPeople()->getFirstName());
 	}
+	
+	public function share($save=true){
+		
+		$this->setAllowEdit( true );
+		if( $save )
+			$this->save();
+	}
+	
+	public function unshare(){
+		
+		$this->setAllowEdit( false );
+		$this->save();
+	}
 
 	public function getInviteStatusDescription(){
 		

@@ -96,7 +96,7 @@ class rankingActions extends sfActions
 	$rankingObj->setEnabled(true);
 	$rankingObj->save();
 	
-	$rankingObj->addPlayer( $this->peopleId );
+	$rankingObj->addPlayer( $this->peopleId, true );
 	
 	if( !$isNew ){
 		
