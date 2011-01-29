@@ -181,7 +181,7 @@ function togglePresence(peopleId){
 				$('eventResultPeopleName'+peopleId).style.color = '#F5F5F5';
 
 				$('eventEventPosition'+peopleId).value = '0';
-				$('eventPrizeValue'+peopleId).value    = '0,00';
+				$('eventPrizeValue'+peopleId).value    = i18n_zero_zeroZero;
 				$('eventRebuys'+peopleId).value        = '0';
 				$('eventAddons'+peopleId).value        = '0';
 			}
@@ -243,7 +243,7 @@ function lockRanking(){
 
 function loadDefaultBuyin(rankingId){
 	
-	if( $('eventBuyin').value!='0,00' && $('eventBuyin').value!='' )
+	if( $('eventBuyin').value!=i18n_zero_zeroZero && $('eventBuyin').value!='' )
 		return false;
 	
 	showIndicator('event');
@@ -467,7 +467,7 @@ function handleOnBlur(fieldObj){
 	var value = fieldObj.value;
 	if( value=='' )
 		if( fieldObj.maxLength > 5 )
-			fieldObj.value = '0,00';
+			fieldObj.value = i18n_zero_zeroZero;
 		else
 			fieldObj.value = '0';
 }

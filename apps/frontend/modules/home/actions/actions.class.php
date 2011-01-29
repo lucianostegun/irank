@@ -40,6 +40,7 @@ class homeActions extends sfActions
 	echo 'var i18n_tryAgain         = "'.__('tryAgain').'";'.$nl;
 	echo 'var i18n_disable          = "'.__('disable').'";'.$nl;
 	echo 'var i18n_enable           = "'.__('enable').'";'.$nl;
+	echo 'var i18n_zero_zeroZero    = "'.__('zero.zeroZero').'";'.$nl;
 	exit;
   }
 }

@@ -1348,6 +1348,18 @@
 				<source>form.error.max140</source>
 				<target>Informe um valor de até 140 caracteres</target>
 			</trans-unit>
+			<trans-unit>
+				<source>zero.zeroZero</source>
+				<target>0,00</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.placeName</source>
+				<target>Nome do local</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.mapsLink</source>
+				<target>Link Google maps</target>
+			</trans-unit>
 			
 		</body>
 	</file>

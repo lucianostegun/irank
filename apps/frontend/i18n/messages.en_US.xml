@@ -459,10 +459,9 @@
 				<source>sign.intro</source>
 				<target>
 				To create you own rankings, participate and visualize&lt;br/&gt;
-				all event's information&lt;br/&gt;
-				you need to register into the website.&lt;br/&gt;&lt;br/&gt;
+				all event's information you need to register into the website.&lt;br/&gt;&lt;br/&gt;
 	
-				Register process is pretty simple, fast and free.
+				Register process is pretty simple, fast and totally free.
 				</target>
 			</trans-unit>
 			<trans-unit>
@@ -1345,6 +1344,18 @@
 			<trans-unit>
 				<source>form.error.max140</source>
 				<target>Enter a value of up to 140 characters</target>
+			</trans-unit>
+			<trans-unit>
+				<source>zero.zeroZero</source>
+				<target>0.00</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.placeName</source>
+				<target>Place name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.mapsLink</source>
+				<target>Google maps link</target>
 			</trans-unit>
 		</body>
 	</file>

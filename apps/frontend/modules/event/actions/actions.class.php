@@ -575,32 +575,32 @@ class eventActions extends sfActions
 	
   	$nl = chr(10);
   	
-  	echo 'var i18n_event_commentsTab_intro                   = "'.__('event.commentsTab.intro').'";';
-  	echo 'var i18n_event_commentsTab_photoIntro              = "'.__('event.commentsTab.photoIntro').'";';
-  	echo 'var i18n_event_commentTab_commentText              = "'.__('event.commentTab.commentText').'";';
-  	echo 'var i18n_event_commentTab_typeSomething            = "'.__('event.commentTab.typeSomething').'";';
-  	echo 'var i18n_event_commentTab_publishing               = "'.__('event.commentTab.publishing').'";';
-  	echo 'var i18n_event_commentTab_publishingError          = "'.__('event.commentTab.publishingError').'";';
-  	echo 'var i18n_event_commentsTab_commentDeleteError      = "'.__('event.commentTab.commentDeleteError').'";';
-  	echo 'var i18n_event_commentsTab_photoUploadError        = "'.__('event.commentsTab.photoUploadError').'";';
-  	echo 'var i18n_event_commentsTab_photoDeleteError        = "'.__('event.commentsTab.photoDeleteError').'";';
-  	echo 'var i18n_event_commentsTab_photoDeleteConfirm      = "'.__('event.commentsTab.photoDeleteConfirm').'";';
-  	echo 'var i18n_event_commentsTab_photoPublishConfirm     = "'.__('event.commentsTab.photoPublishConfirm').'";';
-  	echo 'var i18n_event_commentsTab_showPhotoComments       = "'.__('event.commentsTab.showPhotoComments').'";';
-  	echo 'var i18n_leftChar                                  = "'.__('leftChar').'";';
-  	echo 'var i18n_leftChars                                 = "'.__('leftChars').'";';
-  	echo 'var i18n_event_saveResultConfirm                   = "'.__('event.saveResultConfirm').'";';
-  	echo 'var i18n_event_saveMyPresenceError                 = "'.__('event.saveMyPresenceError').'";';
-  	echo 'var i18n_event_playersTab_playerDeleteConfirm      = "'.__('event.playersTab.playerDeleteConfirm').'";';
-  	echo 'var i18n_event_playersTab_playerDeleteError        = "'.__('event.playersTab.playerDeleteError').'";';
-  	echo 'var i18n_event_playersTab_togglePresenceError      = "'.__('event.playersTab.togglePresenceError').'";';
-  	echo 'var i18n_event_playersTab_presenceNotifyConfirm    = "'.__('event.playersTab.presenceNotifyConfirm').'";';
-  	echo 'var i18n_event_mainTab_rankingPlaceLoadingError    = "'.__('event.mainTab.rankingPlaceLoadingError').'";';
-  	echo 'var i18n_event_cloneConfirm                        = "'.__('event.cloneConfirm').'";';
-  	echo 'var i18n_event_deleteConfirm                       = "'.__('event.deleteConfirm').'";';
-  	echo 'var i18n_event_deleteError                         = "'.__('event.deleteError').'";';
-  	echo 'var i18n_event_searchError                         = "'.__('event.searchError').'";';
-  	echo 'var i18n_event_playersTab_shareError               = "'.__('event.playersTab.shareError').'";';
+  	echo 'var i18n_event_commentsTab_intro                   = "'.__('event.commentsTab.intro').'";'.$nl;
+  	echo 'var i18n_event_commentsTab_photoIntro              = "'.__('event.commentsTab.photoIntro').'";'.$nl;
+  	echo 'var i18n_event_commentTab_commentText              = "'.__('event.commentTab.commentText').'";'.$nl;
+  	echo 'var i18n_event_commentTab_typeSomething            = "'.__('event.commentTab.typeSomething').'";'.$nl;
+  	echo 'var i18n_event_commentTab_publishing               = "'.__('event.commentTab.publishing').'";'.$nl;
+  	echo 'var i18n_event_commentTab_publishingError          = "'.__('event.commentTab.publishingError').'";'.$nl;
+  	echo 'var i18n_event_commentsTab_commentDeleteError      = "'.__('event.commentTab.commentDeleteError').'";'.$nl;
+  	echo 'var i18n_event_commentsTab_photoUploadError        = "'.__('event.commentsTab.photoUploadError').'";'.$nl;
+  	echo 'var i18n_event_commentsTab_photoDeleteError        = "'.__('event.commentsTab.photoDeleteError').'";'.$nl;
+  	echo 'var i18n_event_commentsTab_photoDeleteConfirm      = "'.__('event.commentsTab.photoDeleteConfirm').'";'.$nl;
+  	echo 'var i18n_event_commentsTab_photoPublishConfirm     = "'.__('event.commentsTab.photoPublishConfirm').'";'.$nl;
+  	echo 'var i18n_event_commentsTab_showPhotoComments       = "'.__('event.commentsTab.showPhotoComments').'";'.$nl;
+  	echo 'var i18n_leftChar                                  = "'.__('leftChar').'";'.$nl;
+  	echo 'var i18n_leftChars                                 = "'.__('leftChars').'";'.$nl;
+  	echo 'var i18n_event_saveResultConfirm                   = "'.__('event.saveResultConfirm').'";'.$nl;
+  	echo 'var i18n_event_saveMyPresenceError                 = "'.__('event.saveMyPresenceError').'";'.$nl;
+  	echo 'var i18n_event_playersTab_playerDeleteConfirm      = "'.__('event.playersTab.playerDeleteConfirm').'";'.$nl;
+  	echo 'var i18n_event_playersTab_playerDeleteError        = "'.__('event.playersTab.playerDeleteError').'";'.$nl;
+  	echo 'var i18n_event_playersTab_togglePresenceError      = "'.__('event.playersTab.togglePresenceError').'";'.$nl;
+  	echo 'var i18n_event_playersTab_presenceNotifyConfirm    = "'.__('event.playersTab.presenceNotifyConfirm').'";'.$nl;
+  	echo 'var i18n_event_mainTab_rankingPlaceLoadingError    = "'.__('event.mainTab.rankingPlaceLoadingError').'";'.$nl;
+  	echo 'var i18n_event_cloneConfirm                        = "'.__('event.cloneConfirm').'";'.$nl;
+  	echo 'var i18n_event_deleteConfirm                       = "'.__('event.deleteConfirm').'";'.$nl;
+  	echo 'var i18n_event_deleteError                         = "'.__('event.deleteError').'";'.$nl;
+  	echo 'var i18n_event_searchError                         = "'.__('event.searchError').'";'.$nl;
+  	echo 'var i18n_event_playersTab_shareError               = "'.__('event.playersTab.shareError').'";'.$nl;
   	exit;
   }
   

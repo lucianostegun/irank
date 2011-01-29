@@ -14,11 +14,11 @@
 		<tr>
 			<td valign="top">
 				<div class="row">
-					<div class="label" id="rankingPlacePlaceNameLabel">Nome do local</div>
+					<div class="label" id="rankingPlacePlaceNameLabel"><?php echo __('ranking.placeName') ?></div>
 					<div class="field"><?php echo input_tag('placeName', null, array('size'=>20, 'maxlength'=>20, 'class'=>'required', 'id'=>'rankingPlacePlaceName')) ?></div>
 				</div>
 				<div class="row">
-					<div class="label" id="rankingPlaceMapsLinkLabel">Link GoogleMaps</div>
+					<div class="label" id="rankingPlaceMapsLinkLabel"><?php echo __('ranking.mapsLink') ?></div>
 					<div class="field"><?php echo input_tag('mapsLink', null, array('size'=>60, 'id'=>'rankingPlaceMapsLink')) ?></div>
 				</div>
 			</td>
@@ -26,8 +26,8 @@
 	</table>
 	<div class="windowButtonBar">
 		<?php
-			echo button_tag('rankingPlaceCancel', 'Cancelar', array('onclick'=>'windowRankingPlaceAddHide(); rankingPlaceOnClose()'));
-			echo button_tag('rankingPlaceSubmit', 'Salvar', array('onclick'=>'doSubmitRankingPlace()'));
+			echo button_tag('rankingPlaceCancel', __('button.cancel'), array('onclick'=>'windowRankingPlaceAddHide(); rankingPlaceOnClose()'));
+			echo button_tag('rankingPlaceSubmit', __('button.save'), array('onclick'=>'doSubmitRankingPlace()'));
 			echo getFormWindowLoading('rankingPlace');
 			echo getFormStatus('rankingPlace');
 		?>

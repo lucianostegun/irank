@@ -283,12 +283,12 @@ class rankingActions extends sfActions
 	
   	$nl = chr(10);
   	
-  	echo 'var i18n_ranking_playerListLoadError          = "'.__('ranking.playerListLoadError').'";';
-  	echo 'var i18n_ranking_playersTab_playerDeleteError = "'.__('ranking.playersTab.playerDeleteError').'";';
-  	echo 'var i18n_ranking_playersTab_logLoadError      = "'.__('ranking.classifyTab.logLoadError').'";';
-  	echo 'var i18n_ranking_playersTab_shareError        = "'.__('ranking.classifyTab.shareError').'";';
-  	echo 'var i18n_ranking_deleteConfirm                = "'.__('ranking.deleteConfirm').'";';
-  	echo 'var i18n_ranking_deleteError                  = "'.__('ranking.deleteError').'";';
+  	echo 'var i18n_ranking_playerListLoadError          = "'.__('ranking.playerListLoadError').'";'.$nl;
+  	echo 'var i18n_ranking_playersTab_playerDeleteError = "'.__('ranking.playersTab.playerDeleteError').'";'.$nl;
+  	echo 'var i18n_ranking_playersTab_logLoadError      = "'.__('ranking.classifyTab.logLoadError').'";'.$nl;
+  	echo 'var i18n_ranking_playersTab_shareError        = "'.__('ranking.classifyTab.shareError').'";'.$nl;
+  	echo 'var i18n_ranking_deleteConfirm                = "'.__('ranking.deleteConfirm').'";'.$nl;
+  	echo 'var i18n_ranking_deleteError                  = "'.__('ranking.deleteError').'";'.$nl;
   	exit;
   }
   
