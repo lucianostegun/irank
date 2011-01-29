@@ -123,6 +123,7 @@ class Event extends BaseEvent
 		
 		$criteria = new Criteria();
 		$criteria->add( EventPlayerPeer::EVENT_ID, $this->getId() );
+		$criteria->addAnd( EventPlayerPeer::DELETED, false );
 		$criteria->addJoin( EventPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		
 		if( is_array($orderByList) ){
@@ -203,10 +204,16 @@ class Event extends BaseEvent
 		
 		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		if( !is_object($eventPlayerObj) )
+		if( !is_object($eventPlayerObj) ){
+			
 			return 'nok';
-		else
+		}else{
+
+			if( $eventPlayerObj->getDeleted() )
+				return 'deleted';
+			
 			return $eventPlayerObj->getInviteStatus();
+		}
 	}
 	
 	public function importPlayers(){
@@ -298,14 +305,16 @@ class Event extends BaseEvent
 	
 	public function notify(){
 
+		Util::getHelper('I18N');
+		
 		if( $this->getSentEmail() ){
 			
 			$emailContent = AuxiliarText::getContentByTagName('eventChangeNotify');
-			$emailSubject = 'Notificação de alteração de evento';
+			$emailSubject = __('email.subject.eventChangeNotify');
 		}else{
 			
 			$emailContent = AuxiliarText::getContentByTagName('eventCreateNotify');
-			$emailSubject = 'Notificação de evento';
+			$emailSubject = __('email.subject.eventCreateNotify');
 		}
 
 		$emailContent = str_replace('<eventName>', $this->getEventName(), $emailContent);
@@ -359,16 +368,26 @@ class Event extends BaseEvent
 			
 			$congratsMessage = '';
 			
-			if( $eventPosition <= $this->getPaidPlaces() && $eventPosition > 0 )
-				$congratsMessage = 'Parabéns, você ficou em '.$eventPosition.'º lugar no evento<br/><br/>';
+			if( $eventPosition <= $this->getPaidPlaces() && $eventPosition > 0 ){
+				
+				$sufix = 'th';
+				
+				if( ereg('1$', $eventPosition) ) $sufix = 'st';
+				elseif( ereg('2$', $eventPosition) ) $sufix = 'nd';
+				elseif( ereg('3$', $eventPosition) ) $sufix = 'rd';
+				
+				$congratsMessage = __('event.congratMessage', array('%eventPosition%'=>$eventPosition, '%sufix%'=>$sufix)).'<br/><br/>';
+			}
 				
 			$emailContentTmp = str_replace('<congratsMessage>', $congratsMessage, $emailContentTmp);
 			
-			Report::sendMail('Resultado de evento @ '.$this->getEventName(), $peopleObj->getEmailAddress(), $emailContentTmp);
+			Report::sendMail(__('email.subject.eventResult', array('%eventName%'=>$this->getEventName())), $peopleObj->getEmailAddress(), $emailContentTmp);
 		}
 	}
 	
 	public function notifyDelete(){
+
+		Util::getHelper('I18N');
 
 		$emailContent = AuxiliarText::getContentByTagName('eventDeleteNotify');
 
@@ -379,18 +398,20 @@ class Event extends BaseEvent
 		
 		$emailAddressList = $this->getEmailAddressList();
 		
-		Report::sendMail('Exclusão do evento @ '.$this->getEventName(), $emailAddressList, $emailContent);
+		Report::sendMail(__('email.subject.eventDeleteNotify', array('%eventName%'=>$this->getEventName())), $emailAddressList, $emailContent);
 	}
 	
 	public function notifyReminder($days=7){
 
+		Util::getHelper('I18N');
+
 		$emailContent = AuxiliarText::getContentByTagName('eventReminder');
 		$emailContent = $this->getEmailContent($emailContent);
 		
-		$eventSchedule = ($days==0?'hoje':'em '.$days.' dias');
+		$eventSchedule = ($days==0?__('today'):__('inDays', array('%days%'=>$days)));
 		switch($days){
 			case 1:
-				$eventSchedule = ' amanhã';
+				$eventSchedule = ' '.__('tomorrow');
 				break;	
 		}
 		
@@ -398,7 +419,7 @@ class Event extends BaseEvent
 		
 		$emailAddressList = $this->getEmailAddressList('receiveEventReminder'.$days);
 		
-		Report::sendMail('Lembrete de evento @ '.$this->getEventName(), $emailAddressList, $emailContent);
+		Report::sendMail(__('email.subject.eventReminder', array('%eventName%'=>$this->getEventName())), $emailAddressList, $emailContent);
 	}
 	
 	public function getEmailContent($emailContent){
@@ -647,6 +668,16 @@ class Event extends BaseEvent
 		
 		if( $savedResult && $this->getSavedResult() )
     		HomeWall::doLog('o resultado do evento <b>'.$this->getEventName().'</b> foi atualizado', 'event');
+	}
+	
+	public function isShared($peopleIdException){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPlayerPeer::EVENT_ID, $this->getId() );
+		$criteria->add( EventPlayerPeer::PEOPLE_ID, $peopleIdException, Criteria::NOT_EQUAL );
+		$criteria->add( EventPlayerPeer::DELETED, false );
+		$criteria->add( EventPlayerPeer::ALLOW_EDIT, true );
+		return EventPlayerPeer::doCount($criteria) > 0;
 	}
 	
 	public function getInfo(){

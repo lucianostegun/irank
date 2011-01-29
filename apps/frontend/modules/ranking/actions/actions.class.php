@@ -17,8 +17,11 @@ class rankingActions extends sfActions
 
 		$this->rankingObj = RankingPeer::retrieveByPK( $rankingId );
 		
-		if( !$this->rankingObj->isMyRanking() )
-			throw new Exception('Você não está autorizado a editar as informações deste ranking!');
+		if( !$this->rankingObj->isMyRanking() ){
+			
+			Util::getHelper('i18n');
+			throw new Exception(__('ranking.exception.editionDenied'));
+  		}
 	}
   }
 
@@ -109,16 +112,17 @@ class rankingActions extends sfActions
   
   public function executeDelete($request){
 
+	Util::getHelper('i18n');
 	$rankingId  = $request->getParameter('rankingId');
 	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
 	
-	if( !is_object($rankingObj) )
-		throw new Exception('Ranking não encontrado!');
+	if( !is_object($rankingObj) )		
+		throw new Exception(__('ranking.exception.rankingNotFound'));
 	
 	if( !$rankingObj->isMyRanking() ){
 	
 		Log::doLog('Tentou excluir ranking sem permissão', 'Ranking', array('PEOPLE_ID'=>$this->peopleId, 'RANKING_ID'=>$rankingId), array('severity'=>Log::LOG_CRITICAL));	
-		Util::forceError('Você não tem permissão para excluir este ranking', true);
+		Util::forceError(__('rankin.exception.deleteAttempt'), true);
 	}
 	
 	$rankingObj->delete();
@@ -164,8 +168,11 @@ class rankingActions extends sfActions
 	
 	$rankingObj = $this->rankingObj;
 	
-	if( $rankingObj->getUserSite()->getPeopleId()==$peopleId )
-		throw new Exception('Não é possível remover este membro do ranking');
+	if( $rankingObj->getUserSite()->getPeopleId()==$peopleId ){
+	
+		Util::getHelper('i18n');	
+		throw new Exception(__('ranking.exception.deletePlayerError'));
+	}
 	
 	$rankingObj->deletePlayer( $peopleId );
 	
@@ -227,6 +234,8 @@ class rankingActions extends sfActions
   
   public function executeToggleShare($request){
 
+	Util::getHelper('i18n');
+	
 	$rankingId = $request->getParameter('rankingId');
 	$peopleId  = $request->getParameter('peopleId');
 	
@@ -234,7 +243,7 @@ class rankingActions extends sfActions
 	$peopleIdOwner    = $rankingPlayerObj->getRanking()->getUserSite()->getPeopleId();
 	
 	if( $peopleIdOwner==$peopleId || $peopleId==$this->peopleId || !is_object($rankingPlayerObj) )
-		throw new Exception('Não é possível habilitar/desabilitar a edição do ranking para esta pessoa');
+		throw new Exception(__('ranking.exception.shareError'));
 	
 	$rankingPlayerObj->setAllowEdit( !$rankingPlayerObj->getAllowEdit() );
 	$rankingPlayerObj->save();
@@ -267,6 +276,20 @@ class rankingActions extends sfActions
   }
   
   public function executeJavascript($request){
+  	
+  	Util::getHelper('i18n');
+  	
+    header('Content-type: text/x-javascript');
+	
+  	$nl = chr(10);
+  	
+  	echo 'var i18n_ranking_playerListLoadError          = "'.__('ranking.playerListLoadError').'";';
+  	echo 'var i18n_ranking_playersTab_playerDeleteError = "'.__('ranking.playersTab.playerDeleteError').'";';
+  	echo 'var i18n_ranking_playersTab_logLoadError      = "'.__('ranking.classifyTab.logLoadError').'";';
+  	echo 'var i18n_ranking_playersTab_shareError        = "'.__('ranking.classifyTab.shareError').'";';
+  	echo 'var i18n_ranking_deleteConfirm                = "'.__('ranking.deleteConfirm').'";';
+  	echo 'var i18n_ranking_deleteError                  = "'.__('ranking.deleteError').'";';
+  	exit;
   }
   
   public function executeDebug($request){

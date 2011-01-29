@@ -4,8 +4,8 @@
 	$confirmedPresence = ($isNew?false:$eventObj->isConfirmed($peopleId));
 	$inviteStatus      = ($isNew?'none':$eventObj->getInviteStatus($peopleId));
 	$visibleButtons    = $eventObj->getEnabled();
-	
-	if( !$pastDate )	
+
+	if( !$pastDate && !$inviteStatus=='deleted' )	
 		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
 
 	$pageAction = ($isClone?'Clonagem':($eventObj->isNew()?__('Editing'):__('Creating')));

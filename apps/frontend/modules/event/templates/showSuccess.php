@@ -14,11 +14,11 @@
 	$confirmedPresence = $eventObj->isConfirmed($peopleId);
 	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
-	$dhtmlxTabBarObj->addTab('main', 'Evento', 'event/show/main', array('eventObj'=>$eventObj));
-	$dhtmlxTabBarObj->addTab('player', 'Convidados', 'event/show/player', array('eventObj'=>$eventObj));
+	$dhtmlxTabBarObj->addTab('main', __('Event'), 'event/show/main', array('eventObj'=>$eventObj));
+	$dhtmlxTabBarObj->addTab('player', __('Guests'), 'event/show/player', array('eventObj'=>$eventObj));
 	if( $pastDate )
-		$dhtmlxTabBarObj->addTab('result', 'Resultado', 'event/show/result', array('eventObj'=>$eventObj));
-	$dhtmlxTabBarObj->addTab('comments', 'Comentários', 'event/form/comments', array('eventObj'=>$eventObj));
+		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj));
+	$dhtmlxTabBarObj->addTab('comments', __('Comments'), 'event/form/comments', array('eventObj'=>$eventObj));
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabEvent');
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();

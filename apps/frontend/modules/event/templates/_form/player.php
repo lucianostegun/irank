@@ -1,6 +1,6 @@
 <table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px">
 	<tr>
-		<td valign="top" style="padding: 5px 5px 5px 15px">Lista dos convidados para este evento</td>
+		<td valign="top" style="padding: 5px 5px 5px 15px"><?php echo __('event.playersTab.intro') ?></td>
 	</tr>
 	<tr>
 		<td valign="top" class="defaultForm" id="eventPlayerDiv">
@@ -12,8 +12,8 @@
 	<tr>
 		<td valign="top" class="defaultForm">
 			<div class="row">
-				<div class="halfLabel">Notificar</div>
-				<div class="field"><?php echo select_tag('sendNotify', array('ask'=>'Perguntar', '1'=>'Sim', '0'=>'Não')) ?></div>
+				<div class="halfLabel"><?php echo __('event.playersTab.notify') ?></div>
+				<div class="field"><?php echo select_tag('sendNotify', array('ask'=>__('Ask'), '1'=>__('Yes'), '0'=>__('No'))) ?></div>
 			</div>
 		</td>
 	</tr>

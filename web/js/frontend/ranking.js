@@ -55,7 +55,7 @@ function reloadPlayerTab(){
 	
 	var failureFunc = function(){
 		
-		$('rankingPlayerDiv').innerHTML = 'Não foi possível carregar a lista de jogadores!';
+		$('rankingPlayerDiv').innerHTML = i18n_ranking_playerListLoadError;
 	}
 	
 	var urlAjax = _webRoot+'/ranking/getPlayerList/rankingId/'+rankingId;
@@ -70,7 +70,7 @@ function reloadClassifyTab(){
 	
 	var failureFunc = function(){
 		
-		$('rankingClassifyDiv').innerHTML = 'Não foi possível carregar a lista de jogadores!';
+		$('rankingClassifyDiv').innerHTML = i18n_ranking_playerListLoadError;
 	}
 	
 	var urlAjax = _webRoot+'/ranking/getClassifyList/rankingId/'+rankingId;
@@ -111,7 +111,7 @@ function deleteRankingPlayer(peopleId){
 
 		var content = t.responseText;
 
-		alert('Não foi possível excluir o membro do grupo!\nTente novamente mais tarde.')
+		alert(i18n_ranking_playersTab_playerDeleteError)
 		hideIndicator('rankingPlayerList');
 	};
 	
@@ -145,7 +145,7 @@ function loadRankingHistory(rankingDate){
 
 		var content = t.responseText;
 
-		alert('Não foi possível carregar o histórico de classificação!\nTente novamente mais tarde.')
+		alert(i18n_ranking_playersTab_logLoadError)
 	};
 	
 	putLoading('rankingClassifyDiv');
@@ -167,11 +167,11 @@ function toggleRankingShare(peopleId){
 		if( content=='lock' ){
 			
 			$('rankingShare'+peopleId).src   = $('rankingShare'+peopleId).src.replace('lock', 'unlock');
-			$('rankingShare'+peopleId).title = $('rankingShare'+peopleId).title.replace('Habilitar', 'Desabilitar');
+			$('rankingShare'+peopleId).title = $('rankingShare'+peopleId).title.replace(i18n_enable, i18n_disable);
 		}else{
 			
 			$('rankingShare'+peopleId).src   = $('rankingShare'+peopleId).src.replace('unlock', 'lock');
-			$('rankingShare'+peopleId).title = $('rankingShare'+peopleId).title.replace('Desabilitar', 'Habilitar');
+			$('rankingShare'+peopleId).title = $('rankingShare'+peopleId).title.replace(i18n_disable, i18n_enable);
 		}
 		
 		hideIndicator('rankingPlayerList');
@@ -181,7 +181,7 @@ function toggleRankingShare(peopleId){
 
 		var content = t.responseText;
 
-		alert('Não foi possível habilitar o membro do grupo para edição do ranking!\nTente novamente mais tarde.')
+		alert(i18n_ranking_playersTab_shareError)
 		hideIndicator('rankingPlayerList');
 		
 		if( isDebug() )
@@ -194,7 +194,7 @@ function toggleRankingShare(peopleId){
 
 function doDeleteRanking(){
 	
-	if( !confirm('ATENÇÃO!\n\nAo excluir o ranking todas as informações de eventos e resultados serão perdidas.\nOs participantes do ranking serão notificados da exclusão.\n\n Deseja realmente excluir este ranking?') )
+	if( !confirm(i18n_ranking_deleteConfirm) )
 		return false;
 	
 	showIndicator('ranking');
@@ -220,13 +220,12 @@ function doDeleteRanking(){
 		enableButton('deleteRanking');
 		
 		var errorMessage = parseMessage(content);
-		alert('Não foi possível excluir o ranking!\n'+(errorMessage?errorMessage:'Tente novamente mais tarde.'));
+		alert(i18n_ranking_deleteError+'\n'+(errorMessage?errorMessage:i18n_tryAgain));
 		
 		if( !errorMessage && isDebug() )
 			debug(content);
 	};
 	
 	var urlAjax = _webRoot+'/ranking/delete/rankingId/'+rankingId;
-	alert(urlAjax);
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }

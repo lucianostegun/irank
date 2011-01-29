@@ -1,5 +1,5 @@
 DELETE FROM auxiliar_text;
-DELETE FROM file;
+DELETE FROM file WHERE file_path LIKE 'templates/%';
 
 INSERT INTO file(file_name, file_path, description, file_size, created_at, updated_at)
     VALUES('emailTemplate.htm', 'templates/emailTemplate.htm', 'Template padrão de e-mail', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

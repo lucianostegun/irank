@@ -31,13 +31,14 @@ class UserSite extends BaseUserSite
 	
 	public function quickSave($request){
 		
-		$username     = $request->getParameter('username');
-	  	$emailAddress = $request->getParameter('emailAddress');
-	  	$firstName    = $request->getParameter('firstName');
-	  	$lastName     = $request->getParameter('lastName');
-	  	$password     = $request->getParameter('password');
+		$username        = $request->getParameter('username');
+	  	$emailAddress    = $request->getParameter('emailAddress');
+	  	$firstName       = $request->getParameter('firstName');
+	  	$lastName        = $request->getParameter('lastName');
+	  	$password        = $request->getParameter('password');
+	  	$defaultLanguage = $request->getParameter('defaultLanguage');
 	  	
-  		$peopleObj = People::getQuickPeople($firstName, $lastName, 'userSite', $this->getPeopleId());
+  		$peopleObj = People::getQuickPeople($firstName, $lastName, 'userSite', $this->getPeopleId(), $defaultLanguage);
   		
 	  	if( !$this->getActive() ){
 	  		

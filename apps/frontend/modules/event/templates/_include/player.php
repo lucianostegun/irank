@@ -10,7 +10,7 @@
 ?>
 <table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
   <tr class="header">
-    <th>Nome</th>
+    <th><?php echo __('Player') ?></th>
     <th>E-mail</th>
     <th colspan="3">&nbsp;</th>
   </tr>
@@ -31,25 +31,25 @@
     		$image = image_tag('icon/'.$icon, array('id'=>'presenceImage'.$peopleId));
     		
     		if( $isMyEvent )
-    			echo link_to($image, '#togglePresence('.$peopleId.')', array('title'=>'Confirmar/Cancelar presença'));
+    			echo link_to($image, '#togglePresence('.$peopleId.')', array('title'=>__('event.playersTab.togglePresence')));
     		else
     			echo $image;
     	?>
     </td>
     <?php if( $isMyEvent ): ?>
     <td align="center" class="icon">
-    	<?php echo link_to(image_tag('icon/delete'), '#removePlayer('.$peopleId.')', array('title'=>'Remover jogador do evento')); ?>
+    	<?php echo link_to(image_tag('icon/delete'), '#removePlayer('.$peopleId.')', array('title'=>__('event.playersTab.removePlayer'))); ?>
     </td>
     <td align="center" class="icon">
     	<?php
     		$allowEdit    = $eventPlayerObj->getAllowEdit();
     		$icon         = ($allowEdit?'unlock':'lock');
-    		$shareMessage = ($allowEdit?'Desabilitar':'Habilitar');
+    		$shareMessage = ($allowEdit?__('Disable'):__('Enable'));
     		
     		if( $peopleId==$peopleIdMe || $peopleId==$peopleIdOwner )
-				echo image_tag('icon/disabled/unlock', array('title'=>'Não é possível desabilitar este convidado para edição do evento'));
+				echo image_tag('icon/disabled/unlock', array('title'=>__('event.playersTab.unableToShare')));
 			else
-				echo link_to(image_tag('icon/'.$icon, array('title'=>$shareMessage.' convidado para edição do evento', 'id'=>'eventShare'.$peopleId)), '#toggleEventShare('.$peopleId.')', array());
+				echo link_to(image_tag('icon/'.$icon, array('title'=>__('event.playersTab.shareMessage', array('%shareMessage%'=>$shareMessage)), 'id'=>'eventShare'.$peopleId)), '#toggleEventShare('.$peopleId.')', array());
     	?>
     </td>
     <?php endif; ?>
@@ -60,7 +60,7 @@
   	if( count($eventPlayerObjList)==0 ):
   ?>
   <tr class="boxcontent">
-    <td colspan="5">Este ranking ainda não possui convidados</td>
+    <td colspan="5"><?php echo __('event.playersTab.noGuests') ?></td>
   </tr>
   <?php endif; ?>
 </table>

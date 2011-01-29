@@ -60,6 +60,8 @@ class eventActions extends sfActions
   
   public function executeSave($request){
 
+	Util::getHelper('I18N');
+	
 	$eventId         = $request->getParameter('eventId');
 	$rankingId       = $request->getParameter('rankingId');
 	$eventName       = $request->getParameter('eventName');
@@ -83,7 +85,7 @@ class eventActions extends sfActions
 	$isNew = $eventObj->isNew();
 	
 	if( !$eventObj->isEditable() )
-		Util::forceError('!Este evento está bloqueado para edição', true);
+		Util::forceError('!'.__('event.lockedEvent'), true);
 	
 	$eventObj->setRankingId( $rankingId );
 	$eventObj->setEventName( $eventName );
@@ -119,14 +121,16 @@ class eventActions extends sfActions
   
   public function executeDelete($request){
 
+	Util::getHelper('I18N');
+	
 	$eventId  = $request->getParameter('eventId');
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
 	if( !is_object($eventObj) )
-		throw new Exception('Evento não encontrado!');
+		throw new Exception(__('eventNotFound'));
 	
 	if( !$eventObj->isEditable() )
-		Util::forceError('!Este evento está bloqueado para exclusão', true);
+		Util::forceError('!'.__('event.lockedEvent'), true);
 	
 	$eventObj->delete();
 	exit;
@@ -139,8 +143,8 @@ class eventActions extends sfActions
 
 	$eventObj    = EventPeer::retrieveByPK( $eventId );
 	
-//	if( !$eventObj->isEditable() )
-//		Util::forceError('!Este evento está bloqueado para edição', true);
+	if( !$eventObj->isEditable() )
+		Util::forceError('!'.__('event.lockedEvent'), true);
 
 	$eventObj->togglePresence( $this->peopleId, $choice );
     return $this->forward('event', 'getPlayerList');
@@ -148,14 +152,19 @@ class eventActions extends sfActions
 
   public function executeRemovePlayer($request){
 
+	Util::getHelper('I18N');
+	
 	$eventId  = $request->getParameter('eventId');
 	$peopleId = $request->getParameter('peopleId');
 	
 	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
 	$eventObj    = EventPeer::retrieveByPK( $eventId );
 	
+	if( !$eventObj->isShared($peopleId) )
+		Util::forceError('!'.__('event.playersTab.shareBeforeDelete'), true);
+	
 	if( !$eventObj->isEditable() )
-		Util::forceError('!Este evento está bloqueado para edição', true);
+		Util::forceError('!'.__('event.lockedEvent'), true);
 
 	$eventObj->removePlayer( $peopleId );
     
@@ -164,6 +173,8 @@ class eventActions extends sfActions
   
   public function executeTogglePresence($request){
 
+	Util::getHelper('I18N');
+	
 	$eventId  = $request->getParameter('eventId');
 	$peopleId = $request->getParameter('peopleId');
 	$notify   = $request->getParameter('notify');
@@ -172,7 +183,7 @@ class eventActions extends sfActions
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
 	if( !$eventObj->isMyEvent() )
-		throw new Exception('Você não está autorizado a editar as informações deste evento!');
+		throw new Exception(__('event.exception.editionDenied'));
 	
 	if( !$eventObj->isConfirmed($peopleId) )
 		$eventObj->togglePresence($peopleId, 'yes', $notify);
@@ -206,6 +217,8 @@ class eventActions extends sfActions
   
   public function executeToggleShare($request){
 
+	Util::getHelper('I18N');
+	
 	$eventId  = $request->getParameter('eventId');
 	$peopleId = $request->getParameter('peopleId');
 	
@@ -213,7 +226,7 @@ class eventActions extends sfActions
 	$peopleIdOwner  = $eventPlayerObj->getEvent()->getRanking()->getUserSite()->getPeopleId();
 	
 	if( $peopleIdOwner==$peopleId || $peopleId==$this->peopleId || !is_object($eventPlayerObj) )
-		throw new Exception('Não é possível habilitar/desabilitar a edição do evento para esta pessoa');
+		throw new Exception(__('event.exception.shareError'));
 	
 	$eventPlayerObj->setAllowEdit( !$eventPlayerObj->getAllowEdit() );
 	$eventPlayerObj->save();
@@ -232,9 +245,11 @@ class eventActions extends sfActions
 	$eventId  = $request->getParameter('eventId');
 	$eventObj = EventPeer::retrieveByPK($eventId);
 	
+	Util::getHelper('I18N');
+	
 	if( !$eventObj->isEditable() )
-		Util::forceError('!Este evento está bloqueado para edição', true);
-		
+		Util::forceError('!'.__('event.lockedEvent'), true);
+
 	$eventObj->saveResult($request);
 
 	exit;
@@ -434,12 +449,14 @@ class eventActions extends sfActions
   
   public function executeDeletePhotoComment($request){
 
+	Util::getHelper('I18N');
+	
 	$eventPhotoCommentId = $request->getParameter('eventPhotoCommentId');
 	
 	$eventPhotoCommentObj = EventCommentPeer::retrieveByPK($eventPhotoCommentId);
 	
 	if( !$eventPhotoCommentObj->isMyComment() )
-		throw new Exception('Este comentário não foi escrito por você!');
+		throw new Exception(__('event.notYourComment'));
 	
 	$eventPhotoCommentObj->delete();
 	exit;
@@ -464,6 +481,8 @@ class eventActions extends sfActions
   
   public function executeGetPhotoInfo($request){
 
+	Util::getHelper('I18N');
+	
 	$eventId      = $request->getParameter('eventId');
 	$eventPhotoId = $request->getParameter('eventPhotoId');
 	$direction    = $request->getParameter('direction');
@@ -477,10 +496,10 @@ class eventActions extends sfActions
 		$eventPhotoObj = $eventPhotoObj->getPreviousPhoto();
 
 	if( !is_object($eventPhotoObj) )
-		Util::forceError('Fim das imagens', true);
+		Util::forceError(__('event.endOfImages'), true);
 				
 	if( $eventPhotoObj->getEventId()!=$eventId )
-		throw new Exception('Esta imagem não pertence ao evento informado!');
+		throw new Exception(__('event.exception.notImageEventBelong'));
 	
 	echo Util::parseInfo($eventPhotoObj->getInfo());
 		
@@ -489,6 +508,8 @@ class eventActions extends sfActions
   
   public function executeGetPhoto($request){
 
+	Util::getHelper('I18N');
+	
 	$eventId      = $request->getParameter('eventId');
 	$eventPhotoId = $request->getParameter('eventPhotoId');
 	$maxWidth     = $request->getParameter('maxWidth');
@@ -496,7 +517,7 @@ class eventActions extends sfActions
 	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
 	
 	if( $eventPhotoObj->getEventId()!=$eventId )
-		throw new Exception('Esta imagem não pertence ao evento informado!');
+		throw new Exception(__('event.exception.notImageEventBelong'));
 	
 
 	$fileObj = $eventPhotoObj->getFile();
@@ -507,16 +528,18 @@ class eventActions extends sfActions
   
   public function executeDeletePhoto($request){
 
+	Util::getHelper('I18N');
+	
 	$eventId      = $request->getParameter('eventId');
 	$eventPhotoId = $request->getParameter('eventPhotoId');
 	
 	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
 	
 	if( $eventPhotoObj->getEventId()!=$eventId )
-		throw new Exception('Esta imagem não pertence ao evento informado!');
+		throw new Exception(__('event.exception.notImageEventBelong'));
 	
 	if( !$eventPhotoObj->getEvent()->isMyEvent() )
-		throw new Exception('Você não tem permissão para excluir esta imagem!');
+		throw new Exception(__('event.exception.imageDeleteDenied'));
 	
 	$eventPhotoObj->delete();
 	
@@ -552,20 +575,32 @@ class eventActions extends sfActions
 	
   	$nl = chr(10);
   	
-  	echo 'var i18n_event_commentsTab_intro               = "'.__('event.commentsTab.intro').'";';
-  	echo 'var i18n_event_commentsTab_photoIntro          = "'.__('event.commentsTab.photoIntro').'";';
-  	echo 'var i18n_event_commentTab_commentText          = "'.__('event.commentTab.commentText').'";';
-  	echo 'var i18n_event_commentTab_typeSomething        = "'.__('event.commentTab.typeSomething').'";';
-  	echo 'var i18n_event_commentTab_publishing           = "'.__('event.commentTab.publishing').'";';
-  	echo 'var i18n_event_commentTab_publishingError      = "'.__('event.commentTab.publishingError').'";';
-  	echo 'var i18n_event_commentsTab_commentDeleteError  = "'.__('event.commentTab.commentDeleteError').'";';
-  	echo 'var i18n_event_commentsTab_photoUploadError    = "'.__('event.commentsTab.photoUploadError').'";';
-  	echo 'var i18n_event_commentsTab_photoDeleteError    = "'.__('event.commentsTab.photoDeleteError').'";';
-  	echo 'var i18n_event_commentsTab_photoDeleteConfirm  = "'.__('event.commentsTab.photoDeleteConfirm').'";';
-  	echo 'var i18n_event_commentsTab_photoPublishConfirm = "'.__('event.commentsTab.photoPublishConfirm').'";';
-  	echo 'var i18n_event_commentsTab_showPhotoComments   = "'.__('event.commentsTab.showPhotoComments').'";';
-  	echo 'var i18n_leftChar                              = "'.__('leftChar').'";';
-  	echo 'var i18n_leftChars                             = "'.__('leftChars').'";';
+  	echo 'var i18n_event_commentsTab_intro                   = "'.__('event.commentsTab.intro').'";';
+  	echo 'var i18n_event_commentsTab_photoIntro              = "'.__('event.commentsTab.photoIntro').'";';
+  	echo 'var i18n_event_commentTab_commentText              = "'.__('event.commentTab.commentText').'";';
+  	echo 'var i18n_event_commentTab_typeSomething            = "'.__('event.commentTab.typeSomething').'";';
+  	echo 'var i18n_event_commentTab_publishing               = "'.__('event.commentTab.publishing').'";';
+  	echo 'var i18n_event_commentTab_publishingError          = "'.__('event.commentTab.publishingError').'";';
+  	echo 'var i18n_event_commentsTab_commentDeleteError      = "'.__('event.commentTab.commentDeleteError').'";';
+  	echo 'var i18n_event_commentsTab_photoUploadError        = "'.__('event.commentsTab.photoUploadError').'";';
+  	echo 'var i18n_event_commentsTab_photoDeleteError        = "'.__('event.commentsTab.photoDeleteError').'";';
+  	echo 'var i18n_event_commentsTab_photoDeleteConfirm      = "'.__('event.commentsTab.photoDeleteConfirm').'";';
+  	echo 'var i18n_event_commentsTab_photoPublishConfirm     = "'.__('event.commentsTab.photoPublishConfirm').'";';
+  	echo 'var i18n_event_commentsTab_showPhotoComments       = "'.__('event.commentsTab.showPhotoComments').'";';
+  	echo 'var i18n_leftChar                                  = "'.__('leftChar').'";';
+  	echo 'var i18n_leftChars                                 = "'.__('leftChars').'";';
+  	echo 'var i18n_event_saveResultConfirm                   = "'.__('event.saveResultConfirm').'";';
+  	echo 'var i18n_event_saveMyPresenceError                 = "'.__('event.saveMyPresenceError').'";';
+  	echo 'var i18n_event_playersTab_playerDeleteConfirm      = "'.__('event.playersTab.playerDeleteConfirm').'";';
+  	echo 'var i18n_event_playersTab_playerDeleteError        = "'.__('event.playersTab.playerDeleteError').'";';
+  	echo 'var i18n_event_playersTab_togglePresenceError      = "'.__('event.playersTab.togglePresenceError').'";';
+  	echo 'var i18n_event_playersTab_presenceNotifyConfirm    = "'.__('event.playersTab.presenceNotifyConfirm').'";';
+  	echo 'var i18n_event_mainTab_rankingPlaceLoadingError    = "'.__('event.mainTab.rankingPlaceLoadingError').'";';
+  	echo 'var i18n_event_cloneConfirm                        = "'.__('event.cloneConfirm').'";';
+  	echo 'var i18n_event_deleteConfirm                       = "'.__('event.deleteConfirm').'";';
+  	echo 'var i18n_event_deleteError                         = "'.__('event.deleteError').'";';
+  	echo 'var i18n_event_searchError                         = "'.__('event.searchError').'";';
+  	echo 'var i18n_event_playersTab_shareError               = "'.__('event.playersTab.shareError').'";';
   	exit;
   }
   

@@ -23,6 +23,6 @@
 	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitMyAccount()')); ?>
 		<?php echo getFormLoading('myAccount') ?>
-		<?php echo getFormStatus(); ?>
+		<?php echo getFormStatus(null, false, __('myAccount.errorMessage'), __('myAccount.successMessage')); ?>
 	</div>
 </form>

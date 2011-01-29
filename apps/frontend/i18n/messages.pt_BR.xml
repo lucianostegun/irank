@@ -992,6 +992,362 @@
 				<source>email.subject.eventComment</source>
 				<target>Comentários do evento %eventCode%</target>
 			</trans-unit>
+
+
+
+
+
+
+
+
+
+
+			<trans-unit>
+				<source>myAccount.defaultLanguage</source>
+				<target>Idioma padrão</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.successMessage</source>
+				<target>Perfil atualizado com sucesso!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.errorMessage</source>
+				<target>Erro ao salvar as informações! Verifique os campos em destaque.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playerListLoadError</source>
+				<target>Não foi possível carregar a lista de jogadores!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.playerDeleteError</source>
+				<target>Não foi possível excluir o membro do grupo!\nTente novamente mais tarde.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.classifyTab.logLoadError</source>
+				<target>Não foi possível carregar o histórico de classificação!\nTente novamente mais tarde.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.classifyTab.shareError</source>
+				<target>Não foi possível habilitar o membro do grupo para edição do ranking!\nTente novamente mais tarde.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.deleteConfirm</source>
+				<target>ATENÇÃO!\n\nAo excluir o ranking todas as informações de eventos e resultados serão perdidas.\nOs participantes do ranking serão notificados da exclusão.\n\n Deseja realmente excluir este ranking?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.deleteError</source>
+				<target>Não foi possível excluir o ranking!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>tryAgain</source>
+				<target>Tente novamente mais tarde.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.exception.editionDenied</source>
+				<target>Você não está autorizado a editar as informações deste ranking!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.exception.rankingNotFound</source>
+				<target>Ranking não encontrado!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.exception.deleteAttempt</source>
+				<target>Você não tem permissão para excluir este ranking!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.exception.deletePlayerError</source>
+				<target>Não é possível remover este membro do ranking!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.exception.shareError</source>
+				<target>Não é possível habilitar/desabilitar a edição do ranking para este jogador!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>playerNotFound</source>
+				<target>Jogador não encontrado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>rakning.noRankingLog</source>
+				<target>Não existe histórico para este ranking na data %date%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.rankingDelete</source>
+				<target>Exclusão do ranking @ %rankingName%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>disable</source>
+				<target>Desabilitar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>enable</source>
+				<target>Habilitar</target>
+			</trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+			<trans-unit>
+				<source>event.playersTab.togglePresence</source>
+				<target>Confirmar/Cancelar presença</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.removePlayer</source>
+				<target>Remover jogador do evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.unableToShare</source>
+				<target>Não é possível desabilitar este convidado para edição do evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.shareMessage</source>
+				<target>%shareMessage% convidado para edição do evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.noGuests</source>
+				<target>Este evento ainda não possui convidados</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenPlaceName</source>
+				<target>Já existe um local cadastrado com esse nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidUrl</source>
+				<target>A URL informada não é válida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max20</source>
+				<target>Informe um valor de até 20 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.resultTab.noPlayer</source>
+				<target>Este event não possui convidados para compor os resultados</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.resultTab.footerMessage</source>
+				<target>Os resultados serão enviados por e-mail a todos os participantes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.saveResultConfirm</source>
+				<target>ATENÇÃO!\n\nOs resultados salvos serão enviados por e-mail a todos os convidados e estarão disponíveis para edição até que outro evento posterior seja criado.\n\nDeseja prosseguir?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.errorSavingMyPresence</source>
+				<target>Não foi possível definir sua presença no evento! Tente novamente em alguns instantes.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.playerDeleteConfirm</source>
+				<target>Deseja realmente remover este jogador do evento?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.playerDeleteError</source>
+				<target>Ocorreu um erro ao remover o jogador do evento!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.togglePresenceError</source>
+				<target>Ocorreu um erro ao confirmar a presença!\nTente novamente mais tarde.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.presenceNotifyConfirm</source>
+				<target>Deseja que os convidados sejam notificados?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.mainTab.rankingPlaceLoadingError</source>
+				<target>Não foi possível carregar as opções de locais!\nSelecione o ranking novamente.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.cloneConfirm</source>
+				<target>Ao clonar um evento você será direcionado para a edição do evento clonado e deverá editar as informações antes de salvar.\n\nDeseja realmente clonar este evento?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.deleteConfirm</source>
+				<target>ATENÇÃO!\n\nAo excluir o evento todas as informações de resultados serão perdidas e isso afetará o ranking.\nOs participantes do evento serão notificados da exclusão.\n\n Deseja realmente excluir este evento?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.deleteError.</source>
+				<target>Erro ao excluir o evento!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.searchError</source>
+				<target>Ocorreu um erro ao pesquisar os eventos.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.shareError</source>
+				<target>Não foi possível habilitar o convidado para edição do evento!\nTente novamente mais tarde.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>eventNotFound</source>
+				<target>Evento não encontrado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.numberGreaterThan0</source>
+				<target>Informe um valor maior que 0,00</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidInteger</source>
+				<target>O valor informado não é um número inteiro válido</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.positionConflict</source>
+				<target>Ocorreu um conflito de posições para a posição %position%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.sequencePosition</source>
+				<target>As posições informadas devem ser sequenciais e sem cortes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.lockedEvent</source>
+				<target>Este evento está bloqueado para edição</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventResult</source>
+				<target>Resultado de evento @ %eventName%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventChangeNotify</source>
+				<target>Notificação de alteração de evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventCreateNotify</source>
+				<target>Notificação de criação de evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventDeleteNotify</source>
+				<target>Exclusão do evento @ %eventName%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.congratMessage</source>
+				<target>Parabéns, você ficou em %eventPosition%º lugar no evento.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>today</source>
+				<target>hoje</target>
+			</trans-unit>
+			<trans-unit>
+				<source>inDays</source>
+				<target>em %days% dias</target>
+			</trans-unit>
+			<trans-unit>
+				<source>tomorrow</source>
+				<target>amanhã</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventReminder</source>
+				<target>Lembrete de evento @ %eventName%</target>
+			</trans-unit>
+			
+			
+			
+			
+			<trans-unit>
+				<source>event.button.confirmPresence</source>
+				<target>Confirmar presença</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.button.notGoing</source>
+				<target>Não vou</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.button.maybe</source>
+				<target>Talvez</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.intro</source>
+				<target>Lista dos convidados para este evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Ask</source>
+				<target>Perguntar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Yes</source>
+				<target>Sim</target>
+			</trans-unit>
+			<trans-unit>
+				<source>No</source>
+				<target>Não</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.notify</source>
+				<target>Notificar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Confirmed</source>
+				<target>Confirmado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>NotConfirmed</source>
+				<target>Não confirmado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.shareBeforeDelete</source>
+				<target>Compartilhe este evento com alguém antes de remover este convidado.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.exception.editionDenied</source>
+				<target>Você não está autorizado a editar as informações deste evento!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.exception.shareError</source>
+				<target>Não é possível habilitar/desabilitar a edição do evento para esta pessoa</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.endOfImages</source>
+				<target>Fim das imagens</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.exception.notImageEventBelong</source>
+				<target>Esta imagem não pertence ao evento informado!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.exception.imageDeleteDenied</source>
+				<target>Você não tem permissão para excluir esta imagem!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.confirmPresence.title</source>
+				<target>Presence confirmada</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.confirmPresence.successMessage</source>
+				<target>
+					Sua presença foi confirmada no evento &lt;b&gt;%eventName%&lt;/b&gt;!&lt;br/&gt;
+					Um e-mail foi enviado a todos os convidados do evento informando sobre a sua confirmação.&lt;br/&gt;&lt;br/&gt;
+	
+					Você pode cancelar sua presença ou ainda informar que sua presença não está 100% confirmada.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.confirmPresence.link</source>
+				<target>&lt;b&gt;%link%&lt;/b&gt; para visualizar os detalhes do evento.</target>
+			</trans-unit>
+	
+	
+			<trans-unit>
+				<source>form.error.expiredDate</source>
+				<target>A data informada não pode mais ser utilizada para eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenEventName</source>
+				<target>Já existe um evento cadastrado com este nome para esta mesma data</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidTime</source>
+				<target>A valor informado não é uma hora válida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual0</source>
+				<target>Informe um número maior ou igual a 0</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max140</source>
+				<target>Informe um valor de até 140 caracteres</target>
+			</trans-unit>
 			
 		</body>
 	</file>

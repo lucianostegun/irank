@@ -1,9 +1,9 @@
 <table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
   <tr class="header">
-    <th>Nome</th>
+    <th><?php echo __('Player') ?></th>
     <th>Buy-in</th>
-    <th>Posição</th>
-    <th>Prêmio</th>
+    <th><?php echo __('Position') ?></th>
+    <th><?php echo __('Prize') ?></th>
     <th>Rebuy</th>
     <th>Add-on</th>
   </tr>
@@ -47,13 +47,13 @@
   	if( count($eventPlayerObjList)==0 ):
   ?>
   <tr>
-    <td colspan="6">Este ranking não possui convidados para compor os resultados</td>
+    <td colspan="6"><?php echo __('ranking.resultTab.noPlayer') ?></td>
   </tr>
   <?php endif; ?>
   <tr>
     <td colspan="6" class="defaultForm">
     	<div class="row" style="margin-top: 3px">
-    		<div class="text">Os resultados serão enviados por e-mail a todos os participantes</div>
+    		<div class="text"><?php echo __('event.resultTab.footerMessage') ?></div>
     	</div>
     </td>
   </tr>
