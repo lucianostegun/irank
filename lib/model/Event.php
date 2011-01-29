@@ -188,6 +188,8 @@ class Event extends BaseEvent
 	public function removePlayer($peopleId){
 
 		$this->togglePresence($peopleId, 'no');
+		
+		$this->decraseInvite();
 
 		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		$eventPlayerObj->delete();
@@ -393,7 +395,9 @@ class Event extends BaseEvent
 
 		$emailContent = $this->getEmailContent($emailContent);
 	  	$classifyList = $this->getEmailClassifyList();
+	  	$peopleName   = People::getCurrentPeople()->getName();
 		
+		$emailContent = str_replace('<peopleName>', $peopleName, $emailContent);
 		$emailContent = str_replace('<classifyList>', $classifyList, $emailContent);
 		
 		$emailAddressList = $this->getEmailAddressList();
@@ -551,6 +555,9 @@ class Event extends BaseEvent
 		
 		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
+		if( $this->getRanking()->isShared($peopleId) )
+			$eventPlayerObj->share(false);
+			
 		$eventPlayerObj->togglePresence($choice, $forceNotify);
 	}
 	
@@ -678,6 +685,12 @@ class Event extends BaseEvent
 		$criteria->add( EventPlayerPeer::DELETED, false );
 		$criteria->add( EventPlayerPeer::ALLOW_EDIT, true );
 		return EventPlayerPeer::doCount($criteria) > 0;
+	}
+	
+	public function decraseInvite(){
+		
+		$this->setInvites( $this->getInvites()-1 );
+		$this->save();
 	}
 	
 	public function getInfo(){

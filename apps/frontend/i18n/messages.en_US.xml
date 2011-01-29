@@ -1220,7 +1220,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.congratMessage</source>
-				<target>Congratulations, you took %eventPosition%%sufix% place in this event.</target>
+				<target>Congratulations, you took %eventPosition%%sufix% place on this event.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>today</source>

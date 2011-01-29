@@ -123,7 +123,7 @@ class Ranking extends BaseRanking
 		return $this->getPeopleList(false, $orderByList);
 	}
 	
-	public function addPlayer($peopleId){
+	public function addPlayer($peopleId, $allowEdit=false){
 		
 		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
@@ -135,6 +135,7 @@ class Ranking extends BaseRanking
 			$rankingPlayerObj->setTotalPaid( 0.00 );
 			$rankingPlayerObj->setTotalPrize( 0.00 );
 			$rankingPlayerObj->setTotalBalance( 0.00 );
+			$rankingPlayerObj->setAllowEdit( $allowEdit );
 		}
 
 		if( !$rankingPlayerObj->getEnabled() ){
@@ -625,6 +626,13 @@ class Ranking extends BaseRanking
 	  	}
 	  	
 	  	return $classifyList;
+	}
+	
+	public function isShared($peopleId){
+		
+		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
+		
+		return (is_object($rankingPlayerObj) && $rankingPlayerObj->getAllowEdit());
 	}
 	
 	public function postOnWall(){
