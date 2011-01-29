@@ -37,7 +37,7 @@
 				<div class="label" id="rankingDefaultBuyinLabel"><?php echo __('ranking.defaultBuyin') ?></div>
 				<div class="field"><?php echo input_tag('defaultBuyin', Util::formatFloat($rankingObj->getDefaultBuyin(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'rankingDefaultBuyin')) ?></div>
 				<div class="error" id="rankingDefaultBuyinError" onclick="showFormErrorDetails('ranking', 'defaultBuyin')"></div>
-				<div class="textFlex">Ex: <?php echo Util::formatFloat('0,00', true) ?></div>
+				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 		</td>
 	</tr>
