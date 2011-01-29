@@ -1361,6 +1361,10 @@
 				<source>email.subject.presenceConfirm</source>
 				<target>Presence notify</target>
 			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventPhotoComment</source>
+				<target>Comments on picture of event %eventName% (%eventPhotoCommentCode%)</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
