@@ -21,7 +21,7 @@
 	?>
 	<tr>
 		<td colspan="4">
-			<?php echo __('ranking.eventsTab.noEvents', array('%link%'=>link_to(__('clickHere'), 'event/new'))) ?>
+			<?php echo __('ranking.eventsTab.noEvents', array('%link%'=>link_to(__('ClickHere'), 'event/new'))) ?>
 		</td>
 	</tr>
 	<?php
