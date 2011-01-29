@@ -1364,6 +1364,10 @@
 				<source>email.subject.presenceConfirm</source>
 				<target>Confirmação de presença</target>
 			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventPhotoComment</source>
+				<target>Comentários em foto do evento %eventName% (%eventPhotoCommentCode%)</target>
+			</trans-unit>
 			
 		</body>
 	</file>

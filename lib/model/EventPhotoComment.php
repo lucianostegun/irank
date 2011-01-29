@@ -36,6 +36,14 @@ class EventPhotoComment extends BaseEventPhotoComment
         }
     }
     
+    public function getCode(){
+    	
+    	$eventPhotoCommentId = $this->getId();
+		$eventPhotoCommentId = (1983+$eventPhotoCommentId);
+		
+		return '#'.sprintf('%04d', $eventPhotoCommentId);
+    }
+    
     public function getComment($format=false){
     	
     	$comment = parent::getComment();
@@ -71,9 +79,8 @@ class EventPhotoComment extends BaseEventPhotoComment
 	
 	public function notify(){
 
-		$eventCommentId = $this->getId();
-		$eventCommentId = (1983+$eventCommentId);
-		
+		Util::getHelper('I18N');
+
 		$eventObj     = $this->getEventPhoto()->getEvent();
 		$emailContent = AuxiliarText::getContentByTagName('eventPhotoCommentNotify');
 
@@ -88,6 +95,6 @@ class EventPhotoComment extends BaseEventPhotoComment
 		$options['emailTemplate'] = null;
 		$options['replyTo']       = 'event_photo_comment@irank.com.br';
 		
-		Report::sendMail('Comentários em foto do evento #'.$eventObj->getCode(), $emailAddressList, $emailContent, $options);
+		Report::sendMail(__('email.subject.eventPhotoComment', array('%eventName%'=>$eventObj->getEventName(), '%eventPhotoCommentCode%'=>$this->getCode())), $emailAddressList, $emailContent, $options);
 	}
 }
