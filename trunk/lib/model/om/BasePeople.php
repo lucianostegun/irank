@@ -115,6 +115,12 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastEventPhotoCommentCriteria = null;
 
 	
+	protected $collUserAdminList;
+
+	
+	protected $lastUserAdminCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -658,6 +664,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collUserAdminList !== null) {
+				foreach($this->collUserAdminList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -765,6 +779,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 				if ($this->collEventPhotoCommentList !== null) {
 					foreach($this->collEventPhotoCommentList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collUserAdminList !== null) {
+					foreach($this->collUserAdminList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1044,6 +1066,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			foreach($this->getEventPhotoCommentList() as $relObj) {
 				$copyObj->addEventPhotoComment($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getUserAdminList() as $relObj) {
+				$copyObj->addUserAdmin($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1938,6 +1964,76 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$this->lastEventPhotoCommentCriteria = $criteria;
 
 		return $this->collEventPhotoCommentList;
+	}
+
+	
+	public function initUserAdminList()
+	{
+		if ($this->collUserAdminList === null) {
+			$this->collUserAdminList = array();
+		}
+	}
+
+	
+	public function getUserAdminList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseUserAdminPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collUserAdminList === null) {
+			if ($this->isNew()) {
+			   $this->collUserAdminList = array();
+			} else {
+
+				$criteria->add(UserAdminPeer::PEOPLE_ID, $this->getId());
+
+				UserAdminPeer::addSelectColumns($criteria);
+				$this->collUserAdminList = UserAdminPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(UserAdminPeer::PEOPLE_ID, $this->getId());
+
+				UserAdminPeer::addSelectColumns($criteria);
+				if (!isset($this->lastUserAdminCriteria) || !$this->lastUserAdminCriteria->equals($criteria)) {
+					$this->collUserAdminList = UserAdminPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastUserAdminCriteria = $criteria;
+		return $this->collUserAdminList;
+	}
+
+	
+	public function countUserAdminList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseUserAdminPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(UserAdminPeer::PEOPLE_ID, $this->getId());
+
+		return UserAdminPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addUserAdmin(UserAdmin $l)
+	{
+		$this->collUserAdminList[] = $l;
+		$l->setPeople($this);
 	}
 
 } 

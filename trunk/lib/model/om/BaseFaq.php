@@ -36,10 +36,19 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
+	protected $collFaqI18nList;
+
+	
+	protected $lastFaqI18nCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
 	protected $alreadyInValidation = false;
+
+  
+  protected $culture;
 
 	
 	public function getId()
@@ -329,6 +338,14 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collFaqI18nList !== null) {
+				foreach($this->collFaqI18nList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -369,6 +386,14 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collFaqI18nList !== null) {
+					foreach($this->collFaqI18nList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -533,6 +558,15 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 		$copyObj->setUpdatedAt($this->updated_at);
 
 
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach($this->getFaqI18nList() as $relObj) {
+				$copyObj->addFaqI18n($relObj->copy($deepCopy));
+			}
+
+		} 
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); 
@@ -555,5 +589,136 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 		}
 		return self::$peer;
 	}
+
+	
+	public function initFaqI18nList()
+	{
+		if ($this->collFaqI18nList === null) {
+			$this->collFaqI18nList = array();
+		}
+	}
+
+	
+	public function getFaqI18nList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseFaqI18nPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collFaqI18nList === null) {
+			if ($this->isNew()) {
+			   $this->collFaqI18nList = array();
+			} else {
+
+				$criteria->add(FaqI18nPeer::FAQ_ID, $this->getId());
+
+				FaqI18nPeer::addSelectColumns($criteria);
+				$this->collFaqI18nList = FaqI18nPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(FaqI18nPeer::FAQ_ID, $this->getId());
+
+				FaqI18nPeer::addSelectColumns($criteria);
+				if (!isset($this->lastFaqI18nCriteria) || !$this->lastFaqI18nCriteria->equals($criteria)) {
+					$this->collFaqI18nList = FaqI18nPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastFaqI18nCriteria = $criteria;
+		return $this->collFaqI18nList;
+	}
+
+	
+	public function countFaqI18nList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseFaqI18nPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(FaqI18nPeer::FAQ_ID, $this->getId());
+
+		return FaqI18nPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addFaqI18n(FaqI18n $l)
+	{
+		$this->collFaqI18nList[] = $l;
+		$l->setFaq($this);
+	}
+
+  public function getCulture()
+  {
+    return $this->culture;
+  }
+
+  public function setCulture($culture)
+  {
+    $this->culture = $culture;
+  }
+
+  public function getQuestionI18n()
+  {
+    $obj = $this->getCurrentFaqI18n();
+
+    return ($obj ? $obj->getQuestionI18n() : null);
+  }
+
+  public function setQuestionI18n($value)
+  {
+    $this->getCurrentFaqI18n()->setQuestionI18n($value);
+  }
+
+  public function getAnswerI18n()
+  {
+    $obj = $this->getCurrentFaqI18n();
+
+    return ($obj ? $obj->getAnswerI18n() : null);
+  }
+
+  public function setAnswerI18n($value)
+  {
+    $this->getCurrentFaqI18n()->setAnswerI18n($value);
+  }
+
+  protected $current_i18n = array();
+
+  public function getCurrentFaqI18n()
+  {
+    if (!isset($this->current_i18n[$this->culture]))
+    {
+      $obj = FaqI18nPeer::retrieveByPK($this->getId(), $this->culture);
+      if ($obj)
+      {
+        $this->setFaqI18nForCulture($obj, $this->culture);
+      }
+      else
+      {
+        $this->setFaqI18nForCulture(new FaqI18n(), $this->culture);
+        $this->current_i18n[$this->culture]->setCulture($this->culture);
+      }
+    }
+
+    return $this->current_i18n[$this->culture];
+  }
+
+  public function setFaqI18nForCulture($object, $culture)
+  {
+    $this->current_i18n[$culture] = $object;
+    $this->addFaqI18n($object);
+  }
 
 } 

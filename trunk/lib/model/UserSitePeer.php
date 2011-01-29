@@ -64,6 +64,8 @@ class UserSitePeer extends BaseUserSitePeer
 	
 	public static function checkUsernameRecovery( $username ){
 		
+		Util::getHelper('I18N');
+		
 		$emailAddress = MyTools::getRequestParameter('emailAddress');
 		
 		if( !$emailAddress )
@@ -77,7 +79,7 @@ class UserSitePeer extends BaseUserSitePeer
 		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
 		
 		if( !$userSiteObj )
-			MyTools::setError('emailAddress', 'Usuário/E-mail não encontrados');
+			MyTools::setError('emailAddress', __('form.error.passwordRecoveryError'));
 
 		return is_object( $userSiteObj );
 	}
