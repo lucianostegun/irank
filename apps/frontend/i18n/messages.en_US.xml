@@ -1148,7 +1148,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.playersTab.togglePresenceError</source>
-				<target>Presence status could not be defined!\nPLease, try again.</target>
+				<target>Presence status could not be defined!\nPlease, try again.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.playersTab.presenceNotifyConfirm</source>

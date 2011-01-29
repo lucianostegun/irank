@@ -5,10 +5,10 @@
 	$inviteStatus      = ($isNew?'none':$eventObj->getInviteStatus($peopleId));
 	$visibleButtons    = $eventObj->getEnabled();
 
-	if( !$pastDate && !$inviteStatus=='deleted' )	
+	if( !$pastDate && $inviteStatus!='deleted' )	
 		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
 
-	$pageAction = ($isClone?'Clonagem':($eventObj->isNew()?__('Editing'):__('Creating')));
+	$pageAction = ($isClone?'Clonagem':($eventObj->isNew()?__('Creating'):__('Editing')));
 	
 	if( !$eventObj->getEnabled() || $isClone ):
 ?>
