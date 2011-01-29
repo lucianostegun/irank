@@ -38,7 +38,7 @@ class EventPlayer extends BaseEventPlayer
 	
 	public function notifyConfirm(){
 
-		Util::getPartial('I18N');
+		Util::getHelper('I18N');
 
 		$eventObj     = $this->getEvent();
 		$emailContent = AuxiliarText::getContentByTagName('confirmPresenceNotify');

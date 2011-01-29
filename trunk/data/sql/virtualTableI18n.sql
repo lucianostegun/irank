@@ -18,7 +18,7 @@ INSERT INTO virtual_table_i18n VALUES((SELECT id FROM virtual_table WHERE virtua
 INSERT INTO virtual_table_i18n VALUES((SELECT id FROM virtual_table WHERE virtual_table_name = 'gameStyle' AND tag_name = 'sitngo'), 'en_US', 'Sit & Go');
 
 INSERT INTO virtual_table_i18n VALUES((SELECT id FROM virtual_table WHERE virtual_table_name = 'rankingType' AND tag_name = 'value'), 'en_US', 'Profit');
-INSERT INTO virtual_table_i18n VALUES((SELECT id FROM virtual_table WHERE virtual_table_name = 'rankingType' AND tag_name = 'score'), 'en_US', 'Position');
+INSERT INTO virtual_table_i18n VALUES((SELECT id FROM virtual_table WHERE virtual_table_name = 'rankingType' AND tag_name = 'score'), 'en_US', 'Score');
 INSERT INTO virtual_table_i18n VALUES((SELECT id FROM virtual_table WHERE virtual_table_name = 'rankingType' AND tag_name = 'balance'), 'en_US', 'Balance');
 INSERT INTO virtual_table_i18n VALUES((SELECT id FROM virtual_table WHERE virtual_table_name = 'rankingType' AND tag_name = 'average'), 'en_US', 'Average');
 
