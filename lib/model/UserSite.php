@@ -144,6 +144,8 @@ class UserSite extends BaseUserSite
 
 	public function resetPassword(){
 
+		Util::getHelper('I18N');
+		
 		$emailContent  = AuxiliarText::getContentByTagName('passwordRecovery');
 		
 		$newPassword = String::createRandom(7);
@@ -160,7 +162,7 @@ class UserSite extends BaseUserSite
 		$options = array();
 		$options['emailTemplate'] = null;
 		
-		Report::sendMail('Recuperação de senha', $emailAddress, $emailContent, $options);
+		Report::sendMail(__('email.subject.passwordRecovery'), $emailAddress, $emailContent, $options);
 	}
 	
 	public function setOptionValue($tagName, $optionValue){

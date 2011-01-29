@@ -5,4 +5,4 @@ fields:
       msg:       form.error.requiredField
     sfStringValidator:
       max:       140
-      max_error: Sua questão deve ter no máximo 140 caracteres
+      max_error: form.error.max140

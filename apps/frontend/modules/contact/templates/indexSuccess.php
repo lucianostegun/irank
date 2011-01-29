@@ -67,8 +67,8 @@
 		</tr>
 		<tr>
 			<td align="left" valign="top">
-				<?php echo link_to(__('clickHere'), '#newMessage()', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> <?php echo __('contact.contactForm.newMessageLink') ?>.<br/>
-				<?php echo link_to(__('clickHere'), 'sign', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> <?php echo __('contact.contactForm.signUp') ?>.<br/><br/>
+				<?php echo link_to(__('ClickHere'), '#newMessage()', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> <?php echo __('contact.contactForm.newMessageLink') ?>.<br/>
+				<?php echo link_to(__('ClickHere'), 'sign', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> <?php echo __('contact.contactForm.signUp') ?>.<br/><br/>
 				<?php echo __('contact.successFooterMessage') ?>.	
 			</td>
 		</tr>

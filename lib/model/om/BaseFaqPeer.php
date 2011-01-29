@@ -203,6 +203,55 @@ abstract class BaseFaqPeer {
 		}
 		return $results;
 	}
+
+  
+  public static function doSelectWithI18n(Criteria $c, $culture = null, $con = null)
+  {
+        $c = clone $c;
+    if ($culture === null)
+    {
+      $culture = sfContext::getInstance()->getUser()->getCulture();
+    }
+
+        if ($c->getDbName() == Propel::getDefaultDB())
+    {
+      $c->setDbName(self::DATABASE_NAME);
+    }
+
+    FaqPeer::addSelectColumns($c);
+    $startcol = (FaqPeer::NUM_COLUMNS - FaqPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+    FaqI18nPeer::addSelectColumns($c);
+
+    $c->addJoin(FaqPeer::ID, FaqI18nPeer::FAQ_ID);
+    $c->add(FaqI18nPeer::CULTURE, $culture);
+
+    $rs = BasePeer::doSelect($c, $con);
+    $results = array();
+
+    while($rs->next()) {
+
+      $omClass = FaqPeer::getOMClass();
+
+      $cls = Propel::import($omClass);
+      $obj1 = new $cls();
+      $obj1->hydrate($rs);
+      $obj1->setCulture($culture);
+
+      $omClass = FaqI18nPeer::getOMClass($rs, $startcol);
+
+      $cls = Propel::import($omClass);
+      $obj2 = new $cls();
+      $obj2->hydrate($rs, $startcol);
+
+      $obj1->setFaqI18nForCulture($obj2, $culture);
+      $obj2->setFaq($obj1);
+
+      $results[] = $obj1;
+    }
+    return $results;
+  }
+
 	
 	public static function getTableMap()
 	{

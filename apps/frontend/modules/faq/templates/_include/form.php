@@ -11,7 +11,7 @@
 	<tr>
 		<td valign="top">
 			<div class="rowTextArea">
-				<div class="label">Digite sua dúvida</div>
+				<div class="label"><?php echo __('faq.typeYourQuestion') ?></div>
 				<div class="field">
 					<?php echo textarea_tag('question', null, array('id'=>'faqQuestion', 'rows'=>5, 'cols'=>200)) ?><br/>
 				</div>
@@ -23,7 +23,7 @@
 			<div class="row">
 				<div class="label"></div>
 				<div class="field">
-					Máx. 140 caracteres
+					<?php echo __('faq.max140Chars') ?>
 				</div>
 			</div>
 		</td>

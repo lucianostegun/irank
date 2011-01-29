@@ -243,7 +243,7 @@
 		  </foreign-key>
 	</table>
 
-	<table name="faq" phpName="Faq">
+	<table name="faq" phpName="Faq" isI18n="true" i18nTable="faq_i18n">
 		<column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
 		<column name="question" type="VARCHAR" size="200" />
 		<column name="answer" type="LONGVARCHAR" />
@@ -251,6 +251,16 @@
 		<column name="visible" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="faq_i18n" phpName="FaqI18n">
+		<column name="faq_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="culture" type="CHAR" size="5" required="true" primaryKey="true" isCulture="true" />
+		<column name="question_i18n" type="VARCHAR" size="200" />
+		<column name="answer_i18n" type="LONGVARCHAR" />
+		  <foreign-key foreignTable="faq">
+		    <reference local="faq_id" foreign="id" />
+		  </foreign-key>
 	</table>
 
 	<table name="log" phpName="Log"> 
@@ -357,6 +367,48 @@
 		<column name="updated_at" type="TIMESTAMP" />
 		  <foreign-key foreignTable="user_site">
 		    <reference local="user_site_id" foreign="id" />
+		  </foreign-key>
+	</table>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<table name="user_admin" phpName="UserAdmin">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="people_id" type="INTEGER" />
+		<column name="username" type="VARCHAR" size="50" />
+		<column name="password" type="VARCHAR" size="40" />
+		<column name="active" type="BOOLEAN" />
+		<column name="master" type="BOOLEAN" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="last_access_date" type="TIMESTAMP" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="people" onDelete="CASCADE">
+		    <reference local="people_id" foreign="id" />
 		  </foreign-key>
 	</table>
 

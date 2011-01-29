@@ -19,6 +19,18 @@ class Faq extends BaseFaq
 		return FaqPeer::doSelect( $criteria );
 	}
 	
+	public function getQuestion(){
+		
+		$this->setCulture(MyTools::getCulture());
+		return $this->getQuestionI18n();
+	}
+	
+	public function getAnswer(){
+		
+		$this->setCulture(MyTools::getCulture());
+		return $this->getAnswerI18n();
+	}
+	
 	public function notify(){
 
 		$userSiteObj  = UserSite::getCurrentUser();

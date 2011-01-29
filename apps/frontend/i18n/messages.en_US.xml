@@ -208,7 +208,7 @@
 
 			<trans-unit>
 				<source>home.mobile</source>
-				<target>Access the iRank's mobile version.<br/>
+				<target>Access the iRank's mobile version.&lt;br/&gt;
 						There you can find everything about your rankings,&lt;br/&gt;
 						beside posting the event's results in real time.</target>
 			</trans-unit>
@@ -640,7 +640,7 @@
 			
 			<trans-unit>
 				<source>form.error.invalidRankingName</source>
-				<target>The ranking name typed is not valid.\nThe ranking must start with a letter, and may have only letters, numbers and ()-_ chars</target>
+				<target>The ranking name typed is not valid.\nThe ranking must start with a letter, and may have only letters, numbers and ()-_ characters</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.takenRankingName</source>
@@ -915,11 +915,11 @@
 			</trans-unit>
 			<trans-unit>
 				<source>leftChars</source>
-				<target>left chars</target>
+				<target>left characters</target>
 			</trans-unit>
 			<trans-unit>
 				<source>leftChar</source>
-				<target>left char</target>
+				<target>left character</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.commentTab.commentText</source>
@@ -1364,6 +1364,141 @@
 			<trans-unit>
 				<source>email.subject.eventPhotoComment</source>
 				<target>Comments on picture of event %eventName% (%eventPhotoCommentCode%)</target>
+			</trans-unit>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<trans-unit>
+				<source>accessDenied.title</source>
+				<target>Access denied</target>
+			</trans-unit>
+			<trans-unit>
+				<source>accessDenied.message</source>
+				<target>
+					This page you are trying to acess is only available for registred users!&lt;br/&gt;
+					If you are not an user yet %link% and sign up for free.&lt;br/&gt;&lt;br/&gt;
+					But if you are already an user, log in on left panel of this page.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>passwordRecovery.title</source>
+				<target>Password recovery</target>
+			</trans-unit>
+			<trans-unit>
+				<source>passwordRecovery.intro</source>
+				<target>
+					If you are already an &lt;b&gt;iRank&lt;/b&gt; user but you don't remember your access password&lt;br/&gt;
+					fill the form bellow and input your username and e-mail to receive&lt;br/&gt;
+					an e-mail with a new password.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.resetPassword</source>
+				<target>Reset my password</target>
+			</trans-unit>
+			<trans-unit>
+				<source>login.passwordRecovery.resetPasswordError</source>
+				<target>Error reseting your password! Please, try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>login.passwordRecovery.successMessage</source>
+				<target>
+					Your password has been reseted successfully!&lt;br/&gt;
+					A message was sent by e-mail with your new password.&lt;br/&gt;&lt;br/&gt;
+					We recommend you access your e-mail, login and change your password&lt;br/&gt;
+					by clicking on &lt;b&gt;MY iRANK&lt;/b&gt; on top menu.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>homeLink</source>
+				<target>to go back to the home page</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.passwordRecovery</source>
+				<target>Password recovery</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.passwordRecoveryError</source>
+				<target>Username/E-mail not found</target>
+			</trans-unit>
+			
+			
+			
+			
+			<trans-unit>
+				<source>faq.title</source>
+				<target>FAQ - Frequent ASked Questions</target>
+				<target>FAQ - Dúvidas frequentes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.intro</source>
+				<target>
+					F.A.Q. is an area where you find objective answers for frequent user questions.&lt;br/&gt;
+					Click on question to see the answer. If your question is not listed here, click on &lt;b&gt;Send my question&lt;/b&gt;&lt;br/&gt;
+					to send us a new question.
+				</target>
+				<target>
+					O F.A.Q. é uma área de ajuda onde você encontra respostas objetivas para dúvidas frequentes dos usuários.&lt;br/&gt;
+					Clique sobre a pergunta para visualizar a resposta. Caso sua dúvida não esteja listada clique no botão &lt;b&gt;Enviar minha dúvida&lt;/b&gt;.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.sendMyQuestion</source>
+				<target>Send my question</target>
+				<target>Enviar minha dúvida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.formError</source>
+				<target>Error sending your question! Please, try again.</target>
+				<target>Erro ao enviar a dúvida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.questionForm</source>
+				<target>New question form</target>
+				<target>Formulário de envio de dúvida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.questionForm</source>
+				<target>New question form</target>
+				<target>Formulário de envio de dúvida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.typeYourQuestion</source>
+				<target>Type your question</target>
+				<target>Digite sua dúvida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.max140Chars</source>
+				<target>Max. 140 characters</target>
+				<target>Máx. 140 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.questionSent</source>
+				<target>Question sent</target>
+				<target>Dúvida enviada</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.successMessage</source>
+				<target>
+					Your question has been successfully sent!&lt;br/&gt;
+					It'll be analyzed and published soon.&lt;br/&gt;&lt;br/&gt;
+					&lt;b&gt;%link%&lt;/b&gt; to send another question.
+				</target>
+				<target>
+					Sua dúvida foi enviada com sucesso!&lt;br/&gt;
+					Ela será analisada e publicada em breve.&lt;br/&gt;&lt;br/&gt;
+					&lt;b&gt;%link%&lt;/b&gt; para enviar outra dúvida.
+				</target>
 			</trans-unit>
 		</body>
 	</file>

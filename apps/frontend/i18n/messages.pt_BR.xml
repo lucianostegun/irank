@@ -1369,6 +1369,72 @@
 				<target>Comentários em foto do evento %eventName% (%eventPhotoCommentCode%)</target>
 			</trans-unit>
 			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<trans-unit>
+				<source>accessDenied.title</source>
+				<target>Acesso negado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>accessDenied.message</source>
+				<target>
+					A área que você está tentando acessar é exclusiva a usuários!&lt;br/&gt;
+					Se você ainda não é cadastrado %link% e cadastre-se gratuitamente.&lt;br/&gt;&lt;br/&gt;
+					Caso você já seja um usuário utilize o login no painel à esquerda.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>passwordRecovery.title</source>
+				<target>Recuperação de senha</target>
+			</trans-unit>
+			<trans-unit>
+				<source>passwordRecovery.intro</source>
+				<target>
+					Se você é um usuário cadastrado mas não lembra sua senha&lt;br/&gt;
+					utilize o formulário abaixo e informe seu nome de usuário e seu e-mail&lt;br/&gt;
+					para receber uma mensagem contendo uma nova senha.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.resetPassword</source>
+				<target>Redefinir minha senha</target>
+			</trans-unit>
+			<trans-unit>
+				<source>login.passwordRecovery.resetPasswordError</source>
+				<target>Erro ao redefinir sua senha</target>
+			</trans-unit>
+			<trans-unit>
+				<source>login.passwordRecovery.successMessage</source>
+				<target>
+					Sua senha foi redefinida com sucesso!&lt;br/&gt;
+					Uma mensagem foi enviada ao e-mail informado contendo a nova senha.&lt;br/&gt;&lt;br/&gt;
+					Recomendamos que acesse seu e-mail, faça seu login e altere sua senha&lt;br/&gt;
+					clicando em &lt;b&gt;MY iRANK&lt;/b&gt; no menu principal.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>homeLink</source>
+				<target>para voltar à página inicial</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.passwordRecovery</source>
+				<target>Recuperação de senha</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.passwordRecoveryError</source>
+				<target>Usuário/E-mail não encontrados</target>
+			</trans-unit>
+			
 		</body>
 	</file>
 </xliff>
