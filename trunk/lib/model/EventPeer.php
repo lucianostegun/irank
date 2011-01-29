@@ -35,9 +35,11 @@ class EventPeer extends BaseEventPeer
 		
 		$eventObj = parent::retrieveByPK($pk, $con);
 		
-		if( !is_object($eventObj) )
-			throw new Exception('Evento não encontrado!');
-		else
+		if( !is_object($eventObj) ){
+		
+			Util::getHelper('i18n');	
+			throw new Exception(__('eventNotFound'));
+		}else
 			return $eventObj;
 	}
 	

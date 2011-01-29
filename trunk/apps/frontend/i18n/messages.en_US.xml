@@ -689,7 +689,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>Allow</source>
-				<target>Allow</target>
+				<target>Enable</target>
 			</trans-unit>
 			<trans-unit>
 				<source>Deny</source>
@@ -936,7 +936,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.commentTab.commentDeleteError</source>
-				<target>The comment could not be deleted!\nTry again later.</target>
+				<target>The comment could not be deleted!\nPlease, try again.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>button.publish</source>
@@ -976,7 +976,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.commentsTab.photoDeleteError</source>
-				<target>This picture could not be deleted!\nTry again later.</target>
+				<target>This picture could not be deleted!\nPlease, try again.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.commentsTab.photoDeleteConfirm</source>
@@ -991,6 +991,361 @@
 				<target>Comments on event %eventCode%</target>
 			</trans-unit>
 
+
+
+
+
+
+
+
+
+
+			<trans-unit>
+				<source>myAccount.defaultLanguage</source>
+				<target>Default language</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.successMessage</source>
+				<target>Your profile has been successfully updated!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.errorMessage</source>
+				<target>Error saving your profile! Please check the highlighted fields.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playerListLoadError</source>
+				<target>Error updating player list!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.playersTab.playerDeleteError</source>
+				<target>This player could not be deleted!\nPlease, try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.classifyTab.logLoadError</source>
+				<target>Ranking log could not be loaded!\nPlease, try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.classifyTab.shareError</source>
+				<target>Error sharing this ranking with selected user!\nPlease, try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.deleteConfirm</source>
+				<target>WARNING!\n\nDelete this ranking will result on lost of all events and results information!\nAll players of this ranking will be notified.\n\nDo you really want to delete this ranking?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.deleteError</source>
+				<target>Error deleting this ranking!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>tryAgain</source>
+				<target>Please, try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.exception.editionDenied</source>
+				<target>You have no permission to edit this ranking information!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.exception.rankingNotFound</source>
+				<target>Ranking not found!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.exception.deleteAttempt</source>
+				<target>You have no permission to delete this ranking!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.exception.deletePlayerError</source>
+				<target>This player can not be deleted from this ranking!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.exception.shareError</source>
+				<target>Error sharing ranking with this player!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>playerNotFound</source>
+				<target>Player not found</target>
+			</trans-unit>
+			<trans-unit>
+				<source>rakning.noRankingLog</source>
+				<target>There is no ranking log for date %date%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.rankingDelete</source>
+				<target>Ranking %rankingName% has been deleted</target>
+			</trans-unit>
+			<trans-unit>
+				<source>disable</source>
+				<target>Disable</target>
+			</trans-unit>
+			<trans-unit>
+				<source>enable</source>
+				<target>Enable</target>
+			</trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+			<trans-unit>
+				<source>event.playersTab.togglePresence</source>
+				<target>Confirm/Cancel presence</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.removePlayer</source>
+				<target>Remove player from this event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.unableToShare</source>
+				<target>Unable to disable this user for edit this event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.shareMessage</source>
+				<target>%shareMessage% player to edit this event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.noGuests</source>
+				<target>This event has no guests yet</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenPlaceName</source>
+				<target>There is already a place registred with this name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidUrl</source>
+				<target>This is not a valid URL</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max20</source>
+				<target>Enter a value of up to 20 characters</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.resultTab.noPlayer</source>
+				<target>This event has no player to compose a result</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.resultTab.footerMessage</source>
+				<target>All players will receive an e-mail with the saved result</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.saveResultConfirm</source>
+				<target>WARNING!\n\After saved the result will be sent by e-mail to all players and it will be available for editin until a later event is created\n\nDo you want to proceed?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.errorSavingMyPresence</source>
+				<target>Error saving your presence status for this event! Please, try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.playerDeleteConfirm</source>
+				<target>Do you really want to remove this player from event?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.playerDeleteError</source>
+				<target>The player could not be removed from this event!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.togglePresenceError</source>
+				<target>Presence status could not be defined!\nPLease, try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.presenceNotifyConfirm</source>
+				<target>Do you want guests to be notified?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.mainTab.rankingPlaceLoadingError</source>
+				<target>Unable to load ranking place list!\nPlease, select the ranking again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.cloneConfirm</source>
+				<target>By cloning an event you will be directed to a the cloned event editing and should edit the information before saving.\n\nDo you want to proceed?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.deleteConfirm</source>
+				<target>WARNING!\n\nBy deleting this event all result information will be lost and that will afect the main ranking.\Players will be notified about the exclusion.\n\nDo you really want to delete this event?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.deleteError.</source>
+				<target>Error deleting this event!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.searchError</source>
+				<target>Error do search event list.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.shareError</source>
+				<target>Unable to enable player for editing this event!\nPlease, try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>eventNotFound</source>
+				<target>Event not found</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.numberGreaterThan0</source>
+				<target>Enter a number greater than 0.00</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidInteger</source>
+				<target>Enter a integer number</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.positionConflict</source>
+				<target>Conflict found for position %position%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.sequencePosition</source>
+				<target>The position list must be sequencial with no gap</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.lockedEvent</source>
+				<target>This event is locked for editing</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventResult</source>
+				<target>Event result @ %eventName%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventChangeNotify</source>
+				<target>Event change notify</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventCreateNotify</source>
+				<target>Event creation notify</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventDeleteNotify</source>
+				<target>Event %eventName% has been deleted</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.congratMessage</source>
+				<target>Congratulations, you took %eventPosition%%sufix% place in this event.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>today</source>
+				<target>today</target>
+			</trans-unit>
+			<trans-unit>
+				<source>inDays</source>
+				<target>in %days% days</target>
+			</trans-unit>
+			<trans-unit>
+				<source>tomorrow</source>
+				<target>tomorrow</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventReminder</source>
+				<target>Event reminder @ %eventName%</target>
+			</trans-unit>
+			
+			
+			
+			
+			<trans-unit>
+				<source>event.button.confirmPresence</source>
+				<target>Confirm presence</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.button.notGoing</source>
+				<target>I'm not going</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.button.maybe</source>
+				<target>Maybe</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.intro</source>
+				<target>Guest list for this event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Ask</source>
+				<target>Ask</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Yes</source>
+				<target>Yes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>No</source>
+				<target>No</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.notify</source>
+				<target>Notify</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Confirmed</source>
+				<target>Confirmed</target>
+			</trans-unit>
+			<trans-unit>
+				<source>NotConfirmed</source>
+				<target>Not confirmed</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.playersTab.shareBeforeDelete</source>
+				<target>Share this event with someone before remove this guest.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.exception.editionDenied</source>
+				<target>You have no permission to edit this event!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.exception.shareError</source>
+				<target>This player can not have editing permission changes!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.endOfImages</source>
+				<target>End of pictures</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.exception.notImageEventBelong</source>
+				<target>This picture does not belong to this event!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.exception.imageDeleteDenied</source>
+				<target>You have no permission to delete this picture!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.confirmPresence.title</source>
+				<target>Presence confirmed</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.confirmPresence.successMessage</source>
+				<target>
+					Your presence has been successfully confirmed on event &lt;b&gt;%eventName%&lt;/b&gt;!&lt;br/&gt;
+					All guest were notified by email about your confirmation.&lt;br/&gt;&lt;br/&gt;
+	
+					You can cancel your presence or mark yor are not sure.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.confirmPresence.link</source>
+				<target>&lt;b&gt;%link%&lt;/b&gt; to visualize all details about this event.</target>
+			</trans-unit>
+	
+	
+			<trans-unit>
+				<source>form.error.expiredDate</source>
+				<target>This date is no longer available to create a new event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenEventName</source>
+				<target>There is another event registred with this same name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidTime</source>
+				<target>This is not a valid time</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual0</source>
+				<target>Enter a number greater or equal to 0</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max140</source>
+				<target>Enter a value of up to 140 characters</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

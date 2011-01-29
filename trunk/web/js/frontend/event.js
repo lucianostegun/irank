@@ -58,7 +58,7 @@ function hasResult(){
 
 function doSubmitEvent(content){
 
-	if( !_SaveResultAlert && hasResult() && !confirm('ATENÇÃO!\n\nOs resultados salvos serão enviados por e-mail a todos os convidados e estarão disponíveis para edição até que outro evento posterior seja criado.\n\nDeseja prosseguir?') )
+	if( !_SaveResultAlert && hasResult() && !confirm(i18n_event_saveResultConfirm) )
 		return false;
 	
 	_SaveResultAlert = true;
@@ -99,7 +99,7 @@ function chooseMyPresence(choice){
 
 		hideIndicator('event');
 		
-		alert('Não foi possível definir sua presença no evento!Tente novamente em alguns instantes.')
+		alert(i18n_event_saveMyPresenceError)
 		
 		if( isDebug() )
 			debug(content);
@@ -111,7 +111,7 @@ function chooseMyPresence(choice){
 
 function removePlayer(peopleId){
 	
-	if( !confirm('Deseja realmente remover este jogador do evento?') )
+	if( !confirm(i18n_event_playersTab_playerDeleteConfirm) )
 		return false;
 	
 	showIndicator('event');
@@ -137,9 +137,11 @@ function removePlayer(peopleId){
 	var failureFunc = function(t){
 
 		var content = t.responseText;
-
+		
 		hideIndicator('event');
-		alert('Ocorreu um erro ao remover o jogador do evento!\nTente novamente mais tarde.');
+		
+		var errorMessage = parseMessage(content);
+		alert(i18n_event_playersTab_playerDeleteError+'\n'+(errorMessage?errorMessage:i18n_tryAgain));
 		
 		if( isDebug() )
 			debug(content);
@@ -200,7 +202,7 @@ function togglePresence(peopleId){
 		var content = t.responseText;
 
 		hideIndicator('event');
-		alert('Ocorreu um erro ao confirmar a presença!\nTente novamente mais tarde.');
+		alert(i18n_event_playersTab_togglePresenceError);
 		
 		if( isDebug() )
 			debug(content);
@@ -209,7 +211,7 @@ function togglePresence(peopleId){
 	var notify = $('sendNotify').value;
 	
 	if( notify=='ask' )
-		notify = confirm('Deseja que os convidados sejam notificados?');
+		notify = confirm(i18n_event_playersTab_presenceNotifyConfirm);
 	
 	notify = (notify=='0'?false:notify);
 	
@@ -290,7 +292,7 @@ function loadRankingPlaceList(rankingId, rankingPlaceId){
 	
 	var failureFunc = function(t){
 		
-		alert('Não foi possível carregar as opções de locais!\nSelecione o ranking novamente.');
+		alert(i18n_event_mainTab_rankingPlaceLoadingError);
 		$('eventRankingPlaceIdDiv').innerHTML = getEmptySelect;
 		
 		if( isDebug() ){
@@ -317,14 +319,14 @@ function checkRankingPlace(rankingPlaceId){
 
 function cloneEvent(eventId){
 	
-	if( !confirm('Ao clonar um evento você será direcionado para a edição do evento clonado e deverá editar as informações antes de salvar.\n\nDeseja realmente clonar este evento?') )
+	if( !confirm(i18n_event_cloneConfirm) )
 		return false;
 	goModule('event', 'cloneEvent', 'eventId', eventId);
 }
 
 function doDeleteEvent(){
 	
-	if( !confirm('ATENÇÃO!\n\nAo excluir o evento todas as informações de resultados serão perdidas e isso afetará o ranking.\nOs participantes do evento serão notificados da exclusão.\n\n Deseja realmente excluir este evento?') )
+	if( !confirm(i18n_event_deleteConfirm) )
 		return false;
 	
 	showIndicator('event');
@@ -354,7 +356,7 @@ function doDeleteEvent(){
 		enableButton('deleteEvent');
 		
 		var errorMessage = parseMessage(content);
-		alert('Não foi possível excluir o evento!\n'+(errorMessage?errorMessage:'Tente novamente mais tarde.'));
+		alert(i18n_event_deleteError+'\n'+(errorMessage?errorMessage:i18n_tryAgain));
 		
 		if( !errorMessage && isDebug() )
 			debug(content);
@@ -403,7 +405,7 @@ function doEventSearch(){
 		hideIndicator();
 		
 		var errorMessage = parseMessage(content);
-		alert('Ocorreu um erro ao pesquisar os eventos.'+(errorMessage?'\n'+errorMessage:''));
+		alert(i18n_event_searchError+(errorMessage?'\n'+errorMessage:''));
 		
 		if( !errorMessage && isDebug() )
 			debug(content);
@@ -428,11 +430,11 @@ function toggleEventShare(peopleId){
 		if( content=='lock' ){
 			
 			$('eventShare'+peopleId).src   = $('eventShare'+peopleId).src.replace('lock', 'unlock');
-			$('eventShare'+peopleId).title = $('eventShare'+peopleId).title.replace('Habilitar', 'Desabilitar');
+			$('eventShare'+peopleId).title = $('eventShare'+peopleId).title.replace(i18n_enable, i18n_disable);
 		}else{
 			
 			$('eventShare'+peopleId).src   = $('eventShare'+peopleId).src.replace('unlock', 'lock');
-			$('eventShare'+peopleId).title = $('eventShare'+peopleId).title.replace('Desabilitar', 'Habilitar');
+			$('eventShare'+peopleId).title = $('eventShare'+peopleId).title.replace(i18n_disable, i18n_enable);
 		}
 		
 		hideIndicator('eventPlayerList');
@@ -442,7 +444,7 @@ function toggleEventShare(peopleId){
 
 		var content = t.responseText;
 
-		alert('Não foi possível habilitar o convidado para edição do evento!\nTente novamente mais tarde.')
+		alert(i18n_event_playersTab_shareError)
 		hideIndicator('eventPlayerList');
 		
 		if( isDebug() )

@@ -26,14 +26,9 @@ class EventPlayerPeer extends BaseEventPlayerPeer
 		return $eventPlayerObj;
 	}
 	
-	public static function doSelectRS(Criteria $criteria, $con = null){
-		
-		$criteria->addAnd( self::DELETED, false );
-		
-		return parent::doSelectRS($criteria, $con);
-	}
-	
 	public static function validateResult($eventId){
+		
+		Util::getHelper('I18N');
 		
 		$eventObj = EventPeer::retrieveByPK($eventId);
 		$request  = MyTools::getRequest();
@@ -52,36 +47,36 @@ class EventPlayerPeer extends BaseEventPlayerPeer
 			$prize    = $request->getParameter('prize'.$peopleId);
 			
 			if( !$buyin && $buyin!=='0' )
-				MyTools::setError('buyin'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
+				MyTools::setError('buyin'.$peopleId, __('form.error.requiredField'));
 			elseif( !Validate::isFloat($buyin) || $buyin < 0 )
-				MyTools::setError('buyin'.$peopleId, 'O valor informado não é um número válido');
+				MyTools::setError('buyin'.$peopleId, __('form.error.invalidNumber'));
 			elseif( $eventPosition && $buyin <= 0 )
-				MyTools::setError('buyin'.$peopleId, 'Informe um valor maior que 0,00');
+				MyTools::setError('buyin'.$peopleId, __('form.error.numberGraterThan0'));
 			
 			if( !$rebuy && $rebuy!=='0' )
-				MyTools::setError('rebuy'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
+				MyTools::setError('rebuy'.$peopleId, __('form.error.requiredField'));
 			elseif( !Validate::isFloat($rebuy) || $rebuy < 0 )
-				MyTools::setError('rebuy'.$peopleId, 'O valor informado não é um número válido');
+				MyTools::setError('rebuy'.$peopleId, __('form.error.invalidNumber'));
 				
 			if( !$addon && $addon!=='0' )
-				MyTools::setError('addon'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
+				MyTools::setError('addon'.$peopleId, __('form.error.requiredField'));
 			elseif( !Validate::isFloat($addon) || $addon < 0 )
-				MyTools::setError('addon'.$peopleId, 'O valor informado não é um número válido');
+				MyTools::setError('addon'.$peopleId, __('form.error.invalidNumber'));
 				
 			if( !$eventPosition && $eventPosition!=='0' )
-				MyTools::setError('eventPosition'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
+				MyTools::setError('eventPosition'.$peopleId, __('form.error.requiredField'));
 			elseif( !Validate::isInteger($eventPosition) || $eventPosition < 0 )
-				MyTools::setError('eventPosition'.$peopleId, 'O valor informado não é um número inteiro válido');
+				MyTools::setError('eventPosition'.$peopleId, __('form.error.invalidInteger'));
 			
 			if( !$prize && $prize!=='0' )
-				MyTools::setError('prize'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
+				MyTools::setError('prize'.$peopleId, __('form.error.requiredField'));
 			elseif( !Validate::isFloat($prize) || $prize < 0 )
-				MyTools::setError('prize'.$peopleId, 'O valor informado não é um número válido');
+				MyTools::setError('prize'.$peopleId, __('form.error.invalidNumber'));
 			
 			if( $eventPosition!=-'0' && $peopleIdConflict = array_search($eventPosition, $eventPositionList) ){
 				
-				MyTools::setError('eventPosition'.$peopleId, 'Ocorreu um conflito de posições para a posição '.$eventPosition);
-				MyTools::setError('eventPosition'.$peopleIdConflict, 'Ocorreu um conflito de posições para a posição '.$eventPosition);
+				MyTools::setError('eventPosition'.$peopleId, __('form.error.positionConflict', array('%position%'=>$eventPosition)));
+				MyTools::setError('eventPosition'.$peopleIdConflict, __('form.error.positionConflict', array('%position%'=>$eventPosition)));
 			}else{
 				
 				if( Validate::isInteger($eventPosition) && $eventPosition!='0' )
@@ -97,7 +92,7 @@ class EventPlayerPeer extends BaseEventPlayerPeer
   			
   			$peopleId = array_search($eventPosition, $eventPositionList);
   			if( $eventPosition!=$position++ )
-  				MyTools::setError('eventPosition'.$peopleId, 'As posições informadas devem ser sequenciais e sem cortes');
+  				MyTools::setError('eventPosition'.$peopleId, __('form.error.sequencePosition'));
   		}
   		
 		return !$request->hasErrors();

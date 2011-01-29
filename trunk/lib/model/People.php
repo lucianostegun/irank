@@ -44,9 +44,11 @@ class People extends BasePeople
 		return $firstName.($lastName?' '.$lastName:'');
 	}
 	
-	public static function getQuickPeople($firstName, $lastName=null, $peopleType, $peopleId=null){
+	public static function getQuickPeople($firstName, $lastName=null, $peopleType, $peopleId=null, $defaultLanguage=null){
 
-		$peopleTypeId = VirtualTable::getIdByTagName('peopleType', $peopleType);
+		$peopleTypeId    = VirtualTable::getIdByTagName('peopleType', $peopleType);
+		$culture         = MyTools::getCulture();
+		$defaultLanguage = ($defaultLanguage?$defaultLanguage:$culture);
 
 		if( $peopleId )
 			$peopleObj = PeoplePeer::retrieveByPK($peopleId);
@@ -57,6 +59,7 @@ class People extends BasePeople
 		$peopleObj->setFirstName($firstName);
 		$peopleObj->setLastName($lastName);
 		$peopleObj->setFullName($firstName.($lastName?' '.$lastName:''));
+	  	$peopleObj->setDefaultLanguage( $defaultLanguage );
 		$peopleObj->setEnabled(true);
 		$peopleObj->setVisible(true);
 		$peopleObj->save();
@@ -69,10 +72,12 @@ class People extends BasePeople
 	  	$firstName = $request->getParameter('firstName');
 	  	$lastName  = $request->getParameter('lastName');
 	  	$birthday  = $request->getParameter('birthday');
+	  	$culture   = MyTools::getCulture();
 	
 	  	$this->setFirstName( $firstName );
 	  	$this->setLastName( $lastName );
 	  	$this->setBirthday( Util::formatDate($birthday) );
+	  	$this->setDefaultLanguage( $culture );
 	  	$this->setEnabled(true);
 	  	$this->setVisible(true);
 	  	$this->save();

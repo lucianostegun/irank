@@ -2,5 +2,4 @@ all:
   propel:
     class:          sfPropelDatabase
     param:
-#      dsn:          pgsql://irank:ir4nkc0mbr2010@pgsql.irank.com.br/irank
       dsn:          pgsql://postgres:unidunite@localhost/irank

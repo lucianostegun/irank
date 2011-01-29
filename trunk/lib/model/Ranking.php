@@ -162,7 +162,8 @@ class Ranking extends BaseRanking
 			$this->save();
 		}else{
 			
-			throw new Exception('Membro não encontrado');
+			Util::getHelper('i18n');
+			throw new Exception(__('playerNotFound'));
 		}
 	}
 	
@@ -508,9 +509,11 @@ class Ranking extends BaseRanking
 		$criteria->addAscendingOrderByColumn( RankingHistoryPeer::TOTAL_RANKING_POSITION );
 		$rankingHistoryObjList = RankingHistoryPeer::doSelect($criteria);
 		
-		if( count($rankingHistoryObjList)==0 )
-			throw new Exception('Não existe histórico para este ranking na data '.$rankingDate);
-		else
+		if( count($rankingHistoryObjList)==0 ){
+		
+			Util::getHelper('i18n');
+			throw new Exception(__('ranking.noRankingLog', array('%date%'=>$rankingDate)));
+		}else
 			return $rankingHistoryObjList;
 	}
 	
@@ -576,6 +579,8 @@ class Ranking extends BaseRanking
 	
 	public function notifyDelete(){
 
+		Util::getHelper('i18n');
+
 		$emailContent = AuxiliarText::getContentByTagName('rankingDeleteNotify');
 
 		$peopleObj    = People::getCurrentPeople();
@@ -594,7 +599,7 @@ class Ranking extends BaseRanking
 		
 		$emailAddressList = $this->getEmailAddressList();
 		
-		Report::sendMail('Exclusão do ranking @ '.$this->getRankingName(), $emailAddressList, $emailContent);
+		Report::sendMail(__('email.subject.rankingDelete', array('%rankingName%'=>$this->getRankingName())), $emailAddressList, $emailContent);
 	}
 	
 	public function getEmailClassifyList(){

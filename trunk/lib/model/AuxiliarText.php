@@ -77,10 +77,10 @@ class AuxiliarText extends BaseAuxiliarText
 		$criteria->add( AuxiliarTextPeer::DELETED, false );
 		$criteria->add( AuxiliarTextPeer::TAG_NAME, $tagName );
 		$auxiliarTextObj = AuxiliarTextPeer::doSelectOne( $criteria );
-		
+
 		if( !is_object($auxiliarTextObj) )
 			return null;
-		
+
 		$content = $auxiliarTextObj->getContent($noCulture);
 		
 		if( $encodeUTF8 )
@@ -98,7 +98,7 @@ class AuxiliarText extends BaseAuxiliarText
 			$culture  = MyTools::getCulture();
 			$filePath = str_replace('templates', 'templates'.DIRECTORY_SEPARATOR.$culture, $filePath);
 		}
-		
+
 		return file_get_contents($filePath);
 	}
 	

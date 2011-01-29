@@ -8,7 +8,7 @@ validators:
     class:           sfCallbackValidator
     param:
       callback:      [EventPeer, validateEventDate]
-      invalid_error: A data informada não pode mais ser utilizada para eventos
+      invalid_error: form.error.expiredDate
       
 fields:
        
@@ -21,7 +21,7 @@ fields:
       msg:       form.error.requiredField
     sfCallbackValidator:
       callback:      [EventPeer, uniqueEventName]
-      invalid_error: Já existe um evento cadastrado com este nome para esta mesma data
+      invalid_error: form.error.takenEventName
        
   rankingPlaceId:
     required:
@@ -38,25 +38,25 @@ fields:
       msg:       form.error.requiredField
     sfCallbackValidator:
       callback:      [Validate, validateTime]
-      invalid_error: A hora informada não é uma data válida
+      invalid_error: form.error.invalidTime
        
   paidPlaces:
     required:
       msg:       form.error.requiredField
     sfNumberValidator:
       min_error: 1
-      min_error: Informe um valor maior que 0
-      nan_error: O valor informado não é um número válido
+      min_error: form.error.greaterThan0
+      nan_error: form.error.invalidNumber
        
   buyin:
     required:
       msg:       form.error.requiredField
     sfNumberValidator:
       min:       0
-      min_error: Informe um valor maior ou igual a 0
-      nan_error: Informe um número válido maior ou igual a 0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
        
   comments:
     sfStringValidator:
       max:       140
-      max_error: Informe um valor de até 140 caracteres
+      max_error: form.error.max140

@@ -154,18 +154,20 @@ class EventPlayer extends BaseEventPlayer
 		
 		if( $inviteStatus && $this->getEnabled() )
        		HomeWall::doLog('confirmou presença no evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', true, null, $this->getPeople()->getFirstName());
-		
+
 		if( $inviteStatus && $this->getInviteStatus()=='no' )
-       		HomeWall::doLog('não vai ao evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', null, $this->getPeople()->getFirstName());
+       		HomeWall::doLog('não vai ao evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', true, null, $this->getPeople()->getFirstName());
 	}
 
 	public function getInviteStatusDescription(){
 		
+		Util::getHelper('I18N');
+		
 		switch($this->getInviteStatus()){
 			case 'yes':
-				return 'Confirmado';
+				return __('Confirmed');
 			default:
-				return 'Não confirmado';
+				return __('NotConfirmed');
 		}
 	}
 }

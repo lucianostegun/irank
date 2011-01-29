@@ -1,5 +1,5 @@
 <?php
-	$successMessage = __('form.statusSuccessMessage');
+	$successMessage = ($successMessage?$successMessage:__('form.statusSuccessMessage'));
 	$errorMessage   = ($errorMessage?$errorMessage:__('form.statusErrorMessage'))
 ?>
 <div id="formStatusError<?php echo ucfirst($statusId) ?>Div" class="formStatusDiv">

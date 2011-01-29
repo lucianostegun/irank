@@ -4,6 +4,7 @@
 	$receiveEventReminder3           = $userSiteObj->getOptionValue('receiveEventReminder3');
 	$receiveEventReminder7           = $userSiteObj->getOptionValue('receiveEventReminder7');
 	$receiveEventCommentNotify       = $userSiteObj->getOptionValue('receiveEventCommentNotify');
+	$defaultLanguage                 = $userSiteObj->getPeople()->getDefaultLanguage();
 ?>
 
 <table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px">
@@ -12,6 +13,12 @@
 	</tr>
 	<tr>
 		<td valign="top" class="defaultForm">
+			<div class="row">
+				<div class="label"><?php echo __('myAccount.defaultLanguage') ?></div>
+				<div class="field"><?php echo select_tag('defaultLanguage', options_for_select(array('en_US'=>'English', 'pt_BR'=>'Português'), $defaultLanguage)) ?></div>
+			</div>
+			<hr/>
+			
 			<div class="rowCheckbox">
 				<div class="field"><?php echo checkbox_tag('receiveFriendEventConfirmNotify', true, $receiveFriendEventConfirmNotify) ?></div>
 				<div class="label"><label for="receiveFriendEventConfirmNotify"><?php echo __('myAccount.email.receiveFriendEventConfirmNotify') ?></label></div>
