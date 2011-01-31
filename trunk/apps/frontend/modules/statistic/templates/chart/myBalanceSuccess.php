@@ -1,7 +1,8 @@
 <?php
+Util::getHelper('I18N');
+
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
 $peopleObj  = PeoplePeer::retrieveByPK($peopleId);
-
 
 $libDir = sfConfig::get('sf_lib_dir');
 
@@ -41,16 +42,16 @@ $DataSet->AddPoint($totalPrizeList,'totalPrize');
 $DataSet->AddPoint($totalBalanceList,'totalBalance');
 
 $DataSet->SetSerieName('B+R+A','paidValue');
-$DataSet->SetSerieName('Ganhos','prizeValue');
-$DataSet->SetSerieName('Balanço','balanceValue');
-$DataSet->SetSerieName('B+R+A acumulado','totalPaid');
-$DataSet->SetSerieName('Ganhos acumulado','totalPrize');
-$DataSet->SetSerieName('Balanço acumulado','totalBalance');
+$DataSet->SetSerieName(__('statistic.chart.profit'),'prizeValue');
+$DataSet->SetSerieName(__('statistic.chart.balance'),'balanceValue');
+$DataSet->SetSerieName(__('statistic.chart.totalBRA'),'totalPaid');
+$DataSet->SetSerieName(__('statistic.chart.totalProfit'),'totalPrize');
+$DataSet->SetSerieName(__('statistic.chart.totalBalance'),'totalBalance');
 
 $DataSet->AddPoint($eventDateList,'eventDateList');
 $DataSet->SetAbsciseLabelSerie('eventDateList');
 
-$DataSet->SetYAxisName('Valores');
+$DataSet->SetYAxisName(__('statistic.chart.values'));
 $DataSet->SetYAxisFormat('int');
 
 $width=1150;
@@ -97,7 +98,7 @@ $Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
 $Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255);
 
 header('Content-Type: image/jpeg');
-header('Content-Disposition: attachment; filename=meu_balanco.png');
+header('Content-Disposition: attachment; filename='.__('statistic.fileName.myBalance').'.png');
 header('Expires: 0');
 header('Pragma: no-cache');
 
@@ -105,7 +106,7 @@ header('Pragma: no-cache');
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawLegend($width-135,35,$DataSet->GetDataDescription(),255,255,255);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',11);
-$Test->drawTitle(100,30,'Meu balanço - '.$rankingObj->getRankingName(),50,50,50);
+$Test->drawTitle(100,30,__('statistic.chart.title.myBalance').' - '.$rankingObj->getRankingName(),50,50,50);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawCredits($width, $height);
 $Test->Stroke();

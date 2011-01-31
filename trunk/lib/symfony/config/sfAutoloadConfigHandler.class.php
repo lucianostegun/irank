@@ -75,6 +75,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
         $finder = sfFinder::type('file')->ignore_version_control()->name('*'.$ext);
 
         // recursive mapping?
+        $allFiles  = ((isset($entry['all'])) ? $entry['all'] : false);
         $recursive = ((isset($entry['recursive'])) ? $entry['recursive'] : false);
         if (!$recursive)
         {
@@ -100,20 +101,31 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
         foreach ($files as $file)
         {
           preg_match_all($regex, file_get_contents($file), $classes);
-          foreach ($classes[1] as $class)
-          {
-            $prefix = '';
-            if (isset($entry['prefix']))
-            {
-              // FIXME: does not work for plugins installed with a symlink
-              preg_match('~^'.str_replace('\*', '(.+?)', preg_quote(str_replace('/', DIRECTORY_SEPARATOR, $path), '~')).'~', str_replace('/', DIRECTORY_SEPARATOR, $file), $match);
-              if (isset($match[$entry['prefix']]))
-              {
-                $prefix = $match[$entry['prefix']].'/';
-              }
-            }
+          /**
+           * CÓDIGO ALTERADO Luciano Stegun
+           */
+          if( $allFiles ){
+          	
+          	$className = ereg_replace('.*(\\\\|/)', '', $file);
+          	$className = ereg_replace('(.class)?.php$', '', $className);
+          	$data[] = sprintf("'%s%s'=>'%s',", '', $className, str_replace('\\', '\\\\', $file));
+          }else{
 
-            $data[] = sprintf("'%s%s' => '%s',", $prefix, $class, str_replace('\\', '\\\\', $file));
+	          foreach ($classes[1] as $class)
+	          {
+	            $prefix = '';
+	            if (isset($entry['prefix']))
+	            {
+	              // FIXME: does not work for plugins installed with a symlink
+	              preg_match('~^'.str_replace('\*', '(.+?)', preg_quote(str_replace('/', DIRECTORY_SEPARATOR, $path), '~')).'~', $file, $match);
+	              if (isset($match[$entry['prefix']]))
+	              {
+	                $prefix = $match[$entry['prefix']].'/';
+	              }
+	            }
+	
+	            $data[] = sprintf("'%s%s'=>'%s',", $prefix, $class, str_replace('\\', '\\\\', $file));
+	          }
           }
         }
       }

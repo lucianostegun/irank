@@ -1,0 +1,731 @@
+.defaultForm {
+
+	padding: 		10 5 10 5;
+	margin: 		10 10 10 10;
+	background: 	#F0F0F0;
+	border: 		1px solid #BBBBBB;
+}
+
+.formTitle {
+
+	padding: 				2 5 2 20;
+	margin: 				10 10 -8 10;
+	background: 			#BBBBBB url('/images/misc/arrowDown.png') no-repeat;
+	background-position: 	5 6;
+	border: 				1px solid #999999;
+	font-size: 				10pt;
+	font-weight: 			bold;
+	color: 					#FFFFFF;
+}
+
+.buttonBarForm {
+
+	padding: 		5px;
+	height: 		22px;
+	margin: 		10 25 -8 10;
+	background: 	#E5E5E5;
+	border: 		1px solid #BBBBBB;
+	background: 	url(/images/backend/buttonBarBg.png) #E5E5E5;
+}
+
+.buttonBarForm h1 {
+
+	float: 			right;
+	color: 			#777777;
+	padding: 		0 0 0 20;
+	font-size: 		12pt;
+	margin: 		3 10 5 0
+}
+
+.buttonBarFormSuccess {
+
+	padding: 		5px;
+	height: 		22px;
+	margin: 		10 10 -8 10;
+	border: 		1px solid #3D7EB0;
+	background: 	#C9E1ED;
+}
+
+.buttonBarFormError {
+
+	padding: 		5px;
+	height: 		22px;
+	margin: 		10 10 -8 10;
+	border: 		1px solid #DE7A7B;
+	background: 	#E6C0C0;
+}
+
+.buttonBar {
+
+	padding: 		5px;
+	height: 		22px;
+	margin: 		10 0 1 0;
+	background: 	url(/images/backend/buttonBarBg.png) #E5E5E5;
+	border: 		1px solid #A0A0A0;
+}
+
+.buttonBarWindow {
+
+	padding: 		5px;
+	height: 		22px;
+	margin: 		0 1 1 1;
+	background: 	#E5E5E5;
+	border: 		1px solid #A0A0A0;
+}
+
+.buttonBarWindowError {
+
+	padding: 		5px;
+	height: 		22px;
+	margin: 		0 1 1 1;
+	border: 		1px solid #DE7A7B;
+	background: 	#E6C0C0;
+}
+
+.defaultForm .row {
+
+	height: 		auto;
+	min-height: 	22px;
+	clear: 			both;
+	margin-bottom: 	2px;
+	whitespace: 	nowrap;
+	width:			100%;
+	z-index: 		10;
+
+}
+
+.defaultForm .row .label {
+
+	width: 			160px;
+	float: 			left;
+	padding: 		3 0 0 0;
+	height: 		15px;
+	height: 		21px !ie;
+	text-align: 	right;
+	font-weight: 	bold;
+	color: 			#666666;
+	margin-right: 	10px;
+}
+
+.defaultForm .row .field {
+
+	float: 			left;
+	padding: 		0px;
+	width: 			150px;
+	margin-right: 	2px;
+	padding: 		1 1 0 1;
+	padding: 		0px !ie;
+	height: 		20px;
+	height: 		23px !ie;
+	
+	text-align: 	left;
+	white-space: 	nowrap;
+}
+
+.defaultForm .row .fieldCheckbox {
+
+	float: 			left;
+	text-align: 	left;
+	padding: 		2 2 0 2;
+}
+
+.defaultForm .row .fieldRadio {
+
+	float: 			left;
+	text-align: 	left;
+	padding: 		0 0 0 0;
+	margin: 		-1 0 0 2;
+}
+
+.defaultForm .row .text {
+
+	float: 			left;
+	width: 			auto;
+	width: 			135px !ie;
+	min-width: 		135px;
+	padding: 		2 3 0 3;
+	height: 		15px;
+	height: 		19px !ie;
+	text-align: 	left;
+	color: 			#333333;
+	margin: 		0 10 0 1;
+	border:			1px solid transparent;
+}
+
+.defaultForm .row .textError {
+
+	float: 			left;
+	width: 			auto;
+	width: 			100px !ie;
+	min-width: 		100px;
+	padding: 		2 3 0 3;
+	height: 		15px;
+	height: 		19px !ie;
+	text-align: 	left;
+	color: 			#333333;
+	margin: 		0 10 0 1;
+	background: 	#E6C0C0;
+	border:			1px solid #DE7A7B;
+}
+
+.defaultForm .row .textFlex {
+
+	float: 			left;
+	padding: 		2 3 0 3;
+	height: 		15px;
+	height: 		19px !ie;
+	text-align: 	left;
+	color: 			#333333;
+	margin: 		1 10 0 0;
+	border:			1px solid transparent;
+}
+
+.defaultForm .row .textFlexError {
+
+	float: 			left;
+	padding: 		2 3 0 3;
+	height: 		15px;
+	height: 		19px !ie;
+	text-align: 	left;
+	color: 			#333333;
+	margin: 		1 10 0 0;
+	background: 	#E6C0C0;
+	border:			1px solid #DE7A7B;
+}
+
+.defaultForm .row .image {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		3 3 2 3;
+	text-align: 	left;
+}
+
+.defaultForm .row .button {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		1 2 1 2;
+	padding: 		2 2 1 2 !ie;
+	height: 		20px;
+	height: 		23px !ie;
+}
+
+.defaultForm .row .textButton {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	margin-top: 	-2px;
+	padding: 		0 2 2 2;
+	padding: 		1 2 0 2 !ie;
+	height: 		18px;
+	height: 		21px !ie;
+	cursor: 		pointer;
+}
+
+.defaultForm .row .textButton .image {
+
+	margin-top: 	2px;
+	padding: 		1 2 1 2;
+	border: 		1px solid #C0C0C0;
+	cursor: 		pointer;
+	background: 	#E0E0E0;
+}
+
+.defaultForm .row .textButton .textFlex {
+
+	margin-top: 	2px;
+	padding: 		2 5 1 5;
+	border: 		1px solid #C0C0C0;
+	cursor: 		pointer;
+	background: 	#E0E0E0;
+}
+
+.defaultForm .row .image img {
+
+	border: 	0px solid #FFFFFF;
+}
+
+.defaultForm .checkboxList {
+	
+}
+
+.defaultForm .checkboxList th input {
+
+	border: 	0px solid 
+}
+
+.defaultForm .checkboxList th image {
+
+}
+
+.defaultForm .checkboxList td {
+
+	padding-left: 	5px;
+	padding-right: 	20px
+}
+
+
+
+.tableList {
+	
+	border: 	1px solid transparent;
+}
+
+.tableListError {
+	
+	background: 	#E6C0C0;
+	border:			1px solid #DE7A7B;
+}
+
+
+.defaultForm .radioList {
+	
+}
+
+.defaultForm .radioList th input {
+
+	border: 	0px solid 
+}
+
+.defaultForm .radioList th image {
+
+}
+
+.defaultForm .radioList td {
+
+	padding-top: 	3px;
+	padding-left: 	5px;
+	padding-right: 	20px
+}
+
+
+.defaultForm .rowCheckbox {
+
+	overflow: 		hidden;
+	height: 		20px;
+	clear: 			both;
+	margin-bottom: 	3px;
+	whitespace: 	nowrap;
+}
+
+.defaultForm .rowCheckbox .label {
+
+	float: 			left;
+	padding: 		4 0 0 5;
+	height: 		15px;
+	height: 		21px !ie;
+	text-align: 	left;
+	color: 			#333333;
+	font-weight: 	normal;
+	margin-right: 	10px;
+}
+
+.defaultForm .rowCheckbox .field {
+
+	width: 			160px;
+	float: 			left;
+	padding: 		3 0 0 0;
+	height: 		15px;
+	height: 		21px !ie;
+	text-align: 	right;
+	font-weight: 	bold;
+	color: 			#666666;
+	margin-right: 	10px;
+}
+
+.searchBar {
+	
+	height: 		40px;
+	background: 	#F2F2F2;
+	border-top: 	1px solid transparent;	
+	border-bottom: 	1px solid #DDDDDD;	
+}
+
+.defaultForm input, .searchBar input {
+
+	font-size: 	8pt;
+	height: 	17px;
+	border:		1px solid #999999;
+	padding: 	0 0 1 3;
+}
+
+.defaultForm input:focus {
+
+	background: 	#E0E0E0;
+	border:			1px solid #999999;
+}
+
+.defaultForm .checkbox {
+
+	margin: 	0px;
+	border: 	0px solid;
+	height: 	18px;
+}
+
+.defaultForm select {
+
+	font-size: 		8pt;
+	height: 		18px;
+	height: 		17px;
+	padding: 		0px;
+	padding-left: 	0px;
+	text-align: 	left;
+	border:			1px solid #C0C0C0;
+	padding: 		0;
+}
+
+.defaultForm .rowTextArea {
+
+	height: 		173px;
+	height: 		173px !ie;
+	clear: 			both;
+	margin-top: 	3px;
+	whitespace: 	nowrap;
+}
+
+.defaultForm .rowTextArea .label {
+
+	width: 			160px;
+	float: 			left;
+	padding: 		3 0 0 0;
+	height: 		175px;
+	height: 		175px !ie;
+	text-align: 	right;
+	font-weight: 	bold;
+	color: 			#666666;
+	margin-right: 	10px;
+}
+
+.defaultForm .rowTextArea .labelRo {
+
+	width: 			160px;
+	float: 			left;
+	padding: 		3 0 0 0;
+	height: 		164px;
+	height: 		175px !ie;
+	text-align: 	right;
+	font-weight: 	bold;
+	color: 			#666666;
+	margin-right: 	10px;
+}
+
+.defaultForm .rowTextArea .field {
+
+	float: 			left;
+	height: 		170px;
+	padding: 		1px;
+	margin-right: 	2px;
+	padding-left: 	2px;
+	text-align: 	left;
+	background: 	#FFFFFF;
+}
+
+.defaultForm .rowTextArea .text {
+
+	height: 		164px;
+	height: 		175px !ie;
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		4px;
+	text-align: 	left;
+	width: 			330px;
+	overflow: 		auto;
+	color: 			#333333;
+}
+
+.defaultForm .rowTextArea .textFlex {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		4px;
+	text-align: 	left;
+	background: 	#FFFFFF;
+	border: 		1px solid #D5D5D5;
+	width: 			330px;
+	overflow: 		auto;
+	color: 			#333333;
+}
+
+.defaultForm .rowTextArea .field textarea {
+
+	width: 		400px;
+	height: 	170px;
+	height: 	171px !ie;
+	margin: 	0 0 0 -1;
+	margin: 	-1 -2 -1 -1 !ie;
+	border: 	1px solid #999999;
+	resize: 	none
+}
+
+.defaultForm fieldset {
+
+	height: 		auto;
+	border: 		1px solid #2E5F95;
+	padding: 		5px;
+}
+
+.defaultForm fieldset legend {
+
+	font-weight: 		bold;
+	color: 				#2E5F95;
+	padding-left: 		3px;
+	padding-right: 		3px;
+	padding-top: 		2px;
+	padding-bottom: 	2px;
+	border: 			1px solid #2E5F95;
+	background: 		#C8DAEE;
+}
+
+.defaultForm .row .buttons {
+
+	padding: 	10px;
+}
+
+.defaultForm .row .buttons input {
+
+	height: 		20px;
+}
+
+.defaultForm .row .buttons .delete {
+
+	color: 	#800000;
+}
+
+
+
+.formFieldError {
+
+	font-size: 		8pt;
+	height: 		19px;
+	padding: 		0px;
+	padding-left: 	0px;
+	text-align: 	left;
+	border:			1px solid #DE7A7B;
+	padding: 		2 0 1 3;
+	background: 	#E6C0C0;
+}
+
+.formFieldError:focus, .defaultForm .formFieldError:focus {
+
+	font-size: 		8pt;
+	height: 		17px;
+	padding: 		0 0 1 3;
+	border:			1px solid #999999;
+	background: 	#DFABAB;
+}
+
+.defaultForm .formFieldErrorDiv {
+
+	font-size: 		8pt;
+	padding: 		2 4 2 4;
+	text-align: 	left;
+	margin: 		-3 -3 -3 -5;
+	background: 	#E6C0C0;
+	border:			1px solid #DE7A7B;
+}
+
+#formStatusSuccessDiv {
+
+	position: 				absolute;
+	width: 					295px;
+	width: 					335px !ie;
+	top: 					68px;
+	left: 					290px;
+	margin-top:				10px;
+	margin-bottom:			8px;
+	padding-top:			5px;
+	padding-bottom: 		5px;
+	padding-left: 			40px;
+	font-weight: 			bold;
+	z-index: 				3;
+	display: 				none;
+	
+	background: 			url(/images/backend/success20.png) no-repeat;
+	color: 					#1A4EA6;
+}
+
+#formStatusErrorDiv {
+
+	position: 				absolute;
+	width: 					295px;
+	width: 					335px !ie;
+	top: 					68px;
+	left: 					290px;
+	margin-top:				10px;
+	margin-bottom:			8px;
+	padding-top:			5px;
+	padding-bottom: 		5px;
+	padding-left: 			40px;
+	font-weight: 			bold;
+	z-index: 				3;
+	display: 				none;
+	
+	background: 			url(/images/backend/error20.png) no-repeat;
+	color: 					#CC3300;
+}
+
+.formStatus .message {
+	
+	float: 	left;
+	width: 	267px;
+}
+
+.formStatus .close {
+	
+	float: 			left;
+	width: 			25px;
+	text-align: 	right;
+}
+
+.formStatus .close a {
+
+	text-decoration: 	none;
+	font-size: 			8pt;
+	color: 				#81571F
+}
+
+.defaultForm .formHelp {
+
+	float: 			left;
+	padding: 		0px;
+	margin-right: 	2px;
+	padding: 		1 3 2 3;
+	text-align: 	left;
+}
+
+.defaultForm .formHelpDescription {
+
+	float: 			left;
+	position: 		absolute;
+	display: 		none;
+	width: 			350px;
+	padding: 		5px;
+	border: 		1px solid #426D89;
+	background: 	#C7DBE8;
+	z-index: 		5000;
+	font-weight: 	normal;
+}
+
+.defaultForm .title {
+
+	margin-top: 	20px;
+	margin-bottom: 	5px;
+	padding: 		3px;
+	border-bottom: 	1px solid #5C6D7B;
+	color: 			#414D58;
+	font-weight: 	bold;
+}
+
+.blockSeparator {
+
+	margin-top: 	20px;
+	margin-bottom: 	10px;
+	color: 			#444444;
+	font-weight: 	bold;
+}
+
+.blockSeparator hr {
+
+	margin-top: 	1px;
+	margin-top: 	-5px !ie	
+}
+
+.formStatusDiv {
+	
+	position: 		absolute;
+	top:			-44px;
+	top:			-34px !ie;
+	height: 		35px;
+	width: 			450px;
+	margin-left: 	10px;
+	font-family: 	Arial;
+	font-size: 		10pt;
+	font-weight: 	bold;
+	z-index: 		20;
+	text-align: 	left;
+	padding-left: 	25px;
+	display: 		none;
+}
+
+.formStatusWindowSuccessDiv {
+	
+	height: 		35px;
+	width: 			450px;
+	margin-left: 	10px;
+	margin-top: 	2px;
+	font-family: 	Arial;
+	font-size: 		10pt;
+	font-weight: 	bold;
+	z-index: 		20;
+	text-align: 	left;
+	padding-left: 	25px;
+	padding-top: 	5px;
+	background: 	url(/images/backend/success20.png) no-repeat;
+	display: 		none;
+}
+
+.formStatusWindowErrorDiv .message {
+
+	margin: 	-2 0 0 5;
+	color: 		#1A4EA6;
+}
+
+.formStatusWindowErrorDiv {
+	
+	height: 		35px;
+	width: 			450px;
+	margin-left: 	10px;
+	margin-top: 	2px;
+	font-family: 	Arial;
+	font-size: 		10pt;
+	font-weight: 	bold;
+	z-index: 		20;
+	text-align: 	left;
+	padding-left: 	25px;
+	padding-top: 	5px;
+	background: 	url(/images/backend/error20.png) no-repeat;
+	display: 		none;
+}
+
+.formStatusWindowErrorDiv .message {
+
+	margin: 	-2 0 0 5;
+	color: 		#CC3300;
+}
+
+.formTable th {
+
+	padding: 		4 4 4 4;
+	height: 		17px;
+	height: 		23px !ie;
+	text-align: 	left;
+	background: 	#DADADA;
+	font-weight: 	bold;
+	color: 			#333333;
+	border-top: 	1px solid #CCCCCC;
+	border-left: 	1px solid #CCCCCC;
+	border-bottom: 	1px solid #CCCCCC;	
+}
+
+.formTable td {
+
+	margin-right: 	2px;
+	padding: 		1 1 1 1;
+	padding: 		0px !ie;
+	height: 		20px;
+	height: 		23px !ie;
+	
+	text-align: 	left;
+	border-top: 	1px solid #D5D5D5;
+	border-right: 	1px solid #D5D5D5;
+	border-left: 	1px solid #D5D5D5;
+	border-bottom: 	1px solid #D5D5D5;
+	white-space: 	nowrap;
+	background: 	#FFFFFF;
+}

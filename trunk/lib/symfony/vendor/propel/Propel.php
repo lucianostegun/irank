@@ -555,8 +555,10 @@ class Propel {
 			return $class;
 		}
 
+		$path = str_replace('..', '(##)', $path);
 		// turn to filesystem path
 		$path = strtr($path, '.', DIRECTORY_SEPARATOR) . '.php';
+		$path = str_replace('(##)', '..', $path);
 
 		// include class
 		$ret = include_once($path);

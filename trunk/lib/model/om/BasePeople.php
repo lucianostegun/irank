@@ -1977,7 +1977,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	
 	public function getUserAdminList($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseUserAdminPeer.php';
+				include_once 'apps/backend/lib/model/om/BaseUserAdminPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -2015,7 +2015,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	
 	public function countUserAdminList($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseUserAdminPeer.php';
+				include_once 'apps/backend/lib/model/om/BaseUserAdminPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}

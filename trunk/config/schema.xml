@@ -246,9 +246,11 @@
 	<table name="faq" phpName="Faq" isI18n="true" i18nTable="faq_i18n">
 		<column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
 		<column name="question" type="VARCHAR" size="200" />
-		<column name="answer" type="LONGVARCHAR" />
 		<column name="order_seq" type="INTEGER" />
+		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
 	</table>
@@ -393,7 +395,7 @@
 	
 	
 	
-	<table name="user_admin" phpName="UserAdmin">
+	<table name="user_admin" phpName="UserAdmin" package="...apps.backend.lib.model">
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
 		<column name="people_id" type="INTEGER" />
 		<column name="username" type="VARCHAR" size="50" />
@@ -409,6 +411,49 @@
 		<column name="updated_at" type="TIMESTAMP" />
 		  <foreign-key foreignTable="people" onDelete="CASCADE">
 		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+	
+	<table name="module" phpName="Module" package="...apps.backend.lib.model">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="module_id" type="INTEGER" />
+		<column name="is_menu" type="BOOLEAN" />
+		<column name="description" type="VARCHAR" size="50" />
+		<column name="toolbar_description" type="VARCHAR" size="50" />
+		<column name="image_menu" type="VARCHAR" size="50" />
+		<column name="image_module" type="VARCHAR" size="50" />
+		<column name="execute_module" type="VARCHAR" size="20" />
+		<column name="execute_action" type="VARCHAR" size="15" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="master_only" type="BOOLEAN" />
+		<column name="has_child" type="BOOLEAN" />
+		<column name="order_seq" type="INTEGER" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="module" onDelete="CASCADE">
+		    <reference local="module_id" foreign="id" />
+		  </foreign-key>
+	</table>
+	
+	<table name="toolbar" phpName="Toolbar" package="...apps.backend.lib.model">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="module_id" type="INTEGER" />
+		<column name="description" type="VARCHAR" size="20" />
+		<column name="tag_name" type="VARCHAR" size="20" />
+		<column name="tag_id" type="VARCHAR" size="20" />
+		<column name="image" type="VARCHAR" size="20" />
+		<column name="action_name" type="VARCHAR" size="20" />
+		<column name="execute_module" type="VARCHAR" size="20" />
+		<column name="execute_action" type="VARCHAR" size="20" />
+		<column name="is_javascript" type="BOOLEAN" />
+		<column name="order_seq" type="INTEGER" />
+		<column name="start_disabled" type="BOOLEAN" />
+		<column name="visible_action" type="VARCHAR" size="30" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="module" onDelete="CASCADE">
+			<reference local="module_id" foreign="id" />
 		  </foreign-key>
 	</table>
 

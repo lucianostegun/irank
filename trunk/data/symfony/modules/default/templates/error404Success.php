@@ -1,5 +1,13 @@
-<?php sfContext::getInstance()->getResponse()->addStylesheet('/sf/sf_default/css/screen'); ?>
+<?php
+	sfContext::getInstance()->getResponse()->addStylesheet('/sf/sf_default/css/screen');
+	$isBackend = Util::isApp('backend');
+	
+	$br = '<br/>';
+	if( !$isBackend ):
+		$br = '<br/><br/>';
+?>
 <div class="commonBar"><span>Página não encontrada</span></div>
+<?php endif; ?>
 <div class="sfTMessageContainer sfTAlert"> 
   <?php echo image_tag('/sf/sf_default/images/icons/cancel48.png', array('alt'=>'page not found', 'class'=>'sfTMessageIcon', 'size'=>'48x48')) ?>
   <div class="sfTMessageWrap">
@@ -7,7 +15,7 @@
     <h4>O servidor retornou um erro 404.</h5>
   </div>
 </div>
-<br/><br/>
+<?php echo $br ?>
 <dl class="sfTMessageInfo">
   <dt>Digitou a URL certa?</dt>
   <dd>Você pode ter digitado o endereço (URL) incorretamente. Verifique-o para ter certeza de que você digitou corretamente a ortografia, acentuação, etc.</dd><br/>

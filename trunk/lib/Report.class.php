@@ -131,5 +131,77 @@ class Report {
 		
 		return $sendResult;
     }
+    
+    public static function getPaginator( $request, $regCount ){
+    	
+    	$instanceName = $request->getParameter( 'instanceName' );
+		$limit        = $request->getParameter( 'limit' );
+		$offset       = $request->getParameter( 'offset' );
+		
+		$currentPage = ($offset/($limit==0?1:$limit))+1;
+		$pages       = ceil($regCount/($limit==0?($regCount?$regCount:1):$limit));
+	
+		$initialPage = ($currentPage>2?$currentPage-2:1);
+		$finalPage   = $currentPage+2;
+		$finalPage   = ($currentPage < 4?5:$finalPage);
+		$finalPage   = ($finalPage>$pages?$pages:$finalPage);
+		$initialPage = ($currentPage>1 && $currentPage>=($pages-2)?$pages-4:$initialPage);
+		
+		$initialPage = ($initialPage<=0?1:$initialPage);
+		$finalPage   = ($finalPage>$pages?$pages:$finalPage);
+		
+		if( $currentPage > 1 || $currentPage < $pages ){
+			
+			require_once ('symfony/helper/HelperHelper.php');
+			use_helper('Asset');
+			use_helper('Tag');
+			use_helper('Url');
+		}
+		
+		if( $currentPage > 1 ){
+			
+			echo '<div class="firstPage" onclick="updateGridboxSearch( \''.$instanceName.'\', '.$limit.', 0 )">'.image_tag('paginator/first.gif').'</div>';
+			echo '<div class="previousPage" onclick="updateGridboxSearch( \''.$instanceName.'\', '.$limit.', '.(($currentPage-2)*$limit).' )">'.image_tag('paginator/prev.gif').'</div>';
+		}else{
+			
+			echo '<div class="blank"></div>';
+			echo '<div class="blank" style="margin-right: 10px;"></div>';
+		}
+		
+		for( $page=$initialPage; $page <= $finalPage; $page++ ){
+			
+			$class = (strlen($page)>2?'Bigger':'');
+			
+			if( $page==$currentPage )			
+				echo '<div class="pageNumberCurrent'.$class.'">'.$page.'</div>';
+			else			
+				echo '<div class="pageNumber'.$class.'" onclick="updateGridboxSearch( \''.$instanceName.'\', '.$limit.', '.(($page-1)*$limit).' )">'.$page.'</div>';
+		}
+		
+		if( $currentPage < $pages ){
+		
+			echo '<div class="nextPage" onclick="updateGridboxSearch( \''.$instanceName.'\', '.$limit.', '.(($currentPage)*$limit).' )">'.image_tag('paginator/next.gif').'</div>';
+			echo '<div class="lastPage" onclick="updateGridboxSearch( \''.$instanceName.'\', '.$limit.', '.($pages-1)*$limit.' )">'.image_tag('paginator/last.gif').'</div>';
+		}else{
+			
+			echo '<div class="blank"></div>';
+			echo '<div class="blank"></div>';
+		}
+		
+		Util::getHelpers();
+		$optionsField = select_tag('limit', options_for_select(array(''=>'Sem limite', '20'=>'20', '30'=>'30', '50'=>'50', '100'=>'100', '150'=>'150'), $limit), array('onchange'=>'updateGridboxSearch( "'.$instanceName.'", this.value, 0 )'));
+		
+		echo '<info>';
+		echo '	<b>Total de páginas:</b> '.$pages;
+		echo '<info>';
+		echo '	<b>Total de registros:</b> '.$regCount;
+		echo '<info>';
+		echo '	<b>Registros por página:</b> '.$optionsField.'';
+		
+		echo input_hidden_tag( 'totalPages', $pages );
+		echo input_hidden_tag( 'totalRecords', $regCount );
+		echo input_hidden_tag( 'pageLimit', $limit );
+		echo input_hidden_tag( 'currentPage', ($currentPage-1) );
+    }
 }
 ?>

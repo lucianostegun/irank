@@ -1,9 +1,8 @@
-<div class="commonBar"><span>Mural de fotos</span></div>
+<div class="commonBar"><span><?php echo __('photoWall.title') ?></span></div>
 
 <div class="innerContent">
 	<?php echo image_tag('photos', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
-	Clique sobre as minuaturas abaixo para<br/>
-	visualizar as fotos compartilhadas pelos jogadores
+	<?php echo __('photoWall.intro') ?>
 	<br/><br/>
 </div>
 
@@ -34,7 +33,7 @@
 				<tr>
 					<td class="eventPhotoTable" onmouseover="this.className='eventPhotoTableOver'" onmouseout="this.className='eventPhotoTable'">
 						<?php
-							echo image_tag('misc/comments', array('onclick'=>'loadEventPhotoComments('.$eventPhotoId.')', 'class'=>'commentImage', 'title'=>'Ver comentários desta foto'));
+							echo image_tag('misc/comments', array('onclick'=>'loadEventPhotoComments('.$eventPhotoId.')', 'class'=>'commentImage', 'title'=>__('event.commentsTab.showPhotoComments')));
 								
 							echo image_tag('/uploads/eventPhoto/event-'.$eventId.'/thumb/'.$fileName, array('width'=>80, 'onclick'=>'viewEventPhoto('.$eventPhotoId.')'));
 						?>

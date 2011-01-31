@@ -26,6 +26,8 @@ class friendInviteActions extends sfActions
   
   public function executeSendInvite($request){
   	
+  	Util::getHelper('I18N');
+  	
   	$peopleName   = $request->getParameter('peopleName');
   	$emailAddress = $request->getParameter('emailAddress');
   	
@@ -56,7 +58,7 @@ class friendInviteActions extends sfActions
 	  	$emailContentTmp = str_replace('<friendName>', $friendName, $emailContentTmp);
 	  	$emailContentTmp = str_replace('<emailAddress>', $emailAddress, $emailContentTmp);
 	  	
-	  	$invite = Report::sendMail('Convite especial iRank', $friendEmailAddress, $emailContentTmp);
+	  	$invite = Report::sendMail(__('email.subject.friendInvite'), $friendEmailAddress, $emailContentTmp);
 	  	if($invite)
 	  		$resultList[] = 'ok';
 	  	else
@@ -64,6 +66,24 @@ class friendInviteActions extends sfActions
   	}
   	
   	echo implode('<info>', $resultList);
+  	exit;
+  }
+  
+  public function executeJavascript($request){
+  	
+  	Util::getHelper('i18n');
+  	
+    header('Content-type: text/x-javascript');
+	
+  	$nl = chr(10);
+  	
+  	echo 'var i18n_friendInvite_inviteError       = "'.__('friendInvite.inviteError').'";'.$nl;
+  	echo 'var i18n_friendInvite_status.inviteSent = "'.__('friendInvite.status.inviteSent').'";'.$nl;
+  	echo 'var i18n_friendInvite_inviteError       = "'.__('friendInvite.status.inviteError').'";'.$nl;
+  	echo 'var i18n_friendInvite_alreadyUser       = "'.__('friendInvite.status.alreadyUser').'";'.$nl;
+  	echo 'var i18n_friendInvite_warningMessage    = "'.__('friendInvite.warningMessage').'";'.$nl;
+  	echo 'var i18n_friendInvite_successMessage    = "'.__('friendInvite.successMessage').'";'.$nl;
+  	
   	exit;
   }
 }

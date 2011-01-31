@@ -1,13 +1,9 @@
-<div class="commonBar"><span>Esatísticas</span></div>
+<div class="commonBar"><span><?php echo __('statistic.title') ?></span></div>
 
 <div class="innerContent">
-		Para gerar as estatísticas dos seus rankins e eventos,<br/>
-		selecione abaixo os filtros e o tipo de gráfico ou relatório que deseja.
+		<?php echo __('statistic.intro') ?>
 </div>
 	<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTable">
-		<tr class="header">
-			<th>Formulário de envio de dúvida</th>
-		</tr>
 		<tr>
 			<td>
 		
@@ -31,22 +27,22 @@
 					<div class="field" id="rankingIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect(), array('class'=>'required', 'id'=>'statisticRankingId')) ?></div>
 				</div>
 				<div class="row">
-					<div class="label" id="statisticReportTypeLabel">Tipo de relatório</div>
+					<div class="label" id="statisticReportTypeLabel"><?php echo __('statistic.reportType') ?></div>
 					<div class="field" id="reportTypeFieldDiv">
 						<?php
-							$optionList = array(''=>'Selecione');
-							$optionList['playersBalance'] = 'Balanço dos jogadores';
-							$optionList['myPerformance']  = 'Meu desempenho';
-							$optionList['myBalance']      = 'Meu balanço';
-							$optionList['rankHistory']    = 'Histórico de classificação';
+							$optionList = array(''=>__('select'));
+							$optionList['playersBalance'] = __('statistic.reportType.playersBalance');
+							$optionList['myPerformance']  = __('statistic.reportType.myPerformance');
+							$optionList['myBalance']      = __('statistic.reportType.myBalance');
+							$optionList['rankHistory']    = __('statistic.reportType.rankHistory');
 							
 							echo select_tag('reportType', $optionList, array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statisticReportType')) ?></div>
 				</div>
 				<div class="row">
-					<div class="label" id="statisticFormatLabel">Formato</div>
+					<div class="label" id="statisticFormatLabel"><?php echo __('statistic.format') ?></div>
 					<div class="field" id="formatFieldDiv">
 						<?php
-							echo select_tag('format', array(''=>'Selecione', 'chart'=>'Gráfico', 'report'=>'Planilha'), array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statisticFormat'));
+							echo select_tag('format', array(''=>__('select'), 'chart'=>__('statistic.format.chart'), 'report'=>__('statistic.format.spreadsheet')), array('class'=>'required', 'onchange'=>'checkReportType()', 'id'=>'statisticFormat'));
 						?>
 					</div>
 				</div>
@@ -59,7 +55,7 @@
 </table>
 
 	<div class="buttonBarForm" id="statisticMainButtonBar">
-		<?php echo button_tag('mainSubmit', 'Gerar estatísticas', array('onclick'=>'doSubmitStats()')); ?>
+		<?php echo button_tag('mainSubmit', __('button.buildStatistic'), array('onclick'=>'doSubmitStats()')); ?>
 		<?php echo getFormLoading('statistic') ?>
-		<?php echo getFormStatus(null, null, 'Preencha todos os campos obrigatórios'); ?>
+		<?php echo getFormStatus(null, null, __('statistic.buildError')); ?>
 	</div>
