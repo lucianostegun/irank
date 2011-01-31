@@ -22,24 +22,24 @@ function handleSuccessFriendInvite(content){
 			switch( result ){
 				case 'ok':
 					$('friendInviteImage'+i+'Div').innerHTML = '<img src="/images/icon/ok.png"/>';
-					$('friendInviteStatus'+i+'Div').innerHTML = 'Convite enviado!';
+					$('friendInviteStatus'+i+'Div').innerHTML = i18n_inviteFriend_status_inviteSent;
 					break;
 				case 'error':
 					hasErrors = true;
 					$('friendInviteImage'+i+'Div').innerHTML = '<img src="/images/icon/nok.png"/>';
-					$('friendInviteStatus'+i+'Div').innerHTML = 'Erro ao enviar convite!';
+					$('friendInviteStatus'+i+'Div').innerHTML = i18n_inviteFriend_status_inviteError;
 					break;
 				default:
 					$('friendInviteImage'+i+'Div').innerHTML = '<img src="/images/icon/info.png"/>';
-					$('friendInviteStatus'+i+'Div').innerHTML = 'Já é usuário! ('+result+')';
+					$('friendInviteStatus'+i+'Div').innerHTML = i18n_inviteFriend_status_alreadyUser+' ('+result+')';
 			}
 		}
 	}
 	
 	if( hasErrors )
-		alert('Alguns convites não puderam ser enviados!\nVerifique os e-mails com erro e tente novamente.');
+		alert(i18n_inviteFriend_warningMessage);
 	else
-		alert('Todos os convites foram enviados com sucesso!\nClique em "Limpar formulário" para enviar o convite a outros amigos.');
+		alert(i18n_inviteFriend_successMessage);
 	
 	hideIndicator('friendInvite');
 }

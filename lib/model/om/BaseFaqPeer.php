@@ -13,7 +13,7 @@ abstract class BaseFaqPeer {
 	const CLASS_DEFAULT = 'lib.model.Faq';
 
 	
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 9;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -26,13 +26,19 @@ abstract class BaseFaqPeer {
 	const QUESTION = 'faq.QUESTION';
 
 	
-	const ANSWER = 'faq.ANSWER';
-
-	
 	const ORDER_SEQ = 'faq.ORDER_SEQ';
 
 	
+	const ENABLED = 'faq.ENABLED';
+
+	
 	const VISIBLE = 'faq.VISIBLE';
+
+	
+	const DELETED = 'faq.DELETED';
+
+	
+	const LOCKED = 'faq.LOCKED';
 
 	
 	const CREATED_AT = 'faq.CREATED_AT';
@@ -46,19 +52,19 @@ abstract class BaseFaqPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'Question', 'Answer', 'OrderSeq', 'Visible', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (FaqPeer::ID, FaqPeer::QUESTION, FaqPeer::ANSWER, FaqPeer::ORDER_SEQ, FaqPeer::VISIBLE, FaqPeer::CREATED_AT, FaqPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'question', 'answer', 'order_seq', 'visible', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'QUESTION'=>'', 'ANSWER'=>'', 'ORDER_SEQ'=>'', 'VISIBLE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'Question', 'OrderSeq', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (FaqPeer::ID, FaqPeer::QUESTION, FaqPeer::ORDER_SEQ, FaqPeer::ENABLED, FaqPeer::VISIBLE, FaqPeer::DELETED, FaqPeer::LOCKED, FaqPeer::CREATED_AT, FaqPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'question', 'order_seq', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'QUESTION'=>'', 'ORDER_SEQ'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'Question'=>1, 'Answer'=>2, 'OrderSeq'=>3, 'Visible'=>4, 'CreatedAt'=>5, 'UpdatedAt'=>6, ),
-		BasePeer::TYPE_COLNAME=>array (FaqPeer::ID=>0, FaqPeer::QUESTION=>1, FaqPeer::ANSWER=>2, FaqPeer::ORDER_SEQ=>3, FaqPeer::VISIBLE=>4, FaqPeer::CREATED_AT=>5, FaqPeer::UPDATED_AT=>6, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'question'=>1, 'answer'=>2, 'order_seq'=>3, 'visible'=>4, 'created_at'=>5, 'updated_at'=>6, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'Question'=>1, 'OrderSeq'=>2, 'Enabled'=>3, 'Visible'=>4, 'Deleted'=>5, 'Locked'=>6, 'CreatedAt'=>7, 'UpdatedAt'=>8, ),
+		BasePeer::TYPE_COLNAME=>array (FaqPeer::ID=>0, FaqPeer::QUESTION=>1, FaqPeer::ORDER_SEQ=>2, FaqPeer::ENABLED=>3, FaqPeer::VISIBLE=>4, FaqPeer::DELETED=>5, FaqPeer::LOCKED=>6, FaqPeer::CREATED_AT=>7, FaqPeer::UPDATED_AT=>8, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'question'=>1, 'order_seq'=>2, 'enabled'=>3, 'visible'=>4, 'deleted'=>5, 'locked'=>6, 'created_at'=>7, 'updated_at'=>8, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
@@ -116,11 +122,15 @@ abstract class BaseFaqPeer {
 
 		$criteria->addSelectColumn(FaqPeer::QUESTION);
 
-		$criteria->addSelectColumn(FaqPeer::ANSWER);
-
 		$criteria->addSelectColumn(FaqPeer::ORDER_SEQ);
 
+		$criteria->addSelectColumn(FaqPeer::ENABLED);
+
 		$criteria->addSelectColumn(FaqPeer::VISIBLE);
+
+		$criteria->addSelectColumn(FaqPeer::DELETED);
+
+		$criteria->addSelectColumn(FaqPeer::LOCKED);
 
 		$criteria->addSelectColumn(FaqPeer::CREATED_AT);
 

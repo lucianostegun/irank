@@ -17,15 +17,23 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 
 
 	
-	protected $answer;
-
-
-	
 	protected $order_seq;
 
 
 	
+	protected $enabled;
+
+
+	
 	protected $visible;
+
+
+	
+	protected $deleted;
+
+
+	
+	protected $locked;
 
 
 	
@@ -65,13 +73,6 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getAnswer()
-	{
-
-		return $this->answer;
-	}
-
-	
 	public function getOrderSeq()
 	{
 
@@ -79,10 +80,31 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getEnabled()
+	{
+
+		return $this->enabled;
+	}
+
+	
 	public function getVisible()
 	{
 
 		return $this->visible;
+	}
+
+	
+	public function getDeleted()
+	{
+
+		return $this->deleted;
+	}
+
+	
+	public function getLocked()
+	{
+
+		return $this->locked;
 	}
 
 	
@@ -162,22 +184,6 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setAnswer($v)
-	{
-
-		
-		
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->answer !== $v) {
-			$this->answer = $v;
-			$this->modifiedColumns[] = FaqPeer::ANSWER;
-		}
-
-	} 
-	
 	public function setOrderSeq($v)
 	{
 
@@ -194,12 +200,42 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setEnabled($v)
+	{
+
+		if ($this->enabled !== $v) {
+			$this->enabled = $v;
+			$this->modifiedColumns[] = FaqPeer::ENABLED;
+		}
+
+	} 
+	
 	public function setVisible($v)
 	{
 
 		if ($this->visible !== $v) {
 			$this->visible = $v;
 			$this->modifiedColumns[] = FaqPeer::VISIBLE;
+		}
+
+	} 
+	
+	public function setDeleted($v)
+	{
+
+		if ($this->deleted !== $v) {
+			$this->deleted = $v;
+			$this->modifiedColumns[] = FaqPeer::DELETED;
+		}
+
+	} 
+	
+	public function setLocked($v)
+	{
+
+		if ($this->locked !== $v) {
+			$this->locked = $v;
+			$this->modifiedColumns[] = FaqPeer::LOCKED;
 		}
 
 	} 
@@ -246,21 +282,25 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 
 			$this->question = $rs->getString($startcol + 1);
 
-			$this->answer = $rs->getString($startcol + 2);
+			$this->order_seq = $rs->getInt($startcol + 2);
 
-			$this->order_seq = $rs->getInt($startcol + 3);
+			$this->enabled = $rs->getBoolean($startcol + 3);
 
 			$this->visible = $rs->getBoolean($startcol + 4);
 
-			$this->created_at = $rs->getTimestamp($startcol + 5, null);
+			$this->deleted = $rs->getBoolean($startcol + 5);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 6, null);
+			$this->locked = $rs->getBoolean($startcol + 6);
+
+			$this->created_at = $rs->getTimestamp($startcol + 7, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 8, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 7; 
+						return $startcol + 9; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Faq object", $e);
 		}
@@ -420,18 +460,24 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 				return $this->getQuestion();
 				break;
 			case 2:
-				return $this->getAnswer();
+				return $this->getOrderSeq();
 				break;
 			case 3:
-				return $this->getOrderSeq();
+				return $this->getEnabled();
 				break;
 			case 4:
 				return $this->getVisible();
 				break;
 			case 5:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 6:
+				return $this->getLocked();
+				break;
+			case 7:
+				return $this->getCreatedAt();
+				break;
+			case 8:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -446,11 +492,13 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getQuestion(),
-			$keys[2]=>$this->getAnswer(),
-			$keys[3]=>$this->getOrderSeq(),
+			$keys[2]=>$this->getOrderSeq(),
+			$keys[3]=>$this->getEnabled(),
 			$keys[4]=>$this->getVisible(),
-			$keys[5]=>$this->getCreatedAt(),
-			$keys[6]=>$this->getUpdatedAt(),
+			$keys[5]=>$this->getDeleted(),
+			$keys[6]=>$this->getLocked(),
+			$keys[7]=>$this->getCreatedAt(),
+			$keys[8]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -473,18 +521,24 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 				$this->setQuestion($value);
 				break;
 			case 2:
-				$this->setAnswer($value);
+				$this->setOrderSeq($value);
 				break;
 			case 3:
-				$this->setOrderSeq($value);
+				$this->setEnabled($value);
 				break;
 			case 4:
 				$this->setVisible($value);
 				break;
 			case 5:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 6:
+				$this->setLocked($value);
+				break;
+			case 7:
+				$this->setCreatedAt($value);
+				break;
+			case 8:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -496,11 +550,13 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setQuestion($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setAnswer($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setOrderSeq($arr[$keys[3]]);
+		if (array_key_exists($keys[2], $arr)) $this->setOrderSeq($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setEnabled($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setVisible($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[5], $arr)) $this->setDeleted($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setLocked($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
 	}
 
 	
@@ -510,9 +566,11 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(FaqPeer::ID)) $criteria->add(FaqPeer::ID, $this->id);
 		if ($this->isColumnModified(FaqPeer::QUESTION)) $criteria->add(FaqPeer::QUESTION, $this->question);
-		if ($this->isColumnModified(FaqPeer::ANSWER)) $criteria->add(FaqPeer::ANSWER, $this->answer);
 		if ($this->isColumnModified(FaqPeer::ORDER_SEQ)) $criteria->add(FaqPeer::ORDER_SEQ, $this->order_seq);
+		if ($this->isColumnModified(FaqPeer::ENABLED)) $criteria->add(FaqPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(FaqPeer::VISIBLE)) $criteria->add(FaqPeer::VISIBLE, $this->visible);
+		if ($this->isColumnModified(FaqPeer::DELETED)) $criteria->add(FaqPeer::DELETED, $this->deleted);
+		if ($this->isColumnModified(FaqPeer::LOCKED)) $criteria->add(FaqPeer::LOCKED, $this->locked);
 		if ($this->isColumnModified(FaqPeer::CREATED_AT)) $criteria->add(FaqPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(FaqPeer::UPDATED_AT)) $criteria->add(FaqPeer::UPDATED_AT, $this->updated_at);
 
@@ -547,11 +605,15 @@ abstract class BaseFaq extends BaseObject  implements Persistent {
 
 		$copyObj->setQuestion($this->question);
 
-		$copyObj->setAnswer($this->answer);
-
 		$copyObj->setOrderSeq($this->order_seq);
 
+		$copyObj->setEnabled($this->enabled);
+
 		$copyObj->setVisible($this->visible);
+
+		$copyObj->setDeleted($this->deleted);
+
+		$copyObj->setLocked($this->locked);
 
 		$copyObj->setCreatedAt($this->created_at);
 

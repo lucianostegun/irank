@@ -1,11 +1,13 @@
 <?php
+Util::getHelper('I18N');
 
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
 
 $rankingPlayerObjList = $rankingObj->getClassify();
 $players = $rankingObj->getPlayers();
 
-$inputFilePath  = Util::getFilePath('/templates/playersBalance.xls');
+$culture        = MyTools::getCulture();
+$inputFilePath  = Util::getFilePath('/templates/'.$culture.'/playersBalance.xls');
 $outputFilePath = Util::getFilePath('/temp/playersBalance-'.microtime().'.xls');
 
 $phpExcelObj = PHPExcel_IOFactory::load($inputFilePath);
@@ -25,7 +27,7 @@ $phpExcelObj->setActiveSheetIndex(0)
 			->setCellValue('D3', $rankingObj->getPlayers())
 			->setCellValue('D4', $rankingObj->getEvents())
 			->setCellValue('F4', $rankingObj->getRankingType()->getDescription());
-						
+
 $currentLine = 7;
 $position    = 1;
 foreach($rankingPlayerObjList as $rankingPlayerObj):
@@ -42,7 +44,7 @@ foreach($rankingPlayerObjList as $rankingPlayerObj):
 	$currentLine++;
 endforeach;
 
-Util::headerExcel('balanco_jogadores.xls');
+Util::headerExcel(__('statistic.fileName.playersBalance').'.xls');
 $objWriter = PHPExcel_IOFactory::createWriter($phpExcelObj, 'Excel5');
 $objWriter->save( $outputFilePath );
 

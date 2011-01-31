@@ -1,8 +1,11 @@
 <?php
+Util::getHelper('I18N');
+
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
 $peopleObj  = PeoplePeer::retrieveByPK($peopleId);
 
-$inputFilePath  = Util::getFilePath('/templates/rankHistory.xls');
+$culture        = MyTools::getCulture();
+$inputFilePath  = Util::getFilePath('/templates/'.$culture.'/rankHistory.xls');
 $outputFilePath = Util::getFilePath('/temp/rankHistory-'.microtime().'.xls');
 
 $eventDateList = $rankingObj->getEventDateList();
@@ -80,7 +83,7 @@ $phpExcelObj->setActiveSheetIndex(0)
 			;
 
 
-Util::headerExcel('historico_classificacao.xls');
+Util::headerExcel(__('statistic.fileName.rankingLog').'.xls');
 $objWriter = PHPExcel_IOFactory::createWriter($phpExcelObj, 'Excel5');
 $objWriter->save( $outputFilePath );
 

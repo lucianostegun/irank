@@ -1,4 +1,6 @@
 <?php
+Util::getHelper('I18N');
+
 $libDir = sfConfig::get('sf_lib_dir');
 
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
@@ -31,8 +33,8 @@ $DataSet->AddAllSeries();
 $DataSet->RemoveSerie('playerName');
 $DataSet->SetAbsciseLabelSerie('playerName');
 $DataSet->SetSerieName('B+R+A','totalPaid');
-$DataSet->SetSerieName('Ganhos','totalPrize');
-$DataSet->SetSerieName('Balanço','balance');
+$DataSet->SetSerieName(__('statistic.chart.profit'),'totalPrize');
+$DataSet->SetSerieName(__('statistic.chart.balance'),'balance');
 
 $width  = 1100;
 $height = 500;
@@ -57,7 +59,7 @@ $Test->drawBarGraph($DataSet->GetData(),$DataSet->GetDataDescription(), false, 8
 //$Test->drawOverlayBarGraph($DataSet->GetData(),$DataSet->GetDataDescription(), 80);
 
 header('Content-Type: image/jpeg');
-header('Content-Disposition: attachment; filename=balanco_jogadores.png');
+header('Content-Disposition: attachment; filename='.__('statistic.fileName.playersBalance').'.png');
 header('Expires: 0');
 header('Pragma: no-cache');
 
@@ -65,7 +67,7 @@ header('Pragma: no-cache');
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawLegend($width-82,30,$DataSet->GetDataDescription(),255,255,255);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',11);
-$Test->drawTitle(100,30,'Balanço dos jogadores - '.$rankingObj->getRankingName(),50,50,50);
+$Test->drawTitle(100,30,__('statistic.chart.title.playersBalance').' - '.$rankingObj->getRankingName(),50,50,50);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawCredits($width, $height-40);
 $Test->Stroke();

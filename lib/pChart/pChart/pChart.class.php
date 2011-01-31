@@ -1029,7 +1029,7 @@
     	
     	$C_TextColor =$this->AllocateColor($this->Picture,100,100,100);
 
-    	imagettftext($this->Picture,$this->FontSize,90,$width-20,$height-10,$C_TextColor,$this->FontName,'iRank - Todos os direitos reservados');
+    	imagettftext($this->Picture,$this->FontSize,90,$width-20,$height-10,$C_TextColor,$this->FontName,'iRank - '.__('statistic.chart.reservedRights'));
     }
 
    /* Draw the data legends */

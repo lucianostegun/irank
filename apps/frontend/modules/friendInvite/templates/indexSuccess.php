@@ -1,8 +1,6 @@
-<div class="commonBar"><span>Convidar amigos</span></div>
+<div class="commonBar"><span><?php echo __('friendInvite.title') ?></span></div>
 <div class="innerContent">
-	Convide agora mesmo todos seus amigos para juntar-se a você no <b>iRank</b>.<br/>
-	Informe abaixo apenas o primeiro nome e o e-mail de seus amigos e eles receberão<br/>
-	um e-mail de convite para ingressar gratuitamente ao site.
+	<?php echo __('friendInvite.intro') ?><br/><br/>
 </div>
 
 <table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTable">
@@ -26,19 +24,19 @@
 					?>			
 							
 							<div class="row">
-								<div class="label">Seu nome</div>
+								<div class="label"><?php echo __('friendInvite.yourName') ?></div>
 								<div class="field"><?php echo input_tag('peopleName', $peopleName, array('class'=>'required', 'id'=>'friendInvitePeopleName')) ?></div>
 							</div>
 							<div class="row">
-								<div class="label">Seu e-mail</div>
+								<div class="label"><?php echo __('friendInvite.yourEmail') ?></div>
 								<div class="field"><?php echo input_tag('emailAddress', $emailAddress, array('size'=>35, 'maxlength'=>150, 'class'=>'required', 'id'=>'friendInviteEmailAddress')) ?></div>
 							</div>
 							
 							<br/>
-							Informe o nome e-mail dos amigos que deseja convidar<br/><br/>
+							<?php echo __('friendInvite.intructions') ?><br/><br/>
 							<?php for($i=1; $i <= 10; $i++): ?>
 							<div class="row">
-								<div class="halfLabel">Nome</div>
+								<div class="halfLabel"><?php echo __('friendInvite.friendName') ?></div>
 								<div class="field"><?php echo input_tag('friendName'.$i, null, array('size'=>15, 'autocomplete'=>'off', 'id'=>'friendInviteFriendName'.$i)) ?></div>
 								<div class="halfLabel">E-mail</div>
 								<div class="field"><?php echo input_tag('emailAddress'.$i, null, array('size'=>25, 'autocomplete'=>'off', 'id'=>'friendInviteEmailAddress'.$i)) ?></div>
@@ -54,8 +52,8 @@
 	</tr>
 </table>
 	<div class="buttonBarForm">
-		<?php echo button_tag('mainSubmit', 'Convidar amigos', array('onclick'=>'doSubmitFriendInvite()')); ?>
-		<?php echo button_tag('resetForm', 'Limpar formulário', array('onclick'=>'resetFriendInviteForm()')); ?>
+		<?php echo button_tag('mainSubmit', __('button.inviteFriend'), array('onclick'=>'doSubmitFriendInvite()')); ?>
+		<?php echo button_tag('resetForm', __('button.resetForm'), array('onclick'=>'resetFriendInviteForm()')); ?>
 		<?php echo getFormLoading('friendInvite') ?>
-		<?php echo getFormStatus(null, null, 'Preencha todos os campos obrigatórios'); ?>
+		<?php echo getFormStatus(null, null, __('friendInvite.inviteError')); ?>
 	</div>

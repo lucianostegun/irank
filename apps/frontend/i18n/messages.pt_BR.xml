@@ -1435,6 +1435,275 @@
 				<target>Usuário/E-mail não encontrados</target>
 			</trans-unit>
 			
+			
+			
+			
+			<trans-unit>
+				<source>faq.title</source>
+				<target>FAQ - Dúvidas frequentes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.intro</source>
+				<target>
+					O F.A.Q. é uma área de ajuda onde você encontra respostas objetivas para dúvidas frequentes dos usuários.&lt;br/&gt;
+					Clique sobre a pergunta para visualizar a resposta. Caso sua dúvida não esteja listada clique no botão &lt;b&gt;Enviar minha dúvida&lt;/b&gt;.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.sendMyQuestion</source>
+				<target>Enviar minha dúvida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.formError</source>
+				<target>Erro ao enviar a dúvida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.questionForm</source>
+				<target>Formulário de envio de dúvida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.questionForm</source>
+				<target>Formulário de envio de dúvida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.typeYourQuestion</source>
+				<target>Digite sua dúvida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.max140Chars</source>
+				<target>Máx. 140 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.questionSent</source>
+				<target>Dúvida enviada</target>
+			</trans-unit>
+			<trans-unit>
+				<source>faq.successMessage</source>
+				<target>
+					Sua dúvida foi enviada com sucesso!&lt;br/&gt;
+					Ela será analisada e publicada em breve.&lt;br/&gt;&lt;br/&gt;
+					&lt;b&gt;%link%&lt;/b&gt; para enviar outra dúvida.
+				</target>
+			</trans-unit>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<trans-unit>
+				<source>photoWall.title</source>
+				<target>Mural de fotos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>photoWall.intro</source>
+				<target>
+					Clique sobre as minuaturas abaixo para&lt;br/&gt;
+					visualizar as fotos compartilhadas pelos jogadores
+				</target>
+			</trans-unit><trans-unit>
+				<source>statistic.title</source>
+				<target>Estarísticas</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.intro</source>
+				<target>
+					Para gerar as estatísticas dos seus rankins e eventos,&lt;br/&gt;
+					selecione abaixo os filtros e o tipo de gráfico ou relatório que deseja.
+				</target>
+			</trans-unit>			
+			<trans-unit>
+				<source>button.buildStatistic</source>
+				<target>Gerar estarísticas</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.reportType</source>
+				<target>Tipo de relatório</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.reportType.playersBalance</source>
+				<target>Balanço dos jogadores</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.reportType.myPerformance</source>
+				<target>Meu desempenho</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.reportType.myBalance</source>
+				<target>Meu balanço</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.reportType.rankHistory</source>
+				<target>Histórico de classificação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.format</source>
+				<target>Formato</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.format.chart</source>
+				<target>Gráfico</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.format.spreadsheet</source>
+				<target>Planilha</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.buildError</source>
+				<target>Preencha todos os campos obrigatórios</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.fileName.myBalance</source>
+				<target>meu_balanco</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.fileName.myPerformance</source>
+				<target>meu_desempenho</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.fileName.playersBalance</source>
+				<target>balanco_jogadores</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.fileName.rankingLog</source>
+				<target>historico_classificacao</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.profit</source>
+				<target>Ganhos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.balance</source>
+				<target>Balanço</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.title.playersBalance</source>
+				<target>Balanço dos jogadores</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.title.rankingLog</source>
+				<target>Histórico de classificação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.title.myBalance</source>
+				<target>Meu balanço</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.byDate</source>
+				<target>por data</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.progressive</source>
+				<target>progressivo</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.place</source>
+				<target>º colocado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.rating</source>
+				<target>Classificação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.totalProfit</source>
+				<target>Ganho acumulado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.totalBalance</source>
+				<target>Balanço acumulado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.totalBRA</source>
+				<target>B+R+A acumulado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.values</source>
+				<target>Valores</target>
+			</trans-unit>
+			<trans-unit>
+				<source>statistic.chart.reservedRights</source>
+				<target>Todos os direitos reservados</target>
+			</trans-unit>
+			
+			
+			
+			
+			
+			
+			
+			
+			<trans-unit>
+				<source>email.subject.friendInvite</source>
+				<target>Convite especial iRank</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.title</source>
+				<target>Convidar amigos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.intro</source>
+				<target>
+					Convide agora mesmo todos seus amigos para juntar-se a você no &lt;b&gt;iRank&lt;/b&gt;.&lt;br/&gt;
+					Informe abaixo apenas o primeiro nome e o e-mail de seus amigos e eles receberão&lt;br/&gt;
+					um e-mail de convite para ingressar gratuitamente ao site.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.yourName</source>
+				<target>Seu nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.yourEmail</source>
+				<target>Seu e-mail</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.instructions</source>
+				<target>Informe o nome e-mail dos amigos que deseja convidar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.friendName</source>
+				<target>Nome do amigo</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.friendName</source>
+				<target>Convidar amigos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.resetForm</source>
+				<target>Limpar formulário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.inviteError</source>
+				<target>Preencha todos os campos obrigatórios</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.status.inviteSent</source>
+				<target>Convite enviado!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.status.inviteError</source>
+				<target>Erro ao enviar convite!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.status.alreadyUser</source>
+				<target>Já é usuário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.warningMessage</source>
+				<target>Alguns convites não puderam ser enviados!\nVerifique os e-mails com erro e tente novamente.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.successMessage</source>
+				<target>Todos os convites foram enviados com sucesso!\nClique em "Limpar formulário" para enviar o convite a outros amigos.</target>
+			</trans-unit>
+			
 		</body>
 	</file>
 </xliff>

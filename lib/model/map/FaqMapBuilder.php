@@ -38,11 +38,15 @@ class FaqMapBuilder {
 
 		$tMap->addColumn('QUESTION', 'Question', 'string', CreoleTypes::VARCHAR, false, 200);
 
-		$tMap->addColumn('ANSWER', 'Answer', 'string', CreoleTypes::LONGVARCHAR, false, null);
-
 		$tMap->addColumn('ORDER_SEQ', 'OrderSeq', 'int', CreoleTypes::INTEGER, false, null);
 
+		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('LOCKED', 'Locked', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

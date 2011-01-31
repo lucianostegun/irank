@@ -1,9 +1,8 @@
 <div id="homeTopContentDiv">
 <?php
-	$isLogged = true;
-	$culture  = MyTools::getCulture();
+	$culture = MyTools::getCulture();
 	
-	if( MyTools::isAuthenticated() )
+	if( MyTools::isAuthenticated() && MyTools::hasCredential('iRankSite') )
 		include_partial('home/component/resume');
 	else
 		include_partial('home/component/welcome', (array('culture'=>$culture)));

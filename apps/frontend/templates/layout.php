@@ -7,7 +7,8 @@ include_metas();
 include_title();
 
 $moduleName      = $sf_context->getModuleName();
-$isAuthenticated = MyTools::isAuthenticated();
+$hasCredentials  = MyTools::hasCredential('iRankSite');
+$isAuthenticated = (MyTools::isAuthenticated() && $hasCredentials);
 $culture         = $sf_user->getCulture();
 
 if( $isAuthenticated )

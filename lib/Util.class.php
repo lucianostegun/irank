@@ -750,5 +750,32 @@ class Util {
     	
     	return $timeAgo;
 	}
+	
+	
+	
+	
+	
+	
+	
+	// Métodos utilizados no backend
+	public static function getFormStatus($successMessage=null, $errorMessage=null){
+		
+		echo get_partial('home/include/formStatus', array('successMessage'=>$successMessage, 'errorMessage'=>$errorMessage, 'statusId'=>null, 'window'=>false));
+	}
+	
+	public static function getApp(){
+		
+		$scriptName = MyTools::getRequest()->getScriptName();
+		$scriptName = ereg_replace('[^a-zA-Z]', '', $scriptName);
+		$scriptName = ereg_replace('(dev)?php$', '', $scriptName);
+		
+		$scriptName = ($scriptName=='index'?'frontend':$scriptName);
+		return $scriptName;
+	}
+	
+	public static function isApp($app){
+		
+		return (self::getApp()==$app);
+	}
 }
 ?>

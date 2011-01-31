@@ -1,4 +1,6 @@
 <?php
+Util::getHelper('I18N');
+
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
 $peopleObj  = PeoplePeer::retrieveByPK($peopleId);
 
@@ -19,7 +21,8 @@ if( $peopleIdOther==$peopleId ){
 	}
 }
 
-$inputFilePath  = Util::getFilePath('/templates/myPerformance.xls');
+$culture        = MyTools::getCulture();
+$inputFilePath  = Util::getFilePath('/templates/'.$culture.'/myPerformance.xls');
 $outputFilePath = Util::getFilePath('/temp/myPerformance-'.microtime().'.xls');
 
 $phpExcelObj = PHPExcel_IOFactory::load($inputFilePath);
@@ -69,7 +72,7 @@ foreach($eventDateList as $key=>$eventDate){
 	$currentLine++;
 }
 
-Util::headerExcel('meu_desempenho.xls');
+Util::headerExcel(__('statistic.fileName.myPerformance').'.xls');
 $objWriter = PHPExcel_IOFactory::createWriter($phpExcelObj, 'Excel5');
 $objWriter->save( $outputFilePath );
 
