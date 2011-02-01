@@ -22,24 +22,24 @@ function handleSuccessFriendInvite(content){
 			switch( result ){
 				case 'ok':
 					$('friendInviteImage'+i+'Div').innerHTML = '<img src="/images/icon/ok.png"/>';
-					$('friendInviteStatus'+i+'Div').innerHTML = i18n_inviteFriend_status_inviteSent;
+					$('friendInviteStatus'+i+'Div').innerHTML = i18n_friendInvite_status_inviteSent;
 					break;
 				case 'error':
 					hasErrors = true;
 					$('friendInviteImage'+i+'Div').innerHTML = '<img src="/images/icon/nok.png"/>';
-					$('friendInviteStatus'+i+'Div').innerHTML = i18n_inviteFriend_status_inviteError;
+					$('friendInviteStatus'+i+'Div').innerHTML = i18n_friendInvite_status_inviteError;
 					break;
 				default:
 					$('friendInviteImage'+i+'Div').innerHTML = '<img src="/images/icon/info.png"/>';
-					$('friendInviteStatus'+i+'Div').innerHTML = i18n_inviteFriend_status_alreadyUser+' ('+result+')';
+					$('friendInviteStatus'+i+'Div').innerHTML = i18n_friendInvite_status_alreadyUser+' ('+result+')';
 			}
 		}
 	}
 	
 	if( hasErrors )
-		alert(i18n_inviteFriend_warningMessage);
+		alert(i18n_friendInvite_warningMessage);
 	else
-		alert(i18n_inviteFriend_successMessage);
+		alert(i18n_friendInvite_successMessage);
 	
 	hideIndicator('friendInvite');
 }

@@ -33,7 +33,7 @@
 							</div>
 							
 							<br/>
-							<?php echo __('friendInvite.intructions') ?><br/><br/>
+							<?php echo __('friendInvite.instructions') ?><br/><br/>
 							<?php for($i=1; $i <= 10; $i++): ?>
 							<div class="row">
 								<div class="halfLabel"><?php echo __('friendInvite.friendName') ?></div>

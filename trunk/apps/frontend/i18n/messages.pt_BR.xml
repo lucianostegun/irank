@@ -1672,7 +1672,7 @@
 				<target>Nome do amigo</target>
 			</trans-unit>
 			<trans-unit>
-				<source>button.friendName</source>
+				<source>button.inviteFriend</source>
 				<target>Convidar amigos</target>
 			</trans-unit>
 			<trans-unit>
@@ -1701,7 +1701,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>friendInvite.successMessage</source>
-				<target>Todos os convites foram enviados com sucesso!\nClique em "Limpar formulário" para enviar o convite a outros amigos.</target>
+				<target>Todos os convites foram enviados com sucesso!\nClique em \"Limpar formulário\" para enviar o convite a outros amigos.</target>
 			</trans-unit>
 			
 		</body>
