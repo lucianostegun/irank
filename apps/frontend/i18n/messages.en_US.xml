@@ -1555,7 +1555,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>statistic.buildError</source>
-				<target>Fill all required fields</target>
+				<target>Please fill all required fields</target>
 			</trans-unit>
 			<trans-unit>
 				<source>statistic.fileName.myBalance</source>
@@ -1628,6 +1628,78 @@
 			<trans-unit>
 				<source>statistic.chart.reservedRights</source>
 				<target>All rights reserved</target>
+			</trans-unit>
+			
+			
+			
+			
+			
+			
+			
+			
+			<trans-unit>
+				<source>email.subject.friendInvite</source>
+				<target>iRank invite</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.title</source>
+				<target>Invite your friends</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.intro</source>
+				<target>
+					Invite your friends to join you here at &lt;b&gt;iRank&lt;/b&gt;.&lt;br/&gt;
+					Fill the form bellow with the first name and e-mail of your friends and they will receive&lt;br/&gt;
+					an e-mail invite to join you for free.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.yourName</source>
+				<target>Your name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.yourEmail</source>
+				<target>Your e-mail</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.instructions</source>
+				<target>Tell us both name and e-mail of the friends you want to invite</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.friendName</source>
+				<target>Friend name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.inviteFriend</source>
+				<target>Invite friends</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.resetForm</source>
+				<target>Reset form</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.inviteError</source>
+				<target>Please fill all required fields</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.status.inviteSent</source>
+				<target>Invite sent!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.status.inviteError</source>
+				<target>Error sending the invites!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.status.alreadyUser</source>
+				<target>Already a user</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.warningMessage</source>
+				<target>Some invites could not be sent!\nPlease check the marked e-mails ans try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.successMessage</source>
+				<target>All invites were sent successfully!\nClick on \"Reset form\" to invite other friends.</target>
 			</trans-unit>
 		</body>
 	</file>

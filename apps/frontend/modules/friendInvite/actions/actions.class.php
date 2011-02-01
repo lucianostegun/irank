@@ -77,12 +77,12 @@ class friendInviteActions extends sfActions
 	
   	$nl = chr(10);
   	
-  	echo 'var i18n_friendInvite_inviteError       = "'.__('friendInvite.inviteError').'";'.$nl;
-  	echo 'var i18n_friendInvite_status.inviteSent = "'.__('friendInvite.status.inviteSent').'";'.$nl;
-  	echo 'var i18n_friendInvite_inviteError       = "'.__('friendInvite.status.inviteError').'";'.$nl;
-  	echo 'var i18n_friendInvite_alreadyUser       = "'.__('friendInvite.status.alreadyUser').'";'.$nl;
-  	echo 'var i18n_friendInvite_warningMessage    = "'.__('friendInvite.warningMessage').'";'.$nl;
-  	echo 'var i18n_friendInvite_successMessage    = "'.__('friendInvite.successMessage').'";'.$nl;
+  	echo 'var i18n_friendInvite_inviteError        = "'.__('friendInvite.inviteError').'";'.$nl;
+  	echo 'var i18n_friendInvite_status_inviteSent  = "'.__('friendInvite.status.inviteSent').'";'.$nl;
+  	echo 'var i18n_friendInvite_status_inviteError = "'.__('friendInvite.status.inviteError').'";'.$nl;
+  	echo 'var i18n_friendInvite_status_alreadyUser = "'.__('friendInvite.status.alreadyUser').'";'.$nl;
+  	echo 'var i18n_friendInvite_warningMessage     = "'.__('friendInvite.warningMessage').'";'.$nl;
+  	echo 'var i18n_friendInvite_successMessage     = "'.__('friendInvite.successMessage').'";'.$nl;
   	
   	exit;
   }
