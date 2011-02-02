@@ -1704,6 +1704,19 @@
 				<target>Todos os convites foram enviados com sucesso!\nClique em \"Limpar formulário\" para enviar o convite a outros amigos.</target>
 			</trans-unit>
 			
+			<trans-unit>
+				<source>Result</source>
+				<target>Resultado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Comments</source>
+				<target>Comentários</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Position</source>
+				<target>Posição</target>
+			</trans-unit>
+			
 		</body>
 	</file>
 </xliff>

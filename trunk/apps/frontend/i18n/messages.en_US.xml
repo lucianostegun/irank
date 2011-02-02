@@ -1701,6 +1701,19 @@
 				<source>friendInvite.successMessage</source>
 				<target>All invites were sent successfully!\nClick on \"Reset form\" to invite other friends.</target>
 			</trans-unit>
+			
+			<trans-unit>
+				<source>Result</source>
+				<target>Result</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Comments</source>
+				<target>Comments</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Position</source>
+				<target>Position</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
