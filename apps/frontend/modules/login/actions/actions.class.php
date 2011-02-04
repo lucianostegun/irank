@@ -13,6 +13,8 @@ class loginActions extends sfActions
 	$password  = $request->getParameter('password');
 	$keepLogin = $request->getParameter('keepLogin');
 
+	Util::getHelper('I18N');
+
 	$statusMessage = false;
 	
 	if( $username && $password ){
@@ -46,11 +48,11 @@ class loginActions extends sfActions
 			return $this->renderText(get_partial('home/include/leftBar', $options));
 		}else{
 			
-			$statusMessage = '<b>ACESSO NEGADO!</b> O login/senha inválidos';
+			$statusMessage = __('login.errorMessage');
 		}
 	}else{
 		
-		$statusMessage = '<b>ACESSO NEGADO!</b> O login/senha inválidos';
+		$statusMessage = __('login.errorMessage');
 	}
 	
 	if( $statusMessage )

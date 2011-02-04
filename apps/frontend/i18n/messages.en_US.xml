@@ -1714,6 +1714,144 @@
 				<source>Position</source>
 				<target>Position</target>
 			</trans-unit>
+
+
+
+
+
+
+			<trans-unit>
+				<source>feedback.title</source>
+				<target>Feedback</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.beta</source>
+				<target>beta</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.betaLink</source>
+				<target>http://en.wikipedia.org/wiki/Development_stage#Beta</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.intro</source>
+				<target>
+					Have you realized the &lt;b&gt;iRank&lt;/b&gt; is under &lt;b&gt;&lt;u&gt;%link%&lt;/u&gt;&lt;/b&gt; version?&lt;br/&gt;
+					It means that you evaluation is really important for us to fix bugs&lt;br/&gt;
+					and add improvements in all areas of the site.&lt;br/&gt;&lt;br/&gt;
+					We always ask the Possible That We ask that whenever possible you contact to send us&lt;br/&gt;
+					suggestions or tell us about a possible error, flaw or bug you have found the site
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.name</source>
+				<target>Your name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.subject</source>
+				<target>Subject</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.message</source>
+				<target>Message</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.sendFeedback</source>
+				<target>Send feedback</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.formError</source>
+				<target>Error sending your feedback</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.successTitle</source>
+				<target>Thank you!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.successMessage</source>
+				<target>
+					Your feedback was successfully sent!&lt;br/&gt;&lt;br/&gt;
+					It will be very important for us to fix bugs and&lt;br/&gt;
+					improve our services.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.newMessageLink</source>
+				<target>to send a new feedback.</target>
+			</trans-unit>
+
+
+
+
+
+
+			<trans-unit>
+				<source>search.title</source>
+				<target>Players and events search</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.intro</source>
+				<target>
+					Wanna find your friends and add them to your rankings?&lt;br/&gt;
+					Easy, you can find registred users by searching
+					by their e-mails or usernames.&lt;br/&gt;&lt;br/&gt;
+					And remember, if they are not here yet you can invite them to join you
+					at your events.&lt;br/&gt;&lt;br/&gt;
+
+					Searching players and events of public rankings.&lt;br/&gt;
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.result</source>
+				<target>Search results</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.username</source>
+				<target>Username</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.memberSince</source>
+				<target>Member since</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.footer</source>
+				<target>* Searches are limited on 20 results and don't show user's complete e-mails</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.result</source>
+				<target>to invite them to join you on &lt;b&gt;iRank&lt;/b&gt;</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.noUserResult</source>
+				<target>Ops! This search returned no results.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.titleShow</source>
+				<target>Event/Viewing</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.cloning</source>
+				<target>Cloning</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.formTitle</source>
+				<target>Invite form</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.formTitle</source>
+				<target>Feedback form</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.noRanking</source>
+				<target>You are not subscribed to any ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.form.error.friendNameError</source>
+				<target>Enter your friend's name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.form.error.friendEmailError</source>
+				<target>Enter your friend's e-mail address</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

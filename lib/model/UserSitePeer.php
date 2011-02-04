@@ -41,6 +41,8 @@ class UserSitePeer extends BaseUserSitePeer
 	
 	public static function validateEmailList(){
 		
+		Util::getHelper('I18N');
+		
 		$pattern = '/^[a-z]([a-z-_\.A-Z0-9])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)+/';
 
 		for($i=1; $i<=10; $i++){
@@ -49,13 +51,13 @@ class UserSitePeer extends BaseUserSitePeer
 			$friendName   = MyTools::getRequestParameter('friendName'.$i);
 			
 			if( $emailAddress && !preg_match($pattern, $emailAddress))
-				MyTools::setError('emailAddress'.$i, 'O e-mail informado não é um e-mail válido');
+				MyTools::setError('emailAddress'.$i, __('form.error.invalidEmail'));
 			
 			if( $emailAddress xor $friendName ){
 				if( $emailAddress )
-					MyTools::setError('friendName'.$i, 'Informe o nome de seu amigo');
+					MyTools::setError('friendName'.$i, __('friendInvite.form.error.friendNameError'));
 				else
-					MyTools::setError('emailAddress'.$i, 'Informe o e-mail de seu amigo');
+					MyTools::setError('emailAddress'.$i, __('friendInvite.form.error.friendEmailError'));
 			}
 		}
 		

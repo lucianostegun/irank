@@ -5,7 +5,7 @@
 
 <table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTable">
 	<tr class="header">
-  		<th>Formulário de convite</th>
+  		<th><?php echo __('friendInvite.formTitle') ?></th>
   	</tr>
   	<tr>
   		<td>

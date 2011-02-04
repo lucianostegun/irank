@@ -1716,6 +1716,144 @@
 				<source>Position</source>
 				<target>Posição</target>
 			</trans-unit>
+
+
+
+
+
+
+			<trans-unit>
+				<source>feedback.title</source>
+				<target>Feedback</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.beta</source>
+				<target>beta</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.betaLink</source>
+				<target>http://pt.wikipedia.org/wiki/Vers%C3%A3o_beta</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.intro</source>
+				<target>
+					Reparou que &lt;b&gt;iRank&lt;/b&gt; site está em versão &lt;b&gt;&lt;u&gt;%link%&lt;/u&gt;&lt;/b&gt;?&lt;br/&gt;
+					Isso significa que sua avaliação é muito importante para que possamos &lt;br/&gt;corrigir falhas e adicionar melhorias
+					em todas as áreas do site.&lt;br/&gt;&lt;br/&gt;
+					Pedimos que sempre que possível você entre em contato para nos enviar&lt;br/&gt;sugestões ou nos informar sobre um possível erro, falha ou bug
+					que tenha encontrado no site.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.name</source>
+				<target>Nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.subject</source>
+				<target>Assunto</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.message</source>
+				<target>Mensagem</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.sendFeedback</source>
+				<target>Enviar feedback</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.formError</source>
+				<target>Erro ao enviar a mensagem</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.successTitle</source>
+				<target>Obrigado!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.successMessage</source>
+				<target>
+					Seu feedback foi enviado com sucesso!&lt;br/&gt;&lt;br/&gt;
+					Ele será muito importante para que possamos corrigir falhas e melhorar&lt;br/&gt;
+					os serviços oferecidos.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.newMessageLink</source>
+				<target>para enviar um novo feedback.</target>
+			</trans-unit>
+
+
+
+
+
+
+			<trans-unit>
+				<source>search.title</source>
+				<target>Pesquisa de jogadores e eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.intro</source>
+				<target>
+					Quer encontrar seus amigos e incluí-los em seus rankings?&lt;br/&gt;
+					Simples, você pode localizar usuários já cadastrados no site pesquisando
+					pelo username ou e-mail do jogador.&lt;br/&gt;&lt;br/&gt;
+					E lembre-se, caso você não os encontre você pode convidá-los para juntar-se a você
+					em seus eventos.&lt;br/&gt;&lt;br/&gt;
+
+					Procurando jogadores e eventos em rankings abertos.&lt;br/&gt;
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.result</source>
+				<target>Resultado da pesquisa</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.username</source>
+				<target>Usuário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.memberSince</source>
+				<target>Membro desde</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.footer</source>
+				<target>* As pesquisas são limitadas a 20 resultados e não exibem o e-mail completo do usuário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.result</source>
+				<target>para convidá-los ao &lt;b&gt;iRank&lt;/b&gt;</target>
+			</trans-unit>
+			<trans-unit>
+				<source>search.noUserResult</source>
+				<target>Ops! Nenhum jogador foi encontrado pelo username/e-mail informado.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.titleShow</source>
+				<target>Eventos/Visualização</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.cloning</source>
+				<target>Clonagem</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.formTitle</source>
+				<target>Formulário de convite</target>
+			</trans-unit>
+			<trans-unit>
+				<source>feedback.formTitle</source>
+				<target>Formulário de retorno</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.noRanking</source>
+				<target>Você não está participando de nenhum ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.form.error.friendNameError</source>
+				<target>Informe o nome de seu amigo</target>
+			</trans-unit>
+			<trans-unit>
+				<source>friendInvite.form.error.friendEmailError</source>
+				<target>Informe o e-mail de seu amigo</target>
+			</trans-unit>
 			
 		</body>
 	</file>
