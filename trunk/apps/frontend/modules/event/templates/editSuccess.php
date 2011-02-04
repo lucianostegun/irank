@@ -8,7 +8,7 @@
 	if( !$pastDate && $inviteStatus!='deleted' )	
 		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
 
-	$pageAction = ($isClone?'Clonagem':($eventObj->isNew()?__('Creating'):__('Editing')));
+	$pageAction = ($isClone?__('Cloning'):($eventObj->isNew()?__('Creating'):__('Editing')));
 	
 	if( !$eventObj->getEnabled() || $isClone ):
 ?>

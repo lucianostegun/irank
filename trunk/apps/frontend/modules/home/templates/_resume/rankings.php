@@ -47,7 +47,7 @@
 	</tr>
 	<?php else: ?>
 	<tr>
-		<td style="text-align: left">Você não está participando de nenhum ranking</td>
+		<td style="text-align: left"><?php echo __('resume.noRanking') ?></td>
 	</tr>
 	<?php endif; ?>
 </table>

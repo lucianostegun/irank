@@ -70,7 +70,7 @@ class AuxiliarText extends BaseAuxiliarText
 		return options_for_select( $optionList, $defaultValue );
 	}
 	
-	public static function getContentByTagName($tagName, $encodeUTF8=false, $noCulture=false){
+	public static function getContentByTagName($tagName, $encodeUTF8=false, $noCulture='pt_BR'){
 		
 		$criteria = new Criteria();
 		$criteria->add( AuxiliarTextPeer::VISIBLE, true );

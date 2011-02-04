@@ -1,4 +1,4 @@
-<div class="commonBar"><span>Eventos/Visualização</span></div>
+<div class="commonBar"><span><?php echo __('event.titleShow') ?></span></div>
 <?php
 
 	$pastDate          = $eventObj->isPastDate();

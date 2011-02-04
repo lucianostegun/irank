@@ -14,4 +14,4 @@ default:
 
   has_layout:     on
   layout:         layout
-  culture:        pt_BR
+  culture:        en_US

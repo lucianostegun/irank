@@ -16,8 +16,8 @@
 ?>
 <tr>
 	<td colspan="6">
-		Ops! Nenhum jogador foi encontrado pelo username/e-mail informado.<br/><br/>
-		<b><?php echo link_to('Clique aqui', 'friendInvite/index') ?></b> para convidá-los ao <b>iRank</b></td>
+		<?php echo __('search.noUserResult') ?><br/><br/>
+		<b><?php echo link_to(__('ClickHere'), 'friendInvite/index') ?></b> <?php echo __('search.inviteSuggest') ?></td>
 </tr>
 <?php
 	endif;
