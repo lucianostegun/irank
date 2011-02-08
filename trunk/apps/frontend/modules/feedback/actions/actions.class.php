@@ -19,7 +19,7 @@ class feedbackActions extends sfActions
 	$emailAddress = $request->getParameter('emailAddress');
 	$message      = $request->getParameter('message');
 	
-	$emailContent = AuxiliarText::getContentByTagName('feedbackMessage');
+	$emailContent = AuxiliarText::getContentByTagName('feedbackMessage', false, 'pt_BR');
 	$emailContent = str_replace('<fullName>', $fullName, $emailContent);
 	$emailContent = str_replace('<emailAddress>', $emailAddress, $emailContent);
 	$emailContent = str_replace('<message>', $message, $emailContent);

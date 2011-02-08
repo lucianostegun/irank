@@ -15,39 +15,39 @@
 			
 				<table cellpadding="0" cellspacing="0" width="100%" class="formTable">
 					<tr>
-						<th class="firstLine">Nome</th>
+						<th class="firstLine"><?php echo __('ranking.rankingName') ?></th>
 						<td class="firstLine"><?php echo $rankingObj->getRankingName() ?></td>
 					</tr>
 					<tr>
-						<th>Estilo</th>
+						<th><?php echo __('ranking.rankingStyle') ?></th>
 						<td><?php echo $rankingObj->getGameStyle()->getDescription() ?></td>
 					</tr>
 					<tr>
-						<th>Início</th>
+						<th><?php echo __('ranking.startDate') ?></th>
 						<td><?php echo $rankingObj->getStartDate('d/m/Y') ?></td>
 					</tr>
 					<tr>
-						<th>Término</th>
+						<th><?php echo __('ranking.finishDate') ?></th>
 						<td><?php echo $rankingObj->getFinishDate('d/m/Y') ?></td>
 					</tr>
 					<tr>
-						<th>Exibição</th>
+						<th><?php echo __('ranking.rankingType') ?></th>
 						<td><?php echo ($rankingObj->getIsPrivate()?'Privado':'Público') ?></td>
 					</tr>
 					<tr>
-						<th>Classificação</th>
+						<th><?php echo __('ranking.classifyType') ?></th>
 						<td><?php echo $rankingObj->getRankingType()->getDescription() ?></td>
 					</tr>
 					<tr>
-						<th>Bui-in padrão</th>
+						<th><?php echo __('ranking.defaultBuyIn') ?></th>
 						<td><?php echo Util::formatFloat($rankingObj->getDefaultBuyin(), true) ?></td>
 					</tr>
 					<tr>
-						<th>Eventos realizados</th>
+						<th><?php echo __('ranking.heldEvents') ?></th>
 						<td><?php echo sprintf('%02d', $rankingObj->getEvents()) ?></td>
 					</tr>
 					<tr>
-						<th class="lastLine">Participantes</th>
+						<th class="lastLine"><?php echo __('ranking.players') ?></th>
 						<td class="lastLine"><?php echo sprintf('%02d', $rankingObj->getPlayers()) ?></td>
 					</tr>
 				</table>

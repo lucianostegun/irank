@@ -1,3 +1,6 @@
+<?php
+	$culture = MyTools::getCulture();
+?>
 	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
 		<tr>
 			<td width="0" class="topLeft"><?php echo image_tag('mobile/form/topLeft') ?></td>
@@ -12,17 +15,17 @@
 			
 				<table cellpadding="0" cellspacing="0" width="100%" class="formTable">
 					<tr>
-						<th class="lastLineBar" valign="top">Comentário</th>
+						<th class="lastLineBar" valign="top"><?php echo __('event.comment.comment') ?></th>
 						<td class="lastLineBar">
-						<?php echo textarea_tag('comment', 'Clique aqui para enviar seu comentário', array('onfocus'=>'handleCommentFocus(this)', 'onkeyup'=>'countChars(this)', 'id'=>'commentsComment')) ?>
+						<?php echo textarea_tag('comment', __('event.comment.fieldMessage'), array('onfocus'=>'handleCommentFocus(this)', 'onkeyup'=>'countChars(this)', 'id'=>'commentsComment')) ?>
 						</td>
 					</tr>
 					<tr>
 						<td class="actionBar" align="right" colspan="2" id="commentButtonBarDiv" style="display: none">
 							<table cellpadding="0" cellspacing="0" width="100%" class="clean">
 								<tr>
-									<td align="left" id="commentsCharCount">140 caracteres restantes</td>
-									<td align="right"><?php echo image_tag('mobile/button/publish', array('onclick'=>'sendComment()')) ?></td>
+									<td align="left" id="commentsCharCount">140 <?php echo __('leftChars') ?></td>
+									<td align="right"><?php echo image_tag('mobile/button/'.$culture.'/publish', array('onclick'=>'sendComment()')) ?></td>
 								</tr>
 							</table>
 						</td>

@@ -446,7 +446,7 @@
 				<source>help.contact.description</source>
 				<target>
 				If your doubt is not listed on FAQ&lt;br/&gt;
-				use the contact form to send your a message&lt;br/&gt;
+				use the contact form to send your message&lt;br/&gt;
 				to &lt;b&gt;iRank&lt;/b&gt; Team.
 				</target>
 			</trans-unit>
@@ -461,7 +461,7 @@
 				To create you own rankings, participate and visualize&lt;br/&gt;
 				all event's information you need to register into the website.&lt;br/&gt;&lt;br/&gt;
 	
-				Register process is pretty simple, fast and totally free.
+				The registration process is pretty simple, fast and totally free.
 				</target>
 			</trans-unit>
 			<trans-unit>
@@ -1398,7 +1398,7 @@
 				<source>passwordRecovery.intro</source>
 				<target>
 					If you are already an &lt;b&gt;iRank&lt;/b&gt; user but you don't remember your access password&lt;br/&gt;
-					fill the form bellow and input your username and e-mail to receive&lt;br/&gt;
+					fill the form below and input your username and e-mail to receive&lt;br/&gt;
 					an e-mail with a new password.
 				</target>
 			</trans-unit>
@@ -1513,7 +1513,7 @@
 			<trans-unit>
 				<source>statistic.intro</source>
 				<target>
-					Select bellow the filters and the kind of statistic you want&lt;br/&gt;
+					Select below the filters and the kind of statistic you want&lt;br/&gt;
 					to build charts and spreadsheets reports about your events.
 				</target>
 			</trans-unit>			
@@ -1649,7 +1649,7 @@
 				<source>friendInvite.intro</source>
 				<target>
 					Invite your friends to join you here at &lt;b&gt;iRank&lt;/b&gt;.&lt;br/&gt;
-					Fill the form bellow with the first name and e-mail of your friends and they will receive&lt;br/&gt;
+					Fill the form below with the first name and e-mail of your friends and they will receive&lt;br/&gt;
 					an e-mail invite to join you for free.
 				</target>
 			</trans-unit>
@@ -1851,6 +1851,10 @@
 			<trans-unit>
 				<source>friendInvite.form.error.friendEmailError</source>
 				<target>Enter your friend's e-mail address</target>
+			</trans-unit>
+			<trans-unit>
+				<source>layout.innerLoading</source>
+				<target>Loading,&lt;br/&gt;please wait...</target>
 			</trans-unit>
 		</body>
 	</file>

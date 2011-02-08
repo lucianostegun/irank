@@ -15,39 +15,39 @@
 			
 				<table cellpadding="0" cellspacing="0" width="100%" class="formTable">
 					<tr>
-						<th class="firstLine">Ranking</th>
+						<th class="firstLine"><?php echo __('event.rankingName') ?></th>
 						<td class="firstLine"><?php echo $eventObj->getRanking()->getRankingName() ?></td>
 					</tr>
 					<tr>
-						<th>Título</th>
+						<th><?php echo __('event.eventName') ?></th>
 						<td><?php echo $eventObj->getEventName() ?></td>
 					</tr>
 					<tr>
-						<th>Local</th>
+						<th><?php echo __('event.eventPlace') ?></th>
 						<td><?php echo $eventObj->getEventPlace() ?></td>
 					</tr>
 					<tr>
-						<th>Data</th>
+						<th><?php echo __('event.eventDate') ?></th>
 						<td><?php echo $eventObj->getEventDate('d/m/Y') ?></td>
 					</tr>
 					<tr>
-						<th>Horário</th>
+						<th><?php echo __('event.startTime') ?></th>
 						<td><?php echo $eventObj->getStartTime('H:i') ?></td>
 					</tr>
 					<tr>
-						<th>ITM</th>
+						<th><?php echo __('event.paidPlaces') ?></th>
 						<td><?php echo $eventObj->getPaidPlaces() ?></td>
 					</tr>
 					<tr>
-						<th>Bui-in</th>
+						<th>Buy-in</th>
 						<td><?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></td>
 					</tr>
 					<tr>
-						<th>Convidados</th>
+						<th><?php echo __('event.guests') ?></th>
 						<td><?php echo sprintf('%02d', $eventObj->getInvites()) ?></td>
 					</tr>
 					<tr>
-						<th class="lastLine">Participantes</th>
+						<th class="lastLine"><?php echo __('event.players') ?></th>
 						<td class="lastLine"><?php echo sprintf('%02d', $eventObj->getPlayers()) ?></td>
 					</tr>
 				</table>
@@ -65,13 +65,3 @@
 	</table>
 
 </div>
-
-
-
-
-
-
-
-
-
-

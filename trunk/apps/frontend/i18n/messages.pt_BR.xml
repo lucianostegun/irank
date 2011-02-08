@@ -1854,6 +1854,10 @@
 				<source>friendInvite.form.error.friendEmailError</source>
 				<target>Informe o e-mail de seu amigo</target>
 			</trans-unit>
+			<trans-unit>
+				<source>layout.innerLoading</source>
+				<target>Carregando,&lt;br/&gt;aguarde...</target>
+			</trans-unit>
 			
 		</body>
 	</file>

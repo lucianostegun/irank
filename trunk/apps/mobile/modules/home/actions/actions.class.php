@@ -25,4 +25,19 @@ class homeActions extends sfActions
     
   	exit;
   }
+  
+  public function executeJavascript($request){
+	
+	Util::getHelper('i18n');
+	
+    header('Content-type: text/x-javascript');
+		
+	$nl = chr(10);
+	
+	$peopleId   = $this->getUser()->getAttribute('peopleId');
+	
+	echo 'var i18n_culture      = "'.$this->getUser()->getCulture().'";'.$nl;
+	echo 'var i18n_innerLoading = "'.__('layout.innerLoading').'";'.$nl;
+	exit;
+  }
 }

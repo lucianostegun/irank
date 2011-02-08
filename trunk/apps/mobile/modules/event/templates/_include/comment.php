@@ -18,7 +18,7 @@
 				<table cellpadding="0" cellspacing="0" width="100%" class="formTable">
 					<tr>
 						<td class="lastLine" style="border-left: 2px solid #C0C0C0; font-size: 10pt; padding-top: 0px">
-						<p><b><?php echo $eventCommentObj->getPeople()->getFirstName() ?></b> - <?php echo $eventCommentObj->getTimeAgo() ?> atrás</p>
+						<p><b><?php echo $eventCommentObj->getPeople()->getFirstName() ?></b> - <?php echo $eventCommentObj->getTimeAgo() ?> <?php echo __('timeAgo') ?></p>
 						<?php echo $eventCommentObj->getComment(true) ?>
 						</td>
 						<?php if($isMyComment): ?>

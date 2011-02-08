@@ -14,7 +14,9 @@ class loginActions extends sfActions
 
   public function preExecute(){
 	
-	$this->title = 'Login';
+	Util::getHelper('I18N');
+	
+	$this->title = __('login.title');
 	
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
   }
@@ -47,13 +49,10 @@ class loginActions extends sfActions
 		$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
 		
-		if( is_object($userSiteObj) ){
-	        
+		if( is_object($userSiteObj) )	        
 	        $userSiteObj->login();
-		}else{
-			
+		else
 			$statusMessage = '<b>ACESSO NEGADO!</b><br />O login e/ou senha não são válidos';
-		}
 	}else{
 		
 		$statusMessage = '<b>ACESSO NEGADO!</b><br />Informe se login e senha de acesso';

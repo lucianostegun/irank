@@ -4,7 +4,7 @@ default:
 
   metas:
     title:        iRank - Administração
-    language:     pt
+    language:     en
 
   stylesheets:    [backend/main, backend/form, backend/loading, backend/toolbar]
   javascripts:    [phpEquivalents, backend/main, backend/common, backend/form, backend/paginator, backend/toolbar, backend/mask, backend/hotKey, backend/record, backend/util, /sf/prototype/js/prototype]

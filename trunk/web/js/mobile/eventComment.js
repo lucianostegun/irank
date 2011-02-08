@@ -5,7 +5,7 @@ function sendComment(eventCommentId){
 
 	if( _IsPublishing ){
 	
-		alert('Aguarde a publicação do comentário atual');
+		alert(i18n_event_comment_waitMessage);
 		return false;
 	}
 	
@@ -16,9 +16,9 @@ function sendComment(eventCommentId){
 	var comment  = fieldObj.value;
 	var eventId  = $('eventId').value;
 	
-	if( !comment || comment=='Clique aqui para enviar seu comentário' ){
+	if( !comment || comment==i18n_event_comment_fieldMessage ){
 		
-		alert('Digite alguma mensagem para publicar');
+		alert(i18n_event_comment_typeSomething);
 		return false;
 	}
 	
@@ -26,7 +26,7 @@ function sendComment(eventCommentId){
 	comment = urlencode(comment);
 	
 	disableButton('postComment'+eventCommentId);
-	$('commentsCharCount'+eventCommentId).innerHTML = 'Publicando...';
+	$('commentsCharCount'+eventCommentId).innerHTML = i18n_event_comment_publishing;
 	
 	fieldObj.disabled = true;
 
@@ -44,7 +44,7 @@ function sendComment(eventCommentId){
 		
 		$('commentListDiv').appendChild(commentDiv);
 		
-		$('commentsCharCount'+eventCommentId).innerHTML = 'Comentário postado';
+		$('commentsCharCount'+eventCommentId).innerHTML = i18n_event_comment_published;
 		window.setTimeout('resetCommentForm('+eventCommentId+')', 1000);
 		
 		_IsPublishing = false;
@@ -55,7 +55,7 @@ function sendComment(eventCommentId){
 		var content = t.responseText;
 		
 		enableButton('postComment'+eventCommentId);
-		$('commentsCharCount'+eventCommentId).innerHTML = 'Erro ao publicar o comentário!';
+		$('commentsCharCount'+eventCommentId).innerHTML = i18n_event_comment_errorMessage;
 		
 		fieldObj.disabled = false;
 		_IsPublishing     = false;
@@ -91,7 +91,7 @@ function deleteComment(eventCommentId){
 		var content = t.responseText;
 		
 		hideIndicator();
-		alert('Não foi possível excluir o comentário!\nTente novamente mais tarde.');
+		alert(i18n_event_comment_deleteError);
 		
 		if( isDebug() )
 			debug(content);
@@ -106,9 +106,9 @@ function resetCommentForm(eventCommentId){
 	eventCommentId = (eventCommentId?eventCommentId:'');
 	
 	hideDiv('commentButtonBarDiv');
-	$('commentsCharCount'+eventCommentId).innerHTML = '140 caracteres restantes';
+	$('commentsCharCount'+eventCommentId).innerHTML = '140 '+i18n_leftChars;
 	$('commentsComment'+eventCommentId).disabled    = false;
-	$('commentsComment'+eventCommentId).value       = 'Clique aqui para enviar seu comentário';
+	$('commentsComment'+eventCommentId).value       = i18n_event_comment_fieldMessage;
 	
 	$('commentBaseLeft').src         = $('commentBaseLeft').src.replace('Gray', '');
 	$('commentBaseRight').src        = $('commentBaseRight').src.replace('Gray', '');
@@ -118,7 +118,7 @@ function resetCommentForm(eventCommentId){
 function handleCommentFocus(fieldObj){
 	
 	var comment = fieldObj.value;
-	if( comment=='Clique aqui para enviar seu comentário' )
+	if( comment==i18n_event_comment_fieldMessage )
 		fieldObj.value = '';
 	
 	var eventCommentId = fieldObj.id.replace('commentsComment', '');
@@ -138,7 +138,7 @@ function countChars(fieldObj){
 	
 	var eventCommentId = fieldObj.id.replace('commentsComment', '');
 		
-	$('commentsCharCount'+eventCommentId).innerHTML = leftChars+' caracter'+(leftChars==1?'':'es')+' restante'+(leftChars==1?'':'s');
+	$('commentsCharCount'+eventCommentId).innerHTML = leftChars+' '+(leftChars==1?i18n_leftChar:i18n_leftChars);
 	
 	if( leftChars==0 )
 		fieldObj.value = fieldObj.value.substring(0,140);
@@ -167,6 +167,6 @@ function confirmDelete(eventCommentId){
 		deleteComment(eventCommentId);
 	}
 	
-	$('deleteIcon'+eventCommentId).src     = $('deleteIcon'+eventCommentId).src.replace('icon/delete', 'button/delete');
+	$('deleteIcon'+eventCommentId).src     = $('deleteIcon'+eventCommentId).src.replace('/icon/', '/button/'+i18n_culture+'/');
 	$('deleteIcon'+eventCommentId).onclick = onclick
 }

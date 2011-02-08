@@ -1,14 +1,17 @@
+<?php
+	$culture = MyTools::getCulture();
+?>
 <div id="resultDiv" style="display: none">
 	<div class="text">
-		Utilize o dispositivo na posição horizontal para visualizar todos os campos de edição
+		<?php echo __('event.result.intro') ?>
 	</div>
 	<br/>
 			
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	  <tr class="rank_heading">
-	    <th>Nome</th>
+	    <th><?php echo __('event.result.playerName') ?></th>
 	    <th>Buy-in</th>
-	    <th>Pos</th>
+	    <th><?php echo __('event.result.position') ?></th>
 	    <th>$$$</th>
 	    <th class="hiddenColumn">Rebuy</th>
 	    <th class="hiddenColumn">Add-on</th>
@@ -53,28 +56,25 @@
 	  	if( count($eventPlayerObjList)==0 ):
 	  ?>
 	  <tr>
-	    <td colspan="6">Este ranking não possui convidados para compor os resultados</td>
+	    <td colspan="6"><?php echo __('ranking.noPlayers') ?></td>
 	  </tr>
 	  <?php endif; ?>
 	</table>
 	
 	<br/>
-	<div class="text">Os resultados serão enviados por e-mail a todos os convidados</div>
+	<div class="text"><?php echo __('ranking.result.notifyInfo') ?></div>
 	<br/>
 	
 	<table width="100%" cellspacing="0" cellpadding="0">
 		<tr>
-			<td align="right" style="padding-right: 20px"><?php echo image_tag('mobile/button/saveResult', array('onclick'=>'doSubmitEvent()')) ?></div>
+			<td align="right" style="padding-right: 20px"><?php echo image_tag('mobile/button/'.$culture.'/saveResult', array('onclick'=>'doSubmitEvent()')) ?></div>
 		</tr>
 	</table>
 	
 	<br/>
 	<table class="text">
-		<tr><th align="right">Pts</th><td>Pontos ganhos</td></tr>
-		<tr><th align="right">BRA</th><td>Buy-in + Rebuys + Add-ons</td></tr>
-		<tr><th align="right">$$$</th><td>Ganhos</td></tr>
-		<tr><th align="right">Bal</th><td>Balanço</td></tr>
-		<tr><th align="right">Méd</th><td>Média (Ganhos/BRA)</td></tr>
+		<tr><th align="right"><?php echo __('event.result.position') ?></th><td><?php echo __('event.result.legend.position') ?></td></tr>
+		<tr><th align="right">$$$</th><td><?php echo __('event.result.legend.prize') ?></td></tr>
 	</table>
 	<br/>
 </div>

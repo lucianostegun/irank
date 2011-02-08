@@ -7,7 +7,8 @@ include_http_metas();
 include_metas();
 include_title();
 
-$title = (isset($title)?$title:false);
+$title   = (isset($title)?$title:false);
+$culture = $sf_user->getCulture();
 ?>
 <link rel="shortcut icon" href="/favicon.ico" />
 <script type="text/javascript">
@@ -25,9 +26,9 @@ $title = (isset($title)?$title:false);
 		<td class="header" width="88" align="right">
 			<?php
 				if( $title )
-					echo link_to(image_tag('mobile/layout/backTop'), '#history.back()');
+					echo link_to(image_tag('mobile/layout/'.$culture.'/backTop'), '#history.back()');
 				else
-					echo image_tag('mobile/layout/heart');
+					echo image_tag('mobile/layout/spades');
 			?>
 		</td>
 		<td class="header" width="483" align="center"><?php echo link_to(image_tag('mobile/layout/logo'), '/home/index') ?></td>
@@ -53,8 +54,8 @@ $title = (isset($title)?$title:false);
 
 <table width="100%" cellspacing="0" cellpadding="0">
 	<tr>
-		<td class="footerBack"><?php echo link_to(image_tag('mobile/layout/back'), '#history.back()') ?></td>
-		<td width="100%" class="footer" style="text-align: center"><?php echo link_to('Versão completa', 'home/classic') ?></td>
+		<td class="footerBack"><?php echo link_to(image_tag('mobile/layout/'.$culture.'/back'), '#history.back()') ?></td>
+		<td width="100%" class="footer" style="text-align: center"><?php echo link_to(__('layout.classicVersion'), 'home/classic') ?></td>
 		<td class="footer" align="right"><?php echo image_tag('mobile/layout/logoFooter') ?></td>
 	</tr>
 </table>

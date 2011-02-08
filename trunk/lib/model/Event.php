@@ -534,6 +534,10 @@ class Event extends BaseEvent
 		
 		if( is_object($rankingObj) && !$rankingObj->isMyRanking() )
 			return false;
+		
+		// Se hoje for maior que a data final do ranking
+		if( $this->getSavedResult() && $rankingObj->getStartDate(null) < time() )
+			return false;
 
 		$eventDate = $this->getEventDate();
 		if( $eventDate==null )

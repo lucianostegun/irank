@@ -2,23 +2,22 @@
 
 	<?php if( !$eventObj->getSavedResult() ): ?>
 		<div class="text">
-			O resultado deste evento ainda não foi salvo.<br/><br/>
-			Aguarde até que as informações sejam atualizadas pelos responsáveis do evento.
+			<?php echo __('event.result.notSaved') ?>
 		</div>
 		<br/>
 	<?php else: ?>
 	
 		<div class="text">
-			Resultado do evento
+			<?php echo __('event.show.result.intro') ?>
 		</div>
 		<br/>
 	
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridTable">
 		  <tr>
-		    <th>Nome</th>
+		    <th><?php echo __('event.result.playerName') ?></th>
 		    <th class="hiddenColumn">Buy-in</th>
-		    <th>Posição</th>
-		    <th>Prêmio</th>
+		    <th><?php echo __('event.result.legend.position') ?></th>
+		    <th><?php echo __('event.result.legend.prize') ?></th>
 		    <th class="hiddenColumn">Rebuy</th>
 		    <th class="hiddenColumn">Add-on</th>
 		  </tr>
@@ -51,7 +50,7 @@
 		  	if( count($eventPlayerObjList)==0 ):
 		  ?>
 		  <tr>
-		    <td colspan="6">Este ranking não possui convidados para compor os resultados</td>
+		    <td colspan="6"><?php echo __('event.noPlayers') ?></td>
 		  </tr>
 		  <?php endif; ?>
 		</table>
