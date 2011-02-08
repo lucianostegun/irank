@@ -76,7 +76,7 @@ function isVisible( divId ){
 function putLoading(divId, message, mobile){
 	
 	if( !message )
-		message = 'Carregando,'+(mobile?' ':'<br/>')+'aguarde...';
+		message = i18n_innerLoading;
 	
 	var html = '';
 	

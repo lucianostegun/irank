@@ -12,7 +12,7 @@
   	
   	if( count($rankingObjList)==0 ):
   ?>
-    <br/><div class="text">Você não está inscrito em nenhum ranking</div>
+    <br/><div class="text"><?php echo __('ranking.noRanking') ?></div>
   <?php endif; ?>
 </table>
 </div>

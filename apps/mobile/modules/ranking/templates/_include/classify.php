@@ -2,12 +2,12 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr>
 		<th>#</th>
-		<th>Nome</th>
-		<th>Pts</th>
+		<th><?php echo __('ranking.classify.playerName') ?></th>
+		<th><?php echo __('ranking.classify.score') ?></th>
 	    <th class="hiddenColumn">BRA</th>
 	    <th class="hiddenColumn">$$$</th>
-		<th>Bal</th>
-		<th>Méd</th>
+		<th><?php echo __('ranking.classify.balance') ?></th>
+		<th><?php echo __('ranking.classify.average') ?></th>
 	</tr>
 	<?php
   	$rankingType          = $rankingObj->getRankingType(true);
@@ -33,15 +33,15 @@
 </div>
 
 	<?php if( count($rankingPlayerObjList)==0 ): ?>
-	<div class="text" align="center">Este ranking ainda não possui membros cadastrados</div>
+	<div class="text" align="center"><?php echo __('ranking.classify.noPlayers') ?></div>
 	<?php else: ?>
 	<br/>
 	<table class="text">
-		<tr><th align="right">Pts</th><td>Pontos ganhos</td></tr>
+		<tr><th align="right"><?php echo __('ranking.classify.score') ?></th><td><?php echo __('ranking.classify.legend.score') ?></td></tr>
 		<tr><th align="right">BRA</th><td>Buy-in + Rebuys + Add-ons</td></tr>
-		<tr><th align="right">$$$</th><td>Ganhos</td></tr>
-		<tr><th align="right">Bal</th><td>Balanço</td></tr>
-		<tr><th align="right">Méd</th><td>Média (Ganhos/BRA)</td></tr>
+		<tr><th align="right">$$$</th><td><?php echo __('ranking.classify.legend.prize') ?></td></tr>
+		<tr><th align="right"><?php echo __('ranking.classify.balance') ?></th><td><?php echo __('ranking.classify.legend.balance') ?></td></tr>
+		<tr><th align="right"><?php echo __('ranking.classify.average') ?></th><td><?php echo __('ranking.classify.legend.average') ?></td></tr>
 	</table>
 <?php endif; ?>
 	<br/>

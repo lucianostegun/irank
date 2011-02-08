@@ -70,7 +70,10 @@ class AuxiliarText extends BaseAuxiliarText
 		return options_for_select( $optionList, $defaultValue );
 	}
 	
-	public static function getContentByTagName($tagName, $encodeUTF8=false, $noCulture='pt_BR'){
+	public static function getContentByTagName($tagName, $encodeUTF8=false, $culture=false){
+		
+		if( !$culture )
+			$culture = MyTools::getCulture();
 		
 		$criteria = new Criteria();
 		$criteria->add( AuxiliarTextPeer::VISIBLE, true );
@@ -81,7 +84,7 @@ class AuxiliarText extends BaseAuxiliarText
 		if( !is_object($auxiliarTextObj) )
 			return null;
 
-		$content = $auxiliarTextObj->getContent($noCulture);
+		$content = $auxiliarTextObj->getContent($culture);
 		
 		if( $encodeUTF8 )
 			$content = utf8_encode($content);
@@ -89,15 +92,10 @@ class AuxiliarText extends BaseAuxiliarText
 		return $content;
 	}
 	
-	public function getContent($noCulture=false){
+	public function getContent($culture=false){
 		
 		$filePath = $this->getFilePath(true);
-		
-		if( !$noCulture ){
-			
-			$culture  = MyTools::getCulture();
-			$filePath = str_replace('templates', 'templates'.DIRECTORY_SEPARATOR.$culture, $filePath);
-		}
+		$filePath = str_replace('templates', 'templates'.DIRECTORY_SEPARATOR.$culture, $filePath);
 
 		return file_get_contents($filePath);
 	}

@@ -5,7 +5,9 @@ class eventActions extends sfActions
 
   public function preExecute(){
 	
-	$this->title = 'Eventos';
+	Util::getHelper('I18N');
+	
+	$this->title = __('event.title');
 	
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
 	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
@@ -38,7 +40,7 @@ class eventActions extends sfActions
   	$rankingId        = $request->getParameter('rankingId');
   	$this->rankingObj = RankingPeer::retrieveByPK($rankingId);
   	
-  	$this->title = 'Eventos > '.$this->rankingObj->getRankingName();
+  	$this->title = __('event.title').' > '.$this->rankingObj->getRankingName();
   }
   
   public function executeEdit($request){
@@ -53,7 +55,7 @@ class eventActions extends sfActions
 		if( !is_object($this->eventObj) )
 			return $this->redirect('event/index');
 		
-		if( !$this->eventObj->isMyEvent() )
+		if( !$this->eventObj->isMyEvent() || !$this->eventObj->isEditable() )
 			$this->setTemplate('show');
   	}
   }
@@ -69,7 +71,7 @@ class eventActions extends sfActions
 	$eventObj = EventPeer::retrieveByPK($eventId);
 	
 	if( !$eventObj->isEditable() )
-		Util::forceError('!Este evento está bloqueado para edição', true);
+		Util::forceError(__('event.exception.lockedEvent'), true);
 		
 	$eventObj->saveResult($request);
 	
@@ -105,7 +107,7 @@ class eventActions extends sfActions
 	$eventCommentObj = EventCommentPeer::retrieveByPK($eventCommentId);
 	
 	if( !$eventCommentObj->isMyComment() )
-		throw new Exception('Este comentário não foi escrito por você!');
+		throw new Exception(__('event.exception.notYourComment'));
 	
 	$eventCommentObj->delete();
 	exit;
@@ -133,5 +135,20 @@ class eventActions extends sfActions
     header('Content-type: text/x-javascript');
 		
   	$nl = chr(10);
+  	
+  	echo 'var i18n_event_result_successMessage = "'.__('event.result.successMessage').'";'.$nl;
+  	echo 'var i18n_event_result_errorMessage   = "'.__('event.result.errorMessage').'";'.$nl;
+  	echo 'var i18n_event_result_waitMessage    = "'.__('event.result.waitMessage').'";'.$nl;
+  	echo 'var i18n_event_result_saveConfirm    = "'.__('event.result.saveConfirm').'";'.$nl;
+  	echo 'var i18n_event_comment_waitMessage   = "'.__('event.comment.waitMessage').'";'.$nl;
+  	echo 'var i18n_event_comment_fieldMessage  = "'.__('event.comment.fieldMessage').'";'.$nl;
+  	echo 'var i18n_event_comment_publishing    = "'.__('event.comment.publishing').'";'.$nl;
+  	echo 'var i18n_event_comment_published     = "'.__('event.comment.published').'";'.$nl;
+  	echo 'var i18n_event_comment_errorMessage  = "'.__('event.comment.errorMessage').'";'.$nl;
+  	echo 'var i18n_event_comment_deleteError   = "'.__('event.comment.deleteError').'";'.$nl;
+  	echo 'var i18n_leftChar                    = "'.__('leftChar').'";'.$nl;
+  	echo 'var i18n_leftChars                   = "'.__('leftChars').'";'.$nl;
+  	
+  	exit;
   }
 }

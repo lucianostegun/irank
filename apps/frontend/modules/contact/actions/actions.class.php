@@ -20,7 +20,7 @@ class contactActions extends sfActions
 	$subject      = $request->getParameter('subject');
 	$message      = $request->getParameter('message');
 	
-	$emailContent = AuxiliarText::getContentByTagName('contactMessage');
+	$emailContent = AuxiliarText::getContentByTagName('contactMessage', false, 'pt_BR');
 	$emailContent = str_replace('<fullName>', $fullName, $emailContent);
 	$emailContent = str_replace('<emailAddress>', $emailAddress, $emailContent);
 	$emailContent = str_replace('<subject>', $subject, $emailContent);

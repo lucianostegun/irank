@@ -5,7 +5,7 @@ var _SavingInProgress = false;
 function handleSuccessEventResult(content){
 
 	_SavingInProgress = false;
-	alert('Resultado salvo com sucesso!');
+	alert(i18n_event_result_successMessage);
 
 	hideIndicator('event');
 }
@@ -16,18 +16,18 @@ function handleFailureEventResult(content){
 	enableButton('mainSubmit');
 	
 	handleFormFieldError( request.responseText, 'eventForm', 'event', false, 'event' );
-	alert('Erro ao salvar os resultados!\nVerifique os campos em destaque.');
+	alert(i18n_event_result_errorMessage);
 }
 
 function doSubmitEvent(content){
 
 	if( _SavingInProgress ){
 		
-		alert('A atualização do resultado está em andamento!\nPor favor, aguarde.');
+		alert(i18n_event_result_waitMessage);
 		return false;
 	}
 
-	if( !_SaveResultAlert && !confirm('ATENÇÃO!\n\nOs resultados salvos serão enviados por e-mail a todos os convidados e estarão disponíveis para edição até que outro evento posterior seja criado.\n\nDeseja prosseguir?') )
+	if( !_SaveResultAlert && !confirm(i18n_event_result_saveConfirm) )
 		return false;
 	
 	_SaveResultAlert = true;
@@ -44,7 +44,7 @@ function handleOnFocus(fieldObj){
 	
 	_lastFieldValue = value;
 	
-	if( value.match(/^0(,00)?/) )
+	if( value.match(/^0([,\.]00)?/) )
 		fieldObj.value = '';
 }
 

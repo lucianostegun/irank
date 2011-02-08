@@ -1,6 +1,6 @@
 <div id="playerListDiv" style="display: none">
 	<div class="text">
-		Lista dos jogadores convidados para o evento
+		<?php echo __('event.player.intro') ?>
 	</div>
 	<br/>
 	
@@ -13,7 +13,7 @@
 	  		
 	  		$emailAddress      = $peopleObj->getEmailAddress();
 	  		$inviteStatus      = $eventPlayerObj->getInviteStatus();
-	  		$inviteStatusColor = ($inviteStatus=='yes'?'#3f8b07':'#b70606');
+	  		$inviteStatusColor = ($inviteStatus=='yes'?'#3F8B07':'#B70606');
 	  ?>
 	  <tr>
 	    <td onclick="location.href='mailto:<?php echo $emailAddress ?>'">
@@ -25,7 +25,7 @@
 	</table>
 	
 	<?php if( count($eventPlayerObjList)==0 ): ?>
-	<div class="text" align="center">Este ranking ainda não possui membros cadastrados</div>
+	<div class="text" align="center"><?php echo __('ranking.noPlayers') ?></div>
 	<?php endif; ?>
 	<br/>
 </div>
