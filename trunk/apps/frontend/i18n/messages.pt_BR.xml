@@ -1510,7 +1510,7 @@
 				</target>
 			</trans-unit><trans-unit>
 				<source>statistic.title</source>
-				<target>Estarísticas</target>
+				<target>Estatísticas</target>
 			</trans-unit>
 			<trans-unit>
 				<source>statistic.intro</source>
@@ -1521,7 +1521,7 @@
 			</trans-unit>			
 			<trans-unit>
 				<source>button.buildStatistic</source>
-				<target>Gerar estarísticas</target>
+				<target>Gerar estatísticas</target>
 			</trans-unit>
 			<trans-unit>
 				<source>statistic.reportType</source>
