@@ -12,7 +12,7 @@
 	<tr>
 		<td valign="top" class="defaultForm">
 			<div class="row">
-				<div class="halfLabel"><?php echo __('event.playersTab.notify') ?></div>
+				<div class="labelHalf"><?php echo __('event.playersTab.notify') ?></div>
 				<div class="field"><?php echo select_tag('sendNotify', array('ask'=>__('Ask'), '1'=>__('Yes'), '0'=>__('No'))) ?></div>
 			</div>
 		</td>

@@ -194,12 +194,29 @@ img {
 
 
 
+#contentArea #innerContent #leftContent #leftBar #leftMenu .innerMenu {
+	
+	margin: 		10px 0px 10px 0px;
+	padding: 		7px 0px 7px 0px;
+	background: 	#FAFAFA url('/images/layout/innerMenuBg.png') repeat-y
+}
+
 #contentArea #innerContent #leftContent #leftBar #leftMenu .item {
 	
 	clear: 					both;
 	padding-top: 			4px;
 	padding-bottom: 		4px;
 	padding-left: 			33px;
+	background: 			url('/images/layout/bullet.png') 15px center no-repeat;	
+}
+
+#contentArea #innerContent #leftContent #leftBar #leftMenu .innerItem {
+	
+	clear: 					both;
+	padding-top: 			4px;
+	padding-bottom: 		4px;
+	padding-left: 			33px;
+	margin-left: 			10px;
 	background: 			url('/images/layout/bullet.png') 15px center no-repeat;	
 }
 
@@ -210,7 +227,16 @@ img {
 	text-decoration: 	none;
 }
 
-#contentArea #innerContent #leftContent #leftBar #leftMenu .item a:hover {
+#contentArea #innerContent #leftContent #leftBar #leftMenu .innerItem a {
+
+	font-size: 			8pt;
+	color: 				#444444;
+	text-decoration: 	none;
+	margin-left: 		5px;
+}
+
+#contentArea #innerContent #leftContent #leftBar #leftMenu .item a:hover,
+#contentArea #innerContent #leftContent #leftBar #leftMenu .innerItem a:hover {
 
 	color: 				#E52024;
 	text-decoration: 	underline;

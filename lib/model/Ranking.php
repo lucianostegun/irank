@@ -50,7 +50,7 @@ class Ranking extends BaseRanking
 		return '#'.sprintf('%04d', $this->getId());
 	}
 	
-	public static function getList($onlyMine=false){
+	public static function getList($onlyMine=false, $suppressOld=false){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$peopleId   = MyTools::getAttribute('peopleId');
@@ -59,6 +59,9 @@ class Ranking extends BaseRanking
 		$criteria->add( RankingPeer::ENABLED, true );
 		$criteria->add( RankingPeer::VISIBLE, true );
 		$criteria->add( RankingPeer::DELETED, false );
+		
+		if( $suppressOld )
+			$criteria->add( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
 		
 		if( $onlyMine ){
 		
@@ -77,9 +80,9 @@ class Ranking extends BaseRanking
 		return RankingPeer::doSelect( $criteria );
 	}
 
-	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false, $onlyMine=false ){
+	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false, $onlyMine=false, $suppressOld=false ){
 		
-		$rankingObjList = self::getList($onlyMine);
+		$rankingObjList = self::getList($onlyMine, $suppressOld);
 
 		$optionList = array();
 		$optionList[''] = __('select');

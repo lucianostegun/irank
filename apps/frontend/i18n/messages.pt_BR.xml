@@ -594,7 +594,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>button.newPlayer</source>
-				<target>Novo membro</target>
+				<target>Incluir jogador</target>
 			</trans-unit>
 			<trans-unit>
 				<source>button.playerRegister</source>
@@ -1857,6 +1857,44 @@
 			<trans-unit>
 				<source>layout.innerLoading</source>
 				<target>Carregando,&lt;br/&gt;aguarde...</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.importPlayers</source>
+				<target>Importar jogadores</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>event.players.importConfirm</source>
+				<target>Deseja reimportar todos os jogadores do ranking deste evento?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.players.importError</source>
+				<target>Não foi possível importar os jogadores!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.players.importSuccess</source>
+				<target>Jogadores importados com sucesso!</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>ranking.import</source>
+				<target>Importação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.importData</source>
+				<target>Importar informações</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.import.rankingPlayers</source>
+				<target>Importar lista de jogadores</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.import.rankingPlaces</source>
+				<target>Importar locais dos eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.importTab.intro</source>
+				<target>Selecione o ranking e as informações que deseja importar dele e clique no botão "Importar dados"</target>
 			</trans-unit>
 			
 		</body>

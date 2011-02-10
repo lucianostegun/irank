@@ -13,7 +13,7 @@
 <div id="leftMenu">
 	<?php
 		if( $isAuthenticated )
-			include_partial('home/include/mainMenu');
+			include_partial('home/include/mainMenu', array('innerMenu'=>$innerMenu, 'innerObj'=>$innerObj));
 	?>
 
 	<div class="separator"></div>

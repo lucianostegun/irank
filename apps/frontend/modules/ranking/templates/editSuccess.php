@@ -27,23 +27,23 @@
 	$dhtmlxTabBarObj->addTab('player', __('ranking.players'), 'ranking/form/player', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
 	$dhtmlxTabBarObj->addTab('event', __('ranking.events'), 'ranking/form/event', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
 	$dhtmlxTabBarObj->addTab('classify', __('ranking.classify'), 'ranking/form/classify', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
+	$dhtmlxTabBarObj->addTab('import', __('ranking.import'), 'ranking/form/import', array('rankingObj'=>$rankingObj, 'hidden'=>true));
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabRanking');
 	$dhtmlxTabBarObj->build();
 ?>
 	<div class="buttonTabBar" id="rankingMainButtonBar">
-		<?php
-			echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitRanking()'));
-			
-			if( !$isNew )
-				echo button_tag('deleteRanking', __('button.deleteRanking'), array('onclick'=>'doDeleteRanking()', 'image'=>'../icon/delete', 'style'=>'float: right'));
-		?>
+		<?php echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitRanking()')); ?>
 		<?php echo getFormLoading('ranking') ?>
 		<?php echo getFormStatus(); ?>
 	</div>
 	<div class="buttonTabBar" id="rankingPlayerButtonBar" style="display: none">
 		<?php echo button_tag('addRankingPlayer', __('button.newPlayer'), array('onclick'=>'addRankingPlayer()')) ?>
 		<?php echo getFormLoading('rankingPlayerList') ?>
+	</div>
+	<div class="buttonTabBar" id="rankingImportButtonBar" style="display: none">
+		<?php echo button_tag('importRankingData', __('button.importData'), array('onclick'=>'doImportRankingData()')) ?>
+		<?php echo getFormLoading('rankingImport') ?>
 	</div>
 </form>
 <?php

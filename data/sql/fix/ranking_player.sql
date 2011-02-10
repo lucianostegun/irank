@@ -43,6 +43,17 @@ SET
                     AND event_player.DELETED = FALSE);
 
 UPDATE
+    event
+SET
+    invites = (SELECT
+                    COUNT(1)
+               FROM
+                    event_player
+               WHERE
+                    event_player.EVENT_ID = event.ID
+                    AND event_player.DELETED = FALSE);
+
+UPDATE
     event_player
 SET
     score = (SELECT SUM(buyin+rebuy+addon) FROM event_player ep WHERE ep.EVENT_ID = event_player.EVENT_ID) / event_position / buyin

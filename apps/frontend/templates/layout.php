@@ -10,6 +10,8 @@ $moduleName      = $sf_context->getModuleName();
 $hasCredentials  = MyTools::hasCredential('iRankSite');
 $isAuthenticated = (MyTools::isAuthenticated() && $hasCredentials);
 $culture         = $sf_user->getCulture();
+$innerMenu       = (isset($innerMenu)?$innerMenu:false);
+$innerObj        = (isset($innerObj)?$innerObj:false);
 
 if( $isAuthenticated )
 	$balance = People::getBalance();
@@ -48,7 +50,7 @@ else
     			<tr>
     				<td valign="top" width="200" id="leftContent">
 				    	<div id="leftBar">
-				    		<?php include_partial('home/include/leftBar', array('isAuthenticated'=>$isAuthenticated, 'balance'=>$balance, 'culture'=>$culture)) ?>
+				    		<?php include_partial('home/include/leftBar', array('isAuthenticated'=>$isAuthenticated, 'balance'=>$balance, 'culture'=>$culture, 'innerMenu'=>$innerMenu, 'innerObj'=>$innerObj)) ?>
 				    	</div>
 				    	<div id="socialNetwork">
 				    		<?php include_partial('home/include/facebook', array()) ?>

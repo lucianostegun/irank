@@ -123,6 +123,7 @@ function onSelectTabRanking(tabId){
 
 	hideDiv('rankingMainButtonBar');
 	hideDiv('rankingPlayerButtonBar');
+	hideDiv('rankingImportButtonBar');
 	
 	switch( tabId ){
 		case 'main':
@@ -131,6 +132,10 @@ function onSelectTabRanking(tabId){
 		case 'player':
 			if( isRecordSaved()!=false )
 				showDiv('rankingPlayerButtonBar');
+			break;
+		case 'import':
+			if( isRecordSaved()!=false )
+				showDiv('rankingImportButtonBar');
 			break;
 	}
 	
@@ -228,4 +233,10 @@ function doDeleteRanking(){
 	
 	var urlAjax = _webRoot+'/ranking/delete/rankingId/'+rankingId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function importRankingData(){
+	
+	tabBarMainObj.showTab('import');
+	tabBarMainObj.setTabActive('import');
 }
