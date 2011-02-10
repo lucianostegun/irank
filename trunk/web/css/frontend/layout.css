@@ -62,6 +62,7 @@ img {
 
 	float: 			left;
 	width: 			100px;
+	height: 		30px;
 	margin-left: 	9px;
 	margin-top: 	3px;
 }
@@ -73,7 +74,7 @@ img {
 
 #contentArea #innerContent #header #search {
 
-	float: 			right;
+	float: 			left;
 	background: 	#F0F0F0;
 	width: 			236px;
 	height: 		25px;
@@ -81,7 +82,7 @@ img {
 	border-left: 	1px solid #666666;
 	border-right: 	1px solid #666666;
 	margin-top: 	44px;
-	margin-right: 	20px;
+	margin-left: 	-100px;
 }
 
 #contentArea #innerContent #header input {
