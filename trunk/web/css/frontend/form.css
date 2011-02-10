@@ -123,7 +123,7 @@
 	margin-right: 	10px;
 }
 
-.defaultForm .row .halfLabel, .windowForm .row .halfLabel {
+.defaultForm .row .labelHalf, .windowForm .row .labelHalf {
 
 	width: 			80px;
 	float: 			left;
@@ -214,7 +214,8 @@
 	whitespace: 	nowrap;
 }
 
-.defaultForm .rowCheckbox .label {
+.defaultForm .rowCheckbox .label,
+.defaultForm .rowCheckbox label {
 
 	float: 			left;
 	padding: 		3px 0px 1px 5px;

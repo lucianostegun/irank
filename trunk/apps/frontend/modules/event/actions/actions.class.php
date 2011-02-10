@@ -37,6 +37,9 @@ class eventActions extends sfActions
 		
 		if( !$this->eventObj->isMyEvent() )
 			$this->setTemplate('show');
+	  	
+	  	$this->innerMenu = 'event/include/mainMenu';
+	  	$this->innerObj  = $this->eventObj;
   	}else{
 		
 		$this->eventObj = new Event();
@@ -201,6 +204,16 @@ class eventActions extends sfActions
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	return $this->renderText(get_partial('event/include/player', array('eventObj'=>$eventObj)));
+  }
+
+  public function executeGetResult($request){
+
+	$eventId  = $request->getParameter('eventId');
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('event/include/result', array('eventObj'=>$eventObj)));
   }
   
   public function executeCloneEvent($request){
@@ -569,6 +582,25 @@ class eventActions extends sfActions
 	exit;
   }
   
+  public function executeImportPlayers($request){
+
+	$eventId  = $request->getParameter('eventId');
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+	
+	if( !is_object($eventObj) )
+		throw new Exception(__('eventNotFound'));
+	
+	if( !$eventObj->isEditable() )
+		Util::forceError('!'.__('event.lockedEvent'), true);
+		
+	if( !$eventObj->isMyEvent() )
+		throw new Exception(__('event.exception.editionDenied'));
+		
+	$eventObj->importPlayers();
+  	
+	exit;
+  }
+  
   public function executeJavascript($request){
   	
   	Util::getHelper('i18n');
@@ -603,6 +635,9 @@ class eventActions extends sfActions
   	echo 'var i18n_event_deleteError                         = "'.__('event.deleteError').'";'.$nl;
   	echo 'var i18n_event_searchError                         = "'.__('event.searchError').'";'.$nl;
   	echo 'var i18n_event_playersTab_shareError               = "'.__('event.playersTab.shareError').'";'.$nl;
+  	echo 'var i18n_event_players_importConfirm               = "'.__('event.players.importConfirm').'";'.$nl;
+  	echo 'var i18n_event_players_importError                 = "'.__('event.players.importError').'";'.$nl;
+  	echo 'var i18n_event_players_importSuccess               = "'.__('event.players.importSuccess').'";'.$nl;
   	exit;
   }
   

@@ -1856,6 +1856,23 @@
 				<source>layout.innerLoading</source>
 				<target>Loading,&lt;br/&gt;please wait...</target>
 			</trans-unit>
+			<trans-unit>
+				<source>button.importPlayers</source>
+				<target>Import players</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>event.players.importConfirm</source>
+				<target>Confirm reimport all players from ranking of this event?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.players.importError</source>
+				<target>Unable to import player list!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.players.importSuccess</source>
+				<target>Players have been imported successfully!</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

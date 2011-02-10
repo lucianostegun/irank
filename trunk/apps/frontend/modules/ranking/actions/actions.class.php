@@ -45,6 +45,9 @@ class rankingActions extends sfActions
 		
 		if( !is_object($this->rankingObj) )
 			return $this->redirect('ranking/index');
+	  	
+	  	$this->innerMenu = 'ranking/include/mainMenu';
+	  	$this->innerObj  = $this->rankingObj;
 		
 		if( !$this->rankingObj->isMyRanking() )
 			$this->setTemplate('show');

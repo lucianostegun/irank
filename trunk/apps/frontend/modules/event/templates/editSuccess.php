@@ -52,12 +52,6 @@
 			if( $isEditable )				
 				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()'));
 			
-			if( $isMyEvent && !$isNew )
-				echo button_tag('cloneEvent', __('button.cloneEvent'), array('onclick'=>'cloneEvent('.$eventId.')', 'image'=>'../icon/clone'));
-				
-			if( $isEditable && !$isNew )				
-				echo button_tag('deleteEvent', __('button.deleteEvent'), array('onclick'=>'doDeleteEvent()', 'image'=>'../icon/delete', 'style'=>'float: right'));
-		
 			echo getFormLoading('event');
 			echo getFormStatus();
 		?>

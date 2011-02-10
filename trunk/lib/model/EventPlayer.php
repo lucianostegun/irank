@@ -132,6 +132,7 @@ class EventPlayer extends BaseEventPlayer
 			$choice     = $this->getInviteStatus();
 		} 
 		
+		$this->setDeleted(false);
 		$this->setConfirmCode( $this->getConfirmCode() );
 		$this->setInviteStatus($choice);
 		$this->save();

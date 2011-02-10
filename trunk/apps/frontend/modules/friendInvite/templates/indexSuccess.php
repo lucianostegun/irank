@@ -36,9 +36,9 @@
 							<?php echo __('friendInvite.instructions') ?><br/><br/>
 							<?php for($i=1; $i <= 10; $i++): ?>
 							<div class="row">
-								<div class="halfLabel"><?php echo __('friendInvite.friendName') ?></div>
+								<div class="labelHalf"><?php echo __('friendInvite.friendName') ?></div>
 								<div class="field"><?php echo input_tag('friendName'.$i, null, array('size'=>15, 'autocomplete'=>'off', 'id'=>'friendInviteFriendName'.$i)) ?></div>
-								<div class="halfLabel">E-mail</div>
+								<div class="labelHalf">E-mail</div>
 								<div class="field"><?php echo input_tag('emailAddress'.$i, null, array('size'=>25, 'autocomplete'=>'off', 'id'=>'friendInviteEmailAddress'.$i)) ?></div>
 								<div class="image" id="friendInviteImage<?php echo $i ?>Div"></div>
 								<div class="textFlex" id="friendInviteStatus<?php echo $i ?>Div"></div>

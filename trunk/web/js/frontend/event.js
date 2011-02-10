@@ -317,10 +317,13 @@ function checkRankingPlace(rankingPlaceId){
 	}
 }
 
-function cloneEvent(eventId){
+function cloneEvent(){
 	
 	if( !confirm(i18n_event_cloneConfirm) )
 		return false;
+	
+	var eventId = $('eventId').value;
+	
 	goModule('event', 'cloneEvent', 'eventId', eventId);
 }
 
@@ -373,12 +376,12 @@ function updatePlayerContent(eventId){
 }
 
 function updateResultContent(eventId){
-	
+
 	if( !hasResult() )
 		return false;
 
 	var urlAjax = _webRoot+'/event/getResult/eventId/'+eventId;
-	new Ajax.Updater('rankingClassifyDiv', urlAjax, {asynchronous:true, evalScripts:false});
+	new Ajax.Updater('eventResultDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }
 
 function doEventSearch(){
@@ -500,4 +503,40 @@ function handleOnBlur(fieldObj){
 	var value = fieldObj.value;
 	if( value=='' )
 		fieldObj.value = _lastFieldValue;
+}
+
+function importPlayers(){
+
+	if( !confirm(i18n_event_players_importConfirm) )
+		return false;
+	
+	showIndicator('event');
+	
+	var eventId = $('eventId').value;
+	
+	var successFunc = function(t){
+
+		var content = t.responseText;
+		
+		updatePlayerContent(eventId);
+		updateResultContent(eventId);
+		
+		tabBarMainObj.setTabActive('player');
+		alert(i18n_event_players_importSuccess)
+		
+		hideIndicator('event');
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		alert(content)
+		hideIndicator('event');
+		
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/event/importPlayers/eventId/'+eventId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
