@@ -27,6 +27,8 @@ function handleSuccessEvent(content){
 	enableButton('declinePresence');
 	enableButton('maybePresence');
 	
+	showDiv('mainMenuEvent');
+	
 	if( eventObj.inviteStatus=='yes' )   disableButton('confirmPresence');
 	if( eventObj.inviteStatus=='no' )    disableButton('declinePresence');
 	if( eventObj.inviteStatus=='maybe' ) disableButton('maybePresence');
@@ -539,4 +541,21 @@ function importPlayers(){
 	
 	var urlAjax = _webRoot+'/event/importPlayers/eventId/'+eventId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function handleSuccessEventRankingPlayer(content){
+	
+	$('rankingPlayerForm').reset();
+	
+	var eventId = $('eventId').value;
+
+	updatePlayerContent(eventId);
+	updateResultContent(eventId);
+	
+	enableButton('rankingPlayerSubmit');
+	
+	hideIndicator('rankingPlayer');
+	
+	adjustContentTab();
+	windowRankingPlayerAddHide();
 }

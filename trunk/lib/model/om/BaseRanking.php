@@ -109,6 +109,18 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	protected $lastRankingPlaceCriteria = null;
 
 	
+	protected $collRankingImportLogListRelatedByRankingId;
+
+	
+	protected $lastRankingImportLogRelatedByRankingIdCriteria = null;
+
+	
+	protected $collRankingImportLogListRelatedByRankingIdFrom;
+
+	
+	protected $lastRankingImportLogRelatedByRankingIdFromCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -721,6 +733,22 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collRankingImportLogListRelatedByRankingId !== null) {
+				foreach($this->collRankingImportLogListRelatedByRankingId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collRankingImportLogListRelatedByRankingIdFrom !== null) {
+				foreach($this->collRankingImportLogListRelatedByRankingIdFrom as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -808,6 +836,22 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 				if ($this->collRankingPlaceList !== null) {
 					foreach($this->collRankingPlaceList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingImportLogListRelatedByRankingId !== null) {
+					foreach($this->collRankingImportLogListRelatedByRankingId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingImportLogListRelatedByRankingIdFrom !== null) {
+					foreach($this->collRankingImportLogListRelatedByRankingIdFrom as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1104,6 +1148,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 			foreach($this->getRankingPlaceList() as $relObj) {
 				$copyObj->addRankingPlace($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingImportLogListRelatedByRankingId() as $relObj) {
+				$copyObj->addRankingImportLogRelatedByRankingId($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingImportLogListRelatedByRankingIdFrom() as $relObj) {
+				$copyObj->addRankingImportLogRelatedByRankingIdFrom($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1601,6 +1653,146 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	{
 		$this->collRankingPlaceList[] = $l;
 		$l->setRanking($this);
+	}
+
+	
+	public function initRankingImportLogListRelatedByRankingId()
+	{
+		if ($this->collRankingImportLogListRelatedByRankingId === null) {
+			$this->collRankingImportLogListRelatedByRankingId = array();
+		}
+	}
+
+	
+	public function getRankingImportLogListRelatedByRankingId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingImportLogListRelatedByRankingId === null) {
+			if ($this->isNew()) {
+			   $this->collRankingImportLogListRelatedByRankingId = array();
+			} else {
+
+				$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
+
+				RankingImportLogPeer::addSelectColumns($criteria);
+				$this->collRankingImportLogListRelatedByRankingId = RankingImportLogPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
+
+				RankingImportLogPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingImportLogRelatedByRankingIdCriteria) || !$this->lastRankingImportLogRelatedByRankingIdCriteria->equals($criteria)) {
+					$this->collRankingImportLogListRelatedByRankingId = RankingImportLogPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingImportLogRelatedByRankingIdCriteria = $criteria;
+		return $this->collRankingImportLogListRelatedByRankingId;
+	}
+
+	
+	public function countRankingImportLogListRelatedByRankingId($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
+
+		return RankingImportLogPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingImportLogRelatedByRankingId(RankingImportLog $l)
+	{
+		$this->collRankingImportLogListRelatedByRankingId[] = $l;
+		$l->setRankingRelatedByRankingId($this);
+	}
+
+	
+	public function initRankingImportLogListRelatedByRankingIdFrom()
+	{
+		if ($this->collRankingImportLogListRelatedByRankingIdFrom === null) {
+			$this->collRankingImportLogListRelatedByRankingIdFrom = array();
+		}
+	}
+
+	
+	public function getRankingImportLogListRelatedByRankingIdFrom($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingImportLogListRelatedByRankingIdFrom === null) {
+			if ($this->isNew()) {
+			   $this->collRankingImportLogListRelatedByRankingIdFrom = array();
+			} else {
+
+				$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
+
+				RankingImportLogPeer::addSelectColumns($criteria);
+				$this->collRankingImportLogListRelatedByRankingIdFrom = RankingImportLogPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
+
+				RankingImportLogPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingImportLogRelatedByRankingIdFromCriteria) || !$this->lastRankingImportLogRelatedByRankingIdFromCriteria->equals($criteria)) {
+					$this->collRankingImportLogListRelatedByRankingIdFrom = RankingImportLogPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingImportLogRelatedByRankingIdFromCriteria = $criteria;
+		return $this->collRankingImportLogListRelatedByRankingIdFrom;
+	}
+
+	
+	public function countRankingImportLogListRelatedByRankingIdFrom($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
+
+		return RankingImportLogPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingImportLogRelatedByRankingIdFrom(RankingImportLog $l)
+	{
+		$this->collRankingImportLogListRelatedByRankingIdFrom[] = $l;
+		$l->setRankingRelatedByRankingIdFrom($this);
 	}
 
 } 

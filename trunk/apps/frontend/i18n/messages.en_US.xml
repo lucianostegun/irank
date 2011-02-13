@@ -3,8 +3,24 @@
 	<file orginal="global" source-language="pt_BR" datatype="plaintext" date="">
 		<body>
 			<trans-unit>
-				<source>generalCredit</source>
-				<target>GENERAL CREDIT</target>
+				<source>generalCredit.balance</source>
+				<target>General credit</target>
+			</trans-unit>
+			<trans-unit>
+				<source>generalCredit.profit</source>
+				<target>Total prize</target>
+			</trans-unit>
+			<trans-unit>
+				<source>generalCredit.paid</source>
+				<target>Total paid</target>
+			</trans-unit>
+			<trans-unit>
+				<source>generalCredit.average</source>
+				<target>Average</target>
+			</trans-unit>
+			<trans-unit>
+				<source>generalCredit.score</source>
+				<target>Total score</target>
 			</trans-unit>
 			
 			<trans-unit>
@@ -1872,6 +1888,14 @@
 			<trans-unit>
 				<source>event.players.importSuccess</source>
 				<target>Players have been imported successfully!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.importSuccessMessage</source>
+				<target>Ranking information imported successfully!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.quickResume</source>
+				<target>Home resume</target>
 			</trans-unit>
 		</body>
 	</file>

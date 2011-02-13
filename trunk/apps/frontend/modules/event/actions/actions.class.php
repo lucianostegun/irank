@@ -37,13 +37,13 @@ class eventActions extends sfActions
 		
 		if( !$this->eventObj->isMyEvent() )
 			$this->setTemplate('show');
-	  	
-	  	$this->innerMenu = 'event/include/mainMenu';
-	  	$this->innerObj  = $this->eventObj;
   	}else{
 		
 		$this->eventObj = new Event();
   	}
+	  	
+  	$this->innerMenu = 'event/include/mainMenu';
+  	$this->innerObj  = $this->eventObj;
   }
   
   public function executeShow($request){
@@ -598,6 +598,14 @@ class eventActions extends sfActions
 		
 	$eventObj->importPlayers();
   	
+	exit;
+  }
+  
+  public function executeGetInvite($request){
+
+	$eventId  = $request->getParameter('eventId');
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+	$eventObj->getICal();
 	exit;
   }
   

@@ -1,0 +1,8 @@
+fields:
+       
+  rankingIdImport:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [RankingPeer, validateImport]
+      invalid_error: form.error.ranking.sameRankingIdError

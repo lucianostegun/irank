@@ -54,4 +54,11 @@ class RankingPeer extends BaseRankingPeer
 		
 		return !is_object( $rankingObj );
 	}
+	
+	public static function validateImport($rankingIdImport){
+
+		$rankingId = MyTools::getRequestParameter('rankingId');
+
+		return ($rankingIdImport!=$rankingId);
+	}
 }

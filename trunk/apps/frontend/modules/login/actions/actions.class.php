@@ -43,7 +43,6 @@ class loginActions extends sfActions
 	        $options['username']        = $userSiteObj->getUsername();
 	        $options['firstName']       = $userSiteObj->getPeople()->getFirstName();
 	        $options['isAuthenticated'] = true;
-	        $options['balance']         = $balance = People::getBalance();
 	        $options['innerMenu']       = false;
 	        $options['innerObj']        = false;
 

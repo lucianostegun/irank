@@ -45,9 +45,6 @@ class rankingActions extends sfActions
 		
 		if( !is_object($this->rankingObj) )
 			return $this->redirect('ranking/index');
-	  	
-	  	$this->innerMenu = 'ranking/include/mainMenu';
-	  	$this->innerObj  = $this->rankingObj;
 		
 		if( !$this->rankingObj->isMyRanking() )
 			$this->setTemplate('show');
@@ -58,6 +55,9 @@ class rankingActions extends sfActions
 		
 		$this->rankingObj = new Ranking();
   	}
+	  
+  	$this->innerMenu = 'ranking/include/mainMenu';
+  	$this->innerObj  = $this->rankingObj;
   }
 
   public function handleErrorSave(){
@@ -67,7 +67,7 @@ class rankingActions extends sfActions
   
   public function executeSave($request){
 
-	$rankingId     = $this->getRequestParameter('rankingId');
+	$rankingId     = $request->getParameter('rankingId');
 	$rankingName   = $request->getParameter('rankingName');
 	$gameStyleId   = $request->getParameter('gameStyleId');
 	$startDate     = $request->getParameter('startDate');
@@ -277,6 +277,20 @@ class rankingActions extends sfActions
 
 	return $this->renderText(get_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$rankingDate)));
   }
+
+  public function handleErrorImport(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
+  
+  public function executeImport($request){
+
+	$rankingId = $this->getRequestParameter('rankingId');
+	
+	$rankingObj = RankingPeer::retrieveByPK($rankingId);
+	$rankingObj->importData($request);
+	exit;
+  }
   
   public function executeJavascript($request){
   	
@@ -292,6 +306,7 @@ class rankingActions extends sfActions
   	echo 'var i18n_ranking_playersTab_shareError        = "'.__('ranking.classifyTab.shareError').'";'.$nl;
   	echo 'var i18n_ranking_deleteConfirm                = "'.__('ranking.deleteConfirm').'";'.$nl;
   	echo 'var i18n_ranking_deleteError                  = "'.__('ranking.deleteError').'";'.$nl;
+  	echo 'var i18n_ranking_importSuccessMessage         = "'.__('ranking.importSuccessMessage').'";'.$nl;
   	exit;
   }
   

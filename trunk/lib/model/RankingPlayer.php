@@ -94,6 +94,16 @@ class RankingPlayer extends BaseRankingPlayer
 		return Util::executeOne('SELECT total_ranking_position FROM ranking_history WHERE ranking_id = '.$this->getRankingId().' AND people_id = '.$this->getPeopleId().' ORDER BY ranking_date DESC LIMIT 1', 'int');
 	}
 	
+	public function getClone(){
+		
+		$rankingPlayerObj = new RankingPlayer();
+		$rankingPlayerObj->setPeopleId( $this->getPeopleId() );
+		$rankingPlayerObj->setEnabled( $this->getEnabled() );
+		$rankingPlayerObj->setAllowEdit( $this->getAllowEdit() );
+		
+		return $rankingPlayerObj;
+	}
+	
 	public function postOnWall(){
 		
 		$isNew    = $this->isNew();

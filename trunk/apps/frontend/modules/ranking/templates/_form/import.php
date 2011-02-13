@@ -6,7 +6,7 @@
 		<td valign="top">
 			<div class="row">
 				<div class="label">Ranking</div>
-				<div class="field"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect(false, false, true), array('id'=>'rankingImportRankingId')) ?></div>
+				<div class="field"><?php echo select_tag('rankingIdImport', Ranking::getOptionsForSelect(false, false, true), array('id'=>'rankingRankingIdImport')) ?></div>
 			</div>
 			<br/>
 			<div class="rowCheckbox">

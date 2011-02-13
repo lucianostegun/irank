@@ -277,3 +277,13 @@ function getEmptySelect(fieldName, fieldId){
 	
 	return selectEmpty;
 }
+
+function getModuleName(){
+	
+	return _ModuleName;
+}
+
+function isModuleName(moduleName){
+	
+	return (moduleName==_ModuleName);
+}
