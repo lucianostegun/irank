@@ -1897,6 +1897,17 @@
 				<source>myAccount.quickResume</source>
 				<target>Home resume</target>
 			</trans-unit>
+			
+			<trans-unit>
+				<source>event.iCal.description</source>
+				<target>Event that worth by ranking %rankingName% with buy-in %buyIn% paying first %paidPlaces% positions.
+					
+%comments%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.iCal.remindDescription</source>
+				<target>Don't forget the scheduled game!</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
