@@ -4,6 +4,7 @@
 			<div class="row">
 				<div class="label" id="eventRankingIdLabel">Ranking</div>
 				<div class="textFlex"><?php echo $eventObj->getRanking()->getRankingName() ?></div>
+				<?php echo input_hidden_tag('rankingId', $eventObj->getRankingId(), array('id'=>'eventRankingId')) ?>
 			</div>
 			<div class="row">
 				<div class="label"><?php echo __('event.eventName') ?></div>

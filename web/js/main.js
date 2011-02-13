@@ -15,7 +15,6 @@ function handleMainSearchBlur(fieldObj){
 
 function doQuickSearch(){
 	
-	
 	if( $('mainSearch').value=='' )
 		return false;
 	

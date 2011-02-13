@@ -543,8 +543,11 @@ class Ranking extends BaseRanking
 		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
 		$eventObjList = $this->getEventList($criteria);
 		
-		foreach($eventObjList as $eventObj)
+		foreach($eventObjList as $eventObj){
+			
 			$eventObj->addPlayer($peopleId);
+			$eventObj->updateInvites();
+		}
 	}
 	
 	public function getByPlace($place){
@@ -636,6 +639,46 @@ class Ranking extends BaseRanking
 		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
 		return (is_object($rankingPlayerObj) && $rankingPlayerObj->getAllowEdit());
+	}
+	
+	public function importData($request){
+		
+		$rankingId      = $request->getParameter('rankingIdImport');
+		$rankingPlaces  = $request->getParameter('rankingPlaces');
+		$rankingPlayers = $request->getParameter('rankingPlayers');
+		
+		$rankingObj = RankingPeer::retrieveByPK($rankingId);
+		
+		if( $rankingPlaces ){
+			
+			foreach($rankingObj->getRankingPlaceList() as $rankingPlaceObj){
+				
+				if( !RankingImportLog::check($this->getId(), $rankingId, 'ranking_place', $rankingPlaceObj->getId()) )
+					continue;
+				
+				$rankingPlaceObjNew = $rankingPlaceObj->getClone();
+				$rankingPlaceObjNew->setRankingId( $this->getId() );
+				$rankingPlaceObjNew->save();
+				
+				RankingImportLog::doLog($this->getId(), $rankingId, 'ranking_place', $rankingPlaceObj->getId());
+			}
+		}
+		
+		if( $rankingPlayers ){
+			
+			foreach($rankingObj->getRankingPlayerList() as $rankingPlayerObj){
+				
+				if( !RankingImportLog::check($this->getId(), $rankingId, 'ranking_player', $rankingPlayerObj->getPeopleId()) )
+					continue;
+				
+				if( is_object(RankingPlayerPeer::retrieveByPK($this->getId(), $rankingPlayerObj->getPeopleId())) )
+					continue;
+				
+				$this->addPlayer($rankingPlayerObj->getPeopleId());
+				
+				RankingImportLog::doLog($this->getId(), $rankingId, 'ranking_player', $rankingPlayerObj->getPeopleId());
+			}
+		}
 	}
 	
 	public function postOnWall(){

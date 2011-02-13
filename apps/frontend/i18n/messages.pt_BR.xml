@@ -3,8 +3,24 @@
 	<file orginal="global" source-language="pt_BR" datatype="plaintext" date="">
 		<body>
 			<trans-unit>
-				<source>generalCredit</source>
-				<target>SALDO GERAL</target>
+				<source>generalCredit.balance</source>
+				<target>Saldo geral</target>
+			</trans-unit>
+			<trans-unit>
+				<source>generalCredit.profit</source>
+				<target>Total ganho</target>
+			</trans-unit>
+			<trans-unit>
+				<source>generalCredit.paid</source>
+				<target>Total pago</target>
+			</trans-unit>
+			<trans-unit>
+				<source>generalCredit.average</source>
+				<target>Média geral</target>
+			</trans-unit>
+			<trans-unit>
+				<source>generalCredit.score</source>
+				<target>Total pontos</target>
 			</trans-unit>
 			
 			<trans-unit>
@@ -1895,6 +1911,14 @@
 			<trans-unit>
 				<source>ranking.importTab.intro</source>
 				<target>Selecione o ranking e as informações que deseja importar dele e clique no botão "Importar dados"</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.importSuccessMessage</source>
+				<target>Informações do ranking importadas com sucesso!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>myAccount.quickResume</source>
+				<target>Resumo geral</target>
 			</trans-unit>
 			
 		</body>

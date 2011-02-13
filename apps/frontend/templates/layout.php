@@ -12,17 +12,13 @@ $isAuthenticated = (MyTools::isAuthenticated() && $hasCredentials);
 $culture         = $sf_user->getCulture();
 $innerMenu       = (isset($innerMenu)?$innerMenu:false);
 $innerObj        = (isset($innerObj)?$innerObj:false);
-
-if( $isAuthenticated )
-	$balance = People::getBalance();
-else
-	$balance = null;
 ?>
 <script>
-	var _webRoot   = '<?php echo $sf_request->getScriptName() ?>';
-	var _imageRoot = '<?php echo 'http://'.$sf_request->getHost() .'/images'; ?>';
-	var _isDebug   = <?php echo (Util::isDebug()?'true':'false') ?>;
-	var _isMobile  = false;
+	var _ModuleName = '<?php echo $moduleName ?>';
+	var _webRoot    = '<?php echo $sf_request->getScriptName() ?>';
+	var _imageRoot  = '<?php echo 'http://'.$sf_request->getHost() .'/images'; ?>';
+	var _isDebug    = <?php echo (Util::isDebug()?'true':'false') ?>;
+	var _isMobile   = false;
 </script>
 </head>
 <body>
@@ -50,7 +46,7 @@ else
     			<tr>
     				<td valign="top" width="200" id="leftContent">
 				    	<div id="leftBar">
-				    		<?php include_partial('home/include/leftBar', array('isAuthenticated'=>$isAuthenticated, 'balance'=>$balance, 'culture'=>$culture, 'innerMenu'=>$innerMenu, 'innerObj'=>$innerObj)) ?>
+				    		<?php include_partial('home/include/leftBar', array('isAuthenticated'=>$isAuthenticated, 'culture'=>$culture, 'innerMenu'=>$innerMenu, 'innerObj'=>$innerObj)) ?>
 				    	</div>
 				    	<div id="socialNetwork">
 				    		<?php include_partial('home/include/facebook', array()) ?>

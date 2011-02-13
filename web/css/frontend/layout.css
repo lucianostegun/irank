@@ -290,6 +290,11 @@ img {
 	top: 		-5px;	
 }
 
+#contentArea #innerContent #leftContent #topBar .generalCredit {
+
+	text-transform: 	uppercase;
+}
+
 #contentArea #innerContent #leftContent #topBar .positiveCredit {
 
 	margin-top: 	10px;

@@ -61,4 +61,13 @@ class RankingPlace extends BaseRankingPlace
 
 		return options_for_select( $optionList, $defaultValue );
 	}
+	
+	public function getClone(){
+		
+		$rankingPlaceObj = new RankingPlace();
+		$rankingPlaceObj->setPlaceName( $this->getPlaceName() );
+		$rankingPlaceObj->setMapsLink( $this->getMapsLink() );
+		
+		return $rankingPlaceObj;
+	}
 }

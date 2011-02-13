@@ -9,6 +9,8 @@ function handleSuccessRanking(rankingId){
 	var isNew = ($('rankingId').value=='');
 	$('rankingId').value = rankingId;
 	
+	showDiv('mainMenuRanking');
+	
 	if( isNew ){
 		
 		reloadPlayerTab();
@@ -42,7 +44,10 @@ function addRankingPlayer(){
 	enableButton('rankingPlayerSubmit');
 	windowRankingPlayerAddShow();
 	
-	$('rankingPlayerRankingId').value = $('rankingId').value;
+	if( isModuleName('event') )
+		$('rankingPlayerRankingId').value = $('eventRankingId').value;
+	else
+		$('rankingPlayerRankingId').value = $('rankingId').value;
 	
 	$('rankingPlayerFirstName').focus();
 }
@@ -79,6 +84,9 @@ function reloadClassifyTab(){
 
 function handleSuccessRankingPlayer(content){
 	
+	if( isModuleName('event') )
+		return handleSuccessEventRankingPlayer(content);
+		
 	$('rankingPlayerForm').reset();
 	$('rankingPlayerDiv').innerHTML = content;
 	
@@ -240,3 +248,57 @@ function importRankingData(){
 	tabBarMainObj.showTab('import');
 	tabBarMainObj.setTabActive('import');
 }
+
+function doImportRankingData(){
+	
+	showIndicator('ranking');
+	disableButton('importRankingData');
+	
+	var rankingPlayers = $('rankingImportRankingPlayers').checked;
+	
+	var successFunc = function(t){
+
+		hideIndicator('ranking');
+		enableButton('importRankingData');
+		
+		if( rankingPlayers ){
+			
+			reloadPlayerTab();
+			reloadClassifyTab();
+		}
+		
+		alert(i18n_ranking_importSuccessMessage);
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+		
+		hideIndicator('ranking');
+		
+		enableButton('importRankingData');
+
+		handleFormFieldError( content, 'rankingForm', 'ranking', false, 'ranking' );
+		
+		if( isDebug() )
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/ranking/import';
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize($('rankingForm'))});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

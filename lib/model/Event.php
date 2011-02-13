@@ -331,6 +331,10 @@ class Event extends BaseEvent
 		$emailContent = str_replace('<comments>', $this->getComments(), $emailContent);
 		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
 		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
+		
+//		$iCalFile = $this->getICal();
+//		$attachmentList  = array('invite.ics'=>$iCalFile);
+//		$optionList      = array('attachmentList'=>$attachmentList);
 
 		foreach($this->getEventPlayerList() as $eventPlayerObj){
 			
@@ -339,8 +343,10 @@ class Event extends BaseEvent
 			$emailContentTmp = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
 			$emailContentTmp = str_replace('<confirmCode>', $eventPlayerObj->getConfirmCode(), $emailContentTmp);
 			
-			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp);
+			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp);//, $optionList);
+			break;
 		}
+		
 		$this->setSentEmail(true);
 		$this->save();
 	}
@@ -380,9 +386,9 @@ class Event extends BaseEvent
 				
 				$congratsMessage = __('event.congratMessage', array('%eventPosition%'=>$eventPosition, '%sufix%'=>$sufix)).'<br/><br/>';
 			}
-				
+
 			$emailContentTmp = str_replace('<congratsMessage>', $congratsMessage, $emailContentTmp);
-			
+
 			Report::sendMail(__('email.subject.eventResult', array('%eventName%'=>$this->getEventName())), $peopleObj->getEmailAddress(), $emailContentTmp);
 		}
 	}
@@ -691,10 +697,114 @@ class Event extends BaseEvent
 		return EventPlayerPeer::doCount($criteria) > 0;
 	}
 	
+	public function updateInvites(){
+		
+		$invites = Util::executeOne('SELECT COUNT(1) FROM event_player WHERE event_id = '.$this->getId().' AND deleted = FALSE', 'int');
+		$this->setInvites( $invites );
+		$this->save();
+	}
+	
 	public function decraseInvite(){
 		
 		$this->setInvites( $this->getInvites()-1 );
 		$this->save();
+	}
+	
+	public function getICal(){
+		
+		$peopleObj  = People::getCurrentPeople();
+		$rankingObj = $this->getRanking();
+		
+		$invitePath = Util::getFilePath('/templates/invite.ics');
+		
+		$inviteContent = file_get_contents($invitePath);
+		
+		$ical = new Icalendar_Event();
+		
+		$ical->setProdid('iRank | www.irank.com.br');
+		$ical->setCalName('iRank');
+		$ical->setCalDesc('iRank - Poker Ranking');
+		
+		$dtstart = $ical->getDtstart();
+		
+		$eventDateTS = strtotime($this->getEventDate('Y-m-d').' '.$this->getStartTime('H:i:s'));
+		
+		$event = array();
+		$event['DTSTAMP']       = $dtstart;
+		$event['ORGANIZER']     = $peopleObj->getName().' - '.$peopleObj->getEmailAddress();
+		$event['DATESTART']     = $this->getEventDate('Ymd');
+		$event['HOURSTART']     = $this->getEventDate('His');
+		$event['DATEEND']       = date('Ymd', $eventDateTS+(86400*2));
+		$event['HOUREND']       = date('Hmi', $eventDateTS+(86400*2));
+		$event['UID']           = 'girblml4et3rvtatkk64rhd0bg@google.com';
+		$event['CREATED']       = $ical->dateBuilder($this->getCreatedAt('Ymd'), $this->getCreatedAt('Hmi'));
+		$event['SUMMARY']       = $this->getEventName();
+		$event['DESCRIPTION']   = 'Evento valendo pelo ranking '.$rankingObj->getRankingName().' com buy-in de '.Util::formatFloat($this->getBuyin(), true).' pagando as '.$this->getPaidPlaces().' primeiras posições.';
+		$event['LAST-MODIFIED'] = $ical->dateBuilder($this->getUpdatedAt('Ymd'), $this->getUpdatedAt('Hmi'));
+		$event['LOCATION']      = $this->getRankingPlace()->getPlaceName();
+		$event['SEQUENCE']      = 1;
+		$event['TRANSP']        = 'TRANSPARENT';
+		$event['STATUS']        = 'NEEDS-ACTION';
+		
+		$ical->setEvent($event);
+		
+		$fileName = 'event-ical-'.microtime().'.ics';
+		$filePath = Util::getFilePath('/temp/'.$fileName);
+
+		$ical->setFilename($filePath);
+		$ical->render();
+		$ical->display();
+		$ical->save();
+		
+		return $filePath;
+	}
+
+	public function getICal1(){
+		
+		$invitePath = Util::getFilePath('/templates/invite.ics');
+		
+		$inviteContent = file_get_contents($invitePath);
+		
+		$playerList = array();
+		
+		foreach($this->getPlayerList() as $eventPlayerObj){
+		
+			$inviteStatus = $eventPlayerObj->getInviteStatus();
+			$status       = ($inviteStatus=='yes'?'ACCEPTED':($inviteStatus=='no'?'DECLINED':'TENTATIVE'));
+			
+			$peopleObj    = $eventPlayerObj->getPeople();
+			$playerList[] = 'ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT='.$status.';RSVP=TRUE;CN='.$peopleObj->getName().';X-NUM-GUESTS=0:mailto:'.$peopleObj->getEmailAddress();
+		}
+		
+		$peopleObj  = People::getCurrentPeople();
+		$rankingObj = $this->getRanking();
+		$playerList = implode(chr(10), $playerList);
+		
+		$eventDate = strtotime($this->getEventDate('Y-m-d').' '.$this->getEventDate('H:i:s'));
+		$dtStart   = date('YmdTHis\Z', $eventDate);
+		$dtEnd     = date('YmdTHis\Z', ($eventDate+(86400*2)));
+		$createdAt = $this->getCreatedAt('YmdTHis\Z');
+		$updatedAt = $this->getUpdatedAt('YmdTHis\Z');
+		
+		$inviteContent = str_replace('<organizerName>', $peopleObj->getName(), $inviteContent);
+		$inviteContent = str_replace('<organizerEmailAddress>', $peopleObj->getEmailAddress(), $inviteContent);
+		$inviteContent = str_replace('<eventDescription>', 'Evento valendo pelo ranking '.$rankingObj->getRankingName().' com buy-in de '.Util::formatFloat($this->getBuyin(), true).' pagando as '.$this->getPaidPlaces().' primeiras posições.', $inviteContent);
+		$inviteContent = str_replace('<eventName>', $this->getEventName(), $inviteContent);
+		$inviteContent = str_replace('<eventPlace>', $this->getRankingPlace()->getPlaceName(), $inviteContent);
+		$inviteContent = str_replace('<playerList>', $playerList, $inviteContent);
+		$inviteContent = str_replace('<dtStart>', $dtStart, $inviteContent);
+		$inviteContent = str_replace('<dtEnd>', $dtEnd, $inviteContent);
+		$inviteContent = str_replace('<createdAt>', $createdAt, $inviteContent);
+		$inviteContent = str_replace('<updatedAt>', $updatedAt, $inviteContent);
+		$inviteContent = str_replace('<currentTimestamp>', date('YmdTHis\Z'), $inviteContent);
+		
+		$fileName = 'event-ical-'.microtime().'.ics';
+		$filePath = Util::getFilePath('/temp/'.$fileName);
+        $file = fopen($filePath, 'w');
+        fwrite($file, $inviteContent);
+        fclose($file);
+		
+		return $filePath;
 	}
 	
 	public function getInfo(){

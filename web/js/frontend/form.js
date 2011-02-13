@@ -91,6 +91,20 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 	}	
 }
 
+function addFormStatusError(fieldId, formFieldMessage){
+	
+	var objectForm = $(fieldId);
+	
+	var className = 'formField';
+	className     = className.replace(/Error/g, '');
+	className    += 'Error';
+
+	formFieldMessage = formFieldMessage.replace(/\\n/g, ' '+chr(10));
+	
+	objectForm.className = className;
+	objectForm.title     = formFieldMessage;
+}
+
 function showFormStatusError(formId){
 	
 	var divError = $('formStatusError'+ucfirst(formId)+'Div')

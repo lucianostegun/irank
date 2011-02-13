@@ -371,6 +371,21 @@
 		    <reference local="user_site_id" foreign="id" />
 		  </foreign-key>
 	</table>
+
+	<table name="ranking_import_log" phpName="RankingImportLog">
+		<column name="ranking_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="ranking_id_from" type="INTEGER" required="true" primaryKey="true" />
+		<column name="import_table" type="VARCHAR" size="32"primaryKey="true"  />
+		<column name="object_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id_from" foreign="id" />
+		  </foreign-key>
+	</table>
 	
 	
 	
