@@ -40,9 +40,9 @@
 	<tr>
 		<th class="totalLine"></th>
 		<td class="totalLine"></td>
+		<td class="totalLine"></td>
 		<td class="totalLine"><?php echo Util::formatFloat($totalPaidFinal, true) ?></td>
 		<td class="totalLine"><?php echo Util::formatFloat($totalPrizeFinal, true) ?></td>
-		<td class="totalLine"></td>
 		<td class="totalLine"></td>
 	</tr>
 	<?php else: ?>
