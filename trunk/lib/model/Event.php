@@ -332,9 +332,9 @@ class Event extends BaseEvent
 		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
 		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
 		
-//		$iCalFile = $this->getICal();
-//		$attachmentList  = array('invite.ics'=>$iCalFile);
-//		$optionList      = array('attachmentList'=>$attachmentList);
+		$iCalFile = $this->getICal('update');
+		$attachmentList  = array('invite.ics'=>$iCalFile);
+		$optionList      = array('attachmentList'=>$attachmentList);
 
 		foreach($this->getEventPlayerList() as $eventPlayerObj){
 			
@@ -343,9 +343,11 @@ class Event extends BaseEvent
 			$emailContentTmp = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
 			$emailContentTmp = str_replace('<confirmCode>', $eventPlayerObj->getConfirmCode(), $emailContentTmp);
 			
-			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp);//, $optionList);
+			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp, $optionList);
 			break;
 		}
+		
+		unlink($iCalFile);
 		
 		$this->setSentEmail(true);
 		$this->save();
@@ -408,7 +410,12 @@ class Event extends BaseEvent
 		
 		$emailAddressList = $this->getEmailAddressList();
 		
-		Report::sendMail(__('email.subject.eventDeleteNotify', array('%eventName%'=>$this->getEventName())), $emailAddressList, $emailContent);
+		$iCalFile = $this->getICal('delete');
+		$attachmentList  = array('invite.ics'=>$iCalFile);
+		$optionList      = array('attachmentList'=>$attachmentList);
+		
+		Report::sendMail(__('email.subject.eventDeleteNotify', array('%eventName%'=>$this->getEventName())), $emailAddressList, $emailContent, $optionList);
+		unlink($iCalFile);
 	}
 	
 	public function notifyReminder($days=7){
@@ -710,101 +717,80 @@ class Event extends BaseEvent
 		$this->save();
 	}
 	
-	public function getICal(){
+	public function getICal($action='update'){
+		
+		Util::getHelper('I18N');
 		
 		$peopleObj  = People::getCurrentPeople();
 		$rankingObj = $this->getRanking();
 		
-		$invitePath = Util::getFilePath('/templates/invite.ics');
+		$organizerName         = $peopleObj->getName();
+		$organizerEmailAddress = $peopleObj->getEmailAddress();
 		
-		$inviteContent = file_get_contents($invitePath);
-		
-		$ical = new Icalendar_Event();
-		
-		$ical->setProdid('iRank | www.irank.com.br');
-		$ical->setCalName('iRank');
-		$ical->setCalDesc('iRank - Poker Ranking');
-		
-		$dtstart = $ical->getDtstart();
-		
-		$eventDateTS = strtotime($this->getEventDate('Y-m-d').' '.$this->getStartTime('H:i:s'));
-		
-		$event = array();
-		$event['DTSTAMP']       = $dtstart;
-		$event['ORGANIZER']     = $peopleObj->getName().' - '.$peopleObj->getEmailAddress();
-		$event['DATESTART']     = $this->getEventDate('Ymd');
-		$event['HOURSTART']     = $this->getEventDate('His');
-		$event['DATEEND']       = date('Ymd', $eventDateTS+(86400*2));
-		$event['HOUREND']       = date('Hmi', $eventDateTS+(86400*2));
-		$event['UID']           = 'girblml4et3rvtatkk64rhd0bg@google.com';
-		$event['CREATED']       = $ical->dateBuilder($this->getCreatedAt('Ymd'), $this->getCreatedAt('Hmi'));
-		$event['SUMMARY']       = $this->getEventName();
-		$event['DESCRIPTION']   = 'Evento valendo pelo ranking '.$rankingObj->getRankingName().' com buy-in de '.Util::formatFloat($this->getBuyin(), true).' pagando as '.$this->getPaidPlaces().' primeiras posições.';
-		$event['LAST-MODIFIED'] = $ical->dateBuilder($this->getUpdatedAt('Ymd'), $this->getUpdatedAt('Hmi'));
-		$event['LOCATION']      = $this->getRankingPlace()->getPlaceName();
-		$event['SEQUENCE']      = 1;
-		$event['TRANSP']        = 'TRANSPARENT';
-		$event['STATUS']        = 'NEEDS-ACTION';
-		
-		$ical->setEvent($event);
-		
-		$fileName = 'event-ical-'.microtime().'.ics';
-		$filePath = Util::getFilePath('/temp/'.$fileName);
+		$days = array($this->getEventDate('w'));
 
-		$ical->setFilename($filePath);
-		$ical->render();
-		$ical->display();
-		$ical->save();
+		$organizer   = array($organizerName, $organizerEmailAddress);
+		$categories  = array('Game');
+		$eventDate   = strtotime($this->getEventDate('Y-m-d').' '.$this->getStartTime('H:i:s'));
+		$description = __('event.iCal.description', array('%rankingName%'=>$rankingObj->getRankingName(),
+														  '%buyIn%'=>Util::formatFloat($this->getBuyin(), true),
+														  '%paidPlaces%'=>$this->getPaidPlaces(),
+														  '%comments%'=>$this->getComments())); 
 		
-		return $filePath;
-	}
-
-	public function getICal1(){
-		
-		$invitePath = Util::getFilePath('/templates/invite.ics');
-		
-		$inviteContent = file_get_contents($invitePath);
-		
-		$playerList = array();
-		
+		$attendeeList = array();
+						   
 		foreach($this->getPlayerList() as $eventPlayerObj){
 		
 			$inviteStatus = $eventPlayerObj->getInviteStatus();
 			$status       = ($inviteStatus=='yes'?'ACCEPTED':($inviteStatus=='no'?'DECLINED':'TENTATIVE'));
 			
-			$peopleObj    = $eventPlayerObj->getPeople();
-			$playerList[] = 'ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT='.$status.';RSVP=TRUE;CN='.$peopleObj->getName().';X-NUM-GUESTS=0:mailto:'.$peopleObj->getEmailAddress();
+			$peopleObj      = $eventPlayerObj->getPeople();
+			$attendeeList[$peopleObj->getName()] = $peopleObj->getEmailAddress().',1,'.$status;
 		}
 		
-		$peopleObj  = People::getCurrentPeople();
-		$rankingObj = $this->getRanking();
-		$playerList = implode(chr(10), $playerList);
+		$downloadPath = Util::getFilePath('/temp');
+		$iCal = new iCal('', 0, $downloadPath); // (ProgrammID, Method (1 = Publish | 0 = Request), Download Directory)
+
+		$alarm = array(0, // Action: 0 = DISPLAY, 1 = EMAIL, (not supported: 2 = AUDIO, 3 = PROCEDURE)
+					   150,  // Trigger: alarm before the event in minutes
+					   'iRank - '.$this->getEventName(), // Title
+					   __('event.iCal.remindDescription'), // Description
+					   $attendeeList, // Array (key = attendee name, value = e-mail, second value = role of the attendee [0 = CHAIR | 1 = REQ | 2 = OPT | 3 =NON])
+					   5, // Duration between the alarms in minutes
+					   3  // How often should the alarm be repeated
+					   );
 		
-		$eventDate = strtotime($this->getEventDate('Y-m-d').' '.$this->getEventDate('H:i:s'));
-		$dtStart   = date('YmdTHis\Z', $eventDate);
-		$dtEnd     = date('YmdTHis\Z', ($eventDate+(86400*2)));
-		$createdAt = $this->getCreatedAt('YmdTHis\Z');
-		$updatedAt = $this->getUpdatedAt('YmdTHis\Z');
+		if( $action=='delete' )
+			$alarm = null;
+
+		$iCal->addEvent($organizer, // Organizer
+						$eventDate, // Start Time (timestamp; for an allday event the startdate has to start at YYYY-mm-dd 00:00:00)
+						null, // End Time (write 'allday' for an allday event instead of a timestamp)
+						$this->getRankingPlace()->getPlaceName(), // Location
+						1, // Transparancy (0 = OPAQUE | 1 = TRANSPARENT)
+						$categories, // Array with Strings
+						$description, // Description
+						$this->getEventName(), // Title
+						1, // Class (0 = PRIVATE | 1 = PUBLIC | 2 = CONFIDENTIAL)
+						$attendeeList, // Array (key = attendee name, value = e-mail, second value = role of the attendee [0 = CHAIR | 1 = REQ | 2 = OPT | 3 =NON])
+						5, // Priority = 0-9
+						0, // frequency: 0 = once, secoundly - yearly = 1-7
+						'', // recurrency end: ('' = forever | integer = number of times | timestring = explicit date)
+						1, // Interval for frequency (every 2,3,4 weeks...)
+						$days, // Array with the number of the days the event accures (example: array(0,1,5) = Sunday, Monday, Friday
+						0, // Startday of the Week ( 0 = Sunday - 6 = Saturday)
+						'', // exeption dates: Array with timestamps of dates that should not be includes in the recurring event
+						$alarm,  // Sets the time in minutes an alarm appears before the event in the programm. no alarm if empty string or 0
+						($action=='update'?1:2), // Status of the event (0 = TENTATIVE, 1 = CONFIRMED, 2 = CANCELLED)
+						'http://www.irank.com.br/', // optional URL for that event
+						'pt_BR', // Language of the Strings
+		                md5('irankEvent-'.$this->getId()) // Optional UID for this event
+					   );
 		
-		$inviteContent = str_replace('<organizerName>', $peopleObj->getName(), $inviteContent);
-		$inviteContent = str_replace('<organizerEmailAddress>', $peopleObj->getEmailAddress(), $inviteContent);
-		$inviteContent = str_replace('<eventDescription>', 'Evento valendo pelo ranking '.$rankingObj->getRankingName().' com buy-in de '.Util::formatFloat($this->getBuyin(), true).' pagando as '.$this->getPaidPlaces().' primeiras posições.', $inviteContent);
-		$inviteContent = str_replace('<eventName>', $this->getEventName(), $inviteContent);
-		$inviteContent = str_replace('<eventPlace>', $this->getRankingPlace()->getPlaceName(), $inviteContent);
-		$inviteContent = str_replace('<playerList>', $playerList, $inviteContent);
-		$inviteContent = str_replace('<dtStart>', $dtStart, $inviteContent);
-		$inviteContent = str_replace('<dtEnd>', $dtEnd, $inviteContent);
-		$inviteContent = str_replace('<createdAt>', $createdAt, $inviteContent);
-		$inviteContent = str_replace('<updatedAt>', $updatedAt, $inviteContent);
-		$inviteContent = str_replace('<currentTimestamp>', date('YmdTHis\Z'), $inviteContent);
-		
-		$fileName = 'event-ical-'.microtime().'.ics';
-		$filePath = Util::getFilePath('/temp/'.$fileName);
-        $file = fopen($filePath, 'w');
-        fwrite($file, $inviteContent);
-        fclose($file);
-		
-		return $filePath;
+		$iCal->writeFile();
+//		echo '<pre>'; $iCal->outputFile(); // output file as ics (xcs and rdf possible)
+
+		return $iCal->getFilePath();
 	}
 	
 	public function getInfo(){

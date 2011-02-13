@@ -1921,6 +1921,17 @@
 				<target>Resumo geral</target>
 			</trans-unit>
 			
+			<trans-unit>
+				<source>event.iCal.description</source>
+				<target>Evento valendo pelo ranking %rankingName% com buy-in de %buyIn% pagando as %paidPlaces% primeiras posições.
+					
+%comments%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.iCal.remindDescription</source>
+				<target>Não se esqueça do jogo agendado!</target>
+			</trans-unit>
+			
 		</body>
 	</file>
 </xliff>
