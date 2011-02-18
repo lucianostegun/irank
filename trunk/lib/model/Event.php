@@ -724,8 +724,8 @@ class Event extends BaseEvent
 		$peopleObj  = People::getCurrentPeople();
 		$rankingObj = $this->getRanking();
 		
-		$organizerName         = $peopleObj->getName();
-		$organizerEmailAddress = $peopleObj->getEmailAddress();
+		$organizerName         = 'iRank - Poker Ranking';
+		$organizerEmailAddress = 'irank@irank.com.br';
 		
 		$days = array($this->getEventDate('w'));
 
