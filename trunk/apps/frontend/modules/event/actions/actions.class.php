@@ -141,10 +141,12 @@ class eventActions extends sfActions
   
   public function executeChoosePresence($request){
 
+	Util::getHelper('i18n');
+	
 	$eventId = $request->getParameter('eventId');
 	$choice  = $request->getParameter('choice');
 
-	$eventObj    = EventPeer::retrieveByPK( $eventId );
+	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
 	if( !$eventObj->isEditable() )
 		Util::forceError('!'.__('event.lockedEvent'), true);
@@ -329,7 +331,6 @@ class eventActions extends sfActions
   
   public function executeSaveComment($request){
 
-
 	$eventId = $request->getParameter('eventId');
 	$comment = $request->getParameter('comment');
 	$comment = urldecode($comment);
@@ -347,7 +348,7 @@ class eventActions extends sfActions
 	
 	$eventCommentObj->notify();
 
-	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj)));
+	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false)));
   }
   
   public function executeDeleteComment($request){
@@ -377,7 +378,7 @@ class eventActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	
 	foreach($eventCommentObjList as $eventCommentObj)
-		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj)));
+		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false)));
 		
 	exit;
   }
@@ -458,7 +459,7 @@ class eventActions extends sfActions
 	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj)));
+	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj, 'isPhoto'=>true)));
 	exit;
   }
   
@@ -468,7 +469,7 @@ class eventActions extends sfActions
 	
 	$eventPhotoCommentId = $request->getParameter('eventPhotoCommentId');
 	
-	$eventPhotoCommentObj = EventCommentPeer::retrieveByPK($eventPhotoCommentId);
+	$eventPhotoCommentObj = EventPhotoCommentPeer::retrieveByPK($eventPhotoCommentId);
 	
 	if( !$eventPhotoCommentObj->isMyComment() )
 		throw new Exception(__('event.notYourComment'));
@@ -489,7 +490,7 @@ class eventActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	
 	foreach($eventPhotoCommentObjList as $eventPhotoCommentObj)
-		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj)));
+		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj, 'isPhoto'=>true)));
 		
 	exit;
   }
