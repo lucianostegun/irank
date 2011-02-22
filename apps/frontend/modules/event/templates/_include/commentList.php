@@ -12,5 +12,5 @@
 				endif;
 				
 				foreach($eventCommentObjList as $eventCommentObj)
-					include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj))
+					include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false))
 			?>

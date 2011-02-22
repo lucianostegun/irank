@@ -2,7 +2,7 @@
 	$eventCommentId = $eventCommentObj->getId();
 	$isMyComment    = $eventCommentObj->isMyComment();
 ?>
-<div class="commentArea" id="eventComment<?php echo $eventCommentId ?>Div">
+<div class="commentArea" id="event<?php echo ($isPhoto?'Photo':'') ?>Comment<?php echo $eventCommentId ?>Div">
 	<div class="comment">
 		<div class="header">
 			<div class="senderInfo"><b><?php echo $eventCommentObj->getPeople()->getName() ?></b> - <?php echo $eventCommentObj->getTimeAgo() ?> <?php echo __('ago') ?></div>

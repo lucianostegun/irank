@@ -1,7 +1,13 @@
-var _LastFormReplyId = null
+var _LastFormReplyId  = null
+var _IsSendingComment = false;
 
 function sendComment(eventCommentId){
 
+	if( _IsSendingComment )
+		return true;
+	
+	_IsSendingComment = true;
+	
 	eventCommentId = (eventCommentId?eventCommentId:'');
 
 	var fieldObj     = $('eventCommentComment'+eventCommentId)
@@ -29,6 +35,8 @@ function sendComment(eventCommentId){
 	
 	var successFunc = function(t){
 
+		_IsSendingComment = false;
+		
 		var content = t.responseText;
 
 		var eventCommentIdNew = content.match(/eventComment[0-9]*Div/)+'';
@@ -50,6 +58,8 @@ function sendComment(eventCommentId){
 		
 	var failureFunc = function(t){
 
+		_IsSendingComment = false;
+		
 		var content = t.responseText;
 		
 		enableButton('postComment'+eventCommentId);
@@ -62,7 +72,6 @@ function sendComment(eventCommentId){
 	};
 	
 	var urlAjax = _webRoot+'/event/save'+(isPhoto?'Photo':'')+'Comment/eventId/'+eventId+'?eventPhotoId='+eventPhotoId+'&comment='+comment;
-
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
@@ -71,30 +80,34 @@ function deleteComment(eventCommentId){
 	var eventPhotoId = $('eventCommentEventPhotoId').value;
 	var isPhoto      = (eventPhotoId!='');
 	
-	showIndicator();
+	var divId    = 'event'+(isPhoto?'Photo':'')+'Comment'+eventCommentId+'Div';
+	var divIdTmp = 'event'+(isPhoto?'Photo':'')+'Comment'+eventCommentId+'TmpDiv';
+
+	hideDiv(divId);
+	hideDiv(divIdTmp);
 	
 	var successFunc = function(t){
 
 		try{
 
-			$('comment'+(isPhoto?'Photo':'')+'ListDiv').removeChild( $('event'+(isPhoto?'Photo':'')+'Comment'+eventCommentId+'Div') );
+			$('comment'+(isPhoto?'Photo':'')+'ListDiv').removeChild( $(divId) );
 		}catch(e){
 			
-			$('comment'+(isPhoto?'Photo':'')+'ListDiv').removeChild( $('event'+(isPhoto?'Photo':'')+'Comment'+eventCommentId+'TmpDiv') );
+			$('comment'+(isPhoto?'Photo':'')+'ListDiv').removeChild( $(divIdTmp) );
 		}
 		
 		if( eventCommentId==_LastFormReplyId )
 			_LastFormReplyId = null;
-		
-		hideIndicator();
 	};
 		
 	var failureFunc = function(t){
 
 		var content = t.responseText;
-		
-		hideIndicator();
+
 		alert(i18n_event_commentsTab_commentDeleteError);
+		
+		showDiv(divId);
+		showDiv(divIdTmp);
 		
 		if( isDebug() )
 			debug(content);

@@ -65,7 +65,7 @@ class EventPhotoComment extends BaseEventPhotoComment
 	public function isMyComment(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
-			
+
 		return ($this->getPeopleId()==$peopleId);
 	}
 	
