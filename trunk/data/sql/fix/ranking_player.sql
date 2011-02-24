@@ -92,4 +92,4 @@ SET
                       AND event.RANKING_ID = ranking_history.RANKING_ID
                       AND event.EVENT_DATE <= ranking_history.RANKING_DATE);
 
-UPDATE ranking_player SET total_score = (SELECT SUM(score) FROM ranking_history WHERE ranking_id = ranking_player.RANKING_ID AND people_id = ranking_player.PEOPLE_ID);
+//UPDATE ranking_player SET total_score = (SELECT SUM(score) FROM ranking_history WHERE ranking_id = ranking_player.RANKING_ID AND people_id = ranking_player.PEOPLE_ID);

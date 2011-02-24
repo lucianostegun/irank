@@ -22,6 +22,7 @@ function sendComment(eventCommentId){
 		
 		fieldObj.className = 'eventCommentError';
 		fieldObj.title     = i18n_event_commentTab_typeSomething;
+		_IsSendingComment  = false;
 		return false;
 	}
 	

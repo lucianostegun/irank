@@ -130,6 +130,15 @@ class eventActions extends sfActions
 	exit;
   }
   
+  public function executeGetICal($request){
+
+	$eventId  = $request->getParameter('eventId');
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+	
+	echo $eventObj->getICal('update', true);
+	exit;
+  }
+  
   public function executeJavascript($request){
   	
     header('Content-type: text/x-javascript');
@@ -146,6 +155,7 @@ class eventActions extends sfActions
   	echo 'var i18n_event_comment_published     = "'.__('event.comment.published').'";'.$nl;
   	echo 'var i18n_event_comment_errorMessage  = "'.__('event.comment.errorMessage').'";'.$nl;
   	echo 'var i18n_event_comment_deleteError   = "'.__('event.comment.deleteError').'";'.$nl;
+  	echo 'var i18n_event_comment_typeSomething = "'.__('event.comment.typeSomething').'";'.$nl;
   	echo 'var i18n_leftChar                    = "'.__('leftChar').'";'.$nl;
   	echo 'var i18n_leftChars                   = "'.__('leftChars').'";'.$nl;
   	

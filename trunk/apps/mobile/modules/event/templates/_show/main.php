@@ -24,7 +24,9 @@
 					</tr>
 					<tr>
 						<th><?php echo __('event.eventPlace') ?></th>
-						<td><?php echo $eventObj->getEventPlace() ?></td>
+						<td>
+							<?php echo link_to($eventObj->getEventPlace(), $eventObj->getRankingPlace()->getMapsLink(), array('target'=>'_blank')) ?>
+						</td>
 					</tr>
 					<tr>
 						<th><?php echo __('event.eventDate') ?></th>

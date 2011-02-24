@@ -90,6 +90,8 @@ class UserSite extends BaseUserSite
         	$userSiteId = base64_encode(serialize(array($this->getId())));
 	        MyTools::setCookie('userSiteId', $userSiteId, (time()+(86400*15)), '/');
         }
+        
+        MyTools::setCulture( $peopleObj->getDefaultLanguage() );
         	
         MyTools::getUser()->setAttribute('userSiteId', $this->getId());
         MyTools::getUser()->setAttribute('peopleId', $peopleObj->getId());
@@ -107,6 +109,7 @@ class UserSite extends BaseUserSite
 	public static function logout(){
 		
 		MyTools::setCookie('userSiteId', null, time());
+		MyTools::setCookie('culture', null, time());
 		MyTools::getUser()->getAttributeHolder()->remove('userSiteId');
 		MyTools::getUser()->getAttributeHolder()->remove('peopleId');
 		MyTools::getUser()->getAttributeHolder()->remove('username');

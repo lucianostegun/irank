@@ -1,7 +1,7 @@
 * {
 
 	font-family: 	Verdana, Arial, sans-serif;
-	font-size: 		14pt;
+	font-size: 		8pt;
 }
 
 html, body {
@@ -14,17 +14,17 @@ html, body {
 
 .text {
 
-	font-size: 		18pt;
+	font-size: 		9pt;
 	text-shadow: 	white 1px 1px;
-	padding: 		20 20 0 20;
+	padding: 		10px 10px 0px 10px;
 }
 
 h1 {
 
 	text-align: 	left;
-	font-size: 		20pt;
+	font-size: 		10pt;
 	text-shadow: 	white 1px 1px;
-	padding: 		20 20 0 20;
+	padding: 		10 10 0 10;
 	color: 			#4c566c;
 }
 
@@ -37,7 +37,7 @@ form {
 a {
 
 	text-decoration: 	underline;
-	font-size: 			14pt;
+	font-size: 			7pt;
 	text-shadow: 		white 1px 1px;
 	color: 				#81571F
 }
@@ -54,9 +54,9 @@ img {
 
 .header {
 
-	height: 		86px;
+	height: 		43px;
 	background: 	url('/images/mobile/layout/headerBg.png') repeat-x;
-	border-bottom: 	2px solid #2D3033;
+	border-bottom: 	1px solid #2D3033;
 }
 
 
@@ -64,48 +64,58 @@ img {
 
 	margin: 		-20 -20 0 -10;
 	border-bottom: 	2px solid #2D3033;
-	height: 		88px;
+	height: 		44px;
 	background: 	url('/images/mobile/buttonBarBg.png') repeat-x;
 	text-align: 	right;
 }
 
 .titleBar {
 
-	border-bottom: 	2px solid #2D3033;
-	height: 		47px;
+	border-bottom: 	1px solid #2D3033;
+	height: 		24px;
 	background: 	url('/images/mobile/title/mainBg.png') repeat-x;
+}
+
+#pageTitle {
+	
+	padding: 		3 0 0 5;
+	color: 			#FFFFFF;
+	font-size: 		10pt;
+	font-weight: 	bold;
+	text-shadow: 	#555555 1px -1px;
 }
 
 
 .footer {
 
-	border-top: 	2px solid #2D3033;
-	height: 		86px;
+	border-top: 	1px solid #2D3033;
+	height: 		43px;
 	background: 	url('/images/mobile/layout/footerBg.png') repeat-x;
 	text-align: 	right;
 }
 
 .footer a {
 
-	font-size: 			18pt;
+	font-size: 			9pt;
 	text-decoration: 	none;
 	color: 				#333;
 }
 
 .footerBack {
 
-	border-top: 	2px solid #2D3033;
-	height: 		30px;
+	border-top: 	1px solid #2D3033;
+	height: 		15px;
 	background: 	url('/images/mobile/layout/footerBg.png') repeat-x;
 }
 
 .rank_heading td{
-	padding:3px 0 3px 10px ;
-	font-size:12px;
-	line-height:27px;
-	color:#F0F0F0;
-	font-weight:bold;
-	background:#5a5a5a;	 
+	
+	padding: 		3px 0px 3px 10px ;
+	font-size: 		6px;
+	line-height: 	14px;
+	color: 			#F0F0F0;
+	font-weight: 	bold;
+	background: 	#5A5A5A;	 
 	}
 	
 .boxcontent td{
@@ -115,10 +125,20 @@ img {
 }
 
 .poker_heading{
-	padding:6px 0px 19px 0px;
-	color:#d21d24;
-	font-size:13px;
-	font-weight:bold;
-	text-transform:uppercase;
-	border-bottom:#999999 2px solid;
+	padding: 			6px 0px 19px 0px;
+	color: 				#d21d24;
+	font-size: 			7px;
+	font-weight: 		bold;
+	text-transform: 	uppercase;
+	border-bottom: 		#999999 1px solid;
+}
+
+#flagList {
+
+	padding: 70px 20px 20px 20px;
+}
+
+#flagList img {
+
+	margin-right: 	17px;
 }

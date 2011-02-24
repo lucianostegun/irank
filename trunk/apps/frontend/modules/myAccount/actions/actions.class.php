@@ -26,6 +26,9 @@ class myAccountActions extends sfActions
 	$userSiteId  = MyTools::getAttribute('userSiteId');
 	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
 	$firstSave   = false;
+	
+	$defaultLanguage = $request->getParameter('defaultLanguage');
+	MyTools::setCulture($defaultLanguage);
 
   	$userSiteObj->quickSave($request);
   	$userSiteObj->saveEmailOptions($request);

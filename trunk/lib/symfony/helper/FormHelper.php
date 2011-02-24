@@ -956,9 +956,13 @@ function button_tag( $buttonId, $text, $options=array() ){
 	$image    = array_key_exists('image', $options)?$options['image']:false;
 	$onclick  = array_key_exists('onclick', $options)?$options['onclick']:false;
 
-	if( array_key_exists('onclick', $options) && !$noCkeck )
+	if( array_key_exists('onclick', $options) && !$noCkeck ){
+		
 		$onclick = 'if( checkButton(\''.$buttonId.'\') ){ '.$onclick.'; }';
-	
+		$options['onclick'] = $onclick;
+	}
+
+
 	$style = '';
 	
 	unset($options['disabled']);
@@ -985,12 +989,13 @@ function button_tag( $buttonId, $text, $options=array() ){
 	if( $image )
 		$image = image_tag($imagePath, array('id'=>$buttonId.'Image', 'align'=>'absmiddle'));
 		
-	$submit = '';//link_to(image_tag('blank.gif', array('class'=>'submit')), '#'.$onclick);
+	$submit = link_to(image_tag('blank.gif', array('class'=>'submit')), '#'.$onclick);
+//	$text   = link_to($text, '#'.$onclick);
 	
 	$html = $nl;
 	$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
-	$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft"></div>'.$nl;
-	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.link_to($text, '#'.$onclick).$submit.'</div></div>'.$nl;
+	$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
+	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 	$html .= '</div>';
 	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));
