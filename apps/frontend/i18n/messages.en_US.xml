@@ -246,6 +246,10 @@
 				<target>Prizes</target>
 			</trans-unit>
 			<trans-unit>
+				<source>resume.credits</source>
+				<target>CREDIT</target>
+			</trans-unit>
+			<trans-unit>
 				<source>resume.position</source>
 				<target>Position</target>
 			</trans-unit>
@@ -256,10 +260,6 @@
 			<trans-unit>
 				<source>resume.balance</source>
 				<target>Balance</target>
-			</trans-unit>
-			<trans-unit>
-				<source>resume.credits</source>
-				<target>CREDIT</target>
 			</trans-unit>
 			<trans-unit>
 				<source>resume.nextEvents</source>
@@ -1907,6 +1907,18 @@
 			<trans-unit>
 				<source>event.iCal.remindDescription</source>
 				<target>Don't forget the scheduled game!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.iCalFile</source>
+				<target>Download iCalendar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.iCalFileTitle</source>
+				<target>Download iCalendar file for this event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>layout.changeLanguageError</source>
+				<target>Error changing the language.\nPlease, try again.</target>
 			</trans-unit>
 		</body>
 	</file>

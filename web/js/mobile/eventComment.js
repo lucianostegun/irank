@@ -9,7 +9,6 @@ function sendComment(eventCommentId){
 		return false;
 	}
 	
-	_IsPublishing = true;
 	eventCommentId = (eventCommentId?eventCommentId:'');
 
 	var fieldObj = $('commentsComment'+eventCommentId)
@@ -21,6 +20,8 @@ function sendComment(eventCommentId){
 		alert(i18n_event_comment_typeSomething);
 		return false;
 	}
+	
+	_IsPublishing = true;
 	
 	comment = comment.replace(/[\n\r]/g, '|n');
 	comment = urlencode(comment);

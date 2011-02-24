@@ -4,7 +4,8 @@
 		<body>
 			<trans-unit>
 				<source>home.welcome</source>
-				<target>Hi, welcome to &lt;i&gt;mobile&lt;/i&gt; version of &lt;b&gt;iRank&lt;/b&gt; website.</target>
+				<target>Hi&lt;b&gt;%firstName%&lt;/b&gt;,&lt;br/&gt;
+				welcome to &lt;i&gt;mobile&lt;/i&gt; version of &lt;b&gt;iRank&lt;/b&gt; website.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>home.myRankings</source>
@@ -416,6 +417,42 @@
 			<trans-unit>
 				<source>email.subject.eventComment</source>
 				<target>Comments on event %eventCode%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.iCalFile</source>
+				<target>iCalendar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>layout.changeLanguageError</source>
+				<target>Error changing the language.\nPlease, try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.nextEvents</source>
+				<target>Next events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.lastEvents</source>
+				<target>Last events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.noRealizedEvents</source>
+				<target>No performed events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.prizes</source>
+				<target>Prizes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.credits</source>
+				<target>CREDIT</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.noScheduledEvents</source>
+				<target>No scheduled events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.comment.typeSomething</source>
+				<target>Type something to publish</target>
 			</trans-unit>
 		</body>
 	</file>

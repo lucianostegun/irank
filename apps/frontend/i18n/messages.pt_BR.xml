@@ -1931,6 +1931,18 @@
 				<source>event.iCal.remindDescription</source>
 				<target>Não se esqueça do jogo agendado!</target>
 			</trans-unit>
+			<trans-unit>
+				<source>button.iCalFile</source>
+				<target>Download iCalendar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.iCalFileTitle</source>
+				<target>Baixar arquivo iCalendar deste evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>layout.changeLanguageError</source>
+				<target>Não foi possível alterar o idioma.\nPor favor, tente novamente.</target>
+			</trans-unit>
 			
 		</body>
 	</file>

@@ -30,7 +30,7 @@ function changeLanguage(culture){
 		
 	var errFunc = function(t) {
 	
-		alert('Erro ao definir o idioma selecionado!\nTente novamente.');
+		alert(i18n_changeLanguageError);
 		hideIndicator();
 	};
 	

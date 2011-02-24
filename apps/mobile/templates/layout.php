@@ -23,7 +23,7 @@ $culture = $sf_user->getCulture();
 <?php echo Util::getLoading(); ?>
 <table width="100%" cellspacing="0" cellpadding="0">
 	<tr>
-		<td class="header" width="88" align="right">
+		<td class="header" width="55" align="center">
 			<?php
 				if( $title )
 					echo link_to(image_tag('mobile/layout/'.$culture.'/backTop'), '#history.back()');
@@ -31,15 +31,15 @@ $culture = $sf_user->getCulture();
 					echo image_tag('mobile/layout/spades');
 			?>
 		</td>
-		<td class="header" width="483" align="center"><?php echo link_to(image_tag('mobile/layout/logo'), '/home/index') ?></td>
-		<td class="header" width="69"><?php echo image_tag('mobile/layout/diamond') ?></td>
+		<td class="header" align="center"><?php echo link_to(image_tag('mobile/layout/logo'), '/home/index') ?></td>
+		<td class="header" width="55" align="center"><?php echo image_tag('mobile/layout/diamond') ?></td>
 	</tr>
 </table>
 
 <?php if( $title ): ?>
 <table width="100%" cellspacing="0" cellpadding="0" class="titleBar">
 	<tr>
-		<td valign="top" style="padding: 5 0 0 10; color: #FFFFFF; font-size: 20pt; font-weight: bold; text-shadow: #555555 2px -2px;"><?php echo $title ?></td>
+		<td valign="top" id="pageTitle"><?php echo $title ?></td>
 	</tr>
 </table>
 <?php endif; ?>
@@ -51,6 +51,13 @@ $culture = $sf_user->getCulture();
 		</td>
 	</tr>
 </table>
+
+<center>
+<div id="flagList">
+	<?php echo link_to(image_tag('mobile/flagBrazil'), '#changeLanguage("pt_BR")'); ?>
+	<?php echo link_to(image_tag('mobile/flagUS'), '#changeLanguage("en_US")'); ?>
+</div>
+</center>
 
 <table width="100%" cellspacing="0" cellpadding="0">
 	<tr>

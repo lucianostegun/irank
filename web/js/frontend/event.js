@@ -60,13 +60,17 @@ function hasResult(){
 
 function doSubmitEvent(content){
 
-	if( !_SaveResultAlert && hasResult() && !confirm(i18n_event_saveResultConfirm) )
+	disableButton('mainSubmit');
+	
+	if( !_SaveResultAlert && hasResult() && !confirm(i18n_event_saveResultConfirm) ){
+		
+		enableButton('mainSubmit');
 		return false;
+	}
 	
 	_SaveResultAlert = true;
 	
 	showIndicator('event');
-	disableButton('mainSubmit');
 	$('eventForm').onsubmit();
 }
 
@@ -558,4 +562,11 @@ function handleSuccessEventRankingPlayer(content){
 	
 	adjustContentTab();
 	windowRankingPlayerAddHide();
+}
+
+function getICalFile(){
+	
+	var eventId = $('eventId').value;
+	
+	goModule('event', 'getICal', 'eventId', eventId);
 }

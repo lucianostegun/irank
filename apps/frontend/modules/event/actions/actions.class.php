@@ -148,8 +148,8 @@ class eventActions extends sfActions
 
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
-	if( !$eventObj->isEditable() )
-		Util::forceError('!'.__('event.lockedEvent'), true);
+//	if( !$eventObj->isEditable() )
+//		Util::forceError('!'.__('event.lockedEvent'), true);
 
 	$eventObj->togglePresence( $this->peopleId, $choice );
     return $this->forward('event', 'getPlayerList');
@@ -602,11 +602,12 @@ class eventActions extends sfActions
 	exit;
   }
   
-  public function executeGetInvite($request){
+  public function executeGetICal($request){
 
 	$eventId  = $request->getParameter('eventId');
 	$eventObj = EventPeer::retrieveByPK( $eventId );
-	$eventObj->getICal();
+	
+	echo $eventObj->getICal('update', true);
 	exit;
   }
   

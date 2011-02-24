@@ -54,3 +54,10 @@ function handleOnBlur(fieldObj){
 	if( value=='' )
 		fieldObj.value = _lastFieldValue;
 }
+
+function getICalFile(){
+	
+	var eventId = $('eventId').value;
+	
+	goModule('event', 'getICal', 'eventId', eventId);
+}

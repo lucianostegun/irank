@@ -26,6 +26,14 @@ class homeActions extends sfActions
   	exit;
   }
   
+  public function executeChangeLanguage($request){
+	
+	$culture = $request->getParameter('culture');
+	$this->getUser()->setCulture($culture);
+	$this->getUser()->setAttribute('culture', $culture);
+	exit;
+  }
+  
   public function executeJavascript($request){
 	
 	Util::getHelper('i18n');
@@ -36,8 +44,9 @@ class homeActions extends sfActions
 	
 	$peopleId   = $this->getUser()->getAttribute('peopleId');
 	
-	echo 'var i18n_culture      = "'.$this->getUser()->getCulture().'";'.$nl;
-	echo 'var i18n_innerLoading = "'.__('layout.innerLoading').'";'.$nl;
+	echo 'var i18n_culture             = "'.$this->getUser()->getCulture().'";'.$nl;
+	echo 'var i18n_innerLoading        = "'.__('layout.innerLoading').'";'.$nl;
+	echo 'var i18n_changeLanguageError = "'.__('layout.changeLanguageError').'";'.$nl;
 	exit;
   }
 }

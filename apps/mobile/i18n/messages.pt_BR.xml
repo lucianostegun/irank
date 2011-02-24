@@ -4,7 +4,8 @@
 		<body>
 			<trans-unit>
 				<source>home.welcome</source>
-				<target>Olá, seja bem vindo ao modo &lt;i&gt;mobile&lt;/i&gt; do site &lt;b&gt;iRank&lt;/b&gt;.</target>
+				<target>Olá&lt;b&gt;%firstName%&lt;/b&gt;,&lt;br/&gt;
+				seja bem vindo ao modo &lt;i&gt;mobile&lt;/i&gt; do site &lt;b&gt;iRank&lt;/b&gt;.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>home.myRankings</source>
@@ -411,6 +412,42 @@
 			<trans-unit>
 				<source>email.subject.eventComment</source>
 				<target>Comentários do evento %eventCode%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.iCalFile</source>
+				<target>iCalendar</target>
+			</trans-unit>
+			<trans-unit>
+				<source>layout.changeLanguageError</source>
+				<target>Não foi possível alterar o idioma.\nPor favor, tente novamente.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.nextEvents</source>
+				<target>Próximos eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.lastEvents</source>
+				<target>Últimos eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.noScheduledEvents</source>
+				<target>Nenhum evento agendado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.noRealizedEvents</source>
+				<target>Nenhum evento realizado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.prizes</source>
+				<target>Ganhos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>resume.credits</source>
+				<target>SALDO</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.comment.typeSomething</source>
+				<target>Escreva alguma coisa no comentário</target>
 			</trans-unit>
 		</body>
 	</file>

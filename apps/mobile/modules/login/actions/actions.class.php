@@ -50,7 +50,7 @@ class loginActions extends sfActions
 		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
 		
 		if( is_object($userSiteObj) )	        
-	        $userSiteObj->login();
+	        $userSiteObj->login(true);
 		else
 			$statusMessage = '<b>ACESSO NEGADO!</b><br />O login e/ou senha não são válidos';
 	}else{

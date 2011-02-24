@@ -39,9 +39,11 @@ abstract class sfActions extends sfAction
 	$this->moduleName     = $moduleName     = MyTools::getRequest()->getParameterHolder()->get('module');
 	$this->realModuleName = $realModuleName = $this->getModuleName();
 	
-	$userSiteId = MyTools::getCookie('userSiteId');
-	if( $userSiteId && $moduleName!=='login' ){
-		
+	$userSiteId      = MyTools::getCookie('userSiteId');
+	$isAuthenticated = $this->getUser()->isAuthenticated();
+
+	if( $userSiteId && $moduleName!=='login' && !$isAuthenticated ){
+
 		$userSiteId = unserialize(base64_decode($userSiteId));
 		$userSiteId = $userSiteId[0];
 

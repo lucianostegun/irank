@@ -104,7 +104,7 @@ class Event extends BaseEvent
 		$criteria->add( EventPeer::VISIBLE, true );
 		$criteria->add( EventPeer::DELETED, false );
 		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
-		$criteria->add( EventPeer::START_TIME, date('H:i:s'), Criteria::GREATER_EQUAL );
+//		$criteria->add( EventPeer::START_TIME, date('H:i:s'), Criteria::GREATER_EQUAL );
 		$criteria->add( EventPeer::SAVED_RESULT, false );
 		$criteria->add( UserSitePeer::ID, $userSiteId );
 		$criteria->addJoin( EventPeer::RANKING_ID, RankingPeer::ID, Criteria::INNER_JOIN );
@@ -547,9 +547,9 @@ class Event extends BaseEvent
 		
 		if( is_object($rankingObj) && !$rankingObj->isMyRanking() )
 			return false;
-		
+
 		// Se hoje for maior que a data final do ranking
-		if( $this->getSavedResult() && $rankingObj->getStartDate(null) < time() )
+		if( $this->getSavedResult() && $rankingObj->getFinishDate(null) < time() )
 			return false;
 
 		$eventDate = $this->getEventDate();
@@ -717,7 +717,7 @@ class Event extends BaseEvent
 		$this->save();
 	}
 	
-	public function getICal($action='update'){
+	public function getICal($action='update', $returnContent=false){
 		
 		Util::getHelper('I18N');
 		
@@ -787,10 +787,18 @@ class Event extends BaseEvent
 		                md5('irankEvent-'.$this->getId()) // Optional UID for this event
 					   );
 		
-		$iCal->writeFile();
-//		echo '<pre>'; $iCal->outputFile(); // output file as ics (xcs and rdf possible)
-
-		return $iCal->getFilePath();
+		if( $returnContent ){
+			
+			header('Content-type: application/force-download');
+			header('Content-Disposition: attachment; filename="invite.ics"');
+			
+			$iCal->outputFile();
+			exit;
+		}else{
+		
+			$iCal->writeFile();
+			return $iCal->getFilePath();
+		}
 	}
 	
 	public function getInfo(){
