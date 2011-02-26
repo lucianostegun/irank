@@ -4,7 +4,7 @@ class MobileFilter extends sfFilter {
     
     public function execute($filterChain) {
         
-        $smartPhoneList = array('iPhone', 'windows ce', 'netfront', 'palmos', 'blazer', 'elaine', 'plucker', 'avantgo', 'wap');
+        $smartPhoneList = array('iPhone', 'windows ce', 'netfront', 'palmos', 'blazer', 'elaine', 'plucker', 'avantgo', 'wap', 'android');
         
         $browser = $_SERVER['HTTP_USER_AGENT'];
         
