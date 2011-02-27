@@ -1035,6 +1035,10 @@
 				<target>Não foi possível carregar a lista de jogadores!</target>
 			</trans-unit>
 			<trans-unit>
+				<source>ranking.optionsListLoadError</source>
+				<target>Não foi possível carregar aba de opções!</target>
+			</trans-unit>
+			<trans-unit>
 				<source>ranking.playersTab.playerDeleteError</source>
 				<target>Não foi possível excluir o membro do grupo!\nTente novamente mais tarde.</target>
 			</trans-unit>
@@ -1942,6 +1946,34 @@
 			<trans-unit>
 				<source>layout.changeLanguageError</source>
 				<target>Não foi possível alterar o idioma.\nPor favor, tente novamente.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.calculatePrize</source>
+				<target>Calcular prêmios</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.options</source>
+				<target>Opções</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.optionsTab.intro</source>
+				<target>Informe as divisões percentuais para os casos de premiações abaixo.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.optionsTab.paidPlaces</source>
+				<target>posições pagas</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.optionsTab.until</source>
+				<target>Até</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.optionsTab.buyins</source>
+				<target>buy-ins, pagar %paidPlaces% posições:</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.calculatePrizeError</source>
+				<target>Erro ao calcular a divisão dos prêmios!</target>
 			</trans-unit>
 			
 		</body>

@@ -10,33 +10,33 @@
 class RankingPeer extends BaseRankingPeer
 {
 	
-	public static function doSelectRS(Criteria $criteria, $con = null){
-		
-		$userSiteId = MyTools::getAttribute('userSiteId');
-		$peopleId   = MyTools::getAttribute('peopleId');
-		$cron       = MyTools::getAttribute('cron');
-
-		if(!$cron){
-			
-			if( !$criteria->isNoFilter() ){
-	
-				$criterion = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
-				$criterion->addOr( $criteria->getNewCriterion( self::USER_SITE_ID, $userSiteId ) );
-				$criteria->add($criterion);
-				
-				$criteria->addAnd( self::DELETED, false );
-			}else{
-			
-				$criterion = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
-				$criterion->addOr( $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, null ) );
-				$criteria->add($criterion);
-			}
-			
-			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
-		}
-		
-		return parent::doSelectRS($criteria, $con);
-	}
+//	public static function doSelectRS(Criteria $criteria, $con = null){
+//		
+//		$userSiteId = MyTools::getAttribute('userSiteId');
+//		$peopleId   = MyTools::getAttribute('peopleId');
+//		$cron       = MyTools::getAttribute('cron');
+//
+//		if(!$cron){
+//			
+//			if( !$criteria->isNoFilter() ){
+//	
+//				$criterion = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
+//				$criterion->addOr( $criteria->getNewCriterion( self::USER_SITE_ID, $userSiteId ) );
+//				$criteria->add($criterion);
+//				
+//				$criteria->addAnd( self::DELETED, false );
+//			}else{
+//			
+//				$criterion = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
+//				$criterion->addOr( $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, null ) );
+//				$criteria->add($criterion);
+//			}
+//			
+//			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
+//		}
+//		
+//		return parent::doSelectRS($criteria, $con);
+//	}
     
 	public static function uniqueRankingName( $rankingName ){
 

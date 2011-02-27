@@ -1032,6 +1032,10 @@
 				<target>Error updating player list!</target>
 			</trans-unit>
 			<trans-unit>
+				<source>ranking.optionsListLoadError</source>
+				<target>Error updating options tab!</target>
+			</trans-unit>
+			<trans-unit>
 				<source>ranking.playersTab.playerDeleteError</source>
 				<target>This player could not be deleted!\nPlease, try again.</target>
 			</trans-unit>
@@ -1919,6 +1923,34 @@
 			<trans-unit>
 				<source>layout.changeLanguageError</source>
 				<target>Error changing the language.\nPlease, try again.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.calculatePrize</source>
+				<target>Calculate prizes</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.options</source>
+				<target>Options</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.optionsTab.intro</source>
+				<target>Configure the percentual split for the prize cases below.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.optionsTab.paidPlaces</source>
+				<target>paid places</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.optionsTab.until</source>
+				<target>Until</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.optionsTab.buyins</source>
+				<target>buy-ins, pay %paidPlaces% positions:</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.calculatePrizeError</source>
+				<target>Error while calculating the division of prizes!</target>
 			</trans-unit>
 		</body>
 	</file>

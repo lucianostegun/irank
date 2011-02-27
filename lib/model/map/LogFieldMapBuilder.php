@@ -34,9 +34,9 @@ class LogFieldMapBuilder {
 
 		$tMap->addForeignKey('LOG_ID', 'LogId', 'int', CreoleTypes::INTEGER, 'log', 'ID', true, null);
 
-		$tMap->addColumn('FIELD_NAME', 'FieldName', 'string', CreoleTypes::VARCHAR, false, 32);
+		$tMap->addColumn('FIELD_NAME', 'FieldName', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('FIELD_VALUE', 'FieldValue', 'string', CreoleTypes::VARCHAR, false, 255);
+		$tMap->addColumn('FIELD_VALUE', 'FieldValue', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

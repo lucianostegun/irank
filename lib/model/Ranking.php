@@ -60,8 +60,12 @@ class Ranking extends BaseRanking
 		$criteria->add( RankingPeer::VISIBLE, true );
 		$criteria->add( RankingPeer::DELETED, false );
 		
-		if( $suppressOld )
-			$criteria->add( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+		if( $suppressOld ){
+			
+			$criterion = $criteria->getNewCriterion( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+			$criterion->addOr( $criteria->getNewCriterion( RankingPeer::FINISH_DATE, null ) );
+			$criteria->add($criterion);
+		}
 		
 		if( $onlyMine ){
 		
@@ -157,7 +161,7 @@ class Ranking extends BaseRanking
 
 		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		if( is_object($rankingPlayerObj) ){
+		if( is_object($rankingPlayerObj) && $rankingPlayerObj->getEnabled() ){
 			
 			$rankingPlayerObj->setEnabled( false );
 			$rankingPlayerObj->save();
@@ -169,6 +173,16 @@ class Ranking extends BaseRanking
 			Util::getHelper('i18n');
 			throw new Exception(__('playerNotFound'));
 		}
+	}
+	
+	public static function adjustPlayers(){
+		
+		Util::executeQuery('UPDATE ranking SET players = (SELECT COUNT(1) FROM ranking_player WHERE enabled)');
+	}
+	
+	public static function adjustEvents(){
+
+		Util::executeQuery('UPDATE ranking SET events = (SELECT COUNT(1) FROM event WHERE event.RANKING_ID = ranking.ID AND event.DELETED = FALSE AND event.VISIBLE = TRUE AND event.ENABLED = TRUE)');
 	}
 	
 	public function getEventList($criteria=null, $con=null){
@@ -678,6 +692,50 @@ class Ranking extends BaseRanking
 				
 				RankingImportLog::doLog($this->getId(), $rankingId, 'ranking_player', $rankingPlayerObj->getPeopleId());
 			}
+		}
+	}
+	
+	public function incraseEvents(){
+		
+		$this->setEvents($this->getEvents()+1);
+		$this->save();
+	}
+	
+	public function decraseEvents(){
+		
+		$this->setEvents($this->getEvents()-1);
+		$this->save();
+	}
+	
+	public function getPrizeSplitList($serialize=false){
+		
+		$criteria = new Criteria();
+		$criteria->add( RankingPrizeSplitPeer::RANKING_ID, $this->getId() );
+		$criteria->addAscendingOrderByColumn( RankingPrizeSplitPeer::PAID_PLACES );
+		return RankingPrizeSplitPeer::doSelect($criteria);
+	}
+	
+	public function resetOptions(){
+		
+		Util::executeQuery('DELETE FROM ranking_prize_split WHERE ranking_id='.$this->getId());
+		
+		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 10, 2, \'65%, 35%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)');
+		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 14, 3, \'50%, 30%, 20%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)');
+		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 18, 4, \'40%, 30%, 20%, 10%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)');
+	}
+	
+	public function saveOptions($request){
+		
+		foreach($this->getPrizeSplitList() as $rankingPrizeSplitObj){
+			
+			$paidPlaces = $rankingPrizeSplitObj->getPaidPlaces();
+			
+			$buyins      = $request->getParameter('buyins'.$paidPlaces);
+			$percentList = $request->getParameter('percentList'.$paidPlaces);
+			
+			$rankingPrizeSplitObj->setBuyins($buyins);
+			$rankingPrizeSplitObj->setPercentList($percentList);
+			$rankingPrizeSplitObj->save();
 		}
 	}
 	

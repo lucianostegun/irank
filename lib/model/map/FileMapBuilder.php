@@ -36,9 +36,9 @@ class FileMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('FILE_NAME', 'FileName', 'string', CreoleTypes::VARCHAR, false, 200);
+		$tMap->addColumn('FILE_NAME', 'FileName', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('FILE_PATH', 'FilePath', 'string', CreoleTypes::VARCHAR, false, 200);
+		$tMap->addColumn('FILE_PATH', 'FilePath', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('FILE_SIZE', 'FileSize', 'int', CreoleTypes::INTEGER, false, null);
 
@@ -46,7 +46,7 @@ class FileMapBuilder {
 
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
-		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, 250);
+		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

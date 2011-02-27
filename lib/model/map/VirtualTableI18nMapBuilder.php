@@ -34,9 +34,9 @@ class VirtualTableI18nMapBuilder {
 
 		$tMap->addForeignPrimaryKey('VIRTUAL_TABLE_ID', 'VirtualTableId', 'int' , CreoleTypes::INTEGER, 'virtual_table', 'ID', true, null);
 
-		$tMap->addPrimaryKey('CULTURE', 'Culture', 'string', CreoleTypes::CHAR, true, 5);
+		$tMap->addPrimaryKey('CULTURE', 'Culture', 'string', CreoleTypes::CHAR, true, null);
 
-		$tMap->addColumn('DESCRIPTION_I18N', 'DescriptionI18n', 'string', CreoleTypes::VARCHAR, false, 150);
+		$tMap->addColumn('DESCRIPTION_I18N', 'DescriptionI18n', 'string', CreoleTypes::VARCHAR, false, null);
 
 	} 
 } 

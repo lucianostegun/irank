@@ -179,10 +179,17 @@ function linkToFunction(label, module, action, fieldName, fieldValue){
 	return '<a href="javascript:void(0)" onclick="goModule(\''+module+'\', \''+action+'\', \''+fieldName+'\', \''+fieldValue+'\')">'+label+'</a>';
 }
 
-function toFloat( value ){
+function toFloat( value, display, decimalPlaces ){
 
-	if( !value )
-		return 0;
+	decimalPlaces = (typeof(decimalPlaces)=='undefined'?2:decimalPlaces);
+	
+	if( !value ){
+		
+		if( display )
+			return '0,00';
+		else
+			return 0;
+	}
 	
 	value = value+' ';
 	
@@ -194,7 +201,10 @@ function toFloat( value ){
 	
 	value = parseFloat(value);
 	
-	return parseFloat(value);
+	if( display )
+		value = number_format(value, decimalPlaces, ',', '');
+	
+	return value;
 }
 
 function parseInfo(infoList){

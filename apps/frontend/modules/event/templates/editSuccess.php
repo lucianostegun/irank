@@ -29,6 +29,7 @@
 		), array( 'id'=>'eventForm' ));
 	
 	echo input_hidden_tag('eventId', $eventId);
+	echo input_hidden_tag('isClone', $isClone);
 	
 	$isEditable = $eventObj->isEditable();
 	$isMyEvent  = $eventObj->isMyEvent();
@@ -51,6 +52,9 @@
 		<?php
 			if( $isEditable )				
 				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()'));
+			
+			if( $pastDate )				
+				echo button_tag('calculatePrize', __('button.calculatePrize'), array('onclick'=>'doCalculatePrize()'));
 			
 			echo getFormLoading('event');
 			echo getFormStatus();

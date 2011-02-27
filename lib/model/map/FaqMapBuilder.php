@@ -36,7 +36,7 @@ class FaqMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('QUESTION', 'Question', 'string', CreoleTypes::VARCHAR, false, 200);
+		$tMap->addColumn('QUESTION', 'Question', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ORDER_SEQ', 'OrderSeq', 'int', CreoleTypes::INTEGER, false, null);
 

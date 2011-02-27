@@ -27,6 +27,7 @@
 	$dhtmlxTabBarObj->addTab('player', __('ranking.players'), 'ranking/form/player', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
 	$dhtmlxTabBarObj->addTab('event', __('ranking.events'), 'ranking/form/event', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
 	$dhtmlxTabBarObj->addTab('classify', __('ranking.classify'), 'ranking/form/classify', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
+	$dhtmlxTabBarObj->addTab('options', __('ranking.options'), 'ranking/form/options', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
 	$dhtmlxTabBarObj->addTab('import', __('ranking.import'), 'ranking/form/import', array('rankingObj'=>$rankingObj, 'hidden'=>true));
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabRanking');

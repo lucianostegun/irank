@@ -136,6 +136,18 @@
 	margin-right: 	10px;
 }
 
+.defaultForm .row .labelFlex, .windowForm .row .labelFlex {
+
+	float: 			left;
+	padding: 		1px 0px 2px 0px;
+	height: 		15px;
+	height: 		21px !ie;
+	text-align: 	right;
+	font-weight: 	bold;
+	color: 			#333333;
+	margin-right: 	10px;
+}
+
 .defaultForm .row .field, .windowForm .row .field {
 
 	float: 			left;

@@ -32,8 +32,6 @@ class Event extends BaseEvent
 	public function delete($con=null){
 		
 		$rankingObj = $this->getRanking();
-		$rankingObj->setEvents($rankingObj->getEvents()-1);
-		$rankingObj->save();
 		
 		$deleted = $this->getDeleted();
 		
@@ -42,6 +40,7 @@ class Event extends BaseEvent
 		
 		Log::quickLogDelete('event', $this->getPrimaryKey());
 		
+		$rankingObj->decraseEvents();
 		$rankingObj->updateScores();
 		
 		/**
@@ -549,7 +548,7 @@ class Event extends BaseEvent
 			return false;
 
 		// Se hoje for maior que a data final do ranking
-		if( $this->getSavedResult() && $rankingObj->getFinishDate(null) < time() )
+		if( $this->getSavedResult() && $rankingObj->getFinishDate()!==null && $rankingObj->getFinishDate(null) < time() )
 			return false;
 
 		$eventDate = $this->getEventDate();
@@ -564,7 +563,7 @@ class Event extends BaseEvent
 		$criteria->add( EventPeer::VISIBLE, true );
 		$criteria->add( EventPeer::DELETED, false );
 		$eventCount = EventPeer::doCount($criteria);
-		
+
 		return ($eventCount==0);
 	}
 	

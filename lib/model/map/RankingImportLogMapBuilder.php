@@ -36,7 +36,7 @@ class RankingImportLogMapBuilder {
 
 		$tMap->addForeignPrimaryKey('RANKING_ID_FROM', 'RankingIdFrom', 'int' , CreoleTypes::INTEGER, 'ranking', 'ID', true, null);
 
-		$tMap->addColumn('IMPORT_TABLE', 'ImportTable', 'string', CreoleTypes::VARCHAR, false, 32);
+		$tMap->addPrimaryKey('IMPORT_TABLE', 'ImportTable', 'string', CreoleTypes::VARCHAR, true, null);
 
 		$tMap->addPrimaryKey('OBJECT_ID', 'ObjectId', 'int', CreoleTypes::INTEGER, true, null);
 

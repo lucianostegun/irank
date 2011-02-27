@@ -38,19 +38,19 @@ class ToolbarMapBuilder {
 
 		$tMap->addForeignKey('MODULE_ID', 'ModuleId', 'int', CreoleTypes::INTEGER, 'module', 'ID', false, null);
 
-		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, 20);
+		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('TAG_NAME', 'TagName', 'string', CreoleTypes::VARCHAR, false, 20);
+		$tMap->addColumn('TAG_NAME', 'TagName', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('TAG_ID', 'TagId', 'string', CreoleTypes::VARCHAR, false, 20);
+		$tMap->addColumn('TAG_ID', 'TagId', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('IMAGE', 'Image', 'string', CreoleTypes::VARCHAR, false, 20);
+		$tMap->addColumn('IMAGE', 'Image', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('ACTION_NAME', 'ActionName', 'string', CreoleTypes::VARCHAR, false, 20);
+		$tMap->addColumn('ACTION_NAME', 'ActionName', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('EXECUTE_MODULE', 'ExecuteModule', 'string', CreoleTypes::VARCHAR, false, 20);
+		$tMap->addColumn('EXECUTE_MODULE', 'ExecuteModule', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('EXECUTE_ACTION', 'ExecuteAction', 'string', CreoleTypes::VARCHAR, false, 20);
+		$tMap->addColumn('EXECUTE_ACTION', 'ExecuteAction', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('IS_JAVASCRIPT', 'IsJavascript', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
@@ -58,7 +58,7 @@ class ToolbarMapBuilder {
 
 		$tMap->addColumn('START_DISABLED', 'StartDisabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
-		$tMap->addColumn('VISIBLE_ACTION', 'VisibleAction', 'string', CreoleTypes::VARCHAR, false, 30);
+		$tMap->addColumn('VISIBLE_ACTION', 'VisibleAction', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

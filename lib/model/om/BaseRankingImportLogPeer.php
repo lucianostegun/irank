@@ -631,6 +631,9 @@ abstract class BaseRankingImportLogPeer {
 			$comparison = $criteria->getComparison(RankingImportLogPeer::RANKING_ID_FROM);
 			$selectCriteria->add(RankingImportLogPeer::RANKING_ID_FROM, $criteria->remove(RankingImportLogPeer::RANKING_ID_FROM), $comparison);
 
+			$comparison = $criteria->getComparison(RankingImportLogPeer::IMPORT_TABLE);
+			$selectCriteria->add(RankingImportLogPeer::IMPORT_TABLE, $criteria->remove(RankingImportLogPeer::IMPORT_TABLE), $comparison);
+
 			$comparison = $criteria->getComparison(RankingImportLogPeer::OBJECT_ID);
 			$selectCriteria->add(RankingImportLogPeer::OBJECT_ID, $criteria->remove(RankingImportLogPeer::OBJECT_ID), $comparison);
 
@@ -682,11 +685,13 @@ abstract class BaseRankingImportLogPeer {
 				$vals[0][] = $value[0];
 				$vals[1][] = $value[1];
 				$vals[2][] = $value[2];
+				$vals[3][] = $value[3];
 			}
 
 			$criteria->add(RankingImportLogPeer::RANKING_ID, $vals[0], Criteria::IN);
 			$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $vals[1], Criteria::IN);
-			$criteria->add(RankingImportLogPeer::OBJECT_ID, $vals[2], Criteria::IN);
+			$criteria->add(RankingImportLogPeer::IMPORT_TABLE, $vals[2], Criteria::IN);
+			$criteria->add(RankingImportLogPeer::OBJECT_ID, $vals[3], Criteria::IN);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -740,13 +745,14 @@ abstract class BaseRankingImportLogPeer {
 	}
 
 	
-	public static function retrieveByPK( $ranking_id, $ranking_id_from, $object_id, $con = null) {
+	public static function retrieveByPK( $ranking_id, $ranking_id_from, $import_table, $object_id, $con = null) {
 		if ($con === null) {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 		$criteria = new Criteria();
 		$criteria->add(RankingImportLogPeer::RANKING_ID, $ranking_id);
 		$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $ranking_id_from);
+		$criteria->add(RankingImportLogPeer::IMPORT_TABLE, $import_table);
 		$criteria->add(RankingImportLogPeer::OBJECT_ID, $object_id);
 		$v = RankingImportLogPeer::doSelect($criteria, $con);
 

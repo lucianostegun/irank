@@ -40,17 +40,17 @@ class ModuleMapBuilder {
 
 		$tMap->addColumn('IS_MENU', 'IsMenu', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
-		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, 50);
+		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('TOOLBAR_DESCRIPTION', 'ToolbarDescription', 'string', CreoleTypes::VARCHAR, false, 50);
+		$tMap->addColumn('TOOLBAR_DESCRIPTION', 'ToolbarDescription', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('IMAGE_MENU', 'ImageMenu', 'string', CreoleTypes::VARCHAR, false, 50);
+		$tMap->addColumn('IMAGE_MENU', 'ImageMenu', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('IMAGE_MODULE', 'ImageModule', 'string', CreoleTypes::VARCHAR, false, 50);
+		$tMap->addColumn('IMAGE_MODULE', 'ImageModule', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('EXECUTE_MODULE', 'ExecuteModule', 'string', CreoleTypes::VARCHAR, false, 20);
+		$tMap->addColumn('EXECUTE_MODULE', 'ExecuteModule', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('EXECUTE_ACTION', 'ExecuteAction', 'string', CreoleTypes::VARCHAR, false, 15);
+		$tMap->addColumn('EXECUTE_ACTION', 'ExecuteAction', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

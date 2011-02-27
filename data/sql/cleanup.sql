@@ -6,6 +6,7 @@ DELETE FROM event;
 DELETE FROM ranking_history;
 DELETE FROM ranking_player;
 DELETE FROM ranking_place;
+DELETE FROM ranking_prize_split;
 DELETE FROM ranking;
 DELETE FROM home_wall;
 DELETE FROM log;

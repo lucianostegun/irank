@@ -76,19 +76,19 @@ class eventActions extends sfActions
 	$comments        = $request->getParameter('comments');
 	$confirmPresence = $request->getParameter('confirmPresence');
 	$sendEmail       = $request->getParameter('sendEmail');
+	$isClone         = $request->getParameter('isClone');
 
-	if( $eventId ){
-		
+	if( $eventId )		
 		$eventObj  = EventPeer::retrieveByPK( $eventId );
-	}else{
-		
+	else
 		$eventObj = new Event();
-	}
 	
 	$isNew = $eventObj->isNew();
 	
 	if( !$eventObj->isEditable() )
 		Util::forceError('!'.__('event.lockedEvent'), true);
+		
+	$isClone = ($isClone && !$eventObj->getEnabled());
 	
 	$eventObj->setRankingId( $rankingId );
 	$eventObj->setEventName( $eventName );
@@ -104,11 +104,8 @@ class eventActions extends sfActions
 	
 	$rankingObj = $eventObj->getRanking();
 	
-	if( $isNew ){
-		
-		$rankingObj->setEvents($rankingObj->getEvents()+1);
-		$rankingObj->save();
-	}
+	if( $isNew || $isClone )		
+		$rankingObj->incraseEvents();
 	
 	$eventObj->importPlayers();
 
@@ -611,6 +608,40 @@ class eventActions extends sfActions
 	exit;
   }
   
+  public function executeGetPaidPlaces($request){
+
+	$eventId = $request->getParameter('eventId');
+	$buyins  = $request->getParameter('buyins');
+	
+	$sql = 'SELECT
+			    ranking_prize_split.PERCENT_LIST||\';\'||ranking_prize_split.PAID_PLACES
+			FROM 
+			    ranking_prize_split
+			    INNER JOIN event ON ranking_prize_split.RANKING_ID = event.RANKING_ID
+			WHERE
+			    event.ID = 67
+			    AND ranking_prize_split.BUYINS >= '.$buyins.'
+			ORDER BY
+			    ranking_prize_split.BUYINS
+			LIMIT 1;';
+	
+	$info = Util::executeOne($sql, 'string');
+	
+	if( !$info )
+		Util::forceError('event.calculatePrize.rangeError');
+		
+	list($percentList, $paidPlaces) = explode(';', $info);
+	
+	$percentList = ereg_replace('[^0-9,]', '', $percentList);
+	
+	$infoList = array('percentList'=>$percentList,
+					  'paidPlaces'=>$paidPlaces);
+	
+	echo Util::parseInfo($infoList);;
+	
+	exit;
+  }
+  
   public function executeJavascript($request){
   	
   	Util::getHelper('i18n');
@@ -648,6 +679,7 @@ class eventActions extends sfActions
   	echo 'var i18n_event_players_importConfirm               = "'.__('event.players.importConfirm').'";'.$nl;
   	echo 'var i18n_event_players_importError                 = "'.__('event.players.importError').'";'.$nl;
   	echo 'var i18n_event_players_importSuccess               = "'.__('event.players.importSuccess').'";'.$nl;
+  	echo 'var i18n_event_calculatePrizeError                 = "'.__('event.calculatePrizeError').'";'.$nl;
   	exit;
   }
   
