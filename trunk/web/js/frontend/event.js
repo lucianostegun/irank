@@ -540,6 +540,7 @@ function importPlayers(){
 		alert(content)
 		hideIndicator('event');
 		
+		if( isDebug() )
 			debug(content);
 	};
 	
@@ -569,4 +570,98 @@ function getICalFile(){
 	var eventId = $('eventId').value;
 	
 	goModule('event', 'getICal', 'eventId', eventId);
+}
+
+function calculateResultTotal(type){
+	
+	var peopleIdList = $('resultPeopleIdList').value.split(',');
+	var totalValue   = 0;
+	
+	for(var i=0; i < peopleIdList.length; i++){
+		
+		value = $('event'+ucfirst(type)+peopleIdList[i]).value;
+		value = toFloat(value);
+		
+		totalValue += value;
+	}
+	
+	$('eventResultTotal'+ucfirst(type)).innerHTML = toFloat(totalValue, true);
+	checkTotalPrize();
+}
+
+function checkTotalPrize(){
+	
+	var totalBuyin = toFloat($('eventResultTotalBuyin').innerHTML);
+	var totalPrize = toFloat($('eventResultTotalPrize').innerHTML);
+	var totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
+	var totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
+	
+	if( totalPrize!=(totalBuyin+totalRebuy+totalAddon) )
+		$('eventResultTotalPrize').style.color = '#FF0000';
+	else
+		$('eventResultTotalPrize').style.color = '';
+}
+
+function doCalculatePrize(){
+
+	var eventId = $('eventId').value;
+	
+	var buyin      = toFloat($('eventBuyin').value);
+	var totalBuyin = toFloat($('eventResultTotalBuyin').innerHTML);
+	var totalPrize = toFloat($('eventResultTotalPrize').innerHTML);
+	var totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
+	var totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
+	var totalBRA   = (totalBuyin+totalRebuy+totalAddon);
+	
+	var buyins      = (totalBRA/buyin);
+	
+	var successFunc = function(t){
+
+		var infoObj = parseInfo(t.responseText);
+
+		var paidPlaces  = infoObj.paidPlaces;
+		var percentList = infoObj.percentList.split(',');
+		
+		
+		var peopleIdList = $('resultPeopleIdList').value.split(',');
+				
+		for(var positionIndex=0; positionIndex < paidPlaces; positionIndex++){
+
+			for(var i=0; i < peopleIdList.length; i++){
+				
+				var peopleId = peopleIdList[i];
+				var position = $('eventEventPosition'+peopleId).value;
+
+				if( position==(positionIndex+1) ){
+					
+					var percent = percentList[positionIndex];
+					$('eventPrize'+peopleId).value = toFloat(totalBRA*percent/100, true);
+				}
+				
+				if( position > paidPlaces )				
+					$('eventPrize'+peopleId).value = toFloat(0, true);
+			}
+		}
+		
+		calculateResultTotal('prize');
+		
+		hideIndicator('event');
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		alert(i18n_event_calculatePrizeError)
+
+		if( isDebug() )
+			debug(content);
+		
+		hideIndicator('event');
+	};
+	
+	showIndicator('event');
+	
+	var urlAjax = _webRoot+'/event/getPaidPlaces/eventId/'+eventId+'/buyins/'+buyins;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }

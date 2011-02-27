@@ -48,9 +48,9 @@ class EventPlayerMapBuilder {
 
 		$tMap->addColumn('PRIZE', 'Prize', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('CONFIRM_CODE', 'ConfirmCode', 'string', CreoleTypes::VARCHAR, false, 50);
+		$tMap->addColumn('CONFIRM_CODE', 'ConfirmCode', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('INVITE_STATUS', 'InviteStatus', 'string', CreoleTypes::VARCHAR, false, 5);
+		$tMap->addColumn('INVITE_STATUS', 'InviteStatus', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ALLOW_EDIT', 'AllowEdit', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

@@ -36,13 +36,13 @@ class HomeWallMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('PEOPLE_NAME', 'PeopleName', 'string', CreoleTypes::VARCHAR, false, 20);
+		$tMap->addColumn('PEOPLE_NAME', 'PeopleName', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addForeignKey('USER_SITE_ID', 'UserSiteId', 'int', CreoleTypes::INTEGER, 'user_site', 'ID', false, null);
 
-		$tMap->addColumn('MESSAGE', 'Message', 'string', CreoleTypes::VARCHAR, false, 200);
+		$tMap->addColumn('MESSAGE', 'Message', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('ICON', 'Icon', 'string', CreoleTypes::VARCHAR, false, 10);
+		$tMap->addColumn('ICON', 'Icon', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('SHOW_WHO', 'ShowWho', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

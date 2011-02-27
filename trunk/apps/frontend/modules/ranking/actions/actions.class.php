@@ -101,9 +101,13 @@ class rankingActions extends sfActions
 	
 	$rankingObj->addPlayer( $this->peopleId, true );
 	
-	if( !$isNew ){
+	if( $isNew ){
+		
+		$rankingObj->resetOptions();
+	}else{
 		
 		$rankingObj->updateScores();
+		$rankingObj->saveOptions($request);
 		
 		if( $updateHistory )
 			$rankingObj->updateWholeHistory();
@@ -178,11 +182,7 @@ class rankingActions extends sfActions
 	}
 	
 	$rankingObj->deletePlayer( $peopleId );
-	
-    sfConfig::set('sf_web_debug', false);
-	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-
-	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
+	exit;
   }
   
   public function executeGetPlayerList($request){
@@ -204,6 +204,16 @@ class rankingActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
 	return $this->renderText(get_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$rankingDate)));
+  }
+
+  public function executeGetOptionsList($request){
+
+	$rankingObj = $this->rankingObj;
+	
+    sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+
+	return $this->renderText(get_partial('ranking/form/options', array('rankingObj'=>$rankingObj)));
   }
 
   public function handleErrorSavePlace(){
@@ -301,6 +311,7 @@ class rankingActions extends sfActions
   	$nl = chr(10);
   	
   	echo 'var i18n_ranking_playerListLoadError          = "'.__('ranking.playerListLoadError').'";'.$nl;
+  	echo 'var i18n_ranking_optionsListLoadError         = "'.__('ranking.optionsListLoadError').'";'.$nl;
   	echo 'var i18n_ranking_playersTab_playerDeleteError = "'.__('ranking.playersTab.playerDeleteError').'";'.$nl;
   	echo 'var i18n_ranking_playersTab_logLoadError      = "'.__('ranking.classifyTab.logLoadError').'";'.$nl;
   	echo 'var i18n_ranking_playersTab_shareError        = "'.__('ranking.classifyTab.shareError').'";'.$nl;

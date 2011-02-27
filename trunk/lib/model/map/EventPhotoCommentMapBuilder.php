@@ -40,7 +40,7 @@ class EventPhotoCommentMapBuilder {
 
 		$tMap->addForeignKey('PEOPLE_ID', 'PeopleId', 'int', CreoleTypes::INTEGER, 'people', 'ID', true, null);
 
-		$tMap->addColumn('COMMENT', 'Comment', 'string', CreoleTypes::VARCHAR, false, 140);
+		$tMap->addColumn('COMMENT', 'Comment', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

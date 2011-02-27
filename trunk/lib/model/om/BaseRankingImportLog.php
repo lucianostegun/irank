@@ -512,6 +512,7 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
 
 		$criteria->add(RankingImportLogPeer::RANKING_ID, $this->ranking_id);
 		$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->ranking_id_from);
+		$criteria->add(RankingImportLogPeer::IMPORT_TABLE, $this->import_table);
 		$criteria->add(RankingImportLogPeer::OBJECT_ID, $this->object_id);
 
 		return $criteria;
@@ -526,7 +527,9 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
 
 		$pks[1] = $this->getRankingIdFrom();
 
-		$pks[2] = $this->getObjectId();
+		$pks[2] = $this->getImportTable();
+
+		$pks[3] = $this->getObjectId();
 
 		return $pks;
 	}
@@ -539,15 +542,15 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
 
 		$this->setRankingIdFrom($keys[1]);
 
-		$this->setObjectId($keys[2]);
+		$this->setImportTable($keys[2]);
+
+		$this->setObjectId($keys[3]);
 
 	}
 
 	
 	public function copyInto($copyObj, $deepCopy = false)
 	{
-
-		$copyObj->setImportTable($this->import_table);
 
 		$copyObj->setCreatedAt($this->created_at);
 
@@ -558,6 +561,7 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
 
 		$copyObj->setRankingId(NULL); 
 		$copyObj->setRankingIdFrom(NULL); 
+		$copyObj->setImportTable(NULL); 
 		$copyObj->setObjectId(NULL); 
 	}
 

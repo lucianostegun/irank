@@ -36,7 +36,7 @@ class UserSiteOptionMapBuilder {
 
 		$tMap->addForeignPrimaryKey('USER_SITE_OPTION_ID', 'UserSiteOptionId', 'int' , CreoleTypes::INTEGER, 'virtual_table', 'ID', true, null);
 
-		$tMap->addColumn('OPTION_VALUE', 'OptionValue', 'string', CreoleTypes::VARCHAR, false, 20);
+		$tMap->addColumn('OPTION_VALUE', 'OptionValue', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

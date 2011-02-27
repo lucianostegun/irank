@@ -36,11 +36,11 @@ class VirtualTableMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('VIRTUAL_TABLE_NAME', 'VirtualTableName', 'string', CreoleTypes::VARCHAR, true, 50);
+		$tMap->addColumn('VIRTUAL_TABLE_NAME', 'VirtualTableName', 'string', CreoleTypes::VARCHAR, true, null);
 
-		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, 50);
+		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('TAG_NAME', 'TagName', 'string', CreoleTypes::VARCHAR, false, 30);
+		$tMap->addColumn('TAG_NAME', 'TagName', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

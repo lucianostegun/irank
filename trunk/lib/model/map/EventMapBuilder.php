@@ -38,7 +38,7 @@ class EventMapBuilder {
 
 		$tMap->addForeignKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, 'ranking', 'ID', true, null);
 
-		$tMap->addColumn('EVENT_NAME', 'EventName', 'string', CreoleTypes::VARCHAR, false, 25);
+		$tMap->addColumn('EVENT_NAME', 'EventName', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addForeignKey('RANKING_PLACE_ID', 'RankingPlaceId', 'int', CreoleTypes::INTEGER, 'ranking_place', 'ID', true, null);
 
@@ -50,7 +50,7 @@ class EventMapBuilder {
 
 		$tMap->addColumn('START_TIME', 'StartTime', 'int', CreoleTypes::TIME, false, null);
 
-		$tMap->addColumn('COMMENTS', 'Comments', 'string', CreoleTypes::VARCHAR, false, 140);
+		$tMap->addColumn('COMMENTS', 'Comments', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('SENT_EMAIL', 'SentEmail', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

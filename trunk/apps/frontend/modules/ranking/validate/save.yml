@@ -41,3 +41,8 @@ fields:
       min:       0
       min_error: form.error.greaterEqual0
       nan_error: form.error.invalidNumber
+       
+  options:
+    sfCallbackValidator:
+      callback:      [RankingPrizeSplitPeer, validatePrizeSplit]
+      invalid_error: nullError

@@ -10,3 +10,9 @@
 	position: 			absolute;
 	margin-bottom: 		-22px;
 }
+
+.resultTotal td {
+
+	background: 	#E0E0E0;
+	font-weight: 	bold;
+}

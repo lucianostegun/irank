@@ -22,7 +22,7 @@ $innerObj        = (isset($innerObj)?$innerObj:false);
 </script>
 </head>
 <body>
-
+<div id="debugDiv"></div>
 <div id="contentArea">
 	<div id="innerContent">
     	<div id="header">

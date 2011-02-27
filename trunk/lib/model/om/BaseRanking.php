@@ -121,6 +121,12 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	protected $lastRankingImportLogRelatedByRankingIdFromCriteria = null;
 
 	
+	protected $collRankingPrizeSplitList;
+
+	
+	protected $lastRankingPrizeSplitCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -749,6 +755,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collRankingPrizeSplitList !== null) {
+				foreach($this->collRankingPrizeSplitList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -852,6 +866,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 				if ($this->collRankingImportLogListRelatedByRankingIdFrom !== null) {
 					foreach($this->collRankingImportLogListRelatedByRankingIdFrom as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingPrizeSplitList !== null) {
+					foreach($this->collRankingPrizeSplitList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1156,6 +1178,10 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 			foreach($this->getRankingImportLogListRelatedByRankingIdFrom() as $relObj) {
 				$copyObj->addRankingImportLogRelatedByRankingIdFrom($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingPrizeSplitList() as $relObj) {
+				$copyObj->addRankingPrizeSplit($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1793,6 +1819,76 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	{
 		$this->collRankingImportLogListRelatedByRankingIdFrom[] = $l;
 		$l->setRankingRelatedByRankingIdFrom($this);
+	}
+
+	
+	public function initRankingPrizeSplitList()
+	{
+		if ($this->collRankingPrizeSplitList === null) {
+			$this->collRankingPrizeSplitList = array();
+		}
+	}
+
+	
+	public function getRankingPrizeSplitList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingPrizeSplitPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingPrizeSplitList === null) {
+			if ($this->isNew()) {
+			   $this->collRankingPrizeSplitList = array();
+			} else {
+
+				$criteria->add(RankingPrizeSplitPeer::RANKING_ID, $this->getId());
+
+				RankingPrizeSplitPeer::addSelectColumns($criteria);
+				$this->collRankingPrizeSplitList = RankingPrizeSplitPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingPrizeSplitPeer::RANKING_ID, $this->getId());
+
+				RankingPrizeSplitPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingPrizeSplitCriteria) || !$this->lastRankingPrizeSplitCriteria->equals($criteria)) {
+					$this->collRankingPrizeSplitList = RankingPrizeSplitPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingPrizeSplitCriteria = $criteria;
+		return $this->collRankingPrizeSplitList;
+	}
+
+	
+	public function countRankingPrizeSplitList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingPrizeSplitPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingPrizeSplitPeer::RANKING_ID, $this->getId());
+
+		return RankingPrizeSplitPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingPrizeSplit(RankingPrizeSplit $l)
+	{
+		$this->collRankingPrizeSplitList[] = $l;
+		$l->setRanking($this);
 	}
 
 } 

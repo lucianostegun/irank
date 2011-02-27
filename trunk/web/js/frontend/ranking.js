@@ -7,7 +7,9 @@ function handleSuccessRanking(rankingId){
 	enableButton('mainSubmit');
 	
 	var isNew = ($('rankingId').value=='');
-	$('rankingId').value = rankingId;
+	
+	if( !$('rankingId').value )
+		$('rankingId').value = rankingId;
 	
 	showDiv('mainMenuRanking');
 	
@@ -16,6 +18,7 @@ function handleSuccessRanking(rankingId){
 		reloadPlayerTab();
 		tabBarMainObj.showTab('event');
 		reloadClassifyTab();
+		reloadOptionsTab();
 	}
 	
 	onSelectTabRanking(tabBarMainObj.getActiveTab());
@@ -82,6 +85,21 @@ function reloadClassifyTab(){
 	new Ajax.Updater('rankingClassifyDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }
 
+function reloadOptionsTab(){
+	
+	var rankingId = $('rankingId').value;
+	
+	tabBarMainObj.showTab('options');
+	
+	var failureFunc = function(){
+		
+		$('rankingOptionsDiv').innerHTML = i18n_ranking_optionsListLoadError;
+	}
+	
+	var urlAjax = _webRoot+'/ranking/getOptionsList/rankingId/'+rankingId;
+	new Ajax.Updater('mainOptionsObjDiv', urlAjax, {asynchronous:true, evalScripts:false});
+}
+
 function handleSuccessRankingPlayer(content){
 	
 	if( isModuleName('event') )
@@ -102,17 +120,12 @@ function handleSuccessRankingPlayer(content){
 
 function deleteRankingPlayer(peopleId){
 	
-	showIndicator('rankingPlayerList');
-	
 	var rankingId = $('rankingId').value;
+	
+	hideDiv('rankingPlayer'+peopleId+'Tr');
 	
 	var successFunc = function(t){
 
-		var content = t.responseText;
-		
-		$('rankingPlayerDiv').innerHTML = content;
-		
-		hideIndicator('rankingPlayerList');
 	};
 		
 	var failureFunc = function(t){
@@ -120,7 +133,6 @@ function deleteRankingPlayer(peopleId){
 		var content = t.responseText;
 
 		alert(i18n_ranking_playersTab_playerDeleteError)
-		hideIndicator('rankingPlayerList');
 	};
 	
 	var urlAjax = _webRoot+'/ranking/deletePlayer/rankingId/'+rankingId+'/peopleId/'+peopleId;
@@ -144,6 +156,9 @@ function onSelectTabRanking(tabId){
 		case 'import':
 			if( isRecordSaved()!=false )
 				showDiv('rankingImportButtonBar');
+			break;
+		case 'options':
+			showDiv('rankingMainButtonBar');
 			break;
 	}
 	
@@ -288,17 +303,14 @@ function doImportRankingData(){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize($('rankingForm'))});
 }
 
+function calculateTotalSplitPrize(paidPlace){
+	
+	var percentList = $('rankingSplitPrizePercentList'+paidPlace).value.replace(/ ?% ?/gi, '');
+	percentList     = percentList.split(/ ?[,;] ?/);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	var totalPercent = 0;
+	for(var i=0; i < percentList.length; i++)
+		totalPercent += (percentList[i]*1);
+	
+	$('percent'+paidPlace+'PlacesTotal').innerHTML = toFloat(totalPercent, true, 0)+'%';
+}

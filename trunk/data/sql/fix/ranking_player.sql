@@ -1,3 +1,5 @@
+UPDATE ranking SET players = (SELECT COUNT(1) FROM ranking_player WHERE enabled);
+
 UPDATE 
     ranking_player
 SET 

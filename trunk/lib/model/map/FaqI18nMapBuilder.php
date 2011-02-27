@@ -34,9 +34,9 @@ class FaqI18nMapBuilder {
 
 		$tMap->addForeignPrimaryKey('FAQ_ID', 'FaqId', 'int' , CreoleTypes::INTEGER, 'faq', 'ID', true, null);
 
-		$tMap->addPrimaryKey('CULTURE', 'Culture', 'string', CreoleTypes::CHAR, true, 5);
+		$tMap->addPrimaryKey('CULTURE', 'Culture', 'string', CreoleTypes::CHAR, true, null);
 
-		$tMap->addColumn('QUESTION_I18N', 'QuestionI18n', 'string', CreoleTypes::VARCHAR, false, 200);
+		$tMap->addColumn('QUESTION_I18N', 'QuestionI18n', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ANSWER_I18N', 'AnswerI18n', 'string', CreoleTypes::LONGVARCHAR, false, null);
 

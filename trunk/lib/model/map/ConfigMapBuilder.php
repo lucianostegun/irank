@@ -32,11 +32,11 @@ class ConfigMapBuilder {
 
 		$tMap->setUseIdGenerator(false);
 
-		$tMap->addPrimaryKey('CONFIG_NAME', 'ConfigName', 'string', CreoleTypes::VARCHAR, true, 50);
+		$tMap->addPrimaryKey('CONFIG_NAME', 'ConfigName', 'string', CreoleTypes::VARCHAR, true, null);
 
-		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, 150);
+		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('CONFIG_VALUE', 'ConfigValue', 'string', CreoleTypes::VARCHAR, false, 100);
+		$tMap->addColumn('CONFIG_VALUE', 'ConfigValue', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

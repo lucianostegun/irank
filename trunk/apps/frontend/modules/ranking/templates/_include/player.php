@@ -16,7 +16,7 @@
 			$peopleObj = $rankingPlayerObj->getPeople();
 			$peopleId  = $peopleObj->getId();
 	?>
-	<tr class="boxcontent">
+	<tr class="boxcontent" id="rankingPlayer<?php echo $peopleId ?>Tr">
 		<td><?php echo $peopleObj->getFirstName() ?></td>
 		<td><?php echo $peopleObj->getLastName() ?></td>
 		<td><?php echo $peopleObj->getEmailAddress() ?></td>
