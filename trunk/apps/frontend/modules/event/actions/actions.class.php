@@ -619,7 +619,7 @@ class eventActions extends sfActions
 			    ranking_prize_split
 			    INNER JOIN event ON ranking_prize_split.RANKING_ID = event.RANKING_ID
 			WHERE
-			    event.ID = 67
+			    event.ID = '.$eventId.'
 			    AND ranking_prize_split.BUYINS >= '.$buyins.'
 			ORDER BY
 			    ranking_prize_split.BUYINS
