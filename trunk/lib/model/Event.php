@@ -55,7 +55,7 @@ class Event extends BaseEvent
 	
 	public function getCode(){
 		
-		return '#'.sprintf('%04d', $this->getId());
+		return '#'.sprintf('%04d', ($this->getId()+1985));
 	}
 	
 	public static function getList($criteria=null, $limit=null){

@@ -73,9 +73,6 @@ class EventComment extends BaseEventComment
 
 		Util::getHelper('I18N');
 
-		$eventCommentId = $this->getId();
-		$eventCommentId = (1985+$eventCommentId);
-		
 		$eventObj     = $this->getEvent();
 		$emailContent = AuxiliarText::getContentByTagName('eventCommentNotify');
 
