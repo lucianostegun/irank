@@ -51,7 +51,7 @@ class Log extends BaseLog
         $logId = $logObj->getId();
         
         if( count($columnModifiedList) ){
-		
+			
 			$sql     = 'INSERT INTO log_field VALUES';
 			$sqlList = array();
 			foreach($columnModifiedList as $fieldName=>$fieldValue){

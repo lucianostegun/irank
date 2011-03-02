@@ -93,7 +93,7 @@ class AuxiliarText extends BaseAuxiliarText
 	}
 	
 	public function getContent($culture=false){
-		
+
 		$filePath = $this->getFilePath(true);
 		$filePath = str_replace('templates', 'templates'.DIRECTORY_SEPARATOR.$culture, $filePath);
 

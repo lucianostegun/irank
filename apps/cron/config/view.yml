@@ -4,7 +4,7 @@ default:
 
   metas:
     title:        iRank
-    language:     pt
+    language:     pt_BR
 
   stylesheets:    []
   javascripts:    []

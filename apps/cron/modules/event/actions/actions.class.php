@@ -6,6 +6,7 @@ class eventActions extends sfActions
   public function preExecute(){
 
 	$this->getUser()->setAttribute('cron', true);
+	$this->getUser()->setCulture('pt_BR');
   }
   
   public function executeReminder($request){
@@ -34,8 +35,7 @@ class eventActions extends sfActions
   
   public function executeImportEmailComments($request){
 
-		$isPhoto      = $request->getParameter('photo');
-		$emailAddress = 'event_'.($isPhoto?'photo_':'').'comment@irank.com.br';
+		$emailAddress = 'event_comment@irank.com.br';
 		$password     = 'K33p0utme';
 		$server       = 'imap.irank.com.br';
 		$port         = 993;
@@ -71,37 +71,60 @@ class eventActions extends sfActions
 			if( strtoupper($encoding)!='UTF-8' )
 				$comment  = utf8_encode($comment);
 				
-			$eventCommentId      = ereg_replace('^.*#', '', $subject);
-			$eventCommentId      = $eventCommentId-1985;
-			$eventPhotoCommentId = $eventCommentId-1983;
+			$eventId = ereg_replace('^.*#', '', $subject);
+			$eventId = ($eventId>1985?$eventId-1985:$eventId);
 			
-			if( $isPhoto )
-				$eventCommentObj = EventPhotoCommentPeer::retrieveByPK($eventPhotoCommentId);
-			else
-				$eventCommentObj = EventCommentPeer::retrieveByPK($eventCommentId);
+			$error = false;
+			
+			try{
+			
+				$eventObj = EventPeer::retrieveByPK($eventId);
+					
+			}catch(Exception $e){
+				
+				$error = true;
+			}
 				
 			$peopleObj = PeoplePeer::retrieveByEmailAddress($emailAddress);
 
-			if( !is_object($eventCommentObj) || !is_object($peopleObj) )
-				continue;
+
+			/* VALIDAÇÃO DE ERROS */
+			if( !is_object($eventObj) || !is_object($peopleObj) )
+				$error = true;
 			
-			if( $isPhoto )
-				$eventPhotoObj = $eventCommentObj->getEventPhoto();
-			else
-				$eventObj = $eventCommentObj->getEvent();
+			if( !$error && !$eventObj->isInvited($peopleObj->getId()) )
+				$error = true;
+				
+			if( strlen($comment) > 32 && !ereg(' ', $comment) )
+				$error = true;
+				
 			
-			if( !$eventObj->isInvited($peopleObj->getId()) )
-				continue;
+			if( !$error ){
+				
+				$criteria = new Criteria();
+				$criteria->add( EventCommentPeer::CREATED_AT, $createdAt );
+				$criteria->add( EventCommentPeer::PEOPLE_ID, $peopleObj->getId() );
+				$criteria->add( EventCommentPeer::EVENT_ID, $eventObj->getId() );
+				$eventCommentObj = EventCommentPeer::doSelectOne($criteria);
+				
+				if( !is_object($eventCommentObj) )
+					$error = true;
+			}
+				
+			if( $error ){
+				
+		  	    $messageObj->move('INBOX.Antigos');
+//		  	    $messageObj->delete();
+		  	    continue;
+			}
+			/* FIM VALIDAÇÃO ERROS */
 				
 			$eventCommentObj = new EventComment();
 			$eventCommentObj->setPeopleId( $peopleObj->getId() );
 			
-			if( $isPhoto )
-				$eventCommentObj->setEventPhotoId( $eventPhotoObj->getId() );
-			else
-				$eventCommentObj->setEventId( $eventObj->getId() );
+			$eventCommentObj->setEventId( $eventObj->getId() );
 				
-			$eventCommentObj->setComment( $comment );
+			$eventCommentObj->setComment( utf8_encode($comment) );
 			$eventCommentObj->setCreatedAt( $createdAt );
 			
 			try{
@@ -120,8 +143,8 @@ class eventActions extends sfActions
 				}
 			}
 			
-//	  	    $messageObj->move('INBOX.Antigos');
-	  	    $messageObj->delete();
+	  	    $messageObj->move('INBOX.Antigos');
+//	  	    $messageObj->delete();
 	  	    
 	  	    $successCount++;
 		}
