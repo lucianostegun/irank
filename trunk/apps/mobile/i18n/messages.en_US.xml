@@ -181,7 +181,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.result.intro</source>
-				<target>Put your device on landscape position to see all edit fields</target>
+				<target>Select the players that participated in the event and click at "Lunch result"</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.comments</source>
@@ -453,6 +453,26 @@
 			<trans-unit>
 				<source>event.comment.typeSomething</source>
 				<target>Type something to publish</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.saveResult</source>
+				<target>Save result</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.lunchResult</source>
+				<target>Lunch result</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.previewResult</source>
+				<target>Preview result</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.resultLunch.position</source>
+				<target>Position</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.resultLunch.prize</source>
+				<target>Prize</target>
 			</trans-unit>
 		</body>
 	</file>

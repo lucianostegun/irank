@@ -665,3 +665,20 @@ function doCalculatePrize(){
 	var urlAjax = _webRoot+'/event/getPaidPlaces/eventId/'+eventId+'/buyins/'+buyins;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
+
+function checkBuyin(peopleId){
+	
+	var eventPosition = $('eventEventPosition'+peopleId).value;
+	
+	if( !eventPosition || eventPosition=='0' ){
+		
+		$('eventBuyin'+peopleId).value           = '0';
+		$('eventResultBuyin'+peopleId).innerHTML = '0,00';
+	}else{
+	
+		$('eventBuyin'+peopleId).value           = $('eventBuyin').value;
+		$('eventResultBuyin'+peopleId).innerHTML = $('eventBuyin').value;
+	}
+	
+	calculateResultTotal('buyin');
+}

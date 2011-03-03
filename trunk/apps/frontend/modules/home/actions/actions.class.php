@@ -36,6 +36,7 @@ class homeActions extends sfActions
 	echo 'var _imageRoot = "http://'.$request->getHost() .'/images";'.$nl;
 	echo 'var _CurrentPeopleId = "'.$peopleId.'";'.$nl;
 	
+	echo 'var i18n_culture             = "'.$this->getUser()->getCulture().'";'.$nl;
 	echo 'var i18n_record_exitAlert    = "'.__('record.exitAlert').'";'.$nl;
 	echo 'var i18n_tryAgain            = "'.__('tryAgain').'";'.$nl;
 	echo 'var i18n_disable             = "'.__('disable').'";'.$nl;

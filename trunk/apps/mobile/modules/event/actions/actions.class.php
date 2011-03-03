@@ -130,6 +130,27 @@ class eventActions extends sfActions
 	exit;
   }
   
+  public function executeTogglePresence($request){
+
+	Util::getHelper('I18N');
+	
+	$eventId  = $request->getParameter('eventId');
+	$peopleId = $request->getParameter('peopleId');
+	$notify   = false;
+	
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+	
+	if( !$eventObj->isMyEvent() )
+		throw new Exception(__('event.exception.editionDenied'));
+	
+	if( !$eventObj->isConfirmed($peopleId) )
+		$eventObj->togglePresence($peopleId, 'yes', $notify);
+	else
+		$eventObj->togglePresence($peopleId, 'no', $notify);
+    
+    exit;
+  }
+  
   public function executeGetICal($request){
 
 	$eventId  = $request->getParameter('eventId');
