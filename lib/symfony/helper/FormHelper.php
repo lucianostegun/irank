@@ -991,6 +991,82 @@ function button_tag( $buttonId, $text, $options=array() ){
 		
 	$submit = link_to(image_tag('blank.gif', array('class'=>'submit')), '#'.$onclick);
 //	$text   = link_to($text, '#'.$onclick);
+
+	$app = Util::getApp();
+	
+	$html = $nl;
+	if( $app=='mobile' ){
+		
+		$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).'>'.$nl;
+		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
+		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
+		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
+		$html .= '</div>';
+	}else{
+		
+		$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
+		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
+		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
+		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
+		$html .= '</div>';
+	}
+	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));
+	
+	$app = ($app=='mobile'?'mobile/':'');
+	sfContext::getInstance()->getResponse()->addStylesheet( $app.'button' );
+	sfContext::getInstance()->getResponse()->addJavascript( 'button' );
+	
+	return $html;
+}
+
+function button_mobile_tag( $buttonId, $text, $options=array() ){
+
+	if( Util::getApp()=='mobile' )
+		return button_mobile_tag($buttonId, $text, $options);
+
+	$buttonId = ucfirst($buttonId);
+	$nl       = chr(10);
+	$visible  = array_key_exists('visible', $options)?$options['visible']:true;
+	$disabled = array_key_exists('disabled', $options)?$options['disabled']:false;
+	$noCkeck  = array_key_exists('noCkeck', $options)?$options['noCkeck']:false;
+	$image    = array_key_exists('image', $options)?$options['image']:false;
+	$onclick  = array_key_exists('onclick', $options)?$options['onclick']:false;
+
+	if( array_key_exists('onclick', $options) && !$noCkeck ){
+		
+		$onclick = 'if( checkButton(\''.$buttonId.'\') ){ '.$onclick.'; }';
+		$options['onclick'] = $onclick;
+	}
+
+
+	$style = '';
+	
+	unset($options['disabled']);
+	
+	if( !$visible )
+		$style = 'style="display: none"';
+
+	try{
+		
+		unset($options['noCkeck']);
+	}catch(Exception $e){}
+	
+	$imagePath = 'button/'.$image;
+	
+	if( $disabled ){
+		
+		$imagePathList = split('/', $imagePath);
+		
+		$imagePathList[count($imagePathList)-1] = 'disabled/'.end($imagePathList);
+		
+		$imagePath = implode('/', $imagePathList);
+	}
+	
+	if( $image )
+		$image = image_tag($imagePath, array('id'=>$buttonId.'Image', 'align'=>'absmiddle'));
+		
+	$submit = link_to(image_tag('blank.gif', array('class'=>'submit')), '#'.$onclick);
+//	$text   = link_to($text, '#'.$onclick);
 	
 	$html = $nl;
 	$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;

@@ -179,7 +179,12 @@ function linkToFunction(label, module, action, fieldName, fieldValue){
 	return '<a href="javascript:void(0)" onclick="goModule(\''+module+'\', \''+action+'\', \''+fieldName+'\', \''+fieldValue+'\')">'+label+'</a>';
 }
 
-function toFloat( value, display, decimalPlaces ){
+function toCurrency(value){
+	
+	return toFloat(value, true, 2);
+}
+
+function toFloat(value, display, decimalPlaces){
 
 	decimalPlaces = (typeof(decimalPlaces)=='undefined'?2:decimalPlaces);
 	
@@ -201,8 +206,10 @@ function toFloat( value, display, decimalPlaces ){
 	
 	value = parseFloat(value);
 	
+	var separator = (i18n_culture=='pt_BR'?',':'.');
+	
 	if( display )
-		value = number_format(value, decimalPlaces, ',', '');
+		value = number_format(value, decimalPlaces, separator, '');
 	
 	return value;
 }

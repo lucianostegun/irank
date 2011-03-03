@@ -7,6 +7,7 @@ function handleSuccessEventResult(content){
 	_SavingInProgress = false;
 	alert(i18n_event_result_successMessage);
 
+	enableButton('mainSubmit');
 	hideIndicator('event');
 }
 
@@ -14,9 +15,10 @@ function handleFailureEventResult(content){
 	
 	_SavingInProgress = false;
 	enableButton('mainSubmit');
-	
-	handleFormFieldError( request.responseText, 'eventForm', 'event', false, 'event' );
+
+//	handleFormFieldError( request.responseText, 'eventForm', 'event', false, 'event' );
 	alert(i18n_event_result_errorMessage);
+	hideIndicator('event');
 }
 
 function doSubmitEvent(content){
@@ -60,4 +62,131 @@ function getICalFile(){
 	var eventId = $('eventId').value;
 	
 	goModule('event', 'getICal', 'eventId', eventId);
+}
+
+function togglePresence(peopleId){
+	
+	var className = $('eventResultPlayer'+peopleId).className=='confirmed'?'notConfirmed':'confirmed';
+	var eventId   = $('eventId').value;
+	
+	$('eventResultPlayer'+peopleId).className           = className;
+	$('eventResultPlayer'+peopleId+'Preview').className = className+'Result';
+	
+	if( className=='confirmed' )
+		$('eventResultPresenceIcon'+peopleId).src = $('eventResultPresenceIcon'+peopleId).src.replace('nok.png', 'ok.png');
+	else{
+		
+		$('eventResultPresenceIcon'+peopleId).src = $('eventResultPresenceIcon'+peopleId).src.replace('/ok.png', '/nok.png');
+		
+		$('eventPrize'+peopleId).value         = '0,00';
+		$('eventEventPosition'+peopleId).value = '0';
+		$('eventRebuy'+peopleId).value         = '0,00';
+		$('eventAddon'+peopleId).value         = '0,00';
+		
+		$('eventPrize'+peopleId+'Preview').innerHTML         = '0,00';
+		$('eventEventPosition'+peopleId+'Preview').innerHTML = '0';
+		$('eventRebuy'+peopleId+'Preview').innerHTML         = '0,00';
+		$('eventAddon'+peopleId+'Preview').innerHTML         = '0,00';
+	}
+	
+	var urlAjax = _webRoot+'/event/togglePresence/eventId/'+eventId+'/peopleId/'+peopleId+'/notify/0';
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function lunchEventResult(){
+	
+	$('peopleIdIndex').value = '-1'; 
+	
+	goTop();
+	
+	hideDiv('resultDiv');
+	showDiv('resultLunchDiv');
+	
+	getNextResult();
+}
+
+function getNextResult(){
+	
+	getResult(1);
+}
+
+function getPreviousResult(){
+	
+	getResult(-1);
+}
+
+function getResult(direction){
+	
+	var peopleIdIndex = $('peopleIdIndex').value*1+direction;
+	var peopleIdList  = $('peopleIdList').value.split(',');
+	
+	if( peopleIdIndex >= peopleIdList.length )
+		peopleIdIndex = 0;
+	
+	if( peopleIdIndex < 0 )
+		peopleIdIndex = peopleIdList.length-1;
+
+	var peopleId = peopleIdList[peopleIdIndex];
+	
+	$('peopleIdIndex').value = peopleIdIndex;
+
+	var className = $('eventResultPlayer'+peopleId).className;
+	
+	if( className!='confirmed' )
+		return getResult(direction);
+	
+	$('eventResultLunchPeopleName').innerHTML = $('eventResultPeopleName'+peopleId).innerHTML;
+
+	var buyin    = $('eventBuyin'+peopleId).value;
+	var prize    = $('eventPrize'+peopleId).value;
+	var position = $('eventEventPosition'+peopleId).value;
+	var rebuy    = $('eventRebuy'+peopleId).value;
+	var addon    = $('eventAddon'+peopleId).value;
+	
+	$('eventBuyin').value         = buyin;
+	$('eventPrize').value         = prize;
+	$('eventEventPosition').value = position;
+	$('eventRebuy').value         = rebuy;
+	$('eventAddon').value         = addon;
+}
+
+function getCurrentResultPeopleId(){
+
+	var peopleIdIndex = $('peopleIdIndex').value*1;
+	var peopleIdList  = $('peopleIdList').value.split(',');
+	
+	return peopleIdList[peopleIdIndex];
+}
+
+function replicateValue(fieldObj){
+
+	var fieldId    = fieldObj.id;
+	var fieldValue = fieldObj.value;
+	
+	if( fieldId!='eventEventPosition' )
+		fieldValue = toCurrency(fieldObj.value)
+	
+	fieldId = fieldId+getCurrentResultPeopleId();
+	
+	$(fieldId).value               = fieldObj.value;
+	$(fieldId+'Preview').innerHTML = fieldValue;
+}
+
+function toggleView(viewType){
+
+	hideDiv('playerListDiv');
+	hideDiv('resultDiv');
+	hideDiv('resultLunchDiv');
+	hideDiv('resultPreviewDiv');
+	hideDiv('commentsDiv');
+	hideDiv('infoDiv');
+	
+	showDiv(viewType+'Div');
+
+	goTop();
+}
+
+function previewEventResult(){
+	
+	toggleView('resultPreview');
 }

@@ -180,7 +180,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.result.intro</source>
-				<target>Utilize o dispositivo na posição horizontal para visualizar todos os campos de edição</target>
+				<target>Selecione os jogadores que participaram do evento e clique em "Lançar resultados"</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.comments</source>
@@ -448,6 +448,26 @@
 			<trans-unit>
 				<source>event.comment.typeSomething</source>
 				<target>Escreva alguma coisa no comentário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.saveResult</source>
+				<target>Salvar resultado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.lunchResult</source>
+				<target>Lançar resultado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.previewResult</source>
+				<target>Visualizar resultado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.resultLunch.position</source>
+				<target>Posição</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.resultLunch.prize</source>
+				<target>Prêmio</target>
 			</trans-unit>
 		</body>
 	</file>

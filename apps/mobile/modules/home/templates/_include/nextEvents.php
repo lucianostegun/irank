@@ -17,7 +17,7 @@
 	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="tableMenu">
 		<?php foreach($eventObjList as $key=>$eventObj): ?>
 		<tr>
-			<td onclick="goModule('event', 'show', 'eventId', <?php echo $eventObj->getId() ?>)" class="option <?php echo ($key==0?'firstLine':'').($key==($eventCount-1)?' lastLine':'') ?>">
+			<td onclick="goModule('event', 'edit', 'eventId', <?php echo $eventObj->getId() ?>)" class="option <?php echo ($key==0?'firstLine':'').($key==($eventCount-1)?' lastLine':'') ?>">
 				<?php echo $eventObj->getEventName() ?><br/>
 				<span><?php echo $eventObj->getEventDate('d/m/Y').' '.$eventObj->getStartTime('H:i').' @ '.$eventObj->getRankingPlace()->getPlaceName() ?></span>
 			</td>
