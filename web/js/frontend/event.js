@@ -672,13 +672,39 @@ function checkBuyin(peopleId){
 	
 	if( !eventPosition || eventPosition=='0' ){
 		
-		$('eventBuyin'+peopleId).value           = '0';
-		$('eventResultBuyin'+peopleId).innerHTML = '0,00';
+		$('eventBuyin'+peopleId).value = '0';
+		
+		if( !isRing(peopleId) )
+			$('eventResultBuyin'+peopleId).innerHTML = '0,00';
 	}else{
 	
-		$('eventBuyin'+peopleId).value           = $('eventBuyin').value;
-		$('eventResultBuyin'+peopleId).innerHTML = $('eventBuyin').value;
+		$('eventBuyin'+peopleId).value = $('eventBuyin').value;
+		
+		if( !isRing(peopleId) )
+			$('eventResultBuyin'+peopleId).innerHTML = $('eventBuyin').value;
 	}
 	
 	calculateResultTotal('buyin');
+}
+
+function isRing(peopleId){
+	
+	return ($('eventBuyin'+peopleId).type=='text');
+}
+
+function toggleBuyin(peopleId){
+	
+	var eventPosition = $('eventEventPosition'+peopleId).value;
+	var eventBuyin    = $('eventBuyin').value;
+
+	
+
+	if( eventPosition && (eventPosition*1) > 0 ){
+
+		$('eventBuyin'+peopleId).value = eventBuyin;
+		
+		if( !isRing(peopleId) )
+			$('eventResultBuyin'+peopleId).innerHTML = toFloat(eventBuyin, true);
+	}else
+		$('eventBuyin'+peopleId).value = '0,00';
 }
