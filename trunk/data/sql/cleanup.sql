@@ -15,11 +15,11 @@ DELETE FROM user_site_option;
 DELETE FROM user_admin;
 DELETE FROM people;
 
-
-SELECT SETVAL('event_seq', (SELECT MAX(id) FROM event));
-SELECT SETVAL('ranking_seq', (SELECT MAX(id) FROM ranking));
-SELECT SETVAL('people_seq', (SELECT MAX(id) FROM people));
-SELECT SETVAL('user_site_seq', (SELECT MAX(id) FROM user_site));
+SELECT SETVAL('event_seq', 1, false);
+SELECT SETVAL('ranking_seq', 1, false);
+SELECT SETVAL('people_seq', 1, false);
+SELECT SETVAL('user_site_seq', 1, false);
+SELECT SETVAL('log_seq', 1, false);
 /*
 DELETE FROM virtual_table_i18n;
 DELETE FROM virtual_table;
