@@ -1,9 +1,15 @@
+<?php
+	$userSiteId = $userSiteObj->getId();
+	$peopleId   = $userSiteObj->getPeopleId();
+	$username   = $userSiteObj->getUsername();
+	$filePath   = $userSiteObj->getImagePath(true);
+?>
 <table width="100%" cellspacing="0" cellpadding="0" class="defaultForm">
 	<tr>
 		<td valign="top">
 			<div class="row">
 				<div class="label" id="myAccountUsernameLabel">Username</div>
-				<div class="text"><?php echo $userSiteObj->getUsername() ?></div>
+				<div class="text"><?php echo $username ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="myAccountEmailAddressLabel">E-mail</div>
@@ -26,5 +32,21 @@
 			</div>
 			<div id="passwordAreaDiv"></div>
 		</td>
+		<td width="210" align="center" valign="top">
+			<div id="uploadProfilePhotoDiv">
+				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="200" height="260" align="middle">
+					<param name="allowScriptAccess" value="always" />
+					<param name="allowFullScreen" value="false" />
+					<param name="FlashVars" value="ppid=<?php echo $peopleId ?>&usid=<?php echo $userSiteId ?>&username=<?php echo $username ?>" />
+					<param name="movie" value="/uploads/profilePicture.swf?filePath=<?php echo $filePath ?>&ppid=<?php echo $peopleId ?>&usid=<?php echo $userSiteId ?>&username=<?php echo $username ?>&time=<?php echo time() ?>" />
+					<param name="quality" value="high" />
+					<param name="bgcolor" value="#E6E6E6" />
+					<embed src="/uploads/profilePicture.swf?filePath=<?php echo $filePath ?>&ppid=<?php echo $peopleId ?>&usid=<?php echo $userSiteId ?>&username=<?php echo $username ?>&time=<?php echo time() ?>" quality="high" bgcolor="#E6E6E6" width="200" height="260" border="1" id="uploadProfilePhoto" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" />
+				</object>
+			</div>
+		</td>
 	</tr>
 </table>
+<?php
+	DhtmlxWindows::createWindow('photoCutter', 'Recorte de imagem', 500, 300, 'myAccount/dialog/photoCutter');
+?>

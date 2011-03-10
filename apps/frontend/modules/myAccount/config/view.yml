@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    [frontend/form, frontend/table]
-  javascripts:    [frontend/myAccount, /index.php/myAccount/javascript/js]
+  javascripts:    [frontend/myAccount, /sf/prototype/js/scriptaculous, jsCutter/cropper, /index.php/myAccount/javascript/js]

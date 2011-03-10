@@ -197,14 +197,60 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('quickResume', 'balance');
 	}
 	
-	public function getImagePath(){
+	public function getImagePath($create=false, $thumb=false){
 		
 		$imagePath = parent::getImagePath();
 		
-		if( !$imagePath || !file_exists(Util::getFilePath($imagePath)) )
-			$imagePath = '/images/unavailable65.png';
+		if( (!$imagePath || !file_exists(Util::getFilePath('/uploads/profilePicture/'.$imagePath))) && $create ){
+			
+			$fileName  = md5(microtime().'-'.$this->getId()).'.png';
+			$imagePath = Util::getFilePath('/uploads/profilePicture/'.$fileName);
+			$thumbPath = Util::getFilePath('/uploads/profilePicture/thumb/'.$fileName);
+			
+			copy(Util::getFilePath('/images/unavailable200.png'), $imagePath);
+			copy(Util::getFilePath('/images/unavailable65.png'), $thumbPath);
+			
+			$this->setImagePath($fileName);
+			$this->save();
+		}
 		
-		return $imagePath;
+		return '/uploads/profilePicture/'.($thumb?'thumb/':'').$imagePath;
+	}
+	
+	public function getProfilePicture($width=null){
+		
+		$imagePath = $this->getImagePath();
+		$filePath  = Util::getFilePath($imagePath);
+		
+		$extension       = File::getFileExtension($filePath);
+		$fileDimensions  = File::getFileDimension($filePath);
+		
+		switch( $extension ){
+			case 'jpg':
+				$newImg = imagecreatefromjpeg( $filePath );
+				break;
+			case 'png':
+				$newImg = imagecreatefrompng( $filePath );
+				break;
+			case 'gif':
+				$newImg = imagecreatefromgif( $filePath );
+				break;	
+		}
+
+		$width  = $fileDimensions['width'];
+		$height = $fileDimensions['height'];
+		
+		$srcW = imagesx($newImg);
+		$srcH = imagesy($newImg);
+	
+		$new = imagecreatetruecolor($width, $height);
+		imagecopyresampled($new, $newImg, 0, 0, 0, 0, $width, $height, $srcW, $srcH);
+
+		header('Content-Type: image/jpg');
+		imagejpeg($new, '', 100);
+				
+		imagedestroy($new);
+		imagedestroy($newImg);
 	}
 	
 	public function getId($encode=false){
