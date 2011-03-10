@@ -36,6 +36,7 @@ class signActions extends sfActions
 
 	$userSiteObj->resetOptions();
 	$userSiteObj->sendWelcomeMail($request);
+	$userSiteObj->getImagePath(true);
   	exit;
   }
 }
