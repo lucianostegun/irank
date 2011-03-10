@@ -127,6 +127,7 @@ class File extends BaseFile
 		$allowedExtensionList = (array_key_exists('allowedExtensionList', $options)?$options['allowedExtensionList']:array());
 		$maxFileSize          = (array_key_exists('maxFileSize', $options)?$options['maxFileSize']:null);
 		$destFileName         = (array_key_exists('fileName', $options)?$options['fileName']:null);
+		$noFile               = (array_key_exists('noFile', $options)?$options['noFile']:false);
 		
 		$fileName  = $request->getFileName($fieldName);
 		$fileSize  = $request->getFileSize($fieldName);
@@ -161,17 +162,23 @@ class File extends BaseFile
 
 		$request->moveFile($fieldName, $filePath);
 
-		$fileObj->setFilePath($filePath);
-		$fileObj->setFileSize($fileSize);
-		
-		if( in_array($extension, $extensionImageList) )
-			$fileObj->setIsImage(true);		
-		
-		$fileObj->save();
-		
-		Log::doLog('Upload do arquivo '.$fileObj->getId(), 'File');
-		
-		return $fileObj;
+		if( !$noFile ){
+			
+			$fileObj->setFilePath($filePath);
+			$fileObj->setFileSize($fileSize);
+	
+			if( in_array($extension, $extensionImageList) )
+				$fileObj->setIsImage(true);		
+			
+			$fileObj->save();
+			
+			Log::doLog('Upload do arquivo '.$fileObj->getId(), 'File');
+			
+			return $fileObj;
+		}else{
+			
+			Log::doLog('Upload do arquivo '.$fileName, 'File', array('FILE_PATH'=>$filePath));
+		}
 	}
 	
 	public function getDimensions(){

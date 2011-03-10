@@ -136,7 +136,8 @@ class myAccountActions extends sfActions
 	
 	$options = array('allowedExtensionList'=>$allowedExtensionList,
 					 'maxFileSize'=>$maxFileSize,
-					 'fileName'=>'tmp/'.$fileName);
+					 'fileName'=>'tmp/'.$fileName,
+					 'noFile'=>true);
 
 	try {
 
@@ -145,7 +146,7 @@ class myAccountActions extends sfActions
 	
 		Util::forceError($e);	
 	}
-	
+
 	$originalFileName = $request->getFileName('Filedata');
 	
 	$imagePathTmp = Util::getFilePath('/uploads/profilePicture/tmp/'.$fileName );
@@ -166,6 +167,9 @@ class myAccountActions extends sfActions
 	
 	$width  = $srcW;
 	$height = $srcH;
+	
+	if( $srcW < 200 || $srcH < 260 )
+		Util::forceError('Imagem muito pequena', true);
 	
 	while(($width > 640 || $height > 480) && $width >= 200 && $height >= 260 ){
 		
