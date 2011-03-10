@@ -1,10 +1,10 @@
-<div id="profilePicture" style="margin-left: 20px">
+<div id="profilePictureDiv" style="margin-left: 20px">
 <?php
 	$userSiteObj = UserSite::getCurrentUser();
 	$userSiteId  = $userSiteObj->getId(true);
-	$imagePath   = $userSiteObj->getImagePath();
+	$imagePath   = $userSiteObj->getImagePath(true, true);
 	
-//	echo image_tag($imagePath, array('align'=>'left'));
+	echo link_to(image_tag($imagePath, array('align'=>'left', 'id'=>'profilePicture')), 'myAccount/index');
 ?>
 <?php echo __('leftBar.hello') ?>, <b><?php echo MyTools::getAttribute('firstName'); ?></b>
 

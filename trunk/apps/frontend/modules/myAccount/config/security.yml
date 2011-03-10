@@ -1,3 +1,6 @@
 all:
   is_secure: on
   credentials: iRankSite
+  
+uploadPhoto:
+  is_secure: off

@@ -10,6 +10,18 @@
 class UserSitePeer extends BaseUserSitePeer
 {
 	
+	public static function retrieve($userSiteId, $peopleId, $username){
+		
+		$criteria = new Criteria();
+		$criteria->add( UserSitePeer::ID, $userSiteId );
+		$criteria->add( UserSitePeer::PEOPLE_ID, $peopleId );
+		$criteria->add( UserSitePeer::USERNAME, $username );
+		$criteria->add( UserSitePeer::ENABLED, true );
+		$criteria->add( UserSitePeer::VISIBLE, true );
+		$criteria->add( UserSitePeer::DELETED, false );
+		return UserSitePeer::doSelectOne( $criteria );
+	}
+	
 	public static function uniqueUsername( $username ){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');

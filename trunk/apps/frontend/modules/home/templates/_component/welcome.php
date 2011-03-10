@@ -1,15 +1,84 @@
 <div class="commonBar"><span>Home</span></div>
     
-<table border="0" cellspacing="0" cellpadding="0" class="welcome">
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
 	<tr>
-		<td width="245" align="left" bgcolor="#173211">
-			<?php echo image_tag('frontend/layout/welcome_img.jpg') ?>
+		<td valign="top">
+			<div id="flashContent" style="margin: 10px 0px 10px 10px">
+			
+				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="520" height="220" id="/highlight" align="middle">
+					<param name="movie" value="/highlight.swf" />
+					<param name="quality" value="high" />
+					<param name="bgcolor" value="#163110" />
+					<param name="play" value="true" />
+					<param name="loop" value="false" />
+					<param name="scale" value="showall" />
+					<param name="menu" value="false" />
+			
+					<param name="devicefont" value="false" />
+					<param name="salign" value="" />
+					<param name="allowScriptAccess" value="sameDomain" />
+					<!--[if !IE]>-->
+					<object type="application/x-shockwave-flash" data="/highlight.swf" width="520" height="220">
+						<param name="movie" value="/highlight.swf" />
+						<param name="quality" value="high" />
+						<param name="bgcolor" value="#163110" />
+						<param name="play" value="true" />
+			
+						<param name="loop" value="false" />
+						<param name="scale" value="showall" />
+						<param name="menu" value="false" />
+						<param name="devicefont" value="false" />
+						<param name="salign" value="" />
+						<param name="allowScriptAccess" value="sameDomain" />
+					<!--<![endif]-->
+						<a href="http://www.adobe.com/go/getflash">
+			
+							<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+						</a>
+					<!--[if !IE]>-->
+					</object>
+					<!--<![endif]-->
+				</object>
+			</div>
 		</td>
-		<td align="left" valign="top" style="padding:0px 10px 0px 21px; color: #DADADA" bgcolor="#173211">
-			<p><?php echo image_tag($culture.'/layout/welcome') ?>
-        	<?php echo image_tag('frontend/layout/welcomeLogo', array('align'=>'right')) ?></p>
-        	
-        	<?php echo __('home.welcome', array('%link%'=>link_to(__('clickHere'), 'sign', array('class'=>'white', 'style'=>'font-weight: bold; color: #FFFFFF')))) ?>
+		<td valign="top">
+			<div id="flashContent" style="margin: 10px 10px 10px 0px">
+			
+				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="250" height="220" id="/highlight" align="middle">
+					<param name="movie" value="/highlight.swf" />
+					<param name="quality" value="high" />
+					<param name="bgcolor" value="#FFFFFF" />
+					<param name="play" value="true" />
+					<param name="loop" value="false" />
+					<param name="scale" value="showall" />
+					<param name="menu" value="false" />
+			
+					<param name="devicefont" value="false" />
+					<param name="salign" value="" />
+					<param name="allowScriptAccess" value="sameDomain" />
+					<!--[if !IE]>-->
+					<object type="application/x-shockwave-flash" data="/pictures.swf" width="250" height="220">
+						<param name="movie" value="/pictures.swf" />
+						<param name="quality" value="high" />
+						<param name="bgcolor" value="#FFFFFF" />
+						<param name="play" value="true" />
+			
+						<param name="loop" value="false" />
+						<param name="scale" value="showall" />
+						<param name="menu" value="false" />
+						<param name="devicefont" value="false" />
+						<param name="salign" value="" />
+						<param name="allowScriptAccess" value="sameDomain" />
+					<!--<![endif]-->
+						<a href="http://www.adobe.com/go/getflash">
+			
+							<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+						</a>
+					<!--[if !IE]>-->
+					</object>
+					<!--<![endif]-->
+				</object>
+			</div>
 		</td>
 	</tr>
 </table>

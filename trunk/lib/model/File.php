@@ -126,6 +126,7 @@ class File extends BaseFile
 		$fileId               = (array_key_exists('fileId', $options)?$options['fileId']:null);
 		$allowedExtensionList = (array_key_exists('allowedExtensionList', $options)?$options['allowedExtensionList']:array());
 		$maxFileSize          = (array_key_exists('maxFileSize', $options)?$options['maxFileSize']:null);
+		$destFileName         = (array_key_exists('fileName', $options)?$options['fileName']:null);
 		
 		$fileName  = $request->getFileName($fieldName);
 		$fileSize  = $request->getFileSize($fieldName);
@@ -144,6 +145,7 @@ class File extends BaseFile
 		$isNew   = $fileObj->isNew();		
 		
 		$fileName = ereg_replace('[^0-9]', '', microtime()).'.'.$extension;
+		$fileName = ($destFileName?$destFileName:$fileName);
 
 		$extensionImageList = array('jpg', 'png', 'jpeg', 'bmp', 'gif');
 
@@ -159,7 +161,6 @@ class File extends BaseFile
 
 		$request->moveFile($fieldName, $filePath);
 
-		
 		$fileObj->setFilePath($filePath);
 		$fileObj->setFileSize($fileSize);
 		
@@ -175,7 +176,7 @@ class File extends BaseFile
 	
 	public function getDimensions(){
    	
-   		return File::getFileDimension($this->getFilePath(true));
+   		return strtolower(File::getFileDimension($this->getFilePath(true)));
 	}
    	
 	public static function getFileDimension( $filePath ){
@@ -196,7 +197,7 @@ class File extends BaseFile
 		   	
 		return $fileInfo;
 	}
-   	
+	
 	public static function getFileByPath( $filePath ){
 		
 		$criteria = new Criteria();
@@ -214,10 +215,10 @@ class File extends BaseFile
 	    header('Pragma: no-cache');
 	}
 	
-	public function getFileExtension(){
+	public static function getFileExtension($filePath){
 	 	
-		$fileName = explode('.', $this->getFileName());
-		return end($fileName);
+		$filePath = explode('.', $filePath);
+		return end($filePath);
 	}
 	
 	public function setFilePath($filePath){

@@ -22,4 +22,19 @@ class photoWallActions extends sfActions
 		
 	exit;
   }
+  
+  public function executeGetLastPhoto($request){
+
+	$offset = $request->getParameter('offset');
+	
+	$criteria = new Criteria();
+	$criteria->add( EventPhotoPeer::IS_SHARED, true );
+	$criteria->setOffset($offset);
+	$criteria->addDescendingOrderByColumn( EventPhotoPeer::CREATED_AT );
+	$eventPhotoObj = EventPhotoPeer::doSelectOne($criteria);
+	
+	$eventPhotoObj->getFile()->getResized(400);
+		
+	exit;
+  }
 }

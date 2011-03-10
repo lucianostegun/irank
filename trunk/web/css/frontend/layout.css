@@ -243,7 +243,7 @@ img {
 	text-decoration: 	underline;
 }
 
-#contentArea #innerContent #leftContent #leftBar #profilePicture img {
+#contentArea #innerContent #leftContent #leftBar #profilePictureDiv img {
 
 	border: 		1px solid #999999;
 	margin: 		0px 10px 15px 7px;
