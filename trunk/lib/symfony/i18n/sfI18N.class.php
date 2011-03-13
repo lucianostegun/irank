@@ -129,6 +129,7 @@ class sfI18N
 
   public function __($string, $args = array(), $catalogue = 'messages')
   {
+  		
     $retval = $this->messageFormat->formatExists($string, $args, $catalogue);
 
     if (!$retval)

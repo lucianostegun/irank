@@ -202,6 +202,10 @@
 				<target>Photo wall</target>
 			</trans-unit>
 			<trans-unit>
+				<source>home.quickGuide</source>
+				<target>Quick guide</target>
+			</trans-unit>
+			<trans-unit>
 				<source>home.photoWall.description</source>
 				<target>Post and share picures of the best moments of your events on the photo wall.</target>
 			</trans-unit>
@@ -365,6 +369,10 @@
 			<trans-unit>
 				<source>footerMenu.contact</source>
 				<target>contact</target>
+			</trans-unit>
+			<trans-unit>
+				<source>footerMenu.quickGuide</source>
+				<target>quick guide</target>
 			</trans-unit>
 
 

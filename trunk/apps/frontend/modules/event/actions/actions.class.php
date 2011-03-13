@@ -102,17 +102,17 @@ class eventActions extends sfActions
 	$eventObj->setEnabled(true);
 	$eventObj->save();
 	
-	$rankingObj = $eventObj->getRanking();
-	
-	if( $isNew || $isClone )		
-		$rankingObj->incraseEvents();
-	
+//	$rankingObj = $eventObj->getRanking();
+//	
+//	if( $isNew || $isClone )		
+//		$rankingObj->incraseEvents();
+//	
 	$eventObj->importPlayers();
+//
+//	if( $confirmPresence )
+//		$eventObj->addPlayer( $this->peopleId, true );
 
-	if( $confirmPresence )
-		$eventObj->addPlayer( $this->peopleId, true );
-
-	if( $sendEmail )
+//	if( $sendEmail )
 		$eventObj->notify();
 
     echo Util::parseInfo($eventObj->getInfo());

@@ -20,18 +20,18 @@ class Report {
 	 * @param      Array: Array de opções gerais do módulo
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
-return true;
+
 		$smtpComponent  = 'smtp';
 		$smtpHostname   = Config::getConfigByName( 'smtpHostname', true );
 		$smtpUsername   = Config::getConfigByName( 'smtpUsername', true );
 		$smtpPassword   = Config::getConfigByName( 'smtpPassword', true );
 		$senderName     = Config::getConfigByName( 'emailSenderName', true );
 		
-		$contentType    = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
-		$emailTemplate  = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
-		$replyTo        = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
-		$attachmentList = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
-		$entitiesEncode = array_key_exists('entitiesEncode', $options)?$options['entitiesEncode']:true;
+		$contentType     = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
+		$emailTemplate   = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
+		$replyTo         = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
+		$attachmentList  = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
+		$entitiesEncode  = array_key_exists('entitiesEncode', $options)?$options['entitiesEncode']:true;
 
 		$emailAddressList = array('lucianostegun@gmail.com');
 		
@@ -113,11 +113,10 @@ return true;
 			
 			if( !$emailAddress )
 				continue;
+				
+			$emailContent = $emailContentList
 			
-			if( count($emailAddressList) > 1 )
-				$sfMailObj->addBcc( $emailAddress );
-			else
-				$sfMailObj->addAddress( $emailAddress );
+			$sfMailObj->addAddress( $emailAddress );
 		}
 		
 		try{ 

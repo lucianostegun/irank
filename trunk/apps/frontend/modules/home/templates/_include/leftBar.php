@@ -18,5 +18,6 @@
 
 	<div class="separator"></div>
 	<div class="item" style="background: url('/images/icon/photo.png') 10px 4px no-repeat"><?php echo link_to(__('home.photoWall'), 'photoWall/index', array('style'=>'background: none')) ?></div>
+	<div class="item" style="background: url('/images/icon/guide.png') 10px 4px no-repeat"><?php echo link_to(__('home.quickGuide'), 'quickGuide/index', array('style'=>'background: none')) ?></div>
 	<div class="separator"></div>
 </div>

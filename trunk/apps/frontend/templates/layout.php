@@ -87,6 +87,7 @@ $innerObj        = (isset($innerObj)?$innerObj:false);
 				<?php echo link_to(__('footerMenu.inviteFriends'), '/friendInvite') ?> | 
 				<?php echo link_to('feedback', '/feedBack') ?> | 
 				<?php echo link_to(__('footerMenu.help'), '/help') ?> | 
+				<?php echo link_to(__('footerMenu.quickGuide'), '/quickGuide') ?> | 
 				<?php echo link_to(__('footerMenu.contact'), '/contact') ?>
 			</td> 
 			<td width="33%">&nbsp;</td>

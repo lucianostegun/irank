@@ -17,9 +17,14 @@
  * @version    SVN: $Id: I18NHelper.php 5141 2007-09-16 14:37:58Z fabien $
  */
 
-function __($text, $args = array(), $catalogue = 'messages')
+function __($text, $args = array(), $catalogue = 'messages', $culture=null)
 {
   static $i18n;
+
+  	$cultureTmp = MyTools::getCulture();
+
+  	if( $culture )
+  		MyTools::setCulture($culture);
 
   if (sfConfig::get('sf_i18n'))
   {
@@ -27,8 +32,12 @@ function __($text, $args = array(), $catalogue = 'messages')
     {
       $i18n = sfContext::getInstance()->getI18N();
     }
+    
+	$returnValue = $i18n->__($text, $args, $catalogue);
+	
+	MyTools::setCulture($cultureTmp);
 
-    return $i18n->__($text, $args, $catalogue);
+    return $returnValue;
   }
   else
   {
@@ -45,7 +54,9 @@ function __($text, $args = array(), $catalogue = 'messages')
         $args[$key] = $value->__toString();
       }
     }
-
+    
+	MyTools::setCulture($cultureTmp);
+	
     return strtr($text, $args);
   }
 }

@@ -310,42 +310,52 @@ class Event extends BaseEvent
 		
 		if( $this->getSentEmail() ){
 			
-			$emailContent = AuxiliarText::getContentByTagName('eventChangeNotify');
-			$emailSubject = __('email.subject.eventChangeNotify');
+			$templateName = 'eventChangeNotify';
+			$emailSubject = 'email.subject.eventChangeNotify';
 		}else{
 			
-			$emailContent = AuxiliarText::getContentByTagName('eventCreateNotify');
-			$emailSubject = __('email.subject.eventCreateNotify');
+			$templateName = 'eventCreateNotify';
+			$emailSubject = 'email.subject.eventCreateNotify';
 		}
 
-		$emailContent = str_replace('<eventName>', $this->getEventName(), $emailContent);
-		$emailContent = str_replace('<rankingName>', $this->getRanking()->getRankingName(), $emailContent);
-		$emailContent = str_replace('<gameStyle>', $this->getGameStyle()->getDescription(), $emailContent);
-		$emailContent = str_replace('<eventPlace>', $this->getEventPlace(), $emailContent);
-		$emailContent = str_replace('<mapsLink>', $this->getRankingPlace()->getMapsLink(), $emailContent);
-		$emailContent = str_replace('<eventDate>', $this->getEventDate('d/m/Y'), $emailContent);
-		$emailContent = str_replace('<startTime>', $this->getStartTime('H:i'), $emailContent);
-		$emailContent = str_replace('<paidPlaces>', $this->getPaidPlaces(), $emailContent);
-		$emailContent = str_replace('<buyin>', Util::formatFloat($this->getBuyin(), true), $emailContent);
-		$emailContent = str_replace('<comments>', $this->getComments(), $emailContent);
-		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
-		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
+		$infoList = array();
+		$infoList['eventName']   = $this->getEventName();
+		$infoList['rankingName'] = $this->getRanking()->getRankingName();
+		$infoList['gameStyle']   = $this->getGameStyle()->getDescription();
+		$infoList['eventPlace']  = $this->getEventPlace();
+		$infoList['mapsLink']    = $this->getRankingPlace()->getMapsLink();
+		$infoList['eventDate']   = $this->getEventDate('d/m/Y');
+		$infoList['startTime']   = $this->getStartTime('H:i');
+		$infoList['paidPlaces']  = $this->getPaidPlaces();
+		$infoList['buyin']       = Util::formatFloat($this->getBuyin(), true);
+		$infoList['comments']    = $this->getComments();
+		$infoList['invites']     = $this->getInvites();
+		$infoList['players']     = $this->getPlayers();
 		
 		$iCalFile = $this->getICal('update');
 		$attachmentList  = array('invite.ics'=>$iCalFile);
 		$optionList      = array('attachmentList'=>$attachmentList);
+echo '<Pre>';print_r($infoList);exit;
+		$emailContentList['pt_BR'] = AuxiliarText::getContentByTagName($templateName, false, 'pt_BR');
+		$emailContentList['en_US'] = AuxiliarText::getContentByTagName($templateName, false, 'en_US');
+		$emailSubjectList['pt_BR'] = __($emailSubject, $infoList, 'messages', 'pt_BR');
+		$emailSubjectList['en_US'] = __($emailSubject, $infoList, 'messages', 'en_US');
 
 		foreach($this->getEventPlayerList() as $eventPlayerObj){
 			
-			$peopleObj       = $eventPlayerObj->getPeople();
-			$emailAddress    = $peopleObj->getEmailAddress();
-			$emailContentTmp = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
-			$emailContentTmp = str_replace('<confirmCode>', $eventPlayerObj->getConfirmCode(), $emailContentTmp);
+			$peopleObj    = $eventPlayerObj->getPeople();
+			$emailAddress = $peopleObj->getEmailAddress();
+			$culture      = $peopleObj->getDefaultLanguage();
+			$emailContent = $emailContentList[$culture];
+			$emailSubject = $emailSubjectList[$culture];
 			
-			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp, $optionList);
-			break;
+			$emailContent = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
+			$emailContent = str_replace('<confirmCode>', $eventPlayerObj->getConfirmCode(), $emailContent);
+			echo $emailContent.'<hr>';
+//			Report::sendMail($emailSubject, $emailAddress, $templateName, $optionList);
+//			break;
 		}
-		
+		exit; 
 		unlink($iCalFile);
 		
 		$this->setSentEmail(true);

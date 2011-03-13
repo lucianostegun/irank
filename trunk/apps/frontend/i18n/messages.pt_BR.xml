@@ -204,6 +204,10 @@
 				<target>Mural de fotos</target>
 			</trans-unit>
 			<trans-unit>
+				<source>home.quickGuide</source>
+				<target>Guia rápido</target>
+			</trans-unit>
+			<trans-unit>
 				<source>home.photoWall.description</source>
 				<target>Compartilhar os melhores momentos dos eventos postando suas fotos no mural.</target>
 			</trans-unit>
@@ -367,6 +371,10 @@
 			<trans-unit>
 				<source>footerMenu.contact</source>
 				<target>contato</target>
+			</trans-unit>
+			<trans-unit>
+				<source>footerMenu.quickGuide</source>
+				<target>guia rápido</target>
 			</trans-unit>
 
 
