@@ -9,13 +9,18 @@
 	border: 		1px solid #AAAAAA;
 }
 
+.resumeEventTable tr {
+	
+	background: 	#E0E0E0 url('/images/layout/commonBar.png');
+}
+
 .resumeEventTable th {
 	
 	font-weight: 	bold;
 	border-bottom: 	1px solid #A9ACB4;
 	padding-left: 	18px;
 	height: 		21px;
-	background: 	#E0E0E0 url('/images/layout/bullet.png') 6px 7px no-repeat;
+	background: 	url('/images/layout/bullet.png') 6px 7px no-repeat;
 	text-align: 	left;
 }
 
@@ -26,7 +31,6 @@
 	padding: 			0px;
 	width: 				30px;
 	padding-top: 		1px;
-	background: 		#E0E0E0;
 	text-align: 		center;
 }
 
@@ -47,12 +51,17 @@
 	border: 		1px solid #AAAAAA;
 }
 
+.resumeBankRollTable tr {
+	
+	background: 	#E0E0E0 url('/images/layout/commonBar.png');
+}
+
 .resumeBankRollTable th.title {
 	
 	font-weight: 	bold;
 	border-bottom: 	1px solid #a9acb4;
 	padding-left: 	18px;
-	background: 	#E0E0E0 url('/images/layout/bullet.png') 6px 7px no-repeat;
+	background: 	url('/images/layout/bullet.png') 6px 7px no-repeat;
 	text-align: 	left;
 	height: 		21px;
 }
@@ -84,12 +93,17 @@
 	border: 		1px solid #AAAAAA;
 }
 
+.resumeNumbersTable tr {
+	
+	background: 	#E0E0E0 url('/images/layout/commonBar.png');
+}
+
 .resumeNumbersTable th.title {
 	
 	font-weight: 	bold;
 	border-bottom: 	1px solid #a9acb4;
 	padding-left: 	18px;
-	background: 	#E0E0E0 url('/images/layout/bullet.png') 6px 7px no-repeat;
+	background: 	url('/images/layout/bullet.png') 6px 7px no-repeat;
 	text-align: 	left;
 	height: 		21px;
 }
@@ -121,12 +135,17 @@
 	border: 		1px solid #AAAAAA;
 }
 
+.resumeRankingTable tr {
+	
+	background: 	#E0E0E0 url('/images/layout/commonBar.png');
+}
+
 .resumeRankingTable th.title {
 	
 	font-weight: 	bold;
 	border-bottom: 	1px solid #a9acb4;
 	padding-left: 	18px;
-	background: 	#E0E0E0 url('/images/layout/bullet.png') 6px 7px no-repeat;
+	background: 	url('/images/layout/bullet.png') 6px 7px no-repeat;
 	text-align: 	left;
 	height: 		21px;
 }
