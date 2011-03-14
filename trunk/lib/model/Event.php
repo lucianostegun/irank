@@ -335,11 +335,11 @@ class Event extends BaseEvent
 		$iCalFile = $this->getICal('update');
 		$attachmentList  = array('invite.ics'=>$iCalFile);
 		$optionList      = array('attachmentList'=>$attachmentList);
-echo '<Pre>';print_r($infoList);exit;
-		$emailContentList['pt_BR'] = AuxiliarText::getContentByTagName($templateName, false, 'pt_BR');
-		$emailContentList['en_US'] = AuxiliarText::getContentByTagName($templateName, false, 'en_US');
-		$emailSubjectList['pt_BR'] = __($emailSubject, $infoList, 'messages', 'pt_BR');
-		$emailSubjectList['en_US'] = __($emailSubject, $infoList, 'messages', 'en_US');
+
+		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
+		$emailSubjectList['pt_BR'] = __($emailSubject, null, 'messages', 'pt_BR');
+		$emailSubjectList['en_US'] = __($emailSubject, null, 'messages', 'en_US');
 
 		foreach($this->getEventPlayerList() as $eventPlayerObj){
 			
@@ -351,11 +351,10 @@ echo '<Pre>';print_r($infoList);exit;
 			
 			$emailContent = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
 			$emailContent = str_replace('<confirmCode>', $eventPlayerObj->getConfirmCode(), $emailContent);
-			echo $emailContent.'<hr>';
-//			Report::sendMail($emailSubject, $emailAddress, $templateName, $optionList);
-//			break;
+
+			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 		}
-		exit; 
+ 
 		unlink($iCalFile);
 		
 		$this->setSentEmail(true);
@@ -817,6 +816,7 @@ echo '<Pre>';print_r($infoList);exit;
 		$infoList = array();
 		$infoList['eventId']      = $this->getId();
 		$infoList['isConfirmed']  = $this->isConfirmed($peopleId);
+		$infoList['pastDate']     = $this->isPastDate();
 		$infoList['isEditable']   = $this->isEditable();
 		$infoList['inviteStatus'] = $this->getInviteStatus($peopleId);
 		

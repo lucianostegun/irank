@@ -102,17 +102,17 @@ class eventActions extends sfActions
 	$eventObj->setEnabled(true);
 	$eventObj->save();
 	
-//	$rankingObj = $eventObj->getRanking();
-//	
-//	if( $isNew || $isClone )		
-//		$rankingObj->incraseEvents();
-//	
+	$rankingObj = $eventObj->getRanking();
+	
+	if( $isNew || $isClone )		
+		$rankingObj->incraseEvents();
+	
 	$eventObj->importPlayers();
-//
-//	if( $confirmPresence )
-//		$eventObj->addPlayer( $this->peopleId, true );
 
-//	if( $sendEmail )
+	if( $confirmPresence )
+		$eventObj->addPlayer( $this->peopleId, true );
+
+	if( $sendEmail )
 		$eventObj->notify();
 
     echo Util::parseInfo($eventObj->getInfo());
@@ -121,7 +121,7 @@ class eventActions extends sfActions
   
   public function executeDelete($request){
 
-	Util::getHelper('I18N');
+//	Util::getHelper('I18N');
 	
 	$eventId  = $request->getParameter('eventId');
 	$eventObj = EventPeer::retrieveByPK( $eventId );
@@ -209,10 +209,10 @@ class eventActions extends sfActions
 
 	$eventId  = $request->getParameter('eventId');
 	$eventObj = EventPeer::retrieveByPK( $eventId );
-
+	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/include/result', array('eventObj'=>$eventObj)));
+	return $this->renderText(get_partial('event/include/resultRo', array('eventObj'=>$eventObj)));
   }
   
   public function executeCloneEvent($request){

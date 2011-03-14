@@ -1,4 +1,4 @@
-<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTabTable" style="width: 660px">
   <tr class="header">
     <th><?php echo __('Player') ?></th>
     <th width="50">Buy-in</th>
@@ -11,7 +11,7 @@
   	$eventBuyin  = $eventObj->getBuyin();
   	$savedResult = $eventObj->getSavedResult();
   	$isRing      = $eventObj->getGameStyle()->isTagName('ring');
-  	
+
   	$eventPlayerObjList = $eventObj->getClassify();
   	$recordCount        = count($eventPlayerObjList);
   	
@@ -26,11 +26,12 @@
   	
   		$peopleObj = $eventPlayerObj->getPeople();
   		$peopleId  = $peopleObj->getId();
-  		$style     = ($eventPlayerObj->getEnabled()?'':'color: #BABABA');
+  		$enabled   = $eventPlayerObj->getEnabled();
+  		$style     = ($enabled?'':'color: #BABABA');
   		
   		$peopleIdList[] = $peopleId;
   ?>
-  <tr>
+  <tr id="eventResultRow<?php echo $peopleId ?>" style="display: <?php echo ($enabled?'table-row':'none') ?>">
     <td id="eventResultPeopleName<?php echo $peopleId ?>" style="<?php echo $style ?>"><?php echo $peopleObj->getFullName() ?></td>
     <td align="<?php echo ($isRing?'left':'right') ?>" id="eventResultBuyin<?php echo $peopleId ?>">
     	<?php
@@ -39,7 +40,7 @@
     		$rebuy = $eventPlayerObj->getRebuy();
     		$addon = $eventPlayerObj->getAddon();
     		 
-    		$buyin      = Util::formatFloat($buyin, true);
+    		$buyin = Util::formatFloat($buyin, true);
     		
     		if( $isRing ){
     			
@@ -48,7 +49,7 @@
     			$buyinField = '';
     		}else{
     			
-    			$buyinField = input_hidden_tag('buyin'.$peopleId, 0, array('style'=>'text-align: right', 'id'=>'eventBuyin'.$peopleId));
+    			$buyinField = input_hidden_tag('buyin'.$peopleId, $buyin, array('style'=>'text-align: right', 'id'=>'eventBuyin'.$peopleId));
     			echo $buyin;
     		}
     		
@@ -58,10 +59,10 @@
     		$totalAddon += $addon;
     	?>
     </td>
-    <td><?php echo $buyinField.input_tag('eventPosition'.$peopleId, $eventPlayerObj->getEventPosition(), array('size'=>2, 'maxlength'=>2, 'tabindex'=>($key+1+$recordCount), 'class'=>'eventResultPosition', 'onkeyup'=>'toggleBuyin('.$peopleId.'); checkBuyin('.$peopleId.')', 'id'=>'eventEventPosition'.$peopleId)) ?></td>
-    <td><?php echo input_tag('prize'.$peopleId, Util::formatFloat($prize, true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*2), 'class'=>'eventResultPrize', 'onkeyup'=>'calculateResultTotal("prize")', 'style'=>'text-align: right', 'id'=>'eventPrize'.$peopleId)) ?></td>
-    <td><?php echo input_tag('rebuy'.$peopleId, Util::formatFloat($rebuy, true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*3), 'class'=>'eventResultRebuy', 'onkeyup'=>'calculateResultTotal("rebuy")', 'style'=>'text-align: right', 'id'=>'eventRebuy'.$peopleId)) ?></td>
-    <td><?php echo input_tag('addon'.$peopleId, Util::formatFloat($addon, true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*4), 'class'=>'eventResultAddon', 'onkeyup'=>'calculateResultTotal("addon")', 'style'=>'text-align: right', 'id'=>'eventAddon'.$peopleId)) ?></td>
+    <td align="center"><?php echo $buyinField.input_tag('eventPosition'.$peopleId, $eventPlayerObj->getEventPosition(), array('size'=>2, 'maxlength'=>2, 'tabindex'=>($key+1+$recordCount), 'class'=>'eventResultPosition', 'onkeyup'=>'toggleBuyin('.$peopleId.'); checkBuyin('.$peopleId.')', 'autocomplete'=>'off', 'id'=>'eventEventPosition'.$peopleId)) ?></td>
+    <td align="center"><?php echo input_tag('prize'.$peopleId, Util::formatFloat($prize, true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*2), 'class'=>'eventResultPrize', 'onkeyup'=>'calculateResultTotal("prize")', 'style'=>'text-align: right', 'id'=>'eventPrize'.$peopleId)) ?></td>
+    <td align="center"><?php echo input_tag('rebuy'.$peopleId, Util::formatFloat($rebuy, true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*3), 'class'=>'eventResultRebuy', 'onkeyup'=>'calculateResultTotal("rebuy")', 'style'=>'text-align: right', 'id'=>'eventRebuy'.$peopleId)) ?></td>
+    <td align="center"><?php echo input_tag('addon'.$peopleId, Util::formatFloat($addon, true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*4), 'class'=>'eventResultAddon', 'onkeyup'=>'calculateResultTotal("addon")', 'style'=>'text-align: right', 'id'=>'eventAddon'.$peopleId)) ?></td>
   </tr>
   <?php
   	endforeach;
@@ -93,8 +94,6 @@
 </table>
 <br/>
 <?php
-	echo button_tag('calculatePrize', __('button.calculatePrize'), array('onclick'=>'doCalculatePrize()', 'style'=>'float: right'));
-	
 	echo input_hidden_tag('resultPeopleIdList', implode(',', $peopleIdList));
 	echo input_hidden_tag('resultTab', true);
 ?>

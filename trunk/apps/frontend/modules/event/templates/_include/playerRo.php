@@ -18,7 +18,7 @@
     <td><?php echo $peopleObj->getFullName() ?></td>
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
     <td align="center" class="icon">
-    	<?php echo image_tag('icon/'.($eventPlayerObj->getEnabled()?'ok':'nok'), array('id'=>'presenceImage'.$peopleId)); ?>
+    	<?php echo image_tag('icon/'.($eventPlayerObj->getEnabled()?'ok':'nok')); ?>
     </td>
   </tr>
   <?php

@@ -955,6 +955,7 @@ function button_tag( $buttonId, $text, $options=array() ){
 	$noCkeck  = array_key_exists('noCkeck', $options)?$options['noCkeck']:false;
 	$image    = array_key_exists('image', $options)?$options['image']:false;
 	$onclick  = array_key_exists('onclick', $options)?$options['onclick']:false;
+	$style    = array_key_exists('style', $options)?$options['style']:'';
 
 	if( array_key_exists('onclick', $options) && !$noCkeck ){
 		
@@ -963,12 +964,11 @@ function button_tag( $buttonId, $text, $options=array() ){
 	}
 
 
-	$style = '';
-	
 	unset($options['disabled']);
+	unset($options['$style']);
 	
 	if( !$visible )
-		$style = 'style="display: none"';
+		$style = 'style="display: none; '.$style.'"';
 
 	try{
 		

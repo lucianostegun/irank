@@ -31,14 +31,6 @@ $innerObj        = (isset($innerObj)?$innerObj:false);
 	    		<?php echo link_to(image_tag('flagBrazil'), '#changeLanguage("pt_BR")'); ?>
 	    		<?php echo link_to(image_tag('flagUS'), '#changeLanguage("en_US")'); ?>
 	    	</div>
-    		<div id="search">
-    			<?php
-    				echo form_tag('search/result', array('id'=>'mainSearchForm'));
-    				echo input_tag('mainSearch', __('layout.search'), array('onfocus'=>'handleMainSearchFocus(this)', 'onblur'=>'handleMainSearchBlur(this)'));
-    				echo '</form>';
-    			?>
-    			<div class="mainSearchButton" onmouseover="this.className='mainSearchButtonHover'" onmouseout="this.className='mainSearchButton'"><?php echo link_to(image_tag('blank.gif', array('width'=>23, 'height'=>19)), '#doQuickSearch()') ?></div>
-			</div>
     	</div>
     	<div id="mainContent">
     		
@@ -87,7 +79,6 @@ $innerObj        = (isset($innerObj)?$innerObj:false);
 				<?php echo link_to(__('footerMenu.inviteFriends'), '/friendInvite') ?> | 
 				<?php echo link_to('feedback', '/feedBack') ?> | 
 				<?php echo link_to(__('footerMenu.help'), '/help') ?> | 
-				<?php echo link_to(__('footerMenu.quickGuide'), '/quickGuide') ?> | 
 				<?php echo link_to(__('footerMenu.contact'), '/contact') ?>
 			</td> 
 			<td width="33%">&nbsp;</td>
