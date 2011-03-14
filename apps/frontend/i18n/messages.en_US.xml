@@ -1960,6 +1960,22 @@
 				<source>event.calculatePrizeError</source>
 				<target>Error while calculating the division of prizes!</target>
 			</trans-unit>
+			<trans-unit>
+				<source>form.error.ranking.sameRankingIdError</source>
+				<target>Select a different ranking of the current</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.launchResult</source>
+				<target>Launch result</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.saveResult</source>
+				<target>Save result</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.playerList</source>
+				<target>Guest list</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

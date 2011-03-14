@@ -39,8 +39,12 @@
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 	$dhtmlxTabBarObj->addTab('main', __('Event'), 'event/'.$mode.'/main', array('eventObj'=>$eventObj, 'pastDate'=>$pastDate, 'confirmedPresence'=>$confirmedPresence));
 	$dhtmlxTabBarObj->addTab('player', __('Guests'), 'event/'.$mode.'/player', array('eventObj'=>$eventObj, 'hidden'=>$isNew));
-	if( $pastDate )
-		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/'.$resultMode.'/result', array('eventObj'=>$eventObj));
+//	if( $pastDate )
+//		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/'.$resultMode.'/result', array('eventObj'=>$eventObj));
+		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj));
+//	else
+//		$dhtmlxTabBarObj->addTab('result', __('Result'), null, array('hidden'=>true));
+
 	$dhtmlxTabBarObj->addTab('comments', __('Comments'), 'event/form/comments', array('eventObj'=>$eventObj, 'hidden'=>!$eventObj->getVisible()));
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabEvent');
 	$dhtmlxTabBarObj->setHeight(250);
@@ -50,7 +54,9 @@
 ?>
 	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php
-			if( $isEditable )				
+			if( $pastDate )				
+				echo button_tag('mainSubmit', __('button.launchResult'), array('onclick'=>'openEventResult()'));
+			elseif( $isEditable )				
 				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()'));
 			
 			echo getFormLoading('event');
@@ -63,4 +69,7 @@
 	DhtmlxWindows::createWindow('eventPhotoView', '', 380, 125, 'event/dialog/photoView', array());
 	DhtmlxWindows::createWindow('rankingPlaceAdd', __('event.gamePlaceRegister'), 550, 125, 'ranking/dialog/placeAdd', array());
 	DhtmlxWindows::createWindow('rankingPlayerAdd', __('ranking.playerRegister'), 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$eventObj->getRankingId()));
+	
+	if( $pastDate && ($isEditable || $isMyEvent) )
+		DhtmlxWindows::createWindow('eventResult', __('event.resultTab.intro'), 680, 400, 'event/dialog/result', array('eventObj'=>$eventObj));
 ?>

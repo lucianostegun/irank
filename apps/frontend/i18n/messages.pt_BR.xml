@@ -1983,6 +1983,22 @@
 				<source>event.calculatePrizeError</source>
 				<target>Erro ao calcular a divisão dos prêmios!</target>
 			</trans-unit>
+			<trans-unit>
+				<source>form.error.ranking.sameRankingIdError</source>
+				<target>Selecione um ranking diferente do ranking atual</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.launchResult</source>
+				<target>Lançar resultados</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.saveResult</source>
+				<target>Salvar resultado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.playerList</source>
+				<target>Lista de convidados</target>
+			</trans-unit>
 			
 		</body>
 	</file>

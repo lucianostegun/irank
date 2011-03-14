@@ -45,6 +45,8 @@
 							</div>
 						    <?php endfor; ?>
 						</form>
+						<br/>
+						<br/>
 					</td>
 				</tr>
 			</table>

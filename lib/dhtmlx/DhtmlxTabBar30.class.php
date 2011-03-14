@@ -152,10 +152,12 @@ class DhtmlxTabBar30 {
 	    		$html .= '    '.$objectName.'.setContentHref(\''.$tabBarObj->getId().'\',\''.$tabBarObj->getContent().'\');'.$nl;
 	    	else
 	    		$html .= '    '.$objectName.'.setContent(\''.$tabBarObj->getId().'\',\''.$this->getId().$tabBarObj->getName().'Div\');'.$nl;
-	    	
+    	}
+    	
+    	// Este bloco está separado porque senão fica um buraco entre as abas
+    	foreach( $this->tabBarObjList as $tabBarObj )
 	    	if( $tabBarObj->getHidden() )
 	    		$html .= '    '.$objectName.'.hideTab(\''.$tabBarObj->getId().'\',true);'.$nl;
-    	}
     	
     	return $html;
     }
@@ -396,11 +398,14 @@ class TabBar {
 		
 		$scriptName = MyTools::getRequest()->getScriptName();
 		
-		if( !$this->isAjax() )
-			$content = get_partial($content, $options);
-		else
-			$content = $scriptName.'/home/getTab?tabAddress='.$content.'&options='.serialize($options);
+		if( $content ){
 			
+			if( !$this->isAjax() )
+				$content = get_partial($content, $options);
+			else
+				$content = $scriptName.'/home/getTab?tabAddress='.$content.'&options='.serialize($options);
+		}
+		
 		$this->content = $content;
 	}
 	

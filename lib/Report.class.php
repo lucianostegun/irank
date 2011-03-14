@@ -113,10 +113,11 @@ class Report {
 			
 			if( !$emailAddress )
 				continue;
-				
-			$emailContent = $emailContentList
 			
-			$sfMailObj->addAddress( $emailAddress );
+			if( count($emailAddressList) > 1 )
+				$sfMailObj->addBcc( $emailAddress );
+			else
+				$sfMailObj->addAddress( $emailAddress );
 		}
 		
 		try{ 
@@ -200,6 +201,14 @@ class Report {
 		echo input_hidden_tag( 'totalRecords', $regCount );
 		echo input_hidden_tag( 'pageLimit', $limit );
 		echo input_hidden_tag( 'currentPage', ($currentPage-1) );
+    }
+    
+    public static function replace($content, $infoList){
+    	
+    	foreach($infoList as $key=>$info)
+    		$content = str_replace('<'.$key.'>', $info, $content);
+    	
+    	return $content;
     }
 }
 ?>
