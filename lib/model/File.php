@@ -183,7 +183,7 @@ class File extends BaseFile
 	
 	public function getDimensions(){
    	
-   		return strtolower(File::getFileDimension($this->getFilePath(true)));
+   		return File::getFileDimension($this->getFilePath(true));
 	}
    	
 	public static function getFileDimension( $filePath ){
