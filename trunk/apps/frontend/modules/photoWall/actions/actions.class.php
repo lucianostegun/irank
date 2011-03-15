@@ -33,7 +33,7 @@ class photoWallActions extends sfActions
 	$criteria->addDescendingOrderByColumn( EventPhotoPeer::CREATED_AT );
 	$eventPhotoObj = EventPhotoPeer::doSelectOne($criteria);
 	
-	$eventPhotoObj->getFile()->getResized(400);
+	$eventPhotoObj->getFile()->getResized(300);
 		
 	exit;
   }
