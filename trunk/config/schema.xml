@@ -400,6 +400,14 @@
 		  </foreign-key>
 	</table>
 	
+	<table name="email_log" phpName="EmailLog">
+		<column name="email_address" type="VARCHAR" />
+		<column name="email_subject" type="VARCHAR" />
+		<column name="sending_status" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
 	
 	
 	
