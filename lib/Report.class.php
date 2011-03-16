@@ -123,9 +123,11 @@ class Report {
 		try{ 
 		
 			$sfMailObj->send();
+			EmailLog::doLog($emailAddressList, $emailSubject, 'success');
 		}catch(Exception $e){
 		
 			$sendResult = false;
+			EmailLog::doLog($emailAddressList, $emailSubject, 'error');
 		}
 		
 		return $sendResult;
