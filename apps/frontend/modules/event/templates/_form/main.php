@@ -56,7 +56,7 @@
 			</div>
 			<div class="row">
 				<div class="label"><?php echo __('event.emailNotify') ?></div>
-				<div class="field"><?php echo checkbox_tag('sendEmail', true, !$eventObj->getSentEmail(), array('id'=>'eventSendEmail')) ?></div>
+				<div class="field"><?php echo checkbox_tag('sendEmail', true, (!$eventObj->getSentEmail() && !$isClone), array('id'=>'eventSendEmail')) ?></div>
 				<div class="textFlex" style="display: <?php echo ($eventObj->getSentEmail()?'block':'none') ?>" id="sentEmailDiv"><?php echo __('event.sentNotify') ?></div>
 			</div>
 		</td>

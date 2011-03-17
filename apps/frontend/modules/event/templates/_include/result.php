@@ -81,11 +81,11 @@
   	else:
   ?>
   <tr>
-    <td colspan="6"><?php echo __('event.resultTab.noPlayer') ?></td>
+    <td colspan="7"><?php echo __('event.resultTab.noPlayer') ?></td>
   </tr>
   <?php endif; ?>
   <tr>
-    <td colspan="6" class="defaultForm">
+    <td colspan="7" class="defaultForm">
     	<div class="row" style="margin-top: 3px">
     		<div class="text"><?php echo __('event.resultTab.footerMessage') ?></div>
     	</div>

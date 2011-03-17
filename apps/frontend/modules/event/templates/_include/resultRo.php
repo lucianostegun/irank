@@ -38,7 +38,7 @@
   	if( count($eventPlayerObjList)==0 ):
   ?>
   <tr>
-    <td colspan="6"><?php echo __('ranking.resultTab.noPlayer') ?></td>
+    <td colspan="7"><?php echo __('event.resultTab.noPlayer') ?></td>
   </tr>
   <?php endif; ?>
 </table>

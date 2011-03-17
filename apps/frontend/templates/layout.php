@@ -41,8 +41,8 @@ $innerObj        = (isset($innerObj)?$innerObj:false);
 				    		<?php include_partial('home/include/leftBar', array('isAuthenticated'=>$isAuthenticated, 'culture'=>$culture, 'innerMenu'=>$innerMenu, 'innerObj'=>$innerObj)) ?>
 				    	</div>
 				    	<div id="socialNetwork">
-				    		<?php include_partial('home/include/facebook', array()) ?>
-				    		<?php include_partial('home/include/addthis', array()) ?>
+				    		<?php #include_partial('home/include/facebook', array()) ?>
+				    		<?php #include_partial('home/include/addthis', array()) ?>
 				    	</div>
     				</td>
     				<td valign="top" id="rightContent">
