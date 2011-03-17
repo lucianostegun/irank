@@ -200,21 +200,26 @@ class eventActions extends sfActions
   public function executeGetPlayerList($request){
 
 	$eventId  = $request->getParameter('eventId');
+	$result   = $request->getParameter('result');
 	$eventObj = EventPeer::retrieveByPK( $eventId );
+	$pastDate = $eventObj->isPastDate();
+	
+	$path = ($pastDate && !$result?'show':'include');
 
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/include/player', array('eventObj'=>$eventObj)));
+	return $this->renderText(get_partial('event/'.$path.'/player'.($result?'Result':''), array('eventObj'=>$eventObj)));
   }
 
   public function executeGetResult($request){
 
 	$eventId  = $request->getParameter('eventId');
+	$readOnly = $request->getParameter('readOnly');
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/include/resultRo', array('eventObj'=>$eventObj)));
+	return $this->renderText(get_partial('event/include/result'.($readOnly?'Ro':''), array('eventObj'=>$eventObj)));
   }
   
   public function executeCloneEvent($request){
@@ -626,11 +631,11 @@ class eventActions extends sfActions
 			ORDER BY
 			    ranking_prize_split.BUYINS
 			LIMIT 1;';
-	
+
 	$info = Util::executeOne($sql, 'string');
 	
 	if( !$info )
-		Util::forceError('event.calculatePrize.rangeError');
+		Util::forceError('event.calculatePrize.rangeError', true);
 		
 	list($percentList, $paidPlaces) = explode(';', $info);
 	

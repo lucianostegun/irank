@@ -8,7 +8,7 @@
   	if( is_object($rankingObj) )
   		$peopleIdOwner = $rankingObj->getUserSite()->getPeopleId();
 ?>
-<table border="0" cellspacing="1" cellpadding="2" class="gridTabTable" style="width: 660px">
+<table border="0" cellspacing="1" cellpadding="2" class="gridTabTable" style="width: 650px">
   <tr class="header">
     <th><?php echo __('Player') ?></th>
     <th>&nbsp;</th>

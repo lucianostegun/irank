@@ -1,4 +1,4 @@
-<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTabTable" style="width: 660px">
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTabTable" style="width: 650px">
   <tr class="header">
     <th><?php echo __('Player') ?></th>
     <th width="50">Buy-in</th>
