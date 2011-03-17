@@ -177,7 +177,7 @@ class Ranking extends BaseRanking
 	
 	public static function adjustPlayers(){
 		
-		Util::executeQuery('UPDATE ranking SET players = (SELECT COUNT(1) FROM ranking_player WHERE enabled)');
+		Util::executeQuery('UPDATE ranking SET players = (SELECT COUNT(1) FROM ranking_player WHERE ranking_player.RANKING_ID = ranking.ID AND enabled)');
 	}
 	
 	public static function adjustEvents(){
