@@ -436,6 +436,9 @@ function updatePlayerContent(eventId){
 	
 	var urlAjax = _webRoot+'/event/getPlayerList/eventId/'+eventId;
 	new Ajax.Updater('eventPlayerDiv', urlAjax, {asynchronous:true, evalScripts:false});
+	
+	var urlAjax = _webRoot+'/event/getPlayerList/eventId/'+eventId+'/result/1';
+	new Ajax.Updater('eventResultPlayerListDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }
 
 function updateResultContent(eventId){
@@ -444,13 +447,19 @@ function updateResultContent(eventId){
 		return false;
 	
 	var successFunc = function(t){
-	
+
 		$('eventResultDiv').innerHTML = t.responseText;
 		adjustContentTab();
 	}
 	
-	var urlAjax = _webRoot+'/event/getResult/eventId/'+eventId;
+	var urlAjax = _webRoot+'/event/getResult/eventId/'+eventId+'/readOnly/1';
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
+
+	if( $('eventResultTableDiv')!=null ){
+		
+		var urlAjax = _webRoot+'/event/getResult/eventId/'+eventId;
+		new Ajax.Updater('eventResultTableDiv', urlAjax, {asynchronous:true, evalScripts:false});
+	}
 }
 
 function doEventSearch(){

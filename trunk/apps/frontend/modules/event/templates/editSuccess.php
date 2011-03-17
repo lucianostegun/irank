@@ -50,13 +50,13 @@
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 	
-	if( $isEditable || $isMyEvent ):
+	if( $isEditable ):
 ?>
 	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php
 			if( $pastDate )				
 				echo button_tag('mainSubmit', __('button.launchResult'), array('onclick'=>'openEventResult()'));
-			elseif( $isEditable )				
+			else				
 				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()'));
 			
 			echo getFormLoading('event');
