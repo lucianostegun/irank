@@ -1976,6 +1976,10 @@
 				<source>button.playerList</source>
 				<target>Guest list</target>
 			</trans-unit>
+			<trans-unit>
+				<source>home.pendingResult</source>
+				<target>The result of this event has not been saved yet</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -288,6 +288,7 @@ class sfWebResponse extends sfResponse
       }
       else
       {
+      	
         setrawcookie($cookie['name'], $cookie['value'], $cookie['expire'], $cookie['path'], $cookie['domain'], $cookie['secure']);
       }
 

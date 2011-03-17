@@ -34,14 +34,14 @@
 	$isEditable = $eventObj->isEditable();
 	$isMyEvent  = $eventObj->isMyEvent();
 	$mode       = ($pastDate && !$isClone?'show':'form');
-	$resultMode = ($isEditable?'form':'show');
 	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
-	$dhtmlxTabBarObj->addTab('main', __('Event'), 'event/'.$mode.'/main', array('eventObj'=>$eventObj, 'pastDate'=>$pastDate, 'confirmedPresence'=>$confirmedPresence));
+	$dhtmlxTabBarObj->addTab('main', __('Event'), 'event/'.$mode.'/main', array('eventObj'=>$eventObj, 'isClone'=>$isClone, 'pastDate'=>$pastDate, 'confirmedPresence'=>$confirmedPresence));
 	$dhtmlxTabBarObj->addTab('player', __('Guests'), 'event/'.$mode.'/player', array('eventObj'=>$eventObj, 'hidden'=>$isNew));
-//	if( $pastDate )
-//		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/'.$resultMode.'/result', array('eventObj'=>$eventObj));
+	if( $pastDate )
 		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj));
+	else
+		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj, 'hidden'=>!$eventObj->getVisible()));
 //	else
 //		$dhtmlxTabBarObj->addTab('result', __('Result'), null, array('hidden'=>true));
 

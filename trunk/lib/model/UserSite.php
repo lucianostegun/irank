@@ -89,6 +89,7 @@ class UserSite extends BaseUserSite
 
         	$userSiteId = base64_encode(serialize(array($this->getId())));
 	        MyTools::setCookie('userSiteId', $userSiteId, (time()+(86400*15)), '/');
+	        MyTools::getResponse()->sendHttpHeaders();
         }
         
         MyTools::setCulture( $peopleObj->getDefaultLanguage() );
@@ -118,6 +119,8 @@ class UserSite extends BaseUserSite
 		MyTools::getUser()->getAttributeHolder()->remove('lastName');
 		MyTools::getUser()->removeCredential('iRankSite');
 		MyTools::getUser()->setAuthenticated( false );
+		
+        MyTools::getResponse()->sendHttpHeaders();
 	}
 	
 	public function getRankingList($criteria=null, $con=null){

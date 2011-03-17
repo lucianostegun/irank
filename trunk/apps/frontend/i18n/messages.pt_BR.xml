@@ -1999,6 +1999,10 @@
 				<source>button.playerList</source>
 				<target>Lista de convidados</target>
 			</trans-unit>
+			<trans-unit>
+				<source>home.pendingResult</source>
+				<target>O resultado deste evento ainda não foi lançado</target>
+			</trans-unit>
 			
 		</body>
 	</file>

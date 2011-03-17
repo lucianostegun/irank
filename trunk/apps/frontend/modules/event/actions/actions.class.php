@@ -114,7 +114,9 @@ class eventActions extends sfActions
 
 	if( $sendEmail )
 		$eventObj->notify();
-
+	else
+		$eventObj->save();
+	
     echo Util::parseInfo($eventObj->getInfo());
     exit;
   }

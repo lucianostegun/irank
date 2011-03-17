@@ -86,8 +86,15 @@ class Event extends BaseEvent
 		
 		$criteria = new Criteria();
 
-		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
-		$criteria->add( EventPeer::SAVED_RESULT, true );
+		$criterion = $criteria->getNewCriterion( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
+		$criterion->addAnd( $criteria->getNewCriterion( EventPeer::SAVED_RESULT, true ) );
+		
+		$criterion2 = $criteria->getNewCriterion( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
+		$criterion2->addAnd( $criteria->getNewCriterion( EventPeer::EVENT_DATE, date('Y-m-d', mktime(0,0,0,date('m'),date('d')-7,date('Y'))), Criteria::GREATER_THAN ) );
+
+		$criterion->addOr( $criterion2 );
+
+		$criteria->add( $criterion );
 		
 		return self::getList($criteria, $limit);
 	}
@@ -223,7 +230,7 @@ class Event extends BaseEvent
 		
 		foreach( $rankingPlayerObjList as $rankingPlayerObj )
 			$this->togglePresence( $rankingPlayerObj->getPeopleId(), 'none' );
-		
+
 		$this->setInvites( count($rankingPlayerObjList) );
 	}
 	
