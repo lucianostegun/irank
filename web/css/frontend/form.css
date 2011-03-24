@@ -17,7 +17,7 @@
 .windowForm {
 
 	padding: 		10px 5px 10px 5px;
-	margin: 		0px -2px 0px 0px;
+	margin: 		0px 0px 0px 0px;
 	background: 	#E6E6E6;
 	border: 		1px solid #B0B0B0;
 }
@@ -204,7 +204,7 @@
 .defaultForm .row .textFlex, .windowForm .row .textFlex {
 
 	float: 			left;
-	padding: 		0px 3px 2px 3px;
+	padding: 		1px 3px 2px 3px;
 	height: 		15px;
 	height: 		19px !ie;
 	text-align: 	left;

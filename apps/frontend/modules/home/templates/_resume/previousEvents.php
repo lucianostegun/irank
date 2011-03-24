@@ -14,12 +14,13 @@
 		$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventObj->getId(), $peopleId);
 		
 		$savedResult = $eventObj->getSavedResult();
+		$isMyEvent   = $eventObj->isMyEvent();
 		
 		$eventDescription = $eventObj->getEventDate('d/m/Y').' '.$eventObj->getStartTime('H:i').' - <b>'.$eventObj->getEventName().'</b> @ '.$eventObj->getEventPlace().' ['.$eventObj->getRanking()->getRankingName().']';
 		$eventDescription = truncate_text($eventDescription, 120);
 ?>
 	<tr>
-		<td align="center" style="padding: 0px"><?php echo (!$savedResult?image_tag('icon/alert', array('title'=>__('home.pendingResult'))):''); ?></td>
+		<td align="center" style="padding: 0px"><?php echo (!$savedResult && $isMyEvent?image_tag('icon/alert', array('title'=>__('home.pendingResult'))):''); ?></td>
 		<td><?php echo link_to($eventDescription, '#goModule("event", "edit", "eventId", '.$eventObj->getId().')'); ?></td>
 		<td align="right"><?php echo '#'.$eventPlayerObj->getEventPosition() ?></td>
 		<td align="right"><?php echo Util::formatFloat($eventPlayerObj->getScore(), true, 3) ?></td>

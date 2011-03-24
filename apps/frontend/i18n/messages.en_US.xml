@@ -3,6 +3,22 @@
 	<file orginal="global" source-language="pt_BR" datatype="plaintext" date="">
 		<body>
 			<trans-unit>
+				<source>eventPersonal.noEvents</source>
+				<target>you have no personal events yet</target>
+			</trans-unit>
+			<trans-unit>
+				<source>eventPersonal.newEventInvite</source>
+				<target>&lt;b&gt;%clickHere%&lt;/b&gt; to create your first event</target>
+			</trans-unit>
+			<trans-unit>
+				<source>eventPersonal.title</source>
+				<target>Personal events</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.eventDetails</source>
+				<target>Event details</target>
+			</trans-unit>
+			<trans-unit>
 				<source>generalCredit.balance</source>
 				<target>General credit</target>
 			</trans-unit>
@@ -326,6 +342,10 @@
 			<trans-unit>
 				<source>leftBar.logout</source>
 				<target>Logout</target>
+			</trans-unit>
+			<trans-unit>
+				<source>leftBar.personalEvents</source>
+				<target>Personal events</target>
 			</trans-unit>
 			<trans-unit>
 				<source>leftBar.shareIt</source>
@@ -752,6 +772,10 @@
 			<trans-unit>
 				<source>DateTime</source>
 				<target>Date/Time</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Date</source>
+				<target>Date</target>
 			</trans-unit>
 			<trans-unit>
 				<source>Place</source>
@@ -1979,6 +2003,18 @@
 			<trans-unit>
 				<source>home.pendingResult</source>
 				<target>The result of this event has not been saved yet</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Players</source>
+				<target>Players</target>
+			</trans-unit>
+			<trans-unit>
+				<source>eventPersonal.playerImport</source>
+				<target>Import players</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.noImportPlayer</source>
+				<target>No players to import</target>
 			</trans-unit>
 		</body>
 	</file>

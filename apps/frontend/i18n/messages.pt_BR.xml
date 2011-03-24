@@ -3,6 +3,22 @@
 	<file orginal="global" source-language="pt_BR" datatype="plaintext" date="">
 		<body>
 			<trans-unit>
+				<source>eventPersonal.noEvents</source>
+				<target>Você ainda não cadastrou nenhum evento pessoal</target>
+			</trans-unit>
+			<trans-unit>
+				<source>eventPersonal.newEventInvite</source>
+				<target>&lt;b&gt;%clickHere%&lt;/b&gt; para cadastrar seu primeiro evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>eventPersonal.title</source>
+				<target>Eventos pessoais</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.eventDetails</source>
+				<target>Detalhes do evento</target>
+			</trans-unit>
+			<trans-unit>
 				<source>generalCredit.balance</source>
 				<target>Saldo geral</target>
 			</trans-unit>
@@ -330,6 +346,10 @@
 				<target>Desconectar</target>
 			</trans-unit>
 			<trans-unit>
+				<source>leftBar.personalEvents</source>
+				<target>Eventos pessoais</target>
+			</trans-unit>
+			<trans-unit>
 				<source>leftBar.shareIt</source>
 				<target>Compartilhe</target>
 			</trans-unit>
@@ -585,7 +605,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.players</source>
-				<target>Membros</target>
+				<target>Jogadores</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.events</source>
@@ -622,7 +642,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>button.playerRegister</source>
-				<target>Cadastro de membros</target>
+				<target>Cadastro de jogadores</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.display</source>
@@ -699,19 +719,19 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playersTab.intro</source>
-				<target>Cadastre os membros que farão parte do ranking</target>
+				<target>Cadastre os jogadores que farão parte do ranking</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playersTab.intro</source>
-				<target>Cadastre os membros que farão parte do ranking</target>
+				<target>Cadastre os jogadores que farão parte do ranking</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playersTab.hint.removePlayer</source>
-				<target>Remover este membro do grupo</target>
+				<target>Remover este jogador do grupo</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playersTab.hint.removePlayerUnabled</source>
-				<target>Não é possível remover este membro do grupo</target>
+				<target>Não é possível remover este jogador do grupo</target>
 			</trans-unit>
 			<trans-unit>
 				<source>Allow</source>
@@ -723,11 +743,11 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playersTab.hint.allowPlayerEdit</source>
-				<target>%message% membro para edição do ranking</target>
+				<target>%message% jogador para edição do ranking</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playersTab.hint.allowPlayerEditUnabled</source>
-				<target>Não é possível desabilitar este membro para edição do ranking</target>
+				<target>Não é possível desabilitar este jogador para edição do ranking</target>
 			</trans-unit>
 			<trans-unit>
 				<source>button.cancel</source>
@@ -735,7 +755,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playerRegister</source>
-				<target>Cadastro de membros</target>
+				<target>Cadastro de jogadores</target>
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.playerAdd</source>
@@ -751,6 +771,10 @@
 			<trans-unit>
 				<source>Event</source>
 				<target>Evento</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Date</source>
+				<target>Data</target>
 			</trans-unit>
 			<trans-unit>
 				<source>DateTime</source>
@@ -787,7 +811,7 @@
 			
 			<trans-unit>
 				<source>ranking.classifyTab.noPlayers</source>
-				<target>Este ranking ainda não possui membros cadastrados</target>
+				<target>Este ranking ainda não possui jogadores cadastrados</target>
 			</trans-unit>
 			<trans-unit>
 				<source>Player</source>
@@ -895,6 +919,10 @@
 			<trans-unit>
 				<source>Creating</source>
 				<target>Criação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Cloning</source>
+				<target>Clonagem</target>
 			</trans-unit>
 			<trans-unit>
 				<source>button.deleteEvent</source>
@@ -1048,7 +1076,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playersTab.playerDeleteError</source>
-				<target>Não foi possível excluir o membro do grupo!\nTente novamente mais tarde.</target>
+				<target>Não foi possível excluir o jogador do grupo!\nTente novamente mais tarde.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.classifyTab.logLoadError</source>
@@ -1056,7 +1084,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.classifyTab.shareError</source>
-				<target>Não foi possível habilitar o membro do grupo para edição do ranking!\nTente novamente mais tarde.</target>
+				<target>Não foi possível habilitar o jogador do grupo para edição do ranking!\nTente novamente mais tarde.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.deleteConfirm</source>
@@ -1084,7 +1112,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.exception.deletePlayerError</source>
-				<target>Não é possível remover este membro do ranking!</target>
+				<target>Não é possível remover este jogador do ranking!</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.exception.shareError</source>
@@ -1155,7 +1183,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.resultTab.noPlayer</source>
-				<target>Este event não possui convidados para compor os resultados</target>
+				<target>Este evento não possui convidados para compor os resultados</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.resultTab.footerMessage</source>
@@ -2002,6 +2030,18 @@
 			<trans-unit>
 				<source>home.pendingResult</source>
 				<target>O resultado deste evento ainda não foi lançado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>Players</source>
+				<target>Jogadores</target>
+			</trans-unit>
+			<trans-unit>
+				<source>eventPersonal.playerImport</source>
+				<target>Importação de jogadores</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.noImportPlayer</source>
+				<target>Sem jogadores para importação</target>
 			</trans-unit>
 			
 		</body>

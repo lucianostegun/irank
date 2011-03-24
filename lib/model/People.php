@@ -189,20 +189,19 @@ class People extends BasePeople
 		
 		switch($quickResume){
 			case 'balance':
-				$sql = 'SELECT SUM(event_player.PRIZE-(event_player.BUYIN+event_player.ADDON+event_player.REBUY)) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID';
+				$sql = 'SELECT get_player_balance('.$peopleId.')';
 				break;
 			case 'profit':
-				$sql = 'SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID';
+				$sql = 'SELECT get_player_profit('.$peopleId.')';
 				break;
 			case 'score':
-				$sql = 'SELECT SUM(event_player.SCORE) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID';
+				$sql = 'SELECT get_player_score('.$peopleId.')';
 				break;
 			case 'paid':
-				$sql = 'SELECT SUM(event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID';
+				$sql = 'SELECT get_player_bra('.$peopleId.')';
 				break;
 			case 'average':
-				$sql = 'SELECT COUNT(1) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event_player.BUYIN > 0';
-				$sql = 'SELECT SUM(event_player.PRIZE/(event_player.BUYIN+event_player.REBUY+event_player.ADDON))/('.$sql.') FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event_player.BUYIN > 0';
+				$sql = 'SELECT get_player_average('.$peopleId.')';
 				break;
 		}
 		
