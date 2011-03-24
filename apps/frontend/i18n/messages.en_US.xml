@@ -2016,6 +2016,12 @@
 				<source>event.noImportPlayer</source>
 				<target>No players to import</target>
 			</trans-unit>
+			<trans-unit>
+				<source>eventPersonal.intro</source>
+				<target>Personal events are those in which you participate without costing any of your rankings.&lt;br/&gt;
+	You can launch a simple result of your game, keeping your bankroll up to date&lt;br/&gt;
+	without registering a new ranking.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
