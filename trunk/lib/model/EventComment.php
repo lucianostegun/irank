@@ -75,6 +75,10 @@ class EventComment extends BaseEventComment
 
 		$eventObj     = $this->getEvent();
 		$emailContent = AuxiliarText::getContentByTagName('eventCommentNotify');
+		
+		$culture = MyTools::getCulture();
+		if( !$culture )
+			MyTools::setCulture('pt_BR');
 
 		$emailContent = str_replace('<eventName>', $eventObj->getEventName(), $emailContent);
 		$emailContent = str_replace('<rankingName>', $eventObj->getRanking()->getRankingName(), $emailContent);
