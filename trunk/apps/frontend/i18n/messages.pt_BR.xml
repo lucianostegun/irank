@@ -2043,6 +2043,12 @@
 				<source>event.noImportPlayer</source>
 				<target>Sem jogadores para importação</target>
 			</trans-unit>
+			<trans-unit>
+				<source>eventPersonal.intro</source>
+				<target>Eventos pessoais são aqueles em que você participa sem valer por nenhum ranking cadastrado.&lt;br/&gt;
+	Você pode lançar o resultado simplificado de seu jogo, mantendo seu balanço de caixa atualizado&lt;br/&gt;
+	sem precisar cadastrar um novo ranking.</target>
+			</trans-unit>
 			
 		</body>
 	</file>

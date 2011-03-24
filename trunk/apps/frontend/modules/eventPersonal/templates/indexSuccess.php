@@ -1,4 +1,8 @@
 <div class="commonBar"><span><?php echo __('eventPersonal.title') ?></span></div>
+<div class="innerContent">
+	<?php echo __('eventPersonal.intro') ?>
+	<br/><br/>
+</div>
 <?php
 	echo form_tag('eventPersonal/search', array('id'=>'eventPersonalSearchForm', 'onsubmit'=>'doEventPersonalSearch(); return false'));
 		echo input_hidden_tag('isIE', null);
