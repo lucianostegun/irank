@@ -107,7 +107,7 @@ class eventActions extends sfActions
 				$criteria->add( EventCommentPeer::EVENT_ID, $eventObj->getId() );
 				$eventCommentObj = EventCommentPeer::doSelectOne($criteria);
 				
-				if( !is_object($eventCommentObj) )
+				if( is_object($eventCommentObj) )
 					$error = true;
 			}
 				
