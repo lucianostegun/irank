@@ -39,7 +39,8 @@ function doSubmitRankingPlayer(content){
 }
 
 function addRankingPlayer(){
-	
+
+	$('rankingPlayerForm').reset();
 	clearFormFieldErrors('rankingPlayerForm');
 	hideFormStatusError('rankingPlayer');
 	hideFormStatusSuccess('rankingPlayer');

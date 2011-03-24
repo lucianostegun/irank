@@ -28,6 +28,7 @@ class rankingActions extends sfActions
   public function executeIndex($request){
 
 	$this->userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
+  	$this->innerMenu   = 'ranking/include/mainMenuIndex';
   }
   
   public function executeNew($request){

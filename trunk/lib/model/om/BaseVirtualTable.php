@@ -78,6 +78,12 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	protected $lastUserSiteOptionCriteria = null;
 
 	
+	protected $collEventPersonalList;
+
+	
+	protected $lastEventPersonalCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -471,6 +477,14 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEventPersonalList !== null) {
+				foreach($this->collEventPersonalList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -546,6 +560,14 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 				if ($this->collUserSiteOptionList !== null) {
 					foreach($this->collUserSiteOptionList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventPersonalList !== null) {
+					foreach($this->collEventPersonalList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -769,6 +791,10 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 			foreach($this->getUserSiteOptionList() as $relObj) {
 				$copyObj->addUserSiteOption($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEventPersonalList() as $relObj) {
+				$copyObj->addEventPersonal($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1249,6 +1275,111 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 		$this->lastUserSiteOptionCriteria = $criteria;
 
 		return $this->collUserSiteOptionList;
+	}
+
+	
+	public function initEventPersonalList()
+	{
+		if ($this->collEventPersonalList === null) {
+			$this->collEventPersonalList = array();
+		}
+	}
+
+	
+	public function getEventPersonalList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPersonalPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventPersonalList === null) {
+			if ($this->isNew()) {
+			   $this->collEventPersonalList = array();
+			} else {
+
+				$criteria->add(EventPersonalPeer::GAME_STYLE_ID, $this->getId());
+
+				EventPersonalPeer::addSelectColumns($criteria);
+				$this->collEventPersonalList = EventPersonalPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventPersonalPeer::GAME_STYLE_ID, $this->getId());
+
+				EventPersonalPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventPersonalCriteria) || !$this->lastEventPersonalCriteria->equals($criteria)) {
+					$this->collEventPersonalList = EventPersonalPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventPersonalCriteria = $criteria;
+		return $this->collEventPersonalList;
+	}
+
+	
+	public function countEventPersonalList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPersonalPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventPersonalPeer::GAME_STYLE_ID, $this->getId());
+
+		return EventPersonalPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventPersonal(EventPersonal $l)
+	{
+		$this->collEventPersonalList[] = $l;
+		$l->setVirtualTable($this);
+	}
+
+
+	
+	public function getEventPersonalListJoinUserSite($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventPersonalPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventPersonalList === null) {
+			if ($this->isNew()) {
+				$this->collEventPersonalList = array();
+			} else {
+
+				$criteria->add(EventPersonalPeer::GAME_STYLE_ID, $this->getId());
+
+				$this->collEventPersonalList = EventPersonalPeer::doSelectJoinUserSite($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventPersonalPeer::GAME_STYLE_ID, $this->getId());
+
+			if (!isset($this->lastEventPersonalCriteria) || !$this->lastEventPersonalCriteria->equals($criteria)) {
+				$this->collEventPersonalList = EventPersonalPeer::doSelectJoinUserSite($criteria, $con);
+			}
+		}
+		$this->lastEventPersonalCriteria = $criteria;
+
+		return $this->collEventPersonalList;
 	}
 
   public function getCulture()

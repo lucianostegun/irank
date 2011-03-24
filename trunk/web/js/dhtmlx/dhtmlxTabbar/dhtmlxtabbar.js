@@ -966,6 +966,11 @@ dhtmlXTabBar.prototype = {
 		this._setTabSizes(tab.parentNode)
 	},
 
+	isVisible : function(id) {
+		var tab = this._tabs[id];
+		return tab.style.display!='none';
+	},
+
 	getActiveTab : function() {
 		if (!this._lastActive)
 			return null;
