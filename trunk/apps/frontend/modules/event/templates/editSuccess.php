@@ -41,7 +41,7 @@
 	if( $pastDate )
 		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj));
 	else
-		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj, 'hidden'=>!$eventObj->getVisible()));
+		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj, 'hidden'=>true));
 //	else
 //		$dhtmlxTabBarObj->addTab('result', __('Result'), null, array('hidden'=>true));
 
@@ -54,10 +54,10 @@
 ?>
 	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php
-			if( $pastDate )				
-				echo button_tag('mainSubmit', __('button.launchResult'), array('onclick'=>'openEventResult()'));
-			else				
-				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()'));
+//			if( $pastDate )
+				echo button_tag('mainSubmitResult', __('button.launchResult'), array('onclick'=>'openEventResult()', 'visible'=>$pastDate));
+//			else				
+				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()', 'visible'=>!$pastDate));
 			
 			echo getFormLoading('event');
 			echo getFormStatus();
@@ -70,6 +70,6 @@
 	DhtmlxWindows::createWindow('rankingPlaceAdd', __('event.gamePlaceRegister'), 550, 125, 'ranking/dialog/placeAdd', array());
 	DhtmlxWindows::createWindow('rankingPlayerAdd', __('ranking.playerRegister'), 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$eventObj->getRankingId()));
 	
-	if( $pastDate && ($isEditable || $isMyEvent) )
-		DhtmlxWindows::createWindow('eventResult', __('event.resultTab.intro'), 680, 400, 'event/dialog/result', array('eventObj'=>$eventObj));
+	if( ($isEditable || $isMyEvent) )
+		DhtmlxWindows::createWindow('eventResult', __('event.resultTab.intro'), 680, 400, 'event/dialog/result', array('eventObj'=>$eventObj, 'ajax'=>(!$pastDate)));
 ?>
