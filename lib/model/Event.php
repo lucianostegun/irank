@@ -267,7 +267,7 @@ class Event extends BaseEvent
 		return $this->getRanking()->getGameStyle($returnTagName);
 	}
 	
-	public function getEmailAddressList($tagName=null, $supressMe=false){
+	public function getEmailAddressList($tagName=null, $supressMe=false, $returnCulture=false){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
 		
@@ -284,7 +284,11 @@ class Event extends BaseEvent
 			if( $tagName )
 				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
 					continue;
-					
+			
+			if( $returnCulture )
+				$emailAddressList[] = array('emailAddress'=>$peopleObj->getEmailAddress(),
+											'culture'=>$peopleObj->getDefaultLanguage());
+			else
 			$emailAddressList[] = $peopleObj->getEmailAddress();
 		}
 		
@@ -370,26 +374,36 @@ class Event extends BaseEvent
 	
 	public function notifyResult(){
 
-		$emailContent = AuxiliarText::getContentByTagName('eventResult');
-
-		$emailContent = $this->getEmailContent($emailContent);
+		$templateName = 'eventResult';
+		$emailSubject = 'email.subject.eventResult';
+		
 		$resultList   = $this->getEmailResultList();
 	  	$classifyList = $this->getEmailClassifyList();
 		
-		$emailContent = str_replace('<resultList>', $resultList, $emailContent);
-		$emailContent = str_replace('<classifyList>', $classifyList, $emailContent);
+		$infoList['resultList']   = $resultList;
+		$infoList['classifyList'] = $classifyList;
+		$infoList                 = array_merge($infoList, $this->getInfo());
+		
+		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
+		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
+		$emailSubjectList['en_US'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
 		
 		$eventPlayerObjList = $this->getPlayerList();
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
-			$eventPosition   = $eventPlayerObj->getEventPosition();
+			$eventPosition = $eventPlayerObj->getEventPosition();
 			
 			if( $eventPosition==0 )
 				continue;
 			
 			$peopleObj = $eventPlayerObj->getPeople();
+			$emailAddress = $peopleObj->getEmailAddress();
+			$culture      = $peopleObj->getDefaultLanguage();
+			$emailContent = $emailContentList[$culture];
+			$emailSubject = $emailSubjectList[$culture];
 			
-			$emailContentTmp = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
+			$emailContent = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
 			
 			$congratsMessage = '';
 			
@@ -404,9 +418,9 @@ class Event extends BaseEvent
 				$congratsMessage = __('event.congratMessage', array('%eventPosition%'=>$eventPosition, '%sufix%'=>$sufix)).'<br/><br/>';
 			}
 
-			$emailContentTmp = str_replace('<congratsMessage>', $congratsMessage, $emailContentTmp);
+			$emailContent = str_replace('<congratsMessage>', $congratsMessage, $emailContent);
 
-			Report::sendMail(__('email.subject.eventResult', array('%eventName%'=>$this->getEventName())), $peopleObj->getEmailAddress(), $emailContentTmp);
+			Report::sendMail($emailSubject, $emailAddress, $emailContent);
 		}
 	}
 	
@@ -414,32 +428,46 @@ class Event extends BaseEvent
 
 		Util::getHelper('I18N');
 
-		$emailContent = AuxiliarText::getContentByTagName('eventDeleteNotify');
-
-		$emailContent = $this->getEmailContent($emailContent);
+		$templateName = 'eventDeleteNotify';
+		$emailSubject = 'email.subject.eventDeleteNotify';
+		
 	  	$classifyList = $this->getEmailClassifyList();
 	  	$peopleName   = People::getCurrentPeople()->getName();
 		
-		$emailContent = str_replace('<peopleName>', $peopleName, $emailContent);
-		$emailContent = str_replace('<classifyList>', $classifyList, $emailContent);
+		$infoList['classifyList'] = $classifyList;
+		$infoList                 = array_merge($infoList, $this->getInfo());
 		
-		$emailAddressList = $this->getEmailAddressList();
+		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
+		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
+		$emailSubjectList['en_US'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
+		
+		$emailAddressInfoList = $this->getEmailAddressList(null, false, true);
 		
 		$iCalFile = $this->getICal('delete');
 		$attachmentList  = array('invite.ics'=>$iCalFile);
 		$optionList      = array('attachmentList'=>$attachmentList);
 		
-		Report::sendMail(__('email.subject.eventDeleteNotify', array('%eventName%'=>$this->getEventName())), $emailAddressList, $emailContent, $optionList);
+		foreach($emailAddressInfoList as $emailAddressInfo){
+			
+			$emailAddress = $emailAddressInfo['emailAddress'];
+			$culture      = $emailAddressInfo['culture'];
+			$emailContent = $emailContentList[$culture];
+			$emailSubject = $emailSubjectList[$culture];
+			
+			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
+		}
+		
 		unlink($iCalFile);
 	}
 	
 	public function notifyReminder($days=7){
 
 		Util::getHelper('I18N');
-
-		$emailContent = AuxiliarText::getContentByTagName('eventReminder');
-		$emailContent = $this->getEmailContent($emailContent);
 		
+		$templateName = 'eventReminder';
+		$emailSubject = 'email.subject.eventReminder';
+
 		$eventSchedule = ($days==0?__('today'):__('inDays', array('%days%'=>$days)));
 		switch($days){
 			case 1:
@@ -447,34 +475,33 @@ class Event extends BaseEvent
 				break;	
 		}
 		
-		$emailContent = str_replace('<eventSchedule>', $eventSchedule, $emailContent);
+	  	$classifyList = $this->getEmailClassifyList();
+	  	$peopleName   = People::getCurrentPeople()->getName();
 		
-		$emailAddressList = $this->getEmailAddressList('receiveEventReminder'.$days);
+		$infoList['eventSchedule'] = $eventSchedule;
+		$infoList                  = array_merge($infoList, $this->getInfo());
 		
-		Report::sendMail(__('email.subject.eventReminder', array('%eventName%'=>$this->getEventName())), $emailAddressList, $emailContent);
+		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
+		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
+		$emailSubjectList['en_US'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
+		
+		$emailAddressInfoList = $this->getEmailAddressList('receiveEventReminder'.$days, false, true);
+		
+		foreach($emailAddressInfoList as $emailAddressInfo){
+
+			$emailAddress = $emailAddressInfo['emailAddress'];
+			$culture      = $emailAddressInfo['culture'];
+			$emailContent = $emailContentList[$culture];
+			$emailSubject = $emailSubjectList[$culture];
+			
+			Report::sendMail($emailSubject, $emailAddress, $emailContent);
+		}
 	}
 	
 	public function getEmailContent($emailContent){
 
-		$rankingObj = $this->getRanking();
-
-		$rankingType = $rankingObj->getRankingType()->getDescription();
-		
-		$emailContent = str_replace('<eventName>', $this->getEventName(), $emailContent);
-		$emailContent = str_replace('<rankingName>', $this->getRanking()->getRankingName(), $emailContent);
-		$emailContent = str_replace('<gameStyle>', $this->getGameStyle()->getDescription(), $emailContent);
-		$emailContent = str_replace('<eventPlace>', $this->getEventPlace(), $emailContent);
-		$emailContent = str_replace('<mapsLink>', $this->getRankingPlace()->getMapsLink(), $emailContent);
-		$emailContent = str_replace('<eventDate>', $this->getEventDate('d/m/Y'), $emailContent);
-		$emailContent = str_replace('<startTime>', $this->getStartTime('H:i'), $emailContent);
-		$emailContent = str_replace('<paidPlaces>', $this->getPaidPlaces(), $emailContent);
-		$emailContent = str_replace('<buyin>', Util::formatFloat($this->getBuyin(), true), $emailContent);
-		$emailContent = str_replace('<comments>', $this->getComments(), $emailContent);
-		$emailContent = str_replace('<invites>', $this->getInvites(), $emailContent);
-		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
-		$emailContent = str_replace('<rankingType>', $rankingType, $emailContent);
-		
-		return $emailContent;
+		return Report::replace($emailContent, $this->getInfoList());
 	}
 	
 	public function getEmailResultList(){
@@ -820,12 +847,31 @@ class Event extends BaseEvent
 		
 		$peopleId = MyTools::getAttribute('peopleId');
 		
+		$rankingObj = $this->getRanking();
+
+		$rankingType = $rankingObj->getRankingType()->getDescription();
+		
 		$infoList = array();
+		$infoList['id']           = $this->getId();
 		$infoList['eventId']      = $this->getId();
 		$infoList['isConfirmed']  = $this->isConfirmed($peopleId);
 		$infoList['pastDate']     = $this->isPastDate();
 		$infoList['isEditable']   = $this->isEditable();
 		$infoList['inviteStatus'] = $this->getInviteStatus($peopleId);
+		
+		$infoList['eventName']   = $this->getEventName();
+		$infoList['rankingName'] = $this->getRanking()->getRankingName();
+		$infoList['gameStyle']   = $this->getGameStyle()->getDescription();
+		$infoList['eventPlace']  = $this->getEventPlace();
+		$infoList['mapsLink']    = $this->getRankingPlace()->getMapsLink();
+		$infoList['eventDate']   = $this->getEventDate('d/m/Y');
+		$infoList['startTime']   = $this->getStartTime('H:i');
+		$infoList['paidPlaces']  = $this->getPaidPlaces();
+		$infoList['buyin']       = Util::formatFloat($this->getBuyin(), true);
+		$infoList['comments']    = $this->getComments();
+		$infoList['invites']     = $this->getInvites();
+		$infoList['players']     = $this->getPlayers();
+		$infoList['rankingType'] = $rankingType;
 		
 		return $infoList;
 	}

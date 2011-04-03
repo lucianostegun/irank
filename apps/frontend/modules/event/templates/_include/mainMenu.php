@@ -11,8 +11,8 @@
 	<div class="innerItem" style="background: url('/images/icon/clone.png') 10px 5px no-repeat"><?php echo link_to(__('button.cloneEvent'), '#cloneEvent()') ?></div>
 	
 	<?php if( $isEditable ): ?>
-   	<div class="innerItem" style="background: url('/images/icon/player.png') 10px 5px no-repeat"><?php echo link_to(__('button.newPlayer'), '#addRankingPlayer()') ?></div>
-	<div class="innerItem" style="background: url('/images/icon/players.png') 10px 5px no-repeat"><?php echo link_to(__('button.importPlayers'), '#importPlayers()') ?></div>
+   	<div class="innerItem" style="background: url('/images/icon/player.png') 10px 5px no-repeat" id="mainMenuEventAddRankingPlayersDiv"><?php echo link_to(__('button.newPlayer'), '#addRankingPlayer()') ?></div>
+	<div class="innerItem" style="background: url('/images/icon/players.png') 10px 5px no-repeat" id="mainMenuEventImportPlayersDiv"><?php echo link_to(__('button.importPlayers'), '#importPlayers()') ?></div>
 	<br/><br/>
 	<div class="innerItem" style="background: url('/images/icon/delete.png') 10px 5px no-repeat"><?php echo link_to(__('button.deleteEvent'), '#doDeleteEvent()') ?></div>
 	<?php endif; ?>

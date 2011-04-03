@@ -74,23 +74,33 @@ class EventComment extends BaseEventComment
 		Util::getHelper('I18N');
 
 		$eventObj     = $this->getEvent();
-		$emailContent = AuxiliarText::getContentByTagName('eventCommentNotify');
+		$templateName = 'eventCommentNotify';
+		$emailSubject = 'email.subject.eventComment';
+			
+		$infoList['eventName']   = $eventObj->getEventName();
+		$infoList['rankingName'] = $eventObj->getRanking()->getRankingName();
+		$infoList['peopleName']  = $this->getPeople()->getFirstName();
+		$infoList['comment']     = $this->getComment();
 		
-		$culture = MyTools::getCulture();
-		if( !$culture )
-			MyTools::setCulture('pt_BR');
+		$emailAddressInfoList = $eventObj->getEmailAddressList('receiveEventCommentNotify', false, true);
 
-		$emailContent = str_replace('<eventName>', $eventObj->getEventName(), $emailContent);
-		$emailContent = str_replace('<rankingName>', $eventObj->getRanking()->getRankingName(), $emailContent);
-		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
-		$emailContent = str_replace('<comment>', $this->getComment(), $emailContent);
+		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
+		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventCode%'=>$eventObj->getCode()), 'messages', 'pt_BR');
+		$emailSubjectList['en_US'] = __($emailSubject, array('%eventCode%'=>$eventObj->getCode()), 'messages', 'en_US');
 		
-		$emailAddressList = $eventObj->getEmailAddressList('receiveEventCommentNotify', true);
+		$optionList = array();
+		$optionList['emailTemplate'] = null;
+		$optionList['replyTo']       = 'event_comment@irank.com.br';
 		
-		$options = array();
-		$options['emailTemplate'] = null;
-		$options['replyTo']       = 'event_comment@irank.com.br';
-		
-		Report::sendMail(__('email.subject.eventComment', array('%eventCode%'=>$eventObj->getCode())), $emailAddressList, $emailContent, $options);
+		foreach($emailAddressInfoList as $emailAddressInfo){
+
+			$emailAddress = $emailAddressInfo['emailAddress'];
+			$culture      = $emailAddressInfo['culture'];
+			$emailContent = $emailContentList[$culture];
+			$emailSubject = $emailSubjectList[$culture];
+
+			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
+		}
 	}
 }

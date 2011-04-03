@@ -3,12 +3,13 @@ var _SaveResultAlert = false;
 function handleSuccessEvent(content){
 
 	var eventObj = parseInfo(content);
+	var pastDate = eventObj.pastDate;
 	
 	$('eventId').value = eventObj.eventId;
 
-	updatePlayerContent(eventObj.eventId);
+	updatePlayerContent(eventObj.eventId, pastDate);
 	
-	if( eventObj.pastDate )
+	if( pastDate )
 		updateResultContent(eventObj.eventId);
 	
 	setRecordSaved(true);
@@ -21,13 +22,37 @@ function handleSuccessEvent(content){
 		$('eventSendEmail').checked = false;
 	}
 
-	showButton('confirmPresence');
-	showButton('declinePresence');
-	showButton('maybePresence');
-	
-	enableButton('confirmPresence');
-	enableButton('declinePresence');
-	enableButton('maybePresence');
+	if( pastDate ){
+		
+		lockEvent(eventObj.id)
+		
+		hideButton('confirmPresence');
+		hideButton('declinePresence');
+		hideButton('maybePresence');
+		
+		hideButton('mainSubmit');
+		showButton('mainSubmitResult');
+		
+		disableButton('confirmPresence');
+		disableButton('declinePresence');
+		disableButton('maybePresence');
+		
+		hideDiv('mainMenuEventAddRankingPlayersDiv');
+		hideDiv('mainMenuEventImportPlayersDiv');
+		
+		loadEventResultWindowContent(eventObj.id);
+	}else{
+		
+		showButton('confirmPresence');
+		showButton('declinePresence');
+		showButton('maybePresence');
+		
+		enableButton('confirmPresence');
+		enableButton('declinePresence');
+		enableButton('maybePresence');
+		
+		lockRanking();
+	}
 	
 	showDiv('mainMenuEvent');
 	
@@ -38,10 +63,8 @@ function handleSuccessEvent(content){
 	tabBarMainObj.showTab('comments');
 	tabBarMainObj.showTab('player');
 	
-	if( eventObj.pastDate )
+	if( pastDate )
 		tabBarMainObj.showTab('result');
-	
-	lockRanking();
 	
 	adjustContentTab();
 	
@@ -432,10 +455,10 @@ function doDeleteEvent(){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
-function updatePlayerContent(eventId){
+function updatePlayerContent(eventId, pastEvent){
 	
 	var urlAjax = _webRoot+'/event/getPlayerList/eventId/'+eventId;
-	new Ajax.Updater('eventPlayerDiv', urlAjax, {asynchronous:true, evalScripts:false});
+	new Ajax.Updater((pastEvent?'mainPlayerObjDiv':'eventPlayerDiv'), urlAjax, {asynchronous:true, evalScripts:false});
 	
 	var urlAjax = _webRoot+'/event/getPlayerList/eventId/'+eventId+'/result/1';
 	new Ajax.Updater('eventResultPlayerListDiv', urlAjax, {asynchronous:true, evalScripts:false});
@@ -808,4 +831,19 @@ function toggleEventResultView(showResult){
 		hideButton('calculatePrize');
 		showButton('toggleResultButtonResult');
 	}
+}
+
+function loadEventResultWindowContent(eventId){
+	
+	if( $('windowEventResultDiv').innerHTML!='' )
+		return false;
+	
+	var urlAjax = _webRoot+'/event/getResultWindow/eventId/'+eventId;
+	new Ajax.Updater('windowEventResultDiv', urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function lockEvent(eventId){
+
+	var urlAjax = _webRoot+'/event/getMainTab/eventId/'+eventId+'/readOnly/1';
+	new Ajax.Updater('mainMainObjDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }

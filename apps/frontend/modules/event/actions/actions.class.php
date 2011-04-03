@@ -222,6 +222,27 @@ class eventActions extends sfActions
 	return $this->renderText(get_partial('event/include/result'.($readOnly?'Ro':''), array('eventObj'=>$eventObj)));
   }
   
+  public function executeGetResultWindow($request){
+
+	$eventId  = $request->getParameter('eventId');
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+	
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('event/dialog/result', array('eventObj'=>$eventObj, 'windowHeight'=>400)));
+  }
+  
+  public function executeGetMainTab($request){
+
+	$eventId  = $request->getParameter('eventId');
+	$readOnly = $request->getParameter('readOnly');
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+	
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('event/'.($readOnly?'show':'form').'/main', array('eventObj'=>$eventObj)));
+  }
+  
   public function executeCloneEvent($request){
   	
   	$eventId = $request->getParameter('eventId');
