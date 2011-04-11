@@ -501,7 +501,7 @@ class Event extends BaseEvent
 	
 	public function getEmailContent($emailContent){
 
-		return Report::replace($emailContent, $this->getInfoList());
+		return Report::replace($emailContent, $this->getInfo());
 	}
 	
 	public function getEmailResultList(){
