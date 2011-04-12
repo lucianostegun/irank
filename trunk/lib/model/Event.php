@@ -415,7 +415,7 @@ class Event extends BaseEvent
 				elseif( ereg('2$', $eventPosition) ) $sufix = 'nd';
 				elseif( ereg('3$', $eventPosition) ) $sufix = 'rd';
 				
-				$congratsMessage = __('event.congratMessage', array('%eventPosition%'=>$eventPosition, '%sufix%'=>$sufix)).'<br/><br/>';
+				$congratsMessage = __('event.congratMessage', array('%eventPosition%'=>$eventPosition, '%sufix%'=>$sufix), 'messages', $culture).'<br/><br/>';
 			}
 
 			$emailContent = str_replace('<congratsMessage>', $congratsMessage, $emailContent);
