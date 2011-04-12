@@ -30,8 +30,8 @@ class loginActions extends sfActions
   public function executeLogin($request)
   {
 
-	$username = $request->getParameter( 'username' );
-	$password = $request->getParameter( 'password' );
+	$username = $request->getParameter('username');
+	$password = $request->getParameter('password');
 	
 	$statusMessage = false;
 	

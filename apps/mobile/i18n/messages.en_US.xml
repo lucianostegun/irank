@@ -474,6 +474,14 @@
 				<source>event.resultLunch.prize</source>
 				<target>Prize</target>
 			</trans-unit>
+			<trans-unit>
+				<source>email.subject.eventResult</source>
+				<target>Event result @ %eventName%</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.congratMessage</source>
+				<target>Congratulations, you took %eventPosition%%sufix% place on this event.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
