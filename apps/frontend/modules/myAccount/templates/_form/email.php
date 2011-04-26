@@ -2,7 +2,7 @@
 	$receiveFriendEventConfirmNotify = $userSiteObj->getOptionValue('receiveFriendEventConfirmNotify');
 	$receiveEventReminder0           = $userSiteObj->getOptionValue('receiveEventReminder0');
 	$receiveEventReminder3           = $userSiteObj->getOptionValue('receiveEventReminder3');
-	$receiveEventReminder7           = $userSiteObj->getOptionValue('receiveEventReminder7');
+	$receiveEventReminder5           = $userSiteObj->getOptionValue('receiveEventReminder5');
 	$receiveEventCommentNotify       = $userSiteObj->getOptionValue('receiveEventCommentNotify');
 	$defaultLanguage                 = $userSiteObj->getPeople()->getDefaultLanguage();
 	$quickResume                     = $userSiteObj->getOptionValue('quickResume');
@@ -34,8 +34,8 @@
 				<div class="label"><label for="receiveEventReminder3"><?php echo __('myAccount.email.receiveEventReminder3') ?></label></div>
 			</div>
 			<div class="rowCheckbox">
-				<div class="field"><?php echo checkbox_tag('receiveEventReminder7', true, $receiveEventReminder7) ?></div>
-				<div class="label"><label for="receiveEventReminder7"><?php echo __('myAccount.email.receiveEventReminder7') ?></label></div>
+				<div class="field"><?php echo checkbox_tag('receiveEventReminder5', true, $receiveEventReminder5) ?></div>
+				<div class="label"><label for="receiveEventReminder5"><?php echo __('myAccount.email.receiveEventReminder5') ?></label></div>
 			</div>
 			<div class="rowCheckbox">
 				<div class="field"><?php echo checkbox_tag('receiveEventCommentNotify', true, $receiveEventCommentNotify) ?></div>

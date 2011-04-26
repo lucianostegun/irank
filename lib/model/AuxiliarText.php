@@ -71,7 +71,7 @@ class AuxiliarText extends BaseAuxiliarText
 	}
 	
 	public static function getContentByTagName($tagName, $encodeUTF8=false, $culture=false){
-		
+
 		if( !$culture )
 			$culture = MyTools::getCulture();
 		

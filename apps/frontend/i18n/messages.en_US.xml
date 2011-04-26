@@ -572,8 +572,8 @@
 				<target>Notify scheduled events for next 3 days</target>
 			</trans-unit>
 			<trans-unit>
-				<source>myAccount.email.receiveEventReminder7</source>
-				<target>Notify scheduled events for next 7 days</target>
+				<source>myAccount.email.receiveEventReminder5</source>
+				<target>Notify scheduled events for next 5 days</target>
 			</trans-unit>
 			<trans-unit>
 				<source>myAccount.email.receiveEventCommentNotify</source>
