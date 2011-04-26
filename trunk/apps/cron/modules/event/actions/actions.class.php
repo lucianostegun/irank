@@ -29,7 +29,7 @@ class eventActions extends sfActions
 	
 	$this->getUser()->getAttributeHolder()->remove('cron');
 	
-	echo 'Notificações enviadas com sucesso para '.count($eventObjList).' evento(s)';
+	echo date('Y-m-d H:i:s').' - Notificações enviadas com sucesso para '.count($eventObjList).' evento(s)'.chr(10);
 	exit;
   }
   
@@ -149,7 +149,7 @@ class eventActions extends sfActions
 	  	    $successCount++;
 		}
 		
-		echo 'Importação concluída com sucesso! E-mails importados: '.$successCount;
+		echo date('Y-m-d H:i:s').' - Importação concluída com sucesso! E-mails importados: '.$successCount.chr(10);
 		
 		exit;
   }
