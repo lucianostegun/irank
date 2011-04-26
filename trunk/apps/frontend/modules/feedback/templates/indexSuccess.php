@@ -72,7 +72,7 @@
 		</tr>
 		<tr>
 			<td align="left" valign="top">
-				<?php echo link_to(__('Click here'), '#newMessage()', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> <?php echo __('feedback.newMessageLink') ?><br/>	
+				<?php echo link_to(__('ClickHere'), '#newMessage()', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> <?php echo __('feedback.newMessageLink') ?><br/>	
 			</td>
 		</tr>
 	</table>

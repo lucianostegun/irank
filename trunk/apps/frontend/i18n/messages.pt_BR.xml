@@ -572,11 +572,11 @@
 			</trans-unit>
 			<trans-unit>
 				<source>myAccount.email.receiveEventReminder3</source>
-				<target>Notificar eventos agendados para o dia</target>
+				<target>Notificar eventos agendados para 3 dias</target>
 			</trans-unit>
 			<trans-unit>
-				<source>myAccount.email.receiveEventReminder7</source>
-				<target>Notificar eventos agendados para 7 dias</target>
+				<source>myAccount.email.receiveEventReminder5</source>
+				<target>Notificar eventos agendados para 5 dias</target>
 			</trans-unit>
 			<trans-unit>
 				<source>myAccount.email.receiveEventCommentNotify</source>
