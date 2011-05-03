@@ -351,6 +351,10 @@
 				<source>leftBar.shareIt</source>
 				<target>Share it</target>
 			</trans-unit>
+			<trans-unit>
+				<source>leftBar.partners</source>
+				<target>&lt;b&gt;iRank&lt;/b&gt; partners</target>
+			</trans-unit>
 			
 			<trans-unit>
 				<source>topMenu.myiRank</source>

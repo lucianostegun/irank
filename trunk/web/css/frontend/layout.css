@@ -153,6 +153,21 @@ img {
 	color: 			#6A6A6A
 }
 
+#contentArea #innerContent #leftContent #socialNetwork #partners {
+
+	margin-top: 	30px;
+	margin-bottom: 	5px;
+	border-bottom: 	1px solid #CCC;
+	color: 			#6A6A6A;
+}
+
+#contentArea #innerContent #leftContent #socialNetwork .partner {
+
+	height: 		65px;
+	margin-top: 	7px;
+	margin-left: 	12px;
+}
+
 #contentArea #innerContent #leftContent #leftBar #leftMenu {
 	
 	margin-top: 	15px;

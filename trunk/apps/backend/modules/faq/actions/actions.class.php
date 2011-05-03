@@ -21,7 +21,7 @@ class faqActions extends sfActions
   		$this->faqObj = FaqPeer::retrieveByPK( $faqId );
   		if( !is_object($this->faqObj) )
   			return $this->redirect( 'faq', 'index' );
-  		$this->actionDescription = '<b>Editando:</b> <i>'.$this->faqObj->getQuestion().'</i>';
+  		$this->actionDescription = '<b>Editando:</b> <i>'.$this->faqObj->toString().'</i>';
   	}else{
 	 	
 	 	$this->faqObj = Util::getNewObject( 'faq' );
@@ -29,7 +29,7 @@ class faqActions extends sfActions
   	}
 
   	if( $this->readOnly )
-  		$this->actionDescription = '<b>Visualizando:</b> <i>'.$this->faqObj->getQuestion().'</i>';
+  		$this->actionDescription = '<b>Visualizando:</b> <i>'.$this->faqObj->toString().'</i>';
   	
   	return $this->setTemplate('index');
   }

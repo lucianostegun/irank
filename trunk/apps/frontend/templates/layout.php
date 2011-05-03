@@ -44,6 +44,7 @@ $innerObj        = (isset($innerObj)?$innerObj:false);
 				    	<div id="socialNetwork">
 				    		<?php #include_partial('home/include/facebook', array()) ?>
 				    		<?php include_partial('home/include/addthis', array()) ?>
+				    		<?php include_partial('home/include/partners', array()) ?>
 				    	</div>
     				</td>
     				<td valign="top" id="rightContent">
