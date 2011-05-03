@@ -56,6 +56,12 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 	protected $lastEventPhotoCriteria = null;
 
 	
+	protected $collPartnerList;
+
+	
+	protected $lastPartnerCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -409,6 +415,14 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collPartnerList !== null) {
+				foreach($this->collPartnerList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -460,6 +474,14 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 				if ($this->collEventPhotoList !== null) {
 					foreach($this->collEventPhotoList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collPartnerList !== null) {
+					foreach($this->collPartnerList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -660,6 +682,10 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 			foreach($this->getEventPhotoList() as $relObj) {
 				$copyObj->addEventPhoto($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getPartnerList() as $relObj) {
+				$copyObj->addPartner($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -895,6 +921,76 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 		$this->lastEventPhotoCriteria = $criteria;
 
 		return $this->collEventPhotoList;
+	}
+
+	
+	public function initPartnerList()
+	{
+		if ($this->collPartnerList === null) {
+			$this->collPartnerList = array();
+		}
+	}
+
+	
+	public function getPartnerList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePartnerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPartnerList === null) {
+			if ($this->isNew()) {
+			   $this->collPartnerList = array();
+			} else {
+
+				$criteria->add(PartnerPeer::FILE_ID, $this->getId());
+
+				PartnerPeer::addSelectColumns($criteria);
+				$this->collPartnerList = PartnerPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(PartnerPeer::FILE_ID, $this->getId());
+
+				PartnerPeer::addSelectColumns($criteria);
+				if (!isset($this->lastPartnerCriteria) || !$this->lastPartnerCriteria->equals($criteria)) {
+					$this->collPartnerList = PartnerPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastPartnerCriteria = $criteria;
+		return $this->collPartnerList;
+	}
+
+	
+	public function countPartnerList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BasePartnerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(PartnerPeer::FILE_ID, $this->getId());
+
+		return PartnerPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addPartner(Partner $l)
+	{
+		$this->collPartnerList[] = $l;
+		$l->setFile($this);
 	}
 
 } 

@@ -10,6 +10,11 @@
 class Faq extends BaseFaq
 {
 	
+	public function toString(){
+		
+		return $this->getQuestion();
+	}
+	
 	public static function getList(){
 		
 		$criteria = new Criteria();

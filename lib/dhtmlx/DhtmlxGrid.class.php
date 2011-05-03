@@ -27,6 +27,7 @@ class DhtmlxGrid extends DhtmlxGrid30 {
 	    $exportType   = $request->getParameter('exportType');
 	    $headerList   = $request->getParameter('headerList');
 	    $instanceName = $request->getParameter('instanceName');
+	    
 	    if( $exportType=='excel' )
     		return DhtmlxGrid::exportExcel( $data, $dataType, $headerList, $instanceName );
 
@@ -181,7 +182,7 @@ class DhtmlxGrid extends DhtmlxGrid30 {
     	$webDir = sfConfig::get('sf_web_dir');
     	
     	$inputFilePath  = $webDir.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'gridboxExport.xls';
-		$outputFilePath = $webDir.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'temp'.DIRECTORY_SEPARATOR.'gridboxExport-'.microtime().'.xls';
+		$outputFilePath = $webDir.DIRECTORY_SEPARATOR.'temp'.DIRECTORY_SEPARATOR.'gridExport'.DIRECTORY_SEPARATOR.'gridboxExport-'.microtime().'.xls';
 	
 		$phpExcelObj = PHPExcel_IOFactory::load($inputFilePath);
 						
