@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+	<file orginal="global" source-language="pt_BR" datatype="plaintext" date="">
+		<body>
+			<trans-unit>
+				<source>email.subject.welcome</source>
+				<target>Seja bem-vindo</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>email.subject.playerAdd</source>
+				<target>Inclusão em ranking</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>email.subject.eventComment</source>
+				<target>Comentários do evento %eventCode%</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>email.subject.rankingDelete</source>
+				<target>Exclusão do ranking @ %rankingName%</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>email.subject.eventResult</source>
+				<target>Resultado de evento @ %eventName%</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>email.subject.eventChangeNotify</source>
+				<target>Notificação de alteração de evento</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>email.subject.eventCreateNotify</source>
+				<target>Notificação de criação de evento</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>email.subject.eventDeleteNotify</source>
+				<target>Exclusão do evento @ %eventName%</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>email.subject.eventReminder</source>
+				<target>Lembrete de evento @ %eventName%</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>email.subject.presenceConfirm</source>
+				<target>Confirmação de presença</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>email.subject.eventPhotoComment</source>
+				<target>Comentários em foto do evento %eventName% (%eventPhotoCommentCode%)</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>email.subject.passwordRecovery</source>
+				<target>Recuperação de senha</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>email.subject.friendInvite</source>
+				<target>Convite especial iRank</target>
+			</trans-unit>
+			
+			
+			
+			<trans-unit>
+				<source>today</source>
+				<target>hoje</target>
+			</trans-unit>
+			<trans-unit>
+				<source>inDays</source>
+				<target>em %days% dias</target>
+			</trans-unit>
+			<trans-unit>
+				<source>tomorrow</source>
+				<target>amanhã</target>
+			</trans-unit>	
+		</body>
+	</file>
+</xliff>

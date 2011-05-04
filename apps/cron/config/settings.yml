@@ -2,9 +2,9 @@ prod:
   .settings:
     no_script_name:           off
     cache:                    off
-    standard_helpers:         [Partial, Cache, Form, Javascript, Text]
+    standard_helpers:         [Partial, Cache, Form, Javascript, I18N, Text]
     timeout:                  3600
-    i18n:                     off
+    i18n:                     on
 
 dev:
   .settings:
@@ -16,6 +16,7 @@ dev:
     standard_helpers:       [Partial, Cache, Form, Javascript, I18N, Text]
     timeout:                3600       # Session timeout, in seconds
     rich_text_js_dir:       js/tinyMce
+    i18n:                     on
 
 test:
   .settings:
@@ -24,6 +25,7 @@ test:
     web_debug:              off
     no_script_name:         off
     etag:                   off
+    i18n:                     on
 
 all:
   .settings:

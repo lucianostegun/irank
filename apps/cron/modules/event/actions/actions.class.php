@@ -23,7 +23,7 @@ class eventActions extends sfActions
 	$criteria->add( EventPeer::EVENT_DATE, $eventDate );
 	$criteria->add( EventPeer::CREATED_AT, $createdAt, Criteria::LESS_EQUAL );
 	$eventObjList = EventPeer::doSelect($criteria);
-	
+
 	foreach($eventObjList as $eventObj)
 		$eventObj->notifyReminder($days);
 	
