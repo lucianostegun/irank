@@ -678,7 +678,7 @@ class eventActions extends sfActions
   	$peopleId = $this->getUser()->getAttribute('peopleId');
   	
   	$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
-  	$shareId        = $eventPlayerObj->getShareId();
+  	$shareId        = base64_encode($eventPlayerObj->getShareId());
   	
   	$url = 'http://'.$request->getHost().'/index.php/event/facebookResult/shareId/'.$shareId;
   	echo 'http://www.facebook.com/sharer/sharer.php?u='.urlencode($url);
