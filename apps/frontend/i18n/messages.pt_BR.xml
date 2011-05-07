@@ -905,6 +905,14 @@
 				<target>Posições pagas</target>
 			</trans-unit>
 			<trans-unit>
+				<source>event.entranceFee</source>
+				<target>Taxa de entrada</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.saveError</source>
+				<target>Ocorreu um erro ao salvar o evento!\nPor favor, tente novamente.</target>
+			</trans-unit>
+			<trans-unit>
 				<source>event.comments</source>
 				<target>Observações</target>
 			</trans-unit>
@@ -1967,7 +1975,7 @@
 			
 			<trans-unit>
 				<source>event.iCal.description</source>
-				<target>Evento valendo pelo ranking %rankingName% com buy-in de %buyIn% pagando as %paidPlaces% primeiras posições.
+				<target>Evento valendo pelo ranking %rankingName% com buy-in de %entranceFee%+%buyIn% pagando as %paidPlaces% primeiras posições.
 					
 %comments%</target>
 			</trans-unit>
@@ -2052,6 +2060,14 @@
 				<target>Eventos pessoais são aqueles em que você participa sem valer por nenhum ranking cadastrado.&lt;br/&gt;
 	Você pode lançar o resultado simplificado de seu jogo, mantendo seu balanço de caixa atualizado&lt;br/&gt;
 	sem precisar cadastrar um novo ranking.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.feedNews</source>
+				<target>Últimas novidades</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.share</source>
+				<target>Compartilhar</target>
 			</trans-unit>
 			
 		</body>

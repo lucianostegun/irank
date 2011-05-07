@@ -902,6 +902,14 @@
 				<target>Paid places</target>
 			</trans-unit>
 			<trans-unit>
+				<source>event.entranceFee</source>
+				<target>Entrance fee</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.saveError</source>
+				<target>Ops! Error during saving the event!\nPlease, try again.</target>
+			</trans-unit>
+			<trans-unit>
 				<source>event.comments</source>
 				<target>Comments</target>
 			</trans-unit>
@@ -1940,7 +1948,7 @@
 			
 			<trans-unit>
 				<source>event.iCal.description</source>
-				<target>Event that worth by ranking %rankingName% with buy-in %buyIn% paying first %paidPlaces% positions.
+				<target>Event that worth by ranking %rankingName% with buy-in %entranceFee%+%buyIn% paying first %paidPlaces% positions.
 					
 %comments%</target>
 			</trans-unit>
@@ -2025,6 +2033,14 @@
 				<target>Personal events are those in which you participate without costing any of your rankings.&lt;br/&gt;
 	You can launch a simple result of your game, keeping your bankroll up to date&lt;br/&gt;
 	without registering a new ranking.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.feedNews</source>
+				<target>Last news</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.share</source>
+				<target>Share</target>
 			</trans-unit>
 		</body>
 	</file>

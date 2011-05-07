@@ -3,6 +3,7 @@ DELETE FROM event_comment;
 DELETE FROM event_photo_comment;
 DELETE FROM event_photo;
 DELETE FROM event;
+DELETE FROM event_personal;
 DELETE FROM ranking_history;
 DELETE FROM ranking_player;
 DELETE FROM ranking_place;

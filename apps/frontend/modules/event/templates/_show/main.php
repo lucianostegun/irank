@@ -31,6 +31,10 @@
 				<div class="textFlex"><?php echo __('currency') ?> <?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></div>
 				<?php echo input_hidden_tag('buyin', Util::formatFloat($eventObj->getBuyin(), true), array('id'=>'eventBuyin')) ?>
 			</div>
+			<div class="row">
+				<div class="label"><?php echo __('event.entranceFee') ?></div>
+				<div class="textFlex"><?php echo __('currency') ?> <?php echo Util::formatFloat($eventObj->getEntranceFee(), true) ?></div>
+			</div>
 			<div class="rowTextArea">
 				<div class="label"><?php echo __('event.comments') ?></div>
 				<div class="textFlex"><?php echo $eventObj->getComments() ?></div>

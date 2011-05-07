@@ -13,7 +13,7 @@ abstract class BaseEventPeer {
 	const CLASS_DEFAULT = 'lib.model.Event';
 
 	
-	const NUM_COLUMNS = 19;
+	const NUM_COLUMNS = 20;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -33,6 +33,9 @@ abstract class BaseEventPeer {
 
 	
 	const BUYIN = 'event.BUYIN';
+
+	
+	const ENTRANCE_FEE = 'event.ENTRANCE_FEE';
 
 	
 	const PAID_PLACES = 'event.PAID_PLACES';
@@ -82,19 +85,19 @@ abstract class BaseEventPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'EventName', 'RankingPlaceId', 'Buyin', 'PaidPlaces', 'EventDate', 'StartTime', 'Comments', 'SentEmail', 'Invites', 'Players', 'SavedResult', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventPeer::ID, EventPeer::RANKING_ID, EventPeer::EVENT_NAME, EventPeer::RANKING_PLACE_ID, EventPeer::BUYIN, EventPeer::PAID_PLACES, EventPeer::EVENT_DATE, EventPeer::START_TIME, EventPeer::COMMENTS, EventPeer::SENT_EMAIL, EventPeer::INVITES, EventPeer::PLAYERS, EventPeer::SAVED_RESULT, EventPeer::ENABLED, EventPeer::VISIBLE, EventPeer::DELETED, EventPeer::LOCKED, EventPeer::CREATED_AT, EventPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'event_name', 'ranking_place_id', 'buyin', 'paid_places', 'event_date', 'start_time', 'comments', 'sent_email', 'invites', 'players', 'saved_result', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'EVENT_NAME'=>'', 'RANKING_PLACE_ID'=>'', 'BUYIN'=>'', 'PAID_PLACES'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'COMMENTS'=>'', 'SENT_EMAIL'=>'', 'INVITES'=>'', 'PLAYERS'=>'', 'SAVED_RESULT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'EventName', 'RankingPlaceId', 'Buyin', 'EntranceFee', 'PaidPlaces', 'EventDate', 'StartTime', 'Comments', 'SentEmail', 'Invites', 'Players', 'SavedResult', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventPeer::ID, EventPeer::RANKING_ID, EventPeer::EVENT_NAME, EventPeer::RANKING_PLACE_ID, EventPeer::BUYIN, EventPeer::ENTRANCE_FEE, EventPeer::PAID_PLACES, EventPeer::EVENT_DATE, EventPeer::START_TIME, EventPeer::COMMENTS, EventPeer::SENT_EMAIL, EventPeer::INVITES, EventPeer::PLAYERS, EventPeer::SAVED_RESULT, EventPeer::ENABLED, EventPeer::VISIBLE, EventPeer::DELETED, EventPeer::LOCKED, EventPeer::CREATED_AT, EventPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'event_name', 'ranking_place_id', 'buyin', 'entrance_fee', 'paid_places', 'event_date', 'start_time', 'comments', 'sent_email', 'invites', 'players', 'saved_result', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'EVENT_NAME'=>'', 'RANKING_PLACE_ID'=>'', 'BUYIN'=>'', 'ENTRANCE_FEE'=>'', 'PAID_PLACES'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'COMMENTS'=>'', 'SENT_EMAIL'=>'', 'INVITES'=>'', 'PLAYERS'=>'', 'SAVED_RESULT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'EventName'=>2, 'RankingPlaceId'=>3, 'Buyin'=>4, 'PaidPlaces'=>5, 'EventDate'=>6, 'StartTime'=>7, 'Comments'=>8, 'SentEmail'=>9, 'Invites'=>10, 'Players'=>11, 'SavedResult'=>12, 'Enabled'=>13, 'Visible'=>14, 'Deleted'=>15, 'Locked'=>16, 'CreatedAt'=>17, 'UpdatedAt'=>18, ),
-		BasePeer::TYPE_COLNAME=>array (EventPeer::ID=>0, EventPeer::RANKING_ID=>1, EventPeer::EVENT_NAME=>2, EventPeer::RANKING_PLACE_ID=>3, EventPeer::BUYIN=>4, EventPeer::PAID_PLACES=>5, EventPeer::EVENT_DATE=>6, EventPeer::START_TIME=>7, EventPeer::COMMENTS=>8, EventPeer::SENT_EMAIL=>9, EventPeer::INVITES=>10, EventPeer::PLAYERS=>11, EventPeer::SAVED_RESULT=>12, EventPeer::ENABLED=>13, EventPeer::VISIBLE=>14, EventPeer::DELETED=>15, EventPeer::LOCKED=>16, EventPeer::CREATED_AT=>17, EventPeer::UPDATED_AT=>18, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'event_name'=>2, 'ranking_place_id'=>3, 'buyin'=>4, 'paid_places'=>5, 'event_date'=>6, 'start_time'=>7, 'comments'=>8, 'sent_email'=>9, 'invites'=>10, 'players'=>11, 'saved_result'=>12, 'enabled'=>13, 'visible'=>14, 'deleted'=>15, 'locked'=>16, 'created_at'=>17, 'updated_at'=>18, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'EventName'=>2, 'RankingPlaceId'=>3, 'Buyin'=>4, 'EntranceFee'=>5, 'PaidPlaces'=>6, 'EventDate'=>7, 'StartTime'=>8, 'Comments'=>9, 'SentEmail'=>10, 'Invites'=>11, 'Players'=>12, 'SavedResult'=>13, 'Enabled'=>14, 'Visible'=>15, 'Deleted'=>16, 'Locked'=>17, 'CreatedAt'=>18, 'UpdatedAt'=>19, ),
+		BasePeer::TYPE_COLNAME=>array (EventPeer::ID=>0, EventPeer::RANKING_ID=>1, EventPeer::EVENT_NAME=>2, EventPeer::RANKING_PLACE_ID=>3, EventPeer::BUYIN=>4, EventPeer::ENTRANCE_FEE=>5, EventPeer::PAID_PLACES=>6, EventPeer::EVENT_DATE=>7, EventPeer::START_TIME=>8, EventPeer::COMMENTS=>9, EventPeer::SENT_EMAIL=>10, EventPeer::INVITES=>11, EventPeer::PLAYERS=>12, EventPeer::SAVED_RESULT=>13, EventPeer::ENABLED=>14, EventPeer::VISIBLE=>15, EventPeer::DELETED=>16, EventPeer::LOCKED=>17, EventPeer::CREATED_AT=>18, EventPeer::UPDATED_AT=>19, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'event_name'=>2, 'ranking_place_id'=>3, 'buyin'=>4, 'entrance_fee'=>5, 'paid_places'=>6, 'event_date'=>7, 'start_time'=>8, 'comments'=>9, 'sent_email'=>10, 'invites'=>11, 'players'=>12, 'saved_result'=>13, 'enabled'=>14, 'visible'=>15, 'deleted'=>16, 'locked'=>17, 'created_at'=>18, 'updated_at'=>19, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
@@ -157,6 +160,8 @@ abstract class BaseEventPeer {
 		$criteria->addSelectColumn(EventPeer::RANKING_PLACE_ID);
 
 		$criteria->addSelectColumn(EventPeer::BUYIN);
+
+		$criteria->addSelectColumn(EventPeer::ENTRANCE_FEE);
 
 		$criteria->addSelectColumn(EventPeer::PAID_PLACES);
 

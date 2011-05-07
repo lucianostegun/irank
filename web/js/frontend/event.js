@@ -1,8 +1,25 @@
 var _SaveResultAlert = false;
 
+function handleErrorEvent(){
+	
+	alert(i18n_event_save_error)
+	
+	enableButton('mainSubmit');
+	hideIndicator('event');
+	
+	if( isDebug() )
+		debug(content);
+	
+	return false;
+}
+
 function handleSuccessEvent(content){
 
 	var eventObj = parseInfo(content);
+
+	if( eventObj==null )
+		return handleErrorEvent(content);
+	
 	var pastDate = eventObj.pastDate;
 	
 	$('eventId').value = eventObj.eventId;

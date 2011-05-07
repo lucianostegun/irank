@@ -147,6 +147,7 @@
 		<column name="event_name" type="VARCHAR" />
 		<column name="ranking_place_id" type="INTEGER" required="true" />
 		<column name="buyin" type="FLOAT" />
+		<column name="entrance_fee" type="FLOAT" />
 		<column name="paid_places" type="INTEGER" />
 		<column name="event_date" type="DATE" />
 		<column name="start_time" type="TIME" />
@@ -172,6 +173,7 @@
 	<table name="event_player" phpName="EventPlayer">
 		<column name="event_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="entrance_fee" type="FLOAT" />
 		<column name="buyin" type="FLOAT" />
 		<column name="rebuy" type="FLOAT" />
 		<column name="addon" type="FLOAT" />
@@ -259,7 +261,7 @@
 		<column name="faq_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="culture" type="CHAR" required="true" primaryKey="true" isCulture="true" />
 		<column name="question_i18n" type="VARCHAR" />
-		<column name="answer_i18n" type="LONGVARCHAR" />
+		<column name="answer_i18n" type="VARCHAR" />
 		  <foreign-key foreignTable="faq">
 		    <reference local="faq_id" foreign="id" />
 		  </foreign-key>
@@ -348,7 +350,7 @@
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
 		<column name="ranking_id" type="INTEGER" required="true" />
 		<column name="place_name" type="VARCHAR" />
-		<column name="maps_link" type="LONGVARCHAR" />
+		<column name="maps_link" type="VARCHAR" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -535,6 +537,29 @@
 		<column name="updated_at" type="TIMESTAMP" />
 		  <foreign-key foreignTable="file">
 		    <reference local="file_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="news" phpName="News" isI18n="true" i18nTable="news_i18n">
+		<column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="news_date" type="DATE" />
+		<column name="news_title" type="VARCHAR" />
+		<column name="internal_link" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="news_i18n" phpName="NewsI18n">
+		<column name="news_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="culture" type="CHAR" required="true" primaryKey="true" isCulture="true" />
+		<column name="news_title_i18n" type="VARCHAR" />
+		<column name="description_i18n" type="VARCHAR" />
+		  <foreign-key foreignTable="news">
+		    <reference local="news_id" foreign="id" />
 		  </foreign-key>
 	</table>
 

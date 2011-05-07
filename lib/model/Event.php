@@ -178,6 +178,10 @@ class Event extends BaseEvent
 	
 	public function getPlayerList($orderByList=null){
 		
+		if( $orderByList=='result' )
+		  	$orderByList = array(EventPlayerPeer::ENABLED=>'desc',
+					 			 EventPlayerPeer::EVENT_POSITION=>'asc');
+
 		return $this->getPeopleList(false, $orderByList);
 	}
 	
@@ -339,6 +343,7 @@ class Event extends BaseEvent
 		$infoList['startTime']   = $this->getStartTime('H:i');
 		$infoList['paidPlaces']  = $this->getPaidPlaces();
 		$infoList['buyin']       = Util::formatFloat($this->getBuyin(), true);
+		$infoList['entranceFee'] = Util::formatFloat($this->getEntranceFee(), true);
 		$infoList['comments']    = $this->getComments();
 		$infoList['invites']     = $this->getInvites();
 		$infoList['players']     = $this->getPlayers();
@@ -465,35 +470,32 @@ class Event extends BaseEvent
 
 		Util::getHelper('I18N');
 		
-		$templateName = 'eventReminder';
-		$emailSubject = 'email.subject.eventReminder';
-
-		$eventSchedule = ($days==0?__('today'):__('inDays', array('%days%'=>$days)));
-		switch($days){
-			case 1:
-				$eventSchedule = ' '.__('tomorrow');
-				break;	
-		}
+		$templateName  = 'eventReminder';
+		$emailSubject  = 'email.subject.eventReminder';
+		$eventSchedule = ($days==0?'today':($days==1?'tomorrow':'inDays'));
 		
 	  	$classifyList = $this->getEmailClassifyList();
 	  	$peopleName   = People::getCurrentPeople()->getName();
+
+		$eventScheduleList['pt_BR'] = __($eventSchedule, array('%days%'=>$days), 'messages', 'pt_BR');
+		$eventScheduleList['en_US'] = __($eventSchedule, array('%days%'=>$days), 'messages', 'en_US');
 		
-		$infoList['eventSchedule'] = $eventSchedule;
-		$infoList                  = array_merge($infoList, $this->getInfo());
+		$infoList = $this->getInfo();
 		
-		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
-		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
-		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
-		$emailSubjectList['en_US'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
-		
+		$emailContentList['pt_BR']  = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), array_merge($infoList, array('eventSchedule'=>$eventScheduleList['pt_BR'])));
+		$emailContentList['en_US']  = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), array_merge($infoList, array('eventSchedule'=>$eventScheduleList['en_US'])));
+		$emailSubjectList['pt_BR']  = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
+		$emailSubjectList['en_US']  = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
+
 		$emailAddressInfoList = $this->getEmailAddressList('receiveEventReminder'.$days, false, true);
-		
+
 		foreach($emailAddressInfoList as $emailAddressInfo){
 
-			$emailAddress = $emailAddressInfo['emailAddress'];
-			$culture      = $emailAddressInfo['culture'];
-			$emailContent = $emailContentList[$culture];
-			$emailSubject = $emailSubjectList[$culture];
+			$emailAddress  = $emailAddressInfo['emailAddress'];
+			$culture       = $emailAddressInfo['culture'];
+			$emailContent  = $emailContentList[$culture];
+			$emailSubject  = $emailSubjectList[$culture];
+			$eventSchedule = $eventScheduleList[$culture];
 			
 			Report::sendMail($emailSubject, $emailAddress, $emailContent);
 		}
@@ -563,6 +565,7 @@ class Event extends BaseEvent
 		$eventObj->setInvites($this->getInvites());
 		$eventObj->setPlayers($this->getPlayers());
 		$eventObj->setBuyin($this->getBuyin());
+		$eventObj->setEntranceFee($this->getEntranceFee());
 		$eventObj->setComments($this->getComments());
 		$eventObj->setVisible(false);
 		$eventObj->setEnabled(false);
@@ -628,6 +631,8 @@ class Event extends BaseEvent
 		$paidPlaces = 0;
 		$players    = 0;
 		
+		$entranceFee = $this->getEntranceFee();
+		
 		$eventPlayerObjList = $this->getPlayerList();
 		$totalBuyin         = 0;
 		foreach($eventPlayerObjList as $eventPlayerObj){
@@ -673,6 +678,7 @@ class Event extends BaseEvent
 	
 				$eventPlayerObj->setEventPosition($eventPosition);
 				$eventPlayerObj->setPrize( Util::formatFloat($prize) );
+				$eventPlayerObj->setEntranceFee( Util::formatFloat($entranceFee) );
 				$eventPlayerObj->setRebuy( Util::formatFloat($rebuy) );
 				$eventPlayerObj->setAddon( Util::formatFloat($addon) );
 				$eventPlayerObj->setBuyin( Util::formatFloat($buyin) );
@@ -776,6 +782,7 @@ class Event extends BaseEvent
 		$eventDate   = strtotime($this->getEventDate('Y-m-d').' '.$this->getStartTime('H:i:s'));
 		$description = __('event.iCal.description', array('%rankingName%'=>$rankingObj->getRankingName(),
 														  '%buyIn%'=>Util::formatFloat($this->getBuyin(), true),
+														  '%entranceFee%'=>Util::formatFloat($this->getEntranceFee(), true),
 														  '%paidPlaces%'=>$this->getPaidPlaces(),
 														  '%comments%'=>$this->getComments())); 
 		
@@ -843,6 +850,131 @@ class Event extends BaseEvent
 		}
 	}
 	
+	public function getFacebookResult(){
+		
+		Util::getHelper('Form');
+		Util::getHelper('Text');
+		
+		$peopleObj = People::getCurrentPeople();
+		
+		$culture = $peopleObj->getDefaultLanguage();
+		
+		$filePath         = Util::getFilePath('/templates/'.$culture.'/facebook/eventResult.jpg');
+		$filePathFavorite = Util::getFilePath('/images/favorite.png');
+		$fontPath         = Util::getFilePath('/../lib/pChart/Fonts');
+	
+		$newImg = imagecreatefromjpeg( $filePath );
+		$newFav = imagecreatefrompng( $filePathFavorite );
+		
+		imagealphablending($newFav, false);
+		imagesavealpha($newFav, true);
+		
+		$fileDimensions = File::getFileDimension($filePath);
+			
+		$width  = $fileDimensions['width'];
+		$height = $fileDimensions['height'];
+		
+		$srcW = imagesx($newImg);
+		$srcH = imagesy($newImg);
+		
+		$rankingId = $this->getRankingId();
+		
+		$colorBlack  = imagecolorallocate($newImg, 0,0,0);
+		$colorWhite  = imagecolorallocate($newImg, 255, 255, 255);
+		$colorRed    = imagecolorallocate($newImg, 229, 32, 36);
+		$eventDate   = 'em '.$this->getEventDate('d/m/Y').' valendo pelo ranking';
+		$rankingName = $this->getRanking()->getRankingName();
+		$eventName   = $this->getEventName().' @ '.$this->getRankingPlace()->getPlaceName();
+		$verdana     = $fontPath.'/verdana.ttf';
+		$verdanaB    = $fontPath.'/verdanab.ttf';
+		$verdanaI    = $fontPath.'/verdanai.ttf';
+		$verdanaZ    = $fontPath.'/verdanaz.ttf';
+		$tahoma      = $fontPath.'/tahoma.ttf';
+		$tahomaB     = $fontPath.'/tahomabd.ttf';
+	
+		imagettftext($newImg, 8, 0, 15, 43, $colorBlack, $verdana, $eventName);
+		imagettftext($newImg, 8, 0, 10, 265, $colorWhite, $verdana, $eventDate);
+		imagettftext($newImg, 8, 0, 220, 265, $colorWhite, $verdanaB, $rankingName);
+		
+		$peopleIdCurrent = $peopleObj->getId();
+		
+		$positionY   = 0;
+		$playerList  = array();
+		$keyPosition = null;
+		
+		foreach($this->getPlayerList('result') as $key=>$eventPlayerObj){
+		
+			if( !$eventPlayerObj->getEnabled() )
+				continue;
+	
+			$peopleId        = $eventPlayerObj->getPeopleId();
+			$eventPosition   = $eventPlayerObj->getEventPosition();
+			$rankingPosition = Util::executeOne('SELECT get_player_position('.$rankingId.', '.$peopleId.', \''.$this->getEventDate('Y-m-d').'\')');
+			
+			$playerList[$peopleId] = array('playerName'=>$eventPlayerObj->getPeople()->getName(),
+										   'score'=>$eventPlayerObj->getScore(),
+										   'ranking'=>$rankingPosition.'º',
+										   'eventPosition'=>$eventPosition.'º');
+			
+			if( $peopleId==$peopleIdCurrent )
+				$keyPosition = $eventPosition;
+		}
+	
+		if( count($playerList) > 8 && $keyPosition!==null ){
+			
+			$loop = 0;
+			foreach($playerList as $key=>$playerName){
+				
+				if( $loop < $keyPosition-2 )
+					unset($playerList[$key]);
+				
+				if( count($playerList)==8 )
+					break;
+					
+				$loop++;
+			}
+		}
+		
+		foreach($playerList as $peopleId=>$playerInfo){
+			
+			$fontFace  = $verdana;//($peopleIdCurrent==$peopleId?$verdanaZ:$verdana);
+			$fontColor = ($peopleIdCurrent==$peopleId?$colorRed:$colorBlack);
+			
+			$eventPosition = $playerInfo['eventPosition'];
+			$playerName    = truncate_text('- '.$playerInfo['playerName'], 50);
+			$score         = $playerInfo['score'];
+			$ranking       = $playerInfo['ranking'];
+			
+			$score  = Util::formatFloat($score, true, 3);
+			$length1 = imagettfbbox(8, 0, $verdana, $score);
+			$length1 = $length1[2]-$length1[0];
+			
+			$length2 = imagettfbbox(8, 0, $verdana, $ranking);
+			$length2 = $length2[2]-$length2[0];
+			
+			$length3 = imagettfbbox(8, 0, $verdana, $eventPosition);
+			$length3 = $length3[2]-$length3[0];
+			
+			imagettftext($newImg, 8, 0, $width-$length3-390, 85+$positionY, $fontColor, $verdana, $eventPosition);
+			imagettftext($newImg, 8, 0, 37, 85+$positionY, $fontColor, $fontFace, $playerName);
+			imagettftext($newImg, 8, 0, $width-$length1-74, 85+$positionY, $fontColor, $verdana, $score);
+			imagettftext($newImg, 8, 0, $width-$length2-17, 85+$positionY, $fontColor, $verdana, $ranking);
+			
+			$positionY += 20;
+		}
+		
+		
+		header('Content-Type: image/png');
+		
+//		$new = imagecreatetruecolor($width/2, $height/2);
+//		imagecopyresampled($new, $newImg, 0, 0, 0, 0, $width/2, $height/2, $srcW, $srcH);
+
+		imagepng($newImg);
+//		imagepng($new);
+		imagedestroy($newImg);
+		imagedestroy($new);
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
@@ -868,6 +1000,7 @@ class Event extends BaseEvent
 		$infoList['startTime']   = $this->getStartTime('H:i');
 		$infoList['paidPlaces']  = $this->getPaidPlaces();
 		$infoList['buyin']       = Util::formatFloat($this->getBuyin(), true);
+		$infoList['entranceFee'] = Util::formatFloat($this->getEntranceFee(), true);
 		$infoList['comments']    = $this->getComments();
 		$infoList['invites']     = $this->getInvites();
 		$infoList['players']     = $this->getPlayers();

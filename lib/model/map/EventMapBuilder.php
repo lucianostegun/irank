@@ -44,6 +44,8 @@ class EventMapBuilder {
 
 		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::FLOAT, false, null);
 
+		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::FLOAT, false, null);
+
 		$tMap->addColumn('PAID_PLACES', 'PaidPlaces', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('EVENT_DATE', 'EventDate', 'int', CreoleTypes::DATE, false, null);

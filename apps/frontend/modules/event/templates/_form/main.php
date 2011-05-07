@@ -49,6 +49,12 @@
 				<div class="error" id="eventBuyinError" onclick="showFormErrorDetails('event', 'buyin')"></div>
 				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
+			<div class="row">
+				<div class="label" id="eventEntranceFeeLabel"><?php echo __('event.entranceFee') ?></div>
+				<div class="field"><?php echo input_tag('entranceFee', Util::formatFloat($eventObj->getEntranceFee(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventEntranceFee')) ?></div>
+				<div class="error" id="eventEntranceFeeError" onclick="showFormErrorDetails('event', 'entranceFee')"></div>
+				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
+			</div>
 			<div class="rowTextArea">
 				<div class="label" id="eventCommentsLabel"><?php echo __('event.comments') ?></div>
 				<div class="field"><?php echo textarea_tag('comments', $eventObj->getComments(), array('id'=>'eventComments')) ?></div>

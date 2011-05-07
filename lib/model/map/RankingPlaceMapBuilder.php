@@ -40,7 +40,7 @@ class RankingPlaceMapBuilder {
 
 		$tMap->addColumn('PLACE_NAME', 'PlaceName', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('MAPS_LINK', 'MapsLink', 'string', CreoleTypes::LONGVARCHAR, false, null);
+		$tMap->addColumn('MAPS_LINK', 'MapsLink', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

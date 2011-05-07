@@ -23,7 +23,7 @@
 	echo form_remote_tag(array(
 		'url'=>'event/save'.($pastDate?'Result':''),
 		'success'=>'handleSuccessEvent'.($pastDate?'Result':'').'( request.responseText )',
-		'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "eventForm", "event", false, "event" )',
+		'failure'=>'enableButton("mainSubmit"); alert(request.responseText);handleFormFieldError( request.responseText, "eventForm", "event", false, "event", handleErrorEvent )',
 		'encoding'=>'utf8',
 		'loading'=>'showIndicator()'
 		), array( 'id'=>'eventForm' ));
@@ -61,6 +61,12 @@
 			
 			echo getFormLoading('event');
 			echo getFormStatus();
+		?>
+	</div>
+<?php else: ?>
+	<div class="buttonTabBar" id="eventMainButtonBar">
+		<?php
+			echo button_tag('facebookResultResult', __('button.share'), array('image'=>'facebook.png', 'onclick'=>'openEventResult()'));
 		?>
 	</div>
 <?php endif; ?>
