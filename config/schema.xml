@@ -173,6 +173,7 @@
 	<table name="event_player" phpName="EventPlayer">
 		<column name="event_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="share_id" type="INTEGER" />
 		<column name="entrance_fee" type="FLOAT" />
 		<column name="buyin" type="FLOAT" />
 		<column name="rebuy" type="FLOAT" />

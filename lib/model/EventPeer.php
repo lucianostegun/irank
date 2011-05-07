@@ -43,6 +43,15 @@ class EventPeer extends BaseEventPeer
 			return $eventObj;
 	}
 	
+	public static function retrieveByShareId($shareId){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPlayerPeer::SHARE_ID, $shareId);
+		$criteria->addJoin( EventPeer::ID, EventPlayerPeer::EVENT_ID, Criteria::INNER_JOIN );
+		
+		return EventPeer::doSelectOne($criteria);
+	}
+	
 	public static function uniqueEventName($eventName){
 
 		$rankingId = MyTools::getRequestParameter('rankingId');
