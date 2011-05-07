@@ -971,8 +971,8 @@ class Event extends BaseEvent
 		
 		if( $thumb ){
 			
-			$new = imagecreatetruecolor(90, 57);
-			imagecopyresampled($new, $newImg, 0, 0, 0, 0, 90, 57, $srcW, $srcH);
+			$new = imagecreatetruecolor(100, 63);
+			imagecopyresampled($new, $newImg, 0, 0, 0, 0, 100, 63, $srcW, $srcH);
 	
 			imagepng($new);
 			imagedestroy($new);

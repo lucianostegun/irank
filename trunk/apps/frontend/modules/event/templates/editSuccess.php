@@ -50,6 +50,8 @@
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 	
+	$facebookButton = button_tag('facebookResultResult', __('button.share'), array('image'=>'facebook.png', 'onclick'=>'shareFacebook('.$eventId.')', 'visible'=>$eventObj->getSavedResult()));
+	
 	if( $isEditable ):
 ?>
 	<div class="buttonTabBar" id="eventMainButtonBar">
@@ -58,6 +60,8 @@
 				echo button_tag('mainSubmitResult', __('button.launchResult'), array('onclick'=>'openEventResult()', 'visible'=>$pastDate));
 //			else				
 				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()', 'visible'=>!$pastDate));
+				
+				echo $facebookButton;
 			
 			echo getFormLoading('event');
 			echo getFormStatus();
@@ -66,7 +70,7 @@
 <?php else: ?>
 	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php
-			echo button_tag('facebookResultResult', __('button.share'), array('image'=>'facebook.png', 'onclick'=>'openEventResult()'));
+			echo $facebookButton;
 		?>
 	</div>
 <?php endif; ?>
