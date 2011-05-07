@@ -672,6 +672,19 @@ class eventActions extends sfActions
 	exit;
   }
   
+  public function executeFacebookShareUrl($request){
+
+  	$eventId  = $request->getParameter('eventId');
+  	$peopleId = $this->getUser()->getAttribute('peopleId');
+  	
+  	$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
+  	$shareId        = $eventPlayerObj->getShareId();
+  	
+  	$url = 'http://'.$request->getHost().'/index.php/event/facebookResult/shareId/'.$shareId;
+  	echo 'http://www.facebook.com/sharer/sharer.php?u='.urlencode($url);
+  	exit;
+  }
+  
   public function executeFacebookResult($request){
 
   	$shareId = $request->getParameter('shareId');

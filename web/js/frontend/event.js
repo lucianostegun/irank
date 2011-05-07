@@ -102,6 +102,7 @@ function handleSuccessEventResult(content){
 
 	enableButton('eventResultSubmit');
 	enableButton('calculatePrize');
+	showButton('facebookResultResult');
 	hideIndicator('eventResult');
 }
 
@@ -863,4 +864,16 @@ function lockEvent(eventId){
 
 	var urlAjax = _webRoot+'/event/getMainTab/eventId/'+eventId+'/readOnly/1';
 	new Ajax.Updater('mainMainObjDiv', urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function shareFacebook(eventId){
+
+	var successFunc = function(t){
+		
+		var urlShare = t.responseText;
+		window.open(urlShare,'irankFacebookShare', 'toolbar=0, status=0, width=650, height=450');
+	}
+	
+	var urlAjax = _webRoot+'/event/facebookShareUrl/eventId/'+eventId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure: successFunc, onSuccess: successFunc});
 }
