@@ -686,7 +686,7 @@ class eventActions extends sfActions
 	
 	$this->metaTitle       = 'Resultados iRank';
 	$this->metaDescription = 'Resultado do evento '.$eventObj->getEventName().' realizado em '.$eventObj->getEventDate('d/m/Y').' valendo pelo ranking '.$eventObj->getRanking()->getRankingName();
-	$this->metaImage       = $uri;
+	$this->metaImage       = $uri.'/resize/1';
 	$this->shareLink       = 'event/facebookResultImage/shareId/'.base64_encode($shareId);
 	
 	sfConfig::set('sf_web_debug', false);
@@ -698,6 +698,7 @@ class eventActions extends sfActions
   
   public function executeFacebookResultImage($request){
 
+  	$thumb   = $request->getParameter('thumb');
   	$shareId = $request->getParameter('shareId');
   	$shareId = base64_decode($shareId);
 
@@ -714,7 +715,7 @@ class eventActions extends sfActions
 		$eventObj = EventPeer::retrieveByPK($eventId);
   	}
 
-	$eventObj->getFacebookResult($peopleId);
+	$eventObj->getFacebookResult($peopleId, $thumb);
 	exit;
   }
   

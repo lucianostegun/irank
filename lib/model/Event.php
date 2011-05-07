@@ -850,7 +850,7 @@ class Event extends BaseEvent
 		}
 	}
 	
-	public function getFacebookResult($peopleId=null){
+	public function getFacebookResult($peopleId=null, $thumb=false){
 		
 		Util::getHelper('Form');
 		Util::getHelper('Text');
@@ -969,13 +969,18 @@ class Event extends BaseEvent
 		
 		header('Content-Type: image/png');
 		
-//		$new = imagecreatetruecolor($width/2, $height/2);
-//		imagecopyresampled($new, $newImg, 0, 0, 0, 0, $width/2, $height/2, $srcW, $srcH);
-
-		imagepng($newImg);
-//		imagepng($new);
-		imagedestroy($newImg);
-		imagedestroy($new);
+		if( $thumb ){
+			
+			$new = imagecreatetruecolor(90, 57);
+			imagecopyresampled($new, $newImg, 0, 0, 0, 0, 90, 57, $srcW, $srcH);
+	
+			imagepng($new);
+			imagedestroy($new);
+		}else{
+			
+			imagepng($newImg);
+			imagedestroy($newImg);
+		}
 	}
 	
 	public function getInfo(){
