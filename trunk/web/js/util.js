@@ -216,8 +216,14 @@ function toFloat(value, display, decimalPlaces){
 
 function parseInfo(infoList){
 
-	eval('var obj = '+infoList+';');
-	return obj;
+	try{
+		
+		eval('var obj = '+infoList+';');
+		return obj;
+	}catch(error){
+		
+		return null;
+	}
 }
 
 function parseMessage(errorMessage){

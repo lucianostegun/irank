@@ -9,7 +9,8 @@
     <th><?php echo __('Score') ?></th>
   </tr>
   <?php
-  	$buyin = $eventObj->getBuyin();
+  	$buyin       = $eventObj->getBuyin();
+  	$entranceFee = $eventObj->getEntranceFee();
   	
   	$orderByList = array(EventPlayerPeer::ENABLED=>'desc',
   						 EventPlayerPeer::EVENT_POSITION=>'asc');
@@ -25,7 +26,7 @@
   ?>
   <tr>
     <td><?php echo $peopleObj->getFullName() ?></td>
-    <td align="right"><?php echo Util::formatFloat($buyin, true) ?></td>
+    <td align="right"><?php echo ($entranceFee?Util::formatFloat($entranceFee, true).'+':'') . Util::formatFloat($buyin, true) ?></td>
     <td>#<?php echo $eventPlayerObj->getEventPosition() ?></td>
     <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getPrize(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getRebuy(), true) ?></td>

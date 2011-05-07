@@ -9,11 +9,42 @@
 ?>
 </div>
 
+<style>
 
+.newsList .news {
+	
+	padding: 		2px 0px 2px 0px;
+	border-bottom: 	1px solid #C0C0C0;
+}
+
+.newsList .news.last {
+	
+	border-bottom: 	0px solid #FFFFFF;
+}
+
+.newsList .news span.date {
+	
+	font-weight: 	bold;
+	color: 			#808080;
+	font-size: 		10px;
+}
+</style>
 <table width="100%" border="0" cellspacing="1" cellpadding="2">
 	<tr>
 		<td valign="top" width="490">
 			<table width="100%" border="0" cellspacing="0" cellpadding="2" class="homeDistinct">
+				<tr>
+					<th valign="top"><?php echo image_tag('layout/feedNews.png', array('align'=>'left')) ?></th>
+					<td colspan="6" class="newsList">
+						<span><?php echo __('home.feedNews') ?></span>
+						<?php foreach(News::getLastNews($limit=5) as $key=>$newsObj): ?>
+						<div class="news<?php echo ($key==$limit-1?' last':'') ?>"><span class="date"><?php echo $newsObj->getNewsDate('d/m/Y') ?></span> - <?php echo link_to($newsObj->getNewsTitle(), $newsObj->getInternalLink()) ?></a></div>
+						<?php endforeach; ?>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6"><hr/></td>
+				</tr>
 				<tr>
 					<th valign="top"><?php echo image_tag('layout/stats.png', array('align'=>'left')) ?></th>
 					<td>

@@ -73,6 +73,7 @@ class eventActions extends sfActions
 	$startTime       = $request->getParameter('startTime');
 	$paidPlaces      = $request->getParameter('paidPlaces');
 	$buyin           = $request->getParameter('buyin');
+	$entranceFee     = $request->getParameter('entranceFee');
 	$comments        = $request->getParameter('comments');
 	$confirmPresence = $request->getParameter('confirmPresence');
 	$sendEmail       = $request->getParameter('sendEmail');
@@ -89,7 +90,7 @@ class eventActions extends sfActions
 		Util::forceError('!'.__('event.lockedEvent'), true);
 		
 	$isClone = ($isClone && !$eventObj->getEnabled());
-	
+
 	$eventObj->setRankingId( $rankingId );
 	$eventObj->setEventName( $eventName );
 	$eventObj->setRankingPlaceId( $rankingPlaceId );
@@ -97,6 +98,7 @@ class eventActions extends sfActions
 	$eventObj->setStartTime( $startTime );
 	$eventObj->setPaidPlaces( ($paidPlaces?$paidPlaces:null) );
 	$eventObj->setBuyin( Util::formatFloat($buyin) );
+	$eventObj->setEntranceFee( Util::formatFloat($entranceFee) );
 	$eventObj->setComments( ($comments?$comments:null) );
 	$eventObj->setVisible(true);
 	$eventObj->setEnabled(true);
@@ -670,6 +672,15 @@ class eventActions extends sfActions
 	exit;
   }
   
+  public function executeFacebookResult($request){
+  	
+  	$eventId  = $request->getParameter('eventId');
+	$eventObj = EventPeer::retrieveByPK($eventId);
+	
+	$eventObj->getFacebookResult();
+	exit;
+  }
+  
   public function executeJavascript($request){
   	
   	Util::getHelper('i18n');
@@ -678,6 +689,7 @@ class eventActions extends sfActions
 	
   	$nl = chr(10);
   	
+  	echo 'var i18n_event_save_error                          = "'.__('event.saveError').'";'.$nl;
   	echo 'var i18n_event_commentsTab_intro                   = "'.__('event.commentsTab.intro').'";'.$nl;
   	echo 'var i18n_event_commentsTab_photoIntro              = "'.__('event.commentsTab.photoIntro').'";'.$nl;
   	echo 'var i18n_event_commentTab_commentText              = "'.__('event.commentTab.commentText').'";'.$nl;
