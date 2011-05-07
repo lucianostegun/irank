@@ -868,12 +868,6 @@ function lockEvent(eventId){
 
 function shareFacebook(eventId){
 
-	var successFunc = function(t){
-		
-		var urlShare = t.responseText;
-		window.open(urlShare,'irankFacebookShare', 'toolbar=0, status=0, width=650, height=450');
-	}
-	
-	var urlAjax = _webRoot+'/event/facebookShareUrl/eventId/'+eventId;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure: successFunc, onSuccess: successFunc});
+	var urlShare = _webRoot+'/event/facebookShareUrl/eventId/'+eventId;
+	window.open(urlShare,'irankFacebookShare', 'toolbar=0, status=0, width=650, height=450');
 }
