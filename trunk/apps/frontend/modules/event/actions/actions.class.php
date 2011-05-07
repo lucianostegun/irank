@@ -674,10 +674,11 @@ class eventActions extends sfActions
   
   public function executeFacebookResult($request){
   	
+  	$peopleId = $request->getParameter('peopleId');
   	$eventId  = $request->getParameter('eventId');
 	$eventObj = EventPeer::retrieveByPK($eventId);
 	
-	$eventObj->getFacebookResult();
+	$eventObj->getFacebookResult($peopleId);
 	exit;
   }
   
