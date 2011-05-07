@@ -7,3 +7,9 @@ confirmPresence:
   
 uploadPhoto:
   is_secure: off
+  
+facebookResult:
+  is_secure: off
+
+facebookResultImage:
+  is_secure: off
