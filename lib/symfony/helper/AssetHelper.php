@@ -344,8 +344,11 @@ function include_metas()
   	$nameList  = explode('|', $name);
   	$attribute = 'name';
   	
-  	if( count($nameList)==2 )
-  		$attribute = 'property';
+  	if( count($nameList)==2 ){
+  		
+  		$nameList[1] = ereg_replace('\*[0-9]*$', '', $nameList[1]);
+  		$attribute   = 'property';
+  	}
   		
     	echo tag('meta', array($attribute => implode(':', $nameList), 'content' => $content))."\n";
   }
