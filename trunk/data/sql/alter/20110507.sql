@@ -24,3 +24,5 @@ BEGIN
     RETURN get_player_position(p_ranking_id, p_people_id, CURRENT_DATE);
 END'
 LANGUAGE 'plpgsql';
+
+ALTER TABLE event_player ADD COLUMN share_id SERIAL;

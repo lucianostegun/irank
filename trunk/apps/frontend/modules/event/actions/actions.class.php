@@ -673,11 +673,46 @@ class eventActions extends sfActions
   }
   
   public function executeFacebookResult($request){
-  	
-  	$peopleId = $request->getParameter('peopleId');
-  	$eventId  = $request->getParameter('eventId');
-	$eventObj = EventPeer::retrieveByPK($eventId);
+
+  	$shareId = $request->getParameter('shareId');
+  	$shareId = base64_decode($shareId);
+
+	$eventPlayerObj = EventPlayerPeer::retrieveByShareId($shareId);
+	$peopleId = $eventPlayerObj->getPeopleId();
+	$eventObj = $eventPlayerObj->getEvent();
 	
+	$uri = $request->getUri();
+	$uri = eregi_replace('facebookResult', 'facebookResultImage', $uri);
+	
+	$this->metaTitle       = 'Resultados iRank';
+	$this->metaDescription = 'Resultado do evento '.$eventObj->getEventName().' realizado em '.$eventObj->getEventDate('d/m/Y').' valendo pelo ranking '.$eventObj->getRanking()->getRankingName();
+	$this->metaImage       = $uri;
+	
+	sfConfig::set('sf_web_debug', false);
+
+	$this->setLayout('facebookShare');
+	$this->setTemplate('none');
+	return sfView::SUCCESS;
+  }
+  
+  public function executeFacebookResultImage($request){
+
+  	$shareId = $request->getParameter('shareId');
+  	$shareId = base64_decode($shareId);
+
+  	if( $shareId ){
+  		
+  		$eventPlayerObj = EventPlayerPeer::retrieveByShareId($shareId);
+  		
+  		$peopleId = $eventPlayerObj->getPeopleId();
+  		$eventObj = $eventPlayerObj->getEvent();
+  	}else{
+	  	
+	  	$peopleId = $request->getParameter('peopleId');
+	  	$eventId  = $request->getParameter('eventId');
+		$eventObj = EventPeer::retrieveByPK($eventId);
+  	}
+
 	$eventObj->getFacebookResult($peopleId);
 	exit;
   }

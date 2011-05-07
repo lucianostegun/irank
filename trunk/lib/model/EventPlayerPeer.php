@@ -104,4 +104,13 @@ class EventPlayerPeer extends BaseEventPlayerPeer
 		$criteria->add( EventPlayerPeer::CONFIRM_CODE, $confirmCode );
 		return EventPlayerPeer::doSelectOne($criteria);
 	}
+	
+	public static function retrieveByShareId($shareId){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPlayerPeer::SHARE_ID, $shareId);
+		$criteria->addJoin( EventPlayerPeer::EVENT_ID, EventPeer::ID, Criteria::INNER_JOIN );
+		
+		return EventPlayerPeer::doSelectOne($criteria);
+	}
 }
