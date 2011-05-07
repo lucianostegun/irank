@@ -341,7 +341,13 @@ function include_metas()
 {
   foreach (sfContext::getInstance()->getResponse()->getMetas() as $name => $content)
   {
-    echo tag('meta', array('name' => $name, 'content' => $content))."\n";
+  	$nameList  = explode('|', $name);
+  	$attribute = 'name';
+  	
+  	if( count($nameList)==2 )
+  		$attribute = 'property';
+  		
+    	echo tag('meta', array($attribute => implode(':', $nameList), 'content' => $content))."\n";
   }
 }
 
