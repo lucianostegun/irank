@@ -850,12 +850,15 @@ class Event extends BaseEvent
 		}
 	}
 	
-	public function getFacebookResult(){
+	public function getFacebookResult($peopleId=null){
 		
 		Util::getHelper('Form');
 		Util::getHelper('Text');
 		
-		$peopleObj = People::getCurrentPeople();
+		if( $peopleId )
+			$peopleObj = PeoplePeer::retrieveByPK($peopleId);
+		else			
+			$peopleObj = People::getCurrentPeople();
 		
 		$culture = $peopleObj->getDefaultLanguage();
 		
