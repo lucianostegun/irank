@@ -59,14 +59,14 @@ class UserSite extends BaseUserSite
 		$receiveFriendEventConfirmNotify = $request->getParameter('receiveFriendEventConfirmNotify');
 		$receiveEventReminder0           = $request->getParameter('receiveEventReminder0');
 		$receiveEventReminder3           = $request->getParameter('receiveEventReminder3');
-		$receiveEventReminder7           = $request->getParameter('receiveEventReminder7');
+		$receiveEventReminder5           = $request->getParameter('receiveEventReminder5');
 		$receiveEventCommentNotify       = $request->getParameter('receiveEventCommentNotify');
 		$quickResume                     = $request->getParameter('quickResume');
 		
 		$this->setOptionValue('receiveFriendEventConfirmNotify', ($receiveFriendEventConfirmNotify?'1':'0'));
 		$this->setOptionValue('receiveEventReminder0', ($receiveEventReminder0?'1':'0'));
 		$this->setOptionValue('receiveEventReminder3', ($receiveEventReminder3?'1':'0'));
-		$this->setOptionValue('receiveEventReminder7', ($receiveEventReminder7?'1':'0'));
+		$this->setOptionValue('receiveEventReminder5', ($receiveEventReminder5?'1':'0'));
 		$this->setOptionValue('receiveEventCommentNotify', ($receiveEventCommentNotify?'1':'0'));
 		$this->setOptionValue('quickResume', $quickResume);
 	}
@@ -194,8 +194,7 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('receiveFriendEventConfirmNotify', '1');
 		$this->setOptionValue('receiveEventReminder0', '1');
 		$this->setOptionValue('receiveEventReminder3', '1');
-		$this->setOptionValue('receiveEventReminder7', '1');
-		$this->setOptionValue('receiveEventReminder7', '1');
+		$this->setOptionValue('receiveEventReminder5', '1');
 		$this->setOptionValue('receiveEventCommentNotify', '1');
 		$this->setOptionValue('quickResume', 'balance');
 	}
