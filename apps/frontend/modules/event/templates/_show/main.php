@@ -26,18 +26,46 @@
 				<div class="label"><?php echo __('event.paidPlaces') ?></div>
 				<div class="textFlex"><?php echo $eventObj->getPaidPlaces() ?></div>
 			</div>
+			<?php echo input_hidden_tag('buyin', Util::formatFloat($eventObj->getBuyin(), true), array('id'=>'eventBuyin')) ?>
+			<?php if( !$eventObj->getIsFreeroll() ): ?>
 			<div class="row">
 				<div class="label">Buy-in</div>
 				<div class="textFlex"><?php echo __('currency') ?> <?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></div>
-				<?php echo input_hidden_tag('buyin', Util::formatFloat($eventObj->getBuyin(), true), array('id'=>'eventBuyin')) ?>
 			</div>
 			<div class="row">
 				<div class="label"><?php echo __('event.entranceFee') ?></div>
 				<div class="textFlex"><?php echo __('currency') ?> <?php echo Util::formatFloat($eventObj->getEntranceFee(), true) ?></div>
 			</div>
+			<?php endif; ?>
 			<div class="rowTextArea">
 				<div class="label"><?php echo __('event.comments') ?></div>
 				<div class="textFlex"><?php echo $eventObj->getComments() ?></div>
+			</div>
+		</td>
+		
+		<td valign="top" width="300">
+			<div id="prizeConfigDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>">
+				<h1><?php echo __('event.prizeConfig') ?></h1>
+				<div class="row">
+					<div class="label" id="eventPrizePotLabel"><?php echo __('event.prizePot') ?></div>
+					<div class="textFlex"><?php echo Util::formatFloat($eventObj->getPrizePot(), true) ?></div>
+				</div>
+				
+				<div style="margin-top: 10px" id="prizeShareListDiv">
+					<?php
+						if( $eventObj->getIsFreeroll() ):
+							foreach($eventObj->getPrizeConfigList() as $eventPrizeConfigObj):
+								$eventPosition = $eventPrizeConfigObj->getEventPosition();
+					?>
+					<div class="row">
+						<div class="label"><?php echo $eventPosition.Util::getOrdinalSufix($eventPosition).' '.__('event.place') ?></div>
+						<div class="textFlex"><?php echo Util::formatFloat($eventPrizeConfigObj->getPrizeValue(), true) ?></div>
+					</div>
+					<?php
+							endforeach;
+						endif;
+					?>
+				</div>
 			</div>
 		</td>
 	</tr>

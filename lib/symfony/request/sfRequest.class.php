@@ -264,7 +264,8 @@ abstract class sfRequest
       $this->getContext()->getLogger()->info('{sfRequest} error in form for parameter "'.$name.'" (with message "'.$message.'")');
     }
 
-    $this->errors[$name] = $message;
+	if( !isset($this->errors[$name]) )
+    	$this->errors[$name] = $message;
   }
 
   /**

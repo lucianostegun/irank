@@ -65,6 +65,7 @@
 	<table name="ranking" phpName="Ranking">
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
 		<column name="ranking_name" type="VARCHAR" />
+		<column name="ranking_tag" type="VARCHAR" />
 		<column name="user_site_id" type="INTEGER" />
 		<column name="ranking_type_id" type="INTEGER" />
 		<column name="game_style_id" type="INTEGER" required="true" />
@@ -156,6 +157,8 @@
 		<column name="invites" type="INTEGER" />
 		<column name="players" type="INTEGER" />
 		<column name="saved_result" type="BOOLEAN" />
+		<column name="is_freeroll" type="BOOLEAN" />
+		<column name="prize_pot" type="FLOAT" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -561,6 +564,15 @@
 		<column name="description_i18n" type="VARCHAR" />
 		  <foreign-key foreignTable="news">
 		    <reference local="news_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="event_prize_config" phpName="EventPrizeConfig">
+		<column name="event_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="event_position" type="INTEGER" required="true" primaryKey="true" />
+		<column name="prize_value" type="FLOAT" />
+		  <foreign-key foreignTable="event">
+		    <reference local="event_id" foreign="id" />
 		  </foreign-key>
 	</table>
 

@@ -655,20 +655,7 @@ class Util {
 	 */
 	 public static function parseInfo($infoList){
 	 	
-	 	$nl     = chr(10);
-	  	$html = '{'.$nl;
-	  	
-	  	$infoItemList = array();
-	  	foreach( $infoList as $key=>$info )
-	  		if( ereg('^{.*}$', $info) )
-	  			$infoItemList[] = '	'.$key.': '.$info.'';
-	  		else
-	  			$infoItemList[] = '	'.$key.': "'.str_replace('"', '\"', $info).'"';
-	  	
-	  	$html .= implode(','.$nl, $infoItemList).$nl;
-	  	$html .= '}';
-	  	
-	  	return $html;
+	 	return json_encode($infoList);
 	 }
 	
 	/**
@@ -751,7 +738,22 @@ class Util {
     	return $timeAgo;
 	}
 	
-	
+	public static function getOrdinalSufix($place){
+		
+		$culture = MyTools::getCulture();
+		
+		if( $culture=='pt_BR' )
+			return 'º';
+		
+		if( $culture=='en_US' ){
+			if( ereg('1$', $place) ) $sufix = 'st';
+			elseif( ereg('2$', $place) ) $sufix = 'nd';
+			elseif( ereg('3$', $place) ) $sufix = 'rd';
+			else $sufix = 'th';
+			
+			return $sufix;
+		}
+	}
 	
 	
 	

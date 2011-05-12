@@ -26,3 +26,6 @@ END'
 LANGUAGE 'plpgsql';
 
 ALTER TABLE event_player ADD COLUMN share_id SERIAL;
+
+ALTER TABLE event ADD COLUMN is_freeroll BOOLEAN DEFAULT FALSE;
+ALTER TABLE event ADD COLUMN prize_pot DECIMAL(10,2);

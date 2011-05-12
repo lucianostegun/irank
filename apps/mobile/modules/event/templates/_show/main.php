@@ -42,7 +42,12 @@
 					</tr>
 					<tr>
 						<th>Buy-in</th>
-						<td><?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></td>
+						<td>
+							<?php
+								$entranceFee = $eventObj->getEntranceFee();
+								echo ($entranceFee?Util::formatFloat($entranceFee, true).'+':'').Util::formatFloat($eventObj->getBuyin(), true);
+							?>
+						</td>
 					</tr>
 					<tr>
 						<th><?php echo __('event.guests') ?></th>

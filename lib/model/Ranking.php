@@ -155,6 +155,8 @@ class Ranking extends BaseRanking
 		
 		$rankingPlayerObj->setEnabled( true );
 		$rankingPlayerObj->save();
+		
+		$this->updateEmailGroup();
 	}
 	
 	public function deletePlayer($peopleId){
@@ -168,6 +170,8 @@ class Ranking extends BaseRanking
 			
 			$this->setPlayers( $this->getPlayers()-1 );
 			$this->save();
+			
+			$this->updateEmailGroup();
 		}else{
 			
 			Util::getHelper('i18n');
@@ -737,6 +741,56 @@ class Ranking extends BaseRanking
 			$rankingPrizeSplitObj->setPercentList($percentList);
 			$rankingPrizeSplitObj->save();
 		}
+	}
+	
+	public function getCredit(){
+		
+		return 0;
+	}
+	
+	public function createEmailGroup(){
+
+		$rankingTag = $this->getRankingTag();
+		
+		$emailAddressList   = $this->getEmailAddressList();
+		$emailAddressList[] = $this->getUserSite()->getPeople()->getEmailAddress();
+		$emailAddressList   = array_unique($emailAddressList);
+		
+		$paramList = array();
+		$paramList['idDominio'] = '200080';
+		$paramList['caixa']     = $rankingTag.'@irank.com.br';
+		$paramList['destino']   = implode(',', $emailAddressList);
+		
+		try{
+			
+			$emailObj = new Email();
+			$emailObj->addAlias($paramList);
+			
+			$this->save();
+		}catch(Exception $e){}
+	}
+	
+	public function updateEmailGroup(){
+
+		$rankingTag = $this->getRankingTag();
+		
+		if( !$rankingTag )
+			return false;
+		
+		$emailAddressList   = $this->getEmailAddressList();
+		$emailAddressList[] = $this->getUserSite()->getPeople()->getEmailAddress();
+		$emailAddressList   = array_unique($emailAddressList);
+		
+		$paramList = array();
+		$paramList['idDominio'] = '200080';
+		$paramList['caixa']     = $rankingTag.'@irank.com.br';
+		$paramList['destino']   = implode(',', $emailAddressList);
+		
+		try{
+			
+			$emailObj = new Email();
+			$emailObj->editAlias($paramList);
+		}catch(Exception $e){}
 	}
 	
 	public function postOnWall(){

@@ -1,17 +1,23 @@
-<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTabTable" style="width: 650px">
-  <tr class="header">
-    <th><?php echo __('Player') ?></th>
-    <th width="50">Buy-in</th>
-    <th width="50"><?php echo __('Position') ?></th>
-    <th width="50"><?php echo __('Prize') ?></th>
-    <th width="50">Rebuy</th>
-    <th width="50">Add-on</th>
-  </tr>
-  <?php
+<?php
   	$eventBuyin  = $eventObj->getBuyin();
   	$savedResult = $eventObj->getSavedResult();
   	$isRing      = $eventObj->getGameStyle()->isTagName('ring');
-
+	$isFreeroll  = $eventObj->getIsFreeroll();
+?>
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTabTable" style="width: 650px">
+  <tr class="header">
+    <th><?php echo __('Player') ?></th>
+    <?php if( !$isFreeroll ): ?>
+    <th width="50">Buy-in</th>
+    <?php endif; ?>
+    <th width="50"><?php echo __('Position') ?></th>
+    <th width="50"><?php echo __('Prize') ?></th>
+    <?php if( !$isFreeroll ): ?>
+    <th width="50">Rebuy</th>
+    <th width="50">Add-on</th>
+    <?php endif; ?>
+  </tr>
+  <?php
   	$eventPlayerObjList = $eventObj->getClassify();
   	$recordCount        = count($eventPlayerObjList);
   	
@@ -21,6 +27,8 @@
   	$totalAddon = 0;
   	
   	$peopleIdList = array();
+  	
+  	$fieldType = ($isFreeroll?'input_hidden_tag':'input_tag');
   	
   	foreach($eventPlayerObjList as $key=>$eventPlayerObj):
   	
@@ -33,36 +41,53 @@
   ?>
   <tr id="eventResultRow<?php echo $peopleId ?>" style="display: <?php echo ($enabled?'table-row':'none') ?>">
     <td id="eventResultPeopleName<?php echo $peopleId ?>" style="<?php echo $style ?>"><?php echo $peopleObj->getFullName() ?></td>
+	<?php
+		$buyin = ($savedResult?$eventPlayerObj->getBuyin():0);
+		$prize = $eventPlayerObj->getPrize();
+		$rebuy = $eventPlayerObj->getRebuy();
+		$addon = $eventPlayerObj->getAddon();
+		 
+		$buyin = Util::formatFloat($buyin, true);
+		
+		if( !$isFreeroll ):
+	?>
     <td align="<?php echo ($isRing?'left':'right') ?>" id="eventResultBuyin<?php echo $peopleId ?>">
-    	<?php
-			$buyin = ($savedResult?$eventPlayerObj->getBuyin():0);
-    		$prize = $eventPlayerObj->getPrize();
-    		$rebuy = $eventPlayerObj->getRebuy();
-    		$addon = $eventPlayerObj->getAddon();
-    		 
-    		$buyin = Util::formatFloat($buyin, true);
-    		
-    		if( $isRing ){
-    			
-    			$buyinField = input_tag('buyin'.$peopleId, $buyin, array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1), 'style'=>'text-align: right', 'onkeyup'=>'calculateResultTotal("buyin")', 'id'=>'eventBuyin'.$peopleId));
-    			echo $buyinField;
-    			$buyinField = '';
-    		}else{
-    			
-    			$buyinField = input_hidden_tag('buyin'.$peopleId, $buyin, array('style'=>'text-align: right', 'id'=>'eventBuyin'.$peopleId));
-    			echo $buyin;
-    		}
-    		
-    		$totalBuyin += $buyin;
-    		$totalPrize += $prize;
-    		$totalRebuy += $rebuy;
-    		$totalAddon += $addon;
-    	?>
+    	<?php	
+			if( $isRing ){
+				
+				$buyinField = input_tag('buyin'.$peopleId, $buyin, array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1), 'style'=>'text-align: right', 'onkeyup'=>'calculateResultTotal("buyin")', 'id'=>'eventBuyin'.$peopleId));
+				echo $buyinField;
+				$buyinField = '';
+			}else{
+				
+				$buyinField = input_hidden_tag('buyin'.$peopleId, $buyin, array('id'=>'eventBuyin'.$peopleId));
+				echo $buyin;
+			}
+    	?>	
     </td>
+	<?php
+		else:
+			$buyinField = input_hidden_tag('buyin'.$peopleId, $buyin, array('id'=>'eventBuyin'.$peopleId));
+		endif;
+		
+		$totalBuyin += $buyin;
+		$totalPrize += $prize;
+		$totalRebuy += $rebuy;
+		$totalAddon += $addon;
+	?>
     <td align="center"><?php echo $buyinField.input_tag('eventPosition'.$peopleId, $eventPlayerObj->getEventPosition(), array('size'=>2, 'maxlength'=>2, 'tabindex'=>($key+1+$recordCount), 'class'=>'eventResultPosition', 'onkeyup'=>'toggleBuyin('.$peopleId.'); checkBuyin('.$peopleId.')', 'autocomplete'=>'off', 'id'=>'eventEventPosition'.$peopleId)) ?></td>
+    <?php if( $isFreeroll ): ?>
+    <td align="right" id="eventPrize<?php echo $peopleId ?>Div"><?php echo Util::formatFloat($prize, true) ?></td>
+    <?php
+    	echo input_hidden_tag('prize'.$peopleId, Util::formatFloat($prize, true), array('id'=>'eventPrize'.$peopleId));
+    	echo input_hidden_tag('rebuy'.$peopleId, Util::formatFloat($rebuy, true), array('id'=>'eventRebuy'.$peopleId));
+    	echo input_hidden_tag('addon'.$peopleId, Util::formatFloat($addon, true), array('id'=>'eventAddon'.$peopleId));
+    ?>
+    <?php else: ?>
     <td align="center"><?php echo input_tag('prize'.$peopleId, Util::formatFloat($prize, true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*2), 'class'=>'eventResultPrize', 'onkeyup'=>'calculateResultTotal("prize")', 'style'=>'text-align: right', 'id'=>'eventPrize'.$peopleId)) ?></td>
     <td align="center"><?php echo input_tag('rebuy'.$peopleId, Util::formatFloat($rebuy, true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*3), 'class'=>'eventResultRebuy', 'onkeyup'=>'calculateResultTotal("rebuy")', 'style'=>'text-align: right', 'id'=>'eventRebuy'.$peopleId)) ?></td>
     <td align="center"><?php echo input_tag('addon'.$peopleId, Util::formatFloat($addon, true), array('size'=>5, 'maxlength'=>7, 'tabindex'=>($key+1+$recordCount*4), 'class'=>'eventResultAddon', 'onkeyup'=>'calculateResultTotal("addon")', 'style'=>'text-align: right', 'id'=>'eventAddon'.$peopleId)) ?></td>
+    <?php endif; ?>
   </tr>
   <?php
   	endforeach;
@@ -71,11 +96,15 @@
   ?>
   <tr class="resultTotal">
     <td>TOTAL</td>
+    <?php if( !$isFreeroll ): ?>
     <td align="right" id="eventResultTotalBuyin"><?php echo Util::formatFloat($totalBuyin, true) ?></td>
+    <?php endif; ?>
     <td></td>
     <td align="right" id="eventResultTotalPrize"><?php echo Util::formatFloat($totalPrize, true) ?></td>
+    <?php if( !$isFreeroll ): ?>
     <td align="right" id="eventResultTotalRebuy"><?php echo Util::formatFloat($totalRebuy, true) ?></td>
     <td align="right" id="eventResultTotalAddon"><?php echo Util::formatFloat($totalAddon, true) ?></td>
+    <?php endif; ?>
   </tr>
   <?php
   	else:

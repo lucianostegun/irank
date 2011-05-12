@@ -77,6 +77,8 @@ class eventActions extends sfActions
 	$comments        = $request->getParameter('comments');
 	$confirmPresence = $request->getParameter('confirmPresence');
 	$sendEmail       = $request->getParameter('sendEmail');
+	$isFreeroll      = $request->getParameter('isFreeroll');
+	$prizePot        = $request->getParameter('prizePot');
 	$isClone         = $request->getParameter('isClone');
 
 	if( $eventId )		
@@ -99,10 +101,17 @@ class eventActions extends sfActions
 	$eventObj->setPaidPlaces( ($paidPlaces?$paidPlaces:null) );
 	$eventObj->setBuyin( Util::formatFloat($buyin) );
 	$eventObj->setEntranceFee( Util::formatFloat($entranceFee) );
+	$eventObj->setIsFreeroll( ($isFreeroll?true:false) );
+	$eventObj->setPrizePot( Util::formatFloat($prizePot) );
 	$eventObj->setComments( ($comments?$comments:null) );
 	$eventObj->setVisible(true);
 	$eventObj->setEnabled(true);
 	$eventObj->save();
+	
+	if( $isFreeroll )
+		$eventObj->savePrizeConfig($request);
+	else
+		$eventObj->deletePrizeConfig();
 	
 	$rankingObj = $eventObj->getRanking();
 	
@@ -773,6 +782,8 @@ class eventActions extends sfActions
   	echo 'var i18n_event_players_importError                 = "'.__('event.players.importError').'";'.$nl;
   	echo 'var i18n_event_players_importSuccess               = "'.__('event.players.importSuccess').'";'.$nl;
   	echo 'var i18n_event_calculatePrizeError                 = "'.__('event.calculatePrizeError').'";'.$nl;
+  	echo 'var i18n_event_place                               = "'.__('event.place').'";'.$nl;
+  	echo 'var i18n_event_paidPlacesFormatError               = "'.__('event.paidPlacesFormatError').'";'.$nl;
   	exit;
   }
   

@@ -20,6 +20,16 @@ a:hover {
 	color: 	#E82314;
 }
 
+a.red {
+
+	color: #E82314;
+}
+
+a.red:hover {
+
+	color: #101010;
+}
+
 img {
 
 	border: 	0px;	
