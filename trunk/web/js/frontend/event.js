@@ -1,6 +1,6 @@
 var _SaveResultAlert = false;
 
-function handleErrorEvent(){
+function handleErrorEvent(content){
 	
 	alert(i18n_event_save_error)
 	
@@ -53,6 +53,8 @@ function handleSuccessEvent(content){
 		disableButton('confirmPresence');
 		disableButton('declinePresence');
 		disableButton('maybePresence');
+
+		$('eventPrizeConfig').value = eventObj.prizeConfig;
 		
 		hideDiv('mainMenuEventAddRankingPlayersDiv');
 		hideDiv('mainMenuEventImportPlayersDiv');
@@ -314,9 +316,16 @@ function togglePresenceResult(peopleId){
 			
 			$('eventBuyin'+peopleId).value         = '0';
 			$('eventEventPosition'+peopleId).value = '0';
-			$('eventPrize'+peopleId).value         = i18n_zero_zeroZero;
-			$('eventRebuy'+peopleId).value        = '0';
-			$('eventAddon'+peopleId).value        = '0';
+			
+			if( isFreeroll() ){
+				
+				$('eventPrize'+peopleId+'Div').innerHTML = i18n_zero_zeroZero;
+			}else{
+				
+				$('eventPrize'+peopleId).value         = i18n_zero_zeroZero;
+				$('eventRebuy'+peopleId).value        = '0';
+				$('eventAddon'+peopleId).value        = '0';
+			}
 			
 			hideDiv('eventResultRow'+peopleId);
 		}
@@ -641,7 +650,7 @@ function importPlayers(){
 		updateResultContent(eventId);
 		
 		tabBarMainObj.setTabActive('player');
-		alert(i18n_event_players_importSuccess)
+		alert(i18n_event_players_importSuccess);
 		
 		hideIndicator('event');
 	};
@@ -705,9 +714,16 @@ function calculateResultTotal(type){
 function checkTotalPrize(){
 	
 	var totalBuyin = toFloat($('eventResultTotalBuyin').innerHTML);
-	var totalPrize = toFloat($('eventResultTotalPrize').innerHTML);
-	var totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
-	var totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
+	var totalPrize = 0;
+	var totalRebuy = 0;
+	var totalAddon = 0;
+	
+	if( !isFreeroll() ){
+		
+		totalPrize = toFloat($('eventResultTotalPrize').innerHTML);
+		totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
+		totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
+	}
 	
 	if( totalPrize!=(totalBuyin+totalRebuy+totalAddon) )
 		$('eventResultTotalPrize').style.color = '#FF0000';
@@ -719,12 +735,22 @@ function doCalculatePrize(){
 
 	var eventId = $('eventId').value;
 	
-	var buyin      = toFloat($('eventBuyin').value);
-	var totalBuyin = toFloat($('eventResultTotalBuyin').innerHTML);
-	var totalPrize = toFloat($('eventResultTotalPrize').innerHTML);
-	var totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
-	var totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
-	var totalBRA   = (totalBuyin+totalRebuy+totalAddon);
+	var totalBuyin = 0;
+	var totalPrize = 0;
+	var totalRebuy = 0;
+	var totalAddon = 0;
+	
+	var buyin = toFloat($('eventBuyin').value);
+
+	if( !isFreeroll() ){
+		
+		totalBuyin = toFloat($('eventResultTotalBuyin').innerHTML);
+		totalPrize = toFloat($('eventResultTotalPrize').innerHTML);
+		totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
+		totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
+	}
+	
+	var totalBRA = (totalBuyin+totalRebuy+totalAddon);
 	
 	var buyins = (totalBRA/buyin);
 	
@@ -748,10 +774,11 @@ function doCalculatePrize(){
 				if( position==(positionIndex+1) ){
 					
 					var percent = percentList[positionIndex];
+					
 					$('eventPrize'+peopleId).value = toFloat(totalBRA*percent/100, true);
 				}
 				
-				if( position > paidPlaces )				
+				if( position > paidPlaces )
 					$('eventPrize'+peopleId).value = toFloat(0, true);
 			}
 		}
@@ -779,7 +806,28 @@ function doCalculatePrize(){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
+function calculateFreerollPrize(peopleId){
+	
+	var prizeConfig     = ';'+$('eventPrizeConfig').value;
+	var prizeConfigList = prizeConfig.split(';');
+
+	var eventPosition = $('eventEventPosition'+peopleId).value;
+	
+	if( eventPosition < prizeConfigList.length)
+		var prizeValue = toFloat(prizeConfigList[eventPosition]);
+	else
+		var prizeValue = 0;
+	
+	$('eventPrize'+peopleId).value           = toCurrency(prizeValue);
+	$('eventPrize'+peopleId+'Div').innerHTML = toCurrency(prizeValue);
+	
+	calculateResultTotal('prize');
+}
+
 function checkBuyin(peopleId){
+	
+	if( isFreeroll() )
+		return calculateFreerollPrize(peopleId);
 	
 	var eventPosition = $('eventEventPosition'+peopleId).value;
 	
@@ -807,10 +855,11 @@ function isRing(peopleId){
 
 function toggleBuyin(peopleId){
 	
+	if( isFreeroll() )
+		return true;
+	
 	var eventPosition = $('eventEventPosition'+peopleId).value;
 	var eventBuyin    = $('eventBuyin').value;
-
-	
 
 	if( eventPosition && (eventPosition*1) > 0 ){
 
@@ -822,10 +871,19 @@ function toggleBuyin(peopleId){
 		$('eventBuyin'+peopleId).value = '0,00';
 }
 
+function isFreeroll(){
+	
+	return ($('isFreeroll').value=='1');
+}
+
 function openEventResult(){
 	
 	enableButton('eventResultSubmit');
-	enableButton('calculatePrize');
+	
+	if( isFreeroll() )
+		hideButton('calculatePrize');
+	else
+		enableButton('calculatePrize');
 	
 	windowEventResultShow();
 }
@@ -838,16 +896,18 @@ function toggleEventResultView(showResult){
 		showDiv('eventResultTableDiv');
 		showButton('toggleResultButtonPlayer');
 		showButton('eventResultSubmit');
-		showButton('calculatePrize');
 		hideButton('toggleResultButtonResult');
+		
+//		if( !isFreeroll() )
+			showButton('calculatePrize');
 	}else{
 
 		showDiv('eventResultPlayerListDiv');
 		hideDiv('eventResultTableDiv');
 		hideButton('toggleResultButtonPlayer');
 		hideButton('eventResultSubmit');
-		hideButton('calculatePrize');
 		showButton('toggleResultButtonResult');
+		hideButton('calculatePrize');
 	}
 }
 
@@ -870,4 +930,59 @@ function shareFacebook(eventId){
 
 	var urlShare = _webRoot+'/event/facebookShareUrl/eventId/'+eventId;
 	window.open(urlShare,'irankFacebookShare', 'toolbar=0, status=0, width=650, height=450');
+}
+
+function toggleFreerollFields(checked){
+	
+	if( checked ){
+		
+		hideDiv('eventEntranceFeeRow');
+		hideDiv('eventBuyinRow');
+		showDiv('eventFreerollLinkDiv');
+		$('eventEntranceFee').value = '0,00';
+		$('eventBuyin').value       = '0,00';
+		$('isFreeroll').value       = '1';
+	}else{
+		
+		showDiv('eventEntranceFeeRow');
+		showDiv('eventBuyinRow');
+		hideDiv('prizeConfigDiv');
+		hideDiv('eventFreerollLinkDiv');
+		$('eventPrizePot').value = '0,00';
+		
+		$('eventPaidPlaces').readOnly  = false;
+		$('eventPaidPlaces').className = '';
+		$('eventHasShare').value       = '';
+		$('isFreeroll').value          = '';
+	}
+}
+
+function configurePrize(){
+	
+	var paidPlaces = $('eventPaidPlaces').value;
+	
+	if( !paidPlaces.match(/^[0-9]+$/) ){
+		
+		alert(i18n_event_paid_places_format_error);
+		return false;
+	}
+	
+	$('eventPaidPlaces').readOnly  = true;
+	$('eventPaidPlaces').className = 'disabled';
+	
+	showDiv('prizeConfigDiv');
+	
+	html = '';
+		
+	for(var i=1; i <= paidPlaces; i++){
+		
+		html += '<div class="row">';
+		html += '	<div class="label">'+i+getOrdinalSufix(i)+' '+i18n_event_place+'</div>';
+		html += '	<div class="field"><input type="text" autocomplete="off" name="paidPlace'+i+'" id="eventPaidPlace'+i+'" value="0,00" size="5" maxlength="5" onkeyup="maskCurrency(event)" style="text-align: right" /></div>';
+		html += '</div>';
+	}
+	
+	$('prizeShareListDiv').innerHTML = html;
+	$('eventHasShare').value         = '1';
+	adjustContentTab();
 }

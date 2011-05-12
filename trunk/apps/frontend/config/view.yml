@@ -11,9 +11,9 @@ default:
     
     og|title:        iRank - Poker Ranking
     og|description:  iRank - O primeiro site de gerenciamento de rankings de poker para você e seus amigos
-    og|image:        http://<?php echo $host=MyTools::getRequest()->getHost() ?>/images/facebookLogo.gif
+    og|image*2:      http://<?php echo $host=MyTools::getRequest()->getHost() ?>/images/iphone.png
     og|image*1:      http://<?php echo $host ?>/images/layout/chips.png
-    og|image*2:      http://<?php echo $host ?>/images/iphone.png
+    og|image:        http://<?php echo $host ?>/images/facebookLogo.gif
 
   stylesheets:    [frontend/layout, frontend/loading]
   javascripts:    [phpEquivalents, main, util, frontend/form, /sf/prototype/js/prototype, frontend/record, /index.php/home/javascript/js]

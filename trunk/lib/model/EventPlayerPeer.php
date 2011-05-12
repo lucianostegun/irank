@@ -30,9 +30,10 @@ class EventPlayerPeer extends BaseEventPlayerPeer
 		
 		Util::getHelper('I18N');
 		
-		$eventObj = EventPeer::retrieveByPK($eventId);
-		$request  = MyTools::getRequest();
-		
+		$eventObj   = EventPeer::retrieveByPK($eventId);
+		$request    = MyTools::getRequest();
+		$isFreeroll = $eventObj->getIsFreeroll();
+
 		$eventPositionList = array();
 		
 		$eventPlayerObjList = $eventObj->getPlayerList();
@@ -50,7 +51,7 @@ class EventPlayerPeer extends BaseEventPlayerPeer
 				MyTools::setError('buyin'.$peopleId, __('form.error.requiredField'));
 			elseif( !Validate::isFloat($buyin) || $buyin < 0 )
 				MyTools::setError('buyin'.$peopleId, __('form.error.invalidNumber'));
-			elseif( $eventPosition && $buyin <= 0 )
+			elseif( $eventPosition && $buyin <= 0 && !$isFreeroll )
 				MyTools::setError('buyin'.$peopleId, __('form.error.numberGraterThan0'));
 			
 			if( !$rebuy && $rebuy!=='0' )

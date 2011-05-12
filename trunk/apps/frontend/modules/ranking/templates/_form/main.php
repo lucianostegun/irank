@@ -5,7 +5,27 @@
 				<div class="label" id="rankingRankingNameLabel"><?php echo __('ranking.name') ?></div>
 				<div class="field"><?php echo input_tag('rankingName', $rankingObj->getRankingName(), array('size'=>25, 'maxlength'=>25, 'class'=>'required', 'id'=>'rankingRankingName')) ?></div>
 				<div class="error" id="rankingRankingNameError" onclick="showFormErrorDetails('ranking', 'rankingName')"></div>
+				
+				<?php if( !$rankingObj->getRankingTag() ): ?>
+				<div class="fieldCheckbox" id="rankingBuildEmailGroupField" style="margin-left: 15px"><?php echo checkbox_tag('buildEmailGroup', true, false, array('onclick'=>'toggleEmailAlias(this.checked)', 'id'=>'rankingBuildEmailGroup')) ?></div>
+				<label id="rankingBuildEmailGroupLabel" for="rankingBuildEmailGroup">Criar grupo de e-mail</label>
+				<div class="help" id="rankingBuildEmailGroupHelp" title="Cria um e-mail @irank.com.br que envia de uma só vez a mesma mensagem a todos os participantes do ranking"><?php echo link_to(image_tag('icon/help'), '#showFormHelp("rankingBuildEmailGroup")') ?></div>
+				<?php endif; ?>
 			</div>
+			<?php if( !$rankingObj->getRankingTag() ): ?>
+			<div class="row" id="rankingRankingTagRow" style="display: none">
+				<div class="label" id="rankingRankingTagLabel"><?php echo __('ranking.rankingTag') ?></div>
+				<div class="field" id="rankingRankingTagField"><?php echo input_tag('rankingTag', 'a_', array('size'=>20, 'maxlength'=>20, 'class'=>'required', 'id'=>'rankingRankingTag')) ?></div>
+				<div class="textFlex" id="rankingRankingTagText">@irank.com.br</div>
+				<div class="error" id="rankingRankingTagError" onclick="showFormErrorDetails('ranking', 'rankingTag')"></div>
+			</div>
+			<?php else: ?>
+			<div class="row">
+				<div class="label" id="rankingRankingTagLabel"><?php echo __('ranking.tag') ?></div>
+				<div class="textFlex"><?php echo $rankingObj->getRankingTag() ?>@irank.com.br</div>
+				<div class="help" id="rankingRankingTagHelp" title="As mensagens enviadas ao endereço <?php echo $rankingObj->getRankingTag() ?>@irank.com.br serão automaticamente enviadas a todos os participantes do ranking"><?php echo link_to(image_tag('icon/help'), '#showFormHelp("rankingRankingTag")') ?></div>
+			</div>
+			<?php endif; ?>
 			<div class="row">
 				<div class="label" id="rankingGameStyleIdLabel"><?php echo __('ranking.style') ?></div>
 				<div class="field"><?php echo select_tag('gameStyleId', VirtualTable::getOptionsForSelect('gameStyle', $rankingObj->getGameStyleId()), array('class'=>'required', 'id'=>'rankingGameStyleId')) ?></div>

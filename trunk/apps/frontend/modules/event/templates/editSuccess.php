@@ -23,13 +23,16 @@
 	echo form_remote_tag(array(
 		'url'=>'event/save'.($pastDate?'Result':''),
 		'success'=>'handleSuccessEvent'.($pastDate?'Result':'').'( request.responseText )',
-		'failure'=>'enableButton("mainSubmit"); alert(request.responseText);handleFormFieldError( request.responseText, "eventForm", "event", false, "event", handleErrorEvent )',
+		'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "eventForm", "event", false, "event", handleErrorEvent )',
 		'encoding'=>'utf8',
 		'loading'=>'showIndicator()'
 		), array( 'id'=>'eventForm' ));
 	
 	echo input_hidden_tag('eventId', $eventId);
 	echo input_hidden_tag('isClone', $isClone);
+	echo input_hidden_tag('isFreeroll', $eventObj->getIsFreeroll());
+	echo input_hidden_tag('prizeConfig', $eventObj->getPrizeConfig(), array('id'=>'eventPrizeConfig'));
+	echo input_hidden_tag('hasShare', false, array('id'=>'eventHasShare'));
 	
 	$isEditable = $eventObj->isEditable();
 	$isMyEvent  = $eventObj->isMyEvent();

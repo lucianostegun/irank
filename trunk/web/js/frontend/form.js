@@ -270,12 +270,11 @@ function hideHelpDescriptions(){
 		hideDiv(helpList[i].id);
 }
 
-function showFormHelp( fieldName, event ){
+function showFormHelp( fieldName ){
 
-	helpDiv = $(fieldName+'HelpDescription');
+	helpMessage = $(fieldName+'Help').title;
 
-	showDiv('helpPanelDiv');
-	$('helpPanelDiv').innerHTML = helpDiv.innerHTML;
+	alert(helpMessage);
 }
 
 function goToField( value, length, fieldId, event ){

@@ -58,6 +58,11 @@ class Event extends BaseEvent
 		return '#'.sprintf('%04d', ($this->getId()+1985));
 	}
 	
+	public function getEventName(){
+		
+		return parent::getEventName().($this->getIsFreeroll()?' [Freeroll]':'');
+	}
+	
 	public static function getList($criteria=null, $limit=null){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
@@ -632,6 +637,7 @@ class Event extends BaseEvent
 		$players    = 0;
 		
 		$entranceFee = $this->getEntranceFee();
+		$isFreeroll  = $this->getIsFreeroll();
 		
 		$eventPlayerObjList = $this->getPlayerList();
 		$totalBuyin         = 0;
@@ -682,7 +688,10 @@ class Event extends BaseEvent
 				$eventPlayerObj->setRebuy( Util::formatFloat($rebuy) );
 				$eventPlayerObj->setAddon( Util::formatFloat($addon) );
 				$eventPlayerObj->setBuyin( Util::formatFloat($buyin) );
-				$eventPlayerObj->setScore( $totalBuyin/$eventPosition/$buyin );
+				
+				if( !$isFreeroll )
+					$eventPlayerObj->setScore( $totalBuyin/$eventPosition/$buyin );
+					
 				$eventPlayerObj->save();
 				$players++;
 			}
@@ -983,6 +992,54 @@ class Event extends BaseEvent
 		}
 	}
 	
+	public function getRanking($createNew=false){
+		
+		$rankingObj = parent::getRanking();
+		
+		if( !is_object($rankingObj) && $createNew )
+			$rankingObj = new Ranking();
+		
+		return $rankingObj;
+	}
+	
+	public function savePrizeConfig($request){
+		
+		$paidPlaces = $request->getParameter('paidPlaces');
+		
+		for($eventPosition=1; $eventPosition <= $paidPlaces; $eventPosition++){
+			
+			$prizeValue = $request->getParameter('paidPlace'.$eventPosition);
+			$eventPrizeConfigObj = EventPrizeConfigPeer::retrieveByPK($this->getId(), $eventPosition);
+			$eventPrizeConfigObj->setPrizeValue(Util::formatFloat($prizeValue));
+			$eventPrizeConfigObj->save();
+		}
+				
+		$this->deletePrizeConfig($paidPlaces);
+	}
+
+	public function deletePrizeConfig($paidPlaces=0){
+		
+		Util::executeQuery('DELETE FROM event_prize_config WHERE event_id = '.$this->getId().' AND event_position > '.$paidPlaces);
+	}
+	
+	public function getPrizeConfigList(){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPrizeConfigPeer::EVENT_ID, $this->getId() );
+		$criteria->addAscendingOrderByColumn( EventPrizeConfigPeer::EVENT_POSITION );
+		return EventPrizeConfigPeer::doSelect($criteria);
+	}
+	
+	public function getPrizeConfig(){
+		
+		$prizeValueList = array();
+		
+		foreach($this->getPrizeConfigList() as $eventPrizeConfigObj)
+			$prizeValueList[] = $eventPrizeConfigObj->getPrizeValue();
+		
+		return implode(';', $prizeValueList);
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
@@ -997,6 +1054,8 @@ class Event extends BaseEvent
 		$infoList['isConfirmed']  = $this->isConfirmed($peopleId);
 		$infoList['pastDate']     = $this->isPastDate();
 		$infoList['isEditable']   = $this->isEditable();
+		$infoList['isFreeroll']   = $this->getIsFreeroll();
+		$infoList['prizeConfig']  = $this->getPrizeConfig();
 		$infoList['inviteStatus'] = $this->getInviteStatus($peopleId);
 		
 		$infoList['eventName']   = $this->getEventName();

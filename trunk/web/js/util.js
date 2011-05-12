@@ -310,3 +310,21 @@ function isModuleName(moduleName){
 	
 	return (moduleName==_ModuleName);
 }
+
+function getOrdinalSufix(number){
+	
+	if( i18n_culture=='pt_BR' )
+		return 'º';
+	
+	number = number+'';
+	
+	var sufix = '';
+	if( i18n_culture=='en_US' ){
+		if( number.match(/1$/) ) sufix = 'st';
+		else if( number.match(/2$/) ) sufix = 'nd';
+		else if( number.match(/3$/) ) sufix = 'rd';
+		else sufix = 'th';
+		
+		return sufix;
+	}
+}

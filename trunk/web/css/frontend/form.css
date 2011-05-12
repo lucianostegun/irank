@@ -148,6 +148,21 @@
 	margin-right: 	10px;
 }
 
+.defaultForm .row .labelCheckbox,
+.windowForm .row .labelCheckbox,
+.defaultForm .row label,
+.windowForm .row label {
+
+	float: 			left;
+	padding: 		1px 0px 2px 0px;
+	height: 		15px;
+	height: 		21px !ie;
+	text-align: 	left;
+	font-weight: 	bold;
+	color: 			#333333;
+	margin-left: 	5px;
+}
+
 .defaultForm .row .field, .windowForm .row .field {
 
 	float: 			left;
@@ -186,7 +201,9 @@
 	margin: 		-1px 0px 0px 2px;
 }
 
-.defaultForm .row .text, .windowForm .row .text {
+.defaultForm .row .text,
+.defaultForm .row .help,
+.windowForm .row .text {
 
 	float: 			left;
 	width: 			auto;
@@ -263,6 +280,15 @@
 	padding: 		1px 1px 2px 4px;
 	border:			1px solid #8A8A8A;
 	background: 	#F0F0F0;
+}
+
+.defaultForm input.disabled, .windowForm input.disabled,
+.defaultForm input.disabled:focus, .windowForm input.disabled:focus {
+
+	border: 		1px solid #E6E6E6;
+	background: 	#E6E6E6;
+	cursor: 		default;
+	color: 			#333333;
 }
 
 .defaultForm input.required, .windowForm input.required {

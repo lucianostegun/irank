@@ -36,7 +36,7 @@ CREATE TABLE user_admin (
     CONSTRAINT user_admin_FK_1 FOREIGN KEY (people_id) REFERENCES people (id)
 );
 
-INSERT INTO user_admin VALUES(nextval('user_admin_seq'), (SELECT id FROM people WHERE email_address='lucianostegun@gmail.com'), 'lucianostegun', md5('sherK33p0utme'), null, true, true, true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user_admin VALUES(nextval('user_admin_seq'), (SELECT MIN(id) FROM people WHERE email_address='lucianostegun@gmail.com'), 'lucianostegun', md5('sherK33p0utme'), null, true, true, true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 CREATE TABLE module ( 

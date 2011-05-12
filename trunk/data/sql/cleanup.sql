@@ -1,3 +1,4 @@
+DELETE FROM event_prize_config;
 DELETE FROM event_player;
 DELETE FROM event_comment;
 DELETE FROM event_photo_comment;

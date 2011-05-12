@@ -68,14 +68,16 @@ class rankingActions extends sfActions
   
   public function executeSave($request){
 
-	$rankingId     = $request->getParameter('rankingId');
-	$rankingName   = $request->getParameter('rankingName');
-	$gameStyleId   = $request->getParameter('gameStyleId');
-	$startDate     = $request->getParameter('startDate');
-	$finishDate    = $request->getParameter('finishDate');
-	$isPrivate     = $request->getParameter('isPrivate');
-	$rankingTypeId = $request->getParameter('rankingTypeId');
-	$defaultBuyin  = $request->getParameter('defaultBuyin');
+	$rankingId       = $request->getParameter('rankingId');
+	$rankingName     = $request->getParameter('rankingName');
+	$buildEmailGroup = $request->getParameter('buildEmailGroup');
+	$rankingTag      = $request->getParameter('rankingTag');
+	$gameStyleId     = $request->getParameter('gameStyleId');
+	$startDate       = $request->getParameter('startDate');
+	$finishDate      = $request->getParameter('finishDate');
+	$isPrivate       = $request->getParameter('isPrivate');
+	$rankingTypeId   = $request->getParameter('rankingTypeId');
+	$defaultBuyin    = $request->getParameter('defaultBuyin');
 
 	$rankingObj = $this->rankingObj;
 
@@ -98,7 +100,17 @@ class rankingActions extends sfActions
 	$rankingObj->setRankingTypeId( $rankingTypeId );
 	$rankingObj->setVisible(true);
 	$rankingObj->setEnabled(true);
+	
+	if( !$buildEmailGroup || !$rankingTag || $rankingObj->getRankingTag()!==null )
+		$buildEmailGroup = false;
+		
 	$rankingObj->save();
+	
+	if( $buildEmailGroup ){
+		
+		$rankingObj->setRankingTag($rankingTag);
+		$rankingObj->createEmailGroup();
+	}
 	
 	$rankingObj->addPlayer( $this->peopleId, true );
 	

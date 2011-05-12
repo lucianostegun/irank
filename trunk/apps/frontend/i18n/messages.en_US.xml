@@ -691,8 +691,16 @@
 				<target>The ranking name typed is not valid.\nThe ranking must start with a letter, and may have only letters, numbers and ()-_ characters</target>
 			</trans-unit>
 			<trans-unit>
+				<source>form.error.invalidRankingTag</source>
+				<target>The e-mail address typed is not valid.\nThe ranking must start with a letter, and may have only lower case letters and numbers</target>
+			</trans-unit>
+			<trans-unit>
 				<source>form.error.takenRankingName</source>
 				<target>You already own a ranking with this same name</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenRankingTag</source>
+				<target>There is already another ranking using this e-mail address</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.invalidNumber</source>
@@ -703,8 +711,8 @@
 				<target>Enter a value greater or equal to 0</target>
 			</trans-unit>
 			<trans-unit>
-				<source>form.error.greaterEqual0</source>
-				<target>Enter a value greater or equal to 0</target>
+				<source>form.error.greaterThan0</source>
+				<target>Enter a value greater than 0</target>
 			</trans-unit>
 			<trans-unit>
 				<source>FirstName</source>
@@ -1402,10 +1410,6 @@
 				<target>This is not a valid time</target>
 			</trans-unit>
 			<trans-unit>
-				<source>form.error.greaterEqual0</source>
-				<target>Enter a number greater or equal to 0</target>
-			</trans-unit>
-			<trans-unit>
 				<source>form.error.max140</source>
 				<target>Enter a value of up to 140 characters</target>
 			</trans-unit>
@@ -2041,6 +2045,50 @@
 			<trans-unit>
 				<source>button.share</source>
 				<target>Share</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.prizeConfig</source>
+				<target>Prize config</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.prizePot</source>
+				<target>Prize pot</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.prizeSplit</source>
+				<target>Divisão</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.rankingAvailableCredit</source>
+				<target>Available credit</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.configurePrize</source>
+				<target>configure prize</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.lessEqual9</source>
+				<target>Input a value lower or equal 9</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.prizeShareError</source>
+				<target>The sum of prizes must be equal the prize pot</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.configurePrizeError</source>
+				<target>Configure the prize split</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.rankingTag</source>
+				<target>E-mail address</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.place</source>
+				<target>place</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.paidPlacesFormatError</source>
+				<target>Input a valid number value</target>
 			</trans-unit>
 		</body>
 	</file>

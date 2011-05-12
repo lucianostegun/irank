@@ -86,4 +86,37 @@ class EventPeer extends BaseEventPeer
 
 		return ($eventCount==0);
 	}
+	
+	public static function validatePrizeShare($prizePot){
+		
+		$prizePot   = Util::formatFloat($prizePot);
+		$paidPlaces = MyTools::getRequestParameter('paidPlaces');
+		$isFreeroll = MyTools::getRequestParameter('isFreeroll');
+		$hasShare   = MyTools::getRequestParameter('hasShare');
+		
+		if( is_nan($prizePot) || !$paidPlaces )
+			return true;
+			
+		if( $isFreeroll && !$prizePot )
+			MyTools::setError('prizePot', 'form.error.greaterThan0');
+			
+		if( $isFreeroll && !$hasShare ){
+			
+			MyTools::setError('paidPlaces', 'form.error.configurePrizeError');
+			return false;
+		}
+		
+		if( $hasShare ){
+			
+			$totalPrize = 0;
+			for($i=1; $i<=$paidPlaces; $i++)
+				$totalPrize += Util::formatFloat(MyTools::getRequestParameter('paidPlace'.$i));
+			
+			if( $totalPrize!=$prizePot )
+				for($i=1; $i<=$paidPlaces; $i++)
+					MyTools::setError('paidPlace'.$i, 'form.error.prizeShareError');
+		}
+		
+		return !MyTools::getRequest()->hasErrors();
+	}
 }

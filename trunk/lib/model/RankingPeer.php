@@ -54,6 +54,21 @@ class RankingPeer extends BaseRankingPeer
 		
 		return !is_object( $rankingObj );
 	}
+    
+	public static function uniqueRankingTag( $rankingTag ){
+
+		$rankingId  = MyTools::getRequestParameter('rankingId');
+		
+		$criteria = new Criteria();
+		$criteria->add( RankingPeer::VISIBLE, true );
+		$criteria->add( RankingPeer::ENABLED, true );
+		$criteria->add( RankingPeer::DELETED, false );
+		$criteria->add( RankingPeer::ID, $rankingId, Criteria::NOT_EQUAL );
+		$criteria->add( RankingPeer::RANKING_TAG, $rankingTag, Criteria::ILIKE );
+		$rankingObj = RankingPeer::doSelectOne( $criteria );
+		
+		return !is_object( $rankingObj );
+	}
 	
 	public static function validateImport($rankingIdImport){
 

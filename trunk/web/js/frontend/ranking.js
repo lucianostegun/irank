@@ -11,6 +11,16 @@ function handleSuccessRanking(rankingId){
 	if( !$('rankingId').value )
 		$('rankingId').value = rankingId;
 	
+	if( $('rankingRankingTag')!=null && $('rankingBuildEmailGroup').checked ){
+		
+		$('rankingRankingTagField').className = 'textFlex';
+		$('rankingRankingTagField').innerHTML = $('rankingRankingTag').value+'@irank.com.br';
+		hideDiv('rankingRankingTagText');
+		hideDiv('rankingBuildEmailGroupField');
+		hideDiv('rankingBuildEmailGroupLabel');
+		hideDiv('rankingBuildEmailGroupHelp');
+	}
+	
 	showDiv('mainMenuRanking');
 	
 	if( isNew ){
@@ -314,4 +324,21 @@ function calculateTotalSplitPrize(paidPlace){
 		totalPercent += (percentList[i]*1);
 	
 	$('percent'+paidPlace+'PlacesTotal').innerHTML = toFloat(totalPercent, true, 0)+'%';
+}
+
+function toggleEmailAlias(checked){
+	
+	if( checked ){
+		
+		var rankingTagSuggest = $('rankingRankingName').value;
+		rankingTagSuggest     = rankingTagSuggest.replace(/[^a-zA-z0-9_]/gi, '');
+		rankingTagSuggest     = rankingTagSuggest.toLowerCase();
+		
+		$('rankingRankingTag').value = rankingTagSuggest;
+		showDiv('rankingRankingTagRow');
+	}else{
+		
+		$('rankingRankingTag').value = 'a_';
+		hideDiv('rankingRankingTagRow');
+	}
 }

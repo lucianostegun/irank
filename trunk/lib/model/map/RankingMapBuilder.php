@@ -38,6 +38,8 @@ class RankingMapBuilder {
 
 		$tMap->addColumn('RANKING_NAME', 'RankingName', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('RANKING_TAG', 'RankingTag', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addForeignKey('USER_SITE_ID', 'UserSiteId', 'int', CreoleTypes::INTEGER, 'user_site', 'ID', false, null);
 
 		$tMap->addForeignKey('RANKING_TYPE_ID', 'RankingTypeId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);

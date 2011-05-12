@@ -694,16 +694,20 @@
 				<target>O nome informado não é válido.\nO nome deve iniciar com uma letra, e pode conter apenas letras, números e os caracteres ()-_</target>
 			</trans-unit>
 			<trans-unit>
+				<source>form.error.invalidRankingTag</source>
+				<target>O grupo informado não é válido.\nO grupo deve iniciar com uma letra, e pode conter apenas letras e números</target>
+			</trans-unit>
+			<trans-unit>
 				<source>form.error.takenRankingName</source>
-				<target>Já existe um ranking cadastrado com esse nome</target>
+				<target>Já existe um ranking cadastrado com este nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenRankingTag</source>
+				<target>Já existe outro ranking utilizando este endereço</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.invalidNumber</source>
 				<target>O valor informado não é um número válido</target>
-			</trans-unit>
-			<trans-unit>
-				<source>form.error.greaterEqual0</source>
-				<target>Informe um valor maior ou igual a 0</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.greaterEqual0</source>
@@ -1183,7 +1187,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.takenPlaceName</source>
-				<target>Já existe um local cadastrado com esse nome</target>
+				<target>Já existe um local cadastrado com este nome</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.invalidUrl</source>
@@ -1409,8 +1413,8 @@
 				<target>A valor informado não é uma hora válida</target>
 			</trans-unit>
 			<trans-unit>
-				<source>form.error.greaterEqual0</source>
-				<target>Informe um número maior ou igual a 0</target>
+				<source>form.error.greaterThan0</source>
+				<target>Informe um número maior que 0</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.max140</source>
@@ -1674,6 +1678,10 @@
 			<trans-unit>
 				<source>statistic.chart.place</source>
 				<target>º colocado</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.place</source>
+				<target>lugar</target>
 			</trans-unit>
 			<trans-unit>
 				<source>statistic.chart.rating</source>
@@ -2069,7 +2077,46 @@
 				<source>button.share</source>
 				<target>Compartilhar</target>
 			</trans-unit>
-			
+			<trans-unit>
+				<source>event.prizeConfig</source>
+				<target>Configuração premiação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.prizePot</source>
+				<target>Prêmio total</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.rankingAvailableCredit</source>
+				<target>Crédito disponível</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.prizeSplit</source>
+				<target>Divisão</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.configurePrize</source>
+				<target>configurar premiação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.lessEqual9</source>
+				<target>Informe um valor menor ou igual a 9</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.prizeShareError</source>
+				<target>A soma dos prêmios deve ser igual o prêmio total</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.configurePrizeError</source>
+				<target>Configure a divisão de prêmios do freeroll</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.rankingTag</source>
+				<target>Nome do grupo</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.paidPlacesFormatError</source>
+				<target>Informe um valor numérico válido</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
