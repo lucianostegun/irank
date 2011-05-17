@@ -354,10 +354,7 @@ function lockRanking(){
 	$('eventForm').appendChild(rankingIdField);
 }
 
-function loadDefaultBuyin(rankingId){
-	
-	if( $('eventBuyin').value!=i18n_zero_zeroZero && $('eventBuyin').value!='' )
-		return false;
+function handleRankingChoice(rankingId){
 	
 	showIndicator('event');
 	
@@ -365,10 +362,27 @@ function loadDefaultBuyin(rankingId){
 	
 	var successFunc = function(t){
 
-		var content = t.responseText;
-		
+		var content    = t.responseText;
+		var rankingObj = parseInfo(content);
+
 		$('eventBuyin').disabled = false;
-		$('eventBuyin').value    = content;
+		
+		if( $('eventBuyin').value==i18n_zero_zeroZero || $('eventBuyin').value=='' )
+			$('eventBuyin').value = toCurrency(rankingObj.defaultBuyin);
+		
+		if( rankingObj.gameStyleTag=='ring' ){
+			
+			toggleFreerollFields(false);
+			hideDiv('eventIsFreerollField');
+			hideDiv('eventIsFreerollLabel');
+			hideDiv('eventIsFreerollError');
+		}else{
+		
+			showDiv('eventIsFreerollField');
+			showDiv('eventIsFreerollLabel');
+		}
+		
+		$('eventRankingAvailableCredit').innerHTML = toCurrency(rankingObj.credit);
 		
 		hideIndicator('event');
 	};
@@ -386,7 +400,7 @@ function loadDefaultBuyin(rankingId){
 		}
 	};
 	
-	var urlAjax = _webRoot+'/ranking/getDefaultBuyin/rankingId/'+rankingId;
+	var urlAjax = _webRoot+'/ranking/getInfo/rankingId/'+rankingId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
 }
 
@@ -879,7 +893,7 @@ function isFreeroll(){
 function openEventResult(){
 	
 	enableButton('eventResultSubmit');
-	
+
 	if( isFreeroll() )
 		hideButton('calculatePrize');
 	else
@@ -898,7 +912,7 @@ function toggleEventResultView(showResult){
 		showButton('eventResultSubmit');
 		hideButton('toggleResultButtonResult');
 		
-//		if( !isFreeroll() )
+		if( !isFreeroll() )
 			showButton('calculatePrize');
 	}else{
 
@@ -955,6 +969,8 @@ function toggleFreerollFields(checked){
 		$('eventHasShare').value       = '';
 		$('isFreeroll').value          = '';
 	}
+	
+	$('eventIsFreeroll').checked = checked;
 }
 
 function configurePrize(){

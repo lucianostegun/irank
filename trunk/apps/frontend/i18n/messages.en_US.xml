@@ -3,6 +3,26 @@
 	<file orginal="global" source-language="pt_BR" datatype="plaintext" date="">
 		<body>
 			<trans-unit>
+				<source>ranking.rankingCredit</source>
+				<target>Credit</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.balance.title</source>
+				<target>Ranking balance</target>
+			</trans-unit>
+			<trans-unit>
+				<source>TotalEntranceFee</source>
+				<target>Total entrance fee</target>
+			</trans-unit>
+			<trans-unit>
+				<source>TotalPrize</source>
+				<target>Total freeroll prize</target>
+			</trans-unit>
+			<trans-unit>
+				<source>details</source>
+				<target>details</target>
+			</trans-unit>
+			<trans-unit>
 				<source>eventPersonal.noEvents</source>
 				<target>you have no personal events yet</target>
 			</trans-unit>

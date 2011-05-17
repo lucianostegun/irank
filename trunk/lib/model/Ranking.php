@@ -745,7 +745,29 @@ class Ranking extends BaseRanking
 	
 	public function getCredit(){
 		
-		return 0;
+		$rankingId = $this->getId();
+		if( !$rankingId )
+			return 0;
+		else
+			return Util::executeOne('SELECT get_ranking_balance('.$rankingId.')', 'float');
+	}
+	
+	public function getTotalFreerollPrize(){
+		
+		$rankingId = $this->getId();
+		if( !$rankingId )
+			return 0;
+		else
+			return Util::executeOne('SELECT get_total_freeroll_prize('.$rankingId.')', 'float');
+	}
+	
+	public function getTotalEntranceFee(){
+		
+		$rankingId = $this->getId();
+		if( !$rankingId )
+			return 0;
+		else
+			return Util::executeOne('SELECT get_total_freeroll_entrance_fee('.$rankingId.')', 'float');
 	}
 	
 	public function createEmailGroup(){
@@ -810,5 +832,39 @@ class Ranking extends BaseRanking
 		
 		if( !$isNew && $gameStyle )
     		HomeWall::doLog('estilo do ranking <b>'.$this->getRankingName().'</b> alterado para <b>'.$this->getGameStyle()->getDescription().'</b>', 'ranking');
+	}
+	
+	public function getInfo(){
+		
+		$peopleId = MyTools::getAttribute('peopleId');
+		
+		$rankingType = $this->getRankingType()->getDescription();
+		
+	
+		$infoList = array();
+		$infoList['id']            = $this->getId();
+		$infoList['rankingName']   = $this->getRankingName();
+		$infoList['userSiteId']    = $this->getUserSiteId();
+		$infoList['rankingTypeId'] = $this->getRankingTypeId();
+		$infoList['rankingType']   = $this->getRankingType()->getDescription();
+		$infoList['startDate']     = $this->getStartDate('d/m/Y');
+		$infoList['finishDate']    = $this->getFinishDate('d/m/Y');
+		$infoList['isPrivate']     = $this->getIsPrivate();
+		$infoList['players']       = $this->getPlayers();
+		$infoList['credit']        = $this->getCredit();
+		$infoList['events']        = $this->getEvents();
+		$infoList['enabled']       = $this->getEnabled();
+		$infoList['visible']       = $this->getVisible();
+		$infoList['locked']        = $this->getLocked();
+		$infoList['deleted']       = $this->getDeleted();
+		$infoList['defaultBuyin']  = $this->getDefaultBuyin();
+		$infoList['gameStyleId']   = $this->getGameStyleId();
+		$infoList['gameStyle']     = $this->getGameStyle()->getDescription();
+		$infoList['gameStyleTag']  = $this->getGameStyle()->getTagName();
+		$infoList['rankingTag']    = $this->getRankingTag();
+		$infoList['createdAt']     = $this->getCreatedAt('d/m/Y H:i:s');
+		$infoList['updatedAt']     = $this->getUpdatedAt('d/m/Y H:i:s');
+		
+		return $infoList;
 	}
 }

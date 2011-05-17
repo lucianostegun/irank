@@ -315,6 +315,15 @@ class rankingActions extends sfActions
 	exit;
   }
   
+  public function executeGetInfo($request){
+
+	$rankingId  = $request->getParameter('rankingId');
+	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
+	
+	echo Util::parseInfo($rankingObj->getInfo());
+	exit;
+  }
+  
   public function executeJavascript($request){
   	
   	Util::getHelper('i18n');
