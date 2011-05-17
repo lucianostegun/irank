@@ -11,7 +11,7 @@
 			<div class="row">
 				<div class="label" id="eventRankingIdLabel">Ranking</div>
 				<?php if( !$eventObj->getEnabled() ): ?>
-					<div class="field" id="rankinkIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($eventObj->getRankingId(), false, true, true), array('class'=>'required', 'onchange'=>'loadDefaultBuyin(this.value); loadRankingPlaceList(this.value)', 'id'=>'eventRankingId')) ?></div>
+					<div class="field" id="rankinkIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($eventObj->getRankingId(), false, true, true), array('class'=>'required', 'onchange'=>'handleRankingChoice(this.value); loadRankingPlaceList(this.value)', 'id'=>'eventRankingId')) ?></div>
 					<div class="error" id="eventRankingIdError" onclick="showFormErrorDetails('event', 'rankingId')"></div>
 				<?php else: ?>
 					<?php echo input_hidden_tag('rankingId', $eventObj->getRankingId(), array('id'=>'eventRankingId')) ?>
@@ -23,9 +23,11 @@
 				<div class="field"><?php echo input_tag('eventName', $eventObj->getEventName(), array('size'=>25, 'maxlength'=>25, 'class'=>'required', 'id'=>'eventEventName')) ?></div>
 				<div class="error" id="eventEventNameError" onclick="showFormErrorDetails('event', 'eventName')"></div>
 				
-				<div class="fieldCheckbox" style="margin-left: 15px"><?php echo checkbox_tag('isFreeroll', true, $eventObj->getIsFreeroll(), array('onclick'=>'toggleFreerollFields(this.checked)', 'id'=>'eventIsFreeroll')) ?></div>
-				<label for="eventIsFreeroll">Freeroll</label>
+				<?php if( !$eventObj->getRanking(true)->getGameStyle()->isTagName('ring') ): ?>
+				<div id="eventIsFreerollField" class="fieldCheckbox" style="margin-left: 15px"><?php echo checkbox_tag('isFreeroll', true, $eventObj->getIsFreeroll(), array('onclick'=>'toggleFreerollFields(this.checked)', 'id'=>'eventIsFreeroll')) ?></div>
+				<label id="eventIsFreerollLabel" for="eventIsFreeroll">Freeroll</label>
 				<div class="error" id="eventIsFreerollError" onclick="showFormErrorDetails('event', 'eventName')"></div>
+				<?php endif; ?>
 			</div>
 			<div class="row">
 				<div class="label" id="eventRankingPlaceIdLabel"><?php echo __('event.eventPlace') ?></div>

@@ -3,6 +3,30 @@
 	<file orginal="global" source-language="pt_BR" datatype="plaintext" date="">
 		<body>
 			<trans-unit>
+				<source>ranking.balance.title</source>
+				<target>Balanço do ranking</target>
+			</trans-unit>
+			<trans-unit>
+				<source>TotalEntranceFee</source>
+				<target>Total taxa de entrada</target>
+			</trans-unit>
+			<trans-unit>
+				<source>TotalPrize</source>
+				<target>Total prêmios freeroll</target>
+			</trans-unit>
+			<trans-unit>
+				<source>TotalPrize</source>
+				<target>Total prêmios freeroll</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.rankingCredit</source>
+				<target>Crédito</target>
+			</trans-unit>
+			<trans-unit>
+				<source>details</source>
+				<target>detalhes</target>
+			</trans-unit>
+			<trans-unit>
 				<source>eventPersonal.noEvents</source>
 				<target>Você ainda não cadastrou nenhum evento pessoal</target>
 			</trans-unit>

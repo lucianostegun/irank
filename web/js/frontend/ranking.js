@@ -342,3 +342,8 @@ function toggleEmailAlias(checked){
 		hideDiv('rankingRankingTagRow');
 	}
 }
+
+function showFreerollDetails(){
+	
+	showDiv('rankingFreerollDetailsTable', false, 'table');
+}

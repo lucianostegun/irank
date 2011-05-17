@@ -2,7 +2,7 @@
 	echo form_remote_tag(array(
 		'url'=>'event/saveResult',
 		'success'=>'handleSuccessEventResult( request.responseText )',
-		'failure'=>'enableButton("eventResultSubmit"); handleFormFieldError( request.responseText, "eventResultForm", "eventResult", false, "eventResult" )',
+		'failure'=>'enableButton("eventResultSubmit"); enableButton("calculatePrize"); handleFormFieldError( request.responseText, "eventResultForm", "eventResult", false, "eventResult" )',
 		'encoding'=>'utf8',
 		'loading'=>'showIndicator("eventResult")'
 		), array( 'id'=>'eventResultForm' ));

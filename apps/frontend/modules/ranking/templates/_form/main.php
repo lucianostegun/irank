@@ -1,6 +1,6 @@
 <table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px" class="defaultForm">
 	<tr>
-		<td valign="top">
+		<td valign="top" width="500">
 			<div class="row">
 				<div class="label" id="rankingRankingNameLabel"><?php echo __('ranking.name') ?></div>
 				<div class="field"><?php echo input_tag('rankingName', $rankingObj->getRankingName(), array('size'=>25, 'maxlength'=>25, 'class'=>'required', 'id'=>'rankingRankingName')) ?></div>
@@ -21,9 +21,15 @@
 			</div>
 			<?php else: ?>
 			<div class="row">
-				<div class="label" id="rankingRankingTagLabel"><?php echo __('ranking.tag') ?></div>
+				<div class="label" id="rankingRankingTagLabel"><?php echo __('ranking.rankingTag') ?></div>
 				<div class="textFlex"><?php echo $rankingObj->getRankingTag() ?>@irank.com.br</div>
 				<div class="help" id="rankingRankingTagHelp" title="As mensagens enviadas ao endereço <?php echo $rankingObj->getRankingTag() ?>@irank.com.br serão automaticamente enviadas a todos os participantes do ranking"><?php echo link_to(image_tag('icon/help'), '#showFormHelp("rankingRankingTag")') ?></div>
+			</div>
+			<?php endif; ?>
+			<?php if( !$rankingObj->isNew() ): ?>
+			<div class="row">
+				<div class="label" id="rankingRankingCreditLabel"><?php echo __('ranking.rankingCredit') ?></div>
+				<div class="field" id="rankingRankingCreditField"><?php echo Util::formatFloat($rankingObj->getCredit(), true) ?> [<?php echo link_to(__('details'), '#showFreerollDetails()') ?>]</div>
 			</div>
 			<?php endif; ?>
 			<div class="row">
@@ -59,6 +65,9 @@
 				<div class="error" id="rankingDefaultBuyinError" onclick="showFormErrorDetails('ranking', 'defaultBuyin')"></div>
 				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
+		</td>
+		<td valign="top">
+			<?php include_partial('ranking/include/freeroll', array('rankingObj'=>$rankingObj)); ?>
 		</td>
 	</tr>
 </table>
