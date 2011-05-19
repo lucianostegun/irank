@@ -23,10 +23,12 @@ class MobileFilter extends sfFilter {
                 MyTools::setAttribute('forceClassic', '1');
         }else{
 
-                if( !in_array($url, $quitActionList) )
+			if( !in_array($url, $quitActionList) ){
+                
                 foreach ($smartPhoneList as $smartPhone)
                     if ( !$forceClassic && stristr( $browser, $smartPhone ) )
                         return sfContext::getInstance()->getController()->redirect('http://m.irank.com.br');
+			}
         }
 
         $filterChain->execute();
