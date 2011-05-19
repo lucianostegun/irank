@@ -5,13 +5,14 @@
 				<div class="label" id="rankingRankingNameLabel"><?php echo __('ranking.name') ?></div>
 				<div class="field"><?php echo input_tag('rankingName', $rankingObj->getRankingName(), array('size'=>25, 'maxlength'=>25, 'class'=>'required', 'id'=>'rankingRankingName')) ?></div>
 				<div class="error" id="rankingRankingNameError" onclick="showFormErrorDetails('ranking', 'rankingName')"></div>
-				
-				<?php if( !$rankingObj->getRankingTag() ): ?>
-				<div class="fieldCheckbox" id="rankingBuildEmailGroupField" style="margin-left: 15px"><?php echo checkbox_tag('buildEmailGroup', true, false, array('onclick'=>'toggleEmailAlias(this.checked)', 'id'=>'rankingBuildEmailGroup')) ?></div>
-				<label id="rankingBuildEmailGroupLabel" for="rankingBuildEmailGroup">Criar grupo de e-mail</label>
-				<div class="help" id="rankingBuildEmailGroupHelp" title="Cria um e-mail @irank.com.br que envia de uma só vez a mesma mensagem a todos os participantes do ranking"><?php echo link_to(image_tag('icon/help'), '#showFormHelp("rankingBuildEmailGroup")') ?></div>
-				<?php endif; ?>
 			</div>
+			<?php if( !$rankingObj->getRankingTag() ): ?>
+			<div class="row">
+				<div class="label">Criar grupo de e-mail</div>
+				<div class="fieldCheckbox" id="rankingBuildEmailGroupField"><?php echo checkbox_tag('buildEmailGroup', true, false, array('onclick'=>'toggleEmailAlias(this.checked)', 'id'=>'rankingBuildEmailGroup')) ?></div>
+				<div class="help" id="rankingBuildEmailGroupHelp" title="Cria um e-mail @irank.com.br que envia de uma só vez a mesma mensagem a todos os participantes do ranking"><?php echo link_to(image_tag('icon/help'), '#showFormHelp("rankingBuildEmailGroup")') ?></div>
+			</div>
+			<?php endif; ?>
 			<?php if( !$rankingObj->getRankingTag() ): ?>
 			<div class="row" id="rankingRankingTagRow" style="display: none">
 				<div class="label" id="rankingRankingTagLabel"><?php echo __('ranking.rankingTag') ?></div>

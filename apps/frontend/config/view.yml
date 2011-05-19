@@ -5,8 +5,8 @@ default:
   metas:
     title:           iRank - Poker Ranking
     robots:          index, follow
-    description:     iRank - O primeiro site de gerenciamento de rankings de poker para você e seus amigos
-    keywords:        irank, rank, poker, ranking, classificação, torneio, holdem, amigos, historico, jogo
+    description:     iRank - O primeiro site de gerenciamento de rankings pessoais de poker para você e seus amigos
+    keywords:        irank, rank, poker, poquer, ranking, pessoal, classificação, torneio, holdem, amigos, historico, jogo
     language:        en
     
     og|title:        iRank - Poker Ranking
