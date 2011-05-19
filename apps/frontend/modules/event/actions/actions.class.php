@@ -709,7 +709,7 @@ class eventActions extends sfActions
 	$uri = eregi_replace('facebookResult', 'facebookResultImage', $uri);
 	
 	$this->metaTitle       = 'Resultados iRank';
-	$this->metaDescription = 'Resultado do evento '.$eventObj->getEventName().' realizado em '.$eventObj->getEventDate('d/m/Y').' valendo pelo ranking '.$eventObj->getRanking()->getRankingName();
+	$this->metaDescription = 'Fiquei em '.$eventPlayerObj->getEventPosition().'º lugar no evento '.$eventObj->getEventName().' realizado em '.$eventObj->getEventDate('d/m/Y').' valendo pelo ranking '.$eventObj->getRanking()->getRankingName();
 	$this->metaImage       = $uri.'/thumb/1';
 	$this->shareLink       = 'event/facebookResultImage/shareId/'.base64_encode($shareId);
 	
