@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    [frontend/resume, frontend/home]
-  javascripts:    []
+  javascripts:    [frontend/home]

@@ -89,11 +89,19 @@ class EventPhotoComment extends BaseEventPhotoComment
 		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
 		$emailContent = str_replace('<comment>', $this->getComment(), $emailContent);
 		
+		$emailContent = str_replace('<eventId>', $eventObj->getId(), $emailContent);
+		$emailContent = str_replace('<eventPhotoId>', $this->getEventPhotoId(), $emailContent);
+		$emailContent = str_replace('<shareId>', base64_encode($this->getEventPhotoId()), $emailContent);
+		$emailContent = str_replace('<eventPlace>', $eventObj->getEventPlace(), $emailContent);
+		$emailContent = str_replace('<eventDate>', $eventObj->getEventDate('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<startTime>', $eventObj->getStartTime('H:i'), $emailContent);
+		$emailContent = str_replace('<peopleEmail>', $this->getPeople()->getEmailAddress(), $emailContent);
+		
 		$emailAddressList = $eventObj->getEmailAddressList('receiveEventCommentNotify', true);
 		
 		$options = array();
-		$options['emailTemplate'] = null;
-		$options['replyTo']       = 'event_photo_comment@irank.com.br';
+		$options['emailTemplate']  = null;
+		$options['replyTo']        = 'event_photo_comment@irank.com.br';
 		
 		Report::sendMail(__('email.subject.eventPhotoComment', array('%eventName%'=>$eventObj->getEventName(), '%eventPhotoCommentCode%'=>$this->getCode())), $emailAddressList, $emailContent, $options);
 	}

@@ -20,7 +20,7 @@ class Report {
 	 * @param      Array: Array de opções gerais do módulo
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
-return true;
+
 		$smtpComponent  = 'smtp';
 		$smtpHostname   = Config::getConfigByName( 'smtpHostname', true );
 		$smtpUsername   = Config::getConfigByName( 'smtpUsername', true );
@@ -73,6 +73,7 @@ return true;
 		
 		$emailContent = str_replace('<host>', $host, $emailContent);
 		$emailContent = str_replace('<emailTitle>', $emailSubject, $emailContent);
+		$emailContent = str_replace('<hr/>', '<div style="border-top: 1px solid #DADADA"></div>', $emailContent);
 		
 		$emailContent = utf8_decode($emailContent);
 		
@@ -81,6 +82,8 @@ return true;
 			
 		$emailContent = str_replace('&gt;', '>', $emailContent);
 		$emailContent = str_replace('&lt;', '<', $emailContent);
+		
+//		echo $emailContent;exit;
 		
 //		Util::forceError($emailContent);exit;
 			
@@ -123,6 +126,7 @@ return true;
 		try{ 
 		
 			$sfMailObj->send();
+
 			EmailLog::doLog($emailAddressList, $emailSubject, 'success');
 		}catch(Exception $e){
 		

@@ -60,7 +60,7 @@ class EventPlayer extends BaseEventPlayer
 			$peopleObj = $eventPlayerObj->getPeople();
 			
 			$playerList .= '  <tr class="boxcontent">'.$nl;
-			$playerList .= '    <td style="background: #1B4315">'.$peopleObj->getName().'</td>'.$nl;
+			$playerList .= '    <td style="background: #606060">'.$peopleObj->getName().'</td>'.$nl;
 			$playerList .= '  </tr>'.$nl;
 	  	}
 	  	

@@ -23,4 +23,10 @@ class News extends BaseNews
 		$this->setCulture(($culture?$culture:MyTools::getCulture()));
 		return $this->getNewsTitleI18n();
 	}
+	
+	public function getDescription($culture=null){
+		
+		$this->setCulture(($culture?$culture:MyTools::getCulture()));
+		return $this->getDescriptionI18n();
+	}
 }

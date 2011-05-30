@@ -2,33 +2,27 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<body>
-	<div style="color: #FFFFFF; font-family: Sans serif, Arial, Verdana, Tahoma; font-size: 8pt">
-		<table width="532" cellspacing="0" cellpadding="0" border="0" style="font-size: 8pt" style="color: #FFFFFF">
-			<tr>
-				<td style="background: #14310F"><img src="http://<host>/images/email/top.png" width="534" height="22"></td>
+<body style="color: #404040; font-family: Sans serif, Arial, Verdana, Tahoma; font-size: 8pt">
+	<div style="width: 525px">
+		<div style="padding: 0px 15px 0px 15px; font-weight: normal; font-size: 8pt"><a href="mailto:<peopleEmail>" style="text-decoration: none; color: #303030; font-weight: bold"><peopleName></a> sent the comment bellow on event</div>
+		<div style="padding: 0px 15px 0px 20px; border-bottom: 1px solid #DADADA; font-weight: normal; font-size: 8pt; padding-bottom: 10px"><a href="http://<host>/event/eventId/<eventId>" target="_blank" style="color: #303030"><eventName> @ <eventPlace></a> - <eventDate> <startTime></div>
+		
+		<div style="color: #000000; font-weight: bold; padding: 7px 0px 0px 0px; height: 110px; border-bottom: 1px solid #DADADA; margin-bottom: 10px">
+			<table width="100%" height="100" cellspacing="0" cellpadding="0">
+				<tr>
+					<td valign="top" width="60"><img src="http://<host>/images/email/quotesLeft.gif" /></td>
+					<td valign="center" style="font-size: 8pt; font-weight: bold"><comment></td>
+					<td valign="bottom" width="60"><img src="http://<host>/images/email/quotesRight.gif" /></td>
 			</tr>
-			<tr>
-				<td style="color: #FFFFFF; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; background: #14310F; text-transform: uppercase; font-weight: bold; border-bottom: 1px solid #ccc"><emailTitle></td>
-			</tr>
-			<tr>
-				<td style="color: #F5F5F5; padding: 10px; line-height: 150%; background: #14310F">
-					<peopleName> sent the comment bellow on event <b><eventName></b>:<br/><br/><hr/> 
-					
-					<pre style="text-align: left; font-weight: bold; font-family: Sans serif, Arial, Verdana, Tahoma; font-style: italic"><comment></pre>
-					
-					<hr/><br/>
-					
-					You can reply* this e-mail to reply the comment directly.<br/>
-				</td>
-			</tr>
-			<tr>
-				<td><img src="http://<host>/images/email/base.png" width="534" height="22"></td>
-			</tr>
-			<tr>
-				<td style="padding: 10px; color: #000000">* Just the first 140 characters will be considered</td>
-			</tr>
-		</table>
+			</table>
+		</div>
+		<div style="color: #505050">
+			<a href="http://<host>" target="_blank"><img src="http://<host>/images/emailLogo.png" style="border: none" align="left"></a>
+			<div style="padding-top: 15px; text-align: right">
+				You can reply* this e-mail to reply the comment directly.<br/>
+				* Just the first 140 characters will be considered
+			</div>
+		</div>
 	</div>
 </body>
 </html>

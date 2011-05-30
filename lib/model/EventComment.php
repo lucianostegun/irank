@@ -78,8 +78,12 @@ class EventComment extends BaseEventComment
 		$emailSubject = 'email.subject.eventComment';
 			
 		$infoList['eventName']   = $eventObj->getEventName();
+		$infoList['eventPlace']  = $eventObj->getEventPlace();
+		$infoList['eventDate']   = $eventObj->getEventDate('d/m/Y');
+		$infoList['startTime']   = $eventObj->getStartTime('H:i');
 		$infoList['rankingName'] = $eventObj->getRanking()->getRankingName();
 		$infoList['peopleName']  = $this->getPeople()->getFirstName();
+		$infoList['peopleEmail'] = $this->getPeople()->getEmailAddress();
 		$infoList['comment']     = $this->getComment();
 		
 		$emailAddressInfoList = $eventObj->getEmailAddressList('receiveEventCommentNotify', false, true);
@@ -99,7 +103,7 @@ class EventComment extends BaseEventComment
 			$culture      = $emailAddressInfo['culture'];
 			$emailContent = $emailContentList[$culture];
 			$emailSubject = $emailSubjectList[$culture];
-
+			
 			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 		}
 	}

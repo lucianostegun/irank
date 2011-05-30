@@ -432,7 +432,7 @@ class File extends BaseFile
 	}
 	
 	public function getResized($maxWidth=false, $maxHeight=false){
-		
+
 		$filePath       = $this->getFilePath(true);
 		$fileName       = Util::getFileName($filePath);
 		$extension      = $this->getExtension();
@@ -447,14 +447,14 @@ class File extends BaseFile
 			return false;
 			
 		$maxWidth  = ($maxWidth?$maxWidth:$width);
-		$maxHeight = ($maxHeight?$maxHeight:$height);
-		
-		if( $width >= $height ){
-			
-			$newWidth  = $maxWidth;
-			$newHeight = round($height*$maxWidth/$width);
+
+		if( $width >= $height && !$maxHeight ){
+
+			$newWidth  = ($maxWidth>$width?$width:$maxWidth);
+			$newHeight = round($height*$newWidth/$width);
 		}else{
 
+			$maxHeight = ($maxHeight?$maxHeight:$height);
 			$newHeight = $maxHeight;
 			$newWidth  = round($width*$maxHeight/$height);
 		}

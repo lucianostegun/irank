@@ -161,7 +161,8 @@ class UserSite extends BaseUserSite
 		
 		$emailContent = str_replace('<password>', $newPassword, $emailContent);
 		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
-		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent); 		
+		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
+		$emailContent = utf8_encode($emailContent); 		
 		
 		$emailAddress = $this->getPeople()->getEmailAddress();
 		
@@ -169,7 +170,7 @@ class UserSite extends BaseUserSite
 		$this->save();
 		
 		$options = array();
-		$options['emailTemplate'] = null;
+//		$options['emailTemplate'] = null;
 		
 		Report::sendMail(__('email.subject.passwordRecovery'), $emailAddress, $emailContent, $options);
 	}
