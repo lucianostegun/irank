@@ -7,8 +7,8 @@
 		$eventId = $eventObj->getId();
 		$link = 'goModule(\'event\', \'edit\', \'eventId\', '.$eventId.')';
 		
-		$comments = Util::executeOne('SELECT COUNT(1) FROM event_comment WHERE event_id = '.$eventId);
-		$photos   = Util::executeOne('SELECT COUNT(1) FROM event_photo WHERE event_id = '.$eventId);
+		$comments = Util::executeOne('SELECT COUNT(1) FROM event_comment WHERE event_id = '.$eventId.' AND deleted = false');
+		$photos   = Util::executeOne('SELECT COUNT(1) FROM event_photo WHERE event_id = '.$eventId.' AND deleted = false');
 ?>
 <tr onmouseover="this.className='recordRowOver'" onmouseout="this.className=''">
 	<td onclick="<?php echo $link ?>" align="left"><?php echo $eventObj->getEventName().($isMyEvent?'*':'') ?></td>

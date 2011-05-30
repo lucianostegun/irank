@@ -13,3 +13,6 @@ facebookResult:
 
 facebookResultImage:
   is_secure: off
+
+getPhoto:
+  is_secure: off

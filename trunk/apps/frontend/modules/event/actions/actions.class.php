@@ -562,20 +562,24 @@ class eventActions extends sfActions
 
 	Util::getHelper('I18N');
 	
+	$shareId      = $request->getParameter('shareId');
+	$shareId      = base64_decode($shareId);
 	$eventId      = $request->getParameter('eventId');
-	$eventPhotoId = $request->getParameter('eventPhotoId');
+	$eventPhotoId = $request->getParameter('eventPhotoId', $shareId);
 	$maxWidth     = $request->getParameter('maxWidth');
+	$maxHeight    = $request->getParameter('maxHeight');
 	
 	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
 	
-	if( $eventPhotoObj->getEventId()!=$eventId )
+	if( $eventPhotoObj->getEventId()!=$eventId && !$shareId )
 		throw new Exception(__('event.exception.notImageEventBelong'));
 	
 
 	$fileObj = $eventPhotoObj->getFile();
-	$fileObj->getResized($maxWidth);
+	$fileObj->getResized($maxWidth, $maxHeight);
 		
 	exit;
+  
   }
   
   public function executeDeletePhoto($request){
@@ -689,7 +693,7 @@ class eventActions extends sfActions
   	$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
   	$shareId        = base64_encode($eventPlayerObj->getShareId());
   	
-  	$url = 'http://'.$request->getHost().'/index.php/event/facebookResult/shareId/'.$shareId;
+  	$url = 'http://'.$request->getHost().'/home/photoView/share/eventResult/shareId/'.$shareId;
   	$url = 'http://www.facebook.com/sharer/sharer.php?u='.urlencode($url);
 
   	header('location: '.$url);

@@ -338,6 +338,8 @@ class Event extends BaseEvent
 			$emailSubject = 'email.subject.eventCreateNotify';
 		}
 
+		$entranceFee = $this->getEntranceFee();
+		
 		$infoList = array();
 		$infoList['eventName']   = $this->getEventName();
 		$infoList['rankingName'] = $this->getRanking()->getRankingName();
@@ -347,8 +349,8 @@ class Event extends BaseEvent
 		$infoList['eventDate']   = $this->getEventDate('d/m/Y');
 		$infoList['startTime']   = $this->getStartTime('H:i');
 		$infoList['paidPlaces']  = $this->getPaidPlaces();
-		$infoList['buyin']       = Util::formatFloat($this->getBuyin(), true);
-		$infoList['entranceFee'] = Util::formatFloat($this->getEntranceFee(), true);
+		$infoList['entranceFee'] = Util::formatFloat($entranceFee, true);
+		$infoList['buyin']       = ($entranceFee?$infoList['entranceFee'].'+':'').Util::formatFloat($this->getBuyin(), true);
 		$infoList['comments']    = $this->getComments();
 		$infoList['invites']     = $this->getInvites();
 		$infoList['players']     = $this->getPlayers();
@@ -527,13 +529,13 @@ class Event extends BaseEvent
 			$peopleObj = $eventPlayerObj->getPeople();
 			
 			$resultList .= '  <tr class="boxcontent">'.$nl;
-			$resultList .= '    <td style="background: #1B4315">#'.$eventPosition.'</td>'.$nl;
-			$resultList .= '    <td style="background: #1B4315">'.$peopleObj->getFullName().'</td>'.$nl;
-			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getBuyin(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getPrize(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getRebuy(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getAddon(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($eventPlayerObj->getScore(), true, 3).'</td>'.$nl;
+			$resultList .= '    <td style="background: #606060">#'.$eventPosition.'</td>'.$nl;
+			$resultList .= '    <td style="background: #606060">'.$peopleObj->getFullName().'</td>'.$nl;
+			$resultList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($eventPlayerObj->getBuyin(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($eventPlayerObj->getPrize(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($eventPlayerObj->getRebuy(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($eventPlayerObj->getAddon(), true).'</td>'.$nl;
+			$resultList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($eventPlayerObj->getScore(), true, 3).'</td>'.$nl;
 			$resultList .= '  </tr>'.$nl;
 	  	}
 	  	

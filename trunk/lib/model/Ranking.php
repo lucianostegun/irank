@@ -639,13 +639,13 @@ class Ranking extends BaseRanking
 			$peopleObj = $rankingPlayerObj->getPeople();
 			
 			$classifyList .= '  <tr class="boxcontent">'.$nl;
-			$classifyList .= '    <td style="background: #1B4315">#'.(($position++)+1).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315">'.$peopleObj->getFullName().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060">#'.(($position++)+1).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060">'.$peopleObj->getFullName().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060" align="right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
 			$classifyList .= '  </tr>'.$nl;
 	  	}
 	  	

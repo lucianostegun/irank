@@ -8,27 +8,6 @@
 		include_partial('home/component/welcome', (array('culture'=>$culture)));
 ?>
 </div>
-
-<style>
-
-.newsList .news {
-	
-	padding: 		2px 0px 2px 0px;
-	border-bottom: 	1px solid #C0C0C0;
-}
-
-.newsList .news.last {
-	
-	border-bottom: 	0px solid #FFFFFF;
-}
-
-.newsList .news span.date {
-	
-	font-weight: 	bold;
-	color: 			#808080;
-	font-size: 		10px;
-}
-</style>
 <table width="100%" border="0" cellspacing="1" cellpadding="2">
 	<tr>
 		<td valign="top" width="490">
@@ -37,8 +16,18 @@
 					<th valign="top"><?php echo image_tag('layout/feedNews.png', array('align'=>'left')) ?></th>
 					<td colspan="6" class="newsList">
 						<span><?php echo __('home.feedNews') ?></span>
-						<?php foreach(News::getLastNews($limit=5) as $key=>$newsObj): ?>
-						<div class="news<?php echo ($key==$limit-1?' last':'') ?>"><span class="date"><?php echo $newsObj->getNewsDate('d/m/Y') ?></span> - <?php echo link_to($newsObj->getNewsTitle(), $newsObj->getInternalLink()) ?></a></div>
+						<?php
+							foreach(News::getLastNews($limit=5) as $key=>$newsObj):
+								$description = $newsObj->getDescription();
+						?>
+						<div class="news<?php echo ($key==$limit-1?' last':'') ?>">
+							<?php
+								if( $description )
+									echo link_to(image_tag('icon/plus.gif', array('style'=>'absmiddle')), '#toggleNews('.$newsObj->getId().')');
+							?>
+							<span class="date"><?php echo $newsObj->getNewsDate('d/m/Y') ?></span> - <?php echo link_to($newsObj->getNewsTitle(), $newsObj->getInternalLink()) ?>
+							<div class="description" id="newsDescription<?php echo $newsObj->getId() ?>"><?php echo $description ?></div>
+						</div>
 						<?php endforeach; ?>
 					</td>
 				</tr>
@@ -80,10 +69,15 @@
 		</td>
 		<td valign="top">
 		<div style="width: 275px; margin-left: 15px">
-		<?php echo image_tag('iphone', array('align'=>'right', 'style'=>'margin-left: 10px')) ?>
-		<p align="right"><span style="font-size: 11pt; font-weight: bold; color: #b61515">iRank Mobile</span><br/><br/>
-		<?php echo __('home.mobile'); ?>
-		</p>
+			<table>
+				<tr>
+					<td valign="top" align="right">
+						<div style="font-size: 11pt; font-weight: bold; color: #b61515; margin-bottom: 12px">iRank Mobile</div>
+						<?php echo __('home.mobile'); ?>
+					</td>
+					<td valign="top"><?php echo image_tag('iphone', array('align'=>'right', 'style'=>'margin-left: 10px')) ?></td>
+				</tr>
+			</table>
 		</div>
 		</td>
 	</tr>

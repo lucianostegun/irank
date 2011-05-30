@@ -2110,6 +2110,10 @@
 				<source>event.paidPlacesFormatError</source>
 				<target>Input a valid number value</target>
 			</trans-unit>
+			<trans-unit>
+				<source>home.photoView</source>
+				<target>Image viewer</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

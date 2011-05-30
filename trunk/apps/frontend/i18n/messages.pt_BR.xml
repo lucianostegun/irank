@@ -2141,6 +2141,10 @@
 				<source>event.paidPlacesFormatError</source>
 				<target>Informe um valor numérico válido</target>
 			</trans-unit>
+			<trans-unit>
+				<source>home.photoView</source>
+				<target>Visualização de imagem</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

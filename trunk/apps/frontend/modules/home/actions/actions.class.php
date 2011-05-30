@@ -23,6 +23,25 @@ class homeActions extends sfActions
 	exit;
   }
   
+  public function executePhotoView($request){
+	
+	$share   = $request->getParameter('share');
+	$shareId = $request->getParameter('shareId');
+	
+	$photoUrl = '';
+	
+	switch($share){
+		case 'eventPhoto':
+			$photoUrl = '/index.php/event/getPhoto/shareId/'.$shareId.'/maxWidth/775';
+			break;
+		case 'eventResult':
+			$photoUrl = '/index.php/event/facebookResultImage/shareId/'.$shareId;
+			break;
+	}
+	
+	$this->photoUrl = $photoUrl;
+  }
+  
   public function executeJavascript($request){
 	
 	Util::getHelper('i18n');
