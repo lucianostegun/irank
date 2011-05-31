@@ -181,12 +181,17 @@ class Ranking extends BaseRanking
 	
 	public static function adjustPlayers(){
 		
-		Util::executeQuery('UPDATE ranking SET players = (SELECT COUNT(1) FROM ranking_player WHERE ranking_player.RANKING_ID = ranking.ID AND enabled)');
+		Util::executeQuery('SELECT adjust_ranking_players()');
 	}
 	
 	public static function adjustEvents(){
 
-		Util::executeQuery('UPDATE ranking SET events = (SELECT COUNT(1) FROM event WHERE event.RANKING_ID = ranking.ID AND event.DELETED = FALSE AND event.VISIBLE = TRUE AND event.ENABLED = TRUE)');
+		Util::executeQuery('SELECT adjust_ranking_events()');
+	}
+	
+	public function adjustPlayerEvents(){
+		
+		Util::executeQuery('SELECT adjust_ranking_player_events()');
 	}
 	
 	public function getEventList($criteria=null, $con=null){

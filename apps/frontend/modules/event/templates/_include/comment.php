@@ -15,7 +15,7 @@
 			<div class="reply">
 				<?php
 					if( !$isMyComment )
-						echo link_to(__('Reply'), '#replyComment('.$eventCommentId.')');
+						echo link_to(__('Reply'), '#replyComment('.$eventCommentId.', '.($isPhoto?'true':'false').')');
 				?>
 			</div>
 		</div>

@@ -25,4 +25,13 @@ class rankingActions extends sfActions
 	
 	exit;
   }
+  
+  public function executeAdjustPlayerEvents($request){
+	
+	Ranking::adjustPlayerEvents();
+	
+	echo date('Y-m-d H:i:s').' - Ajuste dos eventos dos jogadores dos rankings realizados com sucesso!'.chr(10);
+	
+	exit;
+  }
 }
