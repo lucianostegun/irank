@@ -39,18 +39,18 @@ function sendComment(eventCommentId){
 		_IsSendingComment = false;
 		
 		var content = t.responseText;
-
+		
 		var eventCommentIdNew = content.match(/eventComment[0-9]*Div/)+'';
 		eventCommentIdNew     = eventCommentIdNew.replace(/[^0-9]/gi, '');
-
+		
 		var commentDiv = document.createElement('div');
 		commentDiv.id = 'event'+(isPhoto?'Photo':'')+'Comment'+eventCommentIdNew+'TmpDiv';
 		
 		commentDiv.innerHTML = content;		
-
+		
 		$('comment'+(isPhoto?'Photo':'')+'ListDiv').appendChild(commentDiv);
-
-		removeLastReplyForm();
+		
+		removeLastReplyForm(isPhoto);
 		
 		adjustContentTab();
 		
@@ -128,6 +128,8 @@ function resetCommentForm(eventCommentId){
 	$('commentsCharCount'+eventCommentId).innerHTML  = '140 '+i18n_leftChars;
 	$('eventCommentComment'+eventCommentId).disabled = false;
 	$('eventCommentComment'+eventCommentId).value    = i18n_event_commentTab_commentText;
+	
+	_LastFormReplyId = null;
 }
 
 function handleCommentFocus(fieldObj){
@@ -185,13 +187,15 @@ function changeIcon(linkObj, over){
 		linkObj.src = linkObj.src.replace('delete10', 'delete10light');
 }
 
-function removeLastReplyForm(){
+function removeLastReplyForm(isPhoto){
 
 	if( _LastFormReplyId )
-		$('eventComment'+_LastFormReplyId+'Div').removeChild($('replyForm'+_LastFormReplyId+'Div'));
+		$('event'+(isPhoto?'Photo':'')+'Comment'+_LastFormReplyId+'Div').removeChild($('replyForm'+_LastFormReplyId+'Div'));
+	
+	_LastFormReplyId = null;
 }
 
-function replyComment(eventCommentId){
+function replyComment(eventCommentId, isPhoto){
 
 	if( eventCommentId==_LastFormReplyId )
 		return false;
@@ -208,7 +212,7 @@ function replyComment(eventCommentId){
 	formDiv.id        = 'replyForm'+eventCommentId+'Div';
 	formDiv.innerHTML = formContent;
 	
-	$('eventComment'+eventCommentId+'Div').appendChild(formDiv);
+	$('event'+(isPhoto?'Photo':'')+'Comment'+eventCommentId+'Div').appendChild(formDiv);
 	showDiv('commentsCharCount'+eventCommentId, true);
 	showDiv('commentsPostButton'+eventCommentId, true);
 	
