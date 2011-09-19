@@ -125,7 +125,7 @@ class myAccountActions extends sfActions
 	$peopleId             = $request->getParameter('peopleId');
 	$userSiteId           = $request->getParameter('userSiteId');
 	$allowedExtensionList = array('jpg', 'jpeg', 'png');
-	$maxFileSize          = (1024*1024*2);
+	$maxFileSize          = (1024*1024*4);
 
 	$userSiteObj = UserSitePeer::retrieve($userSiteId, $peopleId, $username);
 	

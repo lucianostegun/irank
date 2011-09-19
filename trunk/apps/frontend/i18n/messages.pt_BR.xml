@@ -610,6 +610,10 @@
 				<source>myAccount.email.receiveEventCommentNotify</source>
 				<target>Notificar novo comentário nos eventos</target>
 			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.receiveAllResults</source>
+				<target>Receber os resultados de todos os eventos</target>
+			</trans-unit>
 			
 			
 			

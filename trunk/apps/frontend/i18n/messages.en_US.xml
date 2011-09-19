@@ -603,6 +603,10 @@
 				<source>myAccount.email.receiveEventCommentNotify</source>
 				<target>Notify new event comments</target>
 			</trans-unit>
+			<trans-unit>
+				<source>myAccount.email.receiveAllResults</source>
+				<target>Receive results from all events</target>
+			</trans-unit>
 			
 			
 			
@@ -2113,6 +2117,26 @@
 			<trans-unit>
 				<source>home.photoView</source>
 				<target>Image viewer</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.importData</source>
+				<target>Import data</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.import</source>
+				<target>Import</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.importTab.intro</source>
+				<target>Select the ranking and the information you want to import data from and click at "Import data"</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.import.rankingPlaces</source>
+				<target>Import ranking places</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.import.rankingPlayers</source>
+				<target>Import ranking players</target>
 			</trans-unit>
 		</body>
 	</file>
