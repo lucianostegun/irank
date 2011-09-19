@@ -61,6 +61,7 @@ class UserSite extends BaseUserSite
 		$receiveEventReminder3           = $request->getParameter('receiveEventReminder3');
 		$receiveEventReminder5           = $request->getParameter('receiveEventReminder5');
 		$receiveEventCommentNotify       = $request->getParameter('receiveEventCommentNotify');
+		$receiveAllResults               = $request->getParameter('receiveAllResults');
 		$quickResume                     = $request->getParameter('quickResume');
 		
 		$this->setOptionValue('receiveFriendEventConfirmNotify', ($receiveFriendEventConfirmNotify?'1':'0'));
@@ -68,6 +69,7 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('receiveEventReminder3', ($receiveEventReminder3?'1':'0'));
 		$this->setOptionValue('receiveEventReminder5', ($receiveEventReminder5?'1':'0'));
 		$this->setOptionValue('receiveEventCommentNotify', ($receiveEventCommentNotify?'1':'0'));
+		$this->setOptionValue('receiveAllResults', ($receiveAllResults?'1':'0'));
 		$this->setOptionValue('quickResume', $quickResume);
 	}
 	
@@ -132,7 +134,6 @@ class UserSite extends BaseUserSite
 		$criteria->add( RankingPeer::DELETED, false );
 		$criteria->add( RankingPlayerPeer::PEOPLE_ID, $this->getPeopleId() );
 		$criteria->add( RankingPlayerPeer::ENABLED, true );
-		$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::INNER_JOIN );
 		$criteria->addAscendingOrderByColumn( RankingPeer::RANKING_NAME );
 		return RankingPeer::doSelect($criteria);
 	}
@@ -197,6 +198,7 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('receiveEventReminder3', '1');
 		$this->setOptionValue('receiveEventReminder5', '1');
 		$this->setOptionValue('receiveEventCommentNotify', '1');
+		$this->setOptionValue('receiveAllResults', '1');
 		$this->setOptionValue('quickResume', 'balance');
 	}
 	

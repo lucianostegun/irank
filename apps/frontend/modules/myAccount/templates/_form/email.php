@@ -4,6 +4,7 @@
 	$receiveEventReminder3           = $userSiteObj->getOptionValue('receiveEventReminder3');
 	$receiveEventReminder5           = $userSiteObj->getOptionValue('receiveEventReminder5');
 	$receiveEventCommentNotify       = $userSiteObj->getOptionValue('receiveEventCommentNotify');
+	$receiveAllResults               = $userSiteObj->getOptionValue('receiveAllResults');
 	$defaultLanguage                 = $userSiteObj->getPeople()->getDefaultLanguage();
 	$quickResume                     = $userSiteObj->getOptionValue('quickResume');
 ?>
@@ -40,6 +41,10 @@
 			<div class="rowCheckbox">
 				<div class="field"><?php echo checkbox_tag('receiveEventCommentNotify', true, $receiveEventCommentNotify) ?></div>
 				<div class="label"><label for="receiveEventCommentNotify"><?php echo __('myAccount.email.receiveEventCommentNotify') ?></label></div>
+			</div>
+			<div class="rowCheckbox">
+				<div class="field"><?php echo checkbox_tag('receiveAllResults', true, $receiveAllResults) ?></div>
+				<div class="label"><label for="receiveAllResults"><?php echo __('myAccount.email.receiveAllResults') ?></label></div>
 			</div>
 			<br/>
 			<hr/>

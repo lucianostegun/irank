@@ -401,12 +401,16 @@ class Event extends BaseEvent
 		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
 		$emailSubjectList['en_US'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
 		
+		$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', 'receiveAllResults');
+		
 		$eventPlayerObjList = $this->getPlayerList();
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
 			$eventPosition = $eventPlayerObj->getEventPosition();
 			
-			if( $eventPosition==0 )
+			$receiveAllResults = $eventPlayerObj->getPeople()->getOptionValue($userSiteOptionId);
+			
+			if( $eventPosition==0 && !$receiveAllResults )
 				continue;
 			
 			$peopleObj = $eventPlayerObj->getPeople();
