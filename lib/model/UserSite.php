@@ -82,8 +82,11 @@ class UserSite extends BaseUserSite
 	
 	public function login($keepLogin=false){
 		
-		if( MyTools::getUser()->isAuthenticated() )
+		if( MyTools::getUser()->isAuthenticated() ){
+
+			MyTools::setCulture( $peopleObj->getDefaultLanguage());	
 			return true;
+		}
 		
         $peopleObj = $this->getPeople();
         

@@ -1046,6 +1046,25 @@ class Event extends BaseEvent
 		return implode(';', $prizeValueList);
 	}
 	
+	public static function confirmPresence($request){
+
+	  	$confirmCode = $request->getParameter('confirmCode');
+	
+		$eventPlayerObj = EventPlayerPeer::retrieveByConfirmCode($confirmCode);
+	  	
+	  	if( !$confirmCode || !is_object($eventPlayerObj) )
+	  		return false;
+	  	
+	  	MyTools::setAttribute('peopleId', $eventPlayerObj->getPeopleId());
+	  	
+	  	$eventPlayerObj->confirmPresence();
+
+	  	if( $eventPlayerObj->getPeople()->isPeopleType('userSite') ) 
+	  		$eventPlayerObj->getPeople()->getUserSite()->login();
+
+	  	return $eventPlayerObj->getEvent();
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');

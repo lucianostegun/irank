@@ -482,6 +482,35 @@
 				<source>event.congratMessage</source>
 				<target>Congratulations, you took %eventPosition%%sufix% place on this event.</target>
 			</trans-unit>
+			<trans-unit>
+				<source>event.presenceConfirmSuccess</source>
+				<target>Presence confirmed!</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.confirmPresence.successMessage</source>
+				<target>
+					Your presence has been successfully confirmed on event &lt;b&gt;%eventName%&lt;/b&gt;!&lt;br/&gt;&lt;br/&gt;
+					All guest were notified by email about your confirmation.&lt;br/&gt;&lt;br/&gt;
+	
+					You can cancel your presence or mark yor are not sure.
+				</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.confirmPresence.link</source>
+				<target>&lt;b&gt;%link%&lt;/b&gt; to visualize all details about this event.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ClickHere</source>
+				<target>Click here</target>
+			</trans-unit>
+			<trans-unit>
+				<source>email.subject.presenceConfirm</source>
+				<target>Presence notify</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.calculetePrize</source>
+				<target>Calculate prize</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

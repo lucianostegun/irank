@@ -839,6 +839,35 @@ class Ranking extends BaseRanking
     		HomeWall::doLog('estilo do ranking <b>'.$this->getRankingName().'</b> alterado para <b>'.$this->getGameStyle()->getDescription().'</b>', 'ranking');
 	}
 	
+	public static function getPaidPlaces($eventId, $buyins){
+		
+		$sql = 'SELECT
+				    ranking_prize_split.PERCENT_LIST||\';\'||ranking_prize_split.PAID_PLACES
+				FROM 
+				    ranking_prize_split
+				    INNER JOIN event ON ranking_prize_split.RANKING_ID = event.RANKING_ID
+				WHERE
+				    event.ID = '.$eventId.'
+				    AND ranking_prize_split.BUYINS >= '.$buyins.'
+				ORDER BY
+				    ranking_prize_split.BUYINS
+				LIMIT 1;';
+	
+		$info = Util::executeOne($sql, 'string');
+		
+		if( !$info )
+			Util::forceError('event.calculatePrize.rangeError', true);
+			
+		list($percentList, $paidPlaces) = explode(';', $info);
+		
+		$percentList = ereg_replace('[^0-9,]', '', $percentList);
+		
+		$infoList = array('percentList'=>$percentList,
+						  'paidPlaces'=>$paidPlaces);
+		
+		return $infoList;
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');

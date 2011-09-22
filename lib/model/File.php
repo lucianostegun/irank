@@ -225,7 +225,7 @@ class File extends BaseFile
 	public static function getFileExtension($filePath){
 	 	
 		$filePath = explode('.', $filePath);
-		return end($filePath);
+		return strtolower(end($filePath));
 	}
 	
 	public function setFilePath($filePath){

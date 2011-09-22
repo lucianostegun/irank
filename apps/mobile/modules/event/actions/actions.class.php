@@ -34,6 +34,14 @@ class eventActions extends sfActions
 		$this->eventObj = Util::getNewObject('event');
   	}
   }
+  
+  public function executeConfirmPresence($request){
+  	
+	$this->eventObj = Event::confirmPresence($request);
+	
+	if( !is_object($this->eventObj) )
+		return $this->redirect('event/index');
+  }
 
   public function executeSearch($request){
 
@@ -157,6 +165,18 @@ class eventActions extends sfActions
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
 	echo $eventObj->getICal('update', true);
+	exit;
+  }
+  
+  public function executeGetPaidPlaces($request){
+
+	$eventId = $request->getParameter('eventId');
+	$buyins  = $request->getParameter('buyins');
+	
+	$infoList = Ranking::getPaidPlaces($eventId, $buyins);
+	
+	echo Util::parseInfo($infoList);
+	
 	exit;
   }
   
