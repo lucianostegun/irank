@@ -190,3 +190,78 @@ function previewEventResult(){
 	
 	toggleView('resultPreview');
 }
+
+function doCalculatePrize(){
+
+	var eventId = $('eventId').value;
+	
+	var totalBuyin = 0;
+	var totalPrize = 0;
+	var totalRebuy = 0;
+	var totalAddon = 0;
+	
+	var buyin = toFloat($('eventBuyin').value);
+
+	if( !isFreeroll() ){
+		
+		totalBuyin = toFloat($('eventResultTotalBuyin').innerHTML);
+		totalPrize = toFloat($('eventResultTotalPrize').innerHTML);
+		totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
+		totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
+	}
+	
+	var totalBRA = (totalBuyin+totalRebuy+totalAddon);
+	
+	var buyins = (totalBRA/buyin);
+	
+	var successFunc = function(t){
+
+		var infoObj = parseInfo(t.responseText);
+
+		var paidPlaces  = infoObj.paidPlaces;
+		var percentList = infoObj.percentList.split(',');
+		
+		
+		var peopleIdList = $('resultPeopleIdList').value.split(',');
+				
+		for(var positionIndex=0; positionIndex < paidPlaces; positionIndex++){
+
+			for(var i=0; i < peopleIdList.length; i++){
+				
+				var peopleId = peopleIdList[i];
+				var position = $('eventEventPosition'+peopleId).value;
+
+				if( position==(positionIndex+1) ){
+					
+					var percent = percentList[positionIndex];
+					
+					$('eventPrize'+peopleId).value = toFloat(totalBRA*percent/100, true);
+				}
+				
+				if( position > paidPlaces )
+					$('eventPrize'+peopleId).value = toFloat(0, true);
+			}
+		}
+		
+		calculateResultTotal('prize');
+		
+		hideIndicator('eventResult');
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		alert(i18n_event_calculatePrizeError)
+
+		if( isDebug() )
+			debug(content);
+		
+		hideIndicator('eventResult');
+	};
+	
+	showIndicator('eventResult');
+	
+	var urlAjax = _webRoot+'/event/getPaidPlaces/eventId/'+eventId+'/buyins/'+buyins;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}

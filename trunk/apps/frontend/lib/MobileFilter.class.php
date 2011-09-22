@@ -8,6 +8,11 @@ class MobileFilter extends sfFilter {
 
 		$moduleName = MyTools::getContext()->getModuleName();
 		$actionName = MyTools::getContext()->getActionName();
+		$host       = MyTools::getRequest()->getHost();
+		$uri        = '';
+		
+		if( array_key_exists('REDIRECT_URL', $_SERVER) )
+			$uri = $_SERVER['REDIRECT_URL'];
 
 		$browser = $_SERVER['HTTP_USER_AGENT'];
 
@@ -27,7 +32,10 @@ class MobileFilter extends sfFilter {
 				
 				foreach ($smartPhoneList as $smartPhone)
 					if ( !$forceClassic && stristr( $browser, $smartPhone ) )
-						return sfContext::getInstance()->getController()->redirect('http://m.irank.com.br');
+						if($host=='irank')
+							return sfContext::getInstance()->getController()->redirect('http://'.$host.'/mobile.php'.$uri);
+						else
+							return sfContext::getInstance()->getController()->redirect('http://m.irank.com.br'.$uri);
 			}
 		}
 

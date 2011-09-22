@@ -6,6 +6,9 @@ class myAccountActions extends sfActions
   public function preExecute(){
 
   }
+  public function executeUploadTest(){
+
+  }
 
   public function executeIndex($request){
 
@@ -151,7 +154,7 @@ class myAccountActions extends sfActions
 	
 	$imagePathTmp = Util::getFilePath('/uploads/profilePicture/tmp/'.$fileName );
 	$extension    = File::getFileExtension($originalFileName);
-	
+
 	switch( $extension ){
 		case 'jpg':
 		case 'jpeg':

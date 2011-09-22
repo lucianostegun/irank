@@ -343,21 +343,10 @@ class eventActions extends sfActions
   
   public function executeConfirmPresence($request){
   	
-  	$confirmCode = $request->getParameter('confirmCode');
-
-	$eventPlayerObj = EventPlayerPeer::retrieveByConfirmCode($confirmCode);
-  	
-  	if( !$confirmCode || !is_object($eventPlayerObj) )
-  		return $this->redirect('event/index');
-  	
-  	$this->getUser()->setAttribute('peopleId', $eventPlayerObj->getPeopleId());
-  	
-  	$eventPlayerObj->confirmPresence();
-  	
-  	if( $eventPlayerObj->getPeople()->isPeopleType('userSite') )
-  		$eventPlayerObj->getPeople()->getUserSite()->login();
-  	
-  	$this->eventObj = $eventPlayerObj->getEvent();
+	$this->eventObj = Event::confirmPresence($request);
+	
+	if( !is_object($this->eventObj) )
+		return $this->redirect('event/index');
   }
 
   public function handleErrorSaveComment(){
@@ -656,31 +645,9 @@ class eventActions extends sfActions
 	$eventId = $request->getParameter('eventId');
 	$buyins  = $request->getParameter('buyins');
 	
-	$sql = 'SELECT
-			    ranking_prize_split.PERCENT_LIST||\';\'||ranking_prize_split.PAID_PLACES
-			FROM 
-			    ranking_prize_split
-			    INNER JOIN event ON ranking_prize_split.RANKING_ID = event.RANKING_ID
-			WHERE
-			    event.ID = '.$eventId.'
-			    AND ranking_prize_split.BUYINS >= '.$buyins.'
-			ORDER BY
-			    ranking_prize_split.BUYINS
-			LIMIT 1;';
-
-	$info = Util::executeOne($sql, 'string');
+	$infoList = Ranking::getPaidPlaces($eventId, $buyins);
 	
-	if( !$info )
-		Util::forceError('event.calculatePrize.rangeError', true);
-		
-	list($percentList, $paidPlaces) = explode(';', $info);
-	
-	$percentList = ereg_replace('[^0-9,]', '', $percentList);
-	
-	$infoList = array('percentList'=>$percentList,
-					  'paidPlaces'=>$paidPlaces);
-	
-	echo Util::parseInfo($infoList);;
+	echo Util::parseInfo($infoList);
 	
 	exit;
   }
