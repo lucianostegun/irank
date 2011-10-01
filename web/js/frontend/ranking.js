@@ -13,12 +13,9 @@ function handleSuccessRanking(rankingId){
 	
 	if( $('rankingRankingTag')!=null && $('rankingBuildEmailGroup').checked ){
 		
-		$('rankingRankingTagField').className = 'textFlex';
-		$('rankingRankingTagField').innerHTML = $('rankingRankingTag').value+'@irank.com.br';
-		hideDiv('rankingRankingTagText');
-		hideDiv('rankingBuildEmailGroupField');
-		hideDiv('rankingBuildEmailGroupLabel');
-		hideDiv('rankingBuildEmailGroupHelp');
+		$('rankingRankingTagText').innerHTML = $('rankingRankingTag').value+'@irank.com.br';
+		hideDiv('rankingBuildEmailGroupRowDiv');
+		hideDiv('rankingRankingTagField');
 	}
 	
 	showDiv('mainMenuRanking');

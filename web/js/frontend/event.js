@@ -979,7 +979,7 @@ function configurePrize(){
 	
 	if( !paidPlaces.match(/^[0-9]+$/) ){
 		
-		alert(i18n_event_paid_places_format_error);
+		alert(i18n_event_paidPlacesFormatError);
 		return false;
 	}
 	
@@ -994,7 +994,7 @@ function configurePrize(){
 		
 		html += '<div class="row">';
 		html += '	<div class="label">'+i+getOrdinalSufix(i)+' '+i18n_event_place+'</div>';
-		html += '	<div class="field"><input type="text" autocomplete="off" name="paidPlace'+i+'" id="eventPaidPlace'+i+'" value="0,00" size="5" maxlength="5" onkeyup="maskCurrency(event)" style="text-align: right" /></div>';
+		html += '	<div class="field"><input type="text" autocomplete="off" name="paidPlace'+i+'" id="eventPaidPlace'+i+'" value="0,00" size="5" maxlength="6" onkeyup="maskCurrency(event)" style="text-align: right" /></div>';
 		html += '</div>';
 	}
 	

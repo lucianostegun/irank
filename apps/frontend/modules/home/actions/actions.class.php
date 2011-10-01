@@ -42,6 +42,14 @@ class homeActions extends sfActions
 	$this->photoUrl = $photoUrl;
   }
   
+  public function executeMobile($request){
+  	
+  	$this->getUser()->setAttribute('forceClassic', null);
+
+    echo '<html><head><meta http-equiv="refresh" content="0;url=/index.php"/></head></html>';
+  	exit;
+  }
+  
   public function executeJavascript($request){
 	
 	Util::getHelper('i18n');

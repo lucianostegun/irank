@@ -58,9 +58,9 @@ class Event extends BaseEvent
 		return '#'.sprintf('%04d', ($this->getId()+1985));
 	}
 	
-	public function getEventName(){
+	public function getEventName($showSufix=true){
 		
-		return parent::getEventName().($this->getIsFreeroll()?' [Freeroll]':'');
+		return parent::getEventName().($this->getIsFreeroll() && $showSufix?' [Freeroll]':'');
 	}
 	
 	public static function getList($criteria=null, $limit=null){

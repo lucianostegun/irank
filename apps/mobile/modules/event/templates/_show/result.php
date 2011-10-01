@@ -39,7 +39,7 @@
 		  <tr>
 		    <td><?php echo $peopleObj->getFullName() ?></td>
 		    <td class="hiddenColumn" align="right"><?php echo Util::formatFloat($buyin, true) ?></td>
-		    <td>#<?php echo $eventPlayerObj->getEventPosition() ?></td>
+		    <td align="right">#<?php echo $eventPlayerObj->getEventPosition() ?></td>
 		    <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getPrize(), true) ?></td>
 		    <td class="hiddenColumn" align="right"><?php echo Util::formatFloat($eventPlayerObj->getRebuy(), true) ?></td>
 		    <td class="hiddenColumn" align="right"><?php echo Util::formatFloat($eventPlayerObj->getAddon(), true) ?></td>

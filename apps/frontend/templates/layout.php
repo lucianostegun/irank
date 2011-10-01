@@ -13,6 +13,8 @@ $isAuthenticated = (MyTools::isAuthenticated() && $hasCredentials);
 $culture         = $sf_user->getCulture();
 $innerMenu       = (isset($innerMenu)?$innerMenu:false);
 $innerObj        = (isset($innerObj)?$innerObj:false);
+
+$forceClassic = MyTools::getAttribute('forceClassic');
 ?>
 <script>
 	var _ModuleName = '<?php echo $moduleName ?>';
@@ -28,10 +30,6 @@ $innerObj        = (isset($innerObj)?$innerObj:false);
 	<div id="innerContent">
     	<div id="header">
     		<div id="logo"><?php echo link_to(image_tag('layout/logo', array('title'=>__('layout.backHome'))), '/home') ?></div>
-    		<div id="flagList">
-	    		<?php echo link_to(image_tag('flagBrazil'), '#changeLanguage("pt_BR")'); ?>
-	    		<?php echo link_to(image_tag('flagUS'), '#changeLanguage("en_US")'); ?>
-	    	</div>
     	</div>
     	<div id="mainContent">
     		
@@ -82,6 +80,7 @@ $innerObj        = (isset($innerObj)?$innerObj:false);
 				<?php echo link_to('feedback', '/feedBack') ?> | 
 				<?php echo link_to(__('footerMenu.help'), '/help') ?> | 
 				<?php echo link_to(__('footerMenu.contact'), '/contact') ?>
+				<?php echo ($forceClassic?'<br/><b>'.link_to(__('footerMenu.mobildeVersion'), '/home/mobile').'</b><br/>':'') ?>
 			</td> 
 			<td width="33%">&nbsp;</td>
 		</tr>

@@ -4,7 +4,7 @@
 		'success'=>'handleSuccessRankingPlayer( request.responseText )',
 		'failure'=>'enableButton("rankingPlayerSubmit"); handleFormFieldError( request.responseText, "rankingPlayerForm", "rankingPlayer", false, "rankingPlayer" )',
 		'encoding'=>'utf8',
-		'loading'=>'showIndicator("rankingPlayer")'
+		'loading'=>'disableButton("rankingPlayerSubmit"); showIndicator("rankingPlayer")'
 		), array( 'id'=>'rankingPlayerForm' ));
 	
 	echo input_hidden_tag('peopleId', null, array('id'=>'rankingPlayerPeopleId'));

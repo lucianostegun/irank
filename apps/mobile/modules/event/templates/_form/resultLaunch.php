@@ -11,6 +11,7 @@
 	$buyin = Util::formatFloat($eventBuyin, true);
 	
 	echo input_hidden_tag('peopleIdIndex', -1);
+	echo input_hidden_tag('isFreeroll', $eventObj->getIsFreeroll());
 	
 	if( $isRing ){
 		
@@ -55,10 +56,11 @@
 	<table width="100%" cellspacing="0" cellpadding="0">
 		<tr>
 			<td align="left" style="padding-left: 20px">
-				<?php echo image_tag('mobile/button/previous', array('onclick'=>'getPreviousResult()')) ?><?php echo image_tag('mobile/button/next', array('onclick'=>'getNextResult()')) ?></rd>
+				<?php echo image_tag('mobile/button/previous', array('onclick'=>'getPreviousResult()')) ?><?php echo image_tag('mobile/button/next', array('onclick'=>'getNextResult()')) ?>
+			</td>
 			<td align="right">
 				<?php echo button_tag('previewResult', __('button.previewResult'), array('onclick'=>'previewEventResult()', 'style'=>'float: right')) ?>
-			</rd>
+			</td>
 		</tr>
 	</table>
 	

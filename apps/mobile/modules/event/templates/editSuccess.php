@@ -22,7 +22,7 @@
 		
 		if( $resultMode=='form' ){
 			
-			echo get_partial('event/form/resultLunch', array('eventObj'=>$eventObj));
+			echo get_partial('event/form/resultLaunch', array('eventObj'=>$eventObj));
 			echo get_partial('event/form/resultPreview', array('eventObj'=>$eventObj));
 		}
 	}
@@ -33,31 +33,31 @@
 <div align="center">
 <table width="95%" cellpadding="0" cellspacing="0" class="menu">
 	<tr onclick="toggleView('info')">
-		<td width="10" class="topLeft">&nbsp;</td>
-		<td class="middle label"><?php echo __('event.info') ?></td>
-		<td width="10" class="topRight">&nbsp;</td>
+		<td>&nbsp;</td>
+		<th><?php echo __('event.info') ?></th>
+		<td>&nbsp;</td>
 	</tr>
 	<tr onclick="toggleView('playerList')">
-		<td width="10" class="left">&nbsp;</td>
-		<td class="middle label"><?php echo __('event.guests') ?></td>
-		<td width="10" class="right">&nbsp;</td>
+		<td>&nbsp;</td>
+		<th><?php echo __('event.guests') ?></th>
+		<td>&nbsp;</td>
 	</tr>
 	<?php if( $pastDate ): ?>
 	<tr onclick="toggleView('result')">
-		<td width="10" class="left">&nbsp;</td>
-		<td class="middle label"><?php echo __('event.result') ?></td>
-		<td width="10" class="right">&nbsp;</td>
+		<td>&nbsp;</td>
+		<th><?php echo __('event.result') ?></th>
+		<td>&nbsp;</td>
 	</tr>
 	<?php endif; ?>
 	<tr onclick="toggleView('comments')">
-		<td width="10" class="left">&nbsp;</td>
-		<td class="middle label"><?php echo __('event.comments') ?></td>
-		<td width="10" class="right">&nbsp;</td>
+		<td>&nbsp;</td>
+		<th><?php echo __('event.comments') ?></th>
+		<td>&nbsp;</td>
 	</tr>
-	<tr onclick="getICalFile()">
-		<td width="10" class="baseLeft">&nbsp;</td>
-		<td class="base label"><?php echo image_tag('mobile/icon/calendar', array('align'=>'absmiddle')).__('event.iCalFile') ?></td>
-		<td width="10" class="baseRight">&nbsp;</td>
+	<tr onclick="getICalFile()" class="last">
+		<td>&nbsp;</td>
+		<th><?php echo image_tag('mobile/icon/calendar', array('align'=>'absmiddle')).__('event.iCalFile') ?></th>
+		<td>&nbsp;</td>
 	</tr>
 </table>
 </div>

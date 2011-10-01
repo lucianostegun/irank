@@ -4,7 +4,7 @@
 	</div>
 	<br/>
 	
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tableMenu">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tableMenu flat">
 	  <?php
 	  	$eventPlayerObjList = $eventObj->getPlayerList();
 	  	foreach($eventPlayerObjList as $eventPlayerObj):

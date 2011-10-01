@@ -148,3 +148,24 @@ img {
 
 	margin-right: 	17px;
 }
+
+.warning {
+
+	border: 				1px solid #873A38;
+	color: 					#5B1D1B;
+	background: 			#EBBCBB;
+	padding: 				7px;
+	margin: 				10px;
+	-moz-border-radius: 	5px;/* para funcionar no Firefox*/
+	-webkit-border-radius: 	5px;/* para funcionar no Chrome ou no Safari */
+	border-radius: 			5px;/* É bom colocar caso haja alguma compatibilidade no futuro */
+}
+
+.warning A {
+
+	color: 				#5B1D1B;
+	text-decoration: 	none;
+	font-size: 			8pt;
+	text-shadow: 		none;
+	font-weight: 		bold;
+}

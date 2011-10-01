@@ -19,6 +19,7 @@
 	  	
 	  	$eventPlayerObjList = $eventObj->getClassify();
 	  	$recordCount        = count($eventPlayerObjList);
+	  	$peopleIdList       = array();
 	  	foreach($eventPlayerObjList as $key=>$eventPlayerObj):
 	  	
 	  		$peopleObj = $eventPlayerObj->getPeople();
@@ -27,6 +28,7 @@
 	  		
 	  		$buyin = ($savedResult && $eventPlayerObj->getBuyin()?$eventPlayerObj->getBuyin():$eventBuyin);
     		$buyin = Util::formatFloat($buyin, true);
+    		$peopleIdList[] = $peopleId;
 	  ?>
 	  <tr class="<?php echo $class ?>" id="eventResultPlayer<?php echo $peopleId ?>Preview">
 	    <td><?php echo $peopleObj->getFirstName() ?></td>
@@ -37,13 +39,15 @@
 	    <td align="right" id="eventAddon<?php echo $peopleId ?>Preview" style="padding-right: 5px"><?php echo Util::formatFloat($eventPlayerObj->getAddon(), true) ?></td>
 	  </tr>
 	  <?php
-		  echo input_hidden_tag('buyin'.$peopleId, $buyin, array('id'=>'eventBuyin'.$peopleId));
-		  echo input_hidden_tag('eventPosition'.$peopleId, $eventPlayerObj->getEventPosition(), array('id'=>'eventEventPosition'.$peopleId));
-		  echo input_hidden_tag('prize'.$peopleId, Util::formatFloat($eventPlayerObj->getPrize(), true), array('id'=>'eventPrize'.$peopleId));
-		  echo input_hidden_tag('rebuy'.$peopleId, Util::formatFloat($eventPlayerObj->getRebuy(), true), array('id'=>'eventRebuy'.$peopleId));
-		  echo input_hidden_tag('addon'.$peopleId, Util::formatFloat($eventPlayerObj->getAddon(), true), array('id'=>'eventAddon'.$peopleId));
+		  echo input_hidden_tag('buyin'.$peopleId, $buyin, array('class'=>'eventResultBuyin', 'id'=>'eventBuyin'.$peopleId));
+		  echo input_hidden_tag('eventPosition'.$peopleId, $eventPlayerObj->getEventPosition(), array('class'=>'eventResultPosition', 'id'=>'eventEventPosition'.$peopleId));
+		  echo input_hidden_tag('prize'.$peopleId, Util::formatFloat($eventPlayerObj->getPrize(), true), array('class'=>'eventResultPrize', 'id'=>'eventPrize'.$peopleId));
+		  echo input_hidden_tag('rebuy'.$peopleId, Util::formatFloat($eventPlayerObj->getRebuy(), true), array('class'=>'eventResultRebuy', 'id'=>'eventRebuy'.$peopleId));
+		  echo input_hidden_tag('addon'.$peopleId, Util::formatFloat($eventPlayerObj->getAddon(), true), array('class'=>'eventResultAddon', 'id'=>'eventAddon'.$peopleId));
 
 	  	endforeach;
+	  	
+	  	echo input_hidden_tag('resultPeopleIdList', implode(',', $peopleIdList));
 	  	
 	  	if( count($eventPlayerObjList)==0 ):
 	  ?>
@@ -57,12 +61,21 @@
 	<div class="text"><?php echo __('event.result.notifyInfo') ?></div>
 	<br/>
 	
+
+	<table cellspacing="0" cellpadding="0" style="float: right">
+		<tr>
+			<td align="left" style="padding-left: 20px">
+				<?php echo button_tag('calcularePrize', __('button.calculetePrize'), array('onclick'=>'doCalculatePrize()', 'style'=>'float: right')) ?>
+			</td>
+			<td align="right">
+				<?php echo button_tag('mainSubmit', __('button.saveResult'), array('onclick'=>'doSubmitEvent()', 'style'=>'float: right')) ?>
+			</td>
+		</tr>
+	</table>	
+	<br/>
 	
 	<br/>
-	<?php echo button_tag('mainSubmit', __('button.saveResult'), array('onclick'=>'doSubmitEvent()', 'style'=>'float: right')) ?>
-	<br/>
 	
-	<br/>
 	<table class="text">
 		<tr><th align="right"><?php echo __('event.result.position') ?></th><td><?php echo __('event.result.legend.position') ?></td></tr>
 		<tr><th align="right">$</th><td><?php echo __('event.result.legend.prize') ?></td></tr>

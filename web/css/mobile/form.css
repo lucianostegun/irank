@@ -1,59 +1,18 @@
-.mobileForm .topLeft {
-	
-	height: 				10px;
-	background: 			url('/images/mobile/form/topMiddle.png') no-repeat;
-	background-position: 	7 0;
-}
+.mobileForm {
 
-.mobileForm .topRight {
-	
-	text-align: 			right;
-	height: 				10px;
-	background: 			url('/images/mobile/form/topMiddle.png') no-repeat -15;
-	background-position: 	-7 0;
-}
-
-.mobileForm .baseLeft {
-	
-	height: 				10px;
-	background: 			url('/images/mobile/form/baseMiddle.png') no-repeat;
-	background-position: 	7 0;
-}
-
-.mobileForm .baseRight {
-	
-	text-align: 			right;
-	height: 				10px;
-	background: 			url('/images/mobile/form/baseMiddle.png') no-repeat -15;
-	background-position: 	-7 0;
-}
-
-.mobileForm .topMiddle {
-	
-	height: 		10px;
-	background: 	url('/images/mobile/form/topMiddle.png') repeat-x;
-}
-
-.mobileForm .baseMiddle {
-	
-	height: 		10px;
-	background: 	url('/images/mobile/form/baseMiddle.png') repeat-x;
-}
-
-.mobileForm .baseMiddleGray {
-	
-	height: 		10px;
-	background: 	url('/images/mobile/form/baseMiddleGray.png') repeat-x;
+	border: 				1px solid #B0B0B0;
+	background: 			#FFFFFF;
+	-moz-border-radius: 	7px;
+	-webkit-border-radius: 	7px;
+	border-radius: 			7px;
 }
 
 .mobileForm .formContent {
 	
-	background: 	#FFFFFF url('/images/mobile/form/right.png') repeat-y right;
 }
 
 .mobileForm .formTable th {
 	
-	background: 	#FFFFFF url('/images/mobile/form/left.png') repeat-y;
 }
 
 .mobileForm .formTable .actionBar img {
@@ -101,14 +60,12 @@
 
 .mobileForm .formContent .firstLine {
 	
-	padding-top: 	4px;
 }
 
 .mobileForm .formContent .lastLine {
 	
 	padding-left: 		7px;
 	border-bottom: 		0px;
-	padding-bottom: 	4px;
 }
 
 .mobileForm .formContent .lastLineBar {
@@ -120,16 +77,18 @@
 
 .mobileForm .formContent .actionBar {
 	
-	background: 		#F0F0F0;
-	padding-left: 		7px;
-	border-bottom: 		0px;
-	border-top: 		1px solid #C0C0C0;
-	border-left: 		1px solid #C0C0C0;
-	border-right: 		1px solid #C0C0C0;
-	padding-bottom: 	4px;
-	height: 			10px;
-	padding-top: 		10px;
-	padding-bottom: 	0px;
+	background-color: 					#F0F0F0;
+	padding-left: 						7px;
+	border-bottom: 						0px;
+	border-top: 						1px solid #C0C0C0;
+	padding-bottom: 					12px;
+	height: 							10px;
+	-moz-border-radius-bottomleft: 		7px;
+	-webkit-border-radius-bottomleft: 	7px;
+	border-radius-bottomleft: 			7px;
+	-moz-border-radius-bottomright: 	7px;
+	-webkit-border-radius-bottomright: 	7px;
+	border-radius-bottomright: 			7px;
 }
 
 .mobileForm input {

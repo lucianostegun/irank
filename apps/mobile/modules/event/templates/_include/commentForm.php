@@ -3,14 +3,6 @@
 ?>
 	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
 		<tr>
-			<td width="0" class="topLeft"><?php echo image_tag('mobile/form/topLeft') ?></td>
-			<td width="100%" class="topMiddle"></td>
-			<td width="0" class="topRight"><?php echo image_tag('mobile/form/topRight') ?></td>
-		</tr>
-	</table>
-
-	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
-		<tr>
 			<td colspan="3" class="formContent">
 			
 				<table cellpadding="0" cellspacing="0" width="100%" class="formTable">
@@ -33,13 +25,5 @@
 				</table>
 							
 			</td>
-		</tr>
-	</table>
-	
-	<table width="95%" cellpadding="0" cellspacing="0" border="0" class="mobileForm">
-		<tr>
-			<td class="baseLeft" width="0" valign="bottom"><?php echo image_tag('mobile/form/baseLeft', array('id'=>'commentBaseLeft')) ?></td>
-			<td width="100%" class="baseMiddle" id="commentBaseMiddle"></td>
-			<td class="baseRight" width="0" valign="bottom"><?php echo image_tag('mobile/form/baseRight', array('id'=>'commentBaseRight')) ?></td>
 		</tr>
 	</table>

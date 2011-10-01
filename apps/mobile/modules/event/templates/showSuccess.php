@@ -1,3 +1,10 @@
+<?php if( $eventObj->getIsFreeroll() ): ?>
+	<div class="warning">
+		<b>ATENÇÃO!</b><br/>
+		Esta versão ainda não suporta lançamento de resultados para eventos Freeroll.
+		<br/>Por favor, acesse a <?php echo link_to('versão clássica', 'home/classic') ?> para lançar os resultados deste evento.
+	</div>
+<?php endif; ?>
 <?php
 	$pastDate = $eventObj->isPastDate();
 	
@@ -8,35 +15,34 @@
 	
 	echo input_hidden_tag('eventId', $eventObj->getId());
 ?>
-<br/>
 <div align="center">
 <table width="95%" cellpadding="0" cellspacing="0" class="menu">
 	<tr onclick="hideDiv('playerListDiv'); hideDiv('resultDiv'); hideDiv('commentsDiv'); showDiv('infoDiv'); goTop()">
-		<td width="10" class="topLeft">&nbsp;</td>
-		<td class="middle label"><?php echo __('event.info') ?></td>
-		<td width="10" class="topRight">&nbsp;</td>
+		<td>&nbsp;</td>
+		<th><?php echo __('event.info') ?></th>
+		<td>&nbsp;</td>
 	</tr>
 	<tr onclick="hideDiv('infoDiv'); hideDiv('resultDiv'); hideDiv('commentsDiv'); showDiv('playerListDiv'); goTop()">
-		<td width="10" class="left">&nbsp;</td>
-		<td class="middle label"><?php echo __('event.guests') ?></td>
-		<td width="10" class="right">&nbsp;</td>
+		<td>&nbsp;</td>
+		<th><?php echo __('event.guests') ?></th>
+		<td>&nbsp;</td>
 	</tr>
 	<?php if( $pastDate ): ?>
 	<tr onclick="hideDiv('infoDiv'); hideDiv('playerListDiv'); hideDiv('commentsDiv'); showDiv('resultDiv'); goTop()">
-		<td width="10" class="left">&nbsp;</td>
-		<td class="middle label"><?php echo __('event.result') ?></td>
-		<td width="10" class="right">&nbsp;</td>
+		<td>&nbsp;</td>
+		<th><?php echo __('event.result') ?></th>
+		<td>&nbsp;</td>
 	</tr>
 	<?php endif; ?>
 	<tr onclick="hideDiv('infoDiv'); hideDiv('resultDiv'); hideDiv('playerListDiv'); showDiv('commentsDiv'); goTop()">
-		<td width="10" class="left">&nbsp;</td>
-		<td class="middle label"><?php echo __('event.comments') ?></td>
-		<td width="10" class="right">&nbsp;</td>
+		<td>&nbsp;</td>
+		<th><?php echo __('event.comments') ?></th>
+		<td>&nbsp;</td>
 	</tr>
-	<tr onclick="getICalFile()">
-		<td width="10" class="baseLeft">&nbsp;</td>
-		<td class="base label"><?php echo image_tag('mobile/icon/calendar', array('align'=>'absmiddle')).__('event.iCalFile') ?></td>
-		<td width="10" class="baseRight">&nbsp;</td>
+	<tr onclick="getICalFile()" class="last">
+		<td>&nbsp;</td>
+		<th><?php echo image_tag('mobile/icon/calendar', array('align'=>'absmiddle')).__('event.iCalFile') ?></th>
+		<td>&nbsp;</td>
 	</tr>
 </table>
 </div>

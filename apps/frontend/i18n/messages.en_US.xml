@@ -418,6 +418,10 @@
 				<source>footerMenu.quickGuide</source>
 				<target>quick guide</target>
 			</trans-unit>
+			<trans-unit>
+				<source>footerMenu.mobildeVersion</source>
+				<target>mobile version</target>
+			</trans-unit>
 
 
 

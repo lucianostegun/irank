@@ -424,6 +424,10 @@
 				<source>footerMenu.quickGuide</source>
 				<target>guia rápido</target>
 			</trans-unit>
+			<trans-unit>
+				<source>footerMenu.mobildeVersion</source>
+				<target>versão mobile</target>
+			</trans-unit>
 
 
 
@@ -2148,6 +2152,14 @@
 			<trans-unit>
 				<source>home.photoView</source>
 				<target>Visualização de imagem</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.public</source>
+				<target>Público</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.private</source>
+				<target>Privado</target>
 			</trans-unit>
 		</body>
 	</file>

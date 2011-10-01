@@ -35,6 +35,7 @@ class myAccountActions extends sfActions
 
   	$userSiteObj->quickSave($request);
   	$userSiteObj->saveEmailOptions($request);
+  	$userSiteObj->updateEmailGroups();
   	exit;
   }
 
