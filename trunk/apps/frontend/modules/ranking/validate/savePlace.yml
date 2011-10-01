@@ -10,8 +10,8 @@ fields:
       callback:      [RankingPlacePeer, uniquePlaceName]
       invalid_error: form.error.takenRankingPlace
        
-  mapsLink:
-    required:
-      msg:       form.error.requiredField
-    sfUrlValidator:
-      url_error: form.error.invalidUrl
+#  mapsLink:
+#    required:
+#      msg:       form.error.requiredField
+#    sfUrlValidator:
+#      url_error: form.error.invalidUrl

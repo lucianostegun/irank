@@ -335,6 +335,7 @@ class Email extends Kinghost
 	*/	
 	public function delEmail( $idDominio , $email )
 	{
+
 		$this->doCall( 'email/removemailbox/'.$idDominio.'/'.$email , '' , 'DELETE');
 		return @json_decode($this->getResponseBody() , true);
 	}

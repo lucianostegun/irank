@@ -506,6 +506,10 @@
 				<source>button.calculetePrize</source>
 				<target>Calcular prêmios</target>
 			</trans-unit>
+			<trans-unit>
+				<source>event.calculatePrizeError</source>
+				<target>Erro ao calcular a divisão dos prêmios!</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -7,7 +7,7 @@
 				<div class="error" id="rankingRankingNameError" onclick="showFormErrorDetails('ranking', 'rankingName')"></div>
 			</div>
 			<?php if( !$rankingObj->getRankingTag() ): ?>
-			<div class="row">
+			<div class="row" id="rankingBuildEmailGroupRowDiv">
 				<div class="label">Criar grupo de e-mail</div>
 				<div class="fieldCheckbox" id="rankingBuildEmailGroupField"><?php echo checkbox_tag('buildEmailGroup', true, false, array('onclick'=>'toggleEmailAlias(this.checked)', 'id'=>'rankingBuildEmailGroup')) ?></div>
 				<div class="help" id="rankingBuildEmailGroupHelp" title="Cria um e-mail @irank.com.br que envia de uma só vez a mesma mensagem a todos os participantes do ranking"><?php echo link_to(image_tag('icon/help'), '#showFormHelp("rankingBuildEmailGroup")') ?></div>
@@ -25,6 +25,7 @@
 				<div class="label" id="rankingRankingTagLabel"><?php echo __('ranking.rankingTag') ?></div>
 				<div class="textFlex"><?php echo $rankingObj->getRankingTag() ?>@irank.com.br</div>
 				<div class="help" id="rankingRankingTagHelp" title="As mensagens enviadas ao endereço <?php echo $rankingObj->getRankingTag() ?>@irank.com.br serão automaticamente enviadas a todos os participantes do ranking"><?php echo link_to(image_tag('icon/help'), '#showFormHelp("rankingRankingTag")') ?></div>
+				<?php echo input_hidden_tag('rankingTag', $rankingObj->getRankingTag(), array('id'=>'rankingRankingTag')) ?>
 			</div>
 			<?php endif; ?>
 			<?php if( !$rankingObj->isNew() ): ?>

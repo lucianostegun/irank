@@ -167,7 +167,7 @@ function replicateValue(fieldObj){
 		fieldValue = toCurrency(fieldObj.value)
 	
 	fieldId = fieldId+getCurrentResultPeopleId();
-	
+
 	$(fieldId).value               = fieldObj.value;
 	$(fieldId+'Preview').innerHTML = fieldValue;
 }
@@ -191,6 +191,22 @@ function previewEventResult(){
 	toggleView('resultPreview');
 }
 
+function getTotalByClassName(className){
+	
+	var fieldList  = document.getElementsByClassName(className);
+	var totalValue = 0;
+	
+	for(var i=0; i < fieldList.length; i++)
+		totalValue += toFloat(fieldList[i].value);
+	
+	return totalValue;
+}
+
+function isFreeroll(){
+	
+	return ($('isFreeroll').value=='1');
+}
+
 function doCalculatePrize(){
 
 	var eventId = $('eventId').value;
@@ -204,10 +220,10 @@ function doCalculatePrize(){
 
 	if( !isFreeroll() ){
 		
-		totalBuyin = toFloat($('eventResultTotalBuyin').innerHTML);
-		totalPrize = toFloat($('eventResultTotalPrize').innerHTML);
-		totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
-		totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
+		totalBuyin = getTotalByClassName('eventResultBuyin');
+		totalPrize = getTotalByClassName('eventResultPrize');
+		totalRebuy = getTotalByClassName('eventResultRebuy');
+		totalAddon = getTotalByClassName('eventResultAddon');
 	}
 	
 	var totalBRA = (totalBuyin+totalRebuy+totalAddon);
@@ -220,7 +236,6 @@ function doCalculatePrize(){
 
 		var paidPlaces  = infoObj.paidPlaces;
 		var percentList = infoObj.percentList.split(',');
-		
 		
 		var peopleIdList = $('resultPeopleIdList').value.split(',');
 				
@@ -235,7 +250,8 @@ function doCalculatePrize(){
 					
 					var percent = percentList[positionIndex];
 					
-					$('eventPrize'+peopleId).value = toFloat(totalBRA*percent/100, true);
+					$('eventPrize'+peopleId).value               = toFloat(totalBRA*percent/100, true);
+					$('eventPrize'+peopleId+'Preview').innerHTML = toCurrency(totalBRA*percent/100, true);
 				}
 				
 				if( position > paidPlaces )
@@ -243,7 +259,7 @@ function doCalculatePrize(){
 			}
 		}
 		
-		calculateResultTotal('prize');
+//		calculateResultTotal('prize');
 		
 		hideIndicator('eventResult');
 	};
@@ -264,4 +280,21 @@ function doCalculatePrize(){
 	
 	var urlAjax = _webRoot+'/event/getPaidPlaces/eventId/'+eventId+'/buyins/'+buyins;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function calculateResultTotal(type){
+	
+	var peopleIdList = $('resultPeopleIdList').value.split(',');
+	var totalValue   = 0;
+	
+	for(var i=0; i < peopleIdList.length; i++){
+		
+		value = $('event'+ucfirst(type)+peopleIdList[i]).value;
+		value = toFloat(value);
+		
+		totalValue += value;
+	}
+	
+	$('eventResultTotal'+ucfirst(type)).innerHTML = toFloat(totalValue, true);
+	checkTotalPrize();
 }

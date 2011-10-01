@@ -20,7 +20,7 @@
 			</div>
 			<div class="row">
 				<div class="label" id="eventEventNameLabel"><?php echo __('event.eventName') ?></div>
-				<div class="field"><?php echo input_tag('eventName', $eventObj->getEventName(), array('size'=>25, 'maxlength'=>25, 'class'=>'required', 'id'=>'eventEventName')) ?></div>
+				<div class="field"><?php echo input_tag('eventName', $eventObj->getEventName(false), array('size'=>25, 'maxlength'=>25, 'class'=>'required', 'id'=>'eventEventName')) ?></div>
 				<div class="error" id="eventEventNameError" onclick="showFormErrorDetails('event', 'eventName')"></div>
 				
 				<?php if( !$eventObj->getRanking(true)->getGameStyle()->isTagName('ring') ): ?>
@@ -94,7 +94,7 @@
 					?>
 					<div class="row">
 						<div class="label"><?php echo $eventPosition.Util::getOrdinalSufix($eventPosition).' '.__('event.place') ?></div>
-						<div class="field"><?php echo input_tag('paidPlace'.$eventPosition, Util::formatFloat($eventPrizeConfigObj->getPrizeValue(), true), array('size'=>5, 'maxlength'=>5, 'autocomplete'=>'off', 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventPaidPlace'.$eventPosition)) ?></div>
+						<div class="field"><?php echo input_tag('paidPlace'.$eventPosition, Util::formatFloat($eventPrizeConfigObj->getPrizeValue(), true), array('size'=>5, 'maxlength'=>6, 'autocomplete'=>'off', 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventPaidPlace'.$eventPosition)) ?></div>
 					</div>
 					<?php
 							endforeach;

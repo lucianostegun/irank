@@ -1,84 +1,64 @@
+.menu {
+
+	border: 				1px solid #B0B0B0;
+	background: 			#FFFFFF;
+	-moz-border-radius: 	7px;
+	-webkit-border-radius: 	7px;
+	border-radius: 			7px;
+}
+
+.menu td {
+
+	border-bottom: 		1px solid #ABADB0;
+	width: 				10px;
+	height:				44px;
+}
+
+.menu th {
+
+	border-bottom: 		1px solid #ABADB0;
+	height:				44px;
+	font-size: 			12pt;
+	color: 				#000000;
+	font-weight: 		bold;
+	padding-top: 		1px;
+	text-align: 		left;
+}
+
+.menu .last td,
+.menu .last th {
+
+	border-bottom: 	none;
+}
+
 .menu img {
 	
 	margin: 	-10 10 0 3;
 }
 
-.menu .topLeft {
+
+
+
+
+
+.tableMenu {
 	
-	height: 		44px;
-	background: 	url('/images/mobile/layout/menuTopLeft.png') no-repeat
+	border: 				1px solid #B0B0B0;
+	background: 			#FFFFFF;
+	-moz-border-radius: 	7px;
+	-webkit-border-radius: 	7px;
+	border-radius: 			7px;
 }
 
-.menu .middle {
+.flat {
 	
-	height: 		44px;
-	background: 	url('/images/mobile/layout/menuBg.png');
+	border: 				1px solid #B0B0B0;
+	border-bottom: 			none;
+	background: 			#FFFFFF;
+	-moz-border-radius: 	0px;
+	-webkit-border-radius: 	0px;
+	border-radius: 			0px;
 }
-
-.menu .topRight {
-	
-	height: 		44px;
-	background: 	url('/images/mobile/layout/menuTopRight.png') no-repeat
-}
-
-.menu .left {
-	
-	height: 		44px;
-	background: 	url('/images/mobile/layout/menuLeft.png') no-repeat
-}
-
-.menu .right {
-	
-	height: 		44px;
-	background: 	url('/images/mobile/layout/menuRight.png') no-repeat
-}
-
-.menu .baseLeft {
-	
-	height: 		44px;
-	background: 	url('/images/mobile/layout/menuBaseLeft.png') no-repeat
-}
-
-.menu .base {
-	
-	height: 		44px;
-	background: 	url('/images/mobile/layout/menuBaseBg.png');
-}
-
-.menu .baseRight {
-	
-	height: 		44px;
-	background: 	url('/images/mobile/layout/menuBaseRight.png') no-repeat
-}
-
-.menu .label {
-	
-	font-size: 		12pt;
-	color: 			#000000;
-	font-weight: 	bold;
-	padding-top: 	1px
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .tableMenu td {
 	
@@ -88,7 +68,7 @@
 	font-weight: 	bold;
 	height: 		43px;
 	padding-left: 	10px;
-	background: 	#FFFFFF url('/images/mobile/form/arrow.png') no-repeat right;
+	background: 	url('/images/mobile/form/arrow.png') no-repeat right;
 	overflow: 		hidden;
 }
 
@@ -100,8 +80,6 @@
 
 .tableMenu .option {
 	
-	border-left: 	1px solid #c7c7c7;
-	border-right: 	1px solid #c7c7c7;	
 }
 
 .tableMenu .firstLine {
@@ -135,6 +113,7 @@
 	font-weight: 	normal;
 	height: 		43px;
 	padding-left: 	10px;
+	padding-right: 	5px;
 	overflow: 		hidden;
 	background: 	#FFFFFF;
 }

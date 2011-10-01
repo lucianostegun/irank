@@ -784,7 +784,7 @@ class Ranking extends BaseRanking
 		$emailAddressList   = array_unique($emailAddressList);
 		
 		$paramList = array();
-		$paramList['idDominio'] = '200080';
+		$paramList['idDominio'] = Config::DOMAIN_ID;
 		$paramList['caixa']     = $rankingTag.'@irank.com.br';
 		$paramList['destino']   = implode(',', $emailAddressList);
 		
@@ -809,7 +809,7 @@ class Ranking extends BaseRanking
 		$emailAddressList   = array_unique($emailAddressList);
 		
 		$paramList = array();
-		$paramList['idDominio'] = '200080';
+		$paramList['idDominio'] = Config::DOMAIN_ID;
 		$paramList['caixa']     = $rankingTag.'@irank.com.br';
 		$paramList['destino']   = implode(',', $emailAddressList);
 		
@@ -817,6 +817,24 @@ class Ranking extends BaseRanking
 			
 			$emailObj = new Email();
 			$emailObj->editAlias($paramList);
+		}catch(Exception $e){}
+	}
+	
+	public function deleteEmailGroup(){
+
+		$rankingTag = $this->getRankingTag();
+
+		if( !$rankingTag )
+			return false;
+		
+		$paramList = array();
+		$paramList['idDominio'] = Config::DOMAIN_ID;
+		$paramList['caixa']     = $rankingTag.'@irank.com.br';
+		
+		try{
+			
+			$emailObj = new Email();
+			$emailObj->delRedir(Config::DOMAIN_ID, $paramList);
 		}catch(Exception $e){}
 	}
 	

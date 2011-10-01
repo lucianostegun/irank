@@ -63,7 +63,7 @@ class eventActions extends sfActions
 		if( !is_object($this->eventObj) )
 			return $this->redirect('event/index');
 		
-		if( !$this->eventObj->isMyEvent() || !$this->eventObj->isEditable() )
+		if( !$this->eventObj->isMyEvent() || !$this->eventObj->isEditable() || $this->eventObj->getIsFreeroll() )
 			$this->setTemplate('show');
   	}
   }
@@ -199,6 +199,7 @@ class eventActions extends sfActions
   	echo 'var i18n_event_comment_typeSomething = "'.__('event.comment.typeSomething').'";'.$nl;
   	echo 'var i18n_leftChar                    = "'.__('leftChar').'";'.$nl;
   	echo 'var i18n_leftChars                   = "'.__('leftChars').'";'.$nl;
+	echo 'var i18n_event_calculatePrizeError   = "'.__('event.calculatePrizeError').'";'.$nl;
   	
   	exit;
   }

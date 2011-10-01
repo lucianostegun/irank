@@ -3,6 +3,7 @@
 	$peopleId   = $userSiteObj->getPeopleId();
 	$username   = $userSiteObj->getUsername();
 	$filePath   = $userSiteObj->getImagePath(true);
+	$rankings   = $userSiteObj->getRankingCount();
 ?>
 <table width="100%" cellspacing="0" cellpadding="0" class="defaultForm">
 	<tr>
@@ -31,6 +32,15 @@
 				<div class="text"><?php echo link_to(__('sign.form.changePassword'), '#togglePasswordField()') ?></div>
 			</div>
 			<div id="passwordAreaDiv"></div>
+			
+			<?php if( empty($rankings) ): ?>
+			<div style="width: 350px; border: 5px solid #D7D7D7; margin-top: 30px; margin-left: 30px; line-height: 200%; background: #FFFFFF">
+				<div style="border: 1px solid #9F9F9F; padding: 10px">
+					Você ainda não está participando de nenhum ranking.<br/>
+					<b><?php echo link_to('Clique aqui', 'ranking/new', array('class'=>'red')) ?></b> para criar e compartilhar seu primeiro ranking.
+				</div>
+			</div>
+			<?php endif; ?>
 		</td>
 		<td width="210" align="center" valign="top">
 			<div id="uploadProfilePhotoDiv">

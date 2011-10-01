@@ -40,7 +40,7 @@ img {
 	clear: 			both;
 	width: 			1002px;
 	margin: 		0 auto;         
-	text-align: 	left; /* "remédio" para o hack do IE */ 
+	text-align: 	left; /* "remï¿½dio" para o hack do IE */ 
 }
 
 #contentArea #innerContent {
@@ -65,7 +65,13 @@ img {
 	float: 			left;
 	width: 			200px;
 	height: 		69px;
-	border-right: 	1px solid #823D2B;
+}
+
+#contentArea #innerContent #header #sideLogo {
+
+	float: 			left;
+	width: 			45px;
+	height: 		69px;
 }
 
 #contentArea #innerContent #header #search {
@@ -82,6 +88,7 @@ img {
 #contentArea #innerContent #header #flagList {
 
 	position: 		absolute;
+	width: 			70px;
 	height: 		30px;
 	margin-top: 	80px;
 	margin-left: 	915px;

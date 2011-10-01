@@ -19,7 +19,7 @@
 				</div>
 				<div class="row">
 					<div class="label" id="rankingPlaceMapsLinkLabel"><?php echo __('ranking.mapsLink') ?></div>
-					<div class="field"><?php echo input_tag('mapsLink', null, array('size'=>60, 'id'=>'rankingPlaceMapsLink')) ?></div>
+					<div class="field"><?php echo input_tag('mapsLink', null, array('size'=>50, 'id'=>'rankingPlaceMapsLink')) ?></div>
 				</div>
 			</td>
 		</tr>

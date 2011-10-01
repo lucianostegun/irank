@@ -145,6 +145,7 @@ class rankingActions extends sfActions
 		Util::forceError(__('rankin.exception.deleteAttempt'), true);
 	}
 	
+	$rankingObj->deleteEmailGroup();
 	$rankingObj->delete();
 	exit;
   }

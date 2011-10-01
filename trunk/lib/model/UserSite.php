@@ -128,7 +128,7 @@ class UserSite extends BaseUserSite
         MyTools::getResponse()->sendHttpHeaders();
 	}
 	
-	public function getRankingList($criteria=null, $con=null){
+	public function getRankingList($criteria=null, $con=null, $count=false){
 		
 		$criteria = new Criteria();
 		$criteria->setNoFilter(true);
@@ -138,7 +138,16 @@ class UserSite extends BaseUserSite
 		$criteria->add( RankingPlayerPeer::PEOPLE_ID, $this->getPeopleId() );
 		$criteria->add( RankingPlayerPeer::ENABLED, true );
 		$criteria->addAscendingOrderByColumn( RankingPeer::RANKING_NAME );
-		return RankingPeer::doSelect($criteria);
+		
+		if( $count )
+			return RankingPeer::doCount($criteria);
+		else
+			return RankingPeer::doSelect($criteria);
+	}
+	
+	public function getRankingCount(){
+		
+		return $this->getRankingList(null, null, true);
 	}
 	
 	public function sendWelcomeMail($request){
@@ -271,6 +280,12 @@ class UserSite extends BaseUserSite
 		}
 		
 		return $id;
+	}
+	
+	public function updateEmailGroups(){
+		
+		foreach($this->getRankingList() as $rankingObj)
+			$rankingObj->updateEmailGroup();
 	}
 	
 	public function postOnWall($isNew){
