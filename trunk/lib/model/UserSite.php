@@ -63,6 +63,7 @@ class UserSite extends BaseUserSite
 		$receiveEventCommentNotify       = $request->getParameter('receiveEventCommentNotify');
 		$receiveAllResults               = $request->getParameter('receiveAllResults');
 		$quickResume                     = $request->getParameter('quickResume');
+		$quickResumePeriod               = $request->getParameter('quickResumePeriod');
 		
 		$this->setOptionValue('receiveFriendEventConfirmNotify', ($receiveFriendEventConfirmNotify?'1':'0'));
 		$this->setOptionValue('receiveEventReminder0', ($receiveEventReminder0?'1':'0'));
@@ -71,6 +72,7 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('receiveEventCommentNotify', ($receiveEventCommentNotify?'1':'0'));
 		$this->setOptionValue('receiveAllResults', ($receiveAllResults?'1':'0'));
 		$this->setOptionValue('quickResume', $quickResume);
+		$this->setOptionValue('quickResumePeriod', $quickResumePeriod);
 	}
 	
 	public static function getCurrentUser(){
@@ -196,10 +198,17 @@ class UserSite extends BaseUserSite
 		$userSiteOptionObj->save();
 	}
 	
-	public function getOptionValue($tagName){
+	public function getOptionValue($tagName, $defaultValue=null){
 		
 		$userSiteOptionId  = VirtualTable::getIdByTagName('userSiteOption', $tagName);
 		$userSiteOptionObj = UserSiteOptionPeer::retrieveByPK($this->getPeopleId(), $userSiteOptionId);
+		
+		if( $userSiteOptionObj->isNew() && !empty($defaultValue) ){
+			
+			$userSiteOptionObj->setOptionValue($defaultValue);
+			$userSiteOptionObj->save();
+		}
+		
 		return $userSiteOptionObj->getOptionValue();
 	}
 	
@@ -212,6 +221,7 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('receiveEventCommentNotify', '1');
 		$this->setOptionValue('receiveAllResults', '1');
 		$this->setOptionValue('quickResume', 'balance');
+		$this->setOptionValue('quickResumePeriod', 'always');
 	}
 	
 	public function getImagePath($create=false, $thumb=false){

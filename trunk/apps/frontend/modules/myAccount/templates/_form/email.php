@@ -7,6 +7,7 @@
 	$receiveAllResults               = $userSiteObj->getOptionValue('receiveAllResults');
 	$defaultLanguage                 = $userSiteObj->getPeople()->getDefaultLanguage();
 	$quickResume                     = $userSiteObj->getOptionValue('quickResume');
+	$quickResumePeriod               = $userSiteObj->getOptionValue('quickResumePeriod', 'always');
 ?>
 
 <table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px">
@@ -60,6 +61,19 @@
 										'paid'=>__('generalCredit.paid'));
 										
 					echo select_tag('quickResume', options_for_select($optionList, $quickResume));
+				?>
+				</div>
+
+				<div class="labelFlex" style="margin-left: 20px">Desde<!-- I18N --></div>
+				<div class="field">
+				<?php
+					$optionList = array('always'=>'Sempre',
+										'currentYear'=>'Ano corrente',
+										'lastYear'=>'Últimos 12 meses',
+										'currentMonth'=>'Mês corrente',
+										'lastMonth'=>'Últimos 30 dias');
+										
+					echo select_tag('quickResumePeriod', options_for_select($optionList, $quickResumePeriod));
 				?>
 				</div>
 			</div>
