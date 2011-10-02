@@ -33,6 +33,7 @@
 			</div>
 			<div id="passwordAreaDiv"></div>
 			
+			<!-- I18N -->
 			<?php if( empty($rankings) ): ?>
 			<div style="width: 350px; border: 5px solid #D7D7D7; margin-top: 30px; margin-left: 30px; line-height: 200%; background: #FFFFFF">
 				<div style="border: 1px solid #9F9F9F; padding: 10px">
@@ -57,6 +58,7 @@
 		</td>
 	</tr>
 </table>
+<!-- I18N -->
 <?php
 	DhtmlxWindows::createWindow('photoCutter', 'Recorte de imagem', 500, 300, 'myAccount/dialog/photoCutter');
 ?>

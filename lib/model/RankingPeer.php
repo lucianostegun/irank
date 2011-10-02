@@ -15,8 +15,17 @@ class RankingPeer extends BaseRankingPeer
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$peopleId   = MyTools::getAttribute('peopleId');
 		$cron       = MyTools::getAttribute('cron');
+		
+		$moduleName = MyTools::getContext()->getModuleName();
+		$actionName = MyTools::getContext()->getActionName();
+		
+		$allowSearch     = false;
+		$allowedPageList = array('event'=>array('facebookResultImage'));
+		
+		if( array_key_exists($moduleName, $allowedPageList) && in_array($actionName, $allowedPageList[$moduleName]))
+			$allowSearch = true;
 
-		if(!$cron){
+		if(!$cron && !$allowSearch){
 			
 			if( !$criteria->isNoFilter() ){
 
