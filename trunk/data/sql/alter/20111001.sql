@@ -1,7 +1,7 @@
 INSERT INTO virtual_table(virtual_table_name, description, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
     VALUES('userSiteOption', 'Contagem de resumo', 'quickResumePeriod', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO user_site_option (SELECT people_id, (SELECT MAX(id) FROM virtual_table WHERE virtual_table_name = 'userSiteOption'), 'aways', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM user_site WHERE enabled AND visible);
+INSERT INTO user_site_option (SELECT people_id, (SELECT MAX(id) FROM virtual_table WHERE virtual_table_name = 'userSiteOption'), 'always', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM user_site WHERE enabled AND visible);
 
 
 CREATE OR REPLACE FUNCTION get_user_option(peopleId INTEGER, tagName VARCHAR) RETURNS VARCHAR AS
@@ -55,7 +55,7 @@ BEGIN
     optionValue := (SELECT get_user_option(peopleId, ''quickResumePeriod'', ''aways''));
 
     IF optionValue = ''always'' THEN
-        result := ''2010-01-01'';
+        result := ''2009-01-01'';
     END IF;
 
     IF optionValue = ''currentYear'' THEN
@@ -88,7 +88,7 @@ DECLARE
 BEGIN
 	
     SELECT 
-        SUM(event_player.BUYIN+event_player.REBUY+event_player.ADDON)+get_player_bra_personal(peopleId) INTO result
+        SUM(event_player.ENTRANCE_FEE+event_player.BUYIN+event_player.REBUY+event_player.ADDON)+get_player_bra_personal(peopleId) INTO result
     FROM 
         event_player, event 
     WHERE 
@@ -214,7 +214,7 @@ BEGIN
         user_site.PEOPLE_ID = peopleId
         AND event_personal.VISIBLE=TRUE 
         AND event_personal.DELETED=FALSE
-        AND event_personal.EVENT_DATE > get_resume_start_date(peopleId);
+        AND event.EVENT_DATE > get_resume_start_date(peopleId);
 
    IF result IS NULL THEN
      result := 0;
@@ -236,7 +236,7 @@ DECLARE
 BEGIN
 	
     SELECT 
-        SUM(event_player.PRIZE/(event_player.BUYIN+event_player.REBUY+event_player.ADDON))
+        SUM(event_player.PRIZE/(event_player.ENTRANCE_FEE+event_player.BUYIN+event_player.REBUY+event_player.ADDON))
         /
         (SELECT COUNT(1) FROM event_player, event WHERE event_player.PEOPLE_ID = peopleId AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event_player.BUYIN > 0) INTO result
     FROM
