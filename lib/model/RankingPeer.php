@@ -20,7 +20,7 @@ class RankingPeer extends BaseRankingPeer
 		$actionName = MyTools::getContext()->getActionName();
 		
 		$allowSearch     = false;
-		$allowedPageList = array('event'=>array('facebookResultImage'));
+		$allowedPageList = array('event'=>array('facebookResultImage', 'facebookResult'));
 		
 		if( array_key_exists($moduleName, $allowedPageList) && in_array($actionName, $allowedPageList[$moduleName]))
 			$allowSearch = true;

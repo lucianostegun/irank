@@ -15,6 +15,7 @@
 	
 	echo input_hidden_tag('eventId', $eventObj->getId());
 ?>
+<br/>
 <div align="center">
 <table width="95%" cellpadding="0" cellspacing="0" class="menu">
 	<tr onclick="hideDiv('playerListDiv'); hideDiv('resultDiv'); hideDiv('commentsDiv'); showDiv('infoDiv'); goTop()">
