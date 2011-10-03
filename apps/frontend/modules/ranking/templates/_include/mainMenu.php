@@ -10,6 +10,12 @@
 	<div class="innerItem" style="background: url('/images/icon/import.png') 10px 5px no-repeat"><?php echo link_to(__('button.importData'), '#importRankingData()') ?></div>
 	
 	<br/><br/>
+	<div class="innerItem" style="background: url('/images/icon/unsubscribe.png') 10px 5px no-repeat"><!-- I18N --><?php echo link_to('Sair do ranking', '#doUnsubscribeRanking()') ?></div>
 	<div class="innerItem" style="background: url('/images/icon/delete.png') 10px 5px no-repeat"><?php echo link_to(__('button.deleteRanking'), '#doDeleteRanking()') ?></div>
+</div>
+<?php else: ?>
+<div class="innerMenu" style="display: <?php echo ($isNew?'none':'block') ?>" id="mainMenuRanking">
+	<br/><br/>
+	<div class="innerItem" style="background: url('/images/icon/unsubscribe.png') 10px 5px no-repeat"><!-- I18N --><?php echo link_to('Sair do ranking', '#doUnsubscribeRanking()') ?></div>
 </div>
 <?php endif; ?>

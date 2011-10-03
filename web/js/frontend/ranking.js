@@ -344,3 +344,52 @@ function showFreerollDetails(){
 	
 	showDiv('rankingFreerollDetailsTable', false, 'table');
 }
+
+function doUnsubscribeRanking(){
+	
+	// <!-- I18N -->
+	if(!confirm('ATENÇÃO!\n\nAo sair do ranking você perderá todo o histórico e não receberá mais notificações dos eventos relacionados a ele.\n\nDeseja continuar?'))
+		return false;
+	// <!-- I18N -->	
+	if(!confirm('Esta operação não poderá ser revertida.\n\nDeseja continuar?'))
+		return false;
+
+	var rankingId = $('rankingId').value;
+	
+	var successFunc = function(t){
+
+		hideIndicator('ranking');
+		
+		var form = document.createElement('form');
+		
+		var rankingIdField   = document.createElement('input');
+		rankingIdField.type  = 'hidden';
+		rankingIdField.name  = 'rankingId';
+		rankingIdField.value = rankingId;
+
+		form.appendChild( rankingIdField );
+		
+		form.method = 'POST';
+		form.action = _webRoot+'/ranking/unsubscribe';
+		document.body.appendChild( form );
+		
+		form.submit();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+		
+		var errorMessage = parseMessage(content);
+		// <!-- I18N -->
+		alert('Não foi possível sair deste ranking!'+content);
+		
+		hideIndicator('ranking');
+		
+		if( isDebug() )
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/ranking/validateUnsubscribe/rankingId/'+rankingId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}

@@ -5,6 +5,7 @@ class MobileFilter extends sfFilter {
 	public function execute($filterChain) {
 
 		$smartPhoneList = array('iPhone', 'windows ce', 'netfront', 'palmos', 'blazer', 'elaine', 'plucker', 'avantgo', 'wap', 'android');
+		$tabletList     = array('iPad');
 
 		$moduleName = MyTools::getContext()->getModuleName();
 		$actionName = MyTools::getContext()->getActionName();
@@ -22,22 +23,39 @@ class MobileFilter extends sfFilter {
 
 		$forceClassic = MyTools::getRequestParameter('fc');
 		$forceClassic = MyTools::getAttribute('forceClassic', $forceClassic);
+		
+		$urlRedirect = null;
 
 		if( $forceClassic ){
 
 				MyTools::setAttribute('forceClassic', '1');
 		}else{
 
-			if( !in_array($url, $quitActionList) ){
+			if( !in_array($url, $quitActionList) && !$forceClassic ){
 				
-				foreach ($smartPhoneList as $smartPhone)
-					if ( !$forceClassic && stristr( $browser, $smartPhone ) )
+				foreach($smartPhoneList as $smartPhone){
+					if ( strstr($browser, $smartPhone) ){
 						if($host=='irank')
-							return sfContext::getInstance()->getController()->redirect('http://'.$host.'/mobile.php'.$uri);
+							$urlRedirect = 'http://'.$host.'/mobile.php'.$uri;
 						else
-							return sfContext::getInstance()->getController()->redirect('http://m.irank.com.br'.$uri);
+							$urlRedirect = 'http://m.irank.com.br'.$uri;
+					}
+				}
+				
+//				foreach($tabletList as $tablet){
+//
+//					if ( strstr($browser, $tablet) ){
+//						if($host=='irank')
+//							$urlRedirect = 'http://'.$host.'/tablet.php'.$uri;
+//						else
+//							$urlRedirect = 'http://t.irank.com.br'.$uri;
+//					}
+//				}
 			}
 		}
+		
+		if( $urlRedirect )
+			return sfContext::getInstance()->getController()->redirect($urlRedirect);
 
 		$filterChain->execute();
 	}

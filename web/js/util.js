@@ -229,9 +229,9 @@ function parseInfo(infoList){
 function parseMessage(errorMessage){
 
 	if( (errorMessage).match(/^!/) )
-		return errorMessage.replace('!', '');
+		return errorMessage.replace('!', '\n\n');
 	else
-		return false;
+		return null;
 }
 
 function getScreenWidth(){

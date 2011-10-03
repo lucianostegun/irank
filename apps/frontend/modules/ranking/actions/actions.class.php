@@ -8,7 +8,7 @@ class rankingActions extends sfActions
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
 	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
 	
-	$freeActionList = array('edit', 'getDefaultBuyin', 'getRankingHistory');
+	$freeActionList = array('edit', 'getDefaultBuyin', 'getRankingHistory', 'validateUnsubscribe', 'unsubscribe');
 	$actionName     = sfContext::getInstance()->getActionName();
 		
 	$rankingId = $this->getRequestParameter('rankingId');
@@ -323,6 +323,43 @@ class rankingActions extends sfActions
 	
 	echo Util::parseInfo($rankingObj->getInfo());
 	exit;
+  }
+  
+  public function executeValidateUnsubscribe($request){
+
+	$peopleId   = $this->getUser()->getAttribute('peopleId');
+	$userSiteId = $this->getUser()->getAttribute('userSiteId');
+	$rankingId  = $request->getParameter('rankingId');
+
+	$rankingObj = RankingPeer::retrieveByPK($rankingId);
+
+	$count = Util::executeOne('SELECT COUNT(1) FROM ranking_player WHERE ranking_id = '.$rankingId.' AND enabled AND allow_edit');
+	
+	if( $rankingObj->getUserSiteId()==$userSiteId && !$count )
+		// <!-- I18N -->
+		Util::forceError('!Você é o criador do ranking.\nSelecione um ou mais jogadores para adminsitrarem este ranking.'.$count);
+
+	exit;
+  }
+
+  public function executeUnsubscribe($request){
+
+	$peopleId  = $this->getUser()->getAttribute('peopleId');
+	$rankingId = $request->getParameter('rankingId');
+
+	$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($rankingId, $peopleId);
+	
+	if( !is_object($rankingPlayerObj) ){
+	
+		Util::getHelper('i18n');
+		// <!-- I18N -->
+		throw new Exception('Você não faz parte deste ranking!');
+	}
+	
+	$rankingPlayerObj->setEnabled(false);
+	$rankingPlayerObj->save();
+
+	return $this->redirect('ranking/index');
   }
   
   public function executeJavascript($request){
