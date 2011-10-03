@@ -40,8 +40,8 @@ $forceClassic = MyTools::getAttribute('forceClassic');
 				    		<?php include_partial('home/include/leftBar', array('isAuthenticated'=>$isAuthenticated, 'culture'=>$culture, 'innerMenu'=>$innerMenu, 'innerObj'=>$innerObj)) ?>
 				    	</div>
 				    	<div id="socialNetwork">
-				    		<?php #include_partial('home/include/facebook', array()) ?>
-				    		<?php #include_partial('home/include/addthis', array()) ?>
+				    		<?php include_partial('home/include/facebook', array()) ?>
+				    		<?php include_partial('home/include/addthis', array()) ?>
 				    		<?php include_partial('home/include/partners', array()) ?>
 				    	</div>
     				</td>
@@ -54,20 +54,20 @@ $forceClassic = MyTools::getAttribute('forceClassic');
 						<div id="middleContent">
 							<?php echo Util::getLoading(); ?>
 							<?php echo $sf_content ?>
-						</div>	    
-    				
+						</div>
     				</td>
     			</tr>
     			<tr>
-    				<td valign="top" style="background: #F0F0F0; border-top: 0px solid; border-right: 1px solid #404040; height: 35px"><?php echo image_tag('blank.gif', array('width'=>200, 'height'=>1)) ?></td>
-    				<td valign="top" style="background: #F6F6F6; border-top: 0px; border-right: 0px solid"><?php echo image_tag('layout/rightBarBorderBase') ?></td>
+    				<td valign="top" style="background: #F0F0F0; border-top: 0px solid; border-right: 1px solid #404040; text-align: center; height: 35px">
+    					<?php echo image_tag('appstore') ?>
+    					<?php #echo image_tag('blank.gif') ?>
+    				</td>
+    				<td valign="top" style="background: #F6F6F6; border-top: 0px; border-right: 0px solid; padding-bottom: 70px"><?php echo image_tag('layout/rightBarBorderBase') ?></td>
     			</tr>
     		</table>
     	</div>
 	</div>
-	<?php echo image_tag('layout/leftBarFooter', array('style'=>'position: relative; top: -2px')) ?>
 </div>
-
 <div id="footer">
 	<table width="100%" cellspacing="0" cellpadding="0" border="0">
 		<tr>

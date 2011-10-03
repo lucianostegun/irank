@@ -7,7 +7,7 @@
 
 .homeDistinct {
 	
-	margin-left: 	8px;
+	empty-cells: 	show;
 }
 	
 .homeDistinct td span {
@@ -32,7 +32,7 @@
 .homeDistinct td {
 
 	background: 	#FFFFFF;
-	padding: 		5px 5px 5px 10px;
+	padding: 		0px;
 	border-top: 	1px solid #FFFFFF;
 	border-right: 	1px solid #FFFFFF;
 	border-bottom: 	1px solid #FFFFFF;
@@ -124,7 +124,7 @@
 
 .newsList .news.last {
 	
-	border-bottom: 	0px solid #FFFFFF;
+	border-bottom: 	none;
 }
 
 .newsList .news .description {
@@ -140,19 +140,66 @@
 	font-size: 		10px;
 }
 
-#flashContent {
-	
-	color: 	#FFFFFF
+.mobile {
+
+	background: 	#F5F5F5;
+	border: 		0px;
+	margin: 		10px;
 }
 
-#flashContent h1 {
-	
-	font-size: 	11pt;
-	color: 		silver;
-	margin: 	15px 0px 15px 0px;
+.mobile th {
+
+	background: 	#F5F5F5;
+	border: 		0px;
+	text-align: 	right;
+	font-weight: 	normal
 }
 
-#flashContent img {
+.mobile h1 {
+
+	font-size: 11pt;
+	font-weight: bold;
+	color: #b61515;
+	margin-bottom: 12px;
+}
+
+.mobile td {
+
+	background: 	#F5F5F5;
+	border: 		0px;
+	text-align: 	center;
+	padding-right: 	3px
+}
+
+.distinct {
 	
-	margin-bottom: 	-3.5px;
+	clear: 				both;
+	width: 				280px;
+	height: 			60px;
+	margin-left: 		10px;
+	border-bottom: 		1px solid #F0F0F0;
+	padding-top: 		10px;
+	padding-bottom: 	10px
+}
+
+.distinct .image {
+	
+	width: 			58px;
+	float: 			left;
+	text-align: 	center;
+}
+
+.distinct .description {
+	
+	float: 			left;
+	width: 			222px;
+	text-align: 	left;
+}
+
+.distinct .description span {
+	
+	font-size: 		10pt;
+	font-weight: 	bold;
+	color: 			#344f7C;
+	text-align: 	left;
 }

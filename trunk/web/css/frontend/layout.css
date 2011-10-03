@@ -40,7 +40,7 @@ img {
 	clear: 			both;
 	width: 			1002px;
 	margin: 		0 auto;         
-	text-align: 	left; /* "rem�dio" para o hack do IE */ 
+	text-align: 	left; /* "remédio" para o hack do IE */ 
 }
 
 #contentArea #innerContent {
@@ -390,6 +390,7 @@ img {
 
 #contentArea #innerContent #rightContent #middleContent {
 
+	
 }
 
 #contentArea #innerContent #rightContent #middleContent .innerContent {
@@ -436,7 +437,6 @@ select {
 #footer {
 
 	clear: 			both;
-	margin-top: 	35px;
 	height: 		50px;
 	padding: 		20px 0px 0px 0px;
 	background: 	url('/images/layout/footerBg.gif') repeat-x;
@@ -444,14 +444,14 @@ select {
 
 #welcomeLogo {
 	
-	color: #FFFFFF;
-	-moz-border-radius-bottomright: 	17px;
-	-webkit-border-radius-bottomright: 	17px;
-	border-radius-bottomright: 			17px;
+	color: 			#FFFFFF;
+	background: 	#191919 url('/images/frontend/layout/welcomeBg.png') repeat-x bottom left;
+	padding: 		5px 0px 0px 15px;
+	border-bottom: 	2px solid #999999
 }
 
-#welcomeLogo {
+#welcomeLogo a {
 	
-	height: 							220px;
-	color: 								#FFFFFF;
+	color: 			#E8A014;
+	font-weight: 	bold;
 }

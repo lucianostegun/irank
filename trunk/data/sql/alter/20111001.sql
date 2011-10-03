@@ -214,7 +214,7 @@ BEGIN
         user_site.PEOPLE_ID = peopleId
         AND event_personal.VISIBLE=TRUE 
         AND event_personal.DELETED=FALSE
-        AND event.EVENT_DATE > get_resume_start_date(peopleId);
+        AND event_personal.EVENT_DATE > get_resume_start_date(peopleId);
 
    IF result IS NULL THEN
      result := 0;
