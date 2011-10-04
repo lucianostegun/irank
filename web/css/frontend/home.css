@@ -1,3 +1,17 @@
+#welcomeLogo {
+	
+	color: 			#FFFFFF;
+	background: 	#191919 url('/images/frontend/layout/welcomeBg.png') repeat-x bottom left;
+	padding: 		5px 0px 0px 15px;
+	border-bottom: 	2px solid #999999
+}
+
+#welcomeLogo a {
+	
+	color: 			#E8A014;
+	font-weight: 	bold;
+}
+
 .welcome {
 
 	width: 		778px;
@@ -202,4 +216,32 @@
 	font-weight: 	bold;
 	color: 			#344f7C;
 	text-align: 	left;
+}
+
+#photoWall {
+
+	width:			500px;
+	background: 	#FFFFFF;
+}
+
+#photoWall h1 {
+
+	font-size: 		10pt;
+	color: 			#176C37;
+	border-bottom: 	2px solid #176C37;
+	margin: 		0px 7px 0px 7px;
+}
+
+#photoWall .image {
+
+	float: 	left;
+	margin: 	10px 0px -5px 10px;
+}
+
+#photoWall .image img {
+
+	margin: 		0px;
+	border: 		1px solid #999999;
+	padding: 		5px;
+	background: 	#E0E0E0;
 }

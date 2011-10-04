@@ -8,39 +8,7 @@
 			<p>Se você ainda não é cadastrado, <?php echo link_to('clique aqui', 'sign') ?> e comece agora mesmo a controlar seus jogos!</p>
 		</td>
 		<td valign="top">
-		
-				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="300" height="213" id="pictures" align="middle">
-					<param name="movie" value="/pictures.swf" />
-					<param name="quality" value="high" />
-					<param name="bgcolor" value="#FFFFFF" />
-					<param name="play" value="true" />
-					<param name="loop" value="false" />
-					<param name="scale" value="showall" />
-					<param name="menu" value="false" />
-			
-					<param name="devicefont" value="false" />
-					<param name="salign" value="" />
-					<param name="allowScriptAccess" value="sameDomain" />
-					<!--[if !IE]>-->
-					<object type="application/x-shockwave-flash" data="/pictures.swf" width="300" height="213">
-						<param name="movie" value="/pictures.swf" />
-						<param name="quality" value="high" />
-						<param name="bgcolor" value="#FFFFFF" />
-						<param name="play" value="true" />
-			
-						<param name="loop" value="false" />
-						<param name="scale" value="showall" />
-						<param name="menu" value="false" />
-						<param name="devicefont" value="false" />
-						<param name="salign" value="" />
-						<param name="allowScriptAccess" value="sameDomain" />
-					<!--<![endif]-->
-						<?php echo image_tag('frontend/layout/welcomeChips') ?>
-					<!--[if !IE]>-->
-					</object>
-					<!--<![endif]-->
-				</object>
-		
+			<?php echo image_tag('frontend/layout/welcomeChips') ?>
 		</td>
 	</tr>
 </table>
@@ -113,6 +81,6 @@
 		</td>
 	</tr>
 	<tr>
-		<td valign="top"><?php #include_partial('home/include/homeWall'); ?></td>
+		<td valign="top"><?php include_partial('home/include/photoWall'); ?></td>
 	</tr>
 </table>

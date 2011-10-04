@@ -886,6 +886,12 @@ class Ranking extends BaseRanking
 		return $infoList;
 	}
 	
+	public function updatePlayers(){
+		
+		Util::executeQuery('SELECT adjust_ranking_players('.$this->getId().')');
+		$this->updateEmailGroup();
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
