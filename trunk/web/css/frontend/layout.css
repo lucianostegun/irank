@@ -441,17 +441,3 @@ select {
 	padding: 		20px 0px 0px 0px;
 	background: 	url('/images/layout/footerBg.gif') repeat-x;
 }
-
-#welcomeLogo {
-	
-	color: 			#FFFFFF;
-	background: 	#191919 url('/images/frontend/layout/welcomeBg.png') repeat-x bottom left;
-	padding: 		5px 0px 0px 15px;
-	border-bottom: 	2px solid #999999
-}
-
-#welcomeLogo a {
-	
-	color: 			#E8A014;
-	font-weight: 	bold;
-}

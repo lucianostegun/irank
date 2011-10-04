@@ -358,6 +358,8 @@ class rankingActions extends sfActions
 	
 	$rankingPlayerObj->setEnabled(false);
 	$rankingPlayerObj->save();
+	
+	$rankingPlayerObj->getRanking()->updatePlayers();
 
 	return $this->redirect('ranking/index');
   }
