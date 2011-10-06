@@ -185,7 +185,6 @@ class UserSite extends BaseUserSite
 		$this->save();
 		
 		$options = array();
-//		$options['emailTemplate'] = null;
 		
 		Report::sendMail(__('email.subject.passwordRecovery'), $emailAddress, $emailContent, $options);
 	}
