@@ -213,10 +213,10 @@ class People extends BasePeople
 		return $this->getUserSite()->getId();
 	}
 	
-	public static function getResumeBalance(){
+	public static function getResumeBalance($peopleId=null, $userSiteId=null, $formatDecimal=false){
 		
-		$peopleId   = MyTools::getAttribute('peopleId');
-		$userSiteId = MyTools::getAttribute('userSiteId');
+		$peopleId   = ($peopleId?$peopleId:MyTools::getAttribute('peopleId'));
+		$userSiteId = ($userSiteId?$userSiteId:MyTools::getAttribute('userSiteId'));
 		
 		$resumeList = array();
 		
@@ -236,6 +236,13 @@ class People extends BasePeople
 		
 		$resumeList['balance'] = $resumeList['prize']-$resumeList['buyin']-$resumeList['rebuy']-$resumeList['addon']-$resumeList['fee'];
 		$resumeList['average'] = ($bra?$resumeList['prize']/$bra:0);
+		
+		
+		$resumeList['buyin'] = rand(500, 1000);
+		
+		if($formatDecimal)
+			foreach($resumeList as &$resume)
+				$resume = Util::formatFloat($resume, true);
 		
 		$resumeList['rankings'] = Util::executeOne('SELECT COUNT(1) FROM ranking_player, ranking WHERE ranking_player.PEOPLE_ID = \''.$peopleId.'\' AND ranking.VISIBLE=TRUE AND ranking.DELETED=FALSE AND ranking_player.RANKING_ID=ranking.ID', 'float');
 		$resumeList['events']   = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID', 'float');

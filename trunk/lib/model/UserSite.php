@@ -302,4 +302,18 @@ class UserSite extends BaseUserSite
 		if( $isNew )
    			HomeWall::doLog('juntou-se aos jogadores do <b>iRank</b>. Seja bem vindo!', 'userSite', true, $this->getId());
 	}
+	
+	public function getInfo(){
+		
+		$infoList = array();
+		$infoList['id']           = $this->getId();
+		$infoList['firstName']    = $this->getPeople()->getFirstName();
+		$infoList['lastName']     = $this->getPeople()->getLastName();
+		$infoList['emailAddress'] = $this->getPeople()->getEmailAddress();
+		
+		$resumeList = People::getResumeBalance($this->getPeopleId(), $this->getId(), true);
+		$infoList = array_merge($infoList, $resumeList);
+		
+		return $infoList;
+	}
 }

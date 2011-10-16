@@ -19,6 +19,19 @@ class myAccountActions extends sfActions
 	$this->selectedTab = $request->getParameter('tab', 'main');
   }
 
+  public function executeGetAppUpdatedData($request){
+
+	$userSiteId = $request->getParameter('userSiteId');
+	
+	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+	
+	if( !is_object($userSiteObj) )
+		Util::forceError('error');
+	
+	echo Util::parseInfo($userSiteObj->getInfo());
+	exit;
+  }
+
   public function handleErrorSave(){
 
   	$this->handleFormFieldError( $this->getRequest()->getErrors() );

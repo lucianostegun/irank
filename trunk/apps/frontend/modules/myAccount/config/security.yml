@@ -4,3 +4,6 @@ all:
   
 uploadPhoto:
   is_secure: off
+  
+getAppUpdatedData:
+  is_secure: off
