@@ -393,4 +393,46 @@ class rankingActions extends sfActions
   	echo 'ok ranking '.date('d/m/Y H:i:s');
   	exit;
   }
+  
+  public function executeGetiPhoneAppXml($request){
+  	
+  	$userSiteId  = $request->getParameter('userSiteId');
+  	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+  	$peopleId    = $userSiteObj->getPeopleId();
+	
+	$criteria = new Criteria();
+	$criteria->add( RankingPeer::ENABLED, true );
+	$criteria->add( RankingPeer::VISIBLE, true );
+	$criteria->add( RankingPeer::DELETED, false );
+	
+	$criterion = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
+	$criterion->addOr( $criteria->getNewCriterion( RankingPeer::USER_SITE_ID, $userSiteId ) );
+	$criteria->add($criterion);
+
+	$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
+			
+	$criteria->addAscendingOrderByColumn( RankingPeer::RANKING_NAME );
+	$criteria->setDistinct( RankingPeer::ID );
+	$rankingObjList = RankingPeer::doSelect( $criteria );
+	
+	header('content-type: text/xml; charset=UTF-8');
+	
+	$nl = chr(10);
+	
+	$xmlString  = '<?xml version="1.0"?>'.$nl;
+	$xmlString .= '<rankings>'.$nl;
+	
+	foreach($rankingObjList as $rankingObj){
+		
+		$xmlString .= '<ranking id="'.$rankingObj->getId().'">'.$nl;
+		$xmlString .= '	<rankingName>'.$rankingObj->getRankingName().'</rankingName>'.$nl;
+		$xmlString .= '	<players>'.$rankingObj->getPlayers().'</players>'.$nl;
+		$xmlString .= '	<events>'.$rankingObj->getEvents().'</events>'.$nl;
+		$xmlString .= '</ranking>'.$nl;
+	}
+	
+	$xmlString .= '</rankings>'.$nl;
+	echo $xmlString;
+	exit;
+  }
 }

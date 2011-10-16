@@ -16,3 +16,6 @@ facebookResultImage:
 
 getPhoto:
   is_secure: off
+  
+getiPhoneAppXml:
+  is_secure: off
