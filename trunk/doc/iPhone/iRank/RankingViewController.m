@@ -8,13 +8,14 @@
 
 #import "RankingViewController.h"
 #import "iRankAppDelegate.h"
-#import "XMLParser.h"
+#import "XMLRankingParser.h"
 #import "Ranking.h"
-#import "EventViewController.h"
+#import "Constants.h"
 
 @implementation RankingViewController
 @synthesize appDelegate;
 @synthesize detailViewController;
+@synthesize userSiteId;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,14 +39,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     
-    NSURL *url = [[NSURL alloc] initWithString:@"http://irank/index.php/ranking/getiPhoneAppXml/userSiteId/1"];
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    
+    if( userSiteId==nil )
+        userSiteId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserSiteIdKey];
+    
+    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://irank/index.php/ranking/getiPhoneAppXml/userSiteId/%@", userSiteId]];
     NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:url];
     
     
     //Inicia o delegate
-    XMLParser *parser = [[XMLParser alloc] initXMLParser];
+    XMLRankingParser *parser = [[XMLRankingParser alloc] initXMLParser];
     
     [xmlParser setDelegate:parser];
     
@@ -54,6 +59,14 @@
     
     //Inicia o parse do arquivo
     BOOL success = [xmlParser parse];
+    
+    for(Ranking *aRanking in appDelegate.rankingList) {
+        
+        aRanking.rankingName = [aRanking.rankingName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        aRanking.events      = [aRanking.events stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        aRanking.players     = [aRanking.players stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//        aRanking.rankingName = [aRanking.rankingName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
 }
 
 - (void)viewDidUnload
@@ -112,7 +125,13 @@
 - (UITableViewCell *)tableView:(UITableView * )tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     Ranking *aRanking = [appDelegate.rankingList objectAtIndex:indexPath.row];
+
+    if( detailViewController==nil )
+        detailViewController = [[RankingDetailViewController alloc] init];
+    
 	detailViewController.title = aRanking.rankingName;
+    
+    detailViewController.ranking = aRanking;
     
 	[self.navigationController pushViewController:detailViewController animated:YES];
 }
@@ -122,6 +141,7 @@
  
     [appDelegate release];
     [detailViewController release];
+    [userSiteId release];
     [super dealloc];
 }
 

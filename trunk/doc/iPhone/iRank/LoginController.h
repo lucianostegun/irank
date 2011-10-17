@@ -34,5 +34,6 @@
 - (IBAction)signButtonTouchUp:(id)sender;
 //- (IBAction)signCancelButtonTouchUp:(id)sender;
 - (NSString *)getMD5FromString:(NSString *)source;
+- (void)handleLoginResult:(NSString *)data;
 
 @end

@@ -14,7 +14,7 @@
 @interface HomeViewController : UIViewController {
     
     
-    IBOutlet UITableView *tableView;
+    IBOutlet UITableView *mainTableView;
     IBOutlet UIActivityIndicatorView *updateIndicator;
     IBOutlet UIBarButtonItem *updateButton;
     
@@ -27,6 +27,7 @@
     NSString *score;
     NSString *balance;
     NSURLConnection *connection;
+    NSString *userSiteId;
     
     iRankAppDelegate *appDelegate;
     LoginController *loginController;
@@ -35,7 +36,7 @@
 
 @property (nonatomic, retain) NSURLConnection * connection;
 @property (nonatomic, retain) NSMutableArray *bankrollMenuList;
-@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) UITableView *mainTableView;
 @property (nonatomic, retain) UIActivityIndicatorView *updateIndicator;
 @property (nonatomic, retain) NSString *fee;
 @property (nonatomic, retain) NSString *buyin;
@@ -48,6 +49,7 @@
 
 @property (nonatomic, retain) iRankAppDelegate *appDelegate;
 @property (nonatomic, retain) LoginController *loginController;
+@property (nonatomic, retain) NSString *userSiteId;
 
 - (IBAction)doLogout:(id)sender;
 - (IBAction)updateData:(id)sender;

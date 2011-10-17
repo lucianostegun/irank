@@ -12,6 +12,8 @@
     
     NSUserDefaults *defaults;
     NSMutableArray *rankingList;
+    NSMutableArray *eventList;
+    NSString *userSiteId;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
@@ -19,5 +21,7 @@
 
 @property (nonatomic, retain) NSUserDefaults *defaults;
 @property (nonatomic, retain) NSMutableArray *rankingList;
+@property (nonatomic, retain) NSMutableArray *eventList;
+@property (nonatomic, retain) NSString *userSiteId;
 
 @end

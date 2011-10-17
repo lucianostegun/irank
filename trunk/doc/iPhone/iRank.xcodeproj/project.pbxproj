@@ -38,6 +38,8 @@
 		DD2A949E1447CE04007CCDF1 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A94901447CE04007CCDF1 /* SBJsonTokeniser.m */; };
 		DD2A949F1447CE04007CCDF1 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A94921447CE04007CCDF1 /* SBJsonUTF8Stream.m */; };
 		DD2A94A01447CE04007CCDF1 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A94941447CE04007CCDF1 /* SBJsonWriter.m */; };
+		DD583195144BA7060035875B /* RankingDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD583193144BA7060035875B /* RankingDetailViewController.m */; };
+		DD583196144BA7060035875B /* RankingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD583194144BA7060035875B /* RankingDetailViewController.xib */; };
 		DD8DD3731448F8F70063D735 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3711448F8F70063D735 /* HomeViewController.m */; };
 		DD8DD3741448F8F70063D735 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3721448F8F70063D735 /* HomeViewController.xib */; };
 		DD8DD3761448FDC80063D735 /* homeTop.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3751448FDC80063D735 /* homeTop.png */; };
@@ -46,11 +48,13 @@
 		DD8DD3A11449FC650063D735 /* events.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD39E1449FC650063D735 /* events.png */; };
 		DD8DD3A21449FC650063D735 /* rankings.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD39F1449FC650063D735 /* rankings.png */; };
 		DD8DD3A31449FC650063D735 /* photos.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3A01449FC650063D735 /* photos.png */; };
-		DD8DD3AF144A067C0063D735 /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3AE144A067C0063D735 /* XMLParser.m */; };
+		DD8DD3AF144A067C0063D735 /* XMLRankingParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3AE144A067C0063D735 /* XMLRankingParser.m */; };
 		DD8DD3B2144A07990063D735 /* Ranking.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3B1144A07980063D735 /* Ranking.m */; };
 		DD8DD3C3144A20960063D735 /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3C1144A20960063D735 /* EventViewController.m */; };
 		DD8DD3C4144A20960063D735 /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3C2144A20960063D735 /* EventViewController.xib */; };
 		DD8DD3CA144B31EE0063D735 /* RankingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3C8144B31ED0063D735 /* RankingViewController.xib */; };
+		DD8DD3CD144B3D500063D735 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3CC144B3D500063D735 /* Event.m */; };
+		DD8DD3D0144B41F90063D735 /* XMLEventParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3CF144B41F90063D735 /* XMLEventParser.m */; };
 		DDF4B2AF1447AFAD00B859B5 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDF4B2AD1447AFAD00B859B5 /* MainWindow-iPad.xib */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +112,9 @@
 		DD2A94931447CE04007CCDF1 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonWriter.h; path = ../../../Downloads/SBJson_v3.0.4/Classes/SBJsonWriter.h; sourceTree = "<group>"; };
 		DD2A94941447CE04007CCDF1 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = ../../../Downloads/SBJson_v3.0.4/Classes/SBJsonWriter.m; sourceTree = "<group>"; };
 		DD2A94A51447D0DF007CCDF1 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		DD583192144BA7060035875B /* RankingDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingDetailViewController.h; sourceTree = "<group>"; };
+		DD583193144BA7060035875B /* RankingDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingDetailViewController.m; sourceTree = "<group>"; };
+		DD583194144BA7060035875B /* RankingDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingDetailViewController.xib; sourceTree = "<group>"; };
 		DD8DD3701448F8F70063D735 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		DD8DD3711448F8F70063D735 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		DD8DD3721448F8F70063D735 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -118,14 +125,18 @@
 		DD8DD39E1449FC650063D735 /* events.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = events.png; sourceTree = "<group>"; };
 		DD8DD39F1449FC650063D735 /* rankings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rankings.png; sourceTree = "<group>"; };
 		DD8DD3A01449FC650063D735 /* photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photos.png; sourceTree = "<group>"; };
-		DD8DD3AD144A067C0063D735 /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
-		DD8DD3AE144A067C0063D735 /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParser.m; sourceTree = "<group>"; };
+		DD8DD3AD144A067C0063D735 /* XMLRankingParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLRankingParser.h; sourceTree = "<group>"; };
+		DD8DD3AE144A067C0063D735 /* XMLRankingParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLRankingParser.m; sourceTree = "<group>"; };
 		DD8DD3B0144A07980063D735 /* Ranking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ranking.h; sourceTree = "<group>"; };
 		DD8DD3B1144A07980063D735 /* Ranking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ranking.m; sourceTree = "<group>"; };
 		DD8DD3C0144A20960063D735 /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
 		DD8DD3C1144A20960063D735 /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
 		DD8DD3C2144A20960063D735 /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventViewController.xib; sourceTree = "<group>"; };
 		DD8DD3C8144B31ED0063D735 /* RankingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingViewController.xib; sourceTree = "<group>"; };
+		DD8DD3CB144B3D500063D735 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		DD8DD3CC144B3D500063D735 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		DD8DD3CE144B41F90063D735 /* XMLEventParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLEventParser.h; sourceTree = "<group>"; };
+		DD8DD3CF144B41F90063D735 /* XMLEventParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLEventParser.m; sourceTree = "<group>"; };
 		DDF4B2AE1447AFAD00B859B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "iPad/en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -208,6 +219,8 @@
 				DD8DD3981449E1900063D735 /* RankingViewController.m */,
 				DD8DD3C0144A20960063D735 /* EventViewController.h */,
 				DD8DD3C1144A20960063D735 /* EventViewController.m */,
+				DD583192144BA7060035875B /* RankingDetailViewController.h */,
+				DD583193144BA7060035875B /* RankingDetailViewController.m */,
 			);
 			path = iRank;
 			sourceTree = "<group>";
@@ -259,8 +272,10 @@
 		DD8DD3AC144A06580063D735 /* XML */ = {
 			isa = PBXGroup;
 			children = (
-				DD8DD3AD144A067C0063D735 /* XMLParser.h */,
-				DD8DD3AE144A067C0063D735 /* XMLParser.m */,
+				DD8DD3AD144A067C0063D735 /* XMLRankingParser.h */,
+				DD8DD3AE144A067C0063D735 /* XMLRankingParser.m */,
+				DD8DD3CE144B41F90063D735 /* XMLEventParser.h */,
+				DD8DD3CF144B41F90063D735 /* XMLEventParser.m */,
 			);
 			name = XML;
 			sourceTree = "<group>";
@@ -270,6 +285,8 @@
 			children = (
 				DD8DD3B0144A07980063D735 /* Ranking.h */,
 				DD8DD3B1144A07980063D735 /* Ranking.m */,
+				DD8DD3CB144B3D500063D735 /* Event.h */,
+				DD8DD3CC144B3D500063D735 /* Event.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -277,6 +294,7 @@
 		DD8DD3C5144A22E40063D735 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DD583194144BA7060035875B /* RankingDetailViewController.xib */,
 				DD8DD3C8144B31ED0063D735 /* RankingViewController.xib */,
 				DD2A07F81447AA5A003FB740 /* iRankViewController.xib */,
 				DD8DD3721448F8F70063D735 /* HomeViewController.xib */,
@@ -364,6 +382,7 @@
 				DD8DD3A31449FC650063D735 /* photos.png in Resources */,
 				DD8DD3C4144A20960063D735 /* EventViewController.xib in Resources */,
 				DD8DD3CA144B31EE0063D735 /* RankingViewController.xib in Resources */,
+				DD583196144BA7060035875B /* RankingDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,9 +411,12 @@
 				DD2A94A01447CE04007CCDF1 /* SBJsonWriter.m in Sources */,
 				DD8DD3731448F8F70063D735 /* HomeViewController.m in Sources */,
 				DD8DD39A1449E1900063D735 /* RankingViewController.m in Sources */,
-				DD8DD3AF144A067C0063D735 /* XMLParser.m in Sources */,
+				DD8DD3AF144A067C0063D735 /* XMLRankingParser.m in Sources */,
 				DD8DD3B2144A07990063D735 /* Ranking.m in Sources */,
 				DD8DD3C3144A20960063D735 /* EventViewController.m in Sources */,
+				DD8DD3CD144B3D500063D735 /* Event.m in Sources */,
+				DD8DD3D0144B41F90063D735 /* XMLEventParser.m in Sources */,
+				DD583195144BA7060035875B /* RankingDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

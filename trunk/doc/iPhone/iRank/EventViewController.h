@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "iRankAppDelegate.h"
 
-@interface EventViewController : UITableViewController
+@interface EventViewController : UIViewController {
+    
+    iRankAppDelegate *appDelegate;
+    NSString *userSiteId;
+    IBOutlet UIViewController *detailViewController;
+}
+
+@property (nonatomic, retain) iRankAppDelegate *appDelegate;
+@property (nonatomic, retain) IBOutlet UIViewController *detailViewController;
+@property (nonatomic, retain) NSString *userSiteId;
 
 @end
