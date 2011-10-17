@@ -15,7 +15,7 @@
 @implementation HomeViewController
 
 @synthesize bankrollMenuList;
-@synthesize tableView;
+@synthesize mainTableView;
 @synthesize updateIndicator;
 @synthesize fee;
 @synthesize buyin;
@@ -26,7 +26,7 @@
 @synthesize balance;
 @synthesize connection;
 @synthesize updateButton;
-
+@synthesize userSiteId;
 @synthesize appDelegate;
 @synthesize loginController;
 
@@ -54,11 +54,9 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    userSiteId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserSiteIdKey];
+    
+    [self updateDataOnline];
 }
 
 - (void)viewDidUnload
@@ -70,8 +68,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
-    [self updateDataOnline];
     
     [super viewWillAppear:animated];
 }
@@ -290,7 +286,6 @@ titleForHeaderInSection:(NSInteger)section {
     NSURL *             url;
     NSURLRequest *      request;
     
-    NSString *userSiteId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserSiteIdKey];
     NSString *urlString  = [NSString stringWithFormat:@"http://irank/index.php/myAccount/getAppUpdatedData/userSiteId/%@", userSiteId];
     
     url = [NSURL URLWithString:urlString];
@@ -311,7 +306,7 @@ titleForHeaderInSection:(NSInteger)section {
     
     SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
     NSError *error = nil;
-    NSArray *jsonObjects = [jsonParser objectWithString:result error:&error];
+    NSDictionary *jsonObjects = [jsonParser objectWithString:result error:&error];
     
     fee     = [jsonObjects objectForKey:@"fee"];
     buyin   = [jsonObjects objectForKey:@"buyin"];
@@ -323,7 +318,7 @@ titleForHeaderInSection:(NSInteger)section {
     
     [self updateResumeData];
         
-    [tableView reloadData];    
+    [mainTableView reloadData];    
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -342,7 +337,7 @@ titleForHeaderInSection:(NSInteger)section {
     [appDelegate.defaults removeObjectForKey:kUserSiteIdKey];
     
     if( appDelegate==nil )
-        appDelegate = [[UIApplication sharedApplication] delegate];
+        appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     if( loginController==nil )
         loginController = [LoginController alloc];
@@ -354,7 +349,7 @@ titleForHeaderInSection:(NSInteger)section {
 - (void) dealloc {
     
     [bankrollMenuList release];
-    [tableView release];
+    [mainTableView release];
     [updateIndicator release];
     [fee release];
     [buyin release];
@@ -365,7 +360,7 @@ titleForHeaderInSection:(NSInteger)section {
     [balance release];
     [connection release];
     [updateButton release];
-    
+    [userSiteId release];
     [appDelegate release];
     [loginController release];    
     [super dealloc];

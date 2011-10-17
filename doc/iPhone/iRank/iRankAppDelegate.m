@@ -18,6 +18,8 @@
 @synthesize tabBarController = _tabBarController;
 @synthesize defaults;
 @synthesize rankingList;
+@synthesize eventList;
+@synthesize userSiteId;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -27,7 +29,7 @@
     
     defaults = [NSUserDefaults standardUserDefaults];
     
-    NSString *userSiteId = [defaults objectForKey:kUserSiteIdKey];
+    userSiteId = [defaults objectForKey:kUserSiteIdKey];
     
     if( userSiteId!=nil ){
         
@@ -40,7 +42,6 @@
     [self.window makeKeyAndVisible];
 
     [loginController release];
-    [userSiteId release];
     return YES;
 }
 
@@ -89,6 +90,8 @@
     [_tabBarController release];
     [defaults release];
     [rankingList release];
+    [eventList release];
+    [userSiteId release];
     [super dealloc];
 }
 

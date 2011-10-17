@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "iRankAppDelegate.h"
+#import "RankingDetailViewController.h"
 
 @interface RankingViewController : UIViewController {
     
     iRankAppDelegate *appDelegate;
-    IBOutlet UIViewController *detailViewController;
+    NSString *userSiteId;
+    RankingDetailViewController *detailViewController;
 }
 
 @property (nonatomic, retain) iRankAppDelegate *appDelegate;
-@property (nonatomic, retain) IBOutlet UIViewController *detailViewController;
+@property (nonatomic, retain) RankingDetailViewController *detailViewController;
+@property (nonatomic, retain) NSString *userSiteId;
 
 @end
