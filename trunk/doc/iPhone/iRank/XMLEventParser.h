@@ -1,22 +1,22 @@
 //
-//  XMLParser.h
+//  XMLEventParser.h
 //  iRank
 //
-//  Created by Luciano Stegun on 7/11/11.
+//  Created by Luciano Stegun on 16/10/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@class iRankAppDelegate, Ranking;
+@class iRankAppDelegate, Event;
 
-@interface XMLParser : NSObject {
+@interface XMLEventParser : NSObject {
     
     NSMutableString *currentElementValue;
     
     iRankAppDelegate *appDelegate;
-    Ranking *aRanking;
+    Event *aEvent;
 }
 
-- (XMLParser *) initXMLParser;
+- (XMLEventParser *) initXMLParser;
 @end
