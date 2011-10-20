@@ -8,14 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "Ranking.h"
+#import "ELCTextfieldCell.h"
 
-@interface RankingDetailViewController : UIViewController {
+@interface RankingDetailViewController : UITableViewController <ELCTextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>  {
     
     Ranking *ranking;
-    IBOutlet UITableView *mainTableView;
+    UIDatePicker *datePicker;
+    IBOutlet UIPickerView *pickerView;
+    NSMutableArray *pickerOptionList;
 }
 
 @property (nonatomic, retain) Ranking *ranking;
-@property (nonatomic, retain) IBOutlet UITableView *mainTableView;
+@property (nonatomic, retain) IBOutlet UIDatePicker *datePicker;
+@property (nonatomic, retain) IBOutlet UIPickerView *pickerView;
+@property (nonatomic, retain) NSMutableArray *pickerOptionList;
+
+- (void)textFieldTouchUp:(id)selector;
+- (void)showPickerView: (NSInteger)row;
 
 @end

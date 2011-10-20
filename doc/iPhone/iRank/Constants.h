@@ -9,6 +9,14 @@
 #define kScoreKey @"Score"
 #define kBalanceKey @"Balance"
 
+
+
+
+
+
+
+
+
 #define kInset               10
 #define kSelectLabelWidth    100
 #define kDescriptLabelWidth  160
@@ -43,3 +51,6 @@
 #define kPrizesWord @"Prêmios"
 #define kScoreWord @"Pontos"
 #define kBalanceWord @"SALDO"
+
+#define kRankingGameStyleRow   2;
+#define kRankingRankingTypeRow 6;

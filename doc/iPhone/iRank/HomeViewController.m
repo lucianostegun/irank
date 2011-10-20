@@ -171,19 +171,21 @@
     if (cell == nil)
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
 
-        int menuOffset = (indexPath.section*kSection1Rows)+ indexPath.row;
-        NSDictionary *cellText = [bankrollMenuList objectAtIndex:menuOffset];
+    int menuOffset = (indexPath.section*kSection1Rows)+ indexPath.row;
+    NSDictionary *cellText = [bankrollMenuList objectAtIndex:menuOffset];
         
-        NSString *label = [cellText objectForKey:kSelectKey];
-        NSString *description = [cellText objectForKey:kDescriptKey];
+    NSString *label = [cellText objectForKey:kSelectKey];
+    NSString *description = [cellText objectForKey:kDescriptKey];
+    
+    cell.textLabel.text       = label;
+    cell.detailTextLabel.text = description;
         
-        cell.textLabel.text       = label;
-        cell.detailTextLabel.text = description;
+    NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^-.*$"];
         
-        NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^-.*$"];
-        
-        if( [regExPredicate evaluateWithObject:description] )
-            cell.detailTextLabel.textColor = [UIColor redColor];
+    if( [regExPredicate evaluateWithObject:description] )
+        cell.detailTextLabel.textColor = [UIColor redColor];
+
+    cell.selectionStyle = UITableViewCellEditingStyleNone;
 
     return cell;
 }

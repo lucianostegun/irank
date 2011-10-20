@@ -6,20 +6,26 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import "iRankAppDelegate.h"
 #import "RankingDetailViewController.h"
-#import "Ranking.h";
+#import "Ranking.h"
+#import "ELCTextfieldCell.h"
+#import "Constants.h"
 
 @implementation RankingDetailViewController
 
 @synthesize ranking;
-@synthesize mainTableView;
+@synthesize datePicker;
+@synthesize pickerView;
+@synthesize pickerOptionList;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithStyle:style];
+    self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         // Custom initialization
     }
+    
     return self;
 }
 
@@ -37,13 +43,21 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    pickerOptionList = [[NSMutableArray alloc] init];
     
-    [mainTableView reloadData];
+    NSMutableArray *gameStyleList = [[NSMutableArray alloc] init];
+    [gameStyleList addObject:@"Torneio"];
+    [gameStyleList addObject:@"Ring game"];
+    [gameStyleList addObject:@"Sit & Go"];
+    
+    NSMutableArray *rankingTypeList = [[NSMutableArray alloc] init];
+    [rankingTypeList addObject:@"Balanço"];
+    [rankingTypeList addObject:@"Ganhos"];
+    [rankingTypeList addObject:@"Média"];
+    [rankingTypeList addObject:@"Pontos"];
+    
+    [pickerOptionList addObject:gameStyleList];
+    [pickerOptionList addObject:rankingTypeList];
 }
 
 - (void)viewDidUnload
@@ -56,6 +70,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];
+    NSLog(@"viewWillAppear");
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -105,11 +122,6 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    // Configure the cell...
     
     NSString *label;
     NSString *value;
@@ -152,14 +164,7 @@
             default:
                 break;
         }
-        
-        NSLog(@"%@", value);
-        
-        cell.detailTextLabel.text = value;
-    }else{
-        
-        cell.detailTextLabel.text = @"";
-        
+    }else{        
         switch (indexPath.row) {
             case 0:
                 label = @"Jogadores";
@@ -175,9 +180,48 @@
             default:
                 break;
         }
-    }
+    }    
     
-    cell.textLabel.text = label;
+    if( indexPath.section==0 ){
+        
+        ELCTextfieldCell *cell = (ELCTextfieldCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell = [[[ELCTextfieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+
+        cell.leftLabel.text      = label;
+        cell.rightTextField.text = value;
+        
+        if( indexPath.row==1 || indexPath.row==2 || indexPath.row==6 ){
+            
+            cell.rightTextField.enabled = NO;
+            
+            if( indexPath.row==2 || indexPath.row==6 )
+                [cell.rightTextField addTarget:self action:@selector(textFieldTouchUp:) forControlEvents:UIControlEventTouchDown];
+        }
+
+
+        cell.selectionStyle = UITableViewCellEditingStyleNone;
+
+        
+//             [choiceBarSegmentedControl addTarget:self action:@
+//              selector(selectTransportation:) forControlEven
+//                                               ts:UIControlEventValueChanged];
+//        }
+
+        
+        
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.rightTextField.delegate = self;
+        
+        return cell;
+    }else{
+        
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        cell.textLabel.text = label;
+        
+        return cell;
+    }
     
     return cell;
 }
@@ -244,20 +288,203 @@ titleForHeaderInSection:(NSInteger)section {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+
+    NSLog(@"didSelectRowAtIndexPath");
+    
+//    if (self.datePicker == nil){
+//      
+//        self.datePicker = [[UIDatePicker alloc] init];
+//    
+//        [self.navigationController.view.window addSubview: self.datePicker];
+//		
+//		// size up the picker view to our screen and compute the start/end frame origin for our slide up animation
+//		//
+//		// compute the start frame
+//		CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+//		CGSize pickerSize = [datePicker sizeThatFits:CGSizeZero];
+//		CGRect startRect = CGRectMake(0.0,
+//									  screenRect.origin.y + screenRect.size.height,
+//									  pickerSize.width, pickerSize.height);
+//		self.datePicker.frame = startRect;
+//		
+//		// compute the end frame
+//		CGRect pickerRect = CGRectMake(0.0,
+//									   screenRect.origin.y + screenRect.size.height - pickerSize.height,
+//									   pickerSize.width,
+//									   pickerSize.height);
+//		// start the slide up animation
+//		[UIView beginAnimations:nil context:NULL];
+//        [UIView setAnimationDuration:0.3];
+//		
+//        // we need to perform some post operations after the animation is complete
+//        [UIView setAnimationDelegate:self];
+//		
+//        datePicker.frame = pickerRect;
+//		
+//        // shrink the table vertical size to make room for the date picker
+//        CGRect newFrame = self.tableView.frame;
+//        newFrame.size.height -= self.datePicker.frame.size.height-350;
+//        NSLog(@"newFrame.size.height = %f", newFrame.size.height);
+//        self.tableView.frame = newFrame;
+//		[UIView commitAnimations];
+//    }
+
+
+    [self showPickerView:indexPath.row];
 }
+
+- (void)showPickerView:(NSInteger)row {
+
+    switch(row){
+        case 2:
+            row = 0;
+            break;
+        case 6:
+            row = 1;
+            break;
+        default:
+            break;
+    }
+    
+//    if (self.pickerView == nil){
+//        
+//        self.pickerView = [[UIPickerView alloc] init];
+//        self.pickerView.delegate   = self;
+//        self.pickerView.dataSource = self;
+        self.pickerView.tag = row;
+        
+        [self.navigationController.view.window addSubview: self.pickerView];
+		
+		// size up the picker view to our screen and compute the start/end frame origin for our slide up animation
+		//
+		// compute the start frame
+		CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+		CGSize pickerSize = [self.pickerView sizeThatFits:CGSizeZero];
+		CGRect startRect = CGRectMake(0.0,
+									  screenRect.origin.y + screenRect.size.height,
+									  pickerSize.width, pickerSize.height);
+		self.pickerView.frame = startRect;
+		
+		// compute the end frame
+		CGRect pickerRect = CGRectMake(0.0,
+									   screenRect.origin.y + screenRect.size.height - pickerSize.height,
+									   pickerSize.width,
+									   pickerSize.height);
+		// start the slide up animation
+		[UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.3];
+		
+        // we need to perform some post operations after the animation is complete
+        [UIView setAnimationDelegate:self];
+		
+        self.pickerView.frame = pickerRect;
+		
+        // shrink the table vertical size to make room for the date picker
+        CGRect newFrame = self.tableView.frame;
+        newFrame.size.height -= self.pickerView.frame.size.height-350;
+        NSLog(@"self.gameStylePickerView.newFrame.size.height = %f", newFrame.size.height);
+        self.tableView.frame = newFrame;
+		[UIView commitAnimations];
+//    }else{
+//        
+//        self.pickerView.tag = row;
+//        [self.pickerView reloadAllComponents];
+//    }
+}
+
+
+-(void)textFieldDidReturnWithIndexPath:(NSIndexPath*)indexPath {
+    
+    //	if(indexPath.row < [labels count]-1) {
+    //		
+    //        NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
+    //		[[(ELCTextfieldCell*)[self.tableView cellForRowAtIndexPath:path] rightTextField] becomeFirstResponder];
+    //		[self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    //	}
+    //	
+    //	else {
+    
+    [[(ELCTextfieldCell*)[self.tableView cellForRowAtIndexPath:indexPath] rightTextField] resignFirstResponder];
+    //	}
+}
+
+
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView;
+{
+
+    return 1;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    
+    
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
+{
+    return [[pickerOptionList objectAtIndex:pickerView.tag] count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+{
+    
+    return [[pickerOptionList objectAtIndex:pickerView.tag] objectAtIndex:row];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-(BOOL)textFieldShouldReturn:(UITextField *) theTextField {
+    
+    [theTextField resignFirstResponder];
+        
+    return YES;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - (void)dealloc {
     
     [ranking release];
-    [mainTableView release];
+    [datePicker release];
+    [pickerView release];
     [super dealloc];
 }
 
