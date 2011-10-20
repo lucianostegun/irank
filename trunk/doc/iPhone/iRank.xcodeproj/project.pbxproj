@@ -40,6 +40,7 @@
 		DD2A94A01447CE04007CCDF1 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A94941447CE04007CCDF1 /* SBJsonWriter.m */; };
 		DD583195144BA7060035875B /* RankingDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD583193144BA7060035875B /* RankingDetailViewController.m */; };
 		DD583196144BA7060035875B /* RankingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD583194144BA7060035875B /* RankingDetailViewController.xib */; };
+		DD87A2CA144D0343000F5EC7 /* ELCTextfieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD87A2C9144D0343000F5EC7 /* ELCTextfieldCell.m */; };
 		DD8DD3731448F8F70063D735 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3711448F8F70063D735 /* HomeViewController.m */; };
 		DD8DD3741448F8F70063D735 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3721448F8F70063D735 /* HomeViewController.xib */; };
 		DD8DD3761448FDC80063D735 /* homeTop.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3751448FDC80063D735 /* homeTop.png */; };
@@ -55,6 +56,8 @@
 		DD8DD3CA144B31EE0063D735 /* RankingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3C8144B31ED0063D735 /* RankingViewController.xib */; };
 		DD8DD3CD144B3D500063D735 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3CC144B3D500063D735 /* Event.m */; };
 		DD8DD3D0144B41F90063D735 /* XMLEventParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3CF144B41F90063D735 /* XMLEventParser.m */; };
+		DDE33E7E144F2034009BD85C /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE33E7C144F2034009BD85C /* PhotoViewController.m */; };
+		DDE33E7F144F2034009BD85C /* PhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDE33E7D144F2034009BD85C /* PhotoViewController.xib */; };
 		DDF4B2AF1447AFAD00B859B5 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDF4B2AD1447AFAD00B859B5 /* MainWindow-iPad.xib */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +118,8 @@
 		DD583192144BA7060035875B /* RankingDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingDetailViewController.h; sourceTree = "<group>"; };
 		DD583193144BA7060035875B /* RankingDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingDetailViewController.m; sourceTree = "<group>"; };
 		DD583194144BA7060035875B /* RankingDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingDetailViewController.xib; sourceTree = "<group>"; };
+		DD87A2C8144D0343000F5EC7 /* ELCTextfieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCTextfieldCell.h; sourceTree = "<group>"; };
+		DD87A2C9144D0343000F5EC7 /* ELCTextfieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCTextfieldCell.m; sourceTree = "<group>"; };
 		DD8DD3701448F8F70063D735 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		DD8DD3711448F8F70063D735 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		DD8DD3721448F8F70063D735 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -137,6 +142,9 @@
 		DD8DD3CC144B3D500063D735 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		DD8DD3CE144B41F90063D735 /* XMLEventParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLEventParser.h; sourceTree = "<group>"; };
 		DD8DD3CF144B41F90063D735 /* XMLEventParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLEventParser.m; sourceTree = "<group>"; };
+		DDE33E7B144F2034009BD85C /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		DDE33E7C144F2034009BD85C /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
+		DDE33E7D144F2034009BD85C /* PhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoViewController.xib; sourceTree = "<group>"; };
 		DDF4B2AE1447AFAD00B859B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "iPad/en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -199,6 +207,7 @@
 		DD2A07E61447AA5A003FB740 /* iRank */ = {
 			isa = PBXGroup;
 			children = (
+				DD87A2C6144D0328000F5EC7 /* Outward */,
 				DD8DD3B3144A079D0063D735 /* Classes */,
 				DD8DD3AC144A06580063D735 /* XML */,
 				DD2A947A1447CDD1007CCDF1 /* JSON */,
@@ -221,6 +230,8 @@
 				DD8DD3C1144A20960063D735 /* EventViewController.m */,
 				DD583192144BA7060035875B /* RankingDetailViewController.h */,
 				DD583193144BA7060035875B /* RankingDetailViewController.m */,
+				DDE33E7B144F2034009BD85C /* PhotoViewController.h */,
+				DDE33E7C144F2034009BD85C /* PhotoViewController.m */,
 			);
 			path = iRank;
 			sourceTree = "<group>";
@@ -269,6 +280,15 @@
 			name = JSON;
 			sourceTree = "<group>";
 		};
+		DD87A2C6144D0328000F5EC7 /* Outward */ = {
+			isa = PBXGroup;
+			children = (
+				DD87A2C8144D0343000F5EC7 /* ELCTextfieldCell.h */,
+				DD87A2C9144D0343000F5EC7 /* ELCTextfieldCell.m */,
+			);
+			name = Outward;
+			sourceTree = "<group>";
+		};
 		DD8DD3AC144A06580063D735 /* XML */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +320,7 @@
 				DD8DD3721448F8F70063D735 /* HomeViewController.xib */,
 				DD2A080E1447ACE1003FB740 /* LoginController.xib */,
 				DD8DD3C2144A20960063D735 /* EventViewController.xib */,
+				DDE33E7D144F2034009BD85C /* PhotoViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -383,6 +404,7 @@
 				DD8DD3C4144A20960063D735 /* EventViewController.xib in Resources */,
 				DD8DD3CA144B31EE0063D735 /* RankingViewController.xib in Resources */,
 				DD583196144BA7060035875B /* RankingDetailViewController.xib in Resources */,
+				DDE33E7F144F2034009BD85C /* PhotoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,6 +439,8 @@
 				DD8DD3CD144B3D500063D735 /* Event.m in Sources */,
 				DD8DD3D0144B41F90063D735 /* XMLEventParser.m in Sources */,
 				DD583195144BA7060035875B /* RankingDetailViewController.m in Sources */,
+				DD87A2CA144D0343000F5EC7 /* ELCTextfieldCell.m in Sources */,
+				DDE33E7E144F2034009BD85C /* PhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

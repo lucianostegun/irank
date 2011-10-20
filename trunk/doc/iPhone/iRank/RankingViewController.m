@@ -16,6 +16,8 @@
 @synthesize appDelegate;
 @synthesize detailViewController;
 @synthesize userSiteId;
+@synthesize datePicker;
+@synthesize tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -136,13 +138,46 @@
 	[self.navigationController pushViewController:detailViewController animated:YES];
 }
 
+- (void)teste{
+    
+    NSLog(@"Passou no TESTE");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - (void)dealloc {
  
     [appDelegate release];
     [detailViewController release];
     [userSiteId release];
+    [tableView release];
     [super dealloc];
+    
 }
 
 @end

@@ -15,10 +15,16 @@
     iRankAppDelegate *appDelegate;
     NSString *userSiteId;
     RankingDetailViewController *detailViewController;
+    IBOutlet UIDatePicker *datePicker;
+    IBOutlet UITableView *tableView;
 }
 
 @property (nonatomic, retain) iRankAppDelegate *appDelegate;
 @property (nonatomic, retain) RankingDetailViewController *detailViewController;
+@property (nonatomic, retain) UIDatePicker *datePicker;
 @property (nonatomic, retain) NSString *userSiteId;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
+
+-(IBAction)teste;
 
 @end
