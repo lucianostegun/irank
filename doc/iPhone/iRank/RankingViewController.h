@@ -25,6 +25,4 @@
 @property (nonatomic, retain) NSString *userSiteId;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 
--(IBAction)teste;
-
 @end

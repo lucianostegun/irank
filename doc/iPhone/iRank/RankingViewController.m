@@ -138,17 +138,6 @@
 	[self.navigationController pushViewController:detailViewController animated:YES];
 }
 
-- (void)teste{
-    
-    NSLog(@"Passou no TESTE");
-}
-
-
-
-
-
-
-
 
 
 

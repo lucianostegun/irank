@@ -16,14 +16,17 @@
     UIDatePicker *datePicker;
     IBOutlet UIPickerView *pickerView;
     NSMutableArray *pickerOptionList;
+	UIBarButtonItem *doneButton;
 }
 
 @property (nonatomic, retain) Ranking *ranking;
 @property (nonatomic, retain) IBOutlet UIDatePicker *datePicker;
 @property (nonatomic, retain) IBOutlet UIPickerView *pickerView;
 @property (nonatomic, retain) NSMutableArray *pickerOptionList;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *doneButton;
 
 - (void)textFieldTouchUp:(id)selector;
-- (void)showPickerView: (NSInteger)row;
+- (void)showPickerView: (NSInteger)row cellValue:(NSString *)cellValue;
+- (void)doneAction;
 
 @end

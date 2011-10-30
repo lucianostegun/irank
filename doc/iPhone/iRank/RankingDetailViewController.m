@@ -18,6 +18,7 @@
 @synthesize datePicker;
 @synthesize pickerView;
 @synthesize pickerOptionList;
+@synthesize doneButton;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -188,7 +189,7 @@
         cell = [[[ELCTextfieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 
         cell.leftLabel.text      = label;
-        cell.rightTextField.text = value;
+        cell.rightTextField.text = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         if( indexPath.row==1 || indexPath.row==2 || indexPath.row==6 ){
             
@@ -329,11 +330,15 @@ titleForHeaderInSection:(NSInteger)section {
 //		[UIView commitAnimations];
 //    }
 
+    
+    ELCTextfieldCell *cell = (ELCTextfieldCell*)[tableView cellForRowAtIndexPath:indexPath];
+    [self showPickerView:indexPath.row cellValue:cell.rightTextField.text];
 
-    [self showPickerView:indexPath.row];
 }
 
-- (void)showPickerView:(NSInteger)row {
+    
+    
+- (void)showPickerView:(NSInteger)row cellValue:(NSString *)cellValue {
 
     switch(row){
         case 2:
@@ -346,11 +351,12 @@ titleForHeaderInSection:(NSInteger)section {
             break;
     }
     
-//    if (self.pickerView == nil){
-//        
-//        self.pickerView = [[UIPickerView alloc] init];
-//        self.pickerView.delegate   = self;
-//        self.pickerView.dataSource = self;
+    if (self.pickerView == nil){
+        
+        self.pickerView = [[UIPickerView alloc] init];
+        self.pickerView.delegate   = self;
+        self.pickerView.dataSource = self;
+        self.pickerView.showsSelectionIndicator = YES;
         self.pickerView.tag = row;
         
         [self.navigationController.view.window addSubview: self.pickerView];
@@ -381,15 +387,27 @@ titleForHeaderInSection:(NSInteger)section {
 		
         // shrink the table vertical size to make room for the date picker
         CGRect newFrame = self.tableView.frame;
-        newFrame.size.height -= self.pickerView.frame.size.height-350;
-        NSLog(@"self.gameStylePickerView.newFrame.size.height = %f", newFrame.size.height);
+        newFrame.size.height -= self.pickerView.frame.size.height-200;
+
         self.tableView.frame = newFrame;
 		[UIView commitAnimations];
-//    }else{
-//        
-//        self.pickerView.tag = row;
-//        [self.pickerView reloadAllComponents];
-//    }
+    }else{
+        
+        self.pickerView.tag = row;
+        [self.pickerView reloadAllComponents];
+    }
+    
+    int index = 0;
+    for(NSString *optionValue in [pickerOptionList objectAtIndex:row]){
+
+        if( [cellValue isEqualToString:optionValue] ){
+
+            [self.pickerView selectRow:index inComponent:0 animated:YES];
+            break;
+        }
+        
+        index++;
+    }
 }
 
 
@@ -416,21 +434,29 @@ titleForHeaderInSection:(NSInteger)section {
     return 1;
 }
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+- (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     
+    ELCTextfieldCell *cell = (ELCTextfieldCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.rightTextField.text = [[pickerOptionList objectAtIndex:thePickerView.tag] objectAtIndex:row];
+//    NSLog(@"Option choose: %@", [[pickerOptionList objectAtIndex:pickerView.tag] objectAtIndex:row]);
+//    NSLog(@"row: %i, component: %i", row, component);
+//    NSLog(@"section: %i, row: %i", indexPath.section, indexPath.row);
+    [self doneAction];
+    self.pickerView = nil;
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
+- (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component;
 {
-    return [[pickerOptionList objectAtIndex:pickerView.tag] count];
+    return [[pickerOptionList objectAtIndex:thePickerView.tag] count];
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+- (NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
 {
     
-    return [[pickerOptionList objectAtIndex:pickerView.tag] objectAtIndex:row];
+    return [[pickerOptionList objectAtIndex:thePickerView.tag] objectAtIndex:row];
 }
 
 
@@ -456,28 +482,35 @@ titleForHeaderInSection:(NSInteger)section {
     return YES;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- (void)doneAction
+{
+	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+	CGRect endFrame = self.pickerView.frame;
+	endFrame.origin.y = screenRect.origin.y + screenRect.size.height;
+	
+	// start the slide down animation
+	[UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+	
+    // we need to perform some post operations after the animation is complete
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(slideDownDidStop)];
+	
+    self.pickerView.frame = endFrame;
+	[UIView commitAnimations];
+	
+	// grow the table back again in vertical size to make room for the date picker
+	CGRect newFrame = self.tableView.frame;
+	newFrame.size.height += self.pickerView.frame.size.height-200;
+	self.tableView.frame = newFrame;
+	
+	// remove the "Done" button in the nav bar
+	self.navigationItem.rightBarButtonItem = nil;
+	
+	// deselect the current table row
+	NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 
 - (void)dealloc {
@@ -485,6 +518,7 @@ titleForHeaderInSection:(NSInteger)section {
     [ranking release];
     [datePicker release];
     [pickerView release];
+    [doneButton release];
     [super dealloc];
 }
 
