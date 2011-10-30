@@ -8,8 +8,6 @@
 
 #import "HomeViewController.h"
 #import "Constants.h"
-#import "iRankAppDelegate.h"
-#import "LoginController.h"
 #import "JSON.h"
 
 @implementation HomeViewController
@@ -27,8 +25,6 @@
 @synthesize connection;
 @synthesize updateButton;
 @synthesize userSiteId;
-@synthesize appDelegate;
-@synthesize loginController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -55,6 +51,7 @@
     [super viewDidLoad];
 
     userSiteId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserSiteIdKey];
+    appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     [self updateDataOnline];
 }
@@ -336,16 +333,15 @@ titleForHeaderInSection:(NSInteger)section {
 
 - (void)doLogout:(id)sender {
     
-    [appDelegate.defaults removeObjectForKey:kUserSiteIdKey];
+//    [appDelegate.defaults removeObjectForKey:kUserSiteIdKey];
     
-    if( appDelegate==nil )
-        appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+//    if( appDelegate==nil )
+//        
+//    
+//    if( loginController==nil )
+//        loginController = [LoginController alloc];
     
-    if( loginController==nil )
-        loginController = [LoginController alloc];
-    
-    appDelegate.window.rootViewController = loginController;
-//    [appDelegate.window makeKeyAndVisible];
+    [appDelegate showLoginView];
 }
 
 - (void) dealloc {
@@ -363,8 +359,6 @@ titleForHeaderInSection:(NSInteger)section {
     [connection release];
     [updateButton release];
     [userSiteId release];
-    [appDelegate release];
-    [loginController release];    
     [super dealloc];
 }
 

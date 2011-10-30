@@ -11,7 +11,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "JSON.h"
 #import "Constants.h"
-#import "RankingViewController.h"
+//#import "RankingViewController.h"
 
 @implementation LoginController
 
@@ -20,11 +20,6 @@
 @synthesize txtUsername;
 @synthesize txtPassword;
 @synthesize activityIndicator;
-@synthesize appDelegate;
-
-//@synthesize connection;
-//@synthesize url;
-//@synthesize request;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -84,10 +79,28 @@
     urlString = [urlString stringByAppendingString:txtUsername.text];
     urlString = [urlString stringByAppendingString:@"/password/"];
     urlString = [urlString stringByAppendingString:[self getMD5FromString:txtPassword.text]];
+        
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+}
+
+- (void)connection: (NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     
-    NSString *data = [[NSString alloc] initWithContentsOfURL:[NSURL URLWithString:urlString]];
+    activityIndicator.hidden = YES;
+}
+
+- (void)connection: (NSURLConnection *)connection didReceiveData:(NSData *)data {
+
+    NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     
-    [self handleLoginResult:data];
+    [self handleLoginResult:result];
+    [result release];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    
+    [connection release];
 }
 
 - (void)handleLoginResult:(NSString *)result {
@@ -107,7 +120,7 @@
         return;
     }
     
-    NSString *userSiteId = result;
+    NSString *userSiteId = [result copy];
     
     if( userSiteId==nil || userSiteId==NULL ){
         
@@ -120,7 +133,7 @@
     [appDelegate.defaults setObject:userSiteId forKey:kUserSiteIdKey];
     [appDelegate.defaults synchronize];
     
-    appDelegate.window.rootViewController = appDelegate.tabBarController;
+    [appDelegate showHomeView];
     
     [userSiteId release];
 }
@@ -162,9 +175,6 @@
     [txtUsername release];
     [txtPassword release];
     [activityIndicator release];
-//    [connection release];
-//    [request release];
-//    [url release];
     [super dealloc];
 }
 

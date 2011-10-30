@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iRankAppDelegate.h"
+@class iRankAppDelegate;
 
 @interface LoginController : UIViewController <UITextFieldDelegate, UITableViewDelegate> {
     
@@ -17,10 +17,6 @@
     IBOutlet UITextField *txtPassword;
     IBOutlet UIActivityIndicatorView *activityIndicator;
     iRankAppDelegate *appDelegate;
-    
-//    NSURLConnection  *connection;
-//    NSURL *url;
-    NSURLRequest *request;
 }
 
 @property (nonatomic, retain) IBOutlet UIView *signView;
@@ -28,7 +24,6 @@
 @property (nonatomic, retain) IBOutlet UITextField *txtUsername;
 @property (nonatomic, retain) IBOutlet UITextField *txtPassword;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, retain) IBOutlet iRankAppDelegate *appDelegate;
 
 
 - (IBAction)signButtonTouchUp:(id)sender;
