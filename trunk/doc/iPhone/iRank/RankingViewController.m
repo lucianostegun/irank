@@ -14,7 +14,7 @@
 
 @implementation RankingViewController
 @synthesize appDelegate;
-@synthesize detailViewController;
+//@synthesize detailViewController;
 @synthesize userSiteId;
 @synthesize datePicker;
 @synthesize tableView;
@@ -126,16 +126,20 @@
 
 - (UITableViewCell *)tableView:(UITableView * )tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    
     Ranking *aRanking = [appDelegate.rankingList objectAtIndex:indexPath.row];
 
     if( detailViewController==nil )
-        detailViewController = [[RankingDetailViewController alloc] init];
+        detailViewController = [[RankingDetailViewController alloc] initWithNibName:@"RankingDetailViewController" bundle:nil];
     
 	detailViewController.title = aRanking.rankingName;
     
     detailViewController.ranking = aRanking;
     
 	[self.navigationController pushViewController:detailViewController animated:YES];
+    
+    return cell;
 }
 
 

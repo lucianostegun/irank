@@ -14,16 +14,10 @@
 		DD2A07ED1447AA5A003FB740 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A07EC1447AA5A003FB740 /* main.m */; };
 		DD2A07F11447AA5A003FB740 /* iRankAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A07F01447AA5A003FB740 /* iRankAppDelegate.m */; };
 		DD2A07F41447AA5A003FB740 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD2A07F21447AA5A003FB740 /* MainWindow.xib */; };
-		DD2A07F71447AA5A003FB740 /* iRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A07F61447AA5A003FB740 /* iRankViewController.m */; };
-		DD2A07FA1447AA5A003FB740 /* iRankViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD2A07F81447AA5A003FB740 /* iRankViewController.xib */; };
 		DD2A08011447AA89003FB740 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DD2A08001447AA89003FB740 /* icon.png */; };
 		DD2A08031447AA8B003FB740 /* iconRetina.png in Resources */ = {isa = PBXBuildFile; fileRef = DD2A08021447AA8B003FB740 /* iconRetina.png */; };
 		DD2A08051447AA8E003FB740 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DD2A08041447AA8E003FB740 /* Default.png */; };
 		DD2A08071447AA91003FB740 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD2A08061447AA91003FB740 /* Default@2x.png */; };
-		DD2A08091447AA97003FB740 /* buttonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DD2A08081447AA97003FB740 /* buttonBackground.png */; };
-		DD2A080F1447ACE1003FB740 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A080D1447ACE1003FB740 /* LoginController.m */; };
-		DD2A08101447ACE1003FB740 /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD2A080E1447ACE1003FB740 /* LoginController.xib */; };
-		DD2A08121447AD0C003FB740 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = DD2A08111447AD0C003FB740 /* background.png */; };
 		DD2A08141447AD41003FB740 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = DD2A08131447AD41003FB740 /* logo.png */; };
 		DD2A94671447CCF5007CCDF1 /* SBJson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD2A94661447CCF5007CCDF1 /* SBJson.framework */; };
 		DD2A94951447CE04007CCDF1 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A947D1447CE04007CCDF1 /* NSObject+SBJson.m */; };
@@ -38,27 +32,25 @@
 		DD2A949E1447CE04007CCDF1 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A94901447CE04007CCDF1 /* SBJsonTokeniser.m */; };
 		DD2A949F1447CE04007CCDF1 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A94921447CE04007CCDF1 /* SBJsonUTF8Stream.m */; };
 		DD2A94A01447CE04007CCDF1 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A94941447CE04007CCDF1 /* SBJsonWriter.m */; };
-		DD583195144BA7060035875B /* RankingDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD583193144BA7060035875B /* RankingDetailViewController.m */; };
-		DD583196144BA7060035875B /* RankingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD583194144BA7060035875B /* RankingDetailViewController.xib */; };
-		DD87A2CA144D0343000F5EC7 /* ELCTextfieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD87A2C9144D0343000F5EC7 /* ELCTextfieldCell.m */; };
-		DD8DD3731448F8F70063D735 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3711448F8F70063D735 /* HomeViewController.m */; };
-		DD8DD3741448F8F70063D735 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3721448F8F70063D735 /* HomeViewController.xib */; };
+		DD354F49145CE09C0035E31B /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD354F47145CE09C0035E31B /* LoginController.m */; };
+		DD354F4A145CE09C0035E31B /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD354F48145CE09C0035E31B /* LoginController.xib */; };
+		DD354F4C145CE0F50035E31B /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = DD354F4B145CE0F50035E31B /* background.png */; };
+		DD354F54145CF7070035E31B /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD354F52145CF7070035E31B /* HomeViewController.m */; };
+		DD354F55145CF7070035E31B /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD354F53145CF7070035E31B /* HomeViewController.xib */; };
+		DD354F5D145CFD060035E31B /* RankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD354F5B145CFD060035E31B /* RankingViewController.m */; };
+		DD354F5E145CFD060035E31B /* RankingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD354F5C145CFD060035E31B /* RankingViewController.xib */; };
 		DD8DD3761448FDC80063D735 /* homeTop.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3751448FDC80063D735 /* homeTop.png */; };
-		DD8DD39A1449E1900063D735 /* RankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3981449E1900063D735 /* RankingViewController.m */; };
 		DD8DD39D1449FC1D0063D735 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD39C1449FC1D0063D735 /* home.png */; };
 		DD8DD3A11449FC650063D735 /* events.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD39E1449FC650063D735 /* events.png */; };
 		DD8DD3A21449FC650063D735 /* rankings.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD39F1449FC650063D735 /* rankings.png */; };
 		DD8DD3A31449FC650063D735 /* photos.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3A01449FC650063D735 /* photos.png */; };
 		DD8DD3AF144A067C0063D735 /* XMLRankingParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3AE144A067C0063D735 /* XMLRankingParser.m */; };
 		DD8DD3B2144A07990063D735 /* Ranking.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3B1144A07980063D735 /* Ranking.m */; };
-		DD8DD3C3144A20960063D735 /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3C1144A20960063D735 /* EventViewController.m */; };
-		DD8DD3C4144A20960063D735 /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3C2144A20960063D735 /* EventViewController.xib */; };
-		DD8DD3CA144B31EE0063D735 /* RankingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3C8144B31ED0063D735 /* RankingViewController.xib */; };
 		DD8DD3CD144B3D500063D735 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3CC144B3D500063D735 /* Event.m */; };
 		DD8DD3D0144B41F90063D735 /* XMLEventParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8DD3CF144B41F90063D735 /* XMLEventParser.m */; };
-		DDE33E7E144F2034009BD85C /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDE33E7C144F2034009BD85C /* PhotoViewController.m */; };
-		DDE33E7F144F2034009BD85C /* PhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDE33E7D144F2034009BD85C /* PhotoViewController.xib */; };
-		DDF4B2AF1447AFAD00B859B5 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDF4B2AD1447AFAD00B859B5 /* MainWindow-iPad.xib */; };
+		DDA89A09145DA16B0076DCA1 /* RankingDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA89A07145DA16B0076DCA1 /* RankingDetailViewController.m */; };
+		DDA89A0A145DA16B0076DCA1 /* RankingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDA89A08145DA16B0076DCA1 /* RankingDetailViewController.xib */; };
+		DDA89A0D145DA9AF0076DCA1 /* EditableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA89A0C145DA9AF0076DCA1 /* EditableTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,19 +65,11 @@
 		DD2A07EF1447AA5A003FB740 /* iRankAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iRankAppDelegate.h; sourceTree = "<group>"; };
 		DD2A07F01447AA5A003FB740 /* iRankAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iRankAppDelegate.m; sourceTree = "<group>"; };
 		DD2A07F31447AA5A003FB740 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		DD2A07F51447AA5A003FB740 /* iRankViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iRankViewController.h; sourceTree = "<group>"; };
-		DD2A07F61447AA5A003FB740 /* iRankViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iRankViewController.m; sourceTree = "<group>"; };
-		DD2A07F91447AA5A003FB740 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/iRankViewController.xib; sourceTree = "<group>"; };
 		DD2A08001447AA89003FB740 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		DD2A08021447AA8B003FB740 /* iconRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconRetina.png; sourceTree = "<group>"; };
 		DD2A08041447AA8E003FB740 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		DD2A08061447AA91003FB740 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		DD2A08081447AA97003FB740 /* buttonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonBackground.png; path = "../iRank #2/buttonBackground.png"; sourceTree = "<group>"; };
 		DD2A080A1447AC9E003FB740 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		DD2A080C1447ACE1003FB740 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
-		DD2A080D1447ACE1003FB740 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
-		DD2A080E1447ACE1003FB740 /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginController.xib; sourceTree = "<group>"; };
-		DD2A08111447AD0C003FB740 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = "../iRank #2/background.png"; sourceTree = "<group>"; };
 		DD2A08131447AD41003FB740 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		DD2A94661447CCF5007CCDF1 /* SBJson.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SBJson.framework; sourceTree = "<group>"; };
 		DD2A947B1447CE04007CCDF1 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSON.h; path = ../../../Downloads/SBJson_v3.0.4/Classes/JSON.h; sourceTree = "<group>"; };
@@ -114,18 +98,17 @@
 		DD2A94921447CE04007CCDF1 /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonUTF8Stream.m; path = ../../../Downloads/SBJson_v3.0.4/Classes/SBJsonUTF8Stream.m; sourceTree = "<group>"; };
 		DD2A94931447CE04007CCDF1 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonWriter.h; path = ../../../Downloads/SBJson_v3.0.4/Classes/SBJsonWriter.h; sourceTree = "<group>"; };
 		DD2A94941447CE04007CCDF1 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = ../../../Downloads/SBJson_v3.0.4/Classes/SBJsonWriter.m; sourceTree = "<group>"; };
-		DD2A94A51447D0DF007CCDF1 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		DD583192144BA7060035875B /* RankingDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingDetailViewController.h; sourceTree = "<group>"; };
-		DD583193144BA7060035875B /* RankingDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingDetailViewController.m; sourceTree = "<group>"; };
-		DD583194144BA7060035875B /* RankingDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingDetailViewController.xib; sourceTree = "<group>"; };
-		DD87A2C8144D0343000F5EC7 /* ELCTextfieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCTextfieldCell.h; sourceTree = "<group>"; };
-		DD87A2C9144D0343000F5EC7 /* ELCTextfieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCTextfieldCell.m; sourceTree = "<group>"; };
-		DD8DD3701448F8F70063D735 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		DD8DD3711448F8F70063D735 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		DD8DD3721448F8F70063D735 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		DD354F46145CE09C0035E31B /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
+		DD354F47145CE09C0035E31B /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
+		DD354F48145CE09C0035E31B /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginController.xib; sourceTree = "<group>"; };
+		DD354F4B145CE0F50035E31B /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = iRank/background.png; sourceTree = "<group>"; };
+		DD354F51145CF7070035E31B /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		DD354F52145CF7070035E31B /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		DD354F53145CF7070035E31B /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		DD354F5A145CFD060035E31B /* RankingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingViewController.h; sourceTree = "<group>"; };
+		DD354F5B145CFD060035E31B /* RankingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingViewController.m; sourceTree = "<group>"; };
+		DD354F5C145CFD060035E31B /* RankingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingViewController.xib; sourceTree = "<group>"; };
 		DD8DD3751448FDC80063D735 /* homeTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeTop.png; sourceTree = "<group>"; };
-		DD8DD3971449E1900063D735 /* RankingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingViewController.h; sourceTree = "<group>"; };
-		DD8DD3981449E1900063D735 /* RankingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingViewController.m; sourceTree = "<group>"; };
 		DD8DD39C1449FC1D0063D735 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		DD8DD39E1449FC650063D735 /* events.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = events.png; sourceTree = "<group>"; };
 		DD8DD39F1449FC650063D735 /* rankings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rankings.png; sourceTree = "<group>"; };
@@ -134,18 +117,15 @@
 		DD8DD3AE144A067C0063D735 /* XMLRankingParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLRankingParser.m; sourceTree = "<group>"; };
 		DD8DD3B0144A07980063D735 /* Ranking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ranking.h; sourceTree = "<group>"; };
 		DD8DD3B1144A07980063D735 /* Ranking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ranking.m; sourceTree = "<group>"; };
-		DD8DD3C0144A20960063D735 /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
-		DD8DD3C1144A20960063D735 /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
-		DD8DD3C2144A20960063D735 /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventViewController.xib; sourceTree = "<group>"; };
-		DD8DD3C8144B31ED0063D735 /* RankingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingViewController.xib; sourceTree = "<group>"; };
 		DD8DD3CB144B3D500063D735 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		DD8DD3CC144B3D500063D735 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		DD8DD3CE144B41F90063D735 /* XMLEventParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLEventParser.h; sourceTree = "<group>"; };
 		DD8DD3CF144B41F90063D735 /* XMLEventParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLEventParser.m; sourceTree = "<group>"; };
-		DDE33E7B144F2034009BD85C /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
-		DDE33E7C144F2034009BD85C /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
-		DDE33E7D144F2034009BD85C /* PhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoViewController.xib; sourceTree = "<group>"; };
-		DDF4B2AE1447AFAD00B859B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "iPad/en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
+		DDA89A06145DA16B0076DCA1 /* RankingDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingDetailViewController.h; sourceTree = "<group>"; };
+		DDA89A07145DA16B0076DCA1 /* RankingDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingDetailViewController.m; sourceTree = "<group>"; };
+		DDA89A08145DA16B0076DCA1 /* RankingDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingDetailViewController.xib; sourceTree = "<group>"; };
+		DDA89A0B145DA9AF0076DCA1 /* EditableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditableTableViewCell.h; sourceTree = "<group>"; };
+		DDA89A0C145DA9AF0076DCA1 /* EditableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditableTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,9 +152,8 @@
 				DD8DD3A01449FC650063D735 /* photos.png */,
 				DD8DD3751448FDC80063D735 /* homeTop.png */,
 				DD2A08131447AD41003FB740 /* logo.png */,
-				DD2A08111447AD0C003FB740 /* background.png */,
 				DD2A080A1447AC9E003FB740 /* Default.png */,
-				DD2A08081447AA97003FB740 /* buttonBackground.png */,
+				DD354F4B145CE0F50035E31B /* background.png */,
 				DD2A08061447AA91003FB740 /* Default@2x.png */,
 				DD2A08041447AA8E003FB740 /* Default.png */,
 				DD2A08021447AA8B003FB740 /* iconRetina.png */,
@@ -207,31 +186,24 @@
 		DD2A07E61447AA5A003FB740 /* iRank */ = {
 			isa = PBXGroup;
 			children = (
-				DD87A2C6144D0328000F5EC7 /* Outward */,
+				DDA89A06145DA16B0076DCA1 /* RankingDetailViewController.h */,
+				DDA89A07145DA16B0076DCA1 /* RankingDetailViewController.m */,
+				DD354F64145D01D60035E31B /* Resources */,
+				DD354F5A145CFD060035E31B /* RankingViewController.h */,
+				DD354F5B145CFD060035E31B /* RankingViewController.m */,
+				DD354F51145CF7070035E31B /* HomeViewController.h */,
+				DD354F52145CF7070035E31B /* HomeViewController.m */,
+				DD354F46145CE09C0035E31B /* LoginController.h */,
+				DD354F47145CE09C0035E31B /* LoginController.m */,
 				DD8DD3B3144A079D0063D735 /* Classes */,
 				DD8DD3AC144A06580063D735 /* XML */,
 				DD2A947A1447CDD1007CCDF1 /* JSON */,
-				DDF4B2AC1447AFAB00B859B5 /* iPad */,
 				DD2A07EF1447AA5A003FB740 /* iRankAppDelegate.h */,
 				DD2A07F01447AA5A003FB740 /* iRankAppDelegate.m */,
 				DD2A07F21447AA5A003FB740 /* MainWindow.xib */,
-				DD2A07F51447AA5A003FB740 /* iRankViewController.h */,
-				DD2A07F61447AA5A003FB740 /* iRankViewController.m */,
-				DD8DD3C5144A22E40063D735 /* Resources */,
 				DD2A07E71447AA5A003FB740 /* Supporting Files */,
-				DD2A080C1447ACE1003FB740 /* LoginController.h */,
-				DD2A080D1447ACE1003FB740 /* LoginController.m */,
-				DD2A94A51447D0DF007CCDF1 /* Constants.h */,
-				DD8DD3701448F8F70063D735 /* HomeViewController.h */,
-				DD8DD3711448F8F70063D735 /* HomeViewController.m */,
-				DD8DD3971449E1900063D735 /* RankingViewController.h */,
-				DD8DD3981449E1900063D735 /* RankingViewController.m */,
-				DD8DD3C0144A20960063D735 /* EventViewController.h */,
-				DD8DD3C1144A20960063D735 /* EventViewController.m */,
-				DD583192144BA7060035875B /* RankingDetailViewController.h */,
-				DD583193144BA7060035875B /* RankingDetailViewController.m */,
-				DDE33E7B144F2034009BD85C /* PhotoViewController.h */,
-				DDE33E7C144F2034009BD85C /* PhotoViewController.m */,
+				DDA89A0B145DA9AF0076DCA1 /* EditableTableViewCell.h */,
+				DDA89A0C145DA9AF0076DCA1 /* EditableTableViewCell.m */,
 			);
 			path = iRank;
 			sourceTree = "<group>";
@@ -280,13 +252,15 @@
 			name = JSON;
 			sourceTree = "<group>";
 		};
-		DD87A2C6144D0328000F5EC7 /* Outward */ = {
+		DD354F64145D01D60035E31B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DD87A2C8144D0343000F5EC7 /* ELCTextfieldCell.h */,
-				DD87A2C9144D0343000F5EC7 /* ELCTextfieldCell.m */,
+				DD354F5C145CFD060035E31B /* RankingViewController.xib */,
+				DDA89A08145DA16B0076DCA1 /* RankingDetailViewController.xib */,
+				DD354F53145CF7070035E31B /* HomeViewController.xib */,
+				DD354F48145CE09C0035E31B /* LoginController.xib */,
 			);
-			name = Outward;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		DD8DD3AC144A06580063D735 /* XML */ = {
@@ -309,28 +283,6 @@
 				DD8DD3CC144B3D500063D735 /* Event.m */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		DD8DD3C5144A22E40063D735 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				DD583194144BA7060035875B /* RankingDetailViewController.xib */,
-				DD8DD3C8144B31ED0063D735 /* RankingViewController.xib */,
-				DD2A07F81447AA5A003FB740 /* iRankViewController.xib */,
-				DD8DD3721448F8F70063D735 /* HomeViewController.xib */,
-				DD2A080E1447ACE1003FB740 /* LoginController.xib */,
-				DD8DD3C2144A20960063D735 /* EventViewController.xib */,
-				DDE33E7D144F2034009BD85C /* PhotoViewController.xib */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		DDF4B2AC1447AFAB00B859B5 /* iPad */ = {
-			isa = PBXGroup;
-			children = (
-				DDF4B2AD1447AFAD00B859B5 /* MainWindow-iPad.xib */,
-			);
-			name = iPad;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -385,26 +337,21 @@
 			files = (
 				DD2A07EB1447AA5A003FB740 /* InfoPlist.strings in Resources */,
 				DD2A07F41447AA5A003FB740 /* MainWindow.xib in Resources */,
-				DD2A07FA1447AA5A003FB740 /* iRankViewController.xib in Resources */,
 				DD2A08011447AA89003FB740 /* icon.png in Resources */,
 				DD2A08031447AA8B003FB740 /* iconRetina.png in Resources */,
 				DD2A08051447AA8E003FB740 /* Default.png in Resources */,
 				DD2A08071447AA91003FB740 /* Default@2x.png in Resources */,
-				DD2A08091447AA97003FB740 /* buttonBackground.png in Resources */,
-				DD2A08101447ACE1003FB740 /* LoginController.xib in Resources */,
-				DD2A08121447AD0C003FB740 /* background.png in Resources */,
 				DD2A08141447AD41003FB740 /* logo.png in Resources */,
-				DDF4B2AF1447AFAD00B859B5 /* MainWindow-iPad.xib in Resources */,
-				DD8DD3741448F8F70063D735 /* HomeViewController.xib in Resources */,
 				DD8DD3761448FDC80063D735 /* homeTop.png in Resources */,
 				DD8DD39D1449FC1D0063D735 /* home.png in Resources */,
 				DD8DD3A11449FC650063D735 /* events.png in Resources */,
 				DD8DD3A21449FC650063D735 /* rankings.png in Resources */,
 				DD8DD3A31449FC650063D735 /* photos.png in Resources */,
-				DD8DD3C4144A20960063D735 /* EventViewController.xib in Resources */,
-				DD8DD3CA144B31EE0063D735 /* RankingViewController.xib in Resources */,
-				DD583196144BA7060035875B /* RankingDetailViewController.xib in Resources */,
-				DDE33E7F144F2034009BD85C /* PhotoViewController.xib in Resources */,
+				DD354F4A145CE09C0035E31B /* LoginController.xib in Resources */,
+				DD354F4C145CE0F50035E31B /* background.png in Resources */,
+				DD354F55145CF7070035E31B /* HomeViewController.xib in Resources */,
+				DD354F5E145CFD060035E31B /* RankingViewController.xib in Resources */,
+				DDA89A0A145DA16B0076DCA1 /* RankingDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,8 +364,6 @@
 			files = (
 				DD2A07ED1447AA5A003FB740 /* main.m in Sources */,
 				DD2A07F11447AA5A003FB740 /* iRankAppDelegate.m in Sources */,
-				DD2A07F71447AA5A003FB740 /* iRankViewController.m in Sources */,
-				DD2A080F1447ACE1003FB740 /* LoginController.m in Sources */,
 				DD2A94951447CE04007CCDF1 /* NSObject+SBJson.m in Sources */,
 				DD2A94961447CE04007CCDF1 /* SBJsonParser.m in Sources */,
 				DD2A94971447CE04007CCDF1 /* SBJsonStreamParser.m in Sources */,
@@ -431,16 +376,15 @@
 				DD2A949E1447CE04007CCDF1 /* SBJsonTokeniser.m in Sources */,
 				DD2A949F1447CE04007CCDF1 /* SBJsonUTF8Stream.m in Sources */,
 				DD2A94A01447CE04007CCDF1 /* SBJsonWriter.m in Sources */,
-				DD8DD3731448F8F70063D735 /* HomeViewController.m in Sources */,
-				DD8DD39A1449E1900063D735 /* RankingViewController.m in Sources */,
 				DD8DD3AF144A067C0063D735 /* XMLRankingParser.m in Sources */,
 				DD8DD3B2144A07990063D735 /* Ranking.m in Sources */,
-				DD8DD3C3144A20960063D735 /* EventViewController.m in Sources */,
 				DD8DD3CD144B3D500063D735 /* Event.m in Sources */,
 				DD8DD3D0144B41F90063D735 /* XMLEventParser.m in Sources */,
-				DD583195144BA7060035875B /* RankingDetailViewController.m in Sources */,
-				DD87A2CA144D0343000F5EC7 /* ELCTextfieldCell.m in Sources */,
-				DDE33E7E144F2034009BD85C /* PhotoViewController.m in Sources */,
+				DD354F49145CE09C0035E31B /* LoginController.m in Sources */,
+				DD354F54145CF7070035E31B /* HomeViewController.m in Sources */,
+				DD354F5D145CFD060035E31B /* RankingViewController.m in Sources */,
+				DDA89A09145DA16B0076DCA1 /* RankingDetailViewController.m in Sources */,
+				DDA89A0D145DA9AF0076DCA1 /* EditableTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,22 +405,6 @@
 				DD2A07F31447AA5A003FB740 /* en */,
 			);
 			name = MainWindow.xib;
-			sourceTree = "<group>";
-		};
-		DD2A07F81447AA5A003FB740 /* iRankViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DD2A07F91447AA5A003FB740 /* en */,
-			);
-			name = iRankViewController.xib;
-			sourceTree = "<group>";
-		};
-		DDF4B2AD1447AFAD00B859B5 /* MainWindow-iPad.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DDF4B2AE1447AFAD00B859B5 /* en */,
-			);
-			name = "MainWindow-iPad.xib";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

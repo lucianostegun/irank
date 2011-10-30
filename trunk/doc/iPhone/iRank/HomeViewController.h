@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "iRankAppDelegate.h"
-#import "LoginController.h"
+@class iRankAppDelegate;
 
 @interface HomeViewController : UIViewController {
     
@@ -30,7 +29,6 @@
     NSString *userSiteId;
     
     iRankAppDelegate *appDelegate;
-    LoginController *loginController;
     
 }
 
@@ -47,8 +45,6 @@
 @property (nonatomic, retain) NSString *balance;
 @property (nonatomic, retain) UIBarButtonItem *updateButton;
 
-@property (nonatomic, retain) iRankAppDelegate *appDelegate;
-@property (nonatomic, retain) LoginController *loginController;
 @property (nonatomic, retain) NSString *userSiteId;
 
 - (IBAction)doLogout:(id)sender;

@@ -7,9 +7,6 @@
 //
 
 #import "iRankAppDelegate.h"
-
-#import "iRankViewController.h"
-#import "LoginController.h"
 #import "Constants.h"
 
 @implementation iRankAppDelegate
@@ -20,12 +17,14 @@
 @synthesize rankingList;
 @synthesize eventList;
 @synthesize userSiteId;
+@synthesize loginController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
     
-    LoginController *loginController = [LoginController alloc];
+    loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
+    NSLog(@"loginController retainCount: %i", [loginController retainCount]);
     
     defaults = [NSUserDefaults standardUserDefaults];
     
@@ -41,8 +40,19 @@
     
     [self.window makeKeyAndVisible];
 
-    [loginController release];
     return YES;
+}
+
+-(void)showHomeView {
+    
+    [self.window addSubview:self.tabBarController.view];
+    [loginController.view removeFromSuperview];
+}
+
+-(void)showLoginView {
+    
+    [self.window addSubview:loginController.view];
+    [self.tabBarController.view removeFromSuperview];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -113,6 +123,7 @@
     [rankingList release];
     [eventList release];
     [userSiteId release];
+    [loginController release];
     [super dealloc];
 }
 
