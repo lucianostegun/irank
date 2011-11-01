@@ -1,4 +1,4 @@
-//
+    //
 //  RankingDetailViewController.m
 //  iRank
 //
@@ -12,6 +12,8 @@
 
 @implementation RankingDetailViewController
 @synthesize ranking;
+@synthesize pickerView;
+@synthesize pickerOptionList;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,6 +37,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    pickerOptionList = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *gameStyleList = [[NSMutableArray alloc] init];
+    [gameStyleList addObject:@"Torneio"];
+    [gameStyleList addObject:@"Ring game"];
+    [gameStyleList addObject:@"Sit & Go"];
+    
+    NSMutableArray *rankingTypeList = [[NSMutableArray alloc] init];
+    [rankingTypeList addObject:@"Balanço"];
+    [rankingTypeList addObject:@"Ganhos"];
+    [rankingTypeList addObject:@"Média"];
+    [rankingTypeList addObject:@"Pontos"];
+    
+    NSMutableArray *isPrivateList = [[NSMutableArray alloc] init];
+    [isPrivateList addObject:@"Público"];
+    [isPrivateList addObject:@"Privado"];
+    
+    [pickerOptionList addObject:gameStyleList];
+    [pickerOptionList addObject:isPrivateList];
+    [pickerOptionList addObject:rankingTypeList];
+    
+    self.navigationItem.rightBarButtonItem = saveButton;
 }
 
 - (void)viewDidUnload
@@ -48,15 +73,7 @@
 {
     [super viewWillAppear:animated];
     
-    //    [rankingName setText:ranking.rankingName];
-    //    [rankingType setText:ranking.rankingType];
-    //    [gameStyle setText:ranking.gameStyle];
-    //    //    [credit setText:ranking.credit];
-    //    [startDate setText:ranking.startDate];
-    //    [finishDate setText:ranking.finishDate];
-    //    [isPrivate setText:ranking.isPrivate];
-    //    [defaultBuyin setText:ranking.defaultBuyin];
-    
+    [self.tableView reloadData];    
     [[NSNotificationCenter defaultCenter] 
      addObserver:self 
      selector:@selector(keyboardWillAppear:) 
@@ -133,38 +150,49 @@
                 cell.leftLabel.text = @"Nome";
                 cell.rightTextField.text = [ranking.rankingName stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 cell.rightTextField.delegate = self;
+                cell.rightTextField.placeholder = @"Informe o nome do ranking";
                 cell.selectionStyle = UITableViewCellEditingStyleNone;
+                cell.rightTextField.tag = 0;
                 break;
             case 1:
                 cell.leftLabel.text = @"Estilo";
                 cell.rightTextField.text = [ranking.gameStyle stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 cell.rightTextField.enabled = NO;
+                cell.rightTextField.tag = 1;
                 break;
             case 2:
                 cell.leftLabel.text = @"Inicio";
                 cell.rightTextField.text = [ranking.startDate stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                cell.rightTextField.placeholder = @"Data de início";
                 cell.rightTextField.enabled = NO;
+                cell.rightTextField.tag = 2;
                 break;
             case 3:
                 cell.leftLabel.text = @"Término";
                 cell.rightTextField.text = [ranking.finishDate stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                cell.rightTextField.placeholder = @"Data de término";
                 cell.rightTextField.enabled = NO;
+                cell.rightTextField.tag = 3;
                 break;
             case 4:
                 cell.leftLabel.text = @"Exibição";
-                cell.rightTextField.text = [ranking.isPrivate stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                cell.rightTextField.text = ([ranking.isPrivate isEqualToString:@"1"]?@"Privado":@"Público");
                 cell.rightTextField.enabled = NO;
+                cell.rightTextField.tag = 4;
                 break;
             case 5:
                 cell.leftLabel.text = @"Classificação";
                 cell.rightTextField.text = [ranking.rankingType stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 cell.rightTextField.enabled = NO;
+                cell.rightTextField.tag = 5;
                 break;
             case 6:
                 cell.leftLabel.text = @"Buy-in padrão";
                 cell.rightTextField.text = [ranking.defaultBuyin stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 cell.rightTextField.delegate = self;
+                cell.rightTextField.placeholder = @"Valor padrão do buy-in";
                 cell.selectionStyle = UITableViewCellEditingStyleNone;
+                cell.rightTextField.tag = 6;
                 break;
             default:
                 break;
@@ -255,15 +283,13 @@ titleForHeaderInSection:(NSInteger)section {
 
 #pragma mark - Table view delegate
 
--(void)keyboardWillAppear:(NSNotification *)notification {
-    
-    [self dismissDatePicker:datePicker];
-}
-
 - (void)dismissDatePicker:(id)sender {
-
+    
+    if( datePicker.isHidden )
+        return;
+    
     self.navigationItem.leftBarButtonItem = nil;
-    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = saveButton;
     
     CGRect datePickerTargetFrame = CGRectMake(0, self.view.bounds.size.height+44, 320, 216);
     [UIView beginAnimations:@"MoveOut" context:nil];
@@ -271,14 +297,33 @@ titleForHeaderInSection:(NSInteger)section {
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(removeDatePickerViews:)];
     [UIView commitAnimations];
-
+    
     self.navigationItem.hidesBackButton = NO;
-    datePicker.hidden = YES;
+    
 }
 
 - (void)changeDate:(id)sender {
-
-    NSLog(@"New Date: %@", datePicker.date);
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    EditableTableViewCell *cell = (EditableTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [dateFormatter setDateFormat:@"dd/MM/yyyy"];
+    
+    switch (indexPath.row) {
+        case 2:
+            ranking.startDate = [dateFormatter stringFromDate:datePicker.date];
+            break;
+        case 3:
+            ranking.finishDate = [dateFormatter stringFromDate:datePicker.date];
+            break;
+            
+        default:
+            break;
+    }
+    
+    cell.rightTextField.text = [dateFormatter stringFromDate:datePicker.date];
+    
     [self dismissDatePicker:datePicker];
 }
 
@@ -286,14 +331,237 @@ titleForHeaderInSection:(NSInteger)section {
 - (void)removeDatePickerViews:(id)object {
     
     [datePicker removeFromSuperview];
+    datePicker.hidden = YES;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if( indexPath.section==0 ){
+        
+        switch (indexPath.row) {
+            case 2:
+            case 3:
+                [self dismissPickerView:pickerView];
+                [self showDatePicker:indexPath];       
+                break;
+            case 1:
+            case 4:
+            case 5:
+                [self dismissDatePicker:datePicker];
+                [self showPickerView:indexPath];
+                break;
+            default:
+                [self dismissDatePicker:datePicker];
+                [self dismissPickerView:pickerView];
+                break;
+        }
+    }else{
+        
+        [self dismissDatePicker:datePicker];
+        [self dismissPickerView:pickerView];
+    }
+}
+
+
+
+
+
+
+
+
+- (void)dismissPickerView:(id)sender {
+    
+    if( pickerView.isHidden )
+        return;
+    
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = saveButton;
+    
+    CGRect pickerViewTargetFrame = CGRectMake(0, self.view.bounds.size.height+44, 320, 216);
+    [UIView beginAnimations:@"MoveOut" context:nil];
+    pickerView.frame = pickerViewTargetFrame;
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(removePickerViewViews:)];
+    [UIView commitAnimations];
+    
+    self.navigationItem.hidesBackButton = NO;
+    
+}
+
+- (void)changePickerValue:(id)sender {
+    
+    [self dismissPickerView:pickerView];
+}
+
+
+- (void)removePickerViewViews:(id)object {
+    
+    [pickerView removeFromSuperview];
+    pickerView.hidden = YES;
+}
+
+
+
+
+- (void)showPickerView:(NSIndexPath *)indexPath {
+    
     [[self view] endEditing:YES];
     
-    if( !datePicker.isHidden )
+    int row = indexPath.row;
+    
+    row = (row==1?0:(row==4?1:2));
+    
+    EditableTableViewCell *cell = (EditableTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    NSString *cellValue = cell.rightTextField.text;
+    
+    pickerView.tag = row;
+    [pickerView reloadAllComponents];
+    
+    if( !pickerView.isHidden ){
+        
+        int index = 0;
+        for(NSString *optionValue in [pickerOptionList objectAtIndex:row]){
+
+            if( [cellValue isEqualToString:optionValue] ){
+                [self.pickerView selectRow:index inComponent:0 animated:YES];
+                break;
+            }
+            
+            index++;
+        }
         return;
+    }
+    
+    pickerView.hidden = NO;
+    
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.window addSubview:pickerView];
+    
+    CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+    CGSize pickerSize = [pickerView sizeThatFits:CGSizeZero];
+    CGRect startRect = CGRectMake(0.0,
+                                  screenRect.origin.y + screenRect.size.height,
+                                  pickerSize.width, pickerSize.height);
+    
+    pickerView.frame = startRect;
+    
+    // compute the end frame
+    CGRect pickerRect = CGRectMake(0.0,
+                                   screenRect.origin.y + screenRect.size.height - pickerSize.height,
+                                   pickerSize.width,
+                                   pickerSize.height);
+    
+    // start the slide up animation
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    
+    // we need to perform some post operations after the animation is complete
+    [UIView setAnimationDelegate:self];
+    
+    pickerView.frame = pickerRect;
+    
+    [UIView commitAnimations];
+
+    int index = 0;
+    for(NSString *optionValue in [pickerOptionList objectAtIndex:row]){
+
+        if( [cellValue isEqualToString:optionValue] ){
+            [self.pickerView selectRow:index inComponent:0 animated:YES];
+            break;
+        }
+            
+        index++;
+    }
+    
+    UIBarButtonItem *doneButton   = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(changePickerValue:)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissPickerView:)];
+    
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem  = cancelButton;
+    self.navigationItem.rightBarButtonItem = doneButton;
+    [doneButton release];
+    [cancelButton release];
+}
+
+
+
+
+
+
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    
+    return 1;
+}
+
+- (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    EditableTableViewCell *cell = (EditableTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    
+    cell.rightTextField.text = [[pickerOptionList objectAtIndex:thePickerView.tag] objectAtIndex:row];
+    
+    NSString *pickerValue = [[pickerOptionList objectAtIndex:thePickerView.tag] objectAtIndex:row];
+    
+    switch (indexPath.row) {
+        case 1:
+            ranking.gameStyle = pickerValue;
+            break;
+        case 4:
+            ranking.isPrivate = ([pickerValue isEqualToString:@"Privado"]?@"1":@"0");
+            break;
+        case 5:
+            ranking.rankingType = pickerValue;
+            break;
+            
+        default:
+            break;
+    }
+    
+    [pickerValue release];
+}
+
+- (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component;
+{
+    return [[pickerOptionList objectAtIndex:thePickerView.tag] count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+{
+    NSLog(@"row: %i", row);
+    return [[pickerOptionList objectAtIndex:thePickerView.tag] objectAtIndex:row];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- (void)showDatePicker:(NSIndexPath *)indexPath {
+    
+    [[self view] endEditing:YES];
+    
+    EditableTableViewCell *cell = (EditableTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [dateFormatter setDateFormat:@"dd/MM/yyyy"];
+    
+    if( !datePicker.isHidden ){
+        
+        if( ![cell.rightTextField.text isEqualToString:@""] )
+            datePicker.date = [dateFormatter dateFromString:cell.rightTextField.text];
+        return;
+    }
     
     datePicker.hidden = NO;
     
@@ -308,7 +576,7 @@ titleForHeaderInSection:(NSInteger)section {
     CGRect startRect = CGRectMake(0.0,
                                   screenRect.origin.y + screenRect.size.height,
                                   pickerSize.width, pickerSize.height);
-
+    
     datePicker.frame = startRect;
     
     // compute the end frame
@@ -336,19 +604,46 @@ titleForHeaderInSection:(NSInteger)section {
     self.navigationItem.rightBarButtonItem = doneButton;
     [doneButton release];
     [cancelButton release];
+
+    if( ![cell.rightTextField.text isEqualToString:@""] )    
+        datePicker.date = [dateFormatter dateFromString:cell.rightTextField.text];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    switch (textField.tag) {
+        case 0:
+            ranking.rankingName = textField.text;
+            break;
+        case 6:
+            ranking.defaultBuyin = textField.text;
+            break;
+        default:
+            break;
+    }
     
     [textField resignFirstResponder];
     
     return YES;
 }
 
+-(void)keyboardWillAppear:(NSNotification *)notification {
+    
+    [self dismissDatePicker:datePicker];
+    [self dismissPickerView:pickerView];
+}
+
+-(void)saveRanking:(id)sender {
+    
+    [ranking save];
+}
+
 -(void)dealloc {
     
     [ranking release];
     [datePicker release];
+    [pickerView release];
+    [pickerOptionList release];
     [super dealloc];
 }
 

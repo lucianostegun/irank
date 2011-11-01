@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RankingDetailViewController;
 
 @interface Ranking : NSObject {
     
@@ -39,4 +40,6 @@
 @property (nonatomic, retain) NSString *defaultBuyin;
 @property (nonatomic, retain) NSString *players;
 @property (nonatomic, retain) NSString *events;
+
+-(void)save:(id)sender;
 @end
