@@ -24,6 +24,48 @@
 @synthesize isPrivate;
 @synthesize defaultBuyin;
 
+-(void)save {
+    
+    rankingName  = [self.rankingName stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    gameStyle    = [self.gameStyle stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    startDate    = [self.startDate stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    finishDate   = [self.finishDate stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    isPrivate    = [self.isPrivate stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    rankingType  = [self.rankingType stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    defaultBuyin = [self.defaultBuyin stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    rankingName  = [self.rankingName stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    startDate    = [self.startDate stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+    finishDate   = [self.finishDate stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://irank/index.php/ranking/saveMobile?rankingId=%i&rankingName=%@&gameStyle=%@&startDate=%@&finishDate=%@&isPrivate=%@&rankingType=%@&defaultBuyin=%@", rankingId, rankingName, gameStyle, startDate, finishDate, isPrivate, rankingType, defaultBuyin];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    
+    NSLog(@"url: %@", urlString);
+}
+
+- (void)connection: (NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    
+    NSLog(@"response: %@", response);
+}
+
+- (void)connection: (NSURLConnection *)connection didReceiveData:(NSData *)data {
+    
+    NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+    
+    NSLog(@"result: %@", result);
+    
+    [result release];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    
+    [connection release];
+}
+
 - (void) dealloc {
     
     [rankingName release];
