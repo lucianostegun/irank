@@ -8,46 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class iRankAppDelegate;
-
-@interface HomeViewController : UIViewController {
+@interface HomeViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate> {
     
-    
-    IBOutlet UITableView *mainTableView;
-    IBOutlet UIActivityIndicatorView *updateIndicator;
-    IBOutlet UIBarButtonItem *updateButton;
-    
-    NSMutableArray *bankrollMenuList;
-    NSString *fee;
-    NSString *buyin;
-    NSString *addon;
-    NSString *rebuy;
-    NSString *prize;
-    NSString *score;
-    NSString *balance;
-    NSURLConnection *connection;
-    NSString *userSiteId;
-    
-    iRankAppDelegate *appDelegate;
-    
+    IBOutlet UIBarButtonItem *quitButton;
+    NSMutableArray *bankrollInfo;
 }
 
-@property (nonatomic, retain) NSURLConnection * connection;
-@property (nonatomic, retain) NSMutableArray *bankrollMenuList;
-@property (nonatomic, retain) UITableView *mainTableView;
-@property (nonatomic, retain) UIActivityIndicatorView *updateIndicator;
-@property (nonatomic, retain) NSString *fee;
-@property (nonatomic, retain) NSString *buyin;
-@property (nonatomic, retain) NSString *addon;
-@property (nonatomic, retain) NSString *rebuy;
-@property (nonatomic, retain) NSString *prize;
-@property (nonatomic, retain) NSString *score;
-@property (nonatomic, retain) NSString *balance;
-@property (nonatomic, retain) UIBarButtonItem *updateButton;
+@property (nonatomic, retain) NSMutableArray *bankrollInfo;
 
-@property (nonatomic, retain) NSString *userSiteId;
-
-- (IBAction)doLogout:(id)sender;
-- (IBAction)updateData:(id)sender;
-
+-(IBAction)doLogout:(id)sender;
 @end

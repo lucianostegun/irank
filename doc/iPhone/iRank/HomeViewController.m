@@ -7,24 +7,12 @@
 //
 
 #import "HomeViewController.h"
+#import "iRankAppDelegate.h"
 #import "Constants.h"
-#import "JSON.h"
 
 @implementation HomeViewController
 
-@synthesize bankrollMenuList;
-@synthesize mainTableView;
-@synthesize updateIndicator;
-@synthesize fee;
-@synthesize buyin;
-@synthesize rebuy;
-@synthesize addon;
-@synthesize prize;
-@synthesize score;
-@synthesize balance;
-@synthesize connection;
-@synthesize updateButton;
-@synthesize userSiteId;
+@synthesize bankrollInfo;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,7 +20,7 @@
     if (self) {
         // Custom initialization
     }
-    
+
     return self;
 }
 
@@ -49,11 +37,46 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    userSiteId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserSiteIdKey];
-    appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    [self updateDataOnline];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    self.navigationItem.leftBarButtonItem = quitButton;
+    
+
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSMutableDictionary *userInfo = [[appDelegate userDefaults] objectForKey:@"userInfo"];
+    
+    bankrollInfo = [[NSMutableArray alloc] init];
+    
+    [bankrollInfo addObject:[NSMutableDictionary
+                                 dictionaryWithObjectsAndKeys:
+                                 kBuyinsWord, kSelectKey,
+                                 [userInfo valueForKey:kBuyinKey], kDescriptKey,
+                                 nil, kControllerKey, nil]];
+    [bankrollInfo addObject:[NSMutableDictionary
+                                 dictionaryWithObjectsAndKeys:
+                                 kFeeWord, kSelectKey,
+                                 [userInfo valueForKey:kFeeKey], kDescriptKey,
+                                 nil, kControllerKey, nil]];
+    [bankrollInfo addObject:[NSMutableDictionary
+                                 dictionaryWithObjectsAndKeys:
+                                 kRebuysWord, kSelectKey,
+                                 [userInfo valueForKey:kRebuyKey], kDescriptKey,
+                                 nil, kControllerKey, nil]];
+    [bankrollInfo addObject:[NSMutableDictionary
+                                 dictionaryWithObjectsAndKeys:
+                                 kAddonsWord, kSelectKey,
+                                 [userInfo valueForKey:kAddonKey], kDescriptKey,
+                                 nil, kControllerKey, nil]];
+    [bankrollInfo addObject:[NSMutableDictionary
+                                 dictionaryWithObjectsAndKeys:
+                                 kPrizesWord, kSelectKey,
+                                 [userInfo valueForKey:kPrizeKey], kDescriptKey,
+                                 nil, kControllerKey, nil]];
+    [bankrollInfo addObject:[NSMutableDictionary
+                                 dictionaryWithObjectsAndKeys:
+                                 kBalanceWord, kSelectKey,
+                                 [userInfo valueForKey:kBalanceKey], kDescriptKey,
+                                 nil, kControllerKey, nil]];    
 }
 
 - (void)viewDidUnload
@@ -65,7 +88,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
     [super viewWillAppear:animated];
 }
 
@@ -90,47 +112,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Resume content
-- (void)updateResumeData {
-    
-//    if( bankrollMenuList==nil )
-        bankrollMenuList = [[NSMutableArray alloc] init];
-//    else
-//        [bankrollMenuList removeAllObjects];
-    
-    [bankrollMenuList addObject:[NSMutableDictionary 
-                                 dictionaryWithObjectsAndKeys:
-                                 kBuyinsWord, kSelectKey,
-                                 buyin, kDescriptKey,
-                                 nil, kControllerKey, nil]];
-    [bankrollMenuList addObject:[NSMutableDictionary 
-                                 dictionaryWithObjectsAndKeys:
-                                 kFeeWord, kSelectKey,
-                                 fee, kDescriptKey,
-                                 nil, kControllerKey, nil]];
-    [bankrollMenuList addObject:[NSMutableDictionary 
-                                 dictionaryWithObjectsAndKeys:
-                                 kRebuysWord, kSelectKey,
-                                 rebuy, kDescriptKey,
-                                 nil, kControllerKey, nil]];
-    [bankrollMenuList addObject:[NSMutableDictionary 
-                                 dictionaryWithObjectsAndKeys:
-                                 kAddonsWord, kSelectKey,
-                                 addon, kDescriptKey,
-                                 nil, kControllerKey, nil]];
-    [bankrollMenuList addObject:[NSMutableDictionary 
-                                 dictionaryWithObjectsAndKeys:
-                                 kPrizesWord, kSelectKey,
-                                 prize, kDescriptKey,
-                                 nil, kControllerKey, nil]];
-    [bankrollMenuList addObject:[NSMutableDictionary 
-                                 dictionaryWithObjectsAndKeys:
-                                 kBalanceWord, kSelectKey,
-                                 balance, kDescriptKey,
-                                 nil, kControllerKey, nil]];
-}
-
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -142,21 +123,23 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
+    int rows = 0;
+
     switch (section) {
         case 0:
-            return 6;
+            rows = 6;
             break;
         case 1:
-            return 0;
+            rows = 0;
             break;
         case 2:
-            return 0;
+            rows = 0;
             break;
         default:
             break;
     }
     
-    return 0;
+    return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -164,70 +147,70 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil)
+    if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
-
-    int menuOffset = (indexPath.section*kSection1Rows)+ indexPath.row;
-    NSDictionary *cellText = [bankrollMenuList objectAtIndex:menuOffset];
-        
-    NSString *label = [cellText objectForKey:kSelectKey];
-    NSString *description = [cellText objectForKey:kDescriptKey];
+    }
     
+
+    
+    NSDictionary *cellText = [bankrollInfo objectAtIndex:indexPath.row];
+    
+    NSString *label       = [cellText objectForKey:kSelectKey];
+    NSString *description = [cellText objectForKey:kDescriptKey];
+
     cell.textLabel.text       = label;
     cell.detailTextLabel.text = description;
-        
+    
     NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^-.*$"];
-        
+    
     if( [regExPredicate evaluateWithObject:description] )
         cell.detailTextLabel.textColor = [UIColor redColor];
-
+    
     cell.selectionStyle = UITableViewCellEditingStyleNone;
-
+        
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView 
-titleForHeaderInSection:(NSInteger)section {
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-    NSString *title = nil;
-
+    NSString *header = [[[NSString alloc] init] autorelease];
+    
     switch (section) {
         case 0:
-            title = @"Bankroll";
+            header = @"Resumo geral";
             break;
         case 1:
-            title = @"Próximos eventos";
+            header = @"Próximos eventos";
             break;
         case 2:
-            title = @"Últimos eventos";
+            header = @"Últimos eventos";
             break;
         default:
             break;
     }
     
-    return title;
+    return header;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     
-    NSString *title = nil;
+    NSString *footer = [[[NSString alloc] init] autorelease];
     
     switch (section) {
         case 0:
-            title = @"";
+            footer = nil;
             break;
         case 1:
-            title = @"Nenhum evento agendado";
+            footer = @"Nenhum evento agendado";
             break;
         case 2:
-            title = @"Nenhum evento realizado";
+            footer = @"Nenhum evento realizado";
             break;
         default:
             break;
     }
     
-    return title;
+    return footer;
 }
 
 /*
@@ -273,93 +256,31 @@ titleForHeaderInSection:(NSInteger)section {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     // ...
+     // Pass the selected object to the new view controller.
+     [self.navigationController pushViewController:detailViewController animated:YES];
+     [detailViewController release];
+     */
 }
 
-
-
-
-- (void)updateDataOnline {
-    
-    NSURL *             url;
-    NSURLRequest *      request;
-    
-    NSString *urlString  = [NSString stringWithFormat:@"http://irank/index.php/myAccount/getAppUpdatedData/userSiteId/%@", userSiteId];
-    
-    url = [NSURL URLWithString:urlString];
-    
-    request = [NSURLRequest requestWithURL:url];
-    connection = [NSURLConnection connectionWithRequest:request delegate:self];
-}
-
-- (void)connection: (NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    
-    updateIndicator.hidden = YES;
-    updateButton.enabled = YES;
-}
-
-- (void)connection: (NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-    
-    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    NSError *error = nil;
-    NSDictionary *jsonObjects = [jsonParser objectWithString:result error:&error];
-    
-    fee     = [jsonObjects objectForKey:@"fee"];
-    buyin   = [jsonObjects objectForKey:@"buyin"];
-    addon   = [jsonObjects objectForKey:@"addon"];
-    rebuy   = [jsonObjects objectForKey:@"rebuy"];
-    prize   = [jsonObjects objectForKey:@"prize"];
-    score   = [jsonObjects objectForKey:@"score"];
-    balance = [jsonObjects objectForKey:@"balance"];
-    
-    [self updateResumeData];
-        
-    [mainTableView reloadData];    
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    
-}
-
-- (void)updateData:(id)sender {
-    
-    updateIndicator.hidden = NO;
-    updateButton.enabled = NO;
-    [self updateDataOnline];
-}
+#pragma mark - Custom actions
 
 - (void)doLogout:(id)sender {
     
-//    [appDelegate.defaults removeObjectForKey:kUserSiteIdKey];
-    
-//    if( appDelegate==nil )
-//        
-//    
-//    if( loginController==nil )
-//        loginController = [LoginController alloc];
-    
-    [appDelegate showLoginView];
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    [appDelegate showLogin];
+        
+    [[appDelegate userDefaults] removeObjectForKey:@"userInfo"]; 
+    [[appDelegate userDefaults] synchronize];
 }
 
-- (void) dealloc {
+- (void)dealloc {
     
-    [bankrollMenuList release];
-    [mainTableView release];
-    [updateIndicator release];
-    [fee release];
-    [buyin release];
-    [addon release];
-    [rebuy release];
-    [prize release];
-    [score release];
-    [balance release];
-    [connection release];
-    [updateButton release];
-    [userSiteId release];
+    [bankrollInfo release];
     [super dealloc];
 }
-
 @end
