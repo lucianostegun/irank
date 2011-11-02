@@ -7,52 +7,55 @@
 //
 
 #import "iRankAppDelegate.h"
-#import "Constants.h"
 
 @implementation iRankAppDelegate
 
 @synthesize window = _window;
-@synthesize tabBarController = _tabBarController;
-@synthesize defaults;
-@synthesize rankingList;
-@synthesize eventList;
-@synthesize userSiteId;
-@synthesize loginController;
+@synthesize tabBarController;
+@synthesize loginViewController;
+@synthesize userDefaults;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    
-    loginController = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
-    NSLog(@"loginController retainCount: %i", [loginController retainCount]);
-    
-    defaults = [NSUserDefaults standardUserDefaults];
-    
-    userSiteId = [defaults objectForKey:kUserSiteIdKey];
-    
-    if( userSiteId!=nil ){
-        
-        self.window.rootViewController = _tabBarController;
+
+    userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *userInfo = [userDefaults objectForKey:@"userInfo"];
+
+    if( userInfo==nil ){
+
+        loginViewController = [[LoginViewController alloc] init];
+        self.window.rootViewController = loginViewController;
+        [loginViewController release];
     }else{
         
-        self.window.rootViewController = loginController;
+        [self switchLogin];
     }
     
+    [userInfo release];
+    
     [self.window makeKeyAndVisible];
+    
+//    NSLog(@"retainCount: %i", [loginViewController retainCount]);
 
     return YES;
 }
 
--(void)showHomeView {
+-(void)switchLogin {
     
-    [self.window addSubview:self.tabBarController.view];
-    [loginController.view removeFromSuperview];
+    self.window.rootViewController = tabBarController;
+    
+    //    NSLog(@"retainCount: %i", [loginViewController retainCount]);
 }
 
--(void)showLoginView {
+-(void)showLogin {
     
-    [self.window addSubview:loginController.view];
-    [self.tabBarController.view removeFromSuperview];
+    if( loginViewController==nil )
+        loginViewController = [[LoginViewController alloc] init];
+    
+    self.window.rootViewController = nil;
+    self.window.rootViewController = loginViewController;
+    [loginViewController release];
+    loginViewController = nil;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -94,36 +97,20 @@
      */
 }
 
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView;
-{
-    return 1;
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    //    mlabel.text = @"Teste";
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
-{
-    return 1;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
-{
-    return @"Torneio";
+-(void)showAlert:(NSString *)title message:(NSString *)message {
+    
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [alertView show];
+    [alertView release];
 }
 
 - (void)dealloc
 {
+    [loginViewController release];
+    [tabBarController release];
     [_window release];
-    [_tabBarController release];
-    [defaults release];
-    [rankingList release];
-    [eventList release];
-    [userSiteId release];
-    [loginController release];
+    [userDefaults release];
     [super dealloc];
 }
 

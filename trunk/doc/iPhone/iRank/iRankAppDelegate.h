@@ -7,27 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LoginController.h"
+#import "LoginViewController.h"
 
-@interface iRankAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
+@interface iRankAppDelegate : NSObject <UIApplicationDelegate> {
     
-    NSUserDefaults *defaults;
-    NSMutableArray *rankingList;
-    NSMutableArray *eventList;
-    NSString *userSiteId;
-    LoginController *loginController;
+    IBOutlet UITabBarController *tabBarController;
+    LoginViewController *loginViewController;
+    NSUserDefaults *userDefaults;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
-@property (nonatomic, retain) LoginController *loginController;
+@property (nonatomic, retain) LoginViewController *loginViewController;
+@property (nonatomic, readonly) NSUserDefaults *userDefaults;
 
-@property (nonatomic, retain) NSUserDefaults *defaults;
-@property (nonatomic, retain) NSMutableArray *rankingList;
-@property (nonatomic, retain) NSMutableArray *eventList;
-@property (nonatomic, retain) NSString *userSiteId;
-
--(void)showHomeView;
--(void)showLoginView;
+-(void)switchLogin;
+-(void)showAlert:(NSString *)title message:(NSString *)message;
 
 @end
