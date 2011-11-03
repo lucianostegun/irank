@@ -755,9 +755,16 @@ class Util {
 		}
 	}
 	
-	
-	
-	
+	public static function implode_with_key($assoc, $inglue='>', $outglue=',', $lastChar='') {
+		
+	    $return = '';
+	 
+	    foreach ($assoc as $tk => $tv) {
+	        $return .= $outglue . $tk . $inglue . $tv;
+	    }
+	 
+	    return substr($return, strlen($outglue)).$lastChar;
+	}
 	
 	// Métodos utilizados no backend
 	public static function getFormStatus($successMessage=null, $errorMessage=null){

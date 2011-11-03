@@ -5,3 +5,6 @@ default:
   
 getiPhoneAppXml:
   is_secure: off
+  
+saveMobile:
+  is_secure: off

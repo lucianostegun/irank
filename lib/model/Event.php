@@ -63,9 +63,9 @@ class Event extends BaseEvent
 		return parent::getEventName().($this->getIsFreeroll() && $showSufix?' [Freeroll]':'');
 	}
 	
-	public static function getList($criteria=null, $limit=null){
+	public static function getList($criteria=null, $limit=null, $userSiteId=null){
 		
-		$userSiteId = MyTools::getAttribute('userSiteId');
+		$userSiteId = ($userSiteId?$userSiteId:MyTools::getAttribute('userSiteId'));
 		
 		if( !is_object($criteria) )
 			$criteria = new Criteria();
@@ -104,9 +104,9 @@ class Event extends BaseEvent
 		return self::getList($criteria, $limit);
 	}
 	
-	public static function getNextList($criteria=null, $limit=null){
+	public static function getNextList($criteria=null, $limit=null, $userSiteId=null){
 		
-		$userSiteId = MyTools::getAttribute('userSiteId');
+		$userSiteId = ($userSiteId?$userSiteId:MyTools::getAttribute('userSiteId'));
 		
 		if( !is_object($criteria) )
 			$criteria = new Criteria();

@@ -8,7 +8,7 @@ class rankingActions extends sfActions
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
 	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
 	
-	$freeActionList = array('edit', 'getDefaultBuyin', 'getRankingHistory', 'validateUnsubscribe', 'unsubscribe');
+	$freeActionList = array('edit', 'getDefaultBuyin', 'getRankingHistory', 'validateUnsubscribe', 'unsubscribe', 'saveMobile');
 	$actionName     = sfContext::getInstance()->getActionName();
 		
 	$rankingId = $this->getRequestParameter('rankingId');
@@ -127,6 +127,33 @@ class rankingActions extends sfActions
 	}
 	
 	echo $rankingObj->getId();
+	exit;
+  }
+  
+  
+  
+  public function executeSaveMobile($request){
+
+	$rankingId       = $request->getParameter('rankingId');
+	$rankingName     = $request->getParameter('rankingName');
+	$buildEmailGroup = $request->getParameter('buildEmailGroup');
+	$rankingTag      = $request->getParameter('rankingTag');
+	$gameStyleId     = $request->getParameter('gameStyleId');
+	$startDate       = $request->getParameter('startDate');
+	$finishDate      = $request->getParameter('finishDate');
+	$isPrivate       = $request->getParameter('isPrivate');
+	$rankingTypeId   = $request->getParameter('rankingTypeId');
+	$defaultBuyin    = $request->getParameter('defaultBuyin');
+
+//	$rankingObj = $this->rankingObj;
+//
+//	if( !$rankingId ){
+//		
+//		$rankingObj = new Ranking();
+//		$rankingObj->setUserSiteId($this->userSiteId);
+//	}
+	
+	echo $rankingName;
 	exit;
   }
   
@@ -417,17 +444,43 @@ class rankingActions extends sfActions
 	
 	header('content-type: text/xml; charset=UTF-8');
 	
-	$nl = chr(10);
-	
-	$xmlString  = '<?xml version="1.0"?>'.$nl;
-	$xmlString .= '<rankings>'.$nl;
+	$rankingList = array();
+
 	
 	foreach($rankingObjList as $rankingObj){
 		
-		$xmlString .= '<ranking id="'.$rankingObj->getId().'">'.$nl;
-		$xmlString .= '	<rankingName>'.$rankingObj->getRankingName().'</rankingName>'.$nl;
-		$xmlString .= '	<players>'.$rankingObj->getPlayers().'</players>'.$nl;
-		$xmlString .= '	<events>'.$rankingObj->getEvents().'</events>'.$nl;
+		$ranking = array();
+		$ranking['attributeList'] = array('id'=>$rankingObj->getId(),
+											  'rankingTypeId'=>$rankingObj->getRankingTypeId(),
+											  'gameStyleId'=>$rankingObj->getGameStyleId(),
+											  );
+											  
+		$ranking['rankingName']  = $rankingObj->getRankingName();
+		$ranking['rankingType']  = $rankingObj->getRankingType()->getDescription();
+		$ranking['gameStyle']    = $rankingObj->getGameStyle()->getDescription();
+		$ranking['credit']       = Util::formatFloat($rankingObj->getCredit(), true);
+		$ranking['startDate']    = $rankingObj->getStartDate('d/m/Y');
+		$ranking['finishDate']   = $rankingObj->getFinishDate('d/m/Y');
+		$ranking['isPrivate']    = ($rankingObj->getIsPrivate()?'1':'0');
+		$ranking['defaultBuyin'] = Util::formatFloat($rankingObj->getDefaultBuyin(), true);
+		$ranking['players']      = $rankingObj->getPlayers();
+		$ranking['events']       = $rankingObj->getEvents();
+		
+		$rankingList[] = $ranking;
+	}
+
+	$nl = chr(10);	
+	$xmlString  = '<?xml version="1.0"?>'.$nl;
+	$xmlString .= '<rankings>'.$nl;
+	foreach($rankingList as $ranking){
+		
+		$xmlString .= '<ranking '.Util::implode_with_key($ranking['attributeList'], '="', '" ', '"').'>'.$nl;
+		
+		unset($ranking['attributeList']);
+		
+		foreach($ranking as $key=>$value)
+			$xmlString .= '<'.$key.'>'.htmlspecialchars($value).'</'.$key.'>'.$nl;
+		
 		$xmlString .= '</ranking>'.$nl;
 	}
 	
