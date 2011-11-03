@@ -237,9 +237,6 @@ class People extends BasePeople
 		$resumeList['balance'] = $resumeList['prize']-$resumeList['buyin']-$resumeList['rebuy']-$resumeList['addon']-$resumeList['fee'];
 		$resumeList['average'] = ($bra?$resumeList['prize']/$bra:0);
 		
-		
-		$resumeList['buyin'] = rand(500, 1000);
-		
 		if($formatDecimal)
 			foreach($resumeList as &$resume)
 				$resume = Util::formatFloat($resume, true);

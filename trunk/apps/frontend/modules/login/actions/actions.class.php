@@ -12,7 +12,6 @@ class loginActions extends sfActions
 	$username  = $request->getParameter('username');
 	$password  = $request->getParameter('password');
 	$keepLogin = $request->getParameter('keepLogin');
-	$mobile    = $request->getParameter('mobile');
 
 	Util::getHelper('I18N');
 
@@ -37,12 +36,6 @@ class loginActions extends sfActions
 		
 		if( is_object($userSiteObj) ){
 			
-			if( $mobile ){
-				
-				echo $userSiteObj->getId();
-				exit;
-			}
-	        
 	        UserSite::logout();
 	        $userSiteObj->login($keepLogin);
 	        
@@ -58,12 +51,6 @@ class loginActions extends sfActions
 
 			return $this->renderText(get_partial('home/include/leftBar', $options));
 		}else{
-			
-			if( $mobile ){
-				
-				echo 'error';
-				exit;
-			}
 			
 			$statusMessage = __('login.errorMessage');
 		}
