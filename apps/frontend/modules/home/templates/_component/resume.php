@@ -8,8 +8,8 @@
 	
 	$userSiteObj      = UserSite::getCurrentUser();
 	$rankingObjList   = $userSiteObj->getRankingList();
-	$eventObjListNext = Event::getNextList(3);
-	$eventObjListPrev = Event::getPreviousList(5);
+	$eventObjListNext = Event::getNextList(null, 3);
+	$eventObjListPrev = Event::getPreviousList(null, 5);
 ?>
 <table cellspacing="0" cellpadding="3" class="resumeTable">
 	<tr>

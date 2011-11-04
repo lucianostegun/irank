@@ -17,36 +17,41 @@ class eventActions extends sfActions
   public function executeGetXml($request){
   	
   	$userSiteId  = $request->getParameter('userSiteId');
+  	$model       = $request->getParameter('model');
   	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
-  	$peopleId    = $userSiteObj->getPeopleId();
 	
 	$criteria = new Criteria();
 	$criteria->setNoFilter(true);
-//	$eventObjList = Event::getList($criteria, false, $userSiteId);
 
-	$eventObjList = Event::getNextList($criteria, null, $userSiteId);
-	
-	header('content-type: text/xml; charset=UTF-8');
-	
-	$nl = chr(10);
-	
-	$xmlString  = '<?xml version="1.0"?>'.$nl;
-	$xmlString .= '<events>'.$nl;
-	
+	switch($model){
+		case 'nextEvents':
+		$eventObjList = Event::getNextList($criteria, null, $userSiteId);
+		break;
+		case 'previousEvents':
+		$eventObjList = Event::getPreviousList($criteria, 5, $userSiteId);
+		break;
+	}
+
+	$eventList = array();
 	foreach($eventObjList as $eventObj){
 		
-		$xmlString .= '<event id="'.$eventObj->getId().'" rankingId="'.$eventObj->getRankingId().'">'.$nl;
-		$xmlString .= '	<eventName>'.htmlspecialchars($eventObj->getEventName()).'</eventName>'.$nl;
-		$xmlString .= '	<eventDate>'.$eventObj->getEventDate('d/m/Y').'</eventDate>'.$nl;
-		$xmlString .= '	<startTime>'.$eventObj->getStartTime('H:i').'</startTime>'.$nl;
-		$xmlString .= '	<rankingName>'.$eventObj->getRanking()->getRankingName().'</rankingName>'.$nl;
-		$xmlString .= '	<eventPlace>'.$eventObj->getRankingPlace()->getPlaceName().'</eventPlace>'.$nl;
-		$xmlString .= '</event>'.$nl;
+		$eventNode = array();
+		
+		$eventNode['@attributes'] = array('id'=>$eventObj->getId(), 'rankingId'=>$eventObj->getRankingId());
+		$eventNode['eventName']   = $eventObj->getEventName();
+		$eventNode['eventDate']   = $eventObj->getEventDate('d/m/Y');
+		$eventNode['startTime']   = $eventObj->getStartTime('H:i');
+		$eventNode['rankingName'] = $eventObj->getRanking()->getRankingName();
+		$eventNode['eventPlace']  = $eventObj->getRankingPlace()->getPlaceName();
+		$eventNode['paidPlaces']  = $eventObj->getPaidPlaces();
+		$eventNode['entranceFee'] = $eventObj->getEntranceFee();
+		$eventNode['buyin']       = $eventObj->getBuyin();
+		$eventNode['comments']    = $eventObj->getComments();
+		
+		$eventList[] = $eventNode;
 	}
-	
-	$xmlString .= '</events>'.$nl;
-	
-	echo $xmlString;
+
+	echo Event::getXml($eventList);
 	exit;
   }
 }

@@ -37,8 +37,8 @@
 	if( $isAuthenticated ){
 	
 		$resumeList       = People::getResumeBalance();
-		$eventObjListNext = Event::getNextList(3);
-		$eventObjListPrev = Event::getPreviousList(5);
+		$eventObjListNext = Event::getNextList(null, 3);
+		$eventObjListPrev = Event::getPreviousList(null, 5);
 		
 		include_partial('home/include/bankRoll', $resumeList);
 		include_partial('home/include/nextEvents', array('eventObjList'=>$eventObjListNext));
