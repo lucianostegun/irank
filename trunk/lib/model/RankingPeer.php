@@ -18,15 +18,15 @@ class RankingPeer extends BaseRankingPeer
 		
 		$moduleName = MyTools::getContext()->getModuleName();
 		$actionName = MyTools::getContext()->getActionName();
-		
+		$app        = Util::getApp();
+
 		$allowSearch     = false;
-		$allowedPageList = array('event'=>array('facebookResultImage', 'facebookResult', 'getXml'),
-								 'ranking'=>array('getXml'));
+		$allowedPageList = array('event'=>array('facebookResultImage', 'facebookResult'));
 		
 		if( array_key_exists($moduleName, $allowedPageList) && in_array($actionName, $allowedPageList[$moduleName]))
 			$allowSearch = true;
 
-		if(!$cron && !$allowSearch){
+		if(!$cron && !$allowSearch && $app!='ios'){
 			
 			if( !$criteria->isNoFilter() ){
 

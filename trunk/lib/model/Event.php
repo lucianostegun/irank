@@ -87,9 +87,12 @@ class Event extends BaseEvent
 		return EventPeer::doSelect( $criteria );
 	}
 	
-	public static function getPreviousList($limit=null){
+	public static function getPreviousList($criteria=null, $limit=null, $userSiteId=null){
 		
-		$criteria = new Criteria();
+		$userSiteId = ($userSiteId?$userSiteId:MyTools::getAttribute('userSiteId'));
+		
+		if( !is_object($criteria) )
+			$criteria = new Criteria();
 
 		$criterion = $criteria->getNewCriterion( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
 		$criterion->addAnd( $criteria->getNewCriterion( EventPeer::SAVED_RESULT, true ) );
@@ -101,7 +104,7 @@ class Event extends BaseEvent
 
 		$criteria->add( $criterion );
 		
-		return self::getList($criteria, $limit);
+		return self::getList($criteria, $limit, $userSiteId);
 	}
 	
 	public static function getNextList($criteria=null, $limit=null, $userSiteId=null){
@@ -1063,6 +1066,38 @@ class Event extends BaseEvent
 	  		$eventPlayerObj->getPeople()->getUserSite()->login();
 
 	  	return $eventPlayerObj->getEvent();
+	}
+	
+	public static function getXml($eventList){
+		
+		$nl = chr(10);
+		header('content-type: text/xml; charset=UTF-8');
+
+		$xmlString  = '<?xml version="1.0"?>'.$nl;
+		$xmlString .= '<events>'.$nl;
+		foreach($eventList as $eventNode){
+			
+			$attributeString = '';
+			
+			if( array_key_exists('@attributes', $eventNode) ){
+				foreach($eventNode['@attributes'] as $nodeName=>$nodeValue)
+					$attributeString .= ' '.$nodeName.'="'.$nodeValue.'"';
+				unset($eventNode['@attributes']);
+			}
+					
+			$xmlString .= '	<event'.$attributeString.'>'.$nl;	
+			foreach($eventNode as $nodeName=>$nodeValue){
+					
+				$xmlString .= '		<'.$nodeName.'>';
+				$xmlString .= htmlspecialchars($nodeValue);
+				$xmlString .= '</'.$nodeName.'>'.$nl;
+			}
+			$xmlString .= '	</event>'.$nl;
+		}
+		
+		$xmlString .= '</events>'.$nl;
+		
+		return $xmlString;
 	}
 	
 	public function getInfo(){
