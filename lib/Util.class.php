@@ -786,5 +786,55 @@ class Util {
 		
 		return (self::getApp()==$app);
 	}
+	
+	public static function buildXml($nodeList, $root, $mainNode){
+		
+		$nl = chr(10);
+		header('content-type: text/xml; charset=UTF-8');
+
+		$xmlString  = '<?xml version="1.0"?>'.$nl;
+		$xmlString .= '<'.$root.'>'.$nl;
+		foreach($nodeList as $nodeNode){
+			
+			$xmlString .= self::getXmlNode($nodeNode, $mainNode);
+		}
+		
+		$xmlString .= '</'.$root.'>'.$nl;
+		
+		return $xmlString;
+	}
+	
+	public static function getXmlNode($nodeList, $mainNode, $identLevel=1){
+		
+		$xmlString = '';
+		$nl = chr(10);
+		$tb = str_repeat('	', $identLevel);
+		
+		$attributeString = '';
+		
+		if( array_key_exists('@attributes', $nodeList) ){
+			foreach($nodeList['@attributes'] as $nodeName=>$nodeValue)
+				$attributeString .= ' '.$nodeName.'="'.$nodeValue.'"';
+			unset($nodeList['@attributes']);
+		}
+		
+		$xmlString .= $tb.'<'.$mainNode.$attributeString.'>'.$nl;	
+		foreach($nodeList as $nodeName=>$nodeValue){
+			
+			if( is_array($nodeValue) ){
+				
+				$xmlString .= self::getXmlNode($nodeValue, $nodeName, $identLevel+1);
+				continue;
+			}
+			
+			$xmlString .= $tb.'	<'.$nodeName.'>';
+			$xmlString .= htmlspecialchars($nodeValue);
+			$xmlString .= '</'.$nodeName.'>'.$nl;
+		}
+		
+		$xmlString .= $tb.'	</'.$mainNode.'>'.$nl;
+		
+		return $xmlString;
+	}
 }
 ?>

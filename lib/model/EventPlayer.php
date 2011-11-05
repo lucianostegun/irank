@@ -186,4 +186,9 @@ class EventPlayer extends BaseEventPlayer
 				return __('NotConfirmed');
 		}
 	}
+	
+	public static function getXml($eventList){
+		
+		return Util::buildXml($eventList, 'eventPlayers', 'eventPlayer');
+	}
 }

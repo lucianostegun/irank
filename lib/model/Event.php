@@ -1068,36 +1068,19 @@ class Event extends BaseEvent
 	  	return $eventPlayerObj->getEvent();
 	}
 	
+	public function getEventPlayerList($criteria=null, $con=null){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPlayerPeer::EVENT_ID, $this->getId() );
+		$criteria->addJoin( EventPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		$criteria->addAscendingOrderByColumn( PeoplePeer::FIRST_NAME );
+		$criteria->addAscendingOrderByColumn( PeoplePeer::LAST_NAME );
+		return parent::getEventPlayerList($criteria, $con);
+	}
+	
 	public static function getXml($eventList){
 		
-		$nl = chr(10);
-		header('content-type: text/xml; charset=UTF-8');
-
-		$xmlString  = '<?xml version="1.0"?>'.$nl;
-		$xmlString .= '<events>'.$nl;
-		foreach($eventList as $eventNode){
-			
-			$attributeString = '';
-			
-			if( array_key_exists('@attributes', $eventNode) ){
-				foreach($eventNode['@attributes'] as $nodeName=>$nodeValue)
-					$attributeString .= ' '.$nodeName.'="'.$nodeValue.'"';
-				unset($eventNode['@attributes']);
-			}
-					
-			$xmlString .= '	<event'.$attributeString.'>'.$nl;	
-			foreach($eventNode as $nodeName=>$nodeValue){
-					
-				$xmlString .= '		<'.$nodeName.'>';
-				$xmlString .= htmlspecialchars($nodeValue);
-				$xmlString .= '</'.$nodeName.'>'.$nl;
-			}
-			$xmlString .= '	</event>'.$nl;
-		}
-		
-		$xmlString .= '</events>'.$nl;
-		
-		return $xmlString;
+		return Util::buildXml($eventList, 'events', 'event');
 	}
 	
 	public function getInfo(){
