@@ -67,7 +67,7 @@ class EventPlayer extends BaseEventPlayer
 		$emailContent = str_replace('<playerList>', $playerList, $emailContent);
 		
 		$emailAddressList = $eventObj->getEmailAddressList('receiveFriendEventConfirmNotify');
-		
+
 		Report::sendMail(__('email.subject.presenceConfirm'), $emailAddressList, $emailContent);
 	}
 	
