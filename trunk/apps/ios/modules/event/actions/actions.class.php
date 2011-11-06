@@ -10,6 +10,28 @@
  */
 class eventActions extends sfActions
 {
+  
+  public function executeUpdateInviteStatus($request){
+  	
+  	$userSiteId   = $request->getParameter('userSiteId');
+  	$eventId      = $request->getParameter('eventId');
+  	$inviteStatus = $request->getParameter('inviteStatus');
+  	$userSiteObj  = UserSitePeer::retrieveByPK($userSiteId);
+  	
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+	
+  	try{
+  		MyTools::setAttribute('peopleId', $userSiteObj->getPeopleId());
+  		$eventObj->togglePresence( $userSiteObj->getPeopleId(), $inviteStatus );
+  		echo $inviteStatus;	
+  	}catch(Exception $e){
+  	
+  		echo 'error';
+  	}
+  	
+  	exit;
+  }
+  
   /**
    * Executes index action
    *
@@ -27,12 +49,14 @@ class eventActions extends sfActions
 			$criteria = new Criteria();
 			$criteria->setNoFilter(true);
 		
+  			$limit = $request->getParameter('limit');
+  			
 			switch($model){
 				case 'nextEvents':
-				$eventObjList = Event::getNextList($criteria, null, $userSiteId);
+				$eventObjList = Event::getNextList($criteria, $limit, $userSiteId);
 				break;
 				case 'previousEvents':
-				$eventObjList = Event::getPreviousList($criteria, 5, $userSiteId);
+				$eventObjList = Event::getPreviousList($criteria, $limit, $userSiteId);
 				break;
 			}
 		
@@ -41,17 +65,18 @@ class eventActions extends sfActions
 				
 				$eventNode = array();
 				
-				$eventNode['@attributes'] = array('id'=>$eventObj->getId(), 'rankingId'=>$eventObj->getRankingId());
-				$eventNode['eventName']   = $eventObj->getEventName();
-				$eventNode['eventDate']   = $eventObj->getEventDate('d/m/Y');
-				$eventNode['startTime']   = $eventObj->getStartTime('H:i');
-				$eventNode['rankingName'] = $eventObj->getRanking()->getRankingName();
-				$eventNode['eventPlace']  = $eventObj->getRankingPlace()->getPlaceName();
-				$eventNode['paidPlaces']  = $eventObj->getPaidPlaces();
-				$eventNode['entranceFee'] = $eventObj->getEntranceFee();
-				$eventNode['buyin']       = $eventObj->getBuyin();
-				$eventNode['savedResult'] = $eventObj->getSavedResult()?'true':'false';
-				$eventNode['comments']    = $eventObj->getComments();
+				$eventNode['@attributes']  = array('id'=>$eventObj->getId(), 'rankingId'=>$eventObj->getRankingId());
+				$eventNode['eventName']    = $eventObj->getEventName();
+				$eventNode['eventDate']    = $eventObj->getEventDate('d/m/Y');
+				$eventNode['startTime']    = $eventObj->getStartTime('H:i');
+				$eventNode['rankingName']  = $eventObj->getRanking()->getRankingName();
+				$eventNode['eventPlace']   = $eventObj->getRankingPlace()->getPlaceName();
+				$eventNode['paidPlaces']   = $eventObj->getPaidPlaces();
+				$eventNode['entranceFee']  = $eventObj->getEntranceFee();
+				$eventNode['buyin']        = $eventObj->getBuyin();
+				$eventNode['savedResult']  = $eventObj->getSavedResult()?'true':'false';
+				$eventNode['comments']     = $eventObj->getComments();
+				$eventNode['inviteStatus'] = $eventObj->getInviteStatus($userSiteObj->getPeopleId());
 				
 				$eventList[] = $eventNode;
 			}
