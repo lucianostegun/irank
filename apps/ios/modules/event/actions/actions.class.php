@@ -21,7 +21,9 @@ class eventActions extends sfActions
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
   	try{
+  		
   		MyTools::setAttribute('peopleId', $userSiteObj->getPeopleId());
+  		MyTools::setCulture('pt_BR');
   		$eventObj->togglePresence( $userSiteObj->getPeopleId(), $inviteStatus );
   		echo $inviteStatus;	
   	}catch(Exception $e){
