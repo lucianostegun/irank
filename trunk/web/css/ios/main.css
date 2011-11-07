@@ -1,0 +1,13 @@
+* {
+
+	font-family: 	Verdana, Arial, sans-serif;
+	font-size: 		12px;
+}
+
+html, body {
+	
+	width: 			320px;
+	height: 		100%;
+	margin: 		0px;
+	background: 	#FFFFFF;
+}

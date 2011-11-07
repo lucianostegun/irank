@@ -11,6 +11,40 @@
 class eventActions extends sfActions
 {
   
+  public function executeComments($request){
+  	
+//  	$userSiteId  = $request->getParameter('userSiteId');
+  	$this->eventId = $request->getParameter('eventId');
+//  	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+	$criteria = new Criteria();
+
+	sfConfig::set('sf_web_debug', false);
+  }
+  
+  public function executeSaveComment($request){
+
+	$eventId    = $request->getParameter('eventId');
+	$userSiteId = $request->getParameter('userSiteId');
+	$comment    = $request->getParameter('comment');
+	$comment    = urldecode($comment);
+
+	$comment = (strlen($comment)>140?substr($comment, 0, 140):$comment);
+
+	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+
+	$eventCommentObj = new EventComment();
+	$eventCommentObj->setPeopleId( $userSiteObj->getPeopleId() );
+	$eventCommentObj->setEventId( $eventId );
+	$eventCommentObj->setComment( $comment );
+	$eventCommentObj->save();
+	
+	$eventCommentObj->notify();
+	
+	echo 'ok';
+	
+	exit;
+  }
+  
   public function executeUpdateInviteStatus($request){
   	
   	$userSiteId   = $request->getParameter('userSiteId');
