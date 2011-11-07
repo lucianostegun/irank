@@ -1,0 +1,42 @@
+* {
+	
+     -webkit-touch-callout: none;
+     -webkit-user-select: none;
+     -webkit-user-drag: none;
+     -webkit-user-modify: none;
+     -webkit-highlight: none;
+}
+
+body, html {
+	
+}
+
+.commentArea {
+
+	
+	width: 100%;
+	background: #EAEAEA url('/images/ios/quotesLeft.png') 5px 10px no-repeat;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-bottom: 1px solid #FFFFFF
+}
+
+.comment {
+	
+	width: 87%;
+	margin: 5px 35px 5px 35px;
+
+	background: url('/images/ios/quotesRight.png') right bottom no-repeat;
+}
+
+
+.senderInfo {
+
+	margin-top: 5px	
+}
+
+.senderInfo {
+	
+	font-size: 11px;
+	color: #505050
+}
