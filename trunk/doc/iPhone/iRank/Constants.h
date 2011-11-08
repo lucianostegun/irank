@@ -5,6 +5,7 @@
 #define kPrizeKey @"prize"
 #define kScoreKey @"score"
 #define kBalanceKey @"balance"
+#define kUserSiteIdKey @"userSiteId"
 
 #define kBuyinsWord @"Buy-ins"
 #define kFeeWord @"Entradas"
@@ -18,3 +19,6 @@
 #define kSelectKey      @"selection"
 #define kDescriptKey    @"description"
 #define kControllerKey  @"viewController"
+
+#define serverAddress   @"irank"
+//#define serverAddress   @"alpha.irank.com.br"

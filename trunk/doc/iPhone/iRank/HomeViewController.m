@@ -9,10 +9,15 @@
 #import "HomeViewController.h"
 #import "iRankAppDelegate.h"
 #import "Constants.h"
+#import "Event.h"
+#import "XMLEventParser.h"
+#import "EventDetailViewController.h"
 
 @implementation HomeViewController
 
 @synthesize bankrollInfo;
+@synthesize nextEventList, previousEventList;
+@synthesize eventDetailViewController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -41,7 +46,11 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     self.navigationItem.leftBarButtonItem = quitButton;
     
+    [self updateResume];
+}
 
+-(void)updateResume {
+    
     iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSMutableDictionary *userInfo = [[appDelegate userDefaults] objectForKey:@"userInfo"];
     
@@ -76,7 +85,39 @@
                                  dictionaryWithObjectsAndKeys:
                                  kBalanceWord, kSelectKey,
                                  [userInfo valueForKey:kBalanceKey], kDescriptKey,
-                                 nil, kControllerKey, nil]];    
+                                 nil, kControllerKey, nil]];
+    
+    NSNumber *homeEvents = [[appDelegate userDefaults] objectForKey:@"homeEvents"];
+    
+    int userSiteId = [appDelegate userSiteId];
+    
+    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/nextEvents/userSiteId/%i", serverAddress, userSiteId]];
+    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:url];    
+    
+    //Inicia o delegate
+    XMLEventParser *parser = [[XMLEventParser alloc] initXMLParser];
+    
+    [xmlParser setDelegate:parser];
+    
+    BOOL success = [xmlParser parse];
+    
+    nextEventList = [[parser getEventList] copy];
+
+    [parser resetEventList];
+
+    url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/previousEvents/userSiteId/%i/limit/%@", serverAddress, userSiteId, homeEvents]];
+    xmlParser = [xmlParser initWithContentsOfURL:url];    
+    success = [xmlParser parse];
+    
+    previousEventList = [[parser getEventList] copy];
+
+    if( [nextEventList count] > 0 ){
+        
+        appDelegate.homeTabBar.badgeValue = [NSString stringWithFormat:@"%i", [nextEventList count]];
+        [appDelegate incraseBadge:[nextEventList count]];
+    }
+    
+//    [homeEvents release];
 }
 
 - (void)viewDidUnload
@@ -130,10 +171,10 @@
             rows = 6;
             break;
         case 1:
-            rows = 0;
+            rows = [nextEventList count];
             break;
         case 2:
-            rows = 0;
+            rows = [previousEventList count];
             break;
         default:
             break;
@@ -144,29 +185,53 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    
+    NSString *CellIdentifier = [NSString stringWithFormat:@"CellX%d", indexPath.section];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+    
+    if (cell == nil){
+        
+        if( indexPath.section==0 )
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        else
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-
+    NSString *label = [[[NSString alloc] init] autorelease];
+    NSString *description = [[[NSString alloc] init] autorelease];
     
-    NSDictionary *cellText = [bankrollInfo objectAtIndex:indexPath.row];
-    
-    NSString *label       = [cellText objectForKey:kSelectKey];
-    NSString *description = [cellText objectForKey:kDescriptKey];
+    if( indexPath.section==0 ){
+        
+        NSDictionary *cellText = [bankrollInfo objectAtIndex:indexPath.row];
+        
+        label       = [cellText objectForKey:kSelectKey];
+        description = [cellText objectForKey:kDescriptKey];
+        
+        NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^-.*$"];
+        
+        if( [regExPredicate evaluateWithObject:description] )
+            cell.detailTextLabel.textColor = [UIColor redColor];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }else{
+        
+        Event *event;
+        
+        if( indexPath.section==1 )
+            event = [[nextEventList objectAtIndex:indexPath.row] retain];
+        else
+            event = [[previousEventList objectAtIndex:indexPath.row] retain];
 
+        label       = [event eventName];
+        description = [NSString stringWithFormat:@"@%@ - %@ %@", [event eventPlace], [event eventDate], [event startTime]];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        [event release];
+    }
+    
     cell.textLabel.text       = label;
     cell.detailTextLabel.text = description;
-    
-    NSPredicate *regExPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^-.*$"];
-    
-    if( [regExPredicate evaluateWithObject:description] )
-        cell.detailTextLabel.textColor = [UIColor redColor];
-    
-    cell.selectionStyle = UITableViewCellEditingStyleNone;
         
     return cell;
 }
@@ -201,10 +266,12 @@
             footer = nil;
             break;
         case 1:
-            footer = @"Nenhum evento agendado";
+            if( [nextEventList count]==0 )
+                footer = @"Nenhum evento agendado";
             break;
         case 2:
-            footer = @"Nenhum evento realizado";
+            if( [previousEventList count]==0 )
+                footer = @"Nenhum evento realizado";
             break;
         default:
             break;
@@ -256,14 +323,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+
+    if( indexPath.section > 0 ){
+        
+        if( !eventDetailViewController )
+            eventDetailViewController = [[EventDetailViewController alloc] init];
+        
+        Event *event;
+        
+        if( indexPath.section==1 )
+            event = [[nextEventList objectAtIndex:indexPath.row] retain];
+        else
+            event = [[previousEventList objectAtIndex:indexPath.row] retain];
+        
+        [eventDetailViewController setEvent:event];
+        [self.navigationController pushViewController:eventDetailViewController animated:YES];
+        
+        [event release];
+    }
 }
 
 #pragma mark - Custom actions
@@ -281,6 +358,9 @@
 - (void)dealloc {
     
     [bankrollInfo release];
+    [nextEventList release];
+    [previousEventList release];
+    [eventDetailViewController release];
     [super dealloc];
 }
 @end

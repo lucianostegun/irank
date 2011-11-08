@@ -7,6 +7,7 @@
 //
 
 #import "iRankAppDelegate.h"
+#import "Constants.h"
 
 @implementation iRankAppDelegate
 
@@ -14,18 +15,23 @@
 @synthesize tabBarController;
 @synthesize loginViewController;
 @synthesize userDefaults;
+@synthesize homeTabBar;
+@synthesize userSiteId;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
     userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *userInfo = [userDefaults objectForKey:@"userInfo"];
+    
+    userSiteId = [[userInfo objectForKey:kUserSiteIdKey] intValue];
 
     if( userInfo==nil ){
 
         loginViewController = [[LoginViewController alloc] init];
         self.window.rootViewController = loginViewController;
         [loginViewController release];
+        loginViewController = nil;
     }else{
         
         [self switchLogin];
@@ -35,7 +41,16 @@
     
     [self.window makeKeyAndVisible];
     
-//    NSLog(@"retainCount: %i", [loginViewController retainCount]);
+    NSNumber *homeEvents = [userDefaults objectForKey:@"homeEvents"];
+    
+    if( homeEvents==NULL ){
+     
+        homeEvents = [NSNumber numberWithInt:5];
+        [userDefaults setObject:homeEvents forKey:@"homeEvents"];
+        [userDefaults synchronize];
+    }
+    
+    [homeEvents release];
 
     return YES;
 }
@@ -43,6 +58,8 @@
 -(void)switchLogin {
     
     self.window.rootViewController = tabBarController;
+    
+    NSLog(@"%@");
     
     //    NSLog(@"retainCount: %i", [loginViewController retainCount]);
 }
@@ -54,8 +71,12 @@
     
     self.window.rootViewController = nil;
     self.window.rootViewController = loginViewController;
+    
     [loginViewController release];
     loginViewController = nil;
+    
+    mainBadge = 0;
+    [self updateBadge];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -105,12 +126,30 @@
     [alertView release];
 }
 
+-(void)incraseBadge:(int)amount {
+    
+    mainBadge += amount;
+    [self updateBadge];
+}
+
+-(void)decraseBadge:(int)amount {
+    
+    mainBadge -= amount;
+    [self updateBadge];
+}
+
+-(void)updateBadge {
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:mainBadge];
+}
+
 - (void)dealloc
 {
     [loginViewController release];
     [tabBarController release];
     [_window release];
     [userDefaults release];
+    [homeTabBar release];
     [super dealloc];
 }
 
