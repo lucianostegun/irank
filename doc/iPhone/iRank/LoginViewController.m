@@ -50,8 +50,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    txtUsername.text = @"lstegun";
-    txtPassword.text = @"unidunite";
+//    txtUsername.text = @"lstegun";
+//    txtPassword.text = @"unidunite";
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -78,7 +78,7 @@
     [txtUsername setEnabled:NO];
     [txtPassword setEnabled:NO];
     
-    NSString *urlString  = [NSString stringWithFormat:@"http://irank/ios.php/login/doLogin/username/%@/password/%@", txtUsername.text, txtPassword.text];
+    NSString *urlString  = [NSString stringWithFormat:@"http://%@/ios.php/login/doLogin/username/%@/password/%@", serverAddress, txtUsername.text, txtPassword.text];
     
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -108,13 +108,14 @@
     if( [result isEqualToString:@"error"] ) 
         return [appDelegate showAlert:@"Erro" message:@"Ocorreu um erro na identificação!\nPor favor, tente novamente."];
 
-    NSLog(@"result: %@", result);
+//    NSLog(@"result: %@", result);
     
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     
     SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
     NSDictionary *jsonObjects = [jsonParser objectWithString:result error:nil];
-    
+
+    [dictionary setObject:[jsonObjects objectForKey:@"id"] forKey:kUserSiteIdKey];
     [dictionary setObject:[jsonObjects objectForKey:kFeeKey] forKey:kFeeKey];
     [dictionary setObject:[jsonObjects objectForKey:kBuyinKey] forKey:kBuyinKey];
     [dictionary setObject:[jsonObjects objectForKey:kAddonKey] forKey:kAddonKey];

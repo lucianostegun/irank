@@ -12,16 +12,24 @@
 @interface iRankAppDelegate : NSObject <UIApplicationDelegate> {
     
     IBOutlet UITabBarController *tabBarController;
+    IBOutlet UITabBarItem *homeTabBar;
     LoginViewController *loginViewController;
     NSUserDefaults *userDefaults;
+    NSInteger mainBadge;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
+@property (nonatomic, retain) IBOutlet UITabBarItem *homeTabBar;
 @property (nonatomic, retain) LoginViewController *loginViewController;
 @property (nonatomic, readonly) NSUserDefaults *userDefaults;
+@property (nonatomic, readonly) int userSiteId;
 
 -(void)switchLogin;
+-(void)showLogin;
 -(void)showAlert:(NSString *)title message:(NSString *)message;
+-(void)incraseBadge:(int)amount;
+-(void)decraseBadge:(int)amount;
+-(void)updateBadge;
 
 @end
