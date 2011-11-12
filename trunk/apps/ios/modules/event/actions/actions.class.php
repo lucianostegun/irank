@@ -10,12 +10,25 @@
  */
 class eventActions extends sfActions
 {
+	
+  public function preExecute(){
+  	
+	$userSiteId = $this->getRequestParameter('userSiteId');
+	
+	$this->userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+	
+	MyTools::setCulture('pt_BR');
+	
+	if( is_object($this->userSiteObj) )
+		$this->getUser()->setAttribute('peopleId', $this->userSiteObj->getPeopleId());
+		
+	$this->getUser()->setAttribute('userSiteId', $userSiteId);
+  }
   
   public function executeComments($request){
   	
-//  	$userSiteId  = $request->getParameter('userSiteId');
   	$this->eventId = $request->getParameter('eventId');
-//  	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+
 	$criteria = new Criteria();
 
 	sfConfig::set('sf_web_debug', false);
@@ -30,7 +43,7 @@ class eventActions extends sfActions
 
 	$comment = (strlen($comment)>140?substr($comment, 0, 140):$comment);
 
-	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+	$userSiteObj = $this->userSiteObj;
 
 	$eventCommentObj = new EventComment();
 	$eventCommentObj->setPeopleId( $userSiteObj->getPeopleId() );
@@ -50,7 +63,7 @@ class eventActions extends sfActions
   	$userSiteId   = $request->getParameter('userSiteId');
   	$eventId      = $request->getParameter('eventId');
   	$inviteStatus = $request->getParameter('inviteStatus');
-  	$userSiteObj  = UserSitePeer::retrieveByPK($userSiteId);
+  	$userSiteObj  = $this->userSiteObj;
   	
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
@@ -68,6 +81,26 @@ class eventActions extends sfActions
   	exit;
   }
   
+  public function executeTogglePresence($request){
+
+	Util::getHelper('I18N');
+	
+	$eventId    = $request->getParameter('eventId');
+	$peopleId   = $request->getParameter('peopleId');
+	$choice     = $request->getParameter('choice');
+	
+	$eventObj = EventPeer::retrieveByPK( $eventId );
+	
+	$notify = (!$eventObj->isPastDate());
+	
+	if( $choice=='yes' && !$eventObj->isConfirmed($peopleId) )
+		$eventObj->togglePresence($peopleId, 'yes', $notify);
+	else
+		$eventObj->togglePresence($peopleId, 'no', $notify);
+    
+    exit;
+  }
+  
   /**
    * Executes index action
    *
@@ -77,7 +110,7 @@ class eventActions extends sfActions
   	$userSiteId  = $request->getParameter('userSiteId');
   	$eventId     = $request->getParameter('eventId');
   	$model       = $request->getParameter('model');
-  	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+  	$userSiteObj = $this->userSiteObj;
 	
 	switch( $model ){
 		case 'nextEvents':
@@ -113,6 +146,7 @@ class eventActions extends sfActions
 				$eventNode['savedResult']  = $eventObj->getSavedResult()?'true':'false';
 				$eventNode['comments']     = $eventObj->getComments();
 				$eventNode['inviteStatus'] = $eventObj->getInviteStatus($userSiteObj->getPeopleId());
+				$eventNode['isMyEvent']    = $eventObj->isMyEvent()?'true':'false';
 				
 				$eventList[] = $eventNode;
 			}
@@ -129,7 +163,7 @@ class eventActions extends sfActions
 				$peopleObj = $eventPlayerObj->getPeople();
 				
 				$eventNode = array();
-				$eventNode['@attributes']  = array('playerId'=>$peopleObj->getId());
+				$eventNode['@attributes']  = array('playerId'=>$peopleObj->getId(), 'eventId'=>$eventPlayerObj->getEventId());
 				$eventNode['enabled']      = ($eventPlayerObj->getEnabled()?'true':'false');
 				$eventNode['inviteStatus'] = $eventPlayerObj->getInviteStatus();
 				$eventNode['player']       = array('firstName'=>$peopleObj->getFirstName(), 'lastName'=>$peopleObj->getLastName(), 'emailAddress'=>$peopleObj->getEmailAddress());

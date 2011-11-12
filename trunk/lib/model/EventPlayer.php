@@ -81,6 +81,11 @@ class EventPlayer extends BaseEventPlayer
 		$eventObj   = $this->getEvent();
 		$sendNotify = false;
 		
+		$inviteStatus = $this->getInviteStatus();
+		
+		if( $inviteStatus==$choice )
+			return;
+		
 		if( $choice=='yes' && !$this->getEnabled() ){
 		
 			$eventDate = $eventObj->getEventDate('Y-m-d').' '.$eventObj->getStartTime('H:i');
@@ -112,6 +117,12 @@ class EventPlayer extends BaseEventPlayer
 			
 			$sendNotify = false;
 			
+			if( $this->getEnabled() ){
+				
+				$eventObj->setPlayers( $eventObj->getPlayers()-1 );
+				$eventObj->save();
+			}
+			
 			$this->setEventPosition(0);
 			$this->setPrize(0);
 			$this->setRebuy(0);
@@ -119,17 +130,15 @@ class EventPlayer extends BaseEventPlayer
 			$this->setBuyin(0);
 			$this->setEnabled(false);
 			
-			if( $this->getEnabled() ){
-				
-				$eventObj->setPlayers( $eventObj->getPlayers()-1 );
-				$eventObj->save();
-			}
 		}
 		
 		if($choice=='none' && !$this->isNew()){
 			
 			$sendNotify = false;
 			$choice     = $this->getInviteStatus();
+			
+			$eventObj->setPlayers( $eventObj->getPlayers()-1 );
+			$eventObj->save();
 		} 
 		
 		$this->setDeleted(false);
