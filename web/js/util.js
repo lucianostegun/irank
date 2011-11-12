@@ -105,6 +105,7 @@ function isBlank(val){
 
 	if(val==null)
 		return true;
+	
 	if(val=='')
 		return true;
 	
@@ -113,25 +114,34 @@ function isBlank(val){
 
 function isDigit(num) {
 
-	if (num.length>1){return false;}
+	if( num.length>1 )
+		return false;
+	
 	var string="1234567890";
-	if (string.indexOf(num)!=-1){return true;}
+	
+	if( string.indexOf(num)!=-1 )
+		return true;
+	
 	return false;
 }
 
 function isInteger(val){
 
 	val = val+'';
-	if (isBlank(val)){return false;}
-	for(var i=0;i<val.length;i++){
-		if(!isDigit(val.charAt(i))){return false;}
-		}
+	
+	if( isBlank(val) )
+		return false;
+	
+	for(var i=0;i<val.length;i++)
+		if( !isDigit(val.charAt(i)) )
+			return false;
+
 	return true;
 }
 
 function isNumeric(val){
 
-	return(parseFloat(val,10)==(val*1));
+	return (parseFloat(val,10)==(val*1));
 }
 
 function getWaitSelect(fieldName, fieldId, onchange){
@@ -270,13 +280,9 @@ function Trim( value, char ){
 
 function replaceChar( value, char, newChar) {
 
-    for (i=0; i < value.length; i++) {
-    
-    	if (value.substring(i, i+1) == char){
-
+    for (i=0; i < value.length; i++)
+    	if (value.substring(i, i+1) == char)
             value = value.replace(char, newChar);
-        }
-    }
     
     return value;
 }
