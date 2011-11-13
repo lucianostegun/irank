@@ -7,6 +7,24 @@ class homeActions extends sfActions
 
   }
 
+  public function executeRandomNames($request){
+
+	$firstNameList = array('Lukas', 'Jonas', 'Maximiliano', 'Ben', 'Felix', 'Lucas', 'Paulo', 'Santiago', 'Matias', 'Tomas', 'Lucas', 'Joaquim', 'Franco', 'Agusto', 'Thiago', 'Nicolas');
+	$lastNameList  = array('Silva', 'Souza', 'Santos', 'Lima', 'Oliveira', 'Pereira', 'Machado', 'Carvalho', 'Coelho', 'Leão', 'Lobo', 'Moreira', 'Moureira', 'Ribeiro', 'Almeida', 'Cardoso');
+	$serverList   =  array('gmail.com', 'hotmail.com', 'aol.com', 'yahoo.com', 'me.com');
+	for($i=1; $i < 74; $i++){
+		
+		$firstName = $firstNameList[rand(0, 15)];
+		$lastName  = $lastNameList[rand(0, 15)];
+		$server   = $serverList[rand(0, 4)];
+		$emailAddress = strtolower($firstName.$lastName).'@'.$server;
+		
+		echo 'UPDATE people SET first_name=\''.$firstName.'\', last_name=\''.$lastName.'\', email_address=\''.$emailAddress.'\' WHERE id = '.$i.';<br>';
+	}
+	
+	exit;
+  }
+
   public function executeResume($request){
 
     sfConfig::set('sf_web_debug', false);

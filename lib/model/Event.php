@@ -1073,6 +1073,7 @@ class Event extends BaseEvent
 		$criteria = new Criteria();
 		$criteria->add( EventPlayerPeer::EVENT_ID, $this->getId() );
 		$criteria->addJoin( EventPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		$criteria->addAscendingOrderByColumn( EventPlayerPeer::EVENT_POSITION );
 		$criteria->addAscendingOrderByColumn( PeoplePeer::FIRST_NAME );
 		$criteria->addAscendingOrderByColumn( PeoplePeer::LAST_NAME );
 		return parent::getEventPlayerList($criteria, $con);
