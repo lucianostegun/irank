@@ -147,6 +147,8 @@ class eventActions extends sfActions
 				$eventNode['comments']     = $eventObj->getComments();
 				$eventNode['inviteStatus'] = $eventObj->getInviteStatus($userSiteObj->getPeopleId());
 				$eventNode['isMyEvent']    = $eventObj->isMyEvent()?'true':'false';
+				$eventNode['isPastDate']   = $eventObj->isPastDate()?'true':'false';
+				$eventNode['gameStyle']    = $eventObj->getRanking()->getGameStyle()->getTagName();
 				
 				$eventList[] = $eventNode;
 			}
