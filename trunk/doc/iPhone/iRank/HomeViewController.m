@@ -109,6 +109,8 @@
     xmlParser = [xmlParser initWithContentsOfURL:url];    
     success = [xmlParser parse];
     
+//    NSLog(@"url: %@", url.relativeString);
+    
     previousEventList = [[parser getEventList] copy];
 
     if( [nextEventList count] > 0 ){
@@ -227,6 +229,15 @@
         description = [NSString stringWithFormat:@"@%@ - %@ %@", [event eventPlace], [event eventDate], [event startTime]];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
+        if( event.isPastDate && !event.savedResult ){
+            
+            cell.detailTextLabel.textColor = [UIColor redColor];
+            description = @"Resultado pendente...";
+        }else{
+            
+            cell.detailTextLabel.textColor = [UIColor blackColor];
+        }
+        
         [event release];
     }
     
@@ -239,10 +250,14 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
     NSString *header = [[[NSString alloc] init] autorelease];
+
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSString *firstName = appDelegate.firstName;
+    NSString *lastName  = appDelegate.lastName;
     
     switch (section) {
         case 0:
-            header = @"Resumo geral";
+            header = [NSString stringWithFormat:@"Olá %@ %@\n\nResumo geral", firstName, lastName];
             break;
         case 1:
             header = @"Próximos eventos";

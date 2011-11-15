@@ -108,7 +108,7 @@
     if( [result isEqualToString:@"error"] ) 
         return [appDelegate showAlert:@"Erro" message:@"Ocorreu um erro na identificação!\nPor favor, tente novamente."];
 
-//    NSLog(@"result: %@", result);
+    NSLog(@"result: %@", result);
     
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     
@@ -123,6 +123,8 @@
     [dictionary setObject:[jsonObjects objectForKey:kPrizeKey] forKey:kPrizeKey];
     [dictionary setObject:[jsonObjects objectForKey:kScoreKey] forKey:kScoreKey];
     [dictionary setObject:[jsonObjects objectForKey:kBalanceKey] forKey:kBalanceKey];
+    [dictionary setObject:[jsonObjects objectForKey:kFirstNameKey] forKey:kFirstNameKey];
+    [dictionary setObject:[jsonObjects objectForKey:kLastNameKey] forKey:kLastNameKey];
     
     [[appDelegate userDefaults] setObject:dictionary forKey:@"userInfo"];
     [[appDelegate userDefaults] synchronize];

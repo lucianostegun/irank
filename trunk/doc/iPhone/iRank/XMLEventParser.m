@@ -72,6 +72,10 @@
             [event setPaidPlaces:[elementValue intValue]];
         else if( [elementName isEqualToString:@"savedResult"] )
             [event setSavedResult:[elementValue boolValue]];
+        else if( [elementName isEqualToString:@"isPastDate"] )
+            [event setIsPastDate:[elementValue boolValue]];
+        else if( [elementName isEqualToString:@"isMyEvent"] )
+            [event setIsMyEvent:[elementValue boolValue]];
         else
             [event setValue:currentElementValue forKey:elementName];
     }

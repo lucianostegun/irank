@@ -11,9 +11,10 @@
 
 @interface EventPlayerViewController : UITableViewController{
     
-    
+    UIBarButtonItem *doneButton;
 }
 
 @property (nonatomic, assign) Event *event;
+@property (nonatomic, readwrite) BOOL showEnabledOnly;
 
 @end

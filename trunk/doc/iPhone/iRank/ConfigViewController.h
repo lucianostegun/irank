@@ -11,8 +11,10 @@
 @interface ConfigViewController : UIViewController {
     
     IBOutlet UISegmentedControl *homeEventsSegmendetControl;
+    IBOutlet UIView *aboutView;
 }
 
 -(IBAction)didSelectEventCount:(id)sender;
+-(IBAction)aboutButtonTouchUp:(id)sender;
 
 @end

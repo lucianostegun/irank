@@ -13,13 +13,17 @@
 #import "XMLEventPlayerParser.h"
 #import "iRankAppDelegate.h"
 #import "Constants.h"
+#import "EventResultSaveViewController.h"
 
 @implementation EventPlayerViewController
 @synthesize event;
+@synthesize showEnabledOnly;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
+    
+//    self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         // Custom initialization
     }
@@ -39,6 +43,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouchUp:)];
 }
 
 - (void)viewDidUnload
@@ -72,8 +78,28 @@
                   
     [event setEventPlayerList: [[parser getEventPlayerList] retain]];
     
+    
+    if( [self showEnabledOnly] && [event isMyEvent] ){
+        
+        [event filterPlayerList];
+        [self setEditing:YES animated:NO];
+        self.navigationItem.rightBarButtonItem = doneButton;
+    }else{
+        
+        [self setEditing:NO animated:NO];
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+    
     [self setTitle:@"Convidados"];
-    [[self tableView] reloadData];
+    [[self tableView] reloadData];    
+}
+
+-(void)doneButtonTouchUp:(id)sender {
+    
+    EventResultSaveViewController *eventResultSaveViewController = [[EventResultSaveViewController alloc] initWithNibName:nil bundle:nil];
+    
+    eventResultSaveViewController.event = event;
+    [self.navigationController pushViewController:eventResultSaveViewController animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -120,39 +146,48 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
-    if (cell == nil) {
-
+    if (cell == nil)
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-    }
+
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    button.tag = indexPath.row;
-    
-    if( [eventPlayer.inviteStatus isEqualToString:@"yes"] ){
+    if( ![self showEnabledOnly] ){
+       
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        button.tag = indexPath.row;
         
-        [button setImage:[UIImage imageNamed:@"ok.png"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"okH.png"] forState:UIControlStateHighlighted];
-    }
-    else if( [eventPlayer.inviteStatus isEqualToString:@"no"] ){
+        if( [eventPlayer.inviteStatus isEqualToString:@"yes"] ){
+            
+            [button setImage:[UIImage imageNamed:@"ok.png"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:([event isMyEvent]?@"okH.png":@"ok.png")] forState:UIControlStateHighlighted];
+        }
+        else if( [eventPlayer.inviteStatus isEqualToString:@"no"] ){
+            
+            [button setImage:[UIImage imageNamed:@"nok.png"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:([event isMyEvent]?@"nokH.png":@"nok.png")] forState:UIControlStateHighlighted];
+        }
+        else{
+            
+            [button setImage:[UIImage imageNamed:@"none.png"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:([event isMyEvent]?@"noneH.png":@"none.png")] forState:UIControlStateHighlighted];
+        }
         
-        [button setImage:[UIImage imageNamed:@"nok.png"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"nokH.png"] forState:UIControlStateHighlighted];
-    }
-    else{
+        cell.accessoryView = button;
         
-        [button setImage:[UIImage imageNamed:@"none.png"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"noneH.png"] forState:UIControlStateHighlighted];
+        if( [event isMyEvent] ){
+
+            [button addTarget:self action:@selector(accessoryClicked:) forControlEvents:UIControlEventTouchUpInside];
+            cell.accessoryView.userInteractionEnabled = YES;
+        }
+    }else{
+        
+        cell.accessoryView.userInteractionEnabled = NO;
     }
-    
-    
-    [button addTarget:self action:@selector(accessoryClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    cell.accessoryView = button;
-    cell.accessoryView.userInteractionEnabled = YES;
+
+    eventPlayer.eventPosition = indexPath.row+1;
     
 //    [button release];
 
-    cell.textLabel.text       = [player fullName];
+    cell.textLabel.text       = [NSString stringWithFormat:@"%iº %@", indexPath.row+1, [player fullName]];
     cell.detailTextLabel.text = [player emailAddress];
         
     player = nil;
@@ -187,13 +222,13 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return NO;
+    return YES;
 }
 
 
 // Override to support editing the table view.
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
 //    if (editingStyle == UITableViewCellEditingStyleDelete) {
 //        // Delete the row from the data source
 //        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -201,23 +236,49 @@
 //    else if (editingStyle == UITableViewCellEditingStyleInsert) {
 //        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 //    }   
-//}
+    
+    
+}
 
-/*
+
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+    
+    NSMutableArray *eventPlayerList = [event eventPlayerList];
+    // Get pointer to object being moved
+    EventPlayer *eventPlayer = [eventPlayerList objectAtIndex:[fromIndexPath row]];
+    
+    // Retain p so that it is not deallocated whem it is removed from the array
+    [eventPlayer retain]; // Retain count of p is now 2
+    
+    // Remove p from our array, it is automatically sent release
+    [eventPlayerList removeObjectAtIndex:[fromIndexPath row]]; // Retain count of p is now 1
+    
+    // Re-inser p into array at new location, it is automatically retained
+    [eventPlayerList insertObject:eventPlayer atIndex:[toIndexPath row]]; // Retain count of p is now 2
+    
+    // Release p
+    [eventPlayer release]; // Retain count of p is now 1
+    
+    event.eventPlayerList = eventPlayerList;
+    [self.tableView reloadData];
 }
-*/
 
-/*
+
+
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
 }
-*/
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return UITableViewCellEditingStyleNone;
+}
+
 
 #pragma mark - Table view delegate
 

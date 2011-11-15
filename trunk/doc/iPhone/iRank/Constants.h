@@ -7,6 +7,9 @@
 #define kBalanceKey @"balance"
 #define kUserSiteIdKey @"userSiteId"
 
+#define kFirstNameKey @"firstName"
+#define kLastNameKey @"lastName"
+
 #define kBuyinsWord @"Buy-ins"
 #define kFeeWord @"Entradas"
 #define kRebuysWord @"Rebuys"

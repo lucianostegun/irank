@@ -17,6 +17,11 @@
 @property (nonatomic, readwrite) BOOL enabled;
 @property (nonatomic, readwrite) int eventId;
 @property (nonatomic, retain) NSString *inviteStatus;
+@property (nonatomic, readwrite) int eventPosition;
+@property (nonatomic, readwrite) float buyin;
+@property (nonatomic, readwrite) float rebuy;
+@property (nonatomic, readwrite) float addon;
+@property (nonatomic, readwrite) float prize;
 
 -(void)togglePresence:(NSString *)choice;
 
