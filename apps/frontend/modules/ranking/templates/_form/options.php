@@ -20,6 +20,9 @@
 				</tr>
 			<?php endforeach; ?>
 			</table>
+			<div id="extraSplitDiv"></div>
+			<!--I18N-->
+			<?php #echo link_to('Adicionar regra') ?>
 		</td>
 	</tr>
 </table>

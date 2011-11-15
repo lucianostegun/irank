@@ -25,6 +25,58 @@ class eventActions extends sfActions
 	$this->getUser()->setAttribute('userSiteId', $userSiteId);
   }
   
+  public function executeSaveResult($request){
+  	
+  	$xmlString = $request->getParameter('eventResults');
+  	
+//	$file = fopen(Util::getFilePath('/xml.xml'), 'w');
+//	fwrite($file, $xmlString);
+//	fclose($file);
+//	exit;
+//	$xmlString = file_get_contents(Util::getFilePath('/xml.xml'));
+  	
+	$xmlString   = simplexml_load_string( $xmlString );
+	$eventResultList = array();	
+	
+    $validate = new DOMDocument;
+    $validate->loadXML($xmlString->asXml());
+    
+    $eventId  = (int)$xmlString->attributes()->eventId;
+    $eventObj = EventPeer::retrieveByPK($eventId);
+    
+    if( !$eventObj->isEditable() )
+		Util::forceError('!'.__('event.lockedEvent'), true);
+    
+    $rowList = array();
+    foreach( $xmlString->eventResult as $eventResultNode ){
+    	
+    	$eventResult = array();
+    	
+    	$peopleId = (int)$eventResultNode->attributes()->peopleId;
+    	
+    	foreach( $eventResultNode as $key=>$cellNode )
+    		$eventResult[$key] = (float)$cellNode;
+    	
+    	$eventResultList[$peopleId] = $eventResult;
+    }
+
+  	foreach($eventResultList as $peopleId=>$eventResult){
+  		
+		$request->setParameter('buyin'.$peopleId, $eventResult['buyin']);
+		$request->setParameter('rebuy'.$peopleId, $eventResult['rebuy']);
+		$request->setParameter('addon'.$peopleId, $eventResult['addon']);
+		$request->setParameter('eventPosition'.$peopleId, $eventResult['eventPosition']);
+		$request->setParameter('prize'.$peopleId, $eventResult['prize']);
+  	}
+
+	Util::getHelper('I18N');
+  	$eventObj->saveResult($request);
+  	
+  	// A aplicação espera receber este retorno!
+  	echo 'savedResult';
+  	exit;
+  }
+  
   public function executeComments($request){
   	
   	$this->eventId = $request->getParameter('eventId');
@@ -101,6 +153,26 @@ class eventActions extends sfActions
     exit;
   }
   
+  public function executeGetPaidPlaces($request){
+
+	$eventId = $request->getParameter('eventId');
+	$buyins  = $request->getParameter('buyins');
+	
+	$infoList = Ranking::getPaidPlaces($eventId, $buyins);
+	
+	$eventObj   = EventPeer::retrieveByPK($eventId);
+	$totalPrize = $buyins*$eventObj->getBuyin();
+	
+	$percentList = explode(',', $infoList['percentList']);
+	
+	foreach($percentList as $key=>$percent)
+		$infoList[$key+1] = $totalPrize*$percent/100;
+	
+	echo Util::parseInfo($infoList);
+	
+	exit;
+  }
+  
   /**
    * Executes index action
    *
@@ -147,6 +219,7 @@ class eventActions extends sfActions
 				$eventNode['comments']     = $eventObj->getComments();
 				$eventNode['inviteStatus'] = $eventObj->getInviteStatus($userSiteObj->getPeopleId());
 				$eventNode['isMyEvent']    = $eventObj->isMyEvent()?'true':'false';
+				$eventNode['isEditable']   = $eventObj->isEditable()?'true':'false';
 				$eventNode['isPastDate']   = $eventObj->isPastDate()?'true':'false';
 				$eventNode['gameStyle']    = $eventObj->getRanking()->getGameStyle()->getTagName();
 				
@@ -165,10 +238,15 @@ class eventActions extends sfActions
 				$peopleObj = $eventPlayerObj->getPeople();
 				
 				$eventNode = array();
-				$eventNode['@attributes']  = array('playerId'=>$peopleObj->getId(), 'eventId'=>$eventPlayerObj->getEventId());
-				$eventNode['enabled']      = ($eventPlayerObj->getEnabled()?'true':'false');
-				$eventNode['inviteStatus'] = $eventPlayerObj->getInviteStatus();
-				$eventNode['player']       = array('firstName'=>$peopleObj->getFirstName(), 'lastName'=>$peopleObj->getLastName(), 'emailAddress'=>$peopleObj->getEmailAddress());
+				$eventNode['@attributes']   = array('playerId'=>$peopleObj->getId(), 'eventId'=>$eventPlayerObj->getEventId());
+				$eventNode['enabled']       = ($eventPlayerObj->getEnabled()?'true':'false');
+				$eventNode['inviteStatus']  = $eventPlayerObj->getInviteStatus();
+				$eventNode['eventPosition'] = $eventPlayerObj->getEventPosition();
+				$eventNode['buyin']         = $eventPlayerObj->getBuyin();
+				$eventNode['rebuy']         = $eventPlayerObj->getRebuy();
+				$eventNode['addon']         = $eventPlayerObj->getAddon();
+				$eventNode['prize']         = $eventPlayerObj->getPrize();
+				$eventNode['player']        = array('firstName'=>$peopleObj->getFirstName(), 'lastName'=>$peopleObj->getLastName(), 'emailAddress'=>$peopleObj->getEmailAddress());
 				
 				$eventPlayerList[] = $eventNode;
 			}

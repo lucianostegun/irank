@@ -22,8 +22,8 @@ class eventActions extends sfActions
   
   public function executeEdit($request){
   	
-  	$viewComment   = $request->getParameter('viewComment');
-  	$viewComment   = base64_decode(strrev($viewComment));
+  	$viewComment = $request->getParameter('viewComment');
+  	$viewComment = base64_decode(strrev($viewComment));
   	
   	$eventId       = $request->getParameter('eventId', $viewComment);
   	$this->isClone = $request->getParameter('isClone');

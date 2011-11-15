@@ -873,6 +873,23 @@ class Ranking extends BaseRanking
 	
 		$info = Util::executeOne($sql, 'string');
 		
+		if( !$info ){
+		
+			$sql = 'SELECT
+					    ranking_prize_split.PERCENT_LIST||\';\'||ranking_prize_split.PAID_PLACES
+					FROM 
+					    ranking_prize_split
+					    INNER JOIN event ON ranking_prize_split.RANKING_ID = event.RANKING_ID
+					WHERE
+					    event.ID = '.$eventId.'
+					ORDER BY
+					    ranking_prize_split.BUYINS DESC
+					LIMIT 1;';
+		
+			$info = Util::executeOne($sql, 'string');			
+		}
+		
+		
 		if( !$info )
 			Util::forceError('event.calculatePrize.rangeError', true);
 			
