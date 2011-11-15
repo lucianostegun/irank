@@ -103,6 +103,9 @@
             break;
         case 1:
             rows = 2;
+            if( [event isMyEvent] )
+                rows = 3;
+            
             break;
         default:
             break;
@@ -269,7 +272,7 @@
 
 -(UIView *)tableView:(UITableViewCell *)tableView viewForHeaderInSection:(NSInteger)section {
 
-    if( section==0 && !event.savedResult )
+    if( section==0 && !event.isPastDate )
         return [self headerView];
     
     return nil;
@@ -277,7 +280,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    if( section==0 && !event.savedResult )
+    if( section==0 && !event.isPastDate )
         return [[self headerView] frame].size.height;
 
     return 0;
@@ -288,12 +291,21 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
+    if( indexPath.section==0 )
+        return;
+    
     switch (indexPath.row) {
         case 0:
+        case 2:
             if( eventPlayerViewController==nil )
                 eventPlayerViewController = [[EventPlayerViewController alloc] init];
             
             [eventPlayerViewController setEvent:event];
+            
+            if( indexPath.row==2 )
+                [eventPlayerViewController setShowEnabledOnly:YES];
+            else
+                [eventPlayerViewController setShowEnabledOnly:NO];
             
             [self.navigationController pushViewController:eventPlayerViewController animated:YES];
             break;

@@ -24,6 +24,8 @@
 @property (nonatomic, retain) LoginViewController *loginViewController;
 @property (nonatomic, readonly) NSUserDefaults *userDefaults;
 @property (nonatomic, readonly) int userSiteId;
+@property (nonatomic, readonly) NSString *firstName;
+@property (nonatomic, readonly) NSString *lastName;
 
 -(void)switchLogin;
 -(void)showLogin;

@@ -17,6 +17,7 @@
 @synthesize userDefaults;
 @synthesize homeTabBar;
 @synthesize userSiteId;
+@synthesize firstName, lastName;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -25,7 +26,9 @@
     NSDictionary *userInfo = [userDefaults objectForKey:@"userInfo"];
     
     userSiteId = [[userInfo objectForKey:kUserSiteIdKey] intValue];
-
+    firstName = [userInfo objectForKey:kFirstNameKey];
+    lastName = [userInfo objectForKey:kLastNameKey];
+    
     if( userInfo==nil ){
 
         loginViewController = [[LoginViewController alloc] init];
@@ -57,9 +60,15 @@
 
 -(void)switchLogin {
     
+    userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *userInfo = [userDefaults objectForKey:@"userInfo"];
+    
+    userSiteId = [[userInfo objectForKey:kUserSiteIdKey] intValue];
+    firstName = [userInfo objectForKey:kFirstNameKey];
+    lastName = [userInfo objectForKey:kLastNameKey];
     self.window.rootViewController = tabBarController;
     
-    NSLog(@"%@");
+//    NSLog(@"%@");;
     
     //    NSLog(@"retainCount: %i", [loginViewController retainCount]);
 }
@@ -150,6 +159,8 @@
     [_window release];
     [userDefaults release];
     [homeTabBar release];
+    [firstName release];
+    [lastName release];
     [super dealloc];
 }
 

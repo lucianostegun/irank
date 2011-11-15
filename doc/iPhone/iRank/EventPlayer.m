@@ -16,15 +16,29 @@
 @synthesize enabled;
 @synthesize inviteStatus;
 @synthesize eventId;
+@synthesize eventPosition;
+@synthesize buyin, rebuy, addon, prize;
 
-
+-(id)init {
+    
+    self = [super init];
+    
+    eventPosition = 0;
+    buyin         = 0;
+    rebuy         = 0;
+    addon         = 0;
+    prize         = 0;
+    return self;
+}
 
 -(void)togglePresence:(NSString *)choice {
     
     int userSiteId = [(iRankAppDelegate *)[[UIApplication sharedApplication] delegate] userSiteId];
     
-    NSString *urlString = [NSString stringWithFormat:@"http://%@/ios.php/event/togglePresence/eventId/%i/peopleId/%i/choice/%@/userSiteId/%i", serverAddress, player.playerId, eventId, choice, userSiteId];
-    
+    NSString *urlString = [NSString stringWithFormat:@"http://%@/ios.php/event/togglePresence/eventId/%i/peopleId/%i/choice/%@/userSiteId/%i", serverAddress, eventId, player.playerId, choice, userSiteId];
+
+//    NSLog(@"urlString: %@", urlString);
+
     self.inviteStatus = choice;
     
     NSURL *url = [NSURL URLWithString:urlString];
@@ -54,6 +68,11 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
 //    NSLog(@"connectionDidFinishLoading");
+}
+
+-(NSString *)description {
+    
+    return [NSString stringWithFormat:@"(%i): %@", player.playerId, player.fullName];
 }
 
 -(void) dealloc {

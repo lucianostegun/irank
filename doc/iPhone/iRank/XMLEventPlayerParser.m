@@ -32,8 +32,9 @@
         
         eventPlayer         = [[EventPlayer alloc] init];
         player              = [[Player alloc] init];
-        player.playerId     = [[attributeDict objectForKey:@"eventId"] integerValue];
-        eventPlayer.eventId = [[attributeDict objectForKey:@"playerId"] integerValue];
+        player.playerId     = [[attributeDict objectForKey:@"playerId"] integerValue];
+        eventPlayer.eventId = [[attributeDict objectForKey:@"eventId"] integerValue];
+
         return;
     }
 }
