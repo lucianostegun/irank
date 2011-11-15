@@ -102,7 +102,7 @@ class DhtmlxGrid extends DhtmlxGrid30 {
 		    $validate->loadXML($xmlString->asXml());
 		    
 		    $rowList = array();
-		    foreach( $xmlString->row as $rowNode ){
+		    foreach( $xmlString->eventResult as $rowNode ){
 		    	
 		    	$row = array();
 		    	

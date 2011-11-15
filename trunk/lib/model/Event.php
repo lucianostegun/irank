@@ -657,11 +657,11 @@ class Event extends BaseEvent
 			$rebuy         = $request->getParameter('rebuy'.$peopleId);
 			$addon         = $request->getParameter('addon'.$peopleId);
 			$eventPosition = $request->getParameter('eventPosition'.$peopleId);
-			
+
 			if( $eventPosition > 0 )
 				$totalBuyin += Util::formatFloat($buyin)+Util::formatFloat($rebuy)+Util::formatFloat($addon);
 		}
-		
+
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
 			$peopleId      = $eventPlayerObj->getPeopleId();
@@ -670,7 +670,7 @@ class Event extends BaseEvent
 			$addon         = $request->getParameter('addon'.$peopleId);
 			$eventPosition = $request->getParameter('eventPosition'.$peopleId);
 			$prize         = $request->getParameter('prize'.$peopleId);
-			
+
 			$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
 			$enabled        = $eventPlayerObj->getEnabled();
 			
@@ -705,7 +705,7 @@ class Event extends BaseEvent
 				$players++;
 			}
 		}
-		
+
 		$this->setPlayers($players);
 		$this->setPaidPlaces($paidPlaces);
 		$this->setSavedResult(true);
@@ -1073,6 +1073,7 @@ class Event extends BaseEvent
 		$criteria = new Criteria();
 		$criteria->add( EventPlayerPeer::EVENT_ID, $this->getId() );
 		$criteria->addJoin( EventPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		$criteria->addDescendingOrderByColumn( EventPlayerPeer::ENABLED );
 		$criteria->addAscendingOrderByColumn( EventPlayerPeer::EVENT_POSITION );
 		$criteria->addAscendingOrderByColumn( PeoplePeer::FIRST_NAME );
 		$criteria->addAscendingOrderByColumn( PeoplePeer::LAST_NAME );
