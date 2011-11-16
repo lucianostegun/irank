@@ -25,6 +25,8 @@
     if (self) {
         // Custom initialization
     }
+    
+    self.hidesBottomBarWhenPushed = YES;
 
     return self;
 }
@@ -132,6 +134,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.hidesBottomBarWhenPushed = NO;
+    eventDetailViewController.hidesBottomBarWhenPushed = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -146,6 +151,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+
     [super viewDidDisappear:animated];
 }
 
@@ -339,6 +345,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
+
     if( indexPath.section > 0 ){
         
         if( !eventDetailViewController )
@@ -351,11 +358,21 @@
         else
             event = [[previousEventList objectAtIndex:indexPath.row] retain];
         
+        eventDetailViewController.hidesBottomBarWhenPushed = YES;
+        
         [eventDetailViewController setEvent:event];
         [self.navigationController pushViewController:eventDetailViewController animated:YES];
         
         [event release];
     }
+}
+
+-(void)hideTabBar {
+  
+}
+
+-(void)showTabBar {
+
 }
 
 #pragma mark - Custom actions

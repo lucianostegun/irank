@@ -21,4 +21,6 @@
 
 -(IBAction)doLogout:(id)sender;
 -(void)updateResume;
+-(void)hideTabBar;
+-(void)showTabBar;
 @end

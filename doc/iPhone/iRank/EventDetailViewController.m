@@ -103,7 +103,7 @@
             break;
         case 1:
             rows = 2;
-            if( [event isMyEvent] )
+            if( [event isMyEvent] && event.isEditable )
                 rows = 3;
             
             break;

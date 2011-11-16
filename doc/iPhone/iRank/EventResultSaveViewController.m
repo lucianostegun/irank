@@ -10,6 +10,7 @@
 #import "EventPlayer.h"
 #import "Constants.h"
 #import "JSON.h"
+#import "iRankAppDelegate.h"
 
 @implementation EventResultSaveViewController
 @synthesize event;
@@ -20,7 +21,12 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+
+        numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [numberFormatter setDecimalSeparator:@","];
+        [numberFormatter setCurrencyCode:@""];
+        [numberFormatter setCurrencySymbol:@""];
     }
     return self;
 }
@@ -57,6 +63,11 @@
     
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name: UIKeyboardWillShowNotification object:nil];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
 }
 
 -(void)loadPlayerInfo:(int)playerPositionIndex {
@@ -147,10 +158,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    numberFormatter = [[NSNumberFormatter alloc] init];
-    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    [numberFormatter setCurrencyCode:@""];
     
     doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouchUp:)];
     saveButton = [[UIBarButtonItem alloc] initWithTitle:@"salvar" style:UIBarButtonItemStyleDone target:self action:@selector(saveButtonTouchUp:)];
@@ -166,7 +173,8 @@
 
     [self.navigationController pushViewController:resultPreviewViewController animated:YES];
     
-    saveButton.enabled = NO;
+    saveButton.enabled        = NO;
+    btnCalculatePrize.enabled = YES;
     resultPreviewViewController.navigationItem.rightBarButtonItem = saveButton;
 }
 
@@ -181,8 +189,23 @@
     
     resultPreviewViewController.navigationItem.rightBarButtonItem = saveButton;
     
+    event.savedResult = YES;
     btnCalculatePrize.enabled = YES;
+    
     [resultPreviewViewController.navigationItem setHidesBackButton:NO animated:YES];
+    
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    [appDelegate showAlert:@"Resultado salvo" message:@"O resultado do evento foi salvo com sucesso!"];
+}
+
+-(void)concludeCalculatePrize {
+    
+    [resultTableView reloadData];
+    saveButton.enabled        = YES;
+    btnCalculatePrize.enabled = YES;
+    resultPreviewViewController.navigationItem.rightBarButtonItem = saveButton;
+    [activityIndicator stopAnimating];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -220,18 +243,18 @@
         
         const char *bytes = [[NSString stringWithFormat:@"eventResults=%@", stringData] UTF8String];
         
-        NSURL *url = [NSURL URLWithString:@"http://irank/ios.php/event/save"];
+        NSURL *url = [NSURL URLWithString:@"http://irank/ios.php/event/saveResult"];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         
         [request setHTTPMethod:@"POST"];
         [request setHTTPBody:[NSData dataWithBytes:bytes length:strlen(bytes)]];
         
-        NSURLResponse *response;
-        NSError *err;
-        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-        NSLog(@"responseData: %@", responseData);
+//        NSURLResponse *response;
+//        NSError *err;
+//        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
+
         
-        [self concludeSaveResult];
+        [NSURLConnection connectionWithRequest:request delegate:self];
 	}
     
 }
@@ -366,6 +389,13 @@
 
 -(void)calculatePrize:(id)sender {
         
+    resultPreviewViewController.navigationItem.rightBarButtonItem = nil;
+    resultPreviewViewController.navigationItem.rightBarButtonItem = activityIndicatorButton;
+    [activityIndicator setHidden:NO];
+    [activityIndicator startAnimating];
+    
+    btnCalculatePrize.enabled = NO;
+    
     NSString *urlString = [NSString stringWithFormat:@"http://%@/ios.php/event/getPaidPlaces/eventId/%i/buyins/%f", serverAddress, event.eventId, [event totalBuyins]];
     
     NSURL *url = [NSURL URLWithString:urlString];
@@ -379,47 +409,41 @@
 
 - (void)connection: (NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     
-//    NSLog(@"didReceiveResponse");
-    //    [activityIndicator setHidden:YES];
+    NSLog(@"didReceiveResponse");
 }
 
 - (void)connection: (NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-//    NSLog(@"didReceiveData");
+    NSLog(@"didReceiveData");
     
-    NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];    
+    NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     
-    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
-    NSDictionary *jsonObjects = [jsonParser objectWithString:result error:nil];
-    
-    int paidPlaces = [[jsonObjects objectForKey:@"paidPlaces"] intValue];
-    
-    NSLog(@"paidPlaces: %i", paidPlaces);
-    
-    for(int i=1; i <= paidPlaces; i++){
+    if( [result isEqualToString:@"savedResult"] ){
         
-        float playerPrize = [[jsonObjects objectForKey:[NSString stringWithFormat:@"%i", i]] floatValue];
-        [[event.eventPlayerList objectAtIndex:(i-1)] setPrize:playerPrize];
+        [self concludeSaveResult];
+    }else{
+    
+        SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
+        NSDictionary *jsonObjects = [jsonParser objectWithString:result error:nil];
+        
+        int paidPlaces = [[jsonObjects objectForKey:@"paidPlaces"] intValue];
+        
+        NSLog(@"paidPlaces: %i", paidPlaces);
+        
+        for(int i=1; i <= paidPlaces; i++){
+            
+            float playerPrize = [[jsonObjects objectForKey:[NSString stringWithFormat:@"%i", i]] floatValue];
+            [[event.eventPlayerList objectAtIndex:(i-1)] setPrize:playerPrize];
+        }
+        
+        [result release];
+        [self concludeCalculatePrize];
     }
-    
-    [result release];
-    [resultTableView reloadData];
-    
-    saveButton.enabled = YES;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
-//    NSLog(@"connectionDidFinishLoading");
-//    btnSend.enabled    = NO;
-//    txtMessage.enabled = YES;
-//    txtMessage.text    = nil;
-//    
-//    [self doRefreshWebView:NO];
-//    [activityIndicator stopAnimating];
-    
-    //    moveViewUp = NO;
-    //    [self scrollTheView:NO];
+
 }
 
 -(void)dealloc {
