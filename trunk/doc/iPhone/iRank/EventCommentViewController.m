@@ -59,6 +59,11 @@
 
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+}
+
 -(void)viewWillDisappear:(BOOL)animated {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name: UIKeyboardWillShowNotification object:nil];
@@ -126,7 +131,7 @@
     NSValue *aValue     = [info objectForKey:UIKeyboardBoundsUserInfoKey];
     CGSize keyboardSize = [aValue CGRectValue].size;
     
-    float bottomPoint = (toolbar.frame.origin.y + toolbar.frame.size.height - self.tabBarController.tabBar.frame.size.height);
+    float bottomPoint = (toolbar.frame.origin.y + toolbar.frame.size.height);// - self.tabBarController.tabBar.frame.size.height);
     scrollAmount      = keyboardSize.height - (self.view.frame.size.height - bottomPoint);
     
     if(scrollAmount > 0) {

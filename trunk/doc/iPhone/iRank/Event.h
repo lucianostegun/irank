@@ -34,6 +34,7 @@
 @property (nonatomic, readwrite) BOOL savedResult;
 @property (nonatomic, readwrite) BOOL isMyEvent;
 @property (nonatomic, readwrite) BOOL isPastDate;
+@property (nonatomic, readwrite) BOOL isEditable;
 @property (nonatomic, retain) NSMutableArray *eventPlayerList;
 
 -(void)filterPlayerList;

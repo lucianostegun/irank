@@ -60,5 +60,6 @@
 
 - (void)scrollTheView: (BOOL)movedUp;
 - (void)concludeSaveResult;
+- (void)concludeCalculatePrize;
 
 @end

@@ -76,6 +76,8 @@
             [event setIsPastDate:[elementValue boolValue]];
         else if( [elementName isEqualToString:@"isMyEvent"] )
             [event setIsMyEvent:[elementValue boolValue]];
+        else if( [elementName isEqualToString:@"isEditable"] )
+            [event setIsEditable:[elementValue boolValue]];
         else
             [event setValue:currentElementValue forKey:elementName];
     }

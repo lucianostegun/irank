@@ -23,6 +23,7 @@
 @synthesize inviteStatus;
 @synthesize isMyEvent;
 @synthesize isPastDate;
+@synthesize isEditable;
 @synthesize gameStyle;
 
 - (id)init {

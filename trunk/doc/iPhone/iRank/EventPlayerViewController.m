@@ -158,22 +158,22 @@
         if( [eventPlayer.inviteStatus isEqualToString:@"yes"] ){
             
             [button setImage:[UIImage imageNamed:@"ok.png"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:([event isMyEvent]?@"okH.png":@"ok.png")] forState:UIControlStateHighlighted];
+            [button setImage:[UIImage imageNamed:([event isMyEvent] && [event isEditable]?@"okH.png":@"ok.png")] forState:UIControlStateHighlighted];
         }
         else if( [eventPlayer.inviteStatus isEqualToString:@"no"] ){
             
             [button setImage:[UIImage imageNamed:@"nok.png"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:([event isMyEvent]?@"nokH.png":@"nok.png")] forState:UIControlStateHighlighted];
+            [button setImage:[UIImage imageNamed:([event isMyEvent] && [event isEditable]?@"nokH.png":@"nok.png")] forState:UIControlStateHighlighted];
         }
         else{
             
             [button setImage:[UIImage imageNamed:@"none.png"] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:([event isMyEvent]?@"noneH.png":@"none.png")] forState:UIControlStateHighlighted];
+            [button setImage:[UIImage imageNamed:([event isMyEvent] && [event isEditable]?@"noneH.png":@"none.png")] forState:UIControlStateHighlighted];
         }
         
         cell.accessoryView = button;
         
-        if( [event isMyEvent] ){
+        if( [event isMyEvent] && [event isEditable] ){
 
             [button addTarget:self action:@selector(accessoryClicked:) forControlEvents:UIControlEventTouchUpInside];
             cell.accessoryView.userInteractionEnabled = YES;
@@ -187,7 +187,11 @@
     
 //    [button release];
 
-    cell.textLabel.text       = [NSString stringWithFormat:@"%iº %@", indexPath.row+1, [player fullName]];
+    if( [self showEnabledOnly] )
+        cell.textLabel.text = [NSString stringWithFormat:@"%iº %@", indexPath.row+1, [player fullName]];
+    else
+        cell.textLabel.text = [player fullName];
+    
     cell.detailTextLabel.text = [player emailAddress];
         
     player = nil;
