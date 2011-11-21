@@ -10,6 +10,8 @@
 #import "Event.h"
 #import "EventPlayerViewController.h"
 #import "EventCommentViewController.h"
+#import "EventResultViewController.h"
+#import "PhotoViewController.h"
 
 @interface EventDetailViewController : UITableViewController {
     
@@ -17,11 +19,11 @@
     UIActivityIndicatorView *activityIndicator;
     EventCommentViewController *eventCommentViewController;
     EventPlayerViewController *eventPlayerViewController;
+    EventResultViewController *eventResultViewController;
+    PhotoViewController *photoViewController;
 }
 
 @property (nonatomic, assign) Event *event;
-//@property (nonatomic, retain) EventPlayerViewController *eventPlayerViewController;
-//@property (nonatomic, retain) EventCommentViewController *eventCommentViewController;
 
 -(UIView *)headerView;
 

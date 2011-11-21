@@ -29,7 +29,7 @@
     
     IBOutlet UITableView *resultTableView;
     
-    IBOutlet UIViewController *resultPreviewViewController;
+//    IBOutlet UIViewController *resultPreviewViewController;
     
     BOOL    moveViewUp;
     CGFloat scrollAmount;
@@ -46,6 +46,7 @@
 @property (nonatomic, assign) Event *event;
 @property (nonatomic, assign) EventPlayer *eventPlayer;
 @property (nonatomic, retain) NSNumberFormatter *numberFormatter;
+@property (nonatomic, retain) IBOutlet UIViewController *resultPreviewViewController;
 
 -(void)loadPlayerInfo:(int)playerPositionIndex;
 -(IBAction)loadNextPlayerInfo:(id)sender;
@@ -61,5 +62,6 @@
 - (void)scrollTheView: (BOOL)movedUp;
 - (void)concludeSaveResult;
 - (void)concludeCalculatePrize;
+- (void)doSaveEventResult;
 
 @end

@@ -19,8 +19,18 @@
     
     [super init];
     
+    parseComplete = NO;
+    [self performSelector:@selector(parsingDidTimeout) withObject:nil afterDelay:10];
+    
     [self resetEventList];
     return self;
+}
+
+- (void)parsingDidTimeout {
+ 
+    if( parseComplete==NO )
+        [[[UIAlertView alloc] initWithTitle:@"Erro" message:@"Não foi possível carregar as informações do evento." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
@@ -100,6 +110,11 @@
     }
     
     eventList = [[NSMutableArray alloc] init];
+}
+
+- (void)parserDidEndDocument:(NSXMLParser *)parser {
+    
+    parseComplete = YES;
 }
 
 -(void) dealloc {

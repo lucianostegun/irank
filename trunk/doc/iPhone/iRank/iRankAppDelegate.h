@@ -26,6 +26,7 @@
 @property (nonatomic, readonly) int userSiteId;
 @property (nonatomic, readonly) NSString *firstName;
 @property (nonatomic, readonly) NSString *lastName;
+@property (nonatomic, readwrite) BOOL refreshHome;
 
 -(void)switchLogin;
 -(void)showLogin;
@@ -33,5 +34,6 @@
 -(void)incraseBadge:(int)amount;
 -(void)decraseBadge:(int)amount;
 -(void)updateBadge;
+-(void)putOnLandscapeMode;
 
 @end
