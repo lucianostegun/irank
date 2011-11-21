@@ -7,6 +7,8 @@
 //
 
 #import "iRankAppDelegate.h"
+#import "HomeViewController.h"
+#import "ConfigViewController.h"
 #import "Constants.h"
 
 @implementation iRankAppDelegate
@@ -18,12 +20,15 @@
 @synthesize homeTabBar;
 @synthesize userSiteId;
 @synthesize firstName, lastName;
+@synthesize refreshHome;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
     userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *userInfo = [userDefaults objectForKey:@"userInfo"];
+    
+    refreshHome = YES;
     
     userSiteId = [[userInfo objectForKey:kUserSiteIdKey] intValue];
     firstName = [userInfo objectForKey:kFirstNameKey];
@@ -54,11 +59,18 @@
     }
     
     [homeEvents release];
-
+    
     return YES;
 }
 
+-(void)putOnLandscapeMode {
+    
+
+}
+
 -(void)switchLogin {
+    
+    refreshHome = YES;
     
     userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *userInfo = [userDefaults objectForKey:@"userInfo"];

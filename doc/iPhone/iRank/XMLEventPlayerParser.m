@@ -56,7 +56,7 @@
         return;
 
     if([elementName isEqualToString:@"eventPlayer"]) {
-        
+
         [eventPlayer setPlayer:player];
         [eventPlayerList addObject:eventPlayer];
 
@@ -78,6 +78,8 @@
                 [eventPlayer setEnabled:[elementValue boolValue]];
             else
                 [eventPlayer setValue:elementValue forKey:elementName];
+            
+//            NSLog(@"elementName: %@", elementName);
         }
     }
     

@@ -9,19 +9,17 @@
 #import "EventDetailViewController.h"
 #import "EventPlayerViewController.h"
 #import "EventCommentViewController.h"
+#import "EventResultViewController.h"
 #import "Constants.h"
 #import "iRankAppDelegate.h"
 
 @implementation EventDetailViewController
 @synthesize event;
-//@synthesize eventPlayerViewController;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+-(id)initWithStyle:(UITableViewStyle)style {
+    
     self = [super initWithStyle:UITableViewStyleGrouped];
-    if (self) {
-        // Custom initialization
-    }
+    
     return self;
 }
 
@@ -81,7 +79,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;//(interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source
@@ -102,9 +100,9 @@
             rows = 9;
             break;
         case 1:
-            rows = 2;
-            if( [event isMyEvent] && event.isEditable )
-                rows = 3;
+            rows = 3;
+            if( [event isPastDate] )
+                rows = 4;
             
             break;
         default:
@@ -198,6 +196,9 @@
                 label = @"Comentários";
                 break;
             case 2:
+                label = @"Fotos";
+                break;
+            case 3:
                 label = @"Resultado";
                 break;
                 
@@ -296,18 +297,14 @@
     
     switch (indexPath.row) {
         case 0:
-        case 2:
-            if( eventPlayerViewController==nil )
-                eventPlayerViewController = [[EventPlayerViewController alloc] init];
-            
-            [eventPlayerViewController setEvent:event];
-            
-            if( indexPath.row==2 )
-                [eventPlayerViewController setShowEnabledOnly:YES];
-            else
+                if( eventPlayerViewController==nil )
+                    eventPlayerViewController = [[EventPlayerViewController alloc] init];
+                
+                [eventPlayerViewController setEvent:event];
+                
                 [eventPlayerViewController setShowEnabledOnly:NO];
             
-            [self.navigationController pushViewController:eventPlayerViewController animated:YES];
+                [self.navigationController pushViewController:eventPlayerViewController animated:YES];
             break;
         case 1:
             if( eventCommentViewController==nil )
@@ -316,6 +313,37 @@
             [eventCommentViewController setEventId:event.eventId];
             
             [self.navigationController pushViewController:eventCommentViewController animated:YES];
+            break;
+        case 2:                
+            
+            if( photoViewController==nil )
+                photoViewController = [[PhotoViewController alloc] init];
+
+            [photoViewController setEventId:event.eventId];
+            
+            [self.navigationController pushViewController:photoViewController animated:YES];            
+            break;
+        case 3:                
+            
+            if( event.isMyEvent && event.isEditable ){
+                
+                if( eventPlayerViewController==nil )
+                    eventPlayerViewController = [[EventPlayerViewController alloc] init];
+                
+                [eventPlayerViewController setShowEnabledOnly:YES];
+                [eventPlayerViewController setEvent:event];
+                
+                [self.navigationController pushViewController:eventPlayerViewController animated:YES];
+            }else{
+                
+                if( eventResultViewController==nil )
+                    eventResultViewController = [[EventResultViewController alloc] initWithNibName:nil bundle:nil];
+                
+                [eventResultViewController setEvent:event];
+                
+                [self.navigationController pushViewController:eventResultViewController animated:YES];
+            }
+            
             break;
         default:
             break;

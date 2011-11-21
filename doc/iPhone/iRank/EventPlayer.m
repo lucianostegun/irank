@@ -17,7 +17,7 @@
 @synthesize inviteStatus;
 @synthesize eventId;
 @synthesize eventPosition;
-@synthesize buyin, rebuy, addon, prize;
+@synthesize buyin, rebuy, addon, prize, score;
 
 -(id)init {
     
@@ -28,6 +28,7 @@
     rebuy         = 0;
     addon         = 0;
     prize         = 0;
+    score         = 0;
     return self;
 }
 
@@ -72,7 +73,7 @@
 
 -(NSString *)description {
     
-    return [NSString stringWithFormat:@"(%i): %@", player.playerId, player.fullName];
+    return [NSString stringWithFormat:@"(%i): %@ - B: %f R: %f A: %f", player.playerId, player.fullName, buyin, rebuy, addon];
 }
 
 -(void) dealloc {

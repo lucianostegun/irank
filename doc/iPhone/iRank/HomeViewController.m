@@ -92,36 +92,72 @@
     NSNumber *homeEvents = [[appDelegate userDefaults] objectForKey:@"homeEvents"];
     
     int userSiteId = [appDelegate userSiteId];
-    
+
     NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/nextEvents/userSiteId/%i", serverAddress, userSiteId]];
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:url];    
     
-    //Inicia o delegate
-    XMLEventParser *parser = [[XMLEventParser alloc] initXMLParser];
+    XMLEventParser *eventParser = [[XMLEventParser alloc] initXMLParser];
     
-    [xmlParser setDelegate:parser];
+	NSURLRequest *nextEventRequest = [NSURLRequest requestWithURL:url cachePolicy: NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
+	NSError *requestError = nil;
+	NSData *response = [NSURLConnection sendSynchronousRequest:nextEventRequest returningResponse:nil error:&requestError]; 
+    BOOL success;
+	
+    if(requestError == nil) {
+        
+		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:response];
+        
+		[parser setDelegate:eventParser];
+		[parser setShouldProcessNamespaces:YES];
+		[parser setShouldReportNamespacePrefixes:YES];
+		[parser setShouldResolveExternalEntities:NO];
+		success = [parser parse];
+		[parser release];
+        
+        nextEventList = [[eventParser getEventList] copy];
+	} else {
+        
+        NSLog(@"Timeout ao processar o XML de próximos eventos");
+		[eventParser parserDidEndDocument:nil];
+	}
     
-    BOOL success = [xmlParser parse];
     
-    nextEventList = [[parser getEventList] copy];
-
-    [parser resetEventList];
-
+    
     url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/previousEvents/userSiteId/%i/limit/%@", serverAddress, userSiteId, homeEvents]];
-    xmlParser = [xmlParser initWithContentsOfURL:url];    
-    success = [xmlParser parse];
+	nextEventRequest = [NSURLRequest requestWithURL:url cachePolicy: NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
+	requestError = nil;
+	response = [NSURLConnection sendSynchronousRequest:nextEventRequest returningResponse:nil error:&requestError]; 
     
-//    NSLog(@"url: %@", url.relativeString);
+    if(requestError == nil) {
+        
+		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:response];
+        
+		[parser setDelegate:eventParser];
+		[parser setShouldProcessNamespaces:YES];
+		[parser setShouldReportNamespacePrefixes:YES];
+		[parser setShouldResolveExternalEntities:NO];
+		success = [parser parse];
+		[parser release];
+        
+        previousEventList = [[eventParser getEventList] copy];
+	} else {
+        
+        NSLog(@"Timeout ao processar o XML de últimos eventos");
+		[eventParser parserDidEndDocument:nil];
+	}
     
-    previousEventList = [[parser getEventList] copy];
-
     if( [nextEventList count] > 0 ){
         
         appDelegate.homeTabBar.badgeValue = [NSString stringWithFormat:@"%i", [nextEventList count]];
         [appDelegate incraseBadge:[nextEventList count]];
     }
     
-//    [homeEvents release];
+    
+    appDelegate.refreshHome = NO;
+    
+    [homeEvents release];
+    [requestError release];
+    [url release];
+//    [response release];
 }
 
 - (void)viewDidUnload
@@ -137,6 +173,14 @@
     
     self.hidesBottomBarWhenPushed = NO;
     eventDetailViewController.hidesBottomBarWhenPushed = NO;
+    
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    if( appDelegate.refreshHome ){
+     
+        [[self tableView] reloadData];
+        [self updateResume];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -157,8 +201,9 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;//(interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source
@@ -232,7 +277,7 @@
             event = [[previousEventList objectAtIndex:indexPath.row] retain];
 
         label       = [event eventName];
-        description = [NSString stringWithFormat:@"@%@ - %@ %@", [event eventPlace], [event eventDate], [event startTime]];
+        description = [NSString stringWithFormat:@"%@ %@ @%@", [event eventDate], [event startTime], [event eventPlace]];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         if( event.isPastDate && !event.savedResult ){

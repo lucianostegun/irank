@@ -58,7 +58,7 @@
 					</object>
 					<object class="IBUIImageView" id="300282524">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">293</int>
 						<string key="NSFrame">{{40, 20}, {240, 128}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="249389309"/>
@@ -73,7 +73,7 @@
 					</object>
 					<object class="IBUITextField" id="249389309">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">293</int>
 						<string key="NSFrame">{{20, 156}, {280, 31}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="784914239"/>
@@ -82,7 +82,7 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<string key="IBUIText">lstegun</string>
+						<string key="IBUIText"/>
 						<int key="IBUIBorderStyle">3</int>
 						<string key="IBUIPlaceholder">Username/E-mail</string>
 						<object class="NSColor" key="IBUITextColor">
@@ -111,7 +111,7 @@
 					</object>
 					<object class="IBUITextField" id="784914239">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">293</int>
 						<string key="NSFrame">{{20, 195}, {280, 31}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="818279538"/>
@@ -120,7 +120,7 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<string key="IBUIText">unidunite</string>
+						<string key="IBUIText"/>
 						<int key="IBUIBorderStyle">3</int>
 						<string key="IBUIPlaceholder">Senha de acesso</string>
 						<object class="NSColor" key="IBUITextColor">
@@ -141,7 +141,7 @@
 					</object>
 					<object class="IBUIButton" id="344861702">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">-2147483356</int>
+						<int key="NSvFlags">-2147483379</int>
 						<string key="NSFrame">{{87, 403}, {147, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView"/>
@@ -178,7 +178,7 @@
 					</object>
 					<object class="IBUIActivityIndicatorView" id="818279538">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">-2147483356</int>
+						<int key="NSvFlags">-2147483355</int>
 						<string key="NSFrame">{{142, 234}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="344861702"/>

@@ -16,6 +16,7 @@
 @synthesize event;
 @synthesize eventPlayer;
 @synthesize numberFormatter;
+@synthesize resultPreviewViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -197,6 +198,7 @@
     iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     [appDelegate showAlert:@"Resultado salvo" message:@"O resultado do evento foi salvo com sucesso!"];
+    appDelegate.refreshHome = YES;
 }
 
 -(void)concludeCalculatePrize {
@@ -215,48 +217,47 @@
         NSLog(@"Clicou em NÃO");
 	}else{
         
-        resultPreviewViewController.navigationItem.rightBarButtonItem = nil;
-        resultPreviewViewController.navigationItem.rightBarButtonItem = activityIndicatorButton;
-        [activityIndicator setHidden:NO];
-        [activityIndicator startAnimating];
-        
-        btnCalculatePrize.enabled = NO;
-        [resultPreviewViewController.navigationItem setHidesBackButton:YES animated:YES];
-        
-
-        NSString *stringData = [NSString stringWithFormat:@"<?xml version=\"1.0\"?>\n<eventResults eventId=\"%i\">", event.eventId];
-        
-        for(EventPlayer *aEventPlayer in event.eventPlayerList){
-
-            stringData = [stringData stringByAppendingFormat:@"\n\t<eventResult peopleId=\"%i\">", aEventPlayer.player.playerId];
-            stringData = [stringData stringByAppendingFormat:@"\n\t\t<eventPosition>%i</eventPosition>", aEventPlayer.eventPosition];
-            stringData = [stringData stringByAppendingFormat:@"\n\t\t<buyin>%f</buyin>", aEventPlayer.buyin];
-            stringData = [stringData stringByAppendingFormat:@"\n\t\t<rebuy>%f</rebuy>", aEventPlayer.rebuy];
-            stringData = [stringData stringByAppendingFormat:@"\n\t\t<addon>%f</addon>", aEventPlayer.addon];
-            stringData = [stringData stringByAppendingFormat:@"\n\t\t<prize>%f</prize>", aEventPlayer.prize];
-            stringData = [stringData stringByAppendingString:@"\n\t</eventResult>"];
-        }
-
-        stringData = [stringData stringByAppendingString:@"\n</eventResults>"];
-                          
-//        NSLog(@"stringData: %@", stringData);
-        
-        const char *bytes = [[NSString stringWithFormat:@"eventResults=%@", stringData] UTF8String];
-        
-        NSURL *url = [NSURL URLWithString:@"http://irank/ios.php/event/saveResult"];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-        
-        [request setHTTPMethod:@"POST"];
-        [request setHTTPBody:[NSData dataWithBytes:bytes length:strlen(bytes)]];
-        
-//        NSURLResponse *response;
-//        NSError *err;
-//        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-
-        
-        [NSURLConnection connectionWithRequest:request delegate:self];
+        [self doSaveEventResult];
 	}
+}
+
+-(void)doSaveEventResult {
     
+    resultPreviewViewController.navigationItem.rightBarButtonItem = nil;
+    resultPreviewViewController.navigationItem.rightBarButtonItem = activityIndicatorButton;
+    [activityIndicator setHidden:NO];
+    [activityIndicator startAnimating];
+    
+    btnCalculatePrize.enabled = NO;
+    [resultPreviewViewController.navigationItem setHidesBackButton:YES animated:YES];
+    
+    
+    NSString *stringData = [NSString stringWithFormat:@"<?xml version=\"1.0\"?>\n<eventResults eventId=\"%i\">", event.eventId];
+    
+    for(EventPlayer *aEventPlayer in event.eventPlayerList){
+        
+        stringData = [stringData stringByAppendingFormat:@"\n\t<eventResult peopleId=\"%i\">", aEventPlayer.player.playerId];
+        stringData = [stringData stringByAppendingFormat:@"\n\t\t<eventPosition>%i</eventPosition>", aEventPlayer.eventPosition];
+        stringData = [stringData stringByAppendingFormat:@"\n\t\t<buyin>%f</buyin>", aEventPlayer.buyin];
+        stringData = [stringData stringByAppendingFormat:@"\n\t\t<rebuy>%f</rebuy>", aEventPlayer.rebuy];
+        stringData = [stringData stringByAppendingFormat:@"\n\t\t<addon>%f</addon>", aEventPlayer.addon];
+        stringData = [stringData stringByAppendingFormat:@"\n\t\t<prize>%f</prize>", aEventPlayer.prize];
+        stringData = [stringData stringByAppendingString:@"\n\t</eventResult>"];
+    }
+    
+    stringData = [stringData stringByAppendingString:@"\n</eventResults>"];
+    
+    //        NSLog(@"stringData: %@", stringData);
+    
+    const char *bytes = [[NSString stringWithFormat:@"eventResults=%@", stringData] UTF8String];
+    
+    NSURL *url = [NSURL URLWithString:@"http://irank/ios.php/event/saveResult"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[NSData dataWithBytes:bytes length:strlen(bytes)]];
+    
+    [NSURLConnection connectionWithRequest:request delegate:self];    
 }
 
 - (void)viewDidUnload
@@ -269,7 +270,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;//(interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(IBAction)incraseBuyinValue:(id)sender {
@@ -387,6 +388,16 @@
     return cell;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+        return [NSString stringWithFormat:@"%@ - %@ %@", event.eventName, event.eventDate, event.startTime];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    
+    return [NSString stringWithFormat:@"%i jogadores @%@", [event.eventPlayerList count], event.eventPlace];
+}
+
 -(void)calculatePrize:(id)sender {
         
     resultPreviewViewController.navigationItem.rightBarButtonItem = nil;
@@ -443,7 +454,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
-
+    NSLog(@"connectionDidFinishLoading");
 }
 
 -(void)dealloc {
@@ -451,6 +462,7 @@
     [event release];
     [eventPlayer release];
     [numberFormatter release];
+    [resultPreviewViewController release];
     [super dealloc];
 }
 

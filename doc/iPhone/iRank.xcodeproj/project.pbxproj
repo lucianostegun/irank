@@ -51,6 +51,11 @@
 		DD2A949F1447CE04007CCDF1 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A94921447CE04007CCDF1 /* SBJsonUTF8Stream.m */; };
 		DD2A94A01447CE04007CCDF1 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2A94941447CE04007CCDF1 /* SBJsonWriter.m */; };
 		DD354F4C145CE0F50035E31B /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = DD354F4B145CE0F50035E31B /* background.png */; };
+		DD386EF514759E9E00221C24 /* EventResultDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD386EF414759E9E00221C24 /* EventResultDetailViewController.m */; };
+		DD386EFF1475E36000221C24 /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD386EFD1475E36000221C24 /* EventViewController.m */; };
+		DD386F001475E36000221C24 /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD386EFE1475E36000221C24 /* EventViewController.xib */; };
+		DD85E17E1474843300D83223 /* EventResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD85E17C1474843300D83223 /* EventResultViewController.m */; };
+		DD85E17F1474843300D83223 /* EventResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD85E17D1474843300D83223 /* EventResultViewController.xib */; };
 		DD895D3B1460BDA900203286 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD895D391460BDA900203286 /* LoginViewController.m */; };
 		DD895D3C1460BDA900203286 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD895D3A1460BDA900203286 /* LoginViewController.xib */; };
 		DD895D4A1460D8C800203286 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD895D481460D8C800203286 /* HomeViewController.m */; };
@@ -68,6 +73,8 @@
 		DDCD83631470135600000D85 /* EventResultSaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCD83611470135600000D85 /* EventResultSaveViewController.xib */; };
 		DDCD8367147021F000000D85 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = DDCD8365147021F000000D85 /* plus.png */; };
 		DDCD8368147021F000000D85 /* minus.png in Resources */ = {isa = PBXBuildFile; fileRef = DDCD8366147021F000000D85 /* minus.png */; };
+		DDD3C53E1475F11900263ABD /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDD3C53C1475F11900263ABD /* PhotoViewController.m */; };
+		DDD3C53F1475F11900263ABD /* PhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDD3C53D1475F11900263ABD /* PhotoViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -139,6 +146,14 @@
 		DD2A94931447CE04007CCDF1 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonWriter.h; path = ../../../Downloads/SBJson_v3.0.4/Classes/SBJsonWriter.h; sourceTree = "<group>"; };
 		DD2A94941447CE04007CCDF1 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = ../../../Downloads/SBJson_v3.0.4/Classes/SBJsonWriter.m; sourceTree = "<group>"; };
 		DD354F4B145CE0F50035E31B /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = iRank/background.png; sourceTree = "<group>"; };
+		DD386EF314759E9E00221C24 /* EventResultDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventResultDetailViewController.h; sourceTree = "<group>"; };
+		DD386EF414759E9E00221C24 /* EventResultDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventResultDetailViewController.m; sourceTree = "<group>"; };
+		DD386EFC1475E36000221C24 /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
+		DD386EFD1475E36000221C24 /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
+		DD386EFE1475E36000221C24 /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventViewController.xib; sourceTree = "<group>"; };
+		DD85E17B1474843300D83223 /* EventResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventResultViewController.h; sourceTree = "<group>"; };
+		DD85E17C1474843300D83223 /* EventResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventResultViewController.m; sourceTree = "<group>"; };
+		DD85E17D1474843300D83223 /* EventResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventResultViewController.xib; sourceTree = "<group>"; };
 		DD895D381460BDA900203286 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		DD895D391460BDA900203286 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		DD895D3A1460BDA900203286 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -164,6 +179,9 @@
 		DDCD83611470135600000D85 /* EventResultSaveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventResultSaveViewController.xib; sourceTree = "<group>"; };
 		DDCD8365147021F000000D85 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		DDCD8366147021F000000D85 /* minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minus.png; sourceTree = "<group>"; };
+		DDD3C53B1475F11900263ABD /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		DDD3C53C1475F11900263ABD /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
+		DDD3C53D1475F11900263ABD /* PhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +260,14 @@
 				DD121E641466CC1600E97E8C /* EventCommentViewController.m */,
 				DDCD835F1470135600000D85 /* EventResultSaveViewController.h */,
 				DDCD83601470135600000D85 /* EventResultSaveViewController.m */,
+				DD85E17B1474843300D83223 /* EventResultViewController.h */,
+				DD85E17C1474843300D83223 /* EventResultViewController.m */,
+				DD386EF314759E9E00221C24 /* EventResultDetailViewController.h */,
+				DD386EF414759E9E00221C24 /* EventResultDetailViewController.m */,
+				DD386EFC1475E36000221C24 /* EventViewController.h */,
+				DD386EFD1475E36000221C24 /* EventViewController.m */,
+				DDD3C53B1475F11900263ABD /* PhotoViewController.h */,
+				DDD3C53C1475F11900263ABD /* PhotoViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -249,13 +275,17 @@
 		DD121E6214664BF500E97E8C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DD2A07F21447AA5A003FB740 /* MainWindow.xib */,
 				DD895D3A1460BDA900203286 /* LoginViewController.xib */,
 				DD895D491460D8C800203286 /* HomeViewController.xib */,
+				DD386EFE1475E36000221C24 /* EventViewController.xib */,
 				DD121E1B14637A9600E97E8C /* EventDetailViewController.xib */,
 				DD121E24146458D700E97E8C /* EventPlayerViewController.xib */,
 				DDCD83611470135600000D85 /* EventResultSaveViewController.xib */,
 				DD121E5F14657F5200E97E8C /* ConfigViewController.xib */,
 				DD121E651466CC1600E97E8C /* EventCommentViewController.xib */,
+				DDD3C53D1475F11900263ABD /* PhotoViewController.xib */,
+				DD85E17D1474843300D83223 /* EventResultViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -294,7 +324,6 @@
 			children = (
 				DD2A07EF1447AA5A003FB740 /* iRankAppDelegate.h */,
 				DD2A07F01447AA5A003FB740 /* iRankAppDelegate.m */,
-				DD2A07F21447AA5A003FB740 /* MainWindow.xib */,
 				DD895D501460E47C00203286 /* Constants.h */,
 				DD895D5C146215C600203286 /* XMLParser */,
 				DD121E4F1464BD3400E97E8C /* Objects */,
@@ -441,6 +470,9 @@
 				DDCD83631470135600000D85 /* EventResultSaveViewController.xib in Resources */,
 				DDCD8367147021F000000D85 /* plus.png in Resources */,
 				DDCD8368147021F000000D85 /* minus.png in Resources */,
+				DD85E17F1474843300D83223 /* EventResultViewController.xib in Resources */,
+				DD386F001475E36000221C24 /* EventViewController.xib in Resources */,
+				DDD3C53F1475F11900263ABD /* PhotoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +509,10 @@
 				DD121E6014657F5200E97E8C /* ConfigViewController.m in Sources */,
 				DD121E661466CC1700E97E8C /* EventCommentViewController.m in Sources */,
 				DDCD83621470135600000D85 /* EventResultSaveViewController.m in Sources */,
+				DD85E17E1474843300D83223 /* EventResultViewController.m in Sources */,
+				DD386EF514759E9E00221C24 /* EventResultDetailViewController.m in Sources */,
+				DD386EFF1475E36000221C24 /* EventViewController.m in Sources */,
+				DDD3C53E1475F11900263ABD /* PhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,8 +584,8 @@
 		DD2A07FE1447AA5A003FB740 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Luciano Stegun (JDRDT4XYL3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Luciano Stegun (JDRDT4XYL3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -558,12 +594,13 @@
 				GCC_PREFIX_HEADER = "iRank/iRank-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "iRank/iRank-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				ONLY_ACTIVE_ARCH = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "E2229FB7-A272-42D7-882B-94A51C5FA9E6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E2229FB7-A272-42D7-882B-94A51C5FA9E6";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -571,8 +608,12 @@
 		DD2A07FF1447AA5A003FB740 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
+				CODE_SIGN_IDENTITY = "iPhone Developer: Luciano Stegun (JDRDT4XYL3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Luciano Stegun (JDRDT4XYL3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -581,12 +622,13 @@
 				GCC_PREFIX_HEADER = "iRank/iRank-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "iRank/iRank-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				ONLY_ACTIVE_ARCH = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "E2229FB7-A272-42D7-882B-94A51C5FA9E6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E2229FB7-A272-42D7-882B-94A51C5FA9E6";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = armv6;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -22,6 +22,7 @@
 @property (nonatomic, readwrite) float rebuy;
 @property (nonatomic, readwrite) float addon;
 @property (nonatomic, readwrite) float prize;
+@property (nonatomic, readwrite) float score;
 
 -(void)togglePresence:(NSString *)choice;
 
