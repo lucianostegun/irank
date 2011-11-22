@@ -410,39 +410,7 @@ class eventActions extends sfActions
   
   public function executeUploadPhoto($request){
 
-	$publish              = $request->getParameter('publish');
-	$eventId              = $request->getParameter('eventId');
-	$userSiteId           = $request->getParameter('userSiteId');
-	$allowedExtensionList = array('jpg', 'jpeg', 'png');
-	$maxFileSize          = (1024*1024*2);
-	
-	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
-	$peopleId    = $userSiteObj->getPeopleId();
-	
-	$this->getUser()->setAttribute('userSiteId', $userSiteId);
-	$this->getUser()->setAttribute('firstName', $userSiteObj->getPeople()->getFirstName());
-	
-	$options = array('allowedExtensionList'=>$allowedExtensionList,
-					 'maxFileSize'=>$maxFileSize);
-
-	try {
-		
-		$fileObj = File::upload( $request, 'Filedata', 'eventPhoto/event-'.$eventId, $options );
-	}catch( Exception $e ){
-	
-		Util::forceError($e);	
-	}
-	
-	$thumbPath = '/uploads/eventPhoto/event-'.$eventId.'/thumb';
-	$fileObj->createThumbnail($thumbPath, 80, 60);
-	$fileObj->resizeMax(800,600);
-	
-	$eventPhotoObj = new EventPhoto();
-	$eventPhotoObj->setEventId($eventId);
-	$eventPhotoObj->setFileId($fileObj->getId());
-	$eventPhotoObj->setPeopleId($peopleId);
-	$eventPhotoObj->setIsShared($publish);
-	$eventPhotoObj->save();
+	Event::uploadPicture($request);
   	
   	exit;
   }
