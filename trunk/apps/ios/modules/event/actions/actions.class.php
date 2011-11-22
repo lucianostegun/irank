@@ -229,7 +229,7 @@ class eventActions extends sfActions
 	
 	$img = imagecreatetruecolor($width, $height);
 	imagecopyresampled($img, $newImg, 0, 0, 0, 0, $width, $height, $srcW, $srcH);
-	imagejpeg($img);
+	imagejpeg($img, null, 100);
 	imagedestroy($img);
 	imagedestroy($newImg);
 	exit;
