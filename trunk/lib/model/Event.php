@@ -599,12 +599,12 @@ class Event extends BaseEvent
 		return $eventObj;
 	}
 	
-	public function isEditable(){
+	public function isEditable($ignorePeople=false){
 
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$rankingObj = $this->getRanking();
 		
-		if( is_object($rankingObj) && !$rankingObj->isMyRanking() )
+		if( !$ignorePeople && is_object($rankingObj) && !$rankingObj->isMyRanking() )
 			return false;
 
 		// Se hoje for maior que a data final do ranking
