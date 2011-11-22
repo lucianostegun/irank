@@ -34,7 +34,7 @@ class eventActions extends sfActions
 //	fclose($file);
 //	exit;
 //	$xmlString = file_get_contents(Util::getFilePath('/xml.xml'));
-  	
+
 	$xmlString   = simplexml_load_string( $xmlString );
 	$eventResultList = array();	
 	
@@ -43,10 +43,12 @@ class eventActions extends sfActions
     
     $eventId  = (int)$xmlString->attributes()->eventId;
     $eventObj = EventPeer::retrieveByPK($eventId);
-    
-    if( !$eventObj->isEditable() )
+
+	Util::getHelper('I18N');
+	    
+    if( !$eventObj->isEditable(true) )
 		Util::forceError('!'.__('event.lockedEvent'), true);
-    
+
     $rowList = array();
     foreach( $xmlString->eventResult as $eventResultNode ){
     	
@@ -69,7 +71,6 @@ class eventActions extends sfActions
 		$request->setParameter('prize'.$peopleId, $eventResult['prize']);
   	}
 
-	Util::getHelper('I18N');
   	$eventObj->saveResult($request);
   	
   	// A aplicação espera receber este retorno!
@@ -108,6 +109,13 @@ class eventActions extends sfActions
 	echo 'ok';
 	
 	exit;
+  }
+  
+  public function executePhotos($request){
+  	
+  	$this->eventId = $request->getParameter('eventId');
+
+	sfConfig::set('sf_web_debug', false);
   }
   
   public function executeUpdateInviteStatus($request){
@@ -173,6 +181,60 @@ class eventActions extends sfActions
 	exit;
   }
   
+  public function executePhoto($request){
+  	
+  	$eventId  = $request->getParameter('eventId');
+  	$fileName = $request->getParameter('fileName');
+  	$filePath = Util::getFilePath('/uploads/eventPhoto/event-'.$eventId.'/thumb/'.$fileName);
+  	
+	$newImg = @imagecreatefromjpeg( $filePath );
+	
+	header('Content-type: file/jpeg');
+	
+	$srcW = imagesx($newImg);
+	$srcH = imagesy($newImg);
+	
+	$width  = 75;
+	$height = 56;
+	
+	$img = imagecreatetruecolor($width, $height);
+	imagecopyresampled($img, $newImg, 0, 0, 0, 0, $width, $height, $srcW, $srcH);
+	imagejpeg($img);
+	imagedestroy($img);
+	imagedestroy($newImg);
+	exit;
+  }
+  
+  public function executePhotoView($request){
+  	
+  	$this->eventPhotoId = $request->getParameter('eventPhotoId');
+  }
+  
+  public function executeImageThumb($request){
+
+  	$eventPhotoId  = $request->getParameter('eventPhotoId');
+  	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
+  	
+  	$filePath = $eventPhotoObj->getFile()->getFilePath(true);
+  	
+	$newImg = @imagecreatefromjpeg( $filePath );
+	
+	header('Content-type: image/jpeg');
+	
+	$srcW = imagesx($newImg);
+	$srcH = imagesy($newImg);
+	
+	$width  = 300;
+	$height = ($srcH*$width/$srcW);
+	
+	$img = imagecreatetruecolor($width, $height);
+	imagecopyresampled($img, $newImg, 0, 0, 0, 0, $width, $height, $srcW, $srcH);
+	imagejpeg($img);
+	imagedestroy($img);
+	imagedestroy($newImg);
+	exit;
+  }
+  
   /**
    * Executes index action
    *
@@ -185,6 +247,7 @@ class eventActions extends sfActions
   	$userSiteObj = $this->userSiteObj;
 	
 	switch( $model ){
+		case 'list':
 		case 'nextEvents':
 		case 'previousEvents':
 			$criteria = new Criteria();
@@ -193,6 +256,9 @@ class eventActions extends sfActions
   			$limit = $request->getParameter('limit');
   			
 			switch($model){
+				case 'list':
+				$eventObjList = Event::getList($criteria, 30, $userSiteId);
+				break;
 				case 'nextEvents':
 				$eventObjList = Event::getNextList($criteria, $limit, $userSiteId);
 				break;
@@ -237,21 +303,44 @@ class eventActions extends sfActions
 				
 				$peopleObj = $eventPlayerObj->getPeople();
 				
-				$eventNode = array();
-				$eventNode['@attributes']   = array('playerId'=>$peopleObj->getId(), 'eventId'=>$eventPlayerObj->getEventId());
-				$eventNode['enabled']       = ($eventPlayerObj->getEnabled()?'true':'false');
-				$eventNode['inviteStatus']  = $eventPlayerObj->getInviteStatus();
-				$eventNode['eventPosition'] = $eventPlayerObj->getEventPosition();
-				$eventNode['buyin']         = $eventPlayerObj->getBuyin();
-				$eventNode['rebuy']         = $eventPlayerObj->getRebuy();
-				$eventNode['addon']         = $eventPlayerObj->getAddon();
-				$eventNode['prize']         = $eventPlayerObj->getPrize();
-				$eventNode['player']        = array('firstName'=>$peopleObj->getFirstName(), 'lastName'=>$peopleObj->getLastName(), 'emailAddress'=>$peopleObj->getEmailAddress());
+				$eventPlayerNode = array();
+				$eventPlayerNode['@attributes']   = array('playerId'=>$peopleObj->getId(), 'eventId'=>$eventPlayerObj->getEventId());
+				$eventPlayerNode['enabled']       = ($eventPlayerObj->getEnabled()?'true':'false');
+				$eventPlayerNode['inviteStatus']  = $eventPlayerObj->getInviteStatus();
+				$eventPlayerNode['eventPosition'] = $eventPlayerObj->getEventPosition();
+				$eventPlayerNode['buyin']         = $eventPlayerObj->getBuyin();
+				$eventPlayerNode['rebuy']         = $eventPlayerObj->getRebuy();
+				$eventPlayerNode['addon']         = $eventPlayerObj->getAddon();
+				$eventPlayerNode['prize']         = $eventPlayerObj->getPrize();
+				$eventPlayerNode['score']         = $eventPlayerObj->getScore();
+				$eventPlayerNode['player']        = array('firstName'=>$peopleObj->getFirstName(), 'lastName'=>$peopleObj->getLastName(), 'emailAddress'=>$peopleObj->getEmailAddress());
 				
-				$eventPlayerList[] = $eventNode;
+				$eventPlayerList[] = $eventPlayerNode;
 			}
 			
 			echo EventPlayer::getXml($eventPlayerList);
+			break;
+		case 'eventPhoto':
+
+			$eventObj = EventPeer::retrieveByPK($eventId);
+			$host = $request->getHost();
+
+			$eventPhotoList = array();
+			foreach($eventObj->getPhotoList() as $eventPhotoObj){
+				
+				$fileObj  = $eventPhotoObj->getFile();
+				$imageUrl = 'http://'.$host.'/'.$fileObj->getFilePath();
+				$fileName = Util::getFileName($imageUrl);
+				
+				$eventPhotoNode = array();
+				$eventPhotoNode['@attributes'] = array('eventPhotoId'=>$eventPhotoObj->getId(), 'fileId'=>$eventPhotoObj->getFileId());
+				$eventPhotoNode['imageUrl']    = 'http://'.$host.'/ios.php/event/imageThumb/eventPhotoId/'.$eventPhotoObj->getId().'/thumb/1';
+				$eventPhotoNode['thumbUrl']    = str_replace($fileName, 'thumb/'.$fileName, $imageUrl);
+				
+				$eventPhotoList[] = $eventPhotoNode;
+			}
+			
+			echo EventPhoto::getXml($eventPhotoList);
 			break;
 	}
 	exit;

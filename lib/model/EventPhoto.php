@@ -79,6 +79,11 @@ class EventPhoto extends BaseEventPhoto
        	HomeWall::doLog('publicou uma foto do evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPhoto', true);
 	}
 	
+	public static function getXml($eventList){
+		
+		return Util::buildXml($eventList, 'eventPhotos', 'eventPhoto');
+	}
+	
 	public function getInfo(){
 		
 		$fileObj = $this->getFile();

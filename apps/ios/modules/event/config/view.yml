@@ -1,3 +1,3 @@
 all:
-  stylesheets:    [ios/comments]
+  stylesheets:    [ios/event]
   javascripts:    []

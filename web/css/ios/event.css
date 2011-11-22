@@ -21,6 +21,15 @@ body, html {
 	border-bottom: 1px solid #FFFFFF
 }
 
+.photoList {
+
+	width: 100%;
+	height: 100%;
+	padding-top: 2px;
+	padding-left: 1px;
+	background: url('/images/ios/camera.png') center center no-repeat;
+}
+
 .comment {
 	
 	width: 87%;
@@ -29,6 +38,25 @@ body, html {
 	background: url('/images/ios/quotesRight.png') right bottom no-repeat;
 }
 
+.photoList .photo img {
+
+	width: 75px;
+	border: 1px solid #666666;
+	margin-left: 2px;
+}
+
+.photoView {
+
+	text-align: center;
+	background: url('/images/ios/camera.png') center center no-repeat;
+}
+
+.photoView img {
+
+	width: 300px;
+	border: 1px solid #000000;
+	margin-top: 8px;
+}
 
 .senderInfo {
 
