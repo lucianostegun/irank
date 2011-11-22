@@ -27,7 +27,7 @@ class eventActions extends sfActions
   
   public function executeSaveResult($request){
   	
-  	$xmlString = $request->getParameter('eventResults');
+  	$xmlString = $request->getParameter('eventResultXml');
   	
 //	$file = fopen(Util::getFilePath('/xml.xml'), 'w');
 //	fwrite($file, $xmlString);
@@ -75,6 +75,12 @@ class eventActions extends sfActions
   	
   	// A aplicação espera receber este retorno!
   	echo 'savedResult';
+  	exit;
+  }
+  
+  public function executeUploadPhoto($request){
+  	
+	Event::uploadPicture($request, true);
   	exit;
   }
   
