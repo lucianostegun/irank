@@ -94,10 +94,10 @@
     int userSiteId = [appDelegate userSiteId];
 
     NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/nextEvents/userSiteId/%i", serverAddress, userSiteId]];
-    
+
     XMLEventParser *eventParser = [[XMLEventParser alloc] initXMLParser];
     
-	NSURLRequest *nextEventRequest = [NSURLRequest requestWithURL:url cachePolicy: NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
+	NSURLRequest *nextEventRequest = [NSURLRequest requestWithURL:url cachePolicy: NSURLRequestReloadIgnoringCacheData timeoutInterval:120];
 	NSError *requestError = nil;
 	NSData *response = [NSURLConnection sendSynchronousRequest:nextEventRequest returningResponse:nil error:&requestError]; 
     BOOL success;
@@ -123,7 +123,7 @@
     
     
     url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/previousEvents/userSiteId/%i/limit/%@", serverAddress, userSiteId, homeEvents]];
-	nextEventRequest = [NSURLRequest requestWithURL:url cachePolicy: NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
+	nextEventRequest = [NSURLRequest requestWithURL:url cachePolicy: NSURLRequestReloadIgnoringCacheData timeoutInterval:120];
 	requestError = nil;
 	response = [NSURLConnection sendSynchronousRequest:nextEventRequest returningResponse:nil error:&requestError]; 
     

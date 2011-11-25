@@ -249,10 +249,10 @@
     
     //        NSLog(@"stringData: %@", stringData);
     
-    const char *bytes = [[NSString stringWithFormat:@"eventResults=%@", stringData] UTF8String];
+    const char *bytes = [[NSString stringWithFormat:@"eventResultXml=%@", stringData] UTF8String];
     
-    NSURL *url = [NSURL URLWithString:@"http://irank/ios.php/event/saveResult"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5];
+    NSURL *url = [NSURL URLWithString:@"http://irank/ios_dev.php/event/saveResult"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
     
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[NSData dataWithBytes:bytes length:strlen(bytes)]];
@@ -428,6 +428,8 @@
     NSLog(@"didReceiveData");
     
     NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+    
+    NSLog(@"result: %@", result);
     
     if( [result isEqualToString:@"savedResult"] ){
         

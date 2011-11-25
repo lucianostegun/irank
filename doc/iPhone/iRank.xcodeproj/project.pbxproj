@@ -69,6 +69,11 @@
 		DD8DD3A31449FC650063D735 /* photos.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3A01449FC650063D735 /* photos.png */; };
 		DD9D8543146EDA98005B2FD5 /* aboutHeader.png in Resources */ = {isa = PBXBuildFile; fileRef = DD9D8542146EDA98005B2FD5 /* aboutHeader.png */; };
 		DD9D8545146F6191005B2FD5 /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = DD9D8544146F6191005B2FD5 /* alert.png */; };
+		DD9ED0AB147B07B2001B5B32 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = DD9ED0AA147B07B2001B5B32 /* camera.png */; };
+		DD9ED0AF147B11CE001B5B32 /* XMLEventPhotoParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9ED0AE147B11CE001B5B32 /* XMLEventPhotoParser.m */; };
+		DD9ED0B2147B12B9001B5B32 /* EventPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9ED0B1147B12B9001B5B32 /* EventPhoto.m */; };
+		DD9ED0B9147B3751001B5B32 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9ED0B8147B3751001B5B32 /* ImageCache.m */; };
+		DD9ED0BC147B375D001B5B32 /* FileHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9ED0BB147B375C001B5B32 /* FileHelpers.m */; };
 		DDCD83621470135600000D85 /* EventResultSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCD83601470135600000D85 /* EventResultSaveViewController.m */; };
 		DDCD83631470135600000D85 /* EventResultSaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCD83611470135600000D85 /* EventResultSaveViewController.xib */; };
 		DDCD8367147021F000000D85 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = DDCD8365147021F000000D85 /* plus.png */; };
@@ -172,6 +177,15 @@
 		DD8DD3A01449FC650063D735 /* photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photos.png; sourceTree = "<group>"; };
 		DD9D8542146EDA98005B2FD5 /* aboutHeader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aboutHeader.png; sourceTree = "<group>"; };
 		DD9D8544146F6191005B2FD5 /* alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert.png; sourceTree = "<group>"; };
+		DD9ED0AA147B07B2001B5B32 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		DD9ED0AD147B11CE001B5B32 /* XMLEventPhotoParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLEventPhotoParser.h; sourceTree = "<group>"; };
+		DD9ED0AE147B11CE001B5B32 /* XMLEventPhotoParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLEventPhotoParser.m; sourceTree = "<group>"; };
+		DD9ED0B0147B12B9001B5B32 /* EventPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventPhoto.h; sourceTree = "<group>"; };
+		DD9ED0B1147B12B9001B5B32 /* EventPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventPhoto.m; sourceTree = "<group>"; };
+		DD9ED0B7147B3751001B5B32 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
+		DD9ED0B8147B3751001B5B32 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
+		DD9ED0BA147B375C001B5B32 /* FileHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileHelpers.h; sourceTree = "<group>"; };
+		DD9ED0BB147B375C001B5B32 /* FileHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileHelpers.m; sourceTree = "<group>"; };
 		DDA89A1E145E362E0076DCA1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = /Users/lucianostegun/Projetos/iRank/iRank/pt.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
 		DDA89A1F145E362E0076DCA1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = pt; path = /Users/lucianostegun/Projetos/iRank/iRank/pt.lproj/MainWindow.xib; sourceTree = "<absolute>"; };
 		DDCD835F1470135600000D85 /* EventResultSaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventResultSaveViewController.h; sourceTree = "<group>"; };
@@ -202,6 +216,7 @@
 		DD121E361464AB8500E97E8C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				DD9ED0AA147B07B2001B5B32 /* camera.png */,
 				DD9D8544146F6191005B2FD5 /* alert.png */,
 				DD1EC3791468A3570050D5D3 /* nokH.png */,
 				DD1EC37A1468A3570050D5D3 /* noneH.png */,
@@ -232,12 +247,18 @@
 		DD121E4F1464BD3400E97E8C /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				DD9ED0BA147B375C001B5B32 /* FileHelpers.h */,
+				DD9ED0BB147B375C001B5B32 /* FileHelpers.m */,
+				DD9ED0B7147B3751001B5B32 /* ImageCache.h */,
+				DD9ED0B8147B3751001B5B32 /* ImageCache.m */,
 				DD895D52146209EB00203286 /* Event.h */,
 				DD895D53146209EB00203286 /* Event.m */,
 				DD121E2714646DA600E97E8C /* Player.h */,
 				DD121E2814646DA600E97E8C /* Player.m */,
 				DD121E2A14646E6E00E97E8C /* EventPlayer.h */,
 				DD121E2B14646E6E00E97E8C /* EventPlayer.m */,
+				DD9ED0B0147B12B9001B5B32 /* EventPhoto.h */,
+				DD9ED0B1147B12B9001B5B32 /* EventPhoto.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -385,6 +406,8 @@
 				DD895D5A146215C200203286 /* XMLEventParser.m */,
 				DD121E2D1464725500E97E8C /* XMLEventPlayerParser.h */,
 				DD121E2E1464725500E97E8C /* XMLEventPlayerParser.m */,
+				DD9ED0AD147B11CE001B5B32 /* XMLEventPhotoParser.h */,
+				DD9ED0AE147B11CE001B5B32 /* XMLEventPhotoParser.m */,
 			);
 			name = XMLParser;
 			sourceTree = "<group>";
@@ -473,6 +496,7 @@
 				DD85E17F1474843300D83223 /* EventResultViewController.xib in Resources */,
 				DD386F001475E36000221C24 /* EventViewController.xib in Resources */,
 				DDD3C53F1475F11900263ABD /* PhotoViewController.xib in Resources */,
+				DD9ED0AB147B07B2001B5B32 /* camera.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +537,10 @@
 				DD386EF514759E9E00221C24 /* EventResultDetailViewController.m in Sources */,
 				DD386EFF1475E36000221C24 /* EventViewController.m in Sources */,
 				DDD3C53E1475F11900263ABD /* PhotoViewController.m in Sources */,
+				DD9ED0AF147B11CE001B5B32 /* XMLEventPhotoParser.m in Sources */,
+				DD9ED0B2147B12B9001B5B32 /* EventPhoto.m in Sources */,
+				DD9ED0B9147B3751001B5B32 /* ImageCache.m in Sources */,
+				DD9ED0BC147B375D001B5B32 /* FileHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
