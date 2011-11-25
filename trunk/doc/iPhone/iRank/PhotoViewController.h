@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PhotoViewController : UIViewController {
+@interface PhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
     
     UIActivityIndicatorView *activityIndicator;
-    IBOutlet UIWebView *webView;
+    NSMutableArray *buttonImageList;
+    NSMutableArray *eventPhotoList;
+
+    BOOL isZoom;
+    BOOL refreshesImageList;
+
+    IBOutlet UILabel *lblNoPhoto;
+    IBOutlet UIBarButtonItem *btnCamera;
 }
 
 @property (nonatomic, assign) IBOutlet UIWebView *webView;
@@ -19,5 +26,11 @@
 @property (nonatomic, readwrite) int lastEventId;
 
 - (void)doRefreshWebView:(BOOL)fullRefresh;
-
+- (void)updateImageList;
+- (void)drawImages;
+- (void)selectImage:(id)sender;
+- (void)showAllImages;
+- (void)centerZoomImage;
+- (void)addImage:(UIImage *)image tag:(int)tag;
+- (IBAction)takePicture:(id)sender;
 @end
