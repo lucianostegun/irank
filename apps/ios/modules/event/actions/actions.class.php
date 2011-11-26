@@ -81,6 +81,7 @@ class eventActions extends sfActions
   public function executeUploadPhoto($request){
   	
 	Event::uploadPicture($request, true);
+	echo 'uploadSuccess';
   	exit;
   }
   
@@ -253,24 +254,28 @@ class eventActions extends sfActions
   	$userSiteObj = $this->userSiteObj;
 	
 	switch( $model ){
-		case 'list':
+		case 'listEvents':
 		case 'nextEvents':
 		case 'previousEvents':
+		case 'resumeEvents':
 			$criteria = new Criteria();
 			$criteria->setNoFilter(true);
 		
   			$limit = $request->getParameter('limit');
   			
 			switch($model){
-				case 'list':
-				$eventObjList = Event::getList($criteria, 30, $userSiteId);
-				break;
+				case 'listEvents':
+					$eventObjList = Event::getList($criteria, 30, $userSiteId);
+					break;
 				case 'nextEvents':
-				$eventObjList = Event::getNextList($criteria, $limit, $userSiteId);
-				break;
+					$eventObjList = Event::getNextList($criteria, $limit, $userSiteId);
+					break;
 				case 'previousEvents':
-				$eventObjList = Event::getPreviousList($criteria, $limit, $userSiteId);
-				break;
+					$eventObjList = Event::getPreviousList($criteria, $limit, $userSiteId);
+					break;
+				case 'resumeEvents':
+					$eventObjList = Event::getResumeList($limit, $userSiteId);
+					break;
 			}
 		
 			$eventList = array();

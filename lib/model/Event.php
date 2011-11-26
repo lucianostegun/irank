@@ -18,6 +18,8 @@ class Event extends BaseEvent
 			$columnModifiedList = Log::getModifiedColumnList($this);
 
     		$this->postOnWall();
+    		
+    		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
 
 			parent::save();
 			
@@ -94,10 +96,10 @@ class Event extends BaseEvent
 		if( !is_object($criteria) )
 			$criteria = new Criteria();
 
-		$criterion = $criteria->getNewCriterion( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
+		$criterion = $criteria->getNewCriterion( EventPeer::EVENT_DATE_TIME, date('Y-m-d H:i'), Criteria::LESS_EQUAL );
 		$criterion->addAnd( $criteria->getNewCriterion( EventPeer::SAVED_RESULT, true ) );
-		
-		$criterion2 = $criteria->getNewCriterion( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
+
+		$criterion2 = $criteria->getNewCriterion( EventPeer::EVENT_DATE_TIME, date('Y-m-d H:i'), Criteria::LESS_EQUAL );
 		$criterion2->addAnd( $criteria->getNewCriterion( EventPeer::EVENT_DATE, date('Y-m-d', mktime(0,0,0,date('m'),date('d')-7,date('Y'))), Criteria::GREATER_THAN ) );
 
 		$criterion->addOr( $criterion2 );
@@ -106,7 +108,7 @@ class Event extends BaseEvent
 		
 		return self::getList($criteria, $limit, $userSiteId);
 	}
-	
+
 	public static function getNextList($criteria=null, $limit=null, $userSiteId=null){
 		
 		$userSiteId = ($userSiteId?$userSiteId:MyTools::getAttribute('userSiteId'));
@@ -131,6 +133,21 @@ class Event extends BaseEvent
 		$criteria->setLimit($limit);
 		
 		return EventPeer::doSelect( $criteria );
+	}
+
+	public static function getResumeList($limit=null, $userSiteId=null){
+		
+		$criteria = new Criteria();
+		$criteria->setNoFilter(true);
+		
+		$eventObjListNext = Event::getNextList($criteria, $limit, $userSiteId);
+		
+		$criteria = new Criteria();
+		$criteria->setNoFilter(true);
+			
+		$eventObjListPrevious = Event::getPreviousList($criteria, $limit, $userSiteId);
+		
+		return array_merge($eventObjListNext, $eventObjListPrevious);
 	}
 	
 	public function getPeopleList($returnPeople=false, $orderByList=null){

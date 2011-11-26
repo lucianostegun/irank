@@ -152,6 +152,7 @@
 		<column name="paid_places" type="INTEGER" />
 		<column name="event_date" type="DATE" />
 		<column name="start_time" type="TIME" />
+		<column name="event_date_time" type="TIMESTAMP" />
 		<column name="comments" type="VARCHAR" />
 		<column name="sent_email" type="BOOLEAN" />
 		<column name="invites" type="INTEGER" />
