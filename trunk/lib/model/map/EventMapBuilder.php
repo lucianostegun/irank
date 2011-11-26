@@ -52,6 +52,8 @@ class EventMapBuilder {
 
 		$tMap->addColumn('START_TIME', 'StartTime', 'int', CreoleTypes::TIME, false, null);
 
+		$tMap->addColumn('EVENT_DATE_TIME', 'EventDateTime', 'int', CreoleTypes::TIMESTAMP, false, null);
+
 		$tMap->addColumn('COMMENTS', 'Comments', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('SENT_EMAIL', 'SentEmail', 'boolean', CreoleTypes::BOOLEAN, false, null);
