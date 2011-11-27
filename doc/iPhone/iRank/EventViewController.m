@@ -47,20 +47,20 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     
     iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate showLoadingView:nil];
+    [self performSelector:@selector(updateEventList) withObject:nil afterDelay:0.1];
+}
 
+- (void)updateEventList {
+    
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     int userSiteId = [appDelegate userSiteId];
     
-    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/list/userSiteId/%i", serverAddress, userSiteId]];
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:url];    
-
-    //Inicia o delegate
-    XMLEventParser *parser = [[XMLEventParser alloc] initXMLParser];
+    eventList = [Event loadEventList:@"list" userSiteId:userSiteId limit:0];
     
-    [xmlParser setDelegate:parser];
-    
-    BOOL success = [xmlParser parse];
-    
-    eventList = [[parser getEventList] copy];
+    [appDelegate hideLoadingView];
+    [[self tableView] reloadData];
 }
 
 - (void)viewDidUnload

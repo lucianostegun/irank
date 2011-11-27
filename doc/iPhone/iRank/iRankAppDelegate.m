@@ -37,7 +37,11 @@
     if( userInfo==nil ){
 
         loginViewController = [[LoginViewController alloc] init];
-        self.window.rootViewController = loginViewController;
+        
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+        [navigationController setNavigationBarHidden:YES];
+        
+        self.window.rootViewController = navigationController;
         [loginViewController release];
         loginViewController = nil;
     }else{
@@ -51,10 +55,12 @@
     
     NSNumber *homeEvents = [userDefaults objectForKey:@"homeEvents"];
     
+    // Se homeEvents for NULL então reestabelece todas as configurações iniciais
     if( homeEvents==NULL ){
      
         homeEvents = [NSNumber numberWithInt:5];
         [userDefaults setObject:homeEvents forKey:@"homeEvents"];
+        [userDefaults setBool:YES forKey:@"saveResultOffline"];
         [userDefaults synchronize];
     }
     
@@ -78,11 +84,9 @@
     userSiteId = [[userInfo objectForKey:kUserSiteIdKey] intValue];
     firstName = [userInfo objectForKey:kFirstNameKey];
     lastName = [userInfo objectForKey:kLastNameKey];
+    
     self.window.rootViewController = tabBarController;
     
-//    NSLog(@"%@");;
-    
-    //    NSLog(@"retainCount: %i", [loginViewController retainCount]);
 }
 
 -(void)showLogin {
@@ -90,8 +94,11 @@
     if( loginViewController==nil )
         loginViewController = [[LoginViewController alloc] init];
     
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    [navigationController setNavigationBarHidden:YES];
+    
     self.window.rootViewController = nil;
-    self.window.rootViewController = loginViewController;
+    self.window.rootViewController = navigationController;
     
     [loginViewController release];
     loginViewController = nil;
@@ -162,6 +169,33 @@
 -(void)updateBadge {
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:mainBadge];
+}
+
+-(void)showNetworkActivity {
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
+-(void)hideNetworkActivity {
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
+
+-(void)showLoadingView:(NSString *)loadingMessage {
+    
+    if( loadingMessage==nil )
+        loadingMessage = @"carregando lista de eventos...";
+    
+    lblLoadingMessage.text = loadingMessage;
+    
+    [self.window.rootViewController.view addSubview:loadingView];
+    [self showNetworkActivity];
+}
+
+-(void)hideLoadingView {
+    
+    [loadingView removeFromSuperview];
+    [self hideNetworkActivity];
 }
 
 - (void)dealloc

@@ -16,6 +16,9 @@
     LoginViewController *loginViewController;
     NSUserDefaults *userDefaults;
     NSInteger mainBadge;
+    
+    IBOutlet UIView *loadingView;
+    IBOutlet UILabel *lblLoadingMessage;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
@@ -35,5 +38,10 @@
 -(void)decraseBadge:(int)amount;
 -(void)updateBadge;
 -(void)putOnLandscapeMode;
+-(void)showNetworkActivity;
+-(void)hideNetworkActivity;
+
+-(void)showLoadingView:(NSString *)loadingMessage;
+-(void)hideLoadingView;
 
 @end

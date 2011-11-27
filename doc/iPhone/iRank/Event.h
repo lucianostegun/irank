@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Event : NSObject {
+@interface Event : NSObject <NSCoding> {
     
     int rankingPlaceId;
     BOOL sentEmail;
@@ -36,9 +36,14 @@
 @property (nonatomic, readwrite) BOOL isPastDate;
 @property (nonatomic, readwrite) BOOL isEditable;
 @property (nonatomic, retain) NSMutableArray *eventPlayerList;
+@property (nonatomic, readwrite) BOOL filteredPlayerList;
 
--(void)filterPlayerList;
--(float)totalBuyins;
+- (void)filterPlayerList;
+- (float)totalBuyins;
 
--(void)saveResult:(id)sender;
+- (void)saveResult:(id)sender;
+
++ (NSString *)eventArrayPath:(NSString *)sufix;
++ (NSMutableArray *)loadEventList:(NSString *)eventType userSiteId:(int)userSiteId limit:(int)limit;
++ (NSMutableArray *)loadArchivedEventList:(NSString *)eventType userSiteId:(int)userSiteId limit:(int)limit;
 @end

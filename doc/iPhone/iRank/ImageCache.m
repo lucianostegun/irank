@@ -99,9 +99,4 @@ static ImageCache *sharedImageCache;
     return self;
 }
 
--(void)release {
-    
-    // No op
-}
-
 @end

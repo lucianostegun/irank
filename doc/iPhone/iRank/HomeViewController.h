@@ -12,6 +12,7 @@
 @interface HomeViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate> {
     
     IBOutlet UIBarButtonItem *quitButton;
+    IBOutlet UIView *loadingView;
 }
 
 @property (nonatomic, retain) NSMutableArray *bankrollInfo;
@@ -19,8 +20,7 @@
 @property (nonatomic, retain) NSMutableArray *previousEventList;
 @property (nonatomic, retain) EventDetailViewController *eventDetailViewController;
 
--(IBAction)doLogout:(id)sender;
--(void)updateResume;
--(void)hideTabBar;
--(void)showTabBar;
+- (IBAction)doLogout:(id)sender;
+- (void)updateEventList;
+- (void)updateResume;
 @end

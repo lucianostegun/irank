@@ -17,4 +17,7 @@
 @property (nonatomic, assign) Event *event;
 @property (nonatomic, readwrite) BOOL showEnabledOnly;
 
+-(void)doUpdatePlayerList:(BOOL)reloadData;
+-(void)doUpdatePlayerListAndReloadData;
+
 @end

@@ -58,10 +58,61 @@
 {
     [super viewWillAppear:animated];
     
+    BOOL updateEventList = ([[event eventPlayerList] count]==0);
+    
+    if( updateEventList ){
+
+        iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate showLoadingView:@"carregando lista de jogadores..."];
+        
+        [self performSelector:@selector(doUpdatePlayerListAndReloadData) withObject:nil afterDelay:0.1];
+    }
+    
+    if( [self showEnabledOnly] && [event isMyEvent] ){
+        
+        if( !updateEventList )
+            [event filterPlayerList];
+        
+        [self setEditing:YES animated:NO];
+        self.navigationItem.rightBarButtonItem = doneButton;
+    }else{
+        
+        if( [event isEditable] && [event filteredPlayerList] ){
+            
+            UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updatePlayerList:)];
+            
+            self.navigationItem.rightBarButtonItem = reloadButton;
+        }else{
+            
+            self.navigationItem.rightBarButtonItem = nil;
+        }
+        
+        [self setEditing:NO animated:NO];
+    }
+    
+    [self setTitle:@"Convidados"];
+    [[self tableView] reloadData];
+}
+
+-(void)updatePlayerList:(id)sender {
+    
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate showLoadingView:@"carregando lista de jogadores..."];
+    
+    [self performSelector:@selector(doUpdatePlayerListAndReloadData) withObject:nil afterDelay:0.1];
+}
+
+-(void)doUpdatePlayerListAndReloadData {
+    
+    [self doUpdatePlayerList:YES];
+}
+
+-(void)doUpdatePlayerList:(BOOL)reloadData {
+    
     int userSiteId = [(iRankAppDelegate *)[[UIApplication sharedApplication] delegate] userSiteId];
     
     NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/eventPlayer/userSiteId/%i/eventId/%d", serverAddress, userSiteId, event.eventId]];
-
+    
     NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:url];    
     
     //Inicia o delegate
@@ -75,23 +126,21 @@
     
     if( !success ) 
         return [appDelegate showAlert:@"Erro" message:@"Não foi possível recuperar a lista de jogadores."];
-                  
+    
     [event setEventPlayerList: [[parser getEventPlayerList] retain]];
     
+    [appDelegate hideLoadingView];
     
-    if( [self showEnabledOnly] && [event isMyEvent] ){
+    if( reloadData ){
         
-        [event filterPlayerList];
-        [self setEditing:YES animated:NO];
-        self.navigationItem.rightBarButtonItem = doneButton;
-    }else{
+        if( showEnabledOnly )
+            [event filterPlayerList];
         
-        [self setEditing:NO animated:NO];
+        [event setFilteredPlayerList:showEnabledOnly];
+
+        [[self tableView] reloadData];   
         self.navigationItem.rightBarButtonItem = nil;
     }
-    
-    [self setTitle:@"Convidados"];
-    [[self tableView] reloadData];    
 }
 
 -(void)doneButtonTouchUp:(id)sender {

@@ -47,8 +47,55 @@
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     self.navigationItem.leftBarButtonItem = quitButton;
-    
+
     [self updateResume];
+    
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate showLoadingView:nil];
+    [self performSelector:@selector(updateEventList) withObject:nil afterDelay:0.1];
+}
+
+-(void)updateTeste:(id)sender {
+    
+    NSLog(@"Clicou no botão update");
+
+//    [self showIndicator];
+
+}
+
+-(void)showIndicator {
+    
+    [self performSelector:@selector(hideIndicator) withObject:nil afterDelay:0];
+
+    //    [activityIndicator setNeedsDisplay];
+    //    [self.view setNeedsDisplay];
+    //    [activityIndicator setNeedsLayout];
+    //    [self.view setNeedsLayout];
+}
+
+-(void)hideIndicator {
+
+//    int userSiteId = 1;
+//    
+//    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/nextEvents/userSiteId/%i", serverAddress, userSiteId]];
+//    
+//    NSURLRequest *nextEventRequest = [NSURLRequest requestWithURL:url cachePolicy: NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
+//	NSError *requestError = nil;
+//	NSData *response = [NSURLConnection sendSynchronousRequest:nextEventRequest returningResponse:nil error:&requestError]; 
+//    
+//    if(requestError == nil) {
+//        
+//		NSLog(@"Processou o XML com sucesso");
+//	} else {
+//        
+//        NSLog(@"Timeout ao processar o XML de próximos eventos");
+//	}
+//    
+//    [activityIndicator stopAnimating];    
+//    //    [activityIndicator setNeedsDisplay];
+//    //    [self.view setNeedsDisplay];
+//    //    [activityIndicator setNeedsLayout];
+//    //    [self.view setNeedsLayout];
 }
 
 -(void)updateResume {
@@ -89,75 +136,45 @@
                                  [userInfo valueForKey:kBalanceKey], kDescriptKey,
                                  nil, kControllerKey, nil]];
     
-    NSNumber *homeEvents = [[appDelegate userDefaults] objectForKey:@"homeEvents"];
+    appDelegate.refreshHome = NO;
+}
+
+- (void)updateEventList {
+    
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     int userSiteId = [appDelegate userSiteId];
 
-    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/nextEvents/userSiteId/%i", serverAddress, userSiteId]];
-
-    XMLEventParser *eventParser = [[XMLEventParser alloc] initXMLParser];
+    int homeEvents = [[[appDelegate userDefaults] objectForKey:@"homeEvents"] intValue];
     
-	NSURLRequest *nextEventRequest = [NSURLRequest requestWithURL:url cachePolicy: NSURLRequestReloadIgnoringCacheData timeoutInterval:120];
-	NSError *requestError = nil;
-	NSData *response = [NSURLConnection sendSynchronousRequest:nextEventRequest returningResponse:nil error:&requestError]; 
-    BOOL success;
-	
-    if(requestError == nil) {
-        
-		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:response];
-        
-		[parser setDelegate:eventParser];
-		[parser setShouldProcessNamespaces:YES];
-		[parser setShouldReportNamespacePrefixes:YES];
-		[parser setShouldResolveExternalEntities:NO];
-		success = [parser parse];
-		[parser release];
-        
-        nextEventList = [[eventParser getEventList] copy];
-	} else {
-        
-        NSLog(@"Timeout ao processar o XML de próximos eventos");
-		[eventParser parserDidEndDocument:nil];
-	}
+    NSMutableArray *eventList = [Event loadEventList:@"resume" userSiteId:userSiteId limit:homeEvents];
     
+    NSLog(@"eventList count: %i", [eventList count]);
     
+    nextEventList     = [[NSMutableArray alloc] init];
+    previousEventList = [[NSMutableArray alloc] init];
     
-    url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/previousEvents/userSiteId/%i/limit/%@", serverAddress, userSiteId, homeEvents]];
-	nextEventRequest = [NSURLRequest requestWithURL:url cachePolicy: NSURLRequestReloadIgnoringCacheData timeoutInterval:120];
-	requestError = nil;
-	response = [NSURLConnection sendSynchronousRequest:nextEventRequest returningResponse:nil error:&requestError]; 
+    for(Event *event in eventList){
+        
+        if( event.isPastDate )
+            [previousEventList addObject:event];
+        else
+            [nextEventList addObject:event];
+    }
     
-    if(requestError == nil) {
-        
-		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:response];
-        
-		[parser setDelegate:eventParser];
-		[parser setShouldProcessNamespaces:YES];
-		[parser setShouldReportNamespacePrefixes:YES];
-		[parser setShouldResolveExternalEntities:NO];
-		success = [parser parse];
-		[parser release];
-        
-        previousEventList = [[eventParser getEventList] copy];
-	} else {
-        
-        NSLog(@"Timeout ao processar o XML de últimos eventos");
-		[eventParser parserDidEndDocument:nil];
-	}
+    [eventList release];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     if( [nextEventList count] > 0 ){
         
         appDelegate.homeTabBar.badgeValue = [NSString stringWithFormat:@"%i", [nextEventList count]];
         [appDelegate incraseBadge:[nextEventList count]];
     }
-    
-    
-    appDelegate.refreshHome = NO;
-    
-    [homeEvents release];
-    [requestError release];
-    [url release];
-//    [response release];
+
+    [[self tableView] reloadData];
+    [appDelegate hideLoadingView];
+//    [loadingView removeFromSuperview];
 }
 
 - (void)viewDidUnload
@@ -178,7 +195,6 @@
     
     if( appDelegate.refreshHome ){
      
-        [[self tableView] reloadData];
         [self updateResume];
     }
 }
@@ -390,7 +406,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-
     if( indexPath.section > 0 ){
         
         if( !eventDetailViewController )
@@ -410,14 +425,6 @@
         
         [event release];
     }
-}
-
--(void)hideTabBar {
-  
-}
-
--(void)showTabBar {
-
 }
 
 #pragma mark - Custom actions

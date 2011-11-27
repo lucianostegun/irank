@@ -23,7 +23,7 @@
 #define kDescriptKey    @"description"
 #define kControllerKey  @"viewController"
 
-//#define serverAddress   @"irank"
+#define serverAddress   @"irank"
 //#define serverAddress   @"alpha.irank.com.br"
-#define serverAddress   @"www.irank.com.br"
+//#define serverAddress   @"www.irank.com.br"
 //#define serverAddress   @"beta.irank.com.br"

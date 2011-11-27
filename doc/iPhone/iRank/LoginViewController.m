@@ -10,6 +10,7 @@
 #import "iRankAppDelegate.h"
 #import "JSON.h"
 #import "Constants.h"
+#import "SignViewController.h"
 
 @implementation LoginViewController
 
@@ -52,6 +53,13 @@
     
 //    txtUsername.text = @"lstegun";
 //    txtPassword.text = @"unidunite";
+    
+    if( signViewController!=nil && signViewController.signSuccess ){
+     
+        txtUsername.text = signViewController.username;
+        txtPassword.text = signViewController.password;
+        [self doLogin:nil];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -99,6 +107,8 @@
 //    NSLog(@"didReceiveData");
 
     NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+
+    NSLog(@"result: %@", result);
     
     iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -107,8 +117,6 @@
 
     if( [result isEqualToString:@"error"] ) 
         return [appDelegate showAlert:@"Erro" message:@"Ocorreu um erro na identificação!\nPor favor, tente novamente."];
-
-    NSLog(@"result: %@", result);
     
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     
@@ -146,6 +154,38 @@
     
     iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate switchLogin];
+}
+
+-(void)showInfoView:(id)sender {
+    
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:1.0];
+	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight
+						   forView:[self view]
+							 cache:YES];
+
+    [self.view addSubview:infoView];
+    [UIView commitAnimations];
+}
+
+-(void)hideInfoView:(id)sender {
+    
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:1.0];
+	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight
+						   forView:[self view]
+							 cache:YES];
+    
+    [infoView removeFromSuperview];
+    [UIView commitAnimations];
+}
+
+-(void)showSignView:(id)sender {
+
+    if( signViewController==nil )    
+        signViewController = [[SignViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    
+    [self.navigationController pushViewController:signViewController animated:YES];
 }
 
 -(void)dealloc {

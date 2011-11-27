@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "iRankAppDelegate.h"
 
 @interface ConfigViewController : UIViewController {
     
     IBOutlet UISegmentedControl *homeEventsSegmendetControl;
-    IBOutlet UIView *aboutView;
+    IBOutlet UISwitch *saveResultOfflineSwitch;
+    iRankAppDelegate *appDelegate;
 }
 
 -(IBAction)didSelectEventCount:(id)sender;
--(IBAction)aboutButtonTouchUp:(id)sender;
+-(IBAction)changeSaveResultOffline:(id)sender;
 
 @end
