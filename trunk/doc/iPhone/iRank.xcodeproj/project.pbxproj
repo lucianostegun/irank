@@ -54,6 +54,11 @@
 		DD386EF514759E9E00221C24 /* EventResultDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD386EF414759E9E00221C24 /* EventResultDetailViewController.m */; };
 		DD386EFF1475E36000221C24 /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD386EFD1475E36000221C24 /* EventViewController.m */; };
 		DD386F001475E36000221C24 /* EventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD386EFE1475E36000221C24 /* EventViewController.xib */; };
+		DD40A14414813A1900EE116C /* creditBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = DD40A14314813A1900EE116C /* creditBackground.png */; };
+		DD40A14814813B5700EE116C /* newaiLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = DD40A14714813B5700EE116C /* newaiLogo.png */; };
+		DD40A14F14814CF000EE116C /* ELCTextfieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD40A14E14814CF000EE116C /* ELCTextfieldCell.m */; };
+		DD40A15314814EA800EE116C /* SignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD40A15114814EA600EE116C /* SignViewController.m */; };
+		DD40A15414814EA800EE116C /* SignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD40A15214814EA700EE116C /* SignViewController.xib */; };
 		DD85E17E1474843300D83223 /* EventResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD85E17C1474843300D83223 /* EventResultViewController.m */; };
 		DD85E17F1474843300D83223 /* EventResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD85E17D1474843300D83223 /* EventResultViewController.xib */; };
 		DD895D3B1460BDA900203286 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD895D391460BDA900203286 /* LoginViewController.m */; };
@@ -156,6 +161,13 @@
 		DD386EFC1475E36000221C24 /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
 		DD386EFD1475E36000221C24 /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
 		DD386EFE1475E36000221C24 /* EventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventViewController.xib; sourceTree = "<group>"; };
+		DD40A14314813A1900EE116C /* creditBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = creditBackground.png; sourceTree = "<group>"; };
+		DD40A14714813B5700EE116C /* newaiLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newaiLogo.png; sourceTree = "<group>"; };
+		DD40A14D14814CF000EE116C /* ELCTextfieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCTextfieldCell.h; sourceTree = "<group>"; };
+		DD40A14E14814CF000EE116C /* ELCTextfieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCTextfieldCell.m; sourceTree = "<group>"; };
+		DD40A15014814EA500EE116C /* SignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignViewController.h; sourceTree = "<group>"; };
+		DD40A15114814EA600EE116C /* SignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignViewController.m; sourceTree = "<group>"; };
+		DD40A15214814EA700EE116C /* SignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignViewController.xib; sourceTree = "<group>"; };
 		DD85E17B1474843300D83223 /* EventResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventResultViewController.h; sourceTree = "<group>"; };
 		DD85E17C1474843300D83223 /* EventResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventResultViewController.m; sourceTree = "<group>"; };
 		DD85E17D1474843300D83223 /* EventResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventResultViewController.xib; sourceTree = "<group>"; };
@@ -216,6 +228,8 @@
 		DD121E361464AB8500E97E8C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				DD40A14714813B5700EE116C /* newaiLogo.png */,
+				DD40A14314813A1900EE116C /* creditBackground.png */,
 				DD9ED0AA147B07B2001B5B32 /* camera.png */,
 				DD9D8544146F6191005B2FD5 /* alert.png */,
 				DD1EC3791468A3570050D5D3 /* nokH.png */,
@@ -247,6 +261,8 @@
 		DD121E4F1464BD3400E97E8C /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				DD40A14D14814CF000EE116C /* ELCTextfieldCell.h */,
+				DD40A14E14814CF000EE116C /* ELCTextfieldCell.m */,
 				DD9ED0BA147B375C001B5B32 /* FileHelpers.h */,
 				DD9ED0BB147B375C001B5B32 /* FileHelpers.m */,
 				DD9ED0B7147B3751001B5B32 /* ImageCache.h */,
@@ -269,14 +285,14 @@
 				DD895D381460BDA900203286 /* LoginViewController.h */,
 				DD895D391460BDA900203286 /* LoginViewController.m */,
 				DD121E6214664BF500E97E8C /* Resources */,
+				DD121E5D14657F5100E97E8C /* ConfigViewController.h */,
+				DD121E5E14657F5100E97E8C /* ConfigViewController.m */,
 				DD895D471460D8C800203286 /* HomeViewController.h */,
 				DD895D481460D8C800203286 /* HomeViewController.m */,
 				DD121E1914637A9600E97E8C /* EventDetailViewController.h */,
 				DD121E1A14637A9600E97E8C /* EventDetailViewController.m */,
 				DD121E22146458D700E97E8C /* EventPlayerViewController.h */,
 				DD121E23146458D700E97E8C /* EventPlayerViewController.m */,
-				DD121E5D14657F5100E97E8C /* ConfigViewController.h */,
-				DD121E5E14657F5100E97E8C /* ConfigViewController.m */,
 				DD121E631466CC1600E97E8C /* EventCommentViewController.h */,
 				DD121E641466CC1600E97E8C /* EventCommentViewController.m */,
 				DDCD835F1470135600000D85 /* EventResultSaveViewController.h */,
@@ -289,6 +305,8 @@
 				DD386EFD1475E36000221C24 /* EventViewController.m */,
 				DDD3C53B1475F11900263ABD /* PhotoViewController.h */,
 				DDD3C53C1475F11900263ABD /* PhotoViewController.m */,
+				DD40A15014814EA500EE116C /* SignViewController.h */,
+				DD40A15114814EA600EE116C /* SignViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -307,6 +325,7 @@
 				DD121E651466CC1600E97E8C /* EventCommentViewController.xib */,
 				DDD3C53D1475F11900263ABD /* PhotoViewController.xib */,
 				DD85E17D1474843300D83223 /* EventResultViewController.xib */,
+				DD40A15214814EA700EE116C /* SignViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -497,6 +516,9 @@
 				DD386F001475E36000221C24 /* EventViewController.xib in Resources */,
 				DDD3C53F1475F11900263ABD /* PhotoViewController.xib in Resources */,
 				DD9ED0AB147B07B2001B5B32 /* camera.png in Resources */,
+				DD40A14414813A1900EE116C /* creditBackground.png in Resources */,
+				DD40A14814813B5700EE116C /* newaiLogo.png in Resources */,
+				DD40A15414814EA800EE116C /* SignViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +563,8 @@
 				DD9ED0B2147B12B9001B5B32 /* EventPhoto.m in Sources */,
 				DD9ED0B9147B3751001B5B32 /* ImageCache.m in Sources */,
 				DD9ED0BC147B375D001B5B32 /* FileHelpers.m in Sources */,
+				DD40A14F14814CF000EE116C /* ELCTextfieldCell.m in Sources */,
+				DD40A15314814EA800EE116C /* SignViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

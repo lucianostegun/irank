@@ -231,33 +231,7 @@
     btnCalculatePrize.enabled = NO;
     [resultPreviewViewController.navigationItem setHidesBackButton:YES animated:YES];
     
-    
-    NSString *stringData = [NSString stringWithFormat:@"<?xml version=\"1.0\"?>\n<eventResults eventId=\"%i\">", event.eventId];
-    
-    for(EventPlayer *aEventPlayer in event.eventPlayerList){
-        
-        stringData = [stringData stringByAppendingFormat:@"\n\t<eventResult peopleId=\"%i\">", aEventPlayer.player.playerId];
-        stringData = [stringData stringByAppendingFormat:@"\n\t\t<eventPosition>%i</eventPosition>", aEventPlayer.eventPosition];
-        stringData = [stringData stringByAppendingFormat:@"\n\t\t<buyin>%f</buyin>", aEventPlayer.buyin];
-        stringData = [stringData stringByAppendingFormat:@"\n\t\t<rebuy>%f</rebuy>", aEventPlayer.rebuy];
-        stringData = [stringData stringByAppendingFormat:@"\n\t\t<addon>%f</addon>", aEventPlayer.addon];
-        stringData = [stringData stringByAppendingFormat:@"\n\t\t<prize>%f</prize>", aEventPlayer.prize];
-        stringData = [stringData stringByAppendingString:@"\n\t</eventResult>"];
-    }
-    
-    stringData = [stringData stringByAppendingString:@"\n</eventResults>"];
-    
-    //        NSLog(@"stringData: %@", stringData);
-    
-    const char *bytes = [[NSString stringWithFormat:@"eventResultXml=%@", stringData] UTF8String];
-    
-    NSURL *url = [NSURL URLWithString:@"http://irank/ios_dev.php/event/saveResult"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[NSData dataWithBytes:bytes length:strlen(bytes)]];
-    
-    [NSURLConnection connectionWithRequest:request delegate:self];    
+    [event saveResult:self];
 }
 
 - (void)viewDidUnload

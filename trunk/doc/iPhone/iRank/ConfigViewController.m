@@ -33,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (void)viewDidUnload
@@ -44,9 +46,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSNumber *homeEvents   = [[appDelegate userDefaults] objectForKey:@"homeEvents"];
+    BOOL saveResultOffline = [[appDelegate userDefaults] boolForKey:@"saveResultOffline"];
     
-    NSNumber *homeEvents = [[appDelegate userDefaults] objectForKey:@"homeEvents"];
+    NSLog(@"saveResultOffline: %@", (saveResultOffline?@"YES":@"NO"));
     
     switch ([homeEvents intValue]) {
         default:
@@ -64,6 +67,8 @@
             break;
     }
     
+    [saveResultOfflineSwitch setOn:saveResultOffline];
+    
 //    [homeEvents release];
 }
 
@@ -74,8 +79,6 @@
 }
 
 -(void)didSelectEventCount:(id)sender {
-    
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSNumber *homeEvents = [[NSNumber alloc] initWithInt:5];
     
@@ -104,9 +107,12 @@
 //    [homeEvents release];
 }
 
--(void)aboutButtonTouchUp:(id)sender {
+-(void)changeSaveResultOffline:(id)sender {
     
-
+    NSLog(@"saveResultOffline: %@", ([saveResultOfflineSwitch isSelected]?@"YES":@"NO"));
+    
+    [[appDelegate userDefaults] setBool:[saveResultOfflineSwitch isOn] forKey:@"saveResultOffline"];
+    [[appDelegate userDefaults] synchronize];
 }
 
 

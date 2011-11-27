@@ -16,7 +16,6 @@
     
     Event *event;
     NSMutableArray *eventList;
-    BOOL parseComplete;
 }
 
 @property (nonatomic, copy) NSMutableArray *eventList;

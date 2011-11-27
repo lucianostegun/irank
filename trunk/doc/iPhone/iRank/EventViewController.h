@@ -16,4 +16,6 @@
 
 @property (nonatomic, retain) NSMutableArray *eventList;
 
+- (void)updateEventList;
+
 @end
