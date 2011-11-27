@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "Event.h"
 #import "EventPlayer.h"
+#import "iRankAppDelegate.h"
 
 @interface EventResultSaveViewController : UIViewController {
+    
+    iRankAppDelegate *appDelegate;
     
     IBOutlet UILabel *playerName;
     IBOutlet UILabel *playerPosition;
@@ -61,6 +64,7 @@
 
 - (void)scrollTheView: (BOOL)movedUp;
 - (void)concludeSaveResult;
+- (void)concludeSaveResultWithError;
 - (void)concludeCalculatePrize;
 - (void)doSaveEventResult;
 

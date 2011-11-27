@@ -160,6 +160,8 @@
 {
     [super viewDidLoad];
     
+    appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouchUp:)];
     saveButton = [[UIBarButtonItem alloc] initWithTitle:@"salvar" style:UIBarButtonItemStyleDone target:self action:@selector(saveButtonTouchUp:)];
     
@@ -181,24 +183,65 @@
 
 -(void)saveButtonTouchUp:(id)sender {
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirmação" message:@"Confirma salvar e enviar por e-mail o resultado do evento?" delegate:self cancelButtonTitle:@"Não" otherButtonTitles:@"Sim", nil];
+    BOOL saveResultOffline = [[appDelegate userDefaults] boolForKey:@"saveResultOffline"];
+    NSString *confirmMessage = @"Confirma salvar e enviar por e-mail o resultado do evento?";
+
+    if( saveResultOffline )
+        confirmMessage = @"Confirma salvar Offline o resultado do evento?";
+        
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirmação" message:confirmMessage delegate:self cancelButtonTitle:@"Não" otherButtonTitles:@"Sim", nil];
     [alert show];
     [alert release];
 }
 
+-(void)saveEventResult {
+    
+//    resultPreviewViewController.navigationItem.rightBarButtonItem = nil;
+//    resultPreviewViewController.navigationItem.rightBarButtonItem = activityIndicatorButton;
+//    [activityIndicator setHidden:NO];
+//    [activityIndicator startAnimating];
+//    
+//    btnCalculatePrize.enabled = NO;
+//    [resultPreviewViewController.navigationItem setHidesBackButton:YES animated:YES];
+    
+    [appDelegate showLoadingView:@"salvando resultado..."];
+    
+    [self performSelector:@selector(doSaveEventResult) withObject:nil afterDelay:0];
+}
+
+-(void)doSaveEventResult {
+    
+    [event saveResult:self];
+}
+
 -(void)concludeSaveResult {
     
-    resultPreviewViewController.navigationItem.rightBarButtonItem = saveButton;
+//    resultPreviewViewController.navigationItem.rightBarButtonItem = saveButton;
+//    
+//    event.savedResult = YES;
+//    btnCalculatePrize.enabled = YES;
+//    
+//    [resultPreviewViewController.navigationItem setHidesBackButton:NO animated:YES];
     
-    event.savedResult = YES;
-    btnCalculatePrize.enabled = YES;
-    
-    [resultPreviewViewController.navigationItem setHidesBackButton:NO animated:YES];
-    
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate hideLoadingView];
     
     [appDelegate showAlert:@"Resultado salvo" message:@"O resultado do evento foi salvo com sucesso!"];
     appDelegate.refreshHome = YES;
+}
+
+-(void)concludeSaveResultWithError {
+    
+//    resultPreviewViewController.navigationItem.rightBarButtonItem = saveButton;
+//    
+//    event.savedResult = YES;
+//    btnCalculatePrize.enabled = YES;
+//    
+//    [resultPreviewViewController.navigationItem setHidesBackButton:NO animated:YES];
+    
+    [appDelegate hideLoadingView];
+    
+    [appDelegate showAlert:@"Falha" message:@"Não foi possível salvar o resultado do evento.\nPor favor, tente novamente."];
+    appDelegate.refreshHome = NO;
 }
 
 -(void)concludeCalculatePrize {
@@ -217,21 +260,8 @@
         NSLog(@"Clicou em NÃO");
 	}else{
         
-        [self doSaveEventResult];
+        [self saveEventResult];
 	}
-}
-
--(void)doSaveEventResult {
-    
-    resultPreviewViewController.navigationItem.rightBarButtonItem = nil;
-    resultPreviewViewController.navigationItem.rightBarButtonItem = activityIndicatorButton;
-    [activityIndicator setHidden:NO];
-    [activityIndicator startAnimating];
-    
-    btnCalculatePrize.enabled = NO;
-    [resultPreviewViewController.navigationItem setHidesBackButton:YES animated:YES];
-    
-    [event saveResult:self];
 }
 
 - (void)viewDidUnload
