@@ -135,11 +135,12 @@
         
         if( showEnabledOnly )
             [event filterPlayerList];
+        else
+            self.navigationItem.rightBarButtonItem = nil;
         
         [event setFilteredPlayerList:showEnabledOnly];
 
         [[self tableView] reloadData];   
-        self.navigationItem.rightBarButtonItem = nil;
     }
 }
 

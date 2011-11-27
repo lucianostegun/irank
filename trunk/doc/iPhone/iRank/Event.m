@@ -10,6 +10,7 @@
 #import "EventPlayer.h"
 #import "Constants.h"
 #import "XMLEventParser.h"
+#import "iRankAppDelegate.h"
 
 @implementation Event
 
@@ -203,6 +204,7 @@
 
 -(void)saveResult:(id)sender {
     
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSString *stringData = [NSString stringWithFormat:@"<?xml version=\"1.0\"?>\n<eventResults eventId=\"%i\">", eventId];
     
@@ -218,41 +220,50 @@
     }
     
     stringData = [stringData stringByAppendingString:@"\n</eventResults>"];
+
+    BOOL saveResultOffline = [[appDelegate userDefaults] boolForKey:@"saveResultOffline"];
     
-    //        NSLog(@"stringData: %@", stringData);
+    if( saveResultOffline ){
+        
+        NSString *eventResultPath = [Event eventArrayPath:[NSString stringWithFormat:@"result-%i", eventId]];
+        
+        [NSKeyedArchiver archiveRootObject:eventResultPath toFile:eventResultPath];   
+        
+        NSLog(@"Arquivando o resultado em : %@", eventResultPath);
+        
+        [appDelegate hideLoadingView];
+        [appDelegate showAlert:@"Resultado salvo" message:@"O resultado do evento foi salvo com sucesso!"];
+        
+        return;
+    }
+    
+    NSLog(@"stringData: %@", stringData);
     
     const char *bytes = [[NSString stringWithFormat:@"eventResultXml=%@", stringData] UTF8String];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/saveResult", serverAddress]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
+    NSURL *url                   = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/saveResult", serverAddress]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:241];
+  	NSError *requestError        = nil;
     
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[NSData dataWithBytes:bytes length:strlen(bytes)]];
     
-    [NSURLConnection connectionWithRequest:request delegate:self];
-    
-    [sender performSelector:@selector(concludeSaveResult) withObject:nil afterDelay:0];
-}
+	NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&requestError]; 
 
-- (void)connection: (NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    
-    //    NSLog(@"didReceiveResponse");
-    //    [activityIndicator setHidden:YES];
-}
-
-- (void)connection: (NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    //    NSLog(@"didReceiveData");
-    
-//    NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];    
-    
-    
-//    [result release];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    
-//
+    if(requestError == nil) {
+        
+        NSString *result = [[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding];
+        
+        NSLog(@"result: %@", result);
+        
+        if( [result isEqualToString:@"saveSuccess"] )            
+            [sender performSelector:@selector(concludeSaveResult) withObject:nil afterDelay:0];
+        else
+            [sender performSelector:@selector(concludeSaveResultWithError) withObject:nil afterDelay:0];
+	} else {
+        
+        [sender performSelector:@selector(concludeSaveResultWithError) withObject:nil afterDelay:0];
+	}
 }
 
 + (NSMutableArray *)loadEventList:(NSString *)eventType userSiteId:(int)userSiteId limit:(int)limit {
