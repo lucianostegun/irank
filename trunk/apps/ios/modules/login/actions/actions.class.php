@@ -38,7 +38,7 @@ class loginActions extends sfActions
 		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
 		
 		if( is_object($userSiteObj) )
-			echo Util::parseInfo($userSiteObj->getInfo());
+			echo Util::parseInfo($userSiteObj->getInfo(true));
 		else
 			echo 'denied';
 	}else{
