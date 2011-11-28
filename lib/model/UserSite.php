@@ -303,7 +303,7 @@ class UserSite extends BaseUserSite
    			HomeWall::doLog('juntou-se aos jogadores do <b>iRank</b>. Seja bem vindo!', 'userSite', true, $this->getId());
 	}
 	
-	public function getInfo(){
+	public function getInfo($replaceNull=false){
 		
 		$infoList = array();
 		$infoList['id']           = $this->getId();
@@ -313,6 +313,13 @@ class UserSite extends BaseUserSite
 		
 		$resumeList = People::getResumeBalance($this->getPeopleId(), $this->getId(), true);
 		$infoList = array_merge($infoList, $resumeList);
+		
+		if( $replaceNull ){
+			
+			foreach($infoList as &$info)
+				if( is_null($info) )
+					$info = '';
+		}
 		
 		return $infoList;
 	}
