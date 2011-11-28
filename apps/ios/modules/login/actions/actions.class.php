@@ -48,4 +48,66 @@ class loginActions extends sfActions
 	
 	exit;
   }
+  
+  public function executeSave($request){
+  	
+  	$xmlString = $request->getParameter('userSiteXml');
+
+//	$file = fopen(Util::getFilePath('/xml.xml'), 'w');
+//	fwrite($file, $xmlString);
+//	fclose($file);
+//	$xmlString = file_get_contents(Util::getFilePath('/xml.xml'));
+
+	$xmlString = simplexml_load_string( $xmlString );
+	
+	$validate = new DOMDocument;
+    $validate->loadXML($xmlString->asXml());
+    
+    $username     = null;
+    $emailAddress = null;
+    $firstName    = null;
+    $lastName     = null;
+    $password     = null;
+    
+	foreach( $xmlString->userSite as $userSiteNode ){
+		
+		foreach( $userSiteNode as $key=>$nodeValue )
+			$$key = (string)$nodeValue;
+	}
+
+	if( !UserSitePeer::uniqueEmailAddress($emailAddress) )
+		$errorMessage = 'O e-mail informado já está em uso por outro usuário.';
+	
+	if( !UserSitePeer::uniqueUsername($username) )
+		$errorMessage = 'O username informado já está em uso por outro usuário.';
+		
+	if( $errorMessage )
+		Util::forceError(utf8_decode($errorMessage), true);
+		
+		
+	$userSiteObj = new UserSite();
+	$peopleObj   = PeoplePeer::retrieveByEmailAddress($emailAddress);
+	
+	$this->setFlash('showSuccess', true);
+	
+	if( is_object($peopleObj) && $peopleObj->isPeopleType('rankingPlayer') )
+		$userSiteObj->setPeopleId($peopleObj->getId());
+		
+	$this->getUser()->setCulture('pt_BR');
+  	
+	$request->setParameter('username', $username);
+  	$request->setParameter('emailAddress', $emailAddress);
+  	$request->setParameter('firstName', $firstName);
+  	$request->setParameter('lastName', $lastName);
+  	$request->setParameter('password', $password);
+  	$request->setParameter('defaultLanguage', 'pt_BR');
+  	$userSiteObj->quickSave($request);
+
+	$userSiteObj->resetOptions();
+//	$userSiteObj->sendWelcomeMail($request, 'app');
+	$userSiteObj->getImagePath(true);
+		
+	echo 'saveSuccess';
+	exit;
+  }
 }
