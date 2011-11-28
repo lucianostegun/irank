@@ -119,7 +119,7 @@ class Event extends BaseEvent
 		$criteria->add( EventPeer::ENABLED, true );
 		$criteria->add( EventPeer::VISIBLE, true );
 		$criteria->add( EventPeer::DELETED, false );
-		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+		$criteria->add( EventPeer::EVENT_DATE_TIME, date('Y-m-d H:i'), Criteria::GREATER_EQUAL );
 //		$criteria->add( EventPeer::START_TIME, date('H:i:s'), Criteria::GREATER_EQUAL );
 		$criteria->add( EventPeer::SAVED_RESULT, false );
 		$criteria->add( UserSitePeer::ID, $userSiteId );

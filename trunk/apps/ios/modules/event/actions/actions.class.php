@@ -74,7 +74,7 @@ class eventActions extends sfActions
   	$eventObj->saveResult($request);
   	
   	// A aplicação espera receber este retorno!
-  	echo 'savedResult';
+  	echo 'saveSuccess';
   	exit;
   }
   

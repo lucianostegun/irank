@@ -152,11 +152,11 @@ class UserSite extends BaseUserSite
 		return $this->getRankingList(null, null, true);
 	}
 	
-	public function sendWelcomeMail($request){
+	public function sendWelcomeMail($request, $sufix=null){
 
 		Util::getHelper('I18N');
 		
-		$emailContent = AuxiliarText::getContentByTagName('signWelcome');
+		$emailContent = AuxiliarText::getContentByTagName('signWelcome'.ucfirst($sufix));
 		$emailContent = str_replace('<password>', $request->getParameter('password'), $emailContent);
 		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
 		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent); 		
