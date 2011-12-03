@@ -10,9 +10,7 @@
 #import "Event.h"
 #import "EventPlayer.h"
 #import "Player.h"
-#import "XMLEventPlayerParser.h"
 #import "iRankAppDelegate.h"
-#import "Constants.h"
 #import "EventResultSaveViewController.h"
 
 @implementation EventPlayerViewController
@@ -44,7 +42,12 @@
 {
     [super viewDidLoad];
     
+    appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+
     doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouchUp:)];
+//    reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updatePlayerList:)];
+    
+    [self setTitle:@"Convidados"];
 }
 
 - (void)viewDidUnload
@@ -58,98 +61,15 @@
 {
     [super viewWillAppear:animated];
     
-    BOOL updateEventList = ([[event eventPlayerList] count]==0);
-    
-    if( updateEventList ){
-
-        iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate showLoadingView:@"carregando lista de jogadores..."];
+    if( [event eventPlayerList]==nil ){
         
-        [self performSelector:@selector(doUpdatePlayerListAndReloadData) withObject:nil afterDelay:0.1];
-    }
-    
-    if( [self showEnabledOnly] && [event isMyEvent] ){
-        
-        if( !updateEventList )
-            [event filterPlayerList];
-        
-        [self setEditing:YES animated:NO];
-        self.navigationItem.rightBarButtonItem = doneButton;
+        [self updatePlayerList];
     }else{
         
-        if( [event isEditable] && [event filteredPlayerList] ){
-            
-            UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updatePlayerList:)];
-            
-            self.navigationItem.rightBarButtonItem = reloadButton;
-        }else{
-            
-            self.navigationItem.rightBarButtonItem = nil;
-        }
+        [self configureView];
         
-        [self setEditing:NO animated:NO];
+        [[self tableView] reloadData];
     }
-    
-    [self setTitle:@"Convidados"];
-    [[self tableView] reloadData];
-}
-
--(void)updatePlayerList:(id)sender {
-    
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate showLoadingView:@"carregando lista de jogadores..."];
-    
-    [self performSelector:@selector(doUpdatePlayerListAndReloadData) withObject:nil afterDelay:0.1];
-}
-
--(void)doUpdatePlayerListAndReloadData {
-    
-    [self doUpdatePlayerList:YES];
-}
-
--(void)doUpdatePlayerList:(BOOL)reloadData {
-    
-    int userSiteId = [(iRankAppDelegate *)[[UIApplication sharedApplication] delegate] userSiteId];
-    
-    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/eventPlayer/userSiteId/%i/eventId/%d", serverAddress, userSiteId, event.eventId]];
-    
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:url];    
-    
-    //Inicia o delegate
-    XMLEventPlayerParser *parser = [[XMLEventPlayerParser alloc] initXMLParser];
-    
-    [xmlParser setDelegate:parser];
-    
-    BOOL success = [xmlParser parse];
-    
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    if( !success ) 
-        return [appDelegate showAlert:@"Erro" message:@"Não foi possível recuperar a lista de jogadores."];
-    
-    [event setEventPlayerList: [[parser getEventPlayerList] retain]];
-    
-    [appDelegate hideLoadingView];
-    
-    if( reloadData ){
-        
-        if( showEnabledOnly )
-            [event filterPlayerList];
-        else
-            self.navigationItem.rightBarButtonItem = nil;
-        
-        [event setFilteredPlayerList:showEnabledOnly];
-
-        [[self tableView] reloadData];   
-    }
-}
-
--(void)doneButtonTouchUp:(id)sender {
-    
-    EventResultSaveViewController *eventResultSaveViewController = [[EventResultSaveViewController alloc] initWithNibName:nil bundle:nil];
-    
-    eventResultSaveViewController.event = event;
-    [self.navigationController pushViewController:eventResultSaveViewController animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -160,11 +80,76 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    if( !showEnabledOnly && [eventPlayerList count] > 0 )
+        [event setEventPlayerList:eventPlayerList];
+    
+    NSLog(@"eventPlayerList: %@", eventPlayerList);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+}
+
+- (void)updatePlayerList {
+
+    [appDelegate showLoadingView:@"carregando lista de jogadores..."];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePlayerList:) name:kEventPlayerListLoadSuccess object:nil];
+    [self performSelector:@selector(updateEventPlayerList) withObject:nil afterDelay:0.1];
+}
+
+- (void)handlePlayerList:(NSNotification *)notice {
+    
+    [appDelegate hideLoadingView];
+    
+    [self configureView];
+    
+    [[self tableView] reloadData];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:kEventPlayerListLoadSuccess];
+}
+
+-(void)updateEventPlayerList {
+    
+    [event reloadPlayerList:self];
+}
+
+- (void)configureView {
+    
+    if( [self showEnabledOnly] && [event isMyEvent] ){
+        
+        eventPlayerList = [event getFilteredPlayerList];
+        
+        if( [eventPlayerList count] > 0 )
+            self.navigationItem.rightBarButtonItem = doneButton;
+        else
+            self.navigationItem.rightBarButtonItem = nil;
+        
+        [self setEditing:YES animated:NO];
+    }else{
+        
+        self.navigationItem.rightBarButtonItem = nil;
+        
+        eventPlayerList = [event eventPlayerList];
+        
+        [self setEditing:NO animated:NO];
+    }
+}
+
+-(void)updatePlayerList:(id)sender {
+    
+    [self updatePlayerList];
+}
+
+-(void)doneButtonTouchUp:(id)sender {
+    
+    EventResultSaveViewController *eventResultSaveViewController = [[EventResultSaveViewController alloc] initWithNibName:nil bundle:nil];
+    
+    eventResultSaveViewController.event           = event;
+    eventResultSaveViewController.eventPlayerList = eventPlayerList;
+    
+    [self.navigationController pushViewController:eventResultSaveViewController animated:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -183,13 +168,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return [event.eventPlayerList count];
+    return [eventPlayerList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    EventPlayer *eventPlayer = [[event eventPlayerList] objectAtIndex:indexPath.row];
+        
+    EventPlayer *eventPlayer = [eventPlayerList objectAtIndex:indexPath.row];
     Player *player = [eventPlayer player];
     
     NSString *CellIdentifier = [NSString stringWithFormat:@"CellEventPlayer%@", eventPlayer.inviteStatus];
@@ -231,9 +216,8 @@
     }else{
         
         cell.accessoryView.userInteractionEnabled = NO;
+        eventPlayer.eventPosition = indexPath.row+1;
     }
-
-    eventPlayer.eventPosition = indexPath.row+1;
     
 //    [button release];
 
@@ -253,7 +237,7 @@
 -(void)accessoryClicked:(id)sender {
     
     UIButton *button         = (UIButton *)sender;
-    EventPlayer *eventPlayer = [[event eventPlayerList] objectAtIndex:button.tag];
+    EventPlayer *eventPlayer = [eventPlayerList objectAtIndex:button.tag];
     
     NSString *inviteStatus = eventPlayer.inviteStatus;
     
@@ -299,7 +283,6 @@
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
     
-    NSMutableArray *eventPlayerList = [event eventPlayerList];
     // Get pointer to object being moved
     EventPlayer *eventPlayer = [eventPlayerList objectAtIndex:[fromIndexPath row]];
     
@@ -315,7 +298,7 @@
     // Release p
     [eventPlayer release]; // Retain count of p is now 1
     
-    event.eventPlayerList = eventPlayerList;
+    eventPlayerList = eventPlayerList;
     [self.tableView reloadData];
 }
 

@@ -26,12 +26,13 @@ static ImageCache *sharedImageCache;
 
 -(void)setImage:(UIImage *)image forKey:(NSString *)key {
     
-    [dictionary setObject:image forKey:key];
-    
     // Create full path for image
     NSString *imagePath = pathInDocumentDirectory(key);
     
     NSLog(@"imagePath: %@", imagePath);
+    NSLog(@"image: %@", image);
+    
+    [dictionary setObject:image forKey:key];
     
     // Turn image into JPEG data
     NSData *d = UIImageJPEGRepresentation(image, 0.5);
@@ -67,8 +68,8 @@ static ImageCache *sharedImageCache;
     
     [dictionary removeObjectForKey:s];
     
-//    NSString *path = pathInDocumentDiretory(s);
-//    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    NSString *path = pathInDocumentDirectory(s);
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
 }
 
 #pragma mark Singleton stuff

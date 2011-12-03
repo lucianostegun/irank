@@ -8,11 +8,11 @@
 
 #import "PhotoViewController.h"
 #import "iRankAppDelegate.h"
-#import "Constants.h"
 #import "XMLEventPhotoParser.h"
 #import "QuartzCore/QuartzCore.h" // for CALayer
 #import "EventPhoto.h"
 #import "ImageCache.h"
+#import "Reachability.h"
 
 @implementation PhotoViewController
 @synthesize webView;
@@ -22,7 +22,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+
     }
     
     return self;
@@ -49,6 +49,15 @@
     
     isZoom = NO;
     lblNoPhoto.hidden = YES;
+    
+    eventPhotoCacheList = [NSKeyedUnarchiver unarchiveObjectWithFile:[self photoListPath]];
+    
+    [eventPhotoCacheList retain];
+    
+    if( !eventPhotoCacheList )
+        eventPhotoCacheList = [[NSMutableArray alloc] init];
+
+    NSLog(@"eventPhotoCacheList: %@", eventPhotoCacheList);
 }
 
 -(void)updateImageList {
@@ -79,6 +88,8 @@
         
         buttonImageList = [[NSMutableArray alloc] init];
         
+        int lastKey = 0;
+        
         for (EventPhoto *eventPhoto in eventPhotoList) {
             
             NSURL *imageURL = [NSURL URLWithString:eventPhoto.thumbUrl];
@@ -86,12 +97,23 @@
             UIImage *image = [UIImage imageWithData:imageData];
             
             [self addImage:image tag:eventPhoto.eventPhotoId];
+
+            if( eventPhoto.eventPhotoId > lastKey )
+               lastKey = eventPhoto.eventPhotoId;
+            
 //            [image release];
 //            [imageData release];
 //            [imageURL release];
         }
+
+        for (NSString *imageKey in eventPhotoCacheList) {
+            
+            UIImage *image = [[ImageCache sharedImageCache] imageForKey:imageKey];
+            
+            [self addImage:image tag:(++lastKey)*-1];
+        }
          
-        if( [eventPhotoList count] > 0 )
+        if( lastKey > 0 )
             [self drawImages];
         else
             lblNoPhoto.hidden = NO;
@@ -237,10 +259,24 @@
     
     if( refreshesImageList )
         [self updateImageList];
+    
+    
+    int eventPhotoCount = [eventPhotoCacheList count];
+    
+    if( askForUpload && appDelegate.internetActive && appDelegate.hostActive && eventPhotoCount > 0 ){
+     
+        NSString *plural  = (eventPhotoCount>1?@"s":@"");
+        NSString *message = [NSString stringWithFormat:@"Existem %i foto%@ ainda não salva%@.\nDeseja fazer o upload da%@ foto%@ agora?", eventPhotoCount, plural, plural, plural, plural];
+        ;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Carregar fotos" message:message delegate:self cancelButtonTitle:@"Não" otherButtonTitles:@"Sim", nil];
+        [alert show];
+        [alert release];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     
+    askForUpload = YES;
 }
 
 - (void)viewDidLoad
@@ -250,7 +286,10 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     self.navigationItem.rightBarButtonItem = btnCamera;
     
+    appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     refreshesImageList = YES;
+    askForUpload       = YES;
 }
 
 - (void)viewDidUnload
@@ -272,6 +311,18 @@
         [self drawImages];
     else
         [self centerZoomImage];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 0) {
+        
+        NSLog(@"Clicou em NÃO");
+    }else{
+        
+        [appDelegate showLoadingView:@"carregando foto..."];
+        [self performSelector:@selector(uploadCachedPictures) withObject:nil afterDelay:0.1];
+    }
 }
 
 -(void)takePicture:(id)sender {
@@ -304,93 +355,154 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
-//    NSString *oldKey = [editingPossession imageKey];
-//    
-//    // Did the possession already have an image?
-//    if( oldKey ){
-//        // Delete the old image
-//        [[ImageCache sharedImageCache] deleteImageForKey:oldKey];
-//    }
-
-    // TODO: Redimensionar a imagem somente se ela for maior que 800x600
-    
     // Get picker image from info dictionary
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    image = [UIImage imageWithCGImage:image.CGImage scale:0.5 orientation:image.imageOrientation];
+    theImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [theImage retain];
+    
+    NSLog(@"image: %@", theImage);
+    
+    // Take image picker off the screen
+    // you must call this dismiss method
+    [self dismissModalViewControllerAnimated:YES];
+    [appDelegate showLoadingView:@"carregando foto..."];
+    [self performSelector:@selector(uploadPicture) withObject:nil afterDelay:0.1];
+}
 
+-(void)uploadPicture {
+    
+    theImage = [UIImage imageWithCGImage:theImage.CGImage scale:0.5 orientation:theImage.imageOrientation];
+    
     // Create a CFUUID object - it knows how to create unique identifiers
     CFUUIDRef newUniqueID = CFUUIDCreate(kCFAllocatorDefault);
     
     // Create a string from unique identifier
     CFStringRef newUniqueIDString = CFUUIDCreateString(kCFAllocatorDefault, newUniqueID);
-    
-    [[ImageCache sharedImageCache] setImage:image forKey:(NSString *)newUniqueIDString];
+    NSString *imageKey = (NSString *)newUniqueIDString;
+    [imageKey retain];
     
     CFRelease(newUniqueIDString);
     CFRelease(newUniqueID);
     
-
-
-    [self addImage:image tag:([buttonImageList count] * -1)];
+    [self addImage:theImage tag:([buttonImageList count] * -1)];
     [self showAllImages];
     [self drawImages];
     refreshesImageList = NO;
     
+    BOOL saveOffline = (!appDelegate.wifiConnection || !appDelegate.hostActive);
+    saveOffline = (saveOffline && [[appDelegate userDefaults] boolForKey:kSaveOfflineKey]);
+    saveOffline = saveOffline || kForceOfflineSaving;
     
+    [[ImageCache sharedImageCache] setImage:theImage forKey:imageKey];
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    if( !saveOffline ){
+        
+        [self doUploadPicture:theImage];
+        [[ImageCache sharedImageCache] deleteImageForKey:imageKey];
+    }else{
+        
+        askForUpload = NO;
+        [eventPhotoCacheList addObject:imageKey];
+        [NSKeyedArchiver archiveRootObject:eventPhotoCacheList toFile:[self photoListPath]];
+    }
+    
+    [appDelegate hideLoadingView];
+}
+
+- (void)uploadCachedPictures {
+    
+    for (NSString *imageKey in eventPhotoCacheList) {
+        
+        UIImage *image = [[ImageCache sharedImageCache] imageForKey:imageKey];
+
+        BOOL success = [self doUploadPicture:image];
+        
+        if( success )
+            [[ImageCache sharedImageCache] deleteImageForKey:imageKey];   
+    }
+    
+    [[NSFileManager defaultManager] removeItemAtPath:[self photoListPath] error:nil];
+    [appDelegate hideLoadingView];
+}
+
+- (BOOL)doUploadPicture:(UIImage *)image {
     
     int userSiteId = [appDelegate userSiteId];
     
-	/*
-	 turning the image into a NSData object
-	 getting the image back out of the UIImageView
-	 setting the quality to 90
-     */
-	NSData *imageData = UIImageJPEGRepresentation(image, 100);
-	// setting up the URL to post to
-	NSString *urlString = [NSString stringWithFormat:@"http://%@/ios_dev.php/event/uploadPhoto/eventId/%i/userSiteId/%i", serverAddress, eventId, userSiteId];
+    int width  = image.size.width;
+    int height = image.size.height;
     
-	// setting up the request object now
-	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
-	[request setURL:[NSURL URLWithString:urlString]];
-	[request setHTTPMethod:@"POST"];
+    float photoCompress = 100-[[appDelegate userDefaults] floatForKey:kPhotoCompressKey];
     
-	/*
-	 add some header info now
-	 we always need a boundary when we post a file
-	 also we need to set the content type
+    width  = width*photoCompress/100;
+    height = height*photoCompress/100;
+    
+	CGImageRef imageRef = [image CGImage];
+	CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(imageRef);
+	
+	//if (alphaInfo == kCGImageAlphaNone)
+    alphaInfo = kCGImageAlphaNoneSkipLast;
+	
+	CGContextRef bitmap = CGBitmapContextCreate(NULL, width, height, CGImageGetBitsPerComponent(imageRef), 4 * width, CGImageGetColorSpace(imageRef), alphaInfo);
+	CGContextDrawImage(bitmap, CGRectMake(0, 0, width, height), imageRef);
+	CGImageRef ref = CGBitmapContextCreateImage(bitmap);
+	UIImage *imageResult = [UIImage imageWithCGImage:ref];
+	
+	CGContextRelease(bitmap);
+	CGImageRelease(ref);
+    
+    
+    NSData *imageData = UIImageJPEGRepresentation(imageResult, 100);
+    // setting up the URL to post to
+    NSString *urlString = [NSString stringWithFormat:@"http://%@/ios_dev.php/event/uploadPhoto/eventId/%i/userSiteId/%i", serverAddress, eventId, userSiteId];
+    
+    // setting up the request object now
+    NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+    [request setURL:[NSURL URLWithString:urlString]];
+    [request setHTTPMethod:@"POST"];
+    
+    /*
+     add some header info now
+     we always need a boundary when we post a file
+     also we need to set the content type
      
-	 You might want to generate a random boundary.. this is just the same
-	 as my output from wireshark on a valid html post
+     You might want to generate a random boundary.. this is just the same
+     as my output from wireshark on a valid html post
      */
-	NSString *boundary = [NSString stringWithString:@"---------------------------14737809831466499882746641449"];
-	NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
-	[request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+    NSString *boundary = [NSString stringWithString:@"---------------------------14737809831466499882746641449"];
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+    [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
     
-	/*
-	 now lets create the body of the post
+    /*
+     now lets create the body of the post
      */
-	NSMutableData *body = [NSMutableData data];
-	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"Filedata\"; filename=\"ios_runtime_picture.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[NSData dataWithData:imageData]];
-	[body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-	// setting the body of the post to the reqeust
-	[request setHTTPBody:body];
+    NSMutableData *body = [NSMutableData data];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"Filedata\"; filename=\"ios_runtime_picture.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[NSData dataWithData:imageData]];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    // setting the body of the post to the reqeust
+    [request setHTTPBody:body];
     
-	// now lets make the connection to the web
-	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-	NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+    // now lets make the connection to the web
+    NSError *requestError  = nil;
+    NSData *returnData     = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&requestError];
+    NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
     
-	NSLog(@"returnString: %@", returnString);    
+    NSLog(@"returnString: %@", returnString);
     
-    // Take image picker off the screen
-    // you must call this dismiss method
-    [self dismissModalViewControllerAnimated:YES];
+    if( requestError!=nil )
+        return NO;
+    
+    return YES;
+}
+
+- (NSString *)photoListPath {
+    
+    return pathInDocumentDirectory([NSString stringWithFormat:@"Event-%i-photo.data", eventId]);
 }
 
 @end

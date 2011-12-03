@@ -7,18 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "iRankAppDelegate.h"
 
 @interface PhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
     
     UIActivityIndicatorView *activityIndicator;
     NSMutableArray *buttonImageList;
     NSMutableArray *eventPhotoList;
+    NSMutableArray *eventPhotoCacheList;
 
     BOOL isZoom;
     BOOL refreshesImageList;
 
     IBOutlet UILabel *lblNoPhoto;
     IBOutlet UIBarButtonItem *btnCamera;
+    
+    iRankAppDelegate *appDelegate;
+    UIImage *theImage;
+    BOOL askForUpload;
 }
 
 @property (nonatomic, assign) IBOutlet UIWebView *webView;
@@ -33,4 +39,8 @@
 - (void)centerZoomImage;
 - (void)addImage:(UIImage *)image tag:(int)tag;
 - (IBAction)takePicture:(id)sender;
+- (void)uploadPicture;
+- (BOOL)doUploadPicture:(UIImage *)image;
+
+- (NSString *)photoListPath;
 @end

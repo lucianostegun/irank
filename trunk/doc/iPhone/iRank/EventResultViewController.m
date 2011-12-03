@@ -11,15 +11,15 @@
 #import "EventPlayer.h"
 #import "iRankAppDelegate.h"
 #import "XMLEventPlayerParser.h"
-#import "Constants.h"
 
 @implementation EventResultViewController
 @synthesize event;
-//@synthesize resultDetailViewController;
+@synthesize eventPlayerList;
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
     if (self) {
         
         numberFormatter = [[NSNumberFormatter alloc] init];
@@ -28,6 +28,7 @@
         [numberFormatter setCurrencyCode:@""];
         [numberFormatter setCurrencySymbol:@""];
     }
+    
     return self;
 }
 
@@ -45,11 +46,7 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (void)viewDidUnload
@@ -63,26 +60,8 @@
 {
     [super viewWillAppear:animated];
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    int userSiteId = [appDelegate userSiteId];
-    
-    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/eventPlayer/userSiteId/%i/eventId/%d", serverAddress, userSiteId, event.eventId]];
-
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:url];    
-    
-    //Inicia o delegate
-    XMLEventPlayerParser *parser = [[XMLEventPlayerParser alloc] initXMLParser];
-    
-    [xmlParser setDelegate:parser];
-    
-    BOOL success = [xmlParser parse];
-    
-    if( !success ) 
-        return [appDelegate showAlert:@"Erro" message:@"Não foi possível recuperar a lista de jogadores."];
-    
-    [event setEventPlayerList: [parser getEventPlayerList]];
-    [event filterPlayerList];
+    if( [[event eventPlayerList] count]==0 )
+        [self updatePlayerList];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -98,6 +77,29 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+}
+
+- (void)updatePlayerList {
+    
+    [appDelegate showLoadingView:@"carregando resultado..."];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePlayerList:) name:kEventPlayerListLoadSuccess object:nil];
+    [self performSelector:@selector(updateEventPlayerList) withObject:nil afterDelay:0.1];
+}
+
+- (void)updateEventPlayerList {
+    
+    [event reloadPlayerList:self];
+}
+
+- (void)handlePlayerList:(NSNotification *)notice {
+    
+    [appDelegate hideLoadingView];
+    
+    eventPlayerList = [event getFilteredPlayerList];
+    
+    [tableView reloadData];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:kEventPlayerListLoadSuccess];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -118,7 +120,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return [event.eventPlayerList count];
+    return [eventPlayerList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,7 +133,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     
     
-    EventPlayer *eventPlayer = [[event eventPlayerList] objectAtIndex:indexPath.row];
+    EventPlayer *eventPlayer = [eventPlayerList objectAtIndex:indexPath.row];
     Player *player = [eventPlayer player];
     
 //    NSLog(@"eventPlayer: %@", eventPlayer);
@@ -187,7 +189,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    EventPlayer *eventPlayer = [[event eventPlayerList] objectAtIndex:indexPath.row];
+    EventPlayer *eventPlayer = [eventPlayerList objectAtIndex:indexPath.row];
     
     resultDetailViewController.title = @"Detalhes";
     playerName.text     = [[eventPlayer player] fullName];

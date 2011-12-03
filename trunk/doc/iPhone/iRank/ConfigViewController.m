@@ -46,8 +46,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    NSNumber *homeEvents   = [[appDelegate userDefaults] objectForKey:@"homeEvents"];
-    BOOL saveResultOffline = [[appDelegate userDefaults] boolForKey:@"saveResultOffline"];
+    NSNumber *homeEvents   = [[appDelegate userDefaults] objectForKey:kHomeEventLimitKey];
+    BOOL saveResultOffline = [[appDelegate userDefaults] boolForKey:kSaveOfflineKey];
+    float photoCompress    = [[appDelegate userDefaults] floatForKey:kPhotoCompressKey];
     
     NSLog(@"saveResultOffline: %@", (saveResultOffline?@"YES":@"NO"));
     
@@ -68,6 +69,9 @@
     }
     
     [saveResultOfflineSwitch setOn:saveResultOffline];
+    
+    [photoCompressSlider setValue:photoCompress];
+    lblPhotoCompress.text = [NSString stringWithFormat:@"%i%%", (int)photoCompress];
     
 //    [homeEvents release];
 }
@@ -101,7 +105,7 @@
     
     NSLog(@"homeEvents: %@", homeEvents);
 
-    [[appDelegate userDefaults] setObject:homeEvents forKey:@"homeEvents"];
+    [[appDelegate userDefaults] setObject:homeEvents forKey:kHomeEventLimitKey];
     [[appDelegate userDefaults] synchronize];
     
 //    [homeEvents release];
@@ -111,7 +115,17 @@
     
     NSLog(@"saveResultOffline: %@", ([saveResultOfflineSwitch isSelected]?@"YES":@"NO"));
     
-    [[appDelegate userDefaults] setBool:[saveResultOfflineSwitch isOn] forKey:@"saveResultOffline"];
+    [[appDelegate userDefaults] setBool:[saveResultOfflineSwitch isOn] forKey:kSaveOfflineKey];
+    [[appDelegate userDefaults] synchronize];
+}
+
+-(void)changePhotoCompress:(id)sender {
+    
+    float photoCompress = (int)photoCompressSlider.value;
+    
+    lblPhotoCompress.text = [NSString stringWithFormat:@"%i%%", (int)photoCompress];
+    
+    [[appDelegate userDefaults] setFloat:photoCompress forKey:kPhotoCompressKey];
     [[appDelegate userDefaults] synchronize];
 }
 

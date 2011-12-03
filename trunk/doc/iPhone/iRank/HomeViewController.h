@@ -13,6 +13,7 @@
     
     IBOutlet UIBarButtonItem *quitButton;
     IBOutlet UIView *loadingView;
+    iRankAppDelegate *appDelegate;
 }
 
 @property (nonatomic, retain) NSMutableArray *bankrollInfo;
@@ -21,6 +22,8 @@
 @property (nonatomic, retain) EventDetailViewController *eventDetailViewController;
 
 - (IBAction)doLogout:(id)sender;
+- (void)reloadData;
 - (void)updateEventList;
 - (void)updateResume;
+
 @end

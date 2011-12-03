@@ -13,10 +13,14 @@
     
     IBOutlet UISegmentedControl *homeEventsSegmendetControl;
     IBOutlet UISwitch *saveResultOfflineSwitch;
+    IBOutlet UISlider *photoCompressSlider;
+    IBOutlet UILabel *lblPhotoCompress;
     iRankAppDelegate *appDelegate;
+    
 }
 
 -(IBAction)didSelectEventCount:(id)sender;
 -(IBAction)changeSaveResultOffline:(id)sender;
+-(IBAction)changePhotoCompress:(id)sender;
 
 @end

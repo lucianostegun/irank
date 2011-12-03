@@ -9,7 +9,7 @@
 #import "iRankAppDelegate.h"
 #import "HomeViewController.h"
 #import "ConfigViewController.h"
-#import "Constants.h"
+#import "Reachability.h"
 
 @implementation iRankAppDelegate
 
@@ -20,7 +20,8 @@
 @synthesize homeTabBar;
 @synthesize userSiteId;
 @synthesize firstName, lastName;
-@synthesize refreshHome;
+@synthesize refreshHome, refreshHomeEventList;
+@synthesize internetActive, wifiConnection, hostActive;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -44,8 +45,10 @@
         self.window.rootViewController = navigationController;
         [loginViewController release];
         loginViewController = nil;
+        refreshHomeEventList = NO;
     }else{
         
+        refreshHomeEventList = YES;
         [self switchLogin];
     }
     
@@ -53,25 +56,21 @@
     
     [self.window makeKeyAndVisible];
     
-    NSNumber *homeEvents = [userDefaults objectForKey:@"homeEvents"];
+    NSNumber *homeEvents = [userDefaults objectForKey:kHomeEventLimitKey];
     
     // Se homeEvents for NULL então reestabelece todas as configurações iniciais
     if( homeEvents==NULL ){
      
-        homeEvents = [NSNumber numberWithInt:5];
-        [userDefaults setObject:homeEvents forKey:@"homeEvents"];
-        [userDefaults setBool:YES forKey:@"saveResultOffline"];
+        homeEvents = [NSNumber numberWithInt:10];
+        [userDefaults setObject:homeEvents forKey:kHomeEventLimitKey];
+        [userDefaults setBool:YES forKey:kSaveOfflineKey];
+        [userDefaults setFloat  :50 forKey:kPhotoCompressKey];
         [userDefaults synchronize];
     }
     
     [homeEvents release];
     
     return YES;
-}
-
--(void)putOnLandscapeMode {
-    
-
 }
 
 -(void)switchLogin {
@@ -121,6 +120,10 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    
+    refreshHome = YES;
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -135,6 +138,19 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    
+    
+    // check for internet connection
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
+    
+    internetReachable = [[Reachability reachabilityForInternetConnection] retain];
+    [internetReachable startNotifier];
+    
+    // check if a pathway to a random host exists
+    hostReachable = [[Reachability reachabilityWithHostName: serverAddress] retain];
+    [hostReachable startNotifier];
+    
+    // now patiently wait for the notification
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -196,6 +212,52 @@
     
     [loadingView removeFromSuperview];
     [self hideNetworkActivity];
+}
+
+- (void) checkNetworkStatus:(NSNotification *)notice
+{
+    // called after network status changes
+    
+    NetworkStatus internetStatus = [internetReachable currentReachabilityStatus];
+    switch( internetStatus ){
+        case NotReachable:
+
+            NSLog(@"The internet is down.");
+            internetActive = NO;
+            wifiConnection = NO;
+            break;
+        case ReachableViaWiFi:
+
+            NSLog(@"The internet is working via WIFI.");
+            internetActive = YES;
+            wifiConnection = YES;
+            break;
+        case ReachableViaWWAN:
+
+            NSLog(@"The internet is working via WWAN.");
+            internetActive = YES;   
+            wifiConnection = NO;         
+            break;
+    }
+    
+    NetworkStatus hostStatus = [hostReachable currentReachabilityStatus];
+    switch( hostStatus ){
+        case NotReachable:
+
+            NSLog(@"A gateway to the host server is down.");
+            hostActive = NO;            
+            break;
+        case ReachableViaWiFi:
+
+            NSLog(@"A gateway to the host server is working via WIFI.");
+            hostActive = YES;
+            break;
+        case ReachableViaWWAN:
+
+            NSLog(@"A gateway to the host server is working via WWAN.");
+            hostActive = YES;
+            break;
+    }
 }
 
 - (void)dealloc

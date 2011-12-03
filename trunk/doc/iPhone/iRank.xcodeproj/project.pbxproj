@@ -59,6 +59,8 @@
 		DD40A14F14814CF000EE116C /* ELCTextfieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD40A14E14814CF000EE116C /* ELCTextfieldCell.m */; };
 		DD40A15314814EA800EE116C /* SignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD40A15114814EA600EE116C /* SignViewController.m */; };
 		DD40A15414814EA800EE116C /* SignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD40A15214814EA700EE116C /* SignViewController.xib */; };
+		DD40A15C1482C44100EE116C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD40A15A1482C43300EE116C /* SystemConfiguration.framework */; };
+		DD40A1631482C56200EE116C /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = DD40A1621482C56200EE116C /* Reachability.m */; };
 		DD85E17E1474843300D83223 /* EventResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD85E17C1474843300D83223 /* EventResultViewController.m */; };
 		DD85E17F1474843300D83223 /* EventResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD85E17D1474843300D83223 /* EventResultViewController.xib */; };
 		DD895D3B1460BDA900203286 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD895D391460BDA900203286 /* LoginViewController.m */; };
@@ -168,6 +170,9 @@
 		DD40A15014814EA500EE116C /* SignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignViewController.h; sourceTree = "<group>"; };
 		DD40A15114814EA600EE116C /* SignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignViewController.m; sourceTree = "<group>"; };
 		DD40A15214814EA700EE116C /* SignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignViewController.xib; sourceTree = "<group>"; };
+		DD40A15A1482C43300EE116C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DD40A1611482C56200EE116C /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../../../Downloads/Reachability/Classes/Reachability.h; sourceTree = "<group>"; };
+		DD40A1621482C56200EE116C /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../../../Downloads/Reachability/Classes/Reachability.m; sourceTree = "<group>"; };
 		DD85E17B1474843300D83223 /* EventResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventResultViewController.h; sourceTree = "<group>"; };
 		DD85E17C1474843300D83223 /* EventResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventResultViewController.m; sourceTree = "<group>"; };
 		DD85E17D1474843300D83223 /* EventResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventResultViewController.xib; sourceTree = "<group>"; };
@@ -215,6 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD40A15C1482C44100EE116C /* SystemConfiguration.framework in Frameworks */,
 				DD2A07E11447AA5A003FB740 /* UIKit.framework in Frameworks */,
 				DD2A07E31447AA5A003FB740 /* Foundation.framework in Frameworks */,
 				DD2A07E51447AA5A003FB740 /* CoreGraphics.framework in Frameworks */,
@@ -261,6 +267,8 @@
 		DD121E4F1464BD3400E97E8C /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				DD40A1611482C56200EE116C /* Reachability.h */,
+				DD40A1621482C56200EE116C /* Reachability.m */,
 				DD40A14D14814CF000EE116C /* ELCTextfieldCell.h */,
 				DD40A14E14814CF000EE116C /* ELCTextfieldCell.m */,
 				DD9ED0BA147B375C001B5B32 /* FileHelpers.h */,
@@ -351,6 +359,7 @@
 		DD2A07DF1447AA5A003FB740 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DD40A15A1482C43300EE116C /* SystemConfiguration.framework */,
 				DD2A94661447CCF5007CCDF1 /* SBJson.framework */,
 				DD2A07E01447AA5A003FB740 /* UIKit.framework */,
 				DD2A07E21447AA5A003FB740 /* Foundation.framework */,
@@ -565,6 +574,7 @@
 				DD9ED0BC147B375D001B5B32 /* FileHelpers.m in Sources */,
 				DD40A14F14814CF000EE116C /* ELCTextfieldCell.m in Sources */,
 				DD40A15314814EA800EE116C /* SignViewController.m in Sources */,
+				DD40A1631482C56200EE116C /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

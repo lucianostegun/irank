@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Event.h"
+#import "iRankAppDelegate.h"
 
 @interface EventResultViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     
@@ -22,9 +23,18 @@
     IBOutlet UILabel *score;
     
     IBOutlet UIViewController *resultDetailViewController;
+    
+    IBOutlet UITableView *tableView;
+    
+    iRankAppDelegate *appDelegate;
 }
 
 @property (nonatomic, assign) Event *event;
-//@property (nonatomic, retain) IBOutlet UIViewController *resultDetailViewController;
+@property (nonatomic, assign) NSMutableArray *eventPlayerList;
+
+
+- (void)updatePlayerList;
+- (void)updateEventPlayerList;
+- (void)handlePlayerList:(NSNotification *)notice;
 
 @end

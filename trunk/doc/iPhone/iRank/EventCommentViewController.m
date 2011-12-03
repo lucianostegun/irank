@@ -8,7 +8,6 @@
 
 #import "iRankAppDelegate.h"
 #import "EventCommentViewController.h"
-#import "Constants.h"
 
 @implementation EventCommentViewController
 @synthesize webView;

@@ -10,7 +10,6 @@
 #import "EventPlayerViewController.h"
 #import "EventCommentViewController.h"
 #import "EventResultViewController.h"
-#import "Constants.h"
 #import "iRankAppDelegate.h"
 
 @implementation EventDetailViewController
