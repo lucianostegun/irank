@@ -23,7 +23,15 @@
 #define kDescriptKey    @"description"
 #define kControllerKey  @"viewController"
 
+#define kHomeEventLimitKey @"homeEvents"
+#define kSaveOfflineKey @"saveResultOffline"
+#define kPhotoCompressKey @"photoCompress"
+
+#define kEventPlayerListLoadSuccess @"eventPlayerListLoadSuccess"
+
 #define serverAddress   @"irank"
 //#define serverAddress   @"alpha.irank.com.br"
 //#define serverAddress   @"www.irank.com.br"
 //#define serverAddress   @"beta.irank.com.br"
+
+#define kForceOfflineSaving NO;

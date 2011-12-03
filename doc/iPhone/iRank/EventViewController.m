@@ -10,7 +10,6 @@
 #import "iRankAppDelegate.h"
 #import "Event.h"
 #import "XMLEventParser.h"
-#import "Constants.h"
 
 @implementation EventViewController
 @synthesize eventList;
@@ -130,7 +129,11 @@
     description = [NSString stringWithFormat:@"%@ %@ @%@", [event eventDate], [event startTime], [event eventPlace]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    if( event.isPastDate && !event.savedResult ){
+    if( event.hasOfflineResult ){
+        
+        cell.detailTextLabel.textColor = [UIColor orangeColor];
+        description = @"Resultado offline pendente...";
+    }else if( event.isPastDate && !event.savedResult ){
         
         cell.detailTextLabel.textColor = [UIColor redColor];
         description = @"Resultado pendente...";

@@ -8,7 +8,6 @@
 
 #import "EventPlayer.h"
 #import "Player.h"
-#import "Constants.h"
 #import "iRankAppDelegate.h"
 
 @implementation EventPlayer
@@ -32,6 +31,38 @@
     return self;
 }
 
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    
+    [encoder encodeInt:eventId forKey:@"eventId"];
+    [encoder encodeObject:player forKey:@"player"];
+    [encoder encodeBool:enabled forKey:@"enabled"];
+    [encoder encodeObject:inviteStatus forKey:@"inviteStatus"];
+    [encoder encodeInt:eventPosition forKey:@"eventPosition"];
+    [encoder encodeFloat:buyin forKey:@"buyin"];
+    [encoder encodeFloat:rebuy forKey:@"rebuy"];
+    [encoder encodeFloat:addon forKey:@"addon"];
+    [encoder encodeFloat:prize forKey:@"prize"];
+    [encoder encodeFloat:score forKey:@"score"];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    
+    [super init];
+    
+    [self setEventId: [decoder decodeIntForKey:@"eventId"]];
+    [self setPlayer: [decoder decodeObjectForKey:@"player"]];
+    [self setEnabled: [decoder decodeBoolForKey:@"enabled"]];
+    [self setInviteStatus: [decoder decodeObjectForKey:@"inviteStatus"]];
+    [self setEventPosition: [decoder decodeIntForKey:@"eventPosition"]];
+    [self setBuyin: [decoder decodeFloatForKey:@"buyin"]];
+    [self setRebuy: [decoder decodeFloatForKey:@"rebuy"]];
+    [self setAddon: [decoder decodeFloatForKey:@"addon"]];
+    [self setPrize: [decoder decodeFloatForKey:@"prize"]];
+    [self setScore: [decoder decodeFloatForKey:@"score"]];
+    
+    return self;
+}
+
 -(void)togglePresence:(NSString *)choice {
     
     int userSiteId = [(iRankAppDelegate *)[[UIApplication sharedApplication] delegate] userSiteId];
@@ -41,6 +72,9 @@
 //    NSLog(@"urlString: %@", urlString);
 
     self.inviteStatus = choice;
+    
+    self.enabled       = [choice isEqualToString:@"yes"];
+    self.eventPosition = 500;
     
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -73,8 +107,14 @@
 
 -(NSString *)description {
     
-    return [NSString stringWithFormat:@"(%i): %@ - B: %f R: %f A: %f", player.playerId, player.fullName, buyin, rebuy, addon];
+    return [NSString stringWithFormat:@"(%i): %@ %@", eventPosition, player.fullName, (enabled?@"enabled":@"disabled")];
 }
+
+- (NSComparisonResult)compare:(EventPlayer *)eventPlayer {
+
+    return [eventPosition compare:eventPlayer.eventPosition];
+}
+
 
 -(void) dealloc {
     

@@ -9,7 +9,6 @@
 #import "LoginViewController.h"
 #import "iRankAppDelegate.h"
 #import "JSON.h"
-#import "Constants.h"
 #import "SignViewController.h"
 
 @implementation LoginViewController

@@ -35,8 +35,9 @@
     
     if([elementName isEqualToString:@"event"]){
         
-        event           = [[Event alloc] init];
-        event.eventId   = [[attributeDict objectForKey:@"id"] integerValue];
+        int eventId = [[attributeDict objectForKey:@"id"] integerValue];
+        
+        event           = [[Event alloc] initWithEventId:eventId];
         event.rankingId = [[attributeDict objectForKey:@"rankingId"] integerValue];
 
         return;

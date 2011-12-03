@@ -19,6 +19,7 @@
     IBOutlet UILabel *playerPosition;
     IBOutlet UILabel *eventName;
     IBOutlet UILabel *eventPlaceDate;
+    IBOutlet UILabel *lblPrize;
     
     IBOutlet UITextField *buyin;
     IBOutlet UITextField *rebuy;
@@ -31,6 +32,9 @@
     IBOutlet UIBarButtonItem *btnCalculatePrize;
     
     IBOutlet UITableView *resultTableView;
+    IBOutlet UITextView *ringInfo;
+    
+    IBOutlet UIToolbar *prizeToolbar;
     
 //    IBOutlet UIViewController *resultPreviewViewController;
     
@@ -50,6 +54,7 @@
 @property (nonatomic, assign) EventPlayer *eventPlayer;
 @property (nonatomic, retain) NSNumberFormatter *numberFormatter;
 @property (nonatomic, retain) IBOutlet UIViewController *resultPreviewViewController;
+@property (nonatomic, assign) NSMutableArray *eventPlayerList;
 
 -(void)loadPlayerInfo:(int)playerPositionIndex;
 -(IBAction)loadNextPlayerInfo:(id)sender;

@@ -35,13 +35,19 @@
 @property (nonatomic, readwrite) BOOL isMyEvent;
 @property (nonatomic, readwrite) BOOL isPastDate;
 @property (nonatomic, readwrite) BOOL isEditable;
+@property (nonatomic, readwrite) BOOL hasOfflineResult;
 @property (nonatomic, retain) NSMutableArray *eventPlayerList;
-@property (nonatomic, readwrite) BOOL filteredPlayerList;
+@property (nonatomic, retain) NSMutableArray *eventPlayerListFiltered;
+//@property (nonatomic, readwrite) BOOL filteredPlayerList;
 
-- (void)filterPlayerList;
+- (id)initWithEventId:(int)theEventId;
+
+- (void)reloadPlayerList:(id)sender;// filter:(BOOL)filter;
+- (NSMutableArray *)getFilteredPlayerList;
 - (float)totalBuyins;
 
-- (void)saveResult:(id)sender;
+- (void)saveResult:(id)sender saveOffline:(BOOL)saveResultOffline;
+- (void)loadArchivedEventPlayerList;
 
 + (NSString *)eventArrayPath:(NSString *)sufix;
 + (NSMutableArray *)loadEventList:(NSString *)eventType userSiteId:(int)userSiteId limit:(int)limit;

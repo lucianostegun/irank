@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
 
+@class Reachability;
+
 @interface iRankAppDelegate : NSObject <UIApplicationDelegate> {
     
     IBOutlet UITabBarController *tabBarController;
@@ -19,6 +21,9 @@
     
     IBOutlet UIView *loadingView;
     IBOutlet UILabel *lblLoadingMessage;
+    
+    Reachability* internetReachable;
+    Reachability* hostReachable;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
@@ -30,18 +35,24 @@
 @property (nonatomic, readonly) NSString *firstName;
 @property (nonatomic, readonly) NSString *lastName;
 @property (nonatomic, readwrite) BOOL refreshHome;
+@property (nonatomic, readwrite) BOOL refreshHomeEventList;
+@property (nonatomic, readonly) BOOL internetActive;
+@property (nonatomic, readonly) BOOL wifiConnection;
+@property (nonatomic, readonly) BOOL hostActive;
 
--(void)switchLogin;
--(void)showLogin;
--(void)showAlert:(NSString *)title message:(NSString *)message;
--(void)incraseBadge:(int)amount;
--(void)decraseBadge:(int)amount;
--(void)updateBadge;
--(void)putOnLandscapeMode;
--(void)showNetworkActivity;
--(void)hideNetworkActivity;
+- (void)switchLogin;
+- (void)showLogin;
+- (void)showAlert:(NSString *)title message:(NSString *)message;
+- (void)incraseBadge:(int)amount;
+- (void)decraseBadge:(int)amount;
+- (void)updateBadge;
+- (void)putOnLandscapeMode;
+- (void)showNetworkActivity;
+- (void)hideNetworkActivity;
 
--(void)showLoadingView:(NSString *)loadingMessage;
--(void)hideLoadingView;
+- (void)showLoadingView:(NSString *)loadingMessage;
+- (void)hideLoadingView;
+
+- (void)checkNetworkStatus:(NSNotification *)notice;
 
 @end

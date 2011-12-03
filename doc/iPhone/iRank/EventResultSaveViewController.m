@@ -8,15 +8,16 @@
 
 #import "EventResultSaveViewController.h"
 #import "EventPlayer.h"
-#import "Constants.h"
 #import "JSON.h"
 #import "iRankAppDelegate.h"
+#import "Reachability.h"
 
 @implementation EventResultSaveViewController
 @synthesize event;
 @synthesize eventPlayer;
 @synthesize numberFormatter;
 @synthesize resultPreviewViewController;
+@synthesize eventPlayerList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,6 +30,7 @@
         [numberFormatter setCurrencyCode:@""];
         [numberFormatter setCurrencySymbol:@""];
     }
+    
     return self;
 }
 
@@ -45,19 +47,26 @@
         buyin.enabled           = NO;
         btnIncraseBuyin.enabled = NO;
         btnDecraseBuyin.enabled = NO;
+        lblPrize.hidden         = YES;
+        prize.hidden            = YES;
+        ringInfo.hidden         = YES;
+        prizeToolbar.hidden     = NO;
     }else{
         
         buyin.enabled           = YES;
         btnIncraseBuyin.enabled = YES;
         btnDecraseBuyin.enabled = YES;
+        lblPrize.hidden         = NO;
+        prize.hidden            = NO;
+        ringInfo.hidden         = NO;
+        prizeToolbar.hidden     = YES;
     }
-    
+        
     self.title = @"Resultados";
     self.navigationItem.rightBarButtonItem = doneButton;
     
     [[NSNotificationCenter defaultCenter] 
-     addObserver:self selector:@selector
-     (keyboardWillShow:) name:UIKeyboardWillShowNotification object:self.view.window];
+     addObserver:self selector:@selector (keyboardWillShow:) name:UIKeyboardWillShowNotification object:self.view.window];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -72,8 +81,8 @@
 }
 
 -(void)loadPlayerInfo:(int)playerPositionIndex {
-    
-    eventPlayer         = [[event eventPlayerList] objectAtIndex:playerPositionIndex];
+
+    eventPlayer         = [eventPlayerList objectAtIndex:playerPositionIndex];
     playerName.text     = eventPlayer.player.fullName;
     playerPosition.text = [NSString stringWithFormat:@"%iª posição", (playerPositionIndex+1)];
     eventName.text      = event.eventName;
@@ -85,6 +94,7 @@
     buyin.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.buyin]]];
     rebuy.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.rebuy]]];
     addon.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.addon]]];
+    prize.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.prize]]];
 }
 
 - (void)keyboardWillShow: (NSNotification *)notif {
@@ -130,7 +140,7 @@
     
     currentPosition++;
 
-    if ( currentPosition >= [[event eventPlayerList] count] )
+    if ( currentPosition >= [eventPlayerList count] )
         currentPosition = 0;
     
     [self loadPlayerInfo:currentPosition];
@@ -141,7 +151,7 @@
     currentPosition--;
     
     if ( currentPosition < 0 )
-        currentPosition = [[event eventPlayerList] count]-1;
+        currentPosition = [eventPlayerList count]-1;
     
     [self loadPlayerInfo:currentPosition];
 }
@@ -175,18 +185,30 @@
 -(void)doneButtonTouchUp:(id)sender {
 
     [self.navigationController pushViewController:resultPreviewViewController animated:YES];
+    [resultTableView reloadData];
     
-    saveButton.enabled        = NO;
-    btnCalculatePrize.enabled = YES;
+    if( event.hasOfflineResult || [event.gameStyle isEqualToString:@"ring"] ){
+
+        saveButton.enabled        = YES;
+        btnCalculatePrize.enabled = NO;
+    }else{
+     
+        saveButton.enabled        = NO;
+        btnCalculatePrize.enabled = YES;
+    }
+    
     resultPreviewViewController.navigationItem.rightBarButtonItem = saveButton;
 }
 
 -(void)saveButtonTouchUp:(id)sender {
     
-    BOOL saveResultOffline = [[appDelegate userDefaults] boolForKey:@"saveResultOffline"];
+    BOOL saveOffline = (!appDelegate.wifiConnection || !appDelegate.hostActive);
+    saveOffline      = (saveOffline && [[appDelegate userDefaults] boolForKey:kSaveOfflineKey]);
+    saveOffline      = saveOffline || kForceOfflineSaving;
+    
     NSString *confirmMessage = @"Confirma salvar e enviar por e-mail o resultado do evento?";
 
-    if( saveResultOffline )
+    if( saveOffline && !event.hasOfflineResult )
         confirmMessage = @"Confirma salvar Offline o resultado do evento?";
         
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirmação" message:confirmMessage delegate:self cancelButtonTitle:@"Não" otherButtonTitles:@"Sim", nil];
@@ -196,32 +218,24 @@
 
 -(void)saveEventResult {
     
-//    resultPreviewViewController.navigationItem.rightBarButtonItem = nil;
-//    resultPreviewViewController.navigationItem.rightBarButtonItem = activityIndicatorButton;
-//    [activityIndicator setHidden:NO];
-//    [activityIndicator startAnimating];
-//    
-//    btnCalculatePrize.enabled = NO;
-//    [resultPreviewViewController.navigationItem setHidesBackButton:YES animated:YES];
-    
     [appDelegate showLoadingView:@"salvando resultado..."];
     
     [self performSelector:@selector(doSaveEventResult) withObject:nil afterDelay:0];
 }
 
 -(void)doSaveEventResult {
+
+    BOOL saveOffline = (!appDelegate.wifiConnection || !appDelegate.hostActive);
+    saveOffline = (saveOffline && [[appDelegate userDefaults] boolForKey:kSaveOfflineKey]);
+    saveOffline = saveOffline || kForceOfflineSaving;
     
-    [event saveResult:self];
+    if( event.hasOfflineResult )
+        saveOffline = NO;
+    
+    [event saveResult:self saveOffline:saveOffline];
 }
 
 -(void)concludeSaveResult {
-    
-//    resultPreviewViewController.navigationItem.rightBarButtonItem = saveButton;
-//    
-//    event.savedResult = YES;
-//    btnCalculatePrize.enabled = YES;
-//    
-//    [resultPreviewViewController.navigationItem setHidesBackButton:NO animated:YES];
     
     [appDelegate hideLoadingView];
     
@@ -230,13 +244,6 @@
 }
 
 -(void)concludeSaveResultWithError {
-    
-//    resultPreviewViewController.navigationItem.rightBarButtonItem = saveButton;
-//    
-//    event.savedResult = YES;
-//    btnCalculatePrize.enabled = YES;
-//    
-//    [resultPreviewViewController.navigationItem setHidesBackButton:NO animated:YES];
     
     [appDelegate hideLoadingView];
     
@@ -342,6 +349,9 @@
         case 3:
             eventPlayer.addon = [theTextField.text floatValue];
             break;
+        case 4:
+            eventPlayer.prize = [theTextField.text floatValue];
+            break;
             
         default:
             break;
@@ -370,7 +380,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return [[event eventPlayerList] count];
+    return [eventPlayerList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -378,7 +388,7 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    EventPlayer *aEventPlayer = [[event eventPlayerList] objectAtIndex:indexPath.row];
+    EventPlayer *aEventPlayer = [eventPlayerList objectAtIndex:indexPath.row];
     Player *player = [aEventPlayer player];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -399,11 +409,13 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     
-    return [NSString stringWithFormat:@"%i jogadores @%@", [event.eventPlayerList count], event.eventPlace];
+    return [NSString stringWithFormat:@"%i jogadores @%@", [eventPlayerList count], event.eventPlace];
 }
 
 -(void)calculatePrize:(id)sender {
-        
+       
+    [appDelegate checkNetworkStatus:kReachabilityChangedNotification];
+    
     resultPreviewViewController.navigationItem.rightBarButtonItem = nil;
     resultPreviewViewController.navigationItem.rightBarButtonItem = activityIndicatorButton;
     [activityIndicator setHidden:NO];
@@ -433,7 +445,7 @@
     
     NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     
-    NSLog(@"result: %@", result);
+//    NSLog(@"result: %@", result);
     
     if( [result isEqualToString:@"savedResult"] ){
         
@@ -445,12 +457,20 @@
         
         int paidPlaces = [[jsonObjects objectForKey:@"paidPlaces"] intValue];
         
-        NSLog(@"paidPlaces: %i", paidPlaces);
+//        NSLog(@"paidPlaces: %i", paidPlaces);
         
-        for(int i=1; i <= paidPlaces; i++){
+        for(int i=0; i < [eventPlayerList count]; i++){
             
-            float playerPrize = [[jsonObjects objectForKey:[NSString stringWithFormat:@"%i", i]] floatValue];
-            [[event.eventPlayerList objectAtIndex:(i-1)] setPrize:playerPrize];
+//            NSLog(@"i: %i", i);
+            
+            if( i < paidPlaces ){
+                
+                float playerPrize = [[jsonObjects objectForKey:[NSString stringWithFormat:@"%i", i+1]] floatValue];
+                [[eventPlayerList objectAtIndex:i] setPrize:playerPrize];
+            }else{
+                
+                [[eventPlayerList objectAtIndex:i] setPrize:0];
+            }
         }
         
         [result release];
@@ -467,6 +487,7 @@
     
     [event release];
     [eventPlayer release];
+    [eventPlayerList release];
     [numberFormatter release];
     [resultPreviewViewController release];
     [super dealloc];

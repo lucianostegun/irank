@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Player.h"
-@interface EventPlayer : NSObject {
+@interface EventPlayer : NSObject <NSCoding> {
     
     
 }
@@ -25,5 +25,7 @@
 @property (nonatomic, readwrite) float score;
 
 -(void)togglePresence:(NSString *)choice;
+
+- (NSComparisonResult)compare:(EventPlayer *)eventPlayer;
 
 @end

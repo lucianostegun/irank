@@ -8,16 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import "Event.h"
+#import "iRankAppDelegate.h"
 
 @interface EventPlayerViewController : UITableViewController{
     
     UIBarButtonItem *doneButton;
+    UIBarButtonItem *reloadButton;
+    iRankAppDelegate *appDelegate;
+    NSMutableArray *eventPlayerList;
 }
 
 @property (nonatomic, assign) Event *event;
 @property (nonatomic, readwrite) BOOL showEnabledOnly;
 
--(void)doUpdatePlayerList:(BOOL)reloadData;
--(void)doUpdatePlayerListAndReloadData;
+- (void)configureView;
+- (void)updatePlayerList;
+//-(void)doUpdatePlayerListAndReloadData;
+
+- (void)handlePlayerList:(NSNotification *)notice;
 
 @end

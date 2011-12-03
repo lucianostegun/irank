@@ -8,10 +8,10 @@
 
 #import "HomeViewController.h"
 #import "iRankAppDelegate.h"
-#import "Constants.h"
 #import "Event.h"
 #import "XMLEventParser.h"
 #import "EventDetailViewController.h"
+#import "JSON.h"
 
 @implementation HomeViewController
 
@@ -45,65 +45,24 @@
 {
     [super viewDidLoad];
     
+    appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithTitle:@"atualizar" style:UIBarButtonItemStylePlain target:self action:@selector(reloadData:)];
+    
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    self.navigationItem.rightBarButtonItem = reloadButton;
     self.navigationItem.leftBarButtonItem = quitButton;
+    
+    bankrollInfo = [[NSMutableArray alloc] init];
 
     [self updateResume];
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate showLoadingView:nil];
-    [self performSelector:@selector(updateEventList) withObject:nil afterDelay:0.1];
-}
-
--(void)updateTeste:(id)sender {
-    
-    NSLog(@"Clicou no botão update");
-
-//    [self showIndicator];
-
-}
-
--(void)showIndicator {
-    
-    [self performSelector:@selector(hideIndicator) withObject:nil afterDelay:0];
-
-    //    [activityIndicator setNeedsDisplay];
-    //    [self.view setNeedsDisplay];
-    //    [activityIndicator setNeedsLayout];
-    //    [self.view setNeedsLayout];
-}
-
--(void)hideIndicator {
-
-//    int userSiteId = 1;
-//    
-//    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/nextEvents/userSiteId/%i", serverAddress, userSiteId]];
-//    
-//    NSURLRequest *nextEventRequest = [NSURLRequest requestWithURL:url cachePolicy: NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
-//	NSError *requestError = nil;
-//	NSData *response = [NSURLConnection sendSynchronousRequest:nextEventRequest returningResponse:nil error:&requestError]; 
-//    
-//    if(requestError == nil) {
-//        
-//		NSLog(@"Processou o XML com sucesso");
-//	} else {
-//        
-//        NSLog(@"Timeout ao processar o XML de próximos eventos");
-//	}
-//    
-//    [activityIndicator stopAnimating];    
-//    //    [activityIndicator setNeedsDisplay];
-//    //    [self.view setNeedsDisplay];
-//    //    [activityIndicator setNeedsLayout];
-//    //    [self.view setNeedsLayout];
+    [self reloadData];
 }
 
 -(void)updateResume {
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSMutableDictionary *userInfo = [[appDelegate userDefaults] objectForKey:@"userInfo"];
-    
-    bankrollInfo = [[NSMutableArray alloc] init];
     
     [bankrollInfo addObject:[NSMutableDictionary
                                  dictionaryWithObjectsAndKeys:
@@ -141,11 +100,9 @@
 
 - (void)updateEventList {
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     int userSiteId = [appDelegate userSiteId];
 
-    int homeEvents = [[[appDelegate userDefaults] objectForKey:@"homeEvents"] intValue];
+    int homeEvents = [[[appDelegate userDefaults] objectForKey:kHomeEventLimitKey] intValue];
     
     NSMutableArray *eventList = [Event loadEventList:@"resume" userSiteId:userSiteId limit:homeEvents];
     
@@ -191,12 +148,86 @@
     self.hidesBottomBarWhenPushed = NO;
     eventDetailViewController.hidesBottomBarWhenPushed = NO;
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     if( appDelegate.refreshHome ){
-     
-        [self updateResume];
+        
+        [appDelegate showLoadingView:nil];
+        [self performSelector:@selector(reloadResumeData) withObject:nil afterDelay:0.1];
     }
+    
+//    if( appDelegate.refreshHomeEventList )
+//        [self updateResume];
+}
+
+- (void)reloadResumeData {
+    
+    int userSiteId = [appDelegate userSiteId];
+    NSURL *url                   = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ios.php/login/getInfo/userSiteId/%i", serverAddress, userSiteId]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:45];
+  	NSError *requestError        = nil;
+    NSData *response             = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&requestError]; 
+    NSString *result             = [[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding];
+    
+    if( requestError!=nil )
+        return;
+    
+//    NSLog(@"result: %@", result);
+    
+    [bankrollInfo removeAllObjects];
+        
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithDictionary:[[appDelegate userDefaults] objectForKey:@"userInfo"]];
+//    
+    SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
+    NSDictionary *jsonObjects = [jsonParser objectWithString:result error:nil];
+    
+    [dictionary setObject:[jsonObjects objectForKey:kFeeKey] forKey:kFeeKey];
+    [dictionary setObject:[jsonObjects objectForKey:kBuyinKey] forKey:kBuyinKey];
+    [dictionary setObject:[jsonObjects objectForKey:kAddonKey] forKey:kAddonKey];
+    [dictionary setObject:[jsonObjects objectForKey:kRebuyKey] forKey:kRebuyKey];
+    [dictionary setObject:[jsonObjects objectForKey:kPrizeKey] forKey:kPrizeKey];
+    [dictionary setObject:[jsonObjects objectForKey:kScoreKey] forKey:kScoreKey];
+    [dictionary setObject:[jsonObjects objectForKey:kBalanceKey] forKey:kBalanceKey];
+    
+    
+    [bankrollInfo addObject:[NSMutableDictionary
+                             dictionaryWithObjectsAndKeys:
+                             kBuyinsWord, kSelectKey,
+                             [dictionary valueForKey:kBuyinKey], kDescriptKey,
+                             nil, kControllerKey, nil]];
+    [bankrollInfo addObject:[NSMutableDictionary
+                             dictionaryWithObjectsAndKeys:
+                             kFeeWord, kSelectKey,
+                             [dictionary valueForKey:kFeeKey], kDescriptKey,
+                             nil, kControllerKey, nil]];
+    [bankrollInfo addObject:[NSMutableDictionary
+                             dictionaryWithObjectsAndKeys:
+                             kRebuysWord, kSelectKey,
+                             [dictionary valueForKey:kRebuyKey], kDescriptKey,
+                             nil, kControllerKey, nil]];
+    [bankrollInfo addObject:[NSMutableDictionary
+                             dictionaryWithObjectsAndKeys:
+                             kAddonsWord, kSelectKey,
+                             [dictionary valueForKey:kAddonKey], kDescriptKey,
+                             nil, kControllerKey, nil]];
+    [bankrollInfo addObject:[NSMutableDictionary
+                             dictionaryWithObjectsAndKeys:
+                             kPrizesWord, kSelectKey,
+                             [dictionary valueForKey:kPrizeKey], kDescriptKey,
+                             nil, kControllerKey, nil]];
+    [bankrollInfo addObject:[NSMutableDictionary
+                             dictionaryWithObjectsAndKeys:
+                             kBalanceWord, kSelectKey,
+                             [dictionary valueForKey:kBalanceKey], kDescriptKey,
+                             nil, kControllerKey, nil]];
+    
+    [[appDelegate userDefaults] setObject:dictionary forKey:@"userInfo"];
+    [[appDelegate userDefaults] synchronize];
+//    
+//    NSLog(@"dictionary: %@", dictionary);
+////    [dictionary release];
+//    
+    [self updateResume];
+    [[self tableView] reloadData];
+    [appDelegate hideLoadingView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -213,6 +244,18 @@
 {
 
     [super viewDidDisappear:animated];
+}
+
+- (void)reloadData:(id)sender {
+    
+    [self reloadResumeData];
+    [self reloadData];
+}
+
+- (void)reloadData {
+    
+    [appDelegate showLoadingView:nil];
+    [self performSelector:@selector(updateEventList) withObject:nil afterDelay:0.1];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -281,6 +324,13 @@
         
         if( [regExPredicate evaluateWithObject:description] )
             cell.detailTextLabel.textColor = [UIColor redColor];
+        else{
+            
+            if( indexPath.row==5 )
+                cell.detailTextLabel.textColor = [UIColor blueColor];
+            else
+                cell.detailTextLabel.textColor = [UIColor blackColor];
+        }
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }else{
@@ -296,7 +346,11 @@
         description = [NSString stringWithFormat:@"%@ %@ @%@", [event eventDate], [event startTime], [event eventPlace]];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
-        if( event.isPastDate && !event.savedResult ){
+        if( event.hasOfflineResult ){
+            
+            cell.detailTextLabel.textColor = [UIColor orangeColor];
+            description = @"Resultado offline pendente...";
+        }else if( event.isPastDate && !event.savedResult ){
             
             cell.detailTextLabel.textColor = [UIColor redColor];
             description = @"Resultado pendente...";
@@ -318,7 +372,6 @@
     
     NSString *header = [[[NSString alloc] init] autorelease];
 
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSString *firstName = appDelegate.firstName;
     NSString *lastName  = appDelegate.lastName;
     
@@ -431,8 +484,6 @@
 
 - (void)doLogout:(id)sender {
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-
     [appDelegate showLogin];
         
     [[appDelegate userDefaults] removeObjectForKey:@"userInfo"]; 

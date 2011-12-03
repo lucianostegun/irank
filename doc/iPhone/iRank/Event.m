@@ -8,8 +8,8 @@
 
 #import "Event.h"
 #import "EventPlayer.h"
-#import "Constants.h"
 #import "XMLEventParser.h"
+#import "XMLEventPlayerParser.h"
 #import "iRankAppDelegate.h"
 
 @implementation Event
@@ -23,14 +23,38 @@
 @synthesize paidPlaces;
 @synthesize savedResult;
 @synthesize eventPlayerList;
+@synthesize eventPlayerListFiltered;
 @synthesize inviteStatus;
 @synthesize isMyEvent;
 @synthesize isPastDate;
 @synthesize isEditable;
+@synthesize hasOfflineResult;
 @synthesize gameStyle;
-@synthesize filteredPlayerList;
+//@synthesize filteredPlayerList;
 
 - (id)init {
+    
+    self = [super init];
+ 
+    eventPlayerList = nil;
+    eventPlayerListFiltered = nil;
+    return self;
+}
+
+- (id)initWithEventId:(int)theEventId {
+    
+    self = [self init];
+    
+    eventId = theEventId;
+    
+    NSString *eventResultPath = [Event eventArrayPath:[NSString stringWithFormat:@"result-%i", eventId]];
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    
+    self.hasOfflineResult = [manager fileExistsAtPath:eventResultPath];
+    
+    if( self.hasOfflineResult )
+        [self loadArchivedEventPlayerList];
     
     return self;
 }
@@ -144,32 +168,52 @@
     return [NSString stringWithFormat:@"%d: %@ @ %@", eventId, eventName, eventPlace];
 }
 
-- (void)filterPlayerList {
+- (NSMutableArray *)getFilteredPlayerList {
     
-    if( filteredPlayerList )
-        return;
+    if( eventPlayerListFiltered!=nil ){
+        
+        [eventPlayerListFiltered release];
+        eventPlayerListFiltered = nil;
+    }
     
-    NSMutableArray *eventPlayerListTemp = [[NSMutableArray alloc] initWithArray:eventPlayerList];
-    
-    int eventPosition = 0;
+    eventPlayerListFiltered = [[NSMutableArray alloc] init];
     
     for (EventPlayer *eventPlayer in eventPlayerList) {
+        
         if( !eventPlayer.enabled ){
-            [eventPlayerListTemp removeObject:eventPlayer];
+            
             eventPlayer.eventPosition = 0;
         }else{
             
-            eventPlayer.eventPosition = ++eventPosition;
+            [eventPlayerListFiltered addObject:eventPlayer];
             eventPlayer.buyin = [self buyin];
         }
     }
     
-    [eventPlayerList release];
-    eventPlayerList = nil;
-
-    eventPlayerList = eventPlayerListTemp;
+//    NSLog(@"eventPlayerListFiltered: %@", eventPlayerListFiltered);
+    NSArray *sorted = [eventPlayerListFiltered sortedArrayUsingComparator:^(id obj1, id obj2){
+        if ([obj1 isKindOfClass:[EventPlayer class]] && [obj2 isKindOfClass:[EventPlayer class]]) {
+            EventPlayer *s1 = (EventPlayer*)obj1;
+            EventPlayer *s2 = (EventPlayer*)obj2;
+            
+            if (s1.eventPosition < s2.eventPosition) {
+                return (NSComparisonResult)NSOrderedAscending;
+            } else if (s1.eventPosition > s2.eventPosition) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+        }
+        
+        // TODO: default is the same?
+        return (NSComparisonResult)NSOrderedSame;
+    }];
     
-    filteredPlayerList = YES;
+    [eventPlayerListFiltered release];
+    eventPlayerListFiltered = nil;
+    eventPlayerListFiltered = [[NSMutableArray alloc] initWithArray:sorted];
+
+//    NSLog(@"eventPlayerListFiltered: %@", eventPlayerListFiltered);
+
+    return eventPlayerListFiltered;
 }
 
 - (float)totalBuyins {
@@ -188,21 +232,7 @@
     return ((buyins+rebuys+addons)/self.buyin);
 }
 
-- (void) dealloc {
-    
-    [eventName release];
-    [rankingName release];
-    [eventPlace release];
-    [eventDate release];
-    [startTime release];
-    [comments release];
-    [eventPlayerList release];
-    [inviteStatus release];
-    [gameStyle release];
-    [super dealloc];
-}
-
--(void)saveResult:(id)sender {
+-(void)saveResult:(id)sender saveOffline:(BOOL)saveResultOffline {
     
     iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -221,15 +251,15 @@
     
     stringData = [stringData stringByAppendingString:@"\n</eventResults>"];
 
-    BOOL saveResultOffline = [[appDelegate userDefaults] boolForKey:@"saveResultOffline"];
-    
     if( saveResultOffline ){
         
         NSString *eventResultPath = [Event eventArrayPath:[NSString stringWithFormat:@"result-%i", eventId]];
-        
+        NSLog(@"Arquivando o resultado em : %@", eventResultPath);
         [NSKeyedArchiver archiveRootObject:eventResultPath toFile:eventResultPath];   
         
-        NSLog(@"Arquivando o resultado em : %@", eventResultPath);
+        NSString *eventResultPlayerListPath = [Event eventArrayPath:[NSString stringWithFormat:@"playerList-%i", eventId]];
+        NSLog(@"Arquivando o resultado em : %@", eventResultPlayerListPath);
+        [NSKeyedArchiver archiveRootObject:eventPlayerList toFile:eventResultPlayerListPath];
         
         [appDelegate hideLoadingView];
         [appDelegate showAlert:@"Resultado salvo" message:@"O resultado do evento foi salvo com sucesso!"];
@@ -254,11 +284,16 @@
         
         NSString *result = [[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding];
         
-        NSLog(@"result: %@", result);
-        
-        if( [result isEqualToString:@"saveSuccess"] )            
+        if( [result isEqualToString:@"saveSuccess"] ){
+         
             [sender performSelector:@selector(concludeSaveResult) withObject:nil afterDelay:0];
-        else
+            self.hasOfflineResult = NO;
+            self.savedResult      = YES;
+            
+            NSString *eventResultPath = [Event eventArrayPath:[NSString stringWithFormat:@"result-%i", eventId]];
+            
+            [[NSFileManager defaultManager] removeItemAtPath:eventResultPath error:nil];
+        }else
             [sender performSelector:@selector(concludeSaveResultWithError) withObject:nil afterDelay:0];
 	} else {
         
@@ -282,6 +317,7 @@
 //    NSLog(@"url: %@", url);
     
     NSString *eventPath = [Event eventArrayPath:eventType];
+    NSLog(@"eventPath: %@", eventPath);
     
     if(requestError == nil) {
         
@@ -305,6 +341,51 @@
     return eventList;
 }
 
+-(void)reloadPlayerList:(id)sender {
+    
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    int userSiteId = [appDelegate userSiteId];
+    
+    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/eventPlayer/userSiteId/%i/eventId/%d", serverAddress, userSiteId, eventId]];
+    
+    NSLog(@"url: %@", url.relativeString);
+    
+    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:url];    
+    
+    XMLEventPlayerParser *parser = [[XMLEventPlayerParser alloc] initXMLParser];
+    
+    [xmlParser setDelegate:parser];
+    
+    BOOL success = [xmlParser parse];
+    
+    if( !success ) 
+        return [appDelegate showAlert:@"Erro" message:@"Não foi possível recuperar a lista de jogadores."];
+    
+    [self setEventPlayerList: [[parser getEventPlayerList] retain]];
+    
+//    if( filter )
+//        [self filterPlayerList];
+    
+    NSNotification *note = [NSNotification notificationWithName:kEventPlayerListLoadSuccess object:sender];
+    [[NSNotificationCenter defaultCenter] postNotification:note];
+}
+
+- (void)loadArchivedEventPlayerList {
+    
+    NSString *eventPlayerListPath = [Event eventArrayPath:[NSString stringWithFormat:@"playerList-%i", eventId]];
+    
+    NSLog(@"Timeout ao processar o XML de últimos eventos");
+    NSLog(@"Carregando a lista de jogadores arquivada no endereço: %@", eventPlayerListPath);
+    
+    eventPlayerList = [NSKeyedUnarchiver unarchiveObjectWithFile:eventPlayerListPath];
+    
+    if( !eventPlayerList )
+        eventPlayerList = [NSMutableArray array];
+    
+    [eventPlayerList retain];
+}
+
 + (NSMutableArray *)loadArchivedEventList:(NSString *)eventType userSiteId:(int)userSiteId limit:(int)limit {
 
     NSMutableArray *eventList;
@@ -326,6 +407,21 @@
 + (NSString *)eventArrayPath:(NSString *)sufix {
     
     return pathInDocumentDirectory([NSString stringWithFormat:@"Events-%@.data", sufix]);
+}
+
+- (void) dealloc {
+    
+    [eventName release];
+    [rankingName release];
+    [eventPlace release];
+    [eventDate release];
+    [startTime release];
+    [comments release];
+    [eventPlayerList release];
+    [eventPlayerListFiltered release];
+    [inviteStatus release];
+    [gameStyle release];
+    [super dealloc];
 }
 
 @end

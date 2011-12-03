@@ -8,7 +8,6 @@
 
 #import "SignViewController.h"
 #import "iRankAppDelegate.h"
-#import "Constants.h"
 
 @implementation SignViewController
 @synthesize labels;
@@ -56,12 +55,12 @@
                          @"obrigatório", 
                          nil];
     
-    username = @"lstegun";
-    emailAddress = @"lucianostegun@gmail.com";
-    firstName = @"Luciano";
-    lastName = @"Stegun";
-    password = @"unidunite";
-    passwordConfirm = @"unidunite";
+    username = @"";
+    emailAddress = @"";
+    firstName = @"";
+    lastName = @"";
+    password = @"";
+    passwordConfirm = @"";
 	
 	self.tempValues = [NSArray arrayWithObjects:username, emailAddress, firstName, lastName, password, passwordConfirm, nil];
     
