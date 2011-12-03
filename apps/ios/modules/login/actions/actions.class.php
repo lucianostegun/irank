@@ -49,6 +49,17 @@ class loginActions extends sfActions
 	exit;
   }
   
+  public function executeGetInfo($request)
+  {
+
+	$userSiteId = $request->getParameter('userSiteId');
+	
+	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+	echo Util::parseInfo($userSiteObj->getInfo(true));
+		
+	exit;
+  }
+  
   public function executeSave($request){
   	
   	$xmlString = $request->getParameter('userSiteXml');
