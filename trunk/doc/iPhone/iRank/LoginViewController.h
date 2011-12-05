@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SignViewController.h"
 
+@class iRankAppDelegate;
+
 @interface LoginViewController : UIViewController {
     
     IBOutlet UITextField *txtUsername;
@@ -17,6 +19,7 @@
     IBOutlet UIButton *infoButton;
     IBOutlet UIView *infoView;
     SignViewController *signViewController;
+    iRankAppDelegate *appDelegate;
 }
 
 @property (nonatomic, retain) IBOutlet UITextField *txtUsername;

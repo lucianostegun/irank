@@ -8,14 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "EventDetailViewController.h"
+#import "iRankAppDelegate.h"
 
 @interface EventViewController : UITableViewController {
     
+    iRankAppDelegate *appDelegate;
     EventDetailViewController *eventDetailViewController;
 }
 
 @property (nonatomic, retain) NSMutableArray *eventList;
+@property (nonatomic, readwrite) int rankingId;
 
+- (id)initWithStyle:(UITableViewStyle)style rankingId:(int)theRankingId;
 - (void)updateEventList;
 
 @end

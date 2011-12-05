@@ -18,6 +18,7 @@
 @synthesize numberFormatter;
 @synthesize resultPreviewViewController;
 @synthesize eventPlayerList;
+@synthesize theTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -103,7 +104,7 @@
     NSValue *aValue     = [info objectForKey:UIKeyboardBoundsUserInfoKey];
     CGSize keyboardSize = [aValue CGRectValue].size;
     
-    float bottomPoint  = (buyin.frame.origin.y + buyin.frame.size.height + 10);
+    float bottomPoint  = (theTextField.frame.origin.y + theTextField.frame.size.height + 10);
     scrollAmount = keyboardSize.height - (self.view.frame.size.height - bottomPoint);
     
     if(scrollAmount > 0) {
@@ -183,6 +184,8 @@
 }
 
 -(void)doneButtonTouchUp:(id)sender {
+    
+    [[self view] endEditing:YES];
 
     [self.navigationController pushViewController:resultPreviewViewController animated:YES];
     [resultTableView reloadData];
@@ -332,25 +335,25 @@
     addon.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.addon]]];
 }
 
--(BOOL)textFieldShouldReturn:(UITextField *) theTextField {
+-(BOOL)textFieldShouldReturn:(UITextField *) textField {
     
-    [theTextField resignFirstResponder];
+    [textField resignFirstResponder];
     
     if(moveViewUp)
         [self scrollTheView:NO];
     
     switch ( theTextField.tag ) {
         case 1:
-            eventPlayer.buyin = [theTextField.text floatValue];
+            eventPlayer.buyin = [textField.text floatValue];
             break;
         case 2:
-            eventPlayer.rebuy = [theTextField.text floatValue];
+            eventPlayer.rebuy = [textField.text floatValue];
             break;
         case 3:
-            eventPlayer.addon = [theTextField.text floatValue];
+            eventPlayer.addon = [textField.text floatValue];
             break;
         case 4:
-            eventPlayer.prize = [theTextField.text floatValue];
+            eventPlayer.prize = [textField.text floatValue];
             break;
             
         default:
@@ -483,8 +486,14 @@
     NSLog(@"connectionDidFinishLoading");
 }
 
+- (void)updateCurrentTextField:(id)sender {
+
+    theTextField = (UITextField*)sender;
+}
+
 -(void)dealloc {
     
+    [theTextField release];
     [event release];
     [eventPlayer release];
     [eventPlayerList release];

@@ -55,6 +55,7 @@
 @property (nonatomic, retain) NSNumberFormatter *numberFormatter;
 @property (nonatomic, retain) IBOutlet UIViewController *resultPreviewViewController;
 @property (nonatomic, assign) NSMutableArray *eventPlayerList;
+@property (nonatomic, assign) UITextField *theTextField;
 
 -(void)loadPlayerInfo:(int)playerPositionIndex;
 -(IBAction)loadNextPlayerInfo:(id)sender;
@@ -66,6 +67,7 @@
 -(IBAction)incraseAddonValue:(id)sender;
 -(IBAction)decraseAddonValue:(id)sender;
 -(IBAction)calculatePrize:(id)sender;
+-(IBAction)updateCurrentTextField:(id)sender;
 
 - (void)scrollTheView: (BOOL)movedUp;
 - (void)concludeSaveResult;

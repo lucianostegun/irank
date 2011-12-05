@@ -13,7 +13,7 @@
 @interface EventPlayerViewController : UITableViewController{
     
     UIBarButtonItem *doneButton;
-    UIBarButtonItem *reloadButton;
+    UIBarButtonItem *addButton;
     iRankAppDelegate *appDelegate;
     NSMutableArray *eventPlayerList;
 }

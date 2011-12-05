@@ -69,6 +69,15 @@
 		DD895D4B1460D8C800203286 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD895D491460D8C800203286 /* HomeViewController.xib */; };
 		DD895D54146209EB00203286 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = DD895D53146209EB00203286 /* Event.m */; };
 		DD895D5B146215C200203286 /* XMLEventParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD895D5A146215C200203286 /* XMLEventParser.m */; };
+		DD8CBE75148AE716005467A8 /* RankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8CBE73148AE716005467A8 /* RankingViewController.m */; };
+		DD8CBE76148AE716005467A8 /* RankingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8CBE74148AE716005467A8 /* RankingViewController.xib */; };
+		DD8CBE7A148AEBA7005467A8 /* Ranking.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8CBE79148AEBA7005467A8 /* Ranking.m */; };
+		DD8CBE7D148AED1B005467A8 /* XMLRankingParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8CBE7C148AED1B005467A8 /* XMLRankingParser.m */; };
+		DD8CBE81148B09A2005467A8 /* RankingDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8CBE7F148B09A1005467A8 /* RankingDetailViewController.m */; };
+		DD8CBE82148B09A2005467A8 /* RankingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8CBE80148B09A2005467A8 /* RankingDetailViewController.xib */; };
+		DD8CBE87148B0F3D005467A8 /* RankingPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD8CBE85148B0F3D005467A8 /* RankingPlayerViewController.xib */; };
+		DD8CBE8A148B101B005467A8 /* RankingPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8CBE89148B101B005467A8 /* RankingPlayer.m */; };
+		DD8CBE8D148B15C9005467A8 /* XMLRankingPlayerParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8CBE8C148B15C9005467A8 /* XMLRankingPlayerParser.m */; };
 		DD8DD3761448FDC80063D735 /* homeTop.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD3751448FDC80063D735 /* homeTop.png */; };
 		DD8DD39D1449FC1D0063D735 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD39C1449FC1D0063D735 /* home.png */; };
 		DD8DD3A11449FC650063D735 /* events.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8DD39E1449FC650063D735 /* events.png */; };
@@ -81,6 +90,11 @@
 		DD9ED0B2147B12B9001B5B32 /* EventPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9ED0B1147B12B9001B5B32 /* EventPhoto.m */; };
 		DD9ED0B9147B3751001B5B32 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9ED0B8147B3751001B5B32 /* ImageCache.m */; };
 		DD9ED0BC147B375D001B5B32 /* FileHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9ED0BB147B375C001B5B32 /* FileHelpers.m */; };
+		DDB2E2DC148B20C500676FD2 /* RankingPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB2E2DB148B20C500676FD2 /* RankingPlayerViewController.m */; };
+		DDB2E2E4148B2C4B00676FD2 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = DDB2E2E3148B2C4B00676FD2 /* calendar.png */; };
+		DDB2E2E6148B2C8500676FD2 /* stopwatch.png in Resources */ = {isa = PBXBuildFile; fileRef = DDB2E2E5148B2C8500676FD2 /* stopwatch.png */; };
+		DDB2E2EE148C1F5900676FD2 /* AddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB2E2EC148C1F5900676FD2 /* AddPlayerViewController.m */; };
+		DDB2E2EF148C1F5900676FD2 /* AddPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDB2E2ED148C1F5900676FD2 /* AddPlayerViewController.xib */; };
 		DDCD83621470135600000D85 /* EventResultSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCD83601470135600000D85 /* EventResultSaveViewController.m */; };
 		DDCD83631470135600000D85 /* EventResultSaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCD83611470135600000D85 /* EventResultSaveViewController.xib */; };
 		DDCD8367147021F000000D85 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = DDCD8365147021F000000D85 /* plus.png */; };
@@ -187,6 +201,21 @@
 		DD895D53146209EB00203286 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		DD895D59146215C200203286 /* XMLEventParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLEventParser.h; sourceTree = "<group>"; };
 		DD895D5A146215C200203286 /* XMLEventParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLEventParser.m; sourceTree = "<group>"; };
+		DD8CBE72148AE716005467A8 /* RankingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingViewController.h; sourceTree = "<group>"; };
+		DD8CBE73148AE716005467A8 /* RankingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingViewController.m; sourceTree = "<group>"; };
+		DD8CBE74148AE716005467A8 /* RankingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingViewController.xib; sourceTree = "<group>"; };
+		DD8CBE78148AEBA7005467A8 /* Ranking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ranking.h; sourceTree = "<group>"; };
+		DD8CBE79148AEBA7005467A8 /* Ranking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ranking.m; sourceTree = "<group>"; };
+		DD8CBE7B148AED1B005467A8 /* XMLRankingParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLRankingParser.h; sourceTree = "<group>"; };
+		DD8CBE7C148AED1B005467A8 /* XMLRankingParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLRankingParser.m; sourceTree = "<group>"; };
+		DD8CBE7E148B09A1005467A8 /* RankingDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingDetailViewController.h; sourceTree = "<group>"; };
+		DD8CBE7F148B09A1005467A8 /* RankingDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingDetailViewController.m; sourceTree = "<group>"; };
+		DD8CBE80148B09A2005467A8 /* RankingDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingDetailViewController.xib; sourceTree = "<group>"; };
+		DD8CBE85148B0F3D005467A8 /* RankingPlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RankingPlayerViewController.xib; sourceTree = "<group>"; };
+		DD8CBE88148B101B005467A8 /* RankingPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingPlayer.h; sourceTree = "<group>"; };
+		DD8CBE89148B101B005467A8 /* RankingPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingPlayer.m; sourceTree = "<group>"; };
+		DD8CBE8B148B15C9005467A8 /* XMLRankingPlayerParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLRankingPlayerParser.h; sourceTree = "<group>"; };
+		DD8CBE8C148B15C9005467A8 /* XMLRankingPlayerParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLRankingPlayerParser.m; sourceTree = "<group>"; };
 		DD8DD3751448FDC80063D735 /* homeTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeTop.png; sourceTree = "<group>"; };
 		DD8DD39C1449FC1D0063D735 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		DD8DD39E1449FC650063D735 /* events.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = events.png; sourceTree = "<group>"; };
@@ -205,6 +234,13 @@
 		DD9ED0BB147B375C001B5B32 /* FileHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileHelpers.m; sourceTree = "<group>"; };
 		DDA89A1E145E362E0076DCA1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = /Users/lucianostegun/Projetos/iRank/iRank/pt.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
 		DDA89A1F145E362E0076DCA1 /* pt */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = pt; path = /Users/lucianostegun/Projetos/iRank/iRank/pt.lproj/MainWindow.xib; sourceTree = "<absolute>"; };
+		DDB2E2DA148B20C500676FD2 /* RankingPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingPlayerViewController.h; sourceTree = "<group>"; };
+		DDB2E2DB148B20C500676FD2 /* RankingPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingPlayerViewController.m; sourceTree = "<group>"; };
+		DDB2E2E3148B2C4B00676FD2 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
+		DDB2E2E5148B2C8500676FD2 /* stopwatch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopwatch.png; sourceTree = "<group>"; };
+		DDB2E2EB148C1F5800676FD2 /* AddPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPlayerViewController.h; sourceTree = "<group>"; };
+		DDB2E2EC148C1F5900676FD2 /* AddPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPlayerViewController.m; sourceTree = "<group>"; };
+		DDB2E2ED148C1F5900676FD2 /* AddPlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddPlayerViewController.xib; sourceTree = "<group>"; };
 		DDCD835F1470135600000D85 /* EventResultSaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventResultSaveViewController.h; sourceTree = "<group>"; };
 		DDCD83601470135600000D85 /* EventResultSaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventResultSaveViewController.m; sourceTree = "<group>"; };
 		DDCD83611470135600000D85 /* EventResultSaveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventResultSaveViewController.xib; sourceTree = "<group>"; };
@@ -234,6 +270,8 @@
 		DD121E361464AB8500E97E8C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				DDB2E2E5148B2C8500676FD2 /* stopwatch.png */,
+				DDB2E2E3148B2C4B00676FD2 /* calendar.png */,
 				DD40A14714813B5700EE116C /* newaiLogo.png */,
 				DD40A14314813A1900EE116C /* creditBackground.png */,
 				DD9ED0AA147B07B2001B5B32 /* camera.png */,
@@ -283,6 +321,10 @@
 				DD121E2B14646E6E00E97E8C /* EventPlayer.m */,
 				DD9ED0B0147B12B9001B5B32 /* EventPhoto.h */,
 				DD9ED0B1147B12B9001B5B32 /* EventPhoto.m */,
+				DD8CBE78148AEBA7005467A8 /* Ranking.h */,
+				DD8CBE79148AEBA7005467A8 /* Ranking.m */,
+				DD8CBE88148B101B005467A8 /* RankingPlayer.h */,
+				DD8CBE89148B101B005467A8 /* RankingPlayer.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -315,6 +357,14 @@
 				DDD3C53C1475F11900263ABD /* PhotoViewController.m */,
 				DD40A15014814EA500EE116C /* SignViewController.h */,
 				DD40A15114814EA600EE116C /* SignViewController.m */,
+				DD8CBE72148AE716005467A8 /* RankingViewController.h */,
+				DD8CBE73148AE716005467A8 /* RankingViewController.m */,
+				DD8CBE7E148B09A1005467A8 /* RankingDetailViewController.h */,
+				DD8CBE7F148B09A1005467A8 /* RankingDetailViewController.m */,
+				DDB2E2DA148B20C500676FD2 /* RankingPlayerViewController.h */,
+				DDB2E2DB148B20C500676FD2 /* RankingPlayerViewController.m */,
+				DDB2E2EB148C1F5800676FD2 /* AddPlayerViewController.h */,
+				DDB2E2EC148C1F5900676FD2 /* AddPlayerViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -323,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				DD2A07F21447AA5A003FB740 /* MainWindow.xib */,
+				DDB2E2ED148C1F5900676FD2 /* AddPlayerViewController.xib */,
 				DD895D3A1460BDA900203286 /* LoginViewController.xib */,
 				DD895D491460D8C800203286 /* HomeViewController.xib */,
 				DD386EFE1475E36000221C24 /* EventViewController.xib */,
@@ -334,6 +385,9 @@
 				DDD3C53D1475F11900263ABD /* PhotoViewController.xib */,
 				DD85E17D1474843300D83223 /* EventResultViewController.xib */,
 				DD40A15214814EA700EE116C /* SignViewController.xib */,
+				DD8CBE74148AE716005467A8 /* RankingViewController.xib */,
+				DD8CBE80148B09A2005467A8 /* RankingDetailViewController.xib */,
+				DD8CBE85148B0F3D005467A8 /* RankingPlayerViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -436,6 +490,10 @@
 				DD121E2E1464725500E97E8C /* XMLEventPlayerParser.m */,
 				DD9ED0AD147B11CE001B5B32 /* XMLEventPhotoParser.h */,
 				DD9ED0AE147B11CE001B5B32 /* XMLEventPhotoParser.m */,
+				DD8CBE7B148AED1B005467A8 /* XMLRankingParser.h */,
+				DD8CBE7C148AED1B005467A8 /* XMLRankingParser.m */,
+				DD8CBE8B148B15C9005467A8 /* XMLRankingPlayerParser.h */,
+				DD8CBE8C148B15C9005467A8 /* XMLRankingPlayerParser.m */,
 			);
 			name = XMLParser;
 			sourceTree = "<group>";
@@ -528,6 +586,12 @@
 				DD40A14414813A1900EE116C /* creditBackground.png in Resources */,
 				DD40A14814813B5700EE116C /* newaiLogo.png in Resources */,
 				DD40A15414814EA800EE116C /* SignViewController.xib in Resources */,
+				DD8CBE76148AE716005467A8 /* RankingViewController.xib in Resources */,
+				DD8CBE82148B09A2005467A8 /* RankingDetailViewController.xib in Resources */,
+				DD8CBE87148B0F3D005467A8 /* RankingPlayerViewController.xib in Resources */,
+				DDB2E2E4148B2C4B00676FD2 /* calendar.png in Resources */,
+				DDB2E2E6148B2C8500676FD2 /* stopwatch.png in Resources */,
+				DDB2E2EF148C1F5900676FD2 /* AddPlayerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +639,14 @@
 				DD40A14F14814CF000EE116C /* ELCTextfieldCell.m in Sources */,
 				DD40A15314814EA800EE116C /* SignViewController.m in Sources */,
 				DD40A1631482C56200EE116C /* Reachability.m in Sources */,
+				DD8CBE75148AE716005467A8 /* RankingViewController.m in Sources */,
+				DD8CBE7A148AEBA7005467A8 /* Ranking.m in Sources */,
+				DD8CBE7D148AED1B005467A8 /* XMLRankingParser.m in Sources */,
+				DD8CBE81148B09A2005467A8 /* RankingDetailViewController.m in Sources */,
+				DD8CBE8A148B101B005467A8 /* RankingPlayer.m in Sources */,
+				DD8CBE8D148B15C9005467A8 /* XMLRankingPlayerParser.m in Sources */,
+				DDB2E2DC148B20C500676FD2 /* RankingPlayerViewController.m in Sources */,
+				DDB2E2EE148C1F5900676FD2 /* AddPlayerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

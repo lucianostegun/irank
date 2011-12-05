@@ -49,7 +49,11 @@
 - (void)saveResult:(id)sender saveOffline:(BOOL)saveResultOffline;
 - (void)loadArchivedEventPlayerList;
 
+- (void)addPlayer:(int)playerId firstName:(NSString *)firstName lastName:(NSString *)lastName emailAddress:(NSString *)emailAddress;
+
 + (NSString *)eventArrayPath:(NSString *)sufix;
 + (NSMutableArray *)loadEventList:(NSString *)eventType userSiteId:(int)userSiteId limit:(int)limit;
++ (NSMutableArray *)loadEventList:(NSString *)eventType userSiteId:(int)userSiteId limit:(int)limit rankingId:(int)rankingId;
 + (NSMutableArray *)loadArchivedEventList:(NSString *)eventType userSiteId:(int)userSiteId limit:(int)limit;
++ (void)removeCache;
 @end

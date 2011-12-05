@@ -9,7 +9,6 @@
 #import "XMLEventParser.h"
 #import "Event.h"
 
-
 @implementation XMLEventParser
 
 @synthesize event;

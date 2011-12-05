@@ -301,11 +301,45 @@
 	}
 }
 
+- (void)addPlayer:(int)playerId firstName:(NSString *)firstName lastName:(NSString *)lastName emailAddress:(NSString *)emailAddress {
+    
+    BOOL playerExists = NO;
+    
+    for(EventPlayer *eventPlayer in eventPlayerList){
+        
+        if( eventPlayer.player.playerId==playerId ){
+            
+            playerExists = YES;
+            break;
+        }
+    }
+    
+    if( !playerExists ){
+        
+        Player *player = [[Player alloc] init];
+        [player setPlayerId:playerId];
+        [player setFirstName:firstName];
+        [player setLastName:lastName];
+        [player setEmailAddress:emailAddress];
+        
+        EventPlayer *eventPlayer = [[EventPlayer alloc] init];
+        [eventPlayer setPlayer:player];
+        [eventPlayer setInviteStatus:@"none"];
+        
+        [eventPlayerList addObject:eventPlayer];
+    }
+}
+
 + (NSMutableArray *)loadEventList:(NSString *)eventType userSiteId:(int)userSiteId limit:(int)limit {
+
+    return [Event loadEventList:eventType userSiteId:userSiteId limit:limit rankingId:0];
+}
+
++ (NSMutableArray *)loadEventList:(NSString *)eventType userSiteId:(int)userSiteId limit:(int)limit rankingId:(int)rankingId {
     
     NSMutableArray *eventList;
     
-    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/%@Events/userSiteId/%i/limit/%i", serverAddress, eventType, userSiteId, limit]];
+    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/getXml/model/%@Events/userSiteId/%i/rankingId/%i/limit/%i", serverAddress, eventType, userSiteId, rankingId, limit]];
     
     XMLEventParser *eventParser = [[XMLEventParser alloc] initXMLParser];
     
@@ -316,8 +350,11 @@
 
 //    NSLog(@"url: %@", url);
     
+    if( rankingId )
+        eventType = [NSString stringWithFormat:@"%@-%i", eventType, rankingId];
+    
     NSString *eventPath = [Event eventArrayPath:eventType];
-    NSLog(@"eventPath: %@", eventPath);
+//    NSLog(@"eventPath: %@", eventPath);
     
     if(requestError == nil) {
         
@@ -407,6 +444,15 @@
 + (NSString *)eventArrayPath:(NSString *)sufix {
     
     return pathInDocumentDirectory([NSString stringWithFormat:@"Events-%@.data", sufix]);
+}
+
++ (void)removeCache {
+    
+    NSString *eventResumePath = [Event eventArrayPath:@"resume"];
+    NSString *eventListPath   = [Event eventArrayPath:@"list"];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:eventResumePath error:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:eventListPath error:nil];
 }
 
 - (void) dealloc {

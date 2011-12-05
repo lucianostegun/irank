@@ -21,6 +21,7 @@
     EventPlayerViewController *eventPlayerViewController;
     EventResultViewController *eventResultViewController;
     PhotoViewController *photoViewController;
+    UISegmentedControl *segmentedControl;
 }
 
 @property (nonatomic, assign) Event *event;

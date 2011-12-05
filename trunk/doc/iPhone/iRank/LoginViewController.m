@@ -38,7 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (void)viewDidUnload
@@ -109,8 +109,6 @@
 
     NSLog(@"result: %@", result);
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     if( [result isEqualToString:@"denied"] ) 
         return [appDelegate showAlert:@"Acesso negado" message:@"Usuário/Senha inválidos!\nPor favor, tente novamente."];
 
@@ -151,7 +149,6 @@
 
 -(void)switchLogin {
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate switchLogin];
 }
 

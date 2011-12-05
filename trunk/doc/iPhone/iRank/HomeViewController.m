@@ -106,7 +106,7 @@
     
     NSMutableArray *eventList = [Event loadEventList:@"resume" userSiteId:userSiteId limit:homeEvents];
     
-    NSLog(@"eventList count: %i", [eventList count]);
+//    NSLog(@"eventList count: %i", [eventList count]);
     
     nextEventList     = [[NSMutableArray alloc] init];
     previousEventList = [[NSMutableArray alloc] init];
@@ -126,7 +126,7 @@
     if( [nextEventList count] > 0 ){
         
         appDelegate.homeTabBar.badgeValue = [NSString stringWithFormat:@"%i", [nextEventList count]];
-        [appDelegate incraseBadge:[nextEventList count]];
+        [appDelegate setBadge:[nextEventList count]];
     }
 
     [[self tableView] reloadData];
@@ -488,6 +488,8 @@
         
     [[appDelegate userDefaults] removeObjectForKey:@"userInfo"]; 
     [[appDelegate userDefaults] synchronize];
+    
+    [Event removeCache];
 }
 
 - (void)dealloc {
