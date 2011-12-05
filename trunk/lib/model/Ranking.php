@@ -155,6 +155,8 @@ class Ranking extends BaseRanking
 		
 		$rankingPlayerObj->setEnabled( true );
 		$rankingPlayerObj->save();
+			
+		Ranking::adjustPlayers();
 		
 		$this->updateEmailGroup();
 	}
@@ -907,6 +909,11 @@ class Ranking extends BaseRanking
 		
 		Util::executeQuery('SELECT adjust_ranking_players('.$this->getId().')');
 		$this->updateEmailGroup();
+	}
+	
+	public static function getXml($rankingList){
+		
+		return Util::buildXml($rankingList, 'rankings', 'ranking');
 	}
 	
 	public function getInfo(){

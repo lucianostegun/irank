@@ -42,8 +42,9 @@ class RankingPeer extends BaseRankingPeer
 				$criteria->add($criterion);
 			}
 			
-			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
+//			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
 		}
+			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
 		
 		return parent::doSelectRS($criteria, $con);
 	}

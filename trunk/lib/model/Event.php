@@ -1111,7 +1111,7 @@ class Event extends BaseEvent
 		$maxFileSize          = (1024*1024*2);
 		
 		if( $fromIOS )
-			$maxFileSize *= 2;
+			$maxFileSize *= 3.5;
 		
 		$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
 		$peopleId    = $userSiteObj->getPeopleId();

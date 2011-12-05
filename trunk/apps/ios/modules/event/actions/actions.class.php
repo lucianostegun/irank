@@ -242,6 +242,17 @@ class eventActions extends sfActions
 	exit;
   }
   
+  public function executeGetInfo($request)
+  {
+
+	$userSiteId = $request->getParameter('userSiteId');
+	
+	$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+	echo Util::parseInfo($userSiteObj->getInfo(true));
+		
+	exit;
+  }
+  
   /**
    * Executes index action
    *
@@ -249,6 +260,7 @@ class eventActions extends sfActions
   public function executeGetXml($request){
   	
   	$userSiteId  = $request->getParameter('userSiteId');
+  	$rankingId   = $request->getParameter('rankingId');
   	$eventId     = $request->getParameter('eventId');
   	$model       = $request->getParameter('model');
   	$userSiteObj = $this->userSiteObj;
@@ -262,6 +274,9 @@ class eventActions extends sfActions
 			$criteria->setNoFilter(true);
 		
   			$limit = $request->getParameter('limit');
+  			
+  			if( $rankingId )
+  				$criteria->add( EventPeer::RANKING_ID, $rankingId);
   			
 			switch($model){
 				case 'listEvents':
