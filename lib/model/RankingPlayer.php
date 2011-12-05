@@ -104,6 +104,11 @@ class RankingPlayer extends BaseRankingPlayer
 		return $rankingPlayerObj;
 	}
 	
+	public static function getXml($rankingPlayerList){
+		
+		return Util::buildXml($rankingPlayerList, 'rankingPlayers', 'rankingPlayer');
+	}
+	
 	public function postOnWall(){
 		
 		$isNew    = $this->isNew();
