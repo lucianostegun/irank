@@ -110,10 +110,10 @@
     return [NSString stringWithFormat:@"(%i): %@ %@", eventPosition, player.fullName, (enabled?@"enabled":@"disabled")];
 }
 
-- (NSComparisonResult)compare:(EventPlayer *)eventPlayer {
-
-    return [eventPosition compare:eventPlayer.eventPosition];
-}
+//- (NSComparisonResult)compare:(EventPlayer *)eventPlayer {
+//
+//    return [eventPosition compare:eventPlayer.eventPosition];
+//}
 
 
 -(void) dealloc {

@@ -1,19 +1,16 @@
 //
-//  EventViewController.m
+//  RankingViewController.m
 //  iRank
 //
 //  Created by Luciano Stegun on 01/05/2011.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "EventViewController.h"
-#import "iRankAppDelegate.h"
-#import "Event.h"
-#import "XMLEventParser.h"
+#import "RankingViewController.h"
+#import "Ranking.h"
 
-@implementation EventViewController
-@synthesize eventList;
-@synthesize rankingId;
+@implementation RankingViewController
+@synthesize rankingList;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -21,18 +18,6 @@
     if (self) {
         // Custom initialization
     }
-    return self;
-}
-
-- (id)initWithStyle:(UITableViewStyle)style rankingId:(int)theRankingId
-{
-    self = [super initWithStyle:style];
-    
-    if (self) {
-
-        self.rankingId = theRankingId;
-    }
-    
     return self;
 }
 
@@ -50,28 +35,11 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     
     appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    [appDelegate showLoadingView:nil];
-    [self performSelector:@selector(updateEventList) withObject:nil afterDelay:0.1];
-}
-
-- (void)updateEventList {
-
-    int userSiteId = [appDelegate userSiteId];
-    NSLog(@"rankingId: %i", rankingId);
-    eventList = [Event loadEventList:@"list" userSiteId:userSiteId limit:0 rankingId:rankingId];
-    
-    [appDelegate hideLoadingView];
-    [[self tableView] reloadData];
+    [appDelegate showLoadingView:@"carregando lista de rankings"];
+    [self performSelector:@selector(updateRankingList) withObject:nil afterDelay:0.1];
 }
 
 - (void)viewDidUnload
@@ -85,7 +53,7 @@
 {
     [super viewWillAppear:animated];
     
-    self.title = @"Eventos";
+    self.title = @"Rankings";
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -106,7 +74,17 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return YES;//(interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)updateRankingList {
+    
+    int userSiteId = [appDelegate userSiteId];
+    
+    rankingList = [Ranking loadRankingList:userSiteId];
+    
+    [appDelegate hideLoadingView];
+    [[self tableView] reloadData];
 }
 
 #pragma mark - Table view data source
@@ -120,7 +98,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return [eventList count];
+    return [rankingList count];;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -132,32 +110,15 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    NSString *label = [[[NSString alloc] init] autorelease];
-    NSString *description = [[[NSString alloc] init] autorelease];
+    Ranking *ranking = [rankingList objectAtIndex:indexPath.row];
     
-    Event *event = [[eventList objectAtIndex:indexPath.row] retain];
+    NSString *pluralEvent = (ranking.events>1?@"s":@"");
+    NSString *pluralPlayer = (ranking.players>1?@"s":@"");
     
-    label       = [event eventName];
-    description = [NSString stringWithFormat:@"%@ %@ @%@", [event eventDate], [event startTime], [event eventPlace]];
+    cell.textLabel.text       = ranking.rankingName;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %i evento%@, %i jogadore%@", ranking.gameStyle, ranking.events, pluralEvent, ranking.players, pluralPlayer];
+    
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    if( event.hasOfflineResult ){
-        
-        cell.detailTextLabel.textColor = [UIColor orangeColor];
-        description = @"Resultado offline pendente...";
-    }else if( event.isPastDate && !event.savedResult ){
-        
-        cell.detailTextLabel.textColor = [UIColor redColor];
-        description = @"Resultado pendente...";
-    }else{
-        
-        cell.detailTextLabel.textColor = [UIColor blackColor];
-    }
-    
-    [event release];
-
-    cell.textLabel.text       = label;
-    cell.detailTextLabel.text = description;
     
     return cell;
 }
@@ -205,25 +166,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    rankingDetailViewController = [[RankingDetailViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    
+    rankingDetailViewController.ranking = [rankingList objectAtIndex:indexPath.row];
 
-    if( eventDetailViewController==nil )
-        eventDetailViewController = [[EventDetailViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    
-    Event *event;
-    
-        event = [[eventList objectAtIndex:indexPath.row] retain];
-    
-    eventDetailViewController.hidesBottomBarWhenPushed = YES;
-    
-    [eventDetailViewController setEvent:event];
-    [self.navigationController pushViewController:eventDetailViewController animated:YES];
-    
-    [event release];
+    [self.navigationController pushViewController:rankingDetailViewController animated:YES];
+    [rankingDetailViewController release];
 }
 
--(void)dealloc {
+- (void)dealloc {
     
-    [eventList release];
+    [rankingList release];
     [super dealloc];
 }
 

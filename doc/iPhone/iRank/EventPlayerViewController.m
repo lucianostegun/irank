@@ -12,6 +12,7 @@
 #import "Player.h"
 #import "iRankAppDelegate.h"
 #import "EventResultSaveViewController.h"
+#import "AddPlayerViewController.h"
 
 @implementation EventPlayerViewController
 @synthesize event;
@@ -45,7 +46,7 @@
     appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
 
     doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouchUp:)];
-//    reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updatePlayerList:)];
+    addButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTouchUp:)];
     
     [self setTitle:@"Convidados"];
 }
@@ -83,13 +84,22 @@
     
     if( !showEnabledOnly && [eventPlayerList count] > 0 )
         [event setEventPlayerList:eventPlayerList];
-    
-    NSLog(@"eventPlayerList: %@", eventPlayerList);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+}
+
+- (void)addButtonTouchUp:(id)sender {
+    
+    AddPlayerViewController *addPlayerViewController = [[AddPlayerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    
+    addPlayerViewController.rankingId = event.rankingId;
+    addPlayerViewController.eventId   = event.eventId;
+    
+    [self.navigationController pushViewController:addPlayerViewController animated:YES];
+    [addPlayerViewController release];
 }
 
 - (void)updatePlayerList {
@@ -129,7 +139,10 @@
         [self setEditing:YES animated:NO];
     }else{
         
-        self.navigationItem.rightBarButtonItem = nil;
+        if( [event isEditable] && [event isMyEvent] )
+            self.navigationItem.rightBarButtonItem = addButton;
+        else
+            self.navigationItem.rightBarButtonItem = nil;
         
         eventPlayerList = [event eventPlayerList];
         

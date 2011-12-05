@@ -40,7 +40,7 @@
     [activityIndicator setHidesWhenStopped:YES];
     [activityIndicator setHidden:YES];
     
-    UIBarButtonItem * barButton =  [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    UIBarButtonItem * barButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
     
     self.navigationItem.rightBarButtonItem = barButton;
     [barButton release];
@@ -55,8 +55,20 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    
     [super viewWillAppear:animated];
     [self setTitle:[event eventName]];
+    
+    if( segmentedControl!=nil ){
+
+        if( [event.inviteStatus isEqualToString:@"yes"] )
+            [segmentedControl setSelectedSegmentIndex:0];
+        else if( [event.inviteStatus isEqualToString:@"no"] )
+            [segmentedControl setSelectedSegmentIndex:2];
+        else
+            [segmentedControl setSelectedSegmentIndex:1];
+    }
+    
     [[self tableView] reloadData];
 }
 
@@ -369,6 +381,8 @@
     if( [inviteStatus isEqualToString:event.inviteStatus] )
         return;
     
+    [event setInviteStatus:inviteStatus];
+    
     [activityIndicator startAnimating];
     [activityIndicator setHidden:NO];
     
@@ -413,7 +427,7 @@
     
     NSArray *itemList = [[NSArray alloc] initWithObjects:@"Vou", @"Talvez", @"Não vou", nil];
     // Create a UIButton object, simple rounded rect style
-    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemList];
+    segmentedControl = [[UISegmentedControl alloc] initWithItems:itemList];
     segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
 //    segmentedControl.tintColor = [UIColor blackColor];
     

@@ -43,6 +43,7 @@
 - (void)switchLogin;
 - (void)showLogin;
 - (void)showAlert:(NSString *)title message:(NSString *)message;
+- (void)setBadge:(int)amount;
 - (void)incraseBadge:(int)amount;
 - (void)decraseBadge:(int)amount;
 - (void)updateBadge;

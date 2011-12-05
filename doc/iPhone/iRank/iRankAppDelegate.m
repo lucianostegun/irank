@@ -170,6 +170,12 @@
     [alertView release];
 }
 
+-(void)setBadge:(int)amount {
+    
+    mainBadge = amount;
+    [self updateBadge];
+}
+
 -(void)incraseBadge:(int)amount {
     
     mainBadge += amount;
