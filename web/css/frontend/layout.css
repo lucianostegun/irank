@@ -5,7 +5,7 @@ body {
 	font: 			11px/15px Tahoma, Arial, Helvetica, sans-serif;
 	color: 			#333333;
 	line-height: 	16px;
-	background: 	#c5c5c5 url('/images/frontend/layout/bg.png') repeat-x;
+	background: 	#c5c5c5 url('/images/frontend/layout/bgDark.png') repeat-x;
 	text-align: 	center;
 }
 
@@ -439,5 +439,5 @@ select {
 	clear: 			both;
 	height: 		120px;
 	padding: 		20px 0px 0px 0px;
-	background: 	#f6f6f6 url('/images/layout/footerBg.gif') repeat-x;
+	background: 	#f3f3f3 url('/images/layout/footerBg.gif') repeat-x;
 }
