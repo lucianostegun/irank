@@ -261,6 +261,13 @@ class Event extends BaseEvent
 			$this->togglePresence( $rankingPlayerObj->getPeopleId(), 'none' );
 
 		$this->setInvites( count($rankingPlayerObjList) );
+		
+		$this->adjustEventPlayers();
+	}
+	
+	public function adjustEventPlayers(){
+		
+		Util::executeQuery('SELECT adjust_event_players('.$this->getId().')');
 	}
 	
 	public function isPastDate(){
@@ -506,7 +513,6 @@ class Event extends BaseEvent
 		$eventSchedule = ($days==0?'today':($days==1?'tomorrow':'inDays'));
 		
 	  	$classifyList = $this->getEmailClassifyList();
-	  	$peopleName   = People::getCurrentPeople()->getName();
 
 		$eventScheduleList['pt_BR'] = __($eventSchedule, array('%days%'=>$days), 'messages', 'pt_BR');
 		$eventScheduleList['en_US'] = __($eventSchedule, array('%days%'=>$days), 'messages', 'en_US');
@@ -621,7 +627,7 @@ class Event extends BaseEvent
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$rankingObj = $this->getRanking();
 		
-		if( !$ignorePeople && is_object($rankingObj) && !$rankingObj->isMyRanking() )
+		if( !$userSiteId || (!$ignorePeople && is_object($rankingObj) && !$rankingObj->isMyRanking()) )
 			return false;
 
 		// Se hoje for maior que a data final do ranking
@@ -1035,8 +1041,17 @@ class Event extends BaseEvent
 		for($eventPosition=1; $eventPosition <= $paidPlaces; $eventPosition++){
 			
 			$prizeValue = $request->getParameter('paidPlace'.$eventPosition);
+			$isPercent  = false;
+			
+			if( ereg('^[0-9]*(,[0-9]*)*%$', $prizeValue) ){
+				
+				$prizeValue = str_replace('%', '', $prizeValue);
+				$isPercent  = true;
+			}
+			
 			$eventPrizeConfigObj = EventPrizeConfigPeer::retrieveByPK($this->getId(), $eventPosition);
 			$eventPrizeConfigObj->setPrizeValue(Util::formatFloat($prizeValue));
+			$eventPrizeConfigObj->setIsPercent($isPercent);
 			$eventPrizeConfigObj->save();
 		}
 				
@@ -1140,6 +1155,26 @@ class Event extends BaseEvent
 		$eventPhotoObj->setPeopleId($peopleId);
 		$eventPhotoObj->setIsShared($publish);
 		$eventPhotoObj->save();
+	}
+	
+	public function getAllowRebuy(){
+		
+		$allowRebuy = parent::getAllowRebuy();
+		
+		if( is_null($allowRebuy) )
+			$allowRebuy = true;
+		
+		return $allowRebuy;
+	}
+	
+	public function getAllowAddon(){
+		
+		$allowAddon = parent::getAllowAddon();
+		
+		if( is_null($allowAddon) )
+			$allowAddon = true;
+		
+		return $allowAddon;
 	}
 	
 	public function getInfo(){
