@@ -550,7 +550,7 @@ class Ranking extends BaseRanking
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		
-		return ($this->getUserSiteId()==$userSiteId || $this->isAllowEdit());
+		return ($userSiteId && ($this->getUserSiteId()==$userSiteId || $this->isAllowEdit()));
 	}
 	
 	public function isAllowEdit(){
