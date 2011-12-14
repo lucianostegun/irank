@@ -112,7 +112,15 @@ class EventPeer extends BaseEventPeer
 			for($i=1; $i<=$paidPlaces; $i++)
 				$totalPrize += Util::formatFloat(MyTools::getRequestParameter('paidPlace'.$i));
 			
-			if( $totalPrize!=$prizePot )
+			$totalPercent = 0;	
+			for($i=1; $i<=$paidPlaces; $i++){
+				
+				$prizeConfig = MyTools::getRequestParameter('paidPlace'.$i);
+				$prizeConfig = str_replace('%', '', $prizeConfig);
+				$totalPercent += Util::formatFloat($prizeConfig);
+			}
+
+			if( $totalPrize!=$prizePot && $totalPercent!=100.00 )
 				for($i=1; $i<=$paidPlaces; $i++)
 					MyTools::setError('paidPlace'.$i, 'form.error.prizeShareError');
 		}

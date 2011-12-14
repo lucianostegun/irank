@@ -684,7 +684,10 @@ class Event extends BaseEvent
 			if( $eventPosition > 0 )
 				$totalBuyin += Util::formatFloat($buyin)+Util::formatFloat($rebuy)+Util::formatFloat($addon);
 		}
-
+		
+		if( $isFreeroll )
+			$totalBuyin += $this->getPrizePot();
+			
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
 			$peopleId      = $eventPlayerObj->getPeopleId();
@@ -697,6 +700,9 @@ class Event extends BaseEvent
 			$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
 			$enabled        = $eventPlayerObj->getEnabled();
 			
+			if( $isFreeroll )
+				$buyin = $this->getRanking()->getDefaultBuyin();
+			
 			if( !$enabled && $eventPosition > 0 ){
 				
 				$this->addPlayer($peopleId, true, false);
@@ -708,7 +714,7 @@ class Event extends BaseEvent
 				$this->deletePlayer($peopleId);
 				$enabled = false;
 			}
-			
+
 			if( $enabled ){
 				
 				if( $prize > 0 )
@@ -721,8 +727,10 @@ class Event extends BaseEvent
 				$eventPlayerObj->setAddon( Util::formatFloat($addon) );
 				$eventPlayerObj->setBuyin( Util::formatFloat($buyin) );
 				
-				if( !$isFreeroll )
-					$eventPlayerObj->setScore( $totalBuyin/$eventPosition/$buyin );
+				$score = $totalBuyin/$eventPosition/$buyin;
+				
+//				if( !$isFreeroll )
+					$eventPlayerObj->setScore( $score );
 					
 				$eventPlayerObj->save();
 				$players++;

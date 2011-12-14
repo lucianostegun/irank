@@ -32,7 +32,8 @@
 	echo input_hidden_tag('isClone', $isClone);
 	echo input_hidden_tag('isFreeroll', $eventObj->getIsFreeroll());
 	echo input_hidden_tag('prizeConfig', $eventObj->getPrizeConfig(), array('id'=>'eventPrizeConfig'));
-	echo input_hidden_tag('hasShare', false, array('id'=>'eventHasShare'));
+	echo input_hidden_tag('prizePot', $eventObj->getPrizePot(), array('id'=>'eventPrizePot'));
+	echo input_hidden_tag('hasShare', $eventObj->getIsFreeroll(), array('id'=>'eventHasShare'));
 	
 	$isEditable = $eventObj->isEditable();
 	$isMyEvent  = $eventObj->isMyEvent();

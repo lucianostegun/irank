@@ -19,6 +19,10 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 	
 	protected $prize_value;
 
+
+	
+	protected $is_percent;
+
 	
 	protected $aEvent;
 
@@ -47,6 +51,13 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 	{
 
 		return $this->prize_value;
+	}
+
+	
+	public function getIsPercent()
+	{
+
+		return $this->is_percent;
 	}
 
 	
@@ -96,6 +107,16 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setIsPercent($v)
+	{
+
+		if ($this->is_percent !== $v) {
+			$this->is_percent = $v;
+			$this->modifiedColumns[] = EventPrizeConfigPeer::IS_PERCENT;
+		}
+
+	} 
+	
 	public function hydrate(ResultSet $rs, $startcol = 1)
 	{
 		try {
@@ -106,11 +127,13 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 
 			$this->prize_value = $rs->getFloat($startcol + 2);
 
+			$this->is_percent = $rs->getBoolean($startcol + 3);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 3; 
+						return $startcol + 4; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventPrizeConfig object", $e);
 		}
@@ -262,6 +285,9 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 			case 2:
 				return $this->getPrizeValue();
 				break;
+			case 3:
+				return $this->getIsPercent();
+				break;
 			default:
 				return null;
 				break;
@@ -275,6 +301,7 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 			$keys[0]=>$this->getEventId(),
 			$keys[1]=>$this->getEventPosition(),
 			$keys[2]=>$this->getPrizeValue(),
+			$keys[3]=>$this->getIsPercent(),
 		);
 		return $result;
 	}
@@ -299,6 +326,9 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 			case 2:
 				$this->setPrizeValue($value);
 				break;
+			case 3:
+				$this->setIsPercent($value);
+				break;
 		} 	}
 
 	
@@ -309,6 +339,7 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setEventId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setEventPosition($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setPrizeValue($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setIsPercent($arr[$keys[3]]);
 	}
 
 	
@@ -319,6 +350,7 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPrizeConfigPeer::EVENT_ID)) $criteria->add(EventPrizeConfigPeer::EVENT_ID, $this->event_id);
 		if ($this->isColumnModified(EventPrizeConfigPeer::EVENT_POSITION)) $criteria->add(EventPrizeConfigPeer::EVENT_POSITION, $this->event_position);
 		if ($this->isColumnModified(EventPrizeConfigPeer::PRIZE_VALUE)) $criteria->add(EventPrizeConfigPeer::PRIZE_VALUE, $this->prize_value);
+		if ($this->isColumnModified(EventPrizeConfigPeer::IS_PERCENT)) $criteria->add(EventPrizeConfigPeer::IS_PERCENT, $this->is_percent);
 
 		return $criteria;
 	}
@@ -361,6 +393,8 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setPrizeValue($this->prize_value);
+
+		$copyObj->setIsPercent($this->is_percent);
 
 
 		$copyObj->setNew(true);

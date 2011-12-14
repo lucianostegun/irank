@@ -68,6 +68,10 @@ class EventMapBuilder {
 
 		$tMap->addColumn('PRIZE_POT', 'PrizePot', 'double', CreoleTypes::FLOAT, false, null);
 
+		$tMap->addColumn('ALLOW_REBUY', 'AllowRebuy', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('ALLOW_ADDON', 'AllowAddon', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

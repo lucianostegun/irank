@@ -56,10 +56,12 @@
 						if( $eventObj->getIsFreeroll() ):
 							foreach($eventObj->getPrizeConfigList() as $eventPrizeConfigObj):
 								$eventPosition = $eventPrizeConfigObj->getEventPosition();
+								
+								$isPercent = $eventPrizeConfigObj->getIsPercent();
 					?>
 					<div class="row">
 						<div class="label"><?php echo $eventPosition.Util::getOrdinalSufix($eventPosition).' '.__('event.place') ?></div>
-						<div class="textFlex"><?php echo Util::formatFloat($eventPrizeConfigObj->getPrizeValue(), true) ?></div>
+						<div class="textFlex"><?php echo Util::formatFloat($eventPrizeConfigObj->getPrizeValue(), true).($isPercent?'%':'') ?></div>
 					</div>
 					<?php
 							endforeach;

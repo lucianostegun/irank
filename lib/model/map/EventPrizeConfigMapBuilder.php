@@ -38,5 +38,7 @@ class EventPrizeConfigMapBuilder {
 
 		$tMap->addColumn('PRIZE_VALUE', 'PrizeValue', 'double', CreoleTypes::FLOAT, false, null);
 
+		$tMap->addColumn('IS_PERCENT', 'IsPercent', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 	} 
 } 

@@ -2161,6 +2161,14 @@
 				<source>ranking.private</source>
 				<target>Privado</target>
 			</trans-unit>
+			<trans-unit>
+				<source>event.allowRebuy</source>
+				<target>Permitir rebuy</target>
+			</trans-unit>
+			<trans-unit>
+				<source>event.allowAddon</source>
+				<target>Permitir addon</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

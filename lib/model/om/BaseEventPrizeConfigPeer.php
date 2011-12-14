@@ -13,7 +13,7 @@ abstract class BaseEventPrizeConfigPeer {
 	const CLASS_DEFAULT = 'lib.model.EventPrizeConfig';
 
 	
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 4;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -29,24 +29,27 @@ abstract class BaseEventPrizeConfigPeer {
 	const PRIZE_VALUE = 'event_prize_config.PRIZE_VALUE';
 
 	
+	const IS_PERCENT = 'event_prize_config.IS_PERCENT';
+
+	
 	private static $phpNameMap = null;
 
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventId', 'EventPosition', 'PrizeValue', ),
-		BasePeer::TYPE_COLNAME=>array (EventPrizeConfigPeer::EVENT_ID, EventPrizeConfigPeer::EVENT_POSITION, EventPrizeConfigPeer::PRIZE_VALUE, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_id', 'event_position', 'prize_value', ),
-		BasePeer::TYPE_ALIAS=>array ('EVENT_ID'=>'', 'EVENT_POSITION'=>'', 'PRIZE_VALUE'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME=>array ('EventId', 'EventPosition', 'PrizeValue', 'IsPercent', ),
+		BasePeer::TYPE_COLNAME=>array (EventPrizeConfigPeer::EVENT_ID, EventPrizeConfigPeer::EVENT_POSITION, EventPrizeConfigPeer::PRIZE_VALUE, EventPrizeConfigPeer::IS_PERCENT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('event_id', 'event_position', 'prize_value', 'is_percent', ),
+		BasePeer::TYPE_ALIAS=>array ('EVENT_ID'=>'', 'EVENT_POSITION'=>'', 'PRIZE_VALUE'=>'', 'IS_PERCENT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventId'=>0, 'EventPosition'=>1, 'PrizeValue'=>2, ),
-		BasePeer::TYPE_COLNAME=>array (EventPrizeConfigPeer::EVENT_ID=>0, EventPrizeConfigPeer::EVENT_POSITION=>1, EventPrizeConfigPeer::PRIZE_VALUE=>2, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_id'=>0, 'event_position'=>1, 'prize_value'=>2, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME=>array ('EventId'=>0, 'EventPosition'=>1, 'PrizeValue'=>2, 'IsPercent'=>3, ),
+		BasePeer::TYPE_COLNAME=>array (EventPrizeConfigPeer::EVENT_ID=>0, EventPrizeConfigPeer::EVENT_POSITION=>1, EventPrizeConfigPeer::PRIZE_VALUE=>2, EventPrizeConfigPeer::IS_PERCENT=>3, ),
+		BasePeer::TYPE_FIELDNAME=>array ('event_id'=>0, 'event_position'=>1, 'prize_value'=>2, 'is_percent'=>3, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, )
 	);
 
 	
@@ -105,6 +108,8 @@ abstract class BaseEventPrizeConfigPeer {
 		$criteria->addSelectColumn(EventPrizeConfigPeer::EVENT_POSITION);
 
 		$criteria->addSelectColumn(EventPrizeConfigPeer::PRIZE_VALUE);
+
+		$criteria->addSelectColumn(EventPrizeConfigPeer::IS_PERCENT);
 
 	}
 

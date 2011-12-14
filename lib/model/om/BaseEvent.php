@@ -77,6 +77,14 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	
+	protected $allow_rebuy;
+
+
+	
+	protected $allow_addon;
+
+
+	
 	protected $enabled;
 
 
@@ -297,6 +305,20 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	{
 
 		return $this->prize_pot;
+	}
+
+	
+	public function getAllowRebuy()
+	{
+
+		return $this->allow_rebuy;
+	}
+
+	
+	public function getAllowAddon()
+	{
+
+		return $this->allow_addon;
 	}
 
 	
@@ -619,6 +641,26 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setAllowRebuy($v)
+	{
+
+		if ($this->allow_rebuy !== $v) {
+			$this->allow_rebuy = $v;
+			$this->modifiedColumns[] = EventPeer::ALLOW_REBUY;
+		}
+
+	} 
+	
+	public function setAllowAddon($v)
+	{
+
+		if ($this->allow_addon !== $v) {
+			$this->allow_addon = $v;
+			$this->modifiedColumns[] = EventPeer::ALLOW_ADDON;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -731,23 +773,27 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 			$this->prize_pot = $rs->getFloat($startcol + 16);
 
-			$this->enabled = $rs->getBoolean($startcol + 17);
+			$this->allow_rebuy = $rs->getBoolean($startcol + 17);
 
-			$this->visible = $rs->getBoolean($startcol + 18);
+			$this->allow_addon = $rs->getBoolean($startcol + 18);
 
-			$this->deleted = $rs->getBoolean($startcol + 19);
+			$this->enabled = $rs->getBoolean($startcol + 19);
 
-			$this->locked = $rs->getBoolean($startcol + 20);
+			$this->visible = $rs->getBoolean($startcol + 20);
 
-			$this->created_at = $rs->getTimestamp($startcol + 21, null);
+			$this->deleted = $rs->getBoolean($startcol + 21);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 22, null);
+			$this->locked = $rs->getBoolean($startcol + 22);
+
+			$this->created_at = $rs->getTimestamp($startcol + 23, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 24, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 23; 
+						return $startcol + 25; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Event object", $e);
 		}
@@ -1030,21 +1076,27 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				return $this->getPrizePot();
 				break;
 			case 17:
-				return $this->getEnabled();
+				return $this->getAllowRebuy();
 				break;
 			case 18:
-				return $this->getVisible();
+				return $this->getAllowAddon();
 				break;
 			case 19:
-				return $this->getDeleted();
+				return $this->getEnabled();
 				break;
 			case 20:
-				return $this->getLocked();
+				return $this->getVisible();
 				break;
 			case 21:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 22:
+				return $this->getLocked();
+				break;
+			case 23:
+				return $this->getCreatedAt();
+				break;
+			case 24:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1074,12 +1126,14 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$keys[14]=>$this->getSavedResult(),
 			$keys[15]=>$this->getIsFreeroll(),
 			$keys[16]=>$this->getPrizePot(),
-			$keys[17]=>$this->getEnabled(),
-			$keys[18]=>$this->getVisible(),
-			$keys[19]=>$this->getDeleted(),
-			$keys[20]=>$this->getLocked(),
-			$keys[21]=>$this->getCreatedAt(),
-			$keys[22]=>$this->getUpdatedAt(),
+			$keys[17]=>$this->getAllowRebuy(),
+			$keys[18]=>$this->getAllowAddon(),
+			$keys[19]=>$this->getEnabled(),
+			$keys[20]=>$this->getVisible(),
+			$keys[21]=>$this->getDeleted(),
+			$keys[22]=>$this->getLocked(),
+			$keys[23]=>$this->getCreatedAt(),
+			$keys[24]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1147,21 +1201,27 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				$this->setPrizePot($value);
 				break;
 			case 17:
-				$this->setEnabled($value);
+				$this->setAllowRebuy($value);
 				break;
 			case 18:
-				$this->setVisible($value);
+				$this->setAllowAddon($value);
 				break;
 			case 19:
-				$this->setDeleted($value);
+				$this->setEnabled($value);
 				break;
 			case 20:
-				$this->setLocked($value);
+				$this->setVisible($value);
 				break;
 			case 21:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 22:
+				$this->setLocked($value);
+				break;
+			case 23:
+				$this->setCreatedAt($value);
+				break;
+			case 24:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1188,12 +1248,14 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[14], $arr)) $this->setSavedResult($arr[$keys[14]]);
 		if (array_key_exists($keys[15], $arr)) $this->setIsFreeroll($arr[$keys[15]]);
 		if (array_key_exists($keys[16], $arr)) $this->setPrizePot($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setEnabled($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setVisible($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setDeleted($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setLocked($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setCreatedAt($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setUpdatedAt($arr[$keys[22]]);
+		if (array_key_exists($keys[17], $arr)) $this->setAllowRebuy($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setAllowAddon($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setEnabled($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setVisible($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setDeleted($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setLocked($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setCreatedAt($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setUpdatedAt($arr[$keys[24]]);
 	}
 
 	
@@ -1218,6 +1280,8 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPeer::SAVED_RESULT)) $criteria->add(EventPeer::SAVED_RESULT, $this->saved_result);
 		if ($this->isColumnModified(EventPeer::IS_FREEROLL)) $criteria->add(EventPeer::IS_FREEROLL, $this->is_freeroll);
 		if ($this->isColumnModified(EventPeer::PRIZE_POT)) $criteria->add(EventPeer::PRIZE_POT, $this->prize_pot);
+		if ($this->isColumnModified(EventPeer::ALLOW_REBUY)) $criteria->add(EventPeer::ALLOW_REBUY, $this->allow_rebuy);
+		if ($this->isColumnModified(EventPeer::ALLOW_ADDON)) $criteria->add(EventPeer::ALLOW_ADDON, $this->allow_addon);
 		if ($this->isColumnModified(EventPeer::ENABLED)) $criteria->add(EventPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventPeer::VISIBLE)) $criteria->add(EventPeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(EventPeer::DELETED)) $criteria->add(EventPeer::DELETED, $this->deleted);
@@ -1285,6 +1349,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		$copyObj->setIsFreeroll($this->is_freeroll);
 
 		$copyObj->setPrizePot($this->prize_pot);
+
+		$copyObj->setAllowRebuy($this->allow_rebuy);
+
+		$copyObj->setAllowAddon($this->allow_addon);
 
 		$copyObj->setEnabled($this->enabled);
 

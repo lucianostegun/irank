@@ -10,10 +10,13 @@
  */
 class loginActions extends sfActions
 {
-  /**
-   * Executes index action
-   *
-   */
+
+  public function preExecute()
+  {
+  	
+  	$this->getUser()->setCulture('pt_BR');
+  }
+
   public function executeDoLogin($request)
   {
 
@@ -119,6 +122,36 @@ class loginActions extends sfActions
 	$userSiteObj->getImagePath(true);
 		
 	echo 'saveSuccess';
+	exit;
+  }
+  
+  public function executeRecoveryPassword($request){
+  	
+	$username = $request->getParameter('username');
+	
+	$criteria = new Criteria();
+	$criterion = $criteria->getNewCriterion( UserSitePeer::USERNAME, $username, Criteria::ILIKE );
+	$criterion->addOr( $criteria->getNewCriterion( PeoplePeer::EMAIL_ADDRESS, $username, Criteria::ILIKE ) );
+	$criteria->add( $criterion );
+	$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+	$criteria->add( UserSitePeer::ACTIVE, true );
+	$userSiteObj = UserSitePeer::doSelectOne( $criteria );
+	
+	if( is_object($userSiteObj) ){
+		
+		try {
+			
+			$userSiteObj->resetPassword();
+			echo 'recoverySuccess';
+		}catch(Exception $e){
+			
+			Util::forceError('Falha ao enviar o e-mail');
+		}
+	}else{
+		
+		echo 'userNotFound';
+	}
+	
 	exit;
   }
 }
