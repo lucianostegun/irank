@@ -173,15 +173,39 @@ class eventActions extends sfActions
 	$eventId = $request->getParameter('eventId');
 	$buyins  = $request->getParameter('buyins');
 	
-	$infoList = Ranking::getPaidPlaces($eventId, $buyins);
+	$eventObj     = EventPeer::retrieveByPK($eventId);
+	$isPercent    = true;
+	$defaultBuyin = $eventObj->getBuyin();
 	
-	$eventObj   = EventPeer::retrieveByPK($eventId);
-	$totalPrize = $buyins*$eventObj->getBuyin();
+	if( $eventObj->getIsFreeroll() ){
+		
+		$prizeConfig = $eventObj->getPrizeConfig();
+
+		if( ereg('[0-9]*(,[0-9])*%', $prizeConfig) ){
+			
+			$prizeConfig = str_replace('%', '', $prizeConfig);
+		}else{
+			
+			$isPercent = false;
+		}
+		
+		$defaultBuyin = $eventObj->getRanking()->getDefaultBuyin();
+		
+		$prizeConfigList = explode(';', $prizeConfig);
+		$infoList = array('percentList'=>implode(',', $prizeConfigList), 'paidPlaces'=>count($prizeConfigList));
+	}else{
+		
+		$infoList = Ranking::getPaidPlaces($eventId, $buyins);
+	}
 	
+	$totalPrize  = ($buyins*$defaultBuyin)+$eventObj->getPrizePot();
 	$percentList = explode(',', $infoList['percentList']);
 	
 	foreach($percentList as $key=>$percent)
-		$infoList[$key+1] = $totalPrize*$percent/100;
+		if( $isPercent )
+			$infoList[$key+1] = $totalPrize*$percent/100;
+		else
+			$infoList[$key+1] = $percent;
 	
 	echo Util::parseInfo($infoList);
 	
@@ -307,10 +331,12 @@ class eventActions extends sfActions
 				$eventNode['paidPlaces']   = $eventObj->getPaidPlaces();
 				$eventNode['entranceFee']  = $eventObj->getEntranceFee();
 				$eventNode['buyin']        = $eventObj->getBuyin();
+				$eventNode['rankingBuyin'] = $eventObj->getRanking()->getDefaultBuyin();
 				$eventNode['savedResult']  = $eventObj->getSavedResult()?'true':'false';
 				$eventNode['comments']     = $eventObj->getComments();
 				$eventNode['inviteStatus'] = $eventObj->getInviteStatus($userSiteObj->getPeopleId());
 				$eventNode['isMyEvent']    = $eventObj->isMyEvent()?'true':'false';
+				$eventNode['isFreeroll']   = $eventObj->getIsFreeroll()?'true':'false';
 				$eventNode['isEditable']   = $eventObj->isEditable()?'true':'false';
 				$eventNode['isPastDate']   = $eventObj->isPastDate()?'true':'false';
 				$eventNode['gameStyle']    = $eventObj->getRanking()->getGameStyle()->getTagName();

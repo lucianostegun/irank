@@ -13,7 +13,7 @@ abstract class BaseEventPeer {
 	const CLASS_DEFAULT = 'lib.model.Event';
 
 	
-	const NUM_COLUMNS = 23;
+	const NUM_COLUMNS = 25;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -71,6 +71,12 @@ abstract class BaseEventPeer {
 	const PRIZE_POT = 'event.PRIZE_POT';
 
 	
+	const ALLOW_REBUY = 'event.ALLOW_REBUY';
+
+	
+	const ALLOW_ADDON = 'event.ALLOW_ADDON';
+
+	
 	const ENABLED = 'event.ENABLED';
 
 	
@@ -94,19 +100,19 @@ abstract class BaseEventPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'EventName', 'RankingPlaceId', 'Buyin', 'EntranceFee', 'PaidPlaces', 'EventDate', 'StartTime', 'EventDateTime', 'Comments', 'SentEmail', 'Invites', 'Players', 'SavedResult', 'IsFreeroll', 'PrizePot', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventPeer::ID, EventPeer::RANKING_ID, EventPeer::EVENT_NAME, EventPeer::RANKING_PLACE_ID, EventPeer::BUYIN, EventPeer::ENTRANCE_FEE, EventPeer::PAID_PLACES, EventPeer::EVENT_DATE, EventPeer::START_TIME, EventPeer::EVENT_DATE_TIME, EventPeer::COMMENTS, EventPeer::SENT_EMAIL, EventPeer::INVITES, EventPeer::PLAYERS, EventPeer::SAVED_RESULT, EventPeer::IS_FREEROLL, EventPeer::PRIZE_POT, EventPeer::ENABLED, EventPeer::VISIBLE, EventPeer::DELETED, EventPeer::LOCKED, EventPeer::CREATED_AT, EventPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'event_name', 'ranking_place_id', 'buyin', 'entrance_fee', 'paid_places', 'event_date', 'start_time', 'event_date_time', 'comments', 'sent_email', 'invites', 'players', 'saved_result', 'is_freeroll', 'prize_pot', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'EVENT_NAME'=>'', 'RANKING_PLACE_ID'=>'', 'BUYIN'=>'', 'ENTRANCE_FEE'=>'', 'PAID_PLACES'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'COMMENTS'=>'', 'SENT_EMAIL'=>'', 'INVITES'=>'', 'PLAYERS'=>'', 'SAVED_RESULT'=>'', 'IS_FREEROLL'=>'', 'PRIZE_POT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'EventName', 'RankingPlaceId', 'Buyin', 'EntranceFee', 'PaidPlaces', 'EventDate', 'StartTime', 'EventDateTime', 'Comments', 'SentEmail', 'Invites', 'Players', 'SavedResult', 'IsFreeroll', 'PrizePot', 'AllowRebuy', 'AllowAddon', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventPeer::ID, EventPeer::RANKING_ID, EventPeer::EVENT_NAME, EventPeer::RANKING_PLACE_ID, EventPeer::BUYIN, EventPeer::ENTRANCE_FEE, EventPeer::PAID_PLACES, EventPeer::EVENT_DATE, EventPeer::START_TIME, EventPeer::EVENT_DATE_TIME, EventPeer::COMMENTS, EventPeer::SENT_EMAIL, EventPeer::INVITES, EventPeer::PLAYERS, EventPeer::SAVED_RESULT, EventPeer::IS_FREEROLL, EventPeer::PRIZE_POT, EventPeer::ALLOW_REBUY, EventPeer::ALLOW_ADDON, EventPeer::ENABLED, EventPeer::VISIBLE, EventPeer::DELETED, EventPeer::LOCKED, EventPeer::CREATED_AT, EventPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'event_name', 'ranking_place_id', 'buyin', 'entrance_fee', 'paid_places', 'event_date', 'start_time', 'event_date_time', 'comments', 'sent_email', 'invites', 'players', 'saved_result', 'is_freeroll', 'prize_pot', 'allow_rebuy', 'allow_addon', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'EVENT_NAME'=>'', 'RANKING_PLACE_ID'=>'', 'BUYIN'=>'', 'ENTRANCE_FEE'=>'', 'PAID_PLACES'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'COMMENTS'=>'', 'SENT_EMAIL'=>'', 'INVITES'=>'', 'PLAYERS'=>'', 'SAVED_RESULT'=>'', 'IS_FREEROLL'=>'', 'PRIZE_POT'=>'', 'ALLOW_REBUY'=>'', 'ALLOW_ADDON'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'EventName'=>2, 'RankingPlaceId'=>3, 'Buyin'=>4, 'EntranceFee'=>5, 'PaidPlaces'=>6, 'EventDate'=>7, 'StartTime'=>8, 'EventDateTime'=>9, 'Comments'=>10, 'SentEmail'=>11, 'Invites'=>12, 'Players'=>13, 'SavedResult'=>14, 'IsFreeroll'=>15, 'PrizePot'=>16, 'Enabled'=>17, 'Visible'=>18, 'Deleted'=>19, 'Locked'=>20, 'CreatedAt'=>21, 'UpdatedAt'=>22, ),
-		BasePeer::TYPE_COLNAME=>array (EventPeer::ID=>0, EventPeer::RANKING_ID=>1, EventPeer::EVENT_NAME=>2, EventPeer::RANKING_PLACE_ID=>3, EventPeer::BUYIN=>4, EventPeer::ENTRANCE_FEE=>5, EventPeer::PAID_PLACES=>6, EventPeer::EVENT_DATE=>7, EventPeer::START_TIME=>8, EventPeer::EVENT_DATE_TIME=>9, EventPeer::COMMENTS=>10, EventPeer::SENT_EMAIL=>11, EventPeer::INVITES=>12, EventPeer::PLAYERS=>13, EventPeer::SAVED_RESULT=>14, EventPeer::IS_FREEROLL=>15, EventPeer::PRIZE_POT=>16, EventPeer::ENABLED=>17, EventPeer::VISIBLE=>18, EventPeer::DELETED=>19, EventPeer::LOCKED=>20, EventPeer::CREATED_AT=>21, EventPeer::UPDATED_AT=>22, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'event_name'=>2, 'ranking_place_id'=>3, 'buyin'=>4, 'entrance_fee'=>5, 'paid_places'=>6, 'event_date'=>7, 'start_time'=>8, 'event_date_time'=>9, 'comments'=>10, 'sent_email'=>11, 'invites'=>12, 'players'=>13, 'saved_result'=>14, 'is_freeroll'=>15, 'prize_pot'=>16, 'enabled'=>17, 'visible'=>18, 'deleted'=>19, 'locked'=>20, 'created_at'=>21, 'updated_at'=>22, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'EventName'=>2, 'RankingPlaceId'=>3, 'Buyin'=>4, 'EntranceFee'=>5, 'PaidPlaces'=>6, 'EventDate'=>7, 'StartTime'=>8, 'EventDateTime'=>9, 'Comments'=>10, 'SentEmail'=>11, 'Invites'=>12, 'Players'=>13, 'SavedResult'=>14, 'IsFreeroll'=>15, 'PrizePot'=>16, 'AllowRebuy'=>17, 'AllowAddon'=>18, 'Enabled'=>19, 'Visible'=>20, 'Deleted'=>21, 'Locked'=>22, 'CreatedAt'=>23, 'UpdatedAt'=>24, ),
+		BasePeer::TYPE_COLNAME=>array (EventPeer::ID=>0, EventPeer::RANKING_ID=>1, EventPeer::EVENT_NAME=>2, EventPeer::RANKING_PLACE_ID=>3, EventPeer::BUYIN=>4, EventPeer::ENTRANCE_FEE=>5, EventPeer::PAID_PLACES=>6, EventPeer::EVENT_DATE=>7, EventPeer::START_TIME=>8, EventPeer::EVENT_DATE_TIME=>9, EventPeer::COMMENTS=>10, EventPeer::SENT_EMAIL=>11, EventPeer::INVITES=>12, EventPeer::PLAYERS=>13, EventPeer::SAVED_RESULT=>14, EventPeer::IS_FREEROLL=>15, EventPeer::PRIZE_POT=>16, EventPeer::ALLOW_REBUY=>17, EventPeer::ALLOW_ADDON=>18, EventPeer::ENABLED=>19, EventPeer::VISIBLE=>20, EventPeer::DELETED=>21, EventPeer::LOCKED=>22, EventPeer::CREATED_AT=>23, EventPeer::UPDATED_AT=>24, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'event_name'=>2, 'ranking_place_id'=>3, 'buyin'=>4, 'entrance_fee'=>5, 'paid_places'=>6, 'event_date'=>7, 'start_time'=>8, 'event_date_time'=>9, 'comments'=>10, 'sent_email'=>11, 'invites'=>12, 'players'=>13, 'saved_result'=>14, 'is_freeroll'=>15, 'prize_pot'=>16, 'allow_rebuy'=>17, 'allow_addon'=>18, 'enabled'=>19, 'visible'=>20, 'deleted'=>21, 'locked'=>22, 'created_at'=>23, 'updated_at'=>24, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, )
 	);
 
 	
@@ -193,6 +199,10 @@ abstract class BaseEventPeer {
 		$criteria->addSelectColumn(EventPeer::IS_FREEROLL);
 
 		$criteria->addSelectColumn(EventPeer::PRIZE_POT);
+
+		$criteria->addSelectColumn(EventPeer::ALLOW_REBUY);
+
+		$criteria->addSelectColumn(EventPeer::ALLOW_ADDON);
 
 		$criteria->addSelectColumn(EventPeer::ENABLED);
 

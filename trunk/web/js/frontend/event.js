@@ -715,14 +715,31 @@ function calculateResultTotal(type){
 	
 	for(var i=0; i < peopleIdList.length; i++){
 		
-		value = $('event'+ucfirst(type)+peopleIdList[i]).value;
+		var peopleId = peopleIdList[i];
+		value = $('event'+ucfirst(type)+peopleId).value;
 		value = toFloat(value);
 		
 		totalValue += value;
+		
+		if( isFreeroll() && (type=='rebuy' || type=='addon') )
+			calculateFreerollPrize(peopleId)
 	}
 	
 	$('eventResultTotal'+ucfirst(type)).innerHTML = toFloat(totalValue, true);
-	checkTotalPrize();
+	
+	if( isFreeroll() ){
+
+		for(var i=0; i < peopleIdList.length; i++){
+			
+			var peopleId = peopleIdList[i];
+			
+			if( type=='rebuy' || type=='addon' )
+				calculateFreerollPrize(peopleId)
+		}
+	}else{
+		
+		checkTotalPrize();
+	}
 }
 
 function checkTotalPrize(){
@@ -822,14 +839,35 @@ function doCalculatePrize(){
 
 function calculateFreerollPrize(peopleId){
 	
+	var prizePot        = toFloat($('eventPrizePot').value);
 	var prizeConfig     = ';'+$('eventPrizeConfig').value;
 	var prizeConfigList = prizeConfig.split(';');
-
-	var eventPosition = $('eventEventPosition'+peopleId).value;
 	
-	if( eventPosition < prizeConfigList.length)
-		var prizeValue = toFloat(prizeConfigList[eventPosition]);
-	else
+	var eventPosition = $('eventEventPosition'+peopleId).value;
+	eventPosition *= 1;
+	
+	if( eventPosition < prizeConfigList.length){
+		
+		var prizeValue = prizeConfigList[eventPosition];
+		var isPercent  = prizeValue.match(/[0-9]%$/);
+		prizeValue     = toFloat(prizeValue);
+		
+		if( isPercent ){
+			
+			var totalRebuy = 0;
+			var totalAddon = 0;
+			
+			if( $('eventResultTotalRebuy')!=null )
+				totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
+			
+			if( $('eventResultTotalAddon')!=null )
+				totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
+			
+			var totalBRA = (prizePot+totalRebuy+totalAddon);
+			
+			prizeValue = toFloat(totalBRA*prizeValue/100);
+		}
+	}else
 		var prizeValue = 0;
 	
 	$('eventPrize'+peopleId).value           = toCurrency(prizeValue);

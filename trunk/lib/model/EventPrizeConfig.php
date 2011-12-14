@@ -9,4 +9,15 @@
  */ 
 class EventPrizeConfig extends BaseEventPrizeConfig
 {
+	
+	public function getPrizeValue(){
+		
+		$prizeValue = parent::getPrizeValue();
+		$isPercent  = $this->getIsPercent();
+		
+		if( $isPercent )
+			$prizeValue .= '%';
+		
+		return $prizeValue;
+	}
 }

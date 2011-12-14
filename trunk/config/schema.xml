@@ -160,6 +160,8 @@
 		<column name="saved_result" type="BOOLEAN" />
 		<column name="is_freeroll" type="BOOLEAN" />
 		<column name="prize_pot" type="FLOAT" />
+		<column name="allow_rebuy" type="BOOLEAN" defaultValue="TRUE" />
+		<column name="allow_addon" type="BOOLEAN" defaultValue="TRUE" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -572,6 +574,7 @@
 		<column name="event_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="event_position" type="INTEGER" required="true" primaryKey="true" />
 		<column name="prize_value" type="FLOAT" />
+		<column name="is_percent" type="BOOLEAN" />
 		  <foreign-key foreignTable="event">
 		    <reference local="event_id" foreign="id" />
 		  </foreign-key>

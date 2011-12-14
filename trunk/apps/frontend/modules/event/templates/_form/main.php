@@ -50,6 +50,14 @@
 				<div class="error" id="eventPaidPlacesError" onclick="showFormErrorDetails('event', 'paidPlaces')"></div>
 				<div class="textFlex" id="eventFreerollLinkDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>"><?php echo link_to(__('event.configurePrize'), '#configurePrize(true)') ?></div>
 			</div>
+			<div class="row">
+				<div class="label"><?php echo __('event.allowRebuy') ?></div>
+				<div class="field"><?php echo checkbox_tag('allowRebuy', true, $eventObj->getAllowRebuy(), array('id'=>'eventAllowRebuy')) ?></div>
+			</div>
+			<div class="row">
+				<div class="label"><?php echo __('event.allowAddon') ?></div>
+				<div class="field"><?php echo checkbox_tag('allowAddon', true, $eventObj->getAllowAddon(), array('id'=>'eventAllowAddon')) ?></div>
+			</div>
 			<div class="row" id="eventEntranceFeeRow" style="display: <?php echo ($eventObj->getIsFreeroll()?'none':'block') ?>">
 				<div class="label" id="eventEntranceFeeLabel"><?php echo __('event.entranceFee') ?></div>
 				<div class="field"><?php echo input_tag('entranceFee', Util::formatFloat($eventObj->getEntranceFee(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventEntranceFee')) ?></div>
@@ -91,10 +99,12 @@
 						if( $eventObj->getIsFreeroll() ):
 							foreach($eventObj->getPrizeConfigList() as $eventPrizeConfigObj):
 								$eventPosition = $eventPrizeConfigObj->getEventPosition();
+								
+								$isPercent = $eventPrizeConfigObj->getIsPercent();
 					?>
 					<div class="row">
 						<div class="label"><?php echo $eventPosition.Util::getOrdinalSufix($eventPosition).' '.__('event.place') ?></div>
-						<div class="field"><?php echo input_tag('paidPlace'.$eventPosition, Util::formatFloat($eventPrizeConfigObj->getPrizeValue(), true), array('size'=>5, 'maxlength'=>6, 'autocomplete'=>'off', 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventPaidPlace'.$eventPosition)) ?></div>
+						<div class="field"><?php echo input_tag('paidPlace'.$eventPosition, Util::formatFloat($eventPrizeConfigObj->getPrizeValue(), true).($isPercent?'%':''), array('size'=>5, 'maxlength'=>6, 'autocomplete'=>'off', 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventPaidPlace'.$eventPosition)) ?></div>
 					</div>
 					<?php
 							endforeach;

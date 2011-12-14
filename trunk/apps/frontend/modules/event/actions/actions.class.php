@@ -80,6 +80,8 @@ class eventActions extends sfActions
 	$isFreeroll      = $request->getParameter('isFreeroll');
 	$prizePot        = $request->getParameter('prizePot');
 	$isClone         = $request->getParameter('isClone');
+	$allowRebuy      = $request->getParameter('allowRebuy');
+	$allowAddon      = $request->getParameter('allowAddon');
 
 	if( $eventId )		
 		$eventObj  = EventPeer::retrieveByPK( $eventId );
@@ -104,6 +106,8 @@ class eventActions extends sfActions
 	$eventObj->setIsFreeroll( ($isFreeroll?true:false) );
 	$eventObj->setPrizePot( Util::formatFloat($prizePot) );
 	$eventObj->setComments( ($comments?$comments:null) );
+	$eventObj->setAllowRebuy(($allowRebuy?true:false));
+	$eventObj->setAllowAddon(($allowAddon?true:false));
 	$eventObj->setVisible(true);
 	$eventObj->setEnabled(true);
 	$eventObj->save();
