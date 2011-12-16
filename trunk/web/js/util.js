@@ -208,15 +208,21 @@ function toFloat(value, display, decimalPlaces){
 	
 	value = value+' ';
 	
+	var separator = (i18n_culture=='pt_BR'?',':'.');
+	
 	if( (/^[0-9]+\.[0-9]{1,2} $/).test(value) )		
 		value = value.replace('.', ',');
+	
+	if( (/^[0-9]+[,\.][0-9]{3,} $/).test(value) ){
+		
+		value = value.replace(',', '.');
+		value = number_format(value, decimalPlaces, separator, '');
+	}
 
 	value = value.replace(/[^0-9,-]/ig, '');
 	value = value.replace(',', '.');
 	
 	value = parseFloat(value);
-	
-	var separator = (i18n_culture=='pt_BR'?',':'.');
 	
 	if( display )
 		value = number_format(value, decimalPlaces, separator, '');
