@@ -193,12 +193,14 @@ class eventActions extends sfActions
 		
 		$prizeConfigList = explode(';', $prizeConfig);
 		$infoList = array('percentList'=>implode(',', $prizeConfigList), 'paidPlaces'=>count($prizeConfigList));
+		$totalPrize  = $buyins+$eventObj->getPrizePot();
 	}else{
 		
 		$infoList = Ranking::getPaidPlaces($eventId, $buyins);
+		$totalPrize  = ($buyins*$defaultBuyin)+$eventObj->getPrizePot();
 	}
 	
-	$totalPrize  = ($buyins*$defaultBuyin)+$eventObj->getPrizePot();
+	
 	$percentList = explode(',', $infoList['percentList']);
 	
 	foreach($percentList as $key=>$percent)
@@ -339,6 +341,8 @@ class eventActions extends sfActions
 				$eventNode['isFreeroll']   = $eventObj->getIsFreeroll()?'true':'false';
 				$eventNode['isEditable']   = $eventObj->isEditable()?'true':'false';
 				$eventNode['isPastDate']   = $eventObj->isPastDate()?'true':'false';
+				$eventNode['allowRebuy']   = $eventObj->getAllowRebuy()?'true':'false';
+				$eventNode['allowAddon']   = $eventObj->getAllowAddon()?'true':'false';
 				$eventNode['gameStyle']    = $eventObj->getRanking()->getGameStyle()->getTagName();
 				
 				$eventList[] = $eventNode;

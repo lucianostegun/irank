@@ -604,6 +604,8 @@ class Event extends BaseEvent
 		$eventObj->setBuyin($this->getBuyin());
 		$eventObj->setEntranceFee($this->getEntranceFee());
 		$eventObj->setComments($this->getComments());
+		$eventObj->setAllowRebuy($this->getAllowRebuy());
+		$eventObj->setAllowAddon($this->getAllowAddon());
 		$eventObj->setVisible(false);
 		$eventObj->setEnabled(false);
 		$eventObj->setLocked(true);
@@ -725,7 +727,7 @@ class Event extends BaseEvent
 				$eventPlayerObj->setEntranceFee( Util::formatFloat($entranceFee) );
 				$eventPlayerObj->setRebuy( Util::formatFloat($rebuy) );
 				$eventPlayerObj->setAddon( Util::formatFloat($addon) );
-				$eventPlayerObj->setBuyin( Util::formatFloat($buyin) );
+				$eventPlayerObj->setBuyin( Util::formatFloat(($isFreeroll?0:$buyin)) );
 				
 				$score = $totalBuyin/$eventPosition/$buyin;
 				

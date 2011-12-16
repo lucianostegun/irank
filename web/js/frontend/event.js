@@ -752,8 +752,12 @@ function checkTotalPrize(){
 	if( !isFreeroll() ){
 		
 		totalPrize = toFloat($('eventResultTotalPrize').innerHTML);
-		totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
-		totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
+		
+		if( $('eventResultTotalRebuy')!=null )
+			totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
+		
+		if( $('eventResultTotalAddon')!=null )
+			totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
 	}
 	
 	if( totalPrize!=(totalBuyin+totalRebuy+totalAddon) )
@@ -777,8 +781,12 @@ function doCalculatePrize(){
 		
 		totalBuyin = toFloat($('eventResultTotalBuyin').innerHTML);
 		totalPrize = toFloat($('eventResultTotalPrize').innerHTML);
-		totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
-		totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
+		
+		if( $('eventResultTotalRebuy')!=null )
+			totalRebuy = toFloat($('eventResultTotalRebuy').innerHTML);
+		
+		if( $('eventResultTotalAddon')!=null )
+			totalAddon = toFloat($('eventResultTotalAddon').innerHTML);
 	}
 	
 	var totalBRA = (totalBuyin+totalRebuy+totalAddon);
