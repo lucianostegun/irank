@@ -153,4 +153,37 @@ class eventActions extends sfActions
 		
 		exit;
   }
+  
+  public function executePatchEventPhoto(){
+  	
+  	$criteria = new Criteria();
+  	$criteria->add (EventPhotoPeer::DELETED, false);
+  	$eventPhotoObjList = EventPhotoPeer::doSelect($criteria);
+  	
+  	foreach($eventPhotoObjList as $eventPhotoObj){
+  		
+  		$filePath  = $eventPhotoObj->getFile()->getFilePath(true);
+  		
+  		echo $filePath.' - ';
+  		
+  		if( file_exists($filePath) ){
+	  		
+	  		$dimension = File::getFileDimension($filePath);
+	  		$eventPhotoObj->setWidth($dimension['width']);
+	  		$eventPhotoObj->setHeight($dimension['height']);
+	  		$eventPhotoObj->setOrientation(($dimension['width']>$dimension['height']?'L':'P'));
+	  		$eventPhotoObj->save();
+
+	  		echo $dimension['width'].'x'.$dimension['height'];
+	  		echo ' - OK';
+  		}else{
+  			
+	  		echo ' - ERRO';
+  		}
+  		echo '<br/>';
+  	}
+  	
+  	echo 'Processo finalizado com sucesso!';
+  	exit;
+  }
 }

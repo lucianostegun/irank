@@ -13,7 +13,7 @@ abstract class BaseEventPhotoPeer {
 	const CLASS_DEFAULT = 'lib.model.EventPhoto';
 
 	
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 11;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,15 @@ abstract class BaseEventPhotoPeer {
 	const IS_SHARED = 'event_photo.IS_SHARED';
 
 	
+	const WIDTH = 'event_photo.WIDTH';
+
+	
+	const HEIGHT = 'event_photo.HEIGHT';
+
+	
+	const ORIENTATION = 'event_photo.ORIENTATION';
+
+	
 	const DELETED = 'event_photo.DELETED';
 
 	
@@ -49,19 +58,19 @@ abstract class BaseEventPhotoPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventId', 'FileId', 'PeopleId', 'IsShared', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID, EventPhotoPeer::EVENT_ID, EventPhotoPeer::FILE_ID, EventPhotoPeer::PEOPLE_ID, EventPhotoPeer::IS_SHARED, EventPhotoPeer::DELETED, EventPhotoPeer::CREATED_AT, EventPhotoPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_id', 'file_id', 'people_id', 'is_shared', 'deleted', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_ID'=>'', 'FILE_ID'=>'', 'PEOPLE_ID'=>'', 'IS_SHARED'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventId', 'FileId', 'PeopleId', 'IsShared', 'Width', 'Height', 'Orientation', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID, EventPhotoPeer::EVENT_ID, EventPhotoPeer::FILE_ID, EventPhotoPeer::PEOPLE_ID, EventPhotoPeer::IS_SHARED, EventPhotoPeer::WIDTH, EventPhotoPeer::HEIGHT, EventPhotoPeer::ORIENTATION, EventPhotoPeer::DELETED, EventPhotoPeer::CREATED_AT, EventPhotoPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_id', 'file_id', 'people_id', 'is_shared', 'width', 'height', 'orientation', 'deleted', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_ID'=>'', 'FILE_ID'=>'', 'PEOPLE_ID'=>'', 'IS_SHARED'=>'', 'WIDTH'=>'', 'HEIGHT'=>'', 'ORIENTATION'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventId'=>1, 'FileId'=>2, 'PeopleId'=>3, 'IsShared'=>4, 'Deleted'=>5, 'CreatedAt'=>6, 'UpdatedAt'=>7, ),
-		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID=>0, EventPhotoPeer::EVENT_ID=>1, EventPhotoPeer::FILE_ID=>2, EventPhotoPeer::PEOPLE_ID=>3, EventPhotoPeer::IS_SHARED=>4, EventPhotoPeer::DELETED=>5, EventPhotoPeer::CREATED_AT=>6, EventPhotoPeer::UPDATED_AT=>7, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_id'=>1, 'file_id'=>2, 'people_id'=>3, 'is_shared'=>4, 'deleted'=>5, 'created_at'=>6, 'updated_at'=>7, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventId'=>1, 'FileId'=>2, 'PeopleId'=>3, 'IsShared'=>4, 'Width'=>5, 'Height'=>6, 'Orientation'=>7, 'Deleted'=>8, 'CreatedAt'=>9, 'UpdatedAt'=>10, ),
+		BasePeer::TYPE_COLNAME=>array (EventPhotoPeer::ID=>0, EventPhotoPeer::EVENT_ID=>1, EventPhotoPeer::FILE_ID=>2, EventPhotoPeer::PEOPLE_ID=>3, EventPhotoPeer::IS_SHARED=>4, EventPhotoPeer::WIDTH=>5, EventPhotoPeer::HEIGHT=>6, EventPhotoPeer::ORIENTATION=>7, EventPhotoPeer::DELETED=>8, EventPhotoPeer::CREATED_AT=>9, EventPhotoPeer::UPDATED_AT=>10, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_id'=>1, 'file_id'=>2, 'people_id'=>3, 'is_shared'=>4, 'width'=>5, 'height'=>6, 'orientation'=>7, 'deleted'=>8, 'created_at'=>9, 'updated_at'=>10, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
@@ -124,6 +133,12 @@ abstract class BaseEventPhotoPeer {
 		$criteria->addSelectColumn(EventPhotoPeer::PEOPLE_ID);
 
 		$criteria->addSelectColumn(EventPhotoPeer::IS_SHARED);
+
+		$criteria->addSelectColumn(EventPhotoPeer::WIDTH);
+
+		$criteria->addSelectColumn(EventPhotoPeer::HEIGHT);
+
+		$criteria->addSelectColumn(EventPhotoPeer::ORIENTATION);
 
 		$criteria->addSelectColumn(EventPhotoPeer::DELETED);
 

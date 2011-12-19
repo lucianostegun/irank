@@ -31,7 +31,7 @@
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalPrizeLabel"><?php echo __('Prize') ?></div>
-				<div class="field"><?php echo input_tag('prize', Util::formatFloat($eventPersonalObj->getPrize(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalPrize')) ?></div>
+				<div class="field"><?php echo input_tag('prize', Util::formatFloat($eventPersonalObj->getPrize(), true), array('size'=>7, 'maxlength'=>7, 'onkeyup'=>'maskCurrency(event)', 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalPrize')) ?></div>
 				<div class="error" id="eventPersonalPrizeError" onclick="showFormErrorDetails('eventPersonal', 'prize')"></div>
 				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
@@ -59,7 +59,7 @@
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalPlayersLabel"><?php echo __('Players') ?></div>
-				<div class="field"><?php echo input_tag('players', $eventPersonalObj->getPlayers(), array('size'=>2, 'maxlength'=>1, 'class'=>'required', 'id'=>'eventPersonalPlayers')) ?></div>
+				<div class="field"><?php echo input_tag('players', $eventPersonalObj->getPlayers(), array('size'=>3, 'maxlength'=>3, 'class'=>'required', 'id'=>'eventPersonalPlayers')) ?></div>
 				<div class="error" id="eventPersonalPlayersError" onclick="showFormErrorDetails('eventPersonal', 'players')"></div>
 			</div>
 			<div class="rowTextArea">

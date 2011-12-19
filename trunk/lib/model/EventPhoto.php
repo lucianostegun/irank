@@ -16,6 +16,8 @@ class EventPhoto extends BaseEventPhoto
 			
 			$isNew              = $this->isNew();
 			$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$this->updateInfo();
 
     		$this->postOnWall();
 
@@ -34,6 +36,16 @@ class EventPhoto extends BaseEventPhoto
 		$this->save();
 		
 		Log::quickLogDelete('event_photo', $this->getPrimaryKey());
+	}
+	
+	public function updateInfo(){
+		
+		$filePath  = $this->getFile()->getFilePath(true);
+  		$dimension = File::getFileDimension($filePath);
+  		
+  		$this->setWidth($dimension['width']);
+  		$this->setHeight($dimension['height']);
+  		$this->setOrientation(($dimension['width']>$dimension['height']?'L':'P'));
 	}
 	
 	public function getCommentList($limit=null){

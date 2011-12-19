@@ -323,6 +323,9 @@
 		<column name="file_id" type="INTEGER" required="true" />
 		<column name="people_id" type="INTEGER" required="true" />
 		<column name="is_shared" type="BOOLEAN" />
+		<column name="width" type="INTEGER" />
+		<column name="height" type="INTEGER" />
+		<column name="orientation" type="VARCHAR" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />

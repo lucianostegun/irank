@@ -44,6 +44,12 @@ class EventPhotoMapBuilder {
 
 		$tMap->addColumn('IS_SHARED', 'IsShared', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
+		$tMap->addColumn('WIDTH', 'Width', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('HEIGHT', 'Height', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('ORIENTATION', 'Orientation', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

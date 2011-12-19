@@ -214,7 +214,7 @@ DECLARE
 BEGIN
 	
     SELECT
-        SUM(prize) INTO result
+        (SUM(prize)-SUM(rebuy)-SUM(addon)) INTO result
     FROM
         event_player
         INNER JOIN event ON event_player.EVENT_ID = event.ID
