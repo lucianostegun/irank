@@ -10,6 +10,18 @@
 class Event extends BaseEvent
 {
 	
+	public function toString($withDate=false){
+		
+		$string = $this->getEventName().' ';
+		
+		if( $withDate )
+			$string .= '- '.$this->getEventDate('d/m/Y').'\n';
+		
+		$string .= '@ '.$this->getEventPlace();
+		
+		return $string;
+	}
+	
     public function save($con=null){
     	
     	try{
