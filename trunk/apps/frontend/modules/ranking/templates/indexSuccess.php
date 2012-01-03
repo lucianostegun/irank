@@ -1,4 +1,12 @@
 <div class="commonBar"><span>Rankings</span></div>
+<div id="searchOptions">
+	<?php
+		if( $suppressOld )
+			echo link_to('Mostrar rankings ocultos', 'ranking/index?so=0', array('title'=>'Mostrar todos os rankings'));
+		else
+			echo link_to('Ocultar rankings finalizados', 'ranking/index', array('title'=>'Ocultar rankings finalizados'));
+	?>
+</div>
 <table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTable">
 	<tr class="header">
 		<th width="200"><?php echo __('ranking.name') ?></th>
@@ -10,7 +18,16 @@
 		<th><?php echo __('ranking.events') ?></th>
 	</tr>
 	<?php
-		$rankingObjList = $userSiteObj->getRankingList();
+		$criteria = new Criteria();
+		
+		if( $suppressOld ){
+			
+			$criterion = $criteria->getNewCriterion( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+			$criterion->addOr( $criteria->getNewCriterion( RankingPeer::FINISH_DATE, null ) );
+			$criteria->add($criterion);
+		}
+		
+		$rankingObjList = $userSiteObj->getRankingList($criteria);
 		foreach($rankingObjList as $rankingObj):
 			
 			$link = 'goModule(\'ranking\', \'edit\', \'rankingId\', '.$rankingObj->getId().')';

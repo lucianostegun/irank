@@ -29,6 +29,10 @@ class rankingActions extends sfActions
 
 	$this->userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
   	$this->innerMenu   = 'ranking/include/mainMenuIndex';
+  	
+  	$suppressOld = $request->getParameter('so', '1');
+  	
+  	$this->suppressOld = ($suppressOld=='1'?true:false);
   }
   
   public function executeNew($request){

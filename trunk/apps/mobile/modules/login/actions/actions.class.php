@@ -42,8 +42,8 @@ class loginActions extends sfActions
 		$criteria->add( UserSitePeer::ENABLED, true );
 		$criteria->add( UserSitePeer::VISIBLE, true );
 		$criteria->add( UserSitePeer::DELETED, false );
-		$criterion = $criteria->getNewCriterion( UserSitePeer::USERNAME, $username );
-		$criterion->addOr( $criteria->getNewCriterion( PeoplePeer::EMAIL_ADDRESS, $username ) );
+		$criterion = $criteria->getNewCriterion( UserSitePeer::USERNAME, $username, Criteria::ILIKE );
+		$criterion->addOr( $criteria->getNewCriterion( PeoplePeer::EMAIL_ADDRESS, $username, Criteria::ILIKE ) );
 		$criteria->add($criterion);
 		$criteria->add( UserSitePeer::PASSWORD, md5($password) );
 		$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
