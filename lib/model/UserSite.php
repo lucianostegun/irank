@@ -132,7 +132,9 @@ class UserSite extends BaseUserSite
 	
 	public function getRankingList($criteria=null, $con=null, $count=false){
 		
-		$criteria = new Criteria();
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+			
 		$criteria->setNoFilter(true);
 		$criteria->add( RankingPeer::ENABLED, true );
 		$criteria->add( RankingPeer::VISIBLE, true );
