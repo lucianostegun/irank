@@ -1,0 +1,20 @@
+fields:
+       
+  fullName:
+    required:
+      msg:       form.error.requiredField
+       
+  emailAddress:
+    required:
+      msg:       form.error.requiredField
+    sfEmailValidator:
+      strict:       true
+      email_error:  form.error.invalidEmail
+       
+  subject:
+    required:
+      msg:       form.error.requiredField
+       
+  message:
+    required:
+      msg:       form.error.requiredField

@@ -1,0 +1,36 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:REQUEST
+BEGIN:VEVENT
+DTSTART:<dtStart>
+DTEND:<dtEnd>
+DTSTAMP:<currentTimestamp>
+ORGANIZER;CN=<organizerName>:mailto:<organizerEmailAddress>
+UID:8c8el9j0sfjetinr9kvc0tqeak@google.com
+<playerList>
+CREATED:<createdAt>
+DESCRIPTION:<eventDescription>
+LAST-MODIFIED:<updatedAt>
+LOCATION:<eventPlace>
+SEQUENCE:1
+STATUS:NEEDS-ACTION
+SUMMARY:<eventName>
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:EMAIL
+DESCRIPTION:This is an event reminder
+SUMMARY:Alarm notification
+ATTENDEE:mailto:<organizerEmailAddress>
+TRIGGER:-P0DT6H0M0S
+END:VALARM
+BEGIN:VALARM
+ACTION:EMAIL
+DESCRIPTION:This is an event reminder
+SUMMARY:Alarm notification
+ATTENDEE:mailto:<organizerEmailAddress>
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,13 @@
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        iRank
+    language:     pt_BR
+
+  stylesheets:    []
+  javascripts:    []
+
+  has_layout:     on
+  layout:         layout

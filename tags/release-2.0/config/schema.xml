@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="propel" defaultIdMethod="native" noXsd="true" package="lib.model" schema="public">
+
+	<table name="virtual_table" phpName="VirtualTable" isI18n="true" i18nTable="virtual_table_i18n">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="virtual_table_name" type="VARCHAR" required="true" />
+		<column name="description" type="VARCHAR" />
+		<column name="tag_name" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="virtual_table_i18n" phpName="VirtualTableI18n">
+		<column name="virtual_table_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="culture" type="CHAR" required="true" primaryKey="true" isCulture="true" />
+		<column name="description_i18n" type="VARCHAR" />
+		  <foreign-key foreignTable="virtual_table">
+		    <reference local="virtual_table_id" foreign="id" />
+		  </foreign-key>
+	</table>
+	
+	<table name="people" phpName="People">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="people_type_id" type="INTEGER" description="Tipo de pessoa" required="true" />
+		<column name="first_name" description="Nome" type="VARCHAR" />
+		<column name="last_name" description="Sobrenome" type="VARCHAR" />
+		<column name="full_name" type="VARCHAR" />
+		<column name="email_address" type="VARCHAR" description="E-mail" />
+		<column name="birthday" description="Nascimento" type="DATE" />
+		<column name="default_language" type="CHAR" description="Idioma padrão" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="virtual_table">
+		    <reference local="people_type_id" foreign="id" />
+		  </foreign-key>
+	</table>
+	
+	<table name="user_site" phpName="UserSite">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="people_id" type="INTEGER" />
+		<column name="username" type="VARCHAR" description="Username" />
+		<column name="password" type="VARCHAR" />
+		<column name="image_path" type="VARCHAR" />
+		<column name="active" type="BOOLEAN" description="Ativo" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="last_access_date" type="TIMESTAMP" description="Último acesso" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="ranking" phpName="Ranking">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="ranking_name" type="VARCHAR" />
+		<column name="ranking_tag" type="VARCHAR" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="ranking_type_id" type="INTEGER" />
+		<column name="game_style_id" type="INTEGER" required="true" />
+		<column name="start_date" type="DATE" />
+		<column name="finish_date" type="DATE" />
+		<column name="is_private" type="BOOLEAN" />
+		<column name="default_buyin" type="FLOAT" />
+		<column name="players" type="INTEGER" />
+		<column name="events" type="INTEGER" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="user_site">
+		    <reference local="user_site_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="virtual_table">
+		    <reference local="ranking_type_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="virtual_table">
+		    <reference local="game_style_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="ranking_player" phpName="RankingPlayer">
+		<column name="ranking_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="total_events" type="INTEGER" />
+		<column name="total_score" type="FLOAT" />
+		<column name="total_paid" type="FLOAT" />
+		<column name="total_prize" type="FLOAT" />
+		<column name="total_balance" type="FLOAT" />
+		<column name="total_average" type="FLOAT" />
+		<column name="allow_edit" type="BOOLEAN" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="ranking_history" phpName="RankingHistory">
+		<column name="ranking_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="ranking_date" type="DATE" required="true" primaryKey="true" />
+		<column name="total_ranking_position" type="INTEGER" />
+		<column name="ranking_position" type="INTEGER" />
+		<column name="events" type="INTEGER" />
+		<column name="score" type="FLOAT" />
+		<column name="average" type="FLOAT" />
+		<column name="paid_value" type="FLOAT" />
+		<column name="prize_value" type="FLOAT" />
+		<column name="balance_value" type="FLOAT" />
+		<column name="total_events" type="INTEGER" />
+		<column name="total_score" type="FLOAT" />
+		<column name="total_paid" type="FLOAT" />
+		<column name="total_prize" type="FLOAT" />
+		<column name="total_balance" type="FLOAT" />
+		<column name="total_average" type="FLOAT" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="event" phpName="Event">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="ranking_id" type="INTEGER" required="true" />
+		<column name="event_name" type="VARCHAR" />
+		<column name="ranking_place_id" type="INTEGER" required="true" />
+		<column name="buyin" type="FLOAT" />
+		<column name="entrance_fee" type="FLOAT" />
+		<column name="paid_places" type="INTEGER" />
+		<column name="event_date" type="DATE" />
+		<column name="start_time" type="TIME" />
+		<column name="event_date_time" type="TIMESTAMP" />
+		<column name="comments" type="VARCHAR" />
+		<column name="sent_email" type="BOOLEAN" />
+		<column name="invites" type="INTEGER" />
+		<column name="players" type="INTEGER" />
+		<column name="saved_result" type="BOOLEAN" />
+		<column name="is_freeroll" type="BOOLEAN" />
+		<column name="prize_pot" type="FLOAT" />
+		<column name="allow_rebuy" type="BOOLEAN" defaultValue="TRUE" />
+		<column name="allow_addon" type="BOOLEAN" defaultValue="TRUE" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="ranking_place">
+		    <reference local="ranking_place_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="event_player" phpName="EventPlayer">
+		<column name="event_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="share_id" type="INTEGER" />
+		<column name="entrance_fee" type="FLOAT" />
+		<column name="buyin" type="FLOAT" />
+		<column name="rebuy" type="FLOAT" />
+		<column name="addon" type="FLOAT" />
+		<column name="event_position" type="INTEGER" />
+		<column name="score" type="FLOAT" />
+		<column name="prize" type="FLOAT" />
+		<column name="confirm_code" type="VARCHAR" />
+		<column name="invite_status" type="VARCHAR" />
+		<column name="allow_edit" type="BOOLEAN" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="event">
+		    <reference local="event_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+	
+	<table name="file" phpName="File">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="file_name" type="VARCHAR" />
+		<column name="file_path" type="VARCHAR" />
+		<column name="file_size" type="INTEGER" />
+		<column name="is_image" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="description" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="auxiliar_text" phpName="AuxiliarText">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="description" type="VARCHAR" />
+		<column name="file_id" type="INTEGER" />
+		<column name="tag_name" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	    <foreign-key foreignTable="file">
+	      <reference local="file_id" foreign="id" />
+	    </foreign-key>
+	</table>
+	
+	<table name="config" phpName="Config">
+		<column name="config_name" type="VARCHAR" description="Configuração" required="true" primaryKey="true" />
+		<column name="description" type="VARCHAR" description="Descrição" />
+		<column name="config_value" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+
+	<table name="user_site_option" phpName="UserSiteOption">
+		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="user_site_option_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="option_value" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="virtual_table">
+		    <reference local="user_site_option_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="faq" phpName="Faq" isI18n="true" i18nTable="faq_i18n">
+		<column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="question" type="VARCHAR" />
+		<column name="order_seq" type="INTEGER" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="faq_i18n" phpName="FaqI18n">
+		<column name="faq_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="culture" type="CHAR" required="true" primaryKey="true" isCulture="true" />
+		<column name="question_i18n" type="VARCHAR" />
+		<column name="answer_i18n" type="VARCHAR" />
+		  <foreign-key foreignTable="faq">
+		    <reference local="faq_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="log" phpName="Log"> 
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" required="true" />
+		<column name="app" type="VARCHAR"/>
+		<column name="module_name" type="VARCHAR"/>
+		<column name="action_name" type="VARCHAR"/>
+		<column name="class_name" type="VARCHAR"/>
+		<column name="severity" type="INTEGER"/>
+		<column name="message" type="VARCHAR"/>
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="user_site">
+			<reference local="user_site_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="log_field" phpName="LogField"> 
+		<column name="log_id" type="INTEGER" required="true" />
+		<column name="field_name" type="VARCHAR"/>
+		<column name="field_value" type="VARCHAR"/>
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="log">
+			<reference local="log_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="event_comment" phpName="EventComment">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="event_id" type="INTEGER" required="true" />
+		<column name="people_id" type="INTEGER" required="true" />
+		<column name="comment" type="VARCHAR" />
+		<column name="deleted" type="BOOLEAN" required="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="event">
+		    <reference local="event_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="event_photo" phpName="EventPhoto">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="event_id" type="INTEGER" required="true" />
+		<column name="file_id" type="INTEGER" required="true" />
+		<column name="people_id" type="INTEGER" required="true" />
+		<column name="is_shared" type="BOOLEAN" />
+		<column name="width" type="INTEGER" />
+		<column name="height" type="INTEGER" />
+		<column name="orientation" type="VARCHAR" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="event">
+		    <reference local="event_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="file">
+		    <reference local="file_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="event_photo_comment" phpName="EventPhotoComment">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="event_photo_id" type="INTEGER" required="true" />
+		<column name="people_id" type="INTEGER" required="true" />
+		<column name="comment" type="VARCHAR" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="event_photo">
+		    <reference local="event_photo_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="people">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="ranking_place" phpName="RankingPlace">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="ranking_id" type="INTEGER" required="true" />
+		<column name="place_name" type="VARCHAR" />
+		<column name="maps_link" type="VARCHAR" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="home_wall" phpName="HomeWall">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="people_name" type="VARCHAR" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="message" type="VARCHAR" />
+		<column name="icon" type="VARCHAR" />
+		<column name="show_who" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="user_site">
+		    <reference local="user_site_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="ranking_import_log" phpName="RankingImportLog">
+		<column name="ranking_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="ranking_id_from" type="INTEGER" required="true" primaryKey="true" />
+		<column name="import_table" type="VARCHAR" primaryKey="true"  />
+		<column name="object_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id_from" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="ranking_prize_split" phpName="RankingPrizeSplit">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="ranking_id" type="INTEGER" required="true" />
+		<column name="buyins" type="INTEGER" />
+		<column name="paid_places" type="INTEGER" />
+		<column name="percent_list" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="ranking">
+		    <reference local="ranking_id" foreign="id" />
+		  </foreign-key>
+	</table>
+	
+	<table name="email_log" phpName="EmailLog">
+		<column name="email_address" type="VARCHAR" />
+		<column name="email_subject" type="VARCHAR" />
+		<column name="sending_status" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<table name="user_admin" phpName="UserAdmin" package="...apps.backend.lib.model">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="people_id" type="INTEGER" />
+		<column name="username" type="VARCHAR" />
+		<column name="password" type="VARCHAR" />
+		<column name="active" type="BOOLEAN" />
+		<column name="master" type="BOOLEAN" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="last_access_date" type="TIMESTAMP" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="people" onDelete="CASCADE">
+		    <reference local="people_id" foreign="id" />
+		  </foreign-key>
+	</table>
+	
+	<table name="module" phpName="Module" package="...apps.backend.lib.model">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="module_id" type="INTEGER" />
+		<column name="is_menu" type="BOOLEAN" />
+		<column name="description" type="VARCHAR" />
+		<column name="toolbar_description" type="VARCHAR" />
+		<column name="image_menu" type="VARCHAR" />
+		<column name="image_module" type="VARCHAR" />
+		<column name="execute_module" type="VARCHAR" />
+		<column name="execute_action" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="master_only" type="BOOLEAN" />
+		<column name="has_child" type="BOOLEAN" />
+		<column name="order_seq" type="INTEGER" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="module" onDelete="CASCADE">
+		    <reference local="module_id" foreign="id" />
+		  </foreign-key>
+	</table>
+	
+	<table name="toolbar" phpName="Toolbar" package="...apps.backend.lib.model">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="module_id" type="INTEGER" />
+		<column name="description" type="VARCHAR" />
+		<column name="tag_name" type="VARCHAR" />
+		<column name="tag_id" type="VARCHAR" />
+		<column name="image" type="VARCHAR" />
+		<column name="action_name" type="VARCHAR" />
+		<column name="execute_module" type="VARCHAR" />
+		<column name="execute_action" type="VARCHAR" />
+		<column name="is_javascript" type="BOOLEAN" />
+		<column name="order_seq" type="INTEGER" />
+		<column name="start_disabled" type="BOOLEAN" />
+		<column name="visible_action" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="module" onDelete="CASCADE">
+			<reference local="module_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="event_personal" phpName="EventPersonal">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="game_style_id" type="INTEGER" />
+		<column name="event_name" type="VARCHAR" />
+		<column name="event_place" type="VARCHAR" />
+		<column name="event_position" type="INTEGER" />
+		<column name="buyin" type="FLOAT" />
+		<column name="rebuy" type="FLOAT" />
+		<column name="addon" type="FLOAT" />
+		<column name="prize" type="FLOAT" />
+		<column name="paid_places" type="INTEGER" />
+		<column name="event_date" type="DATE" />
+		<column name="comments" type="VARCHAR" />
+		<column name="players" type="INTEGER" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="user_site">
+		    <reference local="user_site_id" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="virtual_table">
+		    <reference local="game_style_id" foreign="id" />
+		  </foreign-key>
+	</table>
+	
+	<table name="partner" phpName="Partner">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="partner_name" type="VARCHAR" />
+		<column name="external_url" type="VARCHAR" />
+		<column name="file_id" type="INTEGER" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="file">
+		    <reference local="file_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="news" phpName="News" isI18n="true" i18nTable="news_i18n">
+		<column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="news_date" type="DATE" />
+		<column name="news_title" type="VARCHAR" />
+		<column name="internal_link" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="news_i18n" phpName="NewsI18n">
+		<column name="news_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="culture" type="CHAR" required="true" primaryKey="true" isCulture="true" />
+		<column name="news_title_i18n" type="VARCHAR" />
+		<column name="description_i18n" type="VARCHAR" />
+		  <foreign-key foreignTable="news">
+		    <reference local="news_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+	<table name="event_prize_config" phpName="EventPrizeConfig">
+		<column name="event_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="event_position" type="INTEGER" required="true" primaryKey="true" />
+		<column name="prize_value" type="FLOAT" />
+		<column name="is_percent" type="BOOLEAN" />
+		  <foreign-key foreignTable="event">
+		    <reference local="event_id" foreign="id" />
+		  </foreign-key>
+	</table>
+
+</database>

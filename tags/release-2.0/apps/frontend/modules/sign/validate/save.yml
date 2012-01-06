@@ -1,0 +1,54 @@
+fields:
+       
+  username:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       15
+      max_error: form.error.max15
+    sfCallbackValidator:
+      callback:      [UserSitePeer, uniqueUsername]
+      invalid_error: form.error.takenUsername
+    sfRegexValidator:
+      match:        Yes
+      match_error:  form.error.invalidUsername
+      pattern:      /^[a-zA-Z]+[a-zA-Z0-9_-]$/si
+       
+  emailAddress:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       150
+      max_error: form.error.max150
+    sfEmailValidator:
+      strict:       true
+      email_error:  form.error.invalidEmail
+    sfCallbackValidator:
+      callback:      [UserSitePeer, uniqueEmailAddress]
+      invalid_error: form.error.takenEmail
+       
+  firstName:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       25
+      max_error: form.error.max25
+  
+  password:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       32
+      max_error: form.error.between5and15
+      min:       6
+      min_error: form.error.between5and15
+      
+  passwordConfirm:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       32
+      max_error: form.error.between5and15
+    sfCompareValidator:
+      check:    password
+      compare_error: form.error.passwordConfirm

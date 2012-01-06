@@ -1,0 +1,9 @@
+all:
+  is_secure: on
+  credentials: iRankSite
+  
+uploadPhoto:
+  is_secure: off
+  
+getAppUpdatedData:
+  is_secure: off

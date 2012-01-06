@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [frontend/faq, frontend/form, frontend/table]
+  javascripts:    [frontend/faq]

@@ -1,0 +1,1 @@
+ALTER TABLE people ADD COLUMN default_language CHAR(5) DEFAULT 'pt_BR';

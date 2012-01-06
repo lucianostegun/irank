@@ -1,0 +1,13 @@
+fields:
+       
+  rankingId:
+    required:
+      msg:       form.error.requiredField
+       
+  format:
+    required:
+      msg:       form.error.requiredField
+       
+  reportType:
+    required:
+      msg:       form.error.requiredField

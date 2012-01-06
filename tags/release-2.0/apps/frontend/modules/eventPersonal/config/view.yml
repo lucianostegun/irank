@@ -1,0 +1,3 @@
+all:
+  stylesheets:    [frontend/table, frontend/form]
+  javascripts:    [frontend/eventPersonal, mask, /index.php/event/javascript/js]

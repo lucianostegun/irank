@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [frontend/table, frontend/form]
+  javascripts:    [frontend/passwordRecovery]

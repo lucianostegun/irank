@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns="http://www.vexbr.com.br"
+elementFormDefault="qualified">
+
+<xs:element name="xliff">
+<xs:complexType>
+<xs:sequence>
+	<xs:element name="file">
+  	<xs:complexType>
+    <xs:sequence>
+		<xs:element name="body">
+   		<xs:complexType>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="trans-unit">
+	   		<xs:complexType>
+    	    <xs:sequence>
+				<xs:element name="source" type="xs:string"/>
+				<xs:element name="target" type="xs:string"/>
+		    </xs:sequence>
+		    <xs:attribute name="id" type="xs:integer"/>
+		    </xs:complexType>
+			</xs:element>
+	    </xs:sequence>
+	    </xs:complexType>
+		</xs:element>
+    </xs:sequence>
+    <xs:attribute name="orginal" type="xs:string"/>
+    <xs:attribute name="source-language" type="xs:string"/>
+    <xs:attribute name="datatype" type="xs:string"/>
+    <xs:attribute name="date" type="xs:string"/>
+    </xs:complexType>
+	</xs:element>
+</xs:sequence>
+<xs:attribute name="version" type="xs:string"/>
+</xs:complexType>
+</xs:element>
+
+</xs:schema>

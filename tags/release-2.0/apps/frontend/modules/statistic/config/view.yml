@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [frontend/form, frontend/table]
+  javascripts:    [frontend/statistic]

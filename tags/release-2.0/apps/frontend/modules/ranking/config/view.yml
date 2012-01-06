@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [frontend/table, frontend/form, frontend/ranking]
+  javascripts:    [frontend/ranking, mask, /index.php/ranking/javascript/js]

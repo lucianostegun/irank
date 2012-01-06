@@ -1,0 +1,1 @@
+<div id="eventPhotoDiv" style="padding: 5px"></div>

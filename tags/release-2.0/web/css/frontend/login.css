@@ -1,0 +1,69 @@
+#quickLogin {
+	
+	width: 		300px;
+}
+
+#quickLogin .middle {
+	
+}
+
+#quickLogin .base {
+	
+	height: 		4px;
+}
+
+#quickLogin table {
+
+	margin-top: 	5px;
+}
+
+#quickLogin table th {
+	
+	font-size: 		8pt;
+	text-align: 	right;
+	color: 			#333333;
+	padding: 		4 8 4 0;
+}
+
+#quickLogin table td {
+
+	font-size: 		8pt;
+	text-align: 	left;
+	color: 			#333333;
+	font-weight: 	bold;
+}
+
+#quickLogin table td input {
+
+	font-size: 		8pt;
+	height: 		17px;
+	border:			1px solid #000000;
+	padding: 		0 0 1 3;
+	background: 	#DDDDDD;
+}
+
+#quickLogin table td input:focus {
+
+	background: 	#999999;
+	border:			1px solid #000000;
+}
+
+#quickLogin table td a {
+
+	font-weight: 	normal;
+}
+
+#quickLogin #quickLoginStatus {
+
+	padding: 		7 0 0 10;
+	margin-bottom: 	-8px;
+	color: 			#880000;
+	display: 		none;
+}
+
+#quickLogin #quickLoginHello {
+
+	padding: 		7 7 0 10;
+	margin-bottom: 	-8px;
+	color: 			#AAAAAA;
+}

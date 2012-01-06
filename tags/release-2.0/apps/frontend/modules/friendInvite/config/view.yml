@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [frontend/table, frontend/form]
+  javascripts:    [frontend/friendInvite, /index.php/friendInvite/javascript/jd]
