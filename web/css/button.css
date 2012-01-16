@@ -1,11 +1,11 @@
-.button {
+.buttonTag {
 
 	cursor: 			pointer;
 	-moz-user-select: 	none;
 	line-height:		16px;
 }
 
-.button .buttonLeft {
+.buttonTag .buttonLeft {
 	
 	float: 			left;
 	height: 		22px;
@@ -13,7 +13,7 @@
 	background: 	url('/images/button/bgLeft.png');
 }
 
-.button .buttonMiddle {
+.buttonTag .buttonMiddle {
 
 	float: 			left;
 	font-size: 		8pt;
@@ -21,26 +21,28 @@
 	font-weight: 	bold;
 	text-align: 	center;
 	color: 			#000000;
+	padding-left: 	2px;
+	padding-right: 	2px;
 	background: 	url('/images/button/bgMiddle.png');
 }
 
-.button .buttonMiddle .label {
+.buttonTag .buttonMiddle .buttonLabel {
 
-	margin-top: 	2px;
+	margin-top: 	3px;
 	margin-top: 	3px !ie;
 	color: 			#000000;
 	text-align: 	center;
 	padding: 		0px; 				
 }
 
-.button .buttonMiddle .label img {
+.buttonTag .buttonMiddle .buttonLabel img {
 
 	margin-top: 	-2px;
 	margin-top: 	0px !ie;
 	margin-right: 	5px
 }
 
-.button .buttonMiddle .label a {
+.buttonTag .buttonMiddle .buttonLabel a {
 
 	position: 		absolute;
 	left: 			-1px;
@@ -49,7 +51,7 @@
 	z-index: 		-100;
 }
 
-.button .buttonMiddle .label .submit {
+.buttonTag .buttonMiddle .buttonLabel .submit {
 
 	position: 		absolute;
 	left: 			-1px;
@@ -61,7 +63,7 @@
 	z-index: 		-100;
 }
 
-.button .buttonMiddle .label a {
+.buttonTag .buttonMiddle .buttonLabel a {
 
 	background: 		none;
 	color: 				#333333;
@@ -69,13 +71,13 @@
 	padding-bottom: 	5px;
 }
 
-.button .buttonMiddle .label a:hover {
+.buttonTag .buttonMiddle .buttonLabel a:hover {
 
 	text-decoration: 	none;
 	color: 				#333333;
 }
 
-.button .buttonRight {
+.buttonTag .buttonRight {
 
 	margin-right: 	10px;
 	float: 			left;
@@ -119,26 +121,26 @@
 	background: 	url('/images/button/bgMiddleDisabled.png');
 }
 
-.buttonDisabled .buttonMiddle .label {
+.buttonDisabled .buttonMiddle .buttonLabel {
 
 	margin-top: 	2px;
 	margin-top: 	3px !ie;
 	color: 			#AAAAAA;
 }
 
-.buttonDisabled .buttonMiddle .label img {
+.buttonDisabled .buttonMiddle .buttonLabel img {
 
 	margin-top: 	-2px;
 	margin-top: 	0px !ie;
 	margin-right: 	5px
 }
 
-.buttonDisabled .buttonMiddle .label a {
+.buttonDisabled .buttonMiddle .buttonLabel a {
 
 	color: 	#999999;
 }
 
-.buttonDisabled .buttonMiddle .label a:hover {
+.buttonDisabled .buttonMiddle .buttonLabel a:hover {
 
 	color: 	#999999;
 }
@@ -152,7 +154,7 @@
 	background: 	url('/images/button/bgRightDisabled.png');
 }
 
-.buttonDisabled .buttonMiddle .label .submit {
+.buttonDisabled .buttonMiddle .buttonLabel .submit {
 
 	position: 		absolute;
 	left: 			-1px;
@@ -164,7 +166,7 @@
 	z-index: 		-100;
 }
 
-.buttonDisabled .buttonMiddle .label a {
+.buttonDisabled .buttonMiddle .buttonLabel a {
 
 	position: 		absolute;
 	left: 			-1px;

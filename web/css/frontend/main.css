@@ -1,28 +1,186 @@
-* {
-
-	font-family: 	Verdana, Arial, sans-serif;
-	font-size: 		8pt;
-}
-
 body {
 	
-	width: 			100%;
+	padding: 		0px;
+	margin: 		0px;
+	font: 			11px/15px Tahoma, Arial, Helvetica, sans-serif;
+	color: 			#333333;
+	line-height: 	16px;
+	background: 	#E6E6E6 url('/images/frontend/layout/bgDark.png') repeat-x;
+	text-align: 	center;
 	height: 		100%;
 }
 
-form {
+#contentArea {
 
-	margin: 	0px;	
+	clear: 			both;
+	width: 			952px;
+	height: 		100%;
+	margin: 		0 auto;         
+	text-align: 	left; /* "remédio" para o hack do IE */
+	background: 	#F0F0F0; 
 }
 
-#debugDiv {
+#contentArea #innerContent {
 
-	position: 		fixed;
+	width: 			950px;
+	clear: 			both;
+	border-left: 	1px solid #777777;
+	border-right: 	1px solid #777777;
+	background: 	url('/images/layout/headerBg.png') 235px top no-repeat;
+}
+
+#contentArea #innerContent #header {
+
+	clear: 			both;
+	height: 		76px;
+	border-bottom: 	1px solid #101010;
+	background: 	url('/images/layout/headerRightBg.png') right top no-repeat;
+}
+
+#contentArea #innerContent #mainContent {
+
+	position: 		relative;
+	width: 			950px;
+	clear: 			both;
 	background: 	#FFFFFF;
-	z-index: 		5000;
-	height: 		617px;
-	width: 			500px;
-	overflow: 		auto;
-	display: 		none;
-	padding: 		5px;
+}
+
+#contentArea #innerContent #mainContent #leftContent {
+
+	float: 			left;
+	width: 			199px;
+	border-right: 	1px solid #777777;
+	background: 	#EAEAEA;
+}
+
+#contentArea #innerContent #leftContent #topBar {
+
+	background: 		url('/images/layout/topLeftBar.png') repeat-x;
+	height: 			42px;
+	color: 				#FFFFFF;
+	font-size: 			11pt;
+	text-align: 		center;
+}
+
+#contentArea #innerContent #leftContent #topBar a {
+
+	font: 			11px/15px Tahoma, Arial, Helvetica, sans-serif;
+	color: 			#E8A014;
+	font-size: 		12pt;
+	font-weight: 	bold;
+	position: 		relative;
+	top: 			12px
+}
+
+#contentArea #innerContent #leftContent #topBar span {
+
+	position: 	relative;
+	top: 		12px
+}
+
+#contentArea #innerContent #leftContent #topBar img {
+
+	position: 	relative;
+	top: 		-5px;	
+}
+
+#contentArea #innerContent #leftContent #topBar .generalCredit {
+
+	text-transform: 	uppercase;
+}
+
+#contentArea #innerContent #leftContent #topBar .positiveCredit {
+
+	margin-top: 	10px;
+	color: 			#4444DD;
+	font-size: 		11pt;
+	font-weight: 	bold;
+}
+
+#contentArea #innerContent #leftContent #topBar .negativeCredit {
+
+	color: 			#DD4444;
+	font-size: 		11pt;
+	font-weight: 	bold;
+}
+
+#contentArea #innerContent #mainContent #rightContent {
+
+	float: 			right;
+	width: 			750px;
+}
+
+#facebookFrame {
+
+	margin-top: 	15px;
+	margin-left: 	15px;
+}
+
+#menuCorner {
+
+	position: 		absolute;
+	background: 	url('/images/frontend/layout/menuCornerLight.png') no-repeat;
+	width: 			26px;
+	height: 		31px;
+	margin-left: 	-1px;
+}
+
+#addressBar {
+
+	position: 		absolute;
+	background: 	url('/images/frontend/layout/addressBar.png') repeat-x;
+	width: 			725px;
+	height: 		31px;
+	margin-left: 	25px;
+	padding-top: 	3px;
+	color: 			#FFFFFF;
+	text-shadow: 	#404040 -1px 1px;
+	font-weight: 	bold;
+	font-size: 		12px;
+}
+
+.clear {
+
+	clear: 	both;
+	width: 	100%;
+}
+
+#footer {
+
+	clear: 			both;
+	height: 		80px;
+	padding: 		10px 0px 0px 0px;
+	background: 	#f3f3f3 url('/images/layout/footerBg.gif') repeat-x;
+}
+
+#footer #footerLinks {
+
+	clear: 			both;
+	width: 			952px;
+	margin: 		10px auto;
+	line-height: 	120%;
+	text-align: 	center;
+}
+
+#footer #footerLinks a {
+
+	color: 				#333333;
+	text-decoration: 	none;
+}
+
+#footer #footerLinks a:hover {
+
+	color: 	#E82314;
+}
+
+#footer #footerLinks a.newai {
+
+	color: 				#A6530A;
+	font-weight: 		bold;
+	text-decoration: 	none;
+}
+
+#footer #footerLinks a:hover.newai {
+
+	color: 	#E82314;
 }
