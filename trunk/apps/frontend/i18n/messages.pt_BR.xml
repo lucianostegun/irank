@@ -384,7 +384,7 @@
 			
 			<trans-unit>
 				<source>topMenu.myiRank</source>
-				<target>MEU iRANK</target>
+				<target>MINHA CONTA</target>
 			</trans-unit>
 			<trans-unit>
 				<source>topMenu.inviteFriends</source>
@@ -405,8 +405,8 @@
 				<target>cadastro</target>
 			</trans-unit>
 			<trans-unit>
-				<source>footerMenu.myiRank</source>
-				<target>meu iRank</target>
+				<source>footerMenu.myiAccount</source>
+				<target>minha conta</target>
 			</trans-unit>
 			<trans-unit>
 				<source>footerMenu.inviteFriends</source>

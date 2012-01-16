@@ -13,8 +13,7 @@ $isAuthenticated = (MyTools::isAuthenticated() && $hasCredentials);
 $culture         = $sf_user->getCulture();
 $innerMenu       = (isset($innerMenu)?$innerMenu:false);
 $innerObj        = (isset($innerObj)?$innerObj:false);
-
-$forceClassic = MyTools::getAttribute('forceClassic');
+$forceClassic    = MyTools::getAttribute('forceClassic');
 ?>
 <script>
 	var _ModuleName = '<?php echo $moduleName ?>';
