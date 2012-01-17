@@ -687,6 +687,7 @@ class Event extends BaseEvent
 		
 		$eventPlayerObjList = $this->getPlayerList();
 		$totalBuyin         = 0;
+		$players            = 0;	
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
 			$peopleId      = $eventPlayerObj->getPeopleId();
@@ -695,13 +696,16 @@ class Event extends BaseEvent
 			$addon         = $request->getParameter('addon'.$peopleId);
 			$eventPosition = $request->getParameter('eventPosition'.$peopleId);
 
-			if( $eventPosition > 0 )
+			if( $eventPosition > 0 ){
+				
 				$totalBuyin += Util::formatFloat($buyin)+Util::formatFloat($rebuy)+Util::formatFloat($addon);
+				$players++;
+			}
 		}
 		
 		if( $isFreeroll )
 			$totalBuyin += $this->getPrizePot();
-			
+		$result = array();
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
 			$peopleId      = $eventPlayerObj->getPeopleId();
@@ -741,15 +745,37 @@ class Event extends BaseEvent
 				$eventPlayerObj->setAddon( Util::formatFloat($addon) );
 				$eventPlayerObj->setBuyin( Util::formatFloat(($isFreeroll?0:$buyin)) );
 				
-				$score = $totalBuyin/$eventPosition/$buyin;
+				$events = $eventPlayerObj->getPeople()->getEvents($this->getRankingId());
 				
-//				if( !$isFreeroll )
-					$eventPlayerObj->setScore( $score );
-					
+				if( !$this->getSavedResult() )
+					$events += 1;
+				
+				$eventPresenceScore = ceil($events/3)*5;
+				$eventPositionScore = $players-($eventPosition-1);
+				$eventPrizeScore    = $prize/10;
+				
+//				$score = $totalBuyin/$eventPosition/$buyin; //Modelo antigo de pontuação
+				$score = ($eventPresenceScore+$eventPositionScore+$eventPrizeScore);
+				$score = number_format($score, 3);
+				
+//				$result[$eventPosition] = $score;				
+				
+				$eventPlayerObj->setScore( $score );
+				
+//					if($eventPlayerObj->getPeopleId()==1){
+//						
+//						echo '$eventPresenceScore: '.$eventPresenceScore;echo '<br>';
+//						echo '$eventPositionScore: '.$eventPositionScore;echo '<br>';
+//						echo '$eventPrizeScore: '.$eventPrizeScore;echo '<br>';
+//						echo '<pre>';
+//						print_r($eventPlayerObj);
+//					}
 				$eventPlayerObj->save();
-				$players++;
 			}
 		}
+		
+//		ksort($result);
+//		echo '<pre>';print_r($result);exit;
 
 		$this->setPlayers($players);
 		$this->setPaidPlaces($paidPlaces);

@@ -144,7 +144,7 @@ function doSubmitEventResult(content){
 	_SaveResultAlert = true;
 	
 	showIndicator('eventResult');
-	$('eventResultForm').onsubmit();
+	$('eventResultForm').submit();
 }
 
 function chooseMyPresence(choice){
