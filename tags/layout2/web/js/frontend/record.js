@@ -1,6 +1,6 @@
 var _RecordSaved = null;
 
-function goModule(module, action, fieldName, fieldValue ){
+function goModule(module, action, fieldName, fieldValue, newWindow ){
 	
 	if( isDebug() ){
 		
@@ -8,7 +8,11 @@ function goModule(module, action, fieldName, fieldValue ){
 		urlLocation    += (action?'/'+action:'');
 		urlLocation    += (fieldName?'/'+fieldName:'');
 		urlLocation    += (fieldValue?'/'+fieldValue:'');
-		window.location = urlLocation;
+		
+		if( newWindow )
+			window.open(urlLocation);
+		else
+			window.location = urlLocation;
 	}else{
 	
 		var form    = document.createElement('form');
@@ -18,6 +22,9 @@ function goModule(module, action, fieldName, fieldValue ){
 		
 		form.action = urlLocation;
 		form.method = 'POST';
+		
+		if( newWindow )
+			form.target = '_blank';
 		
 		var fieldId   = document.createElement('input');
 		fieldId.type  = 'hidden';

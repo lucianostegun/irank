@@ -29,7 +29,7 @@ class eventActions extends sfActions
   	
   	$xmlString = $request->getParameter('eventResultXml');
   	
-//	$file = fopen(Util::getFilePath('/xml.xml'), 'w');
+//	$file = fopen(Util::getFilePath('/xml.xml'), 'w+');
 //	fwrite($file, $xmlString);
 //	fclose($file);
 //	exit;

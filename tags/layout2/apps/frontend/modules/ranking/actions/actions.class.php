@@ -417,9 +417,11 @@ class rankingActions extends sfActions
   public function executeDebug($request){
   	
   	$rankingObj = $this->rankingObj;
+  	
+  	set_time_limit(120);
 
+  	$rankingObj->updateWholeScore();
   	$rankingObj->updateWholeHistory();
-  	$rankingObj->updateScores();
   	
   	echo 'ok ranking '.date('d/m/Y H:i:s');
   	exit;

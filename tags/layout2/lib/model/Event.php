@@ -641,7 +641,7 @@ class Event extends BaseEvent
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$rankingObj = $this->getRanking();
 		
-		if( !$userSiteId || (!$ignorePeople && is_object($rankingObj) && !$rankingObj->isMyRanking()) )
+		if( !$ignorePeople && (!$userSiteId || (!$ignorePeople && is_object($rankingObj) && !$rankingObj->isMyRanking())) )
 			return false;
 
 		// Se hoje for maior que a data final do ranking
@@ -751,7 +751,7 @@ class Event extends BaseEvent
 					$events += 1;
 				
 				$eventPresenceScore = ceil($events/3)*5;
-				$eventPositionScore = $players-($eventPosition-1);
+				$eventPositionScore = ($eventPosition>0?($players-($eventPosition-1)):0);
 				$eventPrizeScore    = $prize/10;
 				
 //				$score = $totalBuyin/$eventPosition/$buyin; //Modelo antigo de pontuação
@@ -787,6 +787,82 @@ class Event extends BaseEvent
 		$rankingObj->updateHistory($this->getEventDate('d/m/Y'));
 		
 		$this->notifyResult();
+	}
+	
+	public function updateResult(){
+		
+		$rankingObj = $this->getRanking();
+		
+		$paidPlaces = $this->getPaidPLaces();
+		$players    = $this->getPlayers();
+		
+		$entranceFee = $this->getEntranceFee();
+		$isFreeroll  = $this->getIsFreeroll();
+		
+		$eventPlayerObjList = $this->getPlayerList();
+		$totalBuyin         = 0;
+		foreach($eventPlayerObjList as $eventPlayerObj){
+			
+			$buyin         = $eventPlayerObj->getBuyin();
+			$rebuy         = $eventPlayerObj->getRebuy();
+			$addon         = $eventPlayerObj->getAddon();
+
+			$totalBuyin += Util::formatFloat($buyin)+Util::formatFloat($rebuy)+Util::formatFloat($addon);
+		}
+		
+		if( $isFreeroll )
+			$totalBuyin += $this->getPrizePot();
+		
+		foreach($eventPlayerObjList as $eventPlayerObj){
+			
+			$peopleId      = $eventPlayerObj->getPeopleId();
+			$buyin         = $eventPlayerObj->getBuyin();
+			$rebuy         = $eventPlayerObj->getRebuy();
+			$addon         = $eventPlayerObj->getAddon();
+			$prize         = $eventPlayerObj->getPrize();
+			$eventPosition = $eventPlayerObj->getEventPosition();
+			$enabled       = $eventPlayerObj->getEnabled();
+			
+			if( $isFreeroll )
+				$buyin = $this->getRanking()->getDefaultBuyin();
+			
+			// Recupera quantos eventos o usuário participou neste ranking antes deste evento
+			$events = $eventPlayerObj->getPeople()->getEvents($this->getRankingId(), $this->getEventDateTime('d/m/Y H:i:s'));
+			
+			if( $enabled ){
+				
+				$eventPresenceScore = ceil($events/3)*5;
+				$eventPositionScore = ($eventPosition>0?($players-($eventPosition-1)):0);
+				$eventPrizeScore    = $prize/10;
+				
+//				$score = $totalBuyin/$eventPosition/$buyin; //Modelo antigo de pontuação
+				$score = ($eventPresenceScore+$eventPositionScore+$eventPrizeScore);
+				$score = number_format($score, 3);
+			}else{
+				
+				$score = 0;
+			}
+			
+//			if( $peopleId==83 ){
+//				echo '$eventId: '.$this->getId().'<br>';
+//				echo '$events: '.$events.'<br>';
+//				echo '$eventPosition: '.$eventPosition.'<br>';
+//				echo '$prize: '.$prize.'<br>';
+//				echo '$eventPresenceScore: '.$eventPresenceScore.'<br>';
+//				echo '$eventPositionScore: '.$eventPositionScore.'<br>';
+//				echo '$eventPrizeScore: '.$eventPrizeScore.'<hr>';
+//			}
+			
+			$eventPlayerObj->setScore( $score );
+			$eventPlayerObj->save();
+//			if( $peopleId==17 ){
+//				echo '<pre>';print_r($eventPlayerObj);exit;
+//			}
+		}
+
+		$rankingObj->updateScores();
+		$rankingObj->updatePlayerEvents();
+		$rankingObj->updateHistory($this->getEventDate('d/m/Y'));
 	}
 	
 	public function isInvited($peopleId){
