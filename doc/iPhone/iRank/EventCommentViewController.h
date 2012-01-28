@@ -16,6 +16,8 @@
     CGFloat  scrollAmount;
     BOOL     moveViewUp;
     UIActivityIndicatorView *activityIndicator;
+    
+    iRankAppDelegate *appDelegate;
 }
 
 @property (nonatomic, assign) IBOutlet UIWebView *webView;

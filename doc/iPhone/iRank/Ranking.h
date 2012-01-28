@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "iRankAppDelegate.h"
 
 @interface Ranking : NSObject <NSCoding> {
     
+    iRankAppDelegate *appDelegate;
 }
 
 @property (nonatomic, readwrite) int rankingId;

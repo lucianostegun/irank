@@ -39,20 +39,20 @@
 {
     [super viewDidLoad];
 
-    self.labels = [NSArray arrayWithObjects:@"Username", 
-                   @"E-mail", 
-                   @"Nome", 
-                   @"Sobrenome", 
-                   @"Senha", 
-                   @"Confirmação", 
+    self.labels = [NSArray arrayWithObjects:NSLocalizedString(@"Username", @"sign"), 
+                   NSLocalizedString(@"E-mail", @"sign"), 
+                   NSLocalizedString(@"First name", @"sign"), 
+                   NSLocalizedString(@"Last name", @"sign"), 
+                   NSLocalizedString(@"Password", @"sign"), 
+                   NSLocalizedString(@"Password confirm", @"sign"), 
                    nil];
 	
-	self.placeholders = [NSArray arrayWithObjects:@"obrigatório", 
-                         @"obrigatório", 
-                         @"obrigatório", 
-                         @"opcional",  
-                         @"obrigatório",   
-                         @"obrigatório", 
+	self.placeholders = [NSArray arrayWithObjects:NSLocalizedString(@"required", @"sign"), 
+                         NSLocalizedString(@"required", @"sign"), 
+                         NSLocalizedString(@"required", @"sign"), 
+                         NSLocalizedString(@"optional", @"sign"),  
+                         NSLocalizedString(@"required", @"sign"),   
+                         NSLocalizedString(@"required", @"sign"), 
                          nil];
     
     username = @"";
@@ -66,7 +66,7 @@
     
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"salvar" style:UIBarButtonItemStyleDone target:self action:@selector(saveSign:)];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"save", @"button") style:UIBarButtonItemStyleDone target:self action:@selector(saveSign:)];
 
     self.navigationItem.rightBarButtonItem = saveButton;
 }
@@ -80,29 +80,29 @@
     if( [username isEqualToString:@""] || [emailAddress isEqualToString:@""] || [firstName isEqualToString:@""] ||
        [password isEqualToString:@""] || [passwordConfirm isEqualToString:@""] ){
         
-        return [appDelegate showAlert:@"Erro" message:@"Favor preencher todos os campos."];   
+        return [appDelegate showAlert:NSLocalizedString(@"Error", @"alert") message:NSLocalizedString(@"Please fill all required fields!", @"sign")];   
     }
     
     if( [password length] < 6 )
-        return [appDelegate showAlert:@"Erro" message:@"A senha deve possuir no mínimo 6 caracteres."];
+        return [appDelegate showAlert:NSLocalizedString(@"Error", @"alert") message:NSLocalizedString(@"The password must have at least 6 characters", @"sign")];
     
     if( ![password isEqualToString:passwordConfirm] )
-        return [appDelegate showAlert:@"Erro" message:@"A senha deve ser igual a confirmação."];
+        return [appDelegate showAlert:NSLocalizedString(@"Error", @"alert") message:NSLocalizedString(@"Password must match to confirmation", @"sign")];
     
 
     NSString *usernameRegex = @"^[a-zA-Z]+[a-zA-Z0-9_-]*$";
     NSPredicate *usernameTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", usernameRegex];
     
     if( ![usernameTest evaluateWithObject:username] )
-        return [appDelegate showAlert:@"Erro" message:@"O nome de usuário escolhido não é válido."];
+        return [appDelegate showAlert:NSLocalizedString(@"Error", @"alert") message:NSLocalizedString(@"The username is not valid", @"sign")];
     
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     
     if( ![emailTest evaluateWithObject:emailAddress] )
-        return [appDelegate showAlert:@"Erro" message:@"O e-mail informado não é válido."];
+        return [appDelegate showAlert:NSLocalizedString(@"Error", @"alert") message:NSLocalizedString(@"The e-mail address is not valid", @"sign")];
     
-    [appDelegate showLoadingView:@"criando novo cadastro..."];
+    [appDelegate showLoadingView:NSLocalizedString(@"saving the new user", @"sign")];
     [self performSelector:@selector(doSaveSign) withObject:nil afterDelay:0.1];
 }
 
@@ -122,15 +122,15 @@
     
     const char *bytes = [[NSString stringWithFormat:@"userSiteXml=%@", stringData] UTF8String];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ios.php/login/save", serverAddress]];
+    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ios.php/login/save/language/%@", serverAddress, appDelegate.currentLanguage]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:240];
 	NSError *requestError = nil;
     
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[NSData dataWithBytes:bytes length:strlen(bytes)]];
 	NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&requestError]; 
-    
-    iRankAppDelegate *appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     if(requestError == nil) {
 
@@ -142,19 +142,19 @@
         if( [result isEqualToString:@"saveSuccess"] ){
 
 //            [appDelegate showAlert:@"Sucesso" message:@"Cadastro concluído com sucesso.\nSeja bem-vindo ao iRank!"];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sucesso" message:@"Cadastro concluído com sucesso.\nSeja bem-vindo ao iRank!" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", @"alert") message:NSLocalizedString(@"Your registration was successfully completed.\nWelcome to iRank!", @"sign") delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
 
             [alert show];
             [alert release];
             
             signSuccess = YES;
         }else if( [result length] < 100 )
-            [appDelegate showAlert:@"Erro" message:result];
+            [appDelegate showAlert:NSLocalizedString(@"Error", @"alert") message:result];
 	} else {
         
         NSLog(@"Passou por aqui porque deu erro");
         [appDelegate hideLoadingView];
-        [appDelegate showAlert:@"Falha" message:@"Não foi possível concluir seu cadastro.\nPor favor, tente novamente."];
+        [appDelegate showAlert:NSLocalizedString(@"Fail", @"alert") message:NSLocalizedString(@"It was unable to proceed you registration!\nPlease, try again.", @"sign")];
 	}
 }
 
@@ -175,7 +175,7 @@
     [super viewWillAppear:animated];   
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    self.title = @"Cadastro";
+    self.title = NSLocalizedString(@"Registration", @"sign");
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -217,8 +217,9 @@
 
 - (void)configureCell:(ELCTextfieldCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 	
-	cell.leftLabel.text = [self.labels objectAtIndex:indexPath.row];
+	cell.leftLabel.text             = [self.labels objectAtIndex:indexPath.row];
 	cell.rightTextField.placeholder = [self.placeholders objectAtIndex:indexPath.row];
+	cell.rightTextField.text        = [self.tempValues objectAtIndex:indexPath.row];
 	cell.indexPath = indexPath;
 	cell.delegate = self;
     //Disables UITableViewCell from accidentally becoming selected.
@@ -240,9 +241,7 @@
         [cell.rightTextField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     
     cell.rightTextField.tag = indexPath.row;
-    
-    cell.rightTextField.text = [self.tempValues objectAtIndex:indexPath.row];
-    
+        
     [cell.rightTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     
     [cell.rightTextField setAutocorrectionType:UITextAutocorrectionTypeNo];

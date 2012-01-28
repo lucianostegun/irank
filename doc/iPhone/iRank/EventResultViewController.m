@@ -81,7 +81,7 @@
 
 - (void)updatePlayerList {
     
-    [appDelegate showLoadingView:@"carregando resultado..."];
+    [appDelegate showLoadingView:NSLocalizedString(@"loading result...", @"eventResult")];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePlayerList:) name:kEventPlayerListLoadSuccess object:nil];
     [self performSelector:@selector(updateEventPlayerList) withObject:nil afterDelay:0.1];
 }
@@ -138,8 +138,8 @@
     
 //    NSLog(@"eventPlayer: %@", eventPlayer);
     
-    cell.textLabel.text       = [NSString stringWithFormat:@"%iº %@", indexPath.row+1, [player fullName]];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"B: %@ R: %@ A: %@ Prêmio: %@ | %@ pontos", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.buyin]], [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.rebuy]], [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.addon]], [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.prize]], [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.score]]];
+    cell.textLabel.text       = [NSString stringWithFormat:@"%i%@ %@", indexPath.row+1, NSLocalizedString(@"ordinalPlace", nil), [player fullName]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@: %@ %@: %@ %@: %@ %@: %@ | %@ %@", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.buyin]], NSLocalizedString(@"B", nil), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.rebuy]], NSLocalizedString(@"R", nil), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.addon]], NSLocalizedString(@"A", nil), NSLocalizedString(@"Prize", @"eventResult"), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.prize]], [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.score]], NSLocalizedString(@"score", @"eventResult")];
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
@@ -191,11 +191,11 @@
 
     EventPlayer *eventPlayer = [eventPlayerList objectAtIndex:indexPath.row];
     
-    resultDetailViewController.title = @"Detalhes";
+    resultDetailViewController.title = NSLocalizedString(@"Details", @"eventResult");
     playerName.text     = [[eventPlayer player] fullName];
     eventPlaceDate.text = [NSString stringWithFormat:@"%@ @%@ - %@ %@", [event eventName], [event eventPlace], [event eventDate], [event startTime]];
     
-    position.text       = [NSString stringWithFormat:@"%iº", indexPath.row+1];
+    position.text       = [NSString stringWithFormat:@"%i%@", indexPath.row+1, NSLocalizedString(@"ordinalPlace", nil)];
     buyin.text          = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.buyin]];
     rebuy.text          = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.rebuy]];
     addon.text          = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.addon]];

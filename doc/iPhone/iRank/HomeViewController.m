@@ -47,7 +47,9 @@
     
     appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithTitle:@"atualizar" style:UIBarButtonItemStylePlain target:self action:@selector(reloadData:)];
+    UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"update", @"home") style:UIBarButtonItemStylePlain target:self action:@selector(reloadData:)];
+    
+    [quitButton setTitle:NSLocalizedString(@"close", @"home")];
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     self.navigationItem.rightBarButtonItem = reloadButton;
@@ -127,6 +129,9 @@
         
         appDelegate.homeTabBar.badgeValue = [NSString stringWithFormat:@"%i", [nextEventList count]];
         [appDelegate setBadge:[nextEventList count]];
+    }else{
+        
+        [appDelegate setBadge:0];
     }
 
     [[self tableView] reloadData];
@@ -152,6 +157,7 @@
         
         [appDelegate showLoadingView:nil];
         [self performSelector:@selector(reloadResumeData) withObject:nil afterDelay:0.1];
+        [self performSelector:@selector(reloadData) withObject:nil afterDelay:0.1];
     }
     
 //    if( appDelegate.refreshHomeEventList )
@@ -349,11 +355,11 @@
         if( event.hasOfflineResult ){
             
             cell.detailTextLabel.textColor = [UIColor orangeColor];
-            description = @"Resultado offline pendente...";
+            description = NSLocalizedString(@"Pending offline saved", @"event");
         }else if( event.isPastDate && !event.savedResult ){
             
             cell.detailTextLabel.textColor = [UIColor redColor];
-            description = @"Resultado pendente...";
+            description = NSLocalizedString(@"Pending result", @"event");
         }else{
             
             cell.detailTextLabel.textColor = [UIColor blackColor];
@@ -377,13 +383,13 @@
     
     switch (section) {
         case 0:
-            header = [NSString stringWithFormat:@"Olá %@ %@\n\nResumo geral", firstName, lastName];
+            header = [NSString stringWithFormat:@"%@ %@ %@\n\n%@", NSLocalizedString(@"Hi", @"home"), firstName, lastName, NSLocalizedString(@"Bankroll", @"home")];
             break;
         case 1:
-            header = @"Próximos eventos";
+            header = NSLocalizedString(@"Next events", @"home");
             break;
         case 2:
-            header = @"Últimos eventos";
+            header = NSLocalizedString(@"Previous events", @"home");
             break;
         default:
             break;
@@ -402,11 +408,11 @@
             break;
         case 1:
             if( [nextEventList count]==0 )
-                footer = @"Nenhum evento agendado";
+                footer = NSLocalizedString(@"No scheduled events", @"home");
             break;
         case 2:
             if( [previousEventList count]==0 )
-                footer = @"Nenhum evento realizado";
+                footer = NSLocalizedString(@"No accomplished events", @"home");
             break;
         default:
             break;

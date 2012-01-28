@@ -151,39 +151,39 @@
         
         switch (indexPath.row) {
             case 0:
-                label = @"Evento";
+                label = NSLocalizedString(@"Title", @"eventDetail");
                 description = event.eventName;
                 break;
             case 1:
-                label = @"Ranking";
+                label = NSLocalizedString(@"Ranking", @"eventDetail");
                 description = event.rankingName;
                 break;
             case 2:
-                label = @"Local";
+                label = NSLocalizedString(@"Place", @"eventDetail");
                 description = event.eventPlace;
                 break;
             case 3:
-                label = @"Data";
+                label = NSLocalizedString(@"Date", @"eventDetail");
                 description = event.eventDate;
                 break;
             case 4:
-                label = @"Hora";
+                label = NSLocalizedString(@"Time", @"eventDetail");
                 description = event.startTime;
                 break;
             case 5:
-                label = @"ITM";
+                label = NSLocalizedString(@"ITM", @"eventDetail");
                 description = [NSString stringWithFormat:@"%i", event.paidPlaces];
                 break;
             case 6:
-                label = @"Buy-in";
+                label = NSLocalizedString(@"Buy-in", nil);
                 description = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:event.buyin]];
                 break;
             case 7:
-                label = @"Rake";
+                label = NSLocalizedString(@"Rake", @"eventDetail");
                 description = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:event.entranceFee]];
                 break;
             case 8:
-                label = @"Obs";
+                label = NSLocalizedString(@"Comments", @"eventDetail");
                 description = event.comments;
                 cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
                 cell.detailTextLabel.numberOfLines = 4;
@@ -201,16 +201,16 @@
         
         switch (indexPath.row) {
             case 0:
-                label = @"Convidados";
+                label = NSLocalizedString(@"Players", @"eventDetail");
                 break;
             case 1:
-                label = @"Comentários";
+                label = NSLocalizedString(@"Comments", nil);
                 break;
             case 2:
-                label = @"Fotos";
+                label = NSLocalizedString(@"Photos", @"eventDetail");
                 break;
             case 3:
-                label = @"Resultado";
+                label = NSLocalizedString(@"Result", @"eventDetail");
                 break;
                 
             default:
@@ -425,7 +425,7 @@
     if( headerView )
         return headerView;
     
-    NSArray *itemList = [[NSArray alloc] initWithObjects:@"Vou", @"Talvez", @"Não vou", nil];
+    NSArray *itemList = [[NSArray alloc] initWithObjects:NSLocalizedString(@"Going", @"eventDetail"), NSLocalizedString(@"Maybe", @"eventDetail"), NSLocalizedString(@"Not going", @"eventDetail"), nil];
     // Create a UIButton object, simple rounded rect style
     segmentedControl = [[UISegmentedControl alloc] initWithItems:itemList];
     segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;

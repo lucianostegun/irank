@@ -7,6 +7,7 @@
 //
 
 #import "EventViewController.h"
+#import "EventEditViewController.h"
 #import "iRankAppDelegate.h"
 #import "Event.h"
 #import "XMLEventParser.h"
@@ -19,7 +20,6 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -34,6 +34,14 @@
     }
     
     return self;
+}
+
+- (void)addEvent:(id)sender{
+    
+    EventEditViewController *eventEditViewController = [[EventEditViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:eventEditViewController animated:YES];
+    
+    [eventEditViewController release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,6 +68,12 @@
     
     appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
+//    UIBarButtonItem *addEvent = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
+//    
+//    self.navigationItem.rightBarButtonItem = addEvent;
+    
+//    NSLog(@"retainCount: %i", self.retainCount);
+    
     [appDelegate showLoadingView:nil];
     [self performSelector:@selector(updateEventList) withObject:nil afterDelay:0.1];
 }
@@ -85,7 +99,15 @@
 {
     [super viewWillAppear:animated];
     
-    self.title = @"Eventos";
+    if( appDelegate.refreshEventList ){
+
+        [appDelegate showLoadingView:nil];
+        [self performSelector:@selector(updateEventList) withObject:nil afterDelay:0.1];
+        
+        appDelegate.refreshEventList = NO;
+    }
+    
+    self.title = NSLocalizedString(@"Events", nil);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -144,11 +166,11 @@
     if( event.hasOfflineResult ){
         
         cell.detailTextLabel.textColor = [UIColor orangeColor];
-        description = @"Resultado offline pendente...";
+        description = NSLocalizedString(@"Pending offline saved", @"event");
     }else if( event.isPastDate && !event.savedResult ){
         
         cell.detailTextLabel.textColor = [UIColor redColor];
-        description = @"Resultado pendente...";
+        description = NSLocalizedString(@"Pending result", @"event");
     }else{
         
         cell.detailTextLabel.textColor = [UIColor blackColor];
