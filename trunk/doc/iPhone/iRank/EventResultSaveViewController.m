@@ -16,9 +16,9 @@
 @synthesize event;
 @synthesize eventPlayer;
 @synthesize numberFormatter;
-@synthesize resultPreviewViewController;
 @synthesize eventPlayerList;
 @synthesize theTextField;
+//@synthesize resultTableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,7 +51,6 @@
         lblPrize.hidden         = YES;
         prize.hidden            = YES;
         ringInfo.hidden         = YES;
-        prizeToolbar.hidden     = NO;
     }else{
         
         buyin.enabled           = YES;
@@ -60,10 +59,19 @@
         lblPrize.hidden         = NO;
         prize.hidden            = NO;
         ringInfo.hidden         = NO;
-        prizeToolbar.hidden     = YES;
     }
+    
+    rebuy.enabled           = event.allowRebuy;
+    addon.enabled           = event.allowAddon;
+    btnIncraseRebuy.enabled = event.allowRebuy;
+    btnDecraseRebuy.enabled = event.allowRebuy;
+    btnIncraseAddon.enabled = event.allowAddon;
+    btnDecraseAddon.enabled = event.allowAddon;
+    
+    viewResumeMode = NO;
+    [segmentedControl setSelectedSegmentIndex:0];
         
-    self.title = @"Resultados";
+    self.title = NSLocalizedString(@"Results", @"eventResultSave");
     self.navigationItem.rightBarButtonItem = doneButton;
     
     [[NSNotificationCenter defaultCenter] 
@@ -85,7 +93,7 @@
 
     eventPlayer         = [eventPlayerList objectAtIndex:playerPositionIndex];
     playerName.text     = eventPlayer.player.fullName;
-    playerPosition.text = [NSString stringWithFormat:@"%iª posição", (playerPositionIndex+1)];
+    playerPosition.text = [NSString stringWithFormat:@"%i%@ %@", (playerPositionIndex+1), NSLocalizedString(@"ordinalPosition", @"eventResultSave"), NSLocalizedString(@"position", @"eventResultSave")];
     eventName.text      = event.eventName;
     eventPlaceDate.text = [NSString stringWithFormat:@"@%@ - %@ %@", event.eventPlace, event.eventDate, event.startTime];
     
@@ -174,13 +182,27 @@
     appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouchUp:)];
-    saveButton = [[UIBarButtonItem alloc] initWithTitle:@"salvar" style:UIBarButtonItemStyleDone target:self action:@selector(saveButtonTouchUp:)];
+    saveButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"save", @"eventResultSave") style:UIBarButtonItemStyleDone target:self action:@selector(saveButtonTouchUp:)];
     
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [activityIndicator setHidesWhenStopped:YES];
     [activityIndicator setHidden:YES];
     
     activityIndicatorButton =  [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    
+    
+    [lblBuyin setText:NSLocalizedString(@"Buy-in", nil)];
+    [lblRebuy setText:NSLocalizedString(@"Rebuy", nil)];
+    [lblAddon setText:NSLocalizedString(@"Add-on", nil)];
+    [lblPrize setText:NSLocalizedString(@"Prize", nil)];
+    [lblPrizeInfo setText:NSLocalizedString(@"prizeInfo", @"eventResult")];
+    
+    [btnPrevious setTitle:NSLocalizedString(@"previous", @"eventResult")];
+    [btnNext setTitle:NSLocalizedString(@"next", @"eventResult")];
+    
+    [btnCalculatePrize setTitle:NSLocalizedString(@"calculate prize", @"eventResult")];
+    [segmentedControl setTitle:NSLocalizedString(@"ranking", @"eventResult") forSegmentAtIndex:0];
+    [segmentedControl setTitle:NSLocalizedString(@"resume", @"eventResult") forSegmentAtIndex:1];
 }
 
 -(void)doneButtonTouchUp:(id)sender {
@@ -188,6 +210,7 @@
     [[self view] endEditing:YES];
 
     [self.navigationController pushViewController:resultPreviewViewController animated:YES];
+    
     [resultTableView reloadData];
     
     if( event.hasOfflineResult || [event.gameStyle isEqualToString:@"ring"] ){
@@ -209,19 +232,19 @@
     saveOffline      = (saveOffline && [[appDelegate userDefaults] boolForKey:kSaveOfflineKey]);
     saveOffline      = saveOffline || kForceOfflineSaving;
     
-    NSString *confirmMessage = @"Confirma salvar e enviar por e-mail o resultado do evento?";
+    NSString *confirmMessage = NSLocalizedString(@"Confirm saving and sending the event result by e-mail?", @"eventResultSave");
 
     if( saveOffline && !event.hasOfflineResult )
-        confirmMessage = @"Confirma salvar Offline o resultado do evento?";
+        confirmMessage = NSLocalizedString(@"Confirm saving the offline result of this event?", @"eventResultSave");
         
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirmação" message:confirmMessage delegate:self cancelButtonTitle:@"Não" otherButtonTitles:@"Sim", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm", @"eventResultSave") message:confirmMessage delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
     [alert show];
     [alert release];
 }
 
 -(void)saveEventResult {
     
-    [appDelegate showLoadingView:@"salvando resultado..."];
+    [appDelegate showLoadingView:NSLocalizedString(@"saving result...", @"eventResultSave")];
     
     [self performSelector:@selector(doSaveEventResult) withObject:nil afterDelay:0];
 }
@@ -242,7 +265,7 @@
     
     [appDelegate hideLoadingView];
     
-    [appDelegate showAlert:@"Resultado salvo" message:@"O resultado do evento foi salvo com sucesso!"];
+    [appDelegate showAlert:NSLocalizedString(@"Result saved", @"eventResultSave") message:NSLocalizedString(@"Event result has been successfully saved!", @"eventResultSave")];
     appDelegate.refreshHome = YES;
 }
 
@@ -250,7 +273,7 @@
     
     [appDelegate hideLoadingView];
     
-    [appDelegate showAlert:@"Falha" message:@"Não foi possível salvar o resultado do evento.\nPor favor, tente novamente."];
+    [appDelegate showAlert:NSLocalizedString(@"Fail", @"alert") message:NSLocalizedString(@"It was unable to save the event result!\nPlease, try again.", @"eventResultSave")];
     appDelegate.refreshHome = NO;
 }
 
@@ -267,7 +290,7 @@
 
 	if (buttonIndex == 0) {
 		
-        NSLog(@"Clicou em NÃO");
+        
 	}else{
         
         [self saveEventResult];
@@ -289,13 +312,13 @@
 
 -(IBAction)incraseBuyinValue:(id)sender {
     
-    eventPlayer.buyin += event.buyin;
+    eventPlayer.buyin += event.rankingBuyin;
     buyin.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.buyin]]];
 }
 
 -(IBAction)decraseBuyinValue:(id)sender {
     
-    eventPlayer.buyin -= event.buyin;
+    eventPlayer.buyin -= event.rankingBuyin;
 
     if( eventPlayer.buyin < 0 )
         eventPlayer.buyin = 0;
@@ -305,13 +328,13 @@
 
 -(IBAction)incraseRebuyValue:(id)sender {
     
-    eventPlayer.rebuy += event.buyin;
+    eventPlayer.rebuy += event.rankingBuyin;
     rebuy.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.rebuy]]];
 }
 
 -(IBAction)decraseRebuyValue:(id)sender {
     
-    eventPlayer.rebuy -= event.buyin;
+    eventPlayer.rebuy -= event.rankingBuyin;
     
     if( eventPlayer.rebuy < 0 )
         eventPlayer.rebuy = 0;
@@ -321,13 +344,13 @@
 
 -(IBAction)incraseAddonValue:(id)sender {
     
-    eventPlayer.addon += event.buyin;
+    eventPlayer.addon += event.rankingBuyin;
     addon.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:eventPlayer.addon]]];
 }
 
 -(IBAction)decraseAddonValue:(id)sender {
     
-    eventPlayer.addon -= event.buyin;
+    eventPlayer.addon -= event.rankingBuyin;
     
     if( eventPlayer.addon < 0 )
         eventPlayer.addon = 0;
@@ -341,24 +364,6 @@
     
     if(moveViewUp)
         [self scrollTheView:NO];
-    
-    switch ( theTextField.tag ) {
-        case 1:
-            eventPlayer.buyin = [textField.text floatValue];
-            break;
-        case 2:
-            eventPlayer.rebuy = [textField.text floatValue];
-            break;
-        case 3:
-            eventPlayer.addon = [textField.text floatValue];
-            break;
-        case 4:
-            eventPlayer.prize = [textField.text floatValue];
-            break;
-            
-        default:
-            break;
-    }
     
     return YES;
 }
@@ -377,13 +382,34 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    
+    if( viewResumeMode )
+        return 3;
+    else
+        return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
+    if( viewResumeMode ){
+    
+        switch ( section ) {
+            case 0:
+                return [eventPlayerBuyinList count];
+                break;
+            case 1:
+                return [eventPlayerRebuyList count];
+                break;
+            case 2:
+                return [eventPlayerAddonList count];
+                break;
+        }
+        [eventPlayerList count];
+    }
+    
     return [eventPlayerList count];
+        
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -391,28 +417,134 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    EventPlayer *aEventPlayer = [eventPlayerList objectAtIndex:indexPath.row];
+    NSMutableArray *eventPlayerListTemp;
+    
+    if( viewResumeMode ){
+        
+        switch ( indexPath.section ) {
+            case 0:
+                eventPlayerListTemp = eventPlayerBuyinList;
+                break;
+            case 1:
+                eventPlayerListTemp = eventPlayerRebuyList;
+                break;
+            case 2:
+                eventPlayerListTemp = eventPlayerAddonList;
+                break;
+        }
+    }else{
+    
+        eventPlayerListTemp = eventPlayerList;
+    }
+    
+    
+    
+    EventPlayer *aEventPlayer = [eventPlayerListTemp objectAtIndex:indexPath.row];
     Player *player = [aEventPlayer player];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == nil)
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+
+    NSString *detailText;
+    NSString *labelText;
     
-    cell.textLabel.text       = [NSString stringWithFormat:@"%iº %@", indexPath.row+1, [player fullName]];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"B: %@, R: %@, A: %@ / Prêmio: %@", [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.buyin]], [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.rebuy]], [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.addon]], [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.prize]]];
+    if( viewResumeMode ){
+
+        labelText = [player fullName];
+        
+        switch ( indexPath.section ) {
+            case 0:
+                detailText = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Buy-in", @"eventResultSave"), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.buyin]]];
+                break;
+            case 1:
+                detailText = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Rebuy", @"eventResultSave"), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.rebuy]]];
+                break;
+            case 2:
+                detailText = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Add-on", @"eventResultSave"), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.addon]]];
+                break;
+        }
+        
+        
+    }else{
+    
+        labelText = [NSString stringWithFormat:@"%i%@ %@", indexPath.row+1, NSLocalizedString(@"ordinalPlace", @"eventResultSave"), [player fullName]];
+        
+        detailText = [NSString stringWithFormat:@"%@: %@, %@: %@, %@: %@ / %@: %@", NSLocalizedString(@"B", @"eventResultSave"), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.buyin]], NSLocalizedString(@"R", @"eventResultSave"), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.rebuy]], NSLocalizedString(@"A", @"eventResultSave"), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.addon]], NSLocalizedString(@"Prize", @"eventResultSave"), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:aEventPlayer.prize]]];
+    }
+    
+    cell.detailTextLabel.text = detailText;
+    cell.textLabel.text       = labelText;
+    
+    detailText = nil;
+    labelText  = nil;
     
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-        return [NSString stringWithFormat:@"%@ - %@ %@", event.eventName, event.eventDate, event.startTime];
+    if( viewResumeMode ){
+    
+        switch ( section ) {
+            case 0:
+                return [NSString stringWithFormat:@"%@\n%@", event.eventName, NSLocalizedString(@"Buy-in", nil)];
+                break;
+            case 1:
+                return NSLocalizedString(@"Rebuy", nil);
+                break;
+            case 2:
+                return NSLocalizedString(@"Add-on", nil);
+                break;
+        }
+    }
+    
+    return [NSString stringWithFormat:@"%@\n%@ %@", event.eventName, event.eventDate, event.startTime];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     
-    return [NSString stringWithFormat:@"%i jogadores @%@", [eventPlayerList count], event.eventPlace];
+    if( viewResumeMode ){
+        
+        switch ( section ) {
+            case 0: {
+                
+                int playersCount = [eventPlayerBuyinList count];
+                
+                if( playersCount==0 )
+                    return NSLocalizedString(@"No player paid for buy-in", @"eventResultSave");
+                
+                NSString *plural = (playersCount==1?@"":NSLocalizedString(@"pluralPlayers", @"eventResultSave"));
+                return [NSString stringWithFormat:@"%i %@%@, %@", playersCount, NSLocalizedString(@"player", @"eventResultSave"), plural, [numberFormatter stringFromNumber:[NSNumber numberWithFloat:event.totalBuyin]]];
+                break;
+            }
+            case 1: {
+                
+                int playersCount = [eventPlayerRebuyList count];
+                
+                if( playersCount==0 )
+                    return NSLocalizedString(@"No player paid for rebuy", @"eventResultSave");
+                
+                NSString *plural = (playersCount==1?@"":NSLocalizedString(@"pluralPlayers", @"eventResultSave"));
+                return [NSString stringWithFormat:@"%i %@%@, %@", playersCount, NSLocalizedString(@"player", @"eventResultSave"), plural, [numberFormatter stringFromNumber:[NSNumber numberWithFloat:[event totalRebuy]]]];
+                break;
+            }
+            case 2: {
+                
+                int playersCount = [eventPlayerAddonList count];
+                
+                if( playersCount==0 )
+                    return NSLocalizedString(@"No player paid for add-on", @"eventResultSave");
+                
+                NSString *plural = (playersCount==1?@"":NSLocalizedString(@"pluralPlayers", @"eventResultSave"));
+                return [NSString stringWithFormat:@"%i %@%@, %@", playersCount, NSLocalizedString(@"player", @"eventResultSave"), plural, [numberFormatter stringFromNumber:[NSNumber numberWithFloat:[event totalAddon]]]];
+                break;
+            }
+        }
+    }
+    
+    return [NSString stringWithFormat:@"%i %@. %@: %@", [eventPlayerList count], NSLocalizedString(@"players", @"eventResultSave"), NSLocalizedString(@"Total", @"eventResultSave"), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:[event totalBuyins:YES]]]];
 }
 
 -(void)calculatePrize:(id)sender {
@@ -426,25 +558,22 @@
     
     btnCalculatePrize.enabled = NO;
     
-    NSString *urlString = [NSString stringWithFormat:@"http://%@/ios.php/event/getPaidPlaces/eventId/%i/buyins/%f", serverAddress, event.eventId, [event totalBuyins]];
+    NSString *urlString = [NSString stringWithFormat:@"http://%@/ios.php/event/getPaidPlaces/eventId/%i/buyins/%f", serverAddress, event.eventId, [event totalBuyins:event.isFreeroll]];
+
+//    NSLog(@"urlString: %@", urlString);
     
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     [NSURLConnection connectionWithRequest:request delegate:self];
-    
-    NSLog(@"urlString: %@", urlString);
 }
 
 - (void)connection: (NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    
-    NSLog(@"didReceiveResponse");
+
 }
 
 - (void)connection: (NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    NSLog(@"didReceiveData");
     
     NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     
@@ -489,16 +618,90 @@
 - (void)updateCurrentTextField:(id)sender {
 
     theTextField = (UITextField*)sender;
+    
+    switch ( theTextField.tag ) {
+        case 1:
+            eventPlayer.buyin = [theTextField.text floatValue];
+            break;
+        case 2:
+            eventPlayer.rebuy = [theTextField.text floatValue];
+            break;
+        case 3:
+            eventPlayer.addon = [theTextField.text floatValue];
+            break;
+        case 4:
+            eventPlayer.prize = [theTextField.text floatValue];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+-(void)segmentedControlTouchUp:(id)sender {
+    
+    int selectedOption = [(UISegmentedControl *)sender selectedSegmentIndex];
+    
+    viewResumeMode = (selectedOption==1);
+    
+    if( viewResumeMode ){
+        
+        if( eventPlayerBuyinList!=nil ){
+            
+            [eventPlayerBuyinList release];
+            eventPlayerBuyinList = nil;
+        }
+        
+        eventPlayerBuyinList = [[NSMutableArray alloc] init];
+        
+        for(EventPlayer *theEventPlayer in eventPlayerList)
+            if( theEventPlayer.buyin > 0 )
+                [eventPlayerBuyinList addObject:theEventPlayer];
+        
+        
+        if( eventPlayerRebuyList!=nil ){
+            
+            [eventPlayerRebuyList release];
+            eventPlayerRebuyList = nil;
+        }
+        
+        eventPlayerRebuyList = [[NSMutableArray alloc] init];
+        
+        for(EventPlayer *theEventPlayer in eventPlayerList)
+            if( theEventPlayer.rebuy > 0 )
+                [eventPlayerRebuyList addObject:theEventPlayer];
+        
+        
+        if( eventPlayerAddonList!=nil ){
+            
+            [eventPlayerAddonList release];
+            eventPlayerAddonList = nil;
+        }
+        
+        eventPlayerAddonList = [[NSMutableArray alloc] init];
+        
+        for(EventPlayer *theEventPlayer in eventPlayerList)
+            if( theEventPlayer.addon > 0 )
+                [eventPlayerAddonList addObject:theEventPlayer];
+    }
+    
+    [resultTableView reloadData];
+}
+
+- (UIViewController *)resultPreviewViewController {
+    
+    return resultPreviewViewController;
 }
 
 -(void)dealloc {
     
     [theTextField release];
+//    [resultTableView release];
     [event release];
     [eventPlayer release];
     [eventPlayerList release];
     [numberFormatter release];
-    [resultPreviewViewController release];
+//    [resultPreviewViewController release];
     [super dealloc];
 }
 

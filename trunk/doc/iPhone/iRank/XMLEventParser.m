@@ -72,6 +72,8 @@
         
         if( [elementName isEqualToString:@"buyin"] )
             [event setBuyin:[elementValue floatValue]];
+        else if( [elementName isEqualToString:@"rankingBuyin"] )
+            [event setRankingBuyin:[elementValue floatValue]];
         else if( [elementName isEqualToString:@"entranceFee"] )
             [event setEntranceFee:[elementValue floatValue]];
         else if( [elementName isEqualToString:@"paidPlaces"] )
@@ -82,8 +84,14 @@
             [event setIsPastDate:[elementValue boolValue]];
         else if( [elementName isEqualToString:@"isMyEvent"] )
             [event setIsMyEvent:[elementValue boolValue]];
+        else if( [elementName isEqualToString:@"isFreeroll"] )
+            [event setIsFreeroll:[elementValue boolValue]];
         else if( [elementName isEqualToString:@"isEditable"] )
             [event setIsEditable:[elementValue boolValue]];
+        else if( [elementName isEqualToString:@"allowRebuy"] )
+            [event setAllowRebuy:[elementValue boolValue]];
+        else if( [elementName isEqualToString:@"allowAddon"] )
+            [event setAllowAddon:[elementValue boolValue]];
         else
             [event setValue:currentElementValue forKey:elementName];
     }

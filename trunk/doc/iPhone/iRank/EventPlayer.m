@@ -69,12 +69,21 @@
     
     NSString *urlString = [NSString stringWithFormat:@"http://%@/ios.php/event/togglePresence/eventId/%i/peopleId/%i/choice/%@/userSiteId/%i", serverAddress, eventId, player.playerId, choice, userSiteId];
 
-//    NSLog(@"urlString: %@", urlString);
+    NSLog(@"urlString: %@", urlString);
 
     self.inviteStatus = choice;
     
     self.enabled       = [choice isEqualToString:@"yes"];
     self.eventPosition = 500;
+    
+    if( !enabled ){
+        
+        buyin         = 0;
+        rebuy         = 0;
+        addon         = 0;
+        prize         = 0;
+        score         = 0;
+    }
     
     NSURL *url = [NSURL URLWithString:urlString];
     
