@@ -836,5 +836,18 @@ class Util {
 		
 		return $xmlString;
 	}
+	
+	public static function getConvertCulture($language){
+		
+		$language = strtolower($language);
+		
+		switch($language){
+			case 'en':
+				return 'en_US';
+			case 'pt':
+			default:
+				return 'pt_BR';
+		}
+	}
 }
 ?>

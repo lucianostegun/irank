@@ -2169,6 +2169,10 @@
 				<source>event.allowAddon</source>
 				<target>Permitir addon</target>
 			</trans-unit>
+			<trans-unit>
+				<source>event.noComments</source>
+				<target>Este evento não possui comentários</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -13,10 +13,10 @@ class emailBroadcastActions extends sfActions
 
 	foreach($peopleObjList as $peopleObj){
 		
-		$emailAddress = $peopleObj->getEmailAddress();
-		$emailContent = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
+		$emailAddress    = $peopleObj->getEmailAddress();
+		$emailContentTmp = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
 
-		$sendResult = true;//Report::sendMail($emailSubject, $emailAddress, $emailContent);
+		$sendResult = Report::sendMail($emailSubject, $emailAddress, $emailContentTmp);
 		
 		echo $emailAddress.' - '.($sendResult?'OK':'ERRO');
 		echo '<br/>';

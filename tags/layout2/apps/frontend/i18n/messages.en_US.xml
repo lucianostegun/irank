@@ -2142,6 +2142,10 @@
 				<source>ranking.import.rankingPlayers</source>
 				<target>Import ranking players</target>
 			</trans-unit>
+			<trans-unit>
+				<source>event.noComments</source>
+				<target>This event has no comments</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
