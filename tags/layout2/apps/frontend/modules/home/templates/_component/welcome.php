@@ -2,10 +2,10 @@
 <table width="100%" cellspacing="0" cellpadding="0" border="0" id="welcomeLogo">
 	<tr>
 		<td valign="top">
-			<h1>Seja bem-vindo</h1>
-			<p>O iRank é um site gratuito para criação e organização de rankings online para jogos de Poker.</p>
-			<p>Aqui você poderá criar seus próprios rankings, definir as configurações de jogo e organizar os eventos, classificações e estatísticas dos torneios entre seus amigos.</p>
-			<p>Se você ainda não é cadastrado, <?php echo link_to('clique aqui', 'sign') ?> e comece agora mesmo a controlar seus jogos!</p>
+			<h1><?php echo __('home.welcome.title') ?></h1>
+			<p><?php echo __('home.welcome.line1') ?></p>
+			<p><?php echo __('home.welcome.line2') ?></p>
+			<p><?php echo __('home.welcome.line3', array('%clickHere%'=>link_to(__('clickHere'), 'sign'))) ?></p>
 		</td>
 		<td valign="top">
 			<?php echo image_tag('frontend/layout/welcomeChips') ?>

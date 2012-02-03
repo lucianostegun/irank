@@ -2173,6 +2173,22 @@
 				<source>event.noComments</source>
 				<target>Este evento não possui comentários</target>
 			</trans-unit>
+			<trans-unit>
+				<source>home.welcome.title</source>
+				<target>Seja bem-vindo</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.welcome.line1</source>
+				<target>O iRank é um site gratuito para criação e organização de rankings online para jogos de Poker.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.welcome.line2</source>
+				<target>Aqui você poderá criar seus próprios rankings, definir as configurações de jogo e organizar os eventos, classificações e estatísticas dos torneios entre seus amigos.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.welcome.line3</source>
+				<target>Se você ainda não é cadastrado, %clickHere% e comece agora mesmo a controlar seus jogos!</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
