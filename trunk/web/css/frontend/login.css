@@ -1,11 +1,11 @@
 #login {
 	
 	position: 				relative;
+	top: 					5px;
+	left: 					5px;
 	width: 					187px;
 	height: 				150px;
-	margin-top: 			5px;
-	margin-left: 			5px;
-	background: 			#F0F0F0 url('/images/frontend/layout/loginBg.png') repeat-x;
+	background: 			#F0F0F0 url('/images/frontend/loginBg.png') repeat-x;
 	border: 				1px solid #C0C0C0;
 	-moz-border-radius: 	7px;
 	-webkit-border-radius: 	7px;

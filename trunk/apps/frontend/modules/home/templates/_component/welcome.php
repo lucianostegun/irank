@@ -1,4 +1,3 @@
-<div class="commonBar"><span>Home</span></div>
 <table width="100%" cellspacing="0" cellpadding="0" border="0" id="welcomeLogo">
 	<tr>
 		<td valign="top">
@@ -16,27 +15,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td valign="top" style="padding-top: 7px; height: 150px">
-			<table width="100%" border="0" cellspacing="0" cellpadding="2" class="homeDistinct">
-				<tr>
-					<th valign="top"><?php echo image_tag('layout/feedNews.png', array('align'=>'left')) ?></th>
-					<td colspan="6" class="newsList">
-						<span><?php echo __('home.feedNews') ?></span>
-						<?php
-							foreach(News::getLastNews($limit=5) as $key=>$newsObj):
-								$description = $newsObj->getDescription();
-						?>
-						<div class="news<?php echo ($key==$limit-1?' last':'') ?>">
-							<?php
-								if( $description )
-									echo link_to(image_tag('icon/plus.gif', array('style'=>'absmiddle')), '#toggleNews('.$newsObj->getId().')');
-							?>
-							<span class="date"><?php echo $newsObj->getNewsDate('d/m/Y') ?></span> - <?php echo link_to($newsObj->getNewsTitle(), $newsObj->getInternalLink()) ?>
-							<div class="description" id="newsDescription<?php echo $newsObj->getId() ?>"><?php echo $description ?></div>
-						</div>
-						<?php endforeach; ?>
-					</td>
-				</tr>
-			</table>
+			
 		</td>
 		<td valign="top" rowspan="2" style="width: 300px; padding-top: 7px; background: #F5F5F5; border: none" align="center">
 			<div class="distinct">

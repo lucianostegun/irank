@@ -259,6 +259,9 @@ function image_tag($source, $options = array())
     return '';
   }
 
+  $culture = MyTools::getCulture();
+  $source  = str_replace('/culture/', '/'.$culture.'/', $source);
+
   $options = _parse_attributes($options);
 
   $absolute = false;
