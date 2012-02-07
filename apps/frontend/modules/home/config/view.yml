@@ -1,5 +1,5 @@
 all:
-  stylesheets:    [-frontend/resume, -frontend/home]
+  stylesheets:    [-frontend/resume, frontend/home]
   javascripts:    [-frontend/home]
   
 indexSuccess:

@@ -58,7 +58,7 @@ $forceClassic    = MyTools::getAttribute('forceClassic');
     			</tr>
     			<tr>
     				<td valign="top" style="background: #F0F0F0; border-top: 0px solid; border-right: 1px solid #404040; text-align: center; height: 35px">
-    					<?php echo link_to(image_tag('appstore'), 'http://itunes.apple.com/us/app/irank/id481129223?l=pt&ls=1&mt=8') ?>
+    					<?php echo link_to(image_tag('appstore'), 'http://itunes.apple.com/us/app/irank/id481129223') ?>
     					<?php #echo image_tag('blank.gif') ?>
     				</td>
     				<td valign="top" style="background: #F6F6F6; border-top: 0px; border-right: 0px solid; padding-bottom: 70px"><?php echo image_tag('layout/rightBarBorderBase') ?></td>
