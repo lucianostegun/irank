@@ -80,7 +80,6 @@
 	
 	color: 				#E8A014;
 	font-weight: 		bold;
-	text-decoration: 	none;
 }
 
 .homeHighlight .content .descriptionText ul {
@@ -128,15 +127,19 @@
 
 
 
-.channels1 {
+.channels {
 	
-	height: 		200px;
+	float: 			left;
+	position: 		relative;
+	left: 			4px;
+	height: 		300px;
+	width: 			229px;
 	margin: 		3px;
 }
 
-.channels1 .channel {
+.channels .channel {
 	
-	width: 				230px;
+	width: 				217px;
 	height: 			70px;
 	border-bottom: 		1px solid #EAEAEA;
 	padding: 			5px;
@@ -144,21 +147,23 @@
 	background: 		#F5F5F5;
 }
 
-.channels1 .channel .image {
+.channels .channel .image {
 	
-	width: 			58px;
+	width: 			48px;
 	float: 			left;
 	text-align: 	center;
 }
 
-.channels1 .channel .description {
+.channels .channel .description {
 	
 	float: 			left;
-	width: 			172px;
+	position: 		relative;
+	left: 			8px;
+	width: 			162px;
 	text-align: 	left;
 }
 
-.channels1 .channel h1 {
+.channels .channel h1 {
 	
 	font-size: 		10pt;
 	font-weight: 	bold;
@@ -184,15 +189,7 @@
 
 
 
-.channels {
-	
-	position: 		relative;
-	background: 	#F00;
-	left: 			550px;
-	height: 		300px;
-	width: 			250px;
-	margin: 		3px;
-}
+
 
 
 

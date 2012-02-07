@@ -63,7 +63,7 @@ $culture = 'pt_BR';
     						</div>
     						
     						<div class="clear"></div>
-    					<div> 
+    					</div> 
     				</td>
     				<td style="background: url('/images/frontend/layout/borderRight.png') repeat-y"></td>
     			</tr>
