@@ -28,7 +28,39 @@
 	</div>
 </div>
 
-
-<div class="channels">aaaa</div>
+<div class="channels">
+	<div class="channel">
+		<div class="image"><?php echo image_tag('frontend/home/stats') ?></div>
+		<div class="description">
+			<h1>Estatísticas</h1>
+			Gere gráficos de gastos, lucros, balanço e desempenho dos jogadores.
+		</div>
+	</div>
+	<div class="channel">
+		<div class="image"><?php echo image_tag('frontend/home/event') ?></div>
+		<div class="description">
+			<h1>Notificação de eventos</h1>
+			Notificação instantânea da criação/edição dos eventos e lembrete dos jogos agendados.
+		</div>
+	</div>
+	<div class="channel">
+		<div class="image"><?php echo image_tag('frontend/home/photo') ?></div>
+		<div class="description">
+			<h1>Mural de fotos</h1>
+			Compartilhar os melhores momentos dos eventos postando suas fotos no mural.
+		</div>
+	</div>
+	<div class="channel" style="height: 88px">
+		<div class="image"><?php echo image_tag('frontend/home/rankingHistory') ?></div>
+		<div class="description">
+			<h1>Histórico</h1>
+			Histórico de posições, total gastos, prêmios e tudo sobre os rankings nas datas que houveram eventos.
+		</div>
+	</div>
+</div>
 
 <div class="clear"></div>
+
+
+
+.....
