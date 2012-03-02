@@ -1,3 +1,0 @@
-all:
-  stylesheets:    []
-  javascripts:    [backend/faq]

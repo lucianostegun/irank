@@ -167,9 +167,59 @@
 	
 	font-size: 		10pt;
 	font-weight: 	bold;
-	color: 			#344f7C;
+	color: 			#344F7C;
 	text-align: 	left;
 	margin: 		0px;
+	padding: 		0px;
+}
+
+
+
+
+.baseChannels {
+	
+	float: 			left;
+	position: 		relative;
+	top: 			4px;
+	left: 			4px;
+	height: 		191px;
+	width: 			778px;
+}
+
+.baseChannels .channel {
+	
+	float: 				left;
+	width: 				245px;
+	height: 			100px;
+	border: 			1px solid #E5E5E5;
+	padding: 			4px;
+	margin: 			2px;
+	background: 		#F5F5F5 url('/images/frontend/home/channelBg.png') repeat-x left bottom;
+}
+
+.baseChannels .channel .image {
+	
+	width: 			48px;
+	float: 			left;
+	text-align: 	center;
+}
+
+.baseChannels .channel .description {
+	
+	float: 			left;
+	position: 		relative;
+	left: 			30px;
+	width: 			162px;
+	text-align: 	left;
+}
+
+.baseChannels .channel h1 {
+	
+	font-size: 		10pt;
+	font-weight: 	bold;
+	color: 			#344f7C;
+	text-align: 	left;
+	margin: 		5px 0px 5px 0px;
 	padding: 		0px;
 }
 
@@ -180,47 +230,81 @@
 
 
 
+#photoVote {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-.mobile {
-
-	background: 	#F5F5F5;
-	border: 		0px;
-	margin: 		10px;
+	background: 	#F0F0F0;
+	padding: 		5px 10px 10px 10px;
+	position: 		relative;
+	top: 			10px;
+	left: 			5px;
+	width: 			756px;
 }
 
-.mobile th {
-
-	background: 	#F5F5F5;
-	border: 		0px;
-	text-align: 	right;
-	font-weight: 	normal
+#photoVote h1 {
+	
+	color: 		#344F7C;
+	margin: 	5px;
 }
 
-.mobile h1 {
-
-	font-size: 		11pt;
-	font-weight: 	bold;
-	color: 			#b61515;
-	margin-bottom: 	12px;
-}
-
-.mobile td {
-
-	background: 	#F5F5F5;
-	border: 		0px;
+#photoVote .links {
+	
 	text-align: 	center;
-	padding-right: 	3px
+	color: 			#b95011;
+}
+
+#photoVote a {
+	
+	font-size: 	11px;
+	color: 		#b95011;
+}
+
+#photoVote .photo {
+	
+	float: 			left;
+	border: 		1px solid #AAAAAA;
+	width: 			365px;
+	height: 		274px;
+	margin: 		3px;
+	overflow: 		hidden;
+}
+
+#photoVote .photo .optionBar {
+
+	display: 				none;
+	position: 				relative;
+	height: 				33px;
+	top: 					241px;
+	background: 			#0A0A0A;
+	filter: 				alpha(opacity=70);
+	-moz-opacity: 			0.70;
+	-khtml-opacity: 		0.70;
+	opacity: 				0.70;	
+}
+
+#photoVote .photo .optionBar .option {
+
+	position: 		relative;
+	width: 			27px;
+	height: 		27px;
+	top: 			3px;
+	cursor: 		pointer;
+}
+
+#photoVote .photo .optionBar .option.hover {
+
+	background-position: 	0px -27px
+}
+
+#photoVote .photo .optionBar .report {
+
+	float: 			left;
+	left: 			303px;
+	background: 	url('/images/frontend/home/alert.png') no-repeat;
+}
+
+#photoVote .photo .optionBar .zoom {
+
+	float: 					left;
+	left: 					5px;
+	background: 			url('/images/frontend/home/zoom.png') no-repeat;
 }

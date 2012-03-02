@@ -26,15 +26,15 @@ $culture = 'pt_BR';
 					<?php echo link_to(image_tag('flagUsa'), '#changeDefaultLanguage("en-US")') ?>
     			</div>
     		</div>
-    		<table style="width: 1058px" cellspacing="0" cellpadding="0" id="borderTable">
+    		<table cellspacing="0" cellpadding="0" id="borderTable">
     			<tr>
-    				<td style="width: 29px; height: 31px;"><?php echo image_tag('frontend/layout/borderTopLeft') ?></td>
-    				<td style="width: 1000px; height: 31px; background: url('/images/frontend/layout/borderTop.png') repeat-x"></td>
-    				<td style="width: 29px; height: 31px"><?php echo image_tag('frontend/layout/borderTopRight') ?></td>
+    				<td class="topLeft"><?php echo image_tag('frontend/layout/borderTopLeft') ?></td>
+    				<td class="top"></td>
+    				<td class="topRight"><?php echo image_tag('frontend/layout/borderTopRight') ?></td>
     			</tr>
     			<tr>
-    				<td style="background: url('/images/frontend/layout/borderLeft.png') repeat-y"></td>
-    				<td style="background: url('/images/frontend/layout/innerBg.png')">
+    				<td class="left"></td>
+    				<td class="middle">
 						<div id="topMenu">
 							<div class="distinct">
 								<?php echo image_tag('frontend/layout/culture/signUp') ?>
@@ -65,11 +65,11 @@ $culture = 'pt_BR';
     						<div class="clear"></div>
     					</div> 
     				</td>
-    				<td style="background: url('/images/frontend/layout/borderRight.png') repeat-y"></td>
+    				<td class="right"></td>
     			</tr>
     			<tr>
     				<td><?php echo image_tag('frontend/layout/borderBottomLeft') ?></td>
-    				<td style="background: url('/images/frontend/layout/borderBottom.png') repeat-x">
+    				<td class="bottom">
     					<?php include_partial('home/include/addthis', array()) ?>
     				</td>
     				<td><?php echo image_tag('frontend/layout/borderBottomRight') ?></td>
@@ -84,8 +84,8 @@ $culture = 'pt_BR';
 	</div>
 </div>
 <?php
-	$dhtmlxWindowsObj = new DhtmlxWindows();
-	$dhtmlxWindowsObj->build();
+//	$dhtmlxWindowsObj = new DhtmlxWindows();
+//	$dhtmlxWindowsObj->build();
 ?>
 </body>
 </html>

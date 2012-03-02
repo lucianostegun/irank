@@ -73,8 +73,7 @@ class loginActions extends sfActions
 //	$xmlString = file_get_contents(Util::getFilePath('/xml.xml'));
 
 	$xmlString = simplexml_load_string( $xmlString );
-	
-	$validate = new DOMDocument;
+	$validate  = new DOMDocument;
     $validate->loadXML($xmlString->asXml());
     
     $username     = null;

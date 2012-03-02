@@ -33,13 +33,16 @@ BEGIN
     SELECT
         SUM(event_player.PRIZE)+get_player_profit_personal(p_people_id) INTO result
     FROM 
-        event_player, event 
+        event_player, event, ranking
     WHERE 
         event_player.PEOPLE_ID = p_people_id
         AND event.VISIBLE=TRUE
         AND event.DELETED=FALSE
         AND event.SAVED_RESULT=TRUE
-        AND event_player.EVENT_ID=event.ID;
+        AND event_player.EVENT_ID=event.ID
+        AND event.RANKING_ID=ranking.ID
+        AND ranking.VISIBLE=TRUE
+        AND ranking.DELETED=FALSE;
 
    IF result IS NULL THEN
      result := 0;
@@ -60,13 +63,16 @@ BEGIN
     SELECT
         SUM(event_player.SCORE) INTO result
     FROM 
-        event_player, event 
+        event_player, event, ranking
     WHERE 
         event_player.PEOPLE_ID = p_people_id
         AND event.VISIBLE=TRUE 
         AND event.DELETED=FALSE 
         AND event.SAVED_RESULT=TRUE 
-        AND event_player.EVENT_ID=event.ID;
+        AND event_player.EVENT_ID=event.ID
+        AND event.RANKING_ID=ranking.ID
+        AND ranking.VISIBLE=TRUE
+        AND ranking.DELETED=FALSE;
 
    IF result IS NULL THEN
      result := 0;
@@ -113,13 +119,16 @@ BEGIN
     SELECT 
         SUM(event_player.ENTRANCE_FEE+event_player.BUYIN+event_player.REBUY+event_player.ADDON)+get_player_bra_personal(p_people_id) INTO result
     FROM 
-        event_player, event 
+        event_player, event, ranking
     WHERE 
         event_player.PEOPLE_ID = p_people_id
         AND event.VISIBLE=TRUE 
         AND event.DELETED=FALSE 
         AND event.SAVED_RESULT=TRUE 
-        AND event_player.EVENT_ID=event.ID;
+        AND event_player.EVENT_ID=event.ID
+        AND event.RANKING_ID=ranking.ID
+        AND ranking.VISIBLE=TRUE
+        AND ranking.DELETED=FALSE;
 
    IF result IS NULL THEN
      result := 0;
@@ -140,16 +149,19 @@ BEGIN
     SELECT 
         SUM(event_player.PRIZE/(event_player.ENTRANCE_FEE+event_player.BUYIN+event_player.REBUY+event_player.ADDON))
         /
-        (SELECT COUNT(1) FROM event_player, event WHERE event_player.PEOPLE_ID = p_people_id AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event_player.BUYIN > 0) INTO result
+        (SELECT COUNT(1) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = p_people_id AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event_player.BUYIN > 0 AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE=TRUE AND ranking.DELETED=FALSE) INTO result
     FROM
-        event_player, event 
+        event_player, event, ranking
     WHERE 
         event_player.PEOPLE_ID = p_people_id 
         AND event.VISIBLE=TRUE 
         AND event.DELETED=FALSE 
         AND event.SAVED_RESULT=TRUE 
         AND event_player.EVENT_ID=event.ID 
-        AND event_player.BUYIN > 0;
+        AND event_player.BUYIN > 0
+        AND event.RANKING_ID=ranking.ID
+        AND ranking.VISIBLE=TRUE
+        AND ranking.DELETED=FALSE;
 
    IF result IS NULL THEN
      result := 0;
@@ -218,13 +230,16 @@ BEGIN
     FROM
         event_player
         INNER JOIN event ON event_player.EVENT_ID = event.ID
+        INNER JOIN ranking ON event.RANKING_ID = ranking
     WHERE
         event.RANKING_ID = p_ranking_id
         AND event.ENABLED
         AND event.VISIBLE
         AND NOT event.DELETED
         AND event.IS_FREEROLL
-        AND event.SAVED_RESULT;
+        AND event.SAVED_RESULT
+        AND ranking.VISIBLE=TRUE
+        AND ranking.DELETED=FALSE;
 
    IF result IS NULL THEN
      result := 0;
@@ -247,12 +262,15 @@ BEGIN
     FROM
         event_player
         INNER JOIN event ON event_player.EVENT_ID = event.ID
+        INNER JOIN ranking ON event.RANKING_ID = ranking.ID
     WHERE
         event.RANKING_ID = p_ranking_id
         AND event.ENABLED
         AND event.VISIBLE
         AND NOT event.DELETED
-        AND event.SAVED_RESULT;
+        AND event.SAVED_RESULT
+        AND ranking.VISIBLE=TRUE
+        AND ranking.DELETED=FALSE;
 
    IF result IS NULL THEN
      result := 0;

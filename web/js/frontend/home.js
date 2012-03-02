@@ -1,16 +1,9 @@
-var _LastNewsId = null;
+function showOptionBar(side){
 
-function toggleNews(newsId){
-	
-	if( _LastNewsId )
-		hideDiv('newsDescription'+_LastNewsId);
-	
-	if( newsId!=_LastNewsId ){
-		
-		showDiv('newsDescription'+newsId);
-		_LastNewsId = newsId;
-	}else{
-		
-		_LastNewsId = null;
-	}
+	showDiv('optionBar'+ucfirst(side));
+}
+
+function hideOptionBar(side){
+
+	hideDiv('optionBar'+ucfirst(side));
 }
