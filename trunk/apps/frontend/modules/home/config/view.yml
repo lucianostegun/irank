@@ -1,8 +1,8 @@
 all:
   stylesheets:    [-frontend/resume, frontend/home]
-  javascripts:    [-frontend/home]
+  javascripts:    [frontend/home]
   
 indexSuccess:
-  stylesheets:    [-frontend/slideshow]
-  javascripts:    [-frontend/tinyfader] 
+  stylesheets:    []
+  javascripts:    [] 
   

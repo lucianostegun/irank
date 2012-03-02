@@ -59,6 +59,19 @@ class homeActions extends sfActions
 	
 	$this->photoUrl = $photoUrl;
   }
+
+  public function executeEventPhoto($request){
+	
+	$id = $request->getParameter('id');
+
+	$eventPhotoObj = EventPhotoPeer::retrieveByPK($id);
+	
+	if( !$eventPhotoObj->getIsShared() )
+		throw new Exception(__('event.exception.notSharedImage'));
+	
+	$fileObj = $eventPhotoObj->getFile();
+	$fileObj->getResized(366);	
+  }
   
   public function executeMobile($request){
   	

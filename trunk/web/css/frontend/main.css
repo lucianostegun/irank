@@ -81,11 +81,51 @@ a:hover {
 #contentArea #borderTable {
 	
 	position: 		relative;
+	width: 			1058px;
 	empty-cells: 	show;
 	padding: 		0px;
 	margin: 		0px;
 	line-height: 	0px;
 	z-index: 		1;
+}
+
+#contentArea #borderTable .topLeft {
+
+	width: 29px;
+	height: 31px;
+}
+
+#contentArea #borderTable .top {
+
+	width: 			1000px;
+	height: 		31px;
+	background: 	url('/images/frontend/layout/borderTop.png') repeat-x
+}
+
+#contentArea #borderTable .topRight {
+
+	width: 		29px;
+	height: 	31px;
+}
+
+#contentArea #borderTable .left {
+
+	background: 	url('/images/frontend/layout/borderLeft.png') repeat-y
+}
+
+#contentArea #borderTable .middle {
+
+	background: 	url('/images/frontend/layout/innerBg.png');
+}
+
+#contentArea #borderTable .bottom {
+
+	background: 	url('/images/frontend/layout/borderBottom.png') repeat-x
+}
+
+#contentArea #borderTable .right {
+
+	background: 	url('/images/frontend/layout/borderRight.png') repeat-y
 }
 
 #contentArea #mainContent #topMenu {
@@ -265,7 +305,6 @@ a:hover {
 	width: 									785px;
 	background: 							#FFFFFF;
 	margin-bottom: 							10px;
-	padding-bottom: 						10px;
 	-moz-border-bottom-right-radius: 		5px;
 	-webkit-border-bottom-right-radius: 	5px;
 	border-bottom-right-radius: 			5px;
@@ -309,4 +348,10 @@ a:hover {
 
 	clear: 	both;
 	width: 	100%
+}
+
+
+#debugDiv {
+
+	background: #FFFFFF
 }

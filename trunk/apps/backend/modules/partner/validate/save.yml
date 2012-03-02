@@ -1,5 +1,0 @@
-fields:
-       
-  question:
-    required:
-      msg:       Este campo é obrigatório e não foi preenchido

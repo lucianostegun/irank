@@ -1,3 +1,0 @@
-all:
-  stylesheets:    [backend/login]
-  javascripts:    [backend/login, -backend/record, -backend/hotKey, -backend/mask, -backend/toolbar, -backend/paginator]
