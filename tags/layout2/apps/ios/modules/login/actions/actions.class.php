@@ -146,7 +146,7 @@ class loginActions extends sfActions
 			echo 'recoverySuccess';
 		}catch(Exception $e){
 			
-			Util::forceError('Falha ao enviar o e-mail');
+			Util::forceError('sendMailFailure');
 		}
 	}else{
 		

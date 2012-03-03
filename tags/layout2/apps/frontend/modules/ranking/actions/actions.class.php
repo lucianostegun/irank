@@ -72,18 +72,21 @@ class rankingActions extends sfActions
   
   public function executeSave($request){
 
-	$rankingId       = $request->getParameter('rankingId');
-	$rankingName     = $request->getParameter('rankingName');
-	$buildEmailGroup = $request->getParameter('buildEmailGroup');
-	$rankingTag      = $request->getParameter('rankingTag');
-	$gameStyleId     = $request->getParameter('gameStyleId');
-	$startDate       = $request->getParameter('startDate');
-	$finishDate      = $request->getParameter('finishDate');
-	$isPrivate       = $request->getParameter('isPrivate');
-	$rankingTypeId   = $request->getParameter('rankingTypeId');
-	$defaultBuyin    = $request->getParameter('defaultBuyin');
-	$scoreSchema     = $request->getParameter('scoreSchema');
-	$scoreFormula    = $request->getParameter('scoreFormula');
+	$rankingId        = $request->getParameter('rankingId');
+	$rankingName      = $request->getParameter('rankingName');
+	$buildEmailGroup  = $request->getParameter('buildEmailGroup');
+	$rankingTag       = $request->getParameter('rankingTag');
+	$gameStyleId      = $request->getParameter('gameStyleId');
+	$startDate        = $request->getParameter('startDate');
+	$finishDate       = $request->getParameter('finishDate');
+	$isPrivate        = $request->getParameter('isPrivate');
+	$rankingTypeId    = $request->getParameter('rankingTypeId');
+	$defaultBuyin     = $request->getParameter('defaultBuyin');
+	$scoreSchema      = $request->getParameter('scoreSchema');
+	$scoreFormula     = $request->getParameter('scoreFormula');
+	$recalculateScore = $request->getParameter('recalculateScore');
+
+$recalculateScore = true;
 
 	$rankingObj = $this->rankingObj;
 
@@ -129,10 +132,13 @@ class rankingActions extends sfActions
 		$rankingObj->resetOptions();
 	}else{
 		
+		if( $recalculateScore )
+			$rankingObj->updateWholeScore();
+		
 		$rankingObj->updateScores();
 		$rankingObj->saveOptions($request);
 		
-		if( $updateHistory )
+		if( $updateHistory || $recalculateScore )
 			$rankingObj->updateWholeHistory();
 	}
 	
@@ -417,6 +423,7 @@ class rankingActions extends sfActions
   	echo 'var i18n_ranking_deleteConfirm                = "'.__('ranking.deleteConfirm').'";'.$nl;
   	echo 'var i18n_ranking_deleteError                  = "'.__('ranking.deleteError').'";'.$nl;
   	echo 'var i18n_ranking_importSuccessMessage         = "'.__('ranking.importSuccessMessage').'";'.$nl;
+  	echo 'var i18n_rankingScoreRecalculateConfirm       = "'.__('ranking.scoreRecalculateConfirm').'";'.$nl;
   	exit;
   }
   

@@ -30,9 +30,9 @@ class rankingActions extends sfActions
   
   public function executeSavePlayer($request){
   	
-  	$xmlString = $request->getParameter('playerXml');
   	$rankingId = $request->getParameter('rankingId');
   	$eventId   = $request->getParameter('eventId');
+  	$xmlString = $request->getParameter('playerXml');
 
 //	$file = fopen(Util::getFilePath('/xml.xml'), 'w');
 //	fwrite($file, $xmlString);

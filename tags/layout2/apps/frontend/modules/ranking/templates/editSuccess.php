@@ -23,6 +23,8 @@
 	
 	echo input_hidden_tag('rankingId', $rankingId);
 	echo input_hidden_tag('scoreFormula', ($scoreFormula=$rankingObj->getScoreFormula()), array('id'=>'rankingScoreFormula'));
+	echo input_hidden_tag('oldScoreSchema', $rankingObj->getScoreSchema(), array('id'=>'rankingOldScoreSchema'));
+	echo input_hidden_tag('recalculateScore', null, array('id'=>'rankingRecalculateScore'));
 
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 	$dhtmlxTabBarObj->addTab('main', 'Ranking', 'ranking/form/main', array('rankingObj'=>$rankingObj));

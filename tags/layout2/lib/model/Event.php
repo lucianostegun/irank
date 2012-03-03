@@ -679,7 +679,10 @@ class Event extends BaseEvent
 		
 		$eventId    = $this->getId();
 		$rankingObj = $this->getRanking();
-		
+
+		$scoreSchema  = $rankingObj->getScoreSchema();
+		$scoreFormula = $rankingObj->getScoreFormula();
+				
 		$paidPlaces = 0;
 		$players    = 0;
 		
@@ -703,9 +706,6 @@ class Event extends BaseEvent
 				$players++;
 			}
 		}
-		
-		$scoreSchema  = $rankingObj->getScoreSchema();
-		$scoreFormula = $rankingObj->getScoreFormula();
 		
 		if( $isFreeroll )
 			$totalBuyin += $this->getPrizePot();
@@ -754,25 +754,7 @@ class Event extends BaseEvent
 				if( !$this->getSavedResult() )
 					$events += 1;
 				
-				$eventPresenceScore = ceil($events/3)*5;
-				$eventPositionScore = ($eventPosition>0?($players-($eventPosition-1)):0);
-				$eventPrizeScore    = $prize/10;
-				
-				switch($scoreSchema){
-					case 'irank1':
-						$score = $totalBuyin/$eventPosition/$buyin;
-						break;
-					case 'vegas':
-					default;
-						$score = ($eventPresenceScore+$eventPositionScore+$eventPrizeScore);
-						break;
-					case 'custom':
-						$score = $this->parseScore($scoreFormula, $eventPosition, $events, $prize, $players, $totalBuyin, $buyin, $paidPlaces);
-						break;
-				}
-				echo "$score = $totalBuyin/$eventPosition/$buyin;";
-				exit;
-				$score = number_format($score, 3);
+				$score = $this->parseScore($scoreSchema, $scoreFormula, $eventPosition, $events, $prize, $players, $totalBuyin, $buyin, $paidPlaces);
 				
 				$eventPlayerObj->setScore( $score );
 				
@@ -792,32 +774,49 @@ class Event extends BaseEvent
 		$this->notifyResult();
 	}
 	
-	public function parseScore($formula, $position, $events, $prize, $players, $totalBuyins, $defaultBuyin, $itm){
+	public function parseScore($scoreSchema, $formula, $position, $events, $prize, $players, $totalBuyins, $defaultBuyin, $itm){
 		
-		$formula = strtolower($formula);
-		$formula = preg_replace('/\t\r\n /', '', $formula);
+		switch($scoreSchema){
+			case 'irank1':
+				$score = $totalBuyins/$position/$defaultBuyin;
+				break;
+			case 'vegas':
+			default:
+				$eventPresenceScore = ceil($events/3)*5;
+				$eventPositionScore = ($position>0?($players-($position-1)):0);
+				$eventPrizeScore    = $prize/10;
+				$score = ($eventPresenceScore+$eventPositionScore+$eventPrizeScore);
+				break;
+			case 'custom':
+				$formula = strtolower($formula);
+				$formula = preg_replace('/\t\r\n /', '', $formula);
+				
+				$formula = preg_replace('/posi[cç][aã]o|position/', '$position', $formula);
+				$formula = preg_replace('/eventos|events/', '$events', $formula);
+				$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
+				$formula = preg_replace('/jogadores|players/', '$players', $formula);
+				$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
+				$formula = preg_replace('/buyin/', '$defaultBuyin', $formula);
+				$formula = preg_replace('/itm/', '$itm', $formula);
+				
+				$score = null;
+				
+				@eval('$score = '.$formula.';');
+				
+				if( $score===null )
+					throw new Exception('Error parsing score formula');
+				break;
+		}
 		
-		$formula = preg_replace('/posi[cç][aã]o|position/', '$position', $formula);
-		$formula = preg_replace('/eventos|events/', '$events', $formula);
-		$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
-		$formula = preg_replace('/jogadores|players/', '$players', $formula);
-		$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
-		$formula = preg_replace('/buyin/', '$defaultBuyin', $formula);
-		$formula = preg_replace('/itm/', '$itm', $formula);
-		
-		$score = null;
-		
-		@eval('$score = '.$formula.';');
-		
-		if( $score===null )
-			throw new Exception('Error parsing score formula');
-		
-		return $score;
+		return number_format($score, 3);
 	}
 	
 	public function updateResult(){
 		
 		$rankingObj = $this->getRanking();
+
+		$scoreSchema  = $rankingObj->getScoreSchema();
+		$scoreFormula = $rankingObj->getScoreFormula();
 		
 		$paidPlaces = $this->getPaidPLaces();
 		$players    = $this->getPlayers();
@@ -855,35 +854,13 @@ class Event extends BaseEvent
 			// Recupera quantos eventos o usuário participou neste ranking antes deste evento
 			$events = $eventPlayerObj->getPeople()->getEvents($this->getRankingId(), $this->getEventDateTime('d/m/Y H:i:s'));
 			
-			if( $enabled ){
-				
-				$eventPresenceScore = ceil($events/3)*5;
-				$eventPositionScore = ($eventPosition>0?($players-($eventPosition-1)):0);
-				$eventPrizeScore    = $prize/10;
-				
-//				$score = $totalBuyin/$eventPosition/$buyin; //Modelo antigo de pontuação
-				$score = ($eventPresenceScore+$eventPositionScore+$eventPrizeScore);
-				$score = number_format($score, 3);
-			}else{
-				
+			if( $enabled )
+				$score = $this->parseScore($scoreSchema, $scoreFormula, $eventPosition, $events, $prize, $players, $totalBuyin, $buyin, $paidPlaces);
+			else
 				$score = 0;
-			}
-			
-//			if( $peopleId==83 ){
-//				echo '$eventId: '.$this->getId().'<br>';
-//				echo '$events: '.$events.'<br>';
-//				echo '$eventPosition: '.$eventPosition.'<br>';
-//				echo '$prize: '.$prize.'<br>';
-//				echo '$eventPresenceScore: '.$eventPresenceScore.'<br>';
-//				echo '$eventPositionScore: '.$eventPositionScore.'<br>';
-//				echo '$eventPrizeScore: '.$eventPrizeScore.'<hr>';
-//			}
 			
 			$eventPlayerObj->setScore( $score );
 			$eventPlayerObj->save();
-//			if( $peopleId==17 ){
-//				echo '<pre>';print_r($eventPlayerObj);exit;
-//			}
 		}
 
 		$rankingObj->updateScores();

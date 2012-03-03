@@ -2203,7 +2203,15 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.invalidFormula</source>
-				<target>A formulá informada não é válida</target>
+				<target>A fórmula informada não é válida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.scoreSchema</source>
+				<target>Modelo de pontuação</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.scoreRecalculateConfirm</source>
+				<target>O modelo de pontuação foi modificado!\nDeseja recalcular o resultado de todos os eventos anteriores para o novo modelo de pontuação?</target>
 			</trans-unit>
 			
 		</body>

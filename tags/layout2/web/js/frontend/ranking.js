@@ -1,3 +1,19 @@
+function doSubmitRanking(content){
+
+	var isNew = ($('rankingId').value=='');
+	
+	if( !isNew ){
+		
+		if( $('rankingOldScoreSchema').value!=$('rankingScoreSchema').value ){
+			$('rankingRecalculateScore').value = confirm(i18n_rankingScoreRecalculateConfirm)?'1':'0';
+		}
+	}
+	
+	showIndicator('ranking');
+	disableButton('mainSubmit');
+	$('rankingForm').onsubmit();
+}
+
 function handleSuccessRanking(rankingId){
 
 	setRecordSaved(true);
@@ -6,7 +22,8 @@ function handleSuccessRanking(rankingId){
 	hideIndicator('ranking');
 	enableButton('mainSubmit');
 	
-	var isNew = ($('rankingId').value=='');
+	var isNew            = ($('rankingId').value=='');
+	var recalculateScore = ($('rankingRecalculateScore').value='1');
 	
 	if( !$('rankingId').value )
 		$('rankingId').value = rankingId;
@@ -20,22 +37,22 @@ function handleSuccessRanking(rankingId){
 	
 	showDiv('mainMenuRanking');
 	
-	if( isNew ){
+	if( isNew || recalculateScore ){
 		
-		reloadPlayerTab();
-		tabBarMainObj.showTab('event');
+		if( isNew ){
+			
+			reloadPlayerTab();
+			tabBarMainObj.showTab('event');
+			reloadOptionsTab();
+		}
+		
 		reloadClassifyTab();
-		reloadOptionsTab();
 	}
 	
+	$('rankingOldScoreSchema').value   = $('rankingScoreSchema').value;
+	$('rankingRecalculateScore').value = '';
+	
 	onSelectTabRanking(tabBarMainObj.getActiveTab());
-}
-
-function doSubmitRanking(content){
-
-	showIndicator('ranking');
-	disableButton('mainSubmit');
-	$('rankingForm').onsubmit();
 }
 
 function doSubmitRankingPlayer(content){
@@ -426,6 +443,9 @@ function doSaveRankingScoreFormula(){
 		
 		$('rankingScoreFormula').value        = $('rankingScoreFormulaFormula').value;
 		$('rankingScoreFormulaDiv').innerHTML = $('rankingScoreFormulaFormula').value;
+		
+		$('rankingOldScoreSchema').value = '';
+		
 		windowRankingScoreFormulaHide();
 	}
 }

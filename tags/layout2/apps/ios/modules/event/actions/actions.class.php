@@ -116,7 +116,7 @@ class eventActions extends sfActions
 	
 	$eventCommentObj->notify();
 	
-	echo 'ok';
+	echo 'saveSuccess';
 	
 	exit;
   }
@@ -155,9 +155,9 @@ class eventActions extends sfActions
 
 	Util::getHelper('I18N');
 	
-	$eventId    = $request->getParameter('eventId');
-	$peopleId   = $request->getParameter('peopleId');
-	$choice     = $request->getParameter('choice');
+	$eventId  = $request->getParameter('eventId');
+	$peopleId = $request->getParameter('peopleId');
+	$choice   = $request->getParameter('choice');
 	
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
@@ -167,6 +167,8 @@ class eventActions extends sfActions
 		$eventObj->togglePresence($peopleId, 'yes', $notify);
 	else
 		$eventObj->togglePresence($peopleId, 'no', $notify);
+    
+    echo 'toggleSuccess';
     
     exit;
   }
@@ -203,7 +205,8 @@ class eventActions extends sfActions
 		$totalPrize  = ($buyins*$defaultBuyin)+$eventObj->getPrizePot();
 	}
 	
-	
+	$infoList['paidPlaces'] *= 1;
+
 	$percentList = explode(',', $infoList['percentList']);
 	
 	foreach($percentList as $key=>$percent)
@@ -249,6 +252,7 @@ class eventActions extends sfActions
   public function executeImageThumb($request){
 
   	$eventPhotoId  = $request->getParameter('eventPhotoId');
+  	$width         = $request->getParameter('width', 300);
   	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
   	
   	$filePath = $eventPhotoObj->getFile()->getFilePath(true);
@@ -260,7 +264,6 @@ class eventActions extends sfActions
 	$srcW = imagesx($newImg);
 	$srcH = imagesy($newImg);
 	
-	$width  = 300;
 	$height = ($srcH*$width/$srcW);
 	
 	$img = imagecreatetruecolor($width, $height);
