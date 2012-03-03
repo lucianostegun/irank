@@ -226,9 +226,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -242,9 +240,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setModuleId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -262,9 +258,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setDescription($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -278,9 +272,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setTagName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -294,9 +286,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setTagId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -310,9 +300,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setImage($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -326,9 +314,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setActionName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -342,9 +328,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setExecuteModule($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -358,9 +342,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setExecuteAction($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -384,9 +366,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setOrderSeq($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -410,9 +390,7 @@ abstract class BaseToolbar extends BaseObject  implements Persistent {
 	public function setVisibleAction($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

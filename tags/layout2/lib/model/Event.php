@@ -476,6 +476,7 @@ class Event extends BaseEvent
 			$emailContent = str_replace('<congratsMessage>', $congratsMessage, $emailContent);
 
 			Report::sendMail($emailSubject, $emailAddress, $emailContent);
+			exit;
 		}
 	}
 	
@@ -703,6 +704,9 @@ class Event extends BaseEvent
 			}
 		}
 		
+		$scoreSchema  = $rankingObj->getScoreSchema();
+		$scoreFormula = $rankingObj->getScoreFormula();
+		
 		if( $isFreeroll )
 			$totalBuyin += $this->getPrizePot();
 		$result = array();
@@ -754,29 +758,28 @@ class Event extends BaseEvent
 				$eventPositionScore = ($eventPosition>0?($players-($eventPosition-1)):0);
 				$eventPrizeScore    = $prize/10;
 				
-//				$score = $totalBuyin/$eventPosition/$buyin; //Modelo antigo de pontuação
-				$score = ($eventPresenceScore+$eventPositionScore+$eventPrizeScore);
+				switch($scoreSchema){
+					case 'irank1':
+						$score = $totalBuyin/$eventPosition/$buyin;
+						break;
+					case 'vegas':
+					default;
+						$score = ($eventPresenceScore+$eventPositionScore+$eventPrizeScore);
+						break;
+					case 'custom':
+						$score = $this->parseScore($scoreFormula, $eventPosition, $events, $prize, $players, $totalBuyin, $buyin, $paidPlaces);
+						break;
+				}
+				echo "$score = $totalBuyin/$eventPosition/$buyin;";
+				exit;
 				$score = number_format($score, 3);
-				
-//				$result[$eventPosition] = $score;				
 				
 				$eventPlayerObj->setScore( $score );
 				
-//					if($eventPlayerObj->getPeopleId()==1){
-//						
-//						echo '$eventPresenceScore: '.$eventPresenceScore;echo '<br>';
-//						echo '$eventPositionScore: '.$eventPositionScore;echo '<br>';
-//						echo '$eventPrizeScore: '.$eventPrizeScore;echo '<br>';
-//						echo '<pre>';
-//						print_r($eventPlayerObj);
-//					}
 				$eventPlayerObj->save();
 			}
 		}
 		
-//		ksort($result);
-//		echo '<pre>';print_r($result);exit;
-
 		$this->setPlayers($players);
 		$this->setPaidPlaces($paidPlaces);
 		$this->setSavedResult(true);
@@ -787,6 +790,29 @@ class Event extends BaseEvent
 		$rankingObj->updateHistory($this->getEventDate('d/m/Y'));
 		
 		$this->notifyResult();
+	}
+	
+	public function parseScore($formula, $position, $events, $prize, $players, $totalBuyins, $defaultBuyin, $itm){
+		
+		$formula = strtolower($formula);
+		$formula = preg_replace('/\t\r\n /', '', $formula);
+		
+		$formula = preg_replace('/posi[cç][aã]o|position/', '$position', $formula);
+		$formula = preg_replace('/eventos|events/', '$events', $formula);
+		$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
+		$formula = preg_replace('/jogadores|players/', '$players', $formula);
+		$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
+		$formula = preg_replace('/buyin/', '$defaultBuyin', $formula);
+		$formula = preg_replace('/itm/', '$itm', $formula);
+		
+		$score = null;
+		
+		@eval('$score = '.$formula.';');
+		
+		if( $score===null )
+			throw new Exception('Error parsing score formula');
+		
+		return $score;
 	}
 	
 	public function updateResult(){

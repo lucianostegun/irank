@@ -2189,6 +2189,23 @@
 				<source>home.welcome.line3</source>
 				<target>Se você ainda não é cadastrado, %clickHere% e comece agora mesmo a controlar seus jogos!</target>
 			</trans-unit>
+			<trans-unit>
+				<source>ranking.scoreFormula</source>
+				<target>Fórmula</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.allowedVariables</source>
+				<target>Variáveis</target>
+			</trans-unit>
+			<trans-unit>
+				<source>button.validateFormula</source>
+				<target>Validar fórmula</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.invalidFormula</source>
+				<target>A formulá informada não é válida</target>
+			</trans-unit>
+			
 		</body>
 	</file>
 </xliff>

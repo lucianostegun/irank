@@ -82,6 +82,8 @@ class rankingActions extends sfActions
 	$isPrivate       = $request->getParameter('isPrivate');
 	$rankingTypeId   = $request->getParameter('rankingTypeId');
 	$defaultBuyin    = $request->getParameter('defaultBuyin');
+	$scoreSchema     = $request->getParameter('scoreSchema');
+	$scoreFormula    = $request->getParameter('scoreFormula');
 
 	$rankingObj = $this->rankingObj;
 
@@ -93,6 +95,8 @@ class rankingActions extends sfActions
 	
 	$isNew = $rankingObj->isNew();
 
+	$scoreFormula = ($scoreSchema=='custom'?$scoreFormula:null);
+
 	$updateHistory = ($rankingTypeId!=$rankingObj->getRankingTypeId());
 
 	$rankingObj->setRankingName( $rankingName );
@@ -102,6 +106,8 @@ class rankingActions extends sfActions
 	$rankingObj->setDefaultBuyin( Util::formatFloat($defaultBuyin) );
 	$rankingObj->setIsPrivate( ($isPrivate?true:false) );
 	$rankingObj->setRankingTypeId( $rankingTypeId );
+	$rankingObj->setScoreSchema( $scoreSchema );
+	$rankingObj->setScoreFormula( $scoreFormula );
 	$rankingObj->setVisible(true);
 	$rankingObj->setEnabled(true);
 	

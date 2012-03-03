@@ -87,4 +87,58 @@ class RankingPeer extends BaseRankingPeer
 
 		return ($rankingIdImport!=$rankingId);
 	}
+	
+	public static function validateScoreSchema($scoreSchema){
+		
+		$scoreFormula = MyTools::getRequestParameter('scoreFormula');
+		
+		if( $scoreSchema!='custom' )
+			return true;
+		
+		if( !$scoreFormula ){
+			
+			MyTools::setError('scoreFormula', __('form.error.requiredField'));
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public static function validateScoreFormula($formula){
+		
+		$scoreSchema = MyTools::getRequestParameter('scoreSchema');
+		
+		if( $scoreSchema!='custom' )
+			return true;
+		
+		$position     = 1;
+		$events       = 1;
+		$prize        = 1;
+		$players      = 1;
+		$totalBuyins  = 1;
+		$defaultBuyin = 1;
+		$itm          = 1;
+		
+		$formula = strtolower($formula);
+		
+		$formula = preg_replace('/posi[cç][aã]o|position/', '$position', $formula);
+		$formula = preg_replace('/eventos|events/', '$events', $formula);
+		$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
+		$formula = preg_replace('/jogadores|players/', '$players', $formula);
+		$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
+		$formula = preg_replace('/buyin/', '$defaultBuyin', $formula);
+		$formula = preg_replace('/itm/', '$itm', $formula);
+		
+		$formulaResult = null;
+		
+		@eval('$formulaResult = '.$formula.';');
+		
+		if( $formulaResult===null ){
+			
+			MyTools::setError('scoreFormula', __('ranking.invalidFormula'));
+			return false;
+		}
+		
+		return true;
+	}
 }

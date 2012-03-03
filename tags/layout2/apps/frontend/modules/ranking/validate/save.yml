@@ -60,3 +60,15 @@ fields:
     sfCallbackValidator:
       callback:      [RankingPrizeSplitPeer, validatePrizeSplit]
       invalid_error: nullError
+      
+  scoreSchema:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [RankingPeer, validateScoreSchema]
+      invalid_error: nullError
+      
+  scoreFormula:
+    sfCallbackValidator:
+      callback:      [RankingPeer, validateScoreFormula]
+      invalid_error: nullError

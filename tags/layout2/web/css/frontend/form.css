@@ -218,7 +218,8 @@
 	border:			1px solid transparent;
 }
 
-.defaultForm .row .textFlex, .windowForm .row .textFlex {
+.defaultForm .row .textFlex, .windowForm .row .textFlex,
+.defaultForm .row .textFlexError, .windowForm .row .textFlexError {
 
 	float: 			left;
 	padding: 		1px 3px 2px 3px;
@@ -228,6 +229,12 @@
 	color: 			#333333;
 	margin: 		0px 10px 0px 0px;
 	border:			1px solid transparent;
+}
+
+.defaultForm .row .textFlexError, .windowForm .row .textFlexError {
+
+	background: 	#FB8F7E;
+	border:			1px solid #333333;
 }
 
 
@@ -326,7 +333,8 @@
 	border:			1px solid #8A8A8A;
 }
 
-.defaultForm .rowTextArea {
+.defaultForm .rowTextArea,
+.windowForm .rowTextArea {
 
 	height: 		73px;
 	height: 		73px !ie;
@@ -335,7 +343,10 @@
 	whitespace: 	nowrap;
 }
 
-.defaultForm .rowTextArea .label {
+.defaultForm .rowTextArea .label,
+.windowForm .rowTextArea .label,
+.defaultForm .rowTextArea .labelHalf,
+.windowForm .rowTextArea .labelHalf {
 
 	width: 			160px;
 	float: 			left;
@@ -348,7 +359,16 @@
 	margin-right: 	10px;
 }
 
-.defaultForm .rowTextArea .labelRo {
+.defaultForm .rowTextArea .label,
+.windowForm .rowTextArea .label,
+.defaultForm .rowTextArea .labelHalf,
+.windowForm .rowTextArea .labelHalf {
+
+	width: 	100px;
+}
+
+.defaultForm .rowTextArea .labelRo,
+.windowForm .rowTextArea .labelRo {
 
 	width: 			160px;
 	float: 			left;
@@ -361,7 +381,8 @@
 	margin-right: 	10px;
 }
 
-.defaultForm .rowTextArea .field {
+.defaultForm .rowTextArea .field,
+.windowForm .rowTextArea .field {
 
 	float: 			left;
 	height: 		70px;
@@ -371,21 +392,22 @@
 	text-align: 	left;
 }
 
-.defaultForm .rowTextArea .text {
+.defaultForm .rowTextArea .text,
+.windowForm .rowTextArea .text {
 
 	height: 		64px;
 	height: 		75px !ie;
 	float: 			left;
-	padding: 		0px;
 	margin-right: 	2px;
-	padding: 		4px;
+	padding: 		4px 4px 4px 4px;
 	text-align: 	left;
 	width: 			330px;
 	overflow: 		auto;
 	color: 			#333333;
 }
 
-.defaultForm .rowTextArea .textFlex {
+.defaultForm .rowTextArea .textFlex,
+.windowForm .rowTextArea .textFlex {
 
 	float: 			left;
 	padding: 		0px;
@@ -393,19 +415,26 @@
 	padding: 		4px;
 	text-align: 	left;
 	border: 		0px solid #D5D5D5;
-	width: 			330px;
 	overflow: 		auto;
 	color: 			#333333;
 }
 
-.defaultForm .rowTextArea .field textarea, .defaultForm textarea {
+.defaultForm .rowTextArea .textFlex {
+
+	width: 			330px;
+}
+
+.defaultForm .rowTextArea .field textarea, .defaultForm textarea,
+.windowForm .rowTextArea .field textarea, .windowForm textarea {
 
 	font-size: 		8pt;
+	font-family: 	Verdana, Arial, sans-serif;
 	width: 			250px;
 	height: 		70px;
 	height: 		71px !ie;
 	margin: 		0px 0px 0px -1px;
 	margin: 		-1px -2px -1px -1px !ie;
+	padding-top: 	3px;
 	padding-left: 	3px;
 	resize: 		none;
 	border:			1px solid #8A8A8A;
@@ -418,7 +447,8 @@
 	border:			1px solid #8A8A8A;
 }
 
-.defaultForm .rowTextArea .field textarea.formFieldError, textarea.formFieldError {
+.defaultForm .rowTextArea .field textarea.formFieldError, textarea.formFieldError,
+.windowForm .rowTextArea .field textarea.formFieldError, textarea.formFieldError {
 
 	background: 	#FB8F7E;
 	border:			1px solid #333333;

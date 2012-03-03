@@ -947,6 +947,26 @@ class Ranking extends BaseRanking
 		return Util::buildXml($rankingList, 'rankings', 'ranking');
 	}
 	
+	public static function getOptionsForSelectScoreSchema($defaultValue=null){
+		
+		$optionList = array();
+		$optionList['irank1']  = 'Buy-ins / Posição / Valor Buy-in';
+		$optionList['vegas']   = 'Padrão Vegas';
+		$optionList['custom']  = 'Fórmula personalizada';
+		
+		return options_for_select($optionList, $defaultValue);
+	}
+	
+	public function getScoreFormula($returnMessage=false){
+		
+		$scoreFormula = parent::getScoreFormula();
+		
+		if( !$scoreFormula && $returnMessage )
+			$scoreFormula = 'Fórmula não definida';
+		
+		return $scoreFormula;
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');

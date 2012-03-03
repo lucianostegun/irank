@@ -393,3 +393,102 @@ function doUnsubscribeRanking(){
 	var urlAjax = _webRoot+'/ranking/validateUnsubscribe/rankingId/'+rankingId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
+
+function handleRankingFloridaSchema(scoreSchema){
+	
+	if( scoreSchema=='custom' ){
+		
+		showDiv('rankingScoreFormulaRowDiv');
+		adjustContentTab();
+	}else{
+		
+		hideDiv('rankingScoreFormulaRowDiv');
+		$('rankingScoreFormula').value = '';
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function doSaveRankingScoreFormula(){
+	
+	if( doValidateRankingScoreFormula() ){
+		
+		$('rankingScoreFormula').value        = $('rankingScoreFormulaFormula').value;
+		$('rankingScoreFormulaDiv').innerHTML = $('rankingScoreFormulaFormula').value;
+		windowRankingScoreFormulaHide();
+	}
+}
+
+function doValidateRankingScoreFormula(){
+	
+	if( checkRankingScoreFormula() ){
+	
+		$('rankingScoreFormulaFormula').className = '';
+		$('rankingScoreFormulaFormula').title     = '';
+		showDiv('rankingFormulaSuccessDiv');
+		enableButton('rankingScoreFormulaSave');
+		return true;
+	}else{
+		
+		setInvalidFormula();
+		return false;
+	}
+}
+
+function checkRankingScoreFormula(){
+
+	var formula = $('rankingScoreFormulaFormula').value;
+	
+	if( !formula )
+		return false;
+	
+	formula = formula.toLowerCase();
+	
+	var position = 1;
+	var events   = 1;
+	var prize    = 1;
+	var players  = 1;
+	var buyins   = 1;
+	var buyin    = 1;
+	var itm      = 1;
+	
+	formula = formula.replace(/posi[cç][aã]o|position/gi, 'position');
+	formula = formula.replace(/eventos|events/gi, 'events');
+	formula = formula.replace(/pr[eê]mio|prize/gi, 'prize');
+	formula = formula.replace(/jogadores|players/gi, 'players');
+	formula = formula.replace(/buyins/gi, 'buyins');
+	formula = formula.replace(/buyin/gi, 'buyin');
+	formula = formula.replace(/itm/gi, 'itm');
+	
+	var formulaResult = null;
+	
+	try{
+		
+		eval('formulaResult = '+formula+';');
+	}catch(error){
+		
+		return false;
+	}
+	
+	if( formulaResult!=null )
+		return true;
+}
+
+function setInvalidFormula(){
+	
+	$('rankingScoreFormulaFormula').className = 'formFieldError';
+	$('rankingScoreFormulaFormula').title     = 'Invalid formula';
+	disableButton('rankingScoreFormulaSave');
+	hideDiv('rankingFormulaSuccessDiv')
+}

@@ -13,3 +13,13 @@
 
 	color: #FF0000;
 }
+
+#rankingFormulaSuccessDiv {
+
+	display: 	none;
+}
+
+#rankingFormulaSuccessDiv img {
+
+	margin-right: 	5px
+}

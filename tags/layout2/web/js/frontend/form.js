@@ -171,6 +171,7 @@ function clearFormFieldErrors( formId ){
 		
 			var objectId  = divList[i2].id;
 			$(objectId).className = $(objectId).className.replace(/Error/g, '');
+			$(objectId).title     = '';
 		}
 	}
 	
