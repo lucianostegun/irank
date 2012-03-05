@@ -1,6 +1,6 @@
 all:
-  stylesheets:    [-frontend/resume, frontend/home]
-  javascripts:    [frontend/home]
+  stylesheets:    [-frontend/resume, frontend/home, frontend/lightbox]
+  javascripts:    [frontend/home, frontend/highlight, /sf/prototype/js/scriptaculous, frontend/lightbox]
   
 indexSuccess:
   stylesheets:    []

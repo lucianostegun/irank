@@ -62,7 +62,8 @@ class homeActions extends sfActions
 
   public function executeEventPhoto($request){
 	
-	$id = $request->getParameter('id');
+	$id   = $request->getParameter('id');
+	$zoom = $request->getParameter('zoom');
 
 	$eventPhotoObj = EventPhotoPeer::retrieveByPK($id);
 	
@@ -70,7 +71,7 @@ class homeActions extends sfActions
 		throw new Exception(__('event.exception.notSharedImage'));
 	
 	$fileObj = $eventPhotoObj->getFile();
-	$fileObj->getResized(366);	
+	$fileObj->getResized(($zoom?750:366));
   }
   
   public function executeMobile($request){
