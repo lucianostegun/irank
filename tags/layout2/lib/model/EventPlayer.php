@@ -62,6 +62,7 @@ class EventPlayer extends BaseEventPlayer
 	  	
 		$infoList = array();
 		$infoList['playerList'] = $playerList;
+		$infoList['peopleName'] = $this->getPeople()->getFirstName();
 
 		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName('confirmPresenceNotify', false, 'pt_BR'), $infoList);
 		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName('confirmPresenceNotify', false, 'en_US'), $infoList);
@@ -69,7 +70,7 @@ class EventPlayer extends BaseEventPlayer
 		$emailSubjectList['en_US'] = __('email.subject.presenceConfirm', null, 'messages', 'en_US');
 
 		$emailAddressList = $eventObj->getEmailAddressList('receiveFriendEventConfirmNotify');
-
+		
 	  	foreach($eventPlayerObjList as $eventPlayerObj){
 
 			$peopleObj    = $eventPlayerObj->getPeople();
@@ -82,9 +83,7 @@ class EventPlayer extends BaseEventPlayer
 			$emailContent    = $emailContentList[$defaultLanguage];
 			$emailSubject    = $emailSubjectList[$defaultLanguage];
 			
-			$emailContent = str_replace('<peopleName>', $peopleObj->getName(), $emailContent);
-			
-			Report::sendMail($emailSubject, $emailAddressList, $emailContent);
+			Report::sendMail($emailSubject, $emailAddress, $emailContent);
 	  	}
 	}
 	
