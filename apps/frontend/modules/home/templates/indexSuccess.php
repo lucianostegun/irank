@@ -12,19 +12,19 @@
 			classificações e estatísticas dos torneios entre seus amigos.</p>
 		</div>
 		
-		<div class="contentItem" id="homeHighlight2" style="background: #F90000">
-			outro conteúdo vermelho
+		<div class="contentItem" id="homeHighlight2" style="background: url('/images/temp/math.jpg') left center no-repeat">
+			<h2 style="position: relative; top: 245px; color: #E9AE0F; text-shadow: black -1px -1px;">Pontuação personalizada</h2>
 		</div>
-		<div class="contentItem" id="homeHighlight3" style="background: #00F900">
-			outro conteúdo verde
+		<div class="contentItem" id="homeHighlight3" style="background: #303030">
+			conteúdo #3
 		</div>
 		
-		<div class="contentItem" id="homeHighlight4" style="background: #0000F9">
-			outro conteúdo azul
+		<div class="contentItem" id="homeHighlight4" style="background: #303030">
+			conteúdo #4
 		</div>
 
-		<div class="contentItem" id="homeHighlight5" style="background: #F9F900">
-			outro conteúdo amarelo
+		<div class="contentItem" id="homeHighlight5" style="background: #303030">
+			conteúdo #5
 		</div>
 		
 		<div class="descriptionBorder">
@@ -32,7 +32,7 @@
 			<div class="descriptionText">
 			 	<ul>
 					<li id="contentItemText1" class="active"><p>Se você ainda não é cadastrado,<br/><?php echo link_to('clique aqui', 'sign') ?> e comece agora mesmo a controlar seus jogos!</p></li>
-					<li id="contentItemText2"><p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</p></li>
+					<li id="contentItemText2"><p>Defina o modelo de pontuação mais adequado ao seu grupo com a nova opção no cadastro de rankings permite a você criar sua própria fórmula para cálculo dos pontos.</p></li>
 					<li id="contentItemText3"><p>Nam at ligula tellus. Fusce vel mattis leo. Suspendisse potenti. Aenean aliquam aliquet metus quis tincidunt. Suspendisse potenti.</p></li>
 					<li id="contentItemText4"><p>Pellentesque non nibh arcu. Fusce egestas, turpis quis congue tempus, ligula risus varius tortor, ac facilisis elit leo eget tellus. Donec suscipit adipiscing arcu</p></li>
 					<li id="contentItemText5"><p>Nulla aliquet ligula eget arcu adipiscing scelerisque. Quisque euismod nisl at nunc semper vel adipiscing enim imperdiet. Duis vehicula, magna vel congue tempus</p></li>
