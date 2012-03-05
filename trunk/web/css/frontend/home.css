@@ -21,7 +21,12 @@
 	width: 					540px;
 	height: 				340px;
 	border: 				1px solid #303030;
-	background: 			#000000 url('/images/frontend/highlight/bg.png');
+	
+	background: 	#000000;
+    background: 	-moz-linear-gradient(top, #000000, #454545);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#000000), to(#454545));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#000000', EndColorStr='#454545', GradientType=0);
+    
 	-moz-border-radius: 	5px;
 	-webkit-border-radius: 	5px;
 	border-radius: 			5px;
@@ -66,6 +71,7 @@
 
 .homeHighlight .content .contentItem {
 	
+	display: 		none;
 	position: 		absolute;
 	width: 			540px;
 	height: 		345px;
@@ -74,6 +80,11 @@
 	line-height: 	25px;
 	font-size: 		12px;
 	padding: 		10px;
+}
+
+.homeHighlight .content .contentItem.active {
+	
+	display: 		block;
 }
 
 .homeHighlight .content .descriptionText a {
@@ -87,17 +98,7 @@
 	list-style-type: 		none;
 }
 
-.homeHighlight .content .descriptionText ul li {
-	
-	display: 	none
-}
-
-.homeHighlight .content .descriptionText ul li.selected {
-	
-	display: 	block
-}
-
-.homeHighlight .content ul.indicator {
+.homeHighlight .content ul.selector {
 	
 	position: 				relative;
 	top: 					253px;
@@ -105,15 +106,16 @@
 	list-style-type: 		none;
 }
 
-.homeHighlight .content ul.indicator li {
+.homeHighlight .content ul.selector li {
 	
-	float: left;
+	float: 			left;
 	background: 	url('/images/frontend/highlight/circle.png') no-repeat;
-	width: 14px;
-	height: 8px
+	width: 			14px;
+	height: 		8px;
+	cursor: 		pointer
 }
 
-.homeHighlight .content ul.indicator li.selected {
+.homeHighlight .content ul.selector li.active {
 	
 	background: 	url('/images/frontend/highlight/circleSelected.png') no-repeat;
 }
@@ -235,7 +237,7 @@
 	background: 	#F0F0F0;
 	padding: 		5px 10px 10px 10px;
 	position: 		relative;
-	top: 			10px;
+	top: 			20px;
 	left: 			5px;
 	width: 			756px;
 }
@@ -243,7 +245,13 @@
 #photoVote h1 {
 	
 	color: 		#344F7C;
-	margin: 	5px;
+	margin: 	5px 5px 7px 5px;
+}
+
+#photoVote .intro {
+
+	margin-left: 	15px;
+	margin-bottom: 	5px;
 }
 
 #photoVote .links {
@@ -307,4 +315,153 @@
 	float: 					left;
 	left: 					5px;
 	background: 			url('/images/frontend/home/zoom.png') no-repeat;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#userResume {
+	
+}
+
+#userResume #eventResume {
+	
+	position: 	relative;
+	top: 		5px;
+	padding-bottom: 	15px;
+}
+
+#userResume #eventResume .calendar {
+	
+	float: 		left;
+	position: 	relative;
+	left: 		15px;
+}
+
+#userResume #eventResume #eventList {
+	
+	float: 		left;
+	position: 	relative;
+	left: 		25px;
+	top: 		25px;
+}
+
+#userResume #eventResume #eventList .event {
+
+	width: 			355px;
+	height: 		51px;
+	margin-bottom: 	2px;
+	border: 		1px solid #b5ccd6;
+	padding: 		5px 5px 5px 55px;
+	cursor: 		pointer;
+}
+
+#userResume #eventResume #eventList .event .title {
+
+	float: 			left;
+	font-weight: 	bold;
+}
+
+#userResume #eventResume #eventList .event .where {
+
+	float: 			left;
+	margin-left: 	5px;
+}
+
+#userResume #eventResume #eventList .event .when {
+
+	clear: 	both;
+}
+
+#userResume #eventResume #eventList .event .ranking {
+
+	float: left;
+}
+
+#userResume #eventResume #eventList .event .presence {
+
+	position: 				relative;
+	top: 					-3px;
+	margin-bottom: 			-3px;
+	float: 					right;
+	border: 				1px solid #b5ccd6;
+	-moz-border-radius: 	3px;
+	-webkit-border-radius: 	3px;
+	border-radius: 			3px;
+	padding-left: 			19px;
+	background: 			#e8f3f7 url('/images/frontend/home/presenceToYes.png') 3px center no-repeat;
+}
+
+#userResume #eventResume #eventList .event .presence.hover,
+#userResume #eventResume #eventList .event .presence.yes.hover {
+
+	background-color: 	#d2e3ea
+}
+
+#userResume #eventResume #eventList .event .presence.yes {
+
+	background: 	#e8f3f7 url('/images/frontend/home/presenceYes.png') 3px center no-repeat;
+}
+
+#userResume #eventResume #eventList .event .presence a {
+
+	margin-left: 	5px;
+	margin-right: 	5px;
+	color: 			#5c6377;
+	text-decoration: 	none;
+}
+
+#userResume #eventResume #eventList .event .presence a.confirmed {
+
+	margin-left: 	5px;
+	margin-right: 	5px;
+	color: 			#44780e;
+}
+
+#userResume #eventResume #eventList .event.next {
+
+	background: 	#d2e3ea url('/images/frontend/home/calendar.png') 2px center no-repeat;
+}
+
+#userResume #eventResume #eventList .event.next.hover,
+#userResume #eventResume #eventList .event.previous.hover {
+
+	background-color: 	#e8f3f7;
+}
+
+#userResume #eventResume #eventList .event.previous {
+
+	background: 	#deeaef url('/images/frontend/home/podium.png') 2px center no-repeat;
+}
+
+#userResume #eventResume #eventList .loadEvents {
+
+	width: 			400px;
+	margin-top: 	0px;
+	padding: 		2px 10px 2px 5px;
+	cursor: 		pointer;
+	text-align: 	right;
+	border: 1px solid #DADADA;
+	
+	
+	background: 	#F0F0F0;
+    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);
+}
+
+#userResume #eventResume #eventList .loadEvents a {
+
+	color: 			#5c6377;
+	font-size: 		12px;
 }

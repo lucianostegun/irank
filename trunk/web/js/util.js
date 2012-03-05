@@ -340,3 +340,8 @@ function getOrdinalSufix(number){
 		return sufix;
 	}
 }
+
+function changeClassName(element, className){
+	
+	element.className = className;
+}
