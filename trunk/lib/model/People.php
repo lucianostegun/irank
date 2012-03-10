@@ -213,7 +213,7 @@ class People extends BasePeople
 		return $this->getUserSite()->getId();
 	}
 	
-	public static function getResumeBalance($peopleId=null, $userSiteId=null, $formatDecimal=false){
+	public static function getFullResume($peopleId=null, $userSiteId=null, $formatDecimal=false){
 		
 		$peopleId   = ($peopleId?$peopleId:MyTools::getAttribute('peopleId'));
 		$userSiteId = ($userSiteId?$userSiteId:MyTools::getAttribute('userSiteId'));

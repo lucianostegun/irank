@@ -4,8 +4,8 @@
 	top: 					5px;
 	left: 					5px;
 	width: 					187px;
-	height: 				150px;
-	background: 			#F0F0F0 url('/images/frontend/loginBg.png') repeat-x;
+	padding-bottom: 		6px;
+	background: 			#D8D8D8 url('/images/loginBg.png') repeat-x;
 	border: 				1px solid #C0C0C0;
 	-moz-border-radius: 	7px;
 	-webkit-border-radius: 	7px;
@@ -103,4 +103,11 @@
 	border-bottom: 	1px solid #EEEEEE;
 	margin-top: 	6px;
 	margin-bottom: 	7px;
+}
+
+#login #loginErrorMessage {
+
+	display: 	none;
+	margin: 	-3px 0px 6px 15px;
+	color: 		#AC1B1B
 }

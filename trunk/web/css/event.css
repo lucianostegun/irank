@@ -1,0 +1,19 @@
+.actionBar {
+	
+	z-Index: 			2;
+	top: 				180px;
+	margin-left: 		441px;
+	top: 				185px !ie;
+	margin-left: 		461px !ie;
+	width: 				450px;
+	height: 			22px;
+	position: 			absolute;
+	margin-bottom: 		-22px;
+}
+
+.resultTotal td {
+
+	background: 	#E0E0E0;
+	font-weight: 	bold;
+	margin-right: 	14px;
+}

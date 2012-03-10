@@ -305,6 +305,71 @@ class UserSite extends BaseUserSite
    			HomeWall::doLog('juntou-se aos jogadores do <b>iRank</b>. Seja bem vindo!', 'userSite', true, $this->getId());
 	}
 	
+	public function getEventListResume($limit, $offset=0, $eventDate=null){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPeer::SAVED_RESULT, false );
+		if( $eventDate ) $criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
+		$criteria->add( EventPeer::EVENT_DATE_TIME, date('Y-m-d H:i:s'), Criteria::GREATER_EQUAL );
+		$criteria->setOffset($offset);
+		
+		$eventObjList = Event::getList($criteria, $limit, $this->getId());
+		$eventCount   = count($eventObjList);
+		
+		if( $eventCount < $limit ){
+			
+			$criteria = new Criteria();
+			$criteria->add( EventPeer::SAVED_RESULT, true );
+			$criteria->add( EventPeer::EVENT_DATE_TIME, date('Y-m-d H:i:s'), Criteria::LESS_THAN );
+			if( $eventDate ) $criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
+			$criteria->setOffset($offset);
+			
+			$eventObjPastList = Event::getList($criteria, $limit-$eventCount, $this->getId());
+			
+			$eventObjList = array_merge($eventObjList, $eventObjPastList);
+		}
+		
+		return $eventObjList;
+	}
+	
+	public static function getCalendarList($startDate, $endDate){
+		
+		$startDate = Util::formatDate($startDate);
+		$endDate   = Util::formatDate($endDate);
+		$peopleId  = MyTools::getAttribute('peopleId');
+		
+		$sql = "SELECT
+					event.EVENT_DATE
+				FROM 
+					event 
+					INNER JOIN ranking ON event.RANKING_ID=ranking.ID
+					INNER JOIN ranking_player ON ranking_player.RANKING_ID=ranking.ID AND ranking_player.PEOPLE_ID = $peopleId AND ranking_player.ENABLED
+				WHERE 
+					event.ENABLED 
+					AND event.VISIBLE 
+					AND NOT event.DELETED 
+					AND ranking.ENABLED 
+					AND ranking.VISIBLE 
+					AND NOT ranking.DELETED 
+					AND event.EVENT_DATE BETWEEN '$startDate' AND '$endDate' 
+				GROUP BY 
+					event.EVENT_DATE";
+					
+		$resultSet = Util::executeQuery($sql);
+		
+		$eventDateList = array();
+		
+		while($resultSet->next()){
+			
+			$eventDate = $resultSet->getTimestamp(1);
+			$eventDate = date('Ymd', strtotime($eventDate));
+			
+			$eventDateList[] = $eventDate;
+		}
+		
+		return array_unique($eventDateList);
+	}
+	
 	public function getInfo($replaceNull=false){
 		
 		$infoList = array();

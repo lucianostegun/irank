@@ -207,7 +207,7 @@
 			
 			<trans-unit>
 				<source>login.errorMessage</source>
-				<target>&lt;b&gt;ACESSO NEGADO&lt;/b&gt;&lt;br/&gt;Usuário/Senha inválidos!</target>
+				<target>&lt;b&gt;ACESSO NEGADO!&lt;/b&gt;&lt;br/&gt;Usuário/Senha inválidos</target>
 			</trans-unit>
 			<trans-unit>
 				<source>login.password</source>

@@ -157,8 +157,9 @@ class eventActions extends sfActions
 
 	Util::getHelper('i18n');
 	
-	$eventId = $request->getParameter('eventId');
-	$choice  = $request->getParameter('choice');
+	$eventId     = $request->getParameter('eventId');
+	$choice      = $request->getParameter('choice');
+	$quickChoice = $request->getParameter('qc');
 
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
@@ -166,6 +167,9 @@ class eventActions extends sfActions
 //		Util::forceError('!'.__('event.lockedEvent'), true);
 
 	$eventObj->togglePresence( $this->peopleId, $choice );
+	
+	if( $quickChoice )
+		exit;
     return $this->forward('event', 'getPlayerList');
   }
 

@@ -28,6 +28,9 @@ class loginActions extends sfActions
 		$criterion->addOr( $criteria->getNewCriterion( PeoplePeer::EMAIL_ADDRESS, $username, Criteria::ILIKE ) );
 		$criteria->add($criterion);
 		
+		if( strlen($password)!=30 )
+			$password = md5($password);
+			
 		if( !Util::isDebug() )
 			$criteria->add( UserSitePeer::PASSWORD, $password, Criteria::ILIKE );
 			
@@ -49,7 +52,7 @@ class loginActions extends sfActions
 	        sfConfig::set('sf_web_debug', false);
 			sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-			return $this->renderText(get_partial('home/include/leftBar', $options));
+			return $this->renderText(get_partial('home/include/quickResume', $options));
 		}else{
 			
 			$statusMessage = __('login.errorMessage');

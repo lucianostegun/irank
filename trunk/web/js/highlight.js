@@ -1,6 +1,6 @@
 var _currentContentItemIdActive = 1;
 var _homeHighlightAmount        = 1;
-var _homeHighlightInterval      = 5;
+var _homeHighlightInterval      = 7;
 
 function setupHomeHighlight(amount){
 

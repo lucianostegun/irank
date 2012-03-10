@@ -1,0 +1,49 @@
+.formLoading {
+
+	float: 			right;
+	height: 		25px;
+	font-weight: 	normal;
+	margin-top: 	0px;
+	margin-top: 	-3px !ie;
+	margin-left: 	10px;
+	margin-left: 	10px;
+	display: 		none;
+}
+
+.formLoading .message, .formLoadingWindow .message {
+	
+	float: 			left;
+	margin-top: 	3px;
+	margin-left: 	6px;
+	color: 			#333333;
+}
+
+.formLoading .image, .formLoadingWindow .image {
+	
+	float: 			left;
+	margin: 		4px;
+}
+
+#indicator {
+
+	position: 		absolute;
+	top: 			117px;
+	font-weight: 	bold;
+	display: 		none;
+	padding: 		2 10 2 10;
+	width: 			200px;
+	margin-left: 	630px;
+}
+
+#indicator .message {
+	
+	float: 			left;
+	margin-left: 	6px;
+	color: 			#333333;
+}
+
+#indicator .image {
+	
+	float: 			left;
+	margin: 		0 4 0 4;
+}

@@ -4,4 +4,11 @@
 	
 	$resumeValue = People::getQuickResume($quickResume);
 ?>
-<span class="generalCredit"><?php echo __('generalCredit.'.$quickResume) ?>:</span> <span class="<?php echo ($resumeValue<0?'negative':'positive') ?>Credit"><?php echo Util::formatFloat($resumeValue, true) ?></span>
+<div class="generalCredit">
+	<span class="label">
+		<?php echo __('generalCredit.'.$quickResume) ?>:
+	</span>
+	<span class="credit <?php echo ($resumeValue<0?'negative':'positive') ?>">
+		<?php echo Util::formatFloat($resumeValue, true) ?>
+	</span>
+</div>

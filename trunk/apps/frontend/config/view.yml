@@ -16,8 +16,8 @@ default:
     og|image*1:      http://<?php echo $host ?>/images/layout/chips.png
     og|image:        http://<?php echo $host ?>/images/facebookLogo.gif
 
-  stylesheets:    [frontend/main, frontend/topMenu, -frontend/loading]
-  javascripts:    [phpEquivalents, -main, util, -frontend/form, /sf/prototype/js/prototype, -frontend/record, -/index.php/home/javascript/js]
+  stylesheets:    [main, loading]
+  javascripts:    [phpEquivalents, main, util, form, /sf/prototype/js/prototype, record, /index.php/home/javascript/debug/<?php echo Util::isDebug(true) ?>/js]
 
   has_layout:     on
   layout:         layout3.1

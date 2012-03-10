@@ -4,7 +4,7 @@ body {
 	margin: 				0px;
 	font: 					11px/15px Tahoma, Arial, Helvetica, sans-serif;
 	color: 					#333333;
-	background-image: 		url('/images/frontend/layout/backgroundBlue.png');
+	background-image: 		url('/images/layout/backgroundBlue.png');
 	background-attachment: 	fixed;
 	text-align: 			center;
 	height: 				100%;
@@ -45,7 +45,7 @@ a:hover {
 	position: 		relative;
 	width: 			70px;
 	left: 			950px;
-	top: 			37px;
+	top: 			42px;
 	z-index: 		3;
 }
 
@@ -99,7 +99,7 @@ a:hover {
 
 	width: 			1000px;
 	height: 		31px;
-	background: 	url('/images/frontend/layout/borderTop.png') repeat-x
+	background: 	url('/images/layout/borderTop.png') repeat-x
 }
 
 #contentArea #borderTable .topRight {
@@ -110,28 +110,28 @@ a:hover {
 
 #contentArea #borderTable .left {
 
-	background: 	url('/images/frontend/layout/borderLeft.png') repeat-y
+	background: 	url('/images/layout/borderLeft.png') repeat-y
 }
 
 #contentArea #borderTable .middle {
 
-	background: 	url('/images/frontend/layout/innerBg.png');
+	background: 	url('/images/layout/innerBg.png');
 }
 
 #contentArea #borderTable .bottom {
 
-	background: 	url('/images/frontend/layout/borderBottom.png') repeat-x
+	background: 	url('/images/layout/borderBottom.png') repeat-x
 }
 
 #contentArea #borderTable .right {
 
-	background: 	url('/images/frontend/layout/borderRight.png') repeat-y
+	background: 	url('/images/layout/borderRight.png') repeat-y
 }
 
 #contentArea #mainContent #topMenu {
 
 	clear: 								both;
-	background: 						#000000 url('/images/frontend/layout/topMenuBg.png') repeat-x;
+	background: 						#000000 url('/images/layout/topMenuBg.png') repeat-x;
 	height: 							43px;
 	-moz-border-top-left-radius: 		5px;
 	-webkit-border-top-left-radius: 	5px;
@@ -160,30 +160,30 @@ a:hover {
 	padding-bottom: 	13px;
 	padding-right: 		19px;
 	padding-left: 		15px;
-	background: 		url('/images/frontend/layout/topMenuItemBg.png') no-repeat top right;	
+	background: 		url('/images/layout/topMenuItemBg.png') no-repeat top right;	
 }
 
 #contentArea #mainContent #topMenu .links a:hover {
 
 	color: 				#E8A014;
-	background: 		url('/images/frontend/layout/topMenuItemBg.png') no-repeat bottom right;
+	background: 		url('/images/layout/topMenuItemBg.png') no-repeat bottom right;
 }
 
 #contentArea #mainContent #topMenu .links a.lastItem {
 
-	background: 		url('/images/frontend/layout/topMenuItemBg.png') no-repeat top left;	
+	background: 		url('/images/layout/topMenuItemBg.png') no-repeat top left;	
 }
 
 #contentArea #mainContent #topMenu .links a:hover.lastItem {
 
 	color: 				#E8A014;
-	background: 		url('/images/frontend/layout/topMenuItemBg.png') no-repeat bottom left;
+	background: 		url('/images/layout/topMenuItemBg.png') no-repeat bottom left;
 }
 
 #contentArea #mainContent #topMenu .distinct {
 
 	float: 								left;
-	background: 						#000000 url('/images/frontend/layout/topMenuDistinctBg.png') repeat-x;
+	background: 						#000000 url('/images/layout/topMenuDistinctBg.png') repeat-x;
 	width: 								209px;
 	height: 							43px;
 	border-right: 						1px solid #777777;

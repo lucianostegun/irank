@@ -8,9 +8,10 @@ include_metas();
 include_title();
 
 $culture = 'pt_BR';
+
+$isAuthenticated = MyTools::isAuthenticated();
 ?>
 <script>
-
 </script>
 </head>
 <body>
@@ -18,9 +19,9 @@ $culture = 'pt_BR';
 <div id="contentArea">
     	<div id="mainContent">
     		<div id="header">
-    			<?php echo image_tag('frontend/layout/logo', array('id'=>'logo')) ?>
-    			<?php echo image_tag('frontend/layout/cards', array('id'=>'cards')) ?>
-    			<?php echo image_tag('frontend/layout/chipsHeader', array('id'=>'chips')) ?>
+    			<?php echo link_to(image_tag('layout/logo', array('id'=>'logo')), '/home', array('title'=>'Voltar para a página inicial')) ?>
+    			<?php echo image_tag('layout/cards', array('id'=>'cards')) ?>
+    			<?php echo image_tag('layout/chipsHeader', array('id'=>'chips')) ?>
     			<div class="flags">
 					<?php echo link_to(image_tag('flagBrazil'), '#changeDefaultLanguage("pt-BR")') ?>
 					<?php echo link_to(image_tag('flagUsa'), '#changeDefaultLanguage("en-US")') ?>
@@ -28,16 +29,21 @@ $culture = 'pt_BR';
     		</div>
     		<table cellspacing="0" cellpadding="0" id="borderTable">
     			<tr>
-    				<td class="topLeft"><?php echo image_tag('frontend/layout/borderTopLeft') ?></td>
+    				<td class="topLeft"><?php echo image_tag('layout/borderTopLeft') ?></td>
     				<td class="top"></td>
-    				<td class="topRight"><?php echo image_tag('frontend/layout/borderTopRight') ?></td>
+    				<td class="topRight"><?php echo image_tag('layout/borderTopRight') ?></td>
     			</tr>
     			<tr>
     				<td class="left"></td>
     				<td class="middle">
 						<div id="topMenu">
-							<div class="distinct">
-								<?php echo image_tag('frontend/layout/culture/signUp') ?>
+							<div class="distinct" id="topMenuDistinct">
+								<?php
+									if( $isAuthenticated )
+										include_partial('home/component/generalCredit', array());
+									else
+										echo link_to(image_tag('layout/'.$culture.'/signUp'), '/sign');
+								?>
 							</div>
 							<div class="links">
 								<?php include_partial('home/include/topMenu') ?>
@@ -46,10 +52,17 @@ $culture = 'pt_BR';
     					<div id="innerContent">
     						<div class="leftContent">
     							<div class="leftContentTop">
-	    							<?php include_partial('login/include/login', array()) ?>
-	    							<?php include_partial('home/include/facebook', array()) ?>
+    								<div id="loginResumeDiv">
+	    							<?php
+	    								if( $isAuthenticated )
+	    									include_partial('home/include/quickResume', array());
+	    								else
+	    									include_partial('login/include/login', array());
+	    							?>
+	    							</div>
 	    							
-						    		<?php echo link_to(image_tag('frontend/appstore'), 'http://itunes.apple.com/us/app/irank/id481129223', array('id'=>'appstore')) ?>
+	    							<?php include_partial('home/include/facebook', array()); ?>
+						    		<?php echo link_to(image_tag('appstore'), 'http://itunes.apple.com/us/app/irank/id481129223', array('id'=>'appstore')) ?>
 						    		
 	    							<div class="social">
 							    		<?php include_partial('home/include/partners', array()) ?>
@@ -68,17 +81,17 @@ $culture = 'pt_BR';
     				<td class="right"></td>
     			</tr>
     			<tr>
-    				<td><?php echo image_tag('frontend/layout/borderBottomLeft') ?></td>
+    				<td><?php echo image_tag('layout/borderBottomLeft') ?></td>
     				<td class="bottom">
     					<?php include_partial('home/include/addthis', array()) ?>
     				</td>
-    				<td><?php echo image_tag('frontend/layout/borderBottomRight') ?></td>
+    				<td><?php echo image_tag('layout/borderBottomRight') ?></td>
     			</tr>
     		</table>
     	</div>
 	</div>
 	<div id="footer">
-		<?php echo image_tag('frontend/layout/chipsFooter') ?>
+		<?php echo image_tag('layout/chipsFooter') ?>
 		<div class="links">home | cadastro | meu iRank | convidar amigos | feedback | ajuda | contato</div>
 		<div class="credit">desenvolvido por: <?php echo link_to('Newai software', 'http://www.newai.com.br', array('target'=>'_blank')) ?></div>
 	</div>
