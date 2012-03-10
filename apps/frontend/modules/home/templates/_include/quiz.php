@@ -10,7 +10,7 @@
 
 	margin-top: 	2px;
 	margin-left: 	3px;
-	background: 	#F0F0F0 url('/images/frontend/quiz/optionBg.gif') repeat-x;
+	background: 	#F0F0F0 url('/images/quiz/optionBg.gif') repeat-x;
 	padding: 		2px 4px 2px 8px;
 	width: 			76px;
 	
@@ -40,7 +40,7 @@
 <h2>Enquete de mãos</h2>
 <div class="handQuiz" style="position: relative; left: 0px; top: 0px; background: #FAFAFA; padding-top: 10px">
 	<div style="margin: -2px 8px 5px 8px">Você é small blind e está abaixo da média na mesa. Qual sa sua ação?</div>
-	<div class="image" style="float: left; margin: 5px"><?php echo image_tag('frontend/quiz/8Koff') ?></div>
+	<div class="image" style="float: left; margin: 5px"><?php echo image_tag('quiz/8Koff') ?></div>
 	<div class="options">
 		<div class="option"><?php echo link_to('CALL', '') ?></div>
 		<div class="option"><?php echo link_to('RAISE', '') ?></div>

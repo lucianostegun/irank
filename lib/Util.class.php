@@ -163,13 +163,15 @@ class Util {
 	 * @author     Luciano Stegun
 	 * @return     Boolean 
 	 */
-	public static function isDebug(){
+	public static function isDebug($returnString=false){
 		
 		$request  = MyTools::getRequest();
 		$isDebug1 = (sfConfig::get('sf_environment')=='dev');
 		$isDebug2 = ($request->getParameter('debug')=='1');
 		
-		return ($isDebug1 || $isDebug2);
+		$isDebug = ($isDebug1 || $isDebug2);
+		
+		return ($returnString?($isDebug?'1':'0'):$isDebug);
 	}
 	
 	/**

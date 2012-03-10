@@ -249,7 +249,10 @@ class Event extends BaseEvent
 		return is_object($eventPlayerObj) && $eventPlayerObj->getEnabled();
 	}
 
-	public function getInviteStatus($peopleId){
+	public function getInviteStatus($peopleId=null){
+		
+		if( is_null($peopleId) )
+			$peopleId = MyTools::getAttribute('peopleId');
 		
 		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		

@@ -36,7 +36,7 @@
 .homeHighlight .content .descriptionBorder {
 	
 	position: 				relative;
-	top: 					280px;
+	top: 					260px;
 	left: 					0px;
 	width: 					540px;
 	height: 				60px;
@@ -49,7 +49,7 @@
 	left: 					0px;
 	background: 			#0A0A0A;
 	width: 					540px;
-	height: 				60px;
+	height: 				80px;
 	filter: 				alpha(opacity=70);
 	-moz-opacity: 			0.70;
 	-khtml-opacity: 		0.70;
@@ -59,7 +59,7 @@
 .homeHighlight .content .descriptionText {
 	
 	position: 				relative;
-	top: 					-70px;
+	top: 					-90px;
 	left: 					-30px;
 	width: 					540px;
 	height: 				60px;
@@ -67,6 +67,16 @@
 	padding: 				8px;
 	font-size: 				12px;
 	line-height: 			18px;
+}
+
+.homeHighlight .content .descriptionText h1 {
+	
+	position: 		relative;
+	font-size: 		16px;
+	top: 			-8px;
+	margin-bottom: 	-10px;
+	color: 			#E9AE0F;
+	text-shadow: 	black -1px -1px;
 }
 
 .homeHighlight .content .contentItem {
@@ -109,7 +119,7 @@
 .homeHighlight .content ul.selector li {
 	
 	float: 			left;
-	background: 	url('/images/frontend/highlight/circle.png') no-repeat;
+	background: 	url('/images/highlight/circle.png') no-repeat;
 	width: 			14px;
 	height: 		8px;
 	cursor: 		pointer
@@ -117,7 +127,7 @@
 
 .homeHighlight .content ul.selector li.active {
 	
-	background: 	url('/images/frontend/highlight/circleSelected.png') no-repeat;
+	background: 	url('/images/highlight/circleSelected.png') no-repeat;
 }
 
 
@@ -196,7 +206,7 @@
 	border: 			1px solid #E5E5E5;
 	padding: 			4px;
 	margin: 			2px;
-	background: 		#F5F5F5 url('/images/frontend/home/channelBg.png') repeat-x left bottom;
+	background: 		#F5F5F5 url('/images/home/channelBg.png') repeat-x left bottom;
 }
 
 .baseChannels .channel .image {
@@ -307,14 +317,14 @@
 
 	float: 			left;
 	left: 			303px;
-	background: 	url('/images/frontend/home/alert.png') no-repeat;
+	background: 	url('/images/home/alert.png') no-repeat;
 }
 
 #photoVote .photo .optionBar .zoom {
 
 	float: 					left;
 	left: 					5px;
-	background: 			url('/images/frontend/home/zoom.png') no-repeat;
+	background: 			url('/images/home/zoom.png') no-repeat;
 }
 
 
@@ -332,12 +342,13 @@
 
 #userResume {
 	
+	height: 330px;
 }
 
 #userResume #eventResume {
 	
-	position: 	relative;
-	top: 		5px;
+	position: 			relative;
+	top: 				4px;
 	padding-bottom: 	15px;
 }
 
@@ -352,8 +363,59 @@
 	
 	float: 		left;
 	position: 	relative;
-	left: 		25px;
-	top: 		25px;
+	left: 		22px;
+	top: 		8px;
+}
+
+#userResume #eventResume #eventList h1 {
+
+	margin: 			0px 0px 2px 0px;
+	padding: 			0px 5px 1px 0px;
+	font-size: 			15px;
+	text-align: 		right;
+	color: 				#337495;
+}
+
+#userResume #eventResume #eventList #eventResumeList {
+
+	height: 260px;
+	overflow: hidden;
+}
+
+#userResume #eventResume #eventResumeLoader {
+
+	display: 	none;
+	position: 	absolute;
+	z-index: 	100;
+}
+
+#userResume #eventResume #eventResumeLoaderArea {
+
+	position: 				absolute;
+	z-index: 				100;
+	width: 					420px;
+	height: 				290px;
+	background: 			#FFFFFF;
+	filter: 				alpha(opacity=80);
+	-moz-opacity: 			0.80;
+	-khtml-opacity: 		0.80;
+	opacity: 				0.80;
+}
+
+#userResume #eventResume #eventResumeLoaderContent {
+
+	position: 				absolute;
+	z-index: 				101;
+	width: 					420px;
+	text-align: 			center;
+	margin-top: 			90px;
+	font-weight: 			bold;
+	
+}
+
+#userResume #eventResume #eventResumeLoaderContent img {
+
+	margin-bottom: 	7px
 }
 
 #userResume #eventResume #eventList .event {
@@ -364,6 +426,14 @@
 	border: 		1px solid #b5ccd6;
 	padding: 		5px 5px 5px 55px;
 	cursor: 		pointer;
+	
+	-webkit-touch-callout: 	none;
+	-webkit-user-select: 	none;
+	-khtml-user-select: 	none;
+	-moz-user-select: 		none;
+	-ms-user-select: 		none;
+	-o-user-select: 		none;
+	user-select: 			none;
 }
 
 #userResume #eventResume #eventList .event .title {
@@ -399,7 +469,8 @@
 	-webkit-border-radius: 	3px;
 	border-radius: 			3px;
 	padding-left: 			19px;
-	background: 			#e8f3f7 url('/images/frontend/home/presenceToYes.png') 3px center no-repeat;
+	padding-bottom: 		2px;
+	background: 			#e8f3f7 url('/images/home/presenceToYes.png') 3px center no-repeat;
 }
 
 #userResume #eventResume #eventList .event .presence.hover,
@@ -410,7 +481,7 @@
 
 #userResume #eventResume #eventList .event .presence.yes {
 
-	background: 	#e8f3f7 url('/images/frontend/home/presenceYes.png') 3px center no-repeat;
+	background: 	#e8f3f7 url('/images/home/presenceYes.png') 3px center no-repeat;
 }
 
 #userResume #eventResume #eventList .event .presence a {
@@ -421,7 +492,7 @@
 	text-decoration: 	none;
 }
 
-#userResume #eventResume #eventList .event .presence a.confirmed {
+#userResume #eventResume #eventList .event .presence a.yes {
 
 	margin-left: 	5px;
 	margin-right: 	5px;
@@ -430,7 +501,7 @@
 
 #userResume #eventResume #eventList .event.next {
 
-	background: 	#d2e3ea url('/images/frontend/home/calendar.png') 2px center no-repeat;
+	background: 	#d2e3ea url('/images/home/calendar.png') 2px center no-repeat;
 }
 
 #userResume #eventResume #eventList .event.next.hover,
@@ -441,13 +512,24 @@
 
 #userResume #eventResume #eventList .event.previous {
 
-	background: 	#deeaef url('/images/frontend/home/podium.png') 2px center no-repeat;
+	background: 	#deeaef url('/images/home/podium.png') 2px center no-repeat;
 }
 
-#userResume #eventResume #eventList .loadEvents {
+#userResume #eventResume #eventList .event.noEvent {
 
+	border: 		1px solid #D0D0D0;
+    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);	
+}
+
+#userResume #eventResume .loadEvents {
+
+	clear: 			both;
+	position: 		relative;
+	top: 			8px;
+	left: 			352px;
 	width: 			400px;
-	margin-top: 	0px;
 	padding: 		2px 10px 2px 5px;
 	cursor: 		pointer;
 	text-align: 	right;
@@ -460,7 +542,7 @@
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);
 }
 
-#userResume #eventResume #eventList .loadEvents a {
+#userResume #eventResume .loadEvents a {
 
 	color: 			#5c6377;
 	font-size: 		12px;
