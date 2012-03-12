@@ -14,10 +14,13 @@ class rankingActions extends sfActions
   public function preExecute(){
   	
 	$userSiteId = $this->getRequestParameter('userSiteId');
+  	$language   = $this->getRequestParameter('language');
 	
 	$this->userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
 	
-	MyTools::setCulture('pt_BR');
+  	$culture = Util::getConvertCulture($language);
+  	
+  	MyTools::setCulture($culture);
 	
 	if( is_object($this->userSiteObj) )
 		$this->getUser()->setAttribute('peopleId', $this->userSiteObj->getPeopleId());
@@ -27,9 +30,9 @@ class rankingActions extends sfActions
   
   public function executeSavePlayer($request){
   	
-  	$xmlString = $request->getParameter('playerXml');
   	$rankingId = $request->getParameter('rankingId');
   	$eventId   = $request->getParameter('eventId');
+  	$xmlString = $request->getParameter('playerXml');
 
 //	$file = fopen(Util::getFilePath('/xml.xml'), 'w');
 //	fwrite($file, $xmlString);

@@ -67,6 +67,16 @@
 				<div class="error" id="rankingDefaultBuyinError" onclick="showFormErrorDetails('ranking', 'defaultBuyin')"></div>
 				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
+			<div class="row">
+				<div class="label" id="rankingScoreSchemaLabel"><?php echo __('ranking.scoreSchema') ?></div>
+				<div class="field"><?php echo select_tag('scoreSchema', Ranking::getOptionsForSelectScoreSchema($rankingObj->getScoreSchema()), array('onchange'=>'handleRankingFloridaSchema(this.value)', 'id'=>'rankingScoreSchema')) ?></div>
+				<div class="error" id="rankingScoreSchemaError" onclick="showFormErrorDetails('ranking', 'ScoreSchema')"></div>
+			</div>
+			<div class="row" id="rankingScoreFormulaRowDiv" style="display: <?php echo ($rankingObj->getScoreSchema()=='custom'?'block':'none')?>">
+				<div class="label" id="rankingScoreFormulaLabel"><?php echo __('ranking.scoreFormula') ?></div>
+				<div class="textFlex" id="rankingScoreFormulaDiv"><?php echo $rankingObj->getScoreFormula(true) ?></div>
+				<div class="textFlex"><?php echo link_to(image_tag('icon/edit'), '#windowRankingScoreFormulaShow()', array('title'=>'Editar fórmula')) ?></div>
+			</div>
 		</td>
 		<td valign="top">
 			<?php include_partial('ranking/include/freeroll', array('rankingObj'=>$rankingObj)); ?>

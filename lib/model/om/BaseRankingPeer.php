@@ -13,7 +13,7 @@ abstract class BaseRankingPeer {
 	const CLASS_DEFAULT = 'lib.model.Ranking';
 
 	
-	const NUM_COLUMNS = 18;
+	const NUM_COLUMNS = 20;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -56,6 +56,12 @@ abstract class BaseRankingPeer {
 	const EVENTS = 'ranking.EVENTS';
 
 	
+	const SCORE_SCHEMA = 'ranking.SCORE_SCHEMA';
+
+	
+	const SCORE_FORMULA = 'ranking.SCORE_FORMULA';
+
+	
 	const ENABLED = 'ranking.ENABLED';
 
 	
@@ -79,19 +85,19 @@ abstract class BaseRankingPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingName', 'RankingTag', 'UserSiteId', 'RankingTypeId', 'GameStyleId', 'StartDate', 'FinishDate', 'IsPrivate', 'DefaultBuyin', 'Players', 'Events', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (RankingPeer::ID, RankingPeer::RANKING_NAME, RankingPeer::RANKING_TAG, RankingPeer::USER_SITE_ID, RankingPeer::RANKING_TYPE_ID, RankingPeer::GAME_STYLE_ID, RankingPeer::START_DATE, RankingPeer::FINISH_DATE, RankingPeer::IS_PRIVATE, RankingPeer::DEFAULT_BUYIN, RankingPeer::PLAYERS, RankingPeer::EVENTS, RankingPeer::ENABLED, RankingPeer::VISIBLE, RankingPeer::DELETED, RankingPeer::LOCKED, RankingPeer::CREATED_AT, RankingPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_name', 'ranking_tag', 'user_site_id', 'ranking_type_id', 'game_style_id', 'start_date', 'finish_date', 'is_private', 'default_buyin', 'players', 'events', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_NAME'=>'', 'RANKING_TAG'=>'', 'USER_SITE_ID'=>'', 'RANKING_TYPE_ID'=>'', 'GAME_STYLE_ID'=>'', 'START_DATE'=>'', 'FINISH_DATE'=>'', 'IS_PRIVATE'=>'', 'DEFAULT_BUYIN'=>'', 'PLAYERS'=>'', 'EVENTS'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingName', 'RankingTag', 'UserSiteId', 'RankingTypeId', 'GameStyleId', 'StartDate', 'FinishDate', 'IsPrivate', 'DefaultBuyin', 'Players', 'Events', 'ScoreSchema', 'ScoreFormula', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (RankingPeer::ID, RankingPeer::RANKING_NAME, RankingPeer::RANKING_TAG, RankingPeer::USER_SITE_ID, RankingPeer::RANKING_TYPE_ID, RankingPeer::GAME_STYLE_ID, RankingPeer::START_DATE, RankingPeer::FINISH_DATE, RankingPeer::IS_PRIVATE, RankingPeer::DEFAULT_BUYIN, RankingPeer::PLAYERS, RankingPeer::EVENTS, RankingPeer::SCORE_SCHEMA, RankingPeer::SCORE_FORMULA, RankingPeer::ENABLED, RankingPeer::VISIBLE, RankingPeer::DELETED, RankingPeer::LOCKED, RankingPeer::CREATED_AT, RankingPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_name', 'ranking_tag', 'user_site_id', 'ranking_type_id', 'game_style_id', 'start_date', 'finish_date', 'is_private', 'default_buyin', 'players', 'events', 'score_schema', 'score_formula', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_NAME'=>'', 'RANKING_TAG'=>'', 'USER_SITE_ID'=>'', 'RANKING_TYPE_ID'=>'', 'GAME_STYLE_ID'=>'', 'START_DATE'=>'', 'FINISH_DATE'=>'', 'IS_PRIVATE'=>'', 'DEFAULT_BUYIN'=>'', 'PLAYERS'=>'', 'EVENTS'=>'', 'SCORE_SCHEMA'=>'', 'SCORE_FORMULA'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingName'=>1, 'RankingTag'=>2, 'UserSiteId'=>3, 'RankingTypeId'=>4, 'GameStyleId'=>5, 'StartDate'=>6, 'FinishDate'=>7, 'IsPrivate'=>8, 'DefaultBuyin'=>9, 'Players'=>10, 'Events'=>11, 'Enabled'=>12, 'Visible'=>13, 'Deleted'=>14, 'Locked'=>15, 'CreatedAt'=>16, 'UpdatedAt'=>17, ),
-		BasePeer::TYPE_COLNAME=>array (RankingPeer::ID=>0, RankingPeer::RANKING_NAME=>1, RankingPeer::RANKING_TAG=>2, RankingPeer::USER_SITE_ID=>3, RankingPeer::RANKING_TYPE_ID=>4, RankingPeer::GAME_STYLE_ID=>5, RankingPeer::START_DATE=>6, RankingPeer::FINISH_DATE=>7, RankingPeer::IS_PRIVATE=>8, RankingPeer::DEFAULT_BUYIN=>9, RankingPeer::PLAYERS=>10, RankingPeer::EVENTS=>11, RankingPeer::ENABLED=>12, RankingPeer::VISIBLE=>13, RankingPeer::DELETED=>14, RankingPeer::LOCKED=>15, RankingPeer::CREATED_AT=>16, RankingPeer::UPDATED_AT=>17, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_name'=>1, 'ranking_tag'=>2, 'user_site_id'=>3, 'ranking_type_id'=>4, 'game_style_id'=>5, 'start_date'=>6, 'finish_date'=>7, 'is_private'=>8, 'default_buyin'=>9, 'players'=>10, 'events'=>11, 'enabled'=>12, 'visible'=>13, 'deleted'=>14, 'locked'=>15, 'created_at'=>16, 'updated_at'=>17, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingName'=>1, 'RankingTag'=>2, 'UserSiteId'=>3, 'RankingTypeId'=>4, 'GameStyleId'=>5, 'StartDate'=>6, 'FinishDate'=>7, 'IsPrivate'=>8, 'DefaultBuyin'=>9, 'Players'=>10, 'Events'=>11, 'ScoreSchema'=>12, 'ScoreFormula'=>13, 'Enabled'=>14, 'Visible'=>15, 'Deleted'=>16, 'Locked'=>17, 'CreatedAt'=>18, 'UpdatedAt'=>19, ),
+		BasePeer::TYPE_COLNAME=>array (RankingPeer::ID=>0, RankingPeer::RANKING_NAME=>1, RankingPeer::RANKING_TAG=>2, RankingPeer::USER_SITE_ID=>3, RankingPeer::RANKING_TYPE_ID=>4, RankingPeer::GAME_STYLE_ID=>5, RankingPeer::START_DATE=>6, RankingPeer::FINISH_DATE=>7, RankingPeer::IS_PRIVATE=>8, RankingPeer::DEFAULT_BUYIN=>9, RankingPeer::PLAYERS=>10, RankingPeer::EVENTS=>11, RankingPeer::SCORE_SCHEMA=>12, RankingPeer::SCORE_FORMULA=>13, RankingPeer::ENABLED=>14, RankingPeer::VISIBLE=>15, RankingPeer::DELETED=>16, RankingPeer::LOCKED=>17, RankingPeer::CREATED_AT=>18, RankingPeer::UPDATED_AT=>19, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_name'=>1, 'ranking_tag'=>2, 'user_site_id'=>3, 'ranking_type_id'=>4, 'game_style_id'=>5, 'start_date'=>6, 'finish_date'=>7, 'is_private'=>8, 'default_buyin'=>9, 'players'=>10, 'events'=>11, 'score_schema'=>12, 'score_formula'=>13, 'enabled'=>14, 'visible'=>15, 'deleted'=>16, 'locked'=>17, 'created_at'=>18, 'updated_at'=>19, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
@@ -168,6 +174,10 @@ abstract class BaseRankingPeer {
 		$criteria->addSelectColumn(RankingPeer::PLAYERS);
 
 		$criteria->addSelectColumn(RankingPeer::EVENTS);
+
+		$criteria->addSelectColumn(RankingPeer::SCORE_SCHEMA);
+
+		$criteria->addSelectColumn(RankingPeer::SCORE_FORMULA);
 
 		$criteria->addSelectColumn(RankingPeer::ENABLED);
 

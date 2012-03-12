@@ -40,12 +40,7 @@ class EventPlayer extends BaseEventPlayer
 
 		Util::getHelper('I18N');
 
-		$eventObj     = $this->getEvent();
-		$emailContent = AuxiliarText::getContentByTagName('confirmPresenceNotify');
-
-		$emailContent = $eventObj->getEmailContent($emailContent);
-		
-		$emailContent = str_replace('<peopleName>', $this->getPeople()->getName(), $emailContent);
+		$eventObj = $this->getEvent();
 		
 		$nl         = chr(10);
 		$playerList = '';
@@ -64,11 +59,32 @@ class EventPlayer extends BaseEventPlayer
 			$playerList .= '  </tr>'.$nl;
 	  	}
 	  	
-		$emailContent = str_replace('<playerList>', $playerList, $emailContent);
-		
+	  	
+		$infoList = array();
+		$infoList['playerList'] = $playerList;
+		$infoList['peopleName'] = $this->getPeople()->getFirstName();
+
+		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName('confirmPresenceNotify', false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName('confirmPresenceNotify', false, 'en_US'), $infoList);
+		$emailSubjectList['pt_BR'] = __('email.subject.presenceConfirm', null, 'messages', 'pt_BR');
+		$emailSubjectList['en_US'] = __('email.subject.presenceConfirm', null, 'messages', 'en_US');
+
 		$emailAddressList = $eventObj->getEmailAddressList('receiveFriendEventConfirmNotify');
 
-		Report::sendMail(__('email.subject.presenceConfirm'), $emailAddressList, $emailContent);
+	  	foreach($eventPlayerObjList as $eventPlayerObj){
+		
+			$peopleObj    = $eventPlayerObj->getPeople();
+			$emailAddress = $peopleObj->getEmailAddress();
+
+			if( !in_array($emailAddress, $emailAddressList) )
+				continue;
+				
+			$defaultLanguage = $peopleObj->getDefaultLanguage();
+			$emailContent    = $emailContentList[$defaultLanguage];
+			$emailSubject    = $emailSubjectList[$defaultLanguage];
+			
+			Report::sendMail($emailSubject, $emailAddress, $emailContent);
+	  	}
 	}
 	
 	public function confirmPresence(){

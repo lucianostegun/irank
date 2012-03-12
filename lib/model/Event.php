@@ -479,6 +479,7 @@ class Event extends BaseEvent
 			$emailContent = str_replace('<congratsMessage>', $congratsMessage, $emailContent);
 
 			Report::sendMail($emailSubject, $emailAddress, $emailContent);
+			exit;
 		}
 	}
 	
@@ -644,7 +645,7 @@ class Event extends BaseEvent
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$rankingObj = $this->getRanking();
 		
-		if( !$userSiteId || (!$ignorePeople && is_object($rankingObj) && !$rankingObj->isMyRanking()) )
+		if( !$ignorePeople && (!$userSiteId || (!$ignorePeople && is_object($rankingObj) && !$rankingObj->isMyRanking())) )
 			return false;
 
 		// Se hoje for maior que a data final do ranking
@@ -681,7 +682,10 @@ class Event extends BaseEvent
 		
 		$eventId    = $this->getId();
 		$rankingObj = $this->getRanking();
-		
+
+		$scoreSchema  = $rankingObj->getScoreSchema();
+		$scoreFormula = $rankingObj->getScoreFormula();
+				
 		$paidPlaces = 0;
 		$players    = 0;
 		
@@ -690,6 +694,7 @@ class Event extends BaseEvent
 		
 		$eventPlayerObjList = $this->getPlayerList();
 		$totalBuyin         = 0;
+		$players            = 0;	
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
 			$peopleId      = $eventPlayerObj->getPeopleId();
@@ -698,13 +703,16 @@ class Event extends BaseEvent
 			$addon         = $request->getParameter('addon'.$peopleId);
 			$eventPosition = $request->getParameter('eventPosition'.$peopleId);
 
-			if( $eventPosition > 0 )
+			if( $eventPosition > 0 ){
+				
 				$totalBuyin += Util::formatFloat($buyin)+Util::formatFloat($rebuy)+Util::formatFloat($addon);
+				$players++;
+			}
 		}
 		
 		if( $isFreeroll )
 			$totalBuyin += $this->getPrizePot();
-			
+		$result = array();
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
 			$peopleId      = $eventPlayerObj->getPeopleId();
@@ -744,16 +752,19 @@ class Event extends BaseEvent
 				$eventPlayerObj->setAddon( Util::formatFloat($addon) );
 				$eventPlayerObj->setBuyin( Util::formatFloat(($isFreeroll?0:$buyin)) );
 				
-				$score = $totalBuyin/$eventPosition/$buyin;
+				$events = $eventPlayerObj->getPeople()->getEvents($this->getRankingId());
 				
-//				if( !$isFreeroll )
-					$eventPlayerObj->setScore( $score );
-					
+				if( !$this->getSavedResult() )
+					$events += 1;
+				
+				$score = $this->parseScore($scoreSchema, $scoreFormula, $eventPosition, $events, $prize, $players, $totalBuyin, $buyin, $paidPlaces);
+				
+				$eventPlayerObj->setScore( $score );
+				
 				$eventPlayerObj->save();
-				$players++;
 			}
 		}
-
+		
 		$this->setPlayers($players);
 		$this->setPaidPlaces($paidPlaces);
 		$this->setSavedResult(true);
@@ -764,6 +775,100 @@ class Event extends BaseEvent
 		$rankingObj->updateHistory($this->getEventDate('d/m/Y'));
 		
 		$this->notifyResult();
+	}
+	
+	public function parseScore($scoreSchema, $formula, $position, $events, $prize, $players, $totalBuyins, $defaultBuyin, $itm){
+		
+		switch($scoreSchema){
+			case 'irank1':
+				$score = $totalBuyins/$position/$defaultBuyin;
+				break;
+			case 'vegas':
+			default:
+				$eventPresenceScore = ceil($events/3)*5;
+				$eventPositionScore = ($position>0?($players-($position-1)):0);
+				$eventPrizeScore    = $prize/10;
+				$score = ($eventPresenceScore+$eventPositionScore+$eventPrizeScore);
+				break;
+			case 'custom':
+				$formula = strtolower($formula);
+				$formula = preg_replace('/\t\r\n /', '', $formula);
+				
+				$formula = preg_replace('/posi[cç][aã]o|position/', '$position', $formula);
+				$formula = preg_replace('/eventos|events/', '$events', $formula);
+				$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
+				$formula = preg_replace('/jogadores|players/', '$players', $formula);
+				$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
+				$formula = preg_replace('/buyin/', '$defaultBuyin', $formula);
+				$formula = preg_replace('/itm/', '$itm', $formula);
+				
+				$score = null;
+				
+				@eval('$score = '.$formula.';');
+				
+				if( $score===null )
+					throw new Exception('Error parsing score formula');
+				break;
+		}
+		
+		return number_format($score, 3);
+	}
+	
+	public function updateResult(){
+		
+		$rankingObj = $this->getRanking();
+
+		$scoreSchema  = $rankingObj->getScoreSchema();
+		$scoreFormula = $rankingObj->getScoreFormula();
+		
+		$paidPlaces = $this->getPaidPLaces();
+		$players    = $this->getPlayers();
+		
+		$entranceFee = $this->getEntranceFee();
+		$isFreeroll  = $this->getIsFreeroll();
+		
+		$eventPlayerObjList = $this->getPlayerList();
+		$totalBuyin         = 0;
+		foreach($eventPlayerObjList as $eventPlayerObj){
+			
+			$buyin         = $eventPlayerObj->getBuyin();
+			$rebuy         = $eventPlayerObj->getRebuy();
+			$addon         = $eventPlayerObj->getAddon();
+
+			$totalBuyin += Util::formatFloat($buyin)+Util::formatFloat($rebuy)+Util::formatFloat($addon);
+		}
+		
+		if( $isFreeroll )
+			$totalBuyin += $this->getPrizePot();
+		
+		foreach($eventPlayerObjList as $eventPlayerObj){
+			
+			$peopleId      = $eventPlayerObj->getPeopleId();
+			$buyin         = $eventPlayerObj->getBuyin();
+			$rebuy         = $eventPlayerObj->getRebuy();
+			$addon         = $eventPlayerObj->getAddon();
+			$prize         = $eventPlayerObj->getPrize();
+			$eventPosition = $eventPlayerObj->getEventPosition();
+			$enabled       = $eventPlayerObj->getEnabled();
+			
+			if( $isFreeroll )
+				$buyin = $this->getRanking()->getDefaultBuyin();
+			
+			// Recupera quantos eventos o usuário participou neste ranking antes deste evento
+			$events = $eventPlayerObj->getPeople()->getEvents($this->getRankingId(), $this->getEventDateTime('d/m/Y H:i:s'));
+			
+			if( $enabled )
+				$score = $this->parseScore($scoreSchema, $scoreFormula, $eventPosition, $events, $prize, $players, $totalBuyin, $buyin, $paidPlaces);
+			else
+				$score = 0;
+			
+			$eventPlayerObj->setScore( $score );
+			$eventPlayerObj->save();
+		}
+
+		$rankingObj->updateScores();
+		$rankingObj->updatePlayerEvents();
+		$rankingObj->updateHistory($this->getEventDate('d/m/Y'));
 	}
 	
 	public function isInvited($peopleId){

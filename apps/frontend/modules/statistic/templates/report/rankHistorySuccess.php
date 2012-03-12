@@ -24,7 +24,8 @@ if( $events > 5 )
 
 $phpExcelObj->setActiveSheetIndex(0)->insertNewRowBefore(8, $players-2);
 
-$rankingPlayerObjList = $rankingObj->getPlayerList();
+$orderByList = array(RankingPlayerPeer::TOTAL_SCORE=>'desc');
+$rankingPlayerObjList = $rankingObj->getPlayerList($orderByList);
 
 $eventDateList = array_merge(array(), $eventDateList);
 
@@ -53,15 +54,15 @@ foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 		$rankingHistoryObj = RankingHistoryPeer::retrieveByPK($rankingObj->getId(), $rankingPlayerObj->getPeopleId(), Util::formatDate($eventDate));
 	
 		if( is_object($rankingHistoryObj) )
-			$totalRankingPosition = $rankingHistoryObj->getRankingPosition();
-		else
-			$totalRankingPosition = ' - ';
+			$totalRankingScore = $rankingHistoryObj->getTotalScore();
+//		else
+//			$totalRankingScore = ' - ';
 	
 		$phpExcelObj->setActiveSheetIndex(0)
-					->setCellValue($colName.$currentLine, $totalRankingPosition);
+					->setCellValue($colName.$currentLine, Util::formatFloat($totalRankingScore, true, 0));
 		
-		if( $totalRankingPosition == ' - ' )
-		$phpExcelObj->setActiveSheetIndex(0)->getStyle($colName.$currentLine)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+//		if( $totalRankingScore == ' - ' )
+//			$phpExcelObj->setActiveSheetIndex(0)->getStyle($colName.$currentLine)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 	}
 	
 	$currentLine++;

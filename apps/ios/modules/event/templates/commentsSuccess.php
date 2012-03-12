@@ -24,7 +24,7 @@
 ?>
 <div class="commentArea">
 	<div class="comment">
-		<div class="message">Este evento não possui comentários</div>
+		<div class="message"><?php echo __('event.noComments') ?></div>
 	</div>
 </div>
 <?php endif; ?>

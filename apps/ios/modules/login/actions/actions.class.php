@@ -14,7 +14,10 @@ class loginActions extends sfActions
   public function preExecute()
   {
   	
-  	$this->getUser()->setCulture('pt_BR');
+  	$language = $this->getRequestParameter('language');
+  	$culture  = Util::getConvertCulture($language);
+  	
+  	MyTools::setCulture($culture);
   }
 
   public function executeDoLogin($request)
@@ -88,11 +91,13 @@ class loginActions extends sfActions
 			$$key = (string)$nodeValue;
 	}
 
+	Util::getHelper('I18N');
+
 	if( !UserSitePeer::uniqueEmailAddress($emailAddress) )
-		$errorMessage = 'O e-mail informado já está em uso por outro usuário.';
+		$errorMessage = __('form.error.takenEmail');
 	
 	if( !UserSitePeer::uniqueUsername($username) )
-		$errorMessage = 'O username informado já está em uso por outro usuário.';
+		$errorMessage = __('form.error.takenUsername');
 		
 	if( $errorMessage )
 		Util::forceError(utf8_decode($errorMessage), true);
@@ -101,13 +106,9 @@ class loginActions extends sfActions
 	$userSiteObj = new UserSite();
 	$peopleObj   = PeoplePeer::retrieveByEmailAddress($emailAddress);
 	
-	$this->setFlash('showSuccess', true);
-	
 	if( is_object($peopleObj) && $peopleObj->isPeopleType('rankingPlayer') )
 		$userSiteObj->setPeopleId($peopleObj->getId());
 		
-	$this->getUser()->setCulture('pt_BR');
-  	
 	$request->setParameter('username', $username);
   	$request->setParameter('emailAddress', $emailAddress);
   	$request->setParameter('firstName', $firstName);
@@ -144,7 +145,7 @@ class loginActions extends sfActions
 			echo 'recoverySuccess';
 		}catch(Exception $e){
 			
-			Util::forceError('Falha ao enviar o e-mail');
+			Util::forceError('sendMailFailure');
 		}
 	}else{
 		

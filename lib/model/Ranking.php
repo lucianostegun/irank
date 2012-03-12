@@ -281,8 +281,37 @@ class Ranking extends BaseRanking
 	
 	public function updateWholeHistory(){
 
-		foreach($this->getEventDateList() as $eventDate)
+		foreach($this->getEventDateList() as $eventDate){
+			
+			echo $eventDate.'<br>';
 			$this->getClassifyHistory($eventDate, true);
+		}
+	}
+
+	public function updateWholeScore(){
+
+		set_time_limit(60);
+
+		foreach($this->getEventDateList() as $eventDate){
+			
+			$eventObjList = $this->getEventListByDate($eventDate);
+			foreach($eventObjList as $eventObj)
+				$eventObj->updateResult();
+		}
+		
+		echo 'Resultados dos eventos atualizados com sucesso!';
+		exit;
+	}
+	
+	public function getEventListByDate($eventDate){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
+		$criteria->add( EventPeer::RANKING_ID, $this->getId() );
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::DELETED, false );
+		return EventPeer::doSelect($criteria);
 	}
 	
 	public function updateHistory($rankingDate){
@@ -384,6 +413,7 @@ class Ranking extends BaseRanking
 		}
 		
 	  	$rankingHistoryObjList = RankingHistoryPeer::doSelect($criteria);
+	  	if($rankingDate=='11/01/2011'){echo '<pre>';print_r($rankingHistoryObjList);exit;}
 
 	  	$lastList = array();
 	  	foreach($rankingHistoryObjList as $key=>$rankingHistoryObj){
@@ -485,7 +515,8 @@ class Ranking extends BaseRanking
 	  			$rankingHistoryObj->setRankingPosition($players);
 	  			$rankingHistoryObj->save();
 	  		}
-	  	}	  	
+	  	}
+	  	
 	  	return $rankingHistoryObjListReturn;
 	}
 	
@@ -914,6 +945,26 @@ class Ranking extends BaseRanking
 	public static function getXml($rankingList){
 		
 		return Util::buildXml($rankingList, 'rankings', 'ranking');
+	}
+	
+	public static function getOptionsForSelectScoreSchema($defaultValue=null){
+		
+		$optionList = array();
+		$optionList['irank1']  = 'Buy-ins / Posição / Valor Buy-in';
+		$optionList['vegas']   = 'Padrão Vegas';
+		$optionList['custom']  = 'Fórmula personalizada';
+		
+		return options_for_select($optionList, $defaultValue);
+	}
+	
+	public function getScoreFormula($returnMessage=false){
+		
+		$scoreFormula = parent::getScoreFormula();
+		
+		if( !$scoreFormula && $returnMessage )
+			$scoreFormula = 'Fórmula não definida';
+		
+		return $scoreFormula;
 	}
 	
 	public function getInfo(){
