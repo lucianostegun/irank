@@ -794,7 +794,7 @@ class Util {
 		$nl = chr(10);
 		header('content-type: text/xml; charset=UTF-8');
 
-		$xmlString  = '<?xml version="1.0"?>'.$nl;
+		$xmlString  = '<?xml version="1.0" encoding="UTF-8"?>'.$nl;
 		$xmlString .= '<'.$root.'>'.$nl;
 		foreach($nodeList as $nodeNode){
 			
@@ -837,6 +837,19 @@ class Util {
 		$xmlString .= $tb.'	</'.$mainNode.'>'.$nl;
 		
 		return $xmlString;
+	}
+	
+	public static function getConvertCulture($language){
+		
+		$language = strtolower($language);
+		
+		switch($language){
+			case 'en':
+				return 'en_US';
+			case 'pt':
+			default:
+				return 'pt_BR';
+		}
 	}
 }
 ?>

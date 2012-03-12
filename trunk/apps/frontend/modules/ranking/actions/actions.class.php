@@ -72,16 +72,21 @@ class rankingActions extends sfActions
   
   public function executeSave($request){
 
-	$rankingId       = $request->getParameter('rankingId');
-	$rankingName     = $request->getParameter('rankingName');
-	$buildEmailGroup = $request->getParameter('buildEmailGroup');
-	$rankingTag      = $request->getParameter('rankingTag');
-	$gameStyleId     = $request->getParameter('gameStyleId');
-	$startDate       = $request->getParameter('startDate');
-	$finishDate      = $request->getParameter('finishDate');
-	$isPrivate       = $request->getParameter('isPrivate');
-	$rankingTypeId   = $request->getParameter('rankingTypeId');
-	$defaultBuyin    = $request->getParameter('defaultBuyin');
+	$rankingId        = $request->getParameter('rankingId');
+	$rankingName      = $request->getParameter('rankingName');
+	$buildEmailGroup  = $request->getParameter('buildEmailGroup');
+	$rankingTag       = $request->getParameter('rankingTag');
+	$gameStyleId      = $request->getParameter('gameStyleId');
+	$startDate        = $request->getParameter('startDate');
+	$finishDate       = $request->getParameter('finishDate');
+	$isPrivate        = $request->getParameter('isPrivate');
+	$rankingTypeId    = $request->getParameter('rankingTypeId');
+	$defaultBuyin     = $request->getParameter('defaultBuyin');
+	$scoreSchema      = $request->getParameter('scoreSchema');
+	$scoreFormula     = $request->getParameter('scoreFormula');
+	$recalculateScore = $request->getParameter('recalculateScore');
+
+$recalculateScore = true;
 
 	$rankingObj = $this->rankingObj;
 
@@ -93,6 +98,8 @@ class rankingActions extends sfActions
 	
 	$isNew = $rankingObj->isNew();
 
+	$scoreFormula = ($scoreSchema=='custom'?$scoreFormula:null);
+
 	$updateHistory = ($rankingTypeId!=$rankingObj->getRankingTypeId());
 
 	$rankingObj->setRankingName( $rankingName );
@@ -102,6 +109,8 @@ class rankingActions extends sfActions
 	$rankingObj->setDefaultBuyin( Util::formatFloat($defaultBuyin) );
 	$rankingObj->setIsPrivate( ($isPrivate?true:false) );
 	$rankingObj->setRankingTypeId( $rankingTypeId );
+	$rankingObj->setScoreSchema( $scoreSchema );
+	$rankingObj->setScoreFormula( $scoreFormula );
 	$rankingObj->setVisible(true);
 	$rankingObj->setEnabled(true);
 	
@@ -123,10 +132,13 @@ class rankingActions extends sfActions
 		$rankingObj->resetOptions();
 	}else{
 		
+		if( $recalculateScore )
+			$rankingObj->updateWholeScore();
+		
 		$rankingObj->updateScores();
 		$rankingObj->saveOptions($request);
 		
-		if( $updateHistory )
+		if( $updateHistory || $recalculateScore )
 			$rankingObj->updateWholeHistory();
 	}
 	
@@ -411,15 +423,18 @@ class rankingActions extends sfActions
   	echo 'var i18n_ranking_deleteConfirm                = "'.__('ranking.deleteConfirm').'";'.$nl;
   	echo 'var i18n_ranking_deleteError                  = "'.__('ranking.deleteError').'";'.$nl;
   	echo 'var i18n_ranking_importSuccessMessage         = "'.__('ranking.importSuccessMessage').'";'.$nl;
+  	echo 'var i18n_rankingScoreRecalculateConfirm       = "'.__('ranking.scoreRecalculateConfirm').'";'.$nl;
   	exit;
   }
   
   public function executeDebug($request){
   	
   	$rankingObj = $this->rankingObj;
+  	
+  	set_time_limit(120);
 
+  	$rankingObj->updateWholeScore();
   	$rankingObj->updateWholeHistory();
-  	$rankingObj->updateScores();
   	
   	echo 'ok ranking '.date('d/m/Y H:i:s');
   	exit;

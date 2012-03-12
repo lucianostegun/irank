@@ -2142,6 +2142,26 @@
 				<source>ranking.import.rankingPlayers</source>
 				<target>Import ranking players</target>
 			</trans-unit>
+			<trans-unit>
+				<source>event.noComments</source>
+				<target>This event has no comments</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.welcome.title</source>
+				<target>Welcome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.welcome.line1</source>
+				<target>The iRank is a free website for management of rankings for poker games.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.welcome.line2</source>
+				<target>Here you can create your own rankings, set the game settings and organize events, rankings and statistics of tournaments with your friends.</target>
+			</trans-unit>
+			<trans-unit>
+				<source>home.welcome.line3</source>
+				<target>If you have not registered yet, %clickHere% right now and start to control your games!</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

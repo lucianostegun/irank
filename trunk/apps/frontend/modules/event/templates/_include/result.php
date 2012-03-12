@@ -105,15 +105,15 @@
   ?>
   <tr class="resultTotal">
     <td>TOTAL</td>
+    <?php if( !$isFreeroll ): ?>
+    <td align="right" id="eventResultTotalBuyin"><?php echo Util::formatFloat($totalBuyin, true) ?></td>
+    <?php endif; ?>
     <td></td>
     <?php if( $allowRebuy ): ?>
     <td align="right" id="eventResultTotalRebuy"><?php echo Util::formatFloat($totalRebuy, true) ?></td>
     <?php endif; ?>
     <?php if( $allowAddon ): ?>
     <td align="right" id="eventResultTotalAddon"><?php echo Util::formatFloat($totalAddon, true) ?></td>
-    <?php endif; ?>
-    <?php if( !$isFreeroll ): ?>
-    <td align="right" id="eventResultTotalBuyin"><?php echo Util::formatFloat($totalBuyin, true) ?></td>
     <?php endif; ?>
     <td align="right" id="eventResultTotalPrize"><?php echo Util::formatFloat($totalPrize, true) ?></td>
   </tr>

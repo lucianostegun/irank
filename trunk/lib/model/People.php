@@ -249,6 +249,26 @@ class People extends BasePeople
 		return $resumeList;
 	}
 	
+	public function getEvents($rankingId, $eventDateTime=null){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPeer::RANKING_ID, $rankingId );
+		$criteria->add( EventPeer::VISIBLE, true);
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::DELETED, false );
+		$criteria->add( EventPeer::SAVED_RESULT, true );
+		
+		if( $eventDateTime )
+			$criteria->add( EventPeer::EVENT_DATE_TIME, Util::formatDateTime($eventDateTime), Criteria::LESS_EQUAL );
+			
+		$criteria->add( EventPlayerPeer::PEOPLE_ID, $this->getId() );
+		$criteria->add( EventPlayerPeer::ENABLED, true );
+		$criteria->addJoin( EventPlayerPeer::EVENT_ID, EventPeer::ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( EventPeer::RANKING_ID, RankingPeer::ID, Criteria::INNER_JOIN );
+		
+		return EventPlayerPeer::doCount($criteria);
+	}
+	
 	public function getInfo(){
 		
 		$infoList = array();
