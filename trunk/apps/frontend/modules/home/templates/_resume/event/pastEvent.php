@@ -1,4 +1,11 @@
-<div class="event previous" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="loadEvent(<?php echo $eventObj->getId() ?>)">
+<?php
+	$savedResult = $eventObj->getSavedResult();
+	$isMyEvent   = $eventObj->isMyEvent();
+	
+	$className = ($isMyEvent && !$savedResult?'previous pending':'previous');
+	$title     = (!$savedResult?'O resultado deste evento ainda não foi lançado!':'');
+?>
+<div class="event <?php echo $className ?>" title="<?php echo $title ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="loadEvent(<?php echo $eventObj->getId() ?>)">
 	<div class="title"><?php echo $eventObj->getEventName() ?></div>
 	<div class="where">@ <?php echo $eventObj->getRankingPlace()->getPlaceName() ?></div>
 	<div class="when"><?php echo $eventObj->getEventDateTime('d/m/Y H:i') ?></div>

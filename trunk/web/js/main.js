@@ -21,7 +21,7 @@ function doQuickSearch(){
 	$('mainSearchForm').submit();
 }
 
-function changeLanguage(culture){
+function changeDefaultLanguage(culture){
 
 	var handlerFunc = function(t) {
 		
@@ -37,4 +37,23 @@ function changeLanguage(culture){
 	showIndicator();	
 	var urlAjax  = _webRoot+'/home/changeLanguage/culture/'+culture;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:handlerFunc, onFailure:errFunc});
+}
+
+function loadStylesheet(cssPath){
+
+	if( !(/\.css$/i).test(cssPath) )
+		cssPath += '.css';
+	
+	var head  = document.getElementsByTagName('head')[0];
+    var link  = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.type = 'text/css';
+    link.href = cssPath;
+    link.media = 'all';
+    head.appendChild(link);
+}
+
+function goToPage(moduleName, actionName){
+	
+	location.href = _webRoot+'/'+moduleName+'/'+actionName;
 }

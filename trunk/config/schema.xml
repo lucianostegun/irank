@@ -583,4 +583,25 @@
 		  </foreign-key>
 	</table>
 
+	<table name="event_photo_contest" phpName="EventPhotoContest">
+		<column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="event_photo_id_left" type="INTEGER" required="true" />
+		<column name="event_photo_id_right" type="INTEGER" required="true" />
+		<column name="event_photo_id_winner" type="INTEGER" required="true" />
+		<column name="lock_key" type="VARCHAR" />
+		<column name="ip_address" type="VARCHAR" />
+		<column name="is_reported" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		  <foreign-key foreignTable="event_photo">
+		    <reference local="event_photo_id_left" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="event_photo">
+		    <reference local="event_photo_id_right" foreign="id" />
+		  </foreign-key>
+		  <foreign-key foreignTable="event_photo">
+		    <reference local="event_photo_id_winner" foreign="id" />
+		  </foreign-key>
+	</table>
+
 </database>

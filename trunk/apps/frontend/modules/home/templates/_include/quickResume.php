@@ -1,9 +1,6 @@
 <?php
 	$resumeInfo = People::getFullResume();
-	$firstName  = MyTools::getAttribute('firstName');
-	$lastName   = MyTools::getAttribute('lastName');
 ?>
-<div class="userInfo">Olá <?php echo $firstName.' '.$lastName ?></div>
 <div id="quickResume">
 	<h1>Bankroll</h1>
 	<div style="margin-top: 17px"></div>

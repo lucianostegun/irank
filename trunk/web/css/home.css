@@ -185,6 +185,11 @@
 	padding: 		0px;
 }
 
+.channels .channel h1 a {
+
+	color: 	#344F7C;
+}
+
 
 
 
@@ -202,7 +207,7 @@
 	
 	float: 				left;
 	width: 				245px;
-	height: 			100px;
+	height: 			130px;
 	border: 			1px solid #E5E5E5;
 	padding: 			4px;
 	margin: 			2px;
@@ -213,6 +218,7 @@
 	
 	width: 			48px;
 	float: 			left;
+	position: 		relative;
 	text-align: 	center;
 }
 
@@ -267,31 +273,65 @@
 #photoVote .links {
 	
 	text-align: 	center;
-	color: 			#b95011;
+	color: 			#B95011;
 }
 
 #photoVote a {
 	
 	font-size: 	11px;
-	color: 		#b95011;
+	color: 		#B95011;
 }
 
-#photoVote .photo {
+#photoVote .photoOption {
 	
-	float: 			left;
-	border: 		1px solid #AAAAAA;
-	width: 			365px;
-	height: 		274px;
-	margin: 		3px;
-	overflow: 		hidden;
+	float: 					left;
+	border: 				1px solid #AAAAAA;
+	width: 					365px;
+	height: 				274px;
+	margin: 				3px;
+	overflow: 				hidden;
 }
 
-#photoVote .photo .optionBar {
+#photoVote .photoOption .photo {
+	
+	position: 				absolute;
+	z-index: 				1;
+	width: 					365px;
+	height: 				274px;
+	margin: 				0px;
+	cursor: 				pointer;
+	filter: 				alpha(opacity=90);
+	-moz-opacity: 			0.90;
+	-khtml-opacity: 		0.90;
+	opacity: 				0.90;
+}
+
+#photoVote .photoOption .photo.winner {
+	
+	background-color: 		#000000;
+	filter: 				alpha(opacity=100);
+	-moz-opacity: 			1;
+	-khtml-opacity: 		1;
+	opacity: 				1;
+}
+
+#photoVote .photoOption .photo.looser {
+	
+	background-color: 		#000000;
+	filter: 				alpha(opacity=50);
+	-moz-opacity: 			0.50;
+	-khtml-opacity: 		0.50;
+	opacity: 				0.50;
+}
+
+#photoVote .photoOption .optionBar {
 
 	display: 				none;
-	position: 				relative;
+	z-index: 				2;
+	position: 				absolute;
 	height: 				33px;
-	top: 					241px;
+	width: 					365px;
+	top: 					299px;
 	background: 			#0A0A0A;
 	filter: 				alpha(opacity=70);
 	-moz-opacity: 			0.70;
@@ -299,7 +339,7 @@
 	opacity: 				0.70;	
 }
 
-#photoVote .photo .optionBar .option {
+#photoVote .photoOption .optionBar .option {
 
 	position: 		relative;
 	width: 			27px;
@@ -308,19 +348,19 @@
 	cursor: 		pointer;
 }
 
-#photoVote .photo .optionBar .option.hover {
+#photoVote .photoOption .optionBar .option.hover {
 
 	background-position: 	0px -27px
 }
 
-#photoVote .photo .optionBar .report {
+#photoVote .photoOption .optionBar .report {
 
 	float: 			left;
 	left: 			303px;
 	background: 	url('/images/home/alert.png') no-repeat;
 }
 
-#photoVote .photo .optionBar .zoom {
+#photoVote .photoOption .optionBar .zoom {
 
 	float: 					left;
 	left: 					5px;
@@ -342,7 +382,13 @@
 
 #userResume {
 	
-	height: 330px;
+	height: 	330px;
+	display: 	none;
+}
+
+#userResume.logged {
+
+	display: block;
 }
 
 #userResume #eventResume {
@@ -470,25 +516,25 @@
 	border-radius: 			3px;
 	padding-left: 			19px;
 	padding-bottom: 		2px;
-	background: 			#e8f3f7 url('/images/home/presenceToYes.png') 3px center no-repeat;
+	background: 			#E8F3F7 url('/images/home/presenceToYes.png') 3px center no-repeat;
 }
 
 #userResume #eventResume #eventList .event .presence.hover,
 #userResume #eventResume #eventList .event .presence.yes.hover {
 
-	background-color: 	#d2e3ea
+	background-color: 	#D2E3EA
 }
 
 #userResume #eventResume #eventList .event .presence.yes {
 
-	background: 	#e8f3f7 url('/images/home/presenceYes.png') 3px center no-repeat;
+	background: 	#E8F3F7 url('/images/home/presenceYes.png') 3px center no-repeat;
 }
 
 #userResume #eventResume #eventList .event .presence a {
 
 	margin-left: 	5px;
 	margin-right: 	5px;
-	color: 			#5c6377;
+	color: 			#5C6377;
 	text-decoration: 	none;
 }
 
@@ -496,23 +542,29 @@
 
 	margin-left: 	5px;
 	margin-right: 	5px;
-	color: 			#44780e;
+	color: 			#44780E;
 }
 
 #userResume #eventResume #eventList .event.next {
 
-	background: 	#d2e3ea url('/images/home/calendar.png') 2px center no-repeat;
+	background: 	#D2E3EA url('/images/home/calendar.png') 2px center no-repeat;
 }
 
 #userResume #eventResume #eventList .event.next.hover,
-#userResume #eventResume #eventList .event.previous.hover {
+#userResume #eventResume #eventList .event.previous.hover,
+#userResume #eventResume #eventList .event.previous.pending.hover {
 
-	background-color: 	#e8f3f7;
+	background-color: 	#E8F3F7;
 }
 
 #userResume #eventResume #eventList .event.previous {
 
-	background: 	#deeaef url('/images/home/podium.png') 2px center no-repeat;
+	background: 	#DEEAEF url('/images/home/podium.png') 2px center no-repeat;
+}
+
+#userResume #eventResume #eventList .event.previous.pending {
+
+	background: 	#DEEAEF url('/images/home/podiumAlert.png') 2px center no-repeat;
 }
 
 #userResume #eventResume #eventList .event.noEvent {
@@ -533,7 +585,7 @@
 	padding: 		2px 10px 2px 5px;
 	cursor: 		pointer;
 	text-align: 	right;
-	border: 1px solid #DADADA;
+	border: 		1px solid #DADADA;
 	
 	
 	background: 	#F0F0F0;
@@ -544,6 +596,6 @@
 
 #userResume #eventResume .loadEvents a {
 
-	color: 			#5c6377;
+	color: 			#5C6377;
 	font-size: 		12px;
 }

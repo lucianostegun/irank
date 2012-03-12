@@ -1,6 +1,7 @@
 var _currentResumeEventsOffset = 0;
 var _isLoadingEventResume      = false;
 var _eventResumeCalendarDate   = null;
+var _photoContestVoted         = false;
 
 function showOptionBar(side){
 
@@ -123,5 +124,52 @@ function toggleMyPresence(eventId, choice){
 	};
 	
 	var urlAjax = _webRoot+'/event/choosePresence/eventId/'+eventId+'/choice/'+choice+'/qc/1';
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+
+function selectPhotoContest(photoSide){
+	
+	if( _photoContestVoted )
+		return false;
+	
+	_photoContestVoted = true;
+	
+	var markPhotoAsVoted = function(){
+		
+		$('eventPhotoContestPhoto'+ucfirst(photoSide)).className                = 'photo winner';
+		$('eventPhotoContestPhoto'+(photoSide=='left'?'Right':'Left')).className = 'photo looser';
+	}
+	
+	markPhotoAsVoted();
+	
+	var successFunc = function(t){
+
+		var content = t.responseText;
+		
+		eventPhotoContestObj = parseInfo(content);
+		
+		$('eventPhotoContestPhotoLeft').className  = 'photo';
+		$('eventPhotoContestPhotoRight').className = 'photo';
+		
+		$('eventPhotoContestPhotoLeft').style.background  = 'url(\'/index.php/home/eventPhoto/id/'+eventPhotoContestObj.eventPhotoIdLeft+'\')';
+		$('eventPhotoContestPhotoRight').style.background = 'url(\'/index.php/home/eventPhoto/id/'+eventPhotoContestObj.eventPhotoIdRight+'\')';
+
+		$('eventPhotoContestLinkLeft').href  = _webRoot+'/home/eventPhoto/id/'+eventPhotoContestObj.eventPhotoIdLeft+'/zoom/1';
+		$('eventPhotoContestLinkRight').href = _webRoot+'/home/eventPhoto/id/'+eventPhotoContestObj.eventPhotoIdRight+'/zoom/1';
+
+		Cookie.init({name: 'eventPhotoContestKey', path:'/', expires: 90});
+		Cookie.setData('eventPhotoContestKey', eventPhotoContestObj.lockKey);
+		
+		_photoContestVoted = false;
+	};
+		
+	var failureFunc = function(t){
+
+		markPhotoAsVoted();
+		_photoContestVoted = false;
+	};
+	
+	var urlAjax = _webRoot+'/home/savePhotoContestVote/photoSide/'+photoSide;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
