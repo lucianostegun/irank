@@ -1202,6 +1202,14 @@ class Event extends BaseEvent
 		return $allowAddon;
 	}
 	
+	public function getMyPosition(){
+		
+		$peopleId      = MyTools::getAttribute('peopleId');
+		$eventPosition = Util::executeOne('SELECT event_position FROM event_player WHERE event_id = '.$this->getId().' AND people_id = '.$peopleId);
+		
+		return $eventPosition;
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');

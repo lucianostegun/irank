@@ -6,7 +6,11 @@ function doQuickLogin(){
 function handleSuccessLogin(content){
 
 	$('loginResumeDiv').innerHTML = content;
+
+	loadStylesheet('/css/quickResume');
+	loadStylesheet('/css/leftMenu');
 	
+	loadHomeResume();
 	loadUserCredit();
 }
 
@@ -14,6 +18,14 @@ function loadUserCredit(){
 	
 	var urlAjax = _webRoot+'/home/getCredit';
 	new Ajax.Updater('topMenuDistinct', urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function loadHomeResume(){
+	
+	showDiv('userResume');
+	
+	var urlAjax = _webRoot+'/home/getResume';
+	new Ajax.Updater('userResume', urlAjax, {asynchronous:true, evalScripts:false});
 }
 
 function handleFailureLogin(content){
@@ -24,28 +36,4 @@ function handleFailureLogin(content){
 		$('loginErrorMessage').innerHTML = content;
 
 	showDiv('loginErrorMessage');
-}
-
-function doQuickLogout(){
-	
-	var successFunc = function(t){
-
-		var content = t.responseText;
-		
-		$('quickLoginContent').innerHTML = content;
-	};
-		
-	var failureFunc = function(t){
-
-		var content = t.responseText;
-	};
-
-	var urlAjax = _webRoot+'/login/logout';
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
-}
-
-function loadHomeResume(){
-
-	var urlAjax = _webRoot+'/home/resume';
-	new Ajax.Updater('homeTopContentDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }

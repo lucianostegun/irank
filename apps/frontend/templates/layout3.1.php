@@ -54,8 +54,11 @@ $isAuthenticated = MyTools::isAuthenticated();
     							<div class="leftContentTop">
     								<div id="loginResumeDiv">
 	    							<?php
-	    								if( $isAuthenticated )
+	    								if( $isAuthenticated ){
+
+	    									include_partial('home/include/leftMenu', array());
 	    									include_partial('home/include/quickResume', array());
+	    								}
 	    								else
 	    									include_partial('login/include/login', array());
 	    							?>

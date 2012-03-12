@@ -31,23 +31,23 @@ class homeActions extends sfActions
 
 	return $this->renderText(get_partial('home/component/generalCredit'));
   }
-//
-//  public function executeResume($request){
-//
-//    sfConfig::set('sf_web_debug', false);
-//	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-//
-//	return $this->renderText(get_partial('home/component/resume'));
-//  }
-//  
-//  public function executeChangeLanguage($request){
-//	
-//	$culture = $request->getParameter('culture');
-//	$this->getUser()->setCulture($culture);
-//	$this->getUser()->setAttribute('culture', $culture);
-//	exit;
-//  }
-//  
+
+  public function executeGetResume($request){
+
+    sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+
+	return $this->renderText(get_partial('home/resume/events'));
+  }
+  
+  public function executeChangeLanguage($request){
+	
+	$culture = $request->getParameter('culture');
+	$this->getUser()->setCulture($culture);
+	$this->getUser()->setAttribute('culture', $culture);
+	exit;
+  }
+  
 //  public function executePhotoView($request){
 //	
 //	$share   = $request->getParameter('share');
@@ -80,14 +80,40 @@ class homeActions extends sfActions
 	$fileObj = $eventPhotoObj->getFile();
 	$fileObj->getResized(($zoom?750:366));
   }
-//  
-//  public function executeMobile($request){
-//  	
-//  	$this->getUser()->setAttribute('forceClassic', null);
-//
-//    echo '<html><head><meta http-equiv="refresh" content="0;url=/index.php"/></head></html>';
-//  	exit;
-//  }
+
+  public function executeSavePhotoContestVote($request){
+	
+	$photoSide = $request->getParameter('photoSide');
+	
+	$lockKey = MyTools::getCookie('eventPhotoContestKey');
+	
+	$eventPhotoContestObj = EventPhotoContestPeer::retriveByLockKey($lockKey);
+	$eventPhotoIdList     = array();
+	
+	if( is_object($eventPhotoContestObj) ){
+		
+		$function = 'getEventPhotoId'.ucfirst($photoSide);
+		
+		$eventPhotoContestObj->setEventPhotoIdWinner($eventPhotoContestObj->$function());
+		$eventPhotoContestObj->save();
+		
+		$eventPhotoIdList[] = $eventPhotoContestObj->getEventPhotoIdLeft();
+		$eventPhotoIdList[] = $eventPhotoContestObj->getEventPhotoIdRight();
+	}
+	
+	$eventPhotoContestObj = EventPhotoContest::getPhotoPair($eventPhotoIdList);
+	echo Util::parseInfo($eventPhotoContestObj->getInfo());
+
+	exit;	
+  }
+  
+  public function executeMobile($request){
+  	
+  	$this->getUser()->setAttribute('forceClassic', null);
+
+    echo '<html><head><meta http-equiv="refresh" content="0;url=/index.php"/></head></html>';
+  	exit;
+  }
   
   public function executeJavascript($request){
 	

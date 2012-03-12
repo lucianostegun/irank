@@ -319,7 +319,6 @@ class UserSite extends BaseUserSite
 		if( $eventCount < $limit ){
 			
 			$criteria = new Criteria();
-			$criteria->add( EventPeer::SAVED_RESULT, true );
 			$criteria->add( EventPeer::EVENT_DATE_TIME, date('Y-m-d H:i:s'), Criteria::LESS_THAN );
 			if( $eventDate ) $criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
 			$criteria->setOffset($offset);
@@ -354,7 +353,7 @@ class UserSite extends BaseUserSite
 					AND event.EVENT_DATE BETWEEN '$startDate' AND '$endDate' 
 				GROUP BY 
 					event.EVENT_DATE";
-					
+
 		$resultSet = Util::executeQuery($sql);
 		
 		$eventDateList = array();
