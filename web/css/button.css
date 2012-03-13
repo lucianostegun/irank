@@ -1,11 +1,11 @@
-.buttonTag {
+.button {
 
 	cursor: 			pointer;
 	-moz-user-select: 	none;
 	line-height:		16px;
 }
 
-.buttonTag .buttonLeft {
+.button .buttonLeft {
 	
 	float: 			left;
 	height: 		22px;
@@ -13,7 +13,7 @@
 	background: 	url('/images/button/bgLeft.png');
 }
 
-.buttonTag .buttonMiddle {
+.button .buttonMiddle {
 
 	float: 			left;
 	font-size: 		8pt;
@@ -21,28 +21,26 @@
 	font-weight: 	bold;
 	text-align: 	center;
 	color: 			#000000;
-	padding-left: 	2px;
-	padding-right: 	2px;
 	background: 	url('/images/button/bgMiddle.png');
 }
 
-.buttonTag .buttonMiddle .buttonLabel {
+.button .buttonMiddle .buttonLabel {
 
-	margin-top: 	3px;
+	margin-top: 	2px;
 	margin-top: 	3px !ie;
 	color: 			#000000;
 	text-align: 	center;
 	padding: 		0px; 				
 }
 
-.buttonTag .buttonMiddle .buttonLabel img {
+.button .buttonMiddle .buttonLabel img {
 
 	margin-top: 	-2px;
 	margin-top: 	0px !ie;
 	margin-right: 	5px
 }
 
-.buttonTag .buttonMiddle .buttonLabel a {
+.button .buttonMiddle .buttonLabel a {
 
 	position: 		absolute;
 	left: 			-1px;
@@ -51,7 +49,7 @@
 	z-index: 		-100;
 }
 
-.buttonTag .buttonMiddle .buttonLabel .submit {
+.button .buttonMiddle .buttonLabel .submit {
 
 	position: 		absolute;
 	left: 			-1px;
@@ -63,7 +61,7 @@
 	z-index: 		-100;
 }
 
-.buttonTag .buttonMiddle .buttonLabel a {
+.button .buttonMiddle .buttonLabel a {
 
 	background: 		none;
 	color: 				#333333;
@@ -71,13 +69,13 @@
 	padding-bottom: 	5px;
 }
 
-.buttonTag .buttonMiddle .buttonLabel a:hover {
+.button .buttonMiddle .buttonLabel a:hover {
 
 	text-decoration: 	none;
 	color: 				#333333;
 }
 
-.buttonTag .buttonRight {
+.button .buttonRight {
 
 	margin-right: 	10px;
 	float: 			left;

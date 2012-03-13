@@ -57,7 +57,7 @@
 
 	font-weight: 			bold;
 	font-size: 				10pt;
-	background: 			#1A1A1A url('/images/frontend/formInfo.png') no-repeat;
+	background: 			#1A1A1A url('/images/form/formInfo.png') no-repeat;
 	background-position: 	5px 3px;
 	padding: 				5px 0px 4px 30px;
 	margin: 				-10px -5px 10px -5px;
@@ -80,6 +80,18 @@
 	margin: 		-5px 7px 7px 7px;
 	background: 	#DFDFDF;
 	border: 		1px solid #AAAAAA;
+}
+
+.buttonTabBar.success {
+
+	background: 	#CADDEC;
+	border: 		1px solid #7FA6CA;
+}
+
+.buttonTabBar.error {
+
+	background: 	#EECFCA;
+	border: 		1px solid #CE9080;
 }
 
 .buttonBarFormError {
@@ -300,7 +312,7 @@
 
 .defaultForm input.required, .windowForm input.required {
 
-	background: 	#F0F0F0 url('/images/frontend/formRequired.png') no-repeat;
+	background: 	#F0F0F0 url('/images/form/formRequired.png') no-repeat;
 }
 
 .defaultForm input:focus, .windowForm input:focus {
@@ -312,7 +324,7 @@
 
 .defaultForm input.required:focus, .windowForm input.required:focus {
 
-	background: 	#C0C0C0 url('/images/frontend/formRequired.png') no-repeat;
+	background: 	#C0C0C0 url('/images/form/formRequired.png') no-repeat;
 }
 
 .defaultForm .checkbox, .windowForm .checkbox {
@@ -462,12 +474,12 @@
 
 .defaultForm .rowTextArea .field textarea.required {
 
-	background: 	#333333 url('/images/frontend/formRequired.png') no-repeat;
+	background: 	#333333 url('/images/form/formRequired.png') no-repeat;
 }
 
 .defaultForm .rowTextArea .field textarea.required:focus {
 
-	background: 	#666666 url('/images/frontend/formRequired.png') no-repeat;
+	background: 	#666666 url('/images/form/formRequired.png') no-repeat;
 }
 
 .defaultForm .row .error {
@@ -476,7 +488,7 @@
 	width: 					16px;
 	height: 				18px;
 	height: 				20px !ie;
-	background: 			url('/images/frontend/formError.png') no-repeat;
+	background: 			url('/images/form/formError.png') no-repeat;
 	background-position: 	0px 2px;
 	cursor: 				pointer;
 	display: 				none;
@@ -537,24 +549,57 @@
 
 .formStatusDiv {
 
+	display: 		none;
 	padding: 		5px;
 	height: 		22px;
 	margin: 		-3px 1px 1px 1px;
 	color: 			#333333;
-	display: 		none;
 	font-weight: 	bold;
 }
 
-.windowButtonBar .formStatusDiv {
+.formStatusDiv.success {
 
-	float: 			left;
-	padding: 		5px;
-	height: 		22px;
-	margin: 		-3px 1px 1px 1px;
-	color: 			#333333;
-	display: 		none;
-	font-weight: 	bold;
+	color: 			#3165A5;
+	background: 	url('/images/form/success.png') 58px 2px no-repeat;
 }
+
+.formStatusDiv.error {
+
+	color: 			#CC3300;
+	background: 	url('/images/form/error.png') 58px 2px no-repeat;
+}
+
+.formStatusDiv.error .message,
+.formStatusDiv.success .message {
+
+	position: 		relative;
+	left: 			38px;
+}
+
+.windowButtonBar .formStatusDiv.success {
+
+	color: 			#3165A5;
+	background: 	url('/images/form/success.png') 8px 2px no-repeat;
+}
+
+.windowButtonBar .formStatusDiv.error {
+
+	color: 			#CC3300;
+	background: 	url('/images/form/error.png') 8px 2px no-repeat;
+}
+
+.windowButtonBar .formStatusDiv.error .message,
+.windowButtonBar .formStatusDiv.success .message {
+
+	width: 			200px;
+	text-align: 	left;
+}
+
+
+
+
+
+
 
 .defaultForm fieldset {
 
