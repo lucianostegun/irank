@@ -4,7 +4,7 @@
 <table width="500" border="0" cellspacing="0" cellpadding="3" class="gridTableFlex" style="margin: 30px">
 	<tr>
 		<td align="left" valign="top" rowspan="2" align="center">
-			<?php echo image_tag('frontend/success', array('align'=>'left', 'style'=>'margin: 20px 15px 15px 15px')) ?>
+			<?php echo image_tag('success', array('align'=>'left', 'style'=>'margin: 20px 15px 15px 15px')) ?>
 		</td>
 		<td align="left" valign="top">
 			<?php echo __('event.confirmPresence.successMessage', array('%eventName%'=>$eventObj->getEventName())) ?><br/><br/>

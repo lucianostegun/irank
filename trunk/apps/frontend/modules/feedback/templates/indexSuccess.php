@@ -64,7 +64,7 @@
 		</tr>
 		<tr>
 			<td align="left" valign="top" rowspan="2" align="center">
-				<?php echo image_tag('frontend/success', array('align'=>'left', 'style'=>'margin: 10px 0px 0px 15px')) ?>
+				<?php echo image_tag('success', array('align'=>'left', 'style'=>'margin: 10px 0px 0px 15px')) ?>
 			</td>
 			<td align="left" valign="top">
 				<?php echo __('feedback.successMessage') ?><br/><br/>

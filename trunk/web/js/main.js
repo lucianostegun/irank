@@ -53,7 +53,10 @@ function loadStylesheet(cssPath){
     head.appendChild(link);
 }
 
-function goToPage(moduleName, actionName){
+function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow){
 	
+	if( fieldName && fieldValue)
+		return goModule(moduleName, actionName, fieldName, fieldValue, newWindow );
+		
 	location.href = _webRoot+'/'+moduleName+'/'+actionName;
 }

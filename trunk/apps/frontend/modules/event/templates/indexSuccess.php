@@ -1,5 +1,6 @@
-<div class="commonBar"><span><?php echo __('event.title') ?></span></div>
 <?php
+	include_partial('home/component/commonBar', array('pathList'=>array(__('event.title')=>'event/index')));
+
 	echo form_tag('event/search', array('id'=>'eventSearchForm', 'onsubmit'=>'doEventSearch(); return false'));
 		echo input_hidden_tag('isIE', null);
 ?>

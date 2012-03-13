@@ -71,7 +71,8 @@
 	padding: 	7px 7px 7px 6px;
 }
 
-#leftMenu .item.hover .iconRight {
+#leftMenu .item.hover .iconRight,
+#leftMenu .item .iconRight.active {
 
 	display: 	block
 }

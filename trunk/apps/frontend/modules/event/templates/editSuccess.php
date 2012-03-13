@@ -15,9 +15,20 @@
 <script>setRecordSaved(false);</script>
 <?php
 	endif;
-?>
-<div class="commonBar"><span><?php echo __('event.title') ?>/<?php echo $pageAction ?></span></div>
-<?php
+
+	$pathList = array('Eventos'=>'event/index');
+	
+	if( !$isNew ){
+		
+		$eventName   = $eventObj->getName();
+		$rankingName = $eventObj->getRanking()->getName();
+		$rankingId   = $eventObj->getRankingId();
+		$pathList[$rankingName] = '#goToPage("ranking", "edit", "rankingId", '.$rankingId.', true)';
+		$pathList[$eventName]   = '';
+	}
+		
+	include_partial('home/component/commonBar', array('pathList'=>$pathList));
+
 	$eventId  = $eventObj->getId();
 	
 	echo form_remote_tag(array(

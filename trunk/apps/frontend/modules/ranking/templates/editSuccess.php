@@ -6,9 +6,17 @@
 <script>setRecordSaved(false);</script>
 <?php
 	endif;
-?>
-<div class="commonBar"><span>Rankings/<?php echo $pageAction ?></span></div>
-<?php
+
+	$rankingId = $rankingObj->getId();
+	$isNew     = $rankingObj->isNew();
+	
+	$pathList = array('Rankings'=>'ranking/index');
+	
+	$rankingName = $rankingObj->getRankingName();
+	if( !$isNew )
+		$pathList[$rankingName] = '';
+		
+	include_partial('home/component/commonBar', array('pathList'=>$pathList));
 	
 	echo form_remote_tag(array(
 		'url'=>'ranking/save',
@@ -17,8 +25,6 @@
 		'encoding'=>'UTF8',
 		), array( 'id'=>'rankingForm' ));
 	
-	$rankingId = $rankingObj->getId();
-	$isNew     = $rankingObj->isNew();
 	
 	echo input_hidden_tag('rankingId', $rankingId);
 	echo input_hidden_tag('scoreFormula', ($scoreFormula=$rankingObj->getScoreFormula()), array('id'=>'rankingScoreFormula'));

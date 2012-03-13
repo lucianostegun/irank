@@ -10,6 +10,11 @@
 class Event extends BaseEvent
 {
 	
+	public function getName(){
+		
+		return $this->getEventName();
+	}
+	
 	public function toString($withDate=false){
 		
 		$string = $this->getEventName().' ';

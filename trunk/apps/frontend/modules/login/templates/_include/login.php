@@ -1,6 +1,7 @@
 <?php
 	sfContext::getInstance()->getResponse()->addStylesheet('login');
 	sfContext::getInstance()->getResponse()->addJavascript('login');
+	sfContext::getInstance()->getResponse()->addStylesheet('quickResume');
 	
 	echo form_remote_tag(array(
 		'url'=>'login/login',
