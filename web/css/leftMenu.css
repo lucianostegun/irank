@@ -114,10 +114,10 @@
     filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E6E6E6', EndColorStr='#D6D6D6', GradientType=0);
     background-repeat: 	repeat-y;
     height: 			25px;
-    border-top: 		1px solid #EAEAEA;
-    border-bottom: 		1px solid #CDCDCD;
-    cursor: 			pointer;
+    border-top: 		1px solid #BBB;
+    border-bottom: 	1px solid #BBB;cursor: 			pointer;
     margin-left: 		10px;
+    margin-bottom: 		1px;
 }
 
 #leftMenu .subitem.hover {
@@ -182,4 +182,9 @@
 #leftMenu .separator.double {
 
 	margin-top: 	15px;
+}
+
+#leftMenu .innerMenu {
+
+	margin-bottom: 	35px;
 }

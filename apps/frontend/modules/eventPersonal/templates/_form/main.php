@@ -49,12 +49,12 @@
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalPaidPlacesLabel"><?php echo __('event.paidPlaces') ?></div>
-				<div class="field"><?php echo input_tag('paidPlaces', $eventPersonalObj->getPaidPlaces(), array('size'=>2, 'maxlength'=>1, 'class'=>'required', 'id'=>'eventPersonalPaidPlaces')) ?></div>
+				<div class="field"><?php echo input_tag('paidPlaces', $eventPersonalObj->getPaidPlaces(), array('size'=>2, 'maxlength'=>3, 'class'=>'required', 'id'=>'eventPersonalPaidPlaces')) ?></div>
 				<div class="error" id="eventPersonalPaidPlacesError" onclick="showFormErrorDetails('eventPersonal', 'paidPlaces')"></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalEventPositionLabel"><?php echo __('Position') ?></div>
-				<div class="field"><?php echo input_tag('eventPosition', $eventPersonalObj->getEventPosition(), array('size'=>2, 'maxlength'=>1, 'class'=>'required', 'id'=>'eventPersonalEventPosition')) ?></div>
+				<div class="field"><?php echo input_tag('eventPosition', $eventPersonalObj->getEventPosition(), array('size'=>2, 'maxlength'=>3, 'class'=>'required', 'id'=>'eventPersonalEventPosition')) ?></div>
 				<div class="error" id="eventPersonalEventPositionError" onclick="showFormErrorDetails('eventPersonal', 'eventPosition')"></div>
 			</div>
 			<div class="row">
