@@ -13,7 +13,11 @@
 	<?php if($moduleName=='ranking') include_partial('ranking/include/leftMenu', array('rankingObj'=>$innerObj, 'actionName'=>$actionName)) ?>
 	
 	<div class="item<?php echo ($moduleName=='event'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('event', 'index')">Eventos</div><div class="iconRight" onclick="goToPage('event', 'new')" title="Criar novo evento padrão"><?php echo image_tag('layout/leftMenu/add') ?></div></div>
+	<?php if($moduleName=='event') include_partial('event/include/leftMenu', array('eventObj'=>$innerObj, 'actionName'=>$actionName)) ?>
+	
 	<div class="item<?php echo ($moduleName=='eventPersonal'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('eventPersonal', 'index')">Eventos pessoais</div><div class="iconRight" onclick="goToPage('eventPersonal', 'new')" title="Criar novo evento pessoal"><?php echo image_tag('layout/leftMenu/add') ?></div></div>
+	<?php if($moduleName=='eventPersonal') include_partial('eventPersonal/include/leftMenu', array('eventPersonalObj'=>$innerObj, 'actionName'=>$actionName)) ?>
+	
 	<div class="separator"></div>
 	<div class="item<?php echo ($moduleName=='statistic'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon stats" onclick="goToPage('statistic', 'index')">Estatísticas</div></div>
 	<div class="item<?php echo ($moduleName=='myAccount'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon config" onclick="goToPage('myAccount', 'index')">Configurações</div></div>

@@ -19,6 +19,7 @@ class eventPersonalActions extends sfActions
 	$this->userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
 	$this->criteria    = new Criteria();
   	$this->innerMenu   = 'eventPersonal/include/mainMenuIndex';
+  	$this->innerObj    = new EventPersonal();
   }
 
   public function executeNew($request){
@@ -48,8 +49,7 @@ class eventPersonalActions extends sfActions
 		$this->eventPersonalObj = new EventPersonal();
   	}
 	  	
-  	$this->innerMenu = 'eventPersonal/include/mainMenu';
-  	$this->innerObj  = $this->eventPersonalObj;
+  	$this->innerObj = $this->eventPersonalObj;
   }
   
   public function handleErrorSave(){

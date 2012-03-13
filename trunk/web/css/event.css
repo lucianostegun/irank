@@ -17,3 +17,23 @@
 	font-weight: 	bold;
 	margin-right: 	14px;
 }
+
+#leftMenu .subitem .label.ical {
+
+	background: 	url(/images/layout/leftMenu/calendar.png) center left no-repeat;
+}
+
+#leftMenu .subitem .label.clone {
+
+	background: 	url(/images/layout/leftMenu/clone.png) center left no-repeat;
+}
+
+#leftMenu .subitem .label.player {
+
+	background: 	url(/images/layout/leftMenu/player.png) center left no-repeat;
+}
+
+#leftMenu .subitem .label.players {
+
+	background: 	url(/images/layout/leftMenu/players.png) center left no-repeat;
+}
