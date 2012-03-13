@@ -9,11 +9,11 @@
 ?>
 <div class="userInfo">Olá <b><?php echo $firstName ?></b></div>
 <div id="leftMenu">
-	<div class="item<?php echo ($moduleName=='ranking'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('ranking', 'index')">Meus rankings</div><div class="iconRight" onclick="goToPage('ranking', 'new')" title="Criar novo ranking"><?php echo image_tag('layout/leftMenu/add') ?></div></div>
-	<?php if($moduleName=='ranking') include_partial('ranking/include/leftMenu', array('rankingObj'=>$innerObj, 'actionName'=>$actionName)) ?>
+	<div class="item<?php echo ($moduleName=='ranking'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('ranking', 'index')">Meus rankings</div><div class="iconRight<?php echo ($moduleName=='ranking'?' active':'') ?>" onclick="goToPage('ranking', 'new')" title="Criar novo ranking"><?php echo image_tag('layout/leftMenu/add') ?></div></div>
+	<?php if($moduleName=='ranking' && $actionName!='index') include_partial('ranking/include/leftMenu', array('rankingObj'=>$innerObj, 'actionName'=>$actionName)) ?>
 	
-	<div class="item<?php echo ($moduleName=='event'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('event', 'index')">Eventos</div><div class="iconRight" onclick="goToPage('event', 'new')" title="Criar novo evento padrão"><?php echo image_tag('layout/leftMenu/add') ?></div></div>
-	<?php if($moduleName=='event') include_partial('event/include/leftMenu', array('eventObj'=>$innerObj, 'actionName'=>$actionName)) ?>
+	<div class="item<?php echo ($moduleName=='event'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('event', 'index')">Eventos</div><div class="iconRight<?php echo ($moduleName=='event'?' active':'') ?>" onclick="goToPage('event', 'new')" title="Criar novo evento padrão"><?php echo image_tag('layout/leftMenu/add') ?></div></div>
+	<?php if($moduleName=='event' && $actionName!='index') include_partial('event/include/leftMenu', array('eventObj'=>$innerObj, 'actionName'=>$actionName)) ?>
 	
 	<div class="item<?php echo ($moduleName=='eventPersonal'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('eventPersonal', 'index')">Eventos pessoais</div><div class="iconRight" onclick="goToPage('eventPersonal', 'new')" title="Criar novo evento pessoal"><?php echo image_tag('layout/leftMenu/add') ?></div></div>
 	<?php if($moduleName=='eventPersonal') include_partial('eventPersonal/include/leftMenu', array('eventPersonalObj'=>$innerObj, 'actionName'=>$actionName)) ?>

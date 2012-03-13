@@ -10,6 +10,11 @@
 class Ranking extends BaseRanking
 {
 	
+	public function getName(){
+		
+		return $this->getRankingName();
+	}
+	
 	public function cleanRecord(){
 		
 		Util::executeQuery('DELETE FROM ranking_player WHERE ranking_id = '.$this->getId());
@@ -947,9 +952,13 @@ class Ranking extends BaseRanking
 		return Util::buildXml($rankingList, 'rankings', 'ranking');
 	}
 	
-	public static function getOptionsForSelectScoreSchema($defaultValue=null){
+	public static function getOptionsForSelectScoreSchema($defaultValue=null, $suppressSelect=true){
 		
 		$optionList = array();
+		
+		if( !$suppressSelect )
+			$optionList[''] = __('select');
+			
 		$optionList['irank1']  = 'Buy-ins / Posição / Valor Buy-in';
 		$optionList['vegas']   = 'Padrão Vegas';
 		$optionList['custom']  = 'Fórmula personalizada';

@@ -7,9 +7,6 @@ function handleSuccessLogin(content){
 
 	$('loginResumeDiv').innerHTML = content;
 
-	loadStylesheet('/css/quickResume');
-	loadStylesheet('/css/leftMenu');
-	
 	loadHomeResume();
 	loadUserCredit();
 }

@@ -69,7 +69,7 @@
 			</div>
 			<div class="row">
 				<div class="label" id="rankingScoreSchemaLabel"><?php echo __('ranking.scoreSchema') ?></div>
-				<div class="field"><?php echo select_tag('scoreSchema', Ranking::getOptionsForSelectScoreSchema($rankingObj->getScoreSchema()), array('onchange'=>'handleRankingScoreSchema(this.value)', 'id'=>'rankingScoreSchema')) ?></div>
+				<div class="field"><?php echo select_tag('scoreSchema', Ranking::getOptionsForSelectScoreSchema($rankingObj->getScoreSchema(), false), array('onchange'=>'handleRankingScoreSchema(this.value)', 'id'=>'rankingScoreSchema')) ?></div>
 				<div class="error" id="rankingScoreSchemaError" onclick="showFormErrorDetails('ranking', 'ScoreSchema')"></div>
 			</div>
 			<div class="row" id="rankingScoreFormulaRowDiv" style="display: <?php echo ($rankingObj->getScoreSchema()=='custom'?'block':'none')?>">

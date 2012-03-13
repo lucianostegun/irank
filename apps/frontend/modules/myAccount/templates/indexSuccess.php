@@ -1,6 +1,6 @@
-<div class="commonBar"><span><?php echo __('myAccount.title') ?></span></div>
 <?php
-	
+	include_partial('home/component/commonBar', array('pathList'=>array(__('myAccount.title')=>'myAccount/index')));
+		
 	echo form_remote_tag(array(
 		'url'=>'myAccount/save',
 		'success'=>'handleSuccessMyAccount( request.responseText )',

@@ -1,4 +1,6 @@
 <?php
+	sfContext::getInstance()->getResponse()->addStylesheet('quickResume');
+	
 	$resumeInfo = People::getFullResume();
 ?>
 <div id="quickResume">
@@ -43,5 +45,3 @@
 	</div>
 </div>
 <div class="logout"><?php echo link_to('desconectar', '/login/logout') ?></div>
-
-<?php sfContext::getInstance()->getResponse()->addStylesheet('quickResume'); ?>
