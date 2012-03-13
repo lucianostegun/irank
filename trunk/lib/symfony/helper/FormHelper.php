@@ -1004,18 +1004,17 @@ function button_tag( $buttonId, $text, $options=array() ){
 		$html .= '</div>';
 	}else{
 		
-		$html .= '<div '.$style.' class="buttonTag'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
+		$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 		$html .= '</div>';
 	}
-	
-	$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; visibility: hidden'));
+	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));
 	
 	$app = ($app=='mobile'?'mobile/':'');
-	sfContext::getInstance()->getResponse()->addStylesheet($app.'button');
-	sfContext::getInstance()->getResponse()->addJavascript('button');
+	sfContext::getInstance()->getResponse()->addStylesheet( $app.'button' );
+	sfContext::getInstance()->getResponse()->addJavascript( 'button' );
 	
 	return $html;
 }
@@ -1072,7 +1071,7 @@ function button_mobile_tag( $buttonId, $text, $options=array() ){
 	$html = $nl;
 	$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
-	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
+	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 	$html .= '</div>';
 	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));

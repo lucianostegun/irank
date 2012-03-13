@@ -52,7 +52,7 @@ class loginActions extends sfActions
 	        sfConfig::set('sf_web_debug', false);
 			sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-			return $this->renderText(get_partial('home/include/quickResume', $options));
+			return $this->renderText(get_partial('home/include/leftMenu').get_partial('home/include/quickResume', $options));
 		}else{
 			
 			$statusMessage = __('login.errorMessage');

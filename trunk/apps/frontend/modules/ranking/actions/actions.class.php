@@ -28,7 +28,7 @@ class rankingActions extends sfActions
   public function executeIndex($request){
 
 	$this->userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
-  	$this->innerMenu   = 'ranking/include/mainMenuIndex';
+  	$this->innerObj    = new Ranking();
   	
   	$suppressOld = $request->getParameter('so', '1');
   	
@@ -61,7 +61,6 @@ class rankingActions extends sfActions
 		$this->rankingObj = new Ranking();
   	}
 	  
-  	$this->innerMenu = 'ranking/include/mainMenu';
   	$this->innerObj  = $this->rankingObj;
   }
 
@@ -85,8 +84,6 @@ class rankingActions extends sfActions
 	$scoreSchema      = $request->getParameter('scoreSchema');
 	$scoreFormula     = $request->getParameter('scoreFormula');
 	$recalculateScore = $request->getParameter('recalculateScore');
-
-$recalculateScore = true;
 
 	$rankingObj = $this->rankingObj;
 

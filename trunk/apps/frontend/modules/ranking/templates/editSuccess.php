@@ -13,9 +13,8 @@
 	echo form_remote_tag(array(
 		'url'=>'ranking/save',
 		'success'=>'handleSuccessRanking( request.responseText )',
-		'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "rankingForm", "ranking", false, "ranking" )',
-		'encoding'=>'utf8',
-		'loading'=>'showIndicator()'
+		'failure'=>'handleFailureRanking( request.responseText )',
+		'encoding'=>'UTF8',
 		), array( 'id'=>'rankingForm' ));
 	
 	$rankingId = $rankingObj->getId();
@@ -40,7 +39,7 @@
 	<div class="buttonTabBar" id="rankingMainButtonBar">
 		<?php echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitRanking()')); ?>
 		<?php echo getFormLoading('ranking') ?>
-		<?php echo getFormStatus(); ?>
+		<?php echo getFormStatus(null, false, 'Erro ao salvar o ranking!', 'Ranking salvo com sucesso!'); ?>
 	</div>
 	<div class="buttonTabBar" id="rankingPlayerButtonBar" style="display: none">
 		<?php echo button_tag('addRankingPlayer', __('button.newPlayer'), array('onclick'=>'addRankingPlayer()')) ?>

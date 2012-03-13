@@ -2,7 +2,7 @@
 	echo form_remote_tag(array(
 		'url'=>'ranking/savePlayer',
 		'success'=>'handleSuccessRankingPlayer( request.responseText )',
-		'failure'=>'enableButton("rankingPlayerSubmit"); handleFormFieldError( request.responseText, "rankingPlayerForm", "rankingPlayer", false, "rankingPlayer" )',
+		'failure'=>'handleFailureRankingPlayer( request.responseText )',
 		'encoding'=>'utf8',
 		'loading'=>'disableButton("rankingPlayerSubmit"); showIndicator("rankingPlayer")'
 		), array( 'id'=>'rankingPlayerForm' ));
@@ -28,7 +28,7 @@
 			</td>
 		</tr>
 	</table>
-	<div class="windowButtonBar">
+	<div class="windowButtonBar" id="rankingPlayerAddButtonBar">
 		<?php
 			echo button_tag('rankingPlayerCancel', __('button.cancel'), array('onclick'=>'windowRankingPlayerAddHide()'));
 			echo button_tag('rankingPlayerSubmit', __('button.save'), array('onclick'=>'doSubmitRankingPlayer()'));

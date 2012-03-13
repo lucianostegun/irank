@@ -12,6 +12,7 @@
     filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E6E6E6', EndColorStr='#D6D6D6', GradientType=0);
     background-repeat: 	repeat-y;
     height: 			30px;
+    overflow: 			hidden;
     border-top: 		1px solid #EAEAEA;
     border-bottom: 		1px solid #CDCDCD;
     cursor: 			pointer;
@@ -37,11 +38,19 @@
 
 #leftMenu .item .label {
 
+	float: 			left;
 	margin-left: 	15px;
-	margin-top: 	6px;
 	font-weight: 	normal;
 	color: 			#303030;
-	height: 		18px;
+	height: 		24px;
+	font-size: 		11px;
+	padding-top: 	6px;
+	width: 			185px;
+}
+
+#leftMenu .item .label.flex {
+
+	width: 			156px;
 }
 
 #leftMenu .item.active .label {
@@ -55,6 +64,18 @@
 	padding-left: 			24px;
 }
 
+#leftMenu .item .iconRight {
+
+	float: 		right;
+	display: 	none;
+	padding: 	7px 7px 7px 6px;
+}
+
+#leftMenu .item.hover .iconRight {
+
+	display: 	block
+}
+
 #leftMenu .item .label.stats {
 
 	background: 	url(/images/layout/leftMenu/stats.png) center left no-repeat;
@@ -65,9 +86,80 @@
 	background: 	url(/images/layout/leftMenu/config.png) center left no-repeat;
 }
 
-#leftMenu .separator {
 
-	margin-top: 	5px;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#leftMenu .subitem {
+	
+    background: 		#E0E0E0;
+    background-image: 	url(/images/layout/leftMenuHoverBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
+    background-image: 	url(/images/layout/leftMenuHoverBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E6E6E6', EndColorStr='#D6D6D6', GradientType=0);
+    background-repeat: 	repeat-y;
+    height: 			25px;
+    border-top: 		1px solid #EAEAEA;
+    border-bottom: 		1px solid #CDCDCD;
+    cursor: 			pointer;
+    margin-left: 		10px;
+}
+
+#leftMenu .subitem.hover {
+
+    background-image: 	url(/images/layout/leftMenuDistinctBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
+    background-image: 	url(/images/layout/leftMenuDistinctBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
+}
+
+#leftMenu .subitem .label {
+
+	margin-left: 	15px;
+	margin-top: 	3px;
+	font-weight: 	normal;
+	color: 			#303030;
+	height: 		18px;
+}
+
+#leftMenu .subitem.active .label {
+
+	font-weight: 	bold;
+	color: 			#A42200;
+}
+
+#leftMenu .subitem .label.icon {
+
+	padding-left: 24px;
+}
+
+
+#leftMenu .subitem .label.add {
+
+	background: 	url(/images/layout/leftMenu/add.png) center left no-repeat;
+}
+
+#leftMenu .subitem .label.import {
+
+	background: 	url(/images/layout/leftMenu/import.png) center left no-repeat;
+}
+
+#leftMenu .subitem .label.delete {
+
+	background: 	url(/images/layout/leftMenu/delete.png) center left no-repeat;
 }
 
 
@@ -82,9 +174,12 @@
 
 
 
+#leftMenu .separator {
 
+	margin-top: 	5px;
+}
 
+#leftMenu .separator.double {
 
-
-
-
+	margin-top: 	15px;
+}

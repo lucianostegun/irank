@@ -10,6 +10,7 @@ include_title();
 $culture = 'pt_BR';
 
 $isAuthenticated = MyTools::isAuthenticated();
+$innerObj = (isset($innerObj)?$innerObj:null);
 ?>
 <script>
 </script>
@@ -22,9 +23,8 @@ $isAuthenticated = MyTools::isAuthenticated();
     			<?php echo link_to(image_tag('layout/logo', array('id'=>'logo')), '/home', array('title'=>'Voltar para a página inicial')) ?>
     			<?php echo image_tag('layout/cards', array('id'=>'cards')) ?>
     			<?php echo image_tag('layout/chipsHeader', array('id'=>'chips')) ?>
-    			<div class="flags">
-					<?php echo link_to(image_tag('flagBrazil'), '#changeDefaultLanguage("pt-BR")') ?>
-					<?php echo link_to(image_tag('flagUsa'), '#changeDefaultLanguage("en-US")') ?>
+    			<div class="search">
+					<?php echo input_tag('eventSearch', null, array('placeholder'=>'Pesquisar eventos...')) ?>
     			</div>
     		</div>
     		<table cellspacing="0" cellpadding="0" id="borderTable">
@@ -56,7 +56,7 @@ $isAuthenticated = MyTools::isAuthenticated();
 	    							<?php
 	    								if( $isAuthenticated ){
 
-	    									include_partial('home/include/leftMenu', array());
+	    									include_partial('home/include/leftMenu', array('innerObj'=>$innerObj));
 	    									include_partial('home/include/quickResume', array());
 	    								}
 	    								else
@@ -100,8 +100,8 @@ $isAuthenticated = MyTools::isAuthenticated();
 	</div>
 </div>
 <?php
-//	$dhtmlxWindowsObj = new DhtmlxWindows();
-//	$dhtmlxWindowsObj->build();
+	$dhtmlxWindowsObj = new DhtmlxWindows();
+	$dhtmlxWindowsObj->build();
 ?>
 </body>
 </html>

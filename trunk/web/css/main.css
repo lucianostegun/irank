@@ -18,6 +18,7 @@ img {
 a {
 	
 	text-decoration: 	none;
+	color: 				#C91E1E;
 }
 
 a:hover {
@@ -47,6 +48,29 @@ a:hover {
 	left: 			950px;
 	top: 			42px;
 	z-index: 		3;
+}
+
+#contentArea #header .search {
+
+	position: 		relative;
+	width: 			70px;
+	left: 			830px;
+	top: 			41px;
+	z-index: 		3;
+}
+
+#contentArea #header input {
+
+	border: 	1px solid #7A7A7A;
+	width: 		150px;
+	height: 	20px;
+	
+	-moz-border-radius: 	10px;
+	-webkit-border-radius: 	10px;
+	border-radius: 			10px;
+	padding-left: 			10px;
+	padding-right: 			25px;
+	background: 			#FFFFFF url('/images/layout/search.gif') center right no-repeat
 }
 
 #contentArea #header .flags img {
@@ -155,6 +179,7 @@ a:hover {
 	color: 				#FFFFFF;
 	font-weight: 		bold;
 	text-decoration: 	none;
+	text-transform: 	uppercase;
 	top: 				12px;
 	padding-top: 		12px;
 	padding-bottom: 	13px;
