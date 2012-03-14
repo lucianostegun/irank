@@ -66,6 +66,7 @@ textarea.eventComment {
 	height: 		47px;
 	font-family: 	Arial, Verdana, Sans serif;
 	margin: 		1px;
+	font-size: 		12px;
 }
 
 textarea.eventCommentError {
@@ -76,6 +77,7 @@ textarea.eventCommentError {
 	width: 			410px !ie;
 	height: 		47px;
 	font-family: 	Arial, Verdana, Sans serif;
+	font-size: 		12px;
 	margin: 		1px;
 	border: 		1px solid #973C2E;
 }

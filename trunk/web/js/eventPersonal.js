@@ -6,14 +6,24 @@ function handleSuccessEventPersonal(content){
 
 	setRecordSaved(true);
 	clearFormFieldErrors('eventPersonalForm');
+	setButtonBarStatus('eventPersonalMain', 'success');
 	showFormStatusSuccess();
 	
 	showDiv('mainMenuEventPersonal');
+	
+	setLastBarPath($('eventPersonalEventName').value);
 	
 	adjustContentTab();
 	
 	enableButton('mainSubmit');
 	hideIndicator('eventPersonal');
+}
+
+function handleFailureEventPersonal(content){
+	
+	enableButton('mainSubmit');
+	setButtonBarStatus('eventPersonalMain', 'error');
+	handleFormFieldError(content, 'eventPersonalForm', 'eventPersonal', false, 'eventPersonal');
 }
 
 function doSubmitEventPersonal(content){

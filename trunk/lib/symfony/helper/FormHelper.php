@@ -305,6 +305,8 @@ function select_language_tag($name, $selected = null, $options = array())
  */
 function input_tag($name, $value = null, $options = array())
 {
+  
+  $options['autocomplete'] = 'off';
   return tag('input', array_merge(array('type' => 'text', 'name' => $name, 'id' => get_id_from_name($name, $value), 'value' => $value), _convert_options($options)));
 }
 
@@ -1010,7 +1012,8 @@ function button_tag( $buttonId, $text, $options=array() ){
 		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 		$html .= '</div>';
 	}
-	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));
+	
+	$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; top: -100px; left: -100px; border: none; background: none', 'onclick'=>$onclick.'; return false')) ;
 	
 	$app = ($app=='mobile'?'mobile/':'');
 	sfContext::getInstance()->getResponse()->addStylesheet( $app.'button' );

@@ -96,24 +96,32 @@
 
 .buttonBarFormError {
 
-	height: 		22px;
-	padding: 		7px 5px 7px 5px;
-	background: 	#CE545C;
-	border: 		1px solid #333333;
+	background: 	#EECFCA;
+	border: 		1px solid #CE9080;
+}
+
+.buttonBarForm.error {
+
+	color: 			#CC3300;
+	background: 	#EECFCA;
 }
 
 .buttonBarFormSuccess {
 
-	height: 		22px;
-	padding: 		7px 5px 7px 5px;
-	background: 	#CE545C;
-	border: 		1px solid #333333;
+	background: 	#CADDEC;
+	border: 		1px solid #7FA6CA;
+}
+
+.buttonBarForm.success {
+
+	color: 			#3165A5;
+	background: 	#CADDEC;
 }
 
 .defaultForm .row, .windowForm .row {
 
 	height: 		auto;
-	min-height: 	22px;
+	min-height: 	26px;
 	clear: 			both;
 	margin-bottom: 	2px;
 	whitespace: 	nowrap;
@@ -126,7 +134,7 @@
 
 	width: 			160px;
 	float: 			left;
-	padding: 		1px 0px 2px 0px;
+	padding: 		2px 0px 2px 0px;
 	height: 		15px;
 	height: 		21px !ie;
 	text-align: 	right;
@@ -245,7 +253,7 @@
 
 .defaultForm .row .textFlexError, .windowForm .row .textFlexError {
 
-	background: 	#FB8F7E;
+	background: 	#F1AFA4;
 	border:			1px solid #333333;
 }
 
@@ -294,37 +302,37 @@
 .defaultForm input, .windowForm input {
 
 	color: 			#1A1A1A;
-	font-size: 		8pt;
-	height: 		14px;
-	padding: 		1px 1px 2px 4px;
+	font-size: 		11px;
+	height: 		16px;
+	padding: 		1px 4px 2px 4px;
 	border:			1px solid #8A8A8A;
-	background: 	#F0F0F0;
+	background: 	#FFFFFF;
 }
 
 .defaultForm input.disabled, .windowForm input.disabled,
 .defaultForm input.disabled:focus, .windowForm input.disabled:focus {
 
 	border: 		1px solid #E6E6E6;
-	background: 	#E6E6E6;
+	background: 	#CADBE6;
 	cursor: 		default;
 	color: 			#333333;
 }
 
 .defaultForm input.required, .windowForm input.required {
 
-	background: 	#F0F0F0 url('/images/form/formRequired.png') no-repeat;
+	background: 	#FFFFFF url('/images/form/formRequired.png') right top no-repeat;
 }
 
 .defaultForm input:focus, .windowForm input:focus {
 
-	background: 	#C0C0C0;
+	background: 	#CADBE6;
 	border: 		1px solid #666666;
 	color: 			#000000;
 }
 
 .defaultForm input.required:focus, .windowForm input.required:focus {
 
-	background: 	#C0C0C0 url('/images/form/formRequired.png') no-repeat;
+	background: 	#CADBE6 url('/images/form/formRequired.png') right top no-repeat;
 }
 
 .defaultForm .checkbox, .windowForm .checkbox {
@@ -336,10 +344,9 @@
 
 .defaultForm select, .windowForm select {
 
-	font-size: 		8pt;
-	height: 		18px;
-	height: 		19px;
-	padding: 		1px;
+	font-size: 		11px;
+	height: 		21px;
+	padding: 		2px 1px 1px 1px;
 	padding-left: 	0px;
 	text-align: 	left;
 	border:			1px solid #8A8A8A;
@@ -450,7 +457,7 @@
 	padding-left: 	3px;
 	resize: 		none;
 	border:			1px solid #8A8A8A;
-	background: 	#F0F0F0;
+	background: 	#FFFFFF;
 }
 
 .defaultForm .rowTextArea .field textarea:focus {
@@ -462,7 +469,7 @@
 .defaultForm .rowTextArea .field textarea.formFieldError, textarea.formFieldError,
 .windowForm .rowTextArea .field textarea.formFieldError, textarea.formFieldError {
 
-	background: 	#FB8F7E;
+	background: 	#F1AFA4;
 	border:			1px solid #333333;
 }
 
@@ -474,12 +481,12 @@
 
 .defaultForm .rowTextArea .field textarea.required {
 
-	background: 	#333333 url('/images/form/formRequired.png') no-repeat;
+	background: 	#333333 url('/images/form/formRequired.png') right top no-repeat;
 }
 
 .defaultForm .rowTextArea .field textarea.required:focus {
 
-	background: 	#666666 url('/images/form/formRequired.png') no-repeat;
+	background: 	#666666 url('/images/form/formRequired.png') right top no-repeat;
 }
 
 .defaultForm .row .error {
@@ -501,47 +508,45 @@
 
 .defaultForm .formFieldError, .windowForm .formFieldError {
 
-	font-size: 		8pt;
-	height: 		14px;
-	padding: 		1px 1px 1px 4px;
+	font-size: 		11px;
+	height: 		16px;
+	padding: 		1px 4px 2px 4px;
 	border:			1px solid #333333;
-	background: 	#FB8F7E;
+	background: 	#F1AFA4;
 	color: 			#000000;
 }
 
 .defaultForm .formFieldError:focus, .windowForm .formFieldError:focus {
 
-	font-size: 		8pt;
-	height: 		14px;
-	padding: 		1px 1px 1px 4px;
+	font-size: 		11px;
+	height: 		16px;
+	padding: 		1px 4px 2px 4px;
 	border:			1px solid #333333;
-	background: 	#E0695A;
+	background: 	#D88D82;
 	color: 			#000000;
 }
 
 .defaultForm select.formFieldError, .windowForm select.formFieldError {
 
-	font-size: 		8pt;
-	height: 		18px;
-	height: 		19px;
-	padding: 		1px;
+	font-size: 		11px;
+	height: 		21px;
+	padding: 		2px 1px 1px 1px;
 	padding-left: 	0px;
 	text-align: 	left;
 	border:			1px solid #333333;
-	background: 	#FB8F7E;
+	background: 	#F1AFA4;
 	color: 			#000000;
 }
 
 .defaultForm select.formFieldError:focus, .windowForm select.formFieldError:focus {
 
-	font-size: 		8pt;
-	height: 		18px;
-	height: 		19px;
-	padding: 		1px;
+	font-size: 		11px;
+	height: 		21px;
+	padding: 		2px 1px 1px 1px;
 	padding-left: 	0px;
 	text-align: 	left;
 	border:			1px solid #333333;
-	background: 	#E0695A;
+	background: 	#D88D82;
 	color: 			#000000;
 }
 
@@ -611,7 +616,7 @@
 .defaultForm fieldset legend {
 
 	font-weight: 		bold;
-	color: 				#F0F0F0;
+	color: 				#FFFFFF;
 	padding-left: 		3px;
 	padding-right: 		3px;
 	padding-top: 		0px;

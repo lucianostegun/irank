@@ -59,6 +59,7 @@ class rankingActions extends sfActions
 		$requiredFieldList = array('userSiteId'=>$this->userSiteId, 'rankingTypeId'=>$rankingTypeId );
 		
 		$this->rankingObj = new Ranking();
+		$this->rankingObj->setIsPrivate(true);
   	}
 	  
   	$this->innerObj  = $this->rankingObj;

@@ -60,3 +60,21 @@
 	background: 	#F0F0F0;
 	border-bottom: 	5px solid #FFFFFF;
 }
+
+
+
+#topSystemMessage .message {
+	
+	font-size: 		11px;
+	padding: 		4px 0px 4px 28px;
+}
+
+#topSystemMessage .message.info {
+
+	background: 	#FFF7D6 url('/images/icon/info.png') 5px center no-repeat;	
+}
+
+#topSystemMessage .message.help {
+
+	background: 	#FFF7D6 url('/images/icon/help.png') 5px center no-repeat;	
+}

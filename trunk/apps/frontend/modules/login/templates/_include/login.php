@@ -27,7 +27,7 @@
 	</div>
 	<div class="separator"></div>
 	<div class="links">
-		<?php echo link_to('esqueceu a senha?', '#retrievePassword()') ?>
+		<?php echo link_to('esqueceu a senha?', 'login/passwordRecovery') ?>
 		<?php echo link_to('cadastrar', 'sign/index', array('class'=>'last')) ?>
 	</div>
 </div>

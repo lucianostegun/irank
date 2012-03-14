@@ -4,13 +4,15 @@
 <div class="commonBar">
 	<div class="home" onclick="goToPage('home', 'index')"></div>
 	<?php
-		$i = 0;
+		$i          = 0;
+		$isLastPath = false;
+		
 		foreach($pathList as $pathName=>$link):
 			$i++;
 			
 			if( $link ){
 				
-				$className = ($i==count($pathList)?'path link last':'path link');
+				$className = 'path link';
 				
 				if( preg_match('/^#/', $link) ){
 					
@@ -23,14 +25,33 @@
 				}
 			}else{
 				
-				$className = ($i==count($pathList)?'path last':'path');
+				$className = 'path';
+			}
+			
+			if( $i==count($pathList) ){
+				
+				$className  .= ' last';
+				$isLastPath = true;
 			}
 	?>
-		<div class="<?php echo $className ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><?php echo $pathName ?></div>
+		<div class="<?php echo $className ?>"<?php echo ($isLastPath?' id="lastCommonBarPath"':'') ?> onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><?php echo $pathName ?></div>
 	<?php
 			if( $link )
 				echo '</a>';
 		endforeach;
+	?>
+</div>
+<div id="topSystemMessage">
+	<?php
+		$messageList = (isset($messageList)?$messageList:array());
+		
+		foreach($messageList as $message){
+			
+			$class = (preg_match('/^\?/', $message)?'help':'info');
+			
+			$message = preg_replace('/^[\?\!]/', '', $message);
+			echo '<div class="message '.$class.'">'.$message.'</div>';
+		}
 	?>
 </div>
 <div class="commonBarSpacer"></div>

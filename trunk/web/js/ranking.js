@@ -52,6 +52,8 @@ function handleSuccessRanking(rankingId){
 		reloadClassifyTab();
 	}
 	
+	setLastBarPath($('rankingRankingName').value);
+	
 	$('rankingOldScoreSchema').value   = $('rankingScoreSchema').value;
 	$('rankingRecalculateScore').value = '';
 	

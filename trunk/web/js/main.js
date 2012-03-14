@@ -60,3 +60,8 @@ function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow){
 		
 	location.href = _webRoot+'/'+moduleName+'/'+actionName;
 }
+
+function setLastBarPath(pathName){
+	
+	$('lastCommonBarPath').innerHTML = pathName
+}
