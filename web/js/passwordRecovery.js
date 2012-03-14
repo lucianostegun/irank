@@ -9,6 +9,13 @@ function handleSuccessPasswordRecovery(content){
 	hideDiv('passwordRecoveryFormDiv');
 }
 
+function handleFailurePasswordRecovery(content){
+
+	enableButton('mainSubmit');
+	
+	handleFormFieldError(content, 'passwordRecoveryForm', 'passwordRecovery', false, 'passwordRecovery');
+}
+
 function doSubmitPasswordRecovery(){
 	
 	showIndicator('passwordRecovery');

@@ -153,6 +153,16 @@ class UserSite extends BaseUserSite
 		
 		return $this->getRankingList(null, null, true);
 	}
+
+	public function getEventCount(){
+		
+		return Util::executeOne('SELECT get_event_count('.$this->getPeopleId().')');
+	}
+	
+	public function getEventPersonalCount(){
+		
+		return Util::executeOne('SELECT get_event_personal_count('.$this->getId().')');
+	}
 	
 	public function sendWelcomeMail($request, $sufix=null){
 

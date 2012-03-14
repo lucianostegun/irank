@@ -4,16 +4,14 @@
 	$pastDate   = $eventObj->isPastDate();
 	$isMyEvent  = $eventObj->isMyEvent();
 ?>
-<div class="innerMenu">
+<div class="innerMenu" style="display: <?php echo ($isNew && $actionName!='index'?'none':'block') ?>" id="mainMenuEvent">
 	<?php if( $isNew && $actionName=='index' ): ?>
-	<div onclick="goToPage('event', 'new')" class="subitem" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon add">Novo evento</div></div>
-	<div class="separator"></div>
-	<?php endif; ?>
-	<div style="display: <?php echo ($isNew?'none':'block') ?>" id="mainMenuEvent">
+
+	<?php else: ?>
 	   	<div onclick="getICalFile()" class="subitem" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon ical"><?php echo __('button.iCalFile') ?></div></div>
 		<div class="separator"></div>
 		
-	<?php if( $isMyEvent || $isNew ): ?>
+	<?php if( $isMyEvent ): ?>
 		<div onclick="cloneEvent()" class="subitem" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon clone"><?php echo __('button.cloneEvent') ?></div></div>
 		
 		<?php if( $isEditable ): ?>
@@ -26,5 +24,5 @@
 	   	<div onclick="doDeleteEvent()" class="subitem" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon delete"><?php echo __('button.deleteEvent') ?></div></div>
 		<?php endif; ?>
 	<?php endif; ?>
-	</div>
+	<?php endif; ?>
 </div>

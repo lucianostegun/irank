@@ -536,8 +536,7 @@
 			<trans-unit>
 				<source>sign.intro</source>
 				<target>
-				Para criar seus rankings, participar e visualizar&lt;br/&gt;
-				todas as informações dos eventos&lt;br/&gt;
+				Para criar seus rankings, participar e visualizar todas as informações dos eventos&lt;br/&gt;
 				é necessário se cadastrar no site.&lt;br/&gt;&lt;br/&gt;
 	
 				O cadastro é simples, rápido e gratuito.
@@ -1112,7 +1111,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>myAccount.errorMessage</source>
-				<target>Erro ao salvar as informações! Verifique os campos em destaque.</target>
+				<target>Erro ao salvar as informações!</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playerListLoadError</source>
@@ -1523,7 +1522,7 @@
 					Sua senha foi redefinida com sucesso!&lt;br/&gt;
 					Uma mensagem foi enviada ao e-mail informado contendo a nova senha.&lt;br/&gt;&lt;br/&gt;
 					Recomendamos que acesse seu e-mail, faça seu login e altere sua senha&lt;br/&gt;
-					clicando em &lt;b&gt;MY iRANK&lt;/b&gt; no menu principal.
+					clicando em &lt;b&gt;MINHA CONTA&lt;/b&gt; no menu principal.
 				</target>
 			</trans-unit>
 			<trans-unit>

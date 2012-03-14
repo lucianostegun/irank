@@ -1,11 +1,17 @@
-<div class="commonBar"><span><?php echo __('eventPersonal.title') ?></span></div>
-<div class="innerContent">
+<?php
+	$messageList = array();
+	
+	if( $userSiteObj->getEventPersonalCount()==0 )
+		$messageList = array('!'.__('eventPersonal.noEvents').' '.__('eventPersonal.newEventInvite', array('%clickHere%'=>link_to(__('ClickHere'), 'eventPersonal/new'))));
+	
+	include_partial('home/component/commonBar', array('pathList'=>array(__('eventPersonal.title')=>'eventPersonal/index'), 'messageList'=>$messageList));
+?>
+<div class="moduleIntro">
 	<?php echo __('eventPersonal.intro') ?>
-	<br/><br/>
 </div>
 <?php
 	echo form_tag('eventPersonal/search', array('id'=>'eventPersonalSearchForm', 'onsubmit'=>'doEventPersonalSearch(); return false'));
-		echo input_hidden_tag('isIE', null);
+	echo input_hidden_tag('isIE', null);
 ?>
 <table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTable">
 	<tr class="header">

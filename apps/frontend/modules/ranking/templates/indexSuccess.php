@@ -1,6 +1,11 @@
-<?php include_partial('home/component/commonBar', array('pathList'=>array('Rankings'=>'ranking/index'))); ?>
+<?php
+	if( $userSiteObj->getRankingCount()==0 )
+		$messageList = array('!Você ainda não está participando de nenhum ranking. <b>'.link_to('Clique aqui', 'ranking/new', array('class'=>'red')).'</b> para criar e compartilhar seu primeiro ranking.');
+	else
+		$messageList = array();
+	
+	include_partial('home/component/commonBar', array('pathList'=>array('Rankings'=>'ranking/index'), 'messageList'=>$messageList));
 
-	<?php
 //		if( $suppressOld )
 //			echo link_to('Mostrar rankings ocultos', 'ranking/index?so=0', array('title'=>'Mostrar todos os rankings'));
 //		else

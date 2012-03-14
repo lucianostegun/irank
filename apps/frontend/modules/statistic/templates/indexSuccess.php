@@ -1,6 +1,6 @@
-<div class="commonBar"><span><?php echo __('statistic.title') ?></span></div>
+<?php include_partial('home/component/commonBar', array('pathList'=>array(__('statistic.title')=>null))); ?>
 
-<div class="innerContent">
+<div class="moduleIntro">
 		<?php echo __('statistic.intro') ?>
 </div>
 	<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTable">
@@ -10,8 +10,8 @@
 		<?php
 			echo form_remote_tag(array(
 				'url'=>'statistic/export',
-				'success'=>'handleSuccessStats( request.responseText )',
-				'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "statisticForm", "statistic", false, "statistic" )',
+				'success'=>'handleSuccessStats(request.responseText)',
+				'failure'=>'handleFailureStats(request.responseText)',
 				'encoding'=>'utf8',
 				'loading'=>'showIndicator()'
 				), array( 'id'=>'statisticForm' ));

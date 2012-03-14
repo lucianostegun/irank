@@ -22,7 +22,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" width="450" class="defaultForm" style="padding: 10px 10px 30px 10px">
+		<td valign="top" width="437" class="defaultForm" style="padding: 10px 10px 30px 10px">
 			<div id="commentListDiv" class="commentList">
 			<?php include_partial('event/include/commentList', array('eventObj'=>$eventObj)); ?>
 			</div>

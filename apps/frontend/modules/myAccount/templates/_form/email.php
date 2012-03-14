@@ -60,7 +60,7 @@
 										'average'=>__('generalCredit.average'),
 										'paid'=>__('generalCredit.paid'));
 										
-					echo select_tag('quickResume', options_for_select($optionList, $quickResume));
+					echo select_tag('quickResume', options_for_select($optionList, $quickResume), array('id'=>'myAccountQuickResume'));
 				?>
 				</div>
 

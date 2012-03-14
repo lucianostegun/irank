@@ -1,5 +1,10 @@
 <?php
-	include_partial('home/component/commonBar', array('pathList'=>array(__('event.title')=>'event/index')));
+	$messageList = array();
+	
+	if( $userSiteObj->getEventCount()==0 )
+		$messageList = array('!Você ainda não cadastrou nenhum evento. <b>'.link_to('Clique aqui', 'event/new', array('class'=>'red')).'</b> para criar seu primeiro evento.');
+		
+	include_partial('home/component/commonBar', array('pathList'=>array(__('event.title')=>'event/index'), 'messageList'=>$messageList));
 
 	echo form_tag('event/search', array('id'=>'eventSearchForm', 'onsubmit'=>'doEventSearch(); return false'));
 		echo input_hidden_tag('isIE', null);

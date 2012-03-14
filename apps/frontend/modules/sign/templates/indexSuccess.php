@@ -1,5 +1,5 @@
-<div class="commonBar"><span><?php echo __('sign.title') ?></span></div>
-<div class="innerContent">
+<?php include_partial('home/component/commonBar', array('pathList'=>array('Cadastro'=>null))); ?>
+<div class="moduleIntro">
 	<?php echo __('sign.intro') ?>
 </div>
 <table width="100%" cellspacing="1" cellpadding="2" class="gridTable">
@@ -11,10 +11,9 @@
 			<?php
 				echo form_remote_tag(array(
 					'url'=>'sign/save',
-					'success'=>'handleSuccessSign( request.responseText, true )',
-					'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "signForm", "sign", false, "sign" )',
-					'encoding'=>'utf8',
-					'loading'=>'showIndicator()'
+					'success'=>'handleSuccessSign(request.responseText, true)',
+					'failure'=>'handleFailureSign(request.responseText)',
+					'encoding'=>'UTF8',
 					), array( 'id'=>'signForm' ));
 			?>
 			<table width="100%" cellspacing="0" cellpadding="0" class="defaultForm">
@@ -56,8 +55,9 @@
 		</td>
 	</tr>
 </table>
-<div class="buttonBarForm">
+<div class="buttonBarForm" id="signMainButtonBar">
 	<?php echo button_tag('mainSubmit', __('sign.form.send'), array('onclick'=>'doSubmitSign()')) ?>
 	<?php echo getFormLoading('sign') ?>
+	<?php echo getFormStatus(null, false, 'Erro ao salvar o cadastro!', 'Cadastro salvo com sucesso!'); ?>
 </div>
 </form>

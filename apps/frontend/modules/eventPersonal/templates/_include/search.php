@@ -15,15 +15,4 @@
 	<td onclick="<?php echo $link ?>" align="center"><?php echo Util::formatFloat($eventPersonalObj->getBRA(), true) ?></td>
 	<td onclick="<?php echo $link ?>" align="center"><?php echo Util::formatFloat($eventPersonalObj->getPrize(), true) ?></td>
 </tr>
-<?php
-	endforeach;
-
-	if( count($eventPersonalObjList)==0 ):
-?>
-<tr class="boxcontent">
-	<td colspan="7">
-		<?php echo __('eventPersonal.noEvents') ?><br/>
-		<?php echo __('eventPersonal.newEventInvite', array('%clickHere%'=>link_to(__('ClickHere'), 'eventPersonal/new'))) ?>
-	</td>
-</tr>
-<?php endif; ?>
+<?php endforeach; ?>

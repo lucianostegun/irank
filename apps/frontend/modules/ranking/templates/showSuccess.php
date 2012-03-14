@@ -1,4 +1,9 @@
-<div class="commonBar"><span>Rankings/<?php echo __('ranking.Viewing') ?></span></div>
+<?php
+	$rankingName = $rankingObj->getName();
+	$pathList    = array('Rankings'=>'ranking/index', $rankingName=>null);
+	
+	include_partial('home/component/commonBar', array('pathList'=>$pathList));
+?>
 <?php
 	echo input_hidden_tag('rankingId', $rankingObj->getId());
 	

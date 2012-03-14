@@ -3,10 +3,18 @@ function handleSuccessMyAccount(content, isNew){
 	if( isNew )
 		goModule('myAccount', null, null, null);
 
+	setButtonBarStatus('myAccountMain', 'success');
 	clearFormFieldErrors('myAccountForm');
 	showFormStatusSuccess();
 	hideIndicator('myAccount');
 	enableButton('mainSubmit');
+}
+
+function handleFailureMyAccount(content){
+	
+	enableButton('mainSubmit');
+	setButtonBarStatus('myAccountMain', 'error');
+	handleFormFieldError(content, 'myAccountForm', 'myAccount', false, 'myAccount');
 }
 
 function doSubmitMyAccount(){

@@ -1,5 +1,6 @@
 .button {
 
+	z-index: 			500;
 	cursor: 			pointer;
 	-moz-user-select: 	none;
 	line-height:		16px;

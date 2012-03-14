@@ -13,7 +13,10 @@
 	$pathList = array('Rankings'=>'ranking/index');
 	
 	$rankingName = $rankingObj->getRankingName();
-	if( !$isNew )
+	
+	if( $isNew )
+		$pathList['Novo ranking'] = '';
+	else
 		$pathList[$rankingName] = '';
 		
 	include_partial('home/component/commonBar', array('pathList'=>$pathList));

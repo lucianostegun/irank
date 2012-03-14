@@ -98,6 +98,9 @@ function setButtonLabel( buttonId, label, icon ){
 
 function setButtonBarStatus(buttonBarId, className){
 	
+	if( $(buttonBarId+'ButtonBar')==null )
+		return false;
+	
 	$(buttonBarId+'ButtonBar').className = $(buttonBarId+'ButtonBar').className.replace(/ .*/gi, '');
 	
 	if( className )

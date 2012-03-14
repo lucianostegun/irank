@@ -1,4 +1,4 @@
 all:
 
-  stylesheets:    [frontend/photoWall]
-  javascripts:    [frontend/photoWall]
+  stylesheets:    [photoWall]
+  javascripts:    [photoWall]

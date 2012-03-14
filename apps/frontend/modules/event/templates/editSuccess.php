@@ -18,7 +18,10 @@
 
 	$pathList = array('Eventos'=>'event/index');
 	
-	if( !$isNew ){
+	if( $isNew ){
+		
+		$pathList['Novo evento'] = '';
+	}else{
 		
 		$eventName   = $eventObj->getName();
 		$rankingName = $eventObj->getRanking()->getName();
@@ -33,8 +36,8 @@
 	
 	echo form_remote_tag(array(
 		'url'=>'event/save'.($pastDate?'Result':''),
-		'success'=>'handleSuccessEvent'.($pastDate?'Result':'').'( request.responseText )',
-		'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "eventForm", "event", false, "event", handleErrorEvent )',
+		'success'=>'handleSuccessEvent'.($pastDate?'Result':'').'(request.responseText)',
+		'failure'=>'handleFailureEvent(request.responseText)',
 		'encoding'=>'utf8',
 		'loading'=>'showIndicator()'
 		), array( 'id'=>'eventForm' ));

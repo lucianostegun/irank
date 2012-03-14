@@ -335,6 +335,14 @@ a:hover {
 	border-bottom-right-radius: 			5px;
 }
 
+#contentArea #mainContent #innerContent .rightContent .moduleIntro {
+
+	position: 	relative;
+	top: 		10px;
+	left: 		20px;
+	width: 		700px;
+}
+
 #footer {
 
 	position: 		relative;

@@ -23,6 +23,8 @@ function handleSuccessEvent(content){
 	var pastDate = eventObj.pastDate;
 	
 	$('eventId').value = eventObj.eventId;
+	
+	setLastBarPath(eventObj.eventName);
 
 	updatePlayerContent(eventObj.eventId, pastDate);
 	
@@ -30,6 +32,7 @@ function handleSuccessEvent(content){
 		updateResultContent(eventObj.eventId);
 	
 	setRecordSaved(true);
+	setButtonBarStatus('eventMain', 'success');
 	clearFormFieldErrors('eventForm');
 	showFormStatusSuccess();
 	
@@ -91,10 +94,18 @@ function handleSuccessEvent(content){
 	hideIndicator('event');
 }
 
+function handleFailureEvent(content){
+	
+	enableButton('mainSubmit');
+	setButtonBarStatus('eventMain', 'error');
+	handleFormFieldError(content, 'eventForm', 'event', false, 'event', handleErrorEvent)
+}
+
 function handleSuccessEventResult(content){
 
 	var eventId = $('eventId').value;
 	
+	setButtonBarStatus('eventMain', 'success');
 	clearFormFieldErrors('eventResultForm');
 	showFormStatusSuccess();
 	
