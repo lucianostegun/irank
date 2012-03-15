@@ -41,14 +41,14 @@ for($line=7; $line <= 7+$events-1; $line++)
 	);
 
 $phpExcelObj->setActiveSheetIndex(0)
-			->setCellValue('C2', $rankingObj->getRankingName())
-			->setCellValue('C3', $rankingObj->getPlayers())
-			->setCellValue('C4', $rankingObj->getEvents())
-			->setCellValue('E4', $rankingObj->getRankingType()->getDescription())
+			->setCellValue('D2', $rankingObj->getRankingName())
+			->setCellValue('D3', $rankingObj->getPlayers())
+			->setCellValue('D4', $rankingObj->getEvents())
+			->setCellValue('F4', $rankingObj->getRankingType()->getDescription())
 			->setCellValue('B6', $peopleObj->getName().' (por data)')
-			->setCellValue('D6', $otherPlace.' (por data)')
-			->setCellValue('C6', $peopleObj->getName().' (progressivo)')
-			->setCellValue('C6', $otherPlace.' (progressivo)')
+			->setCellValue('C6', $otherPlace.'º colocado (por data)')
+			->setCellValue('D6', $peopleObj->getName().' (progressivo)')
+			->setCellValue('E6', $otherPlace.'º colocado (progressivo)')
 			;
 						
 $currentLine = 7;
@@ -64,10 +64,10 @@ foreach($eventDateList as $key=>$eventDate){
 
 	$phpExcelObj->setActiveSheetIndex(0)
 				->setCellValue('A'.$currentLine, $eventDate)
-				->setCellValue('B'.$currentLine, $position)
-				->setCellValue('C'.$currentLine, $totalPosition)
-				->setCellValue('D'.$currentLine, $positionOther)
-				->setCellValue('E'.$currentLine, $totalPositionOther);
+				->setCellValue('B'.$currentLine, '#'.$position)
+				->setCellValue('C'.$currentLine, '#'.$totalPosition)
+				->setCellValue('D'.$currentLine, '#'.$positionOther)
+				->setCellValue('E'.$currentLine, '#'.$totalPositionOther);
 
 	$currentLine++;
 }

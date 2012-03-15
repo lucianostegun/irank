@@ -12,12 +12,13 @@ $balanceList = array();
 foreach($rankingPlayerObjList as $rankingPlayerObj){
 	
 	$totalPaidList[]      = $rankingPlayerObj->getTotalPaid();
-	$totalPrizeList[]      = $rankingPlayerObj->getTotalPrize();
-	$balanceList[]      = $rankingPlayerObj->getTotalBalance();
-	$playerNameList[] = $rankingPlayerObj->getPeople()->getFirstName();
+	$totalPrizeList[]     = $rankingPlayerObj->getTotalPrize();
+	$balanceList[]        = $rankingPlayerObj->getTotalBalance();
+	$playerNameList[]     = $rankingPlayerObj->getPeople()->getFirstName();
 }
 
 $allValues = array_merge($totalPaidList, $totalPrizeList, $balanceList);
+
 $minValue  = min($allValues);
 $maxValue  = max($allValues);
 //$minValue  = round($minValue+($minValue/10));
@@ -35,7 +36,6 @@ $DataSet->SetAbsciseLabelSerie('playerName');
 $DataSet->SetSerieName('B+R+A','totalPaid');
 $DataSet->SetSerieName(__('statistic.chart.profit'),'totalPrize');
 $DataSet->SetSerieName(__('statistic.chart.balance'),'balance');
-
 $width  = 1100;
 $height = 500;
 // Initialise the graph

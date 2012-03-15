@@ -6,9 +6,9 @@
 	$allowRebuy  = $eventObj->getAllowRebuy();
 	$allowAddon  = $eventObj->getAllowAddon();
 ?>
-<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTabTable" style="width: 650px">
+<table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable" style="width: 650px">
   <tr class="header">
-    <th><?php echo __('Player') ?></th>
+    <th class="first"><?php echo __('Player') ?></th>
     <?php if( !$isFreeroll ): ?>
     <th width="50">Buy-in</th>
     <?php endif; ?>
@@ -125,10 +125,8 @@
   </tr>
   <?php endif; ?>
   <tr>
-    <td colspan="7" class="defaultForm">
-    	<div class="row" style="margin-top: 3px">
-    		<div class="text"><?php echo __('event.resultTab.footerMessage') ?></div>
-    	</div>
+    <td colspan="7" class="footer">
+    	<?php echo __('event.resultTab.footerMessage') ?>
     </td>
   </tr>
 </table>

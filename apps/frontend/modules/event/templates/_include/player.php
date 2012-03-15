@@ -8,7 +8,7 @@
   	if( is_object($rankingObj) )
   		$peopleIdOwner = $rankingObj->getUserSite()->getPeopleId();
 ?>
-<table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
+<table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable">
   <tr class="header">
     <th><?php echo __('Player') ?></th>
     <th>E-mail</th>
@@ -61,6 +61,15 @@
   ?>
   <tr class="boxcontent">
     <td colspan="5"><?php echo __('event.playersTab.noGuests') ?></td>
+  </tr>
+  <?php else: ?>
+  <tr>
+    <td colspan="5" class="defaultForm footer">
+		<div class="row">
+			<div class="labelHalf"><?php echo __('event.playersTab.notify') ?></div>
+			<div class="field"><?php echo select_tag('sendNotify', array('ask'=>__('Ask'), '1'=>__('Yes'), '0'=>__('No'))) ?></div>
+		</div>
+    </td>
   </tr>
   <?php endif; ?>
 </table>

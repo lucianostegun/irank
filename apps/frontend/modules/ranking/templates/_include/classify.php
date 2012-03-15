@@ -1,4 +1,4 @@
-<table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
+<table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable">
 	<tr class="header">
 		<th>#</th>
 		<th><?php echo __('Player') ?></th>
@@ -36,5 +36,7 @@
 		<td colspan="8"><?php echo __('ranking.classifyTab.noPlayers') ?></td>
 	</tr>
 	<?php endif; ?>
+	<tr>
+		<td class="footer"><b>B+R+A</b> = Buy-in + Rebuys + Add-ons</td>
+	</tr>
 </table>
-<div class="tabbarFooterInfo"><b>B+R+A</b> = Buy-in + Rebuys + Add-ons</div>

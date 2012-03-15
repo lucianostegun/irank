@@ -53,9 +53,12 @@ function loadStylesheet(cssPath){
     head.appendChild(link);
 }
 
-function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow){
+function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow, evt){
 	
-	if( fieldName && fieldValue)
+	if( evt && (evt.metaKey || evt.altKey) )
+		newWindow = true
+	
+	if( fieldName && fieldValue || newWindow )
 		return goModule(moduleName, actionName, fieldName, fieldValue, newWindow );
 		
 	location.href = _webRoot+'/'+moduleName+'/'+actionName;

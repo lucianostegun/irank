@@ -6,6 +6,9 @@ function doQuickLogin(){
 function handleSuccessLogin(content){
 
 	$('loginResumeDiv').innerHTML = content;
+	
+	if( getModuleName()=='sign' )
+		return goToPage('myAccount', 'index');
 
 	loadHomeResume();
 	loadUserCredit();
