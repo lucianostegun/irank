@@ -1,7 +1,7 @@
 .defaultForm {
 
 	padding: 		10px 0px 10px 0px;
-	margin: 		-5px -2px 0px 0px;
+	margin: 		5px -2px 0px 0px;
 	background: 	#E6E6E6;
 	color: 			#333333;
 }
@@ -134,7 +134,7 @@
 
 	width: 			160px;
 	float: 			left;
-	padding: 		2px 0px 2px 0px;
+	padding: 		3px 0px 2px 0px;
 	height: 		15px;
 	height: 		21px !ie;
 	text-align: 	right;
@@ -147,7 +147,7 @@
 
 	width: 			80px;
 	float: 			left;
-	padding: 		1px 0px 2px 0px;
+	padding: 		3px 0px 2px 0px;
 	height: 		15px;
 	height: 		21px !ie;
 	text-align: 	right;
@@ -159,7 +159,7 @@
 .defaultForm .row .labelFlex, .windowForm .row .labelFlex {
 
 	float: 			left;
-	padding: 		1px 0px 2px 0px;
+	padding: 		3px 0px 2px 0px;
 	height: 		15px;
 	height: 		21px !ie;
 	text-align: 	right;
@@ -229,7 +229,7 @@
 	width: 			auto;
 	width: 			135px !ie;
 	min-width: 		135px;
-	padding: 		0px 3px 2px 3px;
+	padding: 		2px 3px 2px 3px;
 	height: 		15px;
 	height: 		19px !ie;
 	text-align: 	left;
@@ -470,13 +470,11 @@
 .windowForm .rowTextArea .field textarea.formFieldError, textarea.formFieldError {
 
 	background: 	#F1AFA4;
-	border:			1px solid #333333;
 }
 
 .defaultForm .rowTextArea .field textarea.formFieldError:focus {
 
 	background: 	#e0695a;
-	border:			1px solid #333333;
 }
 
 .defaultForm .rowTextArea .field textarea.required {
@@ -511,7 +509,6 @@
 	font-size: 		11px;
 	height: 		16px;
 	padding: 		1px 4px 2px 4px;
-	border:			1px solid #333333;
 	background: 	#F1AFA4;
 	color: 			#000000;
 }
@@ -521,7 +518,6 @@
 	font-size: 		11px;
 	height: 		16px;
 	padding: 		1px 4px 2px 4px;
-	border:			1px solid #333333;
 	background: 	#D88D82;
 	color: 			#000000;
 }
@@ -533,7 +529,6 @@
 	padding: 		2px 1px 1px 1px;
 	padding-left: 	0px;
 	text-align: 	left;
-	border:			1px solid #333333;
 	background: 	#F1AFA4;
 	color: 			#000000;
 }
@@ -545,7 +540,6 @@
 	padding: 		2px 1px 1px 1px;
 	padding-left: 	0px;
 	text-align: 	left;
-	border:			1px solid #333333;
 	background: 	#D88D82;
 	color: 			#000000;
 }

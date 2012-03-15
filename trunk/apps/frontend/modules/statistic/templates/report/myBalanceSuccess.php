@@ -36,15 +36,15 @@ for($line=7; $line <= 7+$events-1; $line++)
 	$phpExcelObj->setActiveSheetIndex(0)->getStyle('A'.$line.':G'.$line)->getFill()->applyFromArray(
 	    array(
 	        'type'       => PHPExcel_Style_Fill::FILL_SOLID,
-	        'startcolor' => array('rgb' => ($line%2==0?'A6A6A6':'D0D0D0'))
+	        'startcolor' => array('rgb' => ($line%2==0?'D0D0D0':'FFFFFF'))
     	)
 	);
 
 $phpExcelObj->setActiveSheetIndex(0)
-			->setCellValue('D2', $rankingObj->getRankingName())
-			->setCellValue('D3', $rankingObj->getPlayers())
-			->setCellValue('D4', $rankingObj->getEvents())
-			->setCellValue('F4', $rankingObj->getRankingType()->getDescription())
+			->setCellValue('E2', $rankingObj->getRankingName())
+			->setCellValue('E3', $rankingObj->getPlayers())
+			->setCellValue('E4', $rankingObj->getEvents())
+			->setCellValue('G4', $rankingObj->getRankingType()->getDescription())
 			;
 						
 $currentLine = 7;

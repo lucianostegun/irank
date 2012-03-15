@@ -136,7 +136,6 @@ class homeActions extends sfActions
 	
 	echo 'var _CurrentPeopleId = "'.$peopleId.'";'.$nl.$nl;
 	
-	echo "var _ModuleName = '$moduleName';".$nl;
 	echo "var _webRoot    = '$scriptName';".$nl;
 	echo "var _imageRoot  = 'http://$hostname/images';".$nl;
 	echo "var _isDebug    = $isDebug;".$nl;

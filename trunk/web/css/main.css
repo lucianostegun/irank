@@ -337,10 +337,11 @@ a:hover {
 
 #contentArea #mainContent #innerContent .rightContent .moduleIntro {
 
-	position: 	relative;
-	top: 		10px;
-	left: 		20px;
-	width: 		700px;
+	position: 		relative;
+	top: 			10px;
+	left: 			20px;
+	width: 			700px;
+	margin-bottom: 	20px;
 }
 
 #footer {

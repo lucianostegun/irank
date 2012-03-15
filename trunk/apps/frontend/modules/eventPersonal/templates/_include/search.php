@@ -6,7 +6,7 @@
 		$eventPersonalId = $eventPersonalObj->getId();
 		$link = 'goModule(\'eventPersonal\', \'edit\', \'eventPersonalId\', '.$eventPersonalId.')';
 ?>
-<tr onmouseover="this.className='recordRowOver'" onmouseout="this.className=''">
+<tr onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">
 	<td onclick="<?php echo $link ?>" align="left"><?php echo $eventPersonalObj->getEventName() ?></td>
 	<td onclick="<?php echo $link ?>" align="center"><?php echo $eventPersonalObj->getEventDate('d/m/Y') ?></td>
 	<td onclick="<?php echo $link ?>" align="left"><?php echo $eventPersonalObj->getEventPlace() ?></td>

@@ -141,4 +141,11 @@ class RankingPeer extends BaseRankingPeer
 		
 		return true;
 	}
+	
+	public static function validateHasEvent($rankingId){
+		
+		$eventCount = Util::executeOne("SELECT COUNT(1) FROM event WHERE ranking_id = $rankingId AND visible AND enabled AND NOT deleted AND saved_result");
+		
+		return $eventCount > 0;
+	}
 }

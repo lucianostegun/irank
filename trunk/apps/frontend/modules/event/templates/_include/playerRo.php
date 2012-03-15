@@ -1,14 +1,14 @@
-<table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
+<table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable">
   <tr class="header">
-    <th><?php echo __('Player') ?></th>
+    <th class="first"><?php echo __('Player') ?></th>
     <th>E-mail</th>
-    <th>&nbsp;</th>
+    <th class="noBorder">&nbsp;</th>
   </tr>
   <?php
   	$myEvent    = $eventObj->isMyEvent();
   	$peopleIdMe = MyTools::getAttribute('peopleId');
   	
-  	$eventPlayerObjList = $eventObj->getPlayerList();
+  	$eventPlayerObjList = $eventObj->getPlayerList('result');
   	foreach($eventPlayerObjList as $eventPlayerObj):
   		
   		$peopleObj = $eventPlayerObj->getPeople();

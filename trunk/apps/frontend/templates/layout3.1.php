@@ -11,8 +11,11 @@ $culture = 'pt_BR';
 
 $isAuthenticated = MyTools::isAuthenticated();
 $innerObj = (isset($innerObj)?$innerObj:null);
+
+$moduleName = $sf_context->getModuleName();
 ?>
 <script>
+var _ModuleName = '<?php echo $moduleName ?>';
 </script>
 </head>
 <body>

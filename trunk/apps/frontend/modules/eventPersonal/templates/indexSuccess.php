@@ -13,9 +13,9 @@
 	echo form_tag('eventPersonal/search', array('id'=>'eventPersonalSearchForm', 'onsubmit'=>'doEventPersonalSearch(); return false'));
 	echo input_hidden_tag('isIE', null);
 ?>
-<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTable">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr class="header">
-		<th><?php echo __('Event') ?></th>
+		<th class="first"><?php echo __('Event') ?></th>
 		<th><?php echo __('Date') ?></th>
 		<th><?php echo __('Place') ?></th>
 		<th><?php echo __('Players') ?></th>
@@ -23,7 +23,7 @@
 		<th>B+R+A</th>
 		<th><?php echo __('Prize') ?></th>
 	</tr>
-	<tr class="filter">
+	<tr class="filter" style="display: none">
 		<th><?php echo input_tag('eventName', $sf_request->getParameter('eventName'), array('size'=>15)) ?></th>
 		<th><?php echo input_date_tag('eventDate', Util::formatDate($sf_request->getParameter('eventDate')), array('size'=>10, 'maxlength'=>10)) ?></th>
 		<th><?php echo input_tag('eventPlace', $sf_request->getParameter('eventPlace'), array('size'=>15)) ?></th>

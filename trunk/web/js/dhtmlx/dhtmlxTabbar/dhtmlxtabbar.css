@@ -268,3 +268,13 @@ div.dhxcont_sb_container div.dhxcont_statusbar {
 	vertical-align: middle;
 	color: #000000;
 }
+
+
+.tabbarIntro {
+
+	padding: 		18px;
+	margin-bottom: 	5px;
+	border-bottom: 	1px solid #CACACA;
+	background: 	#F5F5F5;
+	text-shadow: 	white -1px 1px
+}

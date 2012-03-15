@@ -23,7 +23,8 @@ function doSubmitStats(content){
 
 	if( !checkRankingType() )
 		return false;
-	
+
+	clearFormFieldErrors('statisticForm');
 
 	setButtonBarStatus('statisticMain', '');
 	

@@ -1,4 +1,4 @@
-<table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
+<table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable">
 	<tr class="header">
 		<th width="200"><?php echo __('Event') ?></th>
 		<th><?php echo __('DateTime') ?></th>

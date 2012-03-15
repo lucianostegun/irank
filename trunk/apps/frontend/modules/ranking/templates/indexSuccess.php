@@ -12,9 +12,9 @@
 //			echo link_to('Ocultar rankings finalizados', 'ranking/index', array('title'=>'Ocultar rankings finalizados'));
 	?>
 
-<table width="100%" border="0" cellspacing="1" cellpadding="2" class="gridTable">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr class="header">
-		<th width="200"><?php echo __('ranking.name') ?></th>
+		<th width="200" class="first"><?php echo __('ranking.name') ?></th>
 		<th><?php echo __('ranking.style') ?></th>
 		<th><?php echo __('ranking.start') ?></th>
 		<th><?php echo __('ranking.finish') ?></th>
@@ -37,7 +37,7 @@
 			
 			$link = 'goModule(\'ranking\', \'edit\', \'rankingId\', '.$rankingObj->getId().')';
 	?>
-	<tr onclick="<?php echo $link ?>" onmouseover="this.className='recordRowOver'" onmouseout="this.className=''">
+	<tr onclick="<?php echo $link ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">
 		<td align="left"><?php echo $rankingObj->getRankingName() ?></td>
 		<td align="left"><?php echo $rankingObj->getGameStyle()->getDescription() ?></td>
 		<td align="center"><?php echo $rankingObj->getStartDate('d/m/Y') ?></td>

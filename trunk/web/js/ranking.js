@@ -232,40 +232,45 @@ function loadRankingHistory(rankingDate){
 
 function toggleRankingShare(peopleId){
 	
-	showIndicator('rankingPlayerList');
-	
 	var rankingId = $('rankingId').value;
 	
-	var successFunc = function(t){
-
-		var content = t.responseText;
+	var isLock = !(/unlock\.png/).test($('rankingShare'+peopleId).src);
+	
+	var lock = function(){
 		
-		if( content=='lock' ){
-			
-			$('rankingShare'+peopleId).src   = $('rankingShare'+peopleId).src.replace('lock', 'unlock');
-			$('rankingShare'+peopleId).title = $('rankingShare'+peopleId).title.replace(i18n_enable, i18n_disable);
-		}else{
-			
-			$('rankingShare'+peopleId).src   = $('rankingShare'+peopleId).src.replace('unlock', 'lock');
-			$('rankingShare'+peopleId).title = $('rankingShare'+peopleId).title.replace(i18n_disable, i18n_enable);
-		}
+		$('rankingShare'+peopleId).src   = $('rankingShare'+peopleId).src.replace('lock', 'unlock');
+		$('rankingShare'+peopleId).title = $('rankingShare'+peopleId).title.replace(i18n_enable, i18n_disable);
+	}
+	
+	var unlock = function(){
 		
-		hideIndicator('rankingPlayerList');
-	};
+		$('rankingShare'+peopleId).src   = $('rankingShare'+peopleId).src.replace('unlock', 'lock');
+		$('rankingShare'+peopleId).title = $('rankingShare'+peopleId).title.replace(i18n_disable, i18n_enable);
+	}
+	
+	if( isLock )
+		lock();
+	else
+		unlock();
 		
 	var failureFunc = function(t){
 
 		var content = t.responseText;
 
+		
+		if( isLock )
+			unlock();
+		else
+			lock();
+
 		alert(i18n_ranking_playersTab_shareError)
-		hideIndicator('rankingPlayerList');
 		
 		if( isDebug() )
 			debug(content);
 	};
 	
 	var urlAjax = _webRoot+'/ranking/toggleShare/rankingId/'+rankingId+'/peopleId/'+peopleId;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc});
 }
 
 function doDeleteRanking(){
