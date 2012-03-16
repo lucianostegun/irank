@@ -24,8 +24,6 @@ var _ModuleName = '<?php echo $moduleName ?>';
     	<div id="mainContent">
     		<div id="header">
     			<?php echo link_to(image_tag('layout/logo', array('id'=>'logo')), '/home', array('title'=>'Voltar para a página inicial')) ?>
-    			<?php echo image_tag('layout/cards', array('id'=>'cards')) ?>
-    			<?php echo image_tag('layout/chipsHeader', array('id'=>'chips')) ?>
     			<div class="search">
 					<?php echo input_tag('eventSearch', null, array('placeholder'=>'Pesquisar eventos...')) ?>
     			</div>
@@ -98,7 +96,17 @@ var _ModuleName = '<?php echo $moduleName ?>';
 	</div>
 	<div id="footer">
 		<?php echo image_tag('layout/chipsFooter') ?>
-		<div class="links">home | cadastro | meu iRank | convidar amigos | feedback | ajuda | contato</div>
+		<div class="links">
+			<?php echo link_to('home', '/home/index') ?> | 
+			<?php echo link_to('cadastro', '/sign/index') ?> | 
+			<?php echo link_to('minha conta', '/myAccount/index') ?> | 
+			<?php echo link_to('mural de fotos', '/photoWall/index') ?> | 
+			<?php echo link_to('onde jogar', '/liveClub/index') ?><br/> 
+			<?php echo link_to('eventos', '/eventLive/index') ?> | 
+			<?php echo link_to('convidar amigos', '/friendInvite/index') ?> | 
+			<?php echo link_to('feedback', '/feedback/index') ?> | 
+			<?php echo link_to('contato', '/contact/index') ?>
+		</div>
 		<div class="credit">desenvolvido por: <?php echo link_to('Newai software', 'http://www.newai.com.br', array('target'=>'_blank')) ?></div>
 	</div>
 </div>

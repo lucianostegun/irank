@@ -1,7 +1,7 @@
 <?php
 	$userSiteObj = UserSite::getCurrentUser();
 	$quickResume = $userSiteObj->getOptionValue('quickResume');
-	
+
 	$resumeValue = People::getQuickResume($quickResume);
 ?>
 <div class="generalCredit">

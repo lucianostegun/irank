@@ -130,10 +130,12 @@ class rankingActions extends sfActions
 		$rankingObj->resetOptions();
 	}else{
 		
-		if( $recalculateScore )
+		if( $recalculateScore ){
+			
 			$rankingObj->updateWholeScore();
+			$rankingObj->updateScores();
+		}
 		
-		$rankingObj->updateScores();
 		$rankingObj->saveOptions($request);
 		
 		if( $updateHistory || $recalculateScore )

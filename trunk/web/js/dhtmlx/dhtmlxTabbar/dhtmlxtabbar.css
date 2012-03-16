@@ -276,5 +276,16 @@ div.dhxcont_sb_container div.dhxcont_statusbar {
 	margin-bottom: 	5px;
 	border-bottom: 	1px solid #CACACA;
 	background: 	#F5F5F5;
-	text-shadow: 	white -1px 1px
+	text-shadow: 	white -1px 1px;
+	height: 		20px;
+}
+
+.tabbarIntro .row {
+
+	clear: 	both;
+}
+
+.tabbarIntro .row .cell {
+
+	float: 	left;
 }

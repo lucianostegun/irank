@@ -319,18 +319,20 @@ class eventActions extends sfActions
   
   public function executeSearch($request){
   	
-  	$renderize  = $request->getParameter('isIE');
-  	$eventName  = $request->getParameter('eventName');
-  	$eventPlace = $request->getParameter('eventPlace');
-  	$eventDate  = $request->getParameter('eventDate');
-  	$rankingId  = $request->getParameter('rankingId');
+  	$renderize      = $request->getParameter('isIE');
+  	$eventName      = $request->getParameter('eventName');
+  	$eventPlace     = $request->getParameter('eventPlace');
+  	$eventDateStart = $request->getParameter('dateStart');
+  	$eventDateEnd   = $request->getParameter('dateEnd');
+  	$rankingId      = $request->getParameter('rankingId');
   	
-  	if( !Validate::validateDate($eventDate) )
-  		$eventDate = null;
+  	if( !Validate::validateDate($eventDateStart) ) $eventDateStart = null;
+  	if( !Validate::validateDate($eventDateEnd) ) $eventDateEnd = null;
 
   	$criteria = new Criteria();
-  	if( $eventName ) $criteria->addAnd( EventPeer::EVENT_NAME, '%'.$eventName.'%', Criteria::ILIKE );
-  	if( $eventDate ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
+  	if( $eventName ) $criteria->addAnd( EventPeer::EVENT_NAME, '%'.str_replace(' ', '%', $eventName).'%', Criteria::ILIKE );
+  	if( $eventDateStart ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDateStart), Criteria::GREATER_EQUAL );
+  	if( $eventDateEnd ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDateEnd), Criteria::LESS_EQUAL );
   	if( $rankingId ) $criteria->addAnd( EventPeer::RANKING_ID, $rankingId );
   	if( $eventPlace ){
   		

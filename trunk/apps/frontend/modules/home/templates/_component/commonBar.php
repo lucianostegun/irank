@@ -40,6 +40,9 @@
 				echo '</a>';
 		endforeach;
 	?>
+	<div id="indicator">
+		Processando, aguarde... <?php echo image_tag('ajaxLoader.gif', array('align'=>'absmiddle')) ?>
+	</div>
 </div>
 <div id="topSystemMessage">
 	<?php

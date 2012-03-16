@@ -46,6 +46,8 @@ class EventPhotoContestMapBuilder {
 
 		$tMap->addColumn('IP_ADDRESS', 'IpAddress', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('IS_REPORTED', 'IsReported', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

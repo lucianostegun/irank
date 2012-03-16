@@ -38,8 +38,7 @@
 		'url'=>'event/save'.($pastDate?'Result':''),
 		'success'=>'handleSuccessEvent'.($pastDate?'Result':'').'(request.responseText)',
 		'failure'=>'handleFailureEvent(request.responseText)',
-		'encoding'=>'utf8',
-		'loading'=>'showIndicator()'
+		'encoding'=>'UTF8',
 		), array( 'id'=>'eventForm' ));
 	
 	echo input_hidden_tag('eventId', $eventId);
@@ -94,7 +93,6 @@
 <?php endif; ?>
 </form>
 <?php
-	DhtmlxWindows::createWindow('eventPhotoView', '', 380, 125, 'event/dialog/photoView', array());
 	DhtmlxWindows::createWindow('rankingPlaceAdd', __('event.gamePlaceRegister'), 550, 125, 'ranking/dialog/placeAdd', array());
 	DhtmlxWindows::createWindow('rankingPlayerAdd', __('ranking.playerRegister'), 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$eventObj->getRankingId()));
 	

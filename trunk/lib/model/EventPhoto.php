@@ -63,6 +63,11 @@ class EventPhoto extends BaseEventPhoto
 		return EventPhotoCommentPeer::doSelect($criteria);
 	}
 	
+	public function getCommentsCount(){
+		
+		return Util::executeOne('SELECT COUNT(1) FROM event_photo_comment WHERE event_photo_id = '.$this->getId());
+	}
+	
 	public function getNextPhoto(){
 		
 		$criteria = new Criteria();

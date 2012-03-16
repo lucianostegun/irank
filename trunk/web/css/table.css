@@ -74,7 +74,7 @@
 
 .gridTable .hover td {
 	
-	background: 	#F3C68B;
+	background: 	#f6b957;
 	cursor: 		pointer;
 	color: 			#000000;
 }
@@ -291,6 +291,7 @@
 
 	padding-top: 		15px;
 	padding-bottom: 	15px;
+	font-size: 			12px;
 }
 
 .formTable .icon {

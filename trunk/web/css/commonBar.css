@@ -78,3 +78,20 @@
 
 	background: 	#FFF7D6 url('/images/icon/help.png') 5px center no-repeat;	
 }
+
+
+#indicator {
+
+	float: 		right;
+	display: 	none;
+	position: 	relative;
+	top: 		3px;
+	right: 		10px;
+	color: 		#C91E1E;
+}
+
+#indicator img {
+
+	margin-left: 	5px;
+	margin-top: 	-2px
+}

@@ -33,6 +33,10 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 
 
 	
+	protected $is_reported;
+
+
+	
 	protected $created_at;
 
 
@@ -94,6 +98,13 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 	{
 
 		return $this->ip_address;
+	}
+
+	
+	public function getIsReported()
+	{
+
+		return $this->is_reported;
 	}
 
 	
@@ -237,6 +248,16 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setIsReported($v)
+	{
+
+		if ($this->is_reported !== $v) {
+			$this->is_reported = $v;
+			$this->modifiedColumns[] = EventPhotoContestPeer::IS_REPORTED;
+		}
+
+	} 
+	
 	public function setCreatedAt($v)
 	{
 
@@ -287,15 +308,17 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 
 			$this->ip_address = $rs->getString($startcol + 5);
 
-			$this->created_at = $rs->getTimestamp($startcol + 6, null);
+			$this->is_reported = $rs->getBoolean($startcol + 6);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 7, null);
+			$this->created_at = $rs->getTimestamp($startcol + 7, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 8, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 8; 
+						return $startcol + 9; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventPhotoContest object", $e);
 		}
@@ -494,9 +517,12 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 				return $this->getIpAddress();
 				break;
 			case 6:
-				return $this->getCreatedAt();
+				return $this->getIsReported();
 				break;
 			case 7:
+				return $this->getCreatedAt();
+				break;
+			case 8:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -515,8 +541,9 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 			$keys[3]=>$this->getEventPhotoIdWinner(),
 			$keys[4]=>$this->getLockKey(),
 			$keys[5]=>$this->getIpAddress(),
-			$keys[6]=>$this->getCreatedAt(),
-			$keys[7]=>$this->getUpdatedAt(),
+			$keys[6]=>$this->getIsReported(),
+			$keys[7]=>$this->getCreatedAt(),
+			$keys[8]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -551,9 +578,12 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 				$this->setIpAddress($value);
 				break;
 			case 6:
-				$this->setCreatedAt($value);
+				$this->setIsReported($value);
 				break;
 			case 7:
+				$this->setCreatedAt($value);
+				break;
+			case 8:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -569,8 +599,9 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setEventPhotoIdWinner($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setLockKey($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setIpAddress($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[6], $arr)) $this->setIsReported($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
 	}
 
 	
@@ -584,6 +615,7 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPhotoContestPeer::EVENT_PHOTO_ID_WINNER)) $criteria->add(EventPhotoContestPeer::EVENT_PHOTO_ID_WINNER, $this->event_photo_id_winner);
 		if ($this->isColumnModified(EventPhotoContestPeer::LOCK_KEY)) $criteria->add(EventPhotoContestPeer::LOCK_KEY, $this->lock_key);
 		if ($this->isColumnModified(EventPhotoContestPeer::IP_ADDRESS)) $criteria->add(EventPhotoContestPeer::IP_ADDRESS, $this->ip_address);
+		if ($this->isColumnModified(EventPhotoContestPeer::IS_REPORTED)) $criteria->add(EventPhotoContestPeer::IS_REPORTED, $this->is_reported);
 		if ($this->isColumnModified(EventPhotoContestPeer::CREATED_AT)) $criteria->add(EventPhotoContestPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EventPhotoContestPeer::UPDATED_AT)) $criteria->add(EventPhotoContestPeer::UPDATED_AT, $this->updated_at);
 
@@ -625,6 +657,8 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 		$copyObj->setLockKey($this->lock_key);
 
 		$copyObj->setIpAddress($this->ip_address);
+
+		$copyObj->setIsReported($this->is_reported);
 
 		$copyObj->setCreatedAt($this->created_at);
 
