@@ -163,18 +163,6 @@
 	background: 	url(/images/layout/leftMenu/delete.png) center left no-repeat;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 #leftMenu .separator {
 
 	margin-top: 	5px;
@@ -188,4 +176,52 @@
 #leftMenu .innerMenu {
 
 	margin-bottom: 	35px;
+}
+
+
+
+
+
+
+
+
+.innerFilter {
+
+    margin-bottom: 		35px;
+	margin-left: 		15px;
+    background: 		#E0E0E0;
+    background-image: 	url(/images/layout/leftMenuHoverBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
+    background-image: 	url(/images/layout/leftMenuHoverBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E6E6E6', EndColorStr='#D6D6D6', GradientType=0);
+    background-repeat: 	repeat-y;
+    padding: 			5px 11px 5px 11px;
+}
+
+.innerFilter table {
+
+	width: 	100%
+}
+
+.innerFilter table tr td {
+
+	padding: 	3px 3px 3px 0px;
+}
+
+.innerFilter input {
+
+	width: 		74px;
+	border: 	1px solid #909090;
+	font-size: 	10px;
+	padding: 	1px 3px 1px 3px;
+}
+
+.innerFilter input.double {
+
+	width: 		159px;
+}
+
+.innerFilter select {
+
+	max-width: 		159px;
+	max-width: 		159px !important;
 }

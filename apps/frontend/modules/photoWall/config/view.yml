@@ -1,4 +1,4 @@
 all:
 
-  stylesheets:    [photoWall]
-  javascripts:    [photoWall]
+  stylesheets:    [photoWall, lightbox]
+  javascripts:    [/sf/prototype/js/scriptaculous, lightbox]

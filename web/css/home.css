@@ -516,25 +516,25 @@
 	border-radius: 			3px;
 	padding-left: 			19px;
 	padding-bottom: 		2px;
-	background: 			#E8F3F7 url('/images/home/presenceToYes.png') 3px center no-repeat;
+	background: 			#FFFFFF url('/images/home/presenceToYes.png') 3px center no-repeat;
 }
 
 #userResume #eventResume #eventList .event .presence.hover,
 #userResume #eventResume #eventList .event .presence.yes.hover {
 
-	background-color: 	#D2E3EA
+	background-color: 	#FFFFFF
 }
 
 #userResume #eventResume #eventList .event .presence.yes {
 
-	background: 	#E8F3F7 url('/images/home/presenceYes.png') 3px center no-repeat;
+	background: 	#FFFFFF url('/images/home/presenceYes.png') 3px center no-repeat;
 }
 
 #userResume #eventResume #eventList .event .presence a {
 
-	margin-left: 	5px;
-	margin-right: 	5px;
-	color: 			#5C6377;
+	margin-left: 		5px;
+	margin-right: 		5px;
+	color: 				#5C6377;
 	text-decoration: 	none;
 }
 

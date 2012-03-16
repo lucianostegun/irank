@@ -110,7 +110,7 @@ $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 	
 	<div class="clear"></div>
 	<div class="links">
-		<?php echo link_to('regulamento', 'photoConquest/rules') ?> | <?php echo link_to('classificação atual', 'photoConquest/ranking') ?>
+		<?php echo link_to('ver todas as fotos', 'photoWall/index') ?> | <?php echo link_to('classificação atual', 'photoWall/ranking') ?>
 	</div>
 </div>
 

@@ -136,6 +136,8 @@ function confirmPublish(){
 
 function loadEventPhotoComments(eventPhotoId){
 	
+	myLightbox.end();
+	
 	var eventId = $('eventId').value;
 	
 	$('eventPhotoPreviewDiv').innerHTML = '<img width="280" src="'+_webRoot+'/event/getPhoto/eventId/'+eventId+'/eventPhotoId/'+eventPhotoId+'/maxWidth/280"/>';

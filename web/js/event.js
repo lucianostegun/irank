@@ -367,6 +367,9 @@ function lockRanking(){
 
 function handleRankingChoice(rankingId){
 	
+	if( !rankingId )
+		return;
+	
 	showIndicator('event');
 	
 	$('eventBuyin').disabled = true;
@@ -416,6 +419,9 @@ function handleRankingChoice(rankingId){
 }
 
 function loadRankingPlaceList(rankingId, rankingPlaceId){
+	
+	if( !rankingId )
+		return;
 	
 	var onchangeFunc = $('eventRankingPlaceId').onchange;
 	$('eventRankingPlaceIdDiv').innerHTML = getWaitSelect();
@@ -539,7 +545,10 @@ function updateResultContent(eventId){
 
 function doEventSearch(){
 	
+	showIndicator();
+	
 	var form = $('eventSearchForm');
+	
 	if( isIE() ){
 		
 		$('isIE').value = true;
@@ -567,7 +576,6 @@ function doEventSearch(){
 			debug(content);
 	};
 	
-	showIndicator();
 
 	var urlAjax = _webRoot+'/event/search';
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize(form)});

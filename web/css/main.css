@@ -54,7 +54,7 @@ a:hover {
 
 	position: 		relative;
 	width: 			70px;
-	left: 			830px;
+	left: 			860px;
 	top: 			41px;
 	z-index: 		3;
 }
@@ -62,15 +62,15 @@ a:hover {
 #contentArea #header input {
 
 	border: 	1px solid #7A7A7A;
-	width: 		150px;
+	width: 		120px;
 	height: 	20px;
 	
+	border-radius: 			10px;
 	-moz-border-radius: 	10px;
 	-webkit-border-radius: 	10px;
-	border-radius: 			10px;
-	padding-left: 			10px;
-	padding-right: 			25px;
-	background: 			#FFFFFF url('/images/layout/search.gif') center right no-repeat
+	padding-right: 			10px;
+	padding-left: 			25px;
+	background: 			#FFFFFF url('/images/layout/search.gif') center left no-repeat
 }
 
 #contentArea #header .flags img {
@@ -172,10 +172,15 @@ a:hover {
 	top: 		8px;
 }
 
+#contentArea #mainContent #topMenu .links .first {
+
+	padding-left: 	20px;
+}
+
 #contentArea #mainContent #topMenu .links a {
 
 	position: 			relative;
-	font-size: 			13px;
+	font-size: 			12px;
 	color: 				#FFFFFF;
 	font-weight: 		bold;
 	text-decoration: 	none;
@@ -183,9 +188,14 @@ a:hover {
 	top: 				12px;
 	padding-top: 		12px;
 	padding-bottom: 	13px;
-	padding-right: 		19px;
-	padding-left: 		15px;
+	padding-right: 		14px;
+	padding-left: 		11px;
 	background: 		url('/images/layout/topMenuItemBg.png') no-repeat top right;	
+}
+
+#contentArea #mainContent #topMenu .links a.active {
+
+	color: 				#E8A014;
 }
 
 #contentArea #mainContent #topMenu .links a:hover {
@@ -194,12 +204,12 @@ a:hover {
 	background: 		url('/images/layout/topMenuItemBg.png') no-repeat bottom right;
 }
 
-#contentArea #mainContent #topMenu .links a.lastItem {
+#contentArea #mainContent #topMenu .links a.last {
 
 	background: 		url('/images/layout/topMenuItemBg.png') no-repeat top left;	
 }
 
-#contentArea #mainContent #topMenu .links a:hover.lastItem {
+#contentArea #mainContent #topMenu .links a:hover.last {
 
 	color: 				#E8A014;
 	background: 		url('/images/layout/topMenuItemBg.png') no-repeat bottom left;
@@ -342,6 +352,7 @@ a:hover {
 	left: 			20px;
 	width: 			700px;
 	margin-bottom: 	20px;
+	font-size: 		12px;
 }
 
 #footer {
@@ -361,14 +372,19 @@ a:hover {
 
 #footer .links {
 
-	position: 	relative;
-	top: 		-100px;
+	position: 		relative;
+	top: 			-100px;
+}
+
+#footer .links a {
+
+	color:  	#D5EFFF;
 }
 
 #footer .credit {
 
 	position: 	relative;
-	top: 		-100px;
+	top: 		-85px;
 }
 
 #footer .credit a {

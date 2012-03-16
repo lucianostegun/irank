@@ -11,6 +11,10 @@
 		<div class="value"><?php echo Util::formatFloat($resumeInfo['buyin'], true) ?></div>
 	</div>
 	<div class="row">
+		<div class="label">Taxas</div>
+		<div class="value"><?php echo Util::formatFloat($resumeInfo['fee'], true) ?></div>
+	</div>
+	<div class="row">
 		<div class="label">Rebuys</div>
 		<div class="value"><?php echo Util::formatFloat($resumeInfo['rebuy'], true) ?></div>
 	</div>

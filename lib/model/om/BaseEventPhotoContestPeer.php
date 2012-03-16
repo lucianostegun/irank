@@ -13,7 +13,7 @@ abstract class BaseEventPhotoContestPeer {
 	const CLASS_DEFAULT = 'lib.model.EventPhotoContest';
 
 	
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 9;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -38,6 +38,9 @@ abstract class BaseEventPhotoContestPeer {
 	const IP_ADDRESS = 'event_photo_contest.IP_ADDRESS';
 
 	
+	const IS_REPORTED = 'event_photo_contest.IS_REPORTED';
+
+	
 	const CREATED_AT = 'event_photo_contest.CREATED_AT';
 
 	
@@ -49,19 +52,19 @@ abstract class BaseEventPhotoContestPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventPhotoIdLeft', 'EventPhotoIdRight', 'EventPhotoIdWinner', 'LockKey', 'IpAddress', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventPhotoContestPeer::ID, EventPhotoContestPeer::EVENT_PHOTO_ID_LEFT, EventPhotoContestPeer::EVENT_PHOTO_ID_RIGHT, EventPhotoContestPeer::EVENT_PHOTO_ID_WINNER, EventPhotoContestPeer::LOCK_KEY, EventPhotoContestPeer::IP_ADDRESS, EventPhotoContestPeer::CREATED_AT, EventPhotoContestPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_photo_id_left', 'event_photo_id_right', 'event_photo_id_winner', 'lock_key', 'ip_address', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_PHOTO_ID_LEFT'=>'', 'EVENT_PHOTO_ID_RIGHT'=>'', 'EVENT_PHOTO_ID_WINNER'=>'', 'LOCK_KEY'=>'', 'IP_ADDRESS'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventPhotoIdLeft', 'EventPhotoIdRight', 'EventPhotoIdWinner', 'LockKey', 'IpAddress', 'IsReported', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventPhotoContestPeer::ID, EventPhotoContestPeer::EVENT_PHOTO_ID_LEFT, EventPhotoContestPeer::EVENT_PHOTO_ID_RIGHT, EventPhotoContestPeer::EVENT_PHOTO_ID_WINNER, EventPhotoContestPeer::LOCK_KEY, EventPhotoContestPeer::IP_ADDRESS, EventPhotoContestPeer::IS_REPORTED, EventPhotoContestPeer::CREATED_AT, EventPhotoContestPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_photo_id_left', 'event_photo_id_right', 'event_photo_id_winner', 'lock_key', 'ip_address', 'is_reported', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_PHOTO_ID_LEFT'=>'', 'EVENT_PHOTO_ID_RIGHT'=>'', 'EVENT_PHOTO_ID_WINNER'=>'', 'LOCK_KEY'=>'', 'IP_ADDRESS'=>'', 'IS_REPORTED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventPhotoIdLeft'=>1, 'EventPhotoIdRight'=>2, 'EventPhotoIdWinner'=>3, 'LockKey'=>4, 'IpAddress'=>5, 'CreatedAt'=>6, 'UpdatedAt'=>7, ),
-		BasePeer::TYPE_COLNAME=>array (EventPhotoContestPeer::ID=>0, EventPhotoContestPeer::EVENT_PHOTO_ID_LEFT=>1, EventPhotoContestPeer::EVENT_PHOTO_ID_RIGHT=>2, EventPhotoContestPeer::EVENT_PHOTO_ID_WINNER=>3, EventPhotoContestPeer::LOCK_KEY=>4, EventPhotoContestPeer::IP_ADDRESS=>5, EventPhotoContestPeer::CREATED_AT=>6, EventPhotoContestPeer::UPDATED_AT=>7, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_photo_id_left'=>1, 'event_photo_id_right'=>2, 'event_photo_id_winner'=>3, 'lock_key'=>4, 'ip_address'=>5, 'created_at'=>6, 'updated_at'=>7, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventPhotoIdLeft'=>1, 'EventPhotoIdRight'=>2, 'EventPhotoIdWinner'=>3, 'LockKey'=>4, 'IpAddress'=>5, 'IsReported'=>6, 'CreatedAt'=>7, 'UpdatedAt'=>8, ),
+		BasePeer::TYPE_COLNAME=>array (EventPhotoContestPeer::ID=>0, EventPhotoContestPeer::EVENT_PHOTO_ID_LEFT=>1, EventPhotoContestPeer::EVENT_PHOTO_ID_RIGHT=>2, EventPhotoContestPeer::EVENT_PHOTO_ID_WINNER=>3, EventPhotoContestPeer::LOCK_KEY=>4, EventPhotoContestPeer::IP_ADDRESS=>5, EventPhotoContestPeer::IS_REPORTED=>6, EventPhotoContestPeer::CREATED_AT=>7, EventPhotoContestPeer::UPDATED_AT=>8, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_photo_id_left'=>1, 'event_photo_id_right'=>2, 'event_photo_id_winner'=>3, 'lock_key'=>4, 'ip_address'=>5, 'is_reported'=>6, 'created_at'=>7, 'updated_at'=>8, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
@@ -126,6 +129,8 @@ abstract class BaseEventPhotoContestPeer {
 		$criteria->addSelectColumn(EventPhotoContestPeer::LOCK_KEY);
 
 		$criteria->addSelectColumn(EventPhotoContestPeer::IP_ADDRESS);
+
+		$criteria->addSelectColumn(EventPhotoContestPeer::IS_REPORTED);
 
 		$criteria->addSelectColumn(EventPhotoContestPeer::CREATED_AT);
 

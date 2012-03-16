@@ -1,3 +1,3 @@
 all:
-  stylesheets:    [table, form, event, eventComment, eventPhoto]
-  javascripts:    [event, eventComment, eventPhoto, rankingPlace, ranking, mask, /index.php/event/javascript/js]
+  stylesheets:    [form, table, event, eventComment, eventPhoto, lightbox]
+  javascripts:    [event, eventComment, eventPhoto, rankingPlace, ranking, mask, /sf/prototype/js/scriptaculous, lightbox, /index.php/event/javascript/js]

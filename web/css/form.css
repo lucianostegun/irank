@@ -6,6 +6,12 @@
 	color: 			#333333;
 }
 
+.defaultForm blockquote {
+
+	font-size: 	12px;
+	text-shadow: 	white 1px 1px
+}
+
 .gridTable .defaultForm {
 
 	padding: 		0px;
@@ -75,23 +81,28 @@
 
 .buttonTabBar {
 
+	position: 		relative;
+	z-index: 		200;
 	height: 		22px;
-	padding: 		7px 5px 7px 5px;
-	margin: 		-5px 7px 7px 7px;
-	background: 	#DFDFDF;
+	padding: 		9px 5px 7px 5px;
+	margin: 		-9px 7px 7px 7px;
+	background: 	#DFDFDF url('/images/tableSeparator.png') left top repeat-x;
 	border: 		1px solid #AAAAAA;
+	border-top: 	1px solid transparent;
 }
 
 .buttonTabBar.success {
 
-	background: 	#CADDEC;
+	background: 	#CADDEC url('/images/tableSeparator.png') left top repeat-x;
 	border: 		1px solid #7FA6CA;
+	border-top: 	1px solid transparent;
 }
 
 .buttonTabBar.error {
 
-	background: 	#EECFCA;
+	background: 	#EECFCA url('/images/tableSeparator.png') left top repeat-x;;
 	border: 		1px solid #CE9080;
+	border-top: 	1px solid transparent;
 }
 
 .buttonBarFormError {
@@ -145,7 +156,7 @@
 
 .defaultForm .row .labelHalf, .windowForm .row .labelHalf {
 
-	width: 			80px;
+	width: 			100px;
 	float: 			left;
 	padding: 		3px 0px 2px 0px;
 	height: 		15px;
@@ -202,7 +213,7 @@
 	float: 			left;
 	padding: 		0px;
 	margin-right: 	2px;
-	padding: 		0px 3px 2px 3px;
+	padding: 		3px 3px 2px 3px;
 	text-align: 	left;
 }
 
@@ -378,8 +389,6 @@
 	margin-right: 	10px;
 }
 
-.defaultForm .rowTextArea .label,
-.windowForm .rowTextArea .label,
 .defaultForm .rowTextArea .labelHalf,
 .windowForm .rowTextArea .labelHalf {
 
@@ -474,7 +483,7 @@
 
 .defaultForm .rowTextArea .field textarea.formFieldError:focus {
 
-	background: 	#e0695a;
+	background: 	#D88D82;
 }
 
 .defaultForm .rowTextArea .field textarea.required {

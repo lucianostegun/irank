@@ -54,7 +54,6 @@ function showIndicator( indicatorId ){
 		$('indicator').style.top = window.pageYOffset;
 
 	showDiv('indicator'+indicatorId);
-	showDiv('indicator');
 	hideFormStatusError(indicatorId);
 }
 

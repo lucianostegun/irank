@@ -89,12 +89,14 @@ class Ranking extends BaseRanking
 		return RankingPeer::doSelect( $criteria );
 	}
 
-	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false, $onlyMine=false, $suppressOld=false ){
+	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false, $onlyMine=false, $suppressOld=false, $selectLabel=null ){
 		
 		$rankingObjList = self::getList($onlyMine, $suppressOld);
 
+		if( !$selectLabel )
+			$selectLabel = __('select');
 		$optionList = array();
-		$optionList[''] = __('select');
+		$optionList[''] = $selectLabel;
 		foreach( $rankingObjList as $rankingObj )			
 			$optionList[$rankingObj->getId()] = $rankingObj->getRankingName();
 		

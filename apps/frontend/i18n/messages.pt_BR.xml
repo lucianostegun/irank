@@ -445,8 +445,7 @@
 			<trans-unit>
 				<source>contact.intro</source>
 				<target>
-					Você pode entrar em contato conosco preenchendo o&lt;br/&gt;formulário abaixo e nos enviando sua mensagem.&lt;br/&gt;&lt;br/&gt;
-					Você também pode esclarecer suas dúvidas através de nosso &lt;/b&gt;&lt;/u&gt;%link%&lt;/u&gt;&lt;/b&gt;
+					Entrar em contato conosco preenchendo o&lt;br/&gt;formulário abaixo e nos enviando sua mensagem.
 				</target>
 			</trans-unit>
 			<trans-unit>
@@ -479,8 +478,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>contact.contactForm.successMessage</source>
-				<target>Sua mensagem foi enviada com sucesso!&lt;br/&gt;
-				Assim que possível entraremos em contato para respondê-la.</target>
+				<target>Sua mensagem foi enviada com sucesso!</target>
 			</trans-unit>
 			<trans-unit>
 				<source>contact.contactForm.newMessageLink</source>
@@ -1844,8 +1842,8 @@
 			<trans-unit>
 				<source>feedback.intro</source>
 				<target>
-					Reparou que &lt;b&gt;iRank&lt;/b&gt; site está em versão &lt;b&gt;&lt;u&gt;%link%&lt;/u&gt;&lt;/b&gt;?&lt;br/&gt;
-					Isso significa que sua avaliação é muito importante para que possamos &lt;br/&gt;corrigir falhas e adicionar melhorias
+					Após 18 meses de desenvolvimento o &lt;b&gt;iRank&lt;/b&gt; não está mais em versão &lt;b&gt;&lt;u&gt;%link%&lt;/u&gt;&lt;/b&gt;.&lt;br/&gt;
+					Mas sua avaliação é muito importante para que possamos &lt;br/&gt;corrigir falhas e adicionar melhorias
 					em todas as áreas do site.&lt;br/&gt;&lt;br/&gt;
 					Pedimos que sempre que possível você entre em contato para nos enviar&lt;br/&gt;sugestões ou nos informar sobre um possível erro, falha ou bug
 					que tenha encontrado no site.
@@ -1880,7 +1878,7 @@
 				<target>
 					Seu feedback foi enviado com sucesso!&lt;br/&gt;&lt;br/&gt;
 					Ele será muito importante para que possamos corrigir falhas e melhorar&lt;br/&gt;
-					os serviços oferecidos.
+					cada vez mais nossos serviços.
 				</target>
 			</trans-unit>
 			<trans-unit>

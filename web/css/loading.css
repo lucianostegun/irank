@@ -23,27 +23,3 @@
 	float: 			left;
 	margin: 		4px;
 }
-
-#indicator {
-
-	position: 		absolute;
-	top: 			117px;
-	font-weight: 	bold;
-	display: 		none;
-	padding: 		2 10 2 10;
-	width: 			200px;
-	margin-left: 	630px;
-}
-
-#indicator .message {
-	
-	float: 			left;
-	margin-left: 	6px;
-	color: 			#333333;
-}
-
-#indicator .image {
-	
-	float: 			left;
-	margin: 		0 4 0 4;
-}
