@@ -1,1 +1,0 @@
-<div id="photoWallDiv" style="padding: 5px"></div>

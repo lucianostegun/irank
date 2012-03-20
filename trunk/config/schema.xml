@@ -422,91 +422,6 @@
 		<column name="updated_at" type="TIMESTAMP" />
 	</table>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<table name="user_admin" phpName="UserAdmin" package="...apps.backend.lib.model">
-		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
-		<column name="people_id" type="INTEGER" />
-		<column name="username" type="VARCHAR" />
-		<column name="password" type="VARCHAR" />
-		<column name="active" type="BOOLEAN" />
-		<column name="master" type="BOOLEAN" />
-		<column name="enabled" type="BOOLEAN" />
-		<column name="visible" type="BOOLEAN" />
-		<column name="deleted" type="BOOLEAN" />
-		<column name="locked" type="BOOLEAN" />
-		<column name="last_access_date" type="TIMESTAMP" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
-		<foreign-key foreignTable="people" onDelete="CASCADE">
-			<reference local="people_id" foreign="id" />
-		</foreign-key>
-	</table>
-	
-	<table name="module" phpName="Module" package="...apps.backend.lib.model">
-		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
-		<column name="module_id" type="INTEGER" />
-		<column name="is_menu" type="BOOLEAN" />
-		<column name="description" type="VARCHAR" />
-		<column name="toolbar_description" type="VARCHAR" />
-		<column name="image_menu" type="VARCHAR" />
-		<column name="image_module" type="VARCHAR" />
-		<column name="execute_module" type="VARCHAR" />
-		<column name="execute_action" type="VARCHAR" />
-		<column name="enabled" type="BOOLEAN" />
-		<column name="master_only" type="BOOLEAN" />
-		<column name="has_child" type="BOOLEAN" />
-		<column name="order_seq" type="INTEGER" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
-		<foreign-key foreignTable="module" onDelete="CASCADE">
-			<reference local="module_id" foreign="id" />
-		</foreign-key>
-	</table>
-	
-	<table name="toolbar" phpName="Toolbar" package="...apps.backend.lib.model">
-		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
-		<column name="module_id" type="INTEGER" />
-		<column name="description" type="VARCHAR" />
-		<column name="tag_name" type="VARCHAR" />
-		<column name="tag_id" type="VARCHAR" />
-		<column name="image" type="VARCHAR" />
-		<column name="action_name" type="VARCHAR" />
-		<column name="execute_module" type="VARCHAR" />
-		<column name="execute_action" type="VARCHAR" />
-		<column name="is_javascript" type="BOOLEAN" />
-		<column name="order_seq" type="INTEGER" />
-		<column name="start_disabled" type="BOOLEAN" />
-		<column name="visible_action" type="VARCHAR" />
-		<column name="enabled" type="BOOLEAN" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
-		<foreign-key foreignTable="module" onDelete="CASCADE">
-			<reference local="module_id" foreign="id" />
-		</foreign-key>
-	</table>
-
 	<table name="event_personal" phpName="EventPersonal">
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
 		<column name="user_site_id" type="INTEGER" />
@@ -644,6 +559,60 @@
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="city">
 			<reference local="city_id" foreign="id" />
+		</foreign-key>
+	</table>
+	
+	<table name="ranking_live" idMethod="native">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+		<column name="ranking_name" type="VARCHAR" size="25"/>
+		<column name="ranking_type_id" type="INTEGER"/>
+		<column name="start_date" type="DATE"/>
+		<column name="finish_date" type="DATE"/>
+		<column name="is_private" type="BOOLEAN" default="false"/>
+		<column name="players" type="INTEGER" default="0"/>
+		<column name="events" type="INTEGER" default="0"/>
+		<column name="default_buyin" type="NUMERIC" size="10" scale="2" default="0"/>
+		<column name="game_style_id" type="INTEGER"/>
+		<column name="ranking_tag" type="VARCHAR" size="20"/>
+		<column name="score_formula" type="VARCHAR" size="250"/>
+		<column name="file_name_logo" type="VARCHAR" size="250"/>
+		<column name="enabled" type="BOOLEAN" default="false"/>
+		<column name="visible" type="BOOLEAN" default="true"/>
+		<column name="locked" type="BOOLEAN" default="false"/>
+		<column name="deleted" type="BOOLEAN" default="false"/>
+		<column name="created_at" type="TIMESTAMP"/>
+		<column name="updated_at" type="TIMESTAMP"/>
+		<foreign-key foreignTable="virtual_table" onDelete="" onUpdate="">
+			<reference local="ranking_type_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="virtual_table" onDelete="" onUpdate="">
+			<reference local="game_style_id" foreign="id"/>
+		</foreign-key>
+	</table>
+  
+	<table name="event_live" idMethod="native">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+		<column name="ranking_live_id" type="INTEGER" required="true"/>
+		<column name="event_name" type="VARCHAR" size="100"/>
+		<column name="event_short_name" type="VARCHAR" size="50"/>
+		<column name="event_date" type="DATE"/>
+		<column name="event_time" type="TIME"/>
+		<column name="event_datetime" type="TIMESTAMP"/>
+		<column name="description" type="LONGVARCHAR"/>
+		<column name="club_id" type="INTEGER"/>
+		<column name="buyin" type="NUMERIC" size="10" scale="2"/>
+		<column name="blind_time" type="TIME"/>
+		<column name="stack_chips" type="DOUBLE"/>
+		<column name="players" type="INTEGER"/>
+		<column name="allowed_rebuys" type="INTEGER"/>
+		<column name="allowed_addons" type="INTEGER"/>
+		<column name="created_at" type="TIMESTAMP"/>
+		<column name="updated_at" type="TIMESTAMP"/>
+		<foreign-key foreignTable="ranking_live" onDelete="" onUpdate="">
+			<reference local="ranking_live_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="club" onDelete="" onUpdate="">
+			<reference local="club_id" foreign="id"/>
 		</foreign-key>
 	</table>
 	

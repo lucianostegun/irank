@@ -1,0 +1,127 @@
+.eventDetailsArea {
+
+    background: 			-moz-linear-gradient(top, #FFFFFF, #DFDFDF);
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#DFDFDF));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#DFDFDF', GradientType=0);
+    min-height: 			400px;	
+}
+
+.eventDetailsArea .separator {
+
+	clear: 			both;
+	width: 			100%;
+	border-top: 	1px solid #DDDDDD;
+	border-bottom: 	1px solid #FFFFFF;
+	margin-top: 	10px;
+	margin-bottom: 	7px;
+}
+
+.eventDetails {
+	
+	margin: 	10px 10px 0px 10px;
+}
+
+.eventDetails .logo {
+
+	width: 			110px;
+	text-align: 	center;	
+}
+
+.eventDetails h1 {
+
+	font-size: 		18px;
+	margin: 		0px;
+	padding: 		0px;
+	font-weight: 	bold;
+	font-family: 	Verdana, Sans serif;
+	text-align: 	left;
+	text-shadow: 	silver 1px 1px;	
+}
+
+.eventDetails .info td {
+
+	font-size: 		13px;
+	padding-left: 	15px;	
+}
+
+.eventDetails .payInfo {
+
+	text-align: 		center;
+	vertical-align: 	top;
+	width: 				250px;
+}
+
+.eventDetails .payInfo table {
+	
+	width: 	200px;
+}
+
+.eventDetails .payInfo table tr th {
+	
+}
+
+.eventDetails .payInfo table tr td {
+	
+	white-space: 	nowrap;
+	padding-top: 	8px;
+	text-align: 	center;
+	font-weight: 	bold;
+}
+
+.eventDetails .payInfo table tr td.presence {
+	
+	padding: 	15px 0px 0px 35px;	
+}
+
+
+.eventDetailsArea .channel td {
+
+	clear: 				both;
+	border-left: 		1px solid #D0D0D0;
+	border-right: 		1px solid #FFFFFF;
+	margin-top: 		10px;
+	margin-bottom: 		7px;
+	height: 			40px;
+	text-align: 		center;
+	font-size: 			18px;
+	font-family: 		Arial;
+	font-weight: 		bold;
+	text-shadow: 		white 1px 1px;
+	color: 				#A0A0A0;
+	padding: 			0px 15px 0px 15px;
+	cursor: 			pointer;
+}
+
+.eventDetailsArea .channel td.hover {
+
+	color: 	#C91E1E;
+}
+
+.eventDetailsArea .channel .eventLiveTab.first {
+
+	border-left: 	none;	
+}
+
+.eventDetailsArea .channel .eventLiveTab.last {
+
+	border-right: 	none;	
+}
+
+.eventDetailsArea .channel .eventLiveTab.active {
+
+	color: 		#303030;	
+}
+
+.eventDetailsArea .eventLiveTabContent {
+	
+	display: 		none;
+	margin: 		25px;
+	font-size: 		12px;
+	text-align: 	left;
+	text-shadow: 	white 1px 1px;	
+}
+
+.eventDetailsArea .eventLiveTabContent.active {
+	
+	display: 		block;	
+}

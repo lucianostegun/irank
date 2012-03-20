@@ -4,5 +4,14 @@
 	Você pode utilizar a pesquisa no menu ao lado para filtrar os eventos por cidade, estado, buyin ou torneios.
 </div>
 <blockquote>
-	<?php echo link_to('Detalhes de um evento', 'eventLive/details') ?>
+	<?php
+		$eventLiveObjList = EventLivePeer::doSelect(new Criteria());
+		
+		foreach($eventLiveObjList as $eventLiveObj):
+		
+			echo link_to($eventLiveObj->getEventName(), 'eventLive/details?id='.$eventLiveObj->getId());
+			echo '<br/>';
+		
+		endforeach;
+	?>
 </blockquote>
