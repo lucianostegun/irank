@@ -870,6 +870,8 @@ class Column extends XMLElement {
 			$this->domain->setType(PropelTypes::TIMESTAMP);
 		} else if (strpos($tn, "BINARY") !== false) {
 			$this->domain->setType(PropelTypes::LONGVARBINARY);
+		} else if (strpos($tn, "INET") !== false) {
+			$this->domain->setType(PropelTypes::INET);
 		} else {
 			$this->domain->setType(PropelTypes::VARCHAR);
 		}

@@ -52,6 +52,7 @@ abstract class CreoleTypes {
         const BINARY = 20;
         const LONGVARBINARY = 21;
         const YEAR = 22;
+        const INET = 24;
         
         /** this is "ARRAY" from JDBC types */
         const ARR = 23;
@@ -82,6 +83,7 @@ abstract class CreoleTypes {
                 self::BINARY=>'Blob',
                 self::LONGVARBINARY=>'Blob',
                 self::YEAR=>'Int',
+                self::INET=>'String',
                 self::ARR=>'Array',
                 self::OTHER=>'', // get() and set() for unknown
                 );
@@ -109,6 +111,7 @@ abstract class CreoleTypes {
                 self::BLOB=>'BLOB',
                 self::CLOB=>'CLOB',
                 self::LONGVARCHAR=>'LONGVARCHAR',
+                self::INET=>'INET',
                 self::BINARY=>'BINARY',
                 self::LONGVARBINARY=>'LONGVARBINARY',                
                 self::ARR=>'ARR',

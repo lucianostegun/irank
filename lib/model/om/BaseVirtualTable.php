@@ -84,6 +84,18 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	protected $lastEventPersonalCriteria = null;
 
 	
+	protected $collRankingLiveListRelatedByRankingTypeId;
+
+	
+	protected $lastRankingLiveRelatedByRankingTypeIdCriteria = null;
+
+	
+	protected $collRankingLiveListRelatedByGameStyleId;
+
+	
+	protected $lastRankingLiveRelatedByGameStyleIdCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -477,6 +489,22 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collRankingLiveListRelatedByRankingTypeId !== null) {
+				foreach($this->collRankingLiveListRelatedByRankingTypeId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collRankingLiveListRelatedByGameStyleId !== null) {
+				foreach($this->collRankingLiveListRelatedByGameStyleId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -560,6 +588,22 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 				if ($this->collEventPersonalList !== null) {
 					foreach($this->collEventPersonalList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingLiveListRelatedByRankingTypeId !== null) {
+					foreach($this->collRankingLiveListRelatedByRankingTypeId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingLiveListRelatedByGameStyleId !== null) {
+					foreach($this->collRankingLiveListRelatedByGameStyleId as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -787,6 +831,14 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 			foreach($this->getEventPersonalList() as $relObj) {
 				$copyObj->addEventPersonal($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingLiveListRelatedByRankingTypeId() as $relObj) {
+				$copyObj->addRankingLiveRelatedByRankingTypeId($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingLiveListRelatedByGameStyleId() as $relObj) {
+				$copyObj->addRankingLiveRelatedByGameStyleId($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1372,6 +1424,146 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 		$this->lastEventPersonalCriteria = $criteria;
 
 		return $this->collEventPersonalList;
+	}
+
+	
+	public function initRankingLiveListRelatedByRankingTypeId()
+	{
+		if ($this->collRankingLiveListRelatedByRankingTypeId === null) {
+			$this->collRankingLiveListRelatedByRankingTypeId = array();
+		}
+	}
+
+	
+	public function getRankingLiveListRelatedByRankingTypeId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveListRelatedByRankingTypeId === null) {
+			if ($this->isNew()) {
+			   $this->collRankingLiveListRelatedByRankingTypeId = array();
+			} else {
+
+				$criteria->add(RankingLivePeer::RANKING_TYPE_ID, $this->getId());
+
+				RankingLivePeer::addSelectColumns($criteria);
+				$this->collRankingLiveListRelatedByRankingTypeId = RankingLivePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingLivePeer::RANKING_TYPE_ID, $this->getId());
+
+				RankingLivePeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingLiveRelatedByRankingTypeIdCriteria) || !$this->lastRankingLiveRelatedByRankingTypeIdCriteria->equals($criteria)) {
+					$this->collRankingLiveListRelatedByRankingTypeId = RankingLivePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingLiveRelatedByRankingTypeIdCriteria = $criteria;
+		return $this->collRankingLiveListRelatedByRankingTypeId;
+	}
+
+	
+	public function countRankingLiveListRelatedByRankingTypeId($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingLivePeer::RANKING_TYPE_ID, $this->getId());
+
+		return RankingLivePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingLiveRelatedByRankingTypeId(RankingLive $l)
+	{
+		$this->collRankingLiveListRelatedByRankingTypeId[] = $l;
+		$l->setVirtualTableRelatedByRankingTypeId($this);
+	}
+
+	
+	public function initRankingLiveListRelatedByGameStyleId()
+	{
+		if ($this->collRankingLiveListRelatedByGameStyleId === null) {
+			$this->collRankingLiveListRelatedByGameStyleId = array();
+		}
+	}
+
+	
+	public function getRankingLiveListRelatedByGameStyleId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveListRelatedByGameStyleId === null) {
+			if ($this->isNew()) {
+			   $this->collRankingLiveListRelatedByGameStyleId = array();
+			} else {
+
+				$criteria->add(RankingLivePeer::GAME_STYLE_ID, $this->getId());
+
+				RankingLivePeer::addSelectColumns($criteria);
+				$this->collRankingLiveListRelatedByGameStyleId = RankingLivePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingLivePeer::GAME_STYLE_ID, $this->getId());
+
+				RankingLivePeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingLiveRelatedByGameStyleIdCriteria) || !$this->lastRankingLiveRelatedByGameStyleIdCriteria->equals($criteria)) {
+					$this->collRankingLiveListRelatedByGameStyleId = RankingLivePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingLiveRelatedByGameStyleIdCriteria = $criteria;
+		return $this->collRankingLiveListRelatedByGameStyleId;
+	}
+
+	
+	public function countRankingLiveListRelatedByGameStyleId($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingLivePeer::GAME_STYLE_ID, $this->getId());
+
+		return RankingLivePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingLiveRelatedByGameStyleId(RankingLive $l)
+	{
+		$this->collRankingLiveListRelatedByGameStyleId[] = $l;
+		$l->setVirtualTableRelatedByGameStyleId($this);
 	}
 
   public function getCulture()

@@ -46,6 +46,7 @@ class OraclePlatform extends DefaultPlatform {
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::DOUBLE, "FLOAT"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::DECIMAL, "NUMBER"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::NUMERIC, "NUMBER"));
+		$this->setSchemaDomainMapping(new Domain(PropelTypes::VARCHAR, "INET"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::VARCHAR, "VARCHAR2"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::LONGVARCHAR, "VARCHAR2", "2000"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::TIME, "DATE"));

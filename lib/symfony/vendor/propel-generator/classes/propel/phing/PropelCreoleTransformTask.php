@@ -477,6 +477,7 @@ class PropelCreoleTransformTask extends Task {
 		if ($colSize > 0 && (
 				   $colType == CreoleTypes::CHAR
 				|| $colType == CreoleTypes::VARCHAR
+				|| $colType == CreoleTypes::INET
 				|| $colType == CreoleTypes::LONGVARCHAR
 				|| $colType == CreoleTypes::DECIMAL
 				|| $colType == CreoleTypes::FLOAT
@@ -662,7 +663,8 @@ class PropelCreoleTransformTask extends Task {
 				$colSize > 0 && in_array($colType, array(
 					CreoleTypes::CHAR,
 					CreoleTypes::VARCHAR,
-					CreoleTypes::LONGVARCHAR))) {
+					CreoleTypes::LONGVARCHAR,
+					CreoleTypes::INET))) {
 			$ruleInfo = array('type'=>'maxLength', 'value'=>$colSize);
 			$this->validatorInfos[$tableName][$colName][] = $ruleInfo;
 		}

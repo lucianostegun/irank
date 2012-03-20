@@ -851,5 +851,22 @@ class Util {
 				return 'pt_BR';
 		}
 	}
+	
+	public static function getWeekDay($date){
+	
+		$date = Util::formatDate($date);
+		$weekDay = date('w', strtotime($date));
+	
+		$weekDayList   = array();
+		$weekDayList[] = 'Domingo';
+		$weekDayList[] = 'Segunda-feira';
+		$weekDayList[] = 'Terça-feira';
+		$weekDayList[] = 'Quarta-feira';
+		$weekDayList[] = 'Quinta-feira';
+		$weekDayList[] = 'Sexta-feira';
+		$weekDayList[] = 'Sábado';
+		
+		return $weekDayList[$weekDay];
+	}
 }
 ?>

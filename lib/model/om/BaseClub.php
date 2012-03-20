@@ -67,6 +67,12 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	protected $aCity;
 
 	
+	protected $collEventLiveList;
+
+	
+	protected $lastEventLiveCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -530,6 +536,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collEventLiveList !== null) {
+				foreach($this->collEventLiveList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -578,6 +592,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collEventLiveList !== null) {
+					foreach($this->collEventLiveList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -819,6 +841,15 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$copyObj->setUpdatedAt($this->updated_at);
 
 
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach($this->getEventLiveList() as $relObj) {
+				$copyObj->addEventLive($relObj->copy($deepCopy));
+			}
+
+		} 
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); 
@@ -869,6 +900,111 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aCity;
+	}
+
+	
+	public function initEventLiveList()
+	{
+		if ($this->collEventLiveList === null) {
+			$this->collEventLiveList = array();
+		}
+	}
+
+	
+	public function getEventLiveList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLiveList === null) {
+			if ($this->isNew()) {
+			   $this->collEventLiveList = array();
+			} else {
+
+				$criteria->add(EventLivePeer::CLUB_ID, $this->getId());
+
+				EventLivePeer::addSelectColumns($criteria);
+				$this->collEventLiveList = EventLivePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventLivePeer::CLUB_ID, $this->getId());
+
+				EventLivePeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventLiveCriteria) || !$this->lastEventLiveCriteria->equals($criteria)) {
+					$this->collEventLiveList = EventLivePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventLiveCriteria = $criteria;
+		return $this->collEventLiveList;
+	}
+
+	
+	public function countEventLiveList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventLivePeer::CLUB_ID, $this->getId());
+
+		return EventLivePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventLive(EventLive $l)
+	{
+		$this->collEventLiveList[] = $l;
+		$l->setClub($this);
+	}
+
+
+	
+	public function getEventLiveListJoinRankingLive($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLiveList === null) {
+			if ($this->isNew()) {
+				$this->collEventLiveList = array();
+			} else {
+
+				$criteria->add(EventLivePeer::CLUB_ID, $this->getId());
+
+				$this->collEventLiveList = EventLivePeer::doSelectJoinRankingLive($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePeer::CLUB_ID, $this->getId());
+
+			if (!isset($this->lastEventLiveCriteria) || !$this->lastEventLiveCriteria->equals($criteria)) {
+				$this->collEventLiveList = EventLivePeer::doSelectJoinRankingLive($criteria, $con);
+			}
+		}
+		$this->lastEventLiveCriteria = $criteria;
+
+		return $this->collEventLiveList;
 	}
 
 } 

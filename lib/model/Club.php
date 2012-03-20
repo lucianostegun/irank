@@ -10,6 +10,11 @@
 class Club extends BaseClub
 {
 	
+	public function toString(){
+		
+		return $this->getClubName();
+	}
+	
 	public static function getList(){
 		
 		$criteria = new Criteria();

@@ -33,6 +33,7 @@ class PropelTypes {
 
 	const CHAR = "CHAR";
 	const VARCHAR = "VARCHAR";
+	const INET = "VARCHAR";
 	const LONGVARCHAR = "LONGVARCHAR";
 	const CLOB = "CLOB";
 	const NUMERIC = "NUMERIC";
@@ -64,6 +65,7 @@ class PropelTypes {
 	const CHAR_NATIVE_TYPE = "string";
 	const VARCHAR_NATIVE_TYPE = "string";
 	const LONGVARCHAR_NATIVE_TYPE = "string";
+	const INET_NATIVE_TYPE = "string";
 	const CLOB_NATIVE_TYPE = "string"; // Clob
 	const NUMERIC_NATIVE_TYPE = "double";
 	const DECIMAL_NATIVE_TYPE = "double";
@@ -100,7 +102,7 @@ class PropelTypes {
 		if (self::$isInitialized === false) {
 
 			self::$TEXT_TYPES = array (
-						self::CHAR, self::VARCHAR, self::LONGVARCHAR, self::CLOB, self::DATE, self::TIME, self::TIMESTAMP, self::BU_DATE, self::BU_TIMESTAMP
+						self::CHAR, self::VARCHAR, self::LONGVARCHAR, self::INET, self::CLOB, self::DATE, self::TIME, self::TIMESTAMP, self::BU_DATE, self::BU_TIMESTAMP
 					);
 
 			self::$LOB_TYPES = array (
@@ -116,6 +118,7 @@ class PropelTypes {
 			self::$propelToPHPNativeMap[self::CHAR] = self::CHAR_NATIVE_TYPE;
 			self::$propelToPHPNativeMap[self::VARCHAR] = self::VARCHAR_NATIVE_TYPE;
 			self::$propelToPHPNativeMap[self::LONGVARCHAR] = self::LONGVARCHAR_NATIVE_TYPE;
+			self::$propelToPHPNativeMap[self::INET] = self::INET_NATIVE_TYPE;
 			self::$propelToPHPNativeMap[self::CLOB] = self::CLOB_NATIVE_TYPE;
 			self::$propelToPHPNativeMap[self::NUMERIC] = self::NUMERIC_NATIVE_TYPE;
 			self::$propelToPHPNativeMap[self::DECIMAL] = self::DECIMAL_NATIVE_TYPE;
@@ -145,6 +148,7 @@ class PropelTypes {
 			self::$propelTypeToCreoleTypeMap[self::CHAR] = self::CHAR;
 			self::$propelTypeToCreoleTypeMap[self::VARCHAR] = self::VARCHAR;
 			self::$propelTypeToCreoleTypeMap[self::LONGVARCHAR] = self::LONGVARCHAR;
+			self::$propelTypeToCreoleTypeMap[self::INET] = self::INET;
 			self::$propelTypeToCreoleTypeMap[self::CLOB] = self::CLOB;
 			self::$propelTypeToCreoleTypeMap[self::NUMERIC] = self::NUMERIC;
 			self::$propelTypeToCreoleTypeMap[self::DECIMAL] = self::DECIMAL;
@@ -179,6 +183,7 @@ class PropelTypes {
 			self::$creoleToPropelTypeMap[CreoleTypes::CHAR] = self::CHAR;
 			self::$creoleToPropelTypeMap[CreoleTypes::VARCHAR] = self::VARCHAR;
 			self::$creoleToPropelTypeMap[CreoleTypes::LONGVARCHAR] = self::LONGVARCHAR;
+			self::$creoleToPropelTypeMap[CreoleTypes::INET] = self::INET;
 			self::$creoleToPropelTypeMap[CreoleTypes::CLOB] = self::CLOB;
 			self::$creoleToPropelTypeMap[CreoleTypes::NUMERIC] = self::NUMERIC;
 			self::$creoleToPropelTypeMap[CreoleTypes::DECIMAL] = self::DECIMAL;
