@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+	<file orginal="global" source-language="pt_BR" datatype="plaintext" date="">
+		<body>
+		
+			<trans-unit>
+				<source>form.error.requiredField</source>
+				<target>Este campo é obrigatório e não foi preenchido</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidEmail</source>
+				<target>O e-mail informado não é um e-mail válido</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenEmail</source>
+				<target>Este e-mail já está em uso por outro usuário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenUsername</source>
+				<target>Este username já está em uso por outro usuário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidUsername</source>
+				<target>O username informado não é válido.\nO username deve iniciar com uma letra, e pode conter apenas letras, números e hífen</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max15</source>
+				<target>Informe um valor de até 15 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max150</source>
+				<target>Informe um valor de até 150 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max25</source>
+				<target>Informe um valor de até 25 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.between5and15</source>
+				<target>Informe um valor entre 5 e 15 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.passwordConfirm</source>
+				<target>A confirmação deve ser igual a senha</target>
+			</trans-unit>
+			
+		</body>
+	</file>
+</xliff>

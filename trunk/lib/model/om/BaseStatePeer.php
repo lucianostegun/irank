@@ -26,7 +26,7 @@ abstract class BaseStatePeer {
 	const INITIAL = 'state.INITIAL';
 
 	
-	const DESCRIPTION = 'state.DESCRIPTION';
+	const STATE_NAME = 'state.STATE_NAME';
 
 	
 	const ORDER_SEQ = 'state.ORDER_SEQ';
@@ -43,18 +43,18 @@ abstract class BaseStatePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'Initial', 'Description', 'OrderSeq', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (StatePeer::ID, StatePeer::INITIAL, StatePeer::DESCRIPTION, StatePeer::ORDER_SEQ, StatePeer::CREATED_AT, StatePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'initial', 'description', 'order_seq', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'INITIAL'=>'', 'DESCRIPTION'=>'', 'ORDER_SEQ'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'Initial', 'StateName', 'OrderSeq', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (StatePeer::ID, StatePeer::INITIAL, StatePeer::STATE_NAME, StatePeer::ORDER_SEQ, StatePeer::CREATED_AT, StatePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'initial', 'state_name', 'order_seq', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'INITIAL'=>'', 'STATE_NAME'=>'', 'ORDER_SEQ'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'Initial'=>1, 'Description'=>2, 'OrderSeq'=>3, 'CreatedAt'=>4, 'UpdatedAt'=>5, ),
-		BasePeer::TYPE_COLNAME=>array (StatePeer::ID=>0, StatePeer::INITIAL=>1, StatePeer::DESCRIPTION=>2, StatePeer::ORDER_SEQ=>3, StatePeer::CREATED_AT=>4, StatePeer::UPDATED_AT=>5, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'initial'=>1, 'description'=>2, 'order_seq'=>3, 'created_at'=>4, 'updated_at'=>5, ),
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'Initial'=>1, 'StateName'=>2, 'OrderSeq'=>3, 'CreatedAt'=>4, 'UpdatedAt'=>5, ),
+		BasePeer::TYPE_COLNAME=>array (StatePeer::ID=>0, StatePeer::INITIAL=>1, StatePeer::STATE_NAME=>2, StatePeer::ORDER_SEQ=>3, StatePeer::CREATED_AT=>4, StatePeer::UPDATED_AT=>5, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'initial'=>1, 'state_name'=>2, 'order_seq'=>3, 'created_at'=>4, 'updated_at'=>5, ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, )
 	);
 
@@ -113,7 +113,7 @@ abstract class BaseStatePeer {
 
 		$criteria->addSelectColumn(StatePeer::INITIAL);
 
-		$criteria->addSelectColumn(StatePeer::DESCRIPTION);
+		$criteria->addSelectColumn(StatePeer::STATE_NAME);
 
 		$criteria->addSelectColumn(StatePeer::ORDER_SEQ);
 

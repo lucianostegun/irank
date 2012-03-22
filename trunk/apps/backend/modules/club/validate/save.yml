@@ -1,0 +1,21 @@
+fields:
+       
+  clubName:
+    required:
+      msg:       form.error.requiredField
+      
+  cityId:
+    required:
+      msg:       [cityName] form.error.requiredField
+       
+  addressName:
+    required:
+      msg:       form.error.requiredField
+       
+  addressNumber:
+    required:
+      msg:       form.error.requiredField
+       
+  phoneNumber1:
+    required:
+      msg:       form.error.requiredField

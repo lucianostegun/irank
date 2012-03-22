@@ -29,9 +29,10 @@
 
 .eventDetails h1 {
 
-	font-size: 		18px;
 	margin: 		0px;
 	padding: 		0px;
+	line-height: 	20px;
+	font-size: 		18px;
 	font-weight: 	bold;
 	font-family: 	Verdana, Sans serif;
 	text-align: 	left;
@@ -115,7 +116,6 @@
 .eventDetailsArea .eventLiveTabContent {
 	
 	display: 		none;
-	margin: 		25px;
 	font-size: 		12px;
 	text-align: 	left;
 	text-shadow: 	white 1px 1px;	
@@ -124,4 +124,14 @@
 .eventDetailsArea .eventLiveTabContent.active {
 	
 	display: 		block;	
+}
+
+.eventDetailsArea #eventLiveInfoContent {
+	
+	margin: 		25px;
+}
+
+.eventDetailsArea #eventLiveEventsContent {
+	
+	margin: 		0px;
 }

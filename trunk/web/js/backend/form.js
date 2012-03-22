@@ -1,16 +1,20 @@
-function handleFormFieldErrorMulti( content, formIdList, prefix, alertMessage, indicatorId ){
+function showFormErrorDetails(form, field){
 	
-	for(var i=0; i < formIdList.length; i++)
-		handleFormFieldError( content, formIdList[i], prefix, alertMessage, indicatorId );
+//	var errorMessage = $(form+ucfirst(field)+'Label').innerHTML+':</b><br/><br/>'+$(form+ucfirst(field)).title;
+	var errorMessage = $(form+ucfirst(field)+'Label').innerHTML+':\n'+$(form+ucfirst(field)).title;
+//	errorMessage = errorMessage.replace(/\n/g, '<br/><br/>');
+
+	alert(errorMessage);
+//	$('formErrorDetails'+ucfirst(form)).innerHTML = '<h1 class="formDetailsTitle">Detalhes do erro</h1><b>'+errorMessage;
 }
 
-function handleFormFieldError( content, formId, prefix, alertMessage, indicatorId ){
+function handleFormFieldError( content, formId, prefix, alertMessage, indicatorId, handleFunc ){
 
 	clearFormFieldErrors( formId );
 
 	hideIndicator( indicatorId );
 	hideIndicator( formId );
-	
+
 	var info = content.split(';');
 
 	if( info[0]=='formError' ){
@@ -61,26 +65,53 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 				className     = className.replace(/Error/g, '');
 				className    += 'Error';
 
+				formFieldMessage = formFieldMessage.replace(/\\n/g, ' '+chr(10));
+				
+				if( formFieldMessage=='nullError' )
+					continue;
+
 				objectForm.className = className;
 				objectForm.title     = formFieldMessage;
+				
+				showDiv(formFieldId+'Error');
 			}
 		}
 
 		if(alertMessage)
 			alert('Ocorreu um erro ao salvar as informações!\nVerifique e corrija os campos em destaque e tente novamente');
 		else
-			showFormStatusError(formId);
+			showFormStatusError(prefix);
 	}else{
-
-		if( isDebug() )
-			debug( content );
+		
+		if( handleFunc )
+			return handleFunc(content);
+		
+		if( errorMessage=parseMessage(content) )
+			alert(errorMessage);
+		else
+			if( isDebug() )
+				debug( content );
 	}	
+}
+
+function addFormStatusError(fieldId, formFieldMessage){
+	
+	var objectForm = $(fieldId);
+	
+	var className = 'formField';
+	className     = className.replace(/Error/g, '');
+	className    += 'Error';
+
+	formFieldMessage = formFieldMessage.replace(/\\n/g, ' '+chr(10));
+	
+	objectForm.className = className;
+	objectForm.title     = formFieldMessage;
 }
 
 function showFormStatusError(formId){
 	
 	var divError = $('formStatusError'+ucfirst(formId)+'Div')
-	
+
 	if( divError==null )
 		formId = false;
 	
@@ -88,28 +119,13 @@ function showFormStatusError(formId){
 	
 	if( !formId ){
 		
-		hideDiv('formStatusSuccessDiv');
-		showDiv('formStatusErrorDiv');
-		hideDiv('actionDescriptionDiv');
-		
-		toggleToolbar('red');
+		showDiv('mainFormError');
+		hideFormStatusSuccess();
+		$('mainFormFooter').addClassName('error');
 	}else{
 	
-		var buttonBar = $('buttonBar'+ucfirst(formId));
-
-		if( /^[a-zA-Z]*Window(Error)?$/.test(buttonBar.className) )
-			buttonBar.className = 'buttonBarWindowError';
-		else
-			buttonBar.className = 'buttonBarFormError';
-		
 		hideDiv('formStatusSuccess'+ucfirst(formId)+'Div');
 		showDiv('formStatusError'+ucfirst(formId)+'Div');
-		
-		try{
-			
-			tabId = formId.replace('Form', '');
-			tabBarMainObj.setCustomStyle(tabId, "red", "red", "font-weight: bold; font-style: italic");
-		}catch( error ){}
 	}
 }
 
@@ -117,17 +133,11 @@ function hideFormStatusError(formId){
 	
 	if( !formId ){
 
-		hideDiv('formStatusErrorDiv');
-		showDiv('actionDescriptionDiv');
-		toggleToolbar();
+		hideDiv('mainFormError');
+		$('mainFormFooter').removeClassName('error');
 	}else{
-	
-		var buttonBar = $('buttonBar'+ucfirst(formId));
 		
-		if( buttonBar!=null)
-			buttonBar.className = buttonBar.className.replace('Error', '');
-		
-	hideDiv('formStatusError'+ucfirst(formId)+'Div');
+		hideDiv('formStatusError'+ucfirst(formId)+'Div');
 	}
 }
 
@@ -138,19 +148,16 @@ function clearFormFieldErrors( formId ){
 	if( !formId || $(formId)==null )
 		return;
 	
-	try{
-		
-		tabId = formId.replace('Form', '');
-		tabBarMainObj.setCustomStyle(tabId, "black", "black", "");
-	}catch( error ){}
-
 	var form = $( formId );
+	
 	for(i=0; i < form.length; i++){
 		
 		if( form[i].className=='formFieldError' ){
 			
 			form[i].className = '';
 			form[i].title = '';
+			
+			hideDiv(form[i].id+'Error');
 		}
 	}
 	
@@ -179,15 +186,11 @@ function showFormStatusSuccess(formId){
 	if( !formId ){
 
 		hideIndicator();
-		hideDiv('formStatusErrorDiv');
-		showDiv('formStatusSuccessDiv');
-		hideDiv('actionDescriptionDiv');
-		toggleToolbar('blue');
+		showDiv('mainFormSuccess');
+		hideFormStatusError();
+		$('mainFormFooter').addClassName('success');
 	}else{
 	
-		if( $('buttonBar'+ucfirst(formId))!=null )
-			$('buttonBar'+ucfirst(formId)).className = 'buttonBarFormSuccess';
-		
 		clearFormFieldErrors( formId );
 		
 		hideIndicator(formId);
@@ -220,18 +223,9 @@ function hideFormStatusSuccess(formId){
 	
 	if( !formId ){
 		
-		hideDiv('formStatusSuccessDiv');
-		if( isVisible('formStatusErrorDiv') )
-			return;
-		showDiv('actionDescriptionDiv');
-		toggleToolbar();
+		hideDiv('mainFormSuccess');
+		$('mainFormFooter').removeClassName('success');
 	}else{
-		var buttonBar = $('buttonBar'+ucfirst(formId));
-		
-		if( /^[a-zA-Z]*Window$/.test(buttonBar.className) )
-			buttonBar.className = 'buttonBarWindow';
-		else
-			buttonBar.className = 'buttonBarForm';
 		
 		hideDiv('formStatusSuccess'+ucfirst(formId)+'Div');
 	}
@@ -258,51 +252,6 @@ function checkButton( buttonId ){
 	return !disabled;
 }
 
-function enableButton( buttonId ){
-
-	buttonId = ucfirst(buttonId);
-	
-	if( $('button'+buttonId)!=null ){
-		
-		$('button'+buttonId).className = 'button';
-		$('button'+buttonId).disabled  = false;
-	}
-	
-	image = $(buttonId+'Image');
-	if( image!=null )
-		image.src = image.src.replace('/disabled', '');
-}
-
-function disableButton( buttonId ){
-	
-	buttonId = ucfirst(buttonId);
-	
-	if( $('button'+buttonId)!=null ){
-		
-		$('button'+buttonId).className = 'buttonDisabled';
-		$('button'+buttonId).disabled  = false;
-	}
-
-	image = $(buttonId+'Image');
-	if( image!=null ){
-		
-		image.src = image.src.replace(/\/disabled/g, '');
-		image.src = image.src.replace('/button/', '/button/disabled/');
-	}
-}
-
-function showButton( buttonId ){
-
-	buttonId = ucfirst(buttonId);
-	showDiv('button'+buttonId);
-}
-
-function hideButton( buttonId ){
-	
-	buttonId = ucfirst(buttonId);
-	hideDiv('button'+buttonId);
-}
-
 function checkboxReadOnly( checkboxObj ){
 
 	if( isReadOnly() )
@@ -319,12 +268,11 @@ function hideHelpDescriptions(){
 		hideDiv(helpList[i].id);
 }
 
-function showFormHelp( fieldName, event ){
+function showFormHelp( fieldName ){
 
-	helpDiv = $(fieldName+'HelpDescription');
+	helpMessage = $(fieldName+'Help').title;
 
-	showDiv('helpPanelDiv');
-	$('helpPanelDiv').innerHTML = helpDiv.innerHTML;
+	alert(helpMessage);
 }
 
 function goToField( value, length, fieldId, event ){
@@ -379,4 +327,17 @@ function parseError( message ){
 		return '\n'+message.replace('!', '');
 	
 	return '';
+}
+
+function handleSubmitEnter(evt, executeFunction){
+	
+	var obj;
+    
+    if( navigator.appName.indexOf('Netscape') != -1 )
+    	obj = evt.target;
+    else
+    	obj = evt.srcElement;
+    
+	if( evt.keyCode==13 )
+		executeFunction();
 }

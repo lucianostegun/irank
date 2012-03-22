@@ -38,7 +38,7 @@ class CityMapBuilder {
 
 		$tMap->addForeignKey('STATE_ID', 'StateId', 'int', CreoleTypes::INTEGER, 'state', 'ID', false, null);
 
-		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('CITY_NAME', 'CityName', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ORDER_SEQ', 'OrderSeq', 'int', CreoleTypes::INTEGER, false, null);
 

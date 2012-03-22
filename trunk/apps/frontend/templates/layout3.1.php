@@ -9,7 +9,8 @@ include_title();
 
 $culture = 'pt_BR';
 
-$isAuthenticated = MyTools::isAuthenticated();
+$hasCredentials  = MyTools::hasCredential('iRankSite');
+$isAuthenticated = (MyTools::isAuthenticated() && $hasCredentials);
 $innerObj = (isset($innerObj)?$innerObj:null);
 
 $moduleName = $sf_context->getModuleName();

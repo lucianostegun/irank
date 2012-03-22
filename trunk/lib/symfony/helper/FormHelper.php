@@ -306,7 +306,7 @@ function select_language_tag($name, $selected = null, $options = array())
 function input_tag($name, $value = null, $options = array())
 {
   
-  $options['autocomplete'] = 'off';
+  $options['autocomplete'] = (array_key_exists('autocomplete', $options)?$options['autocomplete']:'off');
   return tag('input', array_merge(array('type' => 'text', 'name' => $name, 'id' => get_id_from_name($name, $value), 'value' => $value), _convert_options($options)));
 }
 

@@ -10,6 +10,35 @@
 class Club extends BaseClub
 {
 	
+	public function quickSave($request){
+		
+		$clubName       = $request->getParameter('clubName');
+		$cityId         = $request->getParameter('cityId');
+		$addressName    = $request->getParameter('addressName');
+		$addressNumber  = $request->getParameter('addressNumber');
+		$addressQuarter = $request->getParameter('addressQuarter');
+		$clubSite       = $request->getParameter('clubSite');
+		$mapsLink       = $request->getParameter('mapsLink');
+		$phoneNumber1   = $request->getParameter('phoneNumber1');
+		$phoneNumber2   = $request->getParameter('phoneNumber2');
+		$phoneNumber3   = $request->getParameter('phoneNumber3');
+		
+		$this->setClubName($clubName);
+		$this->setCityID($cityId);
+		$this->setAddressName($addressName);
+		$this->setAddressNumber($addressNumber);
+		$this->setAddressQuarter($addressQuarter);
+		$this->setClubSite(($clubSite?$clubSite:null));
+		$this->setMapsLink(($mapsLink?$mapsLink:null));
+		$this->setPhoneNumber1($phoneNumber1);
+		$this->setPhoneNumber2(($phoneNumber2?$phoneNumber2:null));
+		$this->setPhoneNumber3(($phoneNumber3?$phoneNumber3:null));
+		$this->setEnabled(true);
+		$this->setVisible(true);
+		$this->setDeleted(false);
+		$this->save();
+	}
+	
 	public function toString(){
 		
 		return $this->getClubName();
@@ -18,8 +47,24 @@ class Club extends BaseClub
 	public static function getList(){
 		
 		$criteria = new Criteria();
+		$criteria->add( ClubPeer::ENABLED, true );
+		$criteria->add( ClubPeer::VISIBLE, true );
+		$criteria->add( ClubPeer::DELETED, false );
 		
 		return ClubPeer::doSelect($criteria);
+	}
+	
+	public function getLocation(){
+		
+		if( !$this->getCityId() )
+			return null;
+		
+		return $this->getCity()->getCityName().', '.$this->getCity()->getState()->getInitial();
+	}
+	
+	public function getEvents(){
+		
+		return rand(10,35);
 	}
 	
 	public function getFileNameLogo(){

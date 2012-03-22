@@ -35,8 +35,11 @@ function clearDebug(){
 function showDiv( divId, isTableCell, displayType ){
 
 	var div = $( divId );
-	if( div && div!='undefined' )
+	if( div && div!='undefined' ){
+		
 		div.style.display = (isTableCell?'table-cell':(displayType?displayType:'block'));
+		div.removeClassName('hidden');
+	}
 }
 
 function hideDiv( divId ){
@@ -343,4 +346,15 @@ function getOrdinalSufix(number){
 function changeClassName(element, className){
 	
 	element.className = className;
+}
+
+function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow, evt){
+	
+	if( evt && (evt.metaKey || evt.altKey) )
+		newWindow = true
+	
+	if( fieldName && fieldValue || newWindow )
+		return goModule(moduleName, actionName, fieldName, fieldValue, newWindow );
+		
+	location.href = _webRoot+'/'+moduleName+'/'+actionName;
 }

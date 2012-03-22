@@ -524,7 +524,7 @@
 	<table name="state" phpName="State">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
 		<column name="initial" type="CHAR" />
-		<column name="description" type="VARCHAR" />
+		<column name="state_name" type="VARCHAR" />
 		<column name="order_seq" type="INTEGER" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -533,7 +533,7 @@
 	<table name="city" phpName="City">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
 		<column name="state_id" type="INTEGER" />
-		<column name="description" type="VARCHAR" />
+		<column name="city_name" type="VARCHAR" />
 		<column name="order_seq" type="INTEGER" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -555,6 +555,10 @@
 		<column name="phone_number_1" type="VARCHAR" />
 		<column name="phone_number_2" type="VARCHAR" />
 		<column name="phone_number_3" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="city">

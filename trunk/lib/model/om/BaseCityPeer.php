@@ -26,7 +26,7 @@ abstract class BaseCityPeer {
 	const STATE_ID = 'city.STATE_ID';
 
 	
-	const DESCRIPTION = 'city.DESCRIPTION';
+	const CITY_NAME = 'city.CITY_NAME';
 
 	
 	const ORDER_SEQ = 'city.ORDER_SEQ';
@@ -43,18 +43,18 @@ abstract class BaseCityPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'StateId', 'Description', 'OrderSeq', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (CityPeer::ID, CityPeer::STATE_ID, CityPeer::DESCRIPTION, CityPeer::ORDER_SEQ, CityPeer::CREATED_AT, CityPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'state_id', 'description', 'order_seq', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'STATE_ID'=>'', 'DESCRIPTION'=>'', 'ORDER_SEQ'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'StateId', 'CityName', 'OrderSeq', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (CityPeer::ID, CityPeer::STATE_ID, CityPeer::CITY_NAME, CityPeer::ORDER_SEQ, CityPeer::CREATED_AT, CityPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'state_id', 'city_name', 'order_seq', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'STATE_ID'=>'', 'CITY_NAME'=>'', 'ORDER_SEQ'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'StateId'=>1, 'Description'=>2, 'OrderSeq'=>3, 'CreatedAt'=>4, 'UpdatedAt'=>5, ),
-		BasePeer::TYPE_COLNAME=>array (CityPeer::ID=>0, CityPeer::STATE_ID=>1, CityPeer::DESCRIPTION=>2, CityPeer::ORDER_SEQ=>3, CityPeer::CREATED_AT=>4, CityPeer::UPDATED_AT=>5, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'state_id'=>1, 'description'=>2, 'order_seq'=>3, 'created_at'=>4, 'updated_at'=>5, ),
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'StateId'=>1, 'CityName'=>2, 'OrderSeq'=>3, 'CreatedAt'=>4, 'UpdatedAt'=>5, ),
+		BasePeer::TYPE_COLNAME=>array (CityPeer::ID=>0, CityPeer::STATE_ID=>1, CityPeer::CITY_NAME=>2, CityPeer::ORDER_SEQ=>3, CityPeer::CREATED_AT=>4, CityPeer::UPDATED_AT=>5, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'state_id'=>1, 'city_name'=>2, 'order_seq'=>3, 'created_at'=>4, 'updated_at'=>5, ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, )
 	);
 
@@ -113,7 +113,7 @@ abstract class BaseCityPeer {
 
 		$criteria->addSelectColumn(CityPeer::STATE_ID);
 
-		$criteria->addSelectColumn(CityPeer::DESCRIPTION);
+		$criteria->addSelectColumn(CityPeer::CITY_NAME);
 
 		$criteria->addSelectColumn(CityPeer::ORDER_SEQ);
 
