@@ -1,4 +1,0 @@
-all:
-
-  stylesheets:    [backend/form]
-  javascripts:    [mask, backend/form, backend/club]
