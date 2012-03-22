@@ -17,7 +17,7 @@ abstract class BaseState extends BaseObject  implements Persistent {
 
 
 	
-	protected $description;
+	protected $state_name;
 
 
 	
@@ -58,10 +58,10 @@ abstract class BaseState extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getDescription()
+	public function getStateName()
 	{
 
-		return $this->description;
+		return $this->state_name;
 	}
 
 	
@@ -144,16 +144,16 @@ abstract class BaseState extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setDescription($v)
+	public function setStateName($v)
 	{
 
 						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
-		if ($this->description !== $v) {
-			$this->description = $v;
-			$this->modifiedColumns[] = StatePeer::DESCRIPTION;
+		if ($this->state_name !== $v) {
+			$this->state_name = $v;
+			$this->modifiedColumns[] = StatePeer::STATE_NAME;
 		}
 
 	} 
@@ -214,7 +214,7 @@ abstract class BaseState extends BaseObject  implements Persistent {
 
 			$this->initial = $rs->getString($startcol + 1);
 
-			$this->description = $rs->getString($startcol + 2);
+			$this->state_name = $rs->getString($startcol + 2);
 
 			$this->order_seq = $rs->getInt($startcol + 3);
 
@@ -386,7 +386,7 @@ abstract class BaseState extends BaseObject  implements Persistent {
 				return $this->getInitial();
 				break;
 			case 2:
-				return $this->getDescription();
+				return $this->getStateName();
 				break;
 			case 3:
 				return $this->getOrderSeq();
@@ -409,7 +409,7 @@ abstract class BaseState extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getInitial(),
-			$keys[2]=>$this->getDescription(),
+			$keys[2]=>$this->getStateName(),
 			$keys[3]=>$this->getOrderSeq(),
 			$keys[4]=>$this->getCreatedAt(),
 			$keys[5]=>$this->getUpdatedAt(),
@@ -435,7 +435,7 @@ abstract class BaseState extends BaseObject  implements Persistent {
 				$this->setInitial($value);
 				break;
 			case 2:
-				$this->setDescription($value);
+				$this->setStateName($value);
 				break;
 			case 3:
 				$this->setOrderSeq($value);
@@ -455,7 +455,7 @@ abstract class BaseState extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setInitial($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
+		if (array_key_exists($keys[2], $arr)) $this->setStateName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setOrderSeq($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setUpdatedAt($arr[$keys[5]]);
@@ -468,7 +468,7 @@ abstract class BaseState extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(StatePeer::ID)) $criteria->add(StatePeer::ID, $this->id);
 		if ($this->isColumnModified(StatePeer::INITIAL)) $criteria->add(StatePeer::INITIAL, $this->initial);
-		if ($this->isColumnModified(StatePeer::DESCRIPTION)) $criteria->add(StatePeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(StatePeer::STATE_NAME)) $criteria->add(StatePeer::STATE_NAME, $this->state_name);
 		if ($this->isColumnModified(StatePeer::ORDER_SEQ)) $criteria->add(StatePeer::ORDER_SEQ, $this->order_seq);
 		if ($this->isColumnModified(StatePeer::CREATED_AT)) $criteria->add(StatePeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(StatePeer::UPDATED_AT)) $criteria->add(StatePeer::UPDATED_AT, $this->updated_at);
@@ -504,7 +504,7 @@ abstract class BaseState extends BaseObject  implements Persistent {
 
 		$copyObj->setInitial($this->initial);
 
-		$copyObj->setDescription($this->description);
+		$copyObj->setStateName($this->state_name);
 
 		$copyObj->setOrderSeq($this->order_seq);
 

@@ -38,7 +38,7 @@ class StateMapBuilder {
 
 		$tMap->addColumn('INITIAL', 'Initial', 'string', CreoleTypes::CHAR, false, null);
 
-		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('STATE_NAME', 'StateName', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ORDER_SEQ', 'OrderSeq', 'int', CreoleTypes::INTEGER, false, null);
 

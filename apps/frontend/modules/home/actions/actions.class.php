@@ -5,7 +5,8 @@ class homeActions extends sfActions
 
   public function preExecute(){
 
-	$this->isAuthenticated = $this->getUser()->isAuthenticated();
+	$hasCredentials        = MyTools::hasCredential('iRankSite');
+	$this->isAuthenticated = ($this->getUser()->isAuthenticated() && $hasCredentials);
   }
   
   public function executeIndex($request){

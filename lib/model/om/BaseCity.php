@@ -17,7 +17,7 @@ abstract class BaseCity extends BaseObject  implements Persistent {
 
 
 	
-	protected $description;
+	protected $city_name;
 
 
 	
@@ -61,10 +61,10 @@ abstract class BaseCity extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getDescription()
+	public function getCityName()
 	{
 
-		return $this->description;
+		return $this->city_name;
 	}
 
 	
@@ -151,16 +151,16 @@ abstract class BaseCity extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setDescription($v)
+	public function setCityName($v)
 	{
 
 						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
-		if ($this->description !== $v) {
-			$this->description = $v;
-			$this->modifiedColumns[] = CityPeer::DESCRIPTION;
+		if ($this->city_name !== $v) {
+			$this->city_name = $v;
+			$this->modifiedColumns[] = CityPeer::CITY_NAME;
 		}
 
 	} 
@@ -221,7 +221,7 @@ abstract class BaseCity extends BaseObject  implements Persistent {
 
 			$this->state_id = $rs->getInt($startcol + 1);
 
-			$this->description = $rs->getString($startcol + 2);
+			$this->city_name = $rs->getString($startcol + 2);
 
 			$this->order_seq = $rs->getInt($startcol + 3);
 
@@ -410,7 +410,7 @@ abstract class BaseCity extends BaseObject  implements Persistent {
 				return $this->getStateId();
 				break;
 			case 2:
-				return $this->getDescription();
+				return $this->getCityName();
 				break;
 			case 3:
 				return $this->getOrderSeq();
@@ -433,7 +433,7 @@ abstract class BaseCity extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getStateId(),
-			$keys[2]=>$this->getDescription(),
+			$keys[2]=>$this->getCityName(),
 			$keys[3]=>$this->getOrderSeq(),
 			$keys[4]=>$this->getCreatedAt(),
 			$keys[5]=>$this->getUpdatedAt(),
@@ -459,7 +459,7 @@ abstract class BaseCity extends BaseObject  implements Persistent {
 				$this->setStateId($value);
 				break;
 			case 2:
-				$this->setDescription($value);
+				$this->setCityName($value);
 				break;
 			case 3:
 				$this->setOrderSeq($value);
@@ -479,7 +479,7 @@ abstract class BaseCity extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setStateId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
+		if (array_key_exists($keys[2], $arr)) $this->setCityName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setOrderSeq($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setUpdatedAt($arr[$keys[5]]);
@@ -492,7 +492,7 @@ abstract class BaseCity extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(CityPeer::ID)) $criteria->add(CityPeer::ID, $this->id);
 		if ($this->isColumnModified(CityPeer::STATE_ID)) $criteria->add(CityPeer::STATE_ID, $this->state_id);
-		if ($this->isColumnModified(CityPeer::DESCRIPTION)) $criteria->add(CityPeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(CityPeer::CITY_NAME)) $criteria->add(CityPeer::CITY_NAME, $this->city_name);
 		if ($this->isColumnModified(CityPeer::ORDER_SEQ)) $criteria->add(CityPeer::ORDER_SEQ, $this->order_seq);
 		if ($this->isColumnModified(CityPeer::CREATED_AT)) $criteria->add(CityPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(CityPeer::UPDATED_AT)) $criteria->add(CityPeer::UPDATED_AT, $this->updated_at);
@@ -528,7 +528,7 @@ abstract class BaseCity extends BaseObject  implements Persistent {
 
 		$copyObj->setStateId($this->state_id);
 
-		$copyObj->setDescription($this->description);
+		$copyObj->setCityName($this->city_name);
 
 		$copyObj->setOrderSeq($this->order_seq);
 
