@@ -54,6 +54,8 @@ class RankingLiveMapBuilder {
 
 		$tMap->addForeignKey('GAME_STYLE_ID', 'GameStyleId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
 
+		$tMap->addForeignKey('GAME_TYPE_ID', 'GameTypeId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
+
 		$tMap->addColumn('RANKING_TAG', 'RankingTag', 'string', CreoleTypes::VARCHAR, false, 20);
 
 		$tMap->addColumn('SCORE_FORMULA', 'ScoreFormula', 'string', CreoleTypes::VARCHAR, false, 250);

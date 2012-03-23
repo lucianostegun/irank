@@ -13,7 +13,7 @@ abstract class BaseRankingLivePeer {
 	const CLASS_DEFAULT = 'lib.model.RankingLive';
 
 	
-	const NUM_COLUMNS = 19;
+	const NUM_COLUMNS = 20;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -50,6 +50,9 @@ abstract class BaseRankingLivePeer {
 	const GAME_STYLE_ID = 'ranking_live.GAME_STYLE_ID';
 
 	
+	const GAME_TYPE_ID = 'ranking_live.GAME_TYPE_ID';
+
+	
 	const RANKING_TAG = 'ranking_live.RANKING_TAG';
 
 	
@@ -82,19 +85,19 @@ abstract class BaseRankingLivePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingName', 'RankingTypeId', 'StartDate', 'FinishDate', 'IsPrivate', 'Players', 'Events', 'DefaultBuyin', 'GameStyleId', 'RankingTag', 'ScoreFormula', 'FileNameLogo', 'Enabled', 'Visible', 'Locked', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (RankingLivePeer::ID, RankingLivePeer::RANKING_NAME, RankingLivePeer::RANKING_TYPE_ID, RankingLivePeer::START_DATE, RankingLivePeer::FINISH_DATE, RankingLivePeer::IS_PRIVATE, RankingLivePeer::PLAYERS, RankingLivePeer::EVENTS, RankingLivePeer::DEFAULT_BUYIN, RankingLivePeer::GAME_STYLE_ID, RankingLivePeer::RANKING_TAG, RankingLivePeer::SCORE_FORMULA, RankingLivePeer::FILE_NAME_LOGO, RankingLivePeer::ENABLED, RankingLivePeer::VISIBLE, RankingLivePeer::LOCKED, RankingLivePeer::DELETED, RankingLivePeer::CREATED_AT, RankingLivePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_name', 'ranking_type_id', 'start_date', 'finish_date', 'is_private', 'players', 'events', 'default_buyin', 'game_style_id', 'ranking_tag', 'score_formula', 'file_name_logo', 'enabled', 'visible', 'locked', 'deleted', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_NAME'=>'', 'RANKING_TYPE_ID'=>'', 'START_DATE'=>'', 'FINISH_DATE'=>'', 'IS_PRIVATE'=>'', 'PLAYERS'=>'', 'EVENTS'=>'', 'DEFAULT_BUYIN'=>'', 'GAME_STYLE_ID'=>'', 'RANKING_TAG'=>'', 'SCORE_FORMULA'=>'', 'FILE_NAME_LOGO'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'LOCKED'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingName', 'RankingTypeId', 'StartDate', 'FinishDate', 'IsPrivate', 'Players', 'Events', 'DefaultBuyin', 'GameStyleId', 'GameTypeId', 'RankingTag', 'ScoreFormula', 'FileNameLogo', 'Enabled', 'Visible', 'Locked', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (RankingLivePeer::ID, RankingLivePeer::RANKING_NAME, RankingLivePeer::RANKING_TYPE_ID, RankingLivePeer::START_DATE, RankingLivePeer::FINISH_DATE, RankingLivePeer::IS_PRIVATE, RankingLivePeer::PLAYERS, RankingLivePeer::EVENTS, RankingLivePeer::DEFAULT_BUYIN, RankingLivePeer::GAME_STYLE_ID, RankingLivePeer::GAME_TYPE_ID, RankingLivePeer::RANKING_TAG, RankingLivePeer::SCORE_FORMULA, RankingLivePeer::FILE_NAME_LOGO, RankingLivePeer::ENABLED, RankingLivePeer::VISIBLE, RankingLivePeer::LOCKED, RankingLivePeer::DELETED, RankingLivePeer::CREATED_AT, RankingLivePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_name', 'ranking_type_id', 'start_date', 'finish_date', 'is_private', 'players', 'events', 'default_buyin', 'game_style_id', 'game_type_id', 'ranking_tag', 'score_formula', 'file_name_logo', 'enabled', 'visible', 'locked', 'deleted', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_NAME'=>'', 'RANKING_TYPE_ID'=>'', 'START_DATE'=>'', 'FINISH_DATE'=>'', 'IS_PRIVATE'=>'', 'PLAYERS'=>'', 'EVENTS'=>'', 'DEFAULT_BUYIN'=>'', 'GAME_STYLE_ID'=>'', 'GAME_TYPE_ID'=>'', 'RANKING_TAG'=>'', 'SCORE_FORMULA'=>'', 'FILE_NAME_LOGO'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'LOCKED'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingName'=>1, 'RankingTypeId'=>2, 'StartDate'=>3, 'FinishDate'=>4, 'IsPrivate'=>5, 'Players'=>6, 'Events'=>7, 'DefaultBuyin'=>8, 'GameStyleId'=>9, 'RankingTag'=>10, 'ScoreFormula'=>11, 'FileNameLogo'=>12, 'Enabled'=>13, 'Visible'=>14, 'Locked'=>15, 'Deleted'=>16, 'CreatedAt'=>17, 'UpdatedAt'=>18, ),
-		BasePeer::TYPE_COLNAME=>array (RankingLivePeer::ID=>0, RankingLivePeer::RANKING_NAME=>1, RankingLivePeer::RANKING_TYPE_ID=>2, RankingLivePeer::START_DATE=>3, RankingLivePeer::FINISH_DATE=>4, RankingLivePeer::IS_PRIVATE=>5, RankingLivePeer::PLAYERS=>6, RankingLivePeer::EVENTS=>7, RankingLivePeer::DEFAULT_BUYIN=>8, RankingLivePeer::GAME_STYLE_ID=>9, RankingLivePeer::RANKING_TAG=>10, RankingLivePeer::SCORE_FORMULA=>11, RankingLivePeer::FILE_NAME_LOGO=>12, RankingLivePeer::ENABLED=>13, RankingLivePeer::VISIBLE=>14, RankingLivePeer::LOCKED=>15, RankingLivePeer::DELETED=>16, RankingLivePeer::CREATED_AT=>17, RankingLivePeer::UPDATED_AT=>18, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_name'=>1, 'ranking_type_id'=>2, 'start_date'=>3, 'finish_date'=>4, 'is_private'=>5, 'players'=>6, 'events'=>7, 'default_buyin'=>8, 'game_style_id'=>9, 'ranking_tag'=>10, 'score_formula'=>11, 'file_name_logo'=>12, 'enabled'=>13, 'visible'=>14, 'locked'=>15, 'deleted'=>16, 'created_at'=>17, 'updated_at'=>18, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingName'=>1, 'RankingTypeId'=>2, 'StartDate'=>3, 'FinishDate'=>4, 'IsPrivate'=>5, 'Players'=>6, 'Events'=>7, 'DefaultBuyin'=>8, 'GameStyleId'=>9, 'GameTypeId'=>10, 'RankingTag'=>11, 'ScoreFormula'=>12, 'FileNameLogo'=>13, 'Enabled'=>14, 'Visible'=>15, 'Locked'=>16, 'Deleted'=>17, 'CreatedAt'=>18, 'UpdatedAt'=>19, ),
+		BasePeer::TYPE_COLNAME=>array (RankingLivePeer::ID=>0, RankingLivePeer::RANKING_NAME=>1, RankingLivePeer::RANKING_TYPE_ID=>2, RankingLivePeer::START_DATE=>3, RankingLivePeer::FINISH_DATE=>4, RankingLivePeer::IS_PRIVATE=>5, RankingLivePeer::PLAYERS=>6, RankingLivePeer::EVENTS=>7, RankingLivePeer::DEFAULT_BUYIN=>8, RankingLivePeer::GAME_STYLE_ID=>9, RankingLivePeer::GAME_TYPE_ID=>10, RankingLivePeer::RANKING_TAG=>11, RankingLivePeer::SCORE_FORMULA=>12, RankingLivePeer::FILE_NAME_LOGO=>13, RankingLivePeer::ENABLED=>14, RankingLivePeer::VISIBLE=>15, RankingLivePeer::LOCKED=>16, RankingLivePeer::DELETED=>17, RankingLivePeer::CREATED_AT=>18, RankingLivePeer::UPDATED_AT=>19, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_name'=>1, 'ranking_type_id'=>2, 'start_date'=>3, 'finish_date'=>4, 'is_private'=>5, 'players'=>6, 'events'=>7, 'default_buyin'=>8, 'game_style_id'=>9, 'game_type_id'=>10, 'ranking_tag'=>11, 'score_formula'=>12, 'file_name_logo'=>13, 'enabled'=>14, 'visible'=>15, 'locked'=>16, 'deleted'=>17, 'created_at'=>18, 'updated_at'=>19, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
@@ -167,6 +170,8 @@ abstract class BaseRankingLivePeer {
 		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_BUYIN);
 
 		$criteria->addSelectColumn(RankingLivePeer::GAME_STYLE_ID);
+
+		$criteria->addSelectColumn(RankingLivePeer::GAME_TYPE_ID);
 
 		$criteria->addSelectColumn(RankingLivePeer::RANKING_TAG);
 
@@ -321,6 +326,34 @@ abstract class BaseRankingLivePeer {
 
 
 	
+	public static function doCountJoinVirtualTableRelatedByGameTypeId(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(RankingLivePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(RankingLivePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(RankingLivePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
+
+		$rs = RankingLivePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
 	public static function doSelectJoinVirtualTableRelatedByRankingTypeId(Criteria $c, $con = null)
 	{
 		$c = clone $c;
@@ -415,6 +448,53 @@ abstract class BaseRankingLivePeer {
 
 
 	
+	public static function doSelectJoinVirtualTableRelatedByGameTypeId(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		RankingLivePeer::addSelectColumns($c);
+		$startcol = (RankingLivePeer::NUM_COLUMNS - RankingLivePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		VirtualTablePeer::addSelectColumns($c);
+
+		$c->addJoin(RankingLivePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = RankingLivePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = VirtualTablePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getVirtualTableRelatedByGameTypeId(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addRankingLiveRelatedByGameTypeId($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initRankingLiveListRelatedByGameTypeId();
+				$obj2->addRankingLiveRelatedByGameTypeId($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
 	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
 	{
 		$criteria = clone $criteria;
@@ -434,6 +514,8 @@ abstract class BaseRankingLivePeer {
 		$criteria->addJoin(RankingLivePeer::RANKING_TYPE_ID, VirtualTablePeer::ID);
 
 		$criteria->addJoin(RankingLivePeer::GAME_STYLE_ID, VirtualTablePeer::ID);
+
+		$criteria->addJoin(RankingLivePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
 
 		$rs = RankingLivePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -462,9 +544,14 @@ abstract class BaseRankingLivePeer {
 		VirtualTablePeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + VirtualTablePeer::NUM_COLUMNS;
 
+		VirtualTablePeer::addSelectColumns($c);
+		$startcol5 = $startcol4 + VirtualTablePeer::NUM_COLUMNS;
+
 		$c->addJoin(RankingLivePeer::RANKING_TYPE_ID, VirtualTablePeer::ID);
 
 		$c->addJoin(RankingLivePeer::GAME_STYLE_ID, VirtualTablePeer::ID);
+
+		$c->addJoin(RankingLivePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -522,6 +609,29 @@ abstract class BaseRankingLivePeer {
 			if ($newObject) {
 				$obj3->initRankingLiveListRelatedByGameStyleId();
 				$obj3->addRankingLiveRelatedByGameStyleId($obj1);
+			}
+
+
+					
+			$omClass = VirtualTablePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj4 = new $cls();
+			$obj4->hydrate($rs, $startcol4);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj4 = $temp_obj1->getVirtualTableRelatedByGameTypeId(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj4->addRankingLiveRelatedByGameTypeId($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj4->initRankingLiveListRelatedByGameTypeId();
+				$obj4->addRankingLiveRelatedByGameTypeId($obj1);
 			}
 
 			$results[] = $obj1;
@@ -583,6 +693,32 @@ abstract class BaseRankingLivePeer {
 
 
 	
+	public static function doCountJoinAllExceptVirtualTableRelatedByGameTypeId(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(RankingLivePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(RankingLivePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$rs = RankingLivePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
 	public static function doSelectJoinAllExceptVirtualTableRelatedByRankingTypeId(Criteria $c, $con = null)
 	{
 		$c = clone $c;
@@ -614,6 +750,36 @@ abstract class BaseRankingLivePeer {
 
 	
 	public static function doSelectJoinAllExceptVirtualTableRelatedByGameStyleId(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		RankingLivePeer::addSelectColumns($c);
+		$startcol2 = (RankingLivePeer::NUM_COLUMNS - RankingLivePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = RankingLivePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptVirtualTableRelatedByGameTypeId(Criteria $c, $con = null)
 	{
 		$c = clone $c;
 

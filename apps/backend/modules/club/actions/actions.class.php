@@ -53,4 +53,34 @@ class clubActions extends sfActions
     
     exit;
   }
+
+  public function executeDelete($request){
+    
+    if( empty($this->clubId) )
+    	Util::forceError('!Nenhum registro foi selecionado!');
+    
+    try{
+    	
+	    $criteria = new Criteria();
+	    $criteria->add( ClubPeer::ID, $this->clubId, Criteria::IN );
+	    $criteria->add( ClubPeer::VISIBLE, true );
+	    $criteria->add( ClubPeer::ENABLED, true );
+	    $criteria->add( ClubPeer::DELETED, false );
+    	$clubObjList = ClubPeer::doSelect($criteria);
+    	
+    	$clubIdList = array();
+    	foreach($clubObjList as $clubObj){
+    		
+    		$clubObj->delete();
+	    	$clubIdList[] = $clubObj->getId();
+    	}
+    	
+    	echo implode(',', $clubIdList);
+    }catch(Exception $e){
+    	
+    	Util::forceError($e->getMessage());
+    }
+    
+    exit;
+  }
 }

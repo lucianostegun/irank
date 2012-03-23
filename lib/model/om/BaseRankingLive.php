@@ -49,6 +49,10 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 
 	
+	protected $game_type_id;
+
+
+	
 	protected $ranking_tag;
 
 
@@ -88,6 +92,9 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 	
 	protected $aVirtualTableRelatedByGameStyleId;
+
+	
+	protected $aVirtualTableRelatedByGameTypeId;
 
 	
 	protected $collEventLiveList;
@@ -199,6 +206,13 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	{
 
 		return $this->game_style_id;
+	}
+
+	
+	public function getGameTypeId()
+	{
+
+		return $this->game_type_id;
 	}
 
 	
@@ -441,6 +455,24 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setGameTypeId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->game_type_id !== $v) {
+			$this->game_type_id = $v;
+			$this->modifiedColumns[] = RankingLivePeer::GAME_TYPE_ID;
+		}
+
+		if ($this->aVirtualTableRelatedByGameTypeId !== null && $this->aVirtualTableRelatedByGameTypeId->getId() !== $v) {
+			$this->aVirtualTableRelatedByGameTypeId = null;
+		}
+
+	} 
+	
 	public function setRankingTag($v)
 	{
 
@@ -581,29 +613,31 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 			$this->game_style_id = $rs->getInt($startcol + 9);
 
-			$this->ranking_tag = $rs->getString($startcol + 10);
+			$this->game_type_id = $rs->getInt($startcol + 10);
 
-			$this->score_formula = $rs->getString($startcol + 11);
+			$this->ranking_tag = $rs->getString($startcol + 11);
 
-			$this->file_name_logo = $rs->getString($startcol + 12);
+			$this->score_formula = $rs->getString($startcol + 12);
 
-			$this->enabled = $rs->getBoolean($startcol + 13);
+			$this->file_name_logo = $rs->getString($startcol + 13);
 
-			$this->visible = $rs->getBoolean($startcol + 14);
+			$this->enabled = $rs->getBoolean($startcol + 14);
 
-			$this->locked = $rs->getBoolean($startcol + 15);
+			$this->visible = $rs->getBoolean($startcol + 15);
 
-			$this->deleted = $rs->getBoolean($startcol + 16);
+			$this->locked = $rs->getBoolean($startcol + 16);
 
-			$this->created_at = $rs->getTimestamp($startcol + 17, null);
+			$this->deleted = $rs->getBoolean($startcol + 17);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 18, null);
+			$this->created_at = $rs->getTimestamp($startcol + 18, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 19, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 19; 
+						return $startcol + 20; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating RankingLive object", $e);
 		}
@@ -685,6 +719,13 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				$this->setVirtualTableRelatedByGameStyleId($this->aVirtualTableRelatedByGameStyleId);
 			}
 
+			if ($this->aVirtualTableRelatedByGameTypeId !== null) {
+				if ($this->aVirtualTableRelatedByGameTypeId->isModified() || $this->aVirtualTableRelatedByGameTypeId->getCurrentVirtualTableI18n()->isModified()) {
+					$affectedRows += $this->aVirtualTableRelatedByGameTypeId->save($con);
+				}
+				$this->setVirtualTableRelatedByGameTypeId($this->aVirtualTableRelatedByGameTypeId);
+			}
+
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
@@ -754,6 +795,12 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aVirtualTableRelatedByGameTypeId !== null) {
+				if (!$this->aVirtualTableRelatedByGameTypeId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aVirtualTableRelatedByGameTypeId->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = RankingLivePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -817,30 +864,33 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				return $this->getGameStyleId();
 				break;
 			case 10:
-				return $this->getRankingTag();
+				return $this->getGameTypeId();
 				break;
 			case 11:
-				return $this->getScoreFormula();
+				return $this->getRankingTag();
 				break;
 			case 12:
-				return $this->getFileNameLogo();
+				return $this->getScoreFormula();
 				break;
 			case 13:
-				return $this->getEnabled();
+				return $this->getFileNameLogo();
 				break;
 			case 14:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 15:
-				return $this->getLocked();
+				return $this->getVisible();
 				break;
 			case 16:
-				return $this->getDeleted();
+				return $this->getLocked();
 				break;
 			case 17:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 18:
+				return $this->getCreatedAt();
+				break;
+			case 19:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -863,15 +913,16 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 			$keys[7]=>$this->getEvents(),
 			$keys[8]=>$this->getDefaultBuyin(),
 			$keys[9]=>$this->getGameStyleId(),
-			$keys[10]=>$this->getRankingTag(),
-			$keys[11]=>$this->getScoreFormula(),
-			$keys[12]=>$this->getFileNameLogo(),
-			$keys[13]=>$this->getEnabled(),
-			$keys[14]=>$this->getVisible(),
-			$keys[15]=>$this->getLocked(),
-			$keys[16]=>$this->getDeleted(),
-			$keys[17]=>$this->getCreatedAt(),
-			$keys[18]=>$this->getUpdatedAt(),
+			$keys[10]=>$this->getGameTypeId(),
+			$keys[11]=>$this->getRankingTag(),
+			$keys[12]=>$this->getScoreFormula(),
+			$keys[13]=>$this->getFileNameLogo(),
+			$keys[14]=>$this->getEnabled(),
+			$keys[15]=>$this->getVisible(),
+			$keys[16]=>$this->getLocked(),
+			$keys[17]=>$this->getDeleted(),
+			$keys[18]=>$this->getCreatedAt(),
+			$keys[19]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -918,30 +969,33 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				$this->setGameStyleId($value);
 				break;
 			case 10:
-				$this->setRankingTag($value);
+				$this->setGameTypeId($value);
 				break;
 			case 11:
-				$this->setScoreFormula($value);
+				$this->setRankingTag($value);
 				break;
 			case 12:
-				$this->setFileNameLogo($value);
+				$this->setScoreFormula($value);
 				break;
 			case 13:
-				$this->setEnabled($value);
+				$this->setFileNameLogo($value);
 				break;
 			case 14:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 15:
-				$this->setLocked($value);
+				$this->setVisible($value);
 				break;
 			case 16:
-				$this->setDeleted($value);
+				$this->setLocked($value);
 				break;
 			case 17:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 18:
+				$this->setCreatedAt($value);
+				break;
+			case 19:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -961,15 +1015,16 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[7], $arr)) $this->setEvents($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setDefaultBuyin($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setGameStyleId($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setRankingTag($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setScoreFormula($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setFileNameLogo($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setEnabled($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setVisible($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setLocked($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setDeleted($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setCreatedAt($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setUpdatedAt($arr[$keys[18]]);
+		if (array_key_exists($keys[10], $arr)) $this->setGameTypeId($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setRankingTag($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setScoreFormula($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setFileNameLogo($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setEnabled($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setVisible($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setLocked($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setDeleted($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setCreatedAt($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setUpdatedAt($arr[$keys[19]]);
 	}
 
 	
@@ -987,6 +1042,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RankingLivePeer::EVENTS)) $criteria->add(RankingLivePeer::EVENTS, $this->events);
 		if ($this->isColumnModified(RankingLivePeer::DEFAULT_BUYIN)) $criteria->add(RankingLivePeer::DEFAULT_BUYIN, $this->default_buyin);
 		if ($this->isColumnModified(RankingLivePeer::GAME_STYLE_ID)) $criteria->add(RankingLivePeer::GAME_STYLE_ID, $this->game_style_id);
+		if ($this->isColumnModified(RankingLivePeer::GAME_TYPE_ID)) $criteria->add(RankingLivePeer::GAME_TYPE_ID, $this->game_type_id);
 		if ($this->isColumnModified(RankingLivePeer::RANKING_TAG)) $criteria->add(RankingLivePeer::RANKING_TAG, $this->ranking_tag);
 		if ($this->isColumnModified(RankingLivePeer::SCORE_FORMULA)) $criteria->add(RankingLivePeer::SCORE_FORMULA, $this->score_formula);
 		if ($this->isColumnModified(RankingLivePeer::FILE_NAME_LOGO)) $criteria->add(RankingLivePeer::FILE_NAME_LOGO, $this->file_name_logo);
@@ -1043,6 +1099,8 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 		$copyObj->setDefaultBuyin($this->default_buyin);
 
 		$copyObj->setGameStyleId($this->game_style_id);
+
+		$copyObj->setGameTypeId($this->game_type_id);
 
 		$copyObj->setRankingTag($this->ranking_tag);
 
@@ -1151,6 +1209,35 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aVirtualTableRelatedByGameStyleId;
+	}
+
+	
+	public function setVirtualTableRelatedByGameTypeId($v)
+	{
+
+
+		if ($v === null) {
+			$this->setGameTypeId(NULL);
+		} else {
+			$this->setGameTypeId($v->getId());
+		}
+
+
+		$this->aVirtualTableRelatedByGameTypeId = $v;
+	}
+
+
+	
+	public function getVirtualTableRelatedByGameTypeId($con = null)
+	{
+		if ($this->aVirtualTableRelatedByGameTypeId === null && ($this->game_type_id !== null)) {
+						include_once 'lib/model/om/BaseVirtualTablePeer.php';
+
+			$this->aVirtualTableRelatedByGameTypeId = VirtualTablePeer::retrieveByPK($this->game_type_id, $con);
+
+			
+		}
+		return $this->aVirtualTableRelatedByGameTypeId;
 	}
 
 	

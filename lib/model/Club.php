@@ -10,6 +10,13 @@
 class Club extends BaseClub
 {
 	
+	public function delete($con=null){
+		
+		$this->setVisible(false);
+		$this->setDeleted(true);
+		$this->save();
+	}
+	
 	public function quickSave($request){
 		
 		$clubName       = $request->getParameter('clubName');
@@ -24,7 +31,7 @@ class Club extends BaseClub
 		$phoneNumber3   = $request->getParameter('phoneNumber3');
 		
 		$this->setClubName($clubName);
-		$this->setCityID($cityId);
+		$this->setCityId($cityId);
 		$this->setAddressName($addressName);
 		$this->setAddressNumber($addressNumber);
 		$this->setAddressQuarter($addressQuarter);

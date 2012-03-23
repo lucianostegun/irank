@@ -577,6 +577,7 @@
 		<column name="events" type="INTEGER" default="0"/>
 		<column name="default_buyin" type="NUMERIC" size="10" scale="2" default="0"/>
 		<column name="game_style_id" type="INTEGER"/>
+		<column name="game_type_id" type="INTEGER"/>
 		<column name="ranking_tag" type="VARCHAR" size="20"/>
 		<column name="score_formula" type="VARCHAR" size="250"/>
 		<column name="file_name_logo" type="VARCHAR" size="250"/>
@@ -586,11 +587,14 @@
 		<column name="deleted" type="BOOLEAN" default="false"/>
 		<column name="created_at" type="TIMESTAMP"/>
 		<column name="updated_at" type="TIMESTAMP"/>
-		<foreign-key foreignTable="virtual_table" onDelete="" onUpdate="">
+		<foreign-key foreignTable="virtual_table">
 			<reference local="ranking_type_id" foreign="id"/>
 		</foreign-key>
-		<foreign-key foreignTable="virtual_table" onDelete="" onUpdate="">
+		<foreign-key foreignTable="virtual_table">
 			<reference local="game_style_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="virtual_table">
+			<reference local="game_type_id" foreign="id"/>
 		</foreign-key>
 	</table>
   
@@ -612,10 +616,10 @@
 		<column name="allowed_addons" type="INTEGER"/>
 		<column name="created_at" type="TIMESTAMP"/>
 		<column name="updated_at" type="TIMESTAMP"/>
-		<foreign-key foreignTable="ranking_live" onDelete="" onUpdate="">
+		<foreign-key foreignTable="ranking_live">
 			<reference local="ranking_live_id" foreign="id"/>
 		</foreign-key>
-		<foreign-key foreignTable="club" onDelete="" onUpdate="">
+		<foreign-key foreignTable="club">
 			<reference local="club_id" foreign="id"/>
 		</foreign-key>
 	</table>

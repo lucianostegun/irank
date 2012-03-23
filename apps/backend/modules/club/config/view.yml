@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    [backend/form]
-  javascripts:    [mask, backend/form, backend/club]
+  javascripts:    [mask, backend/form, backend/club, backend/paginator, backend/record]

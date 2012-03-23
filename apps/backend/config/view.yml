@@ -11,7 +11,7 @@ default:
 
   stylesheets:    [backend/layout]
 
-  javascripts:    [backend/main, /sf/prototype/js/prototype, backend/jquery-1.5.2.min.js, backend/hideshow, backend/jquery.tablesorter.min.js, backend/jquery.equalHeight.js, util, record, /backend.php/home/javascript/debug/<?php echo Util::isDebug(true) ?>/js, phpEquivalents]
+  javascripts:    [backend/main, /sf/prototype/js/prototype, backend/jquery-1.5.2.min.js, backend/hideshow, backend/jquery.tablesorter.min.js, backend/jquery.equalHeight.js, util, record, /backend.php/home/javascript/debug/<?php echo Util::isDebug(true) ?>/js, phpEquivalents, backend/util]
 
   has_layout:     on
   layout:         layout
