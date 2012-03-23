@@ -626,10 +626,11 @@ function input_date_range_tag($name, $value, $options = array())
  */
 function input_date_tag($name, $value = null, $options = array())
 {
-  $options['rich'] = true;
-  $options['format'] = 'dd/MM/Y';
-  $options['onkeyup'] = 'maskDate(event)';
+  $options['rich']         = true;
+  $options['format']       = 'dd/MM/Y';
+  $options['onkeyup']      = 'maskDate(event)';
   $options['autocomplete'] = 'off';
+  $options['maxlength']    = 10;
   $options = _parse_attributes($options);
 
   $context = sfContext::getInstance();
@@ -751,9 +752,16 @@ function input_date_tag($name, $value = null, $options = array())
   }
   $html = input_tag($name, $value, $options);
 
+  $appName = Util::getApp();
+
   if ($calendar_button_type == 'img')
   {
-    $html .= image_tag($calendar_button, array('id'=>$id_calendarButton, 'style'=>'cursor: pointer; vertical-align: middle; margin-top: -3px'));
+  	if( $appName=='backend' )
+  		$style = 'cursor: pointer; vertical-align: middle; margin-top: 4px; margin-left: -3px';
+  	else
+	  	$style = 'cursor: pointer; vertical-align: middle; margin-top: -3px';
+  	
+    $html .= image_tag($calendar_button, array('id'=>$id_calendarButton, 'style'=>$style));
   }
   else
   {

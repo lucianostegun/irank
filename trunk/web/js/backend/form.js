@@ -1,19 +1,8 @@
-function showFormErrorDetails(form, field){
+function handleFormFieldError( content, prefix, alertMessage, indicatorId, handleFunc ){
+
+	clearFormFieldErrors( prefix );
 	
-//	var errorMessage = $(form+ucfirst(field)+'Label').innerHTML+':</b><br/><br/>'+$(form+ucfirst(field)).title;
-	var errorMessage = $(form+ucfirst(field)+'Label').innerHTML+':\n'+$(form+ucfirst(field)).title;
-//	errorMessage = errorMessage.replace(/\n/g, '<br/><br/>');
-
-	alert(errorMessage);
-//	$('formErrorDetails'+ucfirst(form)).innerHTML = '<h1 class="formDetailsTitle">Detalhes do erro</h1><b>'+errorMessage;
-}
-
-function handleFormFieldError( content, formId, prefix, alertMessage, indicatorId, handleFunc ){
-
-	clearFormFieldErrors( formId );
-
-	hideIndicator( indicatorId );
-	hideIndicator( formId );
+	hideIndicator( prefix );
 
 	var info = content.split(';');
 
@@ -42,11 +31,11 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 			
 			formFieldId = prefix+ucfirst(formFieldId);
 
-			objectForm  = $(formFieldId);
+			fieldObj  = $(formFieldId);
 			
 			var isDiv = false;
 			
-			if( objectForm==null || objectForm!=null && (objectForm.type=='hidden' || objectForm.type=='file') && ignoreHidden==false ){
+			if( fieldObj==null || fieldObj!=null && (fieldObj.type=='hidden' || fieldObj.type=='file') && ignoreHidden==false ){
 
 				if(matches=formFieldMessage.match(/^\[[a-zA-Z]+\]/)){
 
@@ -56,12 +45,12 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 				}
 				
 				isDiv = true;
-				objectForm = $(formFieldId+'Div');
+				fieldObj = $(formFieldId+'Div');
 			}
 			
-			if( objectForm!=null ){
+			if( fieldObj!=null ){
 			
-				var className = (isDiv?objectForm.className:'formField');
+				var className = (isDiv?fieldObj.className:'formField');
 				className     = className.replace(/Error/g, '');
 				className    += 'Error';
 
@@ -70,8 +59,8 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 				if( formFieldMessage=='nullError' )
 					continue;
 
-				objectForm.className = className;
-				objectForm.title     = formFieldMessage;
+				fieldObj.className = className;
+				fieldObj.title     = formFieldMessage;
 				
 				showDiv(formFieldId+'Error');
 			}
@@ -96,7 +85,7 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 
 function addFormStatusError(fieldId, formFieldMessage){
 	
-	var objectForm = $(fieldId);
+	var fieldObj = $(fieldId);
 	
 	var className = 'formField';
 	className     = className.replace(/Error/g, '');
@@ -104,60 +93,43 @@ function addFormStatusError(fieldId, formFieldMessage){
 
 	formFieldMessage = formFieldMessage.replace(/\\n/g, ' '+chr(10));
 	
-	objectForm.className = className;
-	objectForm.title     = formFieldMessage;
+	fieldObj.className = className;
+	fieldObj.title     = formFieldMessage;
 }
 
-function showFormStatusError(formId){
+function showFormStatusError(prefix){
 	
-	var divError = $('formStatusError'+ucfirst(formId)+'Div')
-
-	if( divError==null )
-		formId = false;
-	
-	formId = (formId?formId:'');
-	
-	if( !formId ){
-		
-		showDiv('mainFormError');
-		hideFormStatusSuccess();
-		$('mainFormFooter').addClassName('error');
-	}else{
-	
-		hideDiv('formStatusSuccess'+ucfirst(formId)+'Div');
-		showDiv('formStatusError'+ucfirst(formId)+'Div');
-	}
+	showDiv(prefix+'FormError');
+	hideFormStatusSuccess(prefix);
+	$(prefix+'Footer').addClassName('error');
 }
 
-function hideFormStatusError(formId){
+function hideFormStatusError(prefix){
 	
-	if( !formId ){
-
-		hideDiv('mainFormError');
-		$('mainFormFooter').removeClassName('error');
-	}else{
-		
-		hideDiv('formStatusError'+ucfirst(formId)+'Div');
-	}
+	hideDiv(prefix+'FormError');
+	$(prefix+'Footer').removeClassName('error');
 }
 
-function clearFormFieldErrors( formId ){
+function clearFormFieldErrors( prefix ){
 
-	hideIndicator();
+	hideIndicator(prefix);
 	
-	if( !formId || $(formId)==null )
+	if( !prefix || $(prefix+'Form')==null )
 		return;
 	
-	var form = $( formId );
+	var formObj      = $( prefix+'Form' );
+	var fieldObjList = formObj.getElementsByClassName('formFieldError');
 	
-	for(i=0; i < form.length; i++){
+	for(var i=0; i < fieldObjList.length; i++){
 		
-		if( form[i].className=='formFieldError' ){
+		var fieldObj = fieldObjList[i];
+		
+		if( fieldObj.className=='formFieldError' ){
 			
-			form[i].className = '';
-			form[i].title = '';
+			fieldObj.className = '';
+			fieldObj.title     = '';
 			
-			hideDiv(form[i].id+'Error');
+			hideDiv(fieldObj.id+'Error');
 		}
 	}
 	
@@ -174,37 +146,26 @@ function clearFormFieldErrors( formId ){
 		}
 	}
 	
-	hideFormStatusError(formId)
+	hideFormStatusError(prefix)
 }
 
 var _hideFormStatusSuccessDelay = 0;
 
-function showFormStatusSuccess(formId){
+function showFormStatusSuccess(prefix){
 
-	formId = (formId?formId:'');
+	hideIndicator(prefix+'Indicator');
+	showDiv(prefix+'FormSuccess');
+	hideFormStatusError(prefix);
 	
-	if( !formId ){
-
-		hideIndicator();
-		showDiv('mainFormSuccess');
-		hideFormStatusError();
-		$('mainFormFooter').addClassName('success');
-	}else{
-	
-		clearFormFieldErrors( formId );
-		
-		hideIndicator(formId);
-		hideDiv('formStatusError'+ucfirst(formId)+'Div');
-		showDiv('formStatusSuccess'+ucfirst(formId)+'Div');
-	}
+	$(prefix+'Footer').addClassName('success');
 	
 	if( _hideFormStatusSuccessDelay==0 )
-		startHideFormStatusSuccess(9, formId);
+		startHideFormStatusSuccess(9, prefix);
 	else
 		_hideFormStatusSuccessDelay = 10;
 }
 
-function startHideFormStatusSuccess(delay, formId){
+function startHideFormStatusSuccess(delay, prefix){
 
 	if( delay )
 		_hideFormStatusSuccessDelay += delay;
@@ -212,23 +173,16 @@ function startHideFormStatusSuccess(delay, formId){
 		_hideFormStatusSuccessDelay--;
 
 	if( _hideFormStatusSuccessDelay==0 )
-		hideFormStatusSuccess(formId);
+		hideFormStatusSuccess(prefix);
 	else
-		window.setTimeout( 'startHideFormStatusSuccess(false, "'+formId+'")', 1000 );
+		window.setTimeout( 'startHideFormStatusSuccess(false, "'+prefix+'")', 1000 );
 }
 
-function hideFormStatusSuccess(formId){
+function hideFormStatusSuccess(prefix){
 
-	formId = (formId?formId:'');
-	
-	if( !formId ){
-		
-		hideDiv('mainFormSuccess');
-		$('mainFormFooter').removeClassName('success');
-	}else{
-		
-		hideDiv('formStatusSuccess'+ucfirst(formId)+'Div');
-	}
+	hideDiv(prefix+'FormSuccess');
+	$(prefix+'Footer').removeClassName('success');
+
 	_hideFormStatusSuccessDelay = 0;
 }
 

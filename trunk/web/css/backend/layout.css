@@ -22,7 +22,7 @@ height: 20px;
 }
 
 a:link, a:visited {
-color: #77BACE;
+color: #C91E1E;
 text-decoration: none;
 }
 
@@ -176,6 +176,10 @@ color: #44474F;
 text-decoration: none;
 text-shadow: 0 1px 0 #fff;
 font-weight: bold;}
+
+.breadcrumbs a.last {
+font-weight: normal
+}
 
 .breadcrumbs a:hover {
 color: #222222;
@@ -426,6 +430,15 @@ color: #666;}
 width: 95%;
 }
 
+.width_form {
+	
+	width: 			95%;
+	background: 	#F0F0F0;
+    background: 	-moz-linear-gradient(top, #F5F5F5, #E0E0E0);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#F5F5F5), to(#E0E0E0));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#F5F5F5', EndColorStr='#E0E0E0', GradientType=0);
+}
+
 .width_half {
 width: 46%;
 margin-right: 0;
@@ -520,7 +533,7 @@ padding: 10px 10px;
 
 .tablesorter .hover td {
 
-	background: 	#f2d19c;
+	background: 	#FFCB78;
 	cursor: 		pointer;
 	color: 			#000000;
 }
@@ -532,7 +545,7 @@ padding: 10px 10px;
 
 .tablesorter th.checkbox {
 
-	width: 30px
+	width: 20px;
 }
 
 .tablesorter input[type=image] {
@@ -605,23 +618,6 @@ float: left;
 
 .message {
 border-bottom: 1px dotted #cccccc;
-}
-
-input[type=submit] {
-background: #D0D1D4 url(/images/backend/btn_submit.png) repeat-x;
-border: 1px solid #A8A9A8;
--webkit-box-shadow: 0 1px 0 #fff;
--moz-box-shadow: 0 1px 0 #fff;
-box-shadow: 0 1px 0 #fff;
-font-weight: bold;
-height: 22px;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-padding: 0 10px;
-color: #666;
-text-shadow: 0 1px 0 #fff;
-cursor: pointer;
 }
 
 input[type=submit]:hover {

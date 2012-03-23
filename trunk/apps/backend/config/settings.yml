@@ -89,7 +89,7 @@ all:
 #    calendar_web_dir:       /sf/calendar
 #
     # Helpers included in all templates by default
-    standard_helpers:       [Partial, Cache, Form, Javascript]
+    standard_helpers:       [Partial, Cache, Form, Javascript, I18N]
 #
 #    # Activated modules from plugins or from the symfony core
 #    enabled_modules:        [default]

@@ -1,0 +1,29 @@
+fields:
+       
+  rankingName:
+    required:
+      msg:       form.error.requiredField
+      
+  rankingTypeId:
+    required:
+      msg:       form.error.requiredField
+      
+  gameTypeId:
+    required:
+      msg:       form.error.requiredField
+      
+  gameStyleId:
+    required:
+      msg:       form.error.requiredField
+       
+  startDate:
+    required:
+      msg:       form.error.requiredField
+       
+  defaultBuyin:
+    required:
+      msg:       form.error.requiredField
+       
+  scoreFormula:
+    required:
+      msg:       form.error.requiredField

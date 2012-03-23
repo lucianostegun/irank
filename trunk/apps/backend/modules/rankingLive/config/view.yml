@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [backend/form]
+  javascripts:    [mask, backend/form, backend/rankingLive, backend/paginator, backend/record]

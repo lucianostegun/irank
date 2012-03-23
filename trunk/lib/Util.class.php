@@ -34,6 +34,8 @@ class Util {
 		eval('$criteria->addAscendingOrderByColumn( '.$classNamePeer.'::CREATED_AT );');
 		eval('$newObj = '.$classNamePeer.'::doSelectOne( $criteria );');
 		
+		$newObj = null;
+		
 		if( is_object($newObj) ){
 			
 			$newObj->setLocked( true );
@@ -72,7 +74,7 @@ class Util {
 	 * @param      String: Mensagem a ser exibida no erro
 	 * @param      Boolean: Define se o processamento deve ser interrompido assim que a mensagem for enviada
 	 */
-	public static function forceError( $errorDescription=null, $exit=false ){
+	public static function forceError( $errorDescription=null, $exit=true ){
 	
 		header( 'HTTP/1.1 500 Internal Server Error' );
 		
@@ -435,9 +437,13 @@ class Util {
 	 * @author     Luciano Stegun
 	 * @param      String: Nome do arquivo que será gerado para download
 	 */
-	public static function forceDownload( $fileName ){
+	public static function forceDownload( $fileName, $mimeType=null ){
 		
 		header('Content-type: application/force-download');
+		
+		if( $mimeType )
+			header('Content-type: '.$mimeType);
+			
 		header('Content-Disposition: attachment; filename='.$fileName);
 		header('Pragma: no-cache');
 	}

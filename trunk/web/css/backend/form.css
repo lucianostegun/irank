@@ -2,10 +2,6 @@
 
 }
 
-.defaultForm {
-
-}
-
 .defaultForm section {
 
 	clear: 	both;
@@ -45,7 +41,17 @@
 	margin: 4px 0 5px 0;
 }
 
-.defaultForm input[type=text] {
+.defaultForm .upload {
+	display: block;
+	float: left;
+	height: 16px;
+	line-height: 16px;
+	padding-left: 10px;
+	margin: -1px 0 9px 0;
+}
+
+.defaultForm input[type=text],
+.defaultForm input[type=file] {
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 border-radius: 5px;
@@ -61,22 +67,57 @@ margin: 0;
 display: block;
 float: left;
 margin: 0 10px;
+font-size: 12px;
 }
 
 .defaultForm input[type=text]:focus {
 outline: none;
 border: 1px solid #77BACE;
--webkit-box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
--moz-box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
-box-shadow: inset 0 2px 2px #ccc, 0 0 10px #ADDCE6;
+-webkit-box-shadow: inset 0 2px 2px #ccc, 0 0 7px #ADDCE6;
+-moz-box-shadow: inset 0 2px 2px #ccc, 0 0 7px #ADDCE6;
+box-shadow: inset 0 2px 2px #ccc, 0 0 7px #ADDCE6;
+}
+
+.defaultForm input[type=text]:focus.formFieldError {
+border: 1px solid #ee6565;
+-webkit-box-shadow: inset 0 2px 2px #ccc, 0 0 7px #e6adad;
+-moz-box-shadow: inset 0 2px 2px #ccc, 0 0 7px #e6adad;
+box-shadow: inset 0 2px 2px #ccc, 0 0 7px #e6adad;
+}
+
+.defaultForm input[type=checkbox] {
+	float: 		left;
+	margin: 	6px 8px;
 }
 
 .defaultForm select {
-width: 96%;
-margin: 0 10px;
-border: 1px solid #bbb;
-height: 20px;
-color: #666666;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #BBBBBB;
+	height: 20px;
+	color: #303030;
+	-webkit-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
+	-moz-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
+	box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
+	padding: 2px 0px 0px 5px;
+	background-position: 10px 6px;
+	margin: 0;
+	display: block;
+	float: left;
+	margin: 0 10px;
+	
+	margin: 3px 10px;
+	border: 1px solid #bbb;
+	height: 20px;
+	color: #666666;
+}
+
+.defaultForm input[type=text].formFieldError,
+.defaultForm .formFieldError {
+	
+	background-color: 	#f6ccb0;
 }
 
 .defaultForm textarea {
@@ -205,6 +246,11 @@ text-indent: 45px;
 font-size: 14px;
 font-weight: normal}
 
+footer {
+
+	text-indent: 	40px;
+}
+
 footer.error {
 display: block;
 background: #F3D9D9 url(/images/backend/icn_alert_error.png) no-repeat;
@@ -215,64 +261,83 @@ font-size: 14px;
 font-weight: normal}
 
 footer.success {
-display: block;
-background: #E2F6C5 url(/images/backend/icn_alert_success.png) no-repeat;
-background-position: 10px 5px;
-color: #32510F;
-text-indent: 45px;
-font-size: 14px;
-font-weight: normal}
+
+	display: 				block;
+	background: 			#BFD9F7 url(/images/backend/icn_alert_success.png) no-repeat;
+	background-position: 	10px 5px;
+	color: 					#333A48;
+	text-indent: 			45px;
+	font-size: 				14px;
+	font-weight: 			normal
+}
 
 footer .formMessage {
 	display: none;
 	line-height: 30px;
 }
 
+footer .formMessage.indicator {
+	display: none;
+	line-height: 30px;
+	background: url(/images/ajaxLoaderForm.gif) no-repeat;
+	background-position: 13px 8px;
+}
 
+footer .paginator {
+	line-height: 30px;
+}
 
 #main h4.alert_success {
-display: block;
-width: 95%;
-margin: 20px 3% 0 3%;
-margin-top: 20px;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-background: #E2F6C5 url(/images/backend/icn_alert_success.png) no-repeat;
-background-position: 10px 8px;
-border: 1px solid #79C20D;
-color: #32510F;
-padding: 10px 0;
-text-indent: 40px;
-font-size: 14px;
-font-weight: normal}
-
-
-
-input[type=submit].save_btn {
-background: #D0D1D4 url(/images/backend/btn_submit_2.png) repeat-x;
-border: 1px solid #5079af;
--webkit-box-shadow: 0 1px 0 #fff;
--moz-box-shadow: 0 1px 0 #fff;
-box-shadow: 0 1px 0 #fff;
-font-weight: bold;
-height: 22px;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-padding: 0 10px;
-color: #0f233d;
-text-shadow: 0 1px 0 #98bff2;
-cursor: pointer;
+	
+	display: block;
+	width: 95%;
+	margin: 20px 3% 0 3%;
+	margin-top: 20px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: #E2F6C5 url(/images/backend/icn_alert_success.png) no-repeat;
+	background-position: 10px 8px;
+	border: 1px solid #79C20D;
+	color: #32510F;
+	padding: 10px 0;
+	text-indent: 40px;
+	font-size: 14px;
+	font-weight: normal
 }
 
-input[type=submit].save_btn:hover {
+
+
+input[type=submit].save_btn,
+input[type=button].cancel_btn {
+
+	background: #D0D1D4 url(/images/backend/btn_submit_2.png) repeat-x;
+	border: 1px solid #5079af;
+	-webkit-box-shadow: 0 1px 0 #fff;
+	-moz-box-shadow: 0 1px 0 #fff;
+	box-shadow: 0 1px 0 #fff;
+	font-weight: bold;
+	height: 22px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 0 10px;
+	color: #0f233d;
+	text-shadow: 0 1px 0 #98bff2;
+	cursor: pointer;
+}
+
+input[type=button].cancel_btn {
+
+	background: #D0D1D4 url(/images/backend/btn_submit.png) repeat-x;
+	border: 1px solid #909090;
+	color: #303030;
+	text-shadow: 0 1px 0 #EAEAEA;
+}
+
+input[type=submit].save_btn:hover,
+input[type=submit].cancel_btn:hover {
 color: #000;
-}
-
-
-.defaultForm input[type=text].formFieldError {
-	background-color: #f6ccb0;
 }
 
 .defaultForm .hidden,

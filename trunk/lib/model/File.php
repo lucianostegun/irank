@@ -126,6 +126,10 @@ class File extends BaseFile
 		$fileId               = (array_key_exists('fileId', $options)?$options['fileId']:null);
 		$allowedExtensionList = (array_key_exists('allowedExtensionList', $options)?$options['allowedExtensionList']:array());
 		$maxFileSize          = (array_key_exists('maxFileSize', $options)?$options['maxFileSize']:null);
+		$minWidth             = (array_key_exists('minWidth', $options)?$options['minWidth']:null);
+		$maxWidth             = (array_key_exists('maxWidth', $options)?$options['maxWidth']:null);
+		$minHeight            = (array_key_exists('minHeight', $options)?$options['minHeight']:null);
+		$maxHeight            = (array_key_exists('maxHeight', $options)?$options['maxHeight']:null);
 		$destFileName         = (array_key_exists('fileName', $options)?$options['fileName']:null);
 		$noFile               = (array_key_exists('noFile', $options)?$options['noFile']:false);
 		
@@ -149,8 +153,13 @@ class File extends BaseFile
 		$fileName = ($destFileName?$destFileName:$fileName);
 
 		$extensionImageList = array('jpg', 'png', 'jpeg', 'bmp', 'gif');
+		
+		$isImage = in_array($extension, $extensionImageList);
+			
+		if( !preg_match('/^\//', $destinationPath) )
+			$destinationPath = 'uploads/'.$destinationPath;
 
-		$destinationPath = Util::getFilePath('uploads/'.$destinationPath); 
+		$destinationPath = Util::getFilePath($destinationPath); 
 
 		if( !is_dir($destinationPath) )
 			mkdir($destinationPath, 0755);
@@ -161,6 +170,19 @@ class File extends BaseFile
 			$filePath = $fileObj->getFilePath(true);
 
 		$request->moveFile($fieldName, $filePath);
+		
+		if( $isImage ){
+			
+			$dimension = getimagesize($filePath);
+			if( $minWidth && $dimension[0] < $minWidth ||
+				$maxWidth && $dimension[0] < $maxWidth ||
+				$minHeight && $dimension[0] < $minHeight ||
+				$maxHeight && $dimension[0] < $maxHeight ){
+					
+					unlink($filePath);
+					throw new Exception('Dimensões inválidas. Dimensão requerida:\n\nMin: '.$minWidth.'x'.$minHeight.'\nMax: '.$maxWidth.'x'.$maxHeight);
+				}
+		}
 
 		if( !$noFile ){
 			
@@ -168,7 +190,7 @@ class File extends BaseFile
 			$fileObj->setFileSize($fileSize);
 	
 			if( in_array($extension, $extensionImageList) )
-				$fileObj->setIsImage(true);		
+				$fileObj->setIsImage(true);
 			
 			$fileObj->save();
 			

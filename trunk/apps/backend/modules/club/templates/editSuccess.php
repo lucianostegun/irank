@@ -3,6 +3,7 @@
 		'url'=>'club/save',
 		'success'=>'handleSuccessClub(request.responseText)',
 		'failure'=>'handleFailureClub(request.responseText)',
+		'loading'=>'showIndicator("club")',
 		'encoding'=>'UTF8',
 	), array('id'=>'clubForm'));
 	
@@ -22,13 +23,6 @@
 		<div id="tab3" class="tab_content"><?php include_partial('club/tab/ranking', array('clubObj'=>$clubObj)) ?></div>
 		
 	</div>
-<footer id="mainFormFooter">
-	<div class="submit_link">
-		<input type="submit" value="Salvar" class="save_btn">
-		<input type="button" value="Cancelar" onclick="goToPage('club', 'index')">
-	</div>
-	<div class="formMessage" id="mainFormError">Erro ao salvar as informações do registro</div>
-	<div class="formMessage" id="mainFormSuccess">Informações salvas com sucesso</div>
-</footer>
+<?php include_partial('home/include/formFooter', array('prefix'=>'club')) ?>
 </article><!-- end of content manager article -->
 </form>

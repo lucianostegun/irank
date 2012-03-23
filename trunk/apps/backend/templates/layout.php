@@ -71,10 +71,13 @@ $peopleName = 'Luciano Stegun';
 				$pathList = (isset($pathList)?$pathList:array());
 				echo link_to('Home', 'home/index');
 				
+				$key = 0;
 				foreach($pathList as $pathName=>$pathLink){
 					
+					$key++;
+					
 					echo '<div class="breadcrumb_divider"></div>';
-					echo link_to($pathName, $pathLink);
+					echo link_to($pathName, $pathLink, array('class'=>($key==count($pathList)?'last':''), 'id'=>($key==count($pathList)?'lastPathName':'')));
 				}
 			?>
 			</article>
@@ -96,6 +99,9 @@ $peopleName = 'Luciano Stegun';
 		<ul class="toggle">
 			<li class="icn_new_article"><a href="#">Novo ranking</a></li>
 			<li class="icn_categories"><a href="#">Lista de rankings</a></li>
+			<br/>
+			<li class="icn_new_article"><?php echo link_to('Novo ranking live', 'rankingLive/new') ?></li>
+			<li class="icn_categories"><?php echo link_to('Lista de rankings live', 'rankingLive/index') ?></li>
 		</ul>
 		<?php if($sf_user->hasCredential('iRankAdmin')): ?>
 		<h3>Clubes</h3>
