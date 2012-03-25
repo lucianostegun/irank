@@ -21,10 +21,7 @@ class Log extends BaseLog
     	return '#'.sprintf('%05d', $this->getId());
     }
     
-    public static function doLog($message, $className=null, $columnModifiedList=array(), $optionList=array()) 
-    {
-
-		$severity = (array_key_exists('severity', $optionList)?$optionList['severity']:self::LOG_INFORMATION);
+    public static function doLog($message, $className=null, $columnModifiedList=array(), $severity=self::LOG_INFORMATION){
 
     	$userSiteId = sfContext::getInstance()->getUser()->getAttribute('userSiteId');
     	
@@ -48,6 +45,9 @@ class Log extends BaseLog
         $logObj->setSeverity( $severity );
         $logObj->save();
         
+        if( $severity >= self::LOG_ERROR )
+        	Report::sendMail('iRank Log', 'lucianostegun@gmail.com', $logObj->toString(), array('emailTemplate'=>'emailTemplateAdmin'));
+        
         $logId = $logObj->getId();
         
         if( count($columnModifiedList) ){
@@ -67,7 +67,7 @@ class Log extends BaseLog
         return $logId;
     }
     
-    public static function quickLog($tableName, $primaryKey, $isNew, $columnModifiedList, $className=null) {
+    public static function quickLog($tableName, $primaryKey, $isNew, $columnModifiedList, $className=null){
 	
     	if( !$columnModifiedList )
     		return false;
@@ -81,7 +81,7 @@ class Log extends BaseLog
 	    	self::doLog('Editou o registro '.$primaryKey.' na tabela '.$tableName, $className, $columnModifiedList);
     }
     
-    public static function quickLogError($tableName, $primaryKey, $e) {
+    public static function quickLogError($tableName, $primaryKey, $e){
     	
     	if( is_array($primaryKey) )    		
     		$primaryKey = implode(' e ', $primaryKey);
@@ -89,7 +89,7 @@ class Log extends BaseLog
     	throw new LogException('Erro ao salvar o registro '.$primaryKey.' na tabela '.$tableName.'. [' . $e->getMessage() . ']');
     }
     
-    public static function quickLogDelete($tableName, $primaryKey) {
+    public static function quickLogDelete($tableName, $primaryKey){
     	
     	if( is_array($primaryKey) )    		
     		$primaryKey = implode(' e ', $primaryKey);
@@ -97,7 +97,7 @@ class Log extends BaseLog
     	self::doLog('Excluiu o registro '.$primaryKey.' na tabela '.$tableName);
     }
     
-    public static function getEnvironment( $app ) {
+    public static function getEnvironment( $app ){
     	
     	return 'frontend';
     }
@@ -254,6 +254,22 @@ class Log extends BaseLog
     		$userSiteObj = new UserSite();
     	
     	return $userSiteObj;
+    }
+    
+    public function toString(){
+    	
+    	$nl = '<br/>';
+    	
+		$string = '<div style="line-height: 180%">'.$nl;
+		$string .= '<b>Data/Hora: </b>'.$this->getCreatedAt('d/m/Y H:i:s').$nl;
+		$string .= '<b>Modulo: </b>'.$this->getModuleName().$nl;
+		$string .= '<b>Pagina: </b>'.$this->getActionName().$nl;
+		$string .= '<b>IP: </b>'.$_SERVER['REMOTE_ADDR'].$nl;
+		$string .= '<b>URI: </b>'.$_SERVER['REQUEST_URI'].$nl;
+		$string .= '<b>Mensagem: </b><br/><div style="padding: 25px 10px; margin: 10px 0px; border-top: 1px solid #909090; border-bottom: 1px solid #909090">'.$this->getMessage().'</div><b>iRank Admin</b>';
+		$string .= '</div>';
+    	
+    	return $string;
     }
 	
 	public function getInfo(){

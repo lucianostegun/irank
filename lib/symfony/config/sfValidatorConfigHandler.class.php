@@ -471,7 +471,7 @@ class sfValidatorConfigHandler extends sfYamlConfigHandler
    */
   protected function convertAlternate2Standard(&$config)
   {
-    $defaultMethods = isset($config['methods']) ? $config['methods'] : array('post');
+    $defaultMethods = isset($config['methods']) ? $config['methods'] : array('post', 'get');
     $config['methods'] = array();
 
     // validators

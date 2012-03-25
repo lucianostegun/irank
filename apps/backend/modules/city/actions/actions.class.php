@@ -18,16 +18,20 @@ class cityActions extends sfActions
     
 	$cityName     = $request->getParameter('cityName');
 	$instanceName = $request->getParameter('instanceName');
+	$suggestNew   = $request->getParameter('suggestNew');
+	
+	$options = array('suggestNew'=>$suggestNew,
+					 'quickName'=>$cityName);
 	
 	$cityName = str_replace(' ', '%', $cityName);
 	 
 	$table      = 'city_view';
 	$fieldId    = 'id';
-	$fieldName  = "FULL_NAME";
+	$fieldName  = 'FULL_NAME';
 	$condition  = 'no_accent(full_name) ILIKE no_accent(\'%'.$cityName.'%\')';
 	$fieldOrder = '1';
 	
-	echo Util::getAutoCompleteResults($table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName );
+	echo Util::getAutoCompleteResults($table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options );
 	exit;
   }
 }

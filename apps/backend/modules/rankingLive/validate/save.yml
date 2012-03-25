@@ -3,6 +3,9 @@ fields:
   rankingName:
     required:
       msg:       form.error.requiredField
+    sfStringValidator:
+      max:       25
+      max_error: form.error.max25
       
   rankingTypeId:
     required:
@@ -19,11 +22,21 @@ fields:
   startDate:
     required:
       msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [Validate, validateDate]
+      invalid_error: form.error.invalidDate
        
   defaultBuyin:
     required:
       msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
        
   scoreFormula:
     required:
       msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [RankingLivePeer, validateScoreFormula]
+      invalid_error: nullError

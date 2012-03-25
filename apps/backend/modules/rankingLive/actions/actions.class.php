@@ -34,6 +34,14 @@ class rankingLiveActions extends sfActions
     
     $this->rankingLiveObj = $rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
     
+    if( !$rankingLiveObj->isMyRanking() ){
+    	
+	    $username = $this->getUser()->getAttribute('username');
+
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou acessar as informações do ranking <b>('.$rankingLiveObj->getId().') '.$rankingLiveObj->toString().'</b>.', 'RankingLive', array(), Log::LOG_CRITICAL);
+    	$rankingLiveObj = null;
+    }
+    
     if( !is_object($rankingLiveObj) )
     	return $this->redirect('rankingLive/index');
     	
@@ -48,6 +56,14 @@ class rankingLiveActions extends sfActions
   public function executeSave($request){
     
     $rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
+	
+    if( !$rankingLiveObj->isMyRanking() ){
+    	
+	    $username = $this->getUser()->getAttribute('username');
+
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou editar as informações do ranking <b>('.$rankingLiveObj->getId().') '.$rankingLiveObj->toString().'</b>.', 'RankingLive', array(), Log::LOG_CRITICAL);
+    	throw new Exception('Você não tem permissão para editar esse registro!');
+    }
     
     $rankingLiveObj->quickSave($request);
     
@@ -86,11 +102,29 @@ class rankingLiveActions extends sfActions
   
   public function executeUploadLogo($request){
 
+	$userAdminId = $request->getParameter('userAdminId');
+    $userAdminObj = UserAdminPeer::retrieveByPK($userAdminId);
+    
+    $this->getUser()->setCulture('pt_BR');
+    
+    if( !is_object($userAdminObj) )
+    	throw new Exception('Usuário não definido para carregamento da imagem');
+    
 	$allowedExtensionList = array('jpg', 'jpeg', 'png');
 	$maxFileSize          = (1024*300);
 	
 	$fileName = $request->getFileName('Filedata');
 	$fileName = preg_replace('/(\.[^\.]*)$/', '-'.$this->rankingLiveId.'\1', $fileName);
+	
+	$rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
+	
+    if( $rankingLiveObj->isMyRanking($userAdminId) ){
+    	
+	    $username = $userAdminObj->getUsername();
+
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou carregar o arquivo <b>'.$fileName.'</b> para o ranking <b>'.$rankingLiveObj->toString().'</b>.', 'RankingLive', array(), Log::LOG_CRITICAL);
+    	throw new Exception('Você não tem permissão para editar esse registro!');
+    }
 	
 	$options = array('allowedExtensionList'=>$allowedExtensionList,
 					 'maxFileSize'=>$maxFileSize,
@@ -104,8 +138,6 @@ class rankingLiveActions extends sfActions
 	try {
 		
 		$fileObj = File::upload($request, 'Filedata', '/images/ranking', $options);
-		
-		$rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
 		
 		$rankingLiveObj->setFileNameLogo($fileName);
 		$rankingLiveObj->save();
@@ -130,5 +162,18 @@ class rankingLiveActions extends sfActions
 	echo file_get_contents($filePath);
 	
   	exit;
+  }
+
+  public function executeGetSelectField($request){
+    
+    $clubId        = $request->getParameter('clubId');
+    $rankingLiveId = $request->getParameter('rankingLiveId');
+    $prefix        = $request->getParameter('prefix');
+    
+    Util::getHelper('I18N');
+    Util::getHelpers();
+    
+    echo select_tag('rankingLiveId', RankingLive::getOptionsForSelect($clubId, $rankingLiveId), array('id'=>$prefix.'RankingLiveId'));
+    exit;
   }
 }

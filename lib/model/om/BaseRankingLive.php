@@ -103,6 +103,12 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	protected $lastEventLiveCriteria = null;
 
 	
+	protected $collClubRankingLiveList;
+
+	
+	protected $lastClubRankingLiveCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -746,6 +752,14 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collClubRankingLiveList !== null) {
+				foreach($this->collClubRankingLiveList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -809,6 +823,14 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 				if ($this->collEventLiveList !== null) {
 					foreach($this->collEventLiveList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collClubRankingLiveList !== null) {
+					foreach($this->collClubRankingLiveList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1128,6 +1150,10 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				$copyObj->addEventLive($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getClubRankingLiveList() as $relObj) {
+				$copyObj->addClubRankingLive($relObj->copy($deepCopy));
+			}
+
 		} 
 
 		$copyObj->setNew(true);
@@ -1343,6 +1369,111 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 		$this->lastEventLiveCriteria = $criteria;
 
 		return $this->collEventLiveList;
+	}
+
+	
+	public function initClubRankingLiveList()
+	{
+		if ($this->collClubRankingLiveList === null) {
+			$this->collClubRankingLiveList = array();
+		}
+	}
+
+	
+	public function getClubRankingLiveList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseClubRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubRankingLiveList === null) {
+			if ($this->isNew()) {
+			   $this->collClubRankingLiveList = array();
+			} else {
+
+				$criteria->add(ClubRankingLivePeer::RANKING_LIVE_ID, $this->getId());
+
+				ClubRankingLivePeer::addSelectColumns($criteria);
+				$this->collClubRankingLiveList = ClubRankingLivePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ClubRankingLivePeer::RANKING_LIVE_ID, $this->getId());
+
+				ClubRankingLivePeer::addSelectColumns($criteria);
+				if (!isset($this->lastClubRankingLiveCriteria) || !$this->lastClubRankingLiveCriteria->equals($criteria)) {
+					$this->collClubRankingLiveList = ClubRankingLivePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastClubRankingLiveCriteria = $criteria;
+		return $this->collClubRankingLiveList;
+	}
+
+	
+	public function countClubRankingLiveList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseClubRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ClubRankingLivePeer::RANKING_LIVE_ID, $this->getId());
+
+		return ClubRankingLivePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addClubRankingLive(ClubRankingLive $l)
+	{
+		$this->collClubRankingLiveList[] = $l;
+		$l->setRankingLive($this);
+	}
+
+
+	
+	public function getClubRankingLiveListJoinClub($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseClubRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubRankingLiveList === null) {
+			if ($this->isNew()) {
+				$this->collClubRankingLiveList = array();
+			} else {
+
+				$criteria->add(ClubRankingLivePeer::RANKING_LIVE_ID, $this->getId());
+
+				$this->collClubRankingLiveList = ClubRankingLivePeer::doSelectJoinClub($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ClubRankingLivePeer::RANKING_LIVE_ID, $this->getId());
+
+			if (!isset($this->lastClubRankingLiveCriteria) || !$this->lastClubRankingLiveCriteria->equals($criteria)) {
+				$this->collClubRankingLiveList = ClubRankingLivePeer::doSelectJoinClub($criteria, $con);
+			}
+		}
+		$this->lastClubRankingLiveCriteria = $criteria;
+
+		return $this->collClubRankingLiveList;
 	}
 
 } 

@@ -135,3 +135,113 @@
 	
 	margin: 		0px;
 }
+
+
+#eventLiveList {
+
+	padding-top: 	30px;
+}
+
+#eventLiveList .event {
+
+	clear: 					both;
+	margin-bottom: 			25px;
+	height: 				140px;
+	
+
+}
+
+#eventLiveList .event .logo {
+
+	float: 			left;
+	text-align: 	center;
+}
+
+#eventLiveList .event .logo img {
+
+	border: 				1px solid #DADADA;
+	padding: 				10px;
+	border-radius: 			4px;
+	-moz-border-radius: 	4px;
+	-webkit-border-radius: 	4px;
+	margin-bottom: 			4px;
+}
+
+#eventLiveList .event .info {
+
+	float: 			left;
+	width: 			550px;
+	height: 		140px;	
+    margin-left: 	6px;
+    
+	border-radius: 			4px;
+	-moz-border-radius: 	4px;
+	-webkit-border-radius: 	4px;
+	border: 				1px solid #DADADA;
+	
+    background: 			-moz-linear-gradient(top, #F0F0F0, #FFFFFF);
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#F0F0F0', EndColorStr='#FFFFFF', GradientType=0);
+}
+
+#eventLiveList .event .info h1 {
+
+	font-size: 		13px;
+	margin: 		4px 0px 0px 10px;
+	padding: 		0px;
+	height: 		24px;
+	line-height: 	24px;
+	font-weight: 	normal
+}
+
+#eventLiveList .event .info h2 {
+
+	font-size: 		15px;
+	height: 		25px;
+	line-height: 	25px;
+	padding: 		0px;
+	margin: 		0px 0px 0px 6px;
+	text-indent: 	10px;
+}
+
+#eventLiveList .event .info h2 a {
+
+	color: 				#2C6986;
+	text-decoration: 	none;
+}
+
+#eventLiveList .event .info h2 a:hover {
+
+	color: 	#C91E1E
+}
+
+#eventLiveList .event .info h3 {
+
+	font-size: 		12px;
+	padding: 		0px;
+	margin: 		0px 0px 0px 6px;
+	text-indent: 	10px;
+}
+
+
+table.presenceTable {
+	
+	width: 			200px;
+	float: 			left;
+	position: 		relative;
+	top: 			20px;
+	left: 			20px;
+}
+
+table.presenceTable tr th {
+	
+	text-align: 	center;
+}
+
+table.presenceTable tr td {
+	
+	white-space: 	nowrap;
+	padding-top: 	2px;
+	text-align: 	center;
+	font-weight: 	bold;
+}

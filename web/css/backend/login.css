@@ -48,7 +48,7 @@ width: 15%;
 height: 55px;
 font-weight: normal;
 text-align: left;
-text-indent: 1.8%;
+text-indent: 4px;
 line-height: 55px;
 color: #fff;
 text-shadow: 0 -1px 0 #000;
@@ -161,7 +161,7 @@ margin-top: 20%;
 
 #login .loginTable {
 
-	margin-top: 	30px
+	margin-top: 	10px
 }
 
 #login .loginTable th {
@@ -175,4 +175,22 @@ margin-top: 20%;
 
 	text-align: left;
 	padding: 4px 0px 4px 0px
+}
+
+
+
+
+#loginErrorMessageDiv {
+
+	display: 				none;
+	margin:					10px 4px 0px 4px;
+	border-top: 			3px solid #DE7A7B;
+	border-bottom: 			3px solid #DE7A7B;
+	padding-top:			6px;
+	padding-bottom: 		6px;
+	padding-left: 			45px;
+	background: 			#E6C0C0 url(/images/form/error.png) 10px 10px no-repeat;
+	background-position: 	7 3;	
+	color: 					#CC3300;
+	text-align: 			left;
 }

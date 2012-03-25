@@ -247,6 +247,8 @@ Autocompleter.Base = Class.create({
     } else
       value = Element.collectTextNodesIgnoreClass(selectedElement, 'informal');
 
+    value = value.replace('Criar novo: ', '');
+    
     var bounds = this.getTokenBounds();
     if (bounds[0] != -1) {
       var newValue = this.element.value.substr(0, bounds[0]);

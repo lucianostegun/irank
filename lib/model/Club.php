@@ -45,20 +45,32 @@ class Club extends BaseClub
 		$this->setDeleted(false);
 		$this->save();
 	}
-	
-	public function toString(){
+
+	public static function getList(Criteria $criteria=null){
 		
-		return $this->getClubName();
-	}
-	
-	public static function getList(){
-		
-		$criteria = new Criteria();
+		if( !$criteria )
+			$criteria = new Criteria();
+			
 		$criteria->add( ClubPeer::ENABLED, true );
 		$criteria->add( ClubPeer::VISIBLE, true );
 		$criteria->add( ClubPeer::DELETED, false );
 		
 		return ClubPeer::doSelect($criteria);
+	}
+
+	public static function getOptionsForSelect($defaultValue=false, $returnArray=false){
+		
+		$clubObjList = self::getList();
+
+		$optionList = array();
+		$optionList[''] = __('select');
+		foreach( $clubObjList as $clubObj )			
+			$optionList[$clubObj->getId()] = $clubObj->getClubName();
+			
+		if( $returnArray )
+			return $optionList;
+
+		return options_for_select( $optionList, $defaultValue );
 	}
 	
 	public function getLocation(){
@@ -67,21 +79,6 @@ class Club extends BaseClub
 			return null;
 		
 		return $this->getCity()->getCityName().', '.$this->getCity()->getState()->getInitial();
-	}
-	
-	public function getEvents(){
-		
-		return rand(10,35);
-	}
-	
-	public function getFileNameLogo(){
-		
-		$fileNameLogo = parent::getFileNameLogo();
-		
-		if( !$fileNameLogo )
-			$fileNameLogo = 'noImage.jpg';
-		
-		return $fileNameLogo;
 	}
 	
 	public function getPhoneNumberList(){
@@ -97,5 +94,61 @@ class Club extends BaseClub
 		if( $phoneNumber3 ) $phoneNumberList[] = $phoneNumber3;
 		
 		return $phoneNumberList;
+	}
+	
+	public function getFileNameLogo($original=false){
+		
+		$fileNameLogo = parent::getFileNameLogo();
+		
+		if( $original ){
+			
+			$rankingLiveId = $this->getId();
+			$fileNameLogo  = preg_replace('/-[0-9]*(\.[^\.]*)$/', '\1', $fileNameLogo);
+		}
+		
+		if( !$fileNameLogo )
+			$fileNameLogo = 'noImage.jpg';
+		
+		return $fileNameLogo;
+	}
+	
+	public static function customizeLogo($fileName){
+		
+		$fileExtension = File::getFileExtension($fileName);
+		$filePath      = Util::getFilePath('/images/club/'.$fileName);
+	
+		if( $fileExtension=='jpg' )
+			$originalImg = imagecreatefromjpeg( $filePath );
+		else
+			$originalImg = imagecreatefrompng( $filePath );
+			
+		$templateImg = imagecreatefromjpeg( Util::getFilePath('images/club/template.jpg') );
+	
+		imagecopymerge($templateImg, $originalImg, 4, 4, 0, 0, 122, 122, 100);
+		
+		if( $fileExtension=='jpg' )
+			imagejpeg($templateImg, $filePath, 100);
+		else
+			imagepng($templateImg, $filePath);
+		
+		imagedestroy($templateImg);
+		imagedestroy($originalImg);
+		
+	  	exit;
+	}
+	
+	public function getRankingCount(){
+		
+		return Util::executeOne('SELECT get_club_ranking_count('.$this->getId().')');
+	}
+
+	public function getEventCount(){
+		
+		return Util::executeOne('SELECT COUNT(1) FROM event_live WHERE visible AND enabled AND NOT deleted AND club_id = '.$this->getId());
+	}
+	
+	public function toString(){
+		
+		return $this->getClubName();
 	}
 }

@@ -1,4 +1,8 @@
 <?php
+	$clubId = $sf_user->getAttribute('clubId');
+	
+	$allowDelete = !$clubId; // Se o usuário não estiver relacionado a um clube, permite excluir
+	
 	echo form_remote_tag(array(
 		'url'=>'club/delete',
 		'success'=>'handleSuccessClubIndex(request.responseText)',
@@ -12,16 +16,23 @@
 	<table class="tablesorter hoHeader" cellspacing="0"> 
 	<thead> 
 		<tr> 
-			<th class="checkbox"></th> 
+			<?php if( $allowDelete ): ?>
+				<th class="checkbox"></th>
+			<?php endif; ?> 
 			<th>Nome</th> 
 			<th>Cidade</th> 
+			<th>Rankings</th> 
 			<th>Eventos</th> 
 		</tr> 
 	</thead> 
 	<tbody id="clubTbody"> 
 		<?php
+			$criteria = new Criteria();
+			if( $clubId )
+				$criteria->add( ClubPeer::ID, $clubId);
+			
 			$clubIdList = array();
-			foreach(Club::getList() as $clubObj):
+			foreach(Club::getList($criteria) as $clubObj):
 				
 				$clubId       = $clubObj->getId();
 				$clubIdList[] = $clubId;
@@ -29,10 +40,13 @@
 				$onclick = 'goToPage(\'club\', \'edit\', \'clubId\', '.$clubId.')"';
 		?>
 		<tr onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" id="clubIdRow-<?php echo $clubId ?>">
-			<td><?php echo checkbox_tag('clubId[]', $clubId) ?></td> 
+			<?php if( $allowDelete ): ?>
+				<td><?php echo checkbox_tag('clubId[]', $clubId) ?></td>
+			<?php endif; ?> 
 			<td onclick="<?php echo $onclick ?>"><?php echo $clubObj->getClubName() ?></td> 
 			<td onclick="<?php echo $onclick ?>"><?php echo $clubObj->getLocation() ?></td> 
-			<td onclick="<?php echo $onclick ?>"><?php echo $clubObj->getEvents() ?></td> 
+			<td onclick="<?php echo $onclick ?>"><?php echo $clubObj->getRankingCount() ?></td> 
+			<td onclick="<?php echo $onclick ?>"><?php echo $clubObj->getEventCount() ?></td> 
 		</tr> 
 		<?php
 			endforeach;
@@ -44,6 +58,6 @@
 		</tr>
 	</tbody> 
 	</table>
-<?php include_partial('home/include/paginator', array('prefix'=>'club', 'recordCount'=>$recordCount)) ?>
+<?php include_partial('home/include/paginator', array('prefix'=>'club', 'recordCount'=>$recordCount, 'allowDelete'=>$allowDelete)) ?>
 </article><!-- end of content manager article -->
 </form>

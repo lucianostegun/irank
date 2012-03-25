@@ -41,14 +41,14 @@ background: #222222 url(/images/backend/header_bg.png) repeat-x;
 
 header#header h1.site_title, header#header h2.section_title {
 float: left;
-margin: 0;
+margin: 0px 0px 0px 0px;
 font-size: 22px;
 display: block;
 width: 15%;
 height: 55px;
 font-weight: normal;
 text-align: left;
-text-indent: 1.8%;
+text-indent: 4px;
 line-height: 55px;
 color: #fff;
 text-shadow: 0 -1px 0 #000;
@@ -62,13 +62,13 @@ text-decoration: none;
 header#header h2.section_title {
 text-align: center;
 text-indent: 4.5%;
-width: 68%;
+width: 70%;
 background: url(/images/backend/header_shadow.png) no-repeat left top;
 }
 
 .btn_view_site {
-float: left;
-width: 9%;
+float: right;
+width: 7%;
 }
 
 .btn_view_site a {
@@ -165,7 +165,7 @@ line-height: 23px;
 }
 
 .breadcrumbs a.current, .breadcrumbs a.current:hover {
-color: #9E9E9E;
+color: #C91E1E;
 font-weight: bold;
 text-shadow: 0 1px 0 #fff;
 text-decoration: none;
@@ -178,11 +178,18 @@ text-shadow: 0 1px 0 #fff;
 font-weight: bold;}
 
 .breadcrumbs a.last {
-font-weight: normal
+color: #606060;
+font-weight: normal;
+cursor: default;
 }
 
 .breadcrumbs a:hover {
-color: #222222;
+color: #C91E1E;
+}
+
+.breadcrumbs a.last:hover {
+color: #606060;
+cursor: default;
 }
 
 .breadcrumb_divider {
@@ -437,6 +444,13 @@ width: 95%;
     background: 	-moz-linear-gradient(top, #F5F5F5, #E0E0E0);
     background: 	-webkit-gradient(linear, left top, left bottom, from(#F5F5F5), to(#E0E0E0));
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#F5F5F5', EndColorStr='#E0E0E0', GradientType=0);
+}
+
+.inner_table {
+	
+	width: 				100%;
+	padding-top: 		30px;
+	padding-bottom: 	30px;
 }
 
 .width_half {

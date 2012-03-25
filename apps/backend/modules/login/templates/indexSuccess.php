@@ -1,17 +1,16 @@
-<script>
-function doLogin(){
-	
-	$('loginForm').submit();
-}
-
-</script>
 <table style="width: 100%">
 	<tr>
 		<td style="text-align: center">
-			<?php echo form_tag('login/login', array('id'=>'loginForm')) ?>
+			<?php
+				echo form_remote_tag(array(
+					'url'=>'login/login',
+					'success'=>'handleSuccessLogin(request.responseText)',
+					'failure'=>'handleFailureLogin(request.responseText)',
+					'encoding'=>'UTF8',
+					), array('id'=>'loginForm'));
+			?>
 			<div id="login">
-				<?php echo image_tag('backend/login/logo') ?>
-				<br/><br/>
+				<div id="loginErrorMessageDiv"><b>ACESSO NEGADO!</b></br>Usuário/Senha inválidos.</div>
 				<table class="loginTable">
 					<tr>
 						<th>Usuário/E-mail</th>

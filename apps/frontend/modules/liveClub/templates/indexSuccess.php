@@ -17,7 +17,7 @@
 			$addressName     = $clubObj->getAddressName();
 			$addressNumber   = $clubObj->getAddressNumber();
 			$addressQuarter  = $clubObj->getAddressQuarter();
-			$city            = $clubObj->getCity()->getDescription();
+			$city            = $clubObj->getCity()->getCityName();
 			$initial         = $clubObj->getCity()->getState()->getInitial();
 			$clubSiteLink    = ($clubSite?(preg_match('/^[a-zA-Z0-9\-_\.]*@/', $clubSite)?'mailto:'.$clubSite:'http://'.$clubSite):null);
 			$clubSiteTarget  = ($clubSite?(preg_match('/^[a-zA-Z0-9\-_\.]*@/', $clubSite)?'_top':'_blank'):null);

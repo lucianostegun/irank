@@ -4,17 +4,19 @@
 jQuery(document).ready(function() {
 
 // choose text for the show/hide link - can contain HTML (e.g. an image)
-var showText='Show';
-var hideText='Hide';
+var showText='EXIBIR';
+var hideText='OCULTAR';
 
 // initialise the visibility check
 var is_visible = false;
 
 // append show/hide links to the element directly preceding the element with a class of "toggle"
-jQuery('.toggle').prev().append(' <a href="#" class="toggleLink">'+hideText+'</a>');
+jQuery('.toggle.visible').prev().append(' <a href="#" class="toggleLink">'+hideText+'</a>');
+jQuery('.toggle.hidden').prev().append(' <a href="#" class="toggleLink">'+showText+'</a>');
 
 // hide all of the elements with a class of 'toggle'
-jQuery('.toggle').show();
+jQuery('.toggle.visible').show();
+jQuery('.toggle.hidden').hide();
 
 // capture clicks on the toggle links
 jQuery('a.toggleLink').click(function() {

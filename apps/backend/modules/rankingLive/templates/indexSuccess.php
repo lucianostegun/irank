@@ -6,6 +6,8 @@
 		'loading'=>'showIndicator("rankingLive")',
 		'encoding'=>'UTF8',
 	), array('id'=>'rankingLiveForm'));
+	
+	$clubId = $sf_user->getAttribute('clubId');
 ?>
 <article class="module width_full">
 	<header></header>
@@ -19,12 +21,13 @@
 			<th>Classificação</th> 
 			<th>Modalidade</th> 
 			<th>Formato</th> 
+			<th>Etapas</th> 
 		</tr> 
 	</thead> 
 	<tbody id="rankingLiveTbody"> 
 		<?php
 			$rankingLiveIdList = array();
-			foreach(RankingLive::getList() as $rankingLiveObj):
+			foreach(RankingLive::getList($clubId) as $rankingLiveObj):
 				
 				$rankingLiveId       = $rankingLiveObj->getId();
 				$rankingLiveIdList[] = $rankingLiveId;
@@ -39,6 +42,7 @@
 			<td onclick="<?php echo $onclick ?>"><?php echo $rankingLiveObj->getRankingType()->getDescription() ?></td> 
 			<td onclick="<?php echo $onclick ?>"><?php echo $rankingLiveObj->getGameType()->getDescription() ?></td> 
 			<td onclick="<?php echo $onclick ?>"><?php echo $rankingLiveObj->getGameStyle()->getDescription() ?></td> 
+			<td onclick="<?php echo $onclick ?>"><?php echo $rankingLiveObj->getEventCount() ?></td> 
 		</tr> 
 		<?php
 			endforeach;

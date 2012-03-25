@@ -1,6 +1,6 @@
 <table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable">
 	<tr class="header">
-		<th>#</th>
+		<th class="first">#</th>
 		<th><?php echo __('Player') ?></th>
 		<th><?php echo __('Events') ?></th>
 		<th><?php echo __('Score') ?></th>

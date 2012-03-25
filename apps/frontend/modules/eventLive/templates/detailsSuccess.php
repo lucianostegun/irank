@@ -3,7 +3,7 @@
 	$rankingLiveObj = $eventLiveObj->getRankingLive();
 	$rankingName    = $rankingLiveObj->getRankingName();
 	$rankingLiveId  = $eventLiveObj->getRankingLiveId();
-	$eventShortName = $eventLiveObj->getEventShortName();
+	$eventShortName = $eventLiveObj->toString();
 	$clubName       = $eventLiveObj->getClub()->getClubName();
 	$clubId         = $eventLiveObj->getClubId();
 	$addressQuarter = $eventLiveObj->getClub()->getAddressQuarter();
@@ -22,7 +22,7 @@
 <div class="eventDetailsArea" align="center">
 	<table cellspacing="0" cellpadding="0" width="100%" class="eventDetails">
 		<tr>
-			<td rowspan="5" class="logo"><?php echo image_tag($rankingLiveObj->getFileNameLogo()) ?></td>
+			<td rowspan="5" class="logo"><?php echo image_tag('ranking/'.$rankingLiveObj->getFileNameLogo()) ?></td>
 		</tr>
 		<tr>
 			<th valign="top"><h1><?php echo $eventLiveObj->getEventName() ?></h1></th>
@@ -52,7 +52,7 @@
 			<td><?php echo $weekDay ?>, <?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></th>
 		</tr>
 		<tr class="info">
-			<td><?php echo link_to(sprintf('@%s - %s, %s-%s', $clubName, $addressQuarter, $city, $state), '') ?></th>
+			<td><?php echo link_to(sprintf('@%s - %s, %s-%s', $clubName, $addressQuarter, $city, $state), '#goToPage("rankingLive", "view", "rankingLiveId", '.$rankingLiveObj->getId().')') ?></th>
 		</tr>
 	</table>
 	<div class="separator"></div>
