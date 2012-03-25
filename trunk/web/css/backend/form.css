@@ -20,6 +20,13 @@
 	margin: 0px 0 5px 0;
 }
 
+.defaultForm label.checkbox {
+
+	text-align: 	left;
+	font-weight: 	normal;
+	padding-left: 	0px;
+}
+
 .defaultForm .text {
 
 	display: block;
@@ -51,6 +58,7 @@
 }
 
 .defaultForm input[type=text],
+.defaultForm input[type=password],
 .defaultForm input[type=file] {
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
@@ -61,7 +69,8 @@ color: #303030;
 -webkit-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
 -moz-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
 box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
-padding-left: 10px;
+padding-left: 7px;
+padding-right: 7px;
 background-position: 10px 6px;
 margin: 0;
 display: block;
@@ -111,7 +120,7 @@ box-shadow: inset 0 2px 2px #ccc, 0 0 7px #e6adad;
 	margin: 3px 10px;
 	border: 1px solid #bbb;
 	height: 20px;
-	color: #666666;
+	color: #303030;
 }
 
 .defaultForm input[type=text].formFieldError,
@@ -121,21 +130,26 @@ box-shadow: inset 0 2px 2px #ccc, 0 0 7px #e6adad;
 }
 
 .defaultForm textarea {
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-border: 1px solid #BBBBBB;
-color: #666666;
--webkit-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
--moz-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
-padding-left: 10px;
-background-position: 10px 6px;
-margin: 0 0.5%;
-display: block;
-float: left;
-width: 96%;
-margin: 0 10px;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #BBBBBB;
+	color: #666666;
+	-webkit-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
+	-moz-box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
+	box-shadow: inset 0 2px 2px #ccc, 0 1px 0 #fff;
+	padding-left: 7px;
+	padding-right: 3px;
+	padding-top: 10px;
+	font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+	font-size: 13px;
+	background-position: 10px 6px;
+	margin: 0 0.5%;
+	display: block;
+	float: left;
+	width: 96%;
+	margin: 0 10px;
 }
 
 .defaultForm textarea:focus {
@@ -157,6 +171,40 @@ width: 150px;
 border: 1px solid #bbb;
 height: 20px;
 color: #666666;
+}
+
+.defaultForm fieldset {
+	
+	-webkit-border-radius: 	5px;
+	-moz-border-radius: 	5px;
+	border-radius: 			5px;
+	background: 			#F6F6F6;
+	border: 1px solid 		#ccc;
+	padding: 				1% 0%;
+	margin: 				0px;
+}
+
+.defaultForm fieldset legend {
+
+	margin: 		0px 10px;
+	font-weight: 	bold;
+}
+
+.defaultForm fieldset label {
+
+	margin: 			0px 10px;
+	font-weight: 		bold;
+	text-align: 		left;
+	font-weight: 		normal;
+	padding-left: 		0px;
+	width: 				200px;
+	height: 			25px;
+	line-height: 		25px;
+	text-shadow: 		0 1px 0 #FFFFFF;
+	padding-left: 		10px;
+	margin: 			0px;
+	text-transform: 	none;
+}
 }
 
 #main .module_content h1 {
@@ -195,62 +243,12 @@ margin: 8px 0px;
 line-height: 150%;
 }
 
-/* Alerts */
-
-#main h4.alert_info {
-display: block;
-width: 95%;
-margin: 20px 3% 0 3%;
-margin-top: 20px;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-background: #B5E5EF url(/images/backend/icn_alert_info.png) no-repeat;
-background-position: 10px 10px;
-border: 1px solid #77BACE;
-color: #082B33;
-padding: 10px 0;
-text-indent: 40px;
-font-size: 14px;}
-
-#main h4.alert_warning {
-display: block;
-width: 95%;
-margin: 20px 3% 0 3%;
-margin-top: 20px;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-background: #F5F3BA url(/images/backend/icn_alert_warning.png) no-repeat;
-background-position: 10px 10px;
-border: 1px solid #C7A20D;
-color: #796616;
-padding: 10px 0;
-text-indent: 40px;
-font-size: 14px;}
-
-#main h4.alert_error {
-display: block;
-width: 95%;
-margin: 20px 3% 0 3%;
-margin-top: 20px;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-background: #F3D9D9 url(/images/backend/icn_alert_error.png) no-repeat;
-background-position: 10px 8px;
-border: 1px solid #D20009;
-color: #7B040F;
-padding: 10px 0;
-text-indent: 45px;
-font-size: 14px;
-font-weight: normal}
-
 footer {
 
 	text-indent: 	40px;
 }
 
+header.error,
 footer.error {
 display: block;
 background: #F3D9D9 url(/images/backend/icn_alert_error.png) no-repeat;
@@ -263,50 +261,85 @@ font-weight: normal}
 footer.success {
 
 	display: 				block;
-	background: 			#BFD9F7 url(/images/backend/icn_alert_success.png) no-repeat;
-	background-position: 	10px 5px;
+	background: 			url(/images/backend/module_footer_success_bg.png) repeat-x;
 	color: 					#333A48;
 	text-indent: 			45px;
 	font-size: 				14px;
 	font-weight: 			normal
 }
 
+footer.error {
+
+	display: 				block;
+	background: 			url(/images/backend/module_footer_error_bg.png) repeat-x;
+	color: 					#483333;
+	text-indent: 			45px;
+	font-size: 				14px;
+	font-weight: 			normal
+}
+
+header.formHeader {
+
+	display: 				block;
+	margin-top: 			-5px;
+	-webkit-border-radius: 	0px;
+	-moz-border-radius: 	0px;
+	border-radius: 			0px;
+	text-indent: 			45px;
+	font-size: 				14px;
+	font-weight: 			normal;
+}
+
+header.success {
+
+	background: 			url(/images/backend/secondary_bar_success.png) repeat-x;
+	background-position: 	10px 5px;
+	color: 					#333A48;
+	margin-top: 			-10px;
+	padding-top: 			5px;
+}
+
+header.error {
+
+	background: 			url(/images/backend/secondary_bar_error.png) repeat-x;
+	background-position: 	10px 5px;
+	color: 					#7B040F;
+	margin-top: 			-10px;
+	padding-top: 			5px;
+}
+
+header .formMessage,
 footer .formMessage {
 	display: none;
 	line-height: 30px;
 }
 
+header .formMessage.indicator,
 footer .formMessage.indicator {
 	display: none;
 	line-height: 30px;
 	background: url(/images/ajaxLoaderForm.gif) no-repeat;
 	background-position: 13px 8px;
+	text-indent: 45px;
+}
+
+header .formMessage.success,
+footer .formMessage.success {
+
+	background: url(/images/backend/icn_alert_success.png) no-repeat;
+	background-position: 10px 5px;
+}
+
+header .formMessage.error,
+footer .formMessage.error {
+
+	background: url(/images/backend/icn_alert_error.png) no-repeat;
+	background-position: 10px 5px;
 }
 
 footer .paginator {
 	line-height: 30px;
 }
-
-#main h4.alert_success {
-	
-	display: block;
-	width: 95%;
-	margin: 20px 3% 0 3%;
-	margin-top: 20px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	background: #E2F6C5 url(/images/backend/icn_alert_success.png) no-repeat;
-	background-position: 10px 8px;
-	border: 1px solid #79C20D;
-	color: #32510F;
-	padding: 10px 0;
-	text-indent: 40px;
-	font-size: 14px;
-	font-weight: normal
-}
-
-
 
 input[type=submit].save_btn,
 input[type=button].cancel_btn {

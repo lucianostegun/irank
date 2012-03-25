@@ -566,7 +566,7 @@
 		</foreign-key>
 	</table>
 	
-	<table name="ranking_live" idMethod="native">
+	<table name="ranking_live" phpName="RankingLive">
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
 		<column name="ranking_name" type="VARCHAR" size="25"/>
 		<column name="ranking_type_id" type="INTEGER"/>
@@ -598,13 +598,13 @@
 		</foreign-key>
 	</table>
   
-	<table name="event_live" idMethod="native">
+	<table name="event_live" phpName="EventLive">
 		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
 		<column name="ranking_live_id" type="INTEGER" required="true"/>
 		<column name="event_name" type="VARCHAR" size="100"/>
 		<column name="event_short_name" type="VARCHAR" size="50"/>
 		<column name="event_date" type="DATE"/>
-		<column name="event_time" type="TIME"/>
+		<column name="start_time" type="TIME"/>
 		<column name="event_datetime" type="TIMESTAMP"/>
 		<column name="description" type="LONGVARCHAR"/>
 		<column name="club_id" type="INTEGER"/>
@@ -612,8 +612,13 @@
 		<column name="blind_time" type="TIME"/>
 		<column name="stack_chips" type="DOUBLE"/>
 		<column name="players" type="INTEGER"/>
-		<column name="allowed_rebuys" type="INTEGER"/>
-		<column name="allowed_addons" type="INTEGER"/>
+		<column name="allowed_rebuys" type="INTEGER" default="0" />
+		<column name="allowed_addons" type="INTEGER" default="0" />
+		<column name="is_ilimited_rebuys" type="BOOLEAN"/>
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP"/>
 		<column name="updated_at" type="TIMESTAMP"/>
 		<foreign-key foreignTable="ranking_live">
@@ -624,5 +629,41 @@
 		</foreign-key>
 	</table>
 	
-
+	<table name="user_admin" phpName="UserAdmin" package="...apps.backend.lib.model">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="people_id" type="INTEGER" />
+		<column name="club_id" type="INTEGER" />
+		<column name="username" type="VARCHAR" />
+		<column name="password" type="VARCHAR" />
+		<column name="active" type="BOOLEAN" />
+		<column name="master" type="BOOLEAN" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="last_access_date" type="TIMESTAMP" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="people">
+			<reference local="people_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="club">
+			<reference local="club_id" foreign="id" />
+		</foreign-key>
+	</table>
+  
+	<table name="club_ranking_live" phpName="ClubRankingLive">
+		<column name="club_id" type="INTEGER" required="true" primaryKey="true"/>
+		<column name="ranking_live_id" type="INTEGER" required="true" primaryKey="true"/>
+		<column name="enabled" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP"/>
+		<column name="updated_at" type="TIMESTAMP"/>
+		<foreign-key foreignTable="club">
+			<reference local="club_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="ranking_live">
+			<reference local="ranking_live_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
 </database>

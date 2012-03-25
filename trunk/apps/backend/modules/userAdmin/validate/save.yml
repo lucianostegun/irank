@@ -1,0 +1,38 @@
+fields:
+      
+  peopleId:
+    required:
+      msg:       [peopleName] form.error.requiredField
+       
+  username:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       15
+      max_error: form.error.max15
+    sfCallbackValidator:
+      callback:      [UserAdminPeer, uniqueUsername]
+      invalid_error: form.error.takenUsername
+    sfRegexValidator:
+      match:        Yes
+      match_error:  form.error.invalidUsername
+      pattern:      /^[a-zA-Z]+[a-zA-Z0-9_-]$/si
+
+  newPassword:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       32
+      max_error: form.error.between6and15
+      min:       6
+      min_error: form.error.between6and15
+      
+  passwordConfirm:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       32
+      max_error: form.error.between6and15
+    sfCompareValidator:
+      check:    newPassword
+      compare_error: form.error.passwordConfirm

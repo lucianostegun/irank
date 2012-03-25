@@ -6,7 +6,11 @@ include_http_metas();
 include_metas();
 include_title();
 
-$peopleName = 'Luciano Stegun';
+$iRankAdmin = $sf_user->hasCredential('iRankAdmin');
+$iRankSite = $sf_user->hasCredential('iRankClub');
+$messages   = 0;
+$peopleName = $sf_user->getAttribute(($messages?'firstName':'fullName'));
+$moduleName = $sf_context->getModuleName();
 ?>
 
 	<!--[if lt IE 9]>
@@ -16,6 +20,8 @@ $peopleName = 'Luciano Stegun';
 </head>
 
 <script type="text/javascript">
+
+	var _ModuleName = '<?php echo $moduleName ?>';
 
 	jQuery.noConflict();
 	
@@ -55,14 +61,19 @@ $peopleName = 'Luciano Stegun';
 
 	<header id="header">
 		<hgroup>
-			<h1 class="site_title"><a href="index.html">iRank Admin</a></h1>
-			<h2 class="section_title">Resumo geral</h2><div class="btn_view_site"><a href="http://www.irank.com.br">iRank Site</a></div>
+			<h1 class="site_title"><?php echo link_to(image_tag('backend/logo'), 'home/index') ?></h1>
+			<h2 class="section_title">Resumo geral</h2>
+			<div class="btn_view_site"><?php echo link_to('desconectar', 'login/logout') ?></div>
 		</hgroup>
 	</header> <!-- end of header bar -->
 	
 	<section id="secondary_bar">
 		<div class="user">
-			<p><?php echo $peopleName ?> (<a href="#">3 Messages</a>)</p>
+			<p><?php echo $peopleName ?> 
+			<?php
+				if( $messages )
+					echo '('.link_to(sprintf('%d Mensage%s', $messages, ($messages==1?'m':'ns')), 'messages/index').')';
+			?></p>
 			<!-- <a class="logout_user" href="#" title="Logout">Logout</a> -->
 		</div>
 		<div class="breadcrumbs_container">
@@ -89,51 +100,69 @@ $peopleName = 'Luciano Stegun';
 			<input type="text" value="Quick Search" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;">
 		</form>
 		<hr/>
-		<h3>Eventos</h3>
-		<ul class="toggle">
+		<h3>Clubes</h3>
+		<ul class="toggle <?php echo ($moduleName=='club'?'visible':'hidden') ?>">
+		<?php if( $iRankAdmin ): ?>
+			<li class="icn_new_article"><?php echo link_to('Novo clube', 'club/new') ?></li>
+		<?php endif; ?>
+			<li class="icn_categories"><?php echo link_to('Lista de clubes', 'club/index') ?></li>
+		</ul>
+		<?php if( $iRankAdmin ): ?>
+		<h3>Eventos - Home</h3>
+		<ul class="toggle <?php echo ($moduleName=='event'?'visible':'hidden') ?>">
+			<li class="icn_new_article"><?php echo link_to('Novo evento', 'eventLive/new') ?></li>
+			<li class="icn_categories"><?php echo link_to('Lista de eventos', 'eventLive/index') ?></li>
+		</ul>
+		<?php endif; ?>
+		<h3>Eventos - Live</h3>
+		<ul class="toggle <?php echo ($moduleName=='eventLive'?'visible':'hidden') ?>">
 			<li class="icn_new_article"><?php echo link_to('Novo evento', 'eventLive/new') ?></li>
 			<li class="icn_categories"><?php echo link_to('Lista de eventos', 'eventLive/index') ?></li>
 			<li class="icn_tags"><?php echo link_to('Templates', 'eventLive/templates') ?></li>
 		</ul>
-		<h3>Rankings</h3>
-		<ul class="toggle">
+		<?php if( $iRankAdmin ): ?>
+		<h3>Rankings - Home</h3>
+		<ul class="toggle <?php echo ($moduleName=='ranking'?'visible':'hidden') ?>">
 			<li class="icn_new_article"><a href="#">Novo ranking</a></li>
 			<li class="icn_categories"><a href="#">Lista de rankings</a></li>
-			<br/>
-			<li class="icn_new_article"><?php echo link_to('Novo ranking live', 'rankingLive/new') ?></li>
-			<li class="icn_categories"><?php echo link_to('Lista de rankings live', 'rankingLive/index') ?></li>
-		</ul>
-		<?php if($sf_user->hasCredential('iRankAdmin')): ?>
-		<h3>Clubes</h3>
-		<ul class="toggle">
-			<li class="icn_new_article"><?php echo link_to('Novo clube', 'club/new') ?></li>
-			<li class="icn_categories"><?php echo link_to('Lista de clubes', 'club/index') ?></li>
 		</ul>
 		<?php endif; ?>
+		<h3>Rankings - Live</h3>
+		<ul class="toggle <?php echo ($moduleName=='rankingLive'?'visible':'hidden') ?>">
+			<li class="icn_new_article"><?php echo link_to('Novo ranking', 'rankingLive/new') ?></li>
+			<li class="icn_categories"><?php echo link_to('Lista de rankings', 'rankingLive/index') ?></li>
+		</ul>
+		<?php if( $iRankAdmin ): ?>
 		<h3>Usuários</h3>
-		<ul class="toggle">
-			<li class="icn_add_user"><a href="#">Novo usuário</a></li>
-			<li class="icn_view_users"><a href="#">Lista de usuários</a></li>
-			<li class="icn_profile"><a href="#">Meus dados</a></li>
+		<ul class="toggle <?php echo ($moduleName=='userSite'?'visible':'hidden') ?>">
+			<li class="icn_add_user"><?php echo link_to('Novo usuário', 'userSite/new') ?></li>
+			<li class="icn_view_users"><?php echo link_to('Lista de usuários', 'userSite/index') ?></li>
 		</ul>
 		<h3>Media</h3>
-		<ul class="toggle">
+		<ul class="toggle <?php echo ($moduleName=='media'?'visible':'hidden') ?>">
 			<li class="icn_folder"><a href="#">File Manager</a></li>
 			<li class="icn_photo"><a href="#">Gallery</a></li>
 			<li class="icn_audio"><a href="#">Audio</a></li>
 			<li class="icn_video"><a href="#">Video</a></li>
 		</ul>
+		<?php endif; ?>
 		<h3>Admin</h3>
-		<ul class="toggle">
+		<ul class="toggle visible">
+		<?php if( $iRankAdmin ): ?>
+			<li class="icn_add_user"><?php echo link_to('Novo usuário', 'userAdmin/new') ?></li>
+			<li class="icn_view_users"><?php echo link_to('Lista de usuários', 'userAdmin/index') ?></li>
+			<br/>		
 			<li class="icn_settings"><a href="#">Painel de controle</a></li>
 			<li class="icn_security"><a href="#">Security</a></li>
-			<li class="icn_jump_back"><?php echo link_to('Logout', 'login/logout') ?></li>
+		<?php endif; ?>
+			<li class="icn_profile"><a href="#">Meus dados</a></li>
 		</ul>
+		<br/>
 		
 		<footer>
 			<hr />
 			<p><strong>Copyright &copy; 2011 Website Admin</strong></p>
-			<p>Theme by <a href="http://www.medialoot.com">MediaLoot</a></p>
+			<p>Theme by <a href="http://www.medialoot.com" target="_blank">MediaLoot</a></p>
 		</footer>
 	</aside><!-- end of sidebar -->
 	

@@ -29,7 +29,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 
 	
-	protected $event_time;
+	protected $start_time;
 
 
 	
@@ -61,11 +61,31 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 
 	
-	protected $allowed_rebuys;
+	protected $allowed_rebuys = 0;
 
 
 	
-	protected $allowed_addons;
+	protected $allowed_addons = 0;
+
+
+	
+	protected $is_ilimited_rebuys;
+
+
+	
+	protected $enabled;
+
+
+	
+	protected $visible;
+
+
+	
+	protected $deleted;
+
+
+	
+	protected $locked;
 
 
 	
@@ -138,17 +158,17 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getEventTime($format = 'H:i:s')
+	public function getStartTime($format = 'H:i:s')
 	{
 
-		if ($this->event_time === null || $this->event_time === '') {
+		if ($this->start_time === null || $this->start_time === '') {
 			return null;
-		} elseif (!is_int($this->event_time)) {
-						$ts = strtotime($this->event_time);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [event_time] as date/time value: " . var_export($this->event_time, true));
+		} elseif (!is_int($this->start_time)) {
+						$ts = strtotime($this->start_time);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [start_time] as date/time value: " . var_export($this->start_time, true));
 			}
 		} else {
-			$ts = $this->event_time;
+			$ts = $this->start_time;
 		}
 		if ($format === null) {
 			return $ts;
@@ -250,6 +270,41 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	{
 
 		return $this->allowed_addons;
+	}
+
+	
+	public function getIsIlimitedRebuys()
+	{
+
+		return $this->is_ilimited_rebuys;
+	}
+
+	
+	public function getEnabled()
+	{
+
+		return $this->enabled;
+	}
+
+	
+	public function getVisible()
+	{
+
+		return $this->visible;
+	}
+
+	
+	public function getDeleted()
+	{
+
+		return $this->deleted;
+	}
+
+	
+	public function getLocked()
+	{
+
+		return $this->locked;
 	}
 
 	
@@ -374,19 +429,19 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setEventTime($v)
+	public function setStartTime($v)
 	{
 
 		if ($v !== null && !is_int($v)) {
 			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [event_time] from input: " . var_export($v, true));
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [start_time] from input: " . var_export($v, true));
 			}
 		} else {
 			$ts = $v;
 		}
-		if ($this->event_time !== $ts) {
-			$this->event_time = $ts;
-			$this->modifiedColumns[] = EventLivePeer::EVENT_TIME;
+		if ($this->start_time !== $ts) {
+			$this->start_time = $ts;
+			$this->modifiedColumns[] = EventLivePeer::START_TIME;
 		}
 
 	} 
@@ -498,7 +553,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->allowed_rebuys !== $v) {
+		if ($this->allowed_rebuys !== $v || $v === 0) {
 			$this->allowed_rebuys = $v;
 			$this->modifiedColumns[] = EventLivePeer::ALLOWED_REBUYS;
 		}
@@ -512,9 +567,59 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->allowed_addons !== $v) {
+		if ($this->allowed_addons !== $v || $v === 0) {
 			$this->allowed_addons = $v;
 			$this->modifiedColumns[] = EventLivePeer::ALLOWED_ADDONS;
+		}
+
+	} 
+	
+	public function setIsIlimitedRebuys($v)
+	{
+
+		if ($this->is_ilimited_rebuys !== $v) {
+			$this->is_ilimited_rebuys = $v;
+			$this->modifiedColumns[] = EventLivePeer::IS_ILIMITED_REBUYS;
+		}
+
+	} 
+	
+	public function setEnabled($v)
+	{
+
+		if ($this->enabled !== $v) {
+			$this->enabled = $v;
+			$this->modifiedColumns[] = EventLivePeer::ENABLED;
+		}
+
+	} 
+	
+	public function setVisible($v)
+	{
+
+		if ($this->visible !== $v) {
+			$this->visible = $v;
+			$this->modifiedColumns[] = EventLivePeer::VISIBLE;
+		}
+
+	} 
+	
+	public function setDeleted($v)
+	{
+
+		if ($this->deleted !== $v) {
+			$this->deleted = $v;
+			$this->modifiedColumns[] = EventLivePeer::DELETED;
+		}
+
+	} 
+	
+	public function setLocked($v)
+	{
+
+		if ($this->locked !== $v) {
+			$this->locked = $v;
+			$this->modifiedColumns[] = EventLivePeer::LOCKED;
 		}
 
 	} 
@@ -567,7 +672,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 			$this->event_date = $rs->getDate($startcol + 4, null);
 
-			$this->event_time = $rs->getTime($startcol + 5, null);
+			$this->start_time = $rs->getTime($startcol + 5, null);
 
 			$this->event_datetime = $rs->getTimestamp($startcol + 6, null);
 
@@ -587,15 +692,25 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 			$this->allowed_addons = $rs->getInt($startcol + 14);
 
-			$this->created_at = $rs->getTimestamp($startcol + 15, null);
+			$this->is_ilimited_rebuys = $rs->getBoolean($startcol + 15);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 16, null);
+			$this->enabled = $rs->getBoolean($startcol + 16);
+
+			$this->visible = $rs->getBoolean($startcol + 17);
+
+			$this->deleted = $rs->getBoolean($startcol + 18);
+
+			$this->locked = $rs->getBoolean($startcol + 19);
+
+			$this->created_at = $rs->getTimestamp($startcol + 20, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 21, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 17; 
+						return $startcol + 22; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLive object", $e);
 		}
@@ -778,7 +893,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				return $this->getEventDate();
 				break;
 			case 5:
-				return $this->getEventTime();
+				return $this->getStartTime();
 				break;
 			case 6:
 				return $this->getEventDatetime();
@@ -808,9 +923,24 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				return $this->getAllowedAddons();
 				break;
 			case 15:
-				return $this->getCreatedAt();
+				return $this->getIsIlimitedRebuys();
 				break;
 			case 16:
+				return $this->getEnabled();
+				break;
+			case 17:
+				return $this->getVisible();
+				break;
+			case 18:
+				return $this->getDeleted();
+				break;
+			case 19:
+				return $this->getLocked();
+				break;
+			case 20:
+				return $this->getCreatedAt();
+				break;
+			case 21:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -828,7 +958,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$keys[2]=>$this->getEventName(),
 			$keys[3]=>$this->getEventShortName(),
 			$keys[4]=>$this->getEventDate(),
-			$keys[5]=>$this->getEventTime(),
+			$keys[5]=>$this->getStartTime(),
 			$keys[6]=>$this->getEventDatetime(),
 			$keys[7]=>$this->getDescription(),
 			$keys[8]=>$this->getClubId(),
@@ -838,8 +968,13 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$keys[12]=>$this->getPlayers(),
 			$keys[13]=>$this->getAllowedRebuys(),
 			$keys[14]=>$this->getAllowedAddons(),
-			$keys[15]=>$this->getCreatedAt(),
-			$keys[16]=>$this->getUpdatedAt(),
+			$keys[15]=>$this->getIsIlimitedRebuys(),
+			$keys[16]=>$this->getEnabled(),
+			$keys[17]=>$this->getVisible(),
+			$keys[18]=>$this->getDeleted(),
+			$keys[19]=>$this->getLocked(),
+			$keys[20]=>$this->getCreatedAt(),
+			$keys[21]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -871,7 +1006,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$this->setEventDate($value);
 				break;
 			case 5:
-				$this->setEventTime($value);
+				$this->setStartTime($value);
 				break;
 			case 6:
 				$this->setEventDatetime($value);
@@ -901,9 +1036,24 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$this->setAllowedAddons($value);
 				break;
 			case 15:
-				$this->setCreatedAt($value);
+				$this->setIsIlimitedRebuys($value);
 				break;
 			case 16:
+				$this->setEnabled($value);
+				break;
+			case 17:
+				$this->setVisible($value);
+				break;
+			case 18:
+				$this->setDeleted($value);
+				break;
+			case 19:
+				$this->setLocked($value);
+				break;
+			case 20:
+				$this->setCreatedAt($value);
+				break;
+			case 21:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -918,7 +1068,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setEventName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setEventShortName($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setEventDate($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setEventTime($arr[$keys[5]]);
+		if (array_key_exists($keys[5], $arr)) $this->setStartTime($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setEventDatetime($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setDescription($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setClubId($arr[$keys[8]]);
@@ -928,8 +1078,13 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[12], $arr)) $this->setPlayers($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setAllowedRebuys($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setAllowedAddons($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setCreatedAt($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setUpdatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[15], $arr)) $this->setIsIlimitedRebuys($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setEnabled($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setVisible($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setDeleted($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setLocked($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setCreatedAt($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setUpdatedAt($arr[$keys[21]]);
 	}
 
 	
@@ -942,7 +1097,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePeer::EVENT_NAME)) $criteria->add(EventLivePeer::EVENT_NAME, $this->event_name);
 		if ($this->isColumnModified(EventLivePeer::EVENT_SHORT_NAME)) $criteria->add(EventLivePeer::EVENT_SHORT_NAME, $this->event_short_name);
 		if ($this->isColumnModified(EventLivePeer::EVENT_DATE)) $criteria->add(EventLivePeer::EVENT_DATE, $this->event_date);
-		if ($this->isColumnModified(EventLivePeer::EVENT_TIME)) $criteria->add(EventLivePeer::EVENT_TIME, $this->event_time);
+		if ($this->isColumnModified(EventLivePeer::START_TIME)) $criteria->add(EventLivePeer::START_TIME, $this->start_time);
 		if ($this->isColumnModified(EventLivePeer::EVENT_DATETIME)) $criteria->add(EventLivePeer::EVENT_DATETIME, $this->event_datetime);
 		if ($this->isColumnModified(EventLivePeer::DESCRIPTION)) $criteria->add(EventLivePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(EventLivePeer::CLUB_ID)) $criteria->add(EventLivePeer::CLUB_ID, $this->club_id);
@@ -952,6 +1107,11 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePeer::PLAYERS)) $criteria->add(EventLivePeer::PLAYERS, $this->players);
 		if ($this->isColumnModified(EventLivePeer::ALLOWED_REBUYS)) $criteria->add(EventLivePeer::ALLOWED_REBUYS, $this->allowed_rebuys);
 		if ($this->isColumnModified(EventLivePeer::ALLOWED_ADDONS)) $criteria->add(EventLivePeer::ALLOWED_ADDONS, $this->allowed_addons);
+		if ($this->isColumnModified(EventLivePeer::IS_ILIMITED_REBUYS)) $criteria->add(EventLivePeer::IS_ILIMITED_REBUYS, $this->is_ilimited_rebuys);
+		if ($this->isColumnModified(EventLivePeer::ENABLED)) $criteria->add(EventLivePeer::ENABLED, $this->enabled);
+		if ($this->isColumnModified(EventLivePeer::VISIBLE)) $criteria->add(EventLivePeer::VISIBLE, $this->visible);
+		if ($this->isColumnModified(EventLivePeer::DELETED)) $criteria->add(EventLivePeer::DELETED, $this->deleted);
+		if ($this->isColumnModified(EventLivePeer::LOCKED)) $criteria->add(EventLivePeer::LOCKED, $this->locked);
 		if ($this->isColumnModified(EventLivePeer::CREATED_AT)) $criteria->add(EventLivePeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EventLivePeer::UPDATED_AT)) $criteria->add(EventLivePeer::UPDATED_AT, $this->updated_at);
 
@@ -992,7 +1152,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 		$copyObj->setEventDate($this->event_date);
 
-		$copyObj->setEventTime($this->event_time);
+		$copyObj->setStartTime($this->start_time);
 
 		$copyObj->setEventDatetime($this->event_datetime);
 
@@ -1011,6 +1171,16 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		$copyObj->setAllowedRebuys($this->allowed_rebuys);
 
 		$copyObj->setAllowedAddons($this->allowed_addons);
+
+		$copyObj->setIsIlimitedRebuys($this->is_ilimited_rebuys);
+
+		$copyObj->setEnabled($this->enabled);
+
+		$copyObj->setVisible($this->visible);
+
+		$copyObj->setDeleted($this->deleted);
+
+		$copyObj->setLocked($this->locked);
 
 		$copyObj->setCreatedAt($this->created_at);
 

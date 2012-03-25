@@ -1,0 +1,15 @@
+default:
+  is_secure: on
+  credentials: [iRankAdmin]
+
+index:
+  credentials: [[iRankAdmin, iRankClub]]
+
+edit:
+  credentials: [[iRankAdmin, iRankClub]]
+
+save:
+  credentials: [[iRankAdmin, iRankClub]]
+  
+uploadLogo:
+  is_secure: off

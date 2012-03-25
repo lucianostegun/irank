@@ -46,7 +46,7 @@ function updateFileUploadStatus(status, fileName){
 			break;
 		case 'error':
 			$('rankingLiveFileNameLogoDiv').innerHTML = 'Não informado';
-			alert('Erro ao carregar o arquivo!\nVerifique se o arquivo é uma imagem JPG ou PNG de 90x90px');
+			alert('Erro ao carregar o arquivo!\nVerifique se o arquivo é uma imagem JPG ou PNG de 90x90 pixels');
 			break;
 	}
 }

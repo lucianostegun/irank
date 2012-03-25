@@ -8,6 +8,9 @@
  */
 class Util {
 
+	const AUTO_COMPLETE_SUGGEST_NEW = 1;
+	const AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY = 2;
+
 	/**
 	 * Método responsável por criar e retornar um nobo objeto de uma
 	 * determinada classe de acordo com o parâmetro.
@@ -136,9 +139,12 @@ class Util {
 	 * 				consultas autocomplete retornarem registros com o mesmo ID
 	 * @return     String
 	 */
-	public static function getAutoCompleteResults( $table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName ){
+	public static function getAutoCompleteResults( $table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options=array() ){
 		
 		$sql = 'SELECT '.$fieldId.', '.$fieldName.' FROM '.$table.' WHERE '.$condition.' ORDER BY '.$fieldOrder;
+		
+		$suggestNew = array_key_exists('suggestNew', $options)?$options['suggestNew']:false;
+		$quickName  = array_key_exists('quickName', $options)?$options['quickName']:null;
 
 	    $resultSet = self::executeQuery( $sql );
 	    
@@ -152,7 +158,12 @@ class Util {
 			$name = $resultSet->getString(2);
 			$result .= '	<li id="'.$instanceName.$id.'">'.$name.'</li>'.$li;    	
 	    }
-	
+		
+		if( $suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW && $quickName )
+			$result .= '	<li id="quickNew"><b>Criar novo: </b>'.$quickName.'</li>'.$li;
+		else if( $suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY && $resultSet->getRecordCount()==0 && $quickName )
+			$result .= '	<li id="quickNew"><b>Criar novo: </b>'.$quickName.'</li>'.$li;
+			    	
 	    $result .= '</ul>';
 	    
 	    return $result;

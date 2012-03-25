@@ -28,6 +28,30 @@
 				<target>Informe um valor de até 15 caracteres</target>
 			</trans-unit>
 			<trans-unit>
+				<source>form.error.max20</source>
+				<target>Informe um valor de até 20 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max25</source>
+				<target>Informe um valor de até 25 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max30</source>
+				<target>Informe um valor de até 30 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max35</source>
+				<target>Informe um valor de até 35 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max50</source>
+				<target>Informe um valor de até 50 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max100</source>
+				<target>Informe um valor de até 100 caracteres</target>
+			</trans-unit>
+			<trans-unit>
 				<source>form.error.max150</source>
 				<target>Informe um valor de até 150 caracteres</target>
 			</trans-unit>
@@ -36,12 +60,16 @@
 				<target>Informe um valor de até 25 caracteres</target>
 			</trans-unit>
 			<trans-unit>
-				<source>form.error.between5and15</source>
-				<target>Informe um valor entre 5 e 15 caracteres</target>
+				<source>form.error.between6and15</source>
+				<target>Informe um valor entre 6 e 15 caracteres</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.passwordConfirm</source>
 				<target>A confirmação deve ser igual a senha</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidDate</source>
+				<target>A data informada não é válida</target>
 			</trans-unit>
 			
 			

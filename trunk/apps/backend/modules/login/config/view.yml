@@ -11,7 +11,7 @@ default:
 
   stylesheets:    [-*, backend/login]
 
-  javascripts:    [-*, -*, -*, -*, -*, /sf/prototype/js/prototype, phpEquivalents]
+  javascripts:    [-*, -*, -*, -*, util, /sf/prototype/js/prototype, phpEquivalents, backend/login]
 
   has_layout:     on
   layout:         login

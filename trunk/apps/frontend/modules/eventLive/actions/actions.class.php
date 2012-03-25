@@ -16,6 +16,7 @@ class eventLiveActions extends sfActions
   public function executeGetTabContent($request){
   	
   	$eventLiveId = $request->getParameter('id');
+  	$eventLiveId = $request->getParameter('eventLiveId', $eventLiveId);
   	$tabId       = $request->getParameter('tabId');
   	$tabId       = strtolower($tabId);
   	

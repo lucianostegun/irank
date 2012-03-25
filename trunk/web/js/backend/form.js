@@ -72,6 +72,9 @@ function handleFormFieldError( content, prefix, alertMessage, indicatorId, handl
 			showFormStatusError(prefix);
 	}else{
 		
+		if( prefix )
+			showFormStatusError(prefix);
+		
 		if( handleFunc )
 			return handleFunc(content);
 		
@@ -99,14 +102,18 @@ function addFormStatusError(fieldId, formFieldMessage){
 
 function showFormStatusError(prefix){
 	
-	showDiv(prefix+'FormError');
+	showDiv(prefix+'HeaderError');
+	showDiv(prefix+'FooterError');
 	hideFormStatusSuccess(prefix);
+	$(prefix+'Header').addClassName('error');
 	$(prefix+'Footer').addClassName('error');
 }
 
 function hideFormStatusError(prefix){
 	
-	hideDiv(prefix+'FormError');
+	hideDiv(prefix+'HeaderError');
+	hideDiv(prefix+'FooterError');
+	$(prefix+'Header').removeClassName('error');
 	$(prefix+'Footer').removeClassName('error');
 }
 
@@ -117,19 +124,16 @@ function clearFormFieldErrors( prefix ){
 	if( !prefix || $(prefix+'Form')==null )
 		return;
 	
-	var formObj      = $( prefix+'Form' );
-	var fieldObjList = formObj.getElementsByClassName('formFieldError');
+	var form = $( prefix+'Form' );
 	
-	for(var i=0; i < fieldObjList.length; i++){
+	for(i=0; i < form.length; i++){
 		
-		var fieldObj = fieldObjList[i];
-		
-		if( fieldObj.className=='formFieldError' ){
+		if( form[i].className=='formFieldError' ){
 			
-			fieldObj.className = '';
-			fieldObj.title     = '';
+			form[i].className = '';
+			form[i].title = '';
 			
-			hideDiv(fieldObj.id+'Error');
+			hideDiv(form[i].id+'Error');
 		}
 	}
 	
@@ -153,12 +157,14 @@ var _hideFormStatusSuccessDelay = 0;
 
 function showFormStatusSuccess(prefix){
 
-	hideIndicator(prefix+'Indicator');
-	showDiv(prefix+'FormSuccess');
+	hideIndicator(prefix+'HeaderIndicator');
+	hideIndicator(prefix+'FooterIndicator');
+	showDiv(prefix+'HeaderSuccess');
+	showDiv(prefix+'FooterSuccess');
 	hideFormStatusError(prefix);
 	
+	$(prefix+'Header').addClassName('success');
 	$(prefix+'Footer').addClassName('success');
-	
 	if( _hideFormStatusSuccessDelay==0 )
 		startHideFormStatusSuccess(9, prefix);
 	else
@@ -180,7 +186,9 @@ function startHideFormStatusSuccess(delay, prefix){
 
 function hideFormStatusSuccess(prefix){
 
-	hideDiv(prefix+'FormSuccess');
+	hideDiv(prefix+'HeaderSuccess');
+	hideDiv(prefix+'FooterSuccess');
+	$(prefix+'Header').removeClassName('success');
 	$(prefix+'Footer').removeClassName('success');
 
 	_hideFormStatusSuccessDelay = 0;
