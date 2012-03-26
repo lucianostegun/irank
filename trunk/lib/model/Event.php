@@ -1219,7 +1219,7 @@ class Event extends BaseEvent
 	public static function confirmPresence($request){
 
 	  	$confirmCode = $request->getParameter('confirmCode');
-	
+		
 		$eventPlayerObj = EventPlayerPeer::retrieveByConfirmCode($confirmCode);
 	  	
 	  	if( !$confirmCode || !is_object($eventPlayerObj) )

@@ -1,0 +1,3 @@
+all:
+  stylesheets:    [club, table, lightbox]
+  javascripts:    [club, /sf/prototype/js/scriptaculous, lightbox]

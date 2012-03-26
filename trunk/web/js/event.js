@@ -26,7 +26,7 @@ function handleSuccessEvent(content){
 	
 	setLastBarPath(eventObj.eventName);
 
-	updatePlayerContent(eventObj.eventId, pastDate);
+	updatePlayerContent(eventObj.eventId);
 	
 	if( pastDate )
 		updateResultContent(eventObj.eventId);
@@ -168,7 +168,7 @@ function chooseMyPresence(choice){
 
 		var content = t.responseText;
 
-		$('eventPlayerDiv').innerHTML = content;
+		$('mainPlayerObjDiv').innerHTML = content;
 		
 		enableButton('confirmPresence');
 		enableButton('declinePresence');
@@ -212,7 +212,7 @@ function removePlayer(peopleId){
 
 		var content = t.responseText;
 		
-		$('eventPlayerDiv').innerHTML = content;
+		$('mainPlayerObjDiv').innerHTML = content;
 
 		if( peopleId==_CurrentPeopleId ){
 			
@@ -513,10 +513,10 @@ function doDeleteEvent(){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
-function updatePlayerContent(eventId, pastEvent){
+function updatePlayerContent(eventId, isImport){
 	
-	var urlAjax = _webRoot+'/event/getPlayerList/eventId/'+eventId;
-	new Ajax.Updater((pastEvent?'mainPlayerObjDiv':'eventPlayerDiv'), urlAjax, {asynchronous:true, evalScripts:false});
+	var urlAjax = _webRoot+'/event/getPlayerList/eventId/'+eventId+'/import/'+isImport;
+	new Ajax.Updater('mainPlayerObjDiv', urlAjax, {asynchronous:true, evalScripts:false});
 	
 	var urlAjax = _webRoot+'/event/getPlayerList/eventId/'+eventId+'/result/1';
 	new Ajax.Updater('eventResultPlayerListDiv', urlAjax, {asynchronous:true, evalScripts:false});
@@ -679,7 +679,7 @@ function importPlayers(){
 
 		var content = t.responseText;
 		
-		updatePlayerContent(eventId);
+		updatePlayerContent(eventId, true);
 		updateResultContent(eventId);
 		
 		tabBarMainObj.setTabActive('player');

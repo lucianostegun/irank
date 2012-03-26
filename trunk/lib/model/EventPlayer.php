@@ -60,7 +60,7 @@ class EventPlayer extends BaseEventPlayer
 	  	}
 	  	
 	  	
-		$infoList = array();
+		$infoList = $eventObj->getInfo();
 		$infoList['playerList'] = $playerList;
 		$infoList['peopleName'] = $this->getPeople()->getFirstName();
 
@@ -161,7 +161,7 @@ class EventPlayer extends BaseEventPlayer
 		$this->setConfirmCode( $this->getConfirmCode() );
 		$this->setInviteStatus($choice);
 		$this->save();
-			
+		
 		if( $sendNotify && $forceNotify!==false )
 			$this->notifyConfirm();
 	}

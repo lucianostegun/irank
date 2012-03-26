@@ -86,9 +86,11 @@ function addRankingPlayer(){
 	setButtonBarStatus('rankingPlayerAdd');
 	windowRankingPlayerAddShow();
 	
-	if( isModuleName('event') )
+	if( isModuleName('event') ){
+		
 		$('rankingPlayerRankingId').value = $('eventRankingId').value;
-	else
+		$('rankingPlayerEventId').value   = $('eventId').value;
+	}else
 		$('rankingPlayerRankingId').value = $('rankingId').value;
 	
 	$('rankingPlayerFirstName').focus();

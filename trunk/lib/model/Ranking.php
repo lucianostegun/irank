@@ -600,10 +600,14 @@ class Ranking extends BaseRanking
 		return $rankingPlayerObj->getAllowEdit();
 	}
 	
-	public function addToOpenEvents($peopleId){
+	public function addToOpenEvents($peopleId, $eventId=null){
 		
 		$criteria = new Criteria();
-		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+		$criterion = $criteria->getNewCriterion( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+		if( $eventId )
+			$criterion->addOr( $criteria->getNewCriterion( EventPeer::ID, $eventId ) );
+
+		$criteria->add($criterion);
 		$eventObjList = $this->getEventList($criteria);
 		
 		foreach($eventObjList as $eventObj){
@@ -640,8 +644,13 @@ class Ranking extends BaseRanking
 			if( $tagName )
 				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
 					continue;
-					
-			$emailAddressList[] = $peopleObj->getEmailAddress();
+			
+			$emailAddress = $peopleObj->getEmailAddress();
+			
+			if( !$emailAddress )
+				continue;
+			
+			$emailAddressList[] = $emailAddress;
 		}
 		
 		return $emailAddressList;

@@ -52,6 +52,8 @@ class ClubMapBuilder {
 
 		$tMap->addColumn('CLUB_SITE', 'ClubSite', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::LONGVARCHAR, false, null);
+
 		$tMap->addColumn('PHONE_NUMBER_1', 'PhoneNumber1', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('PHONE_NUMBER_2', 'PhoneNumber2', 'string', CreoleTypes::VARCHAR, false, null);

@@ -31,16 +31,18 @@
 				$eventLiveIdList[] = $eventLiveId;
 				
 				$onclick = 'goToPage(\'eventLive\', \'edit\', \'eventLiveId\', '.$eventLiveId.')"';
+				
+				$className = ($eventLiveObj->isPastDate()?'dimmed':'');
 		?>
-		<tr onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
+		<tr class="<?php echo $className ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
 			<td><?php echo checkbox_tag('eventLiveId[]', $eventLiveId) ?></td> 
 			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getEventName() ?></td> 
 			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getRankingLive()->toString() ?></td> 
 			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getClub()->toString() ?></td> 
-			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getEventDateTime('d/m/Y') ?></td> 
-			<td onclick="<?php echo $onclick ?>"><?php echo Util::formatFloat($eventLiveObj->getBuyin()) ?></td> 
-			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getBlindTime() ?></td> 
-			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getStackChips() ?></td> 
+			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
+			<td onclick="<?php echo $onclick ?>"><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
+			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getBlindTime('H:i') ?></td> 
+			<td onclick="<?php echo $onclick ?>"><?php echo number_format($eventLiveObj->getStackChips(), 0, '', '.') ?></td> 
 		</tr> 
 		<?php
 			endforeach;

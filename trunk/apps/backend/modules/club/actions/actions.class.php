@@ -145,7 +145,6 @@ class clubActions extends sfActions
 	exit;
   }
   
-  
   public function executeDownloadLogo($request){
 
 	$clubObj          = ClubPeer::retrieveByPK($this->clubId);

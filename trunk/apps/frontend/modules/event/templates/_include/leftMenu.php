@@ -3,8 +3,10 @@
 	$isEditable = $eventObj->isEditable();
 	$pastDate   = $eventObj->isPastDate();
 	$isMyEvent  = $eventObj->isMyEvent();
+	
+	$hidden = ($isNew && $actionName!='index' || $actionName=='confirmPresence');
 ?>
-<div class="innerMenu" style="display: <?php echo ($isNew && $actionName!='index'?'none':'block') ?>" id="mainMenuEvent">
+<div class="innerMenu" style="display: <?php echo ($hidden?'none':'block') ?>" id="mainMenuEvent">
 	<?php if( $isNew && $actionName=='index' ): ?>
 
 	<?php else: ?>

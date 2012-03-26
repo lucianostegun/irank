@@ -1,9 +1,10 @@
 .eventDetailsArea {
 
-    background: 			-moz-linear-gradient(top, #FFFFFF, #DFDFDF);
-    background: 			-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#DFDFDF));
-    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#DFDFDF', GradientType=0);
-    min-height: 			400px;	
+    background: 	-moz-linear-gradient(top, #FFFFFF, #DFDFDF);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#DFDFDF));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#DFDFDF', GradientType=0);
+    min-height: 	400px;
+    border-bottom: 	1px solid #C0C0C0;
 }
 
 .eventDetailsArea .separator {

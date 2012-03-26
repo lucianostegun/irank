@@ -1,0 +1,1 @@
+<?php include_partial('home/component/commonBar', array('pathList'=>array('Pesquisa'=>$moduleName, $keyWord=>null))); ?>

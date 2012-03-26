@@ -26,7 +26,11 @@ var _ModuleName = '<?php echo $moduleName ?>';
     		<div id="header">
     			<?php echo link_to(image_tag('layout/logo', array('id'=>'logo')), '/home', array('title'=>'Voltar para a página inicial')) ?>
     			<div class="search">
-					<?php echo input_tag('eventSearch', null, array('placeholder'=>'Pesquisar eventos...')) ?>
+					<?php
+						echo form_tag('search/index');
+						echo input_tag('mainSearch', null, array('placeholder'=>'Pesquisar eventos...'));
+					?>
+					</form>
     			</div>
     		</div>
     		<table cellspacing="0" cellpadding="0" id="borderTable">
@@ -102,7 +106,7 @@ var _ModuleName = '<?php echo $moduleName ?>';
 			<?php echo link_to('cadastro', '/sign/index') ?> | 
 			<?php echo link_to('minha conta', '/myAccount/index') ?> | 
 			<?php echo link_to('mural de fotos', '/photoWall/index') ?> | 
-			<?php echo link_to('onde jogar', '/liveClub/index') ?><br/> 
+			<?php echo link_to('onde jogar', '/club/index') ?><br/> 
 			<?php echo link_to('eventos', '/eventLive/index') ?> | 
 			<?php echo link_to('convidar amigos', '/friendInvite/index') ?> | 
 			<?php echo link_to('feedback', '/feedback/index') ?> | 

@@ -94,5 +94,11 @@
 			</div>
 			<div class="text">Imagem JPG com 90 x 90 pixels</div>
 		</section>
+
+		<section class="textarea" style="height: 360px">
+			<label>Informações</label>
+			<?php echo textarea_tag('description', $clubObj->getDescription(), array('style'=>'width: 80%; height: 350px', 'id'=>'clubDescription')) ?>
+		</section>
+		
 	</div>
 </div>

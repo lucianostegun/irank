@@ -45,6 +45,10 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 
 	
+	protected $description;
+
+
+	
 	protected $phone_number_1;
 
 
@@ -167,6 +171,13 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	{
 
 		return $this->club_site;
+	}
+
+	
+	public function getDescription()
+	{
+
+		return $this->description;
 	}
 
 	
@@ -393,6 +404,20 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setDescription($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->description !== $v) {
+			$this->description = $v;
+			$this->modifiedColumns[] = ClubPeer::DESCRIPTION;
+		}
+
+	} 
+	
 	public function setPhoneNumber1($v)
 	{
 
@@ -531,29 +556,31 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			$this->club_site = $rs->getString($startcol + 8);
 
-			$this->phone_number_1 = $rs->getString($startcol + 9);
+			$this->description = $rs->getString($startcol + 9);
 
-			$this->phone_number_2 = $rs->getString($startcol + 10);
+			$this->phone_number_1 = $rs->getString($startcol + 10);
 
-			$this->phone_number_3 = $rs->getString($startcol + 11);
+			$this->phone_number_2 = $rs->getString($startcol + 11);
 
-			$this->enabled = $rs->getBoolean($startcol + 12);
+			$this->phone_number_3 = $rs->getString($startcol + 12);
 
-			$this->visible = $rs->getBoolean($startcol + 13);
+			$this->enabled = $rs->getBoolean($startcol + 13);
 
-			$this->deleted = $rs->getBoolean($startcol + 14);
+			$this->visible = $rs->getBoolean($startcol + 14);
 
-			$this->locked = $rs->getBoolean($startcol + 15);
+			$this->deleted = $rs->getBoolean($startcol + 15);
 
-			$this->created_at = $rs->getTimestamp($startcol + 16, null);
+			$this->locked = $rs->getBoolean($startcol + 16);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 17, null);
+			$this->created_at = $rs->getTimestamp($startcol + 17, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 18, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 18; 
+						return $startcol + 19; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Club object", $e);
 		}
@@ -783,30 +810,33 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				return $this->getClubSite();
 				break;
 			case 9:
-				return $this->getPhoneNumber1();
+				return $this->getDescription();
 				break;
 			case 10:
-				return $this->getPhoneNumber2();
+				return $this->getPhoneNumber1();
 				break;
 			case 11:
-				return $this->getPhoneNumber3();
+				return $this->getPhoneNumber2();
 				break;
 			case 12:
-				return $this->getEnabled();
+				return $this->getPhoneNumber3();
 				break;
 			case 13:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 14:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 15:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 16:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 17:
+				return $this->getCreatedAt();
+				break;
+			case 18:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -828,15 +858,16 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 			$keys[6]=>$this->getCityId(),
 			$keys[7]=>$this->getMapsLink(),
 			$keys[8]=>$this->getClubSite(),
-			$keys[9]=>$this->getPhoneNumber1(),
-			$keys[10]=>$this->getPhoneNumber2(),
-			$keys[11]=>$this->getPhoneNumber3(),
-			$keys[12]=>$this->getEnabled(),
-			$keys[13]=>$this->getVisible(),
-			$keys[14]=>$this->getDeleted(),
-			$keys[15]=>$this->getLocked(),
-			$keys[16]=>$this->getCreatedAt(),
-			$keys[17]=>$this->getUpdatedAt(),
+			$keys[9]=>$this->getDescription(),
+			$keys[10]=>$this->getPhoneNumber1(),
+			$keys[11]=>$this->getPhoneNumber2(),
+			$keys[12]=>$this->getPhoneNumber3(),
+			$keys[13]=>$this->getEnabled(),
+			$keys[14]=>$this->getVisible(),
+			$keys[15]=>$this->getDeleted(),
+			$keys[16]=>$this->getLocked(),
+			$keys[17]=>$this->getCreatedAt(),
+			$keys[18]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -880,30 +911,33 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				$this->setClubSite($value);
 				break;
 			case 9:
-				$this->setPhoneNumber1($value);
+				$this->setDescription($value);
 				break;
 			case 10:
-				$this->setPhoneNumber2($value);
+				$this->setPhoneNumber1($value);
 				break;
 			case 11:
-				$this->setPhoneNumber3($value);
+				$this->setPhoneNumber2($value);
 				break;
 			case 12:
-				$this->setEnabled($value);
+				$this->setPhoneNumber3($value);
 				break;
 			case 13:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 14:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 15:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 16:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 17:
+				$this->setCreatedAt($value);
+				break;
+			case 18:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -922,15 +956,16 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setCityId($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setMapsLink($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setClubSite($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setPhoneNumber1($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setPhoneNumber2($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setPhoneNumber3($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setEnabled($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setVisible($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setDeleted($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setLocked($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setCreatedAt($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setUpdatedAt($arr[$keys[17]]);
+		if (array_key_exists($keys[9], $arr)) $this->setDescription($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setPhoneNumber1($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setPhoneNumber2($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setPhoneNumber3($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setEnabled($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setVisible($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setDeleted($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setLocked($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setCreatedAt($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setUpdatedAt($arr[$keys[18]]);
 	}
 
 	
@@ -947,6 +982,7 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ClubPeer::CITY_ID)) $criteria->add(ClubPeer::CITY_ID, $this->city_id);
 		if ($this->isColumnModified(ClubPeer::MAPS_LINK)) $criteria->add(ClubPeer::MAPS_LINK, $this->maps_link);
 		if ($this->isColumnModified(ClubPeer::CLUB_SITE)) $criteria->add(ClubPeer::CLUB_SITE, $this->club_site);
+		if ($this->isColumnModified(ClubPeer::DESCRIPTION)) $criteria->add(ClubPeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(ClubPeer::PHONE_NUMBER_1)) $criteria->add(ClubPeer::PHONE_NUMBER_1, $this->phone_number_1);
 		if ($this->isColumnModified(ClubPeer::PHONE_NUMBER_2)) $criteria->add(ClubPeer::PHONE_NUMBER_2, $this->phone_number_2);
 		if ($this->isColumnModified(ClubPeer::PHONE_NUMBER_3)) $criteria->add(ClubPeer::PHONE_NUMBER_3, $this->phone_number_3);
@@ -1001,6 +1037,8 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$copyObj->setMapsLink($this->maps_link);
 
 		$copyObj->setClubSite($this->club_site);
+
+		$copyObj->setDescription($this->description);
 
 		$copyObj->setPhoneNumber1($this->phone_number_1);
 

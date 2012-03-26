@@ -137,7 +137,9 @@ class People extends BasePeople
 		$emailContent = str_replace('<rankingOwner>', $rankingOwner, $emailContent);
 		
 		$emailAddress = $this->getEmailAddress();
-		Report::sendMail(__('email.subject.playerAdd'), $emailAddress, $emailContent);
+		
+		if( $emailAddress )
+			Report::sendMail(__('email.subject.playerAdd'), $emailAddress, $emailContent);
 	}
 	
 	public function isUserSite(){

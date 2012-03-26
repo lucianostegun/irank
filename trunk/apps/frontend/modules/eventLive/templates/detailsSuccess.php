@@ -13,6 +13,8 @@
 	$description    = str_replace(chr(10), '<br/>', $description);
 	$weekDay        = Util::getWeekDay($eventLiveObj->getEventDate('d/m/Y'));
 	
+	$peopleId = $sf_user->getAttribute('peopleId');
+	
 	$pathList = array('Eventos ao vivo'=>$moduleName.'/index', 
 					  $clubName=>'#goToPage("club", "view", "clubId", '.$clubId.')', 
 					  $rankingName=>'#goToPage("ranking", "view", "rankingLiveId", '.$rankingLiveId.')', 
@@ -39,12 +41,22 @@
 						<td><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td>
 						<td><?php echo $eventLiveObj->getBlindTime('H:i') ?></td>
 						<td><?php echo $eventLiveObj->getStackChips() ?></td>
-						<td><?php echo $eventLiveObj->getPlayers() ?></td>
+						<td id="eventLive<?php echo $eventLiveId ?>ResumePlayers"><?php echo $eventLiveObj->getPlayers() ?></td>
 					</tr>
 					<tr>
-						<td colspan="4" class="presence"><?php echo button_tag('confirmPresence', 'CONFIRMAR PRESENÇA') ?></td>
+						<td colspan="4" class="presence">
+						</td>
 					</tr>
 				</table>
+				<?php
+					if( !$eventLiveObj->isPastDate() ){
+						
+						if( $eventLiveObj->getPlayerStatus($peopleId, true) )
+							echo button_tag('confirmButton'.$eventLiveId, 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'style'=>'position: relative; left: 47px', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
+						else
+							echo button_tag('confirmButton'.$eventLiveId, 'CONFIRMAR PRESENÇA', array('image'=>'ok.png', 'style'=>'position: relative; left: 47px', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
+					}
+				?>
 				</div>
 			</th>
 		</tr>
@@ -52,7 +64,10 @@
 			<td><?php echo $weekDay ?>, <?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></th>
 		</tr>
 		<tr class="info">
-			<td><?php echo link_to(sprintf('@%s - %s, %s-%s', $clubName, $addressQuarter, $city, $state), '#goToPage("rankingLive", "view", "rankingLiveId", '.$rankingLiveObj->getId().')') ?></th>
+			<td><?php echo $eventLiveObj->getGameStyle()->getDescription() ?> | <?php echo $eventLiveObj->getGameType()->getDescription() ?></th>
+		</tr>
+		<tr class="info">
+			<td><?php echo link_to(sprintf('@%s - %s, %s-%s', $clubName, $addressQuarter, $city, $state), '#goToPage("club", "details", "clubId", '.$clubId.')') ?></th>
 		</tr>
 	</table>
 	<div class="separator"></div>
@@ -72,19 +87,19 @@
 		<?php echo $description ?>
 	</div>
 	<div id="eventLiveEventsContent" class="eventLiveTabContent">
-		<?php include_partial('eventLive/include/loading', array()) ?>
+		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
 	<div id="eventLiveResultContent" class="eventLiveTabContent">
-		<?php include_partial('eventLive/include/loading', array()) ?>
+		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
 	<div id="eventLivePrizeContent" class="eventLiveTabContent">
-		<?php include_partial('eventLive/include/loading', array()) ?>
+		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
 	<div id="eventLivePhotosContent" class="eventLiveTabContent">
-		<?php include_partial('eventLive/include/loading', array()) ?>
+		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
 	<div id="eventLiveClassifyContent" class="eventLiveTabContent">
-		<?php include_partial('eventLive/include/loading', array()) ?>
+		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
 	<br/><br/>
 </div>
