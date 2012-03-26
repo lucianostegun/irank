@@ -31,14 +31,6 @@ CREATE TABLE club_ranking_live (
     CONSTRAINT club_ranking_live_FK_2 FOREIGN KEY (ranking_live_id) REFERENCES ranking_live (id)
 );
 
-
-
-
-
-
-
-
-
 CREATE OR REPLACE FUNCTION get_club_ranking_count(clubId INTEGER) RETURNS INTEGER AS
 '
 DECLARE

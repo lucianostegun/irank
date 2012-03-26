@@ -1,0 +1,292 @@
+#houseList {
+
+	margin-left: 	20px;
+	padding: 		30px 30px 30px 15px;	
+}
+
+#houseList .house {
+
+	clear: 			both;
+	margin-bottom: 	35px;
+	height: 		130px;
+}
+
+#houseList .house .logo {
+
+	float: 	left;
+}
+
+#houseList .house .info {
+
+	float: 					left;
+	width: 					550px;
+	height: 				128px;	
+	border-radius: 			4px;
+	-moz-border-radius: 	4px;
+	-webkit-border-radius: 	4px;
+	border: 				1px solid #DADADA;
+	
+    background: 			-moz-linear-gradient(top, #F0F0F0, #FFFFFF);
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#F0F0F0', EndColorStr='#FFFFFF', GradientType=0);
+    
+    margin-left: 	10px;
+}
+
+#houseList .house .info .profile {
+
+	float: 	left;
+	width: 	420px;
+}
+
+#houseList .house .info .links {
+
+	float: 	left;
+}
+
+#houseList .house .info .links .link {
+
+	margin: 				20px 10px 10px 10px;
+	padding: 				5px 10px 5px 10px;
+	font-size: 				16px;
+	font-weight: 			bold;
+	font-family: 			Verdana;
+	text-align: 			center;
+	background: 			#D0D0D0;
+	border: 				1px solid #BABABA;
+	border-radius: 			4px;
+	-moz-border-radius: 	4px;
+	-webkit-border-radius: 	4px;
+}
+
+#houseList .house .info .links .link.hover {
+
+	background: 	#FFFFFF;
+	cursor: 		pointer;
+}
+
+#houseList .house .info .profile h1 {
+
+	position: 		relative;
+	margin: 		10px 0px 15px 14px;
+	padding: 		0px;
+	font-size: 		21px;
+	font-weight: 	bold;
+	font-family: 	Verdana;
+	text-shadow: 	white 1px 1px;
+}
+
+#houseList .house .info .profile h1 a {
+
+	color: 	#101010;
+}
+
+#houseList .house .info .profile .address {
+
+	clear: 			both;
+	height: 		24px;
+	font-size: 		18px;
+	margin-left: 	20px
+}
+
+#houseList .house .info .profile .address a {
+
+	margin-left: 		10px;
+	font-size: 			14px;
+	text-shadow: 		none;
+	text-decoration: 	none;
+}
+
+#houseList .house .info .profile .address a:hover {
+
+	text-decoration: 	none;
+	color: 				#FA0000;
+}
+
+#houseList .house .info .profile .address img {
+
+	margin-left: 	10px;	
+	margin-right: 	10px	
+}
+
+#houseList .house .info .profile .phoneList {
+
+	clear: 		both;
+	height: 	25px;
+	margin: 	5px 0px 0px 13px
+}
+
+#houseList .house .info .profile .phoneList .phone {
+
+	float: 			left;
+	margin-right: 	4px;
+	background: 	#909090;
+	color: 			#FFFFFF;	
+	padding: 		3px 5px 3px 5px;
+	font-family: 	Verdana;
+	font-size: 		12px;
+	font-weight: 	bold;	
+}
+
+#houseList .house .info .profile .phoneList .phone a {
+
+	color: 	#FFFFFF;
+}
+
+
+
+
+
+
+/* Detalhes do clube */
+
+.clubDetailsArea {
+
+    background: 	-moz-linear-gradient(top, #FFFFFF, #DFDFDF);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#DFDFDF));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#DFDFDF', GradientType=0);
+    min-height: 	400px;
+    border-bottom: 	1px solid #C0C0C0;	
+}
+
+.clubDetailsArea .separator {
+
+	clear: 			both;
+	width: 			100%;
+	border-top: 	1px solid #DDDDDD;
+	border-bottom: 	1px solid #FFFFFF;
+	margin-top: 	10px;
+	margin-bottom: 	7px;
+}
+
+.clubDetails {
+	
+	margin: 	10px 10px 0px 10px;
+	width: 		610px;
+}
+
+.clubDetails .logo {
+
+	width: 			150px;
+	text-align: 	center;	
+}
+
+.clubDetails h1 {
+
+	margin: 		0px;
+	padding: 		0px;
+	height: 		28px;
+	line-height: 	20px;
+	font-size: 		18px;
+	font-weight: 	bold;
+	font-family: 	Verdana, Sans serif;
+	text-align: 	left;
+	text-shadow: 	silver 1px 1px;
+	text-indent: 	-15px;	
+}
+
+.clubDetails .location {
+
+	line-height: 20px;	
+}
+
+.clubDetails td.info {
+
+	font-size: 		15px;
+	padding-left: 	20px;
+	width: 			400px;
+}
+
+.clubDetails td.link {
+
+	padding: 	5px 10px 5px 10px;
+	font-size: 	13px;
+}
+
+.clubDetails td.link img {
+
+	margin-right: 	5px;
+}
+
+.clubDetails th.phones {
+
+	padding: 		0px 10px 5px 10px;
+	font-size: 		13px;
+	font-weight: 	bold;
+	text-align: 	left;
+}
+
+.clubDetails td.phone {
+
+	padding: 		5px 10px;
+	font-size: 		13px;
+	font-weight: 	normal;
+	text-align: 	left;
+}
+
+.clubDetailsArea .channel td {
+
+	clear: 				both;
+	border-left: 		1px solid #D0D0D0;
+	border-right: 		1px solid #FFFFFF;
+	margin-top: 		10px;
+	margin-bottom: 		7px;
+	height: 			40px;
+	text-align: 		center;
+	font-size: 			18px;
+	font-family: 		Arial;
+	font-weight: 		bold;
+	text-shadow: 		white 1px 1px;
+	color: 				#A0A0A0;
+	padding: 			0px 15px 0px 15px;
+	cursor: 			pointer;
+}
+
+.clubDetailsArea .channel td.hover {
+
+	color: 	#C91E1E;
+}
+
+.clubDetailsArea .channel .clubTab.first {
+
+	border-left: 	none;	
+}
+
+.clubDetailsArea .channel .clubTab.last {
+
+	border-right: 	none;	
+}
+
+.clubDetailsArea .channel .clubTab.active {
+
+	color: 		#303030;	
+}
+
+.clubDetailsArea .channel .clubTab.location {
+
+	background: 	url('/images/mapsPin.png') 10px 10px no-repeat;
+	text-indent: 	18px;
+}
+
+.clubDetailsArea .clubTabContent {
+	
+	display: 		none;
+	font-size: 		12px;
+	text-align: 	left;
+	text-shadow: 	white 1px 1px;	
+}
+
+.clubDetailsArea .clubTabContent.active {
+	
+	display: 		block;	
+}
+
+.clubDetailsArea #clubInfoContent {
+	
+	margin: 		25px;
+}
+
+.clubDetailsArea #clubEventsContent {
+	
+	margin: 		0px;
+}

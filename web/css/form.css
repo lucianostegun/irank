@@ -341,10 +341,14 @@
 	color: 			#000000;
 }
 
-.defaultForm input.required:focus, .windowForm input.required:focus {
 
-	background: 	#CADBE6 url('/images/form/formRequired.png') right top no-repeat;
-}
+::-webkit-input-placeholder	{ color:#808080; }
+input:-moz-placeholder { color:#808080; }
+
+input:-ms-placeholder { color:#808080; }
+::-ms-input-placeholder	{ color:#808080; }
+:-ms-input-placeholder	{ color:#808080; }
+
 
 .defaultForm .checkbox, .windowForm .checkbox {
 

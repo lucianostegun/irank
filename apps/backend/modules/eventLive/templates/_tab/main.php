@@ -1,6 +1,6 @@
+<?php include_partial('home/include/formHeader', array('prefix'=>'eventLive')) ?>
 <div class="module_content">
 	<div class="defaultForm">
-		
 		<?php if( $iRankAdmin ): ?>
 		<section>
 			<label>Clube</label>

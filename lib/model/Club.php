@@ -29,6 +29,7 @@ class Club extends BaseClub
 		$phoneNumber1   = $request->getParameter('phoneNumber1');
 		$phoneNumber2   = $request->getParameter('phoneNumber2');
 		$phoneNumber3   = $request->getParameter('phoneNumber3');
+		$description    = $request->getParameter('description');
 		
 		$this->setClubName($clubName);
 		$this->setCityId($cityId);
@@ -40,6 +41,7 @@ class Club extends BaseClub
 		$this->setPhoneNumber1($phoneNumber1);
 		$this->setPhoneNumber2(($phoneNumber2?$phoneNumber2:null));
 		$this->setPhoneNumber3(($phoneNumber3?$phoneNumber3:null));
+		$this->setDescription(($description?$description:null));
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);
@@ -122,7 +124,11 @@ class Club extends BaseClub
 		else
 			$originalImg = imagecreatefrompng( $filePath );
 			
-		$templateImg = imagecreatefromjpeg( Util::getFilePath('images/club/template.jpg') );
+		$templateImg = imagecreatefrompng(Util::getFilePath('images/club/template.png'));
+//		$templateImg = imagecreatefromjpeg(Util::getFilePath('images/club/template.jpg'));
+
+		imagealphablending($templateImg, false);
+		imagesavealpha($templateImg, true);
 	
 		imagecopymerge($templateImg, $originalImg, 4, 4, 0, 0, 122, 122, 100);
 		

@@ -10,7 +10,7 @@
 ?>
 <table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable">
   <tr class="header">
-    <th><?php echo __('Player') ?></th>
+    <th class="first"><?php echo __('Player') ?></th>
     <th>E-mail</th>
     <th colspan="3">&nbsp;</th>
   </tr>

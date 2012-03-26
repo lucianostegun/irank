@@ -51,7 +51,7 @@ class eventActions extends sfActions
   	
   	$eventId = $request->getParameter('eventId');
   	
-	$this->eventObj = EventPeer::retrieveByPK( $eventId );
+	$this->eventObj = $this->innerObj = EventPeer::retrieveByPK( $eventId );
 
 	if( !is_object($this->eventObj) )
 		return $this->redirect('event/index');
@@ -156,7 +156,7 @@ class eventActions extends sfActions
   
   public function executeChoosePresence($request){
 
-	Util::getHelper('i18n');
+	Util::getHelper('I18N');
 	
 	$eventId     = $request->getParameter('eventId');
 	$choice      = $request->getParameter('choice');
@@ -221,14 +221,24 @@ class eventActions extends sfActions
 
 	$eventId  = $request->getParameter('eventId');
 	$result   = $request->getParameter('result');
+	$import   = $request->getParameter('import');
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	$pastDate = $eventObj->isPastDate();
 	
-	$path = ($pastDate && !$result?'show':'include');
+	$path = ($pastDate && !$result?'show':'form');
+	
+	if( $import ){
+		
+		$path = ($pastDate && !$result?'show':'form');
+		$result = false;
+	}
+	
+	if( $pastDate && $result && !$import )
+		$path = 'include';
 
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/'.$path.'/player'.($result?'Result':''), array('eventObj'=>$eventObj)));
+	return $this->renderText(get_partial('event/'.$path.'/player'.($result && ($path=='show' || $pastDate)?'Result':''), array('eventObj'=>$eventObj)));
   }
 
   public function executeGetResult($request){
@@ -354,7 +364,7 @@ class eventActions extends sfActions
   
   public function executeConfirmPresence($request){
   	
-	$this->eventObj = Event::confirmPresence($request);
+	$this->eventObj = $this->innerObj = Event::confirmPresence($request);
 	
 	if( !is_object($this->eventObj) )
 		return $this->redirect('event/index');

@@ -150,6 +150,7 @@ box-shadow: inset 0 2px 2px #ccc, 0 0 7px #e6adad;
 	float: left;
 	width: 96%;
 	margin: 0 10px;
+	resize: none;
 }
 
 .defaultForm textarea:focus {

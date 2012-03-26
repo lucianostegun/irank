@@ -204,6 +204,7 @@ class rankingActions extends sfActions
   	$firstName    = $request->getParameter('firstName');
   	$lastName     = $request->getParameter('lastName');
   	$emailAddress = $request->getParameter('emailAddress');
+  	$eventId      = $request->getParameter('eventId');
 	
 	$rankingObj = $this->rankingObj;
 
@@ -213,12 +214,12 @@ class rankingActions extends sfActions
 		
 		$peopleObj = People::getQuickPeople($firstName, $lastName, 'rankingPlayer', $peopleId );
 		
-		$peopleObj->setEmailAddress($emailAddress);
+		$peopleObj->setEmailAddress(($emailAddress?$emailAddress:null));
 		$peopleObj->save();
 	}
 	
 	$rankingObj->addPlayer( $peopleObj->getId() );
-	$rankingObj->addToOpenEvents($peopleObj->getId());
+	$rankingObj->addToOpenEvents($peopleObj->getId(), $eventId);
 	
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');

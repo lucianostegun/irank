@@ -55,12 +55,7 @@
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 	$dhtmlxTabBarObj->addTab('main', __('Event'), 'event/'.$mode.'/main', array('eventObj'=>$eventObj, 'isClone'=>$isClone, 'pastDate'=>$pastDate, 'confirmedPresence'=>$confirmedPresence));
 	$dhtmlxTabBarObj->addTab('player', __('Guests'), 'event/'.$mode.'/player', array('eventObj'=>$eventObj, 'hidden'=>$isNew));
-	if( $pastDate )
-		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj));
-	else
-		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj, 'hidden'=>true));
-//	else
-//		$dhtmlxTabBarObj->addTab('result', __('Result'), null, array('hidden'=>true));
+	$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj, 'hidden'=>(!$pastDate)));
 
 	$dhtmlxTabBarObj->addTab('comments', __('Comments'), 'event/form/comments', array('eventObj'=>$eventObj, 'hidden'=>!$eventObj->getVisible()));
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabEvent');

@@ -444,6 +444,7 @@ width: 95%;
     background: 	-moz-linear-gradient(top, #F5F5F5, #E0E0E0);
     background: 	-webkit-gradient(linear, left top, left bottom, from(#F5F5F5), to(#E0E0E0));
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#F5F5F5', EndColorStr='#E0E0E0', GradientType=0);
+    margin-bottom: 	100px;
 }
 
 .inner_table {
@@ -543,6 +544,11 @@ cursor: pointer;
 
 .tablesorter td {
 padding: 10px 10px;
+}
+
+.tablesorter .dimmed td {
+
+	color: 	#909090;
 }
 
 .tablesorter .hover td {

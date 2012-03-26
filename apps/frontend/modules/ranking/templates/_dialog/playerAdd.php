@@ -9,6 +9,7 @@
 	
 	echo input_hidden_tag('peopleId', null, array('id'=>'rankingPlayerPeopleId'));
 	echo input_hidden_tag('rankingId', $rankingId, array('id'=>'rankingPlayerRankingId'));
+	echo input_hidden_tag('eventId', null, array('id'=>'rankingPlayerEventId'));
 ?>
 	<table width="100%" height="<?php echo $windowHeight-17 ?>" cellspacing="1" cellpadding="0" class="windowForm">
 		<tr>
@@ -19,11 +20,11 @@
 				</div>
 				<div class="row">
 					<div class="labelHalf" id="rankingPlayerLastNameLabel"><?php echo __('LastName') ?></div>
-					<div class="field"><?php echo input_tag('lastName', null, array('size'=>20, 'maxlength'=>25, 'id'=>'rankingPlayerLastName')) ?></div>
+					<div class="field"><?php echo input_tag('lastName', null, array('size'=>20, 'maxlength'=>25, 'placeholder'=>'opcional', 'id'=>'rankingPlayerLastName')) ?></div>
 				</div>
 				<div class="row">
 					<div class="labelHalf" id="rankingPlayerEmailAddressLabel">E-mail</div>
-					<div class="field"><?php echo input_tag('emailAddress', null, array('size'=>25, 'maxlength'=>150, 'class'=>'required', 'id'=>'rankingPlayerEmailAddress')) ?></div>
+					<div class="field"><?php echo input_tag('emailAddress', null, array('size'=>25, 'maxlength'=>150, 'placeholder'=>'opcional', 'id'=>'rankingPlayerEmailAddress')) ?></div>
 				</div>
 			</td>
 		</tr>

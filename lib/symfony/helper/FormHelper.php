@@ -1000,7 +1000,6 @@ function button_tag( $buttonId, $text, $options=array() ){
 		$image = image_tag($imagePath, array('id'=>$buttonId.'Image', 'align'=>'absmiddle'));
 		
 	$submit = link_to(image_tag('blank.gif', array('class'=>'submit')), '#'.$onclick);
-//	$text   = link_to($text, '#'.$onclick);
 
 	$app = Util::getApp();
 	
@@ -1021,7 +1020,8 @@ function button_tag( $buttonId, $text, $options=array() ){
 		$html .= '</div>';
 	}
 	
-	$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; top: -100px; left: -100px; border: none; background: none', 'onclick'=>$onclick.'; return false')) ;
+	if( $text!='Cancelar' && $text!='Fechar' )
+		$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; top: -1000px; left: -1000px; border: none; background: none', 'onclick'=>$onclick.'; return false')) ;
 	
 	$app = ($app=='mobile'?'mobile/':'');
 	sfContext::getInstance()->getResponse()->addStylesheet( $app.'button' );
