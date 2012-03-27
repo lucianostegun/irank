@@ -382,3 +382,12 @@ color: #000;
 
 	display: none;
 }
+
+.defaultForm .visible,
+#main h4.alert_error.hidden,
+#main h4.alert_warning.hidden,
+#main h4.alert_success.hidden,
+#main h4.alert_info.hidden {
+
+	display: block;
+}

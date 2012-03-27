@@ -65,9 +65,5 @@
 			<label>Informações</label>
 			<?php echo textarea_tag('description', $eventLiveObj->getDescription(), array('style'=>'width: 80%; height: 550px', 'id'=>'eventLiveDescription')) ?>
 		</section>
-
-
-		
 	</div>
-	
 </div>

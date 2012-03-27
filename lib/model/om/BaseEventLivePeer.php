@@ -13,7 +13,7 @@ abstract class BaseEventLivePeer {
 	const CLASS_DEFAULT = 'lib.model.EventLive';
 
 	
-	const NUM_COLUMNS = 22;
+	const NUM_COLUMNS = 23;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -68,6 +68,9 @@ abstract class BaseEventLivePeer {
 	const IS_ILIMITED_REBUYS = 'event_live.IS_ILIMITED_REBUYS';
 
 	
+	const SAVED_RESULT = 'event_live.SAVED_RESULT';
+
+	
 	const ENABLED = 'event_live.ENABLED';
 
 	
@@ -91,19 +94,19 @@ abstract class BaseEventLivePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingLiveId', 'EventName', 'EventShortName', 'EventDate', 'StartTime', 'EventDatetime', 'Description', 'ClubId', 'Buyin', 'BlindTime', 'StackChips', 'Players', 'AllowedRebuys', 'AllowedAddons', 'IsIlimitedRebuys', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID, EventLivePeer::RANKING_LIVE_ID, EventLivePeer::EVENT_NAME, EventLivePeer::EVENT_SHORT_NAME, EventLivePeer::EVENT_DATE, EventLivePeer::START_TIME, EventLivePeer::EVENT_DATETIME, EventLivePeer::DESCRIPTION, EventLivePeer::CLUB_ID, EventLivePeer::BUYIN, EventLivePeer::BLIND_TIME, EventLivePeer::STACK_CHIPS, EventLivePeer::PLAYERS, EventLivePeer::ALLOWED_REBUYS, EventLivePeer::ALLOWED_ADDONS, EventLivePeer::IS_ILIMITED_REBUYS, EventLivePeer::ENABLED, EventLivePeer::VISIBLE, EventLivePeer::DELETED, EventLivePeer::LOCKED, EventLivePeer::CREATED_AT, EventLivePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_live_id', 'event_name', 'event_short_name', 'event_date', 'start_time', 'event_datetime', 'description', 'club_id', 'buyin', 'blind_time', 'stack_chips', 'players', 'allowed_rebuys', 'allowed_addons', 'is_ilimited_rebuys', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_LIVE_ID'=>'', 'EVENT_NAME'=>'', 'EVENT_SHORT_NAME'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATETIME'=>'', 'DESCRIPTION'=>'', 'CLUB_ID'=>'', 'BUYIN'=>'', 'BLIND_TIME'=>'', 'STACK_CHIPS'=>'', 'PLAYERS'=>'', 'ALLOWED_REBUYS'=>'', 'ALLOWED_ADDONS'=>'', 'IS_ILIMITED_REBUYS'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingLiveId', 'EventName', 'EventShortName', 'EventDate', 'StartTime', 'EventDatetime', 'Description', 'ClubId', 'Buyin', 'BlindTime', 'StackChips', 'Players', 'AllowedRebuys', 'AllowedAddons', 'IsIlimitedRebuys', 'SavedResult', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID, EventLivePeer::RANKING_LIVE_ID, EventLivePeer::EVENT_NAME, EventLivePeer::EVENT_SHORT_NAME, EventLivePeer::EVENT_DATE, EventLivePeer::START_TIME, EventLivePeer::EVENT_DATETIME, EventLivePeer::DESCRIPTION, EventLivePeer::CLUB_ID, EventLivePeer::BUYIN, EventLivePeer::BLIND_TIME, EventLivePeer::STACK_CHIPS, EventLivePeer::PLAYERS, EventLivePeer::ALLOWED_REBUYS, EventLivePeer::ALLOWED_ADDONS, EventLivePeer::IS_ILIMITED_REBUYS, EventLivePeer::SAVED_RESULT, EventLivePeer::ENABLED, EventLivePeer::VISIBLE, EventLivePeer::DELETED, EventLivePeer::LOCKED, EventLivePeer::CREATED_AT, EventLivePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_live_id', 'event_name', 'event_short_name', 'event_date', 'start_time', 'event_datetime', 'description', 'club_id', 'buyin', 'blind_time', 'stack_chips', 'players', 'allowed_rebuys', 'allowed_addons', 'is_ilimited_rebuys', 'saved_result', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_LIVE_ID'=>'', 'EVENT_NAME'=>'', 'EVENT_SHORT_NAME'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATETIME'=>'', 'DESCRIPTION'=>'', 'CLUB_ID'=>'', 'BUYIN'=>'', 'BLIND_TIME'=>'', 'STACK_CHIPS'=>'', 'PLAYERS'=>'', 'ALLOWED_REBUYS'=>'', 'ALLOWED_ADDONS'=>'', 'IS_ILIMITED_REBUYS'=>'', 'SAVED_RESULT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingLiveId'=>1, 'EventName'=>2, 'EventShortName'=>3, 'EventDate'=>4, 'StartTime'=>5, 'EventDatetime'=>6, 'Description'=>7, 'ClubId'=>8, 'Buyin'=>9, 'BlindTime'=>10, 'StackChips'=>11, 'Players'=>12, 'AllowedRebuys'=>13, 'AllowedAddons'=>14, 'IsIlimitedRebuys'=>15, 'Enabled'=>16, 'Visible'=>17, 'Deleted'=>18, 'Locked'=>19, 'CreatedAt'=>20, 'UpdatedAt'=>21, ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID=>0, EventLivePeer::RANKING_LIVE_ID=>1, EventLivePeer::EVENT_NAME=>2, EventLivePeer::EVENT_SHORT_NAME=>3, EventLivePeer::EVENT_DATE=>4, EventLivePeer::START_TIME=>5, EventLivePeer::EVENT_DATETIME=>6, EventLivePeer::DESCRIPTION=>7, EventLivePeer::CLUB_ID=>8, EventLivePeer::BUYIN=>9, EventLivePeer::BLIND_TIME=>10, EventLivePeer::STACK_CHIPS=>11, EventLivePeer::PLAYERS=>12, EventLivePeer::ALLOWED_REBUYS=>13, EventLivePeer::ALLOWED_ADDONS=>14, EventLivePeer::IS_ILIMITED_REBUYS=>15, EventLivePeer::ENABLED=>16, EventLivePeer::VISIBLE=>17, EventLivePeer::DELETED=>18, EventLivePeer::LOCKED=>19, EventLivePeer::CREATED_AT=>20, EventLivePeer::UPDATED_AT=>21, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_live_id'=>1, 'event_name'=>2, 'event_short_name'=>3, 'event_date'=>4, 'start_time'=>5, 'event_datetime'=>6, 'description'=>7, 'club_id'=>8, 'buyin'=>9, 'blind_time'=>10, 'stack_chips'=>11, 'players'=>12, 'allowed_rebuys'=>13, 'allowed_addons'=>14, 'is_ilimited_rebuys'=>15, 'enabled'=>16, 'visible'=>17, 'deleted'=>18, 'locked'=>19, 'created_at'=>20, 'updated_at'=>21, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingLiveId'=>1, 'EventName'=>2, 'EventShortName'=>3, 'EventDate'=>4, 'StartTime'=>5, 'EventDatetime'=>6, 'Description'=>7, 'ClubId'=>8, 'Buyin'=>9, 'BlindTime'=>10, 'StackChips'=>11, 'Players'=>12, 'AllowedRebuys'=>13, 'AllowedAddons'=>14, 'IsIlimitedRebuys'=>15, 'SavedResult'=>16, 'Enabled'=>17, 'Visible'=>18, 'Deleted'=>19, 'Locked'=>20, 'CreatedAt'=>21, 'UpdatedAt'=>22, ),
+		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID=>0, EventLivePeer::RANKING_LIVE_ID=>1, EventLivePeer::EVENT_NAME=>2, EventLivePeer::EVENT_SHORT_NAME=>3, EventLivePeer::EVENT_DATE=>4, EventLivePeer::START_TIME=>5, EventLivePeer::EVENT_DATETIME=>6, EventLivePeer::DESCRIPTION=>7, EventLivePeer::CLUB_ID=>8, EventLivePeer::BUYIN=>9, EventLivePeer::BLIND_TIME=>10, EventLivePeer::STACK_CHIPS=>11, EventLivePeer::PLAYERS=>12, EventLivePeer::ALLOWED_REBUYS=>13, EventLivePeer::ALLOWED_ADDONS=>14, EventLivePeer::IS_ILIMITED_REBUYS=>15, EventLivePeer::SAVED_RESULT=>16, EventLivePeer::ENABLED=>17, EventLivePeer::VISIBLE=>18, EventLivePeer::DELETED=>19, EventLivePeer::LOCKED=>20, EventLivePeer::CREATED_AT=>21, EventLivePeer::UPDATED_AT=>22, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_live_id'=>1, 'event_name'=>2, 'event_short_name'=>3, 'event_date'=>4, 'start_time'=>5, 'event_datetime'=>6, 'description'=>7, 'club_id'=>8, 'buyin'=>9, 'blind_time'=>10, 'stack_chips'=>11, 'players'=>12, 'allowed_rebuys'=>13, 'allowed_addons'=>14, 'is_ilimited_rebuys'=>15, 'saved_result'=>16, 'enabled'=>17, 'visible'=>18, 'deleted'=>19, 'locked'=>20, 'created_at'=>21, 'updated_at'=>22, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, )
 	);
 
 	
@@ -188,6 +191,8 @@ abstract class BaseEventLivePeer {
 		$criteria->addSelectColumn(EventLivePeer::ALLOWED_ADDONS);
 
 		$criteria->addSelectColumn(EventLivePeer::IS_ILIMITED_REBUYS);
+
+		$criteria->addSelectColumn(EventLivePeer::SAVED_RESULT);
 
 		$criteria->addSelectColumn(EventLivePeer::ENABLED);
 

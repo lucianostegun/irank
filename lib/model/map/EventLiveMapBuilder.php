@@ -66,6 +66,8 @@ class EventLiveMapBuilder {
 
 		$tMap->addColumn('IS_ILIMITED_REBUYS', 'IsIlimitedRebuys', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
+		$tMap->addColumn('SAVED_RESULT', 'SavedResult', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

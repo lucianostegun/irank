@@ -73,6 +73,10 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 
 	
+	protected $saved_result;
+
+
+	
 	protected $enabled;
 
 
@@ -283,6 +287,13 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	{
 
 		return $this->is_ilimited_rebuys;
+	}
+
+	
+	public function getSavedResult()
+	{
+
+		return $this->saved_result;
 	}
 
 	
@@ -590,6 +601,16 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setSavedResult($v)
+	{
+
+		if ($this->saved_result !== $v) {
+			$this->saved_result = $v;
+			$this->modifiedColumns[] = EventLivePeer::SAVED_RESULT;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -700,23 +721,25 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 			$this->is_ilimited_rebuys = $rs->getBoolean($startcol + 15);
 
-			$this->enabled = $rs->getBoolean($startcol + 16);
+			$this->saved_result = $rs->getBoolean($startcol + 16);
 
-			$this->visible = $rs->getBoolean($startcol + 17);
+			$this->enabled = $rs->getBoolean($startcol + 17);
 
-			$this->deleted = $rs->getBoolean($startcol + 18);
+			$this->visible = $rs->getBoolean($startcol + 18);
 
-			$this->locked = $rs->getBoolean($startcol + 19);
+			$this->deleted = $rs->getBoolean($startcol + 19);
 
-			$this->created_at = $rs->getTimestamp($startcol + 20, null);
+			$this->locked = $rs->getBoolean($startcol + 20);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 21, null);
+			$this->created_at = $rs->getTimestamp($startcol + 21, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 22, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 22; 
+						return $startcol + 23; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLive object", $e);
 		}
@@ -948,21 +971,24 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				return $this->getIsIlimitedRebuys();
 				break;
 			case 16:
-				return $this->getEnabled();
+				return $this->getSavedResult();
 				break;
 			case 17:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 18:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 19:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 20:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 21:
+				return $this->getCreatedAt();
+				break;
+			case 22:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -991,12 +1017,13 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$keys[13]=>$this->getAllowedRebuys(),
 			$keys[14]=>$this->getAllowedAddons(),
 			$keys[15]=>$this->getIsIlimitedRebuys(),
-			$keys[16]=>$this->getEnabled(),
-			$keys[17]=>$this->getVisible(),
-			$keys[18]=>$this->getDeleted(),
-			$keys[19]=>$this->getLocked(),
-			$keys[20]=>$this->getCreatedAt(),
-			$keys[21]=>$this->getUpdatedAt(),
+			$keys[16]=>$this->getSavedResult(),
+			$keys[17]=>$this->getEnabled(),
+			$keys[18]=>$this->getVisible(),
+			$keys[19]=>$this->getDeleted(),
+			$keys[20]=>$this->getLocked(),
+			$keys[21]=>$this->getCreatedAt(),
+			$keys[22]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1061,21 +1088,24 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$this->setIsIlimitedRebuys($value);
 				break;
 			case 16:
-				$this->setEnabled($value);
+				$this->setSavedResult($value);
 				break;
 			case 17:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 18:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 19:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 20:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 21:
+				$this->setCreatedAt($value);
+				break;
+			case 22:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1101,12 +1131,13 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[13], $arr)) $this->setAllowedRebuys($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setAllowedAddons($arr[$keys[14]]);
 		if (array_key_exists($keys[15], $arr)) $this->setIsIlimitedRebuys($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setEnabled($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setVisible($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setDeleted($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setLocked($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setCreatedAt($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setUpdatedAt($arr[$keys[21]]);
+		if (array_key_exists($keys[16], $arr)) $this->setSavedResult($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setEnabled($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setVisible($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setDeleted($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setLocked($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setCreatedAt($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setUpdatedAt($arr[$keys[22]]);
 	}
 
 	
@@ -1130,6 +1161,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePeer::ALLOWED_REBUYS)) $criteria->add(EventLivePeer::ALLOWED_REBUYS, $this->allowed_rebuys);
 		if ($this->isColumnModified(EventLivePeer::ALLOWED_ADDONS)) $criteria->add(EventLivePeer::ALLOWED_ADDONS, $this->allowed_addons);
 		if ($this->isColumnModified(EventLivePeer::IS_ILIMITED_REBUYS)) $criteria->add(EventLivePeer::IS_ILIMITED_REBUYS, $this->is_ilimited_rebuys);
+		if ($this->isColumnModified(EventLivePeer::SAVED_RESULT)) $criteria->add(EventLivePeer::SAVED_RESULT, $this->saved_result);
 		if ($this->isColumnModified(EventLivePeer::ENABLED)) $criteria->add(EventLivePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventLivePeer::VISIBLE)) $criteria->add(EventLivePeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(EventLivePeer::DELETED)) $criteria->add(EventLivePeer::DELETED, $this->deleted);
@@ -1195,6 +1227,8 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		$copyObj->setAllowedAddons($this->allowed_addons);
 
 		$copyObj->setIsIlimitedRebuys($this->is_ilimited_rebuys);
+
+		$copyObj->setSavedResult($this->saved_result);
 
 		$copyObj->setEnabled($this->enabled);
 

@@ -21,6 +21,14 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 
 	
+	protected $event_position;
+
+
+	
+	protected $prize;
+
+
+	
 	protected $created_at;
 
 
@@ -58,6 +66,20 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	{
 
 		return $this->enabled;
+	}
+
+	
+	public function getEventPosition()
+	{
+
+		return $this->event_position;
+	}
+
+	
+	public function getPrize()
+	{
+
+		return $this->prize;
 	}
 
 	
@@ -151,6 +173,30 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setEventPosition($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->event_position !== $v) {
+			$this->event_position = $v;
+			$this->modifiedColumns[] = EventLivePlayerPeer::EVENT_POSITION;
+		}
+
+	} 
+	
+	public function setPrize($v)
+	{
+
+		if ($this->prize !== $v) {
+			$this->prize = $v;
+			$this->modifiedColumns[] = EventLivePlayerPeer::PRIZE;
+		}
+
+	} 
+	
 	public function setCreatedAt($v)
 	{
 
@@ -195,15 +241,19 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 			$this->enabled = $rs->getBoolean($startcol + 2);
 
-			$this->created_at = $rs->getTimestamp($startcol + 3, null);
+			$this->event_position = $rs->getInt($startcol + 3);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 4, null);
+			$this->prize = $rs->getFloat($startcol + 4);
+
+			$this->created_at = $rs->getTimestamp($startcol + 5, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 6, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 5; 
+						return $startcol + 7; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLivePlayer object", $e);
 		}
@@ -379,9 +429,15 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				return $this->getEnabled();
 				break;
 			case 3:
-				return $this->getCreatedAt();
+				return $this->getEventPosition();
 				break;
 			case 4:
+				return $this->getPrize();
+				break;
+			case 5:
+				return $this->getCreatedAt();
+				break;
+			case 6:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -397,8 +453,10 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 			$keys[0]=>$this->getEventLiveId(),
 			$keys[1]=>$this->getPeopleId(),
 			$keys[2]=>$this->getEnabled(),
-			$keys[3]=>$this->getCreatedAt(),
-			$keys[4]=>$this->getUpdatedAt(),
+			$keys[3]=>$this->getEventPosition(),
+			$keys[4]=>$this->getPrize(),
+			$keys[5]=>$this->getCreatedAt(),
+			$keys[6]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -424,9 +482,15 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				$this->setEnabled($value);
 				break;
 			case 3:
-				$this->setCreatedAt($value);
+				$this->setEventPosition($value);
 				break;
 			case 4:
+				$this->setPrize($value);
+				break;
+			case 5:
+				$this->setCreatedAt($value);
+				break;
+			case 6:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -439,8 +503,10 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setEventLiveId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setEnabled($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setUpdatedAt($arr[$keys[4]]);
+		if (array_key_exists($keys[3], $arr)) $this->setEventPosition($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setPrize($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
 	}
 
 	
@@ -451,6 +517,8 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePlayerPeer::EVENT_LIVE_ID)) $criteria->add(EventLivePlayerPeer::EVENT_LIVE_ID, $this->event_live_id);
 		if ($this->isColumnModified(EventLivePlayerPeer::PEOPLE_ID)) $criteria->add(EventLivePlayerPeer::PEOPLE_ID, $this->people_id);
 		if ($this->isColumnModified(EventLivePlayerPeer::ENABLED)) $criteria->add(EventLivePlayerPeer::ENABLED, $this->enabled);
+		if ($this->isColumnModified(EventLivePlayerPeer::EVENT_POSITION)) $criteria->add(EventLivePlayerPeer::EVENT_POSITION, $this->event_position);
+		if ($this->isColumnModified(EventLivePlayerPeer::PRIZE)) $criteria->add(EventLivePlayerPeer::PRIZE, $this->prize);
 		if ($this->isColumnModified(EventLivePlayerPeer::CREATED_AT)) $criteria->add(EventLivePlayerPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EventLivePlayerPeer::UPDATED_AT)) $criteria->add(EventLivePlayerPeer::UPDATED_AT, $this->updated_at);
 
@@ -495,6 +563,10 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setEnabled($this->enabled);
+
+		$copyObj->setEventPosition($this->event_position);
+
+		$copyObj->setPrize($this->prize);
 
 		$copyObj->setCreatedAt($this->created_at);
 
