@@ -35,7 +35,7 @@
 ?>
 <tr class="<?php echo $class ?>" id="eventLiveResultRow-<?php echo $eventPosition ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">
 	<td class="rowhandler"><div class="drag row"></div></td> 
-	<td><?php echo $eventPosition ?></td> 
+	<td id="eventLivePositionLabel-<?php echo $eventPosition ?>" class="eventLivePositionLabel"><?php echo $eventPosition ?></td> 
 	<td>
 		<?php
 		    echo input_hidden_tag('peopleIdPosition-'.$eventPosition, $peopleId);

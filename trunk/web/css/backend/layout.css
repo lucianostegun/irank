@@ -977,3 +977,10 @@ font-size: 14px;}
 
 	display: none;
 }
+
+#debugDiv {
+
+	position: 		absolute;
+	background: 	#FFFFFF;
+	width: 			500px;
+}

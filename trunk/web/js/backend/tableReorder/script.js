@@ -18,8 +18,8 @@ redips_init = function () {
 	rd.hover.color_td = '#FFCFAE';
 	rd.hover.color_tr = '#9BB3DA';
 	// set hover border for current TD and TR
-	rd.hover.border_td = '2px solid #32568E';
-	rd.hover.border_tr = '2px solid #32568E';
+	rd.hover.border_td = '1px solid #32568E';
+	rd.hover.border_tr = '1px solid #32568E';
 	// row was clicked - event handler
 	rd.myhandler_row_clicked = function () {
 		// set current element (this is clicked TR)
@@ -49,10 +49,67 @@ redips_init = function () {
 	// row was dropped - event handler
 	rd.myhandler_row_dropped = function () {
 		// display message
-		debug('Dropped');
+
 		var pos = rd.get_position();
 		// display current table and current row
-		debug('Changed: ' + pos[0] + ' ' + pos[1]);
+		
+//		var eventPositionDrag = rd.obj_old.id.replace(/[^0-9]/g, '');
+//		var eventPositionDrop = pos[1]-1;
+		
+		var eventLiveId = $('eventLiveId').value;
+		
+		var tdList = document.getElementsByClassName('eventLivePositionLabel');
+		for(var i=0; i < tdList.length; i++){
+			
+			var tdElement = tdList[i];
+			var eventPosition    = i+1;
+			var eventPositionOld = tdElement.innerHTML;
+			tdElement.innerHTML = eventPosition;
+			
+			tdElement.parentNode.removeClassName('odd');
+			if( eventPosition%2==0 )
+				tdElement.parentNode.addClassName('odd');
+			
+			debugAdd(eventPosition+' = '+eventPositionOld);
+			
+			try{
+
+				$('eventLivePositionLabel-'+eventPosition).id        = 'eventLivePositionLabel-Temp';
+				$('eventLiveResultRow-'+eventPosition).id            = 'eventLiveResultRow-Temp';
+				$('peopleIdPosition-'+eventPosition).id              = 'peopleIdPosition-Temp';
+				$('eventLivePeopleNameResult-'+eventPosition).id     = 'eventLivePeopleNameResult-Temp';
+				$('peopleIdPrize-'+eventPosition).id                 = 'peopleIdPrize-Temp';
+				$('eventLiveResultEmailAddressTd-'+eventPosition).id = 'eventLiveResultEmailAddressTd-Temp';
+			}catch(error){
+				
+			}
+			
+			try{
+				
+				$('eventLivePositionLabel-'+eventPositionOld).id        = 'eventLivePositionLabel-'+eventPosition;
+				$('eventLiveResultRow-'+eventPositionOld).id            = 'eventLiveResultRow-'+eventPosition;
+				$('peopleIdPosition-'+eventPositionOld).id              = 'peopleIdPosition-'+eventPosition;
+				$('eventLivePeopleNameResult-'+eventPositionOld).id     = 'eventLivePeopleNameResult-'+eventPosition;
+				$('peopleIdPrize-'+eventPositionOld).id                 = 'peopleIdPrize-'+eventPosition;
+				$('eventLiveResultEmailAddressTd-'+eventPositionOld).id = 'eventLiveResultEmailAddressTd-'+eventPosition;
+				
+				new Ajax.Autocompleter('eventLivePeopleNameResult-'+eventPosition, 'eventLivePeopleNameResult-'+eventPosition+'_auto_complete', _webRoot+'/eventLive/autoComplete/instanceName/player/eventLiveId/'+eventLiveId, {afterUpdateElement:function (inputField, selectedItem){ handleSelectEventLivePlayerResult(selectedItem.id, inputField.value, eventPosition) }, callback:function(element, value) { return  value+'?&peopleName='+$('eventLivePeopleNameResult-'+eventPosition).value}});
+			}catch(error){
+				
+				$('eventLivePositionLabel-Temp').id        = 'eventLivePositionLabel-'+eventPosition;
+				$('eventLiveResultRow-Temp').id            = 'eventLiveResultRow-'+eventPosition;
+				$('peopleIdPosition-Temp').id              = 'peopleIdPosition-'+eventPosition;
+				$('eventLivePeopleNameResult-Temp').id     = 'eventLivePeopleNameResult-'+eventPosition;
+				$('peopleIdPrize-Temp').id                 = 'peopleIdPrize-'+eventPosition;
+				$('eventLiveResultEmailAddressTd-Temp').id = 'eventLiveResultEmailAddressTd-'+eventPosition;
+
+				new Ajax.Autocompleter('eventLivePeopleNameResult-'+eventPosition, 'eventLivePeopleNameResult-'+eventPosition+'_auto_complete', _webRoot+'/eventLive/autoComplete/instanceName/player/eventLiveId/'+eventLiveId, {afterUpdateElement:function (inputField, selectedItem){ handleSelectEventLivePlayerResult(selectedItem.id, inputField.value, eventPosition) }, callback:function(element, value) { return  value+'?&peopleName='+$('eventLivePeopleNameResult-'+eventPosition).value}});
+			}
+		}
+			
+		
+//		for(var eventPosition=1; eventPosition <= getEventLivePlayers(); eventPosition++)
+//			$('eventLivePositionLabel-'+eventPositionDrag).innerHTML = eventPosition+'a';
 	};
 	// row was dropped to the source - event handler
 	// mini table (cloned row) will be removed and source row should return to original state
