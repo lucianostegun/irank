@@ -15,9 +15,30 @@ class EventLivePlayer extends BaseEventLivePlayer
 		$this->setEnabled( !$this->getEnabled() );
 		$this->save();
 		
-		Util::executeQuery('SELECT update_event_live_players('.$this->getEventLiveId().')');
+		$this->updatePlayers();
+	}
+	
+	public function confirmPresence(){
+		
+		$this->setEnabled(true);
+		$this->save();
+		
+		$this->updatePlayers();
+	}
+	
+	public function declinePresence(){
+		
+		$this->setEnabled(false);
+		$this->save();
+		
+		$this->updatePlayers();
 	}
 
+	public function updatePlayers(){
+		
+		Util::executeQuery('SELECT update_event_live_players('.$this->getEventLiveId().')');
+	}
+	
 	public function getCurrentStatus(){
 		
 		return ($this->getEnabled()?'yes':'no');

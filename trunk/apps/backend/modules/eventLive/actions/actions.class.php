@@ -105,5 +105,114 @@ class eventLiveActions extends sfActions
     
     exit;
   }
+
+  public function executeAddPlayer($request){
+    
+    $peopleId    = $request->getParameter('peopleId');
+    $eventLiveId = $this->eventLiveId;
+
+    try{
+    	
+    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($eventLiveId, $peopleId);
+    	
+    	if( $eventLivePlayerObj->getEnabled() ){
+    		
+    		echo 'noChange';
+    		exit;
+    	}
+    		
+	    $eventLivePlayerObj->confirmPresence();
+    }catch(Exception $e){
+    	
+    	Util::forceError('!Erro ao incluir o jogador ao evento.'.Util::isDebug()?$e->getMessage():'');
+    }
+    
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('eventLive/include/players', array('eventLiveObj'=>$eventLivePlayerObj->getEventLive())));
+  }
+
+  public function executeRemovePlayer($request){
+    
+    $peopleId    = $request->getParameter('peopleId');
+    $eventLiveId = $this->eventLiveId;
+
+    try{
+    	
+    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($eventLiveId, $peopleId);
+	    $eventLivePlayerObj->declinePresence();
+    }catch(Exception $e){
+    	
+    	Util::forceError('!Erro ao remover o jogador ao evento.'.Util::isDebug()?$e->getMessage():'');
+    }
+    
+    exit;
+  }
+
+  public function executeSavePlayerPosition($request){
+    
+    $peopleId      = $request->getParameter('peopleId');
+    $eventPosition = $request->getParameter('eventPosition');
+    $eventLiveId   = $this->eventLiveId;
+
+    try{
+    	
+    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($eventLiveId, $peopleId);
+    	
+    	$eventPositionOld = $eventLivePlayerObj->getEventPosition();
+    	
+	    $eventLivePlayerObj->setEventPosition($eventPosition);
+	    $eventLivePlayerObj->save();
+	    
+	    $peopleObj = $eventLivePlayerObj->getPeople();
+    }catch(Exception $e){
+    	
+    	Util::forceError('!Erro ao remover o jogador ao evento.'.Util::isDebug()?$e->getMessage():'');
+    }
+    
+    $infoList = array();
+    $infoList['peopleName']   = $peopleObj->getFullName();
+    $infoList['emailAddress'] = $peopleObj->getEmailAddress();
+    $infoList['eventPosition']    = $eventPosition;
+    $infoList['eventPositionOld'] = $eventPositionOld;
+    
+    echo Util::parseInfo($infoList);
+    
+    exit;
+  }
+  
+  public function executeAutoComplete($request){
+    
+	$peopleName   = $request->getParameter('peopleName');
+	$instanceName = $request->getParameter('instanceName');
+	$suggestNew   = $request->getParameter('suggestNew');
+
+	$options = array('suggestNew'=>$suggestNew,
+					 'quickName'=>$peopleName);
+	
+	$emailAddress = null;
+	
+	if( preg_match('/,/', $peopleName) )
+		list($peopleName, $emailAddress) = explode(',', $peopleName);
+		
+	$peopleName   = str_replace(' ', '%', trim($peopleName));
+	$emailAddress = str_replace(' ', '%', trim($emailAddress));
+	
+	$table      = 'people INNER JOIN event_live_player ON event_live_player.PEOPLE_ID=people.ID AND event_live_player.EVENT_LIVE_ID='.$this->eventLiveId.' AND event_live_player.ENABLED';
+	$fieldId    = 'id';
+	$fieldName  = "FULL_NAME||', '||COALESCE(EMAIL_ADDRESS, 'Não informado')";
+	$condition  = "people.ENABLED AND people.VISIBLE AND NOT people.DELETED AND ((no_accent(full_name) ILIKE no_accent('%$peopleName%') OR no_accent(email_address) ILIKE no_accent('%$peopleName%'))";
+	
+	if( $emailAddress )
+		$condition .= " OR email_address ILIKE '%$emailAddress%'";
+		
+	$condition .= ")";
+
+	$fieldOrder = 'full_name';
+	
+	
+	echo Util::getAutoCompleteResults($table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options );
+	exit;
+  }
 }
 	

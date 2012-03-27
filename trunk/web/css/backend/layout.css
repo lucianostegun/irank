@@ -455,120 +455,172 @@ width: 95%;
 }
 
 .width_half {
-width: 46%;
-margin-right: 0;
-float: left;
+	
+	width: 46%;
+	margin-right: 0;
+	float: left;
 }
 
 .width_quarter {
-width: 26%;
-margin-right: 0;
-float: left;
+	
+	width: 26%;
+	margin-right: 0;
+	float: left;
 }
 
 .width_3_quarter {
-width: 66%;
-margin-right: 0;
-float: left;
+	
+	width: 66%;
+	margin-right: 0;
+	float: left;
 }
 
 /* Stats Module */
 
 .stats_graph {
-width: 64%;
-float: left;
+	
+	width: 64%;
+	float: left;
 }
 
 .stats_overview {
-background: #F6F6F6;
-border: 1px solid #ccc;
-float: right;
-width: 26%;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
+	
+	background: #F6F6F6;
+	border: 1px solid #ccc;
+	float: right;
+	width: 26%;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .overview_today, .overview_previous {
-width: 50%;
-float: left;}
+
+	width: 50%;
+	float: left;
+}
 
 .stats_overview p {
-margin: 0; padding: 0;
-text-align: center;
-text-transform: uppercase;
-text-shadow: 0 1px 0 #fff;
+	
+	margin: 0; padding: 0;
+	text-align: center;
+	text-transform: uppercase;
+	text-shadow: 0 1px 0 #fff;
 }
 
 .stats_overview p.overview_day {
-font-size: 12px;
-font-weight: bold;
-margin: 6px 0;
+	
+	font-size: 12px;
+	font-weight: bold;
+	margin: 6px 0;
 }
 
 .stats_overview p.overview_count {
-font-size: 26px;
-font-weight: bold;
-color: #333333;}
+	
+	font-size: 26px;
+	font-weight: bold;
+	color: #333333;
+}
 
 .stats_overview p.overview_type {
-font-size: 10px;
-color: #999999;
-margin-bottom: 8px}
+	
+	font-size: 10px;
+	color: #999999;
+	margin-bottom: 8px
+}
 
 /* Content Manager */
 
-.tablesorter {
-width: 100%;
-margin: -5px 0 0 0;
+.tablesorter,
+.tablestatic {
+	
+	width: 100%;
+	margin: -5px 0 0 0;
 }
 
-.tablesorter.hoHeader {
+.tablesorter.hoHeader,
+.tablestatic.hoHeader {
 
 	margin-top: -35px;
 }
 
-.tablesorter td{
-margin: 0;
-padding: 0;
-border-bottom: 1px dotted #ccc;
+.tablesorter td,
+.tablestatic td{
+	
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px dotted #ccc;
 }
 
-.tablesorter thead tr {
-height: 34px;
-background: url(/images/backend/table_sorter_header.png) repeat-x;
-text-align: left;
-text-indent: 10px;
-cursor: pointer;
+.tablesorter thead tr,
+.tablestatic thead tr,
+.tablestatic tr.thead {
+	
+	height: 34px;
+	background: url(/images/backend/table_sorter_header.png) repeat-x;
+	text-align: left;
+	text-indent: 10px;
+	cursor: pointer;
 }
 
-.tablesorter td {
+.tablestatic thead tr,
+.tablestatic tr.thead {
+
+	cursor: 	default;
+}
+
+.rowhandler,
+.rowhandler:hover {
+}
+
+.drag {
+	
+	width: 	23px;
+	height: 	16px;
+	margin: 0px;
+	text-align: center;
+	font-size: 10pt;
+	height: 20px;
+	line-height: 20px;
+	background-color: white;
+	/* round corners */
+	background: url('/images/backend/drag.png') no-repeat;
+	border: 0px solid;
+}
+
+.tablesorter td, 
+.tablestatic td {
 padding: 10px 10px;
 }
 
-.tablesorter .dimmed td {
+.tablesorter .dimmed td, 
+.tablestatic .dimmed td {
 
 	color: 	#909090;
 }
 
-.tablesorter .hover td {
+.tablesorter .hover td,
+.tablestatic .hover td {
 
 	background: 	#FFCB78;
 	cursor: 		pointer;
 	color: 			#000000;
 }
 
-.tablesorter th.actions {
+.tablesorter th.actions,
+.tablestatic th.actions {
 
 	width: 80px
 }
 
-.tablesorter th.checkbox {
+.tablesorter th.checkbox,
+.tablestatic th.checkbox {
 
 	width: 20px;
 }
 
-.tablesorter input[type=image] {
+.tablesorter input[type=image],
+.tablestatic input[type=image] {
 margin-right: 10px;}
 
 ul.tabs {

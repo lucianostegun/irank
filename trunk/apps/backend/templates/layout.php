@@ -58,7 +58,7 @@ $moduleName = $sf_context->getModuleName();
 </script>
 
 <body>
-
+	<div id="debugDiv"></div>
 	<header id="header">
 		<hgroup>
 			<h1 class="site_title"><?php echo link_to(image_tag('backend/logo'), 'home/index') ?></h1>
