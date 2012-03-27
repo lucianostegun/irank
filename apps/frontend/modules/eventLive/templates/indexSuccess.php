@@ -56,7 +56,7 @@
 								echo button_tag('resultButton'.$eventLiveId, 'VER RESULTADO', array('image'=>'result.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'goToPage("eventLive", "details", "id", '.$eventLiveId.')'));
 						else{
 							
-							if( $eventLiveObj->getPlayerStatus($peopleId, true) )
+							if( $peopleId && $eventLiveObj->getPlayerStatus($peopleId, true) )
 								echo button_tag('confirmButton'.$eventLiveId, 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
 							else
 								echo button_tag('confirmButton'.$eventLiveId, 'CONFIRMAR PRESENÇA', array('image'=>'ok.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));

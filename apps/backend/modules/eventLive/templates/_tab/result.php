@@ -12,15 +12,15 @@
 	</colgroup>
 	<tbody id="eventLiveResultTbody">
 		<tr class="thead">
-			<th colspan="4"><div id="playerResultCountDiv"><?php echo $players.' Jogador'.($players==1?'':'es').' confirmado'.($players==1?'':'s') ?></div></th> 
-			<th class="publishResult"><input type="submit" value="Divulgar resultados" class="save_btn" onclick="publishEventLiveResult()"></th> 
+			<th colspan="4" class="mark"><div id="playerResultCountDiv"><?php echo $players.' Jogador'.($players==1?'':'es').' confirmado'.($players==1?'':'s') ?></div></th> 
+			<th class="publishResult mark"><input type="submit" value="Divulgar resultados" class="save_btn" onclick="publishEventLiveResult()"></th> 
 		</tr>
 		<tr class="thead"> 
-			<th></th> 
-			<th style="width: 30px">#</th> 
-			<th>Nome</th> 
-			<th>Premiação</th> 
-			<th>E-mail</th> 
+			<th class="mark"></th>
+			<th class="mark" style="width: 30px">#</th> 
+			<th class="mark">Nome</th> 
+			<th class="mark">Premiação</th> 
+			<th class="mark">E-mail</th> 
 		</tr>
 		<?php include_partial('eventLive/include/result', array('eventLiveObj'=>$eventLiveObj)) ?>
 	</tbody>
