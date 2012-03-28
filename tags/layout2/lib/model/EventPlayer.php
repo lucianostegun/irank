@@ -60,7 +60,7 @@ class EventPlayer extends BaseEventPlayer
 	  	}
 	  	
 	  	
-		$infoList = array();
+		$infoList = $eventObj->getInfo();
 		$infoList['playerList'] = $playerList;
 		$infoList['peopleName'] = $this->getPeople()->getFirstName();
 
@@ -70,9 +70,9 @@ class EventPlayer extends BaseEventPlayer
 		$emailSubjectList['en_US'] = __('email.subject.presenceConfirm', null, 'messages', 'en_US');
 
 		$emailAddressList = $eventObj->getEmailAddressList('receiveFriendEventConfirmNotify');
-		
-	  	foreach($eventPlayerObjList as $eventPlayerObj){
 
+	  	foreach($eventPlayerObjList as $eventPlayerObj){
+		
 			$peopleObj    = $eventPlayerObj->getPeople();
 			$emailAddress = $peopleObj->getEmailAddress();
 

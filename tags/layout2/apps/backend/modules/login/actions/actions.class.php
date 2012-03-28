@@ -17,8 +17,8 @@ class loginActions extends sfActions
   
   public function executeLogin($request){
 
-	$username = $request->getParameter( 'username' );
-	$password = $request->getParameter( 'password' );
+	$username = $request->getParameter('username');
+	$password = $request->getParameter('password');
 	
 	$statusMessage = false;
 	
@@ -29,26 +29,24 @@ class loginActions extends sfActions
 		$criteria->add( UserAdminPeer::ENABLED, true );
 		$criteria->add( UserAdminPeer::VISIBLE, true );
 		$criteria->add( UserAdminPeer::DELETED, false );
-		$criteria->add( UserAdminPeer::USERNAME, $username );
+		
+		$criterion = $criteria->getNewCriterion( UserAdminPeer::USERNAME, $username );
+		$criterion->addOr( $criteria->getNewCriterion( PeoplePeer::EMAIL_ADDRESS, $username ) );
+		$criteria->add($criterion);
+		
 		$criteria->add( UserAdminPeer::PASSWORD, md5( $password ) );
+		$criteria->addJoin( UserAdminPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$userAdminObj = UserAdminPeer::doSelectOne( $criteria );
 		
-		if( is_object($userAdminObj) ){
-	        
-	        // Realiza um logout para limpar todas as variáveis de sessão
+		if( is_object($userAdminObj) )
 	        $userAdminObj->login();
-		}else{
-			
-			$statusMessage = '<b>ACESSO NEGADO!</b> - O login e/ou senha não são válidos';
-		}
+		else
+			throw new Exception('<b>ACESSO NEGADO!</b> - O usuário/senha não são válidos');
 	}else{
 		
-		$statusMessage = '<b>ACESSO NEGADO!</b> - Informe se login e senha de acesso';
+		throw new Exception('<b>ACESSO NEGADO!</b> - Informe seu username/email e senha de acesso');
 	}
 	
-	if( $statusMessage )
-		Util::forceError( $statusMessage );
-		
 	exit;
   }
 
