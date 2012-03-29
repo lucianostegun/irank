@@ -6,3 +6,7 @@ all:
 edit:
   stylesheets:    []
   javascripts:    [backend/tableReorder/header, backend/tableReorder/redips-drag-min, backend/tableReorder/script]
+  
+editSuccess:
+  stylesheets:    []
+  javascripts:    [backend/tableReorder/header, backend/tableReorder/redips-drag-min, backend/tableReorder/script]
