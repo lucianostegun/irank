@@ -66,6 +66,7 @@ section.addPlayer li {
 	font-weight: 	bold;
 	height: 		28px;
 	font-size: 		20px;
+	white-space: 	nowrap;
 }
 
 .result .publishResult {

@@ -67,3 +67,4 @@
 		</section>
 	</div>
 </div>
+<?php include_partial('home/include/formFooter', array('prefix'=>'eventLive')) ?>

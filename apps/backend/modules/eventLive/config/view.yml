@@ -1,4 +1,8 @@
 all:
-
   stylesheets:    [backend/form, backend/eventLive]
-  javascripts:    [mask, backend/form, backend/eventLive, backend/paginator, backend/record, backend/tableReorder/header, backend/tableReorder/redips-drag-min, backend/tableReorder/script]
+  javascripts:    [mask, backend/form, backend/eventLive, backend/paginator, backend/record]
+
+  
+edit:
+  stylesheets:    []
+  javascripts:    [backend/tableReorder/header, backend/tableReorder/redips-drag-min, backend/tableReorder/script]

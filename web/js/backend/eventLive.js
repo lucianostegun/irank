@@ -5,11 +5,23 @@ function handleSuccessEventLive(content){
 	
 	mainRecordName = ($('eventLiveEventShortName').value?$('eventLiveEventShortName').value:$('eventLiveEventName').value);
 	updateMainRecordName(mainRecordName, true);
+	
+	$('eventLiveResultForm').onsubmit();
 }
 
 function handleFailureEventLive(content){
 	
 	handleFormFieldError(content, 'eventLive');
+}
+
+function handleSuccessEventLiveResult(content){
+	
+	hideIndicator('eventLive');
+}
+
+function handleFailureEventLiveResult(content){
+	
+	hideIndicator('eventLive');
 }
 
 function replicateEventName(eventName){

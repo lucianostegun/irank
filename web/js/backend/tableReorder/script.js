@@ -64,6 +64,7 @@ redips_init = function () {
 			
 			$('eventLivePositionLabel-'+eventPositionOld).id        = 'eventLivePositionLabel-'+eventPosition;
 			$('eventLiveResultRow-'+eventPositionOld).id            = 'eventLiveResultRow-'+eventPosition;
+			$('peopleIdPosition-'+eventPositionOld).name            = 'peopleIdPosition-'+eventPosition;
 			$('peopleIdPosition-'+eventPositionOld).id              = 'peopleIdPosition-'+eventPosition;
 			$('eventLivePeopleNameResult-'+eventPositionOld).id     = 'eventLivePeopleNameResult-'+eventPosition;
 			$('peopleIdPrize-'+eventPositionOld).id                 = 'peopleIdPrize-'+eventPosition;
@@ -91,7 +92,7 @@ redips_init = function () {
 			changeIds(eventPosition, eventPositionOld);
 		}
 		
-		for(var rowIndex=0; rowIndex <= minValue; rowIndex++){
+		for(var rowIndex=0; rowIndex < minValue; rowIndex++){
 			
 			var tdElement = tdList[rowIndex];
 			
@@ -102,6 +103,8 @@ redips_init = function () {
 		
 		for(var eventPosition=maxValue; eventPosition <= minValue; eventPosition++)
 			eval('autoComplete'+eventPosition+'Obj = new Ajax.Autocompleter(\'eventLivePeopleNameResult-'+eventPosition+'\', \'eventLivePeopleNameResult-'+eventPosition+'_auto_complete\', _webRoot+\'/eventLive/autoComplete/instanceName/player/eventLiveId/\'+eventLiveId, {afterUpdateElement:function (inputField, selectedItem){ handleSelectEventLivePlayerResult(selectedItem.id, inputField.value, '+eventPosition+') }, callback:function(element, value) { return  value+\'?&peopleName=\'+$(\'eventLivePeopleNameResult-'+eventPosition+'\').value}});');
+		
+		$('eventLiveResultForm').onsubmit();
 	};
 	// row was dropped to the source - event handler
 	// mini table (cloned row) will be removed and source row should return to original state

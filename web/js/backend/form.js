@@ -165,6 +165,7 @@ function showFormStatusSuccess(prefix){
 	
 	$(prefix+'Header').addClassName('success');
 	$(prefix+'Footer').addClassName('success');
+	
 	if( _hideFormStatusSuccessDelay==0 )
 		startHideFormStatusSuccess(9, prefix);
 	else
