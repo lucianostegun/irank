@@ -160,12 +160,11 @@ function handleSelectEventLivePlayerResult(peopleId, peopleName, eventPosition){
 	setPlayerResult(peopleId, peopleName, eventPosition);
 }
 
-function setPlayerResult(peopleId, peopleName, rowId){
+function setPlayerResult(peopleId, peopleName, eventPosition){
 	
 	showIndicator('eventLive');
 	
 	var eventLiveId = $('eventLiveId').value;
-	var eventPosition = $('eventLivePositionLabel-'+rowId).innerHTML;
 	
 	var successFunc = function(t){
 		
@@ -173,12 +172,12 @@ function setPlayerResult(peopleId, peopleName, rowId){
 		
 		var infoObj = parseInfo(content);
 		
-		$('eventLivePeopleNameResult-'+rowId).value         = infoObj.peopleName;
-		$('peopleIdPosition-'+rowId).value                  = peopleId;
-		$('eventLiveResultEmailAddressTd-'+rowId).innerHTML = infoObj.emailAddress;
+		$('eventLivePeopleNameResult-'+eventPosition).value         = infoObj.peopleName;
+		$('peopleIdPosition-'+eventPosition).value                  = peopleId;
+		$('eventLiveResultEmailAddressTd-'+eventPosition).innerHTML = infoObj.emailAddress;
 
-		if( $('eventLivePeopleNameResult-'+(rowId+1))!=null )
-			$('eventLivePeopleNameResult-'+(rowId+1)).focus();
+		if( $('eventLivePeopleNameResult-'+(eventPosition+1))!=null )
+			$('eventLivePeopleNameResult-'+(eventPosition+1)).focus();
 		
 		if( infoObj.eventPositionOld && infoObj.eventPositionOld!=eventPosition ){
 			
@@ -208,8 +207,6 @@ function setPlayerResult(peopleId, peopleName, rowId){
 	}
 	
 	var urlAjax = _webRoot+'/eventLive/savePlayerPosition/eventLiveId/'+eventLiveId+'/peopleId/'+peopleId+'/eventPosition/'+eventPosition;
-	
-	debug(urlAjax)
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
