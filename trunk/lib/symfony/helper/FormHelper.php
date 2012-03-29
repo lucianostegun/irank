@@ -985,10 +985,10 @@ function button_tag( $buttonId, $text, $options=array() ){
 		unset($options['noCkeck']);
 	}catch(Exception $e){}
 	
-	$app = Util::getApp();
-	$app = ($app!='frontend'?$app.'/':'');
+	$app     = Util::getApp();
+	$appPath = ($app!='frontend'?$app.'/':'');
 	
-	$imagePath = $app.'button/'.$image;
+	$imagePath = $appPath.'button/'.$image;
 	
 	if( $disabled ){
 		
@@ -1027,7 +1027,7 @@ function button_tag( $buttonId, $text, $options=array() ){
 	if( $text!='Cancelar' && $text!='Fechar' )
 		$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; top: -1000px; left: -1000px; border: none; background: none', 'onclick'=>$onclick.'; return false')) ;
 	
-	sfContext::getInstance()->getResponse()->addStylesheet( $app.'button' );
+	sfContext::getInstance()->getResponse()->addStylesheet( $appPath.'button' );
 	sfContext::getInstance()->getResponse()->addJavascript( 'button' );
 	
 	return $html;
