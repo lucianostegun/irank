@@ -13,7 +13,7 @@ abstract class BaseEventLivePlayerPeer {
 	const CLASS_DEFAULT = 'lib.model.EventLivePlayer';
 
 	
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 8;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,9 @@ abstract class BaseEventLivePlayerPeer {
 	const PRIZE = 'event_live_player.PRIZE';
 
 	
+	const SCORE = 'event_live_player.SCORE';
+
+	
 	const CREATED_AT = 'event_live_player.CREATED_AT';
 
 	
@@ -46,19 +49,19 @@ abstract class BaseEventLivePlayerPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventLiveId', 'PeopleId', 'Enabled', 'EventPosition', 'Prize', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePlayerPeer::PEOPLE_ID, EventLivePlayerPeer::ENABLED, EventLivePlayerPeer::EVENT_POSITION, EventLivePlayerPeer::PRIZE, EventLivePlayerPeer::CREATED_AT, EventLivePlayerPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_live_id', 'people_id', 'enabled', 'event_position', 'prize', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('EVENT_LIVE_ID'=>'', 'PEOPLE_ID'=>'', 'ENABLED'=>'', 'EVENT_POSITION'=>'', 'PRIZE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('EventLiveId', 'PeopleId', 'Enabled', 'EventPosition', 'Prize', 'Score', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePlayerPeer::PEOPLE_ID, EventLivePlayerPeer::ENABLED, EventLivePlayerPeer::EVENT_POSITION, EventLivePlayerPeer::PRIZE, EventLivePlayerPeer::SCORE, EventLivePlayerPeer::CREATED_AT, EventLivePlayerPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('event_live_id', 'people_id', 'enabled', 'event_position', 'prize', 'score', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('EVENT_LIVE_ID'=>'', 'PEOPLE_ID'=>'', 'ENABLED'=>'', 'EVENT_POSITION'=>'', 'PRIZE'=>'', 'SCORE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventLiveId'=>0, 'PeopleId'=>1, 'Enabled'=>2, 'EventPosition'=>3, 'Prize'=>4, 'CreatedAt'=>5, 'UpdatedAt'=>6, ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePlayerPeer::EVENT_LIVE_ID=>0, EventLivePlayerPeer::PEOPLE_ID=>1, EventLivePlayerPeer::ENABLED=>2, EventLivePlayerPeer::EVENT_POSITION=>3, EventLivePlayerPeer::PRIZE=>4, EventLivePlayerPeer::CREATED_AT=>5, EventLivePlayerPeer::UPDATED_AT=>6, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_live_id'=>0, 'people_id'=>1, 'enabled'=>2, 'event_position'=>3, 'prize'=>4, 'created_at'=>5, 'updated_at'=>6, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('EventLiveId'=>0, 'PeopleId'=>1, 'Enabled'=>2, 'EventPosition'=>3, 'Prize'=>4, 'Score'=>5, 'CreatedAt'=>6, 'UpdatedAt'=>7, ),
+		BasePeer::TYPE_COLNAME=>array (EventLivePlayerPeer::EVENT_LIVE_ID=>0, EventLivePlayerPeer::PEOPLE_ID=>1, EventLivePlayerPeer::ENABLED=>2, EventLivePlayerPeer::EVENT_POSITION=>3, EventLivePlayerPeer::PRIZE=>4, EventLivePlayerPeer::SCORE=>5, EventLivePlayerPeer::CREATED_AT=>6, EventLivePlayerPeer::UPDATED_AT=>7, ),
+		BasePeer::TYPE_FIELDNAME=>array ('event_live_id'=>0, 'people_id'=>1, 'enabled'=>2, 'event_position'=>3, 'prize'=>4, 'score'=>5, 'created_at'=>6, 'updated_at'=>7, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
@@ -121,6 +124,8 @@ abstract class BaseEventLivePlayerPeer {
 		$criteria->addSelectColumn(EventLivePlayerPeer::EVENT_POSITION);
 
 		$criteria->addSelectColumn(EventLivePlayerPeer::PRIZE);
+
+		$criteria->addSelectColumn(EventLivePlayerPeer::SCORE);
 
 		$criteria->addSelectColumn(EventLivePlayerPeer::CREATED_AT);
 

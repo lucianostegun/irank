@@ -5,6 +5,7 @@
 		<li><a href="#tab1">Principal</a></li>
 		<li><a href="#tab2">Jogadores</a></li>
 		<li><a href="#tab3">Resultado</a></li>
+		<li><a href="#tab4">Fotos</a></li>
 	</ul>
 	</header>
 	<div class="tab_container">
@@ -34,5 +35,6 @@
 		</form>
 		<div id="tab2" class="tab_content"><?php include_partial('eventLive/tab/players', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 		<div id="tab3" class="tab_content"><?php include_partial('eventLive/tab/result', array('eventLiveObj'=>$eventLiveObj)) ?></div>
+		<div id="tab4" class="tab_content"><?php include_partial('eventLive/tab/photos', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 	</div>
 </article><!-- end of content manager article -->

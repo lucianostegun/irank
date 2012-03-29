@@ -43,7 +43,7 @@
 			<?php if( $allowDelete ): ?>
 				<td><?php echo checkbox_tag('clubId[]', $clubId) ?></td>
 			<?php endif; ?> 
-			<td onclick="<?php echo $onclick ?>"><?php echo $clubObj->getClubName() ?></td> 
+			<td onclick="<?php echo $onclick ?>"><?php echo image_tag('club/'.$clubObj->getFileNameLogo(), array('style'=>'height: 40px; margin: -8px 5px -12px 0px')) ?><?php echo $clubObj->getClubName() ?></td> 
 			<td onclick="<?php echo $onclick ?>"><?php echo $clubObj->getLocation() ?></td> 
 			<td onclick="<?php echo $onclick ?>"><?php echo $clubObj->getRankingCount() ?></td> 
 			<td onclick="<?php echo $onclick ?>"><?php echo $clubObj->getEventCount() ?></td> 

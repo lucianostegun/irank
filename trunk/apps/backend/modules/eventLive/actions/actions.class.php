@@ -48,7 +48,7 @@ class eventLiveActions extends sfActions
     if( $eventLiveObj->getRankingLiveId() ){
     	
 	    $rankingLiveObj = $eventLiveObj->getRankingLive();
-	    $this->pathList[$rankingLiveObj->toString()] = 'rankingLive/edit/rankingLiveId/'.$rankingLiveObj->getId();
+	    $this->pathList[$rankingLiveObj->toString()] = '#goToPage("rankingLive", "edit", "rankingLiveId", '.$rankingLiveObj->getId().', true)';
     }
     
     $this->pathList[$eventLiveObj->toString()] = '#';
@@ -225,15 +225,18 @@ class eventLiveActions extends sfActions
 	for($eventPosition=1; $eventPosition <= $players; $eventPosition++){
 		
 		$peopleId = $request->getParameter('peopleIdPosition-'.$eventPosition);
+		$prize    = $request->getParameter('prize-'.$eventPosition);
 		
 		if( !$peopleId )
 			continue;
 			
+		$prize = Util::formatFloat($prize);
+			
 		$peopleIdList[] = $peopleId;
-		Util::executeQuery('UPDATE event_live_player SET event_position = '.$eventPosition.' WHERE event_live_id = '.$this->eventLiveId.' AND people_id='.$peopleId);
+		Util::executeQuery('UPDATE event_live_player SET event_position = '.$eventPosition.', prize='.$prize.' WHERE event_live_id = '.$this->eventLiveId.' AND people_id='.$peopleId);
 	}
 	
-	Util::executeQuery('UPDATE event_live_player SET event_position = null WHERE event_live_id = '.$this->eventLiveId.' AND people_id NOT IN ('.implode(',', $peopleIdList).')');
+	Util::executeQuery('UPDATE event_live_player SET event_position = null, prize=0 WHERE event_live_id = '.$this->eventLiveId.' AND people_id NOT IN ('.implode(',', $peopleIdList).')');
 	exit;
   }
 }

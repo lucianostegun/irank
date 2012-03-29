@@ -182,6 +182,18 @@ class RankingLive extends BaseRankingLive
 		return Util::executeOne('SELECT COUNT(1) FROM event_live WHERE visible AND enabled AND NOT deleted AND ranking_live_id = '.$this->getId());
 	}
 	
+	public function getEventLiveList($criteria=null, $con=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
+		$criteria->add( EventLivePeer::ENABLED, true );
+		$criteria->add( EventLivePeer::VISIBLE, true );
+		$criteria->add( EventLivePeer::DELETED, false );
+		
+		return parent::getEventLiveList($criteria, $con);
+	}
+	
 	public function toString(){
 		
 		return $this->getRankingName();

@@ -1,39 +1,32 @@
 <table border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr class="header">
-		<th class="first">#</th>
-		<th>Jogador</th>
-		<th style="width: 100px">Premiação</th>
+		<th style="width: 55px" class="first">Posição</th>
+		<th>Nome</th>
+		<th style="width: 80px">Pontos</th>
+		<th style="width: 80px"><?php echo __('Prize') ?></th>
 	</tr>
 	<tbody>
-		<tr>
-			<td>#1</td>
-			<td>Luciano Stegun</td>
-			<td align="right">950,00</td>
-		</tr>
-		<tr>
-			<td>#2</td>
-			<td>Diogo Nunes</td>
-			<td align="right">950,00</td>
-		</tr>
-		<tr>
-			<td>#3</td>
-			<td>Wagner André</td>
-			<td align="right">950,00</td>
-		</tr>
-		<tr>
-			<td>#1</td>
-			<td>Reynaldo Rancan</td>
-			<td align="right">950,00</td>
-		</tr>
-		<tr>
-			<td>#4</td>
-			<td>Leo Watanabe</td>
-			<td align="right">950,00</td>
-		</tr>
-		<tr>
-			<td>#5</td>
-			<td>João Marcelo</td>
-			<td align="right">950,00</td>
-		</tr>
-	</tbody>
+<?php
+	$criteria = new Criteria();
+	$criteria->add( EventLivePlayerPeer::PRIZE, 0, Criteria::GREATER_THAN );
+	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList($criteria);
+	
+	foreach($eventLivePlayerObjList as $eventLivePlayerObj):
+	
+		$peopleObj = $eventLivePlayerObj->getPeople();
+		
+		$peopleId     = $peopleObj->getId();
+		$peopleName   = $peopleObj->getFullName();
+		$emailAddress = $peopleObj->getEmailAddress();
+		$prize        = $eventLivePlayerObj->getPrize();
+		$score        = $eventLivePlayerObj->getScore();
+?>
+<tr class="<?php echo $class ?>">
+	<td><?php echo $eventLivePlayerObj->getEventPosition() ?></td> 
+	<td><?php echo $peopleName ?></td>
+	<td style="text-align: right"><?php echo Util::formatFloat($score, true, 1) ?></td>
+	<td style="text-align: right"><?php echo Util::formatFloat($prize, true) ?></td>
+</tr>
+<?php endforeach; ?>
+</tbody>
 </table>
