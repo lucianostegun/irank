@@ -11,7 +11,6 @@ include_title();
 
 	<header id="header">
 		<hgroup>
-			<h1 class="site_title"><?php echo link_to(image_tag('backend/logo'), 'home/index') ?></h1>
 			<h2 class="section_title">Acesso administrativo</h2><div class="btn_view_site"><a href="http://www.irank.com.br">iRank Site</a></div>
 		</hgroup>
 	</header> <!-- end of header bar -->

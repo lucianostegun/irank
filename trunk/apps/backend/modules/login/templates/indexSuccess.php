@@ -11,6 +11,7 @@
 			?>
 			<div id="login">
 				<div id="loginErrorMessageDiv"><b>ACESSO NEGADO!</b></br>Usuário/Senha inválidos.</div>
+				<?php echo image_tag('backend/login/logo') ?><br/><br/>
 				<table class="loginTable">
 					<tr>
 						<th>Usuário/E-mail</th>

@@ -212,7 +212,6 @@ class eventLiveActions extends sfActions
 	
 	
 	echo Util::getAutoCompleteResults($table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options );
-	echo '	<li id="quickNew"><b>Criar novo: </b>'.$peopleName.'</li>';
 	exit;
   }
 }
