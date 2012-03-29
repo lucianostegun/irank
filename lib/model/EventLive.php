@@ -151,6 +151,19 @@ class EventLive extends BaseEventLive
 		return $this->getRankingLive()->getGameType($returnTagName);
 	}
 	
+	public function getEventLivePlayerResultList($criteria=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+			
+		$criteria->add( EventLivePlayerPeer::ENABLED, true );
+		$criteria->addAnd( EventLivePlayerPeer::EVENT_POSITION, 0, Criteria::GREATER_THAN );
+		$criteria->add( EventLivePlayerPeer::EVENT_POSITION, null, Criteria::NOT_EQUAL );
+		$criteria->addAscendingOrderByColumn( EventLivePlayerPeer::EVENT_POSITION );
+		
+		return $this->getEventLivePlayerList($criteria);
+	}
+	
 	public function toString(){
 	
 		return ($this->getEventShortName()?$this->getEventShortName():$this->getEventName());	

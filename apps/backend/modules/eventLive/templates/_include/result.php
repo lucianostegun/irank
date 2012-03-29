@@ -1,11 +1,7 @@
 <?php
 	$players = $eventLiveObj->getPlayers();
 	
-	$criteria = new Criteria();
-	$criteria->add( EventLivePlayerPeer::ENABLED, true );
-	$criteria->add( EventLivePlayerPeer::EVENT_POSITION, 0, Criteria::GREATER_THAN );
-	$criteria->addAscendingOrderByColumn( EventLivePlayerPeer::EVENT_POSITION );
-	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerList($criteria);
+	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList();
 	
 	$eventPosition = 0;
 	$eventPlayerPositionList = array();
@@ -43,7 +39,7 @@
 		?>
 		<div id="eventLivePeopleNameResult-<?php echo $eventPosition ?>_auto_complete" class="auto_complete"></div>
 	</td>
-	<td class="prize"><?php echo input_tag('peopleIdPrize-'.$eventPosition, Util::formatFloat($prize, true), array('size'=>6)); ?></td>
+	<td class="prize"><?php echo input_tag('prize-'.$eventPosition, Util::formatFloat($prize, true), array('size'=>6)); ?></td>
 	<td class="emailAddress" id="eventLiveResultEmailAddressTd-<?php echo $eventPosition ?>"><?php echo $emailAddress ?></td>
 </tr>
 <?php

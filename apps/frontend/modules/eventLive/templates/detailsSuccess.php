@@ -16,7 +16,7 @@
 	$peopleId = $sf_user->getAttribute('peopleId');
 	
 	$pathList = array('Eventos ao vivo'=>$moduleName.'/index', 
-					  $clubName=>'#goToPage("club", "view", "clubId", '.$clubId.')', 
+					  $clubName=>'#goToPage("club", "details", "clubId", '.$clubId.')', 
 					  $rankingName=>'#goToPage("ranking", "view", "rankingLiveId", '.$rankingLiveId.')', 
 					  $eventShortName=>null);
 ?>

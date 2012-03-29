@@ -42,6 +42,8 @@ class EventLivePlayerMapBuilder {
 
 		$tMap->addColumn('PRIZE', 'Prize', 'double', CreoleTypes::FLOAT, false, null);
 
+		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::FLOAT, false, null);
+
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

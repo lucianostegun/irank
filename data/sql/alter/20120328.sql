@@ -1,0 +1,1 @@
+ALTER TABLE event_live_player ADD COLUMN score FLOAT DEFAULT 0;
