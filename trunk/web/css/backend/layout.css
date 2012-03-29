@@ -138,9 +138,9 @@ background: url(/images/backend/icn_logout.png) center no-repeat;
 
 section#secondary_bar .breadcrumbs_container {
 float: left;
-width: 85%;
 background: url(/images/backend/secondary_bar_shadow.png) no-repeat left top;
 height: 38px;
+padding-left: 15px;
 }
 
 article.breadcrumbs {

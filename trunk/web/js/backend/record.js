@@ -1,3 +1,44 @@
+function doSaveMain( formId, evt ){
+
+	formId = (formId?formId:getModuleName());
+	
+	var form = $(formId+'Form');
+	
+	if( form==null )
+		return;
+	
+	try{
+		eval('var result = preSave'+ucfirst(getModuleName())+'();');
+
+		if( result===false ){
+			
+			enableButton('toolbarSave');
+			return false;
+		}
+	}catch( error ){
+		
+	}
+
+	if( (evt.ctrlKey || evt.metaKey) && isDebug() )
+		form.submit();
+	else
+		form.onsubmit();
+}
+
+function goToList(evt){
+	
+	var newWindow = (evt.ctrlKey || evt.metaKey);
+	goToPage(getModuleName(), 'index', false, false, newWindow);
+}
+
+function goToNew(evt){
+	
+	var newWindow = (evt.ctrlKey || evt.metaKey);
+	goToPage(getModuleName(), 'new', false, false, newWindow);
+}
+
+
+
 function doDeleteRecords(){
 	
 	if( !confirm('ATENÇÃO!\n\nDeseja realmente remover os itens selecionados?') )

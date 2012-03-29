@@ -4,7 +4,6 @@
 	cursor: 			pointer;
 	-moz-user-select: 	none;
 	line-height:		16px;
-
 }
 
 .button .buttonLeft {
@@ -12,18 +11,18 @@
 	float: 			left;
 	height: 		22px;
 	width: 			7px;
-	background: 	url('/images/button/bgLeft.png') 0px 0px repeat-x;
+	background: 	url('/images/backend/button/bgLeft.png') 0px 0px no-repeat;
 }
 
 .button .buttonMiddle {
 
 	float: 			left;
-	font-size: 		8pt;
 	height: 		22px;
+	font-size: 		12px;
 	font-weight: 	bold;
 	text-align: 	center;
-	color: 			#000000;
-	background: 	url('/images/button/bgMiddle.png') 0px 0px repeat-x;
+	background: 	url('/images/backend/button/bgMiddle.png') 0px 0px repeat-x;
+	padding: 		0 2px;
 }
 
 .button .buttonRight {
@@ -32,7 +31,26 @@
 	float: 			left;
 	height: 		22px;
 	width: 			7px;
-	background: 	url('/images/button/bgRight.png') 0px 0px repeat-x;
+	background: 	url('/images/backend/button/bgRight.png') 0px 0px no-repeat;
+}
+
+.button .hover .buttonLeft {
+	
+	float: 			left;
+	height: 		22px;
+	width: 			7px;
+	background: 	url('/images/backend/button/bgLeft.png') 0px 0px no-repeat;
+}
+
+.button hover .buttonMiddle {
+
+	float: 			left;
+	height: 		22px;
+	font-size: 		12px;
+	font-weight: 	bold;
+	text-align: 	center;
+	background: 	url('/images/backend/button/bgMiddle.png') 0px 0px repeat-x;
+	padding: 		0 2px;
 }
 
 .button.hover .buttonLeft,
@@ -44,14 +62,19 @@
 
 
 
-
 .button .buttonMiddle .buttonLabel {
 
 	margin-top: 	3px;
 	margin-top: 	3px !ie;
-	color: 			#000000;
+	color: 			#404040;
+	text-shadow: 	1px 1px 0 #E0E0E0;
 	text-align: 	center;
 	padding: 		0px; 				
+}
+
+.button.hover .buttonMiddle .buttonLabel {
+
+	color:	#303030
 }
 
 .button .buttonMiddle .buttonLabel img {
@@ -118,7 +141,7 @@
 	float: 			left;
 	height: 		22px;
 	width: 			7px;
-	background: 	url('/images/button/bgLeftDisabled.png') 0px 0px repeat-x;
+	background: 	url('/images/backend/button/bgLeftDisabled.png');
 }
 
 .buttonDisabled .buttonMiddle {
@@ -128,7 +151,7 @@
 	height: 		22px;
 	font-weight: 	bold;
 	color: 			#000;
-	background: 	url('/images/button/bgMiddleDisabled.png') 0px 0px repeat-x;
+	background: 	url('/images/backend/button/bgMiddleDisabled.png');
 }
 
 .buttonDisabled .buttonMiddle .buttonLabel {
@@ -161,7 +184,7 @@
 	float: 			left;
 	height: 		22px;
 	width: 			7px;
-	background: 	url('/images/button/bgRightDisabled.png') 0px 0px repeat-x;
+	background: 	url('/images/backend/button/bgRightDisabled.png');
 }
 
 .buttonDisabled .buttonMiddle .buttonLabel .submit {

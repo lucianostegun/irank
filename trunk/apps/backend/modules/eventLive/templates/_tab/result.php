@@ -1,5 +1,14 @@
 <?php
 	$players = $eventLiveObj->getPlayers();
+	
+	echo form_remote_tag(array(
+		'url'=>'eventLive/saveResult',
+		'success'=>'handleSuccessEventLiveResult(request.responseText)',
+		'failure'=>'handleFailureEventLiveResult(request.responseText)',
+		'encoding'=>'UTF8',
+	), array('id'=>'eventLiveResultForm'));
+	
+	echo input_hidden_tag('eventLiveId', $eventLiveObj->getId(), array('eventLiveResultEventId'));
 ?>
 <div id="drag" class="inner_table">
 	<table class="tablestatic hoHeader result" cellspacing="0">
@@ -26,3 +35,4 @@
 	</tbody>
 	</table>
 </div>
+</form>

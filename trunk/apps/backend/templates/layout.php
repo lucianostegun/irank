@@ -93,6 +93,22 @@ $moduleName = $sf_context->getModuleName();
 			?>
 			</article>
 		</div>
+		<?php if( $moduleName!='home' ): ?>
+		<div class="toolbar" style="float: right; padding: 5px 0px; text-align: right">
+			<?php
+				echo button_tag('toolbarNew', 'Novo', array('image'=>'add', 'onclick'=>'goToNew(event)'));
+				
+				if( $actionName!='index' ){
+					
+					echo button_tag('toolbarSave', 'Salvar', array('image'=>'save', 'onclick'=>'doSaveMain(false, event)'));
+					echo button_tag('toolbarCancel', 'Cancelar', array('image'=>'list', 'onclick'=>'goToList(event)'));
+				}else{
+					
+					echo button_tag('toolbarDelete', 'Excluir', array('image'=>'delete', 'onclick'=>'doDeleteRecords()'));
+				}
+			?>
+		</div>
+		<?php endif; ?>
 	</section><!-- end of secondary bar -->
 	
 	<aside id="sidebar" class="column">

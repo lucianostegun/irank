@@ -978,14 +978,17 @@ function button_tag( $buttonId, $text, $options=array() ){
 	unset($options['$style']);
 	
 	if( !$visible )
-		$style = 'style="display: none; '.$style.'"';
+		$style = 'display: none; '.$style.'';
 
 	try{
 		
 		unset($options['noCkeck']);
 	}catch(Exception $e){}
 	
-	$imagePath = 'button/'.$image;
+	$app = Util::getApp();
+	$app = ($app!='frontend'?$app.'/':'');
+	
+	$imagePath = $app.'button/'.$image;
 	
 	if( $disabled ){
 		
@@ -1001,19 +1004,17 @@ function button_tag( $buttonId, $text, $options=array() ){
 		
 	$submit = link_to(image_tag('blank.gif', array('class'=>'submit')), '#'.$onclick);
 
-	$app = Util::getApp();
-	
 	$html = $nl;
 	if( $app=='mobile' ){
 		
-		$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).'>'.$nl;
+		$html .= '<div style="'.$style.'" class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).'>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 		$html .= '</div>';
 	}else{
 		
-		$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
+		$html .= '<div style="'.$style.'; float: left" class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="this.addClassName(\'hover\')" onmouseout="this.removeClassName(\'hover\')">'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
@@ -1023,7 +1024,6 @@ function button_tag( $buttonId, $text, $options=array() ){
 	if( $text!='Cancelar' && $text!='Fechar' )
 		$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; top: -1000px; left: -1000px; border: none; background: none', 'onclick'=>$onclick.'; return false')) ;
 	
-	$app = ($app=='mobile'?'mobile/':'');
 	sfContext::getInstance()->getResponse()->addStylesheet( $app.'button' );
 	sfContext::getInstance()->getResponse()->addJavascript( 'button' );
 	

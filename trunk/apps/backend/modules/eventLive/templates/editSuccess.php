@@ -8,7 +8,6 @@
 	</ul>
 	</header>
 	<div class="tab_container">
-		<div id="tab3" class="tab_content"><?php include_partial('eventLive/tab/result', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 		<?php
 			echo form_remote_tag(array(
 				'url'=>'eventLive/save',
@@ -34,6 +33,6 @@
 		<div id="tab1" class="tab_content"><?php include_partial('eventLive/tab/main', array('eventLiveObj'=>$eventLiveObj, 'clubId'=>$clubId, 'iRankAdmin'=>$iRankAdmin)) ?></div>
 		</form>
 		<div id="tab2" class="tab_content"><?php include_partial('eventLive/tab/players', array('eventLiveObj'=>$eventLiveObj)) ?></div>
+		<div id="tab3" class="tab_content"><?php include_partial('eventLive/tab/result', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 	</div>
-<?php include_partial('home/include/formFooter', array('prefix'=>'eventLive')) ?>
 </article><!-- end of content manager article -->

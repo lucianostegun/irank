@@ -153,13 +153,14 @@ class eventLiveActions extends sfActions
     
     $peopleId      = $request->getParameter('peopleId');
     $eventPosition = $request->getParameter('eventPosition');
-    $eventLiveId   = $this->eventLiveId;
 
     try{
     	
-    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($eventLiveId, $peopleId);
+    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($this->eventLiveId, $peopleId);
     	
     	$eventPositionOld = $eventLivePlayerObj->getEventPosition();
+    	
+    	Util::executeQuery('UPDATE event_live_player SET event_position = NULL WHERE event_live_id = '.$this->eventLiveId.' AND event_position='.$eventPosition);
     	
 	    $eventLivePlayerObj->setEventPosition($eventPosition);
 	    $eventLivePlayerObj->save();
@@ -212,6 +213,27 @@ class eventLiveActions extends sfActions
 	
 	
 	echo Util::getAutoCompleteResults($table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options );
+	exit;
+  }
+  
+  public function executeSaveResult($request){
+    
+    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+	
+	$players      = $eventLiveObj->getPlayers();
+	$peopleIdList = array(0);
+	for($eventPosition=1; $eventPosition <= $players; $eventPosition++){
+		
+		$peopleId = $request->getParameter('peopleIdPosition-'.$eventPosition);
+		
+		if( !$peopleId )
+			continue;
+			
+		$peopleIdList[] = $peopleId;
+		Util::executeQuery('UPDATE event_live_player SET event_position = '.$eventPosition.' WHERE event_live_id = '.$this->eventLiveId.' AND people_id='.$peopleId);
+	}
+	
+	Util::executeQuery('UPDATE event_live_player SET event_position = null WHERE event_live_id = '.$this->eventLiveId.' AND people_id NOT IN ('.implode(',', $peopleIdList).')');
 	exit;
   }
 }
