@@ -104,7 +104,7 @@ class scheduleActions extends sfActions
 	$scheduleTemplate = file_get_contents(Util::getFilePath('templates/schedule.ics'));
 	$scheduleTemplate = str_replace('<eventList>', implode($nl, $eventList), $scheduleTemplate);
 	
-//	Util::forceDownload('irank.ics', 'text/calendar');
+	Util::forceDownload('irank.ics', 'text/calendar');
 	
 	echo $scheduleTemplate;
 	
