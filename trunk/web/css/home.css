@@ -231,6 +231,11 @@
 	text-align: 	left;
 }
 
+.baseChannels a .channel .description {
+	
+	color: 	#000000;
+}
+
 .baseChannels .channel h1 {
 	
 	font-size: 		10pt;

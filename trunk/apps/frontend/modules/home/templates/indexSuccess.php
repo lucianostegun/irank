@@ -128,13 +128,15 @@ $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 
 
 <div class="baseChannels">
+	<a href="<?php echo url_for('schedule/index') ?>">
 	<div class="channel">
 		<div class="image"><?php echo image_tag('home/event') ?></div>
 		<div class="description">
 			<h1>Calendário de eventos</h1>
-			Assine o calendário de eventos do <b>iRank</b> e notificações dos eventos de seus rankings e dos clubes de poker próximos a você. 
+			Assine o calendário de eventos do <b>iRank</b> e receba notificações dos eventos de seus rankings e dos clubes de poker próximos a você. 
 		</div>
 	</div>
+	</a>
 	<div class="channel">
 		<div class="image"><?php echo image_tag('home/photo') ?></div>
 		<div class="description">
