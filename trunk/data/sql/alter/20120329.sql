@@ -2,6 +2,8 @@ ALTER TABLE user_site ADD COLUMN htpasswd_line INTEGER DEFAULT NULL;
 ALTER TABLE user_site ADD COLUMN signed_schedule BOOLEAN DEFAULT FALSE;
 ALTER TABLE user_site ADD COLUMN schedule_start_date DATE DEFAULT NULL;
 
+UPDATE user_site SET signed_schedule = false, schedule_start_date = null;
+
 UPDATE
     user_site
 SET
@@ -33,10 +35,6 @@ WHERE
     event.ENABLED
     AND event.VISIBLE
     AND NOT event.DELETED;
-
-
-
-
 
 
 
