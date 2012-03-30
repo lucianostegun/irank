@@ -77,7 +77,8 @@ class scheduleActions extends sfActions
 		$event .= "UID:$eventIdMd5".$nl;
 		$event .= "DTSTAMP:{$currentDate}Z".$nl;
 		$event .= "LOCATION:$eventPlace".$nl;
-		$event .= "DESCRIPTION:$comments".$nl;
+		if( $comments )
+			$event .= "DESCRIPTION:$comments".$nl;
 		$event .= "URL;VALUE=URI:http://www.irank.com.br/event/show/$eventIdBase64".$nl;
 		$event .= "STATUS:CONFIRMED".$nl;
 		$event .= "SEQUENCE:$sequence".$nl;
