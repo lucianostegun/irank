@@ -91,7 +91,7 @@ class scheduleActions extends sfActions
 		
 			$event .= "BEGIN:VALARM".$nl;
 			$event .= "X-WR-ALARMUID:$alarmId".$nl;
-			$event .= "TRIGGER;VALUE=DATE-TIME:{$alarmDateTime}Z".$nl;
+			$event .= "TRIGGER:-PT4H".$nl;
 			$event .= "ATTACH;VALUE=URI:Basso".$nl;
 			$event .= "ACTION:AUDIO".$nl;
 			$event .= "END:VALARM".$nl;
