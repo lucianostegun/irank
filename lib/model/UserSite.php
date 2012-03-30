@@ -46,7 +46,7 @@ class UserSite extends BaseUserSite
 		  	$this->setUsername( $username );
 		}
 		
-		if( strlen($password)!=32 && $this->getSignedSchedule() )
+		if( strlen($password)!=32 && $this->getSignedSchedule() || $this->isNew() )
 	  		$this->updateHtpasswd($password);
 		
 	  	$peopleObj->setEmailAddress( $emailAddress );
