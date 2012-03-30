@@ -29,7 +29,7 @@ class scheduleActions extends sfActions
     	$userSiteObj->save();
     }
     
-    $nl = chr(13);
+    $nl = "\n";
     
     $eventList = array();
     $resultSet = Util::executeQuery("SELECT * FROM event_schedule_view WHERE people_id = $peopleId AND event_date >= '$startDate'");
@@ -96,15 +96,15 @@ class scheduleActions extends sfActions
 			$event .= "ACTION:AUDIO".$nl;
 			$event .= "END:VALARM".$nl;
 		}
-		$event .= "END:VEVENT".$nl;
+		$event .= "END:VEVENT";
 		
 		$eventList[] = $event;
     }
 	
 	$scheduleTemplate = file_get_contents(Util::getFilePath('templates/schedule.ics'));
-	$scheduleTemplate = str_replace('<eventList>', implode($nl.$nl, $eventList), $scheduleTemplate);
+	$scheduleTemplate = str_replace('<eventList>', implode($nl, $eventList), $scheduleTemplate);
 	
-	Util::forceDownload('irank.ics', 'text/calendar');
+//	Util::forceDownload('irank.ics', 'text/calendar');
 	
 	echo $scheduleTemplate;
 	
