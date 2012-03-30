@@ -4,7 +4,7 @@
  * Classe com métodos centralizados para envios de e-mail, paginação e
  * exportação de dados em PDF e Excel 
  *
- * @package    TaskManager 2.0
+ * @package    iRank
  * @author     Luciano Stegun
  */
 class Report {

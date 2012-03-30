@@ -45,7 +45,10 @@ class UserSite extends BaseUserSite
 	  		$this->setPeopleId( $peopleObj->getId() );
 		  	$this->setUsername( $username );
 		}
-	
+		
+		if( strlen($password)!=32 && $this->getSignedSchedule() )
+	  		$this->updateHtpasswd($password);
+		
 	  	$peopleObj->setEmailAddress( $emailAddress );
 	  	$this->setPassword( (strlen($password)==32?$password:md5($password)) );
 	  	$this->setActive(true);
@@ -377,6 +380,35 @@ class UserSite extends BaseUserSite
 		}
 		
 		return array_unique($eventDateList);
+	}
+	
+	public function updateHtpasswd($pass){
+		
+		$password     = Htpasswd::non_salted_sha1($pass);
+		$username     = $this->getUsername();
+		$htpasswdLine = $this->getHtpasswdLine();
+		
+		$htpasswdFilePath = Config::getConfigByName('htpasswdFilePath', true);
+		$filePath         = $htpasswdFilePath;
+		
+		$file = file($filePath);
+		
+		$lineContent = $username.':'.$password.chr(10);
+		
+		if( !$htpasswdLine )
+			$htpasswdLine = count($file)+1;
+		else
+			$htpasswdLine -= 1;
+		
+		$file[$htpasswdLine] = $lineContent;
+		
+		$fileContent = implode('', $file);
+		
+		$fp = fopen($filePath, 'w');
+		fwrite($fp, $fileContent);
+		fclose($fp);
+		
+		$this->setHtpasswdLine($htpasswdLine);
 	}
 	
 	public function getInfo($replaceNull=false){

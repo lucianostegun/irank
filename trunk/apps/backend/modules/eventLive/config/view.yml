@@ -1,6 +1,6 @@
 all:
-  stylesheets:    [backend/form, backend/eventLive]
-  javascripts:    [mask, backend/form, backend/eventLive, backend/paginator, backend/record]
+  stylesheets:    [backend/eventLive]
+  javascripts:    [mask, backend/eventLive, backend/paginator]
 
   
 edit:

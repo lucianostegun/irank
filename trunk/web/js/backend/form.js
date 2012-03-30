@@ -105,7 +105,10 @@ function showFormStatusError(prefix){
 	showDiv(prefix+'HeaderError');
 	showDiv(prefix+'FooterError');
 	hideFormStatusSuccess(prefix);
-	$(prefix+'Header').addClassName('error');
+
+	if( $(prefix+'Header')!=null )
+		$(prefix+'Header').addClassName('error');
+	
 	$(prefix+'Footer').addClassName('error');
 }
 
@@ -113,7 +116,10 @@ function hideFormStatusError(prefix){
 	
 	hideDiv(prefix+'HeaderError');
 	hideDiv(prefix+'FooterError');
-	$(prefix+'Header').removeClassName('error');
+
+	if( $(prefix+'Header')!=null )
+		$(prefix+'Header').removeClassName('error');
+	
 	$(prefix+'Footer').removeClassName('error');
 }
 
@@ -163,7 +169,9 @@ function showFormStatusSuccess(prefix){
 	showDiv(prefix+'FooterSuccess');
 	hideFormStatusError(prefix);
 	
-	$(prefix+'Header').addClassName('success');
+	if( $(prefix+'Header')!=null )
+		$(prefix+'Header').addClassName('success');
+	
 	$(prefix+'Footer').addClassName('success');
 	
 	if( _hideFormStatusSuccessDelay==0 )
@@ -189,7 +197,10 @@ function hideFormStatusSuccess(prefix){
 
 	hideDiv(prefix+'HeaderSuccess');
 	hideDiv(prefix+'FooterSuccess');
-	$(prefix+'Header').removeClassName('success');
+	
+	if( $(prefix+'Header')!=null )
+		$(prefix+'Header').removeClassName('success');
+	
 	$(prefix+'Footer').removeClassName('success');
 
 	_hideFormStatusSuccessDelay = 0;

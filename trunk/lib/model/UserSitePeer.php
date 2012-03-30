@@ -21,6 +21,16 @@ class UserSitePeer extends BaseUserSitePeer
 		$criteria->add( UserSitePeer::DELETED, false );
 		return UserSitePeer::doSelectOne( $criteria );
 	}
+
+	public static function retrieveByUsername($username){
+		
+		$criteria = new Criteria();
+		$criteria->add( UserSitePeer::USERNAME, $username );
+		$criteria->add( UserSitePeer::ENABLED, true );
+		$criteria->add( UserSitePeer::VISIBLE, true );
+		$criteria->add( UserSitePeer::DELETED, false );
+		return UserSitePeer::doSelectOne( $criteria );
+	}
 	
 	public static function uniqueUsername( $username ){
 		

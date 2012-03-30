@@ -1,3 +1,8 @@
+AuthUserFile /Users/lucianostegun/Sites/iRank/.htpasswd
+AuthType Basic
+AuthName "Agenda iRank"
+Require valid-user
+
 Options +FollowSymLinks +ExecCGI
 
 <IfModule mod_rewrite.c>

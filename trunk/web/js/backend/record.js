@@ -1,7 +1,7 @@
 function doSaveMain( formId, evt ){
 
 	formId = (formId?formId:getModuleName());
-	
+		
 	var form = $(formId+'Form');
 	
 	if( form==null )
@@ -18,7 +18,7 @@ function doSaveMain( formId, evt ){
 	}catch( error ){
 		
 	}
-
+	
 	if( (evt.ctrlKey || evt.metaKey) && isDebug() )
 		form.submit();
 	else
