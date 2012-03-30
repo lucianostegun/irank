@@ -9,9 +9,9 @@ default:
     keywords:     symfony, project
     language:     pt_BR
 
-  stylesheets:    [backend/layout]
+  stylesheets:    [backend/layout, backend/form]
 
-  javascripts:    [backend/main, /sf/prototype/js/prototype, backend/jquery-1.5.2.min.js, backend/hideshow, backend/jquery.tablesorter.min.js, backend/jquery.equalHeight.js, util, record, /backend.php/home/javascript/debug/<?php echo Util::isDebug(true) ?>/js, phpEquivalents, backend/util]
+  javascripts:    [backend/main, /sf/prototype/js/prototype, backend/jquery-1.5.2.min.js, backend/hideshow, backend/jquery.tablesorter.min.js, backend/jquery.equalHeight.js, util, record, /backend.php/home/javascript/debug/<?php echo Util::isDebug(true) ?>/js, phpEquivalents, backend/util, backend/form, backend/record]
 
   has_layout:     on
   layout:         layout

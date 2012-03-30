@@ -42,7 +42,13 @@ class UserSiteMapBuilder {
 
 		$tMap->addColumn('PASSWORD', 'Password', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('HTPASSWD_LINE', 'HtpasswdLine', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('IMAGE_PATH', 'ImagePath', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('SIGNED_SCHEDULE', 'SignedSchedule', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('SCHEDULE_START_DATE', 'ScheduleStartDate', 'int', CreoleTypes::DATE, false, null);
 
 		$tMap->addColumn('ACTIVE', 'Active', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

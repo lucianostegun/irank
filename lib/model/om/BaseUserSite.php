@@ -25,7 +25,19 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 
 	
+	protected $htpasswd_line;
+
+
+	
 	protected $image_path;
+
+
+	
+	protected $signed_schedule;
+
+
+	
+	protected $schedule_start_date;
 
 
 	
@@ -121,10 +133,46 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getHtpasswdLine()
+	{
+
+		return $this->htpasswd_line;
+	}
+
+	
 	public function getImagePath()
 	{
 
 		return $this->image_path;
+	}
+
+	
+	public function getSignedSchedule()
+	{
+
+		return $this->signed_schedule;
+	}
+
+	
+	public function getScheduleStartDate($format = 'Y-m-d')
+	{
+
+		if ($this->schedule_start_date === null || $this->schedule_start_date === '') {
+			return null;
+		} elseif (!is_int($this->schedule_start_date)) {
+						$ts = strtotime($this->schedule_start_date);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [schedule_start_date] as date/time value: " . var_export($this->schedule_start_date, true));
+			}
+		} else {
+			$ts = $this->schedule_start_date;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
 	}
 
 	
@@ -289,6 +337,20 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setHtpasswdLine($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->htpasswd_line !== $v) {
+			$this->htpasswd_line = $v;
+			$this->modifiedColumns[] = UserSitePeer::HTPASSWD_LINE;
+		}
+
+	} 
+	
 	public function setImagePath($v)
 	{
 
@@ -299,6 +361,33 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->image_path !== $v) {
 			$this->image_path = $v;
 			$this->modifiedColumns[] = UserSitePeer::IMAGE_PATH;
+		}
+
+	} 
+	
+	public function setSignedSchedule($v)
+	{
+
+		if ($this->signed_schedule !== $v) {
+			$this->signed_schedule = $v;
+			$this->modifiedColumns[] = UserSitePeer::SIGNED_SCHEDULE;
+		}
+
+	} 
+	
+	public function setScheduleStartDate($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [schedule_start_date] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->schedule_start_date !== $ts) {
+			$this->schedule_start_date = $ts;
+			$this->modifiedColumns[] = UserSitePeer::SCHEDULE_START_DATE;
 		}
 
 	} 
@@ -416,29 +505,35 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			$this->password = $rs->getString($startcol + 3);
 
-			$this->image_path = $rs->getString($startcol + 4);
+			$this->htpasswd_line = $rs->getInt($startcol + 4);
 
-			$this->active = $rs->getBoolean($startcol + 5);
+			$this->image_path = $rs->getString($startcol + 5);
 
-			$this->enabled = $rs->getBoolean($startcol + 6);
+			$this->signed_schedule = $rs->getBoolean($startcol + 6);
 
-			$this->visible = $rs->getBoolean($startcol + 7);
+			$this->schedule_start_date = $rs->getDate($startcol + 7, null);
 
-			$this->deleted = $rs->getBoolean($startcol + 8);
+			$this->active = $rs->getBoolean($startcol + 8);
 
-			$this->locked = $rs->getBoolean($startcol + 9);
+			$this->enabled = $rs->getBoolean($startcol + 9);
 
-			$this->last_access_date = $rs->getTimestamp($startcol + 10, null);
+			$this->visible = $rs->getBoolean($startcol + 10);
 
-			$this->created_at = $rs->getTimestamp($startcol + 11, null);
+			$this->deleted = $rs->getBoolean($startcol + 11);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 12, null);
+			$this->locked = $rs->getBoolean($startcol + 12);
+
+			$this->last_access_date = $rs->getTimestamp($startcol + 13, null);
+
+			$this->created_at = $rs->getTimestamp($startcol + 14, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 15, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 13; 
+						return $startcol + 16; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserSite object", $e);
 		}
@@ -669,30 +764,39 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				return $this->getPassword();
 				break;
 			case 4:
-				return $this->getImagePath();
+				return $this->getHtpasswdLine();
 				break;
 			case 5:
-				return $this->getActive();
+				return $this->getImagePath();
 				break;
 			case 6:
-				return $this->getEnabled();
+				return $this->getSignedSchedule();
 				break;
 			case 7:
-				return $this->getVisible();
+				return $this->getScheduleStartDate();
 				break;
 			case 8:
-				return $this->getDeleted();
+				return $this->getActive();
 				break;
 			case 9:
-				return $this->getLocked();
+				return $this->getEnabled();
 				break;
 			case 10:
-				return $this->getLastAccessDate();
+				return $this->getVisible();
 				break;
 			case 11:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 12:
+				return $this->getLocked();
+				break;
+			case 13:
+				return $this->getLastAccessDate();
+				break;
+			case 14:
+				return $this->getCreatedAt();
+				break;
+			case 15:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -709,15 +813,18 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$keys[1]=>$this->getPeopleId(),
 			$keys[2]=>$this->getUsername(),
 			$keys[3]=>$this->getPassword(),
-			$keys[4]=>$this->getImagePath(),
-			$keys[5]=>$this->getActive(),
-			$keys[6]=>$this->getEnabled(),
-			$keys[7]=>$this->getVisible(),
-			$keys[8]=>$this->getDeleted(),
-			$keys[9]=>$this->getLocked(),
-			$keys[10]=>$this->getLastAccessDate(),
-			$keys[11]=>$this->getCreatedAt(),
-			$keys[12]=>$this->getUpdatedAt(),
+			$keys[4]=>$this->getHtpasswdLine(),
+			$keys[5]=>$this->getImagePath(),
+			$keys[6]=>$this->getSignedSchedule(),
+			$keys[7]=>$this->getScheduleStartDate(),
+			$keys[8]=>$this->getActive(),
+			$keys[9]=>$this->getEnabled(),
+			$keys[10]=>$this->getVisible(),
+			$keys[11]=>$this->getDeleted(),
+			$keys[12]=>$this->getLocked(),
+			$keys[13]=>$this->getLastAccessDate(),
+			$keys[14]=>$this->getCreatedAt(),
+			$keys[15]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -746,30 +853,39 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$this->setPassword($value);
 				break;
 			case 4:
-				$this->setImagePath($value);
+				$this->setHtpasswdLine($value);
 				break;
 			case 5:
-				$this->setActive($value);
+				$this->setImagePath($value);
 				break;
 			case 6:
-				$this->setEnabled($value);
+				$this->setSignedSchedule($value);
 				break;
 			case 7:
-				$this->setVisible($value);
+				$this->setScheduleStartDate($value);
 				break;
 			case 8:
-				$this->setDeleted($value);
+				$this->setActive($value);
 				break;
 			case 9:
-				$this->setLocked($value);
+				$this->setEnabled($value);
 				break;
 			case 10:
-				$this->setLastAccessDate($value);
+				$this->setVisible($value);
 				break;
 			case 11:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 12:
+				$this->setLocked($value);
+				break;
+			case 13:
+				$this->setLastAccessDate($value);
+				break;
+			case 14:
+				$this->setCreatedAt($value);
+				break;
+			case 15:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -783,15 +899,18 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setUsername($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPassword($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setImagePath($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setActive($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setEnabled($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setVisible($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setDeleted($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setLocked($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setLastAccessDate($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
+		if (array_key_exists($keys[4], $arr)) $this->setHtpasswdLine($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setImagePath($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setSignedSchedule($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setScheduleStartDate($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setActive($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setEnabled($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setVisible($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setLocked($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setLastAccessDate($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setCreatedAt($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setUpdatedAt($arr[$keys[15]]);
 	}
 
 	
@@ -803,7 +922,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserSitePeer::PEOPLE_ID)) $criteria->add(UserSitePeer::PEOPLE_ID, $this->people_id);
 		if ($this->isColumnModified(UserSitePeer::USERNAME)) $criteria->add(UserSitePeer::USERNAME, $this->username);
 		if ($this->isColumnModified(UserSitePeer::PASSWORD)) $criteria->add(UserSitePeer::PASSWORD, $this->password);
+		if ($this->isColumnModified(UserSitePeer::HTPASSWD_LINE)) $criteria->add(UserSitePeer::HTPASSWD_LINE, $this->htpasswd_line);
 		if ($this->isColumnModified(UserSitePeer::IMAGE_PATH)) $criteria->add(UserSitePeer::IMAGE_PATH, $this->image_path);
+		if ($this->isColumnModified(UserSitePeer::SIGNED_SCHEDULE)) $criteria->add(UserSitePeer::SIGNED_SCHEDULE, $this->signed_schedule);
+		if ($this->isColumnModified(UserSitePeer::SCHEDULE_START_DATE)) $criteria->add(UserSitePeer::SCHEDULE_START_DATE, $this->schedule_start_date);
 		if ($this->isColumnModified(UserSitePeer::ACTIVE)) $criteria->add(UserSitePeer::ACTIVE, $this->active);
 		if ($this->isColumnModified(UserSitePeer::ENABLED)) $criteria->add(UserSitePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(UserSitePeer::VISIBLE)) $criteria->add(UserSitePeer::VISIBLE, $this->visible);
@@ -848,7 +970,13 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 		$copyObj->setPassword($this->password);
 
+		$copyObj->setHtpasswdLine($this->htpasswd_line);
+
 		$copyObj->setImagePath($this->image_path);
+
+		$copyObj->setSignedSchedule($this->signed_schedule);
+
+		$copyObj->setScheduleStartDate($this->schedule_start_date);
 
 		$copyObj->setActive($this->active);
 

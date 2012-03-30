@@ -96,15 +96,22 @@ $moduleName = $sf_context->getModuleName();
 		<?php if( $moduleName!='home' ): ?>
 		<div class="toolbar" style="float: right; padding: 5px 0px; text-align: right">
 			<?php
-				echo button_tag('toolbarNew', 'Novo', array('image'=>'add', 'onclick'=>'goToNew(event)'));
+				$hiddenToolbarList = isset($hiddenToolbarList)?$hiddenToolbarList:array();
 				
-				if( $actionName!='index' ){
+				if( !in_array('new', $hiddenToolbarList) )
+					echo button_tag('toolbarNew', 'Novo', array('image'=>'add', 'onclick'=>'goToNew(event)'));
+				
+				if( $actionName!='index' || $moduleName=='controlPanel' ){
 					
-					echo button_tag('toolbarSave', 'Salvar', array('image'=>'save', 'onclick'=>'doSaveMain(false, event)'));
-					echo button_tag('toolbarCancel', 'Cancelar', array('image'=>'list', 'onclick'=>'goToList(event)'));
+					if( !in_array('save', $hiddenToolbarList) )
+						echo button_tag('toolbarSave', 'Salvar', array('image'=>'save', 'onclick'=>'doSaveMain(false, event)'));
+					
+					if( !in_array('cancel', $hiddenToolbarList) )
+						echo button_tag('toolbarCancel', 'Cancelar', array('image'=>'list', 'onclick'=>'goToList(event)'));
 				}else{
 					
-					echo button_tag('toolbarDelete', 'Excluir', array('image'=>'delete', 'onclick'=>'doDeleteRecords()'));
+					if( !in_array('delete', $hiddenToolbarList) )
+						echo button_tag('toolbarDelete', 'Excluir', array('image'=>'delete', 'onclick'=>'doDeleteRecords()'));
 				}
 			?>
 		</div>
@@ -168,7 +175,7 @@ $moduleName = $sf_context->getModuleName();
 			<li class="icn_add_user"><?php echo link_to('Novo usuário', 'userAdmin/new') ?></li>
 			<li class="icn_view_users"><?php echo link_to('Lista de usuários', 'userAdmin/index') ?></li>
 			<br/>		
-			<li class="icn_settings"><a href="#">Painel de controle</a></li>
+			<li class="icn_settings"><?php echo link_to('Painel de controle', 'controlPanel/index') ?></li>
 			<li class="icn_security"><a href="#">Security</a></li>
 		<?php endif; ?>
 			<li class="icn_profile"><a href="#">Meus dados</a></li>
