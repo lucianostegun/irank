@@ -23,7 +23,7 @@ class scheduleActions extends sfActions
     
     if( !$startDate ){
     	
-    	$startDate = date('Y-m-d');
+    	$startDate = date('Y-m-d', mktime(0,0,0,date('m')-2, date('d'), date('Y')));
     	$userSiteObj->setSignedSchedule(true);
     	$userSiteObj->setScheduleStartDate($startDate);
     	$userSiteObj->save();
