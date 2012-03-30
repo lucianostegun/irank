@@ -395,10 +395,11 @@ class UserSite extends BaseUserSite
 		
 		$lineContent = $username.':'.$password.chr(10);
 		
-		if( !$htpasswdLine )
+		if( !$htpasswdLine ){
+			
 			$htpasswdLine = count($file)+1;
-		else
-			$htpasswdLine -= 1;
+			$this->setHtpasswdLine($htpasswdLine);
+		}
 		
 		$file[$htpasswdLine] = $lineContent;
 		
@@ -407,8 +408,6 @@ class UserSite extends BaseUserSite
 		$fp = fopen($filePath, 'w');
 		fwrite($fp, $fileContent);
 		fclose($fp);
-		
-		$this->setHtpasswdLine($htpasswdLine);
 	}
 	
 	public function getInfo($replaceNull=false){
