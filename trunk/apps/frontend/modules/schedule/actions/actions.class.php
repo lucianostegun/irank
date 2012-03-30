@@ -29,7 +29,7 @@ class scheduleActions extends sfActions
     	$userSiteObj->save();
     }
     
-    $nl = chr(10);
+    $nl = chr(13);
     
     $eventList = array();
     $resultSet = Util::executeQuery("SELECT * FROM event_schedule_view WHERE people_id = $peopleId AND event_date >= '$startDate'");
@@ -101,7 +101,7 @@ class scheduleActions extends sfActions
     }
 	
 	$scheduleTemplate = file_get_contents(Util::getFilePath('templates/schedule.ics'));
-	$scheduleTemplate = str_replace('<eventList>', implode(chr(10).chr(10), $eventList), $scheduleTemplate);
+	$scheduleTemplate = str_replace('<eventList>', implode($nl.$nl, $eventList), $scheduleTemplate);
 	
 	Util::forceDownload('irank.ics', 'text/calendar');
 	
