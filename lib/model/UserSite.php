@@ -397,7 +397,7 @@ class UserSite extends BaseUserSite
 		
 		if( !$htpasswdLine ){
 			
-			$htpasswdLine = count($file)+1;
+			$htpasswdLine = count($file);
 			$this->setHtpasswdLine($htpasswdLine);
 		}
 		
