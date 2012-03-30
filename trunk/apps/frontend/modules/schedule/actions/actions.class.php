@@ -29,7 +29,7 @@ class scheduleActions extends sfActions
     	$userSiteObj->save();
     }
     
-    $nl = "\n";
+    $nl = "\r\n";
     
     $eventList = array();
     $resultSet = Util::executeQuery("SELECT * FROM event_schedule_view WHERE people_id = $peopleId AND event_date >= '$startDate'");
