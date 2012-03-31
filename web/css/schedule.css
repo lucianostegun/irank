@@ -1,0 +1,68 @@
+.plataform {
+
+	float: 					left;
+	margin-right: 			40px;
+	width: 					150px;
+	height: 				150px;
+	border: 				1px solid #E0E0E0;
+	-moz-border-radius: 	5px;
+	-webkit-border-radius: 	5px;
+	border-radius: 			5px;
+}
+
+.plataform.ios {
+
+	margin-left: 	210px;
+	background: 	url('/images/schedule/ios.jpg') no-repeat;
+}
+
+.plataform.android {
+
+	margin-right: 	0px;
+	background: 	url('/images/schedule/android.jpg') no-repeat;
+}
+
+.steps {
+
+	clear: 			both;
+	width: 			730px;
+	height: 		600px;
+	margin-top: 	50px;
+	margin-left: 	8px;
+	padding: 		0px;
+}
+
+.steps .image {
+
+	float: 			left;
+	width: 			370px;
+}
+
+.steps .info {
+
+	float: 			left;
+	width: 			350px;
+	font-size: 		14px;
+	line-height: 	20px
+}
+
+.steps .info h1 {
+
+	color: 		#AAAAAA;
+	font-size: 	54px;
+	margin: 	10px 0px 20px 10px;
+	padding: 	0px;
+}
+
+.steps .info h1 .title {
+
+	color: 		#344F7C;
+	font-size: 	24px;
+	margin: 	-14px 0px 0px 52px;
+	padding: 	0px;
+}
+
+.steps .info .instructions {
+
+	text-indent: 	20px
+}

@@ -117,6 +117,9 @@ class RankingLive extends BaseRankingLive
 			$fileNameLogo  = preg_replace('/-[0-9]*(\.[^\.]*)$/', '\1', $fileNameLogo);
 		}
 		
+		if( !$fileNameLogo )
+			return 'noImage.png';
+		
 		return $fileNameLogo;
 	}
 	
