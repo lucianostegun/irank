@@ -10,6 +10,7 @@ class Schedule {
 
 	const FILE_NAME_EXPORT   = 'iRank.ics';
 	const NEW_LINE           = "\r\n";
+	const NEW_STRING_LINE    = "\\n";
 	const FILE_PATH_TMP      = 'temp/schedule';
 	const FILE_PATH_TEMPLATE = 'templates/schedule.ics';
 	private $peopleId;
@@ -99,7 +100,7 @@ class Schedule {
 	    		$buyin = Util::formatFloat($entranceFee, true).($buyin?'+'.$buyin:'');
 	    	
 	    	if( $buyin )
-	    		$comments = $buyin.($comments?$nl.$nl.$comments:'');
+	    		$comments = $buyin.($comments?Schedule::NEW_STRING_LINE.Schedule::NEW_STRING_LINE.$comments:'');
 	    	
 	    	$this->sequence++;
 	    	
