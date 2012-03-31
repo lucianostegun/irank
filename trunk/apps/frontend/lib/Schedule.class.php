@@ -46,7 +46,7 @@ class Schedule {
     	
     	$microtime = preg_replace('/[^0-9]/', '', (string)microtime());
 		$this->fileName  = sprintf('%s-%s.ics', $username, $microtime);
-		$this->fileName  = $username.'.ics';
+//		$this->fileName  = $username.'.ics';
 		
 		$this->startDate = $startDate;
 		$this->peopleId  = $peopleId;
@@ -60,7 +60,7 @@ class Schedule {
 		// Gera os eventos ao vivo
 //		$this->buildEventLive();
 
-//		$this->buildFile();
+		$this->buildFile();
     }
     
     private function buildEvent(){
