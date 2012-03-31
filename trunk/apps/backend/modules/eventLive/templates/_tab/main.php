@@ -34,6 +34,11 @@
 		</section>
 
 		<section>
+			<label>Taxa entrada</label>
+			<?php echo input_tag('entranceFee', Util::formatFloat($eventLiveObj->getEntranceFee(), true), array('size'=>7, 'maxlength'=>7, 'id'=>'eventLiveEntranceFee')) ?>
+		</section>
+
+		<section>
 			<label>Buy-in</label>
 			<?php echo input_tag('buyin', Util::formatFloat($eventLiveObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'id'=>'eventLiveBuyin')) ?>
 		</section>
@@ -61,9 +66,14 @@
 			<?php echo input_tag('allowedAddons', $eventLiveObj->getAllowedAddons(), array('size'=>1, 'maxlength'=>2, 'id'=>'eventLiveAllowedAddons')) ?>
 		</section>
 
-		<section class="textarea" style="height: 560px">
+		<section class="textarea" style="height: 570px">
 			<label>Informações</label>
 			<?php echo textarea_tag('description', $eventLiveObj->getDescription(), array('style'=>'width: 80%; height: 550px', 'id'=>'eventLiveDescription')) ?>
+		</section>
+
+		<section class="textarea" style="height: 160px">
+			<label>Observações</label>
+			<?php echo textarea_tag('comments', $eventLiveObj->getComments(), array('style'=>'width: 80%; height: 150px', 'id'=>'eventLiveComments')) ?>
 		</section>
 	</div>
 </div>

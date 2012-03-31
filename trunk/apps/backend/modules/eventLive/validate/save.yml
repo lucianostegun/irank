@@ -30,6 +30,14 @@ fields:
       callback:      [Validate, validateTime]
       invalid_error: form.error.invalidTime
 
+  entranceFee:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
+
   buyin:
     required:
       msg:       form.error.requiredField
@@ -68,3 +76,8 @@ fields:
   description:
     required:
       msg:       form.error.requiredField
+
+  comments:
+    sfStringValidator:
+      max:       250
+      max_error: form.error.max250

@@ -38,15 +38,15 @@ class RankingPlayerMapBuilder {
 
 		$tMap->addColumn('TOTAL_EVENTS', 'TotalEvents', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('TOTAL_SCORE', 'TotalScore', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('TOTAL_SCORE', 'TotalScore', 'double', CreoleTypes::NUMERIC, false, 10);
 
-		$tMap->addColumn('TOTAL_PAID', 'TotalPaid', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('TOTAL_PAID', 'TotalPaid', 'double', CreoleTypes::NUMERIC, false, 10);
 
-		$tMap->addColumn('TOTAL_PRIZE', 'TotalPrize', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('TOTAL_PRIZE', 'TotalPrize', 'double', CreoleTypes::NUMERIC, false, 10);
 
-		$tMap->addColumn('TOTAL_BALANCE', 'TotalBalance', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('TOTAL_BALANCE', 'TotalBalance', 'double', CreoleTypes::NUMERIC, false, 10);
 
-		$tMap->addColumn('TOTAL_AVERAGE', 'TotalAverage', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('TOTAL_AVERAGE', 'TotalAverage', 'double', CreoleTypes::NUMERIC, false, 10);
 
 		$tMap->addColumn('ALLOW_EDIT', 'AllowEdit', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
