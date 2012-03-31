@@ -221,7 +221,7 @@ class Schedule {
 //			$event .= "DTEND;TZID=America/Sao_Paulo:$eventDateTimeEnd".$nl;
 			$event .= "UID:$eventLiveIdMd5".$nl;
 			$event .= "DTSTAMP:{$currentDate}Z".$nl;
-			$event .= "LOCATION:$clubName, $cityName-$initial{$mapsLink}".$nl;
+			$event .= "LOCATION:$clubName\\n{$cityName}-$initial{$mapsLink}".$nl;
 			if( $comments )
 				$event .= "DESCRIPTION:$comments".$nl;
 			$event .= "URL;VALUE=URI:http://www.irank.com.br/eventLive/details/$eventLiveIdBase64".$nl;
