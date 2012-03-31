@@ -4,7 +4,9 @@
 	include_partial('home/component/commonBar', array('pathList'=>array('Eventos ao vivo'=>$moduleName.'/index')));
 ?>
 <div class="moduleIntro">
-	Acompanhe e participe dos principais eventos presenciais do Brasil.<br/>
+	Acompanhe e participe dos principais eventos presenciais do Brasil.<br/><br/>
+	<?php echo link_to('Clique aqui', 'schedule/index') ?> para aprender como sincronizar a agenda de seu smartphone ou tablet<br/>
+	para receber automaticamente informações de todos os eventos dos clubes próximos a você. 
 </div>
 <blockquote>
 	<div id="eventLiveList">

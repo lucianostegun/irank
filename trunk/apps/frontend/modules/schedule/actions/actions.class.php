@@ -14,6 +14,18 @@ class scheduleActions extends sfActions
     
   }
   
+  public function executeIndex($request){
+  	
+  }
+  
+  public function executeIos($request){
+  	
+  }
+  
+  public function executeAndroid($request){
+  	
+  }
+  
   public function executeSync($request){
     
     $scheduleObj = new Schedule();

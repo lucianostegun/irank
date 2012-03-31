@@ -5,12 +5,7 @@
 		$messageList = array();
 	
 	include_partial('home/component/commonBar', array('pathList'=>array('Rankings'=>'ranking/index'), 'messageList'=>$messageList));
-
-//		if( $suppressOld )
-//			echo link_to('Mostrar rankings ocultos', 'ranking/index?so=0', array('title'=>'Mostrar todos os rankings'));
-//		else
-//			echo link_to('Ocultar rankings finalizados', 'ranking/index', array('title'=>'Ocultar rankings finalizados'));
-	?>
+?>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr class="header">
