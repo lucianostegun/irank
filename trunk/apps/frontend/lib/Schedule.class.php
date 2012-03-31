@@ -151,7 +151,7 @@ class Schedule {
 				$event .= "ACTION:AUDIO".$nl;
 				$event .= "END:VALARM".$nl;
 			}
-			$event .= "END:VEVENT";
+			$event .= "END:VEVENT".$nl;
 			
 			$this->appendFile($event);
 	    }
