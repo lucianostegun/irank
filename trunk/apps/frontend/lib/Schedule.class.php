@@ -100,7 +100,7 @@ class Schedule {
 	    		$buyin = Util::formatFloat($entranceFee, true).($buyin?'+'.$buyin:'');
 	    	
 	    	if( $buyin )
-	    		$comments = $buyin.($comments?Schedule::NEW_STRING_LINE.Schedule::NEW_STRING_LINE.$comments:'');
+	    		$comments = 'Buy-in: '.$buyin.($comments?Schedule::NEW_STRING_LINE.Schedule::NEW_STRING_LINE.$comments:'');
 	    	
 	    	$this->sequence++;
 	    	
@@ -128,7 +128,7 @@ class Schedule {
 	    
 			$event  = "BEGIN:VEVENT".$nl;
 			$event .= "TRANSP:TRANSPARENT".$nl;
-			$event .= "DTEND;TZID=America/Sao_Paulo:$eventDateTimeEnd".$nl;
+//			$event .= "DTEND;TZID=America/Sao_Paulo:$eventDateTimeEnd".$nl;
 			$event .= "UID:$eventIdMd5".$nl;
 			$event .= "DTSTAMP:{$currentDate}Z".$nl;
 			$event .= "LOCATION:$eventPlace".$nl;
