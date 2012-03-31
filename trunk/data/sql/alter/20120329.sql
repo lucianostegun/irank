@@ -12,7 +12,7 @@ SET
 INSERT INTO config VALUES('htpasswdFilePath', 'Endereo do arquivo .htpasswd', '../.htpasswd', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 SELECT
-    username||':{SHA}2jmj7l5rSw0yVb/vlWAYkK/YBwk=',
+    username||':{SHA}fTT1mPr0/aRzaaaLPLDTGURHy38=',
     (SELECT COUNT(1) FROM user_site user_site_count WHERE user_site.ID > user_site_count.ID AND visible AND enabled AND NOT deleted)+1
 FROM
     user_site

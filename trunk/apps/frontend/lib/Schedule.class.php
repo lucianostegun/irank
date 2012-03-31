@@ -60,7 +60,7 @@ class Schedule {
 		// Gera os eventos ao vivo
 //		$this->buildEventLive();
 
-		$this->buildFile();
+//		$this->buildFile();
     }
     
     private function buildEvent(){
@@ -85,6 +85,21 @@ class Schedule {
 	    	$eventPlace    = $resultSet->getString(14);
 	    	$createdAt     = $resultSet->getTimestamp(15);
 	    	$rankingId     = $resultSet->getInt(16);
+	    	
+	    	if( $isFreeroll )
+	    		$eventName .= ' [FREEROLL]';
+	    	
+	    	
+	    	if( $buyin )
+	    		$buyin = Util::formatFloat($buyin, true);
+	    	else
+	    		$buyin = '';
+	    	
+	    	if( $entranceFee )
+	    		$buyin = Util::formatFloat($entranceFee, true).($buyin?'+'.$buyin:'');
+	    	
+	    	if( $buyin )
+	    		$comments = $buyin.($comments?$nl.$nl.$comments:'');
 	    	
 	    	$this->sequence++;
 	    	
