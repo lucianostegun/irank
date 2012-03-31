@@ -36,7 +36,7 @@ class EventPrizeConfigMapBuilder {
 
 		$tMap->addPrimaryKey('EVENT_POSITION', 'EventPosition', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('PRIZE_VALUE', 'PrizeValue', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('PRIZE_VALUE', 'PrizeValue', 'double', CreoleTypes::NUMERIC, false, 10);
 
 		$tMap->addColumn('IS_PERCENT', 'IsPercent', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

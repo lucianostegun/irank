@@ -885,5 +885,20 @@ class Util {
 		
 		return $weekDayList[$weekDay];
 	}
+	
+	public static function getDirectUrlId($pattern){
+		
+		$pattern = str_replace('/', '\\/', $pattern);
+		
+		$pathInfo = $_SERVER['PATH_INFO'];
+  		$objectId = preg_replace('/^\/'.$pattern.'\//', '', $pathInfo);
+  		$objectId = preg_replace('/\/.*$/', '', $objectId);
+  		$objectId = base64_decode($objectId);
+  		
+  		if( !is_numeric($objectId) )
+  			$objectId = null;
+  		
+  		return $objectId;
+	}
 }
 ?>

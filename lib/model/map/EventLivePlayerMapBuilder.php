@@ -40,9 +40,9 @@ class EventLivePlayerMapBuilder {
 
 		$tMap->addColumn('EVENT_POSITION', 'EventPosition', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('PRIZE', 'Prize', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('PRIZE', 'Prize', 'double', CreoleTypes::NUMERIC, false, 10);
 
-		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::NUMERIC, false, 10);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

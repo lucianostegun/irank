@@ -25,6 +25,8 @@ class EventLive extends BaseEventLive
 		$eventShortName   = $request->getParameter('eventShortName');
 		$eventDate        = $request->getParameter('eventDate');
 		$startTime        = $request->getParameter('startTime');
+		$isFreeroll       = $request->getParameter('isFreeroll');
+		$entranceFee      = $request->getParameter('entranceFee');
 		$buyin            = $request->getParameter('buyin');
 		$blindTime        = $request->getParameter('blindTime');
 		$stackChips       = $request->getParameter('stackChips');
@@ -32,6 +34,7 @@ class EventLive extends BaseEventLive
 		$allowedAddons    = $request->getParameter('allowedAddons');
 		$isIlimitedRebuys = $request->getParameter('isIlimitedRebuys');
 		$description      = $request->getParameter('description');
+		$comments         = $request->getParameter('comments');
 		
 		$eventDateTime = $eventDate.' '.$startTime;
 		
@@ -42,6 +45,8 @@ class EventLive extends BaseEventLive
 		$this->setEventDate(Util::formatDate($eventDate));
 		$this->setStartTime($startTime);
 		$this->setEventDateTime(Util::formatDateTime($eventDateTime));
+		$this->setIsFreeroll(($isFreeroll?true:false));
+		$this->setEntranceFee(Util::formatFloat($entranceFee));
 		$this->setBuyin(Util::formatFloat($buyin));
 		$this->setBlindTime($blindTime);
 		$this->setStackChips($stackChips);
@@ -49,6 +54,7 @@ class EventLive extends BaseEventLive
 		$this->setAllowedAddons($allowedAddons);
 		$this->setIsIlimitedRebuys(($isIlimitedRebuys?true:false));
 		$this->setDescription($description);
+		$this->setComments(($comments?$comments:null));
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);

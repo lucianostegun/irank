@@ -42,9 +42,9 @@ class EventMapBuilder {
 
 		$tMap->addForeignKey('RANKING_PLACE_ID', 'RankingPlaceId', 'int', CreoleTypes::INTEGER, 'ranking_place', 'ID', true, null);
 
-		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::NUMERIC, false, 10);
 
-		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
 
 		$tMap->addColumn('PAID_PLACES', 'PaidPlaces', 'int', CreoleTypes::INTEGER, false, null);
 
@@ -66,7 +66,7 @@ class EventMapBuilder {
 
 		$tMap->addColumn('IS_FREEROLL', 'IsFreeroll', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
-		$tMap->addColumn('PRIZE_POT', 'PrizePot', 'double', CreoleTypes::FLOAT, false, null);
+		$tMap->addColumn('PRIZE_POT', 'PrizePot', 'double', CreoleTypes::NUMERIC, false, 10);
 
 		$tMap->addColumn('ALLOW_REBUY', 'AllowRebuy', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

@@ -59,7 +59,7 @@ class Schedule {
 			$this->buildEvent();
 			
 		// Gera os eventos ao vivo
-//		$this->buildEventLive();
+		$this->buildEventLive();
 
 		$this->buildFile();
     }
@@ -116,15 +116,8 @@ class Schedule {
 	    	
 	    	$eventIdBase64 = base64_encode($eventId);
 	    	
-	    	$eventIdMd5    = 'event-'.$eventIdBase64.'-ranking-'.$rankingId;
-	    	$eventIdMd5    = md5($eventIdMd5);
-	    	$eventIdMd5    = strtoupper($eventIdMd5);
-	    	$eventIdMd5    = sprintf('%s-%s-%s-%s-%s', substr($eventIdMd5, 0, 8), substr($eventIdMd5, 8, 4), substr($eventIdMd5, 12, 4), substr($eventIdMd5, 16, 4), substr($eventIdMd5, 20, 12));
-	
-	    	$alarmId = 'event-'.$eventIdBase64.'-ranking-'.$rankingId.'-alarm';
-	    	$alarmId = md5($alarmId);
-	    	$alarmId = strtoupper($alarmId);
-	    	$alarmId = sprintf('%s-%s-%s-%s-%s', substr($alarmId, 0, 8), substr($alarmId, 8, 4), substr($alarmId, 12, 4), substr($alarmId, 16, 4), substr($alarmId, 20, 12));
+	    	$eventIdMd5 = $this->getMd5Id('event-'.$eventIdBase64.'-ranking-'.$rankingId);
+	    	$alarmId    = $this->getMd5Id('event-'.$eventIdBase64.'-ranking-'.$rankingId.'-alarm');
 	    
 			$event  = "BEGIN:VEVENT".$nl;
 			$event .= "TRANSP:TRANSPARENT".$nl;
@@ -138,6 +131,103 @@ class Schedule {
 			$event .= "STATUS:CONFIRMED".$nl;
 			$event .= "SEQUENCE:{$this->sequence}".$nl;
 			$event .= "SUMMARY:$rankingName\\n$eventName".$nl;
+			$event .= "DTSTART;TZID=America/Sao_Paulo:{$eventDateTimeStart}".$nl;
+			$event .= "CREATED:{$createdAt}Z".$nl;
+			
+			// Define o alarme apenas se a data do evento for maior que hoje
+			if( strtotime($eventDateTime) > time() ){
+			
+				$event .= "BEGIN:VALARM".$nl;
+				$event .= "X-WR-ALARMUID:$alarmId".$nl;
+				$event .= "TRIGGER:-PT4H".$nl;
+				$event .= "ATTACH;VALUE=URI:Basso".$nl;
+				$event .= "ACTION:AUDIO".$nl;
+				$event .= "END:VALARM".$nl;
+			}
+			$event .= "END:VEVENT".$nl;
+			
+			$this->appendFile($event);
+	    }
+    }
+
+    private function buildEventLive(){
+    	
+	    $resultSet = Util::executeQuery(sprintf("SELECT * FROM event_live_schedule_view WHERE event_date >= '%s'", $this->startDate));
+	    
+	    $nl = Schedule::NEW_LINE;
+	    
+	    while( $resultSet->next() ){
+    
+	    	$eventLiveId      = $resultSet->getInt(1);
+	    	$eventName        = $resultSet->getString(2);
+	    	$eventDateTime    = $resultSet->getTimestamp(5);
+	    	$comments         = $resultSet->getString(6);
+	    	$players          = $resultSet->getInt(7);
+	    	$isFreeroll       = $resultSet->getBoolean(8);
+	    	$buyin            = $resultSet->getFloat(9);
+	    	$entranceFee      = $resultSet->getFloat(10);
+	    	$allowedRebuys    = $resultSet->getInt(11);
+	    	$isIlimitedRebuys = $resultSet->getBoolean(12);
+	    	$allowedAddons    = $resultSet->getInt(13);
+	    	$rankingName      = $resultSet->getString(14);
+	    	$clubName         = $resultSet->getString(15);
+	    	$mapsLink         = $resultSet->getString(16);
+	    	$cityName         = $resultSet->getString(17);
+	    	$initial          = $resultSet->getString(18);
+	    	$createdAt        = $resultSet->getTimestamp(19);
+	    	$rankingLiveId    = $resultSet->getInt(20);
+	    	
+	    	if( $isFreeroll ){
+	    		
+	    		$eventName  = preg_replace('/FREEROLL/g', '', $eventName);
+	    		$eventName  = str_replace('  ', '', $eventName);
+	    		$eventName  = trim($eventName);
+	    		$eventName .= ' [FREEROLL]';
+	    	}
+	    	
+	    	if( $buyin )
+	    		$buyin = Util::formatFloat($buyin, true);
+	    	else
+	    		$buyin = '';
+	    	
+	    	if( $entranceFee )
+	    		$buyin = Util::formatFloat($entranceFee, true).($buyin?'+'.$buyin:'');
+	    	
+	    	if( $buyin )
+	    		$comments = 'Buy-in: '.$buyin.Schedule::NEW_STRING_LINE.Schedule::NEW_STRING_LINE.$comments;
+	    		
+	    	$comments = 'Etapa do ranking '.$rankingName.($comments?Schedule::NEW_STRING_LINE.Schedule::NEW_STRING_LINE.$comments:'');
+	    	
+	    	$mapsLink = ($mapsLink?Schedule::NEW_STRING_LINE.$mapsLink:'');
+	    	
+	    	$this->sequence++;
+	    	
+	    	$eventDateTimeStart = date('Ymd\THis', strtotime($eventDateTime));
+	    	$eventDateTimeEnd   = date('Ymd\THis', strtotime($eventDateTime)+(3600*4));
+	    	$alarmDateTime      = date('Ymd\THis', strtotime($eventDateTime)-(3600*4));
+	    	$createdAt          = date('Ymd\THis', strtotime($createdAt));
+	    	$currentDate        = date('Ymd\THis');
+	    	
+	    	$eventName   = str_replace('"', '\"', $eventName); 
+	    	$clubName    = str_replace('"', '\"', $clubName); 
+	    	
+	    	$eventLiveIdBase64 = base64_encode($eventLiveId);
+	    	
+	    	$eventLiveIdMd5 = $this->getMd5Id('eventLive-'.$eventLiveIdBase64.'-rankingLive-'.$rankingLiveId);
+	    	$alarmId    = $this->getMd5Id('eventLive-'.$eventLiveIdBase64.'-rankingLive-'.$rankingLiveId.'-alarm');
+	    
+			$event  = "BEGIN:VEVENT".$nl;
+			$event .= "TRANSP:TRANSPARENT".$nl;
+//			$event .= "DTEND;TZID=America/Sao_Paulo:$eventDateTimeEnd".$nl;
+			$event .= "UID:$eventLiveIdMd5".$nl;
+			$event .= "DTSTAMP:{$currentDate}Z".$nl;
+			$event .= "LOCATION:$clubName, $cityName-$initial{$mapsLink}".$nl;
+			if( $comments )
+				$event .= "DESCRIPTION:$comments".$nl;
+			$event .= "URL;VALUE=URI:http://www.irank.com.br/eventLive/details/$eventLiveIdBase64".$nl;
+			$event .= "STATUS:CONFIRMED".$nl;
+			$event .= "SEQUENCE:{$this->sequence}".$nl;
+			$event .= "SUMMARY:$eventName".$nl;
 			$event .= "DTSTART;TZID=America/Sao_Paulo:{$eventDateTimeStart}".$nl;
 			$event .= "CREATED:{$createdAt}Z".$nl;
 			
@@ -184,6 +274,13 @@ class Schedule {
 		fwrite($fp, $event);
 		    	
     	fclose($fp);
+    }
+    
+    private function getMd5Id($md5Id){
+    	
+		$md5Id = md5($md5Id);
+	    $md5Id = strtoupper($md5Id);
+	    $md5Id = sprintf('%s-%s-%s-%s-%s', substr($md5Id, 0, 8), substr($md5Id, 8, 4), substr($md5Id, 12, 4), substr($md5Id, 16, 4), substr($md5Id, 20, 12));
     }
     
     public function buildFile(){

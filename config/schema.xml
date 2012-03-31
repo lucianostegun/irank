@@ -75,7 +75,7 @@
 		<column name="start_date" type="DATE" />
 		<column name="finish_date" type="DATE" />
 		<column name="is_private" type="BOOLEAN" />
-		<column name="default_buyin" type="FLOAT" />
+		<column name="default_buyin" type="NUMERIC" size="10" scale="2" />
 		<column name="players" type="INTEGER" />
 		<column name="events" type="INTEGER" />
 		<column name="score_schema" type="VARCHAR" />
@@ -101,11 +101,11 @@
 		<column name="ranking_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="total_events" type="INTEGER" />
-		<column name="total_score" type="FLOAT" />
-		<column name="total_paid" type="FLOAT" />
-		<column name="total_prize" type="FLOAT" />
-		<column name="total_balance" type="FLOAT" />
-		<column name="total_average" type="FLOAT" />
+		<column name="total_score" type="NUMERIC" size="10" scale="3" />
+		<column name="total_paid" type="NUMERIC" size="10" scale="2" />
+		<column name="total_prize" type="NUMERIC" size="10" scale="2" />
+		<column name="total_balance" type="NUMERIC" size="10" scale="2" />
+		<column name="total_average" type="NUMERIC" size="10" scale="2" />
 		<column name="allow_edit" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
@@ -125,17 +125,17 @@
 		<column name="total_ranking_position" type="INTEGER" />
 		<column name="ranking_position" type="INTEGER" />
 		<column name="events" type="INTEGER" />
-		<column name="score" type="FLOAT" />
-		<column name="average" type="FLOAT" />
-		<column name="paid_value" type="FLOAT" />
-		<column name="prize_value" type="FLOAT" />
-		<column name="balance_value" type="FLOAT" />
+		<column name="score" type="NUMERIC" size="10" scale="3" />
+		<column name="average" type="NUMERIC" size="10" scale="3" />
+		<column name="paid_value" type="NUMERIC" size="10" scale="2" />
+		<column name="prize_value" type="NUMERIC" size="10" scale="2" />
+		<column name="balance_value" type="NUMERIC" size="10" scale="2" />
 		<column name="total_events" type="INTEGER" />
-		<column name="total_score" type="FLOAT" />
-		<column name="total_paid" type="FLOAT" />
-		<column name="total_prize" type="FLOAT" />
-		<column name="total_balance" type="FLOAT" />
-		<column name="total_average" type="FLOAT" />
+		<column name="total_score" type="NUMERIC" size="10" scale="3" />
+		<column name="total_paid" type="NUMERIC" size="10" scale="2" />
+		<column name="total_prize" type="NUMERIC" size="10" scale="2" />
+		<column name="total_balance" type="NUMERIC" size="10" scale="2" />
+		<column name="total_average" type="NUMERIC" size="10" scale="3" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -152,8 +152,8 @@
 		<column name="ranking_id" type="INTEGER" required="true" />
 		<column name="event_name" type="VARCHAR" />
 		<column name="ranking_place_id" type="INTEGER" required="true" />
-		<column name="buyin" type="FLOAT" />
-		<column name="entrance_fee" type="FLOAT" />
+		<column name="buyin" type="NUMERIC" size="10" scale="2" />
+		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />
 		<column name="paid_places" type="INTEGER" />
 		<column name="event_date" type="DATE" />
 		<column name="start_time" type="TIME" />
@@ -164,7 +164,7 @@
 		<column name="players" type="INTEGER" />
 		<column name="saved_result" type="BOOLEAN" />
 		<column name="is_freeroll" type="BOOLEAN" />
-		<column name="prize_pot" type="FLOAT" />
+		<column name="prize_pot" type="NUMERIC" size="10" scale="2" />
 		<column name="allow_rebuy" type="BOOLEAN" defaultValue="TRUE" />
 		<column name="allow_addon" type="BOOLEAN" defaultValue="TRUE" />
 		<column name="enabled" type="BOOLEAN" />
@@ -185,13 +185,13 @@
 		<column name="event_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="share_id" type="INTEGER" />
-		<column name="entrance_fee" type="FLOAT" />
-		<column name="buyin" type="FLOAT" />
-		<column name="rebuy" type="FLOAT" />
-		<column name="addon" type="FLOAT" />
+		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />
+		<column name="buyin" type="NUMERIC" size="10" scale="2" />
+		<column name="rebuy" type="NUMERIC" size="10" scale="2" />
+		<column name="addon" type="NUMERIC" size="10" scale="2" />
 		<column name="event_position" type="INTEGER" />
-		<column name="score" type="FLOAT" />
-		<column name="prize" type="FLOAT" />
+		<column name="score" type="NUMERIC" size="10" scale="3" />
+		<column name="prize" type="NUMERIC" size="10" scale="2" />
 		<column name="confirm_code" type="VARCHAR" />
 		<column name="invite_status" type="VARCHAR" />
 		<column name="allow_edit" type="BOOLEAN" />
@@ -432,10 +432,10 @@
 		<column name="event_name" type="VARCHAR" />
 		<column name="event_place" type="VARCHAR" />
 		<column name="event_position" type="INTEGER" />
-		<column name="buyin" type="FLOAT" />
-		<column name="rebuy" type="FLOAT" />
-		<column name="addon" type="FLOAT" />
-		<column name="prize" type="FLOAT" />
+		<column name="buyin" type="NUMERIC" size="10" scale="2" />
+		<column name="rebuy" type="NUMERIC" size="10" scale="2" />
+		<column name="addon" type="NUMERIC" size="10" scale="2" />
+		<column name="prize" type="NUMERIC" size="10" scale="2" />
 		<column name="paid_places" type="INTEGER" />
 		<column name="event_date" type="DATE" />
 		<column name="comments" type="VARCHAR" />
@@ -496,7 +496,7 @@
 	<table name="event_prize_config" phpName="EventPrizeConfig">
 		<column name="event_id" type="INTEGER" required="true" primaryKey="true" />
 		<column name="event_position" type="INTEGER" required="true" primaryKey="true" />
-		<column name="prize_value" type="FLOAT" />
+		<column name="prize_value" type="NUMERIC" size="10" scale="2" />
 		<column name="is_percent" type="BOOLEAN" />
 		<foreign-key foreignTable="event">
 			<reference local="event_id" foreign="id" />
@@ -609,10 +609,13 @@
 		<column name="event_short_name" type="VARCHAR" size="50"/>
 		<column name="event_date" type="DATE"/>
 		<column name="start_time" type="TIME"/>
-		<column name="event_datetime" type="TIMESTAMP"/>
+		<column name="event_date_time" type="TIMESTAMP" />
+		<column name="comments" type="VARCHAR" />
 		<column name="description" type="LONGVARCHAR"/>
+		<column name="is_freeroll" type="BOOLEAN" />
 		<column name="club_id" type="INTEGER"/>
-		<column name="buyin" type="NUMERIC" size="10" scale="2"/>
+		<column name="buyin" type="NUMERIC" size="10" scale="2" />
+		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />
 		<column name="blind_time" type="TIME"/>
 		<column name="stack_chips" type="DOUBLE"/>
 		<column name="players" type="INTEGER"/>
@@ -676,8 +679,8 @@
 		<column name="people_id" type="INTEGER" required="true" primaryKey="true"/>
 		<column name="enabled" type="BOOLEAN" />
 		<column name="event_position" type="INTEGER" />
-		<column name="prize" type="FLOAT" />
-		<column name="score" type="FLOAT" />
+		<column name="prize" type="NUMERIC" size="10" scale="2" />
+		<column name="score" type="NUMERIC" size="10" scale="3" />
 		<column name="created_at" type="TIMESTAMP"/>
 		<column name="updated_at" type="TIMESTAMP"/>
 		<foreign-key foreignTable="event_live">

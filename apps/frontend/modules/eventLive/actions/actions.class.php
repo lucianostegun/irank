@@ -12,7 +12,13 @@ class eventLiveActions extends sfActions
   	$eventLiveId = $request->getParameter('id');
   	$eventLiveId = $request->getParameter('eventLiveId', $eventLiveId);
   	
+  	if( !$eventLiveId )
+  		$eventLiveId = Util::getDirectUrlId('eventLive/details');
+  	
   	$this->eventLiveObj = EventLivePeer::retrieveByPK($eventLiveId);
+  	
+  	if( !is_object($this->eventLiveObj) )
+  		return $this->redirect('eventLive/index');
   }
 
   public function executeGetTabContent($request){
