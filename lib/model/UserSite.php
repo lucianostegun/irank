@@ -46,8 +46,12 @@ class UserSite extends BaseUserSite
 		  	$this->setUsername( $username );
 		}
 		
-		if( strlen($password)!=32 && $this->getSignedSchedule() || $this->isNew() )
-	  		$this->updateHtpasswd($password);
+		if( strlen($password)!=32 || $this->isNew() ){
+			if( !$this->getSignedSchedule() )
+				$password = 'irank';
+		  	
+		  	$this->updateHtpasswd($password);
+		}
 		
 	  	$peopleObj->setEmailAddress( $emailAddress );
 	  	$this->setPassword( (strlen($password)==32?$password:md5($password)) );
@@ -76,6 +80,17 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('receiveAllResults', ($receiveAllResults?'1':'0'));
 		$this->setOptionValue('quickResume', $quickResume);
 		$this->setOptionValue('quickResumePeriod', $quickResumePeriod);
+	}
+	
+	public function saveScheduleOptions($request){
+		
+		$scheduleStateId   = $request->getParameter('scheduleStateId');
+		$scheduleCityId    = $request->getParameter('scheduleCityId');
+		$scheduleAlarmTime = $request->getParameter('scheduleAlarmTime');
+		
+		$this->setOptionValue('scheduleStateId', $scheduleStateId);
+		$this->setOptionValue('scheduleCityId', $scheduleCityId);
+		$this->setOptionValue('scheduleAlarmTime', $scheduleAlarmTime);
 	}
 	
 	public static function getCurrentUser(){
@@ -208,7 +223,7 @@ class UserSite extends BaseUserSite
 		
 		$userSiteOptionId  = VirtualTable::getIdByTagName('userSiteOption', $tagName);
 		$userSiteOptionObj = UserSiteOptionPeer::retrieveByPK($this->getPeopleId(), $userSiteOptionId);
-		$userSiteOptionObj->setOptionValue($optionValue);
+		$userSiteOptionObj->setOptionValue(($optionValue?$optionValue:null));
 		$userSiteOptionObj->save();
 	}
 	
@@ -236,6 +251,7 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('receiveAllResults', '1');
 		$this->setOptionValue('quickResume', 'balance');
 		$this->setOptionValue('quickResumePeriod', 'always');
+		$this->setOptionValue('scheduleAlarmTime', '4H');
 	}
 	
 	public function getImagePath($create=false, $thumb=false){

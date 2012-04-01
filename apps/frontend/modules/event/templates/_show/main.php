@@ -39,7 +39,7 @@
 			<?php endif; ?>
 			<div class="rowTextArea">
 				<div class="label"><?php echo __('event.comments') ?></div>
-				<div class="textFlex"><?php echo $eventObj->getComments() ?></div>
+				<div class="textFlex" style="width: 260px"><?php echo $eventObj->getComments() ?></div>
 			</div>
 		</td>
 		

@@ -181,3 +181,16 @@ function closePhotoCutter(reloadPicture){
 		$('uploadProfilePhoto').reloadPicture();
 	}
 }
+
+function loadCityField(stateId){
+	
+	$('myAccountScheduleStateIdDiv').innerHTML = getWaitSelect('scheduleCityId', 'myAccountScheduleStateId');
+	
+	var failureFunc = function(t){
+		
+		getEmptySelect('scheduleCityId', 'myAccountScheduleStateId');
+	}
+	
+	var urlAjax = _webRoot+'/myAccount/getCityField/stateId/'+stateId;
+	new Ajax.Updater('myAccountScheduleStateIdDiv', urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc});
+}

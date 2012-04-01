@@ -48,6 +48,7 @@ class myAccountActions extends sfActions
 
   	$userSiteObj->quickSave($request);
   	$userSiteObj->saveEmailOptions($request);
+  	$userSiteObj->saveScheduleOptions($request);
   	$userSiteObj->updateEmailGroups();
   	exit;
   }
@@ -133,6 +134,16 @@ class myAccountActions extends sfActions
 	imagedestroy($img);
 	imagedestroy($newImg);
 	
+  	exit;
+  }
+  
+  public function executeGetCityField($request){
+  	
+	$stateId = $request->getParameter('stateId');
+	
+  	Util::getHelper('I18N');
+  	Util::getHelpers();
+  	echo select_tag('scheduleCityId', City::getOptionsForSelect($stateId), array('id'=>'myAccountScheduleStateId'));
   	exit;
   }
   

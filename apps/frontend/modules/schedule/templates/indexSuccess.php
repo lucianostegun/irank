@@ -11,7 +11,6 @@
 </div>
 <div class="clear"></div>
 <div style="margin: 50px 0px; text-align: center">
-
 	<div class="plataform ios"><?php echo link_to(image_tag('blank.gif', array('width'=>150, 'height'=>150)), 'schedule/ios') ?></div>
 	<div class="plataform android"><?php echo link_to(image_tag('blank.gif', array('width'=>150, 'height'=>150)), 'schedule/android') ?></div>
 	<div class="clear"></div>

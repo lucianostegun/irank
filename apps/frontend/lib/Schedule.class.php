@@ -86,10 +86,10 @@ class Schedule {
 	    	$eventPlace    = $resultSet->getString(14);
 	    	$createdAt     = $resultSet->getTimestamp(15);
 	    	$rankingId     = $resultSet->getInt(16);
+	    	$inviteStatus  = $resultSet->getString(17);
 	    	
 	    	if( $isFreeroll )
 	    		$eventName .= ' [FREEROLL]';
-	    	
 	    	
 	    	if( $buyin )
 	    		$buyin = Util::formatFloat($buyin, true);
@@ -135,7 +135,7 @@ class Schedule {
 			$event .= "CREATED:{$createdAt}Z".$nl;
 			
 			// Define o alarme apenas se a data do evento for maior que hoje
-			if( strtotime($eventDateTime) > time() ){
+			if( strtotime($eventDateTime) > time() && $inviteStatus=='yes' ){
 			
 				$event .= "BEGIN:VALARM".$nl;
 				$event .= "X-WR-ALARMUID:$alarmId".$nl;
