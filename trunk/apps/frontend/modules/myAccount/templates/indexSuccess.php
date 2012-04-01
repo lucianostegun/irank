@@ -19,7 +19,8 @@
 	echo input_hidden_tag('passwordConfirm', $userSiteObj->getPassword(), array('id'=>'myAccountPasswordConfirm'));
 	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
-	$dhtmlxTabBarObj->setSelectedTabBarId($selectedTab);
+//	$dhtmlxTabBarObj->setSelectedTabBarId($selectedTab);
+	$dhtmlxTabBarObj->addTab('schedule', 'Agenda', 'myAccount/form/schedule', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->addTab('main', __('tab.main'), 'myAccount/form/main', array('userSiteObj'=>$userSiteObj));
 //	$dhtmlxTabBarObj->addTab('profile', 'Perfil', 'myAccount/form/profile', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->addTab('options', 'Opções', 'myAccount/form/options', array('userSiteObj'=>$userSiteObj));

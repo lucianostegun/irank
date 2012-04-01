@@ -22,47 +22,130 @@
 	background: 	url('/images/schedule/android.jpg') no-repeat;
 }
 
+#stepResetPaginator {
+
+	display: 		none;
+	clear: 			both;
+	position: 		absolute;
+	top: 			180px;
+	left: 			640px;
+	width: 			130px;
+	height: 		30px;
+	padding: 		0px;
+	margin: 		50px 0px 10px 30px;
+	font-size: 		16px;
+	z-index: 		500;
+}
+
+#stepPaginator {
+
+	clear: 			both;
+	position: 		relative;
+	top: 			550px;
+	left: 			450px;
+	width: 			330px;
+	height: 		30px;
+	padding: 		0px;
+	margin: 		50px 0px 10px 30px;
+	font-size: 		16px;
+	z-index: 		500;
+}
+
+#stepPaginator .button,
+#stepPaginator .buttonDisabled {
+
+	float: 			left;
+	margin-left: 	5px;
+	margin-right: 	5px;
+	width: 			100px;
+}
+
+#stepPaginator .button .buttonMiddle .buttonLabel, 
+#stepPaginator .buttonDisabled .buttonMiddle .buttonLabel {
+
+	font-size: 	12px;
+}
+
+#stepPaginator #buttonNavigatorNext .buttonMiddle .buttonLabel img {
+
+	float: 			right;
+	margin-top: 	0px;
+	margin-top: 	0px !ie;
+	margin-left: 	5px;
+	margin-right: 	0px
+}
+
 .steps {
 
 	clear: 			both;
 	width: 			730px;
 	height: 		600px;
-	margin-top: 	50px;
-	margin-left: 	8px;
+	margin-left: 	30px;
 	padding: 		0px;
 }
 
-.steps .image {
+.steps .step {
+ 
+ 	display: 		block;
+ }
+
+.steps .step.hidden {
+ 
+ 	display: 		block;
+ }
+
+.steps .step.last {
+ 
+	margin-top: 	20px;
+ }
+
+.steps .step .image {
 
 	float: 			left;
-	width: 			370px;
+	width: 			365px;
+	height: 		565px;
 }
 
-.steps .info {
+.steps .step .info {
 
 	float: 			left;
-	width: 			350px;
+	width: 			320px;
 	font-size: 		14px;
-	line-height: 	20px
+	line-height: 	20px;
+	margin-top: 	30px;
+	margin-left: 	20px;
 }
 
-.steps .info h1 {
+.steps .step .info h1 {
 
 	color: 		#AAAAAA;
-	font-size: 	54px;
-	margin: 	10px 0px 20px 10px;
+	font-size: 	38px;
+	margin: 	0px 0px 20px 5px;
 	padding: 	0px;
 }
 
-.steps .info h1 .title {
+.steps .step .info h1 .title {
 
 	color: 		#344F7C;
-	font-size: 	24px;
-	margin: 	-14px 0px 0px 52px;
+	font-size: 	20px;
+	margin: 	-14px 0px 0px 95px;
 	padding: 	0px;
 }
 
-.steps .info .instructions {
+.steps .step .info .instructions {
 
 	text-indent: 	20px
+}
+
+.steps .step.last .info {
+
+	width: 		700px;
+	height: 	150px;
+}
+
+.steps .step.last .info img {
+
+	float: 			left;
+	margin-top: 	-20px;
+	margin-right: 	20px;
 }
