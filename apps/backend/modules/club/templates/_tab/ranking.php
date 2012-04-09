@@ -36,7 +36,7 @@
 			$recordCount = count($rankingLiveIdList);
 		?>
 		<tr class="<?php echo ($recordCount?'hidden':'') ?>" id="rankingLiveNoRecordsRow">
-			<td colspan="4">Nenhum registro disponível para edição</td>
+			<td colspan="7">Nenhum ranking foi cadastro até o momento.<br/><?php echo link_to('Clique aqui', 'rankingLive/new') ?> para cadastrar o primeiro ranking.</td>
 		</tr>
 	</tbody> 
 	</table>

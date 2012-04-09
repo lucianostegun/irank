@@ -25,7 +25,7 @@ class EmailLogMapBuilder {
 	
 	public function doBuild()
 	{
-		$this->dbMap = Propel::getDatabaseMap('propel');
+		$this->dbMap = Propel::getDatabaseMap('log');
 
 		$tMap = $this->dbMap->addTable('email_log');
 		$tMap->setPhpName('EmailLog');

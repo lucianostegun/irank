@@ -23,7 +23,7 @@
 			<div class="descriptionText">
 			 	<ul>
 					<li id="contentItemText1" class="active"><p>Se você ainda não é cadastrado,<br/><?php echo link_to('clique aqui', 'sign') ?> e comece agora mesmo a controlar seus jogos!</p></li>
-					<li id="contentItemText2"><h1>Sincronize sua agenda</h1><p>Assinando o calendário de eventos <b>iRank</b> em seu smartphone ou tablet você será sempre informado sobre os eventos que irão ocorrer próximo a você.</p></li>
+					<li id="contentItemText2"><h1><?php echo link_to('Sincronize sua agenda', 'schedule/index') ?></h1><p>Assinando o calendário de eventos <b>iRank</b> em seu smartphone ou tablet você será sempre informado sobre os eventos que irão ocorrer próximo a você.</p></li>
 					<li id="contentItemText3"><h1>Pontuação personalizada</h1><p>Defina o modelo de pontuação mais adequado ao seu grupo com a nova opção no cadastro de rankings permite a você criar sua própria fórmula para cálculo dos pontos.</p></li>
 				</ul>
 			</div>
@@ -42,6 +42,13 @@ setupHomeHighlight(3);
 
 <div class="channels">
 	<div class="channel">
+		<div class="image"><?php echo image_tag('home/schedule') ?></div>
+		<div class="description">
+			<h1>Calendário assinado</h1>
+			Sincronize o calendário de seu tablet ou smartphone com nossa agenda de eventos. 
+		</div>
+	</div>
+	<div class="channel">
 		<div class="image"><?php echo image_tag('home/stats') ?></div>
 		<div class="description">
 			<h1>Estatísticas</h1>
@@ -53,13 +60,6 @@ setupHomeHighlight(3);
 		<div class="description">
 			<h1>Notificação de eventos</h1>
 			Notificação instantânea da criação/edição dos eventos e lembrete dos jogos agendados.
-		</div>
-	</div>
-	<div class="channel">
-		<div class="image"><?php echo link_to(image_tag('home/photo'), 'photoWall/index') ?></div>
-		<div class="description">
-			<h1><?php echo link_to('Mural de fotos', 'photoWall/index') ?></h1>
-			Compartilhar os melhores momentos dos eventos postando suas fotos no mural.
 		</div>
 	</div>
 	<div class="channel" style="height: 88px">
@@ -81,6 +81,10 @@ $eventPhotoIdRight = $eventPhotoContestObj->getEventPhotoIdRight();
 $zoomLeft  = 'home/eventPhoto?id='.$eventPhotoIdLeft.'&zoom=1';
 $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 ?>
+
+<div class="eventLiveResume">
+<?php include_partial('home/resume/liveEvents'); ?>
+</div>
 
 <div id="photoVote">
 	<h1>Concurso de fotos</h1>
@@ -129,13 +133,7 @@ $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 
 <div class="baseChannels">
 	<a href="<?php echo url_for('schedule/index') ?>">
-	<div class="channel">
-		<div class="image"><?php echo image_tag('home/event') ?></div>
-		<div class="description">
-			<h1>Calendário de eventos</h1>
-			Assine o calendário de eventos do <b>iRank</b> e receba notificações dos eventos de seus rankings e dos clubes de poker próximos a você. 
-		</div>
-	</div>
+	
 	</a>
 	<div class="channel">
 		<div class="image"><?php echo image_tag('home/photo') ?></div>

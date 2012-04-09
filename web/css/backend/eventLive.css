@@ -81,7 +81,9 @@ section.addPlayer li {
 	font-size: 		16px;
 }
 
-.result .prize input {
+.result .prize input,
+.result .score input {
 
 	text-align: 	right;
+	width: 			85px;
 }

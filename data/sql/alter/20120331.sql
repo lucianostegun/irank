@@ -1,4 +1,4 @@
-DROP VIEW event_schedule_view;
+DROP VIEW IF EXISTS event_schedule_view;
 CREATE OR REPLACE VIEW event_schedule_view AS
 SELECT
     event.ID,
@@ -28,14 +28,6 @@ WHERE
     event.ENABLED
     AND event.VISIBLE
     AND NOT event.DELETED;
-
-ALTER TABLE event_live RENAME COLUMN event_datetime TO event_date_time;
-ALTER TABLE event_live ADD COLUMN is_freeroll BOOLEAN DEFAULT FALSE;
-ALTER TABLE event_live ADD COLUMN entrance_fee DECIMAL(10, 2) DEFAULT 0;
-ALTER TABLE event_live ADD COLUMN comments VARCHAR(250);
-
-
-
 
 
 
@@ -75,10 +67,10 @@ WHERE
     AND NOT event_live.DELETED
     AND NOT ranking_live.IS_PRIVATE;
 
-INSERT INTO virtual_table(virtual_table_name, description, tag_name, enabled, visible, created_at, updated_at)
-    VALUES('userSiteOption', 'Estado da agenda', 'scheduleStateId', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    VALUES('userSiteOption', 'Cidade da agenda', 'scheduleCityId', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    VALUES('userSiteOption', 'Tempo de alerta', 'scheduleAlarmTime', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO virtual_table(virtual_table_name, description, tag_name, enabled, visible, created_at, updated_at) VALUES
+    ('userSiteOption', 'Estado da agenda', 'scheduleStateId', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('userSiteOption', 'Cidade da agenda', 'scheduleCityId', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('userSiteOption', 'Tempo de alerta', 'scheduleAlarmTime', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO user_site_option(people_id, user_site_option_id, option_value, created_at, updated_at)
     (SELECT id, (SELECT MAX(id) FROM user_option), '4H', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM people WHERE people_type_id = 2);

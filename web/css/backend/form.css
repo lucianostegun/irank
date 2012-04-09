@@ -375,6 +375,25 @@ input[type=submit].cancel_btn:hover {
 color: #000;
 }
 
+input[type=submit].default_btn,
+input[type=button].default_btn {
+
+	background: #D0D1D4 url(/images/backend/btn_submit.png) repeat-x;
+	border: 1px solid #909090;
+	-webkit-box-shadow: 0 1px 0 #F0F0F0;
+	-moz-box-shadow: 0 1px 0 #F0F0F0;
+	box-shadow: 0 1px 0 #F0F0F0;
+	font-weight: bold;
+	height: 22px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 0 10px;
+	color: #000;
+	text-shadow: 0 1px 0 #E0E0E0;
+	cursor: pointer;
+}
+
 .defaultForm .hidden,
 #main h4.alert_error.hidden,
 #main h4.alert_warning.hidden,

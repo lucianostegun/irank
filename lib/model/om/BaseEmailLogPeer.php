@@ -4,7 +4,7 @@
 abstract class BaseEmailLogPeer {
 
 	
-	const DATABASE_NAME = 'propel';
+	const DATABASE_NAME = 'log';
 
 	
 	const TABLE_NAME = 'email_log';

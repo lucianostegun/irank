@@ -10,6 +10,10 @@
 class loginActions extends sfActions
 {
 
+  public function preExecute()
+  {
+  }
+
   public function executeIndex($request)
   {
   	
@@ -21,6 +25,9 @@ class loginActions extends sfActions
   }
 
   public function executeLogin($request){
+  	
+  	if( $this->getUser()->isAuthenticated() && $this->getUser()->hasCredential('iRankAdmin') )
+  		return $this->redirect('home/index');
 
 	$username = $request->getParameter('username');
 	$password = $request->getParameter('password');

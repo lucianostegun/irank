@@ -387,7 +387,7 @@
 
 #userResume {
 	
-	height: 	330px;
+	height: 	270px;
 	display: 	none;
 }
 
@@ -403,18 +403,11 @@
 	padding-bottom: 	15px;
 }
 
-#userResume #eventResume .calendar {
-	
-	float: 		left;
-	position: 	relative;
-	left: 		15px;
-}
-
 #userResume #eventResume #eventList {
 	
 	float: 		left;
 	position: 	relative;
-	left: 		22px;
+	left: 		12px;
 	top: 		8px;
 }
 
@@ -429,8 +422,8 @@
 
 #userResume #eventResume #eventList #eventResumeList {
 
-	height: 260px;
-	overflow: hidden;
+	height: 	210px;
+	overflow: 	hidden;
 }
 
 #userResume #eventResume #eventResumeLoader {
@@ -471,11 +464,11 @@
 
 #userResume #eventResume #eventList .event {
 
-	width: 			355px;
-	height: 		51px;
+	width: 			700px;
+	height: 		30px;
 	margin-bottom: 	2px;
 	border: 		1px solid #b5ccd6;
-	padding: 		5px 5px 5px 55px;
+	padding: 		3px 5px 5px 55px;
 	cursor: 		pointer;
 	
 	-webkit-touch-callout: 	none;
@@ -487,32 +480,54 @@
 	user-select: 			none;
 }
 
+#userResume #eventResume #eventList .event .when {
+
+	clear: 			both;
+	float: 			left;
+	margin-left: 	10px;
+}
+
 #userResume #eventResume #eventList .event .title {
 
+	clear: 			both;
 	float: 			left;
 	font-weight: 	bold;
+	margin-left: 	10px;
 }
 
 #userResume #eventResume #eventList .event .where {
 
 	float: 			left;
-	margin-left: 	5px;
-}
-
-#userResume #eventResume #eventList .event .when {
-
-	clear: 	both;
+	margin-left: 	10px;
 }
 
 #userResume #eventResume #eventList .event .ranking {
 
-	float: left;
+	float: 			left;
+	margin-left: 	5px;
+}
+
+#userResume #eventResume #eventList .event .howMuch {
+
+	position: 				relative;
+	top: 					-10px;
+	left: 					100px;
+	margin-bottom: 			-3px;
+	float: 					left;
+	border: 				1px solid #b5ccd6;
+	-moz-border-radius: 	3px;
+	-webkit-border-radius: 	3px;
+	border-radius: 			3px;
+	padding-left: 			5px;
+	padding-right: 			5px;
+	padding-bottom: 		2px;
+	background: 			#DEEAF0;
 }
 
 #userResume #eventResume #eventList .event .presence {
 
 	position: 				relative;
-	top: 					-3px;
+	top: 					-10px;
 	margin-bottom: 			-3px;
 	float: 					right;
 	border: 				1px solid #b5ccd6;
@@ -585,8 +600,8 @@
 	clear: 			both;
 	position: 		relative;
 	top: 			8px;
-	left: 			352px;
-	width: 			400px;
+	left: 			12px;
+	width: 			745px;
 	padding: 		2px 10px 2px 5px;
 	cursor: 		pointer;
 	text-align: 	right;

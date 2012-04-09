@@ -26,6 +26,8 @@ class eventLiveActions extends sfActions
     
     $this->eventLiveObj = Util::getNewObject('eventLive');
     
+    $this->eventLiveObj->setDescription('<descrição do ranking>');
+    
     $this->pathList['Novo evento'] = '#';
     $this->setTemplate('edit');
   }
@@ -148,39 +150,6 @@ class eventLiveActions extends sfActions
     
     exit;
   }
-
-  public function executeSavePlayerPosition($request){
-    
-    $peopleId      = $request->getParameter('peopleId');
-    $eventPosition = $request->getParameter('eventPosition');
-
-    try{
-    	
-    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($this->eventLiveId, $peopleId);
-    	
-    	$eventPositionOld = $eventLivePlayerObj->getEventPosition();
-    	
-    	Util::executeQuery('UPDATE event_live_player SET event_position = NULL WHERE event_live_id = '.$this->eventLiveId.' AND event_position='.$eventPosition);
-    	
-	    $eventLivePlayerObj->setEventPosition($eventPosition);
-	    $eventLivePlayerObj->save();
-	    
-	    $peopleObj = $eventLivePlayerObj->getPeople();
-    }catch(Exception $e){
-    	
-    	Util::forceError('!Erro ao remover o jogador ao evento.'.Util::isDebug()?$e->getMessage():'');
-    }
-    
-    $infoList = array();
-    $infoList['peopleName']   = $peopleObj->getFullName();
-    $infoList['emailAddress'] = $peopleObj->getEmailAddress();
-    $infoList['eventPosition']    = $eventPosition;
-    $infoList['eventPositionOld'] = $eventPositionOld;
-    
-    echo Util::parseInfo($infoList);
-    
-    exit;
-  }
   
   public function executeAutoComplete($request){
     
@@ -215,13 +184,60 @@ class eventLiveActions extends sfActions
 	echo Util::getAutoCompleteResults($table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options );
 	exit;
   }
+
+  public function executeSavePlayerPosition($request){
+    
+    $peopleId      = $request->getParameter('peopleId');
+    $eventPosition = $request->getParameter('eventPosition');
+
+    try{
+    	
+    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($this->eventLiveId, $peopleId);
+    	
+    	$eventPositionOld = $eventLivePlayerObj->getEventPosition();
+    	
+    	Util::executeQuery('UPDATE event_live_player SET event_position = NULL WHERE event_live_id = '.$this->eventLiveId.' AND event_position='.$eventPosition);
+    	
+	    $eventLivePlayerObj->setEventPosition($eventPosition);
+	    $eventLivePlayerObj->save();
+	    
+	    $peopleObj = $eventLivePlayerObj->getPeople();
+    }catch(Exception $e){
+    	
+    	Util::forceError('!Erro ao remover o jogador ao evento.'.Util::isDebug()?$e->getMessage():'');
+    }
+    
+    $infoList = array();
+    $infoList['peopleName']   = $peopleObj->getFullName();
+    $infoList['emailAddress'] = $peopleObj->getEmailAddress();
+    $infoList['eventPosition']    = $eventPosition;
+    $infoList['eventPositionOld'] = $eventPositionOld;
+    
+    echo Util::parseInfo($infoList);
+    
+    exit;
+  }
+
+  public function executeResetEventPosition($request){
+    
+    $peopleId      = $request->getParameter('peopleId');
+    $eventPosition = $request->getParameter('eventPosition');
+
+	Util::executeQuery('UPDATE event_live_player SET event_position = NULL WHERE event_live_id = '.$this->eventLiveId.' AND event_position='.$eventPosition);
+    
+    exit;
+  }
   
   public function executeSaveResult($request){
     
+    $publish      = $request->getParameter('publish');
     $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
 	
 	$players      = $eventLiveObj->getPlayers();
 	$peopleIdList = array(0);
+	
+	$lastValidEventPosition = 0;
+	
 	for($eventPosition=1; $eventPosition <= $players; $eventPosition++){
 		
 		$peopleId = $request->getParameter('peopleIdPosition-'.$eventPosition);
@@ -229,7 +245,9 @@ class eventLiveActions extends sfActions
 		
 		if( !$peopleId )
 			continue;
-			
+		
+		$lastValidEventPosition = $eventPosition;
+		
 		$prize = Util::formatFloat($prize);
 			
 		$peopleIdList[] = $peopleId;
@@ -237,7 +255,36 @@ class eventLiveActions extends sfActions
 	}
 	
 	Util::executeQuery('UPDATE event_live_player SET event_position = null, prize=0 WHERE event_live_id = '.$this->eventLiveId.' AND people_id NOT IN ('.implode(',', $peopleIdList).')');
+
+	if( $publish ){
+		
+		// Coloca por últimos os jogadores que não marcaram em que posição sairam
+		$criteria = new Criteria();
+		$criteria->add( EventLivePlayerPeer::PEOPLE_ID, $peopleIdList, Criteria::NOT_IN );
+		foreach($eventLiveObj->getEventLivePlayerList($criteria) as $eventLivePlayerObj){
+			$eventLivePlayerObj->setEventPosition(++$lastValidEventPosition);
+			$eventLivePlayerObj->save();
+		}
+	}
+	
 	exit;
   }
+  
+//  public function executeCalculateResult($request){
+//    
+//    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+//	
+//	$scoreList = array();
+//	foreach($eventLiveObj->getEventLivePlayerList() as $eventLivePlayerObj){
+//		
+//		$eventPosition = $eventLivePlayerObj->getEventPosition();
+//		$score         = $eventLiveObj->parseScore($eventPosition, $events, $prize, $players, $totalBuyins, $defaultBuyin, $itm);
+//		$scoreList[$eventPosition] = $score;
+//	}
+//	
+//	echo '<pre>';
+//	print_r($scoreList);
+//	
+//	exit;
+//  }
 }
-	

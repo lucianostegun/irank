@@ -48,4 +48,3 @@
 		<div class="value"><?php echo $resumeInfo['photos'] ?></div>
 	</div>
 </div>
-<div class="logout"><?php echo link_to('desconectar', '/login/logout') ?></div>

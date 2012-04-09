@@ -52,6 +52,10 @@ class RankingLiveMapBuilder {
 
 		$tMap->addColumn('DEFAULT_BUYIN', 'DefaultBuyin', 'double', CreoleTypes::NUMERIC, false, 10);
 
+		$tMap->addColumn('DEFAULT_ENTRANCE_FEE', 'DefaultEntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
+
+		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::LONGVARCHAR, false, null);
+
 		$tMap->addForeignKey('GAME_STYLE_ID', 'GameStyleId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
 
 		$tMap->addForeignKey('GAME_TYPE_ID', 'GameTypeId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);

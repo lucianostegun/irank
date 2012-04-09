@@ -80,7 +80,8 @@ function confirmEventLivePresence(eventLiveId){
 		var errorMessage = parseError(t.responseText);
 		errorMessage = (errorMessage?errorMessage:'\nPor favor, tente novamente.');
 		
-		alert('FALHA NA CONFIRMAÇÃO!\n\n'+errorMessage);
+		if( errorMessage )
+			alert(errorMessage);
 	}
 	
 	var urlAjax = _webRoot+'/eventLive/togglePresence/eventLiveId/'+eventLiveId;

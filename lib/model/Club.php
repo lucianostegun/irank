@@ -10,6 +10,24 @@
 class Club extends BaseClub
 {
 	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+//    		$this->postOnWall();
+    		
+			parent::save();
+			
+       		Log::quickLog('club', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('club', $this->getPrimaryKey(), $e);
+        }
+    }
+	
 	public function delete($con=null){
 		
 		$this->setVisible(false);
@@ -139,8 +157,6 @@ class Club extends BaseClub
 		
 		imagedestroy($templateImg);
 		imagedestroy($originalImg);
-		
-	  	exit;
 	}
 	
 	public function getRankingCount(){

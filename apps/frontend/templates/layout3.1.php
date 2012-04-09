@@ -28,7 +28,7 @@ var _ModuleName = '<?php echo $moduleName ?>';
     			<div class="search">
 					<?php
 						echo form_tag('search/index');
-						echo input_tag('mainSearch', null, array('placeholder'=>'Pesquisar eventos...'));
+						echo input_tag('mainSearch', $sf_request->getParameter('mainSearch'), array('placeholder'=>'Pesquisar eventos...'));
 					?>
 					</form>
     			</div>
@@ -71,6 +71,12 @@ var _ModuleName = '<?php echo $moduleName ?>';
 	    							</div>
 	    							
 	    							<?php include_partial('home/include/facebook', array()); ?>
+    							</div>
+    							<div>
+						    		<?php include_partial('home/resume/calendar', array()) ?>
+						    	</div>
+    							<div class="leftContentBottom">
+	    							
 						    		<?php echo link_to(image_tag('appstore'), 'http://itunes.apple.com/us/app/irank/id481129223', array('id'=>'appstore')) ?>
 						    		
 	    							<div class="social">

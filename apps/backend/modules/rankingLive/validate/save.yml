@@ -4,8 +4,8 @@ fields:
     required:
       msg:       form.error.requiredField
     sfStringValidator:
-      max:       25
-      max_error: form.error.max25
+      max:       30
+      max_error: form.error.max30
       
   rankingTypeId:
     required:
@@ -27,6 +27,14 @@ fields:
       invalid_error: form.error.invalidDate
        
   defaultBuyin:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
+       
+  defaultEntranceFee:
     required:
       msg:       form.error.requiredField
     sfNumberValidator:

@@ -22,6 +22,10 @@ class clubActions extends sfActions
     
   }
 
+  public function executeUpload($request){
+    
+  }
+
   public function executeNew($request){
     
     $this->clubObj = Util::getNewObject('club');
@@ -102,9 +106,9 @@ class clubActions extends sfActions
     if( !is_object($userAdminObj) )
     	throw new Exception('Usuário não definido para carregamento da imagem');
     
-    $clubId      = $userAdminObj->getClubId();
-	$fileName    = $request->getFileName('Filedata');
-	$fileName    = preg_replace('/(\.[^\.]*)$/', '-'.$this->clubId.'\1', $fileName);
+    $clubId   = $userAdminObj->getClubId();
+	$fileName = $request->getFileName('Filedata');
+	$fileName = preg_replace('/(\.[^\.]*)$/', '-'.$this->clubId.'\1', $fileName);
 	
     if( $clubId && $clubId!=$this->clubId ){
     	
@@ -128,20 +132,28 @@ class clubActions extends sfActions
 					 'maxHeight'=>122);
 
 	try {
-		
+
 		$fileObj = File::upload($request, 'Filedata', '/images/club', $options);
-		
+
 		Club::customizeLogo($fileName);
-		
+
 		$clubObj = ClubPeer::retrieveByPK($this->clubId);
-		
 		$clubObj->setFileNameLogo($fileName);
 		$clubObj->save();
 	}catch( Exception $e ){
-	
+
 		Util::forceError($e);	
 	}
 	
+	exit;
+  }
+  
+  public function executeCustomizeLogo($request){
+  	
+    $clubObj = ClubPeer::retrieveByPK($this->clubId);
+
+    Club::customizeLogo($clubObj->getFileNameLogo());
+		
 	exit;
   }
   

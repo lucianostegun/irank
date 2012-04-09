@@ -24,7 +24,7 @@
 			      array('autocomplete' => 'off', 'onkeyup'=>'$("clubCityId").value=""', 'size'=>35, 'id'=>'clubCityName'),
 			      array(
 			        'use_style'             => true,
-			        'after_update_element'  => 'function (inputField, selectedItem){ selectAutoCompleteItem(selectedItem.id, inputField.value, \'club\', \'cityId\', \'clubAddressName\', null, {searchFieldName:\'clubCityName\', quickModuleName:\'city\'}) }',
+			        'after_update_element'  => 'function (inputField, selectedItem){ selectAutoCompleteItem(selectedItem.id, inputField.value, \'club\', \'cityId\', \'clubAddressName\', {searchFieldName:\'clubCityName\', quickModuleName:\'city\'}) }',
 			      	'with'                  => ' value+\'?&cityName=\'+$("clubCityName").value',
 			      	'inTab'                 => false)
 			    );

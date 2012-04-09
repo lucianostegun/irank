@@ -28,10 +28,20 @@ function hidePaginator( paginatorId ){
 	hideDiv(paginatorId+'Paginator');
 }
 
-function loadSelectField(element, moduleName, updateDivId){
+function loadSelectField(element, moduleName, updateDivId, updateElementId){
 
+	var elementId            = element.id;
+	var onchangeFunc         = $(updateElementId).onchange;
 	$(updateDivId).innerHTML = getWaitSelect();
 	
-	var urlAjax = _webRoot+'/'+moduleName+'/getSelectField/'+element.name+'/'+element.value;
-	new Ajax.Updater(updateDivId, urlAjax, {asynchronous:true, evalScripts:false});
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		
+		$(updateDivId).innerHTML    = content;
+		$(updateElementId).onchange = onchangeFunc;
+	}
+	
+	var urlAjax = _webRoot+'/'+moduleName+'/getSelectField/'+element.name+'/'+element.value+'/prefix/'+getModuleName();
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
 }

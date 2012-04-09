@@ -364,7 +364,7 @@ class UserSite extends BaseUserSite
 		
 		$startDate = Util::formatDate($startDate);
 		$endDate   = Util::formatDate($endDate);
-		$peopleId  = MyTools::getAttribute('peopleId');
+		$peopleId  = MyTools::getAttribute('peopleId', '0');
 		
 		$sql = "SELECT
 					event.EVENT_DATE

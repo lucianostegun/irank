@@ -174,33 +174,34 @@ class File extends BaseFile
 		if( $isImage ){
 			
 			$dimension = getimagesize($filePath);
-			if( $minWidth && $dimension[0] < $minWidth ||
-				$maxWidth && $dimension[0] < $maxWidth ||
-				$minHeight && $dimension[0] < $minHeight ||
-				$maxHeight && $dimension[0] < $maxHeight ){
+
+			if( ($minWidth && $dimension[0] < $minWidth) ||
+				($maxWidth && $dimension[0] > $maxWidth) ||
+				($minHeight && $dimension[0] < $minHeight) ||
+				($maxHeight && $dimension[0] > $maxHeight) ){
 					
 					unlink($filePath);
 					throw new Exception('Dimensões inválidas. Dimensão requerida:\n\nMin: '.$minWidth.'x'.$minHeight.'\nMax: '.$maxWidth.'x'.$maxHeight);
 				}
 		}
 
+			
+		$fileObj->setFilePath($filePath);
+		$fileObj->setFileSize($fileSize);
+
+		if( in_array($extension, $extensionImageList) )
+			$fileObj->setIsImage(true);
+		
 		if( !$noFile ){
 			
-			$fileObj->setFilePath($filePath);
-			$fileObj->setFileSize($fileSize);
-	
-			if( in_array($extension, $extensionImageList) )
-				$fileObj->setIsImage(true);
-			
 			$fileObj->save();
-			
 			Log::doLog('Upload do arquivo '.$fileObj->getId(), 'File');
-			
-			return $fileObj;
 		}else{
 			
 			Log::doLog('Upload do arquivo '.$fileName, 'File', array('FILE_PATH'=>$filePath));
 		}
+		
+		return $fileObj;
 	}
 	
 	public function getDimensions(){

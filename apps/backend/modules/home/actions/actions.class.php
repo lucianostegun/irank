@@ -48,10 +48,11 @@ class homeActions extends sfActions
 	
 	echo 'var _CurrentPeopleId = "'.$peopleId.'";'.$nl.$nl;
 	
-	echo "var _webRoot   = '$scriptName';".$nl;
-	echo "var _imageRoot = 'http://$hostname/images';".$nl;
-	echo "var _isDebug   = $isDebug;".$nl;
-	echo "var _isMobile  = false;".$nl.$nl;
+	echo "var _webRoot     = '$scriptName';".$nl;
+	echo "var _imageRoot   = 'http://$hostname/images';".$nl;
+	echo "var _isDebug     = $isDebug;".$nl;
+	echo "var _isMobile    = false;".$nl.$nl;
+	echo "var i18n_culture = 'pt_BR';".$nl.$nl;
 	exit;
   }
 }

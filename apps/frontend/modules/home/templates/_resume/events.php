@@ -1,5 +1,4 @@
 	<div id="eventResume">
-		<?php include_partial('home/resume/calendar') ?>
 		<div id="eventList">
 			<h1>Resumo de eventos</h1>
 			<div id="eventResumeList">
@@ -15,9 +14,6 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-		</div>
-		<div class="loadEvents">
-			<?php echo link_to('carregar mais eventos', '#loadMoreEvents()') ?>
 		</div>
 		<div class="clear"></div>
 	</div>

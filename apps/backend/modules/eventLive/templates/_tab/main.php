@@ -4,13 +4,13 @@
 		<?php if( $iRankAdmin ): ?>
 		<section>
 			<label>Clube</label>
-			<?php echo select_tag('clubId', Club::getOptionsForSelect($eventLiveObj->getClubId()), array('onchange'=>'loadSelectField(this, "rankingLive", "eventLiveRankingLiveIdDiv")', 'id'=>'eventLiveClubId')) ?>
+			<?php echo select_tag('clubId', Club::getOptionsForSelect($eventLiveObj->getClubId()), array('onchange'=>'loadSelectField(this, "rankingLive", "eventLiveRankingLiveIdDiv", "eventLiveRankingLiveId")', 'id'=>'eventLiveClubId')) ?>
 		</section>
 		<?php endif; ?>
 
 		<section>
 			<label>Ranking</label>
-			<div id="eventLiveRankingLiveIdDiv"><?php echo select_tag('rankingLiveId', RankingLive::getOptionsForSelect($eventLiveObj->getClubId()|$clubId, $eventLiveObj->getRankingLiveId()), array('id'=>'eventLiveRankingLiveId')) ?></div>
+			<div id="eventLiveRankingLiveIdDiv"><?php echo select_tag('rankingLiveId', RankingLive::getOptionsForSelect($eventLiveObj->getClubId()|$clubId, $eventLiveObj->getRankingLiveId()), array('onchange'=>'loadDefaultBuyin(this.value)', 'id'=>'eventLiveRankingLiveId')) ?></div>
 		</section>
 		
 		<section>
@@ -34,13 +34,15 @@
 		</section>
 
 		<section>
-			<label>Taxa entrada</label>
-			<?php echo input_tag('entranceFee', Util::formatFloat($eventLiveObj->getEntranceFee(), true), array('size'=>7, 'maxlength'=>7, 'id'=>'eventLiveEntranceFee')) ?>
+			<label>Buy-in</label>
+			<?php echo input_tag('buyin', Util::formatFloat($eventLiveObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'disabled'=>$eventLiveObj->getIsFreeroll(), 'id'=>'eventLiveBuyin')) ?>
+			<?php echo checkbox_tag('isFreeroll', true, $eventLiveObj->getIsFreeroll(), array('onclick'=>'handleIsFreeroll(this.checked)', 'id'=>'eventLiveIsFreeroll')) ?>
+			<label for="eventLiveIsFreeroll" class="checkbox">Freeroll</label>
 		</section>
 
 		<section>
-			<label>Buy-in</label>
-			<?php echo input_tag('buyin', Util::formatFloat($eventLiveObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'id'=>'eventLiveBuyin')) ?>
+			<label>Taxa entrada (rake)</label>
+			<?php echo input_tag('entranceFee', Util::formatFloat($eventLiveObj->getEntranceFee(), true), array('size'=>7, 'maxlength'=>7, 'id'=>'eventLiveEntranceFee')) ?>
 		</section>
 
 		<section>
@@ -68,7 +70,7 @@
 
 		<section class="textarea" style="height: 570px">
 			<label>Informações</label>
-			<?php echo textarea_tag('description', $eventLiveObj->getDescription(), array('style'=>'width: 80%; height: 550px', 'id'=>'eventLiveDescription')) ?>
+			<?php echo textarea_tag('description', $eventLiveObj->getDescription(false), array('style'=>'width: 80%; height: 550px', 'id'=>'eventLiveDescription')) ?>
 		</section>
 
 		<section class="textarea" style="height: 160px">

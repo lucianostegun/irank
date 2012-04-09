@@ -10,6 +10,26 @@
 class EventLive extends BaseEventLive
 {
 	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+//    		$this->postOnWall();
+    		
+    		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
+
+			parent::save();
+			
+        	Log::quickLog('event_live', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('event_live', $this->getPrimaryKey(), $e);
+        }
+    }
+	
 	public function delete($con=null){
 		
 		$this->setVisible(false);
@@ -36,7 +56,8 @@ class EventLive extends BaseEventLive
 		$description      = $request->getParameter('description');
 		$comments         = $request->getParameter('comments');
 		
-		$eventDateTime = $eventDate.' '.$startTime;
+		if( $isFreeroll )
+			$buyin = 0;
 		
 		$this->setClubid($clubId);
 		$this->setRankingLiveId(($rankingLiveId?$rankingLiveId:null));
@@ -44,7 +65,6 @@ class EventLive extends BaseEventLive
 		$this->setEventShortName(($eventShortName?$eventShortName:null));
 		$this->setEventDate(Util::formatDate($eventDate));
 		$this->setStartTime($startTime);
-		$this->setEventDateTime(Util::formatDateTime($eventDateTime));
 		$this->setIsFreeroll(($isFreeroll?true:false));
 		$this->setEntranceFee(Util::formatFloat($entranceFee));
 		$this->setBuyin(Util::formatFloat($buyin));
@@ -61,9 +81,11 @@ class EventLive extends BaseEventLive
 		$this->save();
 	}
 	
-	public static function getList($clubId=null){
+	public static function getList(Criteria $criteria=null, $clubId=null){
 		
-		$criteria = new Criteria();
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+			
 		$criteria->add( EventLivePeer::ENABLED, true );
 		$criteria->add( EventLivePeer::VISIBLE, true );
 		$criteria->add( EventLivePeer::DELETED, false );
@@ -147,14 +169,58 @@ class EventLive extends BaseEventLive
 		return PeoplePeer::doSelect($criteria);
 	}
 	
+	public function parseScore($position, $events, $prize, $players, $totalBuyins, $defaultBuyin, $itm){
+		
+		$formula = strtolower($formula);
+		$formula = preg_replace('/\t\r\n /', '', $formula);
+		
+		$formula = preg_replace('/posi[cç][aã]o|position/', '$position', $formula);
+		$formula = preg_replace('/eventos|events/', '$events', $formula);
+		$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
+		$formula = preg_replace('/jogadores|players/', '$players', $formula);
+		$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
+		$formula = preg_replace('/buyin/', '$defaultBuyin', $formula);
+		$formula = preg_replace('/itm/', '$itm', $formula);
+		
+		$score = null;
+		
+		@eval('$score = '.$formula.';');
+		
+		if( $score===null )
+			throw new Exception('Error parsing score formula');
+		
+		return number_format($score, 3);		
+	}
+	
 	public function getGameStyle($returnTagName=false){
+		
+		$rankingLiveId = $this->getRankingLiveId();
+		
+		if( !$rankingLiveId )
+			return new VirtualTable();
 		
 		return $this->getRankingLive()->getGameStyle($returnTagName);
 	}
 	
 	public function getGameType($returnTagName=false){
 		
+		$rankingLiveId = $this->getRankingLiveId();
+		
+		if( !$rankingLiveId )
+			return new VirtualTable();
+		
 		return $this->getRankingLive()->getGameType($returnTagName);
+	}
+	
+	public function getEventLivePlayerList($criteria=null, $con=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+			
+		$criteria->add( EventLivePlayerPeer::ENABLED, true );
+		$criteria->addAscendingOrderByColumn( EventLivePlayerPeer::EVENT_POSITION );
+		
+		return parent::getEventLivePlayerList($criteria, $con);
 	}
 	
 	public function getEventLivePlayerResultList($criteria=null){
@@ -168,6 +234,18 @@ class EventLive extends BaseEventLive
 		$criteria->addAscendingOrderByColumn( EventLivePlayerPeer::EVENT_POSITION );
 		
 		return $this->getEventLivePlayerList($criteria);
+	}
+	
+	public function getDescription($convertTags=true){
+		
+		$description = parent::getDescription();
+		
+		if( $convertTags ){
+			
+			$description = preg_replace('/<descri[cç][aã]o ?do ?ranking>/i', $this->getRankingLive()->getDescription(), $description);
+		}
+		
+		return $description;
 	}
 	
 	public function toString(){

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="log" defaultIdMethod="native" noXsd="true" package="lib.model" schema="public">
+
+	<table name="log" phpName="Log"> 
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" required="true" />
+		<column name="app" type="VARCHAR"/>
+		<column name="module_name" type="VARCHAR"/>
+		<column name="action_name" type="VARCHAR"/>
+		<column name="class_name" type="VARCHAR"/>
+		<column name="severity" type="INTEGER"/>
+		<column name="message" type="VARCHAR"/>
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+
+	<table name="log_field" phpName="LogField"> 
+		<column name="log_id" type="INTEGER" required="true" />
+		<column name="field_name" type="VARCHAR"/>
+		<column name="field_value" type="VARCHAR"/>
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="log">
+			<reference local="log_id" foreign="id" />
+		</foreign-key>
+	</table>
+
+	<table name="email_log" phpName="EmailLog">
+		<column name="email_address" type="VARCHAR" />
+		<column name="email_subject" type="VARCHAR" />
+		<column name="sending_status" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+</database>

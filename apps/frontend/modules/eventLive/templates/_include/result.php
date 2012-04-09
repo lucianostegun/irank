@@ -1,3 +1,10 @@
+<?php
+	if( !$eventLiveObj->getSavedResult() ){
+		
+		echo '<br/><br/><center><h2>O resultado deste evento ainda não foi processado!</h2></center>';
+		return;
+	}
+?>
 <table border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr class="header">
 		<th style="width: 55px" class="first">Posição</th>

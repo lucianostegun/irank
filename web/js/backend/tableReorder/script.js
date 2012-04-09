@@ -68,6 +68,7 @@ redips_init = function () {
 			$('peopleIdPosition-'+eventPositionOld).id              = 'peopleIdPosition-'+eventPosition;
 			$('eventLivePeopleNameResult-'+eventPositionOld).id     = 'eventLivePeopleNameResult-'+eventPosition;
 			$('prize-'+eventPositionOld).id                         = 'prize-'+eventPosition;
+			$('score-'+eventPositionOld).id                         = 'score-'+eventPosition;
 			$('eventLiveResultEmailAddressTd-'+eventPositionOld).id = 'eventLiveResultEmailAddressTd-'+eventPosition;
 		}
 		

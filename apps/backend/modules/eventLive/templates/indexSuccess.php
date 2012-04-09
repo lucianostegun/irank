@@ -50,7 +50,7 @@
 			$recordCount = count($eventLiveIdList);
 		?>
 		<tr class="<?php echo ($recordCount?'hidden':'') ?>" id="eventLiveNoRecordsRow">
-			<td colspan="4">Nenhum registro disponível para edição</td>
+			<td colspan="7">Nenhum evento foi cadastro até o momento.<br/><?php echo link_to('Clique aqui', 'eventLive/new') ?> para cadastrar o primeiro evento.</td>
 		</tr>
 	</tbody> 
 	</table>

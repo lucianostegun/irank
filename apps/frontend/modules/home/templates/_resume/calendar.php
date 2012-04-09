@@ -24,7 +24,6 @@ echo input_hidden_tag('calendarDate', date('Y-m-d'));
 echo input_hidden_tag('calendarMonth', $currentMonth);
 echo input_hidden_tag('calendarYear', $currentYear);
 
-
 $day       = ($monthDaysLastMonth-$daysLastMonth+1);
 $startDate = date('d/m/Y', mktime(0,0,0,$lastMonth,$day,$lastYear));
 $endDate   = date('d/m/Y', mktime(0,0,0,$lastMonth,$day+$weeks*7+7,$lastYear));
@@ -51,8 +50,8 @@ $eventDateList = UserSite::getCalendarList($startDate, $endDate);
 				
 				$link = "getCalendarDetails('$dayId', '$date')";
 		?>
-		<div class="dayGray" id="<?php echo $dayId ?>Div">
-			<div class="dayNumberGray" onclick="<?php echo $link ?>"><?php echo $day ?></div>
+		<div class="dayGray" id="<?php echo $dayId ?>Div" onclick="<?php echo $link ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">
+			<div class="dayNumberGray"><?php echo $day ?></div>
 			<?php
 				if( in_array($dayId, $eventDateList) )
 					echo link_to(image_tag('home/calendarMark'), '#'.$link);
@@ -73,8 +72,8 @@ $eventDateList = UserSite::getCalendarList($startDate, $endDate);
 				
 				$link = "getCalendarDetails('$dayId', '$date')";
 		?>
-		<div class="day<?php echo ($isMarked?'Selected':'') ?>" id="<?php echo $dayId ?>Div">
-			<div class="dayNumber" onclick="<?php echo $link ?>"><?php echo $day ?></div>
+		<div class="day<?php echo ($isMarked?' selected':'') ?>" id="<?php echo $dayId ?>Div" onclick="<?php echo $link ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">
+			<div class="dayNumber"><?php echo $day ?></div>
 			<?php
 				if( in_array($dayId, $eventDateList) )
 					echo link_to(image_tag('home/calendarMark'), '#'.$link);
@@ -92,8 +91,8 @@ $eventDateList = UserSite::getCalendarList($startDate, $endDate);
 					
 					$link = "getCalendarDetails('$dayId', '$date')";
 		?>
-		<div class="dayGray" id="<?php echo $dayId ?>Div">
-			<div class="dayNumberGray" onclick="<?php echo $link ?>"><?php echo $day ?></div>
+		<div class="dayGray" id="<?php echo $dayId ?>Div" onclick="<?php echo $link ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">
+			<div class="dayNumberGray"><?php echo $day ?></div>
 			<?php
 				if( in_array($dayId, $eventDateList) )
 					echo link_to(image_tag('home/calendarMark'), '#'.$link);
@@ -102,3 +101,6 @@ $eventDateList = UserSite::getCalendarList($startDate, $endDate);
 		<?php endfor;?>
 	</div>
 </div>
+<?php
+	sfContext::getInstance()->getResponse()->addStylesheet('calendar');
+?>

@@ -39,6 +39,11 @@
 		</section>
 
 		<section>
+			<label>Taxa entrada padrão</label>
+			<?php echo input_tag('defaultEntranceFee', Util::formatFloat($rankingLiveObj->getDefaultEntranceFee(), true), array('size'=>8, 'maxlength'=>8, 'id'=>'rankingLiveDefaultEntranceFee')) ?>
+		</section>
+
+		<section>
 			<label>Classificação</label>
 			<?php echo select_tag('rankingTypeId', VirtualTable::getOptionsForSelect('rankingType', $rankingLiveObj->getRankingTypeId()), array('id'=>'rankingLiveRankingTypeId')) ?>
 		</section>
@@ -68,12 +73,20 @@
 			<div class="text">Imagem JPG com 90 x 90 pixels</div>
 		</section>
 	</div>
-	<div class="defaultForm" style="float: left; width: 50%">
+	<div class="defaultForm" style="float: left; width: 50%; height: 300px">
 		<?php
 			if( $iRankAdmin )
 				include_partial('rankingLive/include/club', array('rankingLiveObj'=>$rankingLiveObj));
 		?>
 	</div>
+	<div class="defaultForm" style="clear: both; width: 100%">
+		<section class="textarea" style="height: 570px">
+			<label>Informações</label>
+			<?php echo textarea_tag('description', $rankingLiveObj->getDescription(), array('style'=>'width: 80%; height: 550px', 'id'=>'rankingLiveDescription')) ?>
+		</section>	
+	</div>
+
+		
 	<div class="clear"></div>
 	
 </div>

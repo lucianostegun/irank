@@ -1,5 +1,5 @@
 all:
-  stylesheets:    [home, lightbox, calendar]
+  stylesheets:    [home, lightbox, eventLiveResume]
   javascripts:    [home, highlight, /sf/prototype/js/scriptaculous, lightbox]
   
 indexSuccess:

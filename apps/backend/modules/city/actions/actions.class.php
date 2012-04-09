@@ -34,4 +34,20 @@ class cityActions extends sfActions
 	echo Util::getAutoCompleteResults($table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options );
 	exit;
   }
+  
+  public function executeAddQuick($request){
+  	
+  	$quickName = $request->getParameter('quickName');
+  	list($cityName, $initial) = explode(',', $quickName);
+  	
+  	if( !$cityName || !$initial )
+  		throw new Exception('Cidade/Estado não informado');
+  	
+  	$stateObj = StatePeer::retrieveByInitial($initial, true);
+  	
+  	$cityObj = City::getQuickCity($cityName, $stateObj->getId());
+  	
+  	echo $cityObj->getId();
+  	exit;
+  }
 }

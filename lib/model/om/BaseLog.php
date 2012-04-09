@@ -48,9 +48,6 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
-	protected $aUserSite;
-
-	
 	protected $collLogFieldList;
 
 	
@@ -187,10 +184,6 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 		if ($this->user_site_id !== $v) {
 			$this->user_site_id = $v;
 			$this->modifiedColumns[] = LogPeer::USER_SITE_ID;
-		}
-
-		if ($this->aUserSite !== null && $this->aUserSite->getId() !== $v) {
-			$this->aUserSite = null;
 		}
 
 	} 
@@ -408,15 +401,6 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 			$this->alreadyInSave = true;
 
 
-												
-			if ($this->aUserSite !== null) {
-				if ($this->aUserSite->isModified()) {
-					$affectedRows += $this->aUserSite->save($con);
-				}
-				$this->setUserSite($this->aUserSite);
-			}
-
-
 						if ($this->isModified()) {
 				if ($this->isNew()) {
 					$pk = LogPeer::doInsert($this, $con);
@@ -470,14 +454,6 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 			$retval = null;
 
 			$failureMap = array();
-
-
-												
-			if ($this->aUserSite !== null) {
-				if (!$this->aUserSite->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aUserSite->getValidationFailures());
-				}
-			}
 
 
 			if (($retval = LogPeer::doValidate($this, $columns)) !== true) {
@@ -719,35 +695,6 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 			self::$peer = new LogPeer();
 		}
 		return self::$peer;
-	}
-
-	
-	public function setUserSite($v)
-	{
-
-
-		if ($v === null) {
-			$this->setUserSiteId(NULL);
-		} else {
-			$this->setUserSiteId($v->getId());
-		}
-
-
-		$this->aUserSite = $v;
-	}
-
-
-	
-	public function getUserSite($con = null)
-	{
-		if ($this->aUserSite === null && ($this->user_site_id !== null)) {
-						include_once 'lib/model/om/BaseUserSitePeer.php';
-
-			$this->aUserSite = UserSitePeer::retrieveByPK($this->user_site_id, $con);
-
-			
-		}
-		return $this->aUserSite;
 	}
 
 	

@@ -9,7 +9,7 @@ default:
     keywords:     symfony, project
     language:     en
 
-  stylesheets:    [-*, backend/login]
+  stylesheets:    [-*, backend/login/invalid, backend/login/reset, backend/login/style]
 
   javascripts:    [-*, -*, -*, -*, util, /sf/prototype/js/prototype, phpEquivalents, backend/login]
 

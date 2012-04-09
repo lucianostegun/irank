@@ -17,6 +17,7 @@ class Schedule {
 	private $fileName;
 	private $startDate;
 	private $sequence = 0;
+	private $scheduleAlarmTime = '4H';
 	
     function __construct($username=null) {
     	
@@ -31,6 +32,8 @@ class Schedule {
 		    $userSiteObj = UserSitePeer::retrieveByUsername($username);
 		    $peopleId    = $userSiteObj->getPeopleId();
 		    $startDate   = $userSiteObj->getScheduleStartDate('Y-m-d');
+		    
+		    $this->scheduleAlarmTime = $userSiteObj->getOptionValue('scheduleAlarmTime', '4H');
 		    
 		    if( !$startDate ){
 		    	
@@ -137,9 +140,11 @@ class Schedule {
 			// Define o alarme apenas se a data do evento for maior que hoje
 			if( strtotime($eventDateTime) > time() && $inviteStatus=='yes' ){
 			
+				$scheduleAlarmTime = $this->scheduleAlarmTime;
+			
 				$event .= "BEGIN:VALARM".$nl;
 				$event .= "X-WR-ALARMUID:$alarmId".$nl;
-				$event .= "TRIGGER:-PT4H".$nl;
+				$event .= "TRIGGER:-PT$scheduleAlarmTime".$nl;
 				$event .= "ATTACH;VALUE=URI:Basso".$nl;
 				$event .= "ACTION:AUDIO".$nl;
 				$event .= "END:VALARM".$nl;
@@ -234,9 +239,11 @@ class Schedule {
 			// Define o alarme apenas se a data do evento for maior que hoje
 			if( strtotime($eventDateTime) > time() ){
 			
+				$scheduleAlarmTime = $this->scheduleAlarmTime;
+				
 				$event .= "BEGIN:VALARM".$nl;
 				$event .= "X-WR-ALARMUID:$alarmId".$nl;
-				$event .= "TRIGGER:-PT4H".$nl;
+				$event .= "TRIGGER:-PT$scheduleAlarmTime".$nl;
 				$event .= "ATTACH;VALUE=URI:Basso".$nl;
 				$event .= "ACTION:AUDIO".$nl;
 				$event .= "END:VALARM".$nl;
