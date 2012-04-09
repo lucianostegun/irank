@@ -1,5 +1,5 @@
 <?php
-	include_partial('home/component/commonBar', array('pathList'=>array('Agenda'=>'eventLive/index', 'Sincronização'=>null)));
+	include_partial('home/component/commonBar', array('pathList'=>array('Agenda'=>'eventLive/index', 'Sincronização'=>'schedule/index', 'iOS'=>null)));
 ?>
 <div class="moduleIntro">
 	<?php echo image_tag('schedule/ios', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
@@ -29,7 +29,7 @@
 		<div class="image"><?php echo image_tag('schedule/ios/002') ?></div>
 		<div class="info">
 			<h1>2/8 <div class="title">Adicionar conta</div></h1>
-				<div class="instructions"><p>No grupo <b>Contas</b> selecione a opção <b>Adicionar conta...</b></p></div>
+				<div class="instructions"><p>No grupo <b>Contas</b> selecione a opção <b>Adicionar Conta...</b></p></div>
 		</div>
 	</div>
 	<div id="step-003" class="step hidden">
@@ -43,21 +43,21 @@
 		<div class="image"><?php echo image_tag('schedule/ios/004') ?></div>
 		<div class="info">
 			<h1>4/8 <div class="title">Calendário assinado</div></h1>
-				<div class="instructions"><p>Selecione a opção <b>Adicionar calendário assinado</b>.</p></div>
+				<div class="instructions"><p>Selecione a opção <b>Adicionar Calendário Assinado</b>.</p></div>
 		</div>
 	</div>
 	<div id="step-005" class="step hidden">
 		<div class="image"><?php echo image_tag('schedule/ios/005') ?></div>
 		<div class="info">
 			<h1>5/8 <div class="title">Assinatura</div></h1>
-				<div class="instructions"><p>No campo <b>Servidor</b> digite o endereço da agenda <b>iRank</b>:<br/><br/><center><b>agenda.irank.com.br</b></p></div>
+				<div class="instructions"><p>No campo <b>Servidor</b> digite o endereço da agenda:<br/><br/><center><b>agenda.irank.com.br</b></p></div>
 		</div>
 	</div>
 	<div id="step-006" class="step hidden">
 		<div class="image"><?php echo image_tag('schedule/ios/006') ?></div>
 		<div class="info">
 			<h1>6/8 <div class="title">Confirmação</div></h1>
-				<div class="instructions"><p>Você será informado que a assinatura do calendário requer uma autenticação.</p><p>Apenas toque no botão <b>OK</b>.</p></div>
+				<div class="instructions"><p>Você será informado de que a assinatura do calendário requer uma autenticação.</p><p>Apenas toque no botão <b>OK</b>.</p></div>
 		</div>
 	</div>
 	<div id="step-007" class="step hidden">
@@ -71,7 +71,7 @@
 					<p>Caso queira apenas sincronizar a agenda e não ser notificado dos eventos, marque a opção <b>Remover alarmes</b>.</p>
 					<p>Toque no botão <b>Salvar</b>.</p>
 					<p>&nbsp;</p>
-					<p><i>Obs: Após assinar o calendário você poderá trocar a senha padrão para uma senha de sua preferência.</i></p>
+					<p><i>Obs: Não utilize seu e-mail no campo <b>Nomde usuário</b>.</p><p>Após assinar o calendário você poderá trocar a senha padrão para uma senha de sua preferência.</i></p>
 				</div>
 		</div>
 	</div>

@@ -1,26 +1,26 @@
 #eventCalendar {
 
 	position: 	relative;
-	left: 		16px;
-	height: 	180px;
-	float: 		left;
+	left: 		2px;
+	width: 		190px;
+	height: 	210px;
 }
 
 #eventCalendar .month {
 
-	clear: 		both;
-	margin: 	1px;
-	padding: 	1 0 1 0;
-	height: 	57px;
-	width: 		322px;
-	width: 		325px !ie;
+	clear: 			both;
+	margin: 		1px;
+	padding: 		1 0 1 0;
+	height: 		57px;
+	width: 			198px;
+	text-align: 	center;
 }
 
 #eventCalendar .weekDay {
 	
 	float: 			left;
 	border: 		1px solid #AEAEAE;
-	width: 			45px;
+	width: 			27px;
 	margin-left: 	-1px;
 	margin-bottom: 	-1px;
 	font-weight: 	bold;
@@ -35,8 +35,8 @@
 	
 	float: 					left;
 	border: 				1px solid #BBBBBB;
-	height: 				40px;
-	width: 					45px;
+	height: 				20px;
+	width: 					27px;
 	margin-left: 			-1px;
 	margin-bottom: 			-1px;
 	padding-top: 			3px;
@@ -49,31 +49,30 @@
 	background-position: 	-1px 1px;
 	text-align: 			center;
 	color: 					#999999;
+	cursor: 				pointer;
 }
 
-#eventCalendar .dayGraySelected {
+#eventCalendar .dayGray.hover {
 	
-	float: 					left;
-	border: 				1px solid #BBBBBB;
-	height: 				40px;
-	width: 					45px;
-	margin-left: 			-1px;
-	margin-bottom: 			-1px;
-	padding-top: 			3px;
-	background: 			url(/images/home/calendarGraySelectedBg.png) no-repeat #FFFFFF;
-	background: 			url(/images/home/calendarGrayIeSelectedBg.png) no-repeat #FFFFFF !ie;
+	background: 			url(/images/home/calendarGrayBgHover.png) no-repeat #FFFFFF;
 	background-position: 	-1px 1px;
-	text-align: 			center;
-	font-weight: 			bold;
+	font-weight: 			normal;
 	color: 					#FFFFFF;
+}
+
+#eventCalendar .dayGray.selected,
+#eventCalendar .dayGray.selected.hover {
+	
+	background: 			url(/images/home/calendarGraySelectedBg.png) no-repeat #FFFFFF;
+	background-position: 	-1px 1px;
 }
 
 #eventCalendar .day {
 	
 	float: 					left;
 	border: 				1px solid #B5B5D5;
-	height: 				40px;
-	width: 					45px;
+	height: 				20px;
+	width: 					27px;
 	margin-left: 			-1px;
 	margin-bottom: 			-1px;
 	padding-top: 			3px;
@@ -86,21 +85,22 @@
 	background-position: 	-1px 1px;
 	text-align: 			center;
 	color: 					#6C6C7F;
+	cursor: 				pointer;
 }
 
-#eventCalendar .daySelected {
+#eventCalendar .day.hover {
 	
-	float: 					left;
-	border: 				1px solid #B5B5D5;
-	height: 				40px;
-	width: 					45px;
-	margin-left: 			-1px;
-	margin-bottom: 			-1px;
-	padding-top: 			3px;
-	background: 			url(/images/home/calendarBgSelected.png) no-repeat #FFFFFF;
-	background: 			url(/images/home/calendarBgIeSelected.png) no-repeat #FFFFFF !ie;
+	background: 			url(/images/home/calendarBgHover.png) no-repeat #FFFFFF;
 	background-position: 	-1px 1px;
-	text-align: 			center;
+	font-weight: 			normal;
+	color: 					#4C4C66;
+}
+
+#eventCalendar .day.selected,
+#eventCalendar .day.selected.hover {
+	
+	background: 			url(/images/home/calendarBgSelected.png) no-repeat #FFFFFF;
+	background-position: 	-1px 1px;
 	font-weight: 			bold;
 	color: 					#FFFFFF;
 }
@@ -125,7 +125,7 @@
 
 #eventCalendar .monthName {
 	
-	width: 			320px;
+	width: 			190px;
 	padding: 		5px;
 	color: 			#5486B4;
 	font-weight: 	bold; 

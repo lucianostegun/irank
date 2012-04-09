@@ -96,9 +96,9 @@ class Util {
 	 * @param      String: Comando SQL a ser executado na base de dados, deve ser um comando único
 	 * @return     Object: ResultSet
 	 */
-	public static function executeQuery( $query ){
+	public static function executeQuery($query, $con=null){
 		
-		$connection = Propel::getConnection();
+		$connection = Propel::getConnection($con);
     	$statement  = $connection->prepareStatement( $query );
     	$resultset  = $statement->executeQuery($query, ResultSet::FETCHMODE_NUM);
     	

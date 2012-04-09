@@ -18,9 +18,14 @@ function loadEvent(eventId){
 	window.location = _webRoot+'/event/edit/eventId/'+eventId;
 }
 
+function loadEventLive(eventLiveId){
+	
+	window.location = _webRoot+'/eventLive/details/eventLiveId/'+eventLiveId;
+}
+
 function loadMoreEvents(loadByDate){
 	
-	var incraseAmount = 4;
+	var incraseAmount = 5;
 
 	if( _isLoadingEventResume )
 		return;
@@ -58,8 +63,8 @@ function loadMoreEvents(loadByDate){
 				_isLoadingEventResume = false;
 			}
 			
-			new Effect.Move(previousContainerDiv, { x: 0, y: -260, mode: 'absolute' });
-			new Effect.Move(currentContainerDiv, { x: 0, y: -260, mode: 'absolute', afterFinish:afterFinishFunc });
+			new Effect.Move(previousContainerDiv, { x: 0, y: -210, mode: 'absolute' });
+			new Effect.Move(currentContainerDiv, { x: 0, y: -210, mode: 'absolute', afterFinish:afterFinishFunc });
 		}
 	};
 		

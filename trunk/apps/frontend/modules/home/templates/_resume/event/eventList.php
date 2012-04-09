@@ -1,6 +1,6 @@
 <?php
 	$userSiteObj = UserSite::getCurrentUser();
-	$eventObjList = $userSiteObj->getEventListResume(4, $offset, $eventDate);
+	$eventObjList = $userSiteObj->getEventListResume(5, $offset, $eventDate);
 	
 	if( empty($eventObjList) )
 		include_partial('home/resume/event/noEvent');

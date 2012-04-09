@@ -25,7 +25,7 @@ class LogFieldMapBuilder {
 	
 	public function doBuild()
 	{
-		$this->dbMap = Propel::getDatabaseMap('propel');
+		$this->dbMap = Propel::getDatabaseMap('log');
 
 		$tMap = $this->dbMap->addTable('log_field');
 		$tMap->setPhpName('LogField');

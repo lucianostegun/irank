@@ -23,6 +23,7 @@
 				
 				$eventLiveId    = $eventLiveObj->getId();
 				$rankingLiveObj = $eventLiveObj->getRankingLive();
+				$rankingLiveId  = $rankingLiveObj->getId();
 				$fileNameLogo   = $rankingLiveObj->getFileNameLogo();
 		?>
 		<div class="event">
@@ -34,7 +35,11 @@
 			</a>
 			<div class="info">
 				<div class="profile">
-					<h1><?php echo Util::getWeekDay($eventLiveObj->getEventDateTime('d/m/Y')).', '.$eventLiveObj->getEventDateTime('d/m/Y H:i') ?> - <?php echo $eventLiveObj->getGameStyle()->getDescription() ?> | <?php echo $eventLiveObj->getGameType()->getDescription() ?></h1>
+					<h1><?php echo Util::getWeekDay($eventLiveObj->getEventDateTime('d/m/Y')).', '.$eventLiveObj->getEventDateTime('d/m/Y H:i') ?>
+					<?php if( $rankingLiveId ): ?>
+					 - <?php echo $eventLiveObj->getGameStyle()->getDescription() ?> | <?php echo $eventLiveObj->getGameType()->getDescription() ?>
+					<?php endif; ?>
+					</h1>
 					<h2><?php echo link_to($eventLiveObj->getEventName(), '#goToPage("eventLive", "details", "id", '.$eventLiveId.')') ?></h2>
 					<h3>@ <?php echo $eventLiveObj->getClub()->toString() ?> - <?php echo $eventLiveObj->getClub()->getLocation() ?></h3>
 					

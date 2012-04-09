@@ -138,6 +138,7 @@ class rankingLiveActions extends sfActions
 	try {
 		
 		$fileObj = File::upload($request, 'Filedata', '/images/ranking', $options);
+		$fileObj->createThumbnail('/images/ranking/thumb', 65, 65);
 		
 		$rankingLiveObj->setFileNameLogo($fileName);
 		$rankingLiveObj->save();
@@ -166,14 +167,21 @@ class rankingLiveActions extends sfActions
 
   public function executeGetSelectField($request){
     
-    $clubId        = $request->getParameter('clubId');
-    $rankingLiveId = $request->getParameter('rankingLiveId');
-    $prefix        = $request->getParameter('prefix');
+    $clubId = $request->getParameter('clubId');
+    $prefix = $request->getParameter('prefix');
     
     Util::getHelper('I18N');
     Util::getHelpers();
     
-    echo select_tag('rankingLiveId', RankingLive::getOptionsForSelect($clubId, $rankingLiveId), array('id'=>$prefix.'RankingLiveId'));
+    echo select_tag('rankingLiveId', RankingLive::getOptionsForSelect($clubId, $this->rankingLiveId), array('id'=>$prefix.'RankingLiveId'));
+    exit;
+  }
+
+  public function executeGetInfo($request){
+    
+    $rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
+    
+    echo Util::parseInfo($rankingLiveObj->getInfo());
     exit;
   }
 }

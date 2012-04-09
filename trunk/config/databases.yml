@@ -3,3 +3,7 @@ all:
     class:          sfPropelDatabase
     param:
       dsn:          pgsql://postgres:unidunite@localhost/irank
+  log:
+    class:          sfPropelDatabase
+    param:
+      dsn:          pgsql://postgres:unidunite@localhost/irank_log

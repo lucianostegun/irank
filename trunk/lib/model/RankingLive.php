@@ -10,6 +10,24 @@
 class RankingLive extends BaseRankingLive
 {
 	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+//    		$this->postOnWall();
+    		
+			parent::save();
+			
+       		Log::quickLog('ranking_live', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('ranking_live', $this->getPrimaryKey(), $e);
+        }
+    }
+	
 	public function delete($con=null){
 		
 		$this->setVisible(false);
@@ -19,16 +37,18 @@ class RankingLive extends BaseRankingLive
 	
 	public function quickSave($request){
 		
-		$rankingName   = $request->getParameter('rankingName');
-		$rankingTypeId = $request->getParameter('rankingTypeId');
-		$gameTypeId    = $request->getParameter('gameTypeId');
-		$gameStyleId   = $request->getParameter('gameStyleId');
-		$startDate     = $request->getParameter('startDate');
-		$finishDate    = $request->getParameter('finishDate');
-		$isPrivate     = $request->getParameter('isPrivate');
-		$defaultBuyin  = $request->getParameter('defaultBuyin');
-		$scoreFormula  = $request->getParameter('scoreFormula');
-		$clubIdList    = $request->getParameter('clubId');
+		$rankingName        = $request->getParameter('rankingName');
+		$rankingTypeId      = $request->getParameter('rankingTypeId');
+		$gameTypeId         = $request->getParameter('gameTypeId');
+		$gameStyleId        = $request->getParameter('gameStyleId');
+		$startDate          = $request->getParameter('startDate');
+		$finishDate         = $request->getParameter('finishDate');
+		$isPrivate          = $request->getParameter('isPrivate');
+		$defaultBuyin       = $request->getParameter('defaultBuyin');
+		$defaultEntranceFee = $request->getParameter('defaultEntranceFee');
+		$scoreFormula       = $request->getParameter('scoreFormula');
+		$description        = $request->getParameter('description');
+		$clubIdList         = $request->getParameter('clubId');
 		
 		$this->setRankingName($rankingName);
 		$this->setRankingTypeId($rankingTypeId);
@@ -38,7 +58,9 @@ class RankingLive extends BaseRankingLive
 		$this->setFinishDate(($finishDate?Util::formatDate($finishDate):null));
 		$this->setIsPrivate(($isPrivate?true:false));
 		$this->setDefaultBuyin(Util::formatFloat($defaultBuyin));
+		$this->setDefaultEntranceFee(Util::formatFloat($defaultEntranceFee));
 		$this->setScoreFormula($scoreFormula);
+		$this->setDescription($description);
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);
@@ -200,5 +222,16 @@ class RankingLive extends BaseRankingLive
 	public function toString(){
 		
 		return $this->getRankingName();
+	}
+	
+	public function getInfo(){
+		
+		$infoList = array();
+		
+		$infoList['id']                 = $this->getId();
+		$infoList['defaultBuyin']       = $this->getDefaultBuyin();
+		$infoList['defaultEntranceFee'] = $this->getDefaultEntranceFee();
+		
+		return $infoList;
 	}
 }

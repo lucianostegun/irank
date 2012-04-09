@@ -63,9 +63,11 @@
 		<tr class="info">
 			<td><?php echo $weekDay ?>, <?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></th>
 		</tr>
+		<?php if( $rankingLiveId ): ?>
 		<tr class="info">
 			<td><?php echo $eventLiveObj->getGameStyle()->getDescription() ?> | <?php echo $eventLiveObj->getGameType()->getDescription() ?></th>
 		</tr>
+		<?php endif; ?>
 		<tr class="info">
 			<td><?php echo link_to(sprintf('@%s - %s, %s-%s', $clubName, $addressQuarter, $city, $state), '#goToPage("club", "details", "clubId", '.$clubId.')') ?></th>
 		</tr>

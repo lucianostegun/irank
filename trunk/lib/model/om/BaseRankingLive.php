@@ -45,6 +45,14 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 
 	
+	protected $default_entrance_fee = 0;
+
+
+	
+	protected $description;
+
+
+	
 	protected $game_style_id;
 
 
@@ -205,6 +213,20 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	{
 
 		return $this->default_buyin;
+	}
+
+	
+	public function getDefaultEntranceFee()
+	{
+
+		return $this->default_entrance_fee;
+	}
+
+	
+	public function getDescription()
+	{
+
+		return $this->description;
 	}
 
 	
@@ -443,6 +465,30 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setDefaultEntranceFee($v)
+	{
+
+		if ($this->default_entrance_fee !== $v || $v === 0) {
+			$this->default_entrance_fee = $v;
+			$this->modifiedColumns[] = RankingLivePeer::DEFAULT_ENTRANCE_FEE;
+		}
+
+	} 
+	
+	public function setDescription($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->description !== $v) {
+			$this->description = $v;
+			$this->modifiedColumns[] = RankingLivePeer::DESCRIPTION;
+		}
+
+	} 
+	
 	public function setGameStyleId($v)
 	{
 
@@ -617,33 +663,37 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 			$this->default_buyin = $rs->getFloat($startcol + 8);
 
-			$this->game_style_id = $rs->getInt($startcol + 9);
+			$this->default_entrance_fee = $rs->getFloat($startcol + 9);
 
-			$this->game_type_id = $rs->getInt($startcol + 10);
+			$this->description = $rs->getString($startcol + 10);
 
-			$this->ranking_tag = $rs->getString($startcol + 11);
+			$this->game_style_id = $rs->getInt($startcol + 11);
 
-			$this->score_formula = $rs->getString($startcol + 12);
+			$this->game_type_id = $rs->getInt($startcol + 12);
 
-			$this->file_name_logo = $rs->getString($startcol + 13);
+			$this->ranking_tag = $rs->getString($startcol + 13);
 
-			$this->enabled = $rs->getBoolean($startcol + 14);
+			$this->score_formula = $rs->getString($startcol + 14);
 
-			$this->visible = $rs->getBoolean($startcol + 15);
+			$this->file_name_logo = $rs->getString($startcol + 15);
 
-			$this->locked = $rs->getBoolean($startcol + 16);
+			$this->enabled = $rs->getBoolean($startcol + 16);
 
-			$this->deleted = $rs->getBoolean($startcol + 17);
+			$this->visible = $rs->getBoolean($startcol + 17);
 
-			$this->created_at = $rs->getTimestamp($startcol + 18, null);
+			$this->locked = $rs->getBoolean($startcol + 18);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 19, null);
+			$this->deleted = $rs->getBoolean($startcol + 19);
+
+			$this->created_at = $rs->getTimestamp($startcol + 20, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 21, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 20; 
+						return $startcol + 22; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating RankingLive object", $e);
 		}
@@ -883,36 +933,42 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				return $this->getDefaultBuyin();
 				break;
 			case 9:
-				return $this->getGameStyleId();
+				return $this->getDefaultEntranceFee();
 				break;
 			case 10:
-				return $this->getGameTypeId();
+				return $this->getDescription();
 				break;
 			case 11:
-				return $this->getRankingTag();
+				return $this->getGameStyleId();
 				break;
 			case 12:
-				return $this->getScoreFormula();
+				return $this->getGameTypeId();
 				break;
 			case 13:
-				return $this->getFileNameLogo();
+				return $this->getRankingTag();
 				break;
 			case 14:
-				return $this->getEnabled();
+				return $this->getScoreFormula();
 				break;
 			case 15:
-				return $this->getVisible();
+				return $this->getFileNameLogo();
 				break;
 			case 16:
-				return $this->getLocked();
+				return $this->getEnabled();
 				break;
 			case 17:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 18:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 19:
+				return $this->getDeleted();
+				break;
+			case 20:
+				return $this->getCreatedAt();
+				break;
+			case 21:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -934,17 +990,19 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 			$keys[6]=>$this->getPlayers(),
 			$keys[7]=>$this->getEvents(),
 			$keys[8]=>$this->getDefaultBuyin(),
-			$keys[9]=>$this->getGameStyleId(),
-			$keys[10]=>$this->getGameTypeId(),
-			$keys[11]=>$this->getRankingTag(),
-			$keys[12]=>$this->getScoreFormula(),
-			$keys[13]=>$this->getFileNameLogo(),
-			$keys[14]=>$this->getEnabled(),
-			$keys[15]=>$this->getVisible(),
-			$keys[16]=>$this->getLocked(),
-			$keys[17]=>$this->getDeleted(),
-			$keys[18]=>$this->getCreatedAt(),
-			$keys[19]=>$this->getUpdatedAt(),
+			$keys[9]=>$this->getDefaultEntranceFee(),
+			$keys[10]=>$this->getDescription(),
+			$keys[11]=>$this->getGameStyleId(),
+			$keys[12]=>$this->getGameTypeId(),
+			$keys[13]=>$this->getRankingTag(),
+			$keys[14]=>$this->getScoreFormula(),
+			$keys[15]=>$this->getFileNameLogo(),
+			$keys[16]=>$this->getEnabled(),
+			$keys[17]=>$this->getVisible(),
+			$keys[18]=>$this->getLocked(),
+			$keys[19]=>$this->getDeleted(),
+			$keys[20]=>$this->getCreatedAt(),
+			$keys[21]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -988,36 +1046,42 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				$this->setDefaultBuyin($value);
 				break;
 			case 9:
-				$this->setGameStyleId($value);
+				$this->setDefaultEntranceFee($value);
 				break;
 			case 10:
-				$this->setGameTypeId($value);
+				$this->setDescription($value);
 				break;
 			case 11:
-				$this->setRankingTag($value);
+				$this->setGameStyleId($value);
 				break;
 			case 12:
-				$this->setScoreFormula($value);
+				$this->setGameTypeId($value);
 				break;
 			case 13:
-				$this->setFileNameLogo($value);
+				$this->setRankingTag($value);
 				break;
 			case 14:
-				$this->setEnabled($value);
+				$this->setScoreFormula($value);
 				break;
 			case 15:
-				$this->setVisible($value);
+				$this->setFileNameLogo($value);
 				break;
 			case 16:
-				$this->setLocked($value);
+				$this->setEnabled($value);
 				break;
 			case 17:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 18:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 19:
+				$this->setDeleted($value);
+				break;
+			case 20:
+				$this->setCreatedAt($value);
+				break;
+			case 21:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1036,17 +1100,19 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setPlayers($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setEvents($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setDefaultBuyin($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setGameStyleId($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setGameTypeId($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setRankingTag($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setScoreFormula($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setFileNameLogo($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setEnabled($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setVisible($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setLocked($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setDeleted($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setCreatedAt($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setUpdatedAt($arr[$keys[19]]);
+		if (array_key_exists($keys[9], $arr)) $this->setDefaultEntranceFee($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setDescription($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setGameStyleId($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setGameTypeId($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setRankingTag($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setScoreFormula($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setFileNameLogo($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setEnabled($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setVisible($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setLocked($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setDeleted($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setCreatedAt($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setUpdatedAt($arr[$keys[21]]);
 	}
 
 	
@@ -1063,6 +1129,8 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RankingLivePeer::PLAYERS)) $criteria->add(RankingLivePeer::PLAYERS, $this->players);
 		if ($this->isColumnModified(RankingLivePeer::EVENTS)) $criteria->add(RankingLivePeer::EVENTS, $this->events);
 		if ($this->isColumnModified(RankingLivePeer::DEFAULT_BUYIN)) $criteria->add(RankingLivePeer::DEFAULT_BUYIN, $this->default_buyin);
+		if ($this->isColumnModified(RankingLivePeer::DEFAULT_ENTRANCE_FEE)) $criteria->add(RankingLivePeer::DEFAULT_ENTRANCE_FEE, $this->default_entrance_fee);
+		if ($this->isColumnModified(RankingLivePeer::DESCRIPTION)) $criteria->add(RankingLivePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(RankingLivePeer::GAME_STYLE_ID)) $criteria->add(RankingLivePeer::GAME_STYLE_ID, $this->game_style_id);
 		if ($this->isColumnModified(RankingLivePeer::GAME_TYPE_ID)) $criteria->add(RankingLivePeer::GAME_TYPE_ID, $this->game_type_id);
 		if ($this->isColumnModified(RankingLivePeer::RANKING_TAG)) $criteria->add(RankingLivePeer::RANKING_TAG, $this->ranking_tag);
@@ -1119,6 +1187,10 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 		$copyObj->setEvents($this->events);
 
 		$copyObj->setDefaultBuyin($this->default_buyin);
+
+		$copyObj->setDefaultEntranceFee($this->default_entrance_fee);
+
+		$copyObj->setDescription($this->description);
 
 		$copyObj->setGameStyleId($this->game_style_id);
 

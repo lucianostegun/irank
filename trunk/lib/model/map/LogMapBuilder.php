@@ -25,7 +25,7 @@ class LogMapBuilder {
 	
 	public function doBuild()
 	{
-		$this->dbMap = Propel::getDatabaseMap('propel');
+		$this->dbMap = Propel::getDatabaseMap('log');
 
 		$tMap = $this->dbMap->addTable('log');
 		$tMap->setPhpName('Log');
@@ -36,7 +36,7 @@ class LogMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignKey('USER_SITE_ID', 'UserSiteId', 'int', CreoleTypes::INTEGER, 'user_site', 'ID', true, null);
+		$tMap->addColumn('USER_SITE_ID', 'UserSiteId', 'int', CreoleTypes::INTEGER, true, null);
 
 		$tMap->addColumn('APP', 'App', 'string', CreoleTypes::VARCHAR, false, null);
 

@@ -14,11 +14,16 @@
 		$criteria->add( EventLivePeer::VISIBLE, true );
 		$criteria->add( EventLivePeer::DELETED, false );
 		$criteria->addDescendingOrderByColumn( EventLivePeer::EVENT_DATE );
+		
+		$eventLiveIdCurrent = $eventLiveObj->getId();
 
 		foreach($eventLiveObj->getRankingLive()->getEventLiveList($criteria) as $key=>$eventLiveObj):
 			
 			$eventLiveId = $eventLiveObj->getId();
 			$onclick     = 'goModule(\'eventLive\', \'details\', \'id\', '.$eventLiveId.')';
+			
+			if( $eventLiveId==$eventLiveIdCurrent )
+				$onclick = 'alert(\'A etapa selecionada é a mesma que você está visualizando agora!\')';
 			
 			$className = ($key%2==0?'':'odd');
 			$className .= ($key==0?' first':'');

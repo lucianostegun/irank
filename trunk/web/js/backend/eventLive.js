@@ -40,6 +40,11 @@ function handleIsIlimitedRebuys(checked){
 	$('eventLiveAllowedRebuys').disabled = checked;
 }
 
+function handleIsFreeroll(checked){
+	
+	$('eventLiveBuyin').disabled = checked;
+}
+
 function handleSelectEventLivePlayer(peopleId, peopleName){
 
 	if( peopleId=='quickNew' )
@@ -197,8 +202,10 @@ function setPlayerResult(peopleId, peopleName, eventPosition){
 
 			$('eventLivePeopleNameResult-'+eventPositionOld).value         = '';
 			$('peopleIdPosition-'+eventPositionOld).value                  = '';
-			$('peopleIdPrize-'+eventPosition).value                        = $('peopleIdPrize-'+eventPositionOld).value;
-			$('peopleIdPrize-'+eventPositionOld).value                     = '0,00';
+			$('prize-'+eventPosition).value                                = $('prize-'+eventPositionOld).value;
+			$('prize-'+eventPositionOld).value                             = '0,00';
+			$('score-'+eventPosition).value                                = $('score-'+eventPositionOld).value;
+			$('score-'+eventPositionOld).value                             = '0,00';
 			$('eventLiveResultEmailAddressTd-'+eventPositionOld).innerHTML = '';
 		}
 		
@@ -219,6 +226,41 @@ function setPlayerResult(peopleId, peopleName, eventPosition){
 	}
 	
 	var urlAjax = _webRoot+'/eventLive/savePlayerPosition/eventLiveId/'+eventLiveId+'/peopleId/'+peopleId+'/eventPosition/'+eventPosition;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}
+
+function checkEventPositionField(eventPosition){
+	
+	var peopleName = $('eventLivePeopleNameResult-'+eventPosition).value;
+	
+	if( !peopleName )
+		resetEventPosition(eventPosition);
+}
+
+function resetEventPosition(eventPosition){
+	
+	var eventLiveId = $('eventLiveId').value;
+	
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		
+		$('eventLivePeopleNameResult-'+eventPosition).value         = '';
+		$('peopleIdPosition-'+eventPosition).value                  = '';
+		$('prize-'+eventPosition).value                             = '0,00';
+		$('score-'+eventPosition).value                             = '0';
+		$('eventLiveResultEmailAddressTd-'+eventPosition).innerHTML = '';
+	}
+	
+	var failureFunc = function(t){
+		
+		alert('Não foi possível limpar a posição '+eventPosition+' no evento!');
+		
+		if( isDebug() )
+			debug(t.responseText);
+	}
+	
+	var urlAjax = _webRoot+'/eventLive/resetEventPosition/eventLiveId/'+eventLiveId+'/eventPosition/'+eventPosition;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
@@ -258,11 +300,61 @@ function publishEventLiveResult(){
 			debug(t.responseText);
 	}
 	
-	var urlAjax = _webRoot+'/eventLive/savePlayerPosition/eventLiveId/'+eventLiveId+'/peopleId/'+peopleId+'/eventPosition/'+eventPosition;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+	$('eventLiveResultPublish').value = '1';
+	$('eventLiveResultForm').submit();
+	$('eventLiveResultPublish').value = '0';
 }
 
 function getEventLivePlayers(){
 
 	return $('playerCountDiv').innerHTML.replace(/[^0-9]/ig, '')*1;
+}
+
+function loadDefaultBuyin(rankingLiveId){
+	
+	if( !rankingLiveId )
+		return;
+
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		var infoObj = parseInfo(content);
+		
+		$('eventLiveBuyin').value       = toCurrency(infoObj.defaultBuyin);
+		$('eventLiveEntranceFee').value = toCurrency(infoObj.defaultEntranceFee);
+	}
+	
+	var failureFunc = function(t){
+		
+		if( isDebug() )
+			debug(t.responseText);
+	}
+	
+	var urlAjax = _webRoot+'/rankingLive/getInfo/rankingLiveId/'+rankingLiveId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}
+
+function calculateEventLiveResult(){
+
+	return alert('O cálculo de resultados ainda não está disponível');
+	
+	var eventLiveId = $('eventLiveId').value;
+	
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		
+		alert(content);
+	}
+	
+	var failureFunc = function(t){
+		
+		alert('Não foi possível calcular o resultado do evneto!\nPor favor, tente novamente');
+		
+		if( isDebug() )
+			debug(t.responseText);
+	}
+	
+	var urlAjax = _webRoot+'/eventLive/calculateResult/evenLiveId/'+eventLiveId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc, parameters:$('eventLiveResultForm').serialize()});
 }

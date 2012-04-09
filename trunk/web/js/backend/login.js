@@ -6,10 +6,10 @@ function doLogin(){
 
 function handleSuccessLogin(content){
 
-	window.location = _webRoot+'/home';
+	$('loginForm').submit();
 }
 
 function handleFailureLogin(content){
-
+	
 	showDiv('loginErrorMessageDiv');
 }

@@ -258,13 +258,25 @@ a:hover {
 	margin-bottom: 							8px;
 }
 
-#contentArea #mainContent #innerContent .leftContent .leftContentTop {
+#contentArea #mainContent #innerContent .leftContent .leftContentTop,
+#contentArea #mainContent #innerContent .leftContent .leftContentMiddle,
+#contentArea #mainContent #innerContent .leftContent .leftContentBottom {
 
 	position: 								relative;
 	width: 									200px;
 	background: 							#FAFAFA;
-	padding-bottom: 						80px;
 	margin-bottom: 							8px;
+}
+
+
+#contentArea #mainContent #innerContent .leftContent .leftContentTop {
+
+	padding-bottom: 	30px;
+}
+
+#contentArea #mainContent #innerContent .leftContent .leftContentBottom {
+
+	padding-bottom: 	80px;
 }
 
 #contentArea #mainContent #innerContent .leftContent #facebookFrame {

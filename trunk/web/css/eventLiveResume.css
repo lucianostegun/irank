@@ -1,0 +1,261 @@
+.eventLiveResume {
+	
+	height: 		590px;
+	margin-top: 	20px
+}
+
+.eventLiveResume.logged {
+
+	display: block;
+}
+
+.eventLiveResume #eventLiveResume {
+	
+	position: 			relative;
+	top: 				4px;
+	padding-bottom: 	15px;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList {
+	
+	float: 		left;
+	position: 	relative;
+	left: 		12px;
+	top: 		8px;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList h1 {
+
+	width: 								190px;
+	font-size: 							15px;
+	text-align: 						center;
+	color: 								#337495;
+	border: 							1px solid #337495;
+	border-bottom: 						none;
+	
+	-moz-border-top-left-radius: 		10px;
+	-webkit-border-top-left-radius: 	10px;
+	border-top-left-radius: 			10px;
+	-moz-border-top-right-radius: 		10px;
+	-webkit-border-top-right-radius: 	10px;
+	border-top-right-radius: 			10px;
+	padding: 							4px 5px 3px 5px;
+	margin: 							0 auto;
+	margin-bottom: 						-1px;
+	background: 						#FFFFFF;
+	z-index: 							1;
+	position: 							relative;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList #eventLiveResumeList {
+
+	height: 		530px;
+	overflow: 		hidden;
+	border-top: 	1px solid #337495;
+	padding-top: 	10px;
+	z-index: 		0;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveResumeLoader {
+
+	display: 	none;
+	position: 	absolute;
+	z-index: 	100;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveResumeLoaderArea {
+
+	position: 				absolute;
+	z-index: 				100;
+	width: 					420px;
+	height: 				290px;
+	background: 			#FFFFFF;
+	filter: 				alpha(opacity=80);
+	-moz-opacity: 			0.80;
+	-khtml-opacity: 		0.80;
+	opacity: 				0.80;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveResumeLoaderContent {
+
+	position: 				absolute;
+	z-index: 				101;
+	width: 					420px;
+	text-align: 			center;
+	margin-top: 			90px;
+	font-weight: 			bold;
+	
+}
+
+.eventLiveResume #eventLiveResume #eventLiveResumeLoaderContent img {
+
+	margin-bottom: 	7px
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive {
+
+	width: 			690px;
+	height: 		61px;
+	margin-bottom: 	5px;
+	border: 		1px solid #b5ccd6;
+	padding: 		3px 5px 5px 65px;
+	cursor: 		pointer;
+	
+	-webkit-touch-callout: 	none;
+	-webkit-user-select: 	none;
+	-khtml-user-select: 	none;
+	-moz-user-select: 		none;
+	-ms-user-select: 		none;
+	-o-user-select: 		none;
+	user-select: 			none;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .when {
+
+	clear: 			both;
+	float: 			left;
+	height: 		18px;
+	line-height: 	18px;
+	margin-left: 	10px;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .title {
+
+	clear: 			both;
+	float: 			left;
+	font-weight: 	bold;
+	font-size: 		14px;
+	margin-left: 	10px;
+	height: 		25px;
+	line-height: 	25px;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .where {
+
+	float: 			left;
+	margin-left: 	10px;
+	height: 		18px;
+	line-height: 	18px;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .ranking {
+
+	float: 			left;
+	margin-left: 	5px;
+	height: 		18px;
+	line-height: 	18px;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch {
+
+	position: 				relative;
+	top: 					-10px;
+	left: 					100px;
+	clear: 					both;
+	margin-bottom: 			-3px;
+	float: 					left;
+	border: 				1px solid #b5ccd6;
+	-moz-border-radius: 	3px;
+	-webkit-border-radius: 	3px;
+	border-radius: 			3px;
+	padding-left: 			5px;
+	padding-right: 			5px;
+	padding-bottom: 		2px;
+	background: 			#DEEAF0;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence {
+
+	position: 				relative;
+	top: 					-10px;
+	margin-bottom: 			-3px;
+	float: 					right;
+	border: 				1px solid #b5ccd6;
+	-moz-border-radius: 	3px;
+	-webkit-border-radius: 	3px;
+	border-radius: 			3px;
+	padding-left: 			19px;
+	padding-bottom: 		2px;
+	background: 			#FFFFFF url('/images/home/presenceToYes.png') 3px center no-repeat;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence.hover,
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence.yes.hover {
+
+	background-color: 	#FFFFFF
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence.yes {
+
+	background: 	#FFFFFF url('/images/home/presenceYes.png') 3px center no-repeat;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence a {
+
+	margin-left: 		5px;
+	margin-right: 		5px;
+	color: 				#5C6377;
+	text-decoration: 	none;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence a.yes {
+
+	margin-left: 	5px;
+	margin-right: 	5px;
+	color: 			#44780E;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive.next {
+
+	background: 	#D2E3EA url('/images/home/calendar.png') 2px center no-repeat;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive.next.hover,
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.hover,
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.pending.hover {
+
+	background-color: 	#E8F3F7;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous {
+
+	background: 	#DEEAEF url('/images/home/podium.png') 2px center no-repeat;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.pending {
+
+	background: 	#DEEAEF url('/images/home/podiumAlert.png') 2px center no-repeat;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive.noEvent {
+
+	border: 		1px solid #D0D0D0;
+    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);	
+}
+
+.eventLiveResume #eventLiveResume .loadEvents {
+
+	clear: 			both;
+	position: 		relative;
+	top: 			8px;
+	left: 			12px;
+	width: 			745px;
+	padding: 		2px 10px 2px 5px;
+	cursor: 		pointer;
+	text-align: 	right;
+	border: 		1px solid #DADADA;
+	
+	
+	background: 	#F0F0F0;
+    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);
+}
+
+.eventLiveResume #eventLiveResume .loadEvents a {
+
+	color: 			#5C6377;
+	font-size: 		12px;
+}

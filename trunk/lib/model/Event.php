@@ -45,7 +45,6 @@ class Event extends BaseEvent
         	
             Log::quickLogError('event', $this->getPrimaryKey(), $e);
         }
-        
     }
 	
 	public function delete($con=null){

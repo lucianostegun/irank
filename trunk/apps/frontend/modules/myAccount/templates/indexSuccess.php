@@ -20,11 +20,11 @@
 	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 //	$dhtmlxTabBarObj->setSelectedTabBarId($selectedTab);
-	$dhtmlxTabBarObj->addTab('schedule', 'Agenda', 'myAccount/form/schedule', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->addTab('main', __('tab.main'), 'myAccount/form/main', array('userSiteObj'=>$userSiteObj));
 //	$dhtmlxTabBarObj->addTab('profile', 'Perfil', 'myAccount/form/profile', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->addTab('options', 'Opções', 'myAccount/form/options', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->addTab('email', 'Notificações', 'myAccount/form/email', array('userSiteObj'=>$userSiteObj));
+	$dhtmlxTabBarObj->addTab('schedule', 'Agenda', 'myAccount/form/schedule', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 ?>

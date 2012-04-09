@@ -37,4 +37,20 @@ class City extends BaseCity
 
 		return options_for_select( $optionList, $defaultValue );
 	}
+	
+	public static function getQuickCity($cityName, $stateId){
+		
+		$cityName = trim($cityName);
+		
+		$orderSeq = Util::executeOne('SELECT MAX(order_seq) FROM city WHERE state_id='.$stateId);
+		$orderSeq++;
+		
+		$cityObj = new City();
+		$cityObj->setStateId($stateId);
+		$cityObj->setCityName($cityName);
+		$cityObj->setOrderSeq($orderSeq);
+		$cityObj->save();
+		
+		return $cityObj;
+	}
 }

@@ -4,6 +4,7 @@
 	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList();
 	
 	$eventPosition = 0;
+	$eventLiveId   = $eventLiveObj->getId();
 	$eventPlayerPositionList = array();
 	foreach($eventLivePlayerObjList as $eventLivePlayerObj)
 		$eventPlayerPositionList[$eventLivePlayerObj->getEventPosition()] = $eventLivePlayerObj;
@@ -19,12 +20,14 @@
 			$peopleName   = $peopleObj->getFullName();
 			$emailAddress = $peopleObj->getEmailAddress();
 			$prize        = $eventLivePlayerObj->getPrize();
+			$score        = $eventLivePlayerObj->getScore();
 		}else{
 			
 			$peopleId     = null;
 			$peopleName   = null;
 			$emailAddress = null;
 			$prize        = 0;
+			$score        = 0;
 		}
 	
 		$class = ($eventPosition%2==0?'rd':'rl odd');
@@ -35,24 +38,18 @@
 	<td>
 		<?php
 		    echo input_hidden_tag('peopleIdPosition-'.$eventPosition, $peopleId);
-			echo input_tag('peopleName', $peopleName, array('autocomplete' => 'off', 'size'=>40, 'id'=>'eventLivePeopleNameResult-'.$eventPosition));
+			echo input_tag('peopleName', $peopleName, array('autocomplete'=>'off', 'onblur'=>'checkEventPositionField('.$eventPosition.')', 'size'=>40, 'id'=>'eventLivePeopleNameResult-'.$eventPosition));
 		?>
 		<div id="eventLivePeopleNameResult-<?php echo $eventPosition ?>_auto_complete" class="auto_complete"></div>
 	</td>
-	<td class="prize"><?php echo input_tag('prize-'.$eventPosition, Util::formatFloat($prize, true), array('size'=>6)); ?></td>
+	<td class="prize"><?php echo input_tag('prize-'.$eventPosition, Util::formatFloat($prize, true), array('maxlength'=>7)); ?></td>
+	<td class="score"><?php echo input_tag('score-'.$eventPosition, Util::formatFloat($score, true), array('maxlength'=>6)); ?></td>
 	<td class="emailAddress" id="eventLiveResultEmailAddressTd-<?php echo $eventPosition ?>"><?php echo $emailAddress ?></td>
 </tr>
+<?php endfor; ?>
+<script type="text/javascript">
 <?php
-	endfor;
-	
-	echo "<script type=\"text/javascript\">";
-	
-	for($eventPosition=1; $eventPosition <= $players; $eventPosition++):
-	
-	echo "//<![CDATA[
-	var autoComplete{$eventPosition}Obj = new Ajax.Autocompleter('eventLivePeopleNameResult-$eventPosition', 'eventLivePeopleNameResult-{$eventPosition}_auto_complete', '/backend_dev.php/eventLive/autoComplete/instanceName/player/eventLiveId/95', {afterUpdateElement:function (inputField, selectedItem){ handleSelectEventLivePlayerResult(selectedItem.id, inputField.value, $eventPosition) }, callback:function(element, value) { return  value+'?&peopleName='+\$(\"eventLivePeopleNameResult-$eventPosition\").value}});
-	//]]>\n\n";
-	
-	endfor;
+	for($eventPosition=1; $eventPosition <= $players; $eventPosition++)
+		echo "autoComplete{$eventPosition}Obj = new Ajax.Autocompleter('eventLivePeopleNameResult-{$eventPosition}', 'eventLivePeopleNameResult-{$eventPosition}_auto_complete', _webRoot+'/eventLive/autoComplete/instanceName/player/eventLiveId/$eventLiveId', {afterUpdateElement:function (inputField, selectedItem){ handleSelectEventLivePlayerResult(selectedItem.id, inputField.value, {$eventPosition}) }, callback:function(element, value) { return  value+'?&peopleName='+\$('eventLivePeopleNameResult-{$eventPosition}').value}});\n"
 ?>
 </script>
