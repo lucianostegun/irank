@@ -650,7 +650,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.noRankings</source>
-				<target>Você não está inscrito em nenhum ranking</target>
+				<target>Nenhum evento encontrado para os parâmetros pesquisados</target>
 			</trans-unit>
 			
 			<trans-unit>
@@ -828,8 +828,8 @@
 			<trans-unit>
 				<source>ranking.eventsTab.noEvents</source>
 				<target>
-				Este ranking ainda não possui eventos cadastrados.&lt;br/&gt;&lt;br/&gt;
-				&lt;b&gt;%link%&lt;/b&gt; para cadastrar um novo evento.
+				&lt;br/&gt;Este ranking ainda não possui eventos cadastrados.&lt;br/&gt;
+				&lt;b&gt;%link%&lt;/b&gt; para cadastrar um novo evento.&lt;br/&gt;&lt;br/&gt;
 				</target>
 			</trans-unit>
 			
@@ -889,7 +889,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.noEvents</source>
-				<target>Não existem eventos disponíveis para seus rankings</target>
+				<target>Nenhum evento encontrado para os parâmetros pesquisados</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.hint.eventComment</source>
@@ -2209,6 +2209,10 @@
 			<trans-unit>
 				<source>ranking.scoreRecalculateConfirm</source>
 				<target>O modelo de pontuação foi modificado!\nDeseja recalcular o resultado de todos os eventos anteriores para o novo modelo de pontuação?</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.searchError</source>
+				<target>Ocorreu um erro ao pesquisar os rankings.</target>
 			</trans-unit>
 			
 		</body>

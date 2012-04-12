@@ -86,17 +86,6 @@ function loadMoreEvents(loadByDate){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
-function getCalendarDetails(dayId, eventDate){
-	
-	resetEventResume();
-	_currentResumeEventsOffset = 0;	
-	_eventResumeCalendarDate   = eventDate;
-	
-	showDiv('eventResumeLoader');
-	
-	loadMoreEvents(true);
-}
-
 function resetEventResume(){
 	
 	var currentContainerDiv = 'eventListOffset'+_currentResumeEventsOffset;

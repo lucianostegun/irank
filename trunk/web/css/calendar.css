@@ -52,19 +52,24 @@
 	cursor: 				pointer;
 }
 
-#eventCalendar .dayGray.hover {
-	
-	background: 			url(/images/home/calendarGrayBgHover.png) no-repeat #FFFFFF;
-	background-position: 	-1px 1px;
-	font-weight: 			normal;
-	color: 					#FFFFFF;
-}
-
 #eventCalendar .dayGray.selected,
 #eventCalendar .dayGray.selected.hover {
 	
 	background: 			url(/images/home/calendarGraySelectedBg.png) no-repeat #FFFFFF;
 	background-position: 	-1px 1px;
+}
+
+#eventCalendar .dayGray.withEvent {
+	
+	background: 			url(/images/home/calendarGrayBgWithEvent.png) no-repeat #FFFFFF;
+	background-position: 	-1px 1px;
+}
+
+#eventCalendar .dayGray.hover {
+	
+	background-position: 	-1px -24px;
+	font-weight: 			normal;
+	color: 					#FFFFFF;
 }
 
 #eventCalendar .day {
@@ -88,10 +93,14 @@
 	cursor: 				pointer;
 }
 
+#eventCalendar .day.withEvent {
+	
+	background: 	url(/images/home/calendarBgWithEvent.png) no-repeat #FFFFFF;
+}
+
 #eventCalendar .day.hover {
 	
-	background: 			url(/images/home/calendarBgHover.png) no-repeat #FFFFFF;
-	background-position: 	-1px 1px;
+	background-position: 	-1px -24px;
 	font-weight: 			normal;
 	color: 					#4C4C66;
 }
@@ -103,6 +112,13 @@
 	background-position: 	-1px 1px;
 	font-weight: 			bold;
 	color: 					#FFFFFF;
+}
+
+#eventCalendar .day.selected.withEvent,
+#eventCalendar .day.selected.withEvent.hover {
+	
+	background: 	url(/images/home/calendarBgWithEventSelected.png) no-repeat #FFFFFF;
+	background-position: 	-1px 1px;
 }
 
 #eventCalendar .dayNumberGray {

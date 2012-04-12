@@ -30,9 +30,8 @@ class rankingActions extends sfActions
 	$this->userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
   	$this->innerObj    = new Ranking();
   	
-  	$suppressOld = $request->getParameter('so', '1');
-  	
-  	$this->suppressOld = ($suppressOld=='1'?true:false);
+	$this->criteria = new Criteria();
+	$this->criteria->addAnd( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
   }
   
   public function executeNew($request){
@@ -408,6 +407,56 @@ class rankingActions extends sfActions
 	return $this->redirect('ranking/index');
   }
   
+  public function executeSearch($request){
+  	
+  	$renderize        = $request->getParameter('isIE');
+  	$rankingName      = $request->getParameter('rankingName');
+  	$rankingDateStart = $request->getParameter('dateStart');
+  	$rankingDateEnd   = $request->getParameter('dateEnd');
+  	$status           = $request->getParameter('status');
+  	$eventsStart      = $request->getParameter('eventsStart');
+  	$eventsEnd        = $request->getParameter('eventsEnd');
+  	$playersStart     = $request->getParameter('playersStart');
+  	$playersEnd       = $request->getParameter('playersEnd');
+  	
+  	if( !Validate::validateDate($rankingDateStart) ) $rankingDateStart = null;
+  	if( !Validate::validateDate($rankingDateEnd) ) $rankingDateEnd = null;
+  	
+  	$userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
+
+  	$criteria = new Criteria();
+  	if( $rankingName ) $criteria->addAnd( RankingPeer::RANKING_NAME, '%'.str_replace(' ', '%', $rankingName).'%', Criteria::ILIKE );
+  	if( $rankingDateStart ) $criteria->addAnd( RankingPeer::START_DATE, Util::formatDate($rankingDateStart), Criteria::GREATER_EQUAL );
+  	if( $rankingDateEnd ) $criteria->addAnd( RankingPeer::FINISH_DATE, Util::formatDate($rankingDateEnd), Criteria::LESS_EQUAL );
+  	if( $eventsStart ) $criteria->addAnd( RankingPeer::EVENTS, $eventsStart, Criteria::GREATER_EQUAL );
+  	if( $eventsEnd ) $criteria->addAnd( RankingPeer::EVENTS, $eventsEnd, Criteria::LESS_EQUAL );
+  	if( $playersStart ) $criteria->addAnd( RankingPeer::PLAYERS, $playersStart, Criteria::GREATER_EQUAL );
+  	if( $playersEnd ) $criteria->addAnd( RankingPeer::PLAYERS, $playersEnd, Criteria::LESS_EQUAL );
+  	
+  	switch( $status ){
+  		case 'active':
+  		default:
+  			$criteria->addAnd( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+			break;
+  		case 'old':
+  			$criteria->addAnd( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::LESS_THAN );
+			break;
+  		case 'all':
+			break;
+  	}
+
+	if( $renderize ){
+		
+		$this->criteria = $criteria;
+		$this->setTemplate('index');
+	}else{
+	  	
+	  	sfConfig::set('sf_web_debug', false);
+		sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+		return $this->renderText(get_partial('ranking/include/search', array('criteria'=>$criteria, 'userSiteObj'=>$userSiteObj)));
+	}  	
+  }
+  
   public function executeJavascript($request){
   	
   	Util::getHelper('i18n');
@@ -425,6 +474,7 @@ class rankingActions extends sfActions
   	echo 'var i18n_ranking_deleteError                  = "'.__('ranking.deleteError').'";'.$nl;
   	echo 'var i18n_ranking_importSuccessMessage         = "'.__('ranking.importSuccessMessage').'";'.$nl;
   	echo 'var i18n_rankingScoreRecalculateConfirm       = "'.__('ranking.scoreRecalculateConfirm').'";'.$nl;
+  	echo 'var i18n_ranking_searchError                  = "'.__('ranking.searchError').'";'.$nl;
   	exit;
   }
   

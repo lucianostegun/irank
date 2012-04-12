@@ -1,8 +1,5 @@
 <?php
 	$eventLiveObjList = EventLive::getList();
-	$eventLiveObjList = array_merge($eventLiveObjList, $eventLiveObjList);
-	$eventLiveObjList = array_merge($eventLiveObjList, $eventLiveObjList);
-	$eventLiveObjList = array_merge($eventLiveObjList, $eventLiveObjList);
 	if( empty($eventLiveObjList) )
 		include_partial('home/resume/event/noEvent');
 	else{

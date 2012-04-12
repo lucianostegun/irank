@@ -1,4 +1,4 @@
 all:
 
-  stylesheets:    []
-  javascripts:    [mask, backend/rankingLive, backend/paginator]
+  stylesheets:    [backend/form, backend/rankingLive]
+  javascripts:    [mask, backend/plugins/tables/datatable, backend/plugins/tables/tablesort.min, backend/plugins/tables/resizable.min, backend/plugins/forms/uniform, backend/rankingLive]

@@ -11,6 +11,7 @@
 <div id="leftMenu">
 	<div class="item<?php echo ($moduleName=='ranking'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('ranking', 'index', false, false, false, event)">Meus rankings</div><div class="iconRight<?php echo ($moduleName=='ranking'?' active':'') ?>" onclick="goToPage('ranking', 'new', false, false, false, event)" title="Criar novo ranking"><?php echo image_tag('layout/leftMenu/add') ?></div></div>
 	<?php if($moduleName=='ranking' && $actionName!='index') include_partial('ranking/include/leftMenu', array('rankingObj'=>$innerObj, 'actionName'=>$actionName)) ?>
+	<?php if($moduleName=='ranking' && $actionName=='index') include_partial('ranking/include/leftFilter', array()) ?>
 	
 	<div class="item<?php echo ($moduleName=='event'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('event', 'index', false, false, false, event)">Meus eventos</div><div class="iconRight<?php echo ($moduleName=='event'?' active':'') ?>" onclick="goToPage('event', 'new', false, false, false, event)" title="Criar novo evento padrão"><?php echo image_tag('layout/leftMenu/add') ?></div></div>
 	<?php if($moduleName=='event' && $actionName!='index') include_partial('event/include/leftMenu', array('eventObj'=>$innerObj, 'actionName'=>$actionName)) ?>

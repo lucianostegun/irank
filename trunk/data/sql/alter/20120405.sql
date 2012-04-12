@@ -1,1 +1,0 @@
-ALTER TABLE content_movie_preview RENAME TO content_movie_preview_log;

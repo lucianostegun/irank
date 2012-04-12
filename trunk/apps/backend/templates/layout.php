@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <?php
 include_http_metas();
@@ -7,193 +7,218 @@ include_metas();
 include_title();
 
 $iRankAdmin = $sf_user->hasCredential('iRankAdmin');
-$iRankSite = $sf_user->hasCredential('iRankClub');
+$iRankSite  = $sf_user->hasCredential('iRankClub');
 $messages   = 0;
 $peopleName = $sf_user->getAttribute(($messages?'firstName':'fullName'));
 $moduleName = $sf_context->getModuleName();
+$actionName = $sf_context->getActionName();
 ?>
-
-	<!--[if lt IE 9]>
-	<link rel="stylesheet" href="/css/backend/ie.css" type="text/css" media="screen" />
-	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
 </head>
 
-<script type="text/javascript">
-
-	var _ModuleName = '<?php echo $moduleName ?>';
-
-	jQuery.noConflict();
-	
-	jQuery(document).ready(function() 
-    	{ 
-      	  jQuery(".tablesorter").tablesorter(); 
-   	 } 
-	);
-	
-	jQuery(document).ready(function() {
-
-		//When page loads...
-		jQuery(".tab_content").hide(); //Hide all content
-		jQuery("ul.tabs li:first").addClass("active").show(); //Activate first tab
-		jQuery(".tab_content:first").show(); //Show first tab content
-	
-		//On Click Event
-		jQuery("ul.tabs li").click(function() {
-	
-			jQuery("ul.tabs li").removeClass("active"); //Remove any "active" class
-			jQuery(this).addClass("active"); //Add "active" class to selected tab
-			jQuery(".tab_content").hide(); //Hide all tab content
-	
-			var activeTab = jQuery(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
-			jQuery(activeTab).fadeIn(); //Fade in the active ID content
-			return false;
-		});
-	
-	});
-
-    jQuery(function(){
-        jQuery('.column').equalHeight();
-    });
-</script>
-
 <body>
-	<div id="debugDiv"></div>
-	<header id="header">
-		<hgroup>
-			<h1 class="site_title"><?php echo link_to(image_tag('backend/logo'), 'home/index') ?></h1>
-			<h2 class="section_title">Resumo geral</h2>
-			<div class="btn_view_site"><?php echo link_to('desconectar', 'login/logout') ?></div>
-		</hgroup>
-	</header> <!-- end of header bar -->
-	
-	<section id="secondary_bar">
-		<div class="user">
-			<p><?php echo $peopleName ?> 
-			<?php
-				if( $messages )
-					echo '('.link_to(sprintf('%d Mensage%s', $messages, ($messages==1?'m':'ns')), 'messages/index').')';
-			?></p>
-			<!-- <a class="logout_user" href="#" title="Logout">Logout</a> -->
-		</div>
-		<div class="breadcrumbs_container">
-			<article class="breadcrumbs">
-			<?php
-				$pathList = (isset($pathList)?$pathList:array());
-				echo link_to('Home', 'home/index');
-				
-				$key = 0;
-				foreach($pathList as $pathName=>$pathLink){
-					
-					$key++;
-					
-					echo '<div class="breadcrumb_divider"></div>';
-					echo link_to($pathName, $pathLink, array('class'=>($key==count($pathList)?'last':''), 'id'=>($key==count($pathList)?'lastPathName':'')));
-				}
-			?>
-			</article>
-		</div>
-		<?php if( $moduleName!='home' ): ?>
-		<div class="toolbar" style="float: right; padding: 5px 0px; text-align: right">
-			<?php
-				$hiddenToolbarList = isset($hiddenToolbarList)?$hiddenToolbarList:array();
-				
-				if( !in_array('new', $hiddenToolbarList) )
-					echo button_tag('toolbarNew', 'Novo', array('image'=>'add', 'onclick'=>'goToNew(event)'));
-				
-				if( $actionName!='index' || $moduleName=='controlPanel' ){
-					
-					if( !in_array('save', $hiddenToolbarList) )
-						echo button_tag('toolbarSave', 'Salvar', array('image'=>'save', 'onclick'=>'doSaveMain(false, event)'));
-					
-					if( !in_array('cancel', $hiddenToolbarList) )
-						echo button_tag('toolbarCancel', 'Cancelar', array('image'=>'list', 'onclick'=>'goToList(event)'));
-				}else{
-					
-					if( !in_array('delete', $hiddenToolbarList) )
-						echo button_tag('toolbarDelete', 'Excluir', array('image'=>'delete', 'onclick'=>'doDeleteRecords()'));
-				}
-			?>
-		</div>
-		<?php endif; ?>
-	</section><!-- end of secondary bar -->
-	
-	<aside id="sidebar" class="column">
-		<form class="quick_search">
-			<input type="text" value="Quick Search" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;">
-		</form>
-		<hr/>
-		<h3>Clubes</h3>
-		<ul class="toggle <?php echo ($moduleName=='club'?'visible':'hidden') ?>">
-		<?php if( $iRankAdmin ): ?>
-			<li class="icn_new_article"><?php echo link_to('Novo clube', 'club/new') ?></li>
-		<?php endif; ?>
-			<li class="icn_categories"><?php echo link_to('Lista de clubes', 'club/index') ?></li>
-		</ul>
-		<?php if( $iRankAdmin ): ?>
-		<h3>Eventos - Home</h3>
-		<ul class="toggle <?php echo ($moduleName=='event'?'visible':'hidden') ?>">
-			<li class="icn_new_article"><?php echo link_to('Novo evento', 'eventLive/new') ?></li>
-			<li class="icn_categories"><?php echo link_to('Lista de eventos', 'eventLive/index') ?></li>
-		</ul>
-		<?php endif; ?>
-		<h3>Eventos - Live</h3>
-		<ul class="toggle <?php echo ($moduleName=='eventLive'?'visible':'hidden') ?>">
-			<li class="icn_new_article"><?php echo link_to('Novo evento', 'eventLive/new') ?></li>
-			<li class="icn_categories"><?php echo link_to('Lista de eventos', 'eventLive/index') ?></li>
-			<li class="icn_tags"><?php echo link_to('Templates', 'eventLive/templates') ?></li>
-		</ul>
-		<?php if( $iRankAdmin ): ?>
-		<h3>Rankings - Home</h3>
-		<ul class="toggle <?php echo ($moduleName=='ranking'?'visible':'hidden') ?>">
-			<li class="icn_new_article"><a href="#">Novo ranking</a></li>
-			<li class="icn_categories"><a href="#">Lista de rankings</a></li>
-		</ul>
-		<?php endif; ?>
-		<h3>Rankings - Live</h3>
-		<ul class="toggle <?php echo ($moduleName=='rankingLive'?'visible':'hidden') ?>">
-			<li class="icn_new_article"><?php echo link_to('Novo ranking', 'rankingLive/new') ?></li>
-			<li class="icn_categories"><?php echo link_to('Lista de rankings', 'rankingLive/index') ?></li>
-		</ul>
-		<?php if( $iRankAdmin ): ?>
-		<h3>Usuários</h3>
-		<ul class="toggle <?php echo ($moduleName=='userSite'?'visible':'hidden') ?>">
-			<li class="icn_add_user"><?php echo link_to('Novo usuário', 'userSite/new') ?></li>
-			<li class="icn_view_users"><?php echo link_to('Lista de usuários', 'userSite/index') ?></li>
-		</ul>
-		<h3>Media</h3>
-		<ul class="toggle <?php echo ($moduleName=='media'?'visible':'hidden') ?>">
-			<li class="icn_folder"><a href="#">File Manager</a></li>
-			<li class="icn_photo"><a href="#">Gallery</a></li>
-			<li class="icn_audio"><a href="#">Audio</a></li>
-			<li class="icn_video"><a href="#">Video</a></li>
-		</ul>
-		<?php endif; ?>
-		<h3>Admin</h3>
-		<ul class="toggle visible">
-		<?php if( $iRankAdmin ): ?>
-			<li class="icn_add_user"><?php echo link_to('Novo usuário', 'userAdmin/new') ?></li>
-			<li class="icn_view_users"><?php echo link_to('Lista de usuários', 'userAdmin/index') ?></li>
-			<br/>		
-			<li class="icn_settings"><?php echo link_to('Painel de controle', 'controlPanel/index') ?></li>
-			<li class="icn_security"><a href="#">Security</a></li>
-		<?php endif; ?>
-			<li class="icn_profile"><a href="#">Meus dados</a></li>
-		</ul>
-		<br/>
-		
-		<footer>
-			<hr />
-			<p><strong>Copyright &copy; 2011 Website Admin</strong></p>
-			<p>Theme by <a href="http://www.medialoot.com" target="_blank">MediaLoot</a></p>
-		</footer>
-	</aside><!-- end of sidebar -->
-	
-	<section id="main" class="column">
-		
-	<?php echo $sf_data->getRaw('sf_content') ?>
-		
-	</section>
-</body>
 
+<!-- Left side content -->
+<div id="leftSide">
+    <div class="logo"><?php echo link_to(image_tag('backend/logo'), 'home/index', array('title'=>'Voltar para a página inicial')) ?></div>
+    
+    <div class="sidebarSep mt0"></div>
+    
+    <!-- Search widget -->
+    <form action="" class="sidebarSearch">
+
+        <input type="text" name="search" placeholder="search..." id="ac" />
+        <input type="submit" value="" />
+    </form>
+    
+    <div class="sidebarSep"></div>
+
+    <!-- General balance widget -->
+    <div class="genBalance">
+        <a href="#" title="" class="amount">
+            <span>General balance:</span>
+
+            <span class="balanceAmount">$10,900.36</span>
+        </a>
+        <a href="#" title="" class="amChanges">
+            <strong class="sPositive">+0.6%</strong>
+        </a>
+    </div>
+    
+    <!-- Next update progress widget -->
+    <div class="nextUpdate">
+
+        <ul>
+            <li>Next update in:</li>
+            <li>23 hrs 14 min</li>
+        </ul>
+        <div class="pWrapper"><div class="progressG" title="78%"></div></div>
+    </div>
+    
+    <div class="sidebarSep"></div>
+    
+    <!-- Left navigation -->
+
+    <ul id="menu" class="nav">
+        <li class="dash"><?php echo link_to('<span>Resumo geral</span>', 'home/index', array('class'=>($moduleName=='home'?'active':''))) ?></li>
+        <li class="ranking"><a href="javascript:void(0)" title="" class="<?php echo ($moduleName=='rankingLive'?'active':'exp') ?>"><span>Rankings</span><strong>2</strong></a>
+            <ul class="sub">
+                <li><?php echo link_to('Novo ranking', 'rankingLive/new') ?></li>
+                <li><?php echo link_to('Listar rankings', 'rankingLive/index', array('class'=>'last')) ?></li>
+            </ul>
+        </li>
+        <li class="charts"><a href="charts.html" title=""><span>Statistics and charts</span></a></li>
+        <li class="ui"><a href="ui_elements.html" title=""><span>Interface elements</span></a></li>
+        <li class="tables"><a href="tables.html" title="" class="exp"><span>Tables</span><strong>3</strong></a>
+
+            <ul class="sub">
+                <li><a href="table_static.html" title="">Static tables</a></li>
+                <li><a href="table_dynamic.html" title="">Dynamic table</a></li>
+                <li class="last"><a href="table_sortable_resizable.html" title="">Sortable &amp; resizable tables</a></li>
+            </ul>
+        </li>
+
+        <li class="widgets"><a href="#" title="" class="exp"><span>Widgets and grid</span><strong>2</strong></a>
+            <ul class="sub">
+                <li><a href="widgets.html" title="">Widgets</a></li>
+                <li class="last"><a href="grid.html" title="">Grid</a></li>
+            </ul>
+        </li>
+        <li class="errors"><a href="#" title="" class="exp"><span>Error pages</span><strong>6</strong></a>
+
+            <ul class="sub">
+                <li><a href="403.html" title="">403 page</a></li>
+                <li><a href="404.html" title="">404 page</a></li>
+                <li><a href="405.html" title="">405 page</a></li>
+                <li><a href="500.html" title="">500 page</a></li>
+                <li><a href="503.html" title="">503 page</a></li>
+
+                <li class="last"><a href="offline.html" title="">Website is offline</a></li>
+            </ul>
+        </li>
+        <li class="files"><a href="file_manager.html" title=""><span>File manager</span></a></li>
+        <li class="typo"><a href="#" title="" class="exp"><span>Other pages</span><strong>3</strong></a>
+            <ul class="sub">
+                <li><a href="typography.html" title="">Typography</a></li>
+
+                <li><a href="calendar.html" title="">Calendar</a></li>
+                <li class="last"><a href="gallery.html" title="">Gallery</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+
+<!-- Right side -->
+<div id="rightSide">
+
+    <!-- Top fixed navigation -->
+    <div class="topNav">
+        <div class="wrapper">
+            <div class="welcome"><a href="#" title=""><img src="/images/backend/userPic.png" alt="" /></a><span>Olá, <?php echo $peopleName ?>!</span></div>
+            <div class="userNav">
+                <ul>
+                    <li><a href="#" title=""><img src="/images/backend/icons/topnav/profile.png" alt="" /><span>Profile</span></a></li>
+
+                    <li><a href="#" title=""><img src="/images/backend/icons/topnav/tasks.png" alt="" /><span>Tasks</span></a></li>
+                    <li class="dd"><a title=""><img src="/images/backend/icons/topnav/messages.png" alt="" /><span>Messages</span><span class="numberTop"><?php echo $messages ?></span></a>
+                        <ul class="userDropdown">
+                            <li><a href="#" title="" class="sAdd">new message</a></li>
+                            <li><a href="#" title="" class="sInbox">inbox</a></li>
+                            <li><a href="#" title="" class="sOutbox">outbox</a></li>
+
+                            <li><a href="#" title="" class="sTrash">trash</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" title=""><img src="/images/backend/icons/topnav/settings.png" alt="" /><span>Settings</span></a></li>
+                    <li><?php echo link_to(image_tag('backend/icons/topnav/logout').'<span>Logout</span>', 'login/logout') ?></li>
+                </ul>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+    
+    <!-- Responsive header -->
+    <div class="resp">
+        <div class="respHead">
+            <a href="index.html" title=""><img src="/images/backend/loginLogo.png" alt="" /></a>
+        </div>
+        
+        <div class="cLine"></div>
+
+        <div class="smalldd">
+            <span class="goTo"><img src="/images/backend/icons/light/home.png" alt="" />Dashboard</span>
+            <ul class="smallDropdown">
+                <li><a href="index.html" title=""><img src="/images/backend/icons/light/home.png" alt="" />Dashboard</a></li>
+                <li><a href="charts.html" title=""><img src="/images/backend/icons/light/stats.png" alt="" />Statistics and charts</a></li>
+                <li><a href="#" title="" class="exp"><img src="/images/backend/icons/light/pencil.png" alt="" />Forms stuff<strong>4</strong></a>
+
+                    <ul>
+                        <li><a href="forms.html" title="">Form elements</a></li>
+                        <li><a href="form_validation.html" title="">Validation</a></li>
+                        <li><a href="form_editor.html" title="">WYSIWYG and file uploader</a></li>
+                        <li class="last"><a href="form_wizards.html" title="">Wizards</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="ui_elements.html" title=""><img src="/images/backend/icons/light/users.png" alt="" />Interface elements</a></li>
+                <li><a href="tables.html" title="" class="exp"><img src="/images/backend/icons/light/frames.png" alt="" />Tables<strong>3</strong></a>
+                    <ul>
+                        <li><a href="table_static.html" title="">Static tables</a></li>
+                        <li><a href="table_dynamic.html" title="">Dynamic table</a></li>
+                        <li class="last"><a href="table_sortable_resizable.html" title="">Sortable &amp; resizable tables</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="#" title="" class="exp"><img src="/images/backend/icons/light/fullscreen.png" alt="" />Widgets and grid<strong>2</strong></a>
+                    <ul>
+                        <li><a href="widgets.html" title="">Widgets</a></li>
+                        <li class="last"><a href="grid.html" title="">Grid</a></li>
+                    </ul>
+
+                </li>
+                <li><a href="#" title="" class="exp"><img src="/images/backend/icons/light/alert.png" alt="" />Error pages<strong>6</strong></a>
+                    <ul class="sub">
+                        <li><a href="403.html" title="">403 page</a></li>
+                        <li><a href="404.html" title="">404 page</a></li>
+                        <li><a href="405.html" title="">405 page</a></li>
+
+                        <li><a href="500.html" title="">500 page</a></li>
+                        <li><a href="503.html" title="">503 page</a></li>
+                        <li class="last"><a href="offline.html" title="">Website is offline</a></li>
+                    </ul>
+                </li>
+                <li><a href="file_manager.html" title=""><img src="/images/backend/icons/light/files.png" alt="" />File manager</a></li>
+                <li><a href="#" title="" class="exp"><img src="/images/backend/icons/light/create.png" alt="" />Other pages<strong>3</strong></a>
+
+                    <ul>
+                        <li><a href="typography.html" title="">Typography</a></li>
+                        <li><a href="calendar.html" title="">Calendar</a></li>
+                        <li class="last"><a href="gallery.html" title="">Gallery</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+        <div class="cLine"></div>
+    </div>
+    
+    <div class="<?php echo ($actionName=='error404'?'errorWrapper':'wrapper') ?>">
+    	<!-- Title area -->
+	    <div class="titleArea">
+	       <?php echo $sf_data->getRaw('sf_content') ?> 
+	    </div>
+    </div>
+    
+    <!-- Footer line -->
+    <div id="footer">
+        <div class="wrapper">As usually all rights reserved. And as usually brought to you by <a href="http://themeforest.net/user/Kopyov?ref=kopyov" title="">Eugene Kopyov</a></div>
+
+    </div>
+
+</div>
+
+<div class="clear"></div>
+
+</body>
 </html>

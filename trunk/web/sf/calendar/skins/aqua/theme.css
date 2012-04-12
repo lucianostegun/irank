@@ -20,6 +20,7 @@ div.calendar { position: relative; z-index:1000 }
 .calendar td
 {
   background: url("normal-bg.gif");
+  line-height: 15px;
 }
 
 .calendar {
@@ -29,14 +30,18 @@ div.calendar { position: relative; z-index:1000 }
 /* Header part -- contains navigation buttons and day names. */
 
 .calendar .button { /* "<<", "<", ">", ">>" buttons have this class */
+  
+  display: table-cell;
   text-align: center;    /* They are the navigation buttons */
   padding: 2px;          /* Make the buttons seem like they're pressing */
   background: url("title-bg.gif") repeat-x 0 100%; color: #000;
   font-weight: bold;
+  line-height: 15px;
 }
 
 .calendar .nav {
   font-family: verdana,tahoma,sans-serif;
+  border-top: none;
 }
 
 .calendar .nav div {

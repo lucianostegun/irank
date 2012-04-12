@@ -15,8 +15,6 @@
 		<th style="width: 50px" colspan="3"><?php echo __('Guests') ?></th>
 	</tr>
 	<tbody id="eventListContent">
-	<?php
-			include_partial('event/include/search', array('criteria'=>$criteria));
-	?>
+	<?php include_partial('event/include/search', array('criteria'=>$criteria)); ?>
 	</tbody>
 </table>

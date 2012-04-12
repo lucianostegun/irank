@@ -40,6 +40,11 @@ class homeActions extends sfActions
 
 	return $this->renderText(get_partial('home/resume/events'));
   }
+
+  public function executeGetResumeChart($request){
+
+    $this->peopleId = $this->getUser()->getAttribute('peopleId');
+  }
   
   public function executeChangeLanguage($request){
 	

@@ -10,25 +10,23 @@
 class loginActions extends sfActions
 {
 
-  public function preExecute()
-  {
+  public function preExecute(){
+  	
+  	$actionName = $this->getContext()->getActionName();
+  	if( $actionName!='logout' && $this->getUser()->isAuthenticated() && $this->getUser()->hasCredential('iRankAdmin') )
+  		return $this->redirect('home/index');
   }
 
-  public function executeIndex($request)
-  {
+  public function executeIndex($request){
   	
   }
 
-  public function executeAccessDenied($request)
-  {
+  public function executeAccessDenied($request){
   	
   }
 
   public function executeLogin($request){
   	
-  	if( $this->getUser()->isAuthenticated() && $this->getUser()->hasCredential('iRankAdmin') )
-  		return $this->redirect('home/index');
-
 	$username = $request->getParameter('username');
 	$password = $request->getParameter('password');
 	
@@ -62,6 +60,7 @@ class loginActions extends sfActions
 	if( $errorMessage )
 		Util::forceError($errorMessage);
 	
+	echo 'success';
 	exit;
   }
 
@@ -70,6 +69,6 @@ class loginActions extends sfActions
   	
   	UserAdmin::logout();
   	
-  	return $this->forward('login', 'index');
+  	return $this->redirect('login/index');
   }
 }

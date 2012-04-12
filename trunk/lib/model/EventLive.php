@@ -142,6 +142,9 @@ class EventLive extends BaseEventLive
 	
 	public function getPlayerStatus($peopleId, $boolean=false){
 		
+		if( !$peopleId )
+			return 'no';
+		
 		$enabled = Util::executeOne('SELECT enabled FROM event_live_player WHERE event_live_id = '.$this->getId().' AND people_id = '.$peopleId, 'boolean');
 		
 		if( $boolean )
@@ -251,5 +254,47 @@ class EventLive extends BaseEventLive
 	public function toString(){
 	
 		return ($this->getEventShortName()?$this->getEventShortName():$this->getEventName());	
+	}
+	
+	public function getBuyinInfo(){
+		
+		if( $this->getIsFreeroll() )
+			return 'Freeroll';
+			
+		$buyin       = $this->getBuyin();
+		$entranceFee = $this->getEntranceFee();
+		
+		$entranceFee = Util::formatFloat($entranceFee, true);
+		$entranceFee = str_replace(',00', '', $entranceFee);
+
+		$buyin = Util::formatFloat($buyin, true);
+		$buyin = str_replace(',00', '', $buyin);
+		
+		$buyinInfo = '';
+		$buyinInfo = ($entranceFee?$entranceFee.($buyin?'+':''):'');
+		$buyinInfo = $buyinInfo.($buyin?Util::formatFloat($buyin, true):'');
+		
+		return $buyinInfo;
+	}
+	
+	public function getInfo(){
+		
+		$infoList = array();
+		
+		$infoList['eventName']      = $this->getEventName();
+		$infoList['eventDateTime']  = $this->getEventDateTime('d/m/Y H:i');
+		$infoList['weekDay']        = Util::getWeekDay($this->getEventDateTime('d/m/Y'));
+		$infoList['clubName']       = $this->getClub()->toString();
+		$infoList['clubLocation']   = $this->getClub()->getLocation();
+		$infoList['allowedRebuys']  = $this->getAllowedRebuys();
+		$infoList['allowedAddons']  = $this->getAllowedAddons();
+		$infoList['isFreeroll']     = $this->getIsFreeroll();
+		$infoList['entranceFee']    = $this->getEntranceFee();
+		$infoList['buyin']          = $this->getBuyin();
+		$infoList['blindTime']      = $this->getBlindTime('H:i');
+		$infoList['stackChips']     = $this->getStackChips();
+		$infoList['players']        = $this->getPlayers();
+		
+		return $infoList;
 	}
 }

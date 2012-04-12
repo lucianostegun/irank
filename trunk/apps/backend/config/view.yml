@@ -4,14 +4,11 @@ default:
 
   metas:
     title:        iRank - Administração
-    robots:       index, follow
-    description:  symfony project
-    keywords:     symfony, project
+    viewport:     width=device-width; initial-scale=1; maximum-scale=1; user-scalable=no
     language:     pt_BR
 
-  stylesheets:    [backend/layout, backend/form]
-
-  javascripts:    [backend/main, /sf/prototype/js/prototype, backend/jquery-1.5.2.min.js, backend/hideshow, backend/jquery.tablesorter.min.js, backend/jquery.equalHeight.js, util, record, /backend.php/home/javascript/debug/<?php echo Util::isDebug(true) ?>/js, phpEquivalents, backend/util, backend/form, backend/record]
+  stylesheets:    [backend/reset, backend/ui_custom, backend/datatable, backend/main]
+  javascripts:    [/backend.php/home/javascript/js, backend/plugins/jquery.min, backend/plugins/jquery-ui.min, backend/plugins/ui/jquery.collapsible.min, backend/notifications, util, record, backend/record, backend/main]
 
   has_layout:     on
   layout:         layout
