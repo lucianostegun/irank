@@ -1,66 +1,85 @@
-function selectAutoCompleteItem( id, description, instanceName, fieldName, nextFieldId, options ){
+$(function() {
 	
-	hideDiv(instanceName+ucfirst(fieldName)+'FieldDiv');
-	showDiv(instanceName+ucfirst(fieldName)+'RoDiv');
-	showDiv(instanceName+ucfirst(fieldName)+'AutoComplete');
-
-	id = id.replace(fieldName, '');
-
-	if( nextFieldId )
-		$(nextFieldId).focus();
-
-	if( id=='quickNew' ){
-		
-		description = description.replace(/.*: /gi, '');
-		return addQuickNew(instanceName, fieldName, description, options);
-	}
-
-	$(instanceName+ucfirst(fieldName)).value           = id;
-	$(instanceName+ucfirst(fieldName)+'Div').innerHTML = description;
-}
-
-function openAutoComplete(instanceName, fieldName, fieldSearch, reset ){
+	//===== Collapsible elements management =====//
 	
-	showDiv(instanceName+ucfirst(fieldName)+'FieldDiv');
-	hideDiv(instanceName+ucfirst(fieldName)+'RoDiv');
-	hideDiv(instanceName+ucfirst(fieldName)+'AutoComplete');
+	$('.exp').collapsible({
+		defaultOpen: 'current',
+		cookieName: 'navAct',
+		cssOpen: 'active',
+		cssClose: 'inactive',
+		speed: 200
+	});
 	
-	if( reset ){
-		
-		$(instanceName+ucfirst(fieldName)).value = '';
-		$(fieldSearch).value                     = '';
-	}
+	//===== Tabs =====//
 	
-	$(fieldSearch).focus();
-}
-
-function addQuickNew(instanceName, fieldName, quickName, options){
+	$.fn.contentTabs = function(){ 
 	
-	var moduleName = getModuleName();
+		$(this).find(".tab_content").hide(); //Hide all content
+		$(this).find("ul.tabs li:first").addClass("activeTab").show(); //Activate first tab
+		$(this).find(".tab_content:first").show(); //Show first tab content
 	
-	$(instanceName+ucfirst(fieldName)+'Div').innerHTML = quickName;
-
-	$(moduleName+ucfirst(fieldName)).value = quickName;
+		$("ul.tabs li").click(function() {
+			$(this).parent().parent().find("ul.tabs li").removeClass("activeTab"); //Remove any "active" class
+			$(this).addClass("activeTab"); //Add "active" class to selected tab
+			$(this).parent().parent().find(".tab_content").hide(); //Hide all tab content
+			var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+			$(activeTab).show(); //Fade in the active content
+			return false;
+		});
 	
-	var successFunc = function(t){
-
-		var objectId = t.responseText;
-		$(instanceName+ucfirst(fieldName)).value = objectId;
 	};
-		
-	var failureFunc = function(t){
+	$("div[class^='widget']").contentTabs(); //Run function on any div with class name of "Content Tabs"
 
-		var content = t.responseText;
 
-		var errorMessage = parseMessage(content);
 
-		alert('Não foi possível adicionar o novo registro "'+quickName+'"!\nPor favor, tente novamente.');
-		openAutoComplete(instanceName, fieldName, searchFieldName, false )
-		
-		if( !errorMessage && isDebug() )
-			debug(content);
-	};
+	//===== Form elements styling =====//
 	
-	var urlAjax = _webRoot+'/'+options.quickModuleName+'/addQuick/quickName/'+quickName;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
-}
+	$("select, input:checkbox, input:radio, input:file").uniform();
+	
+	
+	/* Tables
+	================================================== */
+
+
+		//===== Check all checbboxes =====//
+		
+		$(".titleIcon input:checkbox").click(function() {
+			var checkedStatus = this.checked;
+			$("#checkAll tbody tr td:first-child input:checkbox").each(function() {
+				this.checked = checkedStatus;
+					if (checkedStatus == this.checked) {
+						$(this).closest('.checker > span').removeClass('checked');
+					}
+					if (this.checked) {
+						$(this).closest('.checker > span').addClass('checked');
+					}
+			});
+		});
+		
+		$('#checkAll tbody tr td:first-child').next('td').css('border-left-color', '#CBCBCB');
+		
+		
+		
+		//===== Resizable columns =====//
+		
+		$("#res, #res1").colResizable({
+			liveDrag:true,
+			draggingClass:"dragging" 
+		});
+		  
+		  
+		  
+		//===== Sortable columns =====//
+		
+		$("table").tablesorter();
+		
+		
+		
+		//===== Dynamic data table =====//
+		
+		oTable = $('.dTable').dataTable({
+			"bJQueryUI": true,
+			"sPaginationType": "full_numbers",
+			"sDom": '<""l>t<"F"fp>'
+		});
+});

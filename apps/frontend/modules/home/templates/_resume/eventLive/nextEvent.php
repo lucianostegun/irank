@@ -13,14 +13,18 @@
 		
 	$eventId = $eventLiveObj->getId();
 ?>
-<div class="eventLive next" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" style="background-image: url('/images/ranking/thumb/<?php echo $eventLiveObj->getRankingLive()->getFileNameLogo() ?>')">
-	<div class="when" onclick="loadEventLive(<?php echo $eventId ?>)"><?php echo Util::getWeekDay($eventLiveObj->getEventDateTime('d/m/Y')).', '.$eventLiveObj->getEventDateTime('d/m/Y H:i') ?></div>
-	<div class="where" onclick="loadEventLive(<?php echo $eventId ?>)"><b>@ <?php echo $eventLiveObj->getClub()->toString() ?></b> - <?php echo $eventLiveObj->getClub()->getLocation() ?></div>
-	<div class="title" onclick="loadEventLive(<?php echo $eventId ?>)"><?php echo $eventLiveObj->getEventName() ?></div>
-	<div class="ranking" onclick="loadEventLive(<?php echo $eventId ?>)"><?php echo ($rankingName?'['.$rankingName.']':'') ?></div>
-	<div class="howMuch" onclick="loadEventLive(<?php echo $eventId ?>)"><b>Buyin:</b> <?php echo $buyin ?></div>
-	<div class="presence <?php echo $status ?>" id="presenceToggler<?php echo $eventId ?>" onmouseover="this.className=this.className.replace('presence', 'presence hover')" onmouseout="this.className=this.className.replace(' hover', '')">
-		<?php echo link_to($toggleLabel, '#toggleMyPresence('.$eventId.', \''.$toggleStatus.'\'); return false', array('class'=>$status)); ?>
+<div class="eventLive next" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="loadEventLive(<?php echo $eventId ?>)">
+	<div class="image"><?php echo image_tag('ranking/thumb/'.$eventLiveObj->getRankingLive()->getFileNameLogo()) ?></div>
+	<div class="eventInfo">
+		<div class="when"><?php echo Util::getWeekDay($eventLiveObj->getEventDateTime('d/m/Y')).', '.$eventLiveObj->getEventDateTime('d/m/Y H:i') ?></div>
+		<div class="where"><b>@ <?php echo $eventLiveObj->getClub()->toString() ?></b> - <?php echo $eventLiveObj->getClub()->getLocation() ?></div>
+		<div class="ranking"><?php echo ($rankingName?' / '.$rankingName:'') ?></div>
+		<div class="title"><?php echo $eventLiveObj->getEventName() ?></div>
+		<div class="howMuch">
+			<label>Buyin:</label><span><?php echo $eventLiveObj->getBuyinInfo() ?></span>
+			<label>Blinds:</label><span><?php echo $eventLiveObj->getBlindTime('H:i') ?></span>
+			<label>Stack:</label><span><?php echo $eventLiveObj->getStackChips() ?></span>
+		</div>
 	</div>
 	<div class="clear"></div>
 </div>

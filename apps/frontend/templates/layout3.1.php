@@ -27,8 +27,8 @@ var _ModuleName = '<?php echo $moduleName ?>';
     			<?php echo link_to(image_tag('layout/logo', array('id'=>'logo')), '/home', array('title'=>'Voltar para a página inicial')) ?>
     			<div class="search">
 					<?php
-						echo form_tag('search/index');
-						echo input_tag('mainSearch', $sf_request->getParameter('mainSearch'), array('placeholder'=>'Pesquisar eventos...'));
+						echo form_tag('search/index', array('id'=>'mainSearchForm'));
+						echo input_tag('mainSearch', $sf_request->getParameter('mainSearch'), array('placeholder'=>'Pesquisar eventos...', 'id'=>'mainSearchKeyWord'));
 					?>
 					</form>
     			</div>

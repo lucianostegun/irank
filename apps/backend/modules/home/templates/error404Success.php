@@ -1,11 +1,6 @@
-<table style="width: 100%">
-	<tr>
-		<td style="text-align: center; padding-top: 100px">
-				<?php echo image_tag('backend/login/logo') ?>
-				<br/><br/>
-				<h1 style="font-size: 24px">404 - Página não encontrada</h1>
-				<?php echo link_to('Voltar para a página anterior', '#javascript.back(-1)') ?><br/>
-				<?php echo link_to('Efetuar o login', 'login/index') ?><br/>
-		</td>
-	</tr>
-</table>
+    <span class="sadEmo"></span>
+    <span class="errorTitle">Huum... Alguma coisa deu errado por aqui :(</span>
+    <span class="errorNum">404</span>
+    <span class="errorDesc">Oops! Desculpe, ocorreu um erro.<br/>Página não encontrada!</span>
+    <?php echo link_to('<span>Voltar para a página anterior</span>', '#javascript.back(-1)', array('class'=>'button dredB')) ?>
+	<?php echo link_to('<span>Efetuar o login</span>', 'login/index', array('class'=>'button blueB')) ?>

@@ -756,9 +756,11 @@ function input_date_tag($name, $value = null, $options = array())
 
   if ($calendar_button_type == 'img')
   {
-  	if( $appName=='backend' )
-  		$style = 'cursor: pointer; vertical-align: middle; margin-top: 4px; margin-left: -3px';
-  	else
+  	if( $appName=='backend' ){
+  		
+  		$style = 'cursor: pointer; vertical-align: middle; margin-top: -2px';
+  		$calendar_button = 'backend/calendarButton';
+  	}else
 	  	$style = 'cursor: pointer; vertical-align: middle; margin-top: -3px';
   	
     $html .= image_tag($calendar_button, array('id'=>$id_calendarButton, 'style'=>$style));

@@ -1,6 +1,6 @@
 .eventLiveResume {
 	
-	height: 		590px;
+	height: 		760px;
 	margin-top: 	20px
 }
 
@@ -49,56 +49,20 @@
 
 .eventLiveResume #eventLiveResume #eventLiveList #eventLiveResumeList {
 
-	height: 		530px;
+	height: 		700px;
 	overflow: 		hidden;
 	border-top: 	1px solid #337495;
 	padding-top: 	10px;
 	z-index: 		0;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveResumeLoader {
-
-	display: 	none;
-	position: 	absolute;
-	z-index: 	100;
-}
-
-.eventLiveResume #eventLiveResume #eventLiveResumeLoaderArea {
-
-	position: 				absolute;
-	z-index: 				100;
-	width: 					420px;
-	height: 				290px;
-	background: 			#FFFFFF;
-	filter: 				alpha(opacity=80);
-	-moz-opacity: 			0.80;
-	-khtml-opacity: 		0.80;
-	opacity: 				0.80;
-}
-
-.eventLiveResume #eventLiveResume #eventLiveResumeLoaderContent {
-
-	position: 				absolute;
-	z-index: 				101;
-	width: 					420px;
-	text-align: 			center;
-	margin-top: 			90px;
-	font-weight: 			bold;
-	
-}
-
-.eventLiveResume #eventLiveResume #eventLiveResumeLoaderContent img {
-
-	margin-bottom: 	7px
-}
-
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive {
 
-	width: 			690px;
+	width: 			752px;
 	height: 		61px;
-	margin-bottom: 	5px;
+	margin-bottom: 	15px;
 	border: 		1px solid #b5ccd6;
-	padding: 		3px 5px 5px 65px;
+	padding: 		3px 5px 5px 3px;
 	cursor: 		pointer;
 	
 	-webkit-touch-callout: 	none;
@@ -110,13 +74,25 @@
 	user-select: 			none;
 }
 
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .image {
+
+	float: 	left;
+	width: 	65px;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .eventInfo {
+
+	float: 	left;
+}
+
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive .when {
 
 	clear: 			both;
 	float: 			left;
 	height: 		18px;
 	line-height: 	18px;
-	margin-left: 	10px;
+	margin-left: 	12px;
+	font-size: 		12px;
 }
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive .title {
@@ -124,18 +100,22 @@
 	clear: 			both;
 	float: 			left;
 	font-weight: 	bold;
-	font-size: 		14px;
-	margin-left: 	10px;
-	height: 		25px;
-	line-height: 	25px;
+	font-size: 		16px;
+	margin-left: 	12px;
+	margin-top: 	2px;
+	height: 		23px;
+	line-height: 	23px;
+	color: 			#303030;
+	text-shadow: 	#F5F5F5 1px 1px;
 }
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive .where {
 
 	float: 			left;
-	margin-left: 	10px;
+	margin-left: 	12px;
 	height: 		18px;
 	line-height: 	18px;
+	font-size: 		12px;
 }
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive .ranking {
@@ -144,31 +124,35 @@
 	margin-left: 	5px;
 	height: 		18px;
 	line-height: 	18px;
+	font-size: 		12px;
 }
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch {
 
-	position: 				relative;
-	top: 					-10px;
-	left: 					100px;
-	clear: 					both;
-	margin-bottom: 			-3px;
-	float: 					left;
-	border: 				1px solid #b5ccd6;
-	-moz-border-radius: 	3px;
-	-webkit-border-radius: 	3px;
-	border-radius: 			3px;
-	padding-left: 			5px;
-	padding-right: 			5px;
-	padding-bottom: 		2px;
-	background: 			#DEEAF0;
+	clear: 			both;
+	margin-left: 	12px;
+	padding-top: 	2px;
+	height: 		18px;
+	line-height: 	18px;
+	font-size: 		12px;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch label {
+
+	font-weight: 	bold;
+	margin-right: 	5px;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch span {
+
+	padding-right: 	20px;
 }
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence {
 
-	position: 				relative;
-	top: 					-10px;
-	margin-bottom: 			-3px;
+	position: 				absolute;
+	top: 					0px;
+	right: 					0px;
 	float: 					right;
 	border: 				1px solid #b5ccd6;
 	-moz-border-radius: 	3px;
@@ -207,14 +191,20 @@
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.next {
 
-	background: 	#D2E3EA url('/images/home/calendar.png') 2px center no-repeat;
+	background: 	#D2E3EA;
+    background: 	-moz-linear-gradient(top, #FFFFFF, #D2E3EA);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#D2E3EA));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#D2E3EA', GradientType=0);
 }
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.next.hover,
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.hover,
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.pending.hover {
 
-	background-color: 	#E8F3F7;
+	background: 	#E8F3F7;
+    background: 	-moz-linear-gradient(top, #FFFFFF, #b9ccd8);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#b9ccd8));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#b9ccd8', GradientType=0);
 }
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous {

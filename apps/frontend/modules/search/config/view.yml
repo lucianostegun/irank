@@ -1,4 +1,4 @@
 all:
 
-  stylesheets:    [table]
-  javascripts:    []
+  stylesheets:    [search]
+  javascripts:    [search]

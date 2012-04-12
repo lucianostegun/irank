@@ -542,3 +542,41 @@ function setInvalidFormula(){
 	disableButton('rankingScoreFormulaSave');
 	hideDiv('rankingFormulaSuccessDiv')
 }
+
+function doRankingSearch(){
+	
+	showIndicator();
+	
+	var form = $('rankingSearchForm');
+	
+	if( isIE() ){
+		
+		$('isIE').value = true;
+		form.submit()
+		return false;
+	}
+
+	var successFunc = function(t){
+
+		var content = t.responseText;
+		$('rankingListContent').innerHTML = content;
+		hideIndicator();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		hideIndicator();
+		
+		var errorMessage = parseMessage(content);
+		alert(i18n_ranking_searchError+(errorMessage?'\n'+errorMessage:''));
+		
+		if( !errorMessage && isDebug() )
+			debug(content);
+	};
+	
+
+	var urlAjax = _webRoot+'/ranking/search';
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize(form)});
+}

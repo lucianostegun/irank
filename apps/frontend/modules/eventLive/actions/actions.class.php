@@ -3,19 +3,22 @@
 class eventLiveActions extends sfActions
 {
 
+  public function preExecute(){
+  	
+  	$this->eventLiveId = $this->getRequestParameter('id');
+  	$this->eventLiveId = $this->getRequestParameter('eventLiveId', $this->eventLiveId);
+  }
+  
   public function executeIndex($request){
   	
   }
 
   public function executeDetails($request){
   	
-  	$eventLiveId = $request->getParameter('id');
-  	$eventLiveId = $request->getParameter('eventLiveId', $eventLiveId);
+  	if( !$this->eventLiveId )
+  		$this->eventLiveId = Util::getDirectUrlId('eventLive/details');
   	
-  	if( !$eventLiveId )
-  		$eventLiveId = Util::getDirectUrlId('eventLive/details');
-  	
-  	$this->eventLiveObj = EventLivePeer::retrieveByPK($eventLiveId);
+  	$this->eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
   	
   	if( !is_object($this->eventLiveObj) )
   		return $this->redirect('eventLive/index');
@@ -23,12 +26,10 @@ class eventLiveActions extends sfActions
 
   public function executeGetTabContent($request){
   	
-  	$eventLiveId = $request->getParameter('id');
-  	$eventLiveId = $request->getParameter('eventLiveId', $eventLiveId);
-  	$tabId       = $request->getParameter('tabId');
-  	$tabId       = strtolower($tabId);
+  	$tabId = $request->getParameter('tabId');
+  	$tabId = strtolower($tabId);
   	
-  	$eventLiveObj = EventLivePeer::retrieveByPK($eventLiveId);
+  	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
   	
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
 
@@ -43,14 +44,13 @@ class eventLiveActions extends sfActions
   	if( !$isAuthenticated || !$iRankSite )
   		Util::forceError('!Você precisa estar logado para confirmar sua presença no evento.');
   		
-  	$peopleId    = $this->getUser()->getAttribute('peopleId');
-  	$eventLiveId = $request->getParameter('eventLiveId');
+  	$peopleId = $this->getUser()->getAttribute('peopleId');
   	
   	$result        = 'success';
   	$errorMessage  = null;
   	$currentStatus = 'no';
   	
-  	$eventLiveObj = EventLivePeer::retrieveByPK($eventLiveId);
+  	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
   	
   	if( is_object($eventLiveObj) ){
 
@@ -60,7 +60,7 @@ class eventLiveActions extends sfActions
 	  		$errorMessage = 'Este evento já foi realizado.';
 	  	}else{
 	  		
-	  		$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($eventLiveId, $peopleId);
+	  		$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($this->eventLiveId, $peopleId);
 	  		$eventLivePlayerObj->togglePresence();
 	  		$currentStatus = $eventLivePlayerObj->getCurrentStatus();
 	  	}
@@ -79,6 +79,13 @@ class eventLiveActions extends sfActions
 	$infoList['errorMessage']  = $errorMessage;
   	
   	echo Util::parseInfo($infoList);
+  	exit;
+  }
+
+  public function executeGetInfo($request){
+  	
+  	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+  	echo Util::parseInfo($eventLiveObj->getInfo());
   	exit;
   }
 }
