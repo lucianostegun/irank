@@ -1,9 +1,9 @@
-default:
+all:
   http_metas:
     content-type: text/html
 
   stylesheets:    [backend/reset, backend/ui_custom, backend/main, backend/login]
-  javascripts:    [backend/login]
+  javascripts:    [-backend/main, backend/login]
 
   has_layout:     on
   layout:         login
