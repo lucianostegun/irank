@@ -1,1 +1,6 @@
 html { height: 100%; background: transparent url(/images/backend/backgrounds/bgLogin.jpg); }
+
+h5 { font-size: 14px; }
+.widget .title h5 { display: none; float: right; font-size: 12px; font-weight: normal; padding: 9px 12px 8px 26px; background: url(/images/ajaxLoader.gif) 0px 11px no-repeat }
+
+#loginErrorPanel { position: absolute; height: 36px; width: 340px}

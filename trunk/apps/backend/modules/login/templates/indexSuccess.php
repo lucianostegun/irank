@@ -4,7 +4,7 @@
         <p><strong>ACESSO NEGADO!</strong>Usuário/Senha inválidos.</p>
     </div>
     <div class="widget">
-        <div class="title"><img src="/images/backend/icons/dark/files.png" alt="" class="titleIcon" /><h6>Identificação</h6></div>
+        <div class="title"><img src="/images/backend/icons/dark/files.png" alt="" class="titleIcon" /><h6 id="headerTitle">Identificação</h6><h5 id="indicator">processando, aguarde...</h5></div>
 		<?php echo form_tag('login/login', array('class'=>'form', 'onsubmit'=>'doLogin(); return false', 'id'=>'loginForm')); ?>
             <fieldset>
                 <div class="formRow">

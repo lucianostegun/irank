@@ -7,12 +7,12 @@ function handleSuccessUserAdminIndex(content){
 		removeTableRows('userAdmin', userAdminIdList);
 	}
 	
-	hideIndicator('userAdmin');
+	hideIndicator();
 }
 
 function handleFailureUserAdminIndex(content){
 	
-	hideIndicator('userAdmin');
+	hideIndicator();
 	var errorMessage = parseMessage(content);
 	
 	alert('Não foi possível excluir um ou mais registros selecionados!'+errorMessage);
@@ -20,10 +20,10 @@ function handleFailureUserAdminIndex(content){
 
 function handleSuccessUserAdmin(content){
 
-	showFormStatusSuccess('userAdmin');
-	clearFormFieldErrors('userAdmin');
+	showFormStatusSuccess();
+	clearFormFieldErrors();
 	
-	mainRecordName = $('userAdminUserAdminName').value;
+	mainRecordName = $('#userAdminUserAdminName').val();
 	updateMainRecordName(mainRecordName, true);
 }
 

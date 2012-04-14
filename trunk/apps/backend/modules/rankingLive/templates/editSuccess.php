@@ -1,16 +1,3 @@
-<?php
-	echo form_tag('rankingLive/save', array('class'=>'form', 'id'=>'rankingLiveForm'));
-
-	$iRankAdmin  = $sf_user->hasCredential('iRankAdmin');
-	$userAdminId = $sf_user->getAttribute('userAdminId');
-	$clubId      = $sf_user->getAttribute('clubId');
-	
-	echo input_hidden_tag('rankingLiveId', $rankingLiveObj->getId());
-	
-	if( !$iRankAdmin && $clubId )
-		echo input_hidden_tag('clubId', $clubId);
-?>
-
     <!-- Fullscreen tabs -->
     <div class="widget">    
         <ul class="tabs">
@@ -20,6 +7,7 @@
 			<?php if( $iRankAdmin ): ?>
             <li><a href="#tab4">Clubes</a></li>
 			<?php endif; ?>
+			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#rankingLiveForm").submit()')); ?>
         </ul>
         <div class="tab_container">
 			<div id="tab1" class="tab_content"><?php include_partial('rankingLive/tab/main', array('rankingLiveObj'=>$rankingLiveObj, 'iRankAdmin'=>$iRankAdmin, 'userAdminId'=>$userAdminId)) ?></div>

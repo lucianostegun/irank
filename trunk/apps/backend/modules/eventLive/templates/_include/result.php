@@ -13,8 +13,8 @@
 	
 		if( array_key_exists($eventPosition, $eventPlayerPositionList) ){
 			
-			$eventPlayerPositionObj = $eventPlayerPositionList[$eventPosition];
-			$peopleObj              = $eventPlayerPositionObj->getPeople();
+			$eventLivePlayerObj = $eventPlayerPositionList[$eventPosition];
+			$peopleObj          = $eventLivePlayerObj->getPeople();
 			
 			$peopleId     = $peopleObj->getId();
 			$peopleName   = $peopleObj->getFullName();

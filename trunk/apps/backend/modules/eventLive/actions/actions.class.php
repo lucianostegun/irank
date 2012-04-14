@@ -244,6 +244,7 @@ class eventLiveActions extends sfActions
 		
 		$peopleId = $request->getParameter('peopleIdPosition-'.$eventPosition);
 		$prize    = $request->getParameter('prize-'.$eventPosition);
+		$score    = $request->getParameter('score-'.$eventPosition);
 		
 		if( !$peopleId )
 			continue;
@@ -251,9 +252,10 @@ class eventLiveActions extends sfActions
 		$lastValidEventPosition = $eventPosition;
 		
 		$prize = Util::formatFloat($prize);
+		$score = Util::formatFloat($score);
 			
 		$peopleIdList[] = $peopleId;
-		Util::executeQuery('UPDATE event_live_player SET event_position = '.$eventPosition.', prize='.$prize.' WHERE event_live_id = '.$this->eventLiveId.' AND people_id='.$peopleId);
+		Util::executeQuery('UPDATE event_live_player SET event_position = '.$eventPosition.', prize='.$prize.', score='.$score.' WHERE event_live_id = '.$this->eventLiveId.' AND people_id='.$peopleId);
 	}
 	
 	Util::executeQuery('UPDATE event_live_player SET event_position = null, prize=0 WHERE event_live_id = '.$this->eventLiveId.' AND people_id NOT IN ('.implode(',', $peopleIdList).')');

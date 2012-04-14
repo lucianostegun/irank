@@ -264,8 +264,14 @@
     $options_html = _parse_attributes($options_html);
 
     $options['form'] = true;
-
-    $options_html['onsubmit'] = remote_function($options).' return false;';
+    
+    $app = Util::getApp();
+	
+	if( $app=='backend' )
+    	$options_html['onsubmit'] = remote_jquery_function($options).' return false;';
+    else
+    	$options_html['onsubmit'] = remote_function($options).' return false;';
+    
     $options_html['action'] = isset($options_html['action']) ? $options_html['action'] : url_for($options['url']);
     $options_html['method'] = isset($options_html['method']) ? $options_html['method'] : 'post';
 
@@ -424,6 +430,58 @@
 
     $function .= '\''.url_for($options['url']).'\'';
     $function .= ', '.$javascript_options.')';
+
+    if (isset($options['before']))
+    {
+      $function = $options['before'].'; '.$function;
+    }
+    if (isset($options['after']))
+    {
+      $function = $function.'; '.$options['after'];
+    }
+    if (isset($options['condition']))
+    {
+      $function = 'if ('.$options['condition'].') { '.$function.'; }';
+    }
+    if (isset($options['confirm']))
+    {
+      $function = "if (window.confirm('".escape_javascript($options['confirm'])."')) { $function; }";
+      if (isset($options['cancel']))
+      {
+        $function = $function.' else { '.$options['cancel'].' }';
+      }
+    }
+
+    return $function.';';
+  }
+
+  function remote_jquery_function($options)
+  {
+
+    $options['url'] = url_for($options['url']);
+    $options['method'] = isset($options['method'])?$options['method']:'POST';
+    $javascript_options = _options_for_jquery($options);
+
+    $update = '';
+    if (isset($options['update']) && is_array($options['update']))
+    {
+      $update = array();
+      if (isset($options['update']['success']))
+      {
+        $update[] = "success:'".$options['update']['success']."'";
+      }
+      if (isset($options['update']['failure']))
+      {
+        $update[] = "error:'".$options['update']['failure']."'";
+      }
+      $update = '{'.join(',', $update).'}';
+    }
+    else if (isset($options['update']))
+    {
+      $update .= "'".$options['update']."'";
+    }
+
+    $function = "$.ajax($javascript_options)";
 
     if (isset($options['before']))
     {
@@ -948,7 +1006,7 @@
     {
       $opts[] = "$key:$value";
     }
-    sort($opts);
+//    sort($opts);
 
     return '{'.join(', ', $opts).'}';
   }
@@ -990,6 +1048,32 @@
     return _options_for_javascript($js_options);
   }
 
+  function _options_for_jquery($options)
+  {
+	
+   	$js_options['url'] = '\''.$options['url'].'\'';
+   	
+    if (isset($options['method'])) 
+    	$js_options['type'] = _method_option_to_s($options['method']);
+    
+	$js_options = array_merge($js_options, _build_callbacks_jquery($options));
+	
+    if (isset($options['form']))
+    {
+      $js_options['data'] = '$(this).serialize()';
+    }
+    else if (isset($options['submit']))
+    {
+      $js_options['data'] = "Form.serialize(document.getElementById('{$options['submit']}'))";
+    }
+    else if (isset($options['with']))
+    {
+      $js_options['data'] = $options['with'];
+    }
+
+    return _options_for_javascript($js_options);
+  }
+
   function _method_option_to_s($method)
   {
     return (is_string($method) && $method[0] != "'") ? "'$method'" : $method;
@@ -1025,6 +1109,26 @@
         $name = 'on'.ucfirst($callback);
         $code = $options[$callback];
         $callbacks[$name] = 'function(request, json){'.$code.'}';
+      }
+    }
+
+    return $callbacks;
+  }
+
+  function _build_callbacks_jquery($options)
+  {
+    $callbacks = array();
+    foreach (get_callbacks() as $callback)
+    {
+      if (isset($options[$callback]))
+      {
+        $name = $callback;
+        
+        if( $callback=='failure' )
+      		$name = 'error';
+      		
+        $code = $options[$callback];
+        $callbacks[$name] = 'function(response){'.$code.'}';
       }
     }
 

@@ -154,7 +154,7 @@ $actionName = $sf_context->getActionName();
                         </ul>
                     </li>
                     <?php if( $iRankAdmin ): ?>
-                    <li><?php echo link_to(image_tag('backend/icons/topnav/settings').'<span>Settings</span>', 'settings/index') ?></li>
+                    <li><?php echo link_to(image_tag('backend/icons/topnav/settings').'<span>Configurações</span>', 'settings/index') ?></li>
                     <?php endif; ?>
                     <li><?php echo link_to(image_tag('backend/icons/topnav/logout').'<span>Logout</span>', 'login/logout') ?></li>
                 </ul>
