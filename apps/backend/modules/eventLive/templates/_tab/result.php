@@ -1,12 +1,14 @@
 <?php
 	$players = $eventLiveObj->getPlayers();
 	
-//	echo form_remote_tag(array(
-//		'url'=>'eventLive/saveResult',
-//		'success'=>'handleSuccessEventLiveResult(request.responseText)',
-//		'failure'=>'handleFailureEventLiveResult(request.responseText)',
-//		'encoding'=>'UTF8',
-//	), array('id'=>'eventLiveResultForm'));
+	echo form_remote_tag(array(
+		'url'=>'eventLive/saveResult',
+		'success'=>'handleSuccessEventLiveResult(response)',
+		'failure'=>'handleFailureEventLiveResult(response.responseText)',
+		'encoding'=>'UTF8',
+	), array('id'=>'eventLiveResultForm'));
+
+//	echo form_tag('eventLive/saveResult', array('id'=>'eventLiveResultForm'));
 	
 	echo input_hidden_tag('eventLiveId', $eventLiveObj->getId(), array('id'=>'eventLiveResultEventId'));
 	echo input_hidden_tag('publish', false, array('id'=>'eventLiveResultPublish'));
@@ -39,3 +41,4 @@
 		</tbody>
 	</table>
 </div>
+</form>

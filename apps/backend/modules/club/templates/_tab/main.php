@@ -1,5 +1,10 @@
 <?php
-	echo form_tag('club/save', array('class'=>'form', 'id'=>'clubForm'));
+	echo form_remote_tag(array(
+		'url'=>'club/save',
+		'success'=>'handleSuccessClub(response)',
+		'failure'=>'handleFailureClub(response.responseText)',
+		),
+		array('class'=>'form', 'id'=>'clubForm'));
 	
 	$clubId = $clubObj->getId();
 	

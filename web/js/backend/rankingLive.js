@@ -7,12 +7,12 @@ function handleSuccessRankingLiveIndex(content){
 		removeTableRows('rankingLive', rankingLiveIdList);
 	}
 	
-	hideIndicator('rankingLive');
+	hideIndicator();
 }
 
 function handleFailureRankingLiveIndex(content){
 	
-	hideIndicator('rankingLive');
+	hideIndicator();
 	var errorMessage = parseMessage(content);
 	
 	alert('Não foi possível excluir um ou mais registros selecionados!'+errorMessage);
@@ -20,10 +20,10 @@ function handleFailureRankingLiveIndex(content){
 
 function handleSuccessRankingLive(content){
 
-	showFormStatusSuccess('rankingLive');
-	clearFormFieldErrors('rankingLive');
+	showFormStatusSuccess();
+	clearFormFieldErrors();
 	
-	mainRecordName = $('rankingLiveRankingName').value;
+	mainRecordName = $('#rankingLiveRankingName').val();
 	updateMainRecordName(mainRecordName, true);
 }
 
@@ -36,16 +36,16 @@ function updateFileUploadStatus(status, fileName){
 	
 	switch(status){
 		case 'success':
-			var rankingLiveId = $('rankingLiveId').value;
+			var rankingLiveId = $('#rankingLiveId').val();
 			
 			var link = '<a href="javascript:void(0)" onclick="goToPage(\'rankingLive\', \'downloadLogo\', \'rankingLiveId\', '+rankingLiveId+')">'+fileName+'</a>'
-			$('rankingLiveFileNameLogoDiv').innerHTML = link;
+			$('rankingLiveFileNameLogoDiv').html(link);
 			break;
 		case 'loading':
-			$('rankingLiveFileNameLogoDiv').innerHTML = 'Carregando arquivo...';
+			$('rankingLiveFileNameLogoDiv').html('Carregando arquivo...');
 			break;
 		case 'error':
-			$('rankingLiveFileNameLogoDiv').innerHTML = 'Não informado';
+			$('rankingLiveFileNameLogoDiv').html('Não informado');
 			alert('Erro ao carregar o arquivo!\nVerifique se o arquivo é uma imagem JPG ou PNG de 90x90 pixels');
 			break;
 	}

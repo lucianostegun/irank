@@ -1,12 +1,12 @@
 function handleSuccessEventLive(content){
 
-	showFormStatusSuccess('eventLive');
-	clearFormFieldErrors('eventLive');
+	showFormStatusSuccess();
+	clearFormFieldErrors();
 	
 	mainRecordName = ($('#eventLiveEventShortName').val()?$('#eventLiveEventShortName').val():$('#eventLiveEventName').val());
 	updateMainRecordName(mainRecordName, true);
 	
-	$('#eventLiveResultForm').onsubmit();
+	$('#eventLiveResultForm').submit();
 }
 
 function handleFailureEventLive(content){
@@ -16,12 +16,12 @@ function handleFailureEventLive(content){
 
 function handleSuccessEventLiveResult(content){
 	
-	hideIndicator('eventLive');
+	hideIndicator();
 }
 
 function handleFailureEventLiveResult(content){
 	
-	hideIndicator('eventLive');
+	hideIndicator();
 }
 
 function replicateEventName(eventName){
@@ -79,14 +79,14 @@ function addQuickNewPlayer(peopleName){
 
 function addPlayer(peopleId){
 	
-	showIndicator('eventLive');
+	showIndicator();
 	
 	var eventLiveId = $('#eventLiveId').val();
 	peopleId        = peopleId.replace(/[^0-9]/gi, '');
 	
 	var successFunc = function(content){
 		
-		hideIndicator('eventLive');
+		hideIndicator();
 		
 		if( content=='noChange' ){
 			
@@ -104,12 +104,12 @@ function addPlayer(peopleId){
 		players = (players+1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s');
 		
 		$('#playerCountDiv').html( players );
-//		$('#playerResultCountDiv').html( (players+1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s'));
+		$('#playerResultCountDiv').html( players );
 	}
 
 	var failureFunc = function(t){
 		
-		hideIndicator('eventLive');
+		hideIndicator();
 		
 		var errorMessage = parseError(t.responseText);
 		errorMessage = (errorMessage?errorMessage:'\nPor favor, tente novamente.');
@@ -128,7 +128,7 @@ function addPlayer(peopleId){
 
 function removePlayer(peopleId){
 	
-	showIndicator('eventLive');
+	showIndicator();
 	
 	var eventLiveId = $('#eventLiveId').val();
 	
@@ -139,16 +139,17 @@ function removePlayer(peopleId){
 		hideDiv('eventLivePeopleIdRow-'+peopleId);
 		
 		var players = getEventLivePlayers();
+		players     = (players-1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s')
 
-		$('#playerCountDiv').html(       (players-1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s'));
-		$('#playerResultCountDiv').html( (players-1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s'));
+		$('#playerCountDiv').html( players );
+		$('#playerResultCountDiv').html( players );
 		
-		hideIndicator('eventLive');
+		hideIndicator();
 	}
 	
 	var failureFunc = function(t){
 		
-		hideIndicator('eventLive');
+		hideIndicator();
 		
 		var errorMessage = parseError(t.responseText);
 		errorMessage = (errorMessage?errorMessage:'\nPor favor, tente novamente.');
@@ -178,7 +179,7 @@ function handleSelectEventLivePlayerResult(peopleId, peopleName, eventPosition){
 
 function setPlayerResult(peopleId, peopleName, eventPosition){
 	
-	showIndicator('eventLive');
+	showIndicator();
 	
 	var eventLiveId = $('#eventLiveId').val();
 	
@@ -206,12 +207,12 @@ function setPlayerResult(peopleId, peopleName, eventPosition){
 			$('#eventLiveResultEmailAddressTd-'+eventPositionOld).html( '' );
 		}
 		
-		hideIndicator('eventLive');
+		hideIndicator();
 	}
 	
 	var failureFunc = function(t){
 		
-		hideIndicator('eventLive');
+		hideIndicator();
 		
 		var errorMessage = parseError(t.responseText);
 		errorMessage = (errorMessage?errorMessage:'\nPor favor, tente novamente.');
@@ -275,18 +276,18 @@ function publishEventLiveResult(){
 		}
 	}
 	
-	showIndicator('eventLive');
+	showIndicator();
 	
 	var successFunc = function(t){
 		
 		var content = t.responseText;
 		
-		hideIndicator('eventLive');
+		hideIndicator();
 	}
 	
 	var failureFunc = function(t){
 		
-		hideIndicator('eventLive');
+		hideIndicator();
 		
 		var errorMessage = parseError(t.responseText);
 		errorMessage = (errorMessage?errorMessage:'\nPor favor, tente novamente.');
