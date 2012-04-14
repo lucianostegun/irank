@@ -73,7 +73,7 @@
 	
 	if( $recordCount==0 ):
 ?>
-	<div class="moduleIntro">Não foram encontrados eventos para "<b><?php echo $originalKeyWord ?></b>"</div>
+	<div class="moduleIntro">Não foram encontrados eventos <b>HOME</b> para "<b><?php echo $originalKeyWord ?></b>"</div>
 <?php else: ?>
 	<div class="moduleIntro">
 		<br/>

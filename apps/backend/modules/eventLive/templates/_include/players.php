@@ -13,7 +13,7 @@
 		if( !$emailAddress )
 			$emailAddress = 'Não informado';
 ?>
-<tr class="<?php echo $class ?>" id="eventLivePeopleIdRow-<?php echo $peopleId ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">
+<tr class="<?php echo $class ?>" id="eventLivePeopleIdRow-<?php echo $peopleId ?>">
 	<td><?php echo $peopleObj->getName() ?></td> 
 	<td><?php echo $emailAddress ?></td> 
 	<td><?php echo $eventLivePlayerObj->getCreatedAt('d/m/Y H:i') ?></td> 

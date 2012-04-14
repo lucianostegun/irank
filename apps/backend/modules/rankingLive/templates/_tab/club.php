@@ -1,5 +1,5 @@
-		<div class="title"><span class="titleIcon"><input type="checkbox" id="titleCheck" name="titleCheck" /></span><h6><label for="titleCheck">Selecionar todos</label></h6></div>                          
-		<table cellpadding="0" cellspacing="0" width="100%" class="display dTable withCheck" id="checkAll">
+	<div class="title"><span class="titleIcon"><input type="checkbox" id="titleCheck" name="titleCheck" /></span><h6><label for="titleCheck">Selecionar todos</label></h6></div>                          
+	<table cellpadding="0" cellspacing="0" width="100%" class="display sTable withCheck" id="checkAll">
 	    <tbody>
 		<?php
 			$clubIdList = $rankingLiveObj->getClubList('id');

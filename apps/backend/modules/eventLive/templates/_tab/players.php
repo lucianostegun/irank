@@ -1,41 +1,54 @@
 <?php
 	$players = $eventLiveObj->getPlayers();
 ?>
-<div class="inner_table">
-	<table class="tablesorter hoHeader playerList" cellspacing="0"> 
-	<thead>
-		<tr>
-			<td><div id="playerCountDiv"><?php echo $players.' Jogador'.($players==1?'':'es').' confirmado'.($players==1?'':'s') ?></div></td> 
-			<td colspan="3">
-			
-			<section class="addPlayer">
-				<label>Adicionar jogador</label>
-				<?php
-					echo input_auto_complete_tag(
-				      'peopleName',
-				      null,
-				      'people/autoComplete?instanceName=player&suggestNew='.Util::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY,
-				      array('autocomplete' => 'off', 'size'=>35, 'id'=>'eventLivePeopleName'),
-				      array(
-				        'use_style'             => true,
-				        'after_update_element'  => 'function (inputField, selectedItem){ handleSelectEventLivePlayer(selectedItem.id, inputField.value, \'eventLive\', \'peopleId\', {searchFieldName:\'eventLivePeopleName\', quickModuleName:\'people\'}) }',
-				      	'with'                  => ' value+\'?&peopleName=\'+$("eventLivePeopleName").value',
-				      	'inTab'                 => false)
-				    );
-				?>
-			</section>
-			
-			</td> 
-		</tr>
-		<tr> 
-			<th>Nome</th> 
-			<th>E-mail</th> 
-			<th style="width: 150px">Confirmação</th> 
-			<th style="width: 50px"></th> 
-		</tr>
-	</thead> 
-	<tbody id="eventLivePlayerIdTbody"> 
-		<?php include_partial('eventLive/include/players', array('eventLiveObj'=>$eventLiveObj)) ?>
-	</tbody>
+<div class="widget form">
+	<table cellpadding="0" cellspacing="0" width="100%" class="display sTable">
+		<thead>
+		    <tr>
+				<th><div id="playerCountDiv"><?php echo $players.' Jogador'.($players==1?'':'es').' confirmado'.($players==1?'':'s') ?></div></td> 
+				<th colspan="3">
+				
+				<label style="margin: 0 15px">
+					Inclusão de jogador
+					<?php echo input_tag('pepleName', null, array('size'=>'100%', 'maxlength'=>200, 'style'=>'margin-left: 10px', 'id'=>'eventLivePeopleName')) ?>
+				</label>
+				
+				</td> 
+			</tr>
+			<tr> 
+				<td>Nome</td>
+				<td>E-mail</td>
+				<td style="width: 150px">Confirmação</td>
+				<td style="width: 50px"></td>
+			</tr>
+		</thead>
+		<tbody id="eventLivePlayerIdTbody"> 
+			<?php include_partial('eventLive/include/players', array('eventLiveObj'=>$eventLiveObj)) ?>
+		</tbody>
 	</table>
 </div>
+
+
+
+
+<script>
+	var urlAjax = _webRoot+'/people/autoComplete';
+	
+    $("#eventLivePeopleName").autocomplete({
+        source: function(request, response) {
+			
+            $.ajax({
+                url: urlAjax,
+                data: request,
+                dataType: "json",
+                success: function(data) {
+                    response(data);
+                },
+                error: function(data) {
+                	
+                },
+            });
+        },
+        select: function(event, ui) { handleSelectEventLivePlayer(ui.item.id, ui.item.value, 'eventLive', 'peopleId', {searchFieldName:'eventLivePeopleName', quickModuleName:'people'}) },
+    });
+</script>

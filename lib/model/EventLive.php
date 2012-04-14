@@ -277,6 +277,16 @@ class EventLive extends BaseEventLive
 		return $buyinInfo;
 	}
 	
+	public function getStackChips($displayShort=false){
+		
+		$stackChips = parent::getStackChips();
+		
+		if( $displayShort )
+			$stackChips = ($stackChips/1000).'K';
+			
+		return $stackChips;
+	}
+	
 	public function getInfo(){
 		
 		$infoList = array();

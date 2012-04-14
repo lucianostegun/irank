@@ -16,12 +16,13 @@ class peopleActions extends sfActions
   
   public function executeAutoComplete($request){
     
-	$peopleName   = $request->getParameter('peopleName');
+	$peopleName   = $request->getParameter('term');
 	$instanceName = $request->getParameter('instanceName');
 	$suggestNew   = $request->getParameter('suggestNew');
 
 	$options = array('suggestNew'=>$suggestNew,
-					 'quickName'=>$peopleName);
+					 'quickName'=>$peopleName,
+					 'jquery'=>true);
 	
 	
 	$table = 'people';

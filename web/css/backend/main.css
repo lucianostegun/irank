@@ -219,6 +219,9 @@ ul.userDropdown li a:hover { border-right: none; border-left: none; }
 .nav li.dash a span { background-image: url(/images/backend/icons/light/home.png); }
 .nav li.charts span { background-image: url(/images/backend/icons/light/stats.png); }
 .nav li.ranking span { background-image: url(/images/backend/icons/light/signal.png); }
+.nav li.event span { background-image: url(/images/backend/icons/light/globe.png); }
+.nav li.admin span { background-image: url(/images/backend/icons/light/adminUser.png); }
+.nav li.club span { background-image: url(/images/backend/icons/light/building.png); }
 .nav li.forms a span { background-image: url(/images/backend/icons/light/pencil.png); }
 .nav li.typo span { background-image: url(/images/backend/icons/light/create.png); }
 .nav li.tables a span { background-image: url(/images/backend/icons/light/frames.png); }
@@ -249,12 +252,15 @@ ul.userDropdown li a:hover { border-right: none; border-left: none; }
 .nav .last { border-bottom: none; }
 
 ul.sub { border-bottom: 1px solid #1a2126; border-top: none; background: url(/images/backend/backgrounds/subNavBg.jpg); }
-ul.sub li { border-bottom: 1px solid #1c252a; border-top: 1px solid #30373d; }
+ul.sub li { border-bottom: 1px solid #1c252a; border-top: 1px solid #30373d; height: 36px }
 ul.sub li.this { background: url(/images/backend/backgrounds/subNavBg_active.jpg); border-bottom: 1px solid #192226; border-top: 1px solid #192226; }
 ul.sub li.this:first-child { border-top: 1px solid #30373D; }
 ul.sub li.this a { color: #d5d5d5; }
 ul.sub li a { background: url(/images/backend/arrow.gif) no-repeat 12px 16px; border: none; font-family: Arial, Helvetica, sans-serif; color: #494949; font-size: 11px; padding: 8px 10px 8px 26px; color: #9da1a5; }
 ul.sub li a:hover { font-style: normal; border: none; color: #d5d5d5; background: url(/images/backend/arrow.gif) no-repeat 12px 16px; }
+
+ul.sub li strong, ul.sub li strong { width: 12px; height: 24px; margin-right: -5px; margin-top: -6px; font-weight: bold; text-align: center; background-image: url(/images/backend/icons/light/add.png); background-position: 6px 5px; background-repeat: no-repeat }
+ul.sub li strong img { position: relative; top: 3px; left: -2px }
 
 ul.sub li ul { border: none; border-top: 1px solid #c9c9c9; }
 ul.sub li ul li { padding-left: 10px; }
@@ -669,6 +675,10 @@ input[type=submit], input[type=reset], input[type=button], button { padding: 7px
 .oneFour { width: 23.5%; float: left; margin-left: 2%; }
 .oneFour:first-child { margin-left: 0; }
 
+.multi { width: auto; float: left; margin-left: 15px }
+.multi:first-child { margin-left: 0; }
+.multi label { margin-top: 4px; margin-left: -20px }
+
 
 /* Left & Right lists inside widgets */
 
@@ -1029,8 +1039,10 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 
 .formRow .checker, .formRow .radio { margin-right: 12px; margin-top: 4px; }
 .formRow .formRight { display: block; float: right; width: 80%; margin-right: 18px; }
+.formRow .multi .checker { margin-top: 8px }
 
-.form input[type=text], .form input[type=password], .form textarea { font-size: 13px; padding: 7px 6px; background: white; border: 1px solid #AAAAAA; width: 100%; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #F0F0F0; -webkit-box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; color: #656565; } 
+.form input[type=text], .form input[type=password], .form textarea { font-size: 13px; padding: 7px 6px; background: white; border: 1px solid #AAAAAA; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #F0F0F0; -webkit-box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; color: #656565; } 
+.form textarea { width: 100% } 
 .form input[type=text]:hover, .form input[type=password]:hover, .form textarea:hover { border-color: #909090; background: #fdfdfd; }
 .form input[type=text]:focus, .form input[type=password]:focus, .form textarea:focus { border-color: #707070; background: #F5F5F5; color: #303030; -webkit-box-shadow: 0 0 0 2px #f4f4f4; box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; }
 .form input.calendar { width: auto; margin-right: 5px } 
@@ -1785,4 +1797,15 @@ color: #656565;
 	.pInfo { max-width: 70%; }
 	.searchWidget input[type="text"] { width: 92%!important; }
 	
+}
+
+#debugDiv {
+
+	display: 	none;
+	background: #FFFFFF;
+	position: 	absolute;
+	left: 		0px;
+	top: 		0px;
+	z-index: 	5000;
+	padding: 	5px 7px;
 }

@@ -47,6 +47,7 @@
 			$where .= "OR no_accent(club_name) ILIKE '%$keyWord%' ";
 			$where .= "OR no_accent(city_name) ILIKE '%$keyWord%' ";
 			$where .= "OR no_accent(initial) ILIKE '%$keyWord%' ";
+			$where .= "OR no_accent(address_quarter) ILIKE '%$keyWord%' ";
 			$where .= "OR no_accent(description) ILIKE '%$keyWord%')";
 		}
 		

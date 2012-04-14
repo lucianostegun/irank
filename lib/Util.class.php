@@ -141,30 +141,50 @@ class Util {
 	 */
 	public static function getAutoCompleteResults( $table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options=array() ){
 		
-		$sql = 'SELECT '.$fieldId.', '.$fieldName.' FROM '.$table.' WHERE '.$condition.' ORDER BY '.$fieldOrder;
 		
 		$suggestNew = array_key_exists('suggestNew', $options)?$options['suggestNew']:false;
 		$quickName  = array_key_exists('quickName', $options)?$options['quickName']:null;
+		$jquery     = array_key_exists('jquery', $options)?$options['jquery']:false;
+		$fieldValue = array_key_exists('fieldValue', $options)?$options['fieldValue']:$fieldName;
+		
+		$sql = "SELECT $fieldId, $fieldName, $fieldValue FROM $table WHERE $condition ORDER BY $fieldOrder";
 
 	    $resultSet = self::executeQuery( $sql );
 	    
-	    $li = chr(10);
+	    if( $jquery ){
+	    	
+		   header('content-type: application/json; charset=UTF-8');
+		   $resultList = array();
+		   
+			while( $resultSet->next() ){
+		
+				$id    = $resultSet->getInt(1);
+				$label = $resultSet->getString(2);
+				$value = $resultSet->getString(3);
+				$resultList[] = '{"id":"'.$id.'", "label": "'.$label.'", "value": "'.$value.'"}';    	
+		    }
+		
+			return '['.implode(', ', $resultList).']';
+	    }else{
 	    
-	    $result = '<ul>'.$li;
+		    $li = chr(10);
+		    
+		    $result = '<ul>'.$li;
+			
+			while( $resultSet->next() ){
 		
-		while( $resultSet->next() ){
-	
-			$id   = $resultSet->getInt(1);
-			$name = $resultSet->getString(2);
-			$result .= '	<li id="'.$instanceName.$id.'">'.$name.'</li>'.$li;    	
+				$id   = $resultSet->getInt(1);
+				$name = $resultSet->getString(2);
+				$result .= '	<li id="'.$instanceName.$id.'">'.$name.'</li>'.$li;    	
+		    }
+			
+			if( $suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW && $quickName )
+				$result .= '	<li id="quickNew"><b>Criar novo: </b>'.$quickName.'</li>'.$li;
+			else if( $suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY && $resultSet->getRecordCount()==0 && $quickName )
+				$result .= '	<li id="quickNew"><b>Criar novo: </b>'.$quickName.'</li>'.$li;
+				    	
+		    $result .= '</ul>';
 	    }
-		
-		if( $suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW && $quickName )
-			$result .= '	<li id="quickNew"><b>Criar novo: </b>'.$quickName.'</li>'.$li;
-		else if( $suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY && $resultSet->getRecordCount()==0 && $quickName )
-			$result .= '	<li id="quickNew"><b>Criar novo: </b>'.$quickName.'</li>'.$li;
-			    	
-	    $result .= '</ul>';
 	    
 	    return $result;
 	}

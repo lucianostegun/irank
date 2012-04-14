@@ -303,7 +303,7 @@ function _compute_public_path($source, $dir, $ext, $absolute = false)
     $source = substr($source, 0, $pos);
   }
 
-  if (false === strpos(basename($source), '.'.$ext))
+  if (false === strpos(basename($source), '.'))
   {
     $source .= '.'.$ext;
   }

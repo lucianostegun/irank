@@ -34,10 +34,12 @@ function handleFailureUserAdmin(content){
 
 function togglePasswordField(){
 	
-	$('userAdminPassword').value = '';
-	$('userAdminNewPassword').value = '';
-	$('userAdminPasswordConfirm').value = '';
+	$('#userAdminPassword').val('');
+	$('#userAdminNewPassword').val('');
+	$('#userAdminPasswordConfirm').val('');
 
 	showDiv('passwordFieldDiv');
 	hideDiv('passwordRoDiv');
+	
+	$('#userAdminNewPassword').focus();
 }

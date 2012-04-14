@@ -153,13 +153,10 @@ class eventLiveActions extends sfActions
   
   public function executeAutoComplete($request){
     
-	$peopleName   = $request->getParameter('peopleName');
+	$peopleName   = $request->getParameter('term');
 	$instanceName = $request->getParameter('instanceName');
 	$suggestNew   = $request->getParameter('suggestNew');
 
-	$options = array('suggestNew'=>$suggestNew,
-					 'quickName'=>$peopleName);
-	
 	$emailAddress = null;
 	
 	if( preg_match('/,/', $peopleName) )
@@ -171,6 +168,7 @@ class eventLiveActions extends sfActions
 	$table      = 'people INNER JOIN event_live_player ON event_live_player.PEOPLE_ID=people.ID AND event_live_player.EVENT_LIVE_ID='.$this->eventLiveId.' AND event_live_player.ENABLED';
 	$fieldId    = 'id';
 	$fieldName  = "FULL_NAME||', '||COALESCE(EMAIL_ADDRESS, 'Não informado')";
+	$fieldValue = "FULL_NAME";
 	$condition  = "people.ENABLED AND people.VISIBLE AND NOT people.DELETED AND ((no_accent(full_name) ILIKE no_accent('%$peopleName%') OR no_accent(email_address) ILIKE no_accent('%$peopleName%'))";
 	
 	if( $emailAddress )
@@ -179,7 +177,11 @@ class eventLiveActions extends sfActions
 	$condition .= ")";
 
 	$fieldOrder = 'full_name';
-	
+
+	$options = array('suggestNew'=>$suggestNew,
+					 'quickName'=>$peopleName,
+					 'fieldValue'=>$fieldValue,
+					 'jquery'=>true);	
 	
 	echo Util::getAutoCompleteResults($table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options );
 	exit;

@@ -45,3 +45,54 @@ function loadSelectField(element, moduleName, updateDivId, updateElementId){
 	var urlAjax = _webRoot+'/'+moduleName+'/getSelectField/'+element.name+'/'+element.value+'/prefix/'+getModuleName();
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
 }
+
+function debug( value ){
+	
+	clearDebug();
+	debugAdd( value );
+}
+
+function debugAdd( value ){
+
+	if( $('#debugDiv').html()!='' )
+		value = $('#debugDiv').html() + '<br/>'+value;
+	else
+		value = '<a href="javascript:void(0)" onclick="clearDebug()">Ocultar</a>'+
+				' - <a href="javascript:void(0)" onclick="$(\'debugDiv\').style.width = \'800px\'">Expandir</a><hr/>'+value;
+
+	$('#debugDiv').html(value);
+	showDiv('debugDiv');
+}
+
+function clearDebug(){
+
+	$('#debugDiv').html('');
+	hideDiv('debugDiv');
+}
+
+function showDiv(divId){
+	
+	$('#'+divId).show();
+}
+
+function hideDiv(divId){
+	
+	$('#'+divId).hide();
+}
+
+function showIndicator(indicatorId){
+	
+}
+
+function hideIndicator(indicatorId){
+	
+}
+
+function parseMessage(){
+	
+}
+
+function AjaxRequest(urlAjax, options){
+	
+	$.ajax({type:'POST', url: urlAjax, data:options.parameters, error: options.onFailure, success: options.onSuccess});
+}
