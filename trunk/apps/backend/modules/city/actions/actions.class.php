@@ -15,13 +15,14 @@ class cityActions extends sfActions
   }
   
   public function executeAutoComplete($request){
-    
-	$cityName     = $request->getParameter('cityName');
+   
+	$cityName     = $request->getParameter('term');
 	$instanceName = $request->getParameter('instanceName');
 	$suggestNew   = $request->getParameter('suggestNew');
 	
 	$options = array('suggestNew'=>$suggestNew,
-					 'quickName'=>$cityName);
+					 'quickName'=>$cityName,
+					 'jquery'=>true);
 	
 	$cityName = str_replace(' ', '%', $cityName);
 	 

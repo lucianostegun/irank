@@ -1,41 +1,34 @@
-<div class="inner_table">
-	<table class="tablesorter hoHeader" cellspacing="0"> 
-	<thead> 
-		<tr> 
-			<th>Nome</th> 
-			<th>Clube</th> 
-			<th>Data/Hora</th> 
-			<th>Buyin</th> 
-			<th>Blind</th> 
-			<th>Stack</th> 
-		</tr> 
-	</thead> 
-	<tbody id="eventLiveTbody"> 
-		<?php
-			$eventLiveIdList = array();
-			foreach(EventLive::getList(null, $clubId) as $eventLiveObj):
-				
-				$eventLiveId       = $eventLiveObj->getId();
-				$eventLiveIdList[] = $eventLiveId;
-				
-				$onclick = 'goToPage(\'eventLive\', \'edit\', \'eventLiveId\', '.$eventLiveId.', true)"';
-		?>
-		<tr onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
-			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getEventName() ?></td> 
-			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getClub()->toString() ?></td> 
-			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getEventDateTime('d/m/Y') ?></td> 
-			<td onclick="<?php echo $onclick ?>"><?php echo Util::formatFloat($eventLiveObj->getBuyin()) ?></td> 
-			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getBlindTime() ?></td> 
-			<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getStackChips() ?></td> 
-		</tr> 
-		<?php
-			endforeach;
-			
-			$recordCount = count($eventLiveIdList);
-		?>
-		<tr class="<?php echo ($recordCount?'hidden':'') ?>" id="eventLiveNoRecordsRow">
-			<td colspan="7">Nenhum evento foi cadastro até o momento.<br/><?php echo link_to('Clique aqui', 'eventLive/new') ?> para cadastrar o primeiro evento.</td>
-		</tr>
-	</tbody>
+<div class="widget">
+	<table cellpadding="0" cellspacing="0" width="100%" class="display dTable">
+	    <thead>
+			<tr>
+				<th>Nome</th> 
+				<th>Clube</th> 
+				<th>Data/Hora</th> 
+				<th>Buyin</th> 
+				<th>Blind</th> 
+				<th>Stack</th> 
+			</tr> 
+		</thead> 
+		<tbody id="eventLiveTbody"> 
+			<?php
+				$eventLiveIdList = array();
+				foreach(EventLive::getList(null, $clubId) as $eventLiveObj):
+					
+					$eventLiveId       = $eventLiveObj->getId();
+					$eventLiveIdList[] = $eventLiveId;
+					
+					$onclick = 'goToPage(\'eventLive\', \'edit\', \'eventLiveId\', '.$eventLiveId.', true)"';
+			?>
+			<tr class="gradeA" onclick="<?php echo $onclick ?>" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
+				<td width="40%"><?php echo $eventLiveObj->getEventName() ?></td> 
+				<td width="24%"><?php echo $eventLiveObj->getClub()->toString() ?></td> 
+				<td width="10%" align="center"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
+				<td width="8%" align="center"><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
+				<td width="8%" align="center"><?php echo $eventLiveObj->getBlindTime() ?></td> 
+				<td width="8%" align="center"><?php echo $eventLiveObj->getStackChips(true) ?></td> 
+			</tr> 
+			<?php endforeach; ?>
+		</tbody>
 	</table>
 </div>

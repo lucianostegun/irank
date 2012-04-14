@@ -758,7 +758,7 @@ function input_date_tag($name, $value = null, $options = array())
   {
   	if( $appName=='backend' ){
   		
-  		$style = 'cursor: pointer; vertical-align: middle; margin-top: -2px';
+  		$style = 'cursor: pointer; vertical-align: middle; margin-top: -2px; margin-left: 3px';
   		$calendar_button = 'backend/calendarButton';
   	}else
 	  	$style = 'cursor: pointer; vertical-align: middle; margin-top: -3px';

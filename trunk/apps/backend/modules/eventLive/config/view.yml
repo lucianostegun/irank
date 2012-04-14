@@ -2,11 +2,6 @@ all:
   stylesheets:    [backend/eventLive]
   javascripts:    [mask, backend/eventLive, backend/paginator]
 
-  
-edit:
-  stylesheets:    []
-  javascripts:    [backend/tableReorder/header, backend/tableReorder/redips-drag-min, backend/tableReorder/script]
-  
 editSuccess:
-  stylesheets:    []
+  stylesheets:    [backend/tableReorder/style]
   javascripts:    [backend/tableReorder/header, backend/tableReorder/redips-drag-min, backend/tableReorder/script]

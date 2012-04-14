@@ -3,10 +3,10 @@ function handleSuccessEventLive(content){
 	showFormStatusSuccess('eventLive');
 	clearFormFieldErrors('eventLive');
 	
-	mainRecordName = ($('eventLiveEventShortName').value?$('eventLiveEventShortName').value:$('eventLiveEventName').value);
+	mainRecordName = ($('#eventLiveEventShortName').val()?$('#eventLiveEventShortName').val():$('#eventLiveEventName').val());
 	updateMainRecordName(mainRecordName, true);
 	
-	$('eventLiveResultForm').onsubmit();
+	$('#eventLiveResultForm').onsubmit();
 }
 
 function handleFailureEventLive(content){
@@ -26,23 +26,23 @@ function handleFailureEventLiveResult(content){
 
 function replicateEventName(eventName){
 	
-	if( $('eventLiveEventShortName').value!='' )
+	if( $('#eventLiveEventShortName').val()!='' )
 		return;
 	
 	eventName = eventName.replace(/ ?-.*Garantidos?/, '');
 	eventName = eventName.replace(/ ?Garantidos?/, '');
 	eventName = eventName.replace(/ ?-.*/, '');
-	$('eventLiveEventShortName').value = eventName.substring(0, 35);
+	$('#eventLiveEventShortName').val( eventName.substring(0, 35) );
 }
 
 function handleIsIlimitedRebuys(checked){
 	
-	$('eventLiveAllowedRebuys').disabled = checked;
+	$('#eventLiveAllowedRebuys').disabled = checked;
 }
 
 function handleIsFreeroll(checked){
 	
-	$('eventLiveBuyin').disabled = checked;
+	$('#eventLiveBuyin').disabled = checked;
 }
 
 function handleSelectEventLivePlayer(peopleId, peopleName){
@@ -74,38 +74,37 @@ function addQuickNewPlayer(peopleName){
 	};
 	
 	var urlAjax = _webRoot+'/people/addQuickPlayer?peopleName='+peopleName;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
 function addPlayer(peopleId){
 	
 	showIndicator('eventLive');
 	
-	var eventLiveId = $('eventLiveId').value;
+	var eventLiveId = $('#eventLiveId').val();
 	peopleId        = peopleId.replace(/[^0-9]/gi, '');
 	
-	var successFunc = function(t){
+	var successFunc = function(content){
 		
 		hideIndicator('eventLive');
 		
-		var content = t.responseText;
-		
 		if( content=='noChange' ){
 			
-			$('eventLivePeopleName').value = 'Jogador já confirmado no evento';
-			$('eventLivePeopleName').select();
+			$('#eventLivePeopleName').val('Jogador já confirmado no evento');
+			$('#eventLivePeopleName').select();
 			window.setTimeout('clearEventLivePeopleName()', 3000);
 			return;
 		}
 
-		$('eventLivePlayerIdTbody').innerHTML = content;
-		$('eventLivePeopleName').value = '';
-		$('eventLivePeopleName').focus();
+		$('#eventLivePlayerIdTbody').html(content);
+		$('#eventLivePeopleName').val('');
+		$('#eventLivePeopleName').focus();
 		
 		var players = getEventLivePlayers();
+		players = (players+1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s');
 		
-		$('playerCountDiv').innerHTML       = (players+1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s');
-		$('playerResultCountDiv').innerHTML = (players+1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s');
+		$('#playerCountDiv').html( players );
+//		$('#playerResultCountDiv').html( (players+1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s'));
 	}
 
 	var failureFunc = function(t){
@@ -117,21 +116,21 @@ function addPlayer(peopleId){
 		
 		alert('FALHA NA CONFIRMAÇÃO!\n'+errorMessage);
 		
-		$('eventLivePeopleName').focus();
+		$('#eventLivePeopleName').focus();
 		
 		if( isDebug() )
 			debug(t.responseText);
 	}
 	
 	var urlAjax = _webRoot+'/eventLive/addPlayer/eventLiveId/'+eventLiveId+'/peopleId/'+peopleId;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});	
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});	
 }
 
 function removePlayer(peopleId){
 	
 	showIndicator('eventLive');
 	
-	var eventLiveId = $('eventLiveId').value;
+	var eventLiveId = $('#eventLiveId').val();
 	
 	var successFunc = function(t){
 		
@@ -141,8 +140,8 @@ function removePlayer(peopleId){
 		
 		var players = getEventLivePlayers();
 
-		$('playerCountDiv').innerHTML       = (players-1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s');
-		$('playerResultCountDiv').innerHTML = (players-1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s');
+		$('#playerCountDiv').html(       (players-1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s'));
+		$('#playerResultCountDiv').html( (players-1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s'));
 		
 		hideIndicator('eventLive');
 	}
@@ -161,13 +160,13 @@ function removePlayer(peopleId){
 	}
 	
 	var urlAjax = _webRoot+'/eventLive/removePlayer/eventLiveId/'+eventLiveId+'/peopleId/'+peopleId;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});	
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});	
 }
 
 function clearEventLivePeopleName(){
 	
-	$('eventLivePeopleName').value = '';
-	$('eventLivePeopleName').focus();
+	$('#eventLivePeopleName').val('');
+	$('#eventLivePeopleName').focus();
 }
 
 function handleSelectEventLivePlayerResult(peopleId, peopleName, eventPosition){
@@ -181,32 +180,30 @@ function setPlayerResult(peopleId, peopleName, eventPosition){
 	
 	showIndicator('eventLive');
 	
-	var eventLiveId = $('eventLiveId').value;
+	var eventLiveId = $('#eventLiveId').val();
 	
-	var successFunc = function(t){
-		
-		var content = t.responseText;
+	var successFunc = function(content){
 		
 		var infoObj = parseInfo(content);
 		
-		$('eventLivePeopleNameResult-'+eventPosition).value         = infoObj.peopleName;
-		$('peopleIdPosition-'+eventPosition).value                  = peopleId;
-		$('eventLiveResultEmailAddressTd-'+eventPosition).innerHTML = infoObj.emailAddress;
+		$('#eventLivePeopleNameResult-'+eventPosition).val( infoObj.peopleName );
+		$('#peopleIdPosition-'+eventPosition).val( peopleId );
+		$('#eventLiveResultEmailAddressTd-'+eventPosition).html( infoObj.emailAddress );
 
-		if( $('eventLivePeopleNameResult-'+(eventPosition+1))!=null )
-			$('eventLivePeopleNameResult-'+(eventPosition+1)).focus();
+		if( $('#eventLivePeopleNameResult-'+(eventPosition+1)).length > 0 )
+			$('#eventLivePeopleNameResult-'+(eventPosition+1)).focus();
 		
 		if( infoObj.eventPositionOld && infoObj.eventPositionOld!=eventPosition ){
 			
 			var eventPositionOld = infoObj.eventPositionOld
 
-			$('eventLivePeopleNameResult-'+eventPositionOld).value         = '';
-			$('peopleIdPosition-'+eventPositionOld).value                  = '';
-			$('prize-'+eventPosition).value                                = $('prize-'+eventPositionOld).value;
-			$('prize-'+eventPositionOld).value                             = '0,00';
-			$('score-'+eventPosition).value                                = $('score-'+eventPositionOld).value;
-			$('score-'+eventPositionOld).value                             = '0,00';
-			$('eventLiveResultEmailAddressTd-'+eventPositionOld).innerHTML = '';
+			$('#eventLivePeopleNameResult-'+eventPositionOld).val('');
+			$('#peopleIdPosition-'+eventPositionOld).val('');
+			$('#prize-'+eventPosition).val( $('#prize-'+eventPositionOld).val() );
+			$('#prize-'+eventPositionOld).val('0,00');
+			$('#score-'+eventPosition).val( $('#score-'+eventPositionOld).val());
+			$('#score-'+eventPositionOld).val('0,00');
+			$('#eventLiveResultEmailAddressTd-'+eventPositionOld).html( '' );
 		}
 		
 		hideIndicator('eventLive');
@@ -226,12 +223,12 @@ function setPlayerResult(peopleId, peopleName, eventPosition){
 	}
 	
 	var urlAjax = _webRoot+'/eventLive/savePlayerPosition/eventLiveId/'+eventLiveId+'/peopleId/'+peopleId+'/eventPosition/'+eventPosition;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
 function checkEventPositionField(eventPosition){
 	
-	var peopleName = $('eventLivePeopleNameResult-'+eventPosition).value;
+	var peopleName = $('#eventLivePeopleNameResult-'+eventPosition).val();
 	
 	if( !peopleName )
 		resetEventPosition(eventPosition);
@@ -239,17 +236,17 @@ function checkEventPositionField(eventPosition){
 
 function resetEventPosition(eventPosition){
 	
-	var eventLiveId = $('eventLiveId').value;
+	var eventLiveId = $('#eventLiveId').val();
 	
 	var successFunc = function(t){
 		
 		var content = t.responseText;
 		
-		$('eventLivePeopleNameResult-'+eventPosition).value         = '';
-		$('peopleIdPosition-'+eventPosition).value                  = '';
-		$('prize-'+eventPosition).value                             = '0,00';
-		$('score-'+eventPosition).value                             = '0';
-		$('eventLiveResultEmailAddressTd-'+eventPosition).innerHTML = '';
+		$('#eventLivePeopleNameResult-'+eventPosition).val('');
+		$('#peopleIdPosition-'+eventPosition).val('');
+		$('#prize-'+eventPosition).val('0,00');
+		$('#score-'+eventPosition).val('0');
+		$('#eventLiveResultEmailAddressTd-'+eventPosition).html( '' );
 	}
 	
 	var failureFunc = function(t){
@@ -261,7 +258,7 @@ function resetEventPosition(eventPosition){
 	}
 	
 	var urlAjax = _webRoot+'/eventLive/resetEventPosition/eventLiveId/'+eventLiveId+'/eventPosition/'+eventPosition;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
 function publishEventLiveResult(){
@@ -270,7 +267,7 @@ function publishEventLiveResult(){
 	
 	for(var eventPosition=1; eventPosition <= players; eventPosition++){
 		
-		if( $('peopleIdPosition-'+eventPosition)==null || !$('peopleIdPosition-'+eventPosition).value ){
+		if( $('#peopleIdPosition-'+eventPosition)==null || !$('#peopleIdPosition-'+eventPosition).val() ){
 			if( !confirm('ATENÇÃO!\n\nAlgumas posições não foram definidas, deseja realmente continuar?') )
 				return;
 			
@@ -300,14 +297,14 @@ function publishEventLiveResult(){
 			debug(t.responseText);
 	}
 	
-	$('eventLiveResultPublish').value = '1';
-	$('eventLiveResultForm').submit();
-	$('eventLiveResultPublish').value = '0';
+	$('#eventLiveResultPublish').val('1');
+	$('#eventLiveResultForm').submit();
+	$('#eventLiveResultPublish').val('0');
 }
 
 function getEventLivePlayers(){
 
-	return $('playerCountDiv').innerHTML.replace(/[^0-9]/ig, '')*1;
+	return $('#playerCountDiv').html().replace(/[^0-9]/ig, '')*1;
 }
 
 function loadDefaultBuyin(rankingLiveId){
@@ -320,8 +317,8 @@ function loadDefaultBuyin(rankingLiveId){
 		var content = t.responseText;
 		var infoObj = parseInfo(content);
 		
-		$('eventLiveBuyin').value       = toCurrency(infoObj.defaultBuyin);
-		$('eventLiveEntranceFee').value = toCurrency(infoObj.defaultEntranceFee);
+		$('#eventLiveBuyin').val(toCurrency(infoObj.defaultBuyin));
+		$('#eventLiveEntranceFee').val(toCurrency(infoObj.defaultEntranceFee));
 	}
 	
 	var failureFunc = function(t){
@@ -331,14 +328,14 @@ function loadDefaultBuyin(rankingLiveId){
 	}
 	
 	var urlAjax = _webRoot+'/rankingLive/getInfo/rankingLiveId/'+rankingLiveId;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
 function calculateEventLiveResult(){
 
 	return alert('O cálculo de resultados ainda não está disponível');
 	
-	var eventLiveId = $('eventLiveId').value;
+	var eventLiveId = $('#eventLiveId').val();
 	
 	var successFunc = function(t){
 		
@@ -356,5 +353,35 @@ function calculateEventLiveResult(){
 	}
 	
 	var urlAjax = _webRoot+'/eventLive/calculateResult/evenLiveId/'+eventLiveId;
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc, parameters:$('eventLiveResultForm').serialize()});
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc, parameters:$('#eventLiveResultForm').serialize()});
+}
+
+function setupEventLiveResultAutoComplete(){
+	
+	var eventLiveId = $('#eventLiveId').val();
+	
+	var urlAjax = _webRoot+'/eventLive/autoComplete/instanceName/player/eventLiveId/'+eventLiveId;
+	
+    $(".autocompletePlayer").autocomplete({
+        source: function(request, response) {
+			
+            $.ajax({
+                url: urlAjax,
+                data: request,
+                dataType: "json",
+                success: function(data) {
+                    response(data);
+                },
+                error: function(data) {
+                	
+                },
+            });
+        },
+        select: function(event, ui) { 
+        	
+        	var eventPosition = this.id.replace('eventLivePeopleNameResult-', '')*1;
+        	handleSelectEventLivePlayerResult(ui.item.id, ui.item.value, eventPosition);
+        },
+        autoFocus: true
+    });
 }

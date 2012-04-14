@@ -16,7 +16,7 @@ $actionName = $sf_context->getActionName();
 </head>
 
 <body>
-
+<div id="debugDiv"></div>
 <!-- Left side content -->
 <div id="leftSide">
     <div class="logo"><?php echo link_to(image_tag('backend/logo'), 'home/index', array('title'=>'Voltar para a página inicial')) ?></div>
@@ -57,15 +57,39 @@ $actionName = $sf_context->getActionName();
     <div class="sidebarSep"></div>
     
     <!-- Left navigation -->
-
+	
     <ul id="menu" class="nav">
         <li class="dash"><?php echo link_to('<span>Resumo geral</span>', 'home/index', array('class'=>($moduleName=='home'?'active':''))) ?></li>
-        <li class="ranking"><a href="javascript:void(0)" title="" class="<?php echo ($moduleName=='rankingLive'?'active':'exp') ?>"><span>Rankings</span><strong>2</strong></a>
+        
+        <?php if( $iRankAdmin ): ?>
+        <li class="club"><a href="javascript:void(0)" title="" class="<?php echo ($moduleName=='club'?'active':'exp') ?>"><span>Clubes</span><strong>2</strong></a>
             <ul class="sub">
-                <li><?php echo link_to('Novo ranking', 'rankingLive/new') ?></li>
-                <li><?php echo link_to('Listar rankings', 'rankingLive/index', array('class'=>'last')) ?></li>
+                <li><?php echo link_to('Novo clube', 'club/new') ?></li>
+                <li><?php echo link_to('Listar clubes', 'club/index', array('class'=>'last')) ?></li>
             </ul>
         </li>
+        <?php endif; ?>
+        
+        <li class="ranking"><a href="javascript:void(0)" title="" class="<?php echo (strstr($moduleName, 'ranking')?'active':'exp') ?>"><span>Rankings</span><strong>2</strong></a>
+            <ul class="sub">
+                <li><?php echo link_to('Rankings live', 'rankingLive/index') ?><?php echo link_to('<strong></strong>', 'rankingLive/new', array('title'=>'Novo ranking LIVE')) ?></li>
+                <li class="last"><?php echo link_to('Rankings home', 'ranking/index') ?></li>
+            </ul>
+        </li>
+        
+        <li class="event"><a href="javascript:void(0)" title="" class="<?php echo (strstr($moduleName, 'event')?'active':'exp') ?>"><span>Eventos</span><strong>2</strong></a>
+            <ul class="sub">
+                <li><?php echo link_to('Eventos live', 'eventLive/index') ?><?php echo link_to('<strong></strong>', 'eventLive/new', array('title'=>'Novo evento LIVE')) ?></li>
+                <li class="last"><?php echo link_to('Eventos home', 'event/index') ?></li>
+            </ul>
+        </li>
+
+        <li class="admin"><a href="javascript:void(0)" title="" class="<?php echo (strstr($moduleName, 'userAdmin')?'active':'exp') ?>"><span>Administração</span><strong>1</strong></a>
+            <ul class="sub">
+                <li class="last"><?php echo link_to('Usuários', 'userAdmin/index') ?></li>
+            </ul>
+        </li>
+        
         <li class="charts"><a href="charts.html" title=""><span>Statistics and charts</span></a></li>
         <li class="ui"><a href="ui_elements.html" title=""><span>Interface elements</span></a></li>
         <li class="tables"><a href="tables.html" title="" class="exp"><span>Tables</span><strong>3</strong></a>
@@ -129,7 +153,9 @@ $actionName = $sf_context->getActionName();
                             <li><a href="#" title="" class="sTrash">trash</a></li>
                         </ul>
                     </li>
-                    <li><a href="#" title=""><img src="/images/backend/icons/topnav/settings.png" alt="" /><span>Settings</span></a></li>
+                    <?php if( $iRankAdmin ): ?>
+                    <li><?php echo link_to(image_tag('backend/icons/topnav/settings').'<span>Settings</span>', 'settings/index') ?></li>
+                    <?php endif; ?>
                     <li><?php echo link_to(image_tag('backend/icons/topnav/logout').'<span>Logout</span>', 'login/logout') ?></li>
                 </ul>
             </div>

@@ -1,7 +1,7 @@
 
 /* =====  Dynamic tables  ===== */
 
-.dTable thead th { background: #efefef url(/images/backend/backgrounds/titleBg.png) repeat-x 0 0; }
+.dTable thead th, .thead th { background: #efefef url(/images/backend/backgrounds/titleBg.png) repeat-x 0 0; }
 
 .paging_two_button .ui-button { float: left; cursor: pointer; * cursor: hand; }
 .paging_full_numbers .ui-button { padding: 2px 6px; margin: 0; cursor: pointer; * cursor: hand; }
@@ -12,13 +12,13 @@
 .dataTables_paginate { width: auto; }
 .dataTables_info { padding: 7px 0 0 80px; color: #878787; }
 
-table.display thead th { padding: 4px 0px 3px 10px; cursor: pointer; * cursor: hand; font-size: 11px; }
+table.display thead th, .thead th { padding: 4px 0px 3px 10px; cursor: pointer; * cursor: hand; font-size: 11px; }
 
 div.dataTables_wrapper .ui-widget-header { font-weight: normal; background: #efefef url(/images/backend/backgrounds/titleBg.png) repeat-x; border-top: 1px solid #D5D5D5; margin-top: -1px;	 border-right: none; }
 
 
-table.display thead th div.DataTables_sort_wrapper { position: relative; padding-right: 20px; color: #878787; }
-table.display thead th div.DataTables_sort_wrapper span { position: absolute; top: 50%; margin-top: -8px; right: 5px; }
+table.display thead th div.DataTables_sort_wrapper, .thead th div.DataTables_sort_wrapper { position: relative; padding-right: 20px; color: #878787; }
+table.display thead th div.DataTables_sort_wrapper span, .thead th div.DataTables_sort_wrapper span { position: absolute; top: 50%; margin-top: -8px; right: 5px; }
 
 
 /* ===== Datatable styles ===== */
@@ -61,8 +61,10 @@ table.display td.center { text-align: center; }
 
 
 /* DataTables row classes*/
+table.display tr.gradeA td { cursor: pointer }
 table.display tr.odd.gradeA { background-color: #ddffdd; }
 table.display tr.even.gradeA { background-color: #eeffee; }
+
 table.display tr { border-bottom: 1px solid #e7e7e7; }
 table.display td { border-left: 1px solid #e7e7e7; }
 table.display td:first-child { border-left: none; }
@@ -75,8 +77,8 @@ table.display tr.even.gradeX { background-color: #ffeeee; }
 table.display tr.odd.gradeU { background-color: #ddd; }
 table.display tr.even.gradeU { background-color: #eee; }
 
-tr.odd { background-color: #E2E4FF; }
-tr.even { background-color: white; }
+tr.odd { background-color: #fafafa; }
+tr.even { background-color: f5f5f5; }
 
 
 /* Misc */
@@ -128,6 +130,14 @@ tr.odd.gradeA td.sorting_3 { background-color: #d1ffd1; }
 tr.even.gradeA td.sorting_1 { background-color: #efefef; }
 tr.even.gradeA td.sorting_2 { background-color: #e2ffe2; }
 tr.even.gradeA td.sorting_3 { background-color: #e2ffe2; }
+
+table.display tr.gradeA:hover, 
+tr.gradeA:hover td.sorting_1,
+tr.gradeA:hover td.sorting_2,
+tr.gradeA:hover td.sorting_3 { 
+	
+	background-color: #f8c05d;
+}
 
 tr.odd.gradeC td.sorting_1 { background-color: #c4c4ff; }
 tr.odd.gradeC td.sorting_2 { background-color: #d1d1ff; }

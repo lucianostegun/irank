@@ -1,68 +1,83 @@
 <?php
 	$password = $userAdminObj->getPassword();
 ?>
-<div class="module_content">
-	<div class="defaultForm">
-
-		<section>
+		<div class="formRow">
 			<label>Clube</label>
-			<?php echo select_tag('clubId', Club::getOptionsForSelect($userAdminObj->getClubId()), array('id'=>'userAdminClubId')) ?>
-		</section>
+			<div class="formRight"><?php echo select_tag('clubId', Club::getOptionsForSelect($userAdminObj->getClubId()), array('id'=>'userAdminClubId')) ?></div>
+			<div class="clear"></div>
+		</div>
 		
 		<?php
 			$peopleId = $userAdminObj->getPeopleId();
+			echo input_hidden_tag('peopleId', $peopleId, array('id'=>'userAdminPeopleId'));
 		?>
-		<section>
-			<label>Nome</label>
-			<span id="userAdminPeopleIdFieldDiv" class="<?php echo ($peopleId?'hidden':'') ?>">
-			<?php
-				echo input_hidden_tag('peopleId', $peopleId, array('id'=>'userAdminPeopleId'));
-				echo input_auto_complete_tag(
-			      'peopleName',
-			      $userAdminObj->getPeople()->getName(),
-			      'people/autoComplete?instanceName=peopleId&suggestNew='.Util::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY,
-			      array('autocomplete' => 'off', 'onkeyup'=>'$("userAdminPeopleId").value=""', 'size'=>35, 'id'=>'userAdminPeopleName'),
-			      array(
-			        'use_style'             => true,
-			        'after_update_element'  => 'function (inputField, selectedItem){ selectAutoCompleteItem(selectedItem.id, inputField.value, \'userAdmin\', \'peopleId\', \'userAdminUsername\', {searchFieldName:\'userAdminPeopleName\', quickModuleName:\'people\'}) }',
-			      	'with'                  => ' value+\'?&peopleName=\'+$("userAdminPeopleName").value',
-			      	'inTab'                 => false)
-			    );
-			?>
-			</span>
-			<div id="userAdminPeopleIdRoDiv" class="text <?php echo ($peopleId?'':'hidden') ?>"><div id="userAdminPeopleIdDiv"><?php echo $userAdminObj->getPeople()->getName() ?></div></div>
-			<div id="userAdminPeopleIdAutoComplete" class="image <?php echo ($peopleId?'':'hidden') ?>"><a href="javascript:void(0)" onclick="openAutoComplete('userAdmin', 'peopleId', 'userAdminPeopleName')"><?php echo image_tag('backend/icon/reload') ?></a></div>
-		</section>
+		
+		<div class="formRow">
+			<label>Cidade</label>
+			<div class="formRight"><?php echo input_tag('peopleName', $userAdminObj->getPeople()->getName(), array('size'=>35, 'maxlength'=>200, 'id'=>'userAdminPeopleName')) ?></div>
+			<div class="clear"></div>
+		</div>
+	
+	
+		<script>
+			var urlAjax = _webRoot+'/people/autoComplete';
+			
+		    $("#userAdminPeopleName").autocomplete({
+		        source: function(request, response) {
+					
+		            $.ajax({
+		                url: urlAjax,
+		                data: request,
+		                dataType: "json",
+		                success: function(data) {
+		                    response(data);
+		                },
+		                error: function(data) {
+		                	
+		                },
+		            });
+		        },
+	            select: function(event, ui) { $('#userAdminPeopleId').val(ui.item.id) },
+		    });
+		</script>
 
-		<section>
+		<div class="formRow">
 			<label>Username</label>
-			<?php echo input_tag('username', $userAdminObj->getUsername(), array('maxlength'=>15, 'id'=>'userAdminUsername')) ?>
-		</section>
+			<div class="formRight"><?php echo input_tag('username', $userAdminObj->getUsername(), array('maxlength'=>15, 'id'=>'userAdminUsername')) ?></div>
+			<div class="clear"></div>
+		</div>
 		
 		<div style="display: <?php echo ($password?'none':'block') ?>" id="passwordFieldDiv">
-			<section>
+			<div class="formRow">
 				<label>Senha</label>
-				<?php echo input_password_tag('newPassword', ($password?'******':''), array('maxlength'=>15, 'id'=>'userAdminNewPassword')) ?>
-			</section>
+				<div class="formRight"><?php echo input_password_tag('newPassword', ($password?'******':''), array('maxlength'=>15, 'id'=>'userAdminNewPassword')) ?></div>
+				<div class="clear"></div>
+			</div>
 	
-			<section>
+			<div class="formRow">
 				<label>Confirmação</label>
-				<?php echo input_password_tag('passwordConfirm', ($password?'******':''), array('maxlength'=>15, 'id'=>'userAdminPasswordConfirm')) ?>
-			</section>
+				<div class="formRight"><?php echo input_password_tag('passwordConfirm', ($password?'******':''), array('maxlength'=>15, 'id'=>'userAdminPasswordConfirm')) ?></div>
+				<div class="clear"></div>
+			</div>
 		</div>
-		<div style="display: <?php echo ($password?'block':'none') ?>" id="passwordRoDiv">
-			<div class="text"><?php echo link_to('alterar senha do usuário', '#togglePasswordField()') ?></div>
+		
+		<div class="formRow" style="display: <?php echo ($password?'block':'none') ?>" id="passwordRoDiv">
+			<label>Senha</label>
+			<div class="formRight"><label><?php echo link_to('alterar senha do usuário', '#togglePasswordField()') ?></label></div>
+			<div class="clear"></div>
 		</div>
 
-		<section>
+		<div class="formRow">
 			<label>Master</label>
-			<?php echo checkbox_tag('master', true, $userAdminObj->getMaster(), array('id'=>'userAdminMaster')) ?>
-		</section>
+			<div class="formRight"><?php echo checkbox_tag('master', true, $userAdminObj->getMaster(), array('id'=>'userAdminMaster')) ?></div>
+			<div class="clear"></div>
+		</div>
 
-		<section>
+		<div class="formRow">
 			<label>Ativo</label>
-			<?php echo checkbox_tag('active', true, $userAdminObj->getActive(), array('id'=>'userAdminActive')) ?>
-		</section>
+			<div class="formRight"><?php echo checkbox_tag('active', true, $userAdminObj->getActive(), array('id'=>'userAdminActive')) ?></div>
+			<div class="clear"></div>
+		</div>
 		
 	</div>
 	

@@ -56,20 +56,20 @@ redips_init = function () {
 		var eventPositionDrag = rd.obj_old.id.replace(/[^0-9]/g, '');
 		var eventPositionDrop = pos[1]-1;
 		
-		var eventLiveId = $('eventLiveId').value;
+		var eventLiveId = $('#eventLiveId').val();
 		
 		var tdList = document.getElementsByClassName('eventLivePositionLabel');
 		
 		var changeIds = function(eventPosition, eventPositionOld){
 			
-			$('eventLivePositionLabel-'+eventPositionOld).id        = 'eventLivePositionLabel-'+eventPosition;
-			$('eventLiveResultRow-'+eventPositionOld).id            = 'eventLiveResultRow-'+eventPosition;
-			$('peopleIdPosition-'+eventPositionOld).name            = 'peopleIdPosition-'+eventPosition;
-			$('peopleIdPosition-'+eventPositionOld).id              = 'peopleIdPosition-'+eventPosition;
-			$('eventLivePeopleNameResult-'+eventPositionOld).id     = 'eventLivePeopleNameResult-'+eventPosition;
-			$('prize-'+eventPositionOld).id                         = 'prize-'+eventPosition;
-			$('score-'+eventPositionOld).id                         = 'score-'+eventPosition;
-			$('eventLiveResultEmailAddressTd-'+eventPositionOld).id = 'eventLiveResultEmailAddressTd-'+eventPosition;
+			$('#eventLivePositionLabel-'+eventPositionOld).attr('id',         'eventLivePositionLabel-'+eventPosition);
+			$('#eventLiveResultRow-'+eventPositionOld).attr('id',             'eventLiveResultRow-'+eventPosition);
+			$('#peopleIdPosition-'+eventPositionOld).attr('name',             'peopleIdPosition-'+eventPosition);
+			$('#peopleIdPosition-'+eventPositionOld).attr('id',               'peopleIdPosition-'+eventPosition);
+			$('#eventLivePeopleNameResult-'+eventPositionOld).attr('id',      'eventLivePeopleNameResult-'+eventPosition);
+			$('#prize-'+eventPositionOld).attr('id',                          'prize-'+eventPosition);
+			$('#score-'+eventPositionOld).attr('id',                          'score-'+eventPosition);
+			$('#eventLiveResultEmailAddressTd-'+eventPositionOld).attr('id',  'eventLiveResultEmailAddressTd-'+eventPosition);
 		}
 		
 		var orderDesc = (eventPositionDrop > eventPositionDrag);
@@ -97,15 +97,17 @@ redips_init = function () {
 			
 			var tdElement = tdList[rowIndex];
 			
-			tdElement.parentNode.removeClassName('odd');
+			$(tdElement.parentNode).removeClass('odd');
 			if( rowIndex%2==0 )
-				tdElement.parentNode.addClassName('odd');
+				$(tdElement.parentNode).addClass('odd');
 		}
 		
-		for(var eventPosition=maxValue; eventPosition <= minValue; eventPosition++)
-			eval('autoComplete'+eventPosition+'Obj = new Ajax.Autocompleter(\'eventLivePeopleNameResult-'+eventPosition+'\', \'eventLivePeopleNameResult-'+eventPosition+'_auto_complete\', _webRoot+\'/eventLive/autoComplete/instanceName/player/eventLiveId/\'+eventLiveId, {afterUpdateElement:function (inputField, selectedItem){ handleSelectEventLivePlayerResult(selectedItem.id, inputField.value, '+eventPosition+') }, callback:function(element, value) { return  value+\'?&peopleName=\'+$(\'eventLivePeopleNameResult-'+eventPosition+'\').value}});');
+		setupEventLiveResultAutoComplete()
 		
-		$('eventLiveResultForm').onsubmit();
+//		for(var eventPosition=maxValue; eventPosition <= minValue; eventPosition++)
+//			eval('autoComplete'+eventPosition+'Obj = new Ajax.Autocompleter(\'eventLivePeopleNameResult-'+eventPosition+'\', \'eventLivePeopleNameResult-'+eventPosition+'_auto_complete\', _webRoot+\'/eventLive/autoComplete/instanceName/player/eventLiveId/\'+eventLiveId, {afterUpdateElement:function (inputField, selectedItem){ handleSelectEventLivePlayerResult(selectedItem.id, inputField.value, '+eventPosition+') }, callback:function(element, value) { return  value+\'?&peopleName=\'+$(\'eventLivePeopleNameResult-'+eventPosition+'\').value}});');
+//		
+//		$('#eventLiveResultForm').onsubmit();
 	};
 	// row was dropped to the source - event handler
 	// mini table (cloned row) will be removed and source row should return to original state

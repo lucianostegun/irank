@@ -1,10 +1,10 @@
 
-<script type="text/javascript" src="/js/backend/plugins/jquery.min.js"></script>
+<script type="text/javascript" src="/js/backend/plugins/jquery.js"></script>
 
 <script type="text/javascript" src="/js/backend/plugins/spinner/ui.spinner.js"></script>
 <script type="text/javascript" src="/js/backend/plugins/spinner/jquery.mousewheel.js"></script>
 
-<script type="text/javascript" src="/js/backend/plugins/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/backend/plugins/jquery-ui.js"></script>
 
 <script type="text/javascript" src="/js/backend/plugins/charts/excanvas.min.js"></script>
 <script type="text/javascript" src="/js/backend/plugins/charts/jquery.flot.js"></script>
