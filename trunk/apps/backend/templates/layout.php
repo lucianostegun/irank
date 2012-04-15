@@ -160,8 +160,12 @@ $actionName = $sf_context->getActionName();
                     <li><?php echo link_to(image_tag('backend/icons/topnav/logout').'<span>Logout</span>', 'login/logout') ?></li>
                 </ul>
             </div>
-
+            
             <div class="clear"></div>
+        </div>
+        
+        <div class="navigation">
+        	testasdasdasdasdasdasdasd
         </div>
     </div>
     

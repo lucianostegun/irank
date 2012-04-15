@@ -194,6 +194,7 @@ text-shadow: 0 1px 0 #ccc,
 .userNav ul li a:hover { border-left: 1px solid #293138; border-right: 1px solid #293138; background-color: #293138; }
 .userNav ul li span { display: block; padding: 4px 15px 4px 8px; float: left; }
 .userNav ul li img { float: left; display: block; margin: 9px 2px 0px 14px; }
+.navigation { z-index: 6000; position: relative; font-size: 11px; border-bottom: 1px solid #F0F0F0; clear: both; background: #C0C0C0; margin-left: 2px }
 
 ul.userDropdown { position: absolute; left: -9px; display: none; top: 35px; background: url(/images/backend/subArrow.png) no-repeat 50% 0; padding: 0 1px 1px 1px; z-index: 100; border: none; }
 ul.userDropdown li { display: block; float: none; border-bottom: 1px solid #1c252b; border-top: 1px solid #404950; background: url(/images/backend/backgrounds/navBg.jpg); }

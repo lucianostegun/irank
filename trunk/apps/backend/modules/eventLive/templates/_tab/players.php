@@ -10,7 +10,7 @@
 				
 				<label style="margin: 0 15px">
 					Inclusão de jogador
-					<?php echo input_tag('pepleName', null, array('size'=>'100%', 'maxlength'=>200, 'style'=>'margin-left: 10px', 'id'=>'eventLivePeopleName')) ?>
+					<?php echo input_autocomplete_tag('pepleName', 'people/autoComplete', 'testFunction', array('size'=>'100%', 'maxlength'=>200, 'style'=>'margin-left: 10px', 'id'=>'eventLivePeopleName')) ?>
 				</label>
 				
 				</td> 
@@ -27,28 +27,3 @@
 		</tbody>
 	</table>
 </div>
-
-
-
-
-<script>
-	var urlAjax = _webRoot+'/people/autoComplete';
-	
-    $("#eventLivePeopleName").autocomplete({
-        source: function(request, response) {
-			
-            $.ajax({
-                url: urlAjax,
-                data: request,
-                dataType: "json",
-                success: function(data) {
-                    response(data);
-                },
-                error: function(data) {
-                	
-                },
-            });
-        },
-        select: function(event, ui) { handleSelectEventLivePlayer(ui.item.id, ui.item.value, 'eventLive', 'peopleId', {searchFieldName:'eventLivePeopleName', quickModuleName:'people'}) },
-    });
-</script>
