@@ -310,6 +310,40 @@ function input_tag($name, $value = null, $options = array())
   return tag('input', array_merge(array('type' => 'text', 'name' => $name, 'id' => get_id_from_name($name, $value), 'value' => $value), _convert_options($options)));
 }
 
+function input_autocomplete_tag($name, $searchUrl, $selectedFunction, $options = array())
+{
+	
+  $value                   = null;
+  $options['id']           = (isset($options['id'])?$options['id']:get_id_from_name($name, $value));
+  $options['autocomplete'] = 'off';
+  
+  $script = '<script>
+				var urlAjax = "'.url_for($searchUrl).'";
+				
+			    $("#'.$options['id'].'").autocomplete({
+			        source: function(request, response) {
+						
+			            $.ajax({
+			                url: urlAjax,
+			                data: request,
+			                dataType: "json",
+			                success: function(data) {
+			                    response(data);
+			                },
+			                error: function(data) {
+			                	
+			                },
+			            });
+			        },
+			        select: function(event, ui) { 
+								'.$selectedFunction.'(ui.item.id, ui.item.value);
+			        		},
+			    });
+			</script>';
+  
+  return tag('input', array_merge(array('type' => 'text', 'name' => $name, 'value' => $value), _convert_options($options))).chr(10).$script;
+}
+
 /**
  * Returns an XHTML compliant <input> tag with type="hidden".
  *

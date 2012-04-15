@@ -386,3 +386,8 @@ function setupEventLiveResultAutoComplete(){
         autoFocus: true
     });
 }
+
+function testFunction(id, value){
+
+	handleSelectEventLivePlayer(id, value, "eventLive", "peopleId", {searchFieldName:"eventLivePeopleName", quickModuleName:"people"})
+}
