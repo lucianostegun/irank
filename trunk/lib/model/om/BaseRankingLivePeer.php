@@ -13,7 +13,7 @@ abstract class BaseRankingLivePeer {
 	const CLASS_DEFAULT = 'lib.model.RankingLive';
 
 	
-	const NUM_COLUMNS = 22;
+	const NUM_COLUMNS = 29;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,12 +44,6 @@ abstract class BaseRankingLivePeer {
 	const EVENTS = 'ranking_live.EVENTS';
 
 	
-	const DEFAULT_BUYIN = 'ranking_live.DEFAULT_BUYIN';
-
-	
-	const DEFAULT_ENTRANCE_FEE = 'ranking_live.DEFAULT_ENTRANCE_FEE';
-
-	
 	const DESCRIPTION = 'ranking_live.DESCRIPTION';
 
 	
@@ -66,6 +60,33 @@ abstract class BaseRankingLivePeer {
 
 	
 	const FILE_NAME_LOGO = 'ranking_live.FILE_NAME_LOGO';
+
+	
+	const DEFAULT_BUYIN = 'ranking_live.DEFAULT_BUYIN';
+
+	
+	const DEFAULT_ENTRANCE_FEE = 'ranking_live.DEFAULT_ENTRANCE_FEE';
+
+	
+	const DEFAULT_START_TIME = 'ranking_live.DEFAULT_START_TIME';
+
+	
+	const DEFAULT_IS_FREEROLL = 'ranking_live.DEFAULT_IS_FREEROLL';
+
+	
+	const DEFAULT_BLIND_TIME = 'ranking_live.DEFAULT_BLIND_TIME';
+
+	
+	const DEFAULT_STACK_CHIPS = 'ranking_live.DEFAULT_STACK_CHIPS';
+
+	
+	const DEFAULT_ALLOWED_REBUYS = 'ranking_live.DEFAULT_ALLOWED_REBUYS';
+
+	
+	const DEFAULT_ALLOWED_ADDONS = 'ranking_live.DEFAULT_ALLOWED_ADDONS';
+
+	
+	const DEFAULT_IS_ILIMITED_REBUYS = 'ranking_live.DEFAULT_IS_ILIMITED_REBUYS';
 
 	
 	const ENABLED = 'ranking_live.ENABLED';
@@ -91,19 +112,19 @@ abstract class BaseRankingLivePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingName', 'RankingTypeId', 'StartDate', 'FinishDate', 'IsPrivate', 'Players', 'Events', 'DefaultBuyin', 'DefaultEntranceFee', 'Description', 'GameStyleId', 'GameTypeId', 'RankingTag', 'ScoreFormula', 'FileNameLogo', 'Enabled', 'Visible', 'Locked', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (RankingLivePeer::ID, RankingLivePeer::RANKING_NAME, RankingLivePeer::RANKING_TYPE_ID, RankingLivePeer::START_DATE, RankingLivePeer::FINISH_DATE, RankingLivePeer::IS_PRIVATE, RankingLivePeer::PLAYERS, RankingLivePeer::EVENTS, RankingLivePeer::DEFAULT_BUYIN, RankingLivePeer::DEFAULT_ENTRANCE_FEE, RankingLivePeer::DESCRIPTION, RankingLivePeer::GAME_STYLE_ID, RankingLivePeer::GAME_TYPE_ID, RankingLivePeer::RANKING_TAG, RankingLivePeer::SCORE_FORMULA, RankingLivePeer::FILE_NAME_LOGO, RankingLivePeer::ENABLED, RankingLivePeer::VISIBLE, RankingLivePeer::LOCKED, RankingLivePeer::DELETED, RankingLivePeer::CREATED_AT, RankingLivePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_name', 'ranking_type_id', 'start_date', 'finish_date', 'is_private', 'players', 'events', 'default_buyin', 'default_entrance_fee', 'description', 'game_style_id', 'game_type_id', 'ranking_tag', 'score_formula', 'file_name_logo', 'enabled', 'visible', 'locked', 'deleted', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_NAME'=>'', 'RANKING_TYPE_ID'=>'', 'START_DATE'=>'', 'FINISH_DATE'=>'', 'IS_PRIVATE'=>'', 'PLAYERS'=>'', 'EVENTS'=>'', 'DEFAULT_BUYIN'=>'', 'DEFAULT_ENTRANCE_FEE'=>'', 'DESCRIPTION'=>'', 'GAME_STYLE_ID'=>'', 'GAME_TYPE_ID'=>'', 'RANKING_TAG'=>'', 'SCORE_FORMULA'=>'', 'FILE_NAME_LOGO'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'LOCKED'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingName', 'RankingTypeId', 'StartDate', 'FinishDate', 'IsPrivate', 'Players', 'Events', 'Description', 'GameStyleId', 'GameTypeId', 'RankingTag', 'ScoreFormula', 'FileNameLogo', 'DefaultBuyin', 'DefaultEntranceFee', 'DefaultStartTime', 'DefaultIsFreeroll', 'DefaultBlindTime', 'DefaultStackChips', 'DefaultAllowedRebuys', 'DefaultAllowedAddons', 'DefaultIsIlimitedRebuys', 'Enabled', 'Visible', 'Locked', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (RankingLivePeer::ID, RankingLivePeer::RANKING_NAME, RankingLivePeer::RANKING_TYPE_ID, RankingLivePeer::START_DATE, RankingLivePeer::FINISH_DATE, RankingLivePeer::IS_PRIVATE, RankingLivePeer::PLAYERS, RankingLivePeer::EVENTS, RankingLivePeer::DESCRIPTION, RankingLivePeer::GAME_STYLE_ID, RankingLivePeer::GAME_TYPE_ID, RankingLivePeer::RANKING_TAG, RankingLivePeer::SCORE_FORMULA, RankingLivePeer::FILE_NAME_LOGO, RankingLivePeer::DEFAULT_BUYIN, RankingLivePeer::DEFAULT_ENTRANCE_FEE, RankingLivePeer::DEFAULT_START_TIME, RankingLivePeer::DEFAULT_IS_FREEROLL, RankingLivePeer::DEFAULT_BLIND_TIME, RankingLivePeer::DEFAULT_STACK_CHIPS, RankingLivePeer::DEFAULT_ALLOWED_REBUYS, RankingLivePeer::DEFAULT_ALLOWED_ADDONS, RankingLivePeer::DEFAULT_IS_ILIMITED_REBUYS, RankingLivePeer::ENABLED, RankingLivePeer::VISIBLE, RankingLivePeer::LOCKED, RankingLivePeer::DELETED, RankingLivePeer::CREATED_AT, RankingLivePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_name', 'ranking_type_id', 'start_date', 'finish_date', 'is_private', 'players', 'events', 'description', 'game_style_id', 'game_type_id', 'ranking_tag', 'score_formula', 'file_name_logo', 'default_buyin', 'default_entrance_fee', 'default_start_time', 'default_is_freeroll', 'default_blind_time', 'default_stack_chips', 'default_allowed_rebuys', 'default_allowed_addons', 'default_is_ilimited_rebuys', 'enabled', 'visible', 'locked', 'deleted', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_NAME'=>'', 'RANKING_TYPE_ID'=>'', 'START_DATE'=>'', 'FINISH_DATE'=>'', 'IS_PRIVATE'=>'', 'PLAYERS'=>'', 'EVENTS'=>'', 'DESCRIPTION'=>'', 'GAME_STYLE_ID'=>'', 'GAME_TYPE_ID'=>'', 'RANKING_TAG'=>'', 'SCORE_FORMULA'=>'', 'FILE_NAME_LOGO'=>'', 'DEFAULT_BUYIN'=>'', 'DEFAULT_ENTRANCE_FEE'=>'', 'DEFAULT_START_TIME'=>'', 'DEFAULT_IS_FREEROLL'=>'', 'DEFAULT_BLIND_TIME'=>'', 'DEFAULT_STACK_CHIPS'=>'', 'DEFAULT_ALLOWED_REBUYS'=>'', 'DEFAULT_ALLOWED_ADDONS'=>'', 'DEFAULT_IS_ILIMITED_REBUYS'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'LOCKED'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingName'=>1, 'RankingTypeId'=>2, 'StartDate'=>3, 'FinishDate'=>4, 'IsPrivate'=>5, 'Players'=>6, 'Events'=>7, 'DefaultBuyin'=>8, 'DefaultEntranceFee'=>9, 'Description'=>10, 'GameStyleId'=>11, 'GameTypeId'=>12, 'RankingTag'=>13, 'ScoreFormula'=>14, 'FileNameLogo'=>15, 'Enabled'=>16, 'Visible'=>17, 'Locked'=>18, 'Deleted'=>19, 'CreatedAt'=>20, 'UpdatedAt'=>21, ),
-		BasePeer::TYPE_COLNAME=>array (RankingLivePeer::ID=>0, RankingLivePeer::RANKING_NAME=>1, RankingLivePeer::RANKING_TYPE_ID=>2, RankingLivePeer::START_DATE=>3, RankingLivePeer::FINISH_DATE=>4, RankingLivePeer::IS_PRIVATE=>5, RankingLivePeer::PLAYERS=>6, RankingLivePeer::EVENTS=>7, RankingLivePeer::DEFAULT_BUYIN=>8, RankingLivePeer::DEFAULT_ENTRANCE_FEE=>9, RankingLivePeer::DESCRIPTION=>10, RankingLivePeer::GAME_STYLE_ID=>11, RankingLivePeer::GAME_TYPE_ID=>12, RankingLivePeer::RANKING_TAG=>13, RankingLivePeer::SCORE_FORMULA=>14, RankingLivePeer::FILE_NAME_LOGO=>15, RankingLivePeer::ENABLED=>16, RankingLivePeer::VISIBLE=>17, RankingLivePeer::LOCKED=>18, RankingLivePeer::DELETED=>19, RankingLivePeer::CREATED_AT=>20, RankingLivePeer::UPDATED_AT=>21, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_name'=>1, 'ranking_type_id'=>2, 'start_date'=>3, 'finish_date'=>4, 'is_private'=>5, 'players'=>6, 'events'=>7, 'default_buyin'=>8, 'default_entrance_fee'=>9, 'description'=>10, 'game_style_id'=>11, 'game_type_id'=>12, 'ranking_tag'=>13, 'score_formula'=>14, 'file_name_logo'=>15, 'enabled'=>16, 'visible'=>17, 'locked'=>18, 'deleted'=>19, 'created_at'=>20, 'updated_at'=>21, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingName'=>1, 'RankingTypeId'=>2, 'StartDate'=>3, 'FinishDate'=>4, 'IsPrivate'=>5, 'Players'=>6, 'Events'=>7, 'Description'=>8, 'GameStyleId'=>9, 'GameTypeId'=>10, 'RankingTag'=>11, 'ScoreFormula'=>12, 'FileNameLogo'=>13, 'DefaultBuyin'=>14, 'DefaultEntranceFee'=>15, 'DefaultStartTime'=>16, 'DefaultIsFreeroll'=>17, 'DefaultBlindTime'=>18, 'DefaultStackChips'=>19, 'DefaultAllowedRebuys'=>20, 'DefaultAllowedAddons'=>21, 'DefaultIsIlimitedRebuys'=>22, 'Enabled'=>23, 'Visible'=>24, 'Locked'=>25, 'Deleted'=>26, 'CreatedAt'=>27, 'UpdatedAt'=>28, ),
+		BasePeer::TYPE_COLNAME=>array (RankingLivePeer::ID=>0, RankingLivePeer::RANKING_NAME=>1, RankingLivePeer::RANKING_TYPE_ID=>2, RankingLivePeer::START_DATE=>3, RankingLivePeer::FINISH_DATE=>4, RankingLivePeer::IS_PRIVATE=>5, RankingLivePeer::PLAYERS=>6, RankingLivePeer::EVENTS=>7, RankingLivePeer::DESCRIPTION=>8, RankingLivePeer::GAME_STYLE_ID=>9, RankingLivePeer::GAME_TYPE_ID=>10, RankingLivePeer::RANKING_TAG=>11, RankingLivePeer::SCORE_FORMULA=>12, RankingLivePeer::FILE_NAME_LOGO=>13, RankingLivePeer::DEFAULT_BUYIN=>14, RankingLivePeer::DEFAULT_ENTRANCE_FEE=>15, RankingLivePeer::DEFAULT_START_TIME=>16, RankingLivePeer::DEFAULT_IS_FREEROLL=>17, RankingLivePeer::DEFAULT_BLIND_TIME=>18, RankingLivePeer::DEFAULT_STACK_CHIPS=>19, RankingLivePeer::DEFAULT_ALLOWED_REBUYS=>20, RankingLivePeer::DEFAULT_ALLOWED_ADDONS=>21, RankingLivePeer::DEFAULT_IS_ILIMITED_REBUYS=>22, RankingLivePeer::ENABLED=>23, RankingLivePeer::VISIBLE=>24, RankingLivePeer::LOCKED=>25, RankingLivePeer::DELETED=>26, RankingLivePeer::CREATED_AT=>27, RankingLivePeer::UPDATED_AT=>28, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_name'=>1, 'ranking_type_id'=>2, 'start_date'=>3, 'finish_date'=>4, 'is_private'=>5, 'players'=>6, 'events'=>7, 'description'=>8, 'game_style_id'=>9, 'game_type_id'=>10, 'ranking_tag'=>11, 'score_formula'=>12, 'file_name_logo'=>13, 'default_buyin'=>14, 'default_entrance_fee'=>15, 'default_start_time'=>16, 'default_is_freeroll'=>17, 'default_blind_time'=>18, 'default_stack_chips'=>19, 'default_allowed_rebuys'=>20, 'default_allowed_addons'=>21, 'default_is_ilimited_rebuys'=>22, 'enabled'=>23, 'visible'=>24, 'locked'=>25, 'deleted'=>26, 'created_at'=>27, 'updated_at'=>28, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, )
 	);
 
 	
@@ -173,10 +194,6 @@ abstract class BaseRankingLivePeer {
 
 		$criteria->addSelectColumn(RankingLivePeer::EVENTS);
 
-		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_BUYIN);
-
-		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_ENTRANCE_FEE);
-
 		$criteria->addSelectColumn(RankingLivePeer::DESCRIPTION);
 
 		$criteria->addSelectColumn(RankingLivePeer::GAME_STYLE_ID);
@@ -188,6 +205,24 @@ abstract class BaseRankingLivePeer {
 		$criteria->addSelectColumn(RankingLivePeer::SCORE_FORMULA);
 
 		$criteria->addSelectColumn(RankingLivePeer::FILE_NAME_LOGO);
+
+		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_BUYIN);
+
+		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_ENTRANCE_FEE);
+
+		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_START_TIME);
+
+		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_IS_FREEROLL);
+
+		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_BLIND_TIME);
+
+		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_STACK_CHIPS);
+
+		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_ALLOWED_REBUYS);
+
+		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_ALLOWED_ADDONS);
+
+		$criteria->addSelectColumn(RankingLivePeer::DEFAULT_IS_ILIMITED_REBUYS);
 
 		$criteria->addSelectColumn(RankingLivePeer::ENABLED);
 

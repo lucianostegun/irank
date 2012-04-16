@@ -7,3 +7,14 @@ all:
 
   has_layout:     on
   layout:         login
+  
+accessDeniedSuccess:
+  
+  http_metas:
+    content-type: text/html
+    
+  stylesheets:    [backend/main, -backend/login]
+  javascripts:    []
+  
+  has_layout:     on
+  layout:         layout

@@ -7,7 +7,7 @@ include_metas();
 include_title();
 
 $iRankAdmin = $sf_user->hasCredential('iRankAdmin');
-$iRankSite  = $sf_user->hasCredential('iRankClub');
+$iRankClub  = $sf_user->hasCredential('iRankClub');
 $messages   = 0;
 $peopleName = $sf_user->getAttribute(($messages?'firstName':'fullName'));
 $moduleName = $sf_context->getModuleName();
@@ -26,7 +26,7 @@ $actionName = $sf_context->getActionName();
     <!-- Search widget -->
     <form action="" class="sidebarSearch">
 
-        <input type="text" name="search" placeholder="search..." id="ac" />
+        <input type="text" name="search" placeholder="pesquisa rápida..." id="ac" />
         <input type="submit" value="" />
     </form>
     
@@ -69,6 +69,9 @@ $actionName = $sf_context->getActionName();
             </ul>
         </li>
         <?php endif; ?>
+        <?php if( !$iRankAdmin && $iRankClub ): ?>
+        <li class="club"><a href="<?php echo url_for('club/edit') ?>"><span>Informações do clube</span></a></li>
+        <?php endif; ?>
         
         <li class="ranking"><a href="javascript:void(0)" title="" class="<?php echo (strstr($moduleName, 'ranking')?'active':'exp') ?>"><span>Rankings</span><strong>2</strong></a>
             <ul class="sub">
@@ -84,51 +87,14 @@ $actionName = $sf_context->getActionName();
             </ul>
         </li>
 
+		<?php if( $iRankAdmin ): ?>
         <li class="admin"><a href="javascript:void(0)" title="" class="<?php echo (strstr($moduleName, 'userAdmin')?'active':'exp') ?>"><span>Administração</span><strong>2</strong></a>
             <ul class="sub">
                 <li><?php echo link_to('Painel de controle', 'controlPanel/index') ?></li>
                 <li class="last"><?php echo link_to('Usuários', 'userAdmin/index') ?></li>
             </ul>
         </li>
-        
-        <li class="charts"><a href="charts.html" title=""><span>Statistics and charts</span></a></li>
-        <li class="ui"><a href="ui_elements.html" title=""><span>Interface elements</span></a></li>
-        <li class="tables"><a href="tables.html" title="" class="exp"><span>Tables</span><strong>3</strong></a>
-
-            <ul class="sub">
-                <li><a href="table_static.html" title="">Static tables</a></li>
-                <li><a href="table_dynamic.html" title="">Dynamic table</a></li>
-                <li class="last"><a href="table_sortable_resizable.html" title="">Sortable &amp; resizable tables</a></li>
-            </ul>
-        </li>
-
-        <li class="widgets"><a href="#" title="" class="exp"><span>Widgets and grid</span><strong>2</strong></a>
-            <ul class="sub">
-                <li><a href="widgets.html" title="">Widgets</a></li>
-                <li class="last"><a href="grid.html" title="">Grid</a></li>
-            </ul>
-        </li>
-        <li class="errors"><a href="#" title="" class="exp"><span>Error pages</span><strong>6</strong></a>
-
-            <ul class="sub">
-                <li><a href="403.html" title="">403 page</a></li>
-                <li><a href="404.html" title="">404 page</a></li>
-                <li><a href="405.html" title="">405 page</a></li>
-                <li><a href="500.html" title="">500 page</a></li>
-                <li><a href="503.html" title="">503 page</a></li>
-
-                <li class="last"><a href="offline.html" title="">Website is offline</a></li>
-            </ul>
-        </li>
-        <li class="files"><a href="file_manager.html" title=""><span>File manager</span></a></li>
-        <li class="typo"><a href="#" title="" class="exp"><span>Other pages</span><strong>3</strong></a>
-            <ul class="sub">
-                <li><a href="typography.html" title="">Typography</a></li>
-
-                <li><a href="calendar.html" title="">Calendar</a></li>
-                <li class="last"><a href="gallery.html" title="">Gallery</a></li>
-            </ul>
-        </li>
+        <?php endif; ?>
     </ul>
 </div>
 
@@ -142,8 +108,8 @@ $actionName = $sf_context->getActionName();
             <div class="welcome"><a href="#" title=""><img src="/images/backend/userPic.png" alt="" /></a><span>Olá, <?php echo $peopleName ?>!</span></div>
             <div class="userNav">
                 <ul>
-                    <li><a href="#" title=""><img src="/images/backend/icons/topnav/profile.png" alt="" /><span>Profile</span></a></li>
-
+                    <li><?php echo link_to(image_tag('backend/icons/topnav/profile').'<span>Perfil</span>', 'userTools/edit') ?></li>
+					<!--
                     <li><a href="#" title=""><img src="/images/backend/icons/topnav/tasks.png" alt="" /><span>Tasks</span></a></li>
                     <li class="dd"><a title=""><img src="/images/backend/icons/topnav/messages.png" alt="" /><span>Messages</span><span class="numberTop"><?php echo $messages ?></span></a>
                         <ul class="userDropdown">
@@ -154,6 +120,7 @@ $actionName = $sf_context->getActionName();
                             <li><a href="#" title="" class="sTrash">trash</a></li>
                         </ul>
                     </li>
+                    -->
                     <?php if( $iRankAdmin ): ?>
                     <li><?php echo link_to(image_tag('backend/icons/topnav/settings').'<span>Configurações</span>', 'settings/index') ?></li>
                     <?php endif; ?>
@@ -234,7 +201,7 @@ $actionName = $sf_context->getActionName();
         <div class="cLine"></div>
     </div>
     
-    <div class="<?php echo ($actionName=='error404'?'errorWrapper':'wrapper') ?>">
+    <div class="<?php echo (in_array($actionName, array('error404', 'accessDenied'))?'errorWrapper':'wrapper') ?>">
     	<!-- Title area -->
 	    <div class="titleArea">
 	       <?php echo $sf_data->getRaw('sf_content') ?> 

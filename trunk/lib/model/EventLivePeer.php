@@ -30,4 +30,9 @@ class EventLivePeer extends BaseEventLivePeer
 		
 		return EventLivePeer::doSelect($criteria);
 	}
+	
+	public static function validateChips($stackChips){
+		
+		return preg_match('/^[0-9]*[,\.]?[0-9]*[kK]?$/', $stackChips);
+	}
 }

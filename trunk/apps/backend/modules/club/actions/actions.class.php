@@ -14,6 +14,7 @@ class clubActions extends sfActions
     
     $this->clubId = $this->getRequestParameter('id');
     $this->clubId = $this->getRequestParameter('clubId', $this->clubId);
+    $this->clubId = $this->getUser()->getAttribute('clubId', $this->clubId);
     
     $this->pathList = array('Clubes'=>'club/index');
   }
@@ -171,6 +172,22 @@ class clubActions extends sfActions
 	
 	
 	echo file_get_contents($filePath);
+	
+  	exit;
+  }
+  
+  public function executeUploadPhotos($request){
+	
+	$clubPhotoObj = Club::uploadPhoto($request, $this->clubId);
+	
+	if( is_object($clubPhotoObj) ){
+		
+		$clubPhotoId = $clubPhotoObj->getId();
+		echo '{"jsonrpc" : "2.0", "result" : "sucesso", "id" : "'.$clubPhotoId.'"}';
+	}else{
+		
+		Util::forceError('Erro ao carregar a imagem');
+	}
 	
   	exit;
   }

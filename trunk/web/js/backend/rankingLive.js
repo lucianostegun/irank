@@ -38,15 +38,22 @@ function updateFileUploadStatus(status, fileName){
 		case 'success':
 			var rankingLiveId = $('#rankingLiveId').val();
 			
-			var link = '<a href="javascript:void(0)" onclick="goToPage(\'rankingLive\', \'downloadLogo\', \'rankingLiveId\', '+rankingLiveId+')">'+fileName+'</a>'
-			$('rankingLiveFileNameLogoDiv').html(link);
+			fileName = fileName.replace(/(\.[a-zA-Z]*)$/, '-'+rankingLiveId+'$1');
+			
+			var link = '<a href="javascript:void(0)" onclick="goToPage(\'rankingLive\', \'downloadLogo\', \'rankingLiveId\', '+rankingLiveId+')"><img src="'+_imageRoot+'/ranking/'+fileName+'?time='+time()+'" /></a>'
+			$('#rankingLiveFileNameLogoDiv').html(link);
 			break;
 		case 'loading':
-			$('rankingLiveFileNameLogoDiv').html('Carregando arquivo...');
+			$('#rankingLiveFileNameLogoDiv').html('Carregando arquivo...');
 			break;
 		case 'error':
-			$('rankingLiveFileNameLogoDiv').html('Não informado');
+			$('#rankingLiveFileNameLogoDiv').html('Não informado');
 			alert('Erro ao carregar o arquivo!\nVerifique se o arquivo é uma imagem JPG ou PNG de 90x90 pixels');
 			break;
 	}
+}
+
+function handleIsFreeroll(checked){
+	
+	$('#rankingLiveDefaultBuyin').attr('disabled', checked);
 }

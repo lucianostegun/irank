@@ -1,7 +1,4 @@
-<?php
-	$iRankAdmin = $sf_user->hasCredential('iRankAdmin');
-	$clubId     = $sf_user->getAttribute('clubId');
-?><!-- Fullscreen tabs -->
+<!-- Fullscreen tabs -->
 <div class="widget form">    
     <ul class="tabs">
 		<li><a href="#tab1">Principal</a></li>

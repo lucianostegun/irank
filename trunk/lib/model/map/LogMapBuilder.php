@@ -36,7 +36,9 @@ class LogMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('USER_SITE_ID', 'UserSiteId', 'int', CreoleTypes::INTEGER, true, null);
+		$tMap->addColumn('USER_SITE_ID', 'UserSiteId', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('USER_ADMIN_ID', 'UserAdminId', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('APP', 'App', 'string', CreoleTypes::VARCHAR, false, null);
 

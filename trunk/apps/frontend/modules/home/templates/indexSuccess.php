@@ -42,9 +42,9 @@ setupHomeHighlight(3);
 
 <div class="channels">
 	<div class="channel">
-		<div class="image"><?php echo image_tag('home/schedule') ?></div>
+		<div class="image"><?php echo link_to(image_tag('home/schedule'), 'schedule/index') ?></div>
 		<div class="description">
-			<h1>Calendário assinado</h1>
+			<h1><?php echo link_to('Calendário assinado', 'schedule/index') ?></h1>
 			Sincronize o calendário de seu tablet ou smartphone com nossa agenda de eventos. 
 		</div>
 	</div>

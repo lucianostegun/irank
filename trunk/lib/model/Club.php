@@ -169,8 +169,42 @@ class Club extends BaseClub
 		return Util::executeOne('SELECT COUNT(1) FROM event_live WHERE visible AND enabled AND NOT deleted AND club_id = '.$this->getId());
 	}
 	
-	public function toString(){
+	public function toString($defaultValue=null){
 		
-		return $this->getClubName();
+		$clubName = $this->getClubName();
+		
+		if( !$clubName && $defaultValue )
+			$clubName = $defaultValue;
+		
+		return $clubName;
+	}
+	
+	public static function uploadPhoto($request, $clubId){
+		
+		$clubId               = $request->getParameter('clubId', $clubId);
+		$allowedExtensionList = array('jpg', 'jpeg', 'png');
+		$maxFileSize          = (1024*1024*4);
+		
+		$options = array('allowedExtensionList'=>$allowedExtensionList,
+						 'maxFileSize'=>$maxFileSize);
+	
+		try {
+			
+			$fileObj = File::upload( $request, 'file', 'clubPhoto/club-'.$clubId, $options );
+		}catch( Exception $e ){
+		
+			Util::forceError($e);	
+		}
+		
+		$thumbPath = '/uploads/clubPhoto/club-'.$clubId.'/thumb';
+		$fileObj->createThumbnail($thumbPath, 80, 60);
+		$fileObj->resizeMax(800,600);
+		
+		$clubPhotoObj = new ClubPhoto();
+		$clubPhotoObj->setClubId($clubId);
+		$clubPhotoObj->setFileId($fileObj->getId());
+		$clubPhotoObj->save();
+		
+		return $clubPhotoObj;
 	}
 }

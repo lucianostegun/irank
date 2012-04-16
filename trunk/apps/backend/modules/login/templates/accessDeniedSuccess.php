@@ -1,11 +1,9 @@
-<table style="width: 100%">
-	<tr>
-		<td style="text-align: center; padding-top: 100px">
-				<?php echo image_tag('backend/login/logo') ?>
-				<br/><br/>
-				<h1 style="font-size: 24px">ACESSO NEGADO!</h1>
-				<?php echo link_to('Voltar para a página anterior', '#javascript.back(-1)') ?><br/>
-				<?php echo link_to('Efetuar o login', 'login/index') ?><br/>
-		</td>
-	</tr>
-</table>
+    <span class="sadEmo"></span>
+    <span class="errorTitle">Huum... Tem algo errado por aqui :(</span>
+    <span class="errorNum denied">ACESSO NEGADO</span>
+    <span class="errorDesc">
+    	Você não tem permissão para acessar a página solicitada!<br/>
+    	Por favor, entre em contato com o responsável pela administração.
+    </span>
+    <?php echo link_to('<span>Voltar para a página anterior</span>', '#javascript.back(-1)', array('class'=>'button dredB')) ?>
+	<?php echo link_to('<span>Efetuar o login</span>', 'login/index', array('class'=>'button blueB')) ?>

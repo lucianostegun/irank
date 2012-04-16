@@ -2,8 +2,9 @@
 <database name="log" defaultIdMethod="native" noXsd="true" package="lib.model" schema="public">
 
 	<table name="log" phpName="Log"> 
-		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
-		<column name="user_site_id" type="INTEGER" required="true" />
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="user_admin_id" type="INTEGER" />
 		<column name="app" type="VARCHAR"/>
 		<column name="module_name" type="VARCHAR"/>
 		<column name="action_name" type="VARCHAR"/>
@@ -15,7 +16,7 @@
 	</table>
 
 	<table name="log_field" phpName="LogField"> 
-		<column name="log_id" type="INTEGER" required="true" />
+		<column name="log_id" type="INTEGER" />
 		<column name="field_name" type="VARCHAR"/>
 		<column name="field_value" type="VARCHAR"/>
 		<column name="created_at" type="TIMESTAMP" />

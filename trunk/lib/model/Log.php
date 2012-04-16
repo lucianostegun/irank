@@ -23,9 +23,10 @@ class Log extends BaseLog
     
     public static function doLog($message, $className=null, $columnModifiedList=array(), $severity=self::LOG_INFORMATION){
 
-    	$userSiteId = sfContext::getInstance()->getUser()->getAttribute('userSiteId');
+    	$userSiteId  = sfContext::getInstance()->getUser()->getAttribute('userSiteId');
+    	$userAdminId = sfContext::getInstance()->getUser()->getAttribute('userAdminId');
     	
-    	$app = self::getEnvironment('frontend');
+    	$app = Util::getApp();
         
         $moduleName = sfContext::getInstance()->getModuleName();
         $actionName = sfContext::getInstance()->getActionName();
@@ -37,6 +38,7 @@ class Log extends BaseLog
         
         $logObj = new Log;
         $logObj->setUserSiteId(($userSiteId?$userSiteId:null)); // Logs sem usuários são logs do sistema
+        $logObj->setUserAdminId(($userAdminId?$userAdminId:null)); // Logs sem usuários são logs do sistema
         $logObj->setApp( $app );
         $logObj->setModuleName( $moduleName );
         $logObj->setActionName( $actionName );
@@ -95,11 +97,6 @@ class Log extends BaseLog
     		$primaryKey = implode(' e ', $primaryKey);
     	
     	self::doLog('Excluiu o registro '.$primaryKey.' na tabela '.$tableName);
-    }
-    
-    public static function getEnvironment( $app ){
-    	
-    	return 'frontend';
     }
     
     public function getMessage( $handle=false ){

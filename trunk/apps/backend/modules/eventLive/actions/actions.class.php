@@ -15,6 +15,9 @@ class eventLiveActions extends sfActions
     $this->eventLiveId = $this->getRequestParameter('id');
     $this->eventLiveId = $this->getRequestParameter('eventLiveId', $this->eventLiveId);
     
+    $this->iRankAdmin = $this->getUser()->hasCredential('iRankAdmin');
+	$this->clubId     = $this->getUser()->getAttribute('clubId');
+    
     $this->pathList = array('Eventos ao vivo'=>'eventLive/index');
   }
 
@@ -70,7 +73,7 @@ class eventLiveActions extends sfActions
 	    $username = $this->getUser()->getAttribute('username');
 
     	Log::doLog('Usuário <b>'.$username.'</b> tentou editar as informações do evento <b>('.$eventLiveObj->getId().') '.$eventLiveObj->toString().'</b>.', 'EventLive', array(), Log::LOG_CRITICAL);
-    	throw new Exception('Você não tem permissão para editar esse registro!');
+    	throw new Exception('Você não tem permissão para editar esse evento!');
     }
     
     $eventLiveObj->quickSave($request);
@@ -291,4 +294,34 @@ class eventLiveActions extends sfActions
 //	
 //	exit;
 //  }
+  
+  public function executeUploadPhotos($request){
+	
+	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+	
+	if( !$eventLiveObj->isMyEvent() ){
+    	
+	    $username = $this->getUser()->getAttribute('username');
+	    
+	    $options  = array('noFile'=>true, 'noLog'=>true, 'maxFileSize'=>'4m');
+	    $fileObj  = File::upload( $request, 'file', 'error', $options );
+	    $fileName = $fileObj->getFileName();
+
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou enviar a imagem "'.$fileName.'" para o evento <b>('.$eventLiveObj->getId().') '.$eventLiveObj->toString().'</b>.', 'EventLive', array(), Log::LOG_CRITICAL);
+    	throw new Exception('Você não tem permissão para enviar fotos para esse evento!');
+    }
+	
+	$eventLivePhotoObj = EventLive::uploadPhoto($request, $this->eventLiveId);
+	
+	if( is_object($eventLivePhotoObj) ){
+		
+		$eventLivePhotoId = $eventLivePhotoObj->getId();
+		echo '{"jsonrpc" : "2.0", "result" : "sucesso", "id" : "'.$eventLivePhotoId.'"}';
+	}else{
+		
+		Util::forceError('Erro ao carregar a imagem');
+	}
+	
+  	exit;
+  }
 }

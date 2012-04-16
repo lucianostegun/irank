@@ -161,6 +161,8 @@ text-shadow: 0 1px 0 #ccc,
                0 10px 10px rgba(0,0,0,.2),
                0 20px 20px rgba(0,0,0,.15); }
 
+.errorWrapper .errorNum.denied { font-size: 80px }
+
 .errorDesc { display: block; margin: 40px 0 25px 0; font-weight: bold; font-size: 14px; }
 
 
@@ -260,8 +262,9 @@ ul.sub li.this a { color: #d5d5d5; }
 ul.sub li a { background: url(/images/backend/arrow.gif) no-repeat 12px 16px; border: none; font-family: Arial, Helvetica, sans-serif; color: #494949; font-size: 11px; padding: 8px 10px 8px 26px; color: #9da1a5; }
 ul.sub li a:hover { font-style: normal; border: none; color: #d5d5d5; background: url(/images/backend/arrow.gif) no-repeat 12px 16px; }
 
-ul.sub li strong, ul.sub li strong { width: 12px; height: 24px; margin-right: -5px; margin-top: -6px; font-weight: bold; text-align: center; background-image: url(/images/backend/icons/light/add.png); background-position: 6px 5px; background-repeat: no-repeat }
+ul.sub li strong { width: 12px; height: 24px; margin-right: -5px; margin-top: -6px; font-weight: bold; text-align: center; background-image: url(/images/backend/icons/light/add.png); background-position: 6px 5px; background-repeat: no-repeat }
 ul.sub li strong img { position: relative; top: 3px; left: -2px }
+ul.sub li strong:hover { background-image: url(/images/backend/icons/light/add.png); background-position: 6px 5px; background-repeat: no-repeat }
 
 ul.sub li ul { border: none; border-top: 1px solid #c9c9c9; }
 ul.sub li ul li { padding-left: 10px; }
@@ -753,7 +756,7 @@ ul.tabs li { float: left; height: 36px; line-height: 38px; border-left: none; ov
 ul.tabs li a { display: block; padding: 0px 12px; outline: none; color: #424242; font-size: 12px; font-weight: bold; }
 ul.tabs li a:hover { color: #797979; }
 html ul.tabs li.activeTab  { background-color: #f9f9f9; height: 37px; }
-.rightTabs .activeTab { height: 36px!important; }
+.rightTabs .activeTab, .leftTabs .activeTab { height: 36px!important; }
 html ul.tabs li.activeTab a { color: #2E6B9B; } 
 
 .tab_container { overflow: hidden; width: 100%; }
@@ -762,6 +765,11 @@ html ul.tabs li.activeTab a { color: #2E6B9B; }
 .rightTabs { position: relative; }
 .rightTabs ul.tabs { float: right; background: none; height: 38px; position: absolute; top: 0; right: 0; border-bottom: none; }
 .rightTabs ul.tabs li { border-left: 1px solid #cdcdcd; border-right: none; }
+
+.leftTabs { position: relative; }
+.leftTabs ul.tabs { float: left; background: none; height: 38px; position: absolute; top: 0; left: 0; border-bottom: none; }
+.leftTabs ul.tabs li { border-right: 1px solid #cdcdcd; border-left: none; }
+.leftTabs ul.tabs li:first-child { margin-left: 35px }
 
 
 /* Search widget */
@@ -950,7 +958,7 @@ html ul.tabs li.activeTab a { color: #2E6B9B; }
 /* ===== Static table ===== */
 
 .sTable thead td { text-align: center; }
-.sTable thead td { border-bottom: 1px solid #cbcbcb; border-left: 1px solid #cbcbcb; background: #efefef url(/images/backend/backgrounds/titleBg.png) repeat-x; color: #878787; font-size: 11px; color: #878787; font-weight: normal; padding: 3px 8px 2px 8px; }
+.sTable thead td { border-bottom: 1px solid #cbcbcb; border-left: 1px solid #cbcbcb; background: #dcdcdc url(/images/backend/backgrounds/titleBg.png) repeat-x; color: #878787; font-size: 11px; color: #303030; text-shadow: #FFF 1px 1px; font-weight: bold; padding: 3px 8px 2px 8px; }
 
 table thead td.sortCol > div { cursor: pointer; position: relative; }
 table thead td span { background: url(/images/backend/icons/sort.png) no-repeat 0; display: block; position: absolute; right: 3px; top: 2px; width: 16px; height: 16px; }
@@ -959,7 +967,7 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 
 .sTable thead td a { color: #878787; }
 .sTable thead td:first-child { border-left: none; }
-.mTable tfoot tr { height: 50px; background: #efefef url(/images/backend/backgrounds/titleBg.png) repeat-x; border-top: 1px solid #ddd; }
+.mTable tfoot tr { height: 50px; background: #dcdcdc url(/images/backend/backgrounds/titleBg.png) repeat-x; border-top: 1px solid #ddd; }
 
 .fileInfo { font-size: 11px; text-align: center; }
 .fileInfo span { display: block; }
@@ -976,8 +984,14 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .sTable tbody tr:nth-child(even) { background-color: #f6f6f6; }
 
 .sTable tbody td { border-left: 1px solid #e4e4e4; padding: 8px 12px; vertical-align: middle; }
-.sTable tbody td:first-child { border-left: none; }
+.sTable tbody td:first-child { border-left: none }
 .sTable tbody tr:first-child { border-top: none; }
+.sTable tbody tr td { cursor: pointer }
+
+.sTable tbody tr .gradeA:hover { 
+	
+	background-color: #f8c05d;
+}
 
 .withCheck tbody tr td:first-child, .withCheck tbody tr th:first-child { padding: 11px; }
 .withCheck thead tr td:first-child { vertical-align: middle; width: 37px!important; padding: 0; }
@@ -1048,6 +1062,8 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .form input[type=text]:focus, .form input[type=password]:focus, .form textarea:focus { border-color: #707070; background: #F5F5F5; color: #303030; -webkit-box-shadow: 0 0 0 2px #f4f4f4; box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; }
 .form input.calendar { width: auto; margin-right: 5px } 
 input[readonly], input[disabled] { background: #FCFCFC; border: 1px solid #DADADA; color: #D1D1D1; }
+
+.form input[disabled], .form input[disabled]:hover { color: #B0B0B0; background: #F5F5F5; border-color: #AAAAAA }
 
 .multiple { width: 100%; padding: 5px; }
 
@@ -1239,11 +1255,11 @@ label.error { color: #A73939; font-size: 11px; display: block; width: 100%; whit
 .plupload_container input { border: 1px solid #DDD; font-size: 11px; width: 98%; }
 
 .plupload_filelist { margin: 0; padding: 0; list-style: none; }
-.plupload_scroll .plupload_filelist { height: 185px; background: #fff; overflow-y: scroll; }
+.plupload_scroll .plupload_filelist { height: 300px; background: #fff; overflow-y: scroll; }
 .plupload_filelist li { padding: 10px 12px 14px 10px; background: #FCFCFC url(/images/backend/contentDivider.png) repeat-x 0 100%; }
 .plupload_filelist li:hover { background-color: #f9f9f9; }
 
-.plupload_filelist_header, .plupload_filelist_footer { background: #EFEFEF url(/images/backend/backgrounds/titleBg.png) repeat-x; padding: 3px 12px; color: #878787; }
+.plupload_filelist_header, .plupload_filelist_footer { background: #DCDCDC url(/images/backend/backgrounds/titleBg.png) repeat-x; padding: 3px 12px; color: #878787; }
 .plupload_filelist_header {	border-bottom: 1px solid #d5d5d5; height: 20px; }
 
 .plupload_filelist_footer { border-top: 1px solid #D5D5D5; line-height: 38px; vertical-align: middle; } 

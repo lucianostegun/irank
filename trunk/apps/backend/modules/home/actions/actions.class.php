@@ -13,6 +13,7 @@ class homeActions extends sfActions
   public function preExecute(){
   	
   	$this->pathList = array('Resumo geral'=>'home/index');
+  	$this->iRankAdmin = $this->getUser()->getAttribute('iRankAdmin');
   }
   
   public function executeIndex($request){

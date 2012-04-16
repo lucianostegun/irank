@@ -5,6 +5,7 @@
 		'failure'=>'handleFailureEventLive(response.responseText)',
 		),
 		array('class'=>'form', 'id'=>'eventLiveForm'));
+//	echo form_tag('eventLive/save', array('class'=>'form', 'id'=>'eventLiveForm'));
 	
 	echo input_hidden_tag('eventLiveId', $eventLiveObj->getId());
 	
@@ -22,7 +23,7 @@
 
 	<div class="formRow">
 		<label>Ranking</label>
-		<div class="formRight" id="eventLiveRankingLiveIdDiv"><?php echo select_tag('rankingLiveId', RankingLive::getOptionsForSelect($eventLiveObj->getClubId()|$clubId, $eventLiveObj->getRankingLiveId()), array('onchange'=>'loadDefaultBuyin(this.value)', 'id'=>'eventLiveRankingLiveId')) ?></div>
+		<div class="formRight" id="eventLiveRankingLiveIdDiv"><?php echo select_tag('rankingLiveId', RankingLive::getOptionsForSelect($eventLiveObj->getClubId()|$clubId, $eventLiveObj->getRankingLiveId()), array('onchange'=>'loadDefaultValues(this.value)', 'id'=>'eventLiveRankingLiveId')) ?></div>
 		<div class="clear"></div>
 	</div>
 	
@@ -68,14 +69,19 @@
 
 	<div class="formRow">
 		<label>Duração dos blinds</label>
-		<div class="formRight"><?php echo input_tag('blindTime', $eventLiveObj->getBlindTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'eventLiveBlindTime')) ?></div>
+		<div class="formRight">
+			<?php echo input_tag('blindTime', $eventLiveObj->getBlindTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'eventLiveBlindTime')) ?>
+			<span class="formNote">Formato: hh:mm</span>
+		</div>
 		<div class="clear"></div>
 	</div>
 
 	<div class="formRow">
 		<label>Stack inicial</label>
-		<div class="formRight"><?php echo input_tag('stackChips', $eventLiveObj->getStackChips(), array('size'=>7, 'maxlength'=>7, 'id'=>'eventLiveStackChips')) ?></div>
-		<div class="text">fichas</div>
+		<div class="formRight">
+			<?php echo input_tag('stackChips', $eventLiveObj->getStackChips(), array('size'=>7, 'maxlength'=>7, 'id'=>'eventLiveStackChips')) ?>
+			<span class="formNote">Formato: 00000 ou 0K</span>
+		</div>
 		<div class="clear"></div>
 	</div>
 

@@ -37,18 +37,32 @@ class RankingLive extends BaseRankingLive
 	
 	public function quickSave($request){
 		
-		$rankingName        = $request->getParameter('rankingName');
-		$rankingTypeId      = $request->getParameter('rankingTypeId');
-		$gameTypeId         = $request->getParameter('gameTypeId');
-		$gameStyleId        = $request->getParameter('gameStyleId');
-		$startDate          = $request->getParameter('startDate');
-		$finishDate         = $request->getParameter('finishDate');
-		$isPrivate          = $request->getParameter('isPrivate');
-		$defaultBuyin       = $request->getParameter('defaultBuyin');
-		$defaultEntranceFee = $request->getParameter('defaultEntranceFee');
-		$scoreFormula       = $request->getParameter('scoreFormula');
-		$description        = $request->getParameter('description');
-		$clubIdList         = $request->getParameter('clubId');
+		$rankingName             = $request->getParameter('rankingName');
+		$rankingTypeId           = $request->getParameter('rankingTypeId');
+		$gameTypeId              = $request->getParameter('gameTypeId');
+		$gameStyleId             = $request->getParameter('gameStyleId');
+		$startDate               = $request->getParameter('startDate');
+		$finishDate              = $request->getParameter('finishDate');
+		$isPrivate               = $request->getParameter('isPrivate');
+		$scoreFormula            = $request->getParameter('scoreFormula');
+		$description             = $request->getParameter('description');
+		$clubIdList              = $request->getParameter('clubId');
+		$defaultStartTime        = $request->getParameter('defaultStartTime');
+		$defaultIsFreeroll       = $request->getParameter('defaultIsFreeroll');
+		$defaultBuyin            = $request->getParameter('defaultBuyin');
+		$defaultEntranceFee      = $request->getParameter('defaultEntranceFee');
+		$defaultBlindTime        = $request->getParameter('defaultBlindTime');
+		$defaultStackChips       = $request->getParameter('defaultStackChips');
+		$defaultAllowedRebuys    = $request->getParameter('defaultAllowedRebuys');
+		$defaultAllowedAddons    = $request->getParameter('defaultAllowedAddons');
+		$defaultIsIlimitedRebuys = $request->getParameter('defaultIsIlimitedRebuys');
+		
+		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $defaultStackChips) )
+			$defaultStackChips = Util::formatFloat($defaultStackChips)*1000;
+
+		if( $defaultIsFreeroll )
+			$buyin = 0;
+
 		
 		$this->setRankingName($rankingName);
 		$this->setRankingTypeId($rankingTypeId);
@@ -57,10 +71,17 @@ class RankingLive extends BaseRankingLive
 		$this->setStartDate(Util::formatDate($startDate));
 		$this->setFinishDate(($finishDate?Util::formatDate($finishDate):null));
 		$this->setIsPrivate(($isPrivate?true:false));
-		$this->setDefaultBuyin(Util::formatFloat($defaultBuyin));
-		$this->setDefaultEntranceFee(Util::formatFloat($defaultEntranceFee));
 		$this->setScoreFormula($scoreFormula);
 		$this->setDescription($description);
+		$this->setDefaultStartTime($defaultStartTime);
+		$this->setDefaultIsFreeroll(($defaultIsFreeroll?true:false));
+		$this->setDefaultBuyin(Util::formatFloat($defaultBuyin));
+		$this->setDefaultEntranceFee(Util::formatFloat($defaultEntranceFee));
+		$this->setDefaultBlindTime($defaultBlindTime);
+		$this->setDefaultStackChips($defaultStackChips);
+		$this->setDefaultAllowedRebuys($defaultAllowedRebuys);
+		$this->setDefaultAllowedAddons($defaultAllowedAddons);
+		$this->setDefaultIsIlimitedRebuys(($defaultIsIlimitedRebuys?true:false));
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);
@@ -184,6 +205,9 @@ class RankingLive extends BaseRankingLive
 	
 	public function isMyRanking($userAdminId=null){
 		
+		if( !$this->getVisible() && !$this->getEnabled() && !$this->getDeleted() )
+			return true;
+		
 		if( !$userAdminId )
 			$userAdminId = MyTools::getAttribute('userAdminId');
 		
@@ -224,13 +248,30 @@ class RankingLive extends BaseRankingLive
 		return $this->getRankingName();
 	}
 	
+	public function getDefaultStackChips($displayShort=false){
+		
+		$defaultStackChips = parent::getDefaultStackChips();
+		
+		if( $displayShort )
+			$defaultStackChips = ($defaultStackChips/1000).'K';
+			
+		return $defaultStackChips;
+	}
+	
 	public function getInfo(){
 		
 		$infoList = array();
 		
-		$infoList['id']                 = $this->getId();
-		$infoList['defaultBuyin']       = $this->getDefaultBuyin();
-		$infoList['defaultEntranceFee'] = $this->getDefaultEntranceFee();
+		$infoList['id']                      = $this->getId();
+		$infoList['defaultStartTime']        = $this->getDefaultStartTime('H:i');
+		$infoList['defaultIsFreeroll']       = $this->getDefaultIsFreeroll();
+		$infoList['defaultBuyin']            = $this->getDefaultBuyin();
+		$infoList['defaultEntranceFee']      = $this->getDefaultEntranceFee();
+		$infoList['defaultBlindTime']        = $this->getDefaultBlindTime('H:i');
+		$infoList['defaultStackChips']       = $this->getDefaultStackChips(true);
+		$infoList['defaultAllowedRebuys']    = $this->getDefaultAllowedRebuys();
+		$infoList['defaultAllowedAddons']    = $this->getDefaultAllowedAddons();
+		$infoList['defaultIsIlimitedRebuys'] = $this->getDefaultIsIlimitedRebuys();
 		
 		return $infoList;
 	}

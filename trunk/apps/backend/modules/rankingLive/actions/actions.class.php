@@ -15,6 +15,9 @@ class rankingLiveActions extends sfActions
     $this->rankingLiveId = $this->getRequestParameter('id');
     $this->rankingLiveId = $this->getRequestParameter('rankingLiveId', $this->rankingLiveId);
     
+    $this->iRankAdmin = $this->getUser()->hasCredential('iRankAdmin');
+	$this->clubId     = $this->getUser()->getAttribute('clubId');
+    
     $this->pathList = array('Rakings ao vivo'=>'rankingLive/index');
   }
 
@@ -24,7 +27,10 @@ class rankingLiveActions extends sfActions
 
   public function executeNew($request){
     
-    $this->rankingLiveObj = Util::getNewObject('rankingLive');
+    $requiredFieldList = array('gameStyleId'=>VirtualTable::getIdByTagName('gameStyle', 'tournament'),
+    						   'gameTypeId'=>VirtualTable::getIdByTagName('gameType', 'holdem'),
+    						   'rankingTypeId'=>VirtualTable::getIdByTagName('rankingType', 'score'));
+    $this->rankingLiveObj = Util::getNewObject('rankingLive', $requiredFieldList);
     
     $this->pathList['Novo ranking'] = '#';
     $this->setTemplate('edit');

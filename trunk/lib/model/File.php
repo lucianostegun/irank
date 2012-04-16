@@ -132,12 +132,16 @@ class File extends BaseFile
 		$maxHeight            = (array_key_exists('maxHeight', $options)?$options['maxHeight']:null);
 		$destFileName         = (array_key_exists('fileName', $options)?$options['fileName']:null);
 		$noFile               = (array_key_exists('noFile', $options)?$options['noFile']:false);
+		$noLog                = (array_key_exists('noLog', $options)?$options['noLog']:false);
 		
 		$fileName  = $request->getFileName($fieldName);
 		$fileSize  = $request->getFileSize($fieldName);
 		$fileType  = $request->getFileType($fieldName);
 		$extension = explode('.', $fileName);
 		$extension = strtolower(end($extension));
+		
+		if( preg_match('/^[0-9]*[Mm][bB]?$/', $maxFileSize) )
+			$maxFileSize = Util::formatFloat($maxFileSize)*1024*1024;
 
 		if( $fileSize > $maxFileSize )
 			throw new Exception('Tamanho máximo de arquivo excedido');
@@ -195,10 +199,13 @@ class File extends BaseFile
 		if( !$noFile ){
 			
 			$fileObj->save();
-			Log::doLog('Upload do arquivo '.$fileObj->getId(), 'File');
+			
+			if( !$noLog )
+				Log::doLog('Upload do arquivo '.$fileObj->getId(), 'File');
 		}else{
 			
-			Log::doLog('Upload do arquivo '.$fileName, 'File', array('FILE_PATH'=>$filePath));
+			if( !$noLog )
+				Log::doLog('Upload do arquivo '.$fileName, 'File', array('FILE_PATH'=>$filePath));
 		}
 		
 		return $fileObj;
