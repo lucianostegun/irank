@@ -56,6 +56,9 @@ class EventLive extends BaseEventLive
 		$description      = $request->getParameter('description');
 		$comments         = $request->getParameter('comments');
 		
+		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $stackChips) )
+			$stackChips = Util::formatFloat($stackChips)*1000;
+
 		if( $isFreeroll )
 			$buyin = 0;
 		
@@ -110,6 +113,9 @@ class EventLive extends BaseEventLive
 	}
 	
 	public function isMyEvent($userAdminId=null){
+		
+		if( !$this->getVisible()  && !$this->getEnabled() && !$this->getDeleted() )
+			return true;
 		
 		if( !$userAdminId )
 			$userAdminId = MyTools::getAttribute('userAdminId');
@@ -285,6 +291,35 @@ class EventLive extends BaseEventLive
 			$stackChips = ($stackChips/1000).'K';
 			
 		return $stackChips;
+	}
+	
+	public static function uploadPhoto($request, $eventLiveId){
+		
+		$eventLiveId          = $request->getParameter('eventLiveId', $eventLiveId);
+		$allowedExtensionList = array('jpg', 'jpeg', 'png');
+		$maxFileSize          = (1024*1024*4);
+		
+		$options = array('allowedExtensionList'=>$allowedExtensionList,
+						 'maxFileSize'=>$maxFileSize);
+	
+		try {
+			
+			$fileObj = File::upload( $request, 'file', 'eventLivePhoto/eventLive-'.$eventLiveId, $options );
+		}catch( Exception $e ){
+		
+			Util::forceError($e);	
+		}
+		
+		$thumbPath = '/uploads/eventLivePhoto/eventLive-'.$eventLiveId.'/thumb';
+		$fileObj->createThumbnail($thumbPath, 80, 60);
+		$fileObj->resizeMax(800,600);
+		
+		$eventLivePhotoObj = new EventLivePhoto();
+		$eventLivePhotoObj->setEventLiveId($eventLiveId);
+		$eventLivePhotoObj->setFileId($fileObj->getId());
+		$eventLivePhotoObj->save();
+		
+		return $eventLivePhotoObj;
 	}
 	
 	public function getInfo(){

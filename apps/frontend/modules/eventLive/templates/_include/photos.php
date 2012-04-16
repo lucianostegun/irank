@@ -2,22 +2,22 @@
 	<table cellspacing="15" cellpadding="0" border="0">
 		<tr>
 			<?php
-				$criteria = new Criteria();
-				$criteria->add( EventPhotoPeer::IS_SHARED, true );
-				$criteria->add( EventPhotoPeer::DELETED, false );
-				$criteria->addDescendingOrderByColumn( EventPhotoPeer::CREATED_AT );
-				$eventPhotoObjList = EventPhotoPeer::doSelect($criteria);
+				$eventLiveId = $eventLiveObj->getId();
 				
-				$col        = 0;
-				$commentRow = 0;
-				foreach($eventPhotoObjList as $eventPhotoObj):
+				$criteria = new Criteria();
+				$criteria->add( EventLivePhotoPeer::EVENT_LIVE_ID, $eventLiveId );
+				$criteria->add( EventLivePhotoPeer::DELETED, false );
+				$criteria->addDescendingOrderByColumn( EventLivePhotoPeer::CREATED_AT );
+				$eventLivePhotoObjList = EventLivePhotoPeer::doSelect($criteria);
+				
+				$col = 0;
+				foreach($eventLivePhotoObjList as $eventLivePhotoObj):
 								
-					$eventPhotoId = $eventPhotoObj->getId();
-					$eventId      = $eventPhotoObj->getEventId();
-					$fileName     = Util::getFileName($eventPhotoObj->getFile()->getFilePath());
+					$eventLivePhotoId = $eventLivePhotoObj->getId();
+					$fileName     = Util::getFileName($eventLivePhotoObj->getFile()->getFilePath());
 					
 					if( $col > 0 && $col%6==0 )
-						echo '</tr><tr id="commentRow'.($commentRow++).'" style="display: none"><td colspan="6">----</td></tr><tr>';
+						echo '</tr><tr>';
 						
 					$col++;
 			?>
@@ -25,7 +25,7 @@
 				<table cellspacing="0" cellpadding="0" border="0">
 					<tr>
 						<td class="eventPhotoTable" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">
-							<a href="<?php echo '/uploads/eventPhoto/event-'.$eventId.'/'.$fileName ?>" rel="lightbox"><?php echo image_tag('/uploads/eventPhoto/event-'.$eventId.'/thumb/'.$fileName, array('width'=>100)) ?></a>
+							<a href="<?php echo '/uploads/eventLivePhoto/eventLive-'.$eventLiveId.'/'.$fileName ?>" rel="lightbox"><?php echo image_tag('/uploads/eventLivePhoto/eventLive-'.$eventLiveId.'/thumb/'.$fileName, array('width'=>100)) ?></a>
 						</td>
 					</tr>
 				</table>
@@ -33,9 +33,6 @@
 			<?php
 				endforeach;
 			?>
-		</tr>
-		<tr id="commentRow<?php echo $commentRow++ ?>" style="display: none">
-			<td colspan="6"></td>
 		</tr>
 	</table>
 </div>

@@ -17,6 +17,10 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 
 
 	
+	protected $user_admin_id;
+
+
+	
 	protected $app;
 
 
@@ -71,6 +75,13 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 	{
 
 		return $this->user_site_id;
+	}
+
+	
+	public function getUserAdminId()
+	{
+
+		return $this->user_admin_id;
 	}
 
 	
@@ -184,6 +195,20 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 		if ($this->user_site_id !== $v) {
 			$this->user_site_id = $v;
 			$this->modifiedColumns[] = LogPeer::USER_SITE_ID;
+		}
+
+	} 
+	
+	public function setUserAdminId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->user_admin_id !== $v) {
+			$this->user_admin_id = $v;
+			$this->modifiedColumns[] = LogPeer::USER_ADMIN_ID;
 		}
 
 	} 
@@ -314,27 +339,29 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 
 			$this->user_site_id = $rs->getInt($startcol + 1);
 
-			$this->app = $rs->getString($startcol + 2);
+			$this->user_admin_id = $rs->getInt($startcol + 2);
 
-			$this->module_name = $rs->getString($startcol + 3);
+			$this->app = $rs->getString($startcol + 3);
 
-			$this->action_name = $rs->getString($startcol + 4);
+			$this->module_name = $rs->getString($startcol + 4);
 
-			$this->class_name = $rs->getString($startcol + 5);
+			$this->action_name = $rs->getString($startcol + 5);
 
-			$this->severity = $rs->getInt($startcol + 6);
+			$this->class_name = $rs->getString($startcol + 6);
 
-			$this->message = $rs->getString($startcol + 7);
+			$this->severity = $rs->getInt($startcol + 7);
 
-			$this->created_at = $rs->getTimestamp($startcol + 8, null);
+			$this->message = $rs->getString($startcol + 8);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 9, null);
+			$this->created_at = $rs->getTimestamp($startcol + 9, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 10, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 10; 
+						return $startcol + 11; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Log object", $e);
 		}
@@ -494,27 +521,30 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 				return $this->getUserSiteId();
 				break;
 			case 2:
-				return $this->getApp();
+				return $this->getUserAdminId();
 				break;
 			case 3:
-				return $this->getModuleName();
+				return $this->getApp();
 				break;
 			case 4:
-				return $this->getActionName();
+				return $this->getModuleName();
 				break;
 			case 5:
-				return $this->getClassName();
+				return $this->getActionName();
 				break;
 			case 6:
-				return $this->getSeverity();
+				return $this->getClassName();
 				break;
 			case 7:
-				return $this->getMessage();
+				return $this->getSeverity();
 				break;
 			case 8:
-				return $this->getCreatedAt();
+				return $this->getMessage();
 				break;
 			case 9:
+				return $this->getCreatedAt();
+				break;
+			case 10:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -529,14 +559,15 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getUserSiteId(),
-			$keys[2]=>$this->getApp(),
-			$keys[3]=>$this->getModuleName(),
-			$keys[4]=>$this->getActionName(),
-			$keys[5]=>$this->getClassName(),
-			$keys[6]=>$this->getSeverity(),
-			$keys[7]=>$this->getMessage(),
-			$keys[8]=>$this->getCreatedAt(),
-			$keys[9]=>$this->getUpdatedAt(),
+			$keys[2]=>$this->getUserAdminId(),
+			$keys[3]=>$this->getApp(),
+			$keys[4]=>$this->getModuleName(),
+			$keys[5]=>$this->getActionName(),
+			$keys[6]=>$this->getClassName(),
+			$keys[7]=>$this->getSeverity(),
+			$keys[8]=>$this->getMessage(),
+			$keys[9]=>$this->getCreatedAt(),
+			$keys[10]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -559,27 +590,30 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 				$this->setUserSiteId($value);
 				break;
 			case 2:
-				$this->setApp($value);
+				$this->setUserAdminId($value);
 				break;
 			case 3:
-				$this->setModuleName($value);
+				$this->setApp($value);
 				break;
 			case 4:
-				$this->setActionName($value);
+				$this->setModuleName($value);
 				break;
 			case 5:
-				$this->setClassName($value);
+				$this->setActionName($value);
 				break;
 			case 6:
-				$this->setSeverity($value);
+				$this->setClassName($value);
 				break;
 			case 7:
-				$this->setMessage($value);
+				$this->setSeverity($value);
 				break;
 			case 8:
-				$this->setCreatedAt($value);
+				$this->setMessage($value);
 				break;
 			case 9:
+				$this->setCreatedAt($value);
+				break;
+			case 10:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -591,14 +625,15 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setUserSiteId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setApp($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setModuleName($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setActionName($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setClassName($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setSeverity($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setMessage($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setCreatedAt($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setUpdatedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[2], $arr)) $this->setUserAdminId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setApp($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setModuleName($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setActionName($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setClassName($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setSeverity($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setMessage($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
 	}
 
 	
@@ -608,6 +643,7 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(LogPeer::ID)) $criteria->add(LogPeer::ID, $this->id);
 		if ($this->isColumnModified(LogPeer::USER_SITE_ID)) $criteria->add(LogPeer::USER_SITE_ID, $this->user_site_id);
+		if ($this->isColumnModified(LogPeer::USER_ADMIN_ID)) $criteria->add(LogPeer::USER_ADMIN_ID, $this->user_admin_id);
 		if ($this->isColumnModified(LogPeer::APP)) $criteria->add(LogPeer::APP, $this->app);
 		if ($this->isColumnModified(LogPeer::MODULE_NAME)) $criteria->add(LogPeer::MODULE_NAME, $this->module_name);
 		if ($this->isColumnModified(LogPeer::ACTION_NAME)) $criteria->add(LogPeer::ACTION_NAME, $this->action_name);
@@ -647,6 +683,8 @@ abstract class BaseLog extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setUserSiteId($this->user_site_id);
+
+		$copyObj->setUserAdminId($this->user_admin_id);
 
 		$copyObj->setApp($this->app);
 

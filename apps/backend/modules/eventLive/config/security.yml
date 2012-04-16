@@ -5,8 +5,14 @@ default:
 index:
   credentials: [[iRankAdmin, iRankClub]]
 
+new:
+  credentials: [[iRankAdmin, iRankClub]]
+  
 edit:
   credentials: [[iRankAdmin, iRankClub]]
 
 save:
   credentials: [[iRankAdmin, iRankClub]]
+
+uploadPhotos:
+  is_secure: off

@@ -13,3 +13,6 @@ save:
   
 uploadLogo:
   is_secure: off
+
+uploadPhotos:
+  is_secure: off

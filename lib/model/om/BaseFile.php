@@ -62,6 +62,18 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 	protected $lastPartnerCriteria = null;
 
 	
+	protected $collEventLivePhotoList;
+
+	
+	protected $lastEventLivePhotoCriteria = null;
+
+	
+	protected $collClubPhotoList;
+
+	
+	protected $lastClubPhotoCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -413,6 +425,22 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEventLivePhotoList !== null) {
+				foreach($this->collEventLivePhotoList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collClubPhotoList !== null) {
+				foreach($this->collClubPhotoList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -472,6 +500,22 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 				if ($this->collPartnerList !== null) {
 					foreach($this->collPartnerList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventLivePhotoList !== null) {
+					foreach($this->collEventLivePhotoList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collClubPhotoList !== null) {
+					foreach($this->collClubPhotoList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -676,6 +720,14 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 			foreach($this->getPartnerList() as $relObj) {
 				$copyObj->addPartner($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEventLivePhotoList() as $relObj) {
+				$copyObj->addEventLivePhoto($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getClubPhotoList() as $relObj) {
+				$copyObj->addClubPhoto($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -981,6 +1033,216 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 	{
 		$this->collPartnerList[] = $l;
 		$l->setFile($this);
+	}
+
+	
+	public function initEventLivePhotoList()
+	{
+		if ($this->collEventLivePhotoList === null) {
+			$this->collEventLivePhotoList = array();
+		}
+	}
+
+	
+	public function getEventLivePhotoList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePhotoList === null) {
+			if ($this->isNew()) {
+			   $this->collEventLivePhotoList = array();
+			} else {
+
+				$criteria->add(EventLivePhotoPeer::FILE_ID, $this->getId());
+
+				EventLivePhotoPeer::addSelectColumns($criteria);
+				$this->collEventLivePhotoList = EventLivePhotoPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventLivePhotoPeer::FILE_ID, $this->getId());
+
+				EventLivePhotoPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventLivePhotoCriteria) || !$this->lastEventLivePhotoCriteria->equals($criteria)) {
+					$this->collEventLivePhotoList = EventLivePhotoPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventLivePhotoCriteria = $criteria;
+		return $this->collEventLivePhotoList;
+	}
+
+	
+	public function countEventLivePhotoList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventLivePhotoPeer::FILE_ID, $this->getId());
+
+		return EventLivePhotoPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventLivePhoto(EventLivePhoto $l)
+	{
+		$this->collEventLivePhotoList[] = $l;
+		$l->setFile($this);
+	}
+
+
+	
+	public function getEventLivePhotoListJoinEventLive($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePhotoList === null) {
+			if ($this->isNew()) {
+				$this->collEventLivePhotoList = array();
+			} else {
+
+				$criteria->add(EventLivePhotoPeer::FILE_ID, $this->getId());
+
+				$this->collEventLivePhotoList = EventLivePhotoPeer::doSelectJoinEventLive($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePhotoPeer::FILE_ID, $this->getId());
+
+			if (!isset($this->lastEventLivePhotoCriteria) || !$this->lastEventLivePhotoCriteria->equals($criteria)) {
+				$this->collEventLivePhotoList = EventLivePhotoPeer::doSelectJoinEventLive($criteria, $con);
+			}
+		}
+		$this->lastEventLivePhotoCriteria = $criteria;
+
+		return $this->collEventLivePhotoList;
+	}
+
+	
+	public function initClubPhotoList()
+	{
+		if ($this->collClubPhotoList === null) {
+			$this->collClubPhotoList = array();
+		}
+	}
+
+	
+	public function getClubPhotoList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseClubPhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubPhotoList === null) {
+			if ($this->isNew()) {
+			   $this->collClubPhotoList = array();
+			} else {
+
+				$criteria->add(ClubPhotoPeer::FILE_ID, $this->getId());
+
+				ClubPhotoPeer::addSelectColumns($criteria);
+				$this->collClubPhotoList = ClubPhotoPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ClubPhotoPeer::FILE_ID, $this->getId());
+
+				ClubPhotoPeer::addSelectColumns($criteria);
+				if (!isset($this->lastClubPhotoCriteria) || !$this->lastClubPhotoCriteria->equals($criteria)) {
+					$this->collClubPhotoList = ClubPhotoPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastClubPhotoCriteria = $criteria;
+		return $this->collClubPhotoList;
+	}
+
+	
+	public function countClubPhotoList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseClubPhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ClubPhotoPeer::FILE_ID, $this->getId());
+
+		return ClubPhotoPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addClubPhoto(ClubPhoto $l)
+	{
+		$this->collClubPhotoList[] = $l;
+		$l->setFile($this);
+	}
+
+
+	
+	public function getClubPhotoListJoinClub($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseClubPhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubPhotoList === null) {
+			if ($this->isNew()) {
+				$this->collClubPhotoList = array();
+			} else {
+
+				$criteria->add(ClubPhotoPeer::FILE_ID, $this->getId());
+
+				$this->collClubPhotoList = ClubPhotoPeer::doSelectJoinClub($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ClubPhotoPeer::FILE_ID, $this->getId());
+
+			if (!isset($this->lastClubPhotoCriteria) || !$this->lastClubPhotoCriteria->equals($criteria)) {
+				$this->collClubPhotoList = ClubPhotoPeer::doSelectJoinClub($criteria, $con);
+			}
+		}
+		$this->lastClubPhotoCriteria = $criteria;
+
+		return $this->collClubPhotoList;
 	}
 
 } 

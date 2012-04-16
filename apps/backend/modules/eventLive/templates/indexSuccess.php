@@ -15,8 +15,9 @@
 		</thead> 
 		<tbody id="eventLiveTbody"> 
 			<?php
+				$clubId = $sf_user->getAttribute('clubId');
 				$eventLiveIdList = array();
-				foreach(EventLive::getList() as $eventLiveObj):
+				foreach(EventLive::getList(null, $clubId) as $eventLiveObj):
 					
 					$eventLiveId       = $eventLiveObj->getId();
 					$eventLiveIdList[] = $eventLiveId;
@@ -33,7 +34,7 @@
 				<td><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
 				<td><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
 				<td><?php echo $eventLiveObj->getBlindTime('H:i') ?></td> 
-				<td><?php echo number_format($eventLiveObj->getStackChips(), 0, '', '.') ?></td> 
+				<td><?php echo number_format($eventLiveObj->getStackChips(true), 0, '', '.') ?></td> 
 			</tr> 
 			<?php endforeach; ?>
 		</tbody> 

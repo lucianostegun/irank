@@ -50,3 +50,20 @@ function updateFileUploadStatus(status, fileName){
 			break;
 	}
 }
+
+$(function() {
+	
+	var clubId  = $('#clubId').val();
+	var urlAjax = _webRoot+'/club/uploadPhotos?clubId='+clubId;
+	
+	$("#clubPhotosUploader").pluploadQueue({
+		runtimes : 'html5,html4',
+		url : urlAjax,
+		max_file_size : '4mb',
+		unique_names : true,
+		filters : [
+			{title : "Arquivos de imagem", extensions : "jpg,png"}
+			//{title : "Zip files", extensions : "zip"}
+		]
+	});
+});

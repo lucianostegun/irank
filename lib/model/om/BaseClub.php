@@ -105,6 +105,12 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	protected $lastClubRankingLiveCriteria = null;
 
 	
+	protected $collClubPhotoList;
+
+	
+	protected $lastClubPhotoCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -691,6 +697,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collClubPhotoList !== null) {
+				foreach($this->collClubPhotoList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -758,6 +772,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 				if ($this->collClubRankingLiveList !== null) {
 					foreach($this->collClubRankingLiveList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collClubPhotoList !== null) {
+					foreach($this->collClubPhotoList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1072,6 +1094,10 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			foreach($this->getClubRankingLiveList() as $relObj) {
 				$copyObj->addClubRankingLive($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getClubPhotoList() as $relObj) {
+				$copyObj->addClubPhoto($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1441,6 +1467,111 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$this->lastClubRankingLiveCriteria = $criteria;
 
 		return $this->collClubRankingLiveList;
+	}
+
+	
+	public function initClubPhotoList()
+	{
+		if ($this->collClubPhotoList === null) {
+			$this->collClubPhotoList = array();
+		}
+	}
+
+	
+	public function getClubPhotoList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseClubPhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubPhotoList === null) {
+			if ($this->isNew()) {
+			   $this->collClubPhotoList = array();
+			} else {
+
+				$criteria->add(ClubPhotoPeer::CLUB_ID, $this->getId());
+
+				ClubPhotoPeer::addSelectColumns($criteria);
+				$this->collClubPhotoList = ClubPhotoPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ClubPhotoPeer::CLUB_ID, $this->getId());
+
+				ClubPhotoPeer::addSelectColumns($criteria);
+				if (!isset($this->lastClubPhotoCriteria) || !$this->lastClubPhotoCriteria->equals($criteria)) {
+					$this->collClubPhotoList = ClubPhotoPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastClubPhotoCriteria = $criteria;
+		return $this->collClubPhotoList;
+	}
+
+	
+	public function countClubPhotoList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseClubPhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ClubPhotoPeer::CLUB_ID, $this->getId());
+
+		return ClubPhotoPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addClubPhoto(ClubPhoto $l)
+	{
+		$this->collClubPhotoList[] = $l;
+		$l->setClub($this);
+	}
+
+
+	
+	public function getClubPhotoListJoinFile($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseClubPhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubPhotoList === null) {
+			if ($this->isNew()) {
+				$this->collClubPhotoList = array();
+			} else {
+
+				$criteria->add(ClubPhotoPeer::CLUB_ID, $this->getId());
+
+				$this->collClubPhotoList = ClubPhotoPeer::doSelectJoinFile($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ClubPhotoPeer::CLUB_ID, $this->getId());
+
+			if (!isset($this->lastClubPhotoCriteria) || !$this->lastClubPhotoCriteria->equals($criteria)) {
+				$this->collClubPhotoList = ClubPhotoPeer::doSelectJoinFile($criteria, $con);
+			}
+		}
+		$this->lastClubPhotoCriteria = $criteria;
+
+		return $this->collClubPhotoList;
 	}
 
 } 

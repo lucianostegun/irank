@@ -10,7 +10,7 @@
 class UserAdmin extends BaseUserAdmin
 {
 	
-	public function quickSave($request){
+	public function quickSave($request, $fromUser=false){
 		
 		$peopleId    = $request->getParameter('peopleId');
 		$clubId      = $request->getParameter('clubId');
@@ -20,17 +20,21 @@ class UserAdmin extends BaseUserAdmin
 		$master      = $request->getParameter('master');
 		$active      = $request->getParameter('active');
 		
-		$password = ($newPassword?md5($newPassword):$password);
+		$password = ($newPassword?md5($newPassword):$this->getPassword());
 		
-		$this->setPeopleId($peopleId);
-		$this->setClubId(($clubId?$clubId:null));
+		if( $fromUser===false ){
+			
+			$this->setPeopleId($peopleId);
+			$this->setClubId(($clubId?$clubId:null));
+			$this->setMaster(($master?true:false));
+			$this->setActive(($active?true:false));
+			$this->setEnabled(true);
+			$this->setVisible(true);
+			$this->setDeleted(false);
+		}
+		
 		$this->setUsername($username);
 		$this->setPassword($password);
-		$this->setMaster(($master?true:false));
-		$this->setActive(($active?true:false));
-		$this->setEnabled(true);
-		$this->setVisible(true);
-		$this->setDeleted(false);
 		$this->save();
 	}
 	
@@ -103,5 +107,12 @@ class UserAdmin extends BaseUserAdmin
 	public function toString(){
 		
 		return $this->getUsername();
+	}
+	
+	public static function getCurrentUser(){
+		
+		$userAdminId = MyTools::getAttribute('userAdminId');
+		
+		return UserAdminPeer::retrieveByPK($userAdminId);
 	}
 }

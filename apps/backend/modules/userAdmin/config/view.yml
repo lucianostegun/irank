@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    []
-  javascripts:    [mask, backend/userAdmin, backend/paginator]
+  javascripts:    [mask, backend/userAdmin]

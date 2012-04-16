@@ -50,10 +50,6 @@ class RankingLiveMapBuilder {
 
 		$tMap->addColumn('EVENTS', 'Events', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('DEFAULT_BUYIN', 'DefaultBuyin', 'double', CreoleTypes::NUMERIC, false, 10);
-
-		$tMap->addColumn('DEFAULT_ENTRANCE_FEE', 'DefaultEntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
-
 		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
 		$tMap->addForeignKey('GAME_STYLE_ID', 'GameStyleId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
@@ -65,6 +61,24 @@ class RankingLiveMapBuilder {
 		$tMap->addColumn('SCORE_FORMULA', 'ScoreFormula', 'string', CreoleTypes::VARCHAR, false, 250);
 
 		$tMap->addColumn('FILE_NAME_LOGO', 'FileNameLogo', 'string', CreoleTypes::VARCHAR, false, 250);
+
+		$tMap->addColumn('DEFAULT_BUYIN', 'DefaultBuyin', 'double', CreoleTypes::NUMERIC, false, 10);
+
+		$tMap->addColumn('DEFAULT_ENTRANCE_FEE', 'DefaultEntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
+
+		$tMap->addColumn('DEFAULT_START_TIME', 'DefaultStartTime', 'int', CreoleTypes::TIME, false, null);
+
+		$tMap->addColumn('DEFAULT_IS_FREEROLL', 'DefaultIsFreeroll', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('DEFAULT_BLIND_TIME', 'DefaultBlindTime', 'int', CreoleTypes::TIME, false, null);
+
+		$tMap->addColumn('DEFAULT_STACK_CHIPS', 'DefaultStackChips', 'double', CreoleTypes::DOUBLE, false, null);
+
+		$tMap->addColumn('DEFAULT_ALLOWED_REBUYS', 'DefaultAllowedRebuys', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('DEFAULT_ALLOWED_ADDONS', 'DefaultAllowedAddons', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('DEFAULT_IS_ILIMITED_REBUYS', 'DefaultIsIlimitedRebuys', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

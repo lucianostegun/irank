@@ -29,8 +29,8 @@ function replicateEventName(eventName){
 	if( $('#eventLiveEventShortName').val()!='' )
 		return;
 	
-	eventName = eventName.replace(/ ?-.*Garantidos?/, '');
-	eventName = eventName.replace(/ ?Garantidos?/, '');
+	eventName = eventName.replace(/ ?-.*Garantidos?/i, '');
+	eventName = eventName.replace(/ ?Garantidos?/i, '');
 	eventName = eventName.replace(/ ?-.*/, '');
 	$('#eventLiveEventShortName').val( eventName.substring(0, 35) );
 }
@@ -42,7 +42,7 @@ function handleIsIlimitedRebuys(checked){
 
 function handleIsFreeroll(checked){
 	
-	$('#eventLiveBuyin').disabled = checked;
+	$('#eventLiveBuyin').attr('disabled', checked);
 }
 
 function handleSelectEventLivePlayer(peopleId, peopleName){
@@ -308,18 +308,28 @@ function getEventLivePlayers(){
 	return $('#playerCountDiv').html().replace(/[^0-9]/ig, '')*1;
 }
 
-function loadDefaultBuyin(rankingLiveId){
+function loadDefaultValues(rankingLiveId){
 	
 	if( !rankingLiveId )
 		return;
 
-	var successFunc = function(t){
+	var successFunc = function(content){
 		
-		var content = t.responseText;
 		var infoObj = parseInfo(content);
 		
+		$('#eventLiveStartTime').val(infoObj.defaultStartTime);
+		$('#eventLiveIsFreeroll').prop('checked', infoObj.defaultIsFreeroll);
 		$('#eventLiveBuyin').val(toCurrency(infoObj.defaultBuyin));
 		$('#eventLiveEntranceFee').val(toCurrency(infoObj.defaultEntranceFee));
+		$('#eventLiveBlindTime').val(infoObj.defaultBlindTime);
+		$('#eventLiveStackChips').val(infoObj.defaultStackChips);
+		$('#eventLiveAllowedRebuys').val(infoObj.defaultAllowedRebuys);
+		$('#eventLiveAllowedAddons').val(infoObj.defaultAllowedAddons);
+		$('#eventLiveIsIlimitedRebuys').prop('checked', infoObj.defaultIsIlimitedRebuys);
+		
+		handleIsFreeroll(infoObj.defaultIsFreeroll)
+		
+		$.uniform.update();
 	}
 	
 	var failureFunc = function(t){
@@ -391,3 +401,20 @@ function testFunction(id, value){
 
 	handleSelectEventLivePlayer(id, value, "eventLive", "peopleId", {searchFieldName:"eventLivePeopleName", quickModuleName:"people"})
 }
+
+$(function() {
+	
+	var eventLiveId = $('#eventLiveId').val();
+	var urlAjax     = _webRoot+'/eventLive/uploadPhotos?eventLiveId='+eventLiveId;
+	
+	$("#eventLivePhotosUploader").pluploadQueue({
+		runtimes : 'html5,html4',
+		url : urlAjax,
+		max_file_size : '4mb',
+		unique_names : true,
+		filters : [
+			{title : "Arquivos de imagem", extensions : "jpg,png"}
+			//{title : "Zip files", extensions : "zip"}
+		]
+	});
+});

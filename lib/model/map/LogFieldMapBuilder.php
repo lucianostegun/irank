@@ -32,7 +32,7 @@ class LogFieldMapBuilder {
 
 		$tMap->setUseIdGenerator(false);
 
-		$tMap->addForeignKey('LOG_ID', 'LogId', 'int', CreoleTypes::INTEGER, 'log', 'ID', true, null);
+		$tMap->addForeignKey('LOG_ID', 'LogId', 'int', CreoleTypes::INTEGER, 'log', 'ID', false, null);
 
 		$tMap->addColumn('FIELD_NAME', 'FieldName', 'string', CreoleTypes::VARCHAR, false, null);
 

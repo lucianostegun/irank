@@ -124,6 +124,12 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	protected $lastEventLivePlayerCriteria = null;
 
 	
+	protected $collEventLivePhotoList;
+
+	
+	protected $lastEventLivePhotoCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -914,6 +920,14 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEventLivePhotoList !== null) {
+				foreach($this->collEventLivePhotoList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -971,6 +985,14 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 				if ($this->collEventLivePlayerList !== null) {
 					foreach($this->collEventLivePlayerList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventLivePhotoList !== null) {
+					foreach($this->collEventLivePhotoList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1356,6 +1378,10 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$copyObj->addEventLivePlayer($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getEventLivePhotoList() as $relObj) {
+				$copyObj->addEventLivePhoto($relObj->copy($deepCopy));
+			}
+
 		} 
 
 		$copyObj->setNew(true);
@@ -1542,6 +1568,111 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		$this->lastEventLivePlayerCriteria = $criteria;
 
 		return $this->collEventLivePlayerList;
+	}
+
+	
+	public function initEventLivePhotoList()
+	{
+		if ($this->collEventLivePhotoList === null) {
+			$this->collEventLivePhotoList = array();
+		}
+	}
+
+	
+	public function getEventLivePhotoList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePhotoList === null) {
+			if ($this->isNew()) {
+			   $this->collEventLivePhotoList = array();
+			} else {
+
+				$criteria->add(EventLivePhotoPeer::EVENT_LIVE_ID, $this->getId());
+
+				EventLivePhotoPeer::addSelectColumns($criteria);
+				$this->collEventLivePhotoList = EventLivePhotoPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventLivePhotoPeer::EVENT_LIVE_ID, $this->getId());
+
+				EventLivePhotoPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventLivePhotoCriteria) || !$this->lastEventLivePhotoCriteria->equals($criteria)) {
+					$this->collEventLivePhotoList = EventLivePhotoPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventLivePhotoCriteria = $criteria;
+		return $this->collEventLivePhotoList;
+	}
+
+	
+	public function countEventLivePhotoList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventLivePhotoPeer::EVENT_LIVE_ID, $this->getId());
+
+		return EventLivePhotoPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventLivePhoto(EventLivePhoto $l)
+	{
+		$this->collEventLivePhotoList[] = $l;
+		$l->setEventLive($this);
+	}
+
+
+	
+	public function getEventLivePhotoListJoinFile($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePhotoPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePhotoList === null) {
+			if ($this->isNew()) {
+				$this->collEventLivePhotoList = array();
+			} else {
+
+				$criteria->add(EventLivePhotoPeer::EVENT_LIVE_ID, $this->getId());
+
+				$this->collEventLivePhotoList = EventLivePhotoPeer::doSelectJoinFile($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePhotoPeer::EVENT_LIVE_ID, $this->getId());
+
+			if (!isset($this->lastEventLivePhotoCriteria) || !$this->lastEventLivePhotoCriteria->equals($criteria)) {
+				$this->collEventLivePhotoList = EventLivePhotoPeer::doSelectJoinFile($criteria, $con);
+			}
+		}
+		$this->lastEventLivePhotoCriteria = $criteria;
+
+		return $this->collEventLivePhotoList;
 	}
 
 } 
