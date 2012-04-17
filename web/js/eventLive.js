@@ -35,6 +35,10 @@ function loadEventLiveTab(element, eventLiveId){
 
 function confirmEventLivePresence(eventLiveId){
 	
+	if( $('buttonPresenceConfirm').hasClassName('buttonPresenceYes') )
+		if( !confirm('Atenção!\n\nTem certeza que deseja cancelar sua confirmação de presença para este evento?') )
+			return false;
+
 	showIndicator();
 	
 	var successFunc = function(t){

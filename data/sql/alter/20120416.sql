@@ -23,7 +23,7 @@ SELECT
     state.INITIAL
 FROM
     event_live
-    LEFT JOIN ranking_live ON event_live.RANKING_LIVE_ID = ranking_live.ID
+    LEFT JOIN ranking_live ON event_live.RANKING_LIVE_ID = ranking_live.ID AND ranking_live.ENABLED AND ranking_live.VISIBLE AND NOT ranking_live.DELETED
     INNER JOIN club ON event_live.CLUB_ID = club.ID
     INNER JOIN city ON club.CITY_ID=city.ID
     INNER JOIN state ON city.STATE_ID=state.ID
@@ -31,9 +31,10 @@ WHERE
     club.ENABLED
     AND club.VISIBLE
     AND NOT club.DELETED
-    AND ranking_live.ENABLED
-    AND ranking_live.VISIBLE
-    AND NOT ranking_live.DELETED
     AND event_live.ENABLED
     AND event_live.VISIBLE
     AND NOT event_live.DELETED;
+
+ALTER TABLE event_live ADD COLUMN rake_percent DECIMAL(5,2);
+ALTER TABLE event_live ADD COLUMN total_rebuys DECIMAL(10,2);
+ALTER TABLE event_live ADD COLUMN prize_split VARCHAR(50);

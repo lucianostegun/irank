@@ -54,16 +54,25 @@
 	<div class="formRow">
 		<label>Buy-in</label>
 		<div class="formRight">
-			<span class="multi"><?php echo input_tag('buyin', Util::formatFloat($eventLiveObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'disabled'=>$eventLiveObj->getIsFreeroll(), 'id'=>'eventLiveBuyin')) ?></span>
+			<span class="multi"><?php echo input_tag('entranceFee', Util::formatFloat($eventLiveObj->getEntranceFee(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'id'=>'eventLiveEntranceFee')) ?></span>
+			<span class="multi"><label class="text">+</label></span>
+			<span class="multi"><?php echo input_tag('buyin', Util::formatFloat($eventLiveObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'disabled'=>$eventLiveObj->getIsFreeroll(), 'id'=>'eventLiveBuyin')) ?></span>
 			<span class="multi"><?php echo checkbox_tag('isFreeroll', true, $eventLiveObj->getIsFreeroll(), array('onclick'=>'handleIsFreeroll(this.checked)', 'id'=>'eventLiveIsFreeroll')) ?></span>
 			<span class="multi"><label for="eventLiveIsFreeroll">Freeroll</label></span>
+			<div class="clear"></div>
+			<div class="formNote">Taxa de entrada + Buyin</div>
 		</div>
 		<div class="clear"></div>
 	</div>
 
 	<div class="formRow">
-		<label>Taxa entrada (rake)</label>
-		<div class="formRight"><?php echo input_tag('entranceFee', Util::formatFloat($eventLiveObj->getEntranceFee(), true), array('size'=>7, 'maxlength'=>7, 'id'=>'eventLiveEntranceFee')) ?></div>
+		<label>Rake</label>
+		<div class="formRight">
+			<span class="multi"><?php echo input_tag('rakePercent', Util::formatFloat($eventLiveObj->getrakePercent(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'id'=>'eventLiveRakePercent')) ?></span>
+			<span class="multi"><label class="text">%</label></span>
+			<div class="clear"></div>
+			<div class="formNote">Porcentagem do clube</div>
+		</div>
 		<div class="clear"></div>
 	</div>
 

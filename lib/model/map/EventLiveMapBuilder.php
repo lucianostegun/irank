@@ -60,6 +60,8 @@ class EventLiveMapBuilder {
 
 		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
 
+		$tMap->addColumn('RAKE_PERCENT', 'RakePercent', 'double', CreoleTypes::NUMERIC, false, 5);
+
 		$tMap->addColumn('BLIND_TIME', 'BlindTime', 'int', CreoleTypes::TIME, false, null);
 
 		$tMap->addColumn('STACK_CHIPS', 'StackChips', 'double', CreoleTypes::DOUBLE, false, null);
@@ -73,6 +75,10 @@ class EventLiveMapBuilder {
 		$tMap->addColumn('IS_ILIMITED_REBUYS', 'IsIlimitedRebuys', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('SAVED_RESULT', 'SavedResult', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('TOTAL_REBUYS', 'TotalRebuys', 'double', CreoleTypes::NUMERIC, false, 5);
+
+		$tMap->addColumn('PRIZE_SPLIT', 'PrizeSplit', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

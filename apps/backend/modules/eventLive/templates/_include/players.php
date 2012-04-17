@@ -16,7 +16,7 @@
 <tr class="<?php echo $class ?>" id="eventLivePeopleIdRow-<?php echo $peopleId ?>">
 	<td><?php echo $peopleObj->getName() ?></td> 
 	<td><?php echo $emailAddress ?></td> 
-	<td><?php echo $eventLivePlayerObj->getCreatedAt('d/m/Y H:i') ?></td> 
-	<td><?php echo link_to(image_tag('icon/delete'), '#removePlayer('.$peopleId.')', array('title'=>'Remover jogador "'.$peopleObj->getFullName().'" do evento')) ?></td> 
+	<td align="center"><?php echo $eventLivePlayerObj->getCreatedAt('d/m/Y H:i') ?></td> 
+	<td align="center"><?php echo link_to(image_tag('icon/delete'), '#removePlayer('.$peopleId.')', array('title'=>'Remover jogador "'.$peopleObj->getFullName().'" do evento')) ?></td> 
 </tr> 
 <?php endforeach; ?>

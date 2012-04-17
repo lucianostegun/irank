@@ -19,7 +19,7 @@
 			$buyinMin = is_numeric($buyinMin)?$buyinMin:0;
 			$buyinMax = is_numeric($buyinMax)?$buyinMax:0;
 			
-			$where = "buyin BETWEEN $buyinMin AND $buyinMax";
+			$where = "buyin BETWEEN $buyinMin AND $buyinMax$nl";
 		}elseif( preg_match('/(hoje|ontem|amanh[aã])/i', $keyWord) ){
 			
 			switch($keyWord){
@@ -35,20 +35,20 @@
 			}
 			
 			$date = date('Y-m-d', mktime(0,0,0, date('m'), date('d')+$incrase, date('Y')));
-			$where = "event_date = '$date'";
+			$where = "event_date = '$date'$nl";
 		}elseif( preg_match('/!?free?roo?ll?/i', $keyWord) ){
 			
-			$where = (preg_match('/!/', $keyWord)?'NOT ':'').'is_freeroll';
+			$where = (preg_match('/!/', $keyWord)?'NOT ':'').'is_freeroll'.$nl;
 		}else{
 			
-			$where  = "(no_accent(event_name) ILIKE '%$keyWord%' ";
-			$where .= "OR no_accent(event_short_name) ILIKE '%$keyWord%' ";
-			$where .= "OR no_accent(ranking_name) ILIKE '%$keyWord%' ";
-			$where .= "OR no_accent(club_name) ILIKE '%$keyWord%' ";
-			$where .= "OR no_accent(city_name) ILIKE '%$keyWord%' ";
-			$where .= "OR no_accent(initial) ILIKE '%$keyWord%' ";
-			$where .= "OR no_accent(address_quarter) ILIKE '%$keyWord%' ";
-			$where .= "OR no_accent(description) ILIKE '%$keyWord%')";
+			$where  = "(no_accent(event_name) ILIKE '%$keyWord%' $nl";
+			$where .= "OR no_accent(event_short_name) ILIKE '%$keyWord%' $nl";
+			$where .= "OR no_accent(ranking_name) ILIKE '%$keyWord%' $nl";
+			$where .= "OR no_accent(club_name) ILIKE '%$keyWord%' $nl";
+			$where .= "OR no_accent(city_name) ILIKE '%$keyWord%' $nl";
+			$where .= "OR no_accent(initial) ILIKE '%$keyWord%' $nl";
+			$where .= "OR no_accent(address_quarter) ILIKE '%$keyWord%' $nl";
+			$where .= "OR no_accent(description) ILIKE '%$keyWord%')$nl";
 		}
 		
 		if( empty($where) )
@@ -59,7 +59,8 @@
 	
 	$whereClause = implode(chr(10).chr(9).'AND ', $whereList);
 	
-	$sql = "SELECT id, event_name, event_date_time, buyin, entrance_fee, is_freeroll, club_name, city_name, initial FROM event_live_search WHERE $whereClause ORDER BY event_date_time DESC";
+	$sql = "SELECT$nl id, event_name, event_date_time, buyin, entrance_fee, is_freeroll, club_name, city_name, initial$nl FROM$nl event_live_search$nl WHERE$nl $whereClause$nl ORDER BY event_date_time DESC";
+//	echo "<Pre>$sql";exit;
 	
 	$resultSet   = Util::executeQuery($sql);
 	$recordIndex = 0;

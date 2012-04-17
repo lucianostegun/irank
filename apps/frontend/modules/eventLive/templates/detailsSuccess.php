@@ -52,9 +52,9 @@
 					if( !$eventLiveObj->isPastDate() ){
 						
 						if( $eventLiveObj->getPlayerStatus($peopleId, true) )
-							echo button_tag('confirmButton'.$eventLiveId, 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'style'=>'position: relative; left: 47px', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
+							echo button_tag('presenceConfirm', 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'class'=>'buttonPresenceYes', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')', 'title'=>'Clique para confirmar sua presença no evento'));
 						else
-							echo button_tag('confirmButton'.$eventLiveId, 'CONFIRMAR PRESENÇA', array('image'=>'ok.png', 'style'=>'position: relative; left: 47px', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
+							echo button_tag('presenceConfirm', 'CONFIRMAR PRESENÇA', array('image'=>'ok.png', 'class'=>'buttonPresenceNo', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')', 'title'=>'Clique para cancelar sua confirmação de presença para o evento'));
 					}
 				?>
 				</div>

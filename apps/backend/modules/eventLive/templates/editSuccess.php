@@ -11,6 +11,6 @@
 		<div id="tab1" class="tab_content"><?php include_partial('eventLive/tab/main', array('eventLiveObj'=>$eventLiveObj, 'clubId'=>$clubId, 'iRankAdmin'=>$iRankAdmin)) ?></div>
 		<div id="tab2" class="tab_content"><?php include_partial('eventLive/tab/players', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 		<div id="tab3" class="tab_content"><?php include_partial('eventLive/tab/result', array('eventLiveObj'=>$eventLiveObj)) ?></div>
-		<div id="tab4" class="tab_content"><?php include_partial('eventLive/tab/photos', array('eventLiveObj'=>$eventLiveObj)) ?></div>
+		<div id="tab4" class="tab_content"><?php include_partial('eventLive/tab/photos', array('eventLiveId'=>$eventLiveObj->getId())) ?></div>
 	</div>
 </div>

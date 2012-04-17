@@ -48,6 +48,7 @@ class EventLive extends BaseEventLive
 		$isFreeroll       = $request->getParameter('isFreeroll');
 		$entranceFee      = $request->getParameter('entranceFee');
 		$buyin            = $request->getParameter('buyin');
+		$rakePercent      = $request->getParameter('rakePercent');
 		$blindTime        = $request->getParameter('blindTime');
 		$stackChips       = $request->getParameter('stackChips');
 		$allowedRebuys    = $request->getParameter('allowedRebuys');
@@ -72,6 +73,7 @@ class EventLive extends BaseEventLive
 		$this->setEntranceFee(Util::formatFloat($entranceFee));
 		$this->setBuyin(Util::formatFloat($buyin));
 		$this->setBlindTime($blindTime);
+		$this->setRakePercent(Util::formatFloat($rakePercent));
 		$this->setStackChips($stackChips);
 		$this->setAllowedRebuys($allowedRebuys);
 		$this->setAllowedAddons($allowedAddons);
@@ -180,6 +182,10 @@ class EventLive extends BaseEventLive
 	
 	public function parseScore($position, $events, $prize, $players, $totalBuyins, $defaultBuyin, $itm){
 		
+		$formula = $this->getRankingLive()->getScoreFormula();
+		if( !$formula )
+			$formula = RankingLive::DEFAULT_SCORE_FORMULA;
+			
 		$formula = strtolower($formula);
 		$formula = preg_replace('/\t\r\n /', '', $formula);
 		
@@ -196,7 +202,7 @@ class EventLive extends BaseEventLive
 		@eval('$score = '.$formula.';');
 		
 		if( $score===null )
-			throw new Exception('Error parsing score formula');
+			throw new Exception('Erro ao processar a fórmula de pontuação:\n'.'$score = '.$formula.';');
 		
 		return number_format($score, 3);		
 	}
@@ -322,6 +328,32 @@ class EventLive extends BaseEventLive
 		return $eventLivePhotoObj;
 	}
 	
+	public function getTotalBuyin($includeRebuys=false){
+		
+		$players = $this->getPlayers();
+		
+		$totalBuyin   = $players * $this->getBuyin();
+		$totalBuyin  += $players * $this->getEntranceFee();
+		
+		if( $includeRebuys )
+			$totalBuyin  += $this->getTotalRebuys();
+		
+		return $totalBuyin;
+	}
+	
+	/**
+	 * Retorna o total em porcentagem da divisão de prêmios configurada na aba Resultados do módulo de eventos na administração
+	 */
+	public function getTotalPercentPrizeSplit(){
+		
+		$prizeSplit = split('((; ?)|(, +))', $this->getPrizeSplit());
+		
+		foreach($prizeSplit as &$prize)
+			$prize = Util::formatFloat($prize);
+		
+		return array_sum($prizeSplit);
+	}
+	
 	public function getInfo(){
 		
 		$infoList = array();
@@ -334,6 +366,7 @@ class EventLive extends BaseEventLive
 		$infoList['allowedRebuys']  = $this->getAllowedRebuys();
 		$infoList['allowedAddons']  = $this->getAllowedAddons();
 		$infoList['isFreeroll']     = $this->getIsFreeroll();
+		$infoList['rakePercent']    = $this->getRakePercent();
 		$infoList['entranceFee']    = $this->getEntranceFee();
 		$infoList['buyin']          = $this->getBuyin();
 		$infoList['blindTime']      = $this->getBlindTime('H:i');

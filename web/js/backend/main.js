@@ -83,3 +83,21 @@ $(function() {
 			"sDom": '<""l>t<"F"fp>'
 		});
 });
+
+function updateMainBalance(differenceValue){
+	
+	var mainBalanceValue = toFloat(_mainBalanceValue);
+	mainBalanceValue += toFloat(differenceValue);
+	
+	$('#mainBalanceAmount').html('R$ '+toCurrency(mainBalanceValue));
+}
+
+function doSaveMain(){
+	
+	$('#'+getModuleName()+'Form').submit();
+}
+
+function doGetNew(){
+	
+	location.href = _webRoot+'/'+getModuleName()+'/new';
+}

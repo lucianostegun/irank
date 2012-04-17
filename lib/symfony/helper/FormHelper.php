@@ -317,6 +317,8 @@ function input_autocomplete_tag($name, $searchUrl, $selectedFunction, $options =
   $options['id']           = (isset($options['id'])?$options['id']:get_id_from_name($name, $value));
   $options['autocomplete'] = 'off';
   
+  $autoFocus = (isset($options['autofocus'])?$options['autofocus']:true);
+  
   $script = '<script>
 				var urlAjax = "'.url_for($searchUrl).'";
 				
@@ -335,6 +337,7 @@ function input_autocomplete_tag($name, $searchUrl, $selectedFunction, $options =
 			                },
 			            });
 			        },
+			        autoFocus: '.($autoFocus?'true':'false').', 
 			        select: function(event, ui) { 
 								'.$selectedFunction.'(ui.item.id, ui.item.value);
 			        		},
@@ -1002,6 +1005,7 @@ function button_tag( $buttonId, $text, $options=array() ){
 	$image    = array_key_exists('image', $options)?$options['image']:false;
 	$onclick  = array_key_exists('onclick', $options)?$options['onclick']:false;
 	$style    = array_key_exists('style', $options)?$options['style']:'';
+	$class    = array_key_exists('class', $options)?$options['class']:'';
 
 	if( array_key_exists('onclick', $options) && !$noCkeck ){
 		
@@ -1011,7 +1015,8 @@ function button_tag( $buttonId, $text, $options=array() ){
 
 
 	unset($options['disabled']);
-	unset($options['$style']);
+	unset($options['style']);
+	unset($options['class']);
 	
 	if( !$visible )
 		$style = 'display: none; '.$style.'';
@@ -1053,7 +1058,7 @@ function button_tag( $buttonId, $text, $options=array() ){
 		$html .= '</div>';
 	}else{
 		
-		$html .= '<div style="'.$style.'" class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="this.addClassName(\'hover\')" onmouseout="this.removeClassName(\'hover\')">'.$nl;
+		$html .= '<div style="'.$style.'" class="button'.($disabled?'Disabled':'').($class?' '.$class:'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="this.addClassName(\'hover\')" onmouseout="this.removeClassName(\'hover\')">'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;

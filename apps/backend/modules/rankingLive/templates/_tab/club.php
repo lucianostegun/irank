@@ -9,7 +9,7 @@
 		?>
 		<tr>
 			<td width="10"><?php echo checkbox_tag('clubId[]', $clubId, in_array($clubId, $clubIdList), array('id'=>'titleCheck'.($key+2))) ?></td>
-			<td><label for="rankingLiveClubId<?php echo $clubId ?>" class="checkbox"><?php echo $clubObj->toString() ?></label></td>
+			<td><label for="titleCheck<?php echo ($key+2) ?>" class="checkbox"><?php echo $clubObj->toString() ?></label></td>
 		</tr>
 		<?php endforeach; ?>
 		</tbody>

@@ -920,5 +920,14 @@ class Util {
   		
   		return $objectId;
 	}
+	
+	public static function getOptionsForJquerySelect($optionList){
+		
+		$returnOptionList = array();
+		foreach($optionList as $optionValue=>$optionDisplay)
+			$returnOptionList[] = array('optionValue'=>$optionValue, 'optionDisplay'=>$optionDisplay);
+		
+		return $returnOptionList;
+	}
 }
 ?>

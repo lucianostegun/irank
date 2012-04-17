@@ -23,10 +23,10 @@
 			<tr class="gradeA" onclick="<?php echo $onclick ?>" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
 				<td width="40%"><?php echo $eventLiveObj->getEventName() ?></td> 
 				<td width="24%"><?php echo $eventLiveObj->getClub()->toString() ?></td> 
-				<td width="10%" align="center"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
-				<td width="8%" align="center"><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
-				<td width="8%" align="center"><?php echo $eventLiveObj->getBlindTime() ?></td> 
-				<td width="8%" align="center"><?php echo $eventLiveObj->getStackChips(true) ?></td> 
+				<td width="13%" align="center"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
+				<td width="7%" align="center"><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
+				<td width="7%" align="center"><?php echo $eventLiveObj->getBlindTime() ?></td> 
+				<td width="7%" align="center"><?php echo $eventLiveObj->getStackChips(true) ?></td> 
 			</tr> 
 			<?php endforeach; ?>
 		</tbody>
