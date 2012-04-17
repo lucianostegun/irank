@@ -10,16 +10,16 @@
 				$criteria->addDescendingOrderByColumn( EventLivePhotoPeer::CREATED_AT );
 				$eventLivePhotoObjList = EventLivePhotoPeer::doSelect($criteria);
 				
-				$col = 0;
+				$recordCount = 0;
 				foreach($eventLivePhotoObjList as $eventLivePhotoObj):
 								
 					$eventLivePhotoId = $eventLivePhotoObj->getId();
-					$fileName     = Util::getFileName($eventLivePhotoObj->getFile()->getFilePath());
+					$fileName         = Util::getFileName($eventLivePhotoObj->getFile()->getFilePath());
 					
-					if( $col > 0 && $col%6==0 )
+					if( $recordCount > 0 && $recordCount%6==0 )
 						echo '</tr><tr>';
 						
-					$col++;
+					$recordCount++;
 			?>
 			<td>
 				<table cellspacing="0" cellpadding="0" border="0">
@@ -30,9 +30,10 @@
 					</tr>
 				</table>
 			</td>
-			<?php
-				endforeach;
-			?>
+			<?php endforeach; ?>
+			<?php if( $recordCount==0 ): ?>
+			Não existem fotos para este evento
+			<?php endif; ?>
 		</tr>
 	</table>
 </div>

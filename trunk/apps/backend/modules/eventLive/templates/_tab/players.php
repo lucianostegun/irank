@@ -10,7 +10,7 @@
 				
 				<label style="margin: 0 15px">
 					Inclusão de jogador
-					<?php echo input_autocomplete_tag('pepleName', 'people/autoComplete', 'testFunction', array('size'=>'100%', 'maxlength'=>200, 'style'=>'margin-left: 10px', 'id'=>'eventLivePeopleName')) ?>
+					<?php echo input_autocomplete_tag('pepleName', 'people/autoComplete', 'doSelectEventLivePlayer', array('size'=>'100%', 'maxlength'=>200, 'style'=>'margin-left: 10px', 'id'=>'eventLivePeopleName')) ?>
 				</label>
 				
 				</td> 

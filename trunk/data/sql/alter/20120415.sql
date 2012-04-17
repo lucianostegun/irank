@@ -38,4 +38,4 @@ CREATE TABLE club_photo (
 );
 
 /* -------------------- EXECUTAR NA BASE LOG ------------------- */
-CONSTRAINT club_photo_fk_2 FOREIGN KEY(file_id) REFERENCES file (id);
+ALTER TABLE log ADD COLUMN user_admin_id INTEGER;

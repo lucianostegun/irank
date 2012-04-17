@@ -10,16 +10,16 @@
 				$criteria->addDescendingOrderByColumn( ClubPhotoPeer::CREATED_AT );
 				$clubPhotoObjList = ClubPhotoPeer::doSelect($criteria);
 				
-				$col = 0;
+				$recordCount = 0;
 				foreach($clubPhotoObjList as $clubPhotoObj):
 								
 					$clubPhotoId = $clubPhotoObj->getId();
 					$fileName     = Util::getFileName($clubPhotoObj->getFile()->getFilePath());
 					
-					if( $col > 0 && $col%6==0 )
+					if( $recordCount > 0 && $recordCount%6==0 )
 						echo '</tr><tr>';
 						
-					$col++;
+					$recordCount++;
 			?>
 			<td>
 				<table cellspacing="0" cellpadding="0" border="0">
@@ -30,9 +30,10 @@
 					</tr>
 				</table>
 			</td>
-			<?php
-				endforeach;
-			?>
+			<?php endforeach; ?>
+			<?php if( $recordCount==0 ): ?>
+			Não existem fotos para este clube
+			<?php endif; ?>
 		</tr>
 	</table>
 </div>

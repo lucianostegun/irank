@@ -191,9 +191,10 @@ function linkToFunction(label, module, action, fieldName, fieldValue){
 	return '<a href="javascript:void(0)" onclick="goModule(\''+module+'\', \''+action+'\', \''+fieldName+'\', \''+fieldValue+'\')">'+label+'</a>';
 }
 
-function toCurrency(value){
+function toCurrency(value, decimalPlaces){
 	
-	return toFloat(value, true, 2);
+	decimalPlaces = (decimalPlaces?decimalPlaces:2);
+	return toFloat(value, true, decimalPlaces);
 }
 
 function toFloat(value, display, decimalPlaces){
@@ -218,7 +219,7 @@ function toFloat(value, display, decimalPlaces){
 	if( (/^[0-9]+[,\.][0-9]{3,} $/).test(value) ){
 		
 		value = value.replace(',', '.');
-		value = number_format(value, decimalPlaces, separator, '');
+		value = number_format(value, decimalPlaces, separator, (separator=='.'?',':'.'));
 	}
 
 	value = value.replace(/[^0-9,-]/ig, '');
@@ -227,7 +228,7 @@ function toFloat(value, display, decimalPlaces){
 	value = parseFloat(value);
 	
 	if( display )
-		value = number_format(value, decimalPlaces, separator, '');
+		value = number_format(value, decimalPlaces, separator, (separator=='.'?',':'.'));
 	
 	return value;
 }

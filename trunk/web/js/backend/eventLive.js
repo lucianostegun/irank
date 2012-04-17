@@ -1,3 +1,22 @@
+$(function() {
+	
+	var eventLiveId = $('#eventLiveId').val();
+	var urlAjax     = _webRoot+'/eventLive/uploadPhotos?eventLiveId='+eventLiveId;
+	
+	$("#eventLivePhotosUploader").pluploadQueue({
+		runtimes : 'html5,html4',
+		url : urlAjax,
+		max_file_size : '4mb',
+		unique_names : true,
+		filters : [
+			{title : "Arquivos de imagem", extensions : "jpg,png"}
+			//{title : "Zip files", extensions : "zip"}
+		]
+	});
+	
+	$('.photoList a.lightbox').lightBox();
+});
+
 function handleSuccessEventLive(content){
 
 	showFormStatusSuccess();
@@ -166,6 +185,9 @@ function removePlayer(peopleId){
 
 function clearEventLivePeopleName(){
 	
+	if( $('#eventLivePeopleName').val()!='Jogador já confirmado no evento' )
+		return;
+		
 	$('#eventLivePeopleName').val('');
 	$('#eventLivePeopleName').focus();
 }
@@ -342,6 +364,35 @@ function loadDefaultValues(rankingLiveId){
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
+function calculateEventLiveScore(){
+	
+	var successFunc = function(content){
+		
+		var infoObj = parseInfo(content);
+		var players = infoObj.players;
+		
+		for(var eventPosition=1; eventPosition <= players; eventPosition++){
+			
+			var score = infoObj[eventPosition].score;
+			var prize = infoObj[eventPosition].prize;
+			
+			$('#score-'+eventPosition).val(toCurrency(score, 3));
+			$('#prize-'+eventPosition).val(toCurrency(prize));
+		}
+	}
+	
+	var failureFunc = function(t){
+		
+		alert('ERRO!\n\nNão foi possível calcular o resultado do evento!\nPor favor, tente novamente.');
+		
+		if( isDebug() )
+			debug(t.responseText);
+	}
+	
+	var urlAjax = _webRoot+'/eventLive/calculateResult';
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc, parameters:$('#eventLiveResultForm').serialize()});
+}
+
 function calculateEventLiveResult(){
 
 	return alert('O cálculo de resultados ainda não está disponível');
@@ -397,24 +448,54 @@ function setupEventLiveResultAutoComplete(){
     });
 }
 
-function testFunction(id, value){
+function doSelectEventLivePlayer(id, value){
 
 	handleSelectEventLivePlayer(id, value, "eventLive", "peopleId", {searchFieldName:"eventLivePeopleName", quickModuleName:"people"})
 }
 
-$(function() {
+function removeEventLivePhoto(eventLivePhotoId){
+
+	var successFunc = function(t){
+
+		$('#eventLivePhoto-'+eventLivePhotoId).remove();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		alert('Não foi possível remover a foto selecionada!\nPor favor, tente novamente.');
+		
+		if( !errorMessage && isDebug() )
+			debug(content);
+	};
 	
-	var eventLiveId = $('#eventLiveId').val();
-	var urlAjax     = _webRoot+'/eventLive/uploadPhotos?eventLiveId='+eventLiveId;
+	var urlAjax = _webRoot+'/eventLive/deletePhoto?eventLivePhotoId='+eventLivePhotoId;
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function updatePrizeSplitLabel(){
 	
-	$("#eventLivePhotosUploader").pluploadQueue({
-		runtimes : 'html5,html4',
-		url : urlAjax,
-		max_file_size : '4mb',
-		unique_names : true,
-		filters : [
-			{title : "Arquivos de imagem", extensions : "jpg,png"}
-			//{title : "Zip files", extensions : "zip"}
-		]
-	});
-});
+	var splitValue = $('#eventLivePrizeSplit').val();
+	if( !splitValue )
+		return $('#prizeSplitTotalLabel').html('0%');
+	
+	splitValue = splitValue.split(/[(; ?)(, +)]/);
+	var totalPercent = 0;
+	
+	for(var i=0; i < splitValue.length; i++)
+		totalPercent += toFloat(splitValue[i]);
+
+	totalPercent = toCurrency(totalPercent, 1)+'%';
+	totalPercent = totalPercent.replace(',0%', '%');
+	$('#prizeSplitTotalLabel').html(totalPercent);
+}
+
+function updateTotalPrizeValue(){
+	
+	var totalPrizeValue = 0;
+	for(var eventPosition=1; eventPosition <= getEventLivePlayers(); eventPosition++)
+		totalPrizeValue += toFloat($('#prize-'+eventPosition).val());
+	
+	$('#totalPrizeValue').html(toCurrency(totalPrizeValue));
+}

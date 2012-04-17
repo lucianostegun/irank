@@ -47,6 +47,10 @@ class eventLiveActions extends sfActions
     	$eventLiveObj = null;
     }
     
+    $this->mainBalanceLabel   = 'Total arrecadado';
+    $this->mainBalanceValue   = $this->eventLiveObj->getTotalBuyin();
+    $this->mainBalancePercent = 0;
+    
     if( !is_object($eventLiveObj) )
     	return $this->redirect('eventLive/index');
     	
@@ -236,7 +240,13 @@ class eventLiveActions extends sfActions
   public function executeSaveResult($request){
     
     $publish      = $request->getParameter('publish');
+	$totalRebuys  = $request->getParameter('totalRebuys');
+	$prizeSplit   = $request->getParameter('prizeSplit');
     $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+    
+    $eventLiveObj->setTotalRebuys(Util::formatFloat($totalRebuys));
+    $eventLiveObj->setPrizeSplit($prizeSplit);
+    $eventLiveObj->save();
 	
 	$players      = $eventLiveObj->getPlayers();
 	$peopleIdList = array(0);
@@ -277,23 +287,44 @@ class eventLiveActions extends sfActions
 	exit;
   }
   
-//  public function executeCalculateResult($request){
-//    
-//    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
-//	
-//	$scoreList = array();
-//	foreach($eventLiveObj->getEventLivePlayerList() as $eventLivePlayerObj){
-//		
-//		$eventPosition = $eventLivePlayerObj->getEventPosition();
-//		$score         = $eventLiveObj->parseScore($eventPosition, $events, $prize, $players, $totalBuyins, $defaultBuyin, $itm);
-//		$scoreList[$eventPosition] = $score;
-//	}
-//	
-//	echo '<pre>';
-//	print_r($scoreList);
-//	
-//	exit;
-//  }
+  public function executeCalculateResult($request){
+    
+	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+	$totalRebuys  = $request->getParameter('totalRebuys');
+	$prizeSplit   = $request->getParameter('prizeSplit');
+	$prizeConfig   = split('((; ?)|(, +))', $prizeSplit);
+	$paidPlaces   = count($prizeConfig);
+	$players      = $eventLiveObj->getPlayers();
+	
+    $eventLiveObj->setTotalRebuys(Util::formatFloat($totalRebuys));
+    $eventLiveObj->setPrizeSplit($prizeSplit);
+    $eventLiveObj->save();
+	
+	$defaultBuyin = $eventLiveObj->getBuyin();
+	$rakePercent  = $eventLiveObj->getRakePercent();
+	$totalPrize   = $eventLiveObj->getTotalBuyin()+Util::formatFloat($totalRebuys);
+	$totalPrize  -= ($totalPrize*$rakePercent/100);
+	
+	$totalBuyins = $totalPrize/$defaultBuyin;
+	
+	$prizeConfigList = array();
+	$prizeConfigList['players'] = $players;
+	
+	$eventPosition = 0;
+	foreach($eventLiveObj->getEventLivePlayerList() as $eventLivePlayerObj){
+		
+		$eventPosition++;
+		
+		$prize  = ($eventPosition <= $paidPlaces?$totalPrize*$prizeConfig[$eventPosition-1]/100:0);
+		$events = 1; // Mudar para o cálculo da quantidade de eventos que o jogador já participou 
+		$score  = $eventLiveObj->parseScore($eventPosition, $events, $prize, $players, $totalBuyins, $defaultBuyin, $prize);
+		
+		$prizeConfigList[$eventPosition] = array('score'=>$score, 'prize'=>$prize);
+	}
+	
+	echo Util::parseInfo($prizeConfigList);
+	exit;
+  }
   
   public function executeUploadPhotos($request){
 	
@@ -321,6 +352,16 @@ class eventLiveActions extends sfActions
 		
 		Util::forceError('Erro ao carregar a imagem');
 	}
+	
+  	exit;
+  }
+  
+  public function executeDeletePhoto($request){
+	
+	$eventLivePhotoId  = $request->getParameter('eventLivePhotoId');
+	$eventLivePhotoObj = EventLivePhotoPeer::retrieveByPK($eventLivePhotoId);
+	
+	$eventLivePhotoObj->delete();
 	
   	exit;
   }

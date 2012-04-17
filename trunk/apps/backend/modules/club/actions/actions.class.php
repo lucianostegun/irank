@@ -191,4 +191,14 @@ class clubActions extends sfActions
 	
   	exit;
   }
+  
+  public function executeDeletePhoto($request){
+	
+	$clubPhotoId  = $request->getParameter('clubPhotoId');
+	$clubPhotoObj = ClubPhotoPeer::retrieveByPK($clubPhotoId);
+	
+	$clubPhotoObj->delete();
+	
+  	exit;
+  }
 }

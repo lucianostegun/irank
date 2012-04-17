@@ -104,10 +104,7 @@ redips_init = function () {
 		
 		setupEventLiveResultAutoComplete()
 		
-//		for(var eventPosition=maxValue; eventPosition <= minValue; eventPosition++)
-//			eval('autoComplete'+eventPosition+'Obj = new Ajax.Autocompleter(\'eventLivePeopleNameResult-'+eventPosition+'\', \'eventLivePeopleNameResult-'+eventPosition+'_auto_complete\', _webRoot+\'/eventLive/autoComplete/instanceName/player/eventLiveId/\'+eventLiveId, {afterUpdateElement:function (inputField, selectedItem){ handleSelectEventLivePlayerResult(selectedItem.id, inputField.value, '+eventPosition+') }, callback:function(element, value) { return  value+\'?&peopleName=\'+$(\'eventLivePeopleNameResult-'+eventPosition+'\').value}});');
-//		
-//		$('#eventLiveResultForm').onsubmit();
+		$('#eventLiveResultForm').submit();
 	};
 	// row was dropped to the source - event handler
 	// mini table (cloned row) will be removed and source row should return to original state

@@ -1,0 +1,36 @@
+.photoList {
+	
+	padding: 	7px 20px;
+	display: 	inline;
+	position: 	relative;
+}
+
+.photoList li {
+
+	float: 		left;
+	padding: 	3px 5px;
+	position: 	relative;	
+}
+
+.photoList li img {
+	
+	border: 	1px solid #B0B0B0;
+}
+
+.photoList li a.remove {
+	
+	display: none;
+	position: absolute;
+	right: 0px;
+	bottom: 5px;
+}
+
+.photoList li:hover a.remove {
+	
+	display: block;
+}
+
+.photoList li a.remove img {
+	
+	border: 	none;
+}

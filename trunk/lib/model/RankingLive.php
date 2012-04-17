@@ -10,6 +10,8 @@
 class RankingLive extends BaseRankingLive
 {
 	
+	const DEFAULT_SCORE_FORMULA = 'JOGADORES-(POSICAO-1)';
+	
     public function save($con=null){
     	
     	try{

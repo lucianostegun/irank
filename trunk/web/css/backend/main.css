@@ -198,6 +198,8 @@ text-shadow: 0 1px 0 #ccc,
 .userNav ul li img { float: left; display: block; margin: 9px 2px 0px 14px; }
 .navigation { z-index: 6000; position: relative; font-size: 11px; border-bottom: 1px solid #F0F0F0; clear: both; background: #C0C0C0; margin-left: 2px }
 
+.toolbarNav .userNav ul li img { float: left; display: block; margin: 6px 2px 0px 14px; }
+
 ul.userDropdown { position: absolute; left: -9px; display: none; top: 35px; background: url(/images/backend/subArrow.png) no-repeat 50% 0; padding: 0 1px 1px 1px; z-index: 100; border: none; }
 ul.userDropdown li { display: block; float: none; border-bottom: 1px solid #1c252b; border-top: 1px solid #404950; background: url(/images/backend/backgrounds/navBg.jpg); }
 ul.userDropdown li:hover { border-top: 1px solid #374047; }
@@ -433,7 +435,7 @@ ul.sub li ul li { padding-left: 10px; }
 
 /* === Title area with middle navigation === */
 
-.titleArea { padding-top: 36px; }
+.titleArea { padding-top: 60px; }
 
 .pageTitle { float: left; padding: 35px 0 32px 0; }
 
@@ -682,6 +684,7 @@ input[type=submit], input[type=reset], input[type=button], button { padding: 7px
 .multi { width: auto; float: left; margin-left: 15px }
 .multi:first-child { margin-left: 0; }
 .multi label { margin-top: 4px; margin-left: -20px }
+.multi label.text { margin-top: 4px; margin-left: 0px; margin-right: 0px }
 
 
 /* Left & Right lists inside widgets */
@@ -982,6 +985,8 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 
 .sTable tbody tr { border-top: 1px solid #e4e4e4; }
 .sTable tbody tr:nth-child(even) { background-color: #f6f6f6; }
+
+.sTable tbody tr.gradeB:nth-child(even) { background-color: #e1ecf2; }
 
 .sTable tbody td { border-left: 1px solid #e4e4e4; padding: 8px 12px; vertical-align: middle; }
 .sTable tbody td:first-child { border-left: none }
@@ -1825,4 +1830,83 @@ color: #656565;
 	top: 		0px;
 	z-index: 	5000;
 	padding: 	5px 7px;
+}
+
+
+
+
+/* Breadcrumbs */
+
+section#secondary_bar .breadcrumbs_container {
+float: left; 
+background: #FFF url(/images/backend/secondary_bar_shadow.png) no-repeat left top;
+height: 36px;
+padding-left: 15px;
+z-index: 5000
+
+}
+
+article.breadcrumbs2 {
+position: absolute;
+float: left;
+padding: 0 10px;
+border: 1px solid #BABABA;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+background: 	-moz-linear-gradient(top, #f0f0f0, #D5D5D5);
+background: 	-webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#D5D5D5));
+filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#f0f0f0', EndColorStr='#D5D5D5', GradientType=0);
+height: 21px;
+margin: 3px 0px 2px -37px;
+}
+
+.breadcrumbs2 a {
+display: inline-block;
+float: left;
+height: 20px;
+line-height: 22px;
+}
+
+.breadcrumbs2 a.current, .breadcrumbs2 a.current:hover {
+color: #C91E1E;
+font-weight: bold;
+text-shadow: 0 1px 0 #fff;
+text-decoration: none;
+}
+
+.breadcrumbs2 a:link, .breadcrumbs2 a:visited {
+color: #44474F;
+text-decoration: none;
+text-shadow: 0 1px 0 #fff;
+font-weight: bold;
+
+}
+
+.breadcrumbs2 a.last {
+color: #606060;
+font-weight: normal;
+cursor: default;
+
+}
+
+.breadcrumbs2 a:hover {
+color: #C91E1E;
+
+}
+
+.breadcrumbs2 a.last:hover {
+color: #606060;
+cursor: default;
+
+}
+
+.breadcrumb_divider {
+display: inline-block;
+width: 12px;
+height: 20px;
+background: url(/images/backend/breadcrumb_divider.png) 0px -1px no-repeat;
+float: left;
+margin: 0 5px;
+
 }

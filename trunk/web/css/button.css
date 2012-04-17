@@ -184,3 +184,17 @@
 	border: 		0px transparent;
 	z-index: 		-100;
 }
+
+
+/* -------------- CLASSES PERSONALIZADAS  -------------- */
+.buttonPresenceYes,
+.buttonPresenceNo {
+
+	position: relative;
+	left: 47px;
+}
+
+.buttonPresenceYes .buttonMiddle .buttonLabel {
+
+	color: 	#909090
+}

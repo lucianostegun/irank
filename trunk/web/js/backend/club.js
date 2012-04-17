@@ -51,6 +51,27 @@ function updateFileUploadStatus(status, fileName){
 	}
 }
 
+function removeClubPhoto(clubPhotoId){
+
+	var successFunc = function(t){
+
+		$('#clubPhoto-'+clubPhotoId).remove();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		alert('Não foi possível remover a foto selecionada!\nPor favor, tente novamente.');
+		
+		if( !errorMessage && isDebug() )
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/club/deletePhoto?clubPhotoId='+clubPhotoId;
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
 $(function() {
 	
 	var clubId  = $('#clubId').val();
@@ -66,4 +87,6 @@ $(function() {
 			//{title : "Zip files", extensions : "zip"}
 		]
 	});
+	
+	$('.photoList a.lightbox').lightBox();
 });

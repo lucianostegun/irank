@@ -12,7 +12,15 @@ $messages   = 0;
 $peopleName = $sf_user->getAttribute(($messages?'firstName':'fullName'));
 $moduleName = $sf_context->getModuleName();
 $actionName = $sf_context->getActionName();
+
+$mainBalanceValue   = isset($mainBalanceValue)?$mainBalanceValue:0;
+$mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:0;
 ?>
+<script>
+	var _mainBalanceValue   = <?php echo $mainBalanceValue ?>;
+	var _mainBalancePercent = <?php echo $mainBalancePercent ?>;
+	var _ModuleName         = '<?php echo $moduleName ?>';
+</script>
 </head>
 
 <body>
@@ -32,18 +40,24 @@ $actionName = $sf_context->getActionName();
     
     <div class="sidebarSep"></div>
 
+	<?php
+		if( isset($mainBalanceLabel) && isset($mainBalanceValue) ):
+		
+			$mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:null;
+	?>
     <!-- General balance widget -->
     <div class="genBalance">
         <a href="#" title="" class="amount">
-            <span>General balance:</span>
-
-            <span class="balanceAmount">$10,900.36</span>
+            <span><?php echo $mainBalanceLabel ?>:</span>
+            <span class="balanceAmount" id="mainBalanceAmount">R$ <?php echo Util::formatFloat($mainBalanceValue, true) ?></span>
         </a>
+        <?php if( !is_null($mainBalancePercent) ): ?>
         <a href="#" title="" class="amChanges">
-            <strong class="sPositive">+0.6%</strong>
+            <strong class="<?php echo ($mainBalancePercent<0?'sNegative':'sPositive') ?>" id="mainBalancePercent"><?php echo Util::formatFloat($mainBalancePercent, true, 1) ?>%</strong>
         </a>
+	    <?php endif; ?>
     </div>
-    
+    <?php endif; ?>
     <!-- Next update progress widget -->
     <div class="nextUpdate">
 
@@ -88,7 +102,7 @@ $actionName = $sf_context->getActionName();
         </li>
 
 		<?php if( $iRankAdmin ): ?>
-        <li class="admin"><a href="javascript:void(0)" title="" class="<?php echo (strstr($moduleName, 'userAdmin')?'active':'exp') ?>"><span>Administração</span><strong>2</strong></a>
+        <li class="admin"><a href="javascript:void(0)" title="" class="<?php echo (in_array($moduleName, array('userAdmin', 'controlPanel'))?'active':'exp') ?>"><span>Administração</span><strong>2</strong></a>
             <ul class="sub">
                 <li><?php echo link_to('Painel de controle', 'controlPanel/index') ?></li>
                 <li class="last"><?php echo link_to('Usuários', 'userAdmin/index') ?></li>
@@ -130,11 +144,8 @@ $actionName = $sf_context->getActionName();
             
             <div class="clear"></div>
         </div>
-        
-        <div class="navigation">
-        	testasdasdasdasdasdasdasd
-        </div>
     </div>
+	<?php include_partial('home/include/breadscrumbs', array('pathList'=>$pathList)); ?>
     
     <!-- Responsive header -->
     <div class="resp">

@@ -34,12 +34,12 @@
 		?>
 			<div id="tab1" class="tab_content"><?php include_partial('rankingLive/tab/main', array('rankingLiveObj'=>$rankingLiveObj, 'iRankAdmin'=>$iRankAdmin, 'userAdminId'=>$userAdminId)) ?></div>
 			<div id="tab2" class="tab_content"><?php include_partial('rankingLive/tab/default', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
-		</form>
-			<div id="tab3" class="tab_content"><?php include_partial('rankingLive/tab/event', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
-			<div id="tab4" class="tab_content"><?php include_partial('rankingLive/tab/classify', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
 			<?php if( $iRankAdmin ): ?>
 			<div id="tab5" class="tab_content"><?php include_partial('rankingLive/tab/club', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
 			<?php endif; ?>
+		</form>
+			<div id="tab3" class="tab_content"><?php include_partial('rankingLive/tab/event', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
+			<div id="tab4" class="tab_content"><?php include_partial('rankingLive/tab/classify', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
         </div>	
         <div class="clear"></div>		 
     </div>

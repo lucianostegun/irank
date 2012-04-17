@@ -30,20 +30,23 @@ function hidePaginator( paginatorId ){
 
 function loadSelectField(element, moduleName, updateDivId, updateElementId){
 
-	var elementId            = element.id;
-	var onchangeFunc         = $(updateElementId).onchange;
-	$(updateDivId).innerHTML = getWaitSelect();
+	var elementId    = element.id;
+	var onchangeFunc = document.getElementById(updateElementId).onchange;
 	
-	var successFunc = function(t){
+	$('#'+updateDivId).html(getWaitSelect());
+	
+	$('#'+updateDivId+' select').uniform();
+	
+	var successFunc = function(content){
 		
-		var content = t.responseText;
+		$('#'+updateDivId).html(content);
+		document.getElementById(updateElementId).onchange = onchangeFunc;
 		
-		$(updateDivId).innerHTML    = content;
-		$(updateElementId).onchange = onchangeFunc;
+		$('#'+updateDivId+' select').uniform();
 	}
 	
 	var urlAjax = _webRoot+'/'+moduleName+'/getSelectField/'+element.name+'/'+element.value+'/prefix/'+getModuleName();
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
 }
 
 function debug( value ){

@@ -81,9 +81,83 @@ section.addPlayer li {
 	font-size: 		16px;
 }
 
-.result .prize input,
-.result .score input {
+.eventResult #playerResultCountDiv {
+
+	font-size: 15px;
+}
+
+.eventResult td.prize,
+.eventResult td.score {
+
+	text-align: 	center;
+	width: 			85px;
+}
+
+.eventResult input[type=text] {
+
+	font-weight: 	bold;
+	font-size: 		18px
+}
+
+.eventResult input.decimal {
 
 	text-align: 	right;
-	width: 			85px;
+	width: 			70px;
+}
+
+.eventResult input.decimal.small100,
+.eventResult input.decimal.small200 {
+
+	text-align: 	right;
+	max-width: 		100px;
+	width: 			100px;
+	font-size: 		18px;
+	height: 		20px;
+	padding: 		4px 5px;
+}
+
+.eventResult input.decimal.small300 {
+
+	width: 			300px;
+	max-width: 		300px;
+	text-align: 	left;
+}
+
+.sTable tbody tr td {
+
+	cursor: 	default
+}
+
+.eventResult .eventLivePositionLabel {
+
+	font-size: 		20px;
+	font-weight: 	bold;
+	color: 			#505050;
+	text-shadow: 	#fafafa 1px 2px;
+	text-align: 	right;
+}
+
+.eventResult .emailAddress {
+
+	color: 			#303030;
+	text-shadow: 	#e0e0e0 1px 1px;
+	font-size: 		15px;
+}
+
+.form .eventResult input[type=text]:focus { border-color: #57768e; background: #e0e0e0 }
+
+.ui-menu .ui-menu-item a { font-size: 16px; color: #404040 }
+
+#prizeSplitTotalLabel {
+
+	margin-top: 7px;
+	margin-left: 0px;
+	font-size: 16px;
+}
+
+.resumeEventResult {
+
+	height: 		30px;
+	font-size: 		16px;
+	line-height: 	30px;
 }
