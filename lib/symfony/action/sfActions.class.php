@@ -83,15 +83,23 @@ abstract class sfActions extends sfAction
   
   public function handleFormFieldError( $formErrors ){
 
-  	Util::forceError(null, false);
-  	Util::getHelper('I18N');
-  	
-  	$formErrorList = array();
-	
-	foreach($formErrors as $keyField=>$formError )
-  		$formErrorList[] = $keyField.'|'.__($formError);
-  	
-  	echo 'formError;'.implode(';', $formErrorList);
-  	exit;
+       Util::forceError(null, false);
+       Util::getHelper('I18N');
+
+       $formErrorList = array();
+       $fieldNameList = array();
+
+       foreach($formErrors as $fieldName=>$formError ){
+
+               $formErrorList[$fieldName] = $formError;
+               $fieldNameList[] = $fieldName;
+       }
+
+       $formErrorList['_fieldErrorCount'] = count($formErrors);
+       $formErrorList['_fieldNameList']   = $fieldNameList;
+
+       echo 'formError:'.Util::parseInfo($formErrorList);
+       exit;
   }
+  
 }
