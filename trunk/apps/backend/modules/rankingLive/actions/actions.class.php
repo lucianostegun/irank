@@ -25,6 +25,10 @@ class rankingLiveActions extends sfActions
     
   }
 
+  public function executeUpload($request){
+    
+  }
+
   public function executeNew($request){
     
     $requiredFieldList = array('gameStyleId'=>VirtualTable::getIdByTagName('gameStyle', 'tournament'),
@@ -124,7 +128,7 @@ class rankingLiveActions extends sfActions
 	
 	$rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
 	
-    if( $rankingLiveObj->isMyRanking($userAdminId) ){
+    if( !$rankingLiveObj->isMyRanking($userAdminId) ){
     	
 	    $username = $userAdminObj->getUsername();
 
