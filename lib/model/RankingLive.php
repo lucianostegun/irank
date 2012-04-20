@@ -49,20 +49,23 @@ class RankingLive extends BaseRankingLive
 		$scoreFormula            = $request->getParameter('scoreFormula');
 		$description             = $request->getParameter('description');
 		$clubIdList              = $request->getParameter('clubId');
-		$defaultStartTime        = $request->getParameter('defaultStartTime');
-		$defaultIsFreeroll       = $request->getParameter('defaultIsFreeroll');
-		$defaultBuyin            = $request->getParameter('defaultBuyin');
-		$defaultEntranceFee      = $request->getParameter('defaultEntranceFee');
-		$defaultBlindTime        = $request->getParameter('defaultBlindTime');
-		$defaultStackChips       = $request->getParameter('defaultStackChips');
-		$defaultAllowedRebuys    = $request->getParameter('defaultAllowedRebuys');
-		$defaultAllowedAddons    = $request->getParameter('defaultAllowedAddons');
-		$defaultIsIlimitedRebuys = $request->getParameter('defaultIsIlimitedRebuys');
+		$startTime               = $request->getParameter('startTime');
+		$isFreeroll              = $request->getParameter('isFreeroll');
+		$buyin                   = $request->getParameter('buyin');
+		$entranceFee             = $request->getParameter('entranceFee');
+		$blindTime               = $request->getParameter('blindTime');
+		$stackChips              = $request->getParameter('stackChips');
+		$allowedRebuys           = $request->getParameter('allowedRebuys');
+		$allowedAddons           = $request->getParameter('allowedAddons');
+		$isIlimitedRebuys        = $request->getParameter('isIlimitedRebuys');
+		$prizeSplit              = $request->getParameter('prizeSplit');
+		$rakePercent             = $request->getParameter('rakePercent');
+		$publishPrize            = $request->getParameter('publishPrize');
 		
-		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $defaultStackChips) )
-			$defaultStackChips = Util::formatFloat($defaultStackChips)*1000;
+		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $stackChips) )
+			$stackChips = Util::formatFloat($stackChips)*1000;
 
-		if( $defaultIsFreeroll )
+		if( $isFreeroll )
 			$buyin = 0;
 
 		
@@ -75,15 +78,18 @@ class RankingLive extends BaseRankingLive
 		$this->setIsPrivate(($isPrivate?true:false));
 		$this->setScoreFormula($scoreFormula);
 		$this->setDescription($description);
-		$this->setDefaultStartTime($defaultStartTime);
-		$this->setDefaultIsFreeroll(($defaultIsFreeroll?true:false));
-		$this->setDefaultBuyin(Util::formatFloat($defaultBuyin));
-		$this->setDefaultEntranceFee(Util::formatFloat($defaultEntranceFee));
-		$this->setDefaultBlindTime($defaultBlindTime);
-		$this->setDefaultStackChips($defaultStackChips);
-		$this->setDefaultAllowedRebuys($defaultAllowedRebuys);
-		$this->setDefaultAllowedAddons($defaultAllowedAddons);
-		$this->setDefaultIsIlimitedRebuys(($defaultIsIlimitedRebuys?true:false));
+		$this->setStartTime($startTime);
+		$this->setIsFreeroll(($isFreeroll?true:false));
+		$this->setBuyin(Util::formatFloat($buyin));
+		$this->setEntranceFee(Util::formatFloat($entranceFee));
+		$this->setBlindTime($blindTime);
+		$this->setStackChips($stackChips);
+		$this->setAllowedRebuys($allowedRebuys);
+		$this->setAllowedAddons($allowedAddons);
+		$this->setIsIlimitedRebuys(($isIlimitedRebuys?true:false));
+		$this->setPrizeSplit(($prizeSplit?$prizeSplit:null));
+		$this->setRakePercent(Util::formatFloat($rakePercent));
+		$this->setPublishPrize(($publishPrize?true:false));
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);
@@ -250,30 +256,140 @@ class RankingLive extends BaseRankingLive
 		return $this->getRankingName();
 	}
 	
-	public function getDefaultStackChips($displayShort=false){
+	public function getStackChips($displayShort=false){
 		
-		$defaultStackChips = parent::getDefaultStackChips();
+		$stackChips = parent::getStackChips();
 		
 		if( $displayShort )
-			$defaultStackChips = ($defaultStackChips/1000).'K';
+			$stackChips = ($stackChips/1000).'K';
 			
-		return $defaultStackChips;
+		return $stackChips;
+	}
+	
+	public function getPlayerList(){
+		
+		$criteria = new Criteria();
+		$criteria->add( RankingLivePlayerPeer::RANKING_LIVE_ID, $this->getId() );
+		$criteria->add( RankingLivePlayerPeer::ENABLED, true );
+		$criteria->addDescendingOrderByColumn( RankingLivePlayerPeer::TOTAL_SCORE );
+		
+		return RankingLivePlayerPeer::doSelect($criteria);
+	}
+	
+	public function updateScores(){
+
+	  	$rankingLivePlayerObjList = $this->getPlayerList();
+
+	  	foreach( $rankingLivePlayerObjList as $rankingLivePlayerObj )
+	  		$rankingLivePlayerObj->updateInfo();
+	}
+	
+	public function updatePlayerEvents(){
+		
+		Util::executeQuery('SELECT update_ranking_live_player_events('.$this->getId().')');
+	}
+	
+	public function updateHistory($rankingDate){
+
+		$rankingDate = Util::formatDate($rankingDate);
+		Util::executeQuery('DELETE FROM ranking_live_history WHERE ranking_live_id = '.$this->getId().' AND ranking_date = \''.$rankingDate.'\'');
+		
+		foreach($this->getPlayerList() as $rankingLivePlayerObj){
+			
+			$rankingLiveHistoryObjLast = $rankingLivePlayerObj->getLastHistory($rankingDate);
+			
+			$rankingLiveHistoryObj = new RankingLiveHistory();
+			$rankingLiveHistoryObj->setRankingLiveId($rankingLiveHistoryObjLast->getRankingLiveId());
+			$rankingLiveHistoryObj->setPeopleId($rankingLiveHistoryObjLast->getPeopleId());
+			$rankingLiveHistoryObj->setRankingDate($rankingDate);
+			$rankingLiveHistoryObj->setEnabled($rankingLivePlayerObj->getEnabled());
+			$rankingLiveHistoryObj->setTotalEvents($rankingLiveHistoryObjLast->getTotalEvents()+0);
+			$rankingLiveHistoryObj->setTotalScore($rankingLiveHistoryObjLast->getTotalScore()+0);
+			$rankingLiveHistoryObj->setTotalBalance($rankingLiveHistoryObjLast->getTotalBalance()+0);
+			$rankingLiveHistoryObj->setTotalPrize($rankingLiveHistoryObjLast->getTotalPrize()+0);
+			$rankingLiveHistoryObj->setTotalPaid($rankingLiveHistoryObjLast->getTotalPaid()+0);
+			
+			$rankingLiveHistoryObj->setEvents(0);
+			$rankingLiveHistoryObj->setScore(0);
+			$rankingLiveHistoryObj->setBalanceValue(0);
+			$rankingLiveHistoryObj->setPrizeValue(0);
+			$rankingLiveHistoryObj->setPaidValue(0);
+			$rankingLiveHistoryObj->updateInfo();
+			$rankingLiveHistoryObj->save();
+		}
+	}
+	
+	public function getClassify($rankingDate=null){
+		
+		if( $rankingDate )
+			return $this->getRankingHistoryByDate($rankingDate);
+		
+		switch($this->getRankingType(true)){
+			case 'value':
+				$orderByList = array(RankingLivePlayerPeer::TOTAL_PRIZE=>'desc');
+				break;
+			case 'balance':
+				$orderByList = array(RankingLivePlayerPeer::TOTAL_BALANCE=>'desc');
+				break;
+			case 'score':
+				$orderByList = array(RankingLivePlayerPeer::TOTAL_SCORE=>'desc');
+				break;
+			case 'average':
+				$orderByList = array(RankingLivePlayerPeer::TOTAL_AVERAGE=>'desc');
+				break;
+		}
+	  	
+	  	$orderByList[RankingLivePlayerPeer::TOTAL_PRIZE]   = 'desc';
+	  	$orderByList[RankingLivePlayerPeer::TOTAL_BALANCE] = 'desc';
+	  	$orderByList[RankingLivePlayerPeer::TOTAL_PAID]    = 'asc';
+	  	$orderByList[RankingLivePlayerPeer::TOTAL_PAID]    = 'asc';
+	  	$orderByList[RankingLivePlayerPeer::TOTAL_AVERAGE] = 'desc';
+	  	$orderByList[RankingLivePlayerPeer::PEOPLE_ID]     = 'asc';
+	  	
+	  	$rankingLivePlayerObjList = $this->getPlayerList($orderByList);
+	  	$lastList = array();
+	  	foreach($rankingLivePlayerObjList as $key=>$rankingLivePlayerObj){
+	  		
+	  		if( $rankingLivePlayerObj->getTotalPaid()==0 ){
+	  			
+	  			$lastList[] = $rankingLivePlayerObj;
+	  			unset($rankingLivePlayerObjList[$key]);
+	  		}
+	  	}
+	  	
+	  	return array_merge($rankingLivePlayerObjList, $lastList);
+	}
+	
+	/**
+	 * Retorna o total em porcentagem da divisão de prêmios configurada na aba Resultados do módulo de eventos na administração
+	 */
+	public function getTotalPercentPrizeSplit(){
+		
+		$prizeSplit = split('((; ?)|(, +))', $this->getPrizeSplit());
+		
+		foreach($prizeSplit as &$prize)
+			$prize = Util::formatFloat($prize);
+		
+		return array_sum($prizeSplit);
 	}
 	
 	public function getInfo(){
 		
 		$infoList = array();
 		
-		$infoList['id']                      = $this->getId();
-		$infoList['defaultStartTime']        = $this->getDefaultStartTime('H:i');
-		$infoList['defaultIsFreeroll']       = $this->getDefaultIsFreeroll();
-		$infoList['defaultBuyin']            = $this->getDefaultBuyin();
-		$infoList['defaultEntranceFee']      = $this->getDefaultEntranceFee();
-		$infoList['defaultBlindTime']        = $this->getDefaultBlindTime('H:i');
-		$infoList['defaultStackChips']       = $this->getDefaultStackChips(true);
-		$infoList['defaultAllowedRebuys']    = $this->getDefaultAllowedRebuys();
-		$infoList['defaultAllowedAddons']    = $this->getDefaultAllowedAddons();
-		$infoList['defaultIsIlimitedRebuys'] = $this->getDefaultIsIlimitedRebuys();
+		$infoList['id']               = $this->getId();
+		$infoList['startTime']        = $this->getStartTime('H:i');
+		$infoList['isFreeroll']       = $this->getIsFreeroll();
+		$infoList['buyin']            = $this->getBuyin();
+		$infoList['entranceFee']      = $this->getEntranceFee();
+		$infoList['blindTime']        = $this->getBlindTime('H:i');
+		$infoList['stackChips']       = $this->getStackChips(true);
+		$infoList['allowedRebuys']    = $this->getAllowedRebuys();
+		$infoList['allowedAddons']    = $this->getAllowedAddons();
+		$infoList['isIlimitedRebuys'] = $this->getIsIlimitedRebuys();
+		$infoList['rakePercent']      = $this->getRakePercent();
+		$infoList['prizeSplit']       = $this->getPrizeSplit();
+		$infoList['publishPrize']     = $this->getPublishPrize();
 		
 		return $infoList;
 	}

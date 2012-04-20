@@ -32,8 +32,8 @@
 						<td><?php echo $rankingObj->getRankingType()->getDescription() ?></td>
 					</tr>
 					<tr>
-						<th><?php echo __('ranking.defaultBuyIn') ?></th>
-						<td><?php echo Util::formatFloat($rankingObj->getDefaultBuyin(), true) ?></td>
+						<th><?php echo __('ranking.buyin') ?></th>
+						<td><?php echo Util::formatFloat($rankingObj->getBuyin(), true) ?></td>
 					</tr>
 					<tr>
 						<th><?php echo __('ranking.heldEvents') ?></th>

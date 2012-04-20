@@ -315,12 +315,16 @@ function input_autocomplete_tag($name, $searchUrl, $selectedFunction, $options =
 	
   $value                   = null;
   $options['id']           = (isset($options['id'])?$options['id']:get_id_from_name($name, $value));
+  $suggestNew              = (isset($options['suggestNew'])?$options['suggestNew']:Util::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY);
   $options['autocomplete'] = 'off';
   
   $autoFocus = (isset($options['autofocus'])?$options['autofocus']:true);
   
+  $parameters  = '?';
+  $parameters .= ($suggestNew?'suggestNew='.$suggestNew:'');
+  
   $script = '<script>
-				var urlAjax = "'.url_for($searchUrl).'";
+				var urlAjax = "'.url_for($searchUrl.$parameters).'";
 				
 			    $("#'.$options['id'].'").autocomplete({
 			        source: function(request, response) {

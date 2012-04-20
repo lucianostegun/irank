@@ -44,6 +44,16 @@ class EventLivePlayerMapBuilder {
 
 		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::NUMERIC, false, 10);
 
+		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
+
+		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::NUMERIC, false, 10);
+
+		$tMap->addColumn('REBUY', 'Rebuy', 'double', CreoleTypes::NUMERIC, false, 10);
+
+		$tMap->addColumn('ADDON', 'Addon', 'double', CreoleTypes::NUMERIC, false, 10);
+
+		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

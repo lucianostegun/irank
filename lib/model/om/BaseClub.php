@@ -61,6 +61,10 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 
 	
+	protected $visit_count;
+
+
+	
 	protected $enabled;
 
 
@@ -205,6 +209,13 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	{
 
 		return $this->phone_number_3;
+	}
+
+	
+	public function getVisitCount()
+	{
+
+		return $this->visit_count;
 	}
 
 	
@@ -466,6 +477,20 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setVisitCount($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->visit_count !== $v) {
+			$this->visit_count = $v;
+			$this->modifiedColumns[] = ClubPeer::VISIT_COUNT;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -570,23 +595,25 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			$this->phone_number_3 = $rs->getString($startcol + 12);
 
-			$this->enabled = $rs->getBoolean($startcol + 13);
+			$this->visit_count = $rs->getInt($startcol + 13);
 
-			$this->visible = $rs->getBoolean($startcol + 14);
+			$this->enabled = $rs->getBoolean($startcol + 14);
 
-			$this->deleted = $rs->getBoolean($startcol + 15);
+			$this->visible = $rs->getBoolean($startcol + 15);
 
-			$this->locked = $rs->getBoolean($startcol + 16);
+			$this->deleted = $rs->getBoolean($startcol + 16);
 
-			$this->created_at = $rs->getTimestamp($startcol + 17, null);
+			$this->locked = $rs->getBoolean($startcol + 17);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 18, null);
+			$this->created_at = $rs->getTimestamp($startcol + 18, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 19, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 19; 
+						return $startcol + 20; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Club object", $e);
 		}
@@ -844,21 +871,24 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				return $this->getPhoneNumber3();
 				break;
 			case 13:
-				return $this->getEnabled();
+				return $this->getVisitCount();
 				break;
 			case 14:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 15:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 16:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 17:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 18:
+				return $this->getCreatedAt();
+				break;
+			case 19:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -884,12 +914,13 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 			$keys[10]=>$this->getPhoneNumber1(),
 			$keys[11]=>$this->getPhoneNumber2(),
 			$keys[12]=>$this->getPhoneNumber3(),
-			$keys[13]=>$this->getEnabled(),
-			$keys[14]=>$this->getVisible(),
-			$keys[15]=>$this->getDeleted(),
-			$keys[16]=>$this->getLocked(),
-			$keys[17]=>$this->getCreatedAt(),
-			$keys[18]=>$this->getUpdatedAt(),
+			$keys[13]=>$this->getVisitCount(),
+			$keys[14]=>$this->getEnabled(),
+			$keys[15]=>$this->getVisible(),
+			$keys[16]=>$this->getDeleted(),
+			$keys[17]=>$this->getLocked(),
+			$keys[18]=>$this->getCreatedAt(),
+			$keys[19]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -945,21 +976,24 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				$this->setPhoneNumber3($value);
 				break;
 			case 13:
-				$this->setEnabled($value);
+				$this->setVisitCount($value);
 				break;
 			case 14:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 15:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 16:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 17:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 18:
+				$this->setCreatedAt($value);
+				break;
+			case 19:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -982,12 +1016,13 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[10], $arr)) $this->setPhoneNumber1($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setPhoneNumber2($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setPhoneNumber3($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setEnabled($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setVisible($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setDeleted($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setLocked($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setCreatedAt($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setUpdatedAt($arr[$keys[18]]);
+		if (array_key_exists($keys[13], $arr)) $this->setVisitCount($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setEnabled($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setVisible($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setDeleted($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setLocked($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setCreatedAt($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setUpdatedAt($arr[$keys[19]]);
 	}
 
 	
@@ -1008,6 +1043,7 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ClubPeer::PHONE_NUMBER_1)) $criteria->add(ClubPeer::PHONE_NUMBER_1, $this->phone_number_1);
 		if ($this->isColumnModified(ClubPeer::PHONE_NUMBER_2)) $criteria->add(ClubPeer::PHONE_NUMBER_2, $this->phone_number_2);
 		if ($this->isColumnModified(ClubPeer::PHONE_NUMBER_3)) $criteria->add(ClubPeer::PHONE_NUMBER_3, $this->phone_number_3);
+		if ($this->isColumnModified(ClubPeer::VISIT_COUNT)) $criteria->add(ClubPeer::VISIT_COUNT, $this->visit_count);
 		if ($this->isColumnModified(ClubPeer::ENABLED)) $criteria->add(ClubPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(ClubPeer::VISIBLE)) $criteria->add(ClubPeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(ClubPeer::DELETED)) $criteria->add(ClubPeer::DELETED, $this->deleted);
@@ -1067,6 +1103,8 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$copyObj->setPhoneNumber2($this->phone_number_2);
 
 		$copyObj->setPhoneNumber3($this->phone_number_3);
+
+		$copyObj->setVisitCount($this->visit_count);
 
 		$copyObj->setEnabled($this->enabled);
 

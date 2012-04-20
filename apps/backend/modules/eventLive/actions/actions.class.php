@@ -53,6 +53,8 @@ class eventLiveActions extends sfActions
     
     if( !is_object($eventLiveObj) )
     	return $this->redirect('eventLive/index');
+    
+    $this->visitCountValue = $eventLiveObj->getVisitCount();
     	
     if( $eventLiveObj->getRankingLiveId() ){
     	
@@ -164,6 +166,8 @@ class eventLiveActions extends sfActions
 	$instanceName = $request->getParameter('instanceName');
 	$suggestNew   = $request->getParameter('suggestNew');
 
+	$nl = chr(10);
+
 	$emailAddress = null;
 	
 	if( preg_match('/,/', $peopleName) )
@@ -174,15 +178,17 @@ class eventLiveActions extends sfActions
 	
 	$table      = 'people INNER JOIN event_live_player ON event_live_player.PEOPLE_ID=people.ID AND event_live_player.EVENT_LIVE_ID='.$this->eventLiveId.' AND event_live_player.ENABLED';
 	$fieldId    = 'id';
-	$fieldName  = "FULL_NAME||', '||COALESCE(EMAIL_ADDRESS, 'Não informado')";
-	$fieldValue = "FULL_NAME";
-	$condition  = "people.ENABLED AND people.VISIBLE AND NOT people.DELETED AND ((no_accent(full_name) ILIKE no_accent('%$peopleName%') OR no_accent(email_address) ILIKE no_accent('%$peopleName%'))";
+	$fieldName  = "FULL_NAME||', '||COALESCE(EMAIL_ADDRESS, 'Não informado')$nl";
+	$fieldValue = "FULL_NAME$nl";
+	$condition  = "people.ENABLED AND people.VISIBLE AND NOT people.DELETED $nl";
+	$condition .= "AND (event_live_player.EVENT_POSITION IS NULL OR event_live_player.EVENT_POSITION=0) $nl";
+	$condition .= "AND ((no_accent(full_name) ILIKE no_accent('%$peopleName%') OR no_accent(email_address) ILIKE no_accent('%$peopleName%'))";
 	
 	if( $emailAddress )
 		$condition .= " OR email_address ILIKE '%$emailAddress%'";
 		
 	$condition .= ")";
-
+	
 	$fieldOrder = 'full_name';
 
 	$options = array('suggestNew'=>$suggestNew,
@@ -239,51 +245,18 @@ class eventLiveActions extends sfActions
   
   public function executeSaveResult($request){
     
-    $publish      = $request->getParameter('publish');
-	$totalRebuys  = $request->getParameter('totalRebuys');
-	$prizeSplit   = $request->getParameter('prizeSplit');
     $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
     
-    $eventLiveObj->setTotalRebuys(Util::formatFloat($totalRebuys));
-    $eventLiveObj->setPrizeSplit($prizeSplit);
-    $eventLiveObj->save();
-	
-	$players      = $eventLiveObj->getPlayers();
-	$peopleIdList = array(0);
-	
-	$lastValidEventPosition = 0;
-	
-	for($eventPosition=1; $eventPosition <= $players; $eventPosition++){
-		
-		$peopleId = $request->getParameter('peopleIdPosition-'.$eventPosition);
-		$prize    = $request->getParameter('prize-'.$eventPosition);
-		$score    = $request->getParameter('score-'.$eventPosition);
-		
-		if( !$peopleId )
-			continue;
-		
-		$lastValidEventPosition = $eventPosition;
-		
-		$prize = Util::formatFloat($prize);
-		$score = Util::formatFloat($score);
-			
-		$peopleIdList[] = $peopleId;
-		Util::executeQuery('UPDATE event_live_player SET event_position = '.$eventPosition.', prize='.$prize.', score='.$score.' WHERE event_live_id = '.$this->eventLiveId.' AND people_id='.$peopleId);
-	}
-	
-	Util::executeQuery('UPDATE event_live_player SET event_position = null, prize=0 WHERE event_live_id = '.$this->eventLiveId.' AND people_id NOT IN ('.implode(',', $peopleIdList).')');
+    if( !$eventLiveObj->isMyEvent() ){
+    	
+	    $username = $this->getUser()->getAttribute('username');
 
-	if( $publish ){
-		
-		// Coloca por últimos os jogadores que não marcaram em que posição sairam
-		$criteria = new Criteria();
-		$criteria->add( EventLivePlayerPeer::PEOPLE_ID, $peopleIdList, Criteria::NOT_IN );
-		foreach($eventLiveObj->getEventLivePlayerList($criteria) as $eventLivePlayerObj){
-			$eventLivePlayerObj->setEventPosition(++$lastValidEventPosition);
-			$eventLivePlayerObj->save();
-		}
-	}
-	
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou editar as informações do evento <b>('.$eventLiveObj->getId().') '.$eventLiveObj->toString().'</b>.', 'EventLive', array(), Log::LOG_CRITICAL);
+    	throw new Exception('Você não tem permissão para editar esse evento!');
+    }
+    
+    $eventLiveObj->saveResult($request);
+
 	exit;
   }
   
@@ -300,12 +273,12 @@ class eventLiveActions extends sfActions
     $eventLiveObj->setPrizeSplit($prizeSplit);
     $eventLiveObj->save();
 	
-	$defaultBuyin = $eventLiveObj->getBuyin();
+	$buyin        = $eventLiveObj->getBuyin();
 	$rakePercent  = $eventLiveObj->getRakePercent();
 	$totalPrize   = $eventLiveObj->getTotalBuyin()+Util::formatFloat($totalRebuys);
 	$totalPrize  -= ($totalPrize*$rakePercent/100);
 	
-	$totalBuyins = $totalPrize/$defaultBuyin;
+	$totalBuyins = $totalPrize/$buyin;
 	
 	$prizeConfigList = array();
 	$prizeConfigList['players'] = $players;
@@ -317,7 +290,7 @@ class eventLiveActions extends sfActions
 		
 		$prize  = ($eventPosition <= $paidPlaces?$totalPrize*$prizeConfig[$eventPosition-1]/100:0);
 		$events = 1; // Mudar para o cálculo da quantidade de eventos que o jogador já participou 
-		$score  = $eventLiveObj->parseScore($eventPosition, $events, $prize, $players, $totalBuyins, $defaultBuyin, $prize);
+		$score  = $eventLiveObj->parseScore($eventPosition, $events, $prize, $players, $totalBuyins, $buyin, $prize);
 		
 		$prizeConfigList[$eventPosition] = array('score'=>$score, 'prize'=>$prize);
 	}

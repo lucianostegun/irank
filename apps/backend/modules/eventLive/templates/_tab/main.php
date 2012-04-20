@@ -68,7 +68,7 @@
 	<div class="formRow">
 		<label>Rake</label>
 		<div class="formRight">
-			<span class="multi"><?php echo input_tag('rakePercent', Util::formatFloat($eventLiveObj->getrakePercent(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'id'=>'eventLiveRakePercent')) ?></span>
+			<span class="multi"><?php echo input_tag('rakePercent', Util::formatFloat($eventLiveObj->getRakePercent(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'id'=>'eventLiveRakePercent')) ?></span>
 			<span class="multi"><label class="text">%</label></span>
 			<div class="clear"></div>
 			<div class="formNote">Porcentagem do clube</div>

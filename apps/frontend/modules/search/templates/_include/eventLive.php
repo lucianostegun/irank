@@ -39,6 +39,11 @@
 		}elseif( preg_match('/!?free?roo?ll?/i', $keyWord) ){
 			
 			$where = (preg_match('/!/', $keyWord)?'NOT ':'').'is_freeroll'.$nl;
+			if( !strstr('!', $keyWord) ){
+				
+				$where  = "($where OR no_accent(event_name) ILIKE '%freeroll%' $nl";
+				$where .= "OR no_accent(event_short_name) ILIKE '%freeroll%') $nl";
+			}
 		}else{
 			
 			$where  = "(no_accent(event_name) ILIKE '%$keyWord%' $nl";

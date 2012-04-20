@@ -1,9 +1,16 @@
+$(function() {
+	
+	clearFormFieldErrors();
+});
+
+
+
 function updateMainRecordName(){
 	
 }
 
 function handleFormFieldError( content, instanceName ){
-	
+
 	if( (/^formError:/).test(content) ){
 
        clearFormFieldErrors(instanceName);
@@ -19,10 +26,25 @@ function handleFormFieldError( content, instanceName ){
            var fieldName    = fieldNameList[i];
            var errorMessage = formErrorObj[fieldName];
            
-           if( $('#'+instanceName+ucfirst(fieldName))!=null ){
-        	  
-               $('#'+instanceName+ucfirst(fieldName)).attr('title', errorMessage);
-               $('#'+instanceName+ucfirst(fieldName)).attr('class', 'fieldError');
+           if( (/^\[([a-zA-Z0-9]*)\]/).test(errorMessage) ){
+        	   
+        	   var matches = errorMessage.match(/^\[([a-zA-Z0-9]*)\]/)
+        	   fieldName   = matches[1];
+        	   
+        	   errorMessage = errorMessage.replace(matches[0], '');
+        	   errorMessage = errorMessage.replace('form.error.requiredField', 'Este campo é obrigatório e não foi preenchido');
+        	   errorMessage = Trim(errorMessage);
+           }
+           
+//           if( $('#'+instanceName+ucfirst(fieldName))!=null ){
+//        	  
+//               $('#'+instanceName+ucfirst(fieldName)).attr('title', errorMessage);
+//               $('#'+instanceName+ucfirst(fieldName)).attr('class', 'fieldError');
+//           }
+           if( $('#'+instanceName+'FormError'+ucfirst(fieldName))!=null ){
+        	   
+        	   $('#'+instanceName+'FormError'+ucfirst(fieldName)).html(errorMessage);
+        	   $('#'+instanceName+'FormError'+ucfirst(fieldName)).show();
            }
        }
 	}else{
@@ -33,12 +55,23 @@ function handleFormFieldError( content, instanceName ){
 
 function clearFormFieldErrors(formId){
 
-   var formObj = document.getElementById(formId+'Form');
-   
-   var errorList = formObj.getElementsByClassName('fieldError');
-
-   for(var i=0; i < errorList.length; i++)
-	   errorList[i].innerHTML = '';
+	if( !formId )
+		formId = getModuleName();
+	
+//	var formObj = document.getElementById(formId+'Form');
+//	
+//	if( formObj==null )
+//		return;
+	
+	var errorList = $('#'+formId+'Form .formNote.error');
+	
+	errorList.each(function(index, Element){
+		$(Element).hide();
+	});
+//	for(var index2=0; index2 < errorList.length; index2++){
+//		errorList[index2].className = 'formNote error';
+//		alert(errorList[index2].className);
+//	}
 }
 
 function hideFormStatusSuccess(){

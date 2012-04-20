@@ -382,7 +382,7 @@ function handleRankingChoice(rankingId){
 		$('eventBuyin').disabled = false;
 		
 		if( $('eventBuyin').value==i18n_zero_zeroZero || $('eventBuyin').value=='' )
-			$('eventBuyin').value = toCurrency(rankingObj.defaultBuyin);
+			$('eventBuyin').value = toCurrency(rankingObj.buyin);
 		
 		if( rankingObj.gameStyleTag=='ring' ){
 			

@@ -36,8 +36,8 @@
 				<div class="text"><?php echo $rankingObj->getRankingType()->getDescription() ?></div>
 			</div>
 			<div class="row">
-				<div class="label" id="rankingDefaultBuyinLabel"><?php echo __('ranking.defaultBuyin') ?></div>
-				<div class="text"><?php echo Util::formatFloat($rankingObj->getDefaultBuyin(), true) ?></div>
+				<div class="label" id="rankingBuyinLabel"><?php echo __('ranking.buyin') ?></div>
+				<div class="text"><?php echo Util::formatFloat($rankingObj->getBuyin(), true) ?></div>
 			</div>
 		</td>
 		<td valign="top">

@@ -3,7 +3,7 @@
     <ul class="tabs">
 		<li><a href="#tab1">Principal</a></li>
 		<li><a href="#tab2">Jogadores</a></li>
-		<li><a href="#tab3">Resultado</a></li>
+		<li><a href="#tab3" onclick="return activeResultTab()">Resultado</a></li>
 		<li><a href="#tab4">Fotos</a></li>
 		<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#eventLiveForm").submit()')); ?>
 	</ul>

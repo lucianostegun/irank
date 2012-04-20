@@ -33,6 +33,26 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 
 	
+	protected $entrance_fee;
+
+
+	
+	protected $buyin;
+
+
+	
+	protected $rebuy;
+
+
+	
+	protected $addon;
+
+
+	
+	protected $deleted;
+
+
+	
 	protected $created_at;
 
 
@@ -91,6 +111,41 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	{
 
 		return $this->score;
+	}
+
+	
+	public function getEntranceFee()
+	{
+
+		return $this->entrance_fee;
+	}
+
+	
+	public function getBuyin()
+	{
+
+		return $this->buyin;
+	}
+
+	
+	public function getRebuy()
+	{
+
+		return $this->rebuy;
+	}
+
+	
+	public function getAddon()
+	{
+
+		return $this->addon;
+	}
+
+	
+	public function getDeleted()
+	{
+
+		return $this->deleted;
 	}
 
 	
@@ -218,6 +273,56 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setEntranceFee($v)
+	{
+
+		if ($this->entrance_fee !== $v) {
+			$this->entrance_fee = $v;
+			$this->modifiedColumns[] = EventLivePlayerPeer::ENTRANCE_FEE;
+		}
+
+	} 
+	
+	public function setBuyin($v)
+	{
+
+		if ($this->buyin !== $v) {
+			$this->buyin = $v;
+			$this->modifiedColumns[] = EventLivePlayerPeer::BUYIN;
+		}
+
+	} 
+	
+	public function setRebuy($v)
+	{
+
+		if ($this->rebuy !== $v) {
+			$this->rebuy = $v;
+			$this->modifiedColumns[] = EventLivePlayerPeer::REBUY;
+		}
+
+	} 
+	
+	public function setAddon($v)
+	{
+
+		if ($this->addon !== $v) {
+			$this->addon = $v;
+			$this->modifiedColumns[] = EventLivePlayerPeer::ADDON;
+		}
+
+	} 
+	
+	public function setDeleted($v)
+	{
+
+		if ($this->deleted !== $v) {
+			$this->deleted = $v;
+			$this->modifiedColumns[] = EventLivePlayerPeer::DELETED;
+		}
+
+	} 
+	
 	public function setCreatedAt($v)
 	{
 
@@ -268,15 +373,25 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 			$this->score = $rs->getFloat($startcol + 5);
 
-			$this->created_at = $rs->getTimestamp($startcol + 6, null);
+			$this->entrance_fee = $rs->getFloat($startcol + 6);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 7, null);
+			$this->buyin = $rs->getFloat($startcol + 7);
+
+			$this->rebuy = $rs->getFloat($startcol + 8);
+
+			$this->addon = $rs->getFloat($startcol + 9);
+
+			$this->deleted = $rs->getBoolean($startcol + 10);
+
+			$this->created_at = $rs->getTimestamp($startcol + 11, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 12, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 8; 
+						return $startcol + 13; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLivePlayer object", $e);
 		}
@@ -461,9 +576,24 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				return $this->getScore();
 				break;
 			case 6:
-				return $this->getCreatedAt();
+				return $this->getEntranceFee();
 				break;
 			case 7:
+				return $this->getBuyin();
+				break;
+			case 8:
+				return $this->getRebuy();
+				break;
+			case 9:
+				return $this->getAddon();
+				break;
+			case 10:
+				return $this->getDeleted();
+				break;
+			case 11:
+				return $this->getCreatedAt();
+				break;
+			case 12:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -482,8 +612,13 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 			$keys[3]=>$this->getEventPosition(),
 			$keys[4]=>$this->getPrize(),
 			$keys[5]=>$this->getScore(),
-			$keys[6]=>$this->getCreatedAt(),
-			$keys[7]=>$this->getUpdatedAt(),
+			$keys[6]=>$this->getEntranceFee(),
+			$keys[7]=>$this->getBuyin(),
+			$keys[8]=>$this->getRebuy(),
+			$keys[9]=>$this->getAddon(),
+			$keys[10]=>$this->getDeleted(),
+			$keys[11]=>$this->getCreatedAt(),
+			$keys[12]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -518,9 +653,24 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				$this->setScore($value);
 				break;
 			case 6:
-				$this->setCreatedAt($value);
+				$this->setEntranceFee($value);
 				break;
 			case 7:
+				$this->setBuyin($value);
+				break;
+			case 8:
+				$this->setRebuy($value);
+				break;
+			case 9:
+				$this->setAddon($value);
+				break;
+			case 10:
+				$this->setDeleted($value);
+				break;
+			case 11:
+				$this->setCreatedAt($value);
+				break;
+			case 12:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -536,8 +686,13 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setEventPosition($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setPrize($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setScore($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEntranceFee($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setBuyin($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setRebuy($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setAddon($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setDeleted($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
 	}
 
 	
@@ -551,6 +706,11 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePlayerPeer::EVENT_POSITION)) $criteria->add(EventLivePlayerPeer::EVENT_POSITION, $this->event_position);
 		if ($this->isColumnModified(EventLivePlayerPeer::PRIZE)) $criteria->add(EventLivePlayerPeer::PRIZE, $this->prize);
 		if ($this->isColumnModified(EventLivePlayerPeer::SCORE)) $criteria->add(EventLivePlayerPeer::SCORE, $this->score);
+		if ($this->isColumnModified(EventLivePlayerPeer::ENTRANCE_FEE)) $criteria->add(EventLivePlayerPeer::ENTRANCE_FEE, $this->entrance_fee);
+		if ($this->isColumnModified(EventLivePlayerPeer::BUYIN)) $criteria->add(EventLivePlayerPeer::BUYIN, $this->buyin);
+		if ($this->isColumnModified(EventLivePlayerPeer::REBUY)) $criteria->add(EventLivePlayerPeer::REBUY, $this->rebuy);
+		if ($this->isColumnModified(EventLivePlayerPeer::ADDON)) $criteria->add(EventLivePlayerPeer::ADDON, $this->addon);
+		if ($this->isColumnModified(EventLivePlayerPeer::DELETED)) $criteria->add(EventLivePlayerPeer::DELETED, $this->deleted);
 		if ($this->isColumnModified(EventLivePlayerPeer::CREATED_AT)) $criteria->add(EventLivePlayerPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EventLivePlayerPeer::UPDATED_AT)) $criteria->add(EventLivePlayerPeer::UPDATED_AT, $this->updated_at);
 
@@ -601,6 +761,16 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		$copyObj->setPrize($this->prize);
 
 		$copyObj->setScore($this->score);
+
+		$copyObj->setEntranceFee($this->entrance_fee);
+
+		$copyObj->setBuyin($this->buyin);
+
+		$copyObj->setRebuy($this->rebuy);
+
+		$copyObj->setAddon($this->addon);
+
+		$copyObj->setDeleted($this->deleted);
 
 		$copyObj->setCreatedAt($this->created_at);
 

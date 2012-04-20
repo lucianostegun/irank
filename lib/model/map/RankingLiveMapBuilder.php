@@ -62,23 +62,29 @@ class RankingLiveMapBuilder {
 
 		$tMap->addColumn('FILE_NAME_LOGO', 'FileNameLogo', 'string', CreoleTypes::VARCHAR, false, 250);
 
-		$tMap->addColumn('DEFAULT_BUYIN', 'DefaultBuyin', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::NUMERIC, false, 10);
 
-		$tMap->addColumn('DEFAULT_ENTRANCE_FEE', 'DefaultEntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
 
-		$tMap->addColumn('DEFAULT_START_TIME', 'DefaultStartTime', 'int', CreoleTypes::TIME, false, null);
+		$tMap->addColumn('START_TIME', 'StartTime', 'int', CreoleTypes::TIME, false, null);
 
-		$tMap->addColumn('DEFAULT_IS_FREEROLL', 'DefaultIsFreeroll', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_FREEROLL', 'IsFreeroll', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
-		$tMap->addColumn('DEFAULT_BLIND_TIME', 'DefaultBlindTime', 'int', CreoleTypes::TIME, false, null);
+		$tMap->addColumn('BLIND_TIME', 'BlindTime', 'int', CreoleTypes::TIME, false, null);
 
-		$tMap->addColumn('DEFAULT_STACK_CHIPS', 'DefaultStackChips', 'double', CreoleTypes::DOUBLE, false, null);
+		$tMap->addColumn('STACK_CHIPS', 'StackChips', 'double', CreoleTypes::DOUBLE, false, null);
 
-		$tMap->addColumn('DEFAULT_ALLOWED_REBUYS', 'DefaultAllowedRebuys', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addColumn('ALLOWED_REBUYS', 'AllowedRebuys', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('DEFAULT_ALLOWED_ADDONS', 'DefaultAllowedAddons', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addColumn('ALLOWED_ADDONS', 'AllowedAddons', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('DEFAULT_IS_ILIMITED_REBUYS', 'DefaultIsIlimitedRebuys', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_ILIMITED_REBUYS', 'IsIlimitedRebuys', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('PUBLISH_PRIZE', 'PublishPrize', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('PRIZE_SPLIT', 'PrizeSplit', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('RAKE_PERCENT', 'RakePercent', 'double', CreoleTypes::NUMERIC, false, 5);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

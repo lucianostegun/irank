@@ -74,9 +74,9 @@ function handleSelectEventLivePlayer(peopleId, peopleName){
 
 function addQuickNewPlayer(peopleName){
 	
-	var successFunc = function(t){
+	var successFunc = function(content){
 
-		var peopleId = t.responseText;
+		var peopleId = content;
 		addPlayer(peopleId);
 	};
 		
@@ -322,7 +322,6 @@ function publishEventLiveResult(){
 	
 	$('#eventLiveResultPublish').val('1');
 	$('#eventLiveResultForm').submit();
-	$('#eventLiveResultPublish').val('0');
 }
 
 function getEventLivePlayers(){
@@ -339,17 +338,20 @@ function loadDefaultValues(rankingLiveId){
 		
 		var infoObj = parseInfo(content);
 		
-		$('#eventLiveStartTime').val(infoObj.defaultStartTime);
-		$('#eventLiveIsFreeroll').prop('checked', infoObj.defaultIsFreeroll);
-		$('#eventLiveBuyin').val(toCurrency(infoObj.defaultBuyin));
-		$('#eventLiveEntranceFee').val(toCurrency(infoObj.defaultEntranceFee));
-		$('#eventLiveBlindTime').val(infoObj.defaultBlindTime);
-		$('#eventLiveStackChips').val(infoObj.defaultStackChips);
-		$('#eventLiveAllowedRebuys').val(infoObj.defaultAllowedRebuys);
-		$('#eventLiveAllowedAddons').val(infoObj.defaultAllowedAddons);
-		$('#eventLiveIsIlimitedRebuys').prop('checked', infoObj.defaultIsIlimitedRebuys);
+		$('#eventLiveStartTime').val(infoObj.startTime);
+		$('#eventLiveIsFreeroll').prop('checked', infoObj.isFreeroll);
+		$('#eventLiveBuyin').val(toCurrency(infoObj.buyin));
+		$('#eventLiveEntranceFee').val(toCurrency(infoObj.entranceFee));
+		$('#eventLiveBlindTime').val(infoObj.blindTime);
+		$('#eventLiveStackChips').val(infoObj.stackChips);
+		$('#eventLiveAllowedRebuys').val(infoObj.allowedRebuys);
+		$('#eventLiveAllowedAddons').val(infoObj.allowedAddons);
+		$('#eventLivePrizeSplit').val(infoObj.prizeSplit);
+		$('#eventLiveRakePercent').val(infoObj.rakePercent);
+		$('#eventLiveIsIlimitedRebuys').prop('checked', infoObj.isIlimitedRebuys);
+		$('#eventLivePublishPrize').prop('checked', infoObj.publishPrize);
 		
-		handleIsFreeroll(infoObj.defaultIsFreeroll)
+		handleIsFreeroll(infoObj.isFreeroll)
 		
 		$.uniform.update();
 	}
@@ -498,4 +500,12 @@ function updateTotalPrizeValue(){
 		totalPrizeValue += toFloat($('#prize-'+eventPosition).val());
 	
 	$('#totalPrizeValue').html(toCurrency(totalPrizeValue));
+}
+
+function activeResultTab(){
+	
+	$("#resultTab").find("ul.tabs li:first").addClass("activeTab").show(); //Activate first tab
+	$("#resultTab").find(".tab_content:first").show(); //Show first tab content
+	
+	return false;
 }

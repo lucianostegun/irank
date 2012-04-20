@@ -8,3 +8,31 @@
 	margin-right: 	15px;
 	margin-top: 	-2px
 }
+
+.form input.fieldError, .form input.fieldError:hover{ 
+
+	font-size: 13px; 
+	padding: 7px 6px;
+	background: #e4c5c4;
+	border: 1px solid #bc9190;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+	box-shadow: 0 0 0 2px #F0F0F0;
+	-webkit-box-shadow: 0 0 0 2px #f4f4f4;
+	-moz-box-shadow: 0 0 0 2px #f4f4f4;
+	color: #656565;
+}
+
+.form input.fieldError:hover{ 
+
+	border-color: #a25d5b;
+	color: #000000
+}
+
+.form input.fieldError:focus{ 
+
+	border-color: #a25d5b;
+	background: #d6b6b5;
+}

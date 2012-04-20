@@ -180,7 +180,7 @@ class eventActions extends sfActions
 	
 	$eventObj     = EventPeer::retrieveByPK($eventId);
 	$isPercent    = true;
-	$defaultBuyin = $eventObj->getBuyin();
+	$buyin        = $eventObj->getBuyin();
 	
 	if( $eventObj->getIsFreeroll() ){
 		
@@ -194,7 +194,7 @@ class eventActions extends sfActions
 			$isPercent = false;
 		}
 		
-		$defaultBuyin = $eventObj->getRanking()->getDefaultBuyin();
+		$buyin        = $eventObj->getRanking()->getBuyin();
 		
 		$prizeConfigList = explode(';', $prizeConfig);
 		$infoList = array('percentList'=>implode(',', $prizeConfigList), 'paidPlaces'=>count($prizeConfigList));
@@ -202,7 +202,7 @@ class eventActions extends sfActions
 	}else{
 		
 		$infoList = Ranking::getPaidPlaces($eventId, $buyins);
-		$totalPrize  = ($buyins*$defaultBuyin)+$eventObj->getPrizePot();
+		$totalPrize  = ($buyins*$buyin)+$eventObj->getPrizePot();
 	}
 	
 	$infoList['paidPlaces'] *= 1;
@@ -339,7 +339,7 @@ class eventActions extends sfActions
 				$eventNode['paidPlaces']   = $eventObj->getPaidPlaces();
 				$eventNode['entranceFee']  = $eventObj->getEntranceFee();
 				$eventNode['buyin']        = $eventObj->getBuyin();
-				$eventNode['rankingBuyin'] = $eventObj->getRanking()->getDefaultBuyin();
+				$eventNode['rankingBuyin'] = $eventObj->getRanking()->getBuyin();
 				$eventNode['savedResult']  = $eventObj->getSavedResult()?'true':'false';
 				$eventNode['comments']     = $eventObj->getComments();
 				$eventNode['inviteStatus'] = $eventObj->getInviteStatus($userSiteObj->getPeopleId());

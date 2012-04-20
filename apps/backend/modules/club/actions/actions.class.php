@@ -42,6 +42,8 @@ class clubActions extends sfActions
     if( !is_object($clubObj) )
     	return $this->redirect('club/index');
     	
+    $this->visitCountValue = $clubObj->getVisitCount();
+    
     $this->pathList[$clubObj->getClubName()] = '#';
   }
 

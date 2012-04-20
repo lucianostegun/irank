@@ -55,5 +55,22 @@ function updateFileUploadStatus(status, fileName){
 
 function handleIsFreeroll(checked){
 	
-	$('#rankingLiveDefaultBuyin').attr('disabled', checked);
+	$('#rankingLiveBuyin').attr('disabled', checked);
+}
+
+function updatePrizeSplitLabel(){
+	
+	var splitValue = $('#rankingLivePrizeSplit').val();
+	if( !splitValue )
+		return $('#prizeSplitTotalLabel').html('0%');
+	
+	splitValue = splitValue.split(/[(; ?)(, +)]/);
+	var totalPercent = 0;
+	
+	for(var i=0; i < splitValue.length; i++)
+		totalPercent += toFloat(splitValue[i]);
+
+	totalPercent = toCurrency(totalPercent, 1)+'%';
+	totalPercent = totalPercent.replace(',0%', '%');
+	$('#prizeSplitTotalLabel').html(totalPercent);
 }

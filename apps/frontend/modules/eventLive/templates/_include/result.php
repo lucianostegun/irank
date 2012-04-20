@@ -14,12 +14,14 @@
 	</tr>
 	<tbody>
 <?php
-	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList();
+	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList(null, true);
 	
+	$eventPosition = 0;
 	foreach($eventLivePlayerObjList as $eventLivePlayerObj):
 	
 		$peopleObj = $eventLivePlayerObj->getPeople();
 		
+		$eventPosition++;
 		$peopleId     = $peopleObj->getId();
 		$peopleName   = $peopleObj->getFullName();
 		$emailAddress = $peopleObj->getEmailAddress();
@@ -27,9 +29,9 @@
 		$score        = $eventLivePlayerObj->getScore();
 ?>
 <tr class="<?php echo $class ?>">
-	<td><?php echo $eventLivePlayerObj->getEventPosition() ?></td> 
+	<td><?php echo $eventPosition ?>º</td> 
 	<td><?php echo $peopleName ?></td>
-	<td style="text-align: right"><?php echo Util::formatFloat($score, true, 1) ?></td>
+	<td style="text-align: right"><?php echo Util::formatFloat($score, true, 3) ?></td>
 	<td style="text-align: right"><?php echo Util::formatFloat($prize, true) ?></td>
 </tr>
 <?php endforeach; ?>

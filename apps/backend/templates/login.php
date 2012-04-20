@@ -6,6 +6,9 @@
 	include_metas();
 	include_title();
 ?>
+<script>
+	var _ModuleName = 'login';
+</script>
 </head>
 
 <body class="nobg loginPage">

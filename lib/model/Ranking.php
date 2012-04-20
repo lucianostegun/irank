@@ -403,7 +403,6 @@ class Ranking extends BaseRanking
 		}
 		
 	  	$rankingHistoryObjList = RankingHistoryPeer::doSelect($criteria);
-	  	if($rankingDate=='11/01/2011'){echo '<pre>';print_r($rankingHistoryObjList);exit;}
 
 	  	$lastList = array();
 	  	foreach($rankingHistoryObjList as $key=>$rankingHistoryObj){
@@ -993,7 +992,7 @@ class Ranking extends BaseRanking
 		$infoList['visible']       = $this->getVisible();
 		$infoList['locked']        = $this->getLocked();
 		$infoList['deleted']       = $this->getDeleted();
-		$infoList['defaultBuyin']  = $this->getDefaultBuyin();
+		$infoList['buyin']  = $this->getBuyin();
 		$infoList['gameStyleId']   = $this->getGameStyleId();
 		$infoList['gameStyle']     = $this->getGameStyle()->getDescription();
 		$infoList['gameStyleTag']  = $this->getGameStyle()->getTagName();

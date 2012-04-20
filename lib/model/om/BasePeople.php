@@ -127,6 +127,18 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastEventLivePlayerCriteria = null;
 
 	
+	protected $collRankingLivePlayerList;
+
+	
+	protected $lastRankingLivePlayerCriteria = null;
+
+	
+	protected $collRankingLiveHistoryList;
+
+	
+	protected $lastRankingLiveHistoryCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -672,6 +684,22 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collRankingLivePlayerList !== null) {
+				foreach($this->collRankingLivePlayerList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collRankingLiveHistoryList !== null) {
+				foreach($this->collRankingLiveHistoryList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -795,6 +823,22 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 				if ($this->collEventLivePlayerList !== null) {
 					foreach($this->collEventLivePlayerList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingLivePlayerList !== null) {
+					foreach($this->collRankingLivePlayerList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingLiveHistoryList !== null) {
+					foreach($this->collRankingLiveHistoryList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1082,6 +1126,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			foreach($this->getEventLivePlayerList() as $relObj) {
 				$copyObj->addEventLivePlayer($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingLivePlayerList() as $relObj) {
+				$copyObj->addRankingLivePlayer($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingLiveHistoryList() as $relObj) {
+				$copyObj->addRankingLiveHistory($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -2186,6 +2238,216 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$this->lastEventLivePlayerCriteria = $criteria;
 
 		return $this->collEventLivePlayerList;
+	}
+
+	
+	public function initRankingLivePlayerList()
+	{
+		if ($this->collRankingLivePlayerList === null) {
+			$this->collRankingLivePlayerList = array();
+		}
+	}
+
+	
+	public function getRankingLivePlayerList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLivePlayerList === null) {
+			if ($this->isNew()) {
+			   $this->collRankingLivePlayerList = array();
+			} else {
+
+				$criteria->add(RankingLivePlayerPeer::PEOPLE_ID, $this->getId());
+
+				RankingLivePlayerPeer::addSelectColumns($criteria);
+				$this->collRankingLivePlayerList = RankingLivePlayerPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingLivePlayerPeer::PEOPLE_ID, $this->getId());
+
+				RankingLivePlayerPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingLivePlayerCriteria) || !$this->lastRankingLivePlayerCriteria->equals($criteria)) {
+					$this->collRankingLivePlayerList = RankingLivePlayerPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingLivePlayerCriteria = $criteria;
+		return $this->collRankingLivePlayerList;
+	}
+
+	
+	public function countRankingLivePlayerList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingLivePlayerPeer::PEOPLE_ID, $this->getId());
+
+		return RankingLivePlayerPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingLivePlayer(RankingLivePlayer $l)
+	{
+		$this->collRankingLivePlayerList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getRankingLivePlayerListJoinRankingLive($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLivePlayerList === null) {
+			if ($this->isNew()) {
+				$this->collRankingLivePlayerList = array();
+			} else {
+
+				$criteria->add(RankingLivePlayerPeer::PEOPLE_ID, $this->getId());
+
+				$this->collRankingLivePlayerList = RankingLivePlayerPeer::doSelectJoinRankingLive($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingLivePlayerPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastRankingLivePlayerCriteria) || !$this->lastRankingLivePlayerCriteria->equals($criteria)) {
+				$this->collRankingLivePlayerList = RankingLivePlayerPeer::doSelectJoinRankingLive($criteria, $con);
+			}
+		}
+		$this->lastRankingLivePlayerCriteria = $criteria;
+
+		return $this->collRankingLivePlayerList;
+	}
+
+	
+	public function initRankingLiveHistoryList()
+	{
+		if ($this->collRankingLiveHistoryList === null) {
+			$this->collRankingLiveHistoryList = array();
+		}
+	}
+
+	
+	public function getRankingLiveHistoryList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLiveHistoryPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveHistoryList === null) {
+			if ($this->isNew()) {
+			   $this->collRankingLiveHistoryList = array();
+			} else {
+
+				$criteria->add(RankingLiveHistoryPeer::PEOPLE_ID, $this->getId());
+
+				RankingLiveHistoryPeer::addSelectColumns($criteria);
+				$this->collRankingLiveHistoryList = RankingLiveHistoryPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingLiveHistoryPeer::PEOPLE_ID, $this->getId());
+
+				RankingLiveHistoryPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingLiveHistoryCriteria) || !$this->lastRankingLiveHistoryCriteria->equals($criteria)) {
+					$this->collRankingLiveHistoryList = RankingLiveHistoryPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingLiveHistoryCriteria = $criteria;
+		return $this->collRankingLiveHistoryList;
+	}
+
+	
+	public function countRankingLiveHistoryList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLiveHistoryPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingLiveHistoryPeer::PEOPLE_ID, $this->getId());
+
+		return RankingLiveHistoryPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingLiveHistory(RankingLiveHistory $l)
+	{
+		$this->collRankingLiveHistoryList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getRankingLiveHistoryListJoinRankingLive($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLiveHistoryPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveHistoryList === null) {
+			if ($this->isNew()) {
+				$this->collRankingLiveHistoryList = array();
+			} else {
+
+				$criteria->add(RankingLiveHistoryPeer::PEOPLE_ID, $this->getId());
+
+				$this->collRankingLiveHistoryList = RankingLiveHistoryPeer::doSelectJoinRankingLive($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingLiveHistoryPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastRankingLiveHistoryCriteria) || !$this->lastRankingLiveHistoryCriteria->equals($criteria)) {
+				$this->collRankingLiveHistoryList = RankingLiveHistoryPeer::doSelectJoinRankingLive($criteria, $con);
+			}
+		}
+		$this->lastRankingLiveHistoryCriteria = $criteria;
+
+		return $this->collRankingLiveHistoryList;
 	}
 
 } 

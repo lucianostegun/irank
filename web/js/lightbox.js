@@ -576,6 +576,7 @@ Lightbox.prototype = {
 				myLightbox.changeImage(activeImage - 1);
 			}
 		} else if((key == 'n') || (keycode == 39)){	// display next image
+			
 			if(activeImage != (imageArray.length - 1)){
 				myLightbox.disableKeyboardNav();
 				myLightbox.changeImage(activeImage + 1);
@@ -786,5 +787,8 @@ function pause(numberMillis) {
 
 
 
-function initLightbox() { myLightbox = new Lightbox(); }
+function initLightbox() {
+	
+	myLightbox = new Lightbox();
+}
 Event.observe(window, 'load', initLightbox, false);
