@@ -48,7 +48,7 @@ fields:
     required:
       msg:       form.error.requiredField
        
-  defaultBuyin:
+  buyin:
     required:
       msg:       form.error.requiredField
     sfNumberValidator:

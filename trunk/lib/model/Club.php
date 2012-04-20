@@ -127,7 +127,7 @@ class Club extends BaseClub
 		}
 		
 		if( !$fileNameLogo )
-			$fileNameLogo = 'noImage.jpg';
+			$fileNameLogo = 'noImage.png';
 		
 		return $fileNameLogo;
 	}
@@ -136,6 +136,8 @@ class Club extends BaseClub
 		
 		$fileExtension = File::getFileExtension($fileName);
 		$filePath      = Util::getFilePath('/images/club/'.$fileName);
+		
+		copy($filePath, str_replace('images/club', 'images/club/original', $filePath));
 	
 		if( $fileExtension=='jpg' )
 			$originalImg = imagecreatefromjpeg( $filePath );
@@ -206,5 +208,17 @@ class Club extends BaseClub
 		$clubPhotoObj->save();
 		
 		return $clubPhotoObj;
+	}
+	
+	public function updateVisitCount(){
+		
+		$clubId    = $this->getId();
+		$className = ucfirst(get_class($this));
+		
+		if( !MyTools::hasAttribute("visitCount$className-$clubId") ){
+			
+			Util::executeQuery("SELECT update_club_visit_count($clubId)");
+			MyTools::setAttribute("visitCount$className-$clubId", true);
+		}
 	}
 }

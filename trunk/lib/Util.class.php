@@ -141,14 +141,13 @@ class Util {
 	 */
 	public static function getAutoCompleteResults( $table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options=array() ){
 		
-		
 		$suggestNew = array_key_exists('suggestNew', $options)?$options['suggestNew']:false;
 		$quickName  = array_key_exists('quickName', $options)?$options['quickName']:null;
 		$jquery     = array_key_exists('jquery', $options)?$options['jquery']:false;
 		$fieldValue = array_key_exists('fieldValue', $options)?$options['fieldValue']:$fieldName;
 		
 		$sql = "SELECT $fieldId, $fieldName, $fieldValue FROM $table WHERE $condition ORDER BY $fieldOrder";
-
+		
 	    $resultSet = self::executeQuery( $sql );
 	    
 	    if( $jquery ){
@@ -163,6 +162,10 @@ class Util {
 				$value = $resultSet->getString(3);
 				$resultList[] = '{"id":"'.$id.'", "label": "'.$label.'", "value": "'.$value.'"}';    	
 		    }
+
+			if( ($suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW && $quickName) ||
+				($suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY && $resultSet->getRecordCount()==0 && $quickName) )
+				$resultList[] = '{"id":"quickNew", "label": "Criar novo: '.$quickName.'", "value": "'.$quickName.'"}';
 		
 			return '['.implode(', ', $resultList).']';
 	    }else{

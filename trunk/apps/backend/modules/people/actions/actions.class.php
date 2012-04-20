@@ -24,7 +24,6 @@ class peopleActions extends sfActions
 					 'quickName'=>$peopleName,
 					 'jquery'=>true);
 	
-	
 	$table = 'people';
 	
 	if( $instanceName=='player' ){
@@ -39,7 +38,8 @@ class peopleActions extends sfActions
 		
 		$fieldId    = 'id';
 		$fieldName  = "FULL_NAME||', '||COALESCE(EMAIL_ADDRESS, 'Não informado')";
-		$condition  = "ENABLED AND VISIBLE AND NOT DELETED AND ((no_accent(full_name) ILIKE no_accent('%$peopleName%') OR no_accent(email_address) ILIKE no_accent('%$peopleName%'))";
+		$condition  = "ENABLED AND VISIBLE AND NOT DELETED ";
+		$condition .= "AND ((no_accent(full_name) ILIKE no_accent('%$peopleName%') OR no_accent(email_address) ILIKE no_accent('%$peopleName%'))";
 		
 		if( $emailAddress )
 			$condition .= " OR email_address ILIKE '%$emailAddress%'";
@@ -54,7 +54,7 @@ class peopleActions extends sfActions
 		$condition  = 'ENABLED AND VISIBLE AND NOT DELETED AND no_accent(full_name) ILIKE no_accent(\'%'.$peopleName.'%\')';
 	}
 
-	$fieldOrder = 'full_name';
+	$fieldOrder = 'TRIM(full_name)';
 	
 	
 	echo Util::getAutoCompleteResults($table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options );

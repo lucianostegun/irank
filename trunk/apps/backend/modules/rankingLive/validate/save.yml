@@ -26,40 +26,40 @@ fields:
       callback:      [Validate, validateDate]
       invalid_error: form.error.invalidDate
       
-  defaultStartTime:
+  startTime:
     sfCallbackValidator:
       callback:      [Validate, validateTime]
       invalid_error: form.error.invalidTime
        
-  defaultBuyin:
+  buyin:
     sfNumberValidator:
       min:       0
       min_error: form.error.greaterEqual0
       nan_error: form.error.greaterEqual0
        
-  defaultEntranceFee:
+  entranceFee:
     sfNumberValidator:
       min:       0
       min_error: form.error.greaterEqual0
       nan_error: form.error.greaterEqual0
       
-  defaultDlindTime:
+  blindTime:
     sfCallbackValidator:
       callback:      [Validate, validateTime]
       invalid_error: form.error.invalidTime
 
-  defaultStackChips:
+  stackChips:
     sfCallbackValidator:
       callback:      [EventLivePeer, validateChips]
       invalid_error: form.error.invalidNumber
 
-  defaultAllowedRebuys:
+  allowedRebuys:
     sfNumberValidator:
       min:       0
       min_error: form.error.greaterEqual0
       nan_error: form.error.greaterEqual0
 
-  defaultAllowedAddons:
+  allowedAddons:
     sfNumberValidator:
       min:       0
       min_error: form.error.greaterEqual0

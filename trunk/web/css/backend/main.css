@@ -334,7 +334,11 @@ ul.sub li ul li { padding-left: 10px; }
 
 /* General balance */
 
-.genBalance { height: 68px; border-top: 1px solid #252d31; border-bottom: 1px solid #242d33; background: #252d31; }
+.genBalance { border-top: 1px solid #252d31; border-bottom: 1px solid #242d33; background: #252d31; }
+.genBalance.balance { height: 68px }
+.genBalance.visitCount { height: 37px }
+.genBalance.balance.visitCount { height: 105px }
+
 .genBalance a { background: url(/images/backend/backgrounds/genBalance.png) repeat-x; display: block; border-top: 1px solid #4a535c; color: #e0e0e0; border-bottom: 1px solid #3c444c; }
 .genBalance a span { font-size: 11px; display: block; margin-bottom: 6px; }
 .genBalance a span.balanceAmount { font-size: 22px; font-weight: bold; margin: 0; }
@@ -343,6 +347,11 @@ ul.sub li ul li { padding-left: 10px; }
 .sNegative, .sPositive, .sZero { padding: 26px 0 2px 0; text-align: center; display: block; font-size: 14px; }
 .sNegative { color: #e77575; background: url(/images/backend/backgrounds/sidebarNegativeArrow.png) no-repeat 14px 10px;}
 .sPositive { color: #90c254; background: url(/images/backend/backgrounds/sidebarPositiveArrow.png) no-repeat 14px 10px; }
+
+.genBalance .amountWide { width: 186px; float: left; margin-right: 1px; margin-bottom: 6px; border-right: 1px solid #3b4751; padding: 10px 14px 4px 14px; border-left: 1px solid #3b4751; }
+.genBalance .amountWide span { float: left; width: 100px }
+.genBalance .amountWide span.visitCount { float: left; width: 70px; font-size: 22px; font-weight: bold; margin: 0 }
+
 .sZero {  }
 
 
@@ -704,6 +713,7 @@ input[type=submit], input[type=reset], input[type=button], button { padding: 7px
 /* General widgets styles */
 
 .widget { background: #f9f9f9; border: 1px solid #cdcdcd; margin-top: 32px; clear: both; }
+.widget .widget { margin-top: 12px }
 .widget .title { height: 36px; background: #efefef url(/images/backend/backgrounds/titleBg.png) repeat-x; border-bottom: 1px solid #cdcdcd; }
 .widget .title .titleIcon { float: left; padding: 11px 11px; border-right: 1px solid #D5D5D5; }
 
@@ -1049,6 +1059,7 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .formRight label { float: left; margin-right: 24px; padding: 2px 0; cursor: pointer; }
 .formRow .text { padding: 4px 0; display: block; float: left; }
 .formNote { display: block; text-align: left; font-size: 11px; padding-top: 5px; color: #939393; }
+.formNote.error { color: #a93f31; }
 
 .req { float: right; margin-left: 5px; display: block; color: #DB6464; }
 .disabled { color: #c0c0c0; }
@@ -1062,7 +1073,6 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .formRow .multi .checker { margin-top: 8px }
 
 .form input[type=text], .form input[type=password], .form textarea { font-size: 13px; padding: 7px 6px; background: white; border: 1px solid #AAAAAA; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #F0F0F0; -webkit-box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; color: #656565; } 
-.form input.fieldError, .form input.fieldError:hover{ font-size: 13px; padding: 7px 6px; background: #E09090; border: 1px solid #A03030; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #F0F0F0; -webkit-box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; color: #656565; } 
 .form textarea { width: 100% } 
 .form input[type=text]:hover, .form input[type=password]:hover, .form textarea:hover { border-color: #909090; background: #fdfdfd; }
 .form input[type=text]:focus, .form input[type=password]:focus, .form textarea:focus { border-color: #707070; background: #F5F5F5; color: #303030; -webkit-box-shadow: 0 0 0 2px #f4f4f4; box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; }

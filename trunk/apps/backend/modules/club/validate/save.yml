@@ -6,7 +6,7 @@ fields:
       
   cityId:
     required:
-      msg:       [cityName] form.error.requiredField
+      msg:       form.error.requiredField
        
   addressName:
     required:

@@ -16,6 +16,7 @@ class clubActions extends sfActions
   public function executeDetails($request){
   	
   	$this->clubObj = ClubPeer::retrieveByPK($this->clubId);
+  	$this->clubObj->updateVisitCount();
   }
 
   public function executeGetTabContent($request){

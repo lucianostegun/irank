@@ -91,7 +91,7 @@ abstract class sfActions extends sfAction
 
        foreach($formErrors as $fieldName=>$formError ){
 
-               $formErrorList[$fieldName] = $formError;
+               $formErrorList[$fieldName] = __($formError);
                $fieldNameList[] = $fieldName;
        }
 

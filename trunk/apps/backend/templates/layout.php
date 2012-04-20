@@ -14,7 +14,8 @@ $moduleName = $sf_context->getModuleName();
 $actionName = $sf_context->getActionName();
 
 $mainBalanceValue   = isset($mainBalanceValue)?$mainBalanceValue:0;
-$mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:0;
+$mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:null;
+$visitCountValue   = isset($visitCountValue)?$visitCountValue:null;
 ?>
 <script>
 	var _mainBalanceValue   = <?php echo $mainBalanceValue ?>;
@@ -41,34 +42,33 @@ $mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:0;
     <div class="sidebarSep"></div>
 
 	<?php
-		if( isset($mainBalanceLabel) && isset($mainBalanceValue) ):
+		if( isset($mainBalanceLabel) && isset($mainBalanceValue) || $visitCountValue ):
 		
 			$mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:null;
 	?>
     <!-- General balance widget -->
-    <div class="genBalance">
-        <a href="#" title="" class="amount">
+    <div class="genBalance <?php echo (isset($mainBalanceLabel)?'balance':'') ?> <?php echo ($visitCountValue?'visitCount':'') ?>">
+    	<?php if( isset($mainBalanceLabel) ): ?>
+        <a href="javascript:void(0)" title="" class="amount">
             <span><?php echo $mainBalanceLabel ?>:</span>
             <span class="balanceAmount" id="mainBalanceAmount">R$ <?php echo Util::formatFloat($mainBalanceValue, true) ?></span>
         </a>
+        <?php endif; ?>
         <?php if( !is_null($mainBalancePercent) ): ?>
-        <a href="#" title="" class="amChanges">
+        <a href="javascript:void(0)" title="" class="amChanges">
             <strong class="<?php echo ($mainBalancePercent<0?'sNegative':'sPositive') ?>" id="mainBalancePercent"><?php echo Util::formatFloat($mainBalancePercent, true, 1) ?>%</strong>
         </a>
 	    <?php endif; ?>
+    	<?php if( !is_null($visitCountValue) ): ?>
+        <a href="javascript:void(0)" title="" class="amountWide">
+            <span>Visitas na página</span>
+            <span class="visitCount" id="mainVisitCount"><?php echo $visitCountValue ?></span>
+        </a>
+	    <?php endif; ?>
     </div>
-    <?php endif; ?>
-    <!-- Next update progress widget -->
-    <div class="nextUpdate">
-
-        <ul>
-            <li>Next update in:</li>
-            <li>23 hrs 14 min</li>
-        </ul>
-        <div class="pWrapper"><div class="progressG" title="78%"></div></div>
-    </div>
-    
     <div class="sidebarSep"></div>
+    <?php endif; ?>
+    
     
     <!-- Left navigation -->
 	

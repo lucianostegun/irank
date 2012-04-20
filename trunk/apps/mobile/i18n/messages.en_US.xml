@@ -99,7 +99,7 @@
 				<target>Rating</target>
 			</trans-unit>
 			<trans-unit>
-				<source>ranking.defaultBuyIn</source>
+				<source>ranking.buyin</source>
 				<target>Default buy-in</target>
 			</trans-unit>
 			<trans-unit>

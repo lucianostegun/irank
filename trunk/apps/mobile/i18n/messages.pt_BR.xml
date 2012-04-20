@@ -99,7 +99,7 @@
 				<target>Classificação</target>
 			</trans-unit>
 			<trans-unit>
-				<source>ranking.defaultBuyIn</source>
+				<source>ranking.buyin</source>
 				<target>Buy-in padrão</target>
 			</trans-unit>
 			<trans-unit>

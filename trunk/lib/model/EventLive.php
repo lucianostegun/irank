@@ -104,6 +104,91 @@ class EventLive extends BaseEventLive
 		return EventLivePeer::doSelect($criteria);
 	}
 	
+	public function saveResult($request){
+		
+	    $publish      = $request->getParameter('publish');
+		$totalRebuys  = $request->getParameter('totalRebuys');
+		$prizeSplit   = $request->getParameter('prizeSplit');
+		$publishPrize = $request->getParameter('publishPrize');
+		    
+	    $this->setTotalRebuys(Util::formatFloat($totalRebuys));
+	    $this->setPrizeSplit($prizeSplit);
+	    $this->setPublishPrize(($publishPrize?true:false));
+	    $this->save();
+		
+		$eventLiveId = $this->getId();
+		
+		$players      = $this->getPlayers();
+		$peopleIdList = array(0);
+		
+		$lastValidEventPosition = 0;
+		
+		$isFreeroll  = $this->getIsFreeroll();
+		$buyin       = $this->getBuyin();
+		$entranceFee = $this->getEntranceFee();
+		
+		// Apenas salva o resultado sem publicar as informações
+		for($eventPosition=1; $eventPosition <= $players; $eventPosition++){
+			
+			$peopleId = $request->getParameter('peopleIdPosition-'.$eventPosition);
+			$prize    = $request->getParameter('prize-'.$eventPosition);
+			$score    = $request->getParameter('score-'.$eventPosition);
+			$rebuy    = 0;//$request->getParameter('rebuy-'.$eventPosition);
+			$addon    = 0;//$request->getParameter('addon-'.$eventPosition);
+			
+			if( !$peopleId )
+				continue;
+			
+			$lastValidEventPosition = $eventPosition;
+			
+			$prize = Util::formatFloat($prize);
+			$score = Util::formatFloat($score);
+				
+			$peopleIdList[] = $peopleId;
+
+			$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($eventLiveId, $peopleId);
+			
+			$eventLivePlayerObj->setEventPosition($eventPosition);
+			$eventLivePlayerObj->setPrize( Util::formatFloat($prize) );
+			$eventLivePlayerObj->setEntranceFee( Util::formatFloat($entranceFee) );
+			$eventLivePlayerObj->setRebuy( Util::formatFloat($rebuy) );
+			$eventLivePlayerObj->setAddon( Util::formatFloat($addon) );
+			$eventLivePlayerObj->setBuyin( Util::formatFloat(($isFreeroll?0:$buyin)) );
+			$eventLivePlayerObj->setScore( $score );
+			$eventLivePlayerObj->save();
+		}
+		
+		Util::executeQuery('UPDATE event_live_player SET event_position = null, prize=0 WHERE event_live_id = '.$eventLiveId.' AND people_id NOT IN ('.implode(',', $peopleIdList).')');
+	
+	
+		// Publica as informações no site
+		if( $publish ){
+			
+			// Coloca por últimos os jogadores que não marcaram em que posição sairam
+			$criteria = new Criteria();
+			$criteria->add( EventLivePlayerPeer::PEOPLE_ID, $peopleIdList, Criteria::NOT_IN );
+			foreach($this->getEventLivePlayerList($criteria) as $eventLivePlayerObj){
+				
+				$eventLivePlayerObj->setEventPosition(++$lastValidEventPosition);
+				$eventLivePlayerObj->save();
+				
+				$peopleId = $eventLivePlayerObj->getPeopleId();
+			}
+			
+			$this->setSavedResult(true);
+			$this->save();
+			
+			$rankingLiveObj = $this->getRankingLive();
+				
+			if( is_object($rankingLiveObj) ){
+				
+				$rankingLiveObj->updateScores();
+				$rankingLiveObj->updatePlayerEvents();
+				$rankingLiveObj->updateHistory($this->getEventDate('d/m/Y'));
+			}
+		}
+	}
+	
 	public function getRankingLive($con=null){
 		
 		$rankingLiveObj = parent::getRankingLive($con);
@@ -180,7 +265,7 @@ class EventLive extends BaseEventLive
 		return PeoplePeer::doSelect($criteria);
 	}
 	
-	public function parseScore($position, $events, $prize, $players, $totalBuyins, $defaultBuyin, $itm){
+	public function parseScore($position, $events, $prize, $players, $totalBuyins, $buyin, $itm){
 		
 		$formula = $this->getRankingLive()->getScoreFormula();
 		if( !$formula )
@@ -194,7 +279,7 @@ class EventLive extends BaseEventLive
 		$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
 		$formula = preg_replace('/jogadores|players/', '$players', $formula);
 		$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
-		$formula = preg_replace('/buyin/', '$defaultBuyin', $formula);
+		$formula = preg_replace('/buyin/', '$buyin', $formula);
 		$formula = preg_replace('/itm/', '$itm', $formula);
 		
 		$score = null;
@@ -238,8 +323,12 @@ class EventLive extends BaseEventLive
 		return parent::getEventLivePlayerList($criteria, $con);
 	}
 	
-	public function getEventLivePlayerResultList($criteria=null){
+	public function getEventLivePlayerResultList($criteria=null, $forceEventResult=false){
 		
+		// Se o evento tiver um ranking, retorna a classificação do ranking e não do evento
+		if( $this->getRankingLiveId() && !$forceEventResult )
+			return $this->getRankingLive()->getClassify();
+			
 		if( is_null($criteria) )
 			$criteria = new Criteria();
 			
@@ -352,6 +441,18 @@ class EventLive extends BaseEventLive
 			$prize = Util::formatFloat($prize);
 		
 		return array_sum($prizeSplit);
+	}
+	
+	public function updateVisitCount(){
+		
+		$eventLiveId = $this->getId();
+		$className   = ucfirst(get_class($this));
+		
+		if( !MyTools::hasAttribute("visitCount$className-$eventLiveId") ){
+			
+			Util::executeQuery("SELECT update_event_live_visit_count($eventLiveId)");
+			MyTools::setAttribute("visitCount$className-$eventLiveId", true);
+		}
 	}
 	
 	public function getInfo(){

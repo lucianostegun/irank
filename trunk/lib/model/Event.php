@@ -698,7 +698,9 @@ class Event extends BaseEvent
 		
 		$eventPlayerObjList = $this->getPlayerList();
 		$totalBuyin         = 0;
-		$players            = 0;	
+		$players            = 0;
+		
+		// Faz a soma de tudo o que foi arrecadado entre Buyin, Rebuy e Addon
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
 			$peopleId      = $eventPlayerObj->getPeopleId();
@@ -716,6 +718,8 @@ class Event extends BaseEvent
 		
 		if( $isFreeroll )
 			$totalBuyin += $this->getPrizePot();
+		
+		// Atualiza a tabela EVENT_PLAYER que contém as informações do jogador em relação ao evento
 		$result = array();
 		foreach($eventPlayerObjList as $eventPlayerObj){
 			
@@ -730,20 +734,23 @@ class Event extends BaseEvent
 			$enabled        = $eventPlayerObj->getEnabled();
 			
 			if( $isFreeroll )
-				$buyin = $this->getRanking()->getDefaultBuyin();
+				$buyin = $this->getRanking()->getBuyin();
 			
+			// 1 - Se o jogador não estiver confirmado, marca como confirmado
 			if( !$enabled && $eventPosition > 0 ){
 				
 				$this->addPlayer($peopleId, true, false);
 				$enabled = true;
 			}
 			
+			// 2 - Se o jogador estiver confirmado mas não jogou, remove do evento
 			if( $enabled && $eventPosition == 0 ){
 				
 				$this->deletePlayer($peopleId);
 				$enabled = false;
 			}
 
+			// Após as verificações 1 e 2, caso o jogador esteja confirmado, atualiza as informações dele no evento
 			if( $enabled ){
 				
 				if( $prize > 0 )
@@ -769,23 +776,26 @@ class Event extends BaseEvent
 			}
 		}
 		
+		// Atualiza o evento com a quantidade de jogadores, posições pagas e marca como Resultado Salvo
 		$this->setPlayers($players);
 		$this->setPaidPlaces($paidPlaces);
 		$this->setSavedResult(true);
 		$this->save();
 		
+		// Atualiza toda a parte do ranking
 		$rankingObj->updateScores();
 		$rankingObj->updatePlayerEvents();
 		$rankingObj->updateHistory($this->getEventDate('d/m/Y'));
 		
+		// Notifica os jogadores do resultado do evento
 		$this->notifyResult();
 	}
 	
-	public function parseScore($scoreSchema, $formula, $position, $events, $prize, $players, $totalBuyins, $defaultBuyin, $itm){
+	public function parseScore($scoreSchema, $formula, $position, $events, $prize, $players, $totalBuyins, $buyin, $itm){
 		
 		switch($scoreSchema){
 			case 'irank1':
-				$score = $totalBuyins/$position/$defaultBuyin;
+				$score = $totalBuyins/$position/$buyin;
 				break;
 			case 'vegas':
 			default:
@@ -803,7 +813,7 @@ class Event extends BaseEvent
 				$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
 				$formula = preg_replace('/jogadores|players/', '$players', $formula);
 				$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
-				$formula = preg_replace('/buyin/', '$defaultBuyin', $formula);
+				$formula = preg_replace('/buyin/', '$buyin', $formula);
 				$formula = preg_replace('/itm/', '$itm', $formula);
 				
 				$score = null;
@@ -856,7 +866,7 @@ class Event extends BaseEvent
 			$enabled       = $eventPlayerObj->getEnabled();
 			
 			if( $isFreeroll )
-				$buyin = $this->getRanking()->getDefaultBuyin();
+				$buyin = $this->getRanking()->getBuyin();
 			
 			// Recupera quantos eventos o usuário participou neste ranking antes deste evento
 			$events = $eventPlayerObj->getPeople()->getEvents($this->getRankingId(), $this->getEventDateTime('d/m/Y H:i:s'));

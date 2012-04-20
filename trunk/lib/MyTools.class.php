@@ -109,6 +109,11 @@ class MyTools
     {
         sfContext::getInstance()->getUser()->setAttribute($name, $value, $ns);
     }
+
+    public static function hasAttribute($name, $ns = 'iRank')
+    {
+        return sfContext::getInstance()->getUser()->hasAttribute($name, $ns);
+    }
  
     public static function removeAttribute($name, $ns = 'iRank')
     {

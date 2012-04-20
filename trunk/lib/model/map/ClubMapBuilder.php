@@ -60,6 +60,8 @@ class ClubMapBuilder {
 
 		$tMap->addColumn('PHONE_NUMBER_3', 'PhoneNumber3', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('VISIT_COUNT', 'VisitCount', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

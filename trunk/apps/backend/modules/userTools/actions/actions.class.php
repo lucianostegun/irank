@@ -25,7 +25,7 @@ class userToolsActions extends sfActions
     $userAdminObj = UserAdmin::getCurrentUser();
     $peopleObj    = $userAdminObj->getPeople();
     
-    $firstName = preg_replace('/ .*$', '', $fullName);
+    $firstName = preg_replace('/ .*$/', '', $fullName);
     $lastName  = preg_replace('/^'.$firstName.' /', '', $fullName);
     
     $userAdminObj->quickSave($request, true);

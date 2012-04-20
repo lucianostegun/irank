@@ -78,7 +78,11 @@ class EventLiveMapBuilder {
 
 		$tMap->addColumn('TOTAL_REBUYS', 'TotalRebuys', 'double', CreoleTypes::NUMERIC, false, 5);
 
+		$tMap->addColumn('PUBLISH_PRIZE', 'PublishPrize', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('PRIZE_SPLIT', 'PrizeSplit', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('VISIT_COUNT', 'VisitCount', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

@@ -22,7 +22,7 @@
 						+ '</div><div class="plupload_clearer">&nbsp;</div></div><ul id="'
 						+ f
 						+ '_filelist" class="plupload_filelist"></ul><div class="plupload_filelist_footer"><div class="plupload_file_name"><div class="plupload_buttons"><a href="#" class="plupload_button plupload_add"><span>'
-						+ a("Add files")
+						+ a("Selecionar arquivos")
 						+ '</span></a><a href="#" class="plupload_button plupload_start"><span>'
 						+ a("Upload")
 						+ '</span></a></div><span class="plupload_upload_status"></span></div><div class="plupload_file_action"></div><div class="plupload_file_status"><span class="plupload_total_status">0%</span></div><div class="plupload_file_size"><span class="plupload_total_file_size">0 b</span></div><div class="plupload_progress"><div class="plupload_progress_container"><div class="plupload_progress_bar"></div></div></div><div class="plupload_clearer">&nbsp;</div></div></div></div></div><input type="hidden" id="'

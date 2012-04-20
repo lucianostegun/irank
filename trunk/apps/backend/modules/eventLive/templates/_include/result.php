@@ -1,15 +1,15 @@
 <?php
 	$players = $eventLiveObj->getPlayers();
 	
-	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList();
+	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList(null, true);
 	
 	$totalPrizeValue = 0;
 	$eventPosition   = 0;
 	$eventLiveId     = $eventLiveObj->getId();
 	
 	$eventPlayerPositionList = array();
-	foreach($eventLivePlayerObjList as $eventLivePlayerObj)
-		$eventPlayerPositionList[$eventLivePlayerObj->getEventPosition()] = $eventLivePlayerObj;
+	foreach($eventLivePlayerObjList as $eventPosition=>$eventLivePlayerObj)
+		$eventPlayerPositionList[$eventPosition+1] = $eventLivePlayerObj;
 	
 	for($eventPosition=1; $eventPosition <= $players; $eventPosition++):
 	
@@ -48,7 +48,7 @@
 	</td>
 	<td width="35%" class="emailAddress" id="eventLiveResultEmailAddressTd-<?php echo $eventPosition ?>"><?php echo $emailAddress ?></td>
 	<td class="prize"><?php echo input_tag('prize-'.$eventPosition, Util::formatFloat($prize, true), array('maxlength'=>7, 'class'=>'decimal', 'tabindex'=>($players+$eventPosition), 'onkeyup'=>'updateTotalPrizeValue()')); ?></td>
-	<td class="score"><?php echo input_tag('score-'.$eventPosition, Util::formatFloat($score, true), array('maxlength'=>6, 'class'=>'decimal', 'tabindex'=>(($players*2)+$eventPosition))); ?></td>
+	<td class="score"><?php echo input_tag('score-'.$eventPosition, Util::formatFloat($score, true, 3), array('maxlength'=>6, 'class'=>'decimal', 'tabindex'=>(($players*2)+$eventPosition))); ?></td>
 </tr>
 <?php endfor; ?>
 	<tr class="tfoot resumeEventResult"> 

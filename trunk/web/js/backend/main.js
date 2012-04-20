@@ -19,17 +19,21 @@ $(function() {
 		$(this).find(".tab_content:first").show(); //Show first tab content
 	
 		$("ul.tabs li").click(function() {
+			return false;
+		});
+		
+		$("ul.tabs li").mousedown(function() {
 			$(this).parent().parent().find("ul.tabs li").removeClass("activeTab"); //Remove any "active" class
 			$(this).addClass("activeTab"); //Add "active" class to selected tab
 			$(this).parent().parent().find(".tab_content").hide(); //Hide all tab content
 			var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
 			$(activeTab).show(); //Fade in the active content
+			
 			return false;
 		});
-	
 	};
 	$("div[class^='widget']").contentTabs(); //Run function on any div with class name of "Content Tabs"
-
+	
 
 
 	//===== Form elements styling =====//
