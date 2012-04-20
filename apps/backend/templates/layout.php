@@ -18,8 +18,8 @@ $mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:null;
 $visitCountValue   = isset($visitCountValue)?$visitCountValue:null;
 ?>
 <script>
-	var _mainBalanceValue   = <?php echo $mainBalanceValue ?>;
-	var _mainBalancePercent = <?php echo $mainBalancePercent ?>;
+	var _mainBalanceValue   = <?php echo ($mainBalanceValue?$mainBalanceValue:'0') ?>;
+	var _mainBalancePercent = <?php echo ($mainBalancePercent?$mainBalancePercent:'0') ?>;
 	var _ModuleName         = '<?php echo $moduleName ?>';
 </script>
 </head>
