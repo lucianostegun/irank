@@ -1,30 +1,45 @@
 	<div class="formRow">
 		<label>Nome do ranking</label>
-		<div class="formRight"><?php echo input_tag('rankingName', $rankingLiveObj->getRankingName(), array('size'=>30, 'maxlength'=>30, 'id'=>'rankingLiveRankingName')) ?></div>
+		<div class="formRight">
+			<?php echo input_tag('rankingName', $rankingLiveObj->getRankingName(), array('size'=>30, 'maxlength'=>30, 'id'=>'rankingLiveRankingName')) ?>
+			<div class="formNote error" id="rankingLiveFormErrorRankingName"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 
 	<div class="formRow">
 		<label>Modalidade</label>
-		<div class="formRight"><?php echo select_tag('gameTypeId', VirtualTable::getOptionsForSelect('gameType', $rankingLiveObj->getGameTypeId()), array('id'=>'rankingLiveGameTypeId')) ?></div>
+		<div class="formRight">
+			<?php echo select_tag('gameTypeId', VirtualTable::getOptionsForSelect('gameType', $rankingLiveObj->getGameTypeId()), array('id'=>'rankingLiveGameTypeId')) ?>
+			<div class="formNote error" id="rankingLiveFormErrorGameTypeId"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 
 	<div class="formRow">
 		<label>Formato</label>
-		<div class="formRight"><?php echo select_tag('gameStyleId', VirtualTable::getOptionsForSelect('gameStyle', $rankingLiveObj->getGameStyleId()), array('id'=>'rankingLiveGameStyleId')) ?></div>
+		<div class="formRight">
+			<?php echo select_tag('gameStyleId', VirtualTable::getOptionsForSelect('gameStyle', $rankingLiveObj->getGameStyleId()), array('id'=>'rankingLiveGameStyleId')) ?>
+			<div class="formNote error" id="rankingLiveFormErrorGameStyleId"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 
 	<div class="formRow">
 		<label>Data início</label>
-		<div class="formRight"><?php echo input_date_tag('startDate', $rankingLiveObj->getStartDate(), array('class'=>'calendar', 'id'=>'rankingLiveStartDate')) ?></div>
+		<div class="formRight">
+			<?php echo input_date_tag('startDate', $rankingLiveObj->getStartDate(), array('class'=>'calendar', 'id'=>'rankingLiveStartDate')) ?>
+			<div class="formNote error" id="rankingLiveFormErrorStartDate"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 
 	<div class="formRow">
 		<label>Data término</label>
-		<div class="formRight"><?php echo input_date_tag('finishDate', $rankingLiveObj->getFinishDate(), array('class'=>'calendar', 'id'=>'rankingLiveFinishDate')) ?></div>
+		<div class="formRight">
+			<?php echo input_date_tag('finishDate', $rankingLiveObj->getFinishDate(), array('class'=>'calendar', 'id'=>'rankingLiveFinishDate')) ?>
+			<div class="formNote error" id="rankingLiveFormErrorFinishDate"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 
@@ -33,19 +48,27 @@
 		<div class="formRight">
 			<?php echo checkbox_tag('isPrivate', true, $rankingLiveObj->getIsPrivate(), array('id'=>'rankingLiveIsPrivate')) ?>
 			<label for="rankingLiveIsPrivate">Apenas jogadores convidados podem participar</label>
+			<div class="formNote error" id="rankingLiveFormErrorIsPrivate"></div>
 		</div>
 		<div class="clear"></div>
 	</div>
 
 	<div class="formRow">
 		<label>Classificação</label>
-		<div class="formRight"><?php echo select_tag('rankingTypeId', VirtualTable::getOptionsForSelect('rankingType', $rankingLiveObj->getRankingTypeId()), array('id'=>'rankingLiveRankingTypeId')) ?></div>
+		<div class="formRight">
+			<?php echo select_tag('rankingTypeId', VirtualTable::getOptionsForSelect('rankingType', $rankingLiveObj->getRankingTypeId()), array('id'=>'rankingLiveRankingTypeId')) ?>
+			<div class="formNote error" id="rankingLiveFormErrorRankingTypeId"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 
 	<div class="formRow">
 		<label>Fórmula</label>
-		<div class="formRight"><?php echo input_tag('scoreFormula', $rankingLiveObj->getScoreFormula(), array('size'=>45, 'maxlength'=>150, 'id'=>'rankingLiveScoreFormula')) ?></div>
+		<div class="formRight">
+			<?php echo input_tag('scoreFormula', $rankingLiveObj->getScoreFormula(), array('size'=>45, 'maxlength'=>150, 'id'=>'rankingLiveScoreFormula')) ?>
+			<div class="formNote error" id="rankingLiveFormErrorScoreFormula"></div>
+			<div class="formNote">Opções: POSICAO, EVENTOS, PREMIO, JOGADORES, BUYINS, BUYIN, ITM</div>
+		</div>
 		<div class="clear"></div>
 	</div>
 	<?php
@@ -75,6 +98,9 @@
 	
 	<div class="formRow">
 		<label>Informações</label>
-		<div class="formRight"><?php echo textarea_tag('description', $rankingLiveObj->getDescription(), array('style'=>'height: 400px', 'id'=>'rankingLiveDescription')) ?></div>
+		<div class="formRight">
+			<?php echo textarea_tag('description', $rankingLiveObj->getDescription(), array('style'=>'height: 400px', 'id'=>'rankingLiveDescription')) ?>
+			<div class="formNote error" id="rankingLiveFormErrorDescription"></div>
+		</div>
 		<div class="clear"></div>
 	</div>

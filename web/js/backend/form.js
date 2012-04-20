@@ -50,6 +50,9 @@ function handleFormFieldError( content, instanceName ){
 	}else{
 		
        alert('Não foi possível concluir seu cadastro!\nPor favor, tente novamente.');
+       
+       if( isDebug() )
+    	   debug(content)
 	}
 }
 

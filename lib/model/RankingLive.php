@@ -78,7 +78,7 @@ class RankingLive extends BaseRankingLive
 		$this->setIsPrivate(($isPrivate?true:false));
 		$this->setScoreFormula($scoreFormula);
 		$this->setDescription($description);
-		$this->setStartTime($startTime);
+		$this->setStartTime(Util::formatTime($startTime));
 		$this->setIsFreeroll(($isFreeroll?true:false));
 		$this->setBuyin(Util::formatFloat($buyin));
 		$this->setEntranceFee(Util::formatFloat($entranceFee));
@@ -226,8 +226,8 @@ class RankingLive extends BaseRankingLive
 		
 		$criteria = new Criteria();
 		$criteria->add( RankingLivePeer::ID, $this->getId() );
-		$criteria->add( ClubRankingLivePeer::ENABLED, true );
 		$criteria->add( UserAdminPeer::ID, $userAdminId );
+		$criteria->add( ClubRankingLivePeer::ENABLED, true );
 		$criteria->addJoin( RankingLivePeer::ID, ClubRankingLivePeer::RANKING_LIVE_ID, Criteria::INNER_JOIN );
 		$criteria->addJoin( ClubRankingLivePeer::CLUB_ID, UserAdminPeer::CLUB_ID, Criteria::INNER_JOIN );
 		
