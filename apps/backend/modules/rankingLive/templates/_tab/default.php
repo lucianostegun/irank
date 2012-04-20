@@ -5,18 +5,16 @@
 	</div>
 
 	<div class="formRow">
-		<label>Buy-in padrão</label>
+		<label>Buy-in</label>
 		<div class="formRight">
-			<span class="multi"><?php echo input_tag('buyin', Util::formatFloat($rankingLiveObj->getBuyin(), true), array('size'=>8, 'maxlength'=>8, 'id'=>'rankingLiveBuyin')) ?></span>
+			<span class="multi"><?php echo input_tag('buyin', Util::formatFloat($rankingLiveObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'disabled'=>$rankingLiveObj->getIsFreeroll(), 'id'=>'rankingLiveBuyin')) ?></span>
+			<span class="multi"><label class="text">+</label></span>
+			<span class="multi"><?php echo input_tag('entranceFee', Util::formatFloat($rankingLiveObj->getEntranceFee(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'id'=>'rankingLiveEntranceFee')) ?></span>
 			<span class="multi"><?php echo checkbox_tag('isFreeroll', true, $rankingLiveObj->getIsFreeroll(), array('onclick'=>'handleIsFreeroll(this.checked)', 'id'=>'rankingLiveIsFreeroll')) ?></span>
 			<span class="multi"><label for="rankingLiveIsFreeroll">Freeroll</label></span>
+			<div class="clear"></div>
+			<div class="formNote">Buyin + Taxa de entrada</div>
 		</div>
-		<div class="clear"></div>
-	</div>
-
-	<div class="formRow">
-		<label>Taxa entrada padrão</label>
-		<div class="formRight"><?php echo input_tag('entranceFee', Util::formatFloat($rankingLiveObj->getEntranceFee(), true), array('size'=>8, 'maxlength'=>8, 'id'=>'rankingLiveEntranceFee')) ?></div>
 		<div class="clear"></div>
 	</div>
 	

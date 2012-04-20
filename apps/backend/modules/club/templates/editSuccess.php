@@ -9,8 +9,8 @@
 	</ul>
 	<div class="tab_container">
 		<div id="tab1" class="tab_content"><?php include_partial('club/tab/main', array('clubObj'=>$clubObj)) ?></div>
-		<div id="tab2" class="tab_content"><?php include_partial('club/tab/event', array('clubId'=>$clubId)) ?></div>
-		<div id="tab3" class="tab_content"><?php include_partial('club/tab/ranking', array('clubId'=>$clubId)) ?></div>
+		<div id="tab2" class="tab_content"><?php include_partial('club/tab/event', array('clubObj'=>$clubObj)) ?></div>
+		<div id="tab3" class="tab_content"><?php include_partial('club/tab/ranking', array('clubObj'=>$clubObj)) ?></div>
 		<div id="tab4" class="tab_content"><?php include_partial('club/tab/photos', array('clubId'=>$clubId)) ?></div>
 	</div>
 </div>

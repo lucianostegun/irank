@@ -12,6 +12,11 @@ class RankingLive extends BaseRankingLive
 	
 	const DEFAULT_SCORE_FORMULA = 'JOGADORES-(POSICAO-1)';
 	
+	public function getIsNew(){
+		
+		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
+	}
+	
     public function save($con=null){
     	
     	try{
@@ -121,14 +126,15 @@ class RankingLive extends BaseRankingLive
 		}
 	}
 	
-	public static function getList($clubId=null){
+	public static function getList($criteria=null, $clubId=null){
 		
-		$criteria = new Criteria();
+		if( is_null($criteria) )
+			$criteria = new Criteria();
 		$criteria->add( RankingLivePeer::ENABLED, true );
 		$criteria->add( RankingLivePeer::VISIBLE, true );
 		$criteria->add( RankingLivePeer::DELETED, false );
 		
-		if( $clubId ){
+		if( !is_null($clubId) ){
 			
 			$criteria->add( ClubRankingLivePeer::CLUB_ID, $clubId );
 			$criteria->add( ClubRankingLivePeer::ENABLED, true );

@@ -100,7 +100,7 @@ class Schedule {
 	    		$buyin = '';
 	    	
 	    	if( $entranceFee )
-	    		$buyin = Util::formatFloat($entranceFee, true).($buyin?'+'.$buyin:'');
+	    		$buyin .= ($entranceFee?'+'.Util::formatFloat($entranceFee, true):'');
 	    	
 	    	if( $buyin )
 	    		$comments = 'Buy-in: '.$buyin.($comments?Schedule::NEW_STRING_LINE.Schedule::NEW_STRING_LINE.$comments:'');
@@ -196,7 +196,7 @@ class Schedule {
 	    		$buyin = '';
 	    	
 	    	if( $entranceFee )
-	    		$buyin = Util::formatFloat($entranceFee, true).($buyin?'+'.$buyin:'');
+	    		$buyin .= ($entranceFee?'+'.Util::formatFloat($entranceFee, true):'');
 	    	
 	    	if( $buyin )
 	    		$comments = 'Buy-in: '.$buyin.Schedule::NEW_STRING_LINE.Schedule::NEW_STRING_LINE.$comments;

@@ -13,8 +13,13 @@
 		</thead> 
 		<tbody id="rankingLiveTbody"> 
 			<?php
+				$criteria = new Criteria();
+				
+				if( $clubObj->getIsNew() )
+					$criteria->add( RankingLivePeer::ID, null);
+				
 				$rankingLiveIdList = array();
-				foreach(RankingLive::getList($clubId) as $rankingLiveObj):
+				foreach(RankingLive::getList($criteria) as $rankingLiveObj):
 					
 					$rankingLiveId       = $rankingLiveObj->getId();
 					$rankingLiveIdList[] = $rankingLiveId;
