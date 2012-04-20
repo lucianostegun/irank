@@ -372,8 +372,8 @@ class EventLive extends BaseEventLive
 		$buyin = str_replace(',00', '', $buyin);
 		
 		$buyinInfo = '';
-		$buyinInfo = ($entranceFee?$entranceFee.($buyin?'+':''):'');
-		$buyinInfo = $buyinInfo.($buyin?Util::formatFloat($buyin, true):'');
+		$buyinInfo = ($buyin?$buyin.($entranceFee?'+':''):'');
+		$buyinInfo = $buyinInfo.($entranceFee?Util::formatFloat($entranceFee, true):'');
 		
 		return $buyinInfo;
 	}

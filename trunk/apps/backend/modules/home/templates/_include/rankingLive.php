@@ -13,7 +13,7 @@
 	<tbody id="rankingLiveTbody"> 
 		<?php
 			$rankingLiveIdList = array();
-			foreach(RankingLive::getList($clubId) as $rankingLiveObj):
+			foreach(RankingLive::getList(null, $clubId) as $rankingLiveObj):
 				
 				$rankingLiveId       = $rankingLiveObj->getId();
 				$rankingLiveIdList[] = $rankingLiveId;

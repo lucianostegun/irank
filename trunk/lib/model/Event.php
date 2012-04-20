@@ -385,6 +385,7 @@ class Event extends BaseEvent
 		}
 
 		$entranceFee = $this->getEntranceFee();
+		$buyin       = $this->getBuyin();
 		
 		$infoList = array();
 		$infoList['eventName']   = $this->getEventName();
@@ -396,7 +397,7 @@ class Event extends BaseEvent
 		$infoList['startTime']   = $this->getStartTime('H:i');
 		$infoList['paidPlaces']  = $this->getPaidPlaces();
 		$infoList['entranceFee'] = Util::formatFloat($entranceFee, true);
-		$infoList['buyin']       = ($entranceFee?$infoList['entranceFee'].'+':'').Util::formatFloat($this->getBuyin(), true);
+		$infoList['buyin']       = Util::formatFloat($buyin, true).($entranceFee?'+'.$infoList['entranceFee']:'');
 		$infoList['comments']    = $this->getComments();
 		$infoList['invites']     = $this->getInvites();
 		$infoList['players']     = $this->getPlayers();

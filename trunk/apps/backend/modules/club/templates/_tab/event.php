@@ -12,8 +12,13 @@
 		</thead> 
 		<tbody id="eventLiveTbody"> 
 			<?php
+				$criteria = new Criteria();
+				
+				if( $clubObj->getIsNew() )
+					$criteria->add( EventLivePeer::ID, null);
+				
 				$eventLiveIdList = array();
-				foreach(EventLive::getList(null, $clubId) as $eventLiveObj):
+				foreach(EventLive::getList($criteria, $clubObj->getId()) as $eventLiveObj):
 					
 					$eventLiveId       = $eventLiveObj->getId();
 					$eventLiveIdList[] = $eventLiveId;

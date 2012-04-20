@@ -11,6 +11,7 @@
 		<label>Modalidade</label>
 		<div class="formRight">
 			<?php echo select_tag('gameTypeId', VirtualTable::getOptionsForSelect('gameType', $rankingLiveObj->getGameTypeId()), array('id'=>'rankingLiveGameTypeId')) ?>
+			<div class="clear"></div>
 			<div class="formNote error" id="rankingLiveFormErrorGameTypeId"></div>
 		</div>
 		<div class="clear"></div>
@@ -20,6 +21,7 @@
 		<label>Formato</label>
 		<div class="formRight">
 			<?php echo select_tag('gameStyleId', VirtualTable::getOptionsForSelect('gameStyle', $rankingLiveObj->getGameStyleId()), array('id'=>'rankingLiveGameStyleId')) ?>
+			<div class="clear"></div>
 			<div class="formNote error" id="rankingLiveFormErrorGameStyleId"></div>
 		</div>
 		<div class="clear"></div>
@@ -57,6 +59,7 @@
 		<label>Classificação</label>
 		<div class="formRight">
 			<?php echo select_tag('rankingTypeId', VirtualTable::getOptionsForSelect('rankingType', $rankingLiveObj->getRankingTypeId()), array('id'=>'rankingLiveRankingTypeId')) ?>
+			<div class="clear"></div>
 			<div class="formNote error" id="rankingLiveFormErrorRankingTypeId"></div>
 		</div>
 		<div class="clear"></div>
