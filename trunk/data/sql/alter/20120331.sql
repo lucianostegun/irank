@@ -29,44 +29,6 @@ WHERE
     AND event.VISIBLE
     AND NOT event.DELETED;
 
-
-
-
-DROP VIEW IF EXISTS event_live_schedule_view;
-CREATE OR REPLACE VIEW event_live_schedule_view AS
-SELECT
-    event_live.ID,
-    event_live.EVENT_NAME,
-    event_live.EVENT_DATE,
-    event_live.START_TIME,
-    event_live.EVENT_DATE_TIME,
-    event_live.COMMENTS,
-    event_live.PLAYERS,
-    event_live.IS_FREEROLL,
-    event_live.BUYIN,
-    event_live.ENTRANCE_FEE,
-    event_live.ALLOWED_REBUYS,
-    event_live.IS_ILIMITED_REBUYS,
-    event_live.ALLOWED_ADDONS,
-    ranking_live.RANKING_NAME,
-    club.CLUB_NAME,
-    club.MAPS_LINK,
-    city.CITY_NAME,
-    state.INITIAL,
-    event_live.CREATED_AT,
-    ranking_live.ID AS ranking_live_id
-FROM
-    event_live
-    INNER JOIN ranking_live ON event_live.RANKING_LIVE_ID=ranking_live.ID
-    INNER JOIN club ON event_live.CLUB_ID=club.ID
-    INNER JOIN city ON club.CITY_ID=city.ID
-    INNER JOIN state ON city.STATE_ID=state.ID
-WHERE
-    event_live.ENABLED
-    AND event_live.VISIBLE
-    AND NOT event_live.DELETED
-    AND NOT ranking_live.IS_PRIVATE;
-
 INSERT INTO virtual_table(virtual_table_name, description, tag_name, enabled, visible, created_at, updated_at) VALUES
     ('userSiteOption', 'Estado da agenda', 'scheduleStateId', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('userSiteOption', 'Cidade da agenda', 'scheduleCityId', true, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

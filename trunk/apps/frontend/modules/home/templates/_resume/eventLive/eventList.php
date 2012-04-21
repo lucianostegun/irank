@@ -1,5 +1,12 @@
 <?php
-	$eventLiveObjList = EventLive::getList();
+
+	// Busca todos os eventos até a hora atual
+	$criteria = new Criteria();
+	$criteria->add( EventLivePeer::EVENT_DATE_TIME, date('Y-m-d H:00'), Criteria::GREATER_EQUAL );
+	$criteria->add( RankingLivePeer::IS_PRIVATE, false );
+	$criteria->addJoin( EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID, Criteria::LEFT_JOIN );
+	
+	$eventLiveObjList = EventLive::getList($criteria);
 	if( empty($eventLiveObjList) )
 		include_partial('home/resume/event/noEvent');
 	else{

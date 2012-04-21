@@ -3,6 +3,7 @@
 		'url'=>'userTools/save',
 		'success'=>'handleSuccessUserTools(response)',
 		'failure'=>'handleFailureUserTools(response.responseText)',
+		'loading'=>'showIndicator()',
 		),
 		array('class'=>'form', 'id'=>'userToolsForm'));
 //	echo form_tag('userTools/save', array('class'=>'form', 'id'=>'userToolsForm'));

@@ -482,7 +482,7 @@
       $update .= "'".$options['update']."'";
     }
 
-    $function = "$.ajax($javascript_options)";
+    $function = "$loading; $.ajax($javascript_options)";
 
     if (isset($options['before']))
     {

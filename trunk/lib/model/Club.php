@@ -226,4 +226,18 @@ class Club extends BaseClub
 			MyTools::setAttribute("visitCount$className-$clubId", true);
 		}
 	}
+	
+	public function getEventList($criteria=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
+		$criteria->add( EventLivePeer::CLUB_ID, $this->getId() );
+		$criteria->add( EventLivePeer::ENABLED, true );
+		$criteria->add( EventLivePeer::VISIBLE, true );
+		$criteria->add( EventLivePeer::DELETED, false );
+		$criteria->addAscendingOrderByColumn( EventLivePeer::EVENT_DATE_TIME );
+		
+		return EventLivePeer::doSelect($criteria);
+	}
 }

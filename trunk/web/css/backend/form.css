@@ -1,6 +1,5 @@
 .formStatusTopMessage {
 
-	display: 				none;
 	position: 				absolute;
 	width: 					400px;
 	left: 					-400px;
@@ -13,7 +12,7 @@
 	-webkit-border-radius: 	5px;
 	-moz-border-radius: 	5px;
 	border-radius: 			5px;
-	border: 				1px solid none;
+	border: 				1px solid transparent;
 	border-top: 			none;
 	font-weight: 			normal;
 	cursor: 				pointer;
@@ -46,23 +45,23 @@
 	background: 		#cfe2f7 url(/images/backend/icons/notifications/success.png) no-repeat 7px center;
 	border-color: 		#9fc2ee;
 	color: 				#1e487a;
-	font-weight: 			bold;
+	font-weight: 		bold;
 }
 
 .formStatusTopMessage.warning {
 
-	background: #ffe9ad url(/images/backend/icons/notifications/error.png) no-repeat 7px center;
-	border: 1px solid #eac572;
-	color: #826200;
-	font-weight: 			bold;
+	background: 	#ffe9ad url(/images/backend/icons/notifications/error.png) no-repeat 7px center;
+	border: 		1px solid #eac572;
+	color: 			#826200;
+	font-weight: 	bold;
 }
 
 .formStatusTopMessage.error {
 
-	background: #fccac1 url(/images/backend/icons/notifications/exclamation.png) no-repeat 7px center;
-	border: 1px solid #e18b7c;
-	color: #AC260F;
-	font-weight: 			bold;
+	background: 	#fccac1 url(/images/backend/icons/notifications/exclamation.png) no-repeat 7px center;
+	border-color: 	#e18b7c;
+	color: 			#AC260F;
+	font-weight: 	bold;
 }
 
 .formStatusTopMessage.success .errorMessage {

@@ -604,6 +604,7 @@
 		<column name="saved_result" type="BOOLEAN" />
 		<column name="total_rebuys" type="NUMERIC" size="5" scale="2" />
 		<column name="publish_prize" type="BOOLEAN"/>
+		<column name="suppress_schedule" type="BOOLEAN"/>
 		<column name="prize_split" type="VARCHAR" />
 		<column name="visit_count" type="INTEGER" />
 		<column name="enabled" type="BOOLEAN" />

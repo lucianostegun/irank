@@ -25,15 +25,15 @@ html .fc, .fc table { font-size: 1em; }
 .fc-header .fc-state-down { z-index: 3; }
 .fc-header .fc-state-active, .fc-header .ui-state-active { z-index: 4; }
 	
-.fc-button-prev .fc-button-content { width: 10px; background: url(../images/leftArrow.png) no-repeat 15px 13px; }
-.fc-button-next .fc-button-content { width: 10px; background: url(../images/rightArrow.png) no-repeat 15px 13px; }
+.fc-button-prev .fc-button-content { width: 10px; background: url(/images/backend/leftArrow.png) no-repeat 15px 13px; }
+.fc-button-next .fc-button-content { width: 10px; background: url(/images/backend/rightArrow.png) no-repeat 15px 13px; }
 	
 .fc-content {  }	
 .fc-view { width: 100%; overflow: hidden; }
 	
 	
 .fc-widget-header, .fc-widget-content { border: 1px solid #d5d5d5; }
-.fc-state-highlight { background: #f5f5f5 url(../images/backgrounds/calActiveBg.png) repeat-x 0 0; }	
+.fc-state-highlight { background: #f5f5f5 url(/images/backend/backgrounds/calActiveBg.png) repeat-x 0 0; }	
 .fc-cell-overlay { background: #9cf; opacity: .2; filter: alpha(opacity=20); /* for IE */ }
 	
 

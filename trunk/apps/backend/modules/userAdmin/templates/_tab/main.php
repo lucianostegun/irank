@@ -3,6 +3,7 @@
 		'url'=>'userAdmin/save',
 		'success'=>'handleSuccessUserAdmin(response)',
 		'failure'=>'handleFailureUserAdmin(response.responseText)',
+		'loading'=>'showIndicator()',
 		),
 		array('class'=>'form', 'id'=>'userAdminForm'));
 	

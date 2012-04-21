@@ -80,6 +80,8 @@ class EventLiveMapBuilder {
 
 		$tMap->addColumn('PUBLISH_PRIZE', 'PublishPrize', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
+		$tMap->addColumn('SUPPRESS_SCHEDULE', 'SuppressSchedule', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('PRIZE_SPLIT', 'PrizeSplit', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('VISIT_COUNT', 'VisitCount', 'int', CreoleTypes::INTEGER, false, null);

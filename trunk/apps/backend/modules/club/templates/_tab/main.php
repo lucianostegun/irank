@@ -3,6 +3,7 @@
 		'url'=>'club/save',
 		'success'=>'handleSuccessClub(response)',
 		'failure'=>'handleFailureClub(response.responseText)',
+		'loading'=>'showIndicator()',
 		),
 		array('class'=>'form', 'id'=>'clubForm'));
 	

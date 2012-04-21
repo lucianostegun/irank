@@ -119,11 +119,9 @@ function hideIndicator(fade){
 }
 
 
-
-
-
-
 function showFormStatusMessage(){
+	
+	$('#formStatusTopMessage').removeClass('hidden');
 	
 	$('#formStatusTopMessage').fadeTo(200, 1.00, function(){ //fade
 		$(this).show(); //then remove from the DOM
