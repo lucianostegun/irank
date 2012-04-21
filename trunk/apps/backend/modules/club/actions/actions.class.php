@@ -17,6 +17,7 @@ class clubActions extends sfActions
     $this->clubId = $this->getUser()->getAttribute('clubId', $this->clubId);
     
     $this->pathList = array('Clubes'=>'club/index');
+    $this->toolbarList = array('new');
   }
 
   public function executeIndex($request){
@@ -33,6 +34,8 @@ class clubActions extends sfActions
     
     $this->pathList['Novo clube'] = '#';
     $this->setTemplate('edit');
+    
+    $this->toolbarList = array('new', 'save');
   }
   
   public function executeEdit($request){
@@ -45,6 +48,7 @@ class clubActions extends sfActions
     $this->visitCountValue = $clubObj->getVisitCount();
     
     $this->pathList[$clubObj->getClubName()] = '#';
+    $this->toolbarList = array('new', 'save', 'delete');
   }
 
   public function handleErrorSave(){

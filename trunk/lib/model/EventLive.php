@@ -10,6 +10,11 @@
 class EventLive extends BaseEventLive
 {
 	
+	public function getIsNew(){
+		
+		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
+	}
+	
     public function save($con=null){
     	
     	try{
@@ -160,9 +165,10 @@ class EventLive extends BaseEventLive
 		
 		Util::executeQuery('UPDATE event_live_player SET event_position = null, prize=0 WHERE event_live_id = '.$eventLiveId.' AND people_id NOT IN ('.implode(',', $peopleIdList).')');
 	
+		$savedResult = $this->getSavedResult();
 	
 		// Publica as informações no site
-		if( $publish ){
+		if( $publish || $savedResult ){
 			
 			// Coloca por últimos os jogadores que não marcaram em que posição sairam
 			$criteria = new Criteria();

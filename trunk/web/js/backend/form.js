@@ -5,8 +5,9 @@ $(function() {
 
 
 
-function updateMainRecordName(){
+function updateMainRecordName(recordName){
 	
+	$('#lastPathName').html(recordName)
 }
 
 function handleFormFieldError( content, instanceName ){

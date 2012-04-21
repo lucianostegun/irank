@@ -71,7 +71,30 @@
 				<source>form.error.invalidDate</source>
 				<target>A data informada não é válida</target>
 			</trans-unit>
-			
+			<trans-unit>
+				<source>form.error.invalidRankingName</source>
+				<target>O nome informado não é válido.\nO nome deve iniciar com uma letra, e pode conter apenas letras, números e os caracteres ()-_</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidRankingTag</source>
+				<target>O grupo informado não é válido.\nO grupo deve iniciar com uma letra, e pode conter apenas letras e números</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenRankingName</source>
+				<target>Já existe um ranking cadastrado com este nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenRankingTag</source>
+				<target>Já existe outro ranking utilizando este endereço</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidNumber</source>
+				<target>O valor informado não é um número válido</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual0</source>
+				<target>Informe um valor maior ou igual a 0</target>
+			</trans-unit>
 			
 			
 			<trans-unit>

@@ -143,7 +143,7 @@ select[multiple] { border: 1px solid #ddd; box-shadow: 0 0 0 2px #f4f4f4; -webki
 
 /* ==========  Error and offline pages  ========== */
 
-.errorWrapper { position: absolute; top: 70px; bottom: 0; text-align: center; left: 222px; right: 0; height: 430px }
+.errorWrapper { position: absolute; top: 100px; bottom: 0; text-align: center; left: 222px; right: 0; height: 430px }
 .errorWrapper .button { margin-bottom: 30px; }
 .sadEmo { background: url(/images/backend/sadEmo.png) no-repeat; display: block; height: 62px; margin: 0 auto 0px auto; width: 62px; }
 .errorWrapper .errorTitle { display: block; text-shadow: 1px 0 0 #fff; text-align: center; font-size: 20px; border-bottom: 1px solid #cdcdcd; padding: 20px 14px; font-weight: bold; color: #d76a6a; font-style: italic; }
@@ -415,7 +415,7 @@ ul.sub li ul li { padding-left: 10px; }
 .widget, .middleNav, .sItem, .statsDetailed 
 { box-shadow: 0 1px 0 #fff; -moz-box-shadow: 0 1px 0 #fff; -webkit-box-shadow: 0 1px 0 #fff; }
 
-.wButton, .nNote, .widget .num a, .tag, a.sButton, .tooltip, .tPagination ul li a, .bc, .pages li a, .smallButton, .search-choice, .horControlB ul li, .gallery ul li, .iconsGroup, .logMeIn, .wContentButton
+.wButton, .nNote, .widget .num a, .tag, a.sButton, .tooltip, .tPagination ul li a, .bc, .pages li a, .smallButton, .search-choice, .horControlB ul li, .horControlT ul li, .gallery ul li, .iconsGroup, .logMeIn, .wContentButton
 { -moz-border-radius: 2px; -webkit-border-radius: 2px; -khtml-border-radius: 2px; border-radius: 2px; }
 
 .contentProgress, .invoicesBar, .barG, .barO, .barB 
@@ -444,7 +444,7 @@ ul.sub li ul li { padding-left: 10px; }
 
 /* === Title area with middle navigation === */
 
-.titleArea { padding-top: 60px; }
+.titleArea { padding-top: 36px; }
 
 .pageTitle { float: left; padding: 35px 0 32px 0; }
 
@@ -535,6 +535,14 @@ ul.sub li ul li { padding-left: 10px; }
 .horControlB ul li a {  display: block; font-weight: bold; white-space: nowrap; color: #626262; }
 .horControlB ul li img { float: left; margin: 12px 12px 10px 12px; }
 .horControlB ul li a span { display: block; margin: 0px 0 0 40px; padding: 10px 16px 8px 16px; border-left: 1px solid #d5d5d5; } 
+
+.horControlT { text-align: right; padding: 3px 3px 3px 0; }
+.horControlT ul li { display: inline-block; margin: 6px 0px 0 5px; background: url(/images/backend/backgrounds/horControlT.png) repeat-x; border: 1px solid #d5d5d5; text-align: center; box-shadow: inset 0 0 0 1px #fff; -webkit-box-shadow: inset 0 0 0 1px #fff; -moz-box-shadow: inset 0 0 0 1px #fff; }
+.horControlT ul li:hover { background-position: 0 -43px; }
+.horControlT ul li:active { background-position: 0 -86px; }
+.horControlT ul li a {  display: block; font-weight: bold; white-space: nowrap; color: #626262; }
+.horControlT ul li img { float: left; margin: 6px 6px 5px 6px; }
+.horControlT ul li a span { display: block; margin: 0px 0 0 30px; padding: 5px 8px 4px 8px; border-left: 1px solid #d5d5d5; } 
 
 
 
@@ -1001,7 +1009,7 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .sTable tbody td { border-left: 1px solid #e4e4e4; padding: 8px 12px; vertical-align: middle; }
 .sTable tbody td:first-child { border-left: none }
 .sTable tbody tr:first-child { border-top: none; }
-.sTable tbody tr td { cursor: pointer }
+.sTable tbody tr.gradeA td { cursor: pointer }
 
 .sTable tbody tr .gradeA:hover { 
 	
@@ -1625,6 +1633,7 @@ color: #656565;
 	.sItem { width: 186px; }
 	
 	.horControlB ul li { margin: 2px; width: 46%; }
+	.horControlT ul li { margin: 2px; width: 46%; }
 	
 	table thead td span { display: none; }
 	.sTable thead td.sortCol { text-align: center; padding: 3px 14px 2px 14px; }
@@ -1799,6 +1808,7 @@ color: #656565;
 	
 	.controlB ul li { display: block; float: left; width: 49%; margin: 1px 1px 0 0; }
 	.horControlB ul li { margin: 1px 0 0 0; width: 100%; text-align: left; }
+	.horControlT ul li { margin: 1px 0 0 0; width: 100%; text-align: left; }
 	
 	.sItem { margin: 1px 0 0 0; width: 100%; }
 	.sItem > h2 { width: 50%; border-right: 1px solid #D5D5D5; }
@@ -1858,25 +1868,63 @@ z-index: 5000
 }
 
 article.breadcrumbs2 {
-position: absolute;
+position: relative;
 float: left;
 padding: 0 10px;
 border: 1px solid #BABABA;
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 border-radius: 5px;
-background: 	-moz-linear-gradient(top, #f0f0f0, #D5D5D5);
-background: 	-webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#D5D5D5));
-filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#f0f0f0', EndColorStr='#D5D5D5', GradientType=0);
+background: 	-moz-linear-gradient(top, #FFFFFF, #D5D5D5);
+background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#D5D5D5));
+filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#D5D5D5', GradientType=0);
 height: 21px;
-margin: 3px 0px 2px -37px;
+top: 13px;
+left: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Breadcrumbs */
+
+article.breadcrumbs2 {
+float: left;
+padding: 0 10px;
+border: 1px solid #ccc;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+-webkit-box-shadow: 0 1px 0 #fff;
+-moz-box-shadow: 0 1px 0 #fff;
+box-shadow: 0 1px 0 #fff;
+height: 23px;
+margin:04px5px%
+background: #F00;
 }
 
 .breadcrumbs2 a {
 display: inline-block;
 float: left;
-height: 20px;
-line-height: 22px;
+height: 24px;
+line-height: 23px;
 }
 
 .breadcrumbs2 a.current, .breadcrumbs2 a.current:hover {
@@ -1890,34 +1938,28 @@ text-decoration: none;
 color: #44474F;
 text-decoration: none;
 text-shadow: 0 1px 0 #fff;
-font-weight: bold;
-
-}
+font-weight: bold;}
 
 .breadcrumbs2 a.last {
 color: #606060;
 font-weight: normal;
 cursor: default;
-
 }
 
 .breadcrumbs2 a:hover {
 color: #C91E1E;
-
 }
 
 .breadcrumbs2 a.last:hover {
 color: #606060;
 cursor: default;
-
 }
 
 .breadcrumb_divider {
 display: inline-block;
 width: 12px;
-height: 20px;
-background: url(/images/backend/breadcrumb_divider.png) 0px -1px no-repeat;
+height: 24px;
+background: url(/images/backend/breadcrumb_divider.png) no-repeat;
 float: left;
 margin: 0 5px;
-
 }

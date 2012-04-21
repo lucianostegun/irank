@@ -20,7 +20,7 @@ class UserAdmin extends BaseUserAdmin
 		$master      = $request->getParameter('master');
 		$active      = $request->getParameter('active');
 		
-		$password = ($newPassword?md5($newPassword):$this->getPassword());
+		$password = ($newPassword && $newPassword!='******'?md5($newPassword):$this->getPassword());
 		
 		if( $fromUser===false ){
 			

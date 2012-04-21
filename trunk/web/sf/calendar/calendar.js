@@ -745,7 +745,7 @@ Calendar.prototype.create = function (_par) {
 
 	var div = Calendar.createElement("div");
 	this.element = div;
-	div.className = "calendar";
+	div.className = "dhxCalendar";
 	if (this.isPopup) {
 		div.style.position = "absolute";
 		div.style.display = "none";

@@ -1,3 +1,4 @@
+<div class="wrapper">
 <div class="widget">
 	<div class="title"><span class="titleIcon"><input type="checkbox" id="titleCheck" name="titleCheck" /></span><h6>Eventos LIVE</h6></div>                          
 	<table cellpadding="0" cellspacing="0" width="100%" class="display dTable withCheck" id="checkAll">

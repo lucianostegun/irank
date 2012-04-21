@@ -30,7 +30,7 @@
 	<div class="formRow">
 		<label>Data início</label>
 		<div class="formRight">
-			<?php echo input_date_tag('startDate', $rankingLiveObj->getStartDate(), array('class'=>'calendar', 'id'=>'rankingLiveStartDate')) ?>
+			<?php echo input_tag('startDate', $rankingLiveObj->getStartDate('d/m/Y'), array('maxlength'=>10, 'class'=>'datepicker maskDate', 'id'=>'rankingLiveStartDate')) ?>
 			<div class="formNote error" id="rankingLiveFormErrorStartDate"></div>
 		</div>
 		<div class="clear"></div>
@@ -39,7 +39,7 @@
 	<div class="formRow">
 		<label>Data término</label>
 		<div class="formRight">
-			<?php echo input_date_tag('finishDate', $rankingLiveObj->getFinishDate(), array('class'=>'calendar', 'id'=>'rankingLiveFinishDate')) ?>
+			<?php echo input_tag('finishDate', $rankingLiveObj->getFinishDate('d/m/Y'), array('maxlength'=>10, 'class'=>'datepicker maskDate', 'id'=>'rankingLiveFinishDate')) ?>
 			<div class="formNote error" id="rankingLiveFormErrorFinishDate"></div>
 		</div>
 		<div class="clear"></div>

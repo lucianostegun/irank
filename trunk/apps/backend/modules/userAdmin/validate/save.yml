@@ -2,7 +2,11 @@ fields:
       
   peopleId:
     required:
-      msg:       [peopleName] form.error.requiredField
+      msg:       form.error.requiredField
+      
+  peopleName:
+    required:
+      msg:       form.error.requiredField
        
   username:
     required:
