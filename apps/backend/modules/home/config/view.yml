@@ -1,4 +1,4 @@
 indexSuccess:
 
   stylesheets:    [backend/reset, backend/fullcalendar, backend/datatable, backend/ui_custom, backend/prettyPhoto, backend/elfinder]
-  javascripts:    [/backend.php/home/javascript/js]
+  javascripts:    [backend/plugins/calendar.min.js, backend/home]

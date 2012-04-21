@@ -207,4 +207,16 @@ class clubActions extends sfActions
 	
   	exit;
   }
+
+  public function executeGetCalendar($request){
+	
+	$eventList = array();
+	$event = array('title'=>'Titulo do evento', 'start'=>1334199600000, 'allDay'=>false);
+	$eventList[] = $event;
+	
+	echo Util::parseInfo($eventList);
+
+//	echo "[{title: 'All day event', start: new Date(2012, 03, 12)}]";
+  	exit;
+  }
 }

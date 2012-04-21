@@ -45,5 +45,6 @@
     <div class="wrapper">
     	<!-- Title area -->
     	<?php include_partial('home/club/resume', array('clubId'=>$clubId)) ?>
+    	<?php include_partial('home/club/calendar', array('clubId'=>$clubId)) ?>
     	<div class="clear"></div>
 	</div>
