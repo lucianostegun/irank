@@ -61,6 +61,7 @@ class EventLive extends BaseEventLive
 		$isIlimitedRebuys = $request->getParameter('isIlimitedRebuys');
 		$description      = $request->getParameter('description');
 		$comments         = $request->getParameter('comments');
+		$suppressSchedule = $request->getParameter('suppressSchedule');
 		
 		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $stackChips) )
 			$stackChips = Util::formatFloat($stackChips)*1000;
@@ -85,6 +86,10 @@ class EventLive extends BaseEventLive
 		$this->setIsIlimitedRebuys(($isIlimitedRebuys?true:false));
 		$this->setDescription($description);
 		$this->setComments(($comments?$comments:null));
+		
+		// Informações da aba Options
+		$this->setSuppressSchedule(($suppressSchedule?true:false));
+		
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);

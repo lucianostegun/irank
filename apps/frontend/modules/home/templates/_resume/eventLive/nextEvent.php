@@ -18,12 +18,12 @@
 	<div class="eventInfo">
 		<div class="when"><?php echo Util::getWeekDay($eventLiveObj->getEventDateTime('d/m/Y')).', '.$eventLiveObj->getEventDateTime('d/m/Y H:i') ?></div>
 		<div class="where"><b>@ <?php echo $eventLiveObj->getClub()->toString() ?></b> - <?php echo $eventLiveObj->getClub()->getLocation() ?></div>
-		<div class="ranking"><?php echo ($rankingName?' / '.$rankingName:'') ?></div>
 		<div class="title"><?php echo $eventLiveObj->getEventName() ?></div>
 		<div class="howMuch">
 			<label>Buyin:</label><span><?php echo $eventLiveObj->getBuyinInfo() ?></span>
 			<label>Blinds:</label><span><?php echo $eventLiveObj->getBlindTime('H:i') ?></span>
 			<label>Stack:</label><span><?php echo $eventLiveObj->getStackChips() ?></span>
+			<?php echo ($rankingName?'<label class="ranking">Ranking: </label><span>'.$rankingName.'</span>':'') ?>
 		</div>
 	</div>
 	<div class="clear"></div>

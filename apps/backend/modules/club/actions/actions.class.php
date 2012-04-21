@@ -209,14 +209,36 @@ class clubActions extends sfActions
   }
 
   public function executeGetCalendar($request){
-	
+
 	$eventList = array();
-	$event = array('title'=>'Titulo do evento', 'start'=>1334199600000, 'allDay'=>false);
-	$eventList[] = $event;
+	
+	$criteria = new Criteria();
+	$criteria->add( EventLivePeer::EVENT_DATE, date('Y-m-d', mktime(0,0,0,date('m')-1, 1, date('Y'))), Criteria::GREATER_EQUAL );
+	$criteria->addAnd( EventLivePeer::EVENT_DATE, date('Y-m-d', mktime(0,0,0,date('m')+3, 0, date('Y'))), Criteria::LESS_EQUAL );
+	
+	if( $this->clubId ){
+		
+		$clubObj = ClubPeer::retrieveByPK($this->clubId);
+		$eventLiveObjList = $clubObj->getEventList($criteria);
+	}else{
+		
+		$eventLiveObjList = EventLive::getList($criteria);
+	}
+	
+	Util::getHelper('Url');
+	
+	foreach($eventLiveObjList as $eventLiveObj){
+		
+		$event = array('title'=>$eventLiveObj->toString(), 
+					   'start'=>date('r', $eventLiveObj->getEventDateTime(null)), 
+					   'allDay'=>false, 
+					   'color'=>'#d57656', 
+					   'url'=>url_for('eventLive/edit?id='.$eventLiveObj->getId()));
+		$eventList[] = $event;
+	}
 	
 	echo Util::parseInfo($eventList);
 
-//	echo "[{title: 'All day event', start: new Date(2012, 03, 12)}]";
   	exit;
   }
 }

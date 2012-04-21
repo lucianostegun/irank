@@ -83,11 +83,13 @@ class RankingLive extends BaseRankingLive
 		$this->setIsPrivate(($isPrivate?true:false));
 		$this->setScoreFormula($scoreFormula);
 		$this->setDescription($description);
+		
+		// Informações da aba Valores padrão
 		$this->setStartTime(($startTime?$startTime:null));
 		$this->setIsFreeroll(($isFreeroll?true:false));
 		$this->setBuyin(Util::formatFloat($buyin));
 		$this->setEntranceFee(Util::formatFloat($entranceFee));
-		$this->setBlindTime($blindTime);
+		$this->setBlindTime(($blindTime?$blindTime:null));
 		$this->setStackChips($stackChips);
 		$this->setAllowedRebuys($allowedRebuys);
 		$this->setAllowedAddons($allowedAddons);
@@ -95,6 +97,7 @@ class RankingLive extends BaseRankingLive
 		$this->setPrizeSplit(($prizeSplit?$prizeSplit:null));
 		$this->setRakePercent(Util::formatFloat($rakePercent));
 		$this->setPublishPrize(($publishPrize?true:false));
+		
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);

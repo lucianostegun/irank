@@ -118,15 +118,6 @@
 	font-size: 		12px;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .ranking {
-
-	float: 			left;
-	margin-left: 	5px;
-	height: 		18px;
-	line-height: 	18px;
-	font-size: 		12px;
-}
-
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch {
 
 	clear: 			both;
@@ -140,12 +131,20 @@
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch label {
 
 	font-weight: 	bold;
+	font-size: 		11px;
 	margin-right: 	5px;
 }
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch span {
 
-	padding-right: 	20px;
+	padding-right: 	16px;
+	font-size: 		11px;
+}
+
+.eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch label.ranking {
+
+	margin-left: 	20px;
+	font-size: 		12px;
 }
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence {
@@ -209,7 +208,8 @@
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous {
 
-	background: 	#DEEAEF url('/images/home/podium.png') 2px center no-repeat;
+	background: 		#DEEAEF;
+	background-repeat: 	no-repeat;
 }
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.pending {

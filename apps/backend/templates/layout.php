@@ -14,6 +14,7 @@ $moduleName = $sf_context->getModuleName();
 $actionName = $sf_context->getActionName();
 
 $mainBalanceValue   = isset($mainBalanceValue)?$mainBalanceValue:0;
+$mainBalanceBase    = isset($mainBalanceBase)?$mainBalanceBase:0;
 $mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:null;
 $visitCountValue   = isset($visitCountValue)?$visitCountValue:null;
 
@@ -21,6 +22,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
 ?>
 <script>
 	var _mainBalanceValue   = <?php echo ($mainBalanceValue?$mainBalanceValue:'0') ?>;
+	var _mainBalanceBase    = <?php echo ($mainBalanceBase?$mainBalanceBase:'0') ?>;
 	var _mainBalancePercent = <?php echo ($mainBalancePercent?$mainBalancePercent:'0') ?>;
 	var _ModuleName         = '<?php echo $moduleName ?>';
 	var _ActionName         = '<?php echo $actionName ?>';
@@ -122,7 +124,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
     <!-- Top fixed navigation -->
     <div class="topNav">
         <div class="wrapper">
-            <div class="formStatusTopMessage hideit" id="formStatusTopMessage">
+            <div class="formStatusTopMessage hideit hidden" id="formStatusTopMessage">
             	<span class="indicator" id="formStatusIndicator">Processando, aguarde...</span>
             	<span class="errorMessage" id="formStatusErrorMessage">Erro ao salvar as informações!</span>
             	<span class="successMessage" id="formStatusSuccessMessage">Informações salvas com sucesso!</span>

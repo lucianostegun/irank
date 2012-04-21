@@ -101,6 +101,10 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 
 	
+	protected $suppress_schedule;
+
+
+	
 	protected $prize_split;
 
 
@@ -374,6 +378,13 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	{
 
 		return $this->publish_prize;
+	}
+
+	
+	public function getSuppressSchedule()
+	{
+
+		return $this->suppress_schedule;
 	}
 
 	
@@ -769,6 +780,16 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setSuppressSchedule($v)
+	{
+
+		if ($this->suppress_schedule !== $v) {
+			$this->suppress_schedule = $v;
+			$this->modifiedColumns[] = EventLivePeer::SUPPRESS_SCHEDULE;
+		}
+
+	} 
+	
 	public function setPrizeSplit($v)
 	{
 
@@ -921,27 +942,29 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 			$this->publish_prize = $rs->getBoolean($startcol + 22);
 
-			$this->prize_split = $rs->getString($startcol + 23);
+			$this->suppress_schedule = $rs->getBoolean($startcol + 23);
 
-			$this->visit_count = $rs->getInt($startcol + 24);
+			$this->prize_split = $rs->getString($startcol + 24);
 
-			$this->enabled = $rs->getBoolean($startcol + 25);
+			$this->visit_count = $rs->getInt($startcol + 25);
 
-			$this->visible = $rs->getBoolean($startcol + 26);
+			$this->enabled = $rs->getBoolean($startcol + 26);
 
-			$this->deleted = $rs->getBoolean($startcol + 27);
+			$this->visible = $rs->getBoolean($startcol + 27);
 
-			$this->locked = $rs->getBoolean($startcol + 28);
+			$this->deleted = $rs->getBoolean($startcol + 28);
 
-			$this->created_at = $rs->getTimestamp($startcol + 29, null);
+			$this->locked = $rs->getBoolean($startcol + 29);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 30, null);
+			$this->created_at = $rs->getTimestamp($startcol + 30, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 31, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 31; 
+						return $startcol + 32; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLive object", $e);
 		}
@@ -1210,27 +1233,30 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				return $this->getPublishPrize();
 				break;
 			case 23:
-				return $this->getPrizeSplit();
+				return $this->getSuppressSchedule();
 				break;
 			case 24:
-				return $this->getVisitCount();
+				return $this->getPrizeSplit();
 				break;
 			case 25:
-				return $this->getEnabled();
+				return $this->getVisitCount();
 				break;
 			case 26:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 27:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 28:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 29:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 30:
+				return $this->getCreatedAt();
+				break;
+			case 31:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1266,14 +1292,15 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$keys[20]=>$this->getSavedResult(),
 			$keys[21]=>$this->getTotalRebuys(),
 			$keys[22]=>$this->getPublishPrize(),
-			$keys[23]=>$this->getPrizeSplit(),
-			$keys[24]=>$this->getVisitCount(),
-			$keys[25]=>$this->getEnabled(),
-			$keys[26]=>$this->getVisible(),
-			$keys[27]=>$this->getDeleted(),
-			$keys[28]=>$this->getLocked(),
-			$keys[29]=>$this->getCreatedAt(),
-			$keys[30]=>$this->getUpdatedAt(),
+			$keys[23]=>$this->getSuppressSchedule(),
+			$keys[24]=>$this->getPrizeSplit(),
+			$keys[25]=>$this->getVisitCount(),
+			$keys[26]=>$this->getEnabled(),
+			$keys[27]=>$this->getVisible(),
+			$keys[28]=>$this->getDeleted(),
+			$keys[29]=>$this->getLocked(),
+			$keys[30]=>$this->getCreatedAt(),
+			$keys[31]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1359,27 +1386,30 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$this->setPublishPrize($value);
 				break;
 			case 23:
-				$this->setPrizeSplit($value);
+				$this->setSuppressSchedule($value);
 				break;
 			case 24:
-				$this->setVisitCount($value);
+				$this->setPrizeSplit($value);
 				break;
 			case 25:
-				$this->setEnabled($value);
+				$this->setVisitCount($value);
 				break;
 			case 26:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 27:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 28:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 29:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 30:
+				$this->setCreatedAt($value);
+				break;
+			case 31:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1412,14 +1442,15 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[20], $arr)) $this->setSavedResult($arr[$keys[20]]);
 		if (array_key_exists($keys[21], $arr)) $this->setTotalRebuys($arr[$keys[21]]);
 		if (array_key_exists($keys[22], $arr)) $this->setPublishPrize($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setPrizeSplit($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setVisitCount($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setEnabled($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setVisible($arr[$keys[26]]);
-		if (array_key_exists($keys[27], $arr)) $this->setDeleted($arr[$keys[27]]);
-		if (array_key_exists($keys[28], $arr)) $this->setLocked($arr[$keys[28]]);
-		if (array_key_exists($keys[29], $arr)) $this->setCreatedAt($arr[$keys[29]]);
-		if (array_key_exists($keys[30], $arr)) $this->setUpdatedAt($arr[$keys[30]]);
+		if (array_key_exists($keys[23], $arr)) $this->setSuppressSchedule($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setPrizeSplit($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setVisitCount($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setEnabled($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setVisible($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setDeleted($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setLocked($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setCreatedAt($arr[$keys[30]]);
+		if (array_key_exists($keys[31], $arr)) $this->setUpdatedAt($arr[$keys[31]]);
 	}
 
 	
@@ -1450,6 +1481,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePeer::SAVED_RESULT)) $criteria->add(EventLivePeer::SAVED_RESULT, $this->saved_result);
 		if ($this->isColumnModified(EventLivePeer::TOTAL_REBUYS)) $criteria->add(EventLivePeer::TOTAL_REBUYS, $this->total_rebuys);
 		if ($this->isColumnModified(EventLivePeer::PUBLISH_PRIZE)) $criteria->add(EventLivePeer::PUBLISH_PRIZE, $this->publish_prize);
+		if ($this->isColumnModified(EventLivePeer::SUPPRESS_SCHEDULE)) $criteria->add(EventLivePeer::SUPPRESS_SCHEDULE, $this->suppress_schedule);
 		if ($this->isColumnModified(EventLivePeer::PRIZE_SPLIT)) $criteria->add(EventLivePeer::PRIZE_SPLIT, $this->prize_split);
 		if ($this->isColumnModified(EventLivePeer::VISIT_COUNT)) $criteria->add(EventLivePeer::VISIT_COUNT, $this->visit_count);
 		if ($this->isColumnModified(EventLivePeer::ENABLED)) $criteria->add(EventLivePeer::ENABLED, $this->enabled);
@@ -1531,6 +1563,8 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		$copyObj->setTotalRebuys($this->total_rebuys);
 
 		$copyObj->setPublishPrize($this->publish_prize);
+
+		$copyObj->setSuppressSchedule($this->suppress_schedule);
 
 		$copyObj->setPrizeSplit($this->prize_split);
 

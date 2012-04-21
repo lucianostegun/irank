@@ -20,7 +20,7 @@
 				'url'=>'rankingLive/save',
 				'success'=>'handleSuccessRankingLive(response)',
 				'failure'=>'handleFailureRankingLive(response.responseText)',
-				'loading'=>'alert(1)',
+				'loading'=>'showIndicator()',
 				),
 				array('class'=>'form', 'id'=>'rankingLiveForm'));
 //			echo form_tag('rankingLive/save', array('class'=>'form', 'id'=>'rankingLiveForm'));

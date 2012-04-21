@@ -10,6 +10,9 @@ edit:
 
 save:
   credentials: [[iRankAdmin, iRankClub]]
+
+getCalendar:
+  credentials: [[iRankAdmin, iRankClub]]
   
 uploadLogo:
   is_secure: off

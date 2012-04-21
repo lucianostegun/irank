@@ -20,8 +20,8 @@ $(function() {
 
 function handleSuccessEventLive(content){
 
-	showFormStatusSuccess();
 	clearFormFieldErrors();
+	showFormStatusSuccess();
 	
 	mainRecordName = ($('#eventLiveEventShortName').val()?$('#eventLiveEventShortName').val():$('#eventLiveEventName').val());
 	updateMainRecordName(mainRecordName, true);

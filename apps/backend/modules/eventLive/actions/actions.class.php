@@ -19,6 +19,7 @@ class eventLiveActions extends sfActions
 	$this->clubId     = $this->getUser()->getAttribute('clubId');
     
     $this->pathList = array('Eventos ao vivo'=>'eventLive/index');
+    $this->toolbarList = array('new');
   }
 
   public function executeIndex($request){
@@ -32,6 +33,7 @@ class eventLiveActions extends sfActions
     $this->eventLiveObj->setDescription('<descrição do ranking>');
     
     $this->pathList['Novo evento'] = '#';
+    $this->toolbarList = array('save');
     $this->setTemplate('edit');
   }
   
@@ -48,7 +50,8 @@ class eventLiveActions extends sfActions
     }
     
     $this->mainBalanceLabel   = 'Total arrecadado';
-    $this->mainBalanceValue   = $this->eventLiveObj->getTotalBuyin();
+    $this->mainBalanceValue   = $this->eventLiveObj->getTotalBuyin(true);
+    $this->mainBalanceBase    = $this->eventLiveObj->getTotalBuyin();
     $this->mainBalancePercent = 0;
     
     if( !is_object($eventLiveObj) )
@@ -63,6 +66,7 @@ class eventLiveActions extends sfActions
     }
     
     $this->pathList[$eventLiveObj->toString()] = '#';
+    $this->toolbarList = array('new', 'save', 'delete');
   }
 
   public function handleErrorSave(){

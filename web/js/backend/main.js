@@ -103,10 +103,10 @@ $(function() {
 
 function updateMainBalance(differenceValue){
 	
-	var mainBalanceValue = toFloat(_mainBalanceValue);
-	mainBalanceValue += toFloat(differenceValue);
+	var mainBalanceBase = toFloat(_mainBalanceBase);
+	mainBalanceBase += toFloat(differenceValue);
 	
-	$('#mainBalanceAmount').html('R$ '+toCurrency(mainBalanceValue));
+	$('#mainBalanceAmount').html('R$ '+toCurrency(mainBalanceBase));
 }
 
 function doSaveMain(){
