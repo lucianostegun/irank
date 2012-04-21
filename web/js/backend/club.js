@@ -24,6 +24,7 @@ function handleSuccessClub(content){
 	showFormStatusSuccess();
 	
 	mainRecordName = $('#clubClubName').val();
+	
 	updateMainRecordName(mainRecordName, true);
 }
 

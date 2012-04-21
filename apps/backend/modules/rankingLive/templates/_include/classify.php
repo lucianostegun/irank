@@ -7,7 +7,7 @@
 		$prize        = $rankingLivePlayerObj->getTotalPrize();
 		$events       = $rankingLivePlayerObj->getTotalEvents();
 ?>
-<tr class="gradeA">
+<tr class="gradeB">
 	<td><?php echo $rankingPosition ?></td> 
 	<td><?php echo $peopleName ?></td>
 	<td><?php echo $emailAddress ?></td>

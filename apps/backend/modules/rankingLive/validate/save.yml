@@ -36,6 +36,12 @@ fields:
       min:       0
       min_error: form.error.greaterEqual0
       nan_error: form.error.greaterEqual0
+
+  rakePercent:
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
        
   entranceFee:
     sfNumberValidator:

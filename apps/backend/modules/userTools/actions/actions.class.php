@@ -12,11 +12,21 @@ class userToolsActions extends sfActions
 
   public function preExecute(){
     
+    $this->pathList    = array('Perfil'=>'userTools/edit');
+    $this->toolbarList = array('save');
   }
   
   public function executeEdit($request){
     
     $this->userAdminObj = UserAdmin::getCurrentUser();
+    
+    $peopleName = $this->userAdminObj->getPeople()->getName();
+    $this->pathList[$peopleName] = null;
+  }
+
+  public function handleErrorSave(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
   }
 
   public function executeSave($request){

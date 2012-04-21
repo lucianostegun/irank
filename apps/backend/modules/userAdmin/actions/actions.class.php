@@ -16,6 +16,7 @@ class userAdminActions extends sfActions
     $this->userAdminId = $this->getRequestParameter('userAdminId', $this->userAdminId);
     
     $this->pathList = array('Usuários'=>'userAdmin/index');
+    $this->toolbarList = array('new');
   }
 
   public function executeIndex($request){
@@ -27,6 +28,7 @@ class userAdminActions extends sfActions
     $this->userAdminObj = Util::getNewObject('userAdmin');
     
     $this->pathList['Novo usuário'] = '#';
+    $this->toolbarList = array('new', 'save');
     $this->setTemplate('edit');
   }
   
@@ -38,6 +40,7 @@ class userAdminActions extends sfActions
     	return $this->redirect('userAdmin/index');
     	
     $this->pathList[$userAdminObj->toString()] = '#';
+    $this->toolbarList = array('new', 'save', 'delete');
   }
 
   public function handleErrorSave(){

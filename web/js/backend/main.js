@@ -86,6 +86,19 @@ $(function() {
 			"sPaginationType": "full_numbers",
 			"sDom": '<""l>t<"F"fp>'
 		});
+		
+		$(".datepicker").datepicker({ 
+			defaultDate: +0,
+			autoSize: false,
+			appendText: '(dd/mm/aaaa)',
+			dateFormat: 'dd/mm/yy'
+		});
+		
+		//===== Masked input =====//
+		
+		$.mask.definitions['~'] = "[+-]";
+		$(".maskDate").mask("99/99/9999");
+		$(".maskPhone").mask("(99) 9999-9999");
 });
 
 function updateMainBalance(differenceValue){

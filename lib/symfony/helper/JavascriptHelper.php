@@ -458,8 +458,9 @@
   function remote_jquery_function($options)
   {
 
-    $options['url'] = url_for($options['url']);
-    $options['method'] = isset($options['method'])?$options['method']:'POST';
+    $options['url']     = url_for($options['url']);
+    $options['method']  = isset($options['method'])?$options['method']:'POST';
+    $loading            = isset($options['loading'])?$options['loading']:'';
     $javascript_options = _options_for_jquery($options);
 
     $update = '';
@@ -481,7 +482,7 @@
       $update .= "'".$options['update']."'";
     }
 
-    $function = "showIndicator(); $.ajax($javascript_options)";
+    $function = "$.ajax($javascript_options)";
 
     if (isset($options['before']))
     {

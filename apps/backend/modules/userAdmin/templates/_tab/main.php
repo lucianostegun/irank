@@ -13,7 +13,11 @@
 ?>
 	<div class="formRow">
 		<label>Clube</label>
-		<div class="formRight"><?php echo select_tag('clubId', Club::getOptionsForSelect($userAdminObj->getClubId()), array('id'=>'userAdminClubId')) ?></div>
+		<div class="formRight">
+			<?php echo select_tag('clubId', Club::getOptionsForSelect($userAdminObj->getClubId()), array('id'=>'userAdminClubId')) ?>
+			<div class="clear"></div>
+			<div class="formNote error" id="userAdminFormErrorClubId"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 	
@@ -24,7 +28,10 @@
 	
 	<div class="formRow">
 		<label>Pessoa</label>
-		<div class="formRight"><?php echo input_tag('peopleName', $userAdminObj->getPeople()->getName(), array('size'=>35, 'maxlength'=>200, 'id'=>'userAdminPeopleName')) ?></div>
+		<div class="formRight">
+			<?php echo input_tag('peopleName', $userAdminObj->getPeople()->getName(), array('size'=>35, 'maxlength'=>200, 'id'=>'userAdminPeopleName')) ?>
+			<div class="formNote error" id="userAdminFormErrorPeopleName"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 
@@ -53,20 +60,29 @@
 
 	<div class="formRow">
 		<label>Username</label>
-		<div class="formRight"><?php echo input_tag('username', $userAdminObj->getUsername(), array('maxlength'=>15, 'id'=>'userAdminUsername')) ?></div>
+		<div class="formRight">
+			<?php echo input_tag('username', $userAdminObj->getUsername(), array('maxlength'=>15, 'id'=>'userAdminUsername')) ?>
+			<div class="formNote error" id="userAdminFormErrorUsername"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 	
 	<div style="display: <?php echo ($password?'none':'block') ?>" id="passwordFieldDiv">
 		<div class="formRow">
 			<label>Senha</label>
-			<div class="formRight"><?php echo input_password_tag('newPassword', ($password?'******':''), array('maxlength'=>15, 'id'=>'userAdminNewPassword')) ?></div>
+			<div class="formRight">
+				<?php echo input_password_tag('newPassword', ($password?'******':''), array('maxlength'=>15, 'id'=>'userAdminNewPassword')) ?>
+				<div class="formNote error" id="userAdminFormErrorNewPassword"></div>
+			</div>
 			<div class="clear"></div>
 		</div>
 
 		<div class="formRow">
 			<label>Confirmação</label>
-			<div class="formRight"><?php echo input_password_tag('passwordConfirm', ($password?'******':''), array('maxlength'=>15, 'id'=>'userAdminPasswordConfirm')) ?></div>
+			<div class="formRight">
+				<?php echo input_password_tag('passwordConfirm', ($password?'******':''), array('maxlength'=>15, 'id'=>'userAdminPasswordConfirm')) ?>
+				<div class="formNote error" id="userAdminFormErrorPasswordConfirm"></div>
+			</div>
 			<div class="clear"></div>
 		</div>
 	</div>

@@ -1,4 +1,8 @@
 fields:
+
+  peopleName:
+    required:
+      msg:       form.error.requiredField
       
   username:
     required:

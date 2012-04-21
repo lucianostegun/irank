@@ -36,12 +36,19 @@ function handleFailureEventLive(content){
 
 function handleSuccessEventLiveResult(content){
 	
-	hideIndicator();
+	if( $('#eventLiveResultPublish').val()=='1' ){
+		
+		showFormStatusSuccess();
+	}
 }
 
 function handleFailureEventLiveResult(content){
 	
-	hideIndicator();
+	if( $('#eventLiveResultPublish').val()=='1' ){
+		
+		hideIndicator();
+		alert('Não foi possível salvar o resultado deste evento!\nPor favor, tente novamente.');
+	}
 }
 
 function replicateEventName(eventName){
@@ -393,6 +400,8 @@ function calculateEventLiveScore(){
 			$('#score-'+eventPosition).val(toCurrency(score, 3));
 			$('#prize-'+eventPosition).val(toCurrency(prize));
 		}
+		
+		updateTotalPrizeValue();
 	}
 	
 	var failureFunc = function(t){

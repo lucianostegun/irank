@@ -46,6 +46,7 @@
 			}
 		}else{
 			
+			$keyWord = preg_replace('/[^a-zA-Z0-9\.]/', '%', $keyWord);
 			$where  = "(no_accent(event_name) ILIKE '%$keyWord%' $nl";
 			$where .= "OR no_accent(event_short_name) ILIKE '%$keyWord%' $nl";
 			$where .= "OR no_accent(ranking_name) ILIKE '%$keyWord%' $nl";

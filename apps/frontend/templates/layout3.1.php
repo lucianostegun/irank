@@ -80,7 +80,7 @@ var _ModuleName = '<?php echo $moduleName ?>';
 						    		<?php echo link_to(image_tag('appstore'), 'http://itunes.apple.com/us/app/irank/id481129223', array('id'=>'appstore')) ?>
 						    		
 	    							<div class="social">
-							    		<?php include_partial('home/include/partners', array()) ?>
+							    		
 						    		</div>
 						    	</div>
 					    		<?php include_partial('home/include/quiz', array()) ?>

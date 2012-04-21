@@ -499,7 +499,7 @@ $(function() {
 		autoSize: true,
 		appendText: '(dd-mm-yyyy)',
 		dateFormat: 'dd-mm-yy',
-	});	
+	});
 	
 	$( ".datepickerInline" ).datepicker({ 
 		defaultDate: +7,
