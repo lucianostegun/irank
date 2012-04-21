@@ -31,10 +31,10 @@
 				<td><?php echo $eventLiveObj->getEventName() ?></td> 
 				<td><?php echo $eventLiveObj->getRankingLive()->toString() ?></td> 
 				<td><?php echo $eventLiveObj->getClub()->toString() ?></td> 
-				<td><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
-				<td><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
-				<td><?php echo $eventLiveObj->getBlindTime('H:i') ?></td> 
-				<td><?php echo number_format($eventLiveObj->getStackChips(true), 0, '', '.') ?></td> 
+				<td class="textC"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
+				<td class="textR"><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
+				<td class="textC"><?php echo $eventLiveObj->getBlindTime('H:i') ?></td> 
+				<td class="textR"><?php echo $eventLiveObj->getStackChips(true) ?></td> 
 			</tr> 
 			<?php endforeach; ?>
 		</tbody> 

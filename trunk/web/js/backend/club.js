@@ -14,28 +14,9 @@ $(function() {
 		]
 	});
 	
-	$('.photoList a.lightbox').lightBox();
+	if( getActionName()!='index' )
+		$('.photoList a.lightbox').lightBox();
 });
-
-function handleSuccessClubIndex(content){
-	
-	if( content ){
-		
-		var clubIdList = content.split(',');
-		
-		removeTableRows('club', clubIdList);
-	}
-	
-	hideIndicator();
-}
-
-function handleFailureClubIndex(content){
-	
-	hideIndicator();
-	var errorMessage = parseMessage(content);
-	
-	alert('Não foi possível excluir um ou mais registros selecionados!'+errorMessage);
-}
 
 function handleSuccessClub(content){
 

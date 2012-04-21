@@ -39,7 +39,7 @@
 	<div class="formRow">
 		<label>Rebuys permitidos</label>
 		<div class="formRight">
-			<span class="multi"><?php echo input_tag('allowedRebuys', $rankingLiveObj->getAllowedRebuys(), array('size'=>1, 'maxlength'=>2, 'disabled'=>$rankingLiveObj->getIsIlimitedRebuys(), 'id'=>'rankingLiveAllowedRebuys')) ?></span>
+			<span class="multi"><?php echo input_tag('allowedRebuys', ($allowedRebuys=$rankingLiveObj->getAllowedRebuys()?$allowedRebuys:0), array('size'=>1, 'maxlength'=>2, 'disabled'=>$rankingLiveObj->getIsIlimitedRebuys(), 'id'=>'rankingLiveAllowedRebuys')) ?></span>
 			<span class="multi"><?php echo checkbox_tag('isIlimitedRebuys', true, $rankingLiveObj->getIsIlimitedRebuys(), array('onclick'=>'handleIsIlimitedRebuys(this.checked)', 'id'=>'rankingLiveIsIlimitedRebuys')) ?></span>
 			<span class="multi"><label for="rankingLiveIsIlimitedRebuys" class="checkbox">ilimitados</label></span>
 		</div>

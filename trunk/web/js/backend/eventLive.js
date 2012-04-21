@@ -14,7 +14,8 @@ $(function() {
 		]
 	});
 	
-	$('.photoList a.lightbox').lightBox();
+	if( getActionName()!='index' )
+		$('.photoList a.lightbox').lightBox();
 });
 
 function handleSuccessEventLive(content){
@@ -56,7 +57,7 @@ function replicateEventName(eventName){
 
 function handleIsIlimitedRebuys(checked){
 	
-	$('#eventLiveAllowedRebuys').disabled = checked;
+	$('#eventLiveAllowedRebuys').attr('disabled', checked);
 }
 
 function handleIsFreeroll(checked){
@@ -368,9 +369,20 @@ function loadDefaultValues(rankingLiveId){
 
 function calculateEventLiveScore(){
 	
+	if( !$('#eventLivePrizeSplit').val() ){
+		
+		$('#eventLivePrizeSplit').focus();
+		return addFormError('eventLive', 'prizeSplit', 'Informe a divisão do prêmio');
+	}else
+		removeFormError('eventLive', 'prizeSplit');
+	
 	var successFunc = function(content){
 		
 		var infoObj = parseInfo(content);
+		
+		if( infoObj==null )
+			return failureFunc(content);
+		
 		var players = infoObj.players;
 		
 		for(var eventPosition=1; eventPosition <= players; eventPosition++){

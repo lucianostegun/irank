@@ -58,6 +58,11 @@ function handleIsFreeroll(checked){
 	$('#rankingLiveBuyin').attr('disabled', checked);
 }
 
+function handleIsIlimitedRebuys(checked){
+	
+	$('#rankingLiveAllowedRebuys').attr('disabled', checked);
+}
+
 function updatePrizeSplitLabel(){
 	
 	var splitValue = $('#rankingLivePrizeSplit').val();

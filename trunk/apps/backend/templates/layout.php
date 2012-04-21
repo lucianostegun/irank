@@ -21,6 +21,7 @@ $visitCountValue   = isset($visitCountValue)?$visitCountValue:null;
 	var _mainBalanceValue   = <?php echo ($mainBalanceValue?$mainBalanceValue:'0') ?>;
 	var _mainBalancePercent = <?php echo ($mainBalancePercent?$mainBalancePercent:'0') ?>;
 	var _ModuleName         = '<?php echo $moduleName ?>';
+	var _ActionName         = '<?php echo $actionName ?>';
 </script>
 </head>
 
@@ -61,7 +62,7 @@ $visitCountValue   = isset($visitCountValue)?$visitCountValue:null;
 	    <?php endif; ?>
     	<?php if( !is_null($visitCountValue) ): ?>
         <a href="javascript:void(0)" title="" class="amountWide">
-            <span>Visitas na página</span>
+            <span>Visitas na página:</span>
             <span class="visitCount" id="mainVisitCount"><?php echo $visitCountValue ?></span>
         </a>
 	    <?php endif; ?>
@@ -119,6 +120,7 @@ $visitCountValue   = isset($visitCountValue)?$visitCountValue:null;
     <!-- Top fixed navigation -->
     <div class="topNav">
         <div class="wrapper">
+            
             <div class="welcome"><a href="#" title=""><img src="/images/backend/userPic.png" alt="" /></a><span>Olá, <?php echo $peopleName ?>!</span></div>
             <div class="userNav">
                 <ul>
