@@ -326,6 +326,11 @@ function isModuleName(moduleName){
 	return (moduleName==_ModuleName);
 }
 
+function getActionName(){
+	
+	return _ActionName;
+}
+
 function getOrdinalSufix(number){
 	
 	if( i18n_culture=='pt_BR' )

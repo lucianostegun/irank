@@ -16,6 +16,7 @@
 			<span class="multi"><?php echo input_tag('prizeSplit', $eventLiveObj->getPrizeSplit(), array('onkeyup'=>'updatePrizeSplitLabel()', 'class'=>'decimal small300', 'id'=>'eventLivePrizeSplit')) ?></span>
 			<span class="multi"><label id="prizeSplitTotalLabel"><?php echo Util::formatFloat($eventLiveObj->getTotalPercentPrizeSplit()) ?>%</label></span>
 			<div class="clear"></div>
+			<div class="formNote error" id="eventLiveFormErrorPrizeSplit"></div>
 			<div class="formNote">Formato: 25%; 15%; 7,5%, ...</div>
 		</div>
 		<div class="clear"></div>

@@ -3,6 +3,7 @@
 		'url'=>'eventLive/save',
 		'success'=>'handleSuccessEventLive(response)',
 		'failure'=>'handleFailureEventLive(response.responseText)',
+		'loading'=>'alert(1)',
 		),
 		array('class'=>'form', 'id'=>'eventLiveForm'));
 //	echo form_tag('eventLive/save', array('class'=>'form', 'id'=>'eventLiveForm'));
@@ -97,7 +98,7 @@
 	<div class="formRow">
 		<label>Rebuys permitidos</label>
 		<div class="formRight">
-			<span class="multi"><?php echo input_tag('allowedRebuys', $eventLiveObj->getAllowedRebuys(), array('size'=>1, 'maxlength'=>2, 'disabled'=>$eventLiveObj->getIsIlimitedRebuys(), 'id'=>'eventLiveAllowedRebuys')) ?></span>
+			<span class="multi"><?php echo input_tag('allowedRebuys', ($allowedRebuys=$eventLiveObj->getAllowedRebuys()?$allowedRebuys:0), array('size'=>1, 'maxlength'=>2, 'disabled'=>$eventLiveObj->getIsIlimitedRebuys(), 'id'=>'eventLiveAllowedRebuys')) ?></span>
 			<span class="multi"><?php echo checkbox_tag('ilimitedRebuys', true, $eventLiveObj->getIsIlimitedRebuys(), array('onclick'=>'handleIsIlimitedRebuys(this.checked)', 'id'=>'eventLiveIsIlimitedRebuys')) ?></span>
 			<span class="multi"><label for="eventLiveIsIlimitedRebuys" class="checkbox">ilimitados</label></span>
 		</div>

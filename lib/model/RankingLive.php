@@ -83,7 +83,7 @@ class RankingLive extends BaseRankingLive
 		$this->setIsPrivate(($isPrivate?true:false));
 		$this->setScoreFormula($scoreFormula);
 		$this->setDescription($description);
-		$this->setStartTime(Util::formatTime($startTime));
+		$this->setStartTime(($startTime?$startTime:null));
 		$this->setIsFreeroll(($isFreeroll?true:false));
 		$this->setBuyin(Util::formatFloat($buyin));
 		$this->setEntranceFee(Util::formatFloat($entranceFee));
@@ -130,6 +130,7 @@ class RankingLive extends BaseRankingLive
 		
 		if( is_null($criteria) )
 			$criteria = new Criteria();
+			
 		$criteria->add( RankingLivePeer::ENABLED, true );
 		$criteria->add( RankingLivePeer::VISIBLE, true );
 		$criteria->add( RankingLivePeer::DELETED, false );
@@ -146,7 +147,7 @@ class RankingLive extends BaseRankingLive
 
 	public static function getOptionsForSelect($clubId, $defaultValue=false, $returnArray=false){
 		
-		$rankingLiveObjList = self::getList($clubId);
+		$rankingLiveObjList = self::getList(null, $clubId);
 
 		$optionList = array();
 		$optionList[''] = __('select');

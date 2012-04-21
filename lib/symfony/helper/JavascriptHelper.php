@@ -481,7 +481,7 @@
       $update .= "'".$options['update']."'";
     }
 
-    $function = "$.ajax($javascript_options)";
+    $function = "showIndicator(); $.ajax($javascript_options)";
 
     if (isset($options['before']))
     {
