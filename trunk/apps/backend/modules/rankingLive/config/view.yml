@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    [backend/rankingLive]
-  javascripts:    [mask, backend/rankingLive, backend/plugins/calendar.min.js]
+  javascripts:    [mask, backend/rankingLive]
