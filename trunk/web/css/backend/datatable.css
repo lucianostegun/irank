@@ -1,5 +1,9 @@
 
 /* =====  Dynamic tables  ===== */
+.formTable thead th, .thead th { background: #efefef url(/images/backend/backgrounds/titleBg.png) repeat-x 0 0; }
+.formTable tbody td { overflow: hidden; padding: 5px; }
+.formTable tbody td input { height: 20px }
+.formTable tbody td img { margin-bottom: -3px }
 
 .dTable thead th, .thead th { background: #efefef url(/images/backend/backgrounds/titleBg.png) repeat-x 0 0; }
 

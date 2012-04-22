@@ -79,3 +79,22 @@ function updatePrizeSplitLabel(){
 	totalPercent = totalPercent.replace(',0%', '%');
 	$('#prizeSplitTotalLabel').html(totalPercent);
 }
+
+function showAddEventForm( showForm ){
+	
+	if( showForm ){
+		
+		hideDiv('eventListDiv');
+		showDiv('quickAddEventFormDiv');
+
+		hideDiv('showAddEventLink');
+		showDiv('hideAddEventLink');
+	} else{
+		
+		showDiv('eventListDiv');
+		hideDiv('quickAddEventFormDiv');
+
+		showDiv('showAddEventLink');
+		hideDiv('hideAddEventLink');
+	}
+}
