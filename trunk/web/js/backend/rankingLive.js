@@ -98,3 +98,33 @@ function showAddEventForm( showForm ){
 		hideDiv('hideAddEventLink');
 	}
 }
+
+function validateQuickAddEvent( rowId ){
+	
+	var eventName     = $('#eventName'+rowId).val();
+	var clubId        = $('#clubId'+rowId).val();
+	var eventDate     = $('#eventDate'+rowId).val();
+	var startTime     = $('#startTime'+rowId).val();
+	var buyinInfo     = $('#buyinInfo'+rowId).val();
+	var blindTime     = $('#blindTime'+rowId).val();
+	var stackChips    = $('#stackChips'+rowId).val();
+	
+	if(!eventName || !clubId || !eventDate || !startTime || !buyinInfo || !blindTime || !stackChips)
+		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconRed.png" title="Favor preencher todos os campos" />');
+	else if (!/^([0-2][0-9]|3[01])[/](0[0-9]|1[0-2])[/][0-9]{4}$/.test(eventDate))
+		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconYellow.png" title="A data informada é inválida" />');
+	else if (!/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/.test(startTime))
+		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconYellow.png" title="A hora informada é inválida" />');
+	else if (!/^[0-9][0-9]:[0-5][0-9]:[0-5][0-9]$/.test(blindTime))
+		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconYellow.png" title="O blind é um tempo no formato 00:00:00" />');
+	else{
+		
+		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconGreen.png" title="Campos validados" />');
+		//fazer requisição ajax para salvar
+	}
+}
+
+function selectQuickEventClub( clubId, clubName, fieldId ){
+	
+	alert(clubId+'|'+clubName+'|'+fieldId);
+}

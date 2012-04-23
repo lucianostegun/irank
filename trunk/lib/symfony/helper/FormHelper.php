@@ -343,7 +343,7 @@ function input_autocomplete_tag($name, $searchUrl, $selectedFunction, $options =
 			        },
 			        autoFocus: '.($autoFocus?'true':'false').', 
 			        select: function(event, ui) { 
-								'.$selectedFunction.'(ui.item.id, ui.item.value);
+								'.$selectedFunction.'(ui.item.id, ui.item.value, \''.$options['id'].'\');
 			        		},
 			    });
 			</script>';
