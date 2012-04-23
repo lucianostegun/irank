@@ -52,16 +52,17 @@
 				    </tr>
 				</thead>
 				<tbody>
-					<tr id="quickAddEventLiveIdRow-1">
-						<?php input_hidden_tag('eventId1', null) ?>
-						<td width="40%"><?php echo input_tag('eventName1', null) ?></td> 
-						<td width="24%"><?php echo input_autocomplete_tag('clubName1', 'club/autocomplete', 'selectClub') ?></td> 
-						<td width="15%" class="textC"><?php echo input_date_tag('eventDateTime1', null) ?></td> 
-						<td width="8%" class="textR"><?php echo input_tag('buyinInfo1', null, array('size'=>6)) ?></td> 
-						<td width="8%" class="textC"><?php echo input_tag('blindTime1', null, array('size'=>6)) ?></td> 
-						<td width="8%" class="textR"><?php echo input_tag('stackChips1', null, array('size'=>6)) ?></td> 
-						<td width="8%" class="textR"><?php echo image_tag('backend/icons/iconRed') ?></td> 
-					</tr>
+					<?php for($i=0; $i<10; $i++): ?>
+						<tr id="quickAddEventLiveIdRow-1">
+							<td width="38%"><?php echo input_tag('eventName'.$i, null, array('style'=>'width: 100%', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
+							<td width="23%"><?php echo select_tag('clubId'.$i, Club::getOptionsForSelect(), array('onchange'=>'validateQuickAddEvent('.$i.')')) ?></td> 
+							<td width="14%" class="textC"><?php echo input_tag('eventDate'.$i, null, array('maxlength'=>10, 'class'=>'datepicker maskDate', 'onblur'=>'validateQuickAddEvent('.$i.')')).input_tag('startTime'.$i, null, array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
+							<td width="8%" class="textR"><?php echo input_tag('buyinInfo'.$i, null, array('style'=>'width: 100%', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
+							<td width="8%" class="textC"><?php echo input_tag('blindTime'.$i, null, array('style'=>'width: 100%', 'maxlength'=>8, 'onkeyup'=>'maskTime(event)', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
+							<td width="8%" class="textR"><?php echo input_tag('stackChips'.$i, null, array('style'=>'width: 100%', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
+							<td width="4%" id="quickAddEventLiveInfo<?php echo $i ?>" class="textR"><?php echo image_tag('backend/icons/iconRed') ?></td> 
+						</tr>
+					<?php endfor; ?>
 				</tbody>
 			</table>
 		<form>
