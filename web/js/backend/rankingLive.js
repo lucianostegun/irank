@@ -99,24 +99,32 @@ function showAddEventForm( showForm ){
 	}
 }
 
+_addQuickEventCount = 10;
 function validateQuickAddEvent( rowId ){
 	
 	var eventName     = $('#eventName'+rowId).val();
 	var clubId        = $('#clubId'+rowId).val();
 	var eventDate     = $('#eventDate'+rowId).val();
 	var startTime     = $('#startTime'+rowId).val();
-	var buyinInfo     = $('#buyinInfo'+rowId).val();
-	var blindTime     = $('#blindTime'+rowId).val();
-	var stackChips    = $('#stackChips'+rowId).val();
+	var buyinValue    = $('#rankingLiveBuyin').val();
+	var freeroll      = $('#rankingLiveIsFreeroll').val();
+	var blindTime     = $('#rankingLiveBlindTime').val();
+	var stackChips    = $('#rankingLiveStackChips').val();
+	stackChips        = stackChips.replace(/[Kk]/gi, '000');
+	stackChips        = stackChips*1;
 	
-	if(!eventName || !clubId || !eventDate || !startTime || !buyinInfo || !blindTime || !stackChips)
+	if(!eventName || !clubId || !eventDate || !startTime)
 		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconRed.png" title="Favor preencher todos os campos" />');
 	else if (!/^([0-2][0-9]|3[01])[/](0[0-9]|1[0-2])[/][0-9]{4}$/.test(eventDate))
 		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconYellow.png" title="A data informada é inválida" />');
 	else if (!/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/.test(startTime))
 		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconYellow.png" title="A hora informada é inválida" />');
-	else if (!/^[0-9][0-9]:[0-5][0-9]:[0-5][0-9]$/.test(blindTime))
-		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconYellow.png" title="O blind é um tempo no formato 00:00:00" />');
+	else if (!/^[0-9][0-9]:[0-5][0-9]$/.test(blindTime))
+		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconYellow.png" title="Favor verificar a duração dos blinds na aba valores padrão" />');
+	else if ( !freeroll && !/^[0-9]+([,.][0-9]{1,2})?$/.test(buyinValue))
+		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconYellow.png" title="Favor verificar o buy-in na aba valores padrão" />');
+	else if ( isNaN(stackChips) || stackChips<1 )
+		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconYellow.png" title="Favor verificar o Stack inicial na aba valores padrão" />');
 	else{
 		
 		$('#quickAddEventLiveInfo'+rowId).html('<img src="/images/backend/icons/iconGreen.png" title="Campos validados" />');
@@ -124,7 +132,8 @@ function validateQuickAddEvent( rowId ){
 	}
 }
 
-function selectQuickEventClub( clubId, clubName, fieldId ){
+function validateAllQuickAddEvent(){
 	
-	alert(clubId+'|'+clubName+'|'+fieldId);
+	for(var rowId=1; rowId<=_addQuickEventCount; rowId++)
+		validateQuickAddEvent( rowId )
 }
