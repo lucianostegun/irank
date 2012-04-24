@@ -7,10 +7,10 @@
 	<div class="formRow">
 		<label>Buy-in</label>
 		<div class="formRight">
-			<span class="multi"><?php echo input_tag('buyin', Util::formatFloat($rankingLiveObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'disabled'=>$rankingLiveObj->getIsFreeroll(), 'id'=>'rankingLiveBuyin')) ?></span>
+			<span class="multi"><?php echo input_tag('buyin', Util::formatFloat($rankingLiveObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'onblur'=>'validateAllQuickAddEvent()', 'class'=>'textR', 'disabled'=>$rankingLiveObj->getIsFreeroll(), 'id'=>'rankingLiveBuyin')) ?></span>
 			<span class="multi"><label class="text">+</label></span>
 			<span class="multi"><?php echo input_tag('entranceFee', Util::formatFloat($rankingLiveObj->getEntranceFee(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'id'=>'rankingLiveEntranceFee')) ?></span>
-			<span class="multi"><?php echo checkbox_tag('isFreeroll', true, $rankingLiveObj->getIsFreeroll(), array('onclick'=>'handleIsFreeroll(this.checked)', 'id'=>'rankingLiveIsFreeroll')) ?></span>
+			<span class="multi"><?php echo checkbox_tag('isFreeroll', true, $rankingLiveObj->getIsFreeroll(), array('onclick'=>'handleIsFreeroll(this.checked); validateAllQuickAddEvent()', 'id'=>'rankingLiveIsFreeroll')) ?></span>
 			<span class="multi"><label for="rankingLiveIsFreeroll">Freeroll</label></span>
 			<div class="clear"></div>
 			<div class="formNote">Buyin + Taxa de entrada</div>
@@ -18,10 +18,10 @@
 		<div class="clear"></div>
 	</div>
 	
-	<div class="formRow">
+	<div class="formRow"> 
 		<label>Duração dos blinds</label>
 		<div class="formRight">
-			<?php echo input_tag('blindTime', $rankingLiveObj->getBlindTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'rankingLiveBlindTime')) ?>
+			<?php echo input_tag('blindTime', $rankingLiveObj->getBlindTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onblur'=>'validateAllQuickAddEvent()', 'onkeyup'=>'maskTime(event)', 'id'=>'rankingLiveBlindTime')) ?>
 			<span class="formNote">Formato: hh:mm</span>
 		</div>
 		<div class="clear"></div>
@@ -30,7 +30,7 @@
 	<div class="formRow">
 		<label>Stack inicial</label>
 		<div class="formRight">
-			<?php echo input_tag('stackChips', $rankingLiveObj->getStackChips(true), array('size'=>7, 'maxlength'=>7, 'id'=>'rankingLiveStackChips')) ?>
+			<?php echo input_tag('stackChips', $rankingLiveObj->getStackChips(true), array('size'=>7, 'maxlength'=>7, 'onblur'=>'validateAllQuickAddEvent()', 'id'=>'rankingLiveStackChips')) ?>
 			<span class="formNote">Formato: 00000 ou 0K</span>
 		</div>
 		<div class="clear"></div>

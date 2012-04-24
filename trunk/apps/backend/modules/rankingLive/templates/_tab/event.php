@@ -1,3 +1,6 @@
+<?php
+	$isAdmin = MyTools::getUser()->hasCredential('iRankAdmin');
+?>
 <div class="widget">
 	<div id="quickAddEventsLinkDiv" style="float: left; position: relative; margin-top: -25px">
 		<?php echo link_to('Adicionar eventos', '#showAddEventForm(true)', array('id'=>'showAddEventLink')) ?>
@@ -43,24 +46,24 @@
 				<thead>
 				    <tr>
 						<th>Etapa</th>
-						<th>Clube</th>
+						<?php if($isAdmin):?>
+							<th>Clube</th>
+						<?php endif; ?>
 						<th>Data/Hora</th>
-						<th>Buyin</th>
-						<th>Blind</th>
-						<th>Stack</th>
 						<th>&nbsp;</th>
 				    </tr>
 				</thead>
 				<tbody>
-					<?php for($i=0; $i<10; $i++): ?>
+					<?php for($i=1; $i<=10; $i++): ?>
 						<tr id="quickAddEventLiveIdRow-1">
-							<td width="38%"><?php echo input_tag('eventName'.$i, null, array('style'=>'width: 100%', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
-							<td width="23%"><?php echo select_tag('clubId'.$i, Club::getOptionsForSelect(), array('onchange'=>'validateQuickAddEvent('.$i.')')) ?></td> 
-							<td width="14%" class="textC"><?php echo input_tag('eventDate'.$i, null, array('maxlength'=>10, 'class'=>'datepicker maskDate', 'onblur'=>'validateQuickAddEvent('.$i.')')).input_tag('startTime'.$i, null, array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
-							<td width="8%" class="textR"><?php echo input_tag('buyinInfo'.$i, null, array('style'=>'width: 100%', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
-							<td width="8%" class="textC"><?php echo input_tag('blindTime'.$i, null, array('style'=>'width: 100%', 'maxlength'=>8, 'onkeyup'=>'maskTime(event)', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
-							<td width="8%" class="textR"><?php echo input_tag('stackChips'.$i, null, array('style'=>'width: 100%', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
-							<td width="4%" id="quickAddEventLiveInfo<?php echo $i ?>" class="textR"><?php echo image_tag('backend/icons/iconRed') ?></td> 
+							<td width="<?php echo ($isAdmin?'40':'70') ?>%"><?php echo input_tag('eventName'.$i, null, array('style'=>'width: 100%', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
+							<?php if($isAdmin):?>
+								<td width="30%"><?php echo select_tag('clubId'.$i, Club::getOptionsForSelect(), array('onchange'=>'validateQuickAddEvent('.$i.')')) ?></td> 
+							<?php else:?>
+								<?php echo input_hidden_tag('clubId'.$i, MyTools::getAttribute('clubId')) ?>
+							<?php endif;?>
+							<td width="20%" class="textC"><?php echo input_tag('eventDate'.$i, null, array('maxlength'=>10, 'class'=>'datepicker maskDate', 'onblur'=>'validateQuickAddEvent('.$i.')')).input_tag('startTime'.$i, null, array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'onblur'=>'validateQuickAddEvent('.$i.')')) ?></td> 
+							<td width="10%" id="quickAddEventLiveInfo<?php echo $i ?>" class="textR"><?php echo image_tag('backend/icons/iconRed') ?></td> 
 						</tr>
 					<?php endfor; ?>
 				</tbody>
