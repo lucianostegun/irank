@@ -10,6 +10,10 @@ class photoWallActions extends sfActions
   public function executeIndex($request){
 
   }
+
+  public function executeRanking($request){
+
+  }
   
   public function executeGetPhotoInfo($request){
 

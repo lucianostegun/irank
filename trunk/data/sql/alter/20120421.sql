@@ -35,3 +35,21 @@ WHERE
     AND event_live.VISIBLE
     AND NOT event_live.DELETED
     AND NOT ranking_live.IS_PRIVATE;
+
+ALTER TABLE event_photo ADD COLUMN contest_runs INTEGER DEFAULT 0;
+ALTER TABLE event_photo ADD COLUMN contest_wins INTEGER DEFAULT 0;
+ALTER TABLE event_photo ADD COLUMN contest_ratio FLOAT DEFAULT 0.0;
+
+
+
+
+
+CREATE OR REPLACE FUNCTION update_photo_contest(eventPhotoIdWinner INTEGER, eventPhotoIdLoser INTEGER) RETURNS VOID AS '
+BEGIN
+
+    UPDATE event_photo SET contest_runs = contest_runs+1 WHERE id IN (eventPhotoIdWinner, eventPhotoIdLoser);
+    UPDATE event_photo SET contest_wins = contest_wins+1 WHERE id = eventPhotoIdWinner;
+    UPDATE event_photo SET contest_ratio = (contest_wins::FLOAT/contest_runs::FLOAT)::FLOAT WHERE id IN (eventPhotoIdWinner, eventPhotoIdLoser) AND contest_wins > 0;
+
+END'
+LANGUAGE 'plpgsql';

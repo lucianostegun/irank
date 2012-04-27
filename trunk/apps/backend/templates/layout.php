@@ -16,7 +16,7 @@ $actionName = $sf_context->getActionName();
 $mainBalanceValue   = isset($mainBalanceValue)?$mainBalanceValue:0;
 $mainBalanceBase    = isset($mainBalanceBase)?$mainBalanceBase:0;
 $mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:null;
-$visitCountValue   = isset($visitCountValue)?$visitCountValue:null;
+$numStatList        = isset($numStatList)?$numStatList:array();
 
 $toolbarList = isset($toolbarList)?$toolbarList:array();
 ?>
@@ -47,12 +47,12 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
     <div class="sidebarSep"></div>
 
 	<?php
-		if( isset($mainBalanceLabel) && isset($mainBalanceValue) || $visitCountValue ):
+		if( isset($mainBalanceLabel) && isset($mainBalanceValue) ):
 		
 			$mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:null;
 	?>
     <!-- General balance widget -->
-    <div class="genBalance <?php echo (isset($mainBalanceLabel)?'balance':'') ?> <?php echo ($visitCountValue?'visitCount':'') ?>">
+    <div class="genBalance">
     	<?php if( isset($mainBalanceLabel) ): ?>
         <a href="javascript:void(0)" title="" class="amount">
             <span><?php echo $mainBalanceLabel ?>:</span>
@@ -64,16 +64,26 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
             <strong class="<?php echo ($mainBalancePercent<0?'sNegative':'sPositive') ?>" id="mainBalancePercent"><?php echo Util::formatFloat($mainBalancePercent, true, 1) ?>%</strong>
         </a>
 	    <?php endif; ?>
-    	<?php if( !is_null($visitCountValue) ): ?>
-        <a href="javascript:void(0)" title="" class="amountWide">
-            <span>Visitas na página:</span>
-            <span class="visitCount" id="mainVisitCount"><?php echo $visitCountValue ?></span>
-        </a>
-	    <?php endif; ?>
     </div>
     <div class="sidebarSep"></div>
     <?php endif; ?>
     
+    <!-- Statistics -->
+    <?php if( !empty($numStatList) ): ?>
+    <div class="numStats">
+    	<ul>
+    		<?php
+    			$i = 0;
+    			foreach($numStatList as $label=>$value):
+    				$i++;
+    		?>
+        	<li class="<?php echo ($i==count($numStatList)?'last':'') ?>"><?php echo $value ?><span><?php echo $label ?></span></li>
+        	<?php endforeach; ?>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div class="sidebarSep"></div>
+    <?php endif ?>
     
     <!-- Left navigation -->
 	

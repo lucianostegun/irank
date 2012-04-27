@@ -39,8 +39,8 @@
 			<?php if( $iRankAdmin ): ?>
 			<div id="tab5" class="tab_content"><?php include_partial('rankingLive/tab/club', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
 			<?php endif; ?>
-		</form>
 			<div id="tab3" class="tab_content"><?php include_partial('rankingLive/tab/event', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
+		</form>
 			<div id="tab4" class="tab_content"><?php include_partial('rankingLive/tab/classify', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
         </div>	
         <div class="clear"></div>		 

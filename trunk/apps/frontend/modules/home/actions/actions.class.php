@@ -98,10 +98,16 @@ class homeActions extends sfActions
 	
 	if( is_object($eventPhotoContestObj) ){
 		
-		$function = 'getEventPhotoId'.ucfirst($photoSide);
+		$functionWinner = 'getEventPhotoId'.ucfirst($photoSide);
+		$functionLoser  = 'getEventPhotoId'.ucfirst(($photoSide=='left'?'right':'left'));
 		
-		$eventPhotoContestObj->setEventPhotoIdWinner($eventPhotoContestObj->$function());
+		$eventPhotoIdWinner = $eventPhotoContestObj->$functionWinner();
+		$eventPhotoIdLoser  = $eventPhotoContestObj->$functionLoser();
+		
+		$eventPhotoContestObj->setEventPhotoIdWinner($eventPhotoIdWinner);
 		$eventPhotoContestObj->save();
+		
+		Util::executeQuery("SELECT update_photo_contest($eventPhotoIdWinner, $eventPhotoIdLoser)");
 		
 		$eventPhotoIdList[] = $eventPhotoContestObj->getEventPhotoIdLeft();
 		$eventPhotoIdList[] = $eventPhotoContestObj->getEventPhotoIdRight();

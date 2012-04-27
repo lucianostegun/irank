@@ -11,6 +11,7 @@ class RankingLive extends BaseRankingLive
 {
 	
 	const DEFAULT_SCORE_FORMULA = 'JOGADORES-(POSICAO-1)';
+	private $reloadEvents = false;
 	
 	public function getIsNew(){
 		
@@ -106,12 +107,12 @@ class RankingLive extends BaseRankingLive
 		$iRankAdmin = MyTools::hasCredential('iRankAdmin');
 		
 		if( $iRankAdmin )
-			$this->saveRankingLive($clubIdList, true);
+			$this->saveClub($clubIdList, true);
 		else
-			$this->saveRankingLive(array($clubIdList), false);
+			$this->saveClub(array($clubIdList), false);
 	}
 	
-	public function saveRankingLive($clubIdList, $delete){
+	public function saveClub($clubIdList, $delete){
 		
 		$rankingLiveId = $this->getId();
 		
@@ -126,6 +127,43 @@ class RankingLive extends BaseRankingLive
 			
 			$clubIdList[] = 0;
 			Util::executeQuery('UPDATE club_ranking_live SET enabled=FALSE, updated_at = CURRENT_TIMESTAMP WHERE enabled AND ranking_live_id = '.$rankingLiveId.' AND club_id NOT IN ('.implode(',', $clubIdList).')');
+		}
+	}
+	
+	public function saveQuickEvents($request){
+		
+		for($i=1; $i <= 10; $i++ ){
+			
+			$eventName = $request->getParameter('eventName'.$i);
+			$clubId    = $request->getParameter('clubId'.$i);
+			$eventDate = $request->getParameter('eventDate'.$i);
+			$startTime = $request->getParameter('startTime'.$i);
+
+			if( !$eventName || !$clubId || !Validate::validateDate($eventDate) || !Validate::validateTime($startTime) )
+				continue;
+			
+			$eventLiveObj = new EventLive();
+			$eventLiveObj->setEventName($eventName);
+			$eventLiveObj->setEventShortName($eventLiveObj->buildShortName());
+			$eventLiveObj->setRankingLiveId($this->getId());
+			$eventLiveObj->setClubId($clubId);
+			$eventLiveObj->setEventDate(Util::formatDate($eventDate));
+			$eventLiveObj->setStartTime($startTime);
+			$eventLiveObj->setBuyin($this->getBuyin());
+			$eventLiveObj->setEntranceFee($this->getEntranceFee());
+			$eventLiveObj->setRakePercent($this->getRakePercent());
+			$eventLiveObj->setBlindTime($this->getBlindTime());
+			$eventLiveObj->setStackChips($this->getStackChips());
+			$eventLiveObj->setAllowedRebuys($this->getAllowedRebuys());
+			$eventLiveObj->setAllowedAddons($this->getAllowedAddons());
+			$eventLiveObj->setIsIlimitedRebuys($this->getIsIlimitedRebuys());
+			$eventLiveObj->setDescription('<descrição do ranking>');
+			$eventLiveObj->setEnabled(true);
+			$eventLiveObj->setVisible(true);
+			$eventLiveObj->setDeleted(false);
+			$eventLiveObj->save();
+			
+			$this->reloadEvents = true;
 		}
 	}
 	
@@ -257,6 +295,7 @@ class RankingLive extends BaseRankingLive
 		$criteria->add( EventLivePeer::ENABLED, true );
 		$criteria->add( EventLivePeer::VISIBLE, true );
 		$criteria->add( EventLivePeer::DELETED, false );
+		$criteria->addDescendingOrderByColumn( EventLivePeer::EVENT_DATE_TIME );
 		
 		return parent::getEventLiveList($criteria, $con);
 	}
@@ -400,6 +439,7 @@ class RankingLive extends BaseRankingLive
 		$infoList['rakePercent']      = $this->getRakePercent();
 		$infoList['prizeSplit']       = $this->getPrizeSplit();
 		$infoList['publishPrize']     = $this->getPublishPrize();
+		$infoList['reloadEvents']     = $this->reloadEvents;
 		
 		return $infoList;
 	}

@@ -50,6 +50,12 @@ class EventPhotoMapBuilder {
 
 		$tMap->addColumn('ORIENTATION', 'Orientation', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('CONTEST_RUNS', 'ContestRuns', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('CONTEST_WINS', 'ContestWins', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('CONTEST_RATIO', 'ContestRatio', 'double', CreoleTypes::FLOAT, false, null);
+
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

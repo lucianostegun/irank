@@ -257,9 +257,12 @@ class EventLive extends BaseEventLive
 			return ($enabled?'yes':'no');
 	}
 	
-	public function getPlayers($updated=false){
+	public function getPlayers($updated=false, $countAll=false){
 		
-		if( $updated )
+		if( $countAll )
+			// Considera todos os jogadores que se inscreveram
+			return Util::executeOne('SELECT COUNT(1) FROM event_live_player WHERE event_live_id = '.$this->getId());
+		elseif( $updated )
 			return Util::executeOne('SELECT get_event_live_players('.$this->getId().')');
 		else
 			return parent::getPlayers();
@@ -355,10 +358,8 @@ class EventLive extends BaseEventLive
 		
 		$description = parent::getDescription();
 		
-		if( $convertTags ){
-			
-			$description = preg_replace('/<descri[cç][aã]o ?do ?ranking>/i', $this->getRankingLive()->getDescription(), $description);
-		}
+		if( $convertTags )
+			$description = preg_replace('/<descri[çc]+[ã]+o ?do ?ranking>/i', $this->getRankingLive()->getDescription(), $description);
 		
 		return $description;
 	}
@@ -464,6 +465,17 @@ class EventLive extends BaseEventLive
 			Util::executeQuery("SELECT update_event_live_visit_count($eventLiveId)");
 			MyTools::setAttribute("visitCount$className-$eventLiveId", true);
 		}
+	}
+	
+	public function buildShortName(){
+		
+		$eventName = $this->getEventName();
+		$eventName = preg_replace('/ ?-.*Garantidos?/i', '', $eventName);
+		$eventName = preg_replace('/ ?Garantidos?/i', '', $eventName);
+		$eventName = preg_replace('/ ?-.*/', '', $eventName);
+		$eventName = substr($eventName, 0, 35);
+		
+		return $eventName;	
 	}
 	
 	public function getInfo(){

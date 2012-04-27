@@ -84,7 +84,7 @@ $(function() {
 		oTable = $('.dTable').dataTable({
 			"bJQueryUI": true,
 			"sPaginationType": "full_numbers",
-			"sDom": '<""l>t<"F"fp>'
+			"sDom": '<""l>t<"F"fp>',
 		});
 		
 		$(".datepicker").datepicker({ 
@@ -92,6 +92,12 @@ $(function() {
 			autoSize: false,
 			appendText: '(dd/mm/aaaa)',
 			dateFormat: 'dd/mm/yy'
+		});
+
+		$(".datepickerClean").datepicker({ 
+			defaultDate: +7,
+			autoSize: true,
+			dateFormat: 'dd/mm/yy',
 		});
 		
 		//===== Masked input =====//

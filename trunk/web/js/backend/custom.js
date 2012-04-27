@@ -494,10 +494,16 @@ $(function() {
 	
 	//===== Datepickers =====//
 	
-	$( ".datepicker" ).datepicker({ 
+	$(".datepicker").datepicker({ 
 		defaultDate: +7,
 		autoSize: true,
 		appendText: '(dd-mm-yyyy)',
+		dateFormat: 'dd-mm-yy',
+	});
+
+	$(".datepickerClean").datepicker({ 
+		defaultDate: +7,
+		autoSize: true,
 		dateFormat: 'dd-mm-yy',
 	});
 	
