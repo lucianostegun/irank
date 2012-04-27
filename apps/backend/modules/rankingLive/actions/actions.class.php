@@ -19,6 +19,7 @@ class rankingLiveActions extends sfActions
 	$this->clubId     = $this->getUser()->getAttribute('clubId');
     
     $this->pathList = array('Rakings ao vivo'=>'rankingLive/index');
+    $this->toolbarList = array('new');
   }
 
   public function executeIndex($request){
@@ -37,6 +38,7 @@ class rankingLiveActions extends sfActions
     $this->rankingLiveObj = Util::getNewObject('rankingLive', $requiredFieldList);
     
     $this->pathList['Novo ranking'] = '#';
+    $this->toolbarList = array('save');
     $this->setTemplate('edit');
   }
   
@@ -56,6 +58,7 @@ class rankingLiveActions extends sfActions
     	return $this->redirect('rankingLive/index');
     	
     $this->pathList[$rankingLiveObj->getRankingName()] = '#';
+    $this->toolbarList = array('new', 'save', 'delete');
   }
 
   public function handleErrorSave(){
@@ -76,7 +79,9 @@ class rankingLiveActions extends sfActions
     }
     
     $rankingLiveObj->quickSave($request);
+    $rankingLiveObj->saveQuickEvents($request);
     
+    echo Util::parseInfo($rankingLiveObj->getInfo());
     exit;
   }
 
@@ -185,6 +190,34 @@ class rankingLiveActions extends sfActions
     
     echo select_tag('rankingLiveId', RankingLive::getOptionsForSelect($clubId, $this->rankingLiveId), array('id'=>$prefix.'RankingLiveId'));
     exit;
+  }
+
+  public function executeGetEventLiveList($request){
+    
+    $rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
+    
+//    $eventLiveList = array();
+//    
+//	foreach($rankingLiveObj->getEventLiveList() as $eventLiveObj){
+//		
+//		$eventLive = array();
+////		$eventLive[] = $eventLiveObj->getId();
+//		$eventLive[] = $eventLiveObj->getEventName(); 
+//		$eventLive[] = $eventLiveObj->getClub()->toString(); 
+//		$eventLive[] = $eventLiveObj->getEventDateTime('d/m/Y H:i'); 
+//		$eventLive[] = Util::formatFloat($eventLiveObj->getBuyinInfo(), true); 
+//		$eventLive[] = $eventLiveObj->getBlindTime(); 
+//		$eventLive[] = $eventLiveObj->getStackChips(); 
+//	
+//		$eventLiveList[] = $eventLive;
+//  }
+//  
+//  $eventList = array('aaData'=>$eventLiveList);
+//  echo Util::parseInfo($eventList);exit;
+//  echo '<Pre>';print_r($eventList);exit;  
+	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('rankingLive/include/event', array('rankingLiveObj'=>$rankingLiveObj)));
   }
 
   public function executeGetInfo($request){

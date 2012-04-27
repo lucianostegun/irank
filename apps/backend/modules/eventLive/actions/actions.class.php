@@ -57,7 +57,9 @@ class eventLiveActions extends sfActions
     if( !is_object($eventLiveObj) )
     	return $this->redirect('eventLive/index');
     
-    $this->visitCountValue = $eventLiveObj->getVisitCount();
+    $this->numStatList = array('Visitas'=>$eventLiveObj->getVisitCount(),
+    						   'Inscrições'=>$eventLiveObj->getPlayers(true),
+    						   'Confirm.'=>$eventLiveObj->getPlayers());
     	
     if( $eventLiveObj->getRankingLiveId() ){
     	

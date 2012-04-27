@@ -122,7 +122,7 @@ select[multiple] { border: 1px solid #ddd; box-shadow: 0 0 0 2px #f4f4f4; -webki
 .loginPage #footer .wrapper { padding-left: 0; }
 .loginPage .formRow { padding: 18px 14px; }
 
-.loginWrapper { margin: -119px 0 0 -170px; position: absolute; top: 36%; left: 50%; }
+.loginWrapper { margin: -119px 0 0 -170px; position: absolute; top: 45%; left: 50%; }
 .loginWrapper .widget { width: 340px; background: #f9f9f9; border: 1px solid #cdcdcd; display: block; height: 236px; }
 .loginLogo { position: absolute; width: 492px; height: 64px; display: block; top: -55px; left: 50%; margin-left: -146px; } 
 .loginControl { border-top: 1px solid #fff; padding: 16px 14px; }
@@ -334,10 +334,7 @@ ul.sub li ul li { padding-left: 10px; }
 
 /* General balance */
 
-.genBalance { border-top: 1px solid #252d31; border-bottom: 1px solid #242d33; background: #252d31; }
-.genBalance.balance { height: 68px }
-.genBalance.visitCount { height: 37px }
-.genBalance.balance.visitCount { height: 105px }
+.genBalance { height: 68px; border-top: 1px solid #252d31; border-bottom: 1px solid #242d33; background: #252d31; }
 
 .genBalance a { background: url(/images/backend/backgrounds/genBalance.png) repeat-x; display: block; border-top: 1px solid #4a535c; color: #e0e0e0; border-bottom: 1px solid #3c444c; }
 .genBalance a span { font-size: 11px; display: block; margin-bottom: 6px; }

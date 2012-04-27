@@ -304,6 +304,9 @@
 		<column name="width" type="INTEGER" />
 		<column name="height" type="INTEGER" />
 		<column name="orientation" type="VARCHAR" />
+		<column name="contest_runs" type="INTEGER" />
+		<column name="contest_wins" type="INTEGER" />
+		<column name="contest_ratio" type="FLOAT" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />

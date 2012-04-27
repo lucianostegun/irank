@@ -37,3 +37,29 @@
 
 	background: 	url(/images/layout/leftMenu/players.png) center left no-repeat;
 }
+
+.rowhandler {
+
+	width: 30px;
+}
+
+.drag {
+	margin: 0;
+	text-align: center;
+	font-size: 10pt;
+	width: 16px;
+	height: 30px;
+	line-height: 20px;
+	
+	/* round corners */
+	border-radius: 4px; /* Opera, Chrome */
+	-moz-border-radius: 4px; /* FF */
+	border: 0px solid transparent;
+	border-color: 	#F00;
+	background: url(/images/drag.png) center center no-repeat
+}
+
+.dragRow {
+
+	padding: 0px;
+}

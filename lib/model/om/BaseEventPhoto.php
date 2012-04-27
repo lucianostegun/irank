@@ -41,6 +41,18 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 
 	
+	protected $contest_runs;
+
+
+	
+	protected $contest_wins;
+
+
+	
+	protected $contest_ratio;
+
+
+	
 	protected $deleted;
 
 
@@ -144,6 +156,27 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	{
 
 		return $this->orientation;
+	}
+
+	
+	public function getContestRuns()
+	{
+
+		return $this->contest_runs;
+	}
+
+	
+	public function getContestWins()
+	{
+
+		return $this->contest_wins;
+	}
+
+	
+	public function getContestRatio()
+	{
+
+		return $this->contest_ratio;
 	}
 
 	
@@ -318,6 +351,44 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setContestRuns($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->contest_runs !== $v) {
+			$this->contest_runs = $v;
+			$this->modifiedColumns[] = EventPhotoPeer::CONTEST_RUNS;
+		}
+
+	} 
+	
+	public function setContestWins($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->contest_wins !== $v) {
+			$this->contest_wins = $v;
+			$this->modifiedColumns[] = EventPhotoPeer::CONTEST_WINS;
+		}
+
+	} 
+	
+	public function setContestRatio($v)
+	{
+
+		if ($this->contest_ratio !== $v) {
+			$this->contest_ratio = $v;
+			$this->modifiedColumns[] = EventPhotoPeer::CONTEST_RATIO;
+		}
+
+	} 
+	
 	public function setDeleted($v)
 	{
 
@@ -382,17 +453,23 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 			$this->orientation = $rs->getString($startcol + 7);
 
-			$this->deleted = $rs->getBoolean($startcol + 8);
+			$this->contest_runs = $rs->getInt($startcol + 8);
 
-			$this->created_at = $rs->getTimestamp($startcol + 9, null);
+			$this->contest_wins = $rs->getInt($startcol + 9);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 10, null);
+			$this->contest_ratio = $rs->getFloat($startcol + 10);
+
+			$this->deleted = $rs->getBoolean($startcol + 11);
+
+			$this->created_at = $rs->getTimestamp($startcol + 12, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 13, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 11; 
+						return $startcol + 14; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventPhoto object", $e);
 		}
@@ -661,12 +738,21 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 				return $this->getOrientation();
 				break;
 			case 8:
-				return $this->getDeleted();
+				return $this->getContestRuns();
 				break;
 			case 9:
-				return $this->getCreatedAt();
+				return $this->getContestWins();
 				break;
 			case 10:
+				return $this->getContestRatio();
+				break;
+			case 11:
+				return $this->getDeleted();
+				break;
+			case 12:
+				return $this->getCreatedAt();
+				break;
+			case 13:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -687,9 +773,12 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 			$keys[5]=>$this->getWidth(),
 			$keys[6]=>$this->getHeight(),
 			$keys[7]=>$this->getOrientation(),
-			$keys[8]=>$this->getDeleted(),
-			$keys[9]=>$this->getCreatedAt(),
-			$keys[10]=>$this->getUpdatedAt(),
+			$keys[8]=>$this->getContestRuns(),
+			$keys[9]=>$this->getContestWins(),
+			$keys[10]=>$this->getContestRatio(),
+			$keys[11]=>$this->getDeleted(),
+			$keys[12]=>$this->getCreatedAt(),
+			$keys[13]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -730,12 +819,21 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 				$this->setOrientation($value);
 				break;
 			case 8:
-				$this->setDeleted($value);
+				$this->setContestRuns($value);
 				break;
 			case 9:
-				$this->setCreatedAt($value);
+				$this->setContestWins($value);
 				break;
 			case 10:
+				$this->setContestRatio($value);
+				break;
+			case 11:
+				$this->setDeleted($value);
+				break;
+			case 12:
+				$this->setCreatedAt($value);
+				break;
+			case 13:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -753,9 +851,12 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setWidth($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setHeight($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setOrientation($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setDeleted($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[8], $arr)) $this->setContestRuns($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setContestWins($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setContestRatio($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setCreatedAt($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setUpdatedAt($arr[$keys[13]]);
 	}
 
 	
@@ -771,6 +872,9 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPhotoPeer::WIDTH)) $criteria->add(EventPhotoPeer::WIDTH, $this->width);
 		if ($this->isColumnModified(EventPhotoPeer::HEIGHT)) $criteria->add(EventPhotoPeer::HEIGHT, $this->height);
 		if ($this->isColumnModified(EventPhotoPeer::ORIENTATION)) $criteria->add(EventPhotoPeer::ORIENTATION, $this->orientation);
+		if ($this->isColumnModified(EventPhotoPeer::CONTEST_RUNS)) $criteria->add(EventPhotoPeer::CONTEST_RUNS, $this->contest_runs);
+		if ($this->isColumnModified(EventPhotoPeer::CONTEST_WINS)) $criteria->add(EventPhotoPeer::CONTEST_WINS, $this->contest_wins);
+		if ($this->isColumnModified(EventPhotoPeer::CONTEST_RATIO)) $criteria->add(EventPhotoPeer::CONTEST_RATIO, $this->contest_ratio);
 		if ($this->isColumnModified(EventPhotoPeer::DELETED)) $criteria->add(EventPhotoPeer::DELETED, $this->deleted);
 		if ($this->isColumnModified(EventPhotoPeer::CREATED_AT)) $criteria->add(EventPhotoPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EventPhotoPeer::UPDATED_AT)) $criteria->add(EventPhotoPeer::UPDATED_AT, $this->updated_at);
@@ -817,6 +921,12 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 		$copyObj->setHeight($this->height);
 
 		$copyObj->setOrientation($this->orientation);
+
+		$copyObj->setContestRuns($this->contest_runs);
+
+		$copyObj->setContestWins($this->contest_wins);
+
+		$copyObj->setContestRatio($this->contest_ratio);
 
 		$copyObj->setDeleted($this->deleted);
 
