@@ -538,7 +538,6 @@ function activeResultTab(){
 	$("#resultTab").find(".tab_content:first").show(); //Show first tab content
 	
 	return false;
-<<<<<<< .mine
 }
 
 function updateEventLivePhotoList(){
