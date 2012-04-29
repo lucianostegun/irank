@@ -1,4 +1,12 @@
 all:
+  
+  metas:
+    og|title:        iRank - Poker Ranking
+    og|description:  iRank - O primeiro site de gerenciamento de rankings de poker para você e seus amigos
+    og|image*2:      http://<?php echo $host=MyTools::getRequest()->getHost() ?>/images/iphone.png
+    og|image*1:      http://<?php echo $host ?>/images/layout/chips.png
+    og|image:        http://<?php echo $host ?>/images/facebookLogo.gif
+    
   stylesheets:    [home, lightbox, eventLiveResume]
   javascripts:    [home, highlight, /sf/prototype/js/scriptaculous, lightbox]
   
