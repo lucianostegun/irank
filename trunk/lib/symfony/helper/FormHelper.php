@@ -1062,7 +1062,7 @@ function button_tag( $buttonId, $text, $options=array() ){
 		$html .= '</div>';
 	}else{
 		
-		$html .= '<div style="'.$style.'" class="button'.($disabled?'Disabled':'').($class?' '.$class:'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="this.addClassName(\'hover\')" onmouseout="this.removeClassName(\'hover\')">'.$nl;
+		$html .= '<div style="'.$style.'" class="button'.($disabled?' disabled':'').($class?' '.$class:'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="this.addClassName(\'hover\')" onmouseout="this.removeClassName(\'hover\')">'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;

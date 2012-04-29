@@ -15,11 +15,13 @@
 			<?php
 				$criteria = new Criteria();
 				
+				$clubId = $sf_user->getAttribute('clubId');
+				
 				if( $clubObj->getIsNew() )
 					$criteria->add( RankingLivePeer::ID, null);
 				
 				$rankingLiveIdList = array();
-				foreach(RankingLive::getList($criteria) as $rankingLiveObj):
+				foreach(RankingLive::getList($criteria, $clubId) as $rankingLiveObj):
 					
 					$rankingLiveId       = $rankingLiveObj->getId();
 					$rankingLiveIdList[] = $rankingLiveId;

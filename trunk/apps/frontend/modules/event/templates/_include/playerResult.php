@@ -18,9 +18,10 @@
   	foreach($eventPlayerObjList as $eventPlayerObj):
   		
   		$peopleObj = $eventPlayerObj->getPeople();
+  		$enabled   = $eventPlayerObj->getEnabled();
   		$peopleId  = $peopleObj->getId();
   ?>
-  <tr title="<?php echo __('event.playersTab.togglePresence') ?>" onclick="togglePresenceResult(<?php echo $peopleId ?>)" onmouseover="this.addClassName('hover green')" onmouseout="this.removeClassName('hover green')">
+  <tr class="<?php echo ($enabled?'selectedPlayer':'') ?>" title="<?php echo ($enabled?'Cancelar presença':'Confirmar presença') ?>" onclick="togglePresenceResult(<?php echo $peopleId ?>, this)" onmouseover="this.addClassName('hover '+(this.hasClassName('selectedPlayer')?'red':'green'))" onmouseout="this.removeClassName('hover green'); this.removeClassName('hover red')">
     <td><?php echo $peopleObj->getFullName() ?></td>
     <td align="center" class="icon">
     	<?php

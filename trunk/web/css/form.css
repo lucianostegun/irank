@@ -88,21 +88,21 @@
 	margin: 		-9px 7px 7px 7px;
 	background: 	#DFDFDF url('/images/tableSeparator.png') left top repeat-x;
 	border: 		1px solid #AAAAAA;
-	border-top: 	1px solid transparent;
+	border-top: 	none;
 }
 
 .buttonTabBar.success {
 
 	background: 	#CADDEC url('/images/tableSeparator.png') left top repeat-x;
 	border: 		1px solid #7FA6CA;
-	border-top: 	1px solid transparent;
+	border-top: 	none;
 }
 
 .buttonTabBar.error {
 
-	background: 	#EECFCA url('/images/tableSeparator.png') left top repeat-x;;
+	background: 	#EECFCA url('/images/tableSeparator.png') left top repeat-x;
 	border: 		1px solid #CE9080;
-	border-top: 	1px solid transparent;
+	border-top: 	none;
 }
 
 .buttonBarFormError {
@@ -561,32 +561,40 @@ input:-ms-placeholder { color:#808080; }
 
 .formStatusDiv {
 
+	float: 			left;
 	display: 		none;
 	padding: 		5px;
 	height: 		22px;
 	margin: 		-3px 1px 1px 1px;
-	color: 			#333333;
-	font-weight: 	bold;
 }
 
-.formStatusDiv.success {
+.formStatusDiv.successStatus {
 
 	color: 			#3165A5;
-	background: 	url('/images/form/success.png') 58px 2px no-repeat;
+	background: 	url('/images/form/success.png') 8px 2px no-repeat;
 }
 
-.formStatusDiv.error {
+.formStatusDiv.errorStatus {
 
-	color: 			#CC3300;
-	background: 	url('/images/form/error.png') 58px 2px no-repeat;
+	color: 					#CC3300;
+	background: 			url('/images/form/error.png') 12px 2px no-repeat;
 }
 
-.formStatusDiv.error .message,
-.formStatusDiv.success .message {
+.formStatusDiv .statusMessage {
 
+	font-weight: 	bold;
 	position: 		relative;
-	left: 			38px;
+	left: 			44px;
+	padding-left: 	0px;
+	text-indent: 	0px;
 }
+
+
+
+
+
+
+
 
 .windowButtonBar .formStatusDiv.success {
 

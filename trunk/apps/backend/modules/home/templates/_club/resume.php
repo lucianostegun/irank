@@ -1,3 +1,6 @@
+<?php
+	$iRankAdmin = $sf_user->hasCredential('iRankAdmin');
+?>
 	<!-- Tables inside tabs -->
     <div class="widget leftTabs">  
         <div class="title"><?php echo image_tag('backend/icons/dark/frames', array('class'=>'titleIcon')) ?></div>     
@@ -15,7 +18,9 @@
 							<td widtd="16"></td> 
 							<td>Nome</td> 
 							<td>Ranking</td> 
-							<td>Clube</td> 
+							<?php if($iRankAdmin): ?>
+								<td>Clube</td>
+							<?php endif; ?> 
 							<td>Data/Hora</td> 
 							<td>Buyin</td> 
 							<td>Blind</td> 
@@ -56,11 +61,13 @@
 							<td width="10"><?php echo image_tag('backend/icons/'.$icon, array('title'=>$title)) ?></td> 
 							<td><?php echo $eventLiveObj->toString() ?></td> 
 							<td><?php echo $eventLiveObj->getRankingLive()->toString() ?></td> 
-							<td><?php echo $eventLiveObj->getClub()->toString() ?></td> 
-							<td><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
-							<td><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
-							<td><?php echo $eventLiveObj->getBlindTime('H:i') ?></td> 
-							<td><?php echo number_format($eventLiveObj->getStackChips(), 0, '', '.') ?></td> 
+							<?php if($iRankAdmin): ?>
+								<td><?php echo $eventLiveObj->getClub()->toString() ?></td>
+							<?php endif; ?> 
+							<td align="center"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
+							<td align="center"><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
+							<td align="center"><?php echo $eventLiveObj->getBlindTime('H:i') ?></td> 
+							<td align="right"><?php echo $eventLiveObj->getStackChips(true) ?></td> 
 						</tr> 
 						<?php
 							endforeach;
@@ -80,7 +87,9 @@
 							<td widtd="16"></td> 
 							<td>Nome</td> 
 							<td>Ranking</td> 
-							<td>Clube</td> 
+							<?php if($iRankAdmin): ?>
+								<td>Clube</td>
+							<?php endif; ?> 
 							<td>Data/Hora</td> 
 							<td>Buyin</td> 
 							<td>Blind</td> 
@@ -104,14 +113,16 @@
 								$eventDateTime = $eventLiveObj->getEventDateTime(null);
 						?>
 						<tr class="gradeA" onclick="<?php echo $onclick ?>" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
-							<td width="10"><?php echo image_tag('backend/icons/'.$icon, array('title'=>$title)) ?></td> 
+							<td width="10"><?php echo image_tag('backend/icons/iconGray') ?></td> 
 							<td><?php echo $eventLiveObj->toString() ?></td> 
-							<td><?php echo $eventLiveObj->getRankingLive()->toString() ?></td> 
-							<td><?php echo $eventLiveObj->getClub()->toString() ?></td> 
-							<td><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
-							<td><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
-							<td><?php echo $eventLiveObj->getBlindTime('H:i') ?></td> 
-							<td><?php echo number_format($eventLiveObj->getStackChips(), 0, '', '.') ?></td> 
+							<td><?php echo $eventLiveObj->getRankingLive()->toString() ?></td>
+							<?php if($iRankAdmin): ?> 
+								<td><?php echo $eventLiveObj->getClub()->toString() ?></td>
+							<?php endif; ?> 
+							<td align="center"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
+							<td align="center"><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
+							<td align="center"><?php echo $eventLiveObj->getBlindTime('H:i') ?></td> 
+							<td align="right"><?php echo $eventLiveObj->getStackChips(true) ?></td> 
 						</tr> 
 						<?php
 							endforeach;

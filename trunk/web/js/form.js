@@ -17,24 +17,29 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 
 	var info = content.split(';');
 
-	if( info[0]=='formError' ){
+	if( (/^formError:/).test(content) ){
+		
+		content = content.replace(/^formError:/, '');
 	
-		for( var fieldErrorIndex=1; fieldErrorIndex < info.length; fieldErrorIndex++ ){
+		var formErrorObj    = parseInfo(content);
+		var fieldNameList   = formErrorObj._fieldNameList
+		var fieldErrorCount = formErrorObj._fieldErrorCount
 
-			var ignoreHidden     = false;
-			var fieldInfo        = info[fieldErrorIndex].split('|');
-			var formFieldId      = fieldInfo[0];
-			var formFieldMessage = fieldInfo[1];
+		for(var i=0; i < fieldErrorCount; i++){
+
+			var ignoreHidden = false;
+			var fieldName    = fieldNameList[i];
+		    var errorMessage = formErrorObj[fieldName];
 			
-			var formFieldMessageSplit = formFieldMessage.split('] ');
+			var errorMessageSplit = errorMessage.split('] ');
 
-			if( formFieldMessageSplit.length > 1 ){
+			if( errorMessageSplit.length > 1 ){
 
-				formFieldId      = formFieldMessageSplit[0];
+				formFieldId      = errorMessageSplit[0];
 				formFieldId      = formFieldId.substring(1, formFieldId.length);
 				
-				formFieldMessage = formFieldMessageSplit[1];
-				ignoreHidden     = true;
+				errorMessage = formFieldMessageSplit[1];
+				ignoreHidden = true;
 				
 				if( (/^[a-zA-Z]+[a-zA-Z0-9_]*\([a-zA-Z0-9_\'\"]*\)/).exec(formFieldId) )
 					eval(formFieldId+';');
@@ -48,7 +53,7 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 			
 			if( objectForm==null || objectForm!=null && (objectForm.type=='hidden' || objectForm.type=='file') && ignoreHidden==false ){
 
-				if(matches=formFieldMessage.match(/^\[[a-zA-Z]+\]/)){
+				if(matches=errorMessage.match(/^\[[a-zA-Z]+\]/)){
 
 					divName     = matches[0];
 					formFieldId = divName.replace(/[\[\]]/g, '');
@@ -65,13 +70,13 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 				className     = className.replace(/Error/g, '');
 				className    += 'Error';
 
-				formFieldMessage = formFieldMessage.replace(/\\n/g, ' '+chr(10));
+				errorMessage = errorMessage.replace(/\\n/g, ' '+chr(10));
 				
-				if( formFieldMessage=='nullError' )
+				if( errorMessage=='nullError' )
 					continue;
 
 				objectForm.className = className;
-				objectForm.title     = formFieldMessage;
+				objectForm.title     = errorMessage;
 				
 				showDiv(formFieldId+'Error');
 			}

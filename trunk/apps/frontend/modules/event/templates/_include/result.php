@@ -16,11 +16,12 @@
 			<col/>
 			<col/>
 			<col/>
+			<col/>
 		</colgroup>
 	<tbody>
 		<tr class="header">
 			<th class="mark first"></th>
-			<th><?php echo __('Player') ?></th>
+			<th class="mark"><?php echo __('Player') ?></th>
 			<?php if( !$isFreeroll ): ?>
 			<th class="mark" width="50">Buy-in</th>
 			<?php endif; ?>
@@ -44,8 +45,8 @@
 		
 		$peopleIdList = array();
 		
-		$fieldType = ($isFreeroll?'input_hidden_tag':'input_tag');
-		
+		$fieldType     = ($isFreeroll?'input_hidden_tag':'input_tag');
+		$eventPosition = 0;
 		foreach($eventPlayerObjList as $key=>$eventPlayerObj):
 		
 			$peopleObj = $eventPlayerObj->getPeople();
@@ -53,9 +54,12 @@
 			$enabled   = $eventPlayerObj->getEnabled();
 			$style     = ($enabled?'':'color: #BABABA');
 			
+			if( $enabled )
+				$eventPosition++;
+			
 			$peopleIdList[] = $peopleId;
 	  ?>
-		<tr id="eventResultRow<?php echo $peopleId ?>" style="display: <?php echo ($enabled?'table-row':'none') ?>">
+		<tr id="eventResultRow<?php echo $peopleId ?>" class="resultEventPlayerRow eventPosition<?php echo $eventPosition ?>" style="display: <?php echo ($enabled?'table-row':'none') ?>">
 			<td align="center" class="rowhandler"><div class="drag row"></div></td>
 			<td id="eventResultPeopleName<?php echo $peopleId ?>" style="<?php echo $style ?>"><?php echo $peopleObj->getFullName() ?></td>
 			<?php
@@ -118,7 +122,7 @@
 		  ?>
 		</tbody>
 		<tr class="resultTotal">
-			<td class="mark">TOTAL</td>
+			<td class="mark" colspan="2">TOTAL</td>
 			<?php if( !$isFreeroll ): ?>
 			<td class="mark" align="right" id="eventResultTotalBuyin"><?php echo Util::formatFloat($totalBuyin, true) ?></td>
 			<?php endif; ?>

@@ -50,8 +50,25 @@ td.eventPhotoTable.hover {
 
 h1.photoContestPosition {
 
+	width: 			80px;
 	margin-right: 	20px;
 	font-size: 		28px;
-	color: 			#336b83;
-	text-shadow: 	#10354a 1px 1px;
+	color: 			#4d6e97;
+	text-shadow: 	#374b65 1px 1px;
+	text-align: 	right;
+}
+
+.eventPhotoInfo {
+
+	padding-left: 		15px;
+	padding-top: 		5px;
+	font-size: 			12px;
+	line-height: 		20px;
+	vertical-align: 	top;
+}
+
+.photoRationInfo {
+
+	margin-top: 	10px;
+	font-size: 		14px
 }

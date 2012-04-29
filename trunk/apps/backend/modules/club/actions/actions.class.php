@@ -16,6 +16,8 @@ class clubActions extends sfActions
     $this->clubId = $this->getRequestParameter('clubId', $this->clubId);
     $this->clubId = $this->getUser()->getAttribute('clubId', $this->clubId);
     
+    $this->clubIdAttribute = $this->getUser()->getAttribute('clubId');
+    
     $this->pathList = array('Clubes'=>'club/index');
     $this->toolbarList = array('new');
   }
@@ -29,7 +31,7 @@ class clubActions extends sfActions
   }
 
   public function executeNew($request){
-    
+  	
     $this->clubObj = Util::getNewObject('club');
     
     $this->pathList['Novo clube'] = '#';
@@ -48,7 +50,11 @@ class clubActions extends sfActions
     $this->visitCountValue = $clubObj->getVisitCount();
     
     $this->pathList[$clubObj->getClubName()] = '#';
-    $this->toolbarList = array('new', 'save', 'delete');
+    
+    if( $this->clubIdAttribute )
+    	$this->toolbarList = array('save');
+    else
+    	$this->toolbarList = array('new', 'save', 'delete');
   }
 
   public function handleErrorSave(){

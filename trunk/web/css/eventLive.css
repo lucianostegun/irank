@@ -246,3 +246,8 @@ table.presenceTable tr td {
 	text-align: 	center;
 	font-weight: 	bold;
 }
+
+.button.confirmedButton .buttonMiddle .buttonLabel {
+
+	color: #909090;
+}

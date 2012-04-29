@@ -132,7 +132,7 @@ class RankingLive extends BaseRankingLive
 	
 	public function saveQuickEvents($request){
 		
-		for($i=1; $i <= 10; $i++ ){
+		for($i=1; $i <= 12; $i++ ){
 			
 			$eventName = $request->getParameter('eventName'.$i);
 			$clubId    = $request->getParameter('clubId'.$i);
@@ -157,6 +157,9 @@ class RankingLive extends BaseRankingLive
 			$eventLiveObj->setAllowedRebuys($this->getAllowedRebuys());
 			$eventLiveObj->setAllowedAddons($this->getAllowedAddons());
 			$eventLiveObj->setIsIlimitedRebuys($this->getIsIlimitedRebuys());
+			$eventLiveObj->setPrizeSplit($this->getPrizeSplit());
+			$eventLiveObj->setPublishPrize($this->getPublishPrize());
+			$eventLiveObj->setRakePercent($this->getRakePercent());
 			$eventLiveObj->setDescription('<descrição do ranking>');
 			$eventLiveObj->setEnabled(true);
 			$eventLiveObj->setVisible(true);
@@ -414,12 +417,24 @@ class RankingLive extends BaseRankingLive
 	 */
 	public function getTotalPercentPrizeSplit(){
 		
-		$prizeSplit = split('((; ?)|(, +))', $this->getPrizeSplit());
+		$prizeSplit = split(EventLive::PRIZE_SPLIT_PATTERN, $this->getPrizeSplit());
 		
 		foreach($prizeSplit as &$prize)
 			$prize = Util::formatFloat($prize);
 		
 		return array_sum($prizeSplit);
+	}
+	
+	function importPlayers(){
+		
+		$resultSet = Util::executeQuery('SELECT get_ranking_live_new_players('.$this->getId().')');
+
+		while( $resultSet->next() ){
+			
+			$peopleId             = $resultSet->getInt(1);
+			$rankingLivePlayerObj = RankingLivePlayerPeer::retrieveByPK($this->getId(), $peopleId);
+			$rankingLivePlayerObj->save();
+		}
 	}
 	
 	public function getInfo(){

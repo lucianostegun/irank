@@ -25,7 +25,7 @@ function checkButton( buttonId ){
 	if( $('button'+buttonId)==null )
 		return false;
 	
-	var disabled = $('button'+buttonId).className == 'buttonDisabled';
+	var disabled = $('button'+buttonId).hasClassName('buttonDisabled');
 
 	return !disabled;
 }
@@ -36,7 +36,7 @@ function enableButton( buttonId ){
 	
 	if( $('button'+buttonId)!=null ){
 		
-		$('button'+buttonId).className = 'button';
+		$('button'+buttonId).removeClassName('disabled');
 		$('button'+buttonId).disabled  = false;
 	}
 	
@@ -51,7 +51,7 @@ function disableButton( buttonId ){
 	
 	if( $('button'+buttonId)!=null ){
 		
-		$('button'+buttonId).className = 'buttonDisabled';
+		$('button'+buttonId).addClassName('disabled');
 		$('button'+buttonId).disabled  = false;
 	}
 

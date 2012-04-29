@@ -14,10 +14,10 @@
 	<table width="100%" height="<?php echo $windowHeight-17 ?>" cellspacing="1" cellpadding="0" class="windowForm">
 		<tr>
 			<td valign="top" align="center">
-				<div id="eventResultTableDiv" style="height: 350px; overflow: auto; display: <?php echo ($savedResult?'block':'none') ?>">
+				<div id="eventResultTableDiv" style="height: 500px; overflow: auto; display: <?php echo ($savedResult?'block':'none') ?>">
 					<?php include_partial('event/include/result', array('eventObj'=>$eventObj)) ?>
 				</div>
-				<div id="eventResultPlayerListDiv" style="height: 350px; overflow: auto; display: <?php echo ($savedResult?'none':'block') ?>">
+				<div id="eventResultPlayerListDiv" style="height: 500px; overflow: auto; display: <?php echo ($savedResult?'none':'block') ?>">
 					<?php include_partial('event/include/playerResult', array('eventObj'=>$eventObj)) ?>
 				</div>
 			</td>

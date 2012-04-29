@@ -253,6 +253,8 @@ ul.userDropdown li a:hover { border-right: none; border-left: none; }
 .nav li a strong { background: #1b232a; display: block; position: absolute; right: 10px; padding: 0 7px; top: 12px; box-shadow: 0 1px 1px #38444f; -webkit-box-shadow: 0 1px 1px #38444f; -moz-box-shadow: 0 1px 1px #38444f; font-size: 11px; color: #efefef; }
 .nav li a.active strong, .nav li a:active strong { background: #212a31; box-shadow: 0 1px 1px #557188; -webkit-box-shadow: 0 1px 1px #557188; -moz-box-shadow: 0 1px 1px #557188; }
 
+.nav li a.quickAdd { border-bottom: none; border-top: none; }
+
 
 .nav .last { border-bottom: none; }
 

@@ -1,7 +1,8 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array(__('contact.title')=>'contact/index'))); ?>
 <div class="moduleIntro">
 	<?php echo image_tag('at', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
-	<?php echo __('contact.intro') ?></u>
+	<?php echo __('contact.intro') ?><br/><br/>
+	Você também pode enviar uma mensagem para o endereço <a href="mailto:contato@irank.com.br">contato@irank.com.br</a>.
 </div>
 <div class="clear"></div>
 <div id="contactFormDiv" align="center">
@@ -37,7 +38,7 @@
 						<div class="labelHalf"><?php echo __('contact.contactForm.message') ?></div>
 						<div class="field"><?php echo textarea_tag('message', null, array('id'=>'contactMessage', 'cols'=>50)) ?></div>
 					</div>
-					<div class="separator"></div>
+					<div class="separator mt20"></div>
 					<div class="buttonBarForm">
 						<?php echo button_tag('mainSubmit', __('contact.contactForm.send'), array('onclick'=>'doSubmitContact()')) ?>
 						<?php echo getFormStatus(null, null, __('contact.contactForm.errorMessage')) ?>
@@ -72,8 +73,6 @@
 		</tr>
 	</table>
 </div>
-
-<div style="font-size: 12px; text-align: left; margin-left: 30px">Você também pode enviar uma mensagem para o endereço <a href="mailto:contato@irank.com.br">contato@irank.com.br</a>.</div>
 
 </form>
 <br/>

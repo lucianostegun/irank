@@ -91,29 +91,33 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         <li class="dash"><?php echo link_to('<span>Resumo geral</span>', 'home/index', array('class'=>($moduleName=='home'?'active':''))) ?></li>
         
         <?php if( $iRankAdmin ): ?>
-        <li class="club"><a href="javascript:void(0)" title="" class="<?php echo ($moduleName=='club'?'active':'exp') ?>"><span>Clubes</span><strong>2</strong></a>
-            <ul class="sub">
-                <li><?php echo link_to('Novo clube', 'club/new') ?></li>
-                <li><?php echo link_to('Listar clubes', 'club/index', array('class'=>'last')) ?></li>
-            </ul>
+        <li class="club">
+        	<?php
+        		echo link_to('<span>Clubes</span>', 'club/index', array('class'=>($moduleName=='club'?'active':'')));
+        		if( $iRankAdmin )
+        			echo link_to('<strong>+</strong>', 'club/new', array('class'=>'quickAdd'));
+        	?>
         </li>
         <?php endif; ?>
+        
         <?php if( !$iRankAdmin && $iRankClub ): ?>
         <li class="club"><a href="<?php echo url_for('club/edit') ?>"><span>Informações do clube</span></a></li>
         <?php endif; ?>
         
-        <li class="ranking"><a href="javascript:void(0)" title="" class="<?php echo (strstr($moduleName, 'ranking')?'active':'exp') ?>"><span>Rankings</span><strong>2</strong></a>
-            <ul class="sub">
-                <li><?php echo link_to('Rankings live', 'rankingLive/index') ?><?php echo link_to('<strong></strong>', 'rankingLive/new', array('title'=>'Novo ranking LIVE')) ?></li>
-                <li class="last"><?php echo link_to('Rankings home', 'ranking/index') ?></li>
-            </ul>
+        <li class="ranking">
+        	<?php
+        		echo link_to('<span>Rankings ao vivo</span>', 'rankingLive/index', array('class'=>($moduleName=='rankingLive'?'active':'')));
+        		if( $iRankAdmin )
+        			echo link_to('<strong>+</strong>', 'rankingLive/new', array('class'=>'quickAdd'));
+        	?>
         </li>
         
-        <li class="event"><a href="javascript:void(0)" title="" class="<?php echo (strstr($moduleName, 'event')?'active':'exp') ?>"><span>Eventos</span><strong>2</strong></a>
-            <ul class="sub">
-                <li><?php echo link_to('Eventos live', 'eventLive/index') ?><?php echo link_to('<strong></strong>', 'eventLive/new', array('title'=>'Novo evento LIVE')) ?></li>
-                <li class="last"><?php echo link_to('Eventos home', 'event/index') ?></li>
-            </ul>
+        <li class="event">
+        	<?php
+        		echo link_to('<span>Eventos ao vivo</span>', 'eventLive/index', array('class'=>($moduleName=='eventLive'?'active':'')));
+        		if( $iRankAdmin )
+        			echo link_to('<strong>+</strong>', 'eventLive/new', array('class'=>'quickAdd'));
+        	?>
         </li>
 
 		<?php if( $iRankAdmin ): ?>
@@ -166,7 +170,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         </div>
     </div>
 	<?php
-		if( !isset($pathList) && ($actionName!=='error404' || $actionName!=='accessDenied') )
+		if( !isset($pathList) && ($actionName!=='error404' && $actionName!=='accessDenied') )
 			throw new Exception('A variável $pathList não foi definida');
 							
 		include_partial('home/include/toolbar', array('pathList'=>$pathList, 'toolbarList'=>$toolbarList));

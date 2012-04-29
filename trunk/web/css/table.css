@@ -83,8 +83,11 @@
 .gridTable .hover.green td {
 	
 	background: 	#DEF280;
-	cursor: 		pointer;
-	color: 			#000000;
+}
+
+.gridTable .hover.red td {
+	
+	background: 	#f2a880;
 }
 
 .gridTable td img {
@@ -269,7 +272,7 @@
 	width: 			100%;
 	border-top: 	1px solid #CACACA;
 	border-bottom: 	1px solid #EEEEEE;
-	margin-top: 	6px;
+	margin-top: 	16px;
 	margin-bottom: 	7px;
 }
 

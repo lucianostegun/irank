@@ -35,7 +35,7 @@ function loadEventLiveTab(element, eventLiveId){
 
 function confirmEventLivePresence(eventLiveId){
 	
-	if( $('buttonPresenceConfirm').hasClassName('buttonPresenceYes') )
+	if( $('buttonPresenceConfirm'+eventLiveId).hasClassName('buttonPresenceYes') )
 		if( !confirm('Atenção!\n\nTem certeza que deseja cancelar sua confirmação de presença para este evento?') )
 			return false;
 
@@ -51,24 +51,28 @@ function confirmEventLivePresence(eventLiveId){
 			var label   = 'CONFIRMAR PRESENÇA';
 			var icon    = '<img id="ConfirmButton'+eventLiveId+'Image" align="absmiddle" src="/images/button/ok.png" />';
 			var color   = '#000000';
+			var title   = '';
 			
 			switch(infoObj.currentStatus){
 				case 'yes':
 					label = 'PRESENÇA CONFIRMADA';
 					icon  = '<img id="ConfirmButton'+eventLiveId+'Image" align="absmiddle" src="/images/button/reload.png" />';
 					color = '#909090';
+					title = 'Clique para cancelar sua confirmação de presença para o evento';
 					break;
 				case 'no':
 					label = 'CONFIRMAR PRESENÇA';
 					icon  = '<img id="ConfirmButton'+eventLiveId+'Image" align="absmiddle" src="/images/button/ok.png" />';
 					color = '#000000';
+					title = 'Clique para confirmar sua presença no evento';
 					break;
 			}
 			
 			$('eventLive'+eventLiveId+'ResumePlayers').innerHTML = players;
 			
-			$('buttonConfirmButton'+eventLiveId+'Label').innerHTML   = icon+label;
-			$('buttonConfirmButton'+eventLiveId+'Label').style.color = color;
+			$('buttonPresenceConfirm'+eventLiveId+'Label').innerHTML   = icon+label;
+			$('buttonPresenceConfirm'+eventLiveId+'Label').style.color = color;
+			$('buttonPresenceConfirm'+eventLiveId).title               = title;
 		}else{
 			
 			alert('FALHA NA CONFIRMAÇÃO!\n'+infoObj.errorMessage);

@@ -53,58 +53,25 @@ redips_init = function () {
 		var pos = rd.get_position();
 		// display current table and current row
 		
-//		var eventPositionDrag = rd.obj_old.id.replace(/[^0-9]/g, '');
-//		var eventPositionDrop = pos[1]-1;
-//		
-//		var eventLiveId = $('#eventLiveId').val();
-//		
-//		var tdList = document.getElementsByClassName('eventLivePositionLabel');
-//		
-//		var changeIds = function(eventPosition, eventPositionOld){
-//			
-//			$('#eventLivePositionLabel-'+eventPositionOld).attr('id',         'eventLivePositionLabel-'+eventPosition);
-//			$('#eventLiveResultRow-'+eventPositionOld).attr('id',             'eventLiveResultRow-'+eventPosition);
-//			$('#peopleIdPosition-'+eventPositionOld).attr('name',             'peopleIdPosition-'+eventPosition);
-//			$('#peopleIdPosition-'+eventPositionOld).attr('id',               'peopleIdPosition-'+eventPosition);
-//			$('#eventLivePeopleNameResult-'+eventPositionOld).attr('id',      'eventLivePeopleNameResult-'+eventPosition);
-//			$('#prize-'+eventPositionOld).attr('id',                          'prize-'+eventPosition);
-//			$('#score-'+eventPositionOld).attr('id',                          'score-'+eventPosition);
-//			$('#eventLiveResultEmailAddressTd-'+eventPositionOld).attr('id',  'eventLiveResultEmailAddressTd-'+eventPosition);
-//		}
-//		
-//		var orderDesc = (eventPositionDrop > eventPositionDrag);
-//		
-//		var minValue = eventPositionDrag;
-//		var maxValue = eventPositionDrop;
-//		
-//		if( orderDesc ){
-//		
-//			var minValue = eventPositionDrop;
-//			var maxValue = eventPositionDrag;
-//		}
-//		
-//		for(var rowIndex=minValue-1; rowIndex >= maxValue-1; rowIndex--){
-//			
-//			var tdElement        = tdList[rowIndex];
-//			var eventPositionOld = tdElement.innerHTML;
-//			var eventPosition    = rowIndex+1;
-//			tdElement.innerHTML  = eventPosition;
-//			
-//			changeIds(eventPosition, eventPositionOld);
-//		}
-//		
-//		for(var rowIndex=0; rowIndex < minValue; rowIndex++){
-//			
-//			var tdElement = tdList[rowIndex];
-//			
-//			$(tdElement.parentNode).removeClass('odd');
-//			if( rowIndex%2==0 )
-//				$(tdElement.parentNode).addClass('odd');
-//		}
-//		
-//		setupEventLiveResultAutoComplete()
-//		
-//		$('#eventLiveResultForm').submit();
+		var trList = document.getElementsByClassName('resultEventPlayerRow');
+		
+		var players       = getSelectedResultPlayers();
+		var eventPosition = 0;
+		for(var rowIndex=0; rowIndex < trList.length; rowIndex++){
+			
+			if( trList[rowIndex].style.display=='none' )
+				continue;
+			
+			eventPosition++;
+			var peopleId = trList[rowIndex].id.replace(/[^0-9]/gi, '');
+			$('eventEventPosition'+peopleId).value    = eventPosition;
+			
+			$('eventBuyin'+peopleId).tabIndex         = eventPosition;
+			$('eventEventPosition'+peopleId).tabIndex = players+eventPosition;
+			$('eventRebuy'+peopleId).tabIndex         = rowIndex+1+players*2;
+			$('eventAddon'+peopleId).tabIndex         = rowIndex+1+players*3;
+			$('eventPrize'+peopleId).tabIndex         = rowIndex+1+players*4;
+		}
 	};
 	// row was dropped to the source - event handler
 	// mini table (cloned row) will be removed and source row should return to original state

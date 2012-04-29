@@ -9,7 +9,13 @@ function createEventListTable(){
 		"bJQueryUI": true,
 		"sPaginationType": "full_numbers",
 		"sDom": '<""l>t<"F"fp>',
-		"aaSorting": [[2, "desc"]],
+		"aoColumns": [null,
+		              null,
+		              {"sType": "date-euro"},
+		              null,
+		              null,
+		              null],
+  		"aaSorting": [[2, "desc"]],
 	});
 	
 	$('#eventLiveTable').css('width', '100%')
@@ -175,12 +181,14 @@ function clearQuickEventLiveForm(){
 	
 	showAddEventForm();
 	
-	for(var i=1; i <= 10; i++){
+	for(var i=1; i <= 12; i++){
 		
 		$('#rankingLiveQuickEventLiveEventName'+i).val('');
-		$('#rankingLiveQuickEventLiveClubId'+i).val('');
 		$('#rankingLiveQuickEventLiveEventDate'+i).val('');
 		$('#rankingLiveQuickEventLiveStartTime'+i).val($('#rankingLiveStartTime').val());
+		
+		if( $('#rankingLiveQuickEventLiveClubId1').prop('type')!='hidden' )
+			$('#rankingLiveQuickEventLiveClubId'+i).val('');
 	}
 	
 	validateAllQuickAddEvent();

@@ -68,9 +68,7 @@
 ?>
 	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php
-//			if( $pastDate )
 				echo button_tag('mainSubmitResult', __('button.launchResult'), array('onclick'=>'openEventResult()', 'visible'=>$pastDate));
-//			else				
 				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()', 'visible'=>!$pastDate));
 				
 				echo $facebookButton;
@@ -92,5 +90,5 @@
 	DhtmlxWindows::createWindow('rankingPlayerAdd', __('ranking.playerRegister'), 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$eventObj->getRankingId()));
 	
 	if( ($isEditable || $isMyEvent) )
-		DhtmlxWindows::createWindow('eventResult', __('event.resultTab.intro'), 680, 400, 'event/dialog/result', array('eventObj'=>$eventObj, 'ajax'=>(!$pastDate)));
+		DhtmlxWindows::createWindow('eventResult', __('event.resultTab.intro'), 680, 550, 'event/dialog/result', array('eventObj'=>$eventObj, 'ajax'=>(!$pastDate)));
 ?>

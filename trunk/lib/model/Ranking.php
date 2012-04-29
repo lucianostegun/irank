@@ -672,6 +672,9 @@ class Ranking extends BaseRanking
 		$rankingPlayerObjList = $this->getClassify();
 	  	foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 		
+			if( $rankingPlayerObj->getTotalEvents()==0 )
+				continue;
+			
 			$peopleObj = $rankingPlayerObj->getPeople();
 			
 			$classifyList .= '  <tr class="boxcontent">'.$nl;

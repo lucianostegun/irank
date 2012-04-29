@@ -15,6 +15,8 @@ class loginActions extends sfActions
   	$actionName = $this->getContext()->getActionName();
   	if( $actionName!='logout' && $this->getUser()->isAuthenticated() && $this->getUser()->hasCredential('iRankAdmin') )
   		return $this->redirect('home/index');
+  	
+  	$this->pathList = array('Acesso negado'=>null);
   }
 
   public function executeIndex($request){
