@@ -166,6 +166,18 @@ class eventLiveActions extends sfActions
     exit;
   }
   
+  public function executeFacebookShare($request){
+  	
+  	$eventLiveId = $request->getParameter('eventLiveId');
+  	
+  	if(!$eventLiveId)
+  		Util::forceError('Parametros inv&aacute;lidos');
+  	
+  	$this->redirect('http://www.facebook.com/sharer.php?u='.urlencode('http://'.$request->getHost().'/index.php/eventLive/details/eventLiveId/'.$eventLiveId));
+  	
+  	exit;	
+  }
+  
   public function executeAutoComplete($request){
     
 	$peopleName   = $request->getParameter('term');

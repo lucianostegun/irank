@@ -530,3 +530,37 @@ function activeResultTab(){
 	
 	return false;
 }
+
+function eventLiveEmailShare(){
+
+	alert('A opção por email estará disponível em breve');
+}
+
+function eventLiveFacebookShare(){
+	
+	var eventLiveId = $('#eventLiveId').val();
+	
+	if(!eventLiveId)
+		return alert('Salve o evento antes de divulgá-lo');
+	
+	var form = document.createElement('form');
+	
+	form.target = '_blank';
+	form.method = 'POST';
+	form.action = _webRoot+'/eventLive/facebookShare';
+	
+	document.body.appendChild( form );
+	
+	var postParam  = document.createElement('input');
+	postParam.type  = 'hidden';
+	postParam.name  = 'eventLiveId';
+	postParam.value = eventLiveId;
+
+	form.appendChild( postParam );
+	form.submit();	
+}
+
+function eventLiveTwitterShare(){
+
+	alert('A opção pelo Twitter estará disponível em breve');
+}
