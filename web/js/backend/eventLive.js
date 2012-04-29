@@ -11,11 +11,22 @@ $(function() {
 		filters : [
 			{title : "Arquivos de imagem", extensions : "jpg,png"}
 			//{title : "Zip files", extensions : "zip"}
-		]
+		],
+		init : {
+			Refresh: function(up) {
+				// Called when upload shim is moved
+			},
+			
+			StateChanged: function(up) {
+				// Called when the state of the queue is changed
+				if(up.state == plupload.STOPPED)
+					updateEventLivePhotoList();
+			},
+		},
 	});
 	
 	if( getActionName()!='index' )
-		$('.photoList a.lightbox').lightBox();
+		buildEventLiveLightbox()
 });
 
 function handleSuccessEventLive(content){
@@ -36,10 +47,8 @@ function handleFailureEventLive(content){
 
 function handleSuccessEventLiveResult(content){
 	
-	if( $('#eventLiveResultPublish').val()=='1' ){
-		
+	if( $('#eventLiveResultPublish').val()=='1' )		
 		showFormStatusSuccess();
-	}
 }
 
 function handleFailureEventLiveResult(content){
@@ -529,6 +538,43 @@ function activeResultTab(){
 	$("#resultTab").find(".tab_content:first").show(); //Show first tab content
 	
 	return false;
+<<<<<<< .mine
+}
+
+function updateEventLivePhotoList(){
+	
+	var eventLiveId = $('#eventLiveId').val();
+	
+	var successFunc = function(content){
+		
+		$('#eventLivePhotoListDiv').html(content);
+		
+		buildEventLiveLightbox();
+		
+		hideIndicator();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		hideIndicator();
+		alert('Não foi possível recarregar a listagem de fotos!\nPor favor, recarregue a página para visualizar as fotos carregadas.');
+		
+		if( isDebug() )
+			debug(content);
+	};
+
+	showIndicator();
+
+	var urlAjax = _webRoot+'/eventLive/getPhotoList?eventLiveId='+eventLiveId;
+
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function buildEventLiveLightbox(){
+	
+	$('.photoList a.lightbox').lightBox();
 }
 
 function eventLiveEmailShare(){

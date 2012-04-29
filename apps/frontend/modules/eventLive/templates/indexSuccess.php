@@ -11,7 +11,9 @@
 <blockquote>
 	<div id="eventLiveList">
 		<?php
-			$eventLiveObjList = EventLivePeer::search();
+			$criteria = new Criteria();
+			$criteria->add( EventLivePeer::EVENT_DATE, Util::getDate('30d'), Criteria::LESS_THAN);
+			$eventLiveObjList = EventLivePeer::search($criteria);
 			
 			if( count($eventLiveObjList)==0 ):
 		?>
@@ -64,9 +66,9 @@
 						else{
 							
 							if( $peopleId && $eventLiveObj->getPlayerStatus($peopleId, true) )
-								echo button_tag('confirmButton'.$eventLiveId, 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
+								echo button_tag('presenceConfirm'.$eventLiveId, 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'style'=>'margin-top: 37px; float: right', 'class'=>'confirmedButton', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
 							else
-								echo button_tag('confirmButton'.$eventLiveId, 'CONFIRMAR PRESENÇA', array('image'=>'ok.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
+								echo button_tag('presenceConfirm'.$eventLiveId, 'CONFIRMAR PRESENÇA', array('image'=>'ok.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
 						}
 					?>
 				</div>

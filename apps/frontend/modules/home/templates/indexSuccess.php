@@ -120,34 +120,3 @@ $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 
 <div class="clear"></div>
 <br/>
-
-
-
-
-
-
-
-
-
-
-
-<div class="baseChannels">
-	<a href="<?php echo url_for('schedule/index') ?>">
-	
-	</a>
-	<div class="channel">
-		<div class="image"><?php echo image_tag('home/photo') ?></div>
-		<div class="description">
-			<h1>Mural de fotos</h1>
-			Compartilhar os melhores momentos dos eventos postando suas fotos no mural.
-		</div>
-	</div>
-	<div class="channel">
-		<div class="image"><?php echo image_tag('home/tour') ?></div>
-		<div class="description">
-			<h1>iRank tour</h1>
-			Quer aprender rapidamente como criar seus rankings e gerenciar seus eventos? Faça um passeio pelo site e aproveite.<br/>
-			 
-		</div>
-	</div>
-</div>

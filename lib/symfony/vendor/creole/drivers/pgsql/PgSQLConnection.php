@@ -152,7 +152,7 @@ class PgSQLConnection extends ConnectionCommon implements Connection {
     function executeUpdate($sql)
     {            
 
-	  	$pattern = "![^A-Za-z0-9\]\[)('\"\!@#\$%&*-= _+><:|,\.;\//?}{  \n\r\t ÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜàáâãäçèéêëìíîïñòóôõöùúûü]!u";
+	  	$pattern = "![^A-Za-z0-9\]\[)('\"\!@#\$%&ªº*-= _+><:|,\.;\//?}{  \n\r\t ÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜàáâãäçèéêëìíîïñòóôõöùúûü]!u";
 	  	$sql     = preg_replace($pattern, '', $sql);
 
         $result = @pg_query($this->dblink, $sql);

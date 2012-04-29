@@ -165,7 +165,7 @@
 								c("#" + k + "_filelist")
 										.append(
 												'<li class="plupload_droptext">'
-														+ a("Arraste os arquivos para cá")
+														+ a("Arraste os arquivos aqui")
 														+ "</li>")
 							}
 						}
@@ -242,7 +242,7 @@
 												c("#" + k + "_filelist")
 														.append(
 																'<li class="plupload_droptext">'
-																		+ a("Arraste os arquivos para cá")
+																		+ a("Arraste os arquivos aqui")
 																		+ "</li>")
 											}
 											c("#" + k + "_container").attr(

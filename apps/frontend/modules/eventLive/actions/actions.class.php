@@ -19,6 +19,10 @@ class eventLiveActions extends sfActions
   		$this->eventLiveId = Util::getDirectUrlId('eventLive/details');
   	
   	$this->eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+  	
+  	if( !is_object($this->eventLiveObj) )
+  		return $this->redirect('eventLive/index');
+  		
   	$this->eventLiveObj->updateVisitCount();
   	
   	if( !is_object($this->eventLiveObj) )

@@ -443,12 +443,17 @@ class Event extends BaseEvent
 		$infoList['classifyList'] = $classifyList;
 		$infoList                 = array_merge($infoList, $this->getInfo());
 		
-		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
-		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
-		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
-		$emailSubjectList['en_US'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
+//		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+//		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
+//		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
+//		$emailSubjectList['en_US'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
+
+		$emailContent = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailSubject = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
 		
 		$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', 'receiveAllResults');
+		
+		$culture = 'pt_BR';
 		
 		$eventPlayerObjList = $this->getPlayerList();
 		foreach($eventPlayerObjList as $eventPlayerObj){
@@ -460,11 +465,8 @@ class Event extends BaseEvent
 			if( $eventPosition==0 && !$receiveAllResults )
 				continue;
 			
-			$peopleObj = $eventPlayerObj->getPeople();
+			$peopleObj    = $eventPlayerObj->getPeople();
 			$emailAddress = $peopleObj->getEmailAddress();
-			$culture      = $peopleObj->getDefaultLanguage();
-			$emailContent = $emailContentList[$culture];
-			$emailSubject = $emailSubjectList[$culture];
 			
 			$emailContent = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
 			
@@ -484,7 +486,6 @@ class Event extends BaseEvent
 			$emailContent = str_replace('<congratsMessage>', $congratsMessage, $emailContent);
 
 			Report::sendMail($emailSubject, $emailAddress, $emailContent);
-			exit;
 		}
 	}
 	
@@ -1083,7 +1084,7 @@ class Event extends BaseEvent
 	
 		imagettftext($newImg, 8, 0, 15, 43, $colorBlack, $verdana, $eventName);
 		imagettftext($newImg, 8, 0, 10, 265, $colorWhite, $verdana, $eventDate);
-		imagettftext($newImg, 8, 0, 220, 265, $colorWhite, $verdanaB, $rankingName);
+		imagettftext($newImg, 8, 0, 230, 265, $colorWhite, $verdanaB, $rankingName);
 		
 		$peopleIdCurrent = $peopleObj->getId();
 		
@@ -1126,7 +1127,6 @@ class Event extends BaseEvent
 		
 		foreach($playerList as $peopleId=>$playerInfo){
 			
-			$fontFace  = $verdana;//($peopleIdCurrent==$peopleId?$verdanaZ:$verdana);
 			$fontColor = ($peopleIdCurrent==$peopleId?$colorRed:$colorBlack);
 			
 			$eventPosition = $playerInfo['eventPosition'];
@@ -1145,7 +1145,7 @@ class Event extends BaseEvent
 			$length3 = $length3[2]-$length3[0];
 			
 			imagettftext($newImg, 8, 0, $width-$length3-390, 85+$positionY, $fontColor, $verdana, $eventPosition);
-			imagettftext($newImg, 8, 0, 37, 85+$positionY, $fontColor, $fontFace, $playerName);
+			imagettftext($newImg, 8, 0, 37, 85+$positionY, $fontColor, $verdana, $playerName);
 			imagettftext($newImg, 8, 0, $width-$length1-74, 85+$positionY, $fontColor, $verdana, $score);
 			imagettftext($newImg, 8, 0, $width-$length2-17, 85+$positionY, $fontColor, $verdana, $ranking);
 			

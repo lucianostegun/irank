@@ -309,19 +309,27 @@ function togglePresence(peopleId){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
-function togglePresenceResult(peopleId){
+function togglePresenceResult(peopleId, Element){
+	
+	var players = getSelectedResultPlayers();
 	
 	if( $('presenceImage'+peopleId).src.match(/(nok|help)\.png$/) ){
 
 		$('presenceImage'+peopleId).src = $('presenceImage'+peopleId).src.replace(/\/(nok|help)\.png$/, '/ok.png');
+		Element.className = 'hover red selectedPlayer';
+		Element.title     = 'Cancelar presença';
 		
 		$('eventResultPeopleName'+peopleId).style.color = '';
 		
 		if( $('eventResultPeopleName'+peopleId)!=null )
 			showDiv('eventResultRow'+peopleId, false, 'table-row');
+		
 	}else{
 
 		$('presenceImage'+peopleId).src = $('presenceImage'+peopleId).src.replace(/\/(ok|help)\.png$/, '/nok.png');
+		Element.removeClassName('selectedPlayer');
+		Element.className = 'hover green';
+		Element.title     = 'Confirmar presença';
 		
 		if( $('eventResultPeopleName'+peopleId)!=null ){
 			
@@ -340,6 +348,37 @@ function togglePresenceResult(peopleId){
 			
 			hideDiv('eventResultRow'+peopleId);
 		}
+	}
+	
+	resetPlayerResultPosition();
+}
+
+function resetPlayerResultPosition(){
+	
+	var resultEventPlayerRowList = document.getElementsByClassName('resultEventPlayerRow');
+	
+	var eventPosition = 0;
+	for(var rowIndex=0; rowIndex < resultEventPlayerRowList.length; rowIndex++){
+		
+		var resultEventPlayerRow = resultEventPlayerRowList[rowIndex];
+		
+		var className = resultEventPlayerRow.style.display;
+		var peopleId  = resultEventPlayerRow.id.replace(/[^0-9]/gi, '');
+		
+		if( className=='table-row' ){
+			
+			eventPosition++;
+			
+			$('eventEventPosition'+peopleId).value = eventPosition;
+			resultEventPlayerRow.className         = 'resultEventPlayerRow eventPosition'+eventPosition;
+		}else{
+			
+			$('eventEventPosition'+peopleId).value = '0';
+			resultEventPlayerRow.className = 'resultEventPlayerRow';
+		}
+		
+		toggleBuyin(peopleId);
+		checkBuyin(peopleId)
 	}
 }
 
@@ -1066,4 +1105,9 @@ function configurePrize(){
 	$('prizeShareListDiv').innerHTML = html;
 	$('eventHasShare').value         = '1';
 	adjustContentTab();
+}
+
+function getSelectedResultPlayers(){
+	
+	return document.getElementsByClassName('selectedPlayer').length;
 }

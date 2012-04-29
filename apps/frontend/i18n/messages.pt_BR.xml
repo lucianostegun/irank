@@ -1236,7 +1236,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.saveResultConfirm</source>
-				<target>ATENÇÃO!\n\nOs resultados salvos serão enviados por e-mail a todos os convidados e estarão disponíveis para edição até que outro evento posterior seja criado.\n\nDeseja prosseguir?</target>
+				<target>ATENÇÃO!\n\nOs resultados salvos serão enviados por e-mail a todos os convidados\ne estarão disponíveis para edição até que outro evento posterior seja criado.\n\nDeseja prosseguir?</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.errorSavingMyPresence</source>
@@ -1264,7 +1264,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.cloneConfirm</source>
-				<target>Ao clonar um evento você será direcionado para a edição do evento clonado e deverá editar as informações antes de salvar.\n\nDeseja realmente clonar este evento?</target>
+				<target>Ao clonar um evento você será direcionado para a edição do evento clonado\ne deverá editar as informações antes de salvar.\n\nDeseja realmente clonar este evento?</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.deleteConfirm</source>

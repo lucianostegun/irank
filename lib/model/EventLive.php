@@ -10,6 +10,8 @@
 class EventLive extends BaseEventLive
 {
 	
+	const PRIZE_SPLIT_PATTERN = '((; ?)|(, ?))';
+	
 	public function getIsNew(){
 		
 		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
@@ -120,7 +122,7 @@ class EventLive extends BaseEventLive
 		$totalRebuys  = $request->getParameter('totalRebuys');
 		$prizeSplit   = $request->getParameter('prizeSplit');
 		$publishPrize = $request->getParameter('publishPrize');
-		    
+		
 	    $this->setTotalRebuys(Util::formatFloat($totalRebuys));
 	    $this->setPrizeSplit($prizeSplit);
 	    $this->setPublishPrize(($publishPrize?true:false));
@@ -192,6 +194,12 @@ class EventLive extends BaseEventLive
 			$rankingLiveObj = $this->getRankingLive();
 				
 			if( is_object($rankingLiveObj) ){
+				
+				/**
+				 * Reimporta todos os jogadores que ainda não fazem parte do ranking,
+				 * ou seja, os jogadores que estão jogando pela primeira vez.
+				 */
+				$rankingLiveObj->importPlayers();
 				
 				$rankingLiveObj->updateScores();
 				$rankingLiveObj->updatePlayerEvents();
@@ -447,7 +455,7 @@ class EventLive extends BaseEventLive
 	 */
 	public function getTotalPercentPrizeSplit(){
 		
-		$prizeSplit = split('((; ?)|(, +))', $this->getPrizeSplit());
+		$prizeSplit = split(EventLive::PRIZE_SPLIT_PATTERN, $this->getPrizeSplit());
 		
 		foreach($prizeSplit as &$prize)
 			$prize = Util::formatFloat($prize);

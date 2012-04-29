@@ -58,7 +58,7 @@ class eventLiveActions extends sfActions
     	return $this->redirect('eventLive/index');
     
     $this->numStatList = array('Visitas'=>$eventLiveObj->getVisitCount(),
-    						   'Inscrições'=>$eventLiveObj->getPlayers(true),
+    						   'Inscrições'=>$eventLiveObj->getPlayers(false, true),
     						   'Confirm.'=>$eventLiveObj->getPlayers());
     	
     if( $eventLiveObj->getRankingLiveId() ){
@@ -283,7 +283,7 @@ class eventLiveActions extends sfActions
 	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
 	$totalRebuys  = $request->getParameter('totalRebuys');
 	$prizeSplit   = $request->getParameter('prizeSplit');
-	$prizeConfig   = split('((; ?)|(, +))', $prizeSplit);
+	$prizeConfig   = split(EventLive::PRIZE_SPLIT_PATTERN, $prizeSplit);
 	$paidPlaces   = count($prizeConfig);
 	$players      = $eventLiveObj->getPlayers();
 	
@@ -355,5 +355,12 @@ class eventLiveActions extends sfActions
 	$eventLivePhotoObj->delete();
 	
   	exit;
+  }
+
+  public function executeGetPhotoList($request){
+    
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('eventLive/include/photos', array('eventLiveId'=>$this->eventLiveId)));
   }
 }

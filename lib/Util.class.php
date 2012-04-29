@@ -497,6 +497,26 @@ class Util {
 		return $browser;
 	}
 	
+	public static function getDate($dateIncrase){
+		
+		$dateIncrase = strtolower($dateIncrase);
+		$dateIncrase = preg_replace('/[^-0-9dwmy]/', '', $dateIncrase);
+		$daysIncrase = 0;
+		
+		if( preg_match('/^-?[0-9]*d$/', $dateIncrase) )
+			$daysIncrase = str_replace('d', '', $dateIncrase);
+		elseif( preg_match('/^-?[0-9]*w$/', $dateIncrase) )
+			$daysIncrase = str_replace('w', '', $dateIncrase)*7;
+		elseif( preg_match('/^-?[0-9]*m$/', $dateIncrase) )
+			$daysIncrase = str_replace('m', '', $dateIncrase)*30;
+		elseif( preg_match('/^-?[0-9]*y$/', $dateIncrase) )
+			$daysIncrase = str_replace('y', '', $dateIncrase)*35;
+		else
+			throw new Exception('Parâmetro "'.$dateIncrase.'" inválido para o método Util::getDate()');
+		
+		return date('Y-m-d', mktime(0,0,0,date('m'),date('d')+$daysIncrase,date('Y')));
+	}
+	
 	/**
 	 * Método que retorna a data por extenso
 	 *

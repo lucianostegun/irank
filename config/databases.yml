@@ -3,7 +3,15 @@ all:
     class:          sfPropelDatabase
     param:
       dsn:          pgsql://postgres:unidunite@localhost/irank
+      phptype:            pgsql
+      port:               5432
+      encoding:           utf8
+      persistent:         true
   log:
     class:          sfPropelDatabase
     param:
       dsn:          pgsql://postgres:unidunite@localhost/irank_log
+      phptype:            pgsql
+      port:               5432
+      encoding:           utf8
+      persistent:         true
