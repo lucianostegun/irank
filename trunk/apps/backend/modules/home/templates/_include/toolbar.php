@@ -29,9 +29,19 @@
 	</div>
 	<div class="horControlT" style="height: 37px">
     	<ul>
-            <?php if( in_array('new', $toolbarList)): ?><li><?php echo link_to(image_tag('backend/toolbar/new').'<span>Novo</span>', '#doGetNew()') ?></li><?php endif; ?>
-            <?php if( in_array('save', $toolbarList)): ?><li><?php echo link_to(image_tag('backend/toolbar/save').'<span>Salvar</span>', '#doSaveMain()') ?></li><?php endif; ?>
-            <?php if( in_array('delete', $toolbarList)): ?><li><?php echo link_to(image_tag('backend/toolbar/delete').'<span>Excluir</span>', '#doDeleteMain()') ?></li><?php endif; ?>
+            <?php
+            	if( array_key_exists('new', $toolbarList) || in_array('new', $toolbarList) )
+            		echo '<li>'.link_to(image_tag('backend/toolbar/new').'<span>Novo</span>', '#doGetNew()').'</li>';
+            	
+            	if( array_key_exists('save', $toolbarList) || in_array('save', $toolbarList) )
+					echo '<li>'.link_to(image_tag('backend/toolbar/save').'<span>Salvar</span>', '#doSaveMain()').'</li>';
+					
+            	if( array_key_exists('delete', $toolbarList) || in_array('delete', $toolbarList) ){
+            		
+            		$executeAction = array_key_exists('delete', $toolbarList)?$toolbarList['delete']:'#doDeleteMain()';
+					echo '<li>'.link_to(image_tag('backend/toolbar/delete').'<span>Excluir</span>', $executeAction).'</li>';
+            	}
+			?>
         </ul>
     </div>
     <div class="line"></div>

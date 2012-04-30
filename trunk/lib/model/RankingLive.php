@@ -318,9 +318,11 @@ class RankingLive extends BaseRankingLive
 		return $stackChips;
 	}
 	
-	public function getPlayerList(){
+	public function getPlayerList($criteria=null){
 		
-		$criteria = new Criteria();
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
 		$criteria->add( RankingLivePlayerPeer::RANKING_LIVE_ID, $this->getId() );
 		$criteria->add( RankingLivePlayerPeer::ENABLED, true );
 		$criteria->addDescendingOrderByColumn( RankingLivePlayerPeer::TOTAL_SCORE );
@@ -346,7 +348,22 @@ class RankingLive extends BaseRankingLive
 		$rankingDate = Util::formatDate($rankingDate);
 		Util::executeQuery('DELETE FROM ranking_live_history WHERE ranking_live_id = '.$this->getId().' AND ranking_date = \''.$rankingDate.'\'');
 		
-		foreach($this->getPlayerList() as $rankingLivePlayerObj){
+		$criteria = new Criteria();
+		$criteria->add( RankingLivePlayerPeer::TOTAL_EVENTS, 0, Criteria::GREATER_THAN );
+		$criteria->add( EventLivePeer::ENABLED, true );
+		$criteria->add( EventLivePeer::VISIBLE, true );
+		$criteria->add( EventLivePeer::DELETED, false );
+		$criteria->add( EventLivePeer::SAVED_RESULT, true );
+		$criteria->add( EventLivePeer::EVENT_DATE, $rankingDate, Criteria::LESS_EQUAL );
+		$criteria->add( EventLivePlayerPeer::ENABLED, true );
+		$criteria->add( EventLivePlayerPeer::DELETED, false );
+		$criteria->add( EventLivePlayerPeer::PEOPLE_ID, EventLivePlayerPeer::PEOPLE_ID.' = '.RankingLivePlayerPeer::PEOPLE_ID, Criteria::CUSTOM );
+		$criteria->addJoin( RankingLivePlayerPeer::RANKING_LIVE_ID, EventLivePeer::RANKING_LIVE_ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( EventLivePeer::ID, EventLivePlayerPeer::EVENT_LIVE_ID, Criteria::INNER_JOIN );
+		$criteria->setDistinct( EventLivePeer::ID );
+		
+		// Aqui atualiza as informações de valores, pontos e prêmios acumulados para a data
+		foreach($this->getPlayerList($criteria) as $rankingLivePlayerObj){
 			
 			$rankingLiveHistoryObjLast = $rankingLivePlayerObj->getLastHistory($rankingDate);
 			
@@ -366,12 +383,43 @@ class RankingLive extends BaseRankingLive
 			$rankingLiveHistoryObj->setBalanceValue(0);
 			$rankingLiveHistoryObj->setPrizeValue(0);
 			$rankingLiveHistoryObj->setPaidValue(0);
-			$rankingLiveHistoryObj->updateInfo();
+			$rankingLiveHistoryObj->updateInfo($rankingDate);
 			$rankingLiveHistoryObj->save();
 		}
+
+		$rankingLiveId   = $this->getId();
+		$rankingPosition = 0;
+		
+		
+		// A partir daqui atualiza as informações da classificação do dia e acumulada do jogador no ranking
+		foreach($this->getClassify(null, $rankingDate) as $rankingLivePlayerObj){
+			
+			++$rankingPosition;
+			$peopleId = $rankingLivePlayerObj->getPeopleId();
+			
+			$sql = "UPDATE ranking_live_history SET total_ranking_position = $rankingPosition WHERE ranking_live_id = $rankingLiveId AND ranking_date = '$rankingDate' AND people_id = $peopleId";
+			Util::executeQuery($sql);
+		}
+		
+		$criteria = new Criteria();
+	  	$criteria->add( RankingLiveHistoryPeer::RANKING_DATE, Util::formatDate($rankingDate) );
+	  	$criteria->add( RankingLiveHistoryPeer::RANKING_LIVE_ID, $this->getId() );
+	  	$criteria->addDescendingOrderByColumn( RankingLiveHistoryPeer::SCORE );
+	  	$rankingLiveHistoryObjList = RankingLiveHistoryPeer::doSelect($criteria);
+
+  		$rankingPosition = 1;
+  		foreach($rankingLiveHistoryObjList as $rankingLiveHistoryObj){
+
+			if( $rankingLiveHistoryObj->getScore() )
+	  			$rankingLiveHistoryObj->setRankingPosition($rankingPosition++);
+	  		else
+	  			$rankingLiveHistoryObj->setRankingPosition(0);
+	  		
+  			$rankingLiveHistoryObj->save();
+  		}
 	}
 	
-	public function getClassify($rankingDate=null){
+	public function getClassify($criteria=null, $rankingDate=null){
 		
 		if( $rankingDate )
 			return $this->getRankingHistoryByDate($rankingDate);
@@ -398,7 +446,7 @@ class RankingLive extends BaseRankingLive
 	  	$orderByList[RankingLivePlayerPeer::TOTAL_AVERAGE] = 'desc';
 	  	$orderByList[RankingLivePlayerPeer::PEOPLE_ID]     = 'asc';
 	  	
-	  	$rankingLivePlayerObjList = $this->getPlayerList($orderByList);
+	  	$rankingLivePlayerObjList = $this->getPlayerList($criteria);
 	  	$lastList = array();
 	  	foreach($rankingLivePlayerObjList as $key=>$rankingLivePlayerObj){
 	  		
@@ -410,6 +458,22 @@ class RankingLive extends BaseRankingLive
 	  	}
 	  	
 	  	return array_merge($rankingLivePlayerObjList, $lastList);
+	}
+	
+	public function getRankingHistoryByDate($rankingDate){
+		
+		$criteria = new Criteria();
+		$criteria->add( RankingLiveHistoryPeer::RANKING_LIVE_ID, $this->getId() );
+		$criteria->add( RankingLiveHistoryPeer::RANKING_DATE, Util::formatDate($rankingDate) );
+		$criteria->addDescendingOrderByColumn( RankingLiveHistoryPeer::TOTAL_SCORE );
+		$rankingLiveHistoryObjList = RankingLiveHistoryPeer::doSelect($criteria);
+		
+		if( count($rankingLiveHistoryObjList)==0 ){
+		
+			Util::getHelper('i18n');
+			throw new Exception(__('ranking.noRankingLog', array('%date%'=>$rankingDate)));
+		}else
+			return $rankingLiveHistoryObjList;
 	}
 	
 	/**
@@ -425,7 +489,7 @@ class RankingLive extends BaseRankingLive
 		return array_sum($prizeSplit);
 	}
 	
-	function importPlayers(){
+	public function importPlayers(){
 		
 		$resultSet = Util::executeQuery('SELECT get_ranking_live_new_players('.$this->getId().')');
 
@@ -434,6 +498,123 @@ class RankingLive extends BaseRankingLive
 			$peopleId             = $resultSet->getInt(1);
 			$rankingLivePlayerObj = RankingLivePlayerPeer::retrieveByPK($this->getId(), $peopleId);
 			$rankingLivePlayerObj->save();
+		}
+	}
+
+	public function updatePlayers(){
+		
+		Util::executeQuery('SELECT update_ranking_live_players('.$this->getId().')');
+	}
+
+	public function updateEvents(){
+		
+		Util::executeQuery('SELECT update_ranking_live_events('.$this->getId().')');
+	}
+	
+	public function getTotalPrize(){
+		
+		return Util::executeOne('SELECT get_ranking_live_total_prize('.$this->getId().')', 'float');
+	}
+	
+	public function getClub(){
+		
+		$clubObjList = $this->getClubList();
+		
+		if( count($clubObjList)==1 )
+			return $clubObjList[0];
+		else
+			return 'Múltiplos clubes';
+	}
+	
+	public function updateVisitCount(){
+		
+		$rankingLiveId = $this->getId();
+		$className     = ucfirst(get_class($this));
+		
+		if( !MyTools::hasAttribute("visitCount$className-$rankingLiveId") ){
+			
+			Util::executeQuery("SELECT update_ranking_live_visit_count($rankingLiveId)");
+			MyTools::setAttribute("visitCount$className-$rankingLiveId", true);
+		}
+	}
+	
+	public function getDateList($includeDeleted=false){
+		
+		$rankingLiveId = $this->getId();
+		
+		$includeDeleted = ($includeDeleted?'true':'false');
+		$resultSet = Util::executeQuery("SELECT get_ranking_live_date_list($rankingLiveId, $includeDeleted)");
+		
+		$dateList = array();
+		while( $resultSet->next() ){
+			
+			$timestamp = strtotime($resultSet->getString(1));
+			$dateList[date('Y-m-d', $timestamp)] = date('d/m/Y', $timestamp);
+		}
+		
+		return $dateList;
+	}
+	
+	public function getEventDateList($format='d/m/Y', $saved=true, $orderByList=array()){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventLivePeer::SAVED_RESULT, $saved );
+		
+		$criteria->addOrderBy($orderByList);
+		
+		$criteria->addAscendingOrderByColumn( EventLivePeer::EVENT_DATE );
+		$eventLiveObjList = $this->getEventLiveList($criteria);
+		
+		$eventDateList = array();
+		foreach($eventLiveObjList as $eventObj)
+			$eventDateList[] = $eventObj->getEventDate($format);
+		
+		return array_unique($eventDateList);
+	}
+	
+	public function isPlayer($peopleId){
+		
+		$rankingLiveId = $this->getId();
+		
+		return Util::executeOne("SELECT is_ranking_live_player($rankingLiveId, $peopleId)", 'boolean');
+	}
+	
+	public function getRankingPosition($peopleId, $rankingDate){
+		
+		$rankingLiveId = $this->getId();
+		$rankingDate = Util::formatDate($rankingDate);
+		$rankingPosition = Util::executeOne("SELECT ranking_position FROM ranking_live_history WHERE ranking_live_id = $rankingLiveId AND people_id = $peopleId AND ranking_date = '$rankingDate'");
+		
+		return (!$rankingPosition?null:$rankingPosition);
+	}
+
+	public function getTotalRankingPosition($peopleId, $rankingDate){
+		
+		$rankingLiveId = $this->getId();
+		$rankingDate = Util::formatDate($rankingDate);
+		$totalRankingPosition = Util::executeOne("SELECT total_ranking_position FROM ranking_live_history WHERE ranking_live_id = $rankingLiveId AND people_id = $peopleId AND ranking_date = '$rankingDate'");
+		
+		return (!$totalRankingPosition?null:$totalRankingPosition);
+	}
+	
+	public function getByPlace($place){
+		
+		$rankingPosition = 1;
+		foreach($this->getClassify() as $rankingLivePlayerObj)
+			if( ($rankingPosition++)==$place )
+				return $rankingLivePlayerObj;
+		
+		return null;
+	}
+	
+	public function updateWholeHistory(){
+
+		Util::executeQuery('DELETE FROM ranking_live_history WHERE ranking_live_id = '.$this->getId());
+		
+		foreach($this->getEventDateList() as $eventDate){
+			
+			echo $eventDate.'<br/>';
+			$this->updateHistory($eventDate);
 		}
 	}
 	

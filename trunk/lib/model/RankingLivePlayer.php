@@ -28,15 +28,15 @@ class RankingLivePlayer extends BaseRankingLivePlayer
 	
 	public function updateScore(){
 		
-		$totalScore = Util::executeOne('SELECT SUM(event_live_player.SCORE) FROM event_live_player, event_live WHERE event_live.VISIBLE=TRUE AND event_live.DELETED=FALSE AND event_live.SAVED_RESULT=TRUE AND event_live_player.EVENT_LIVE_ID=event_live.ID AND event_live.RANKING_LIVE_ID='.$this->getRankingLiveId().' AND event_live_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$totalScore = Util::executeOne('SELECT SUM(event_live_player.SCORE) FROM event_live_player, event_live WHERE event_live.ENABLED AND event_live.VISIBLE=TRUE AND event_live.DELETED=FALSE AND event_live.SAVED_RESULT=TRUE AND event_live_player.EVENT_LIVE_ID=event_live.ID AND event_live.RANKING_LIVE_ID='.$this->getRankingLiveId().' AND event_live_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
 		
 		$this->setTotalScore( $totalScore );
 	}
 	
 	public function updateBalance(){
 		
-		$totalPaid  = Util::executeOne('SELECT SUM(event_live_player.ENTRANCE_FEE+event_live_player.BUYIN+event_live_player.REBUY+event_live_player.ADDON) FROM event_live_player, event_live WHERE event_live.VISIBLE=TRUE AND event_live.DELETED=FALSE AND event_live.SAVED_RESULT=TRUE AND event_live_player.EVENT_LIVE_ID=event_live.ID AND event_live.RANKING_LIVE_ID='.$this->getRankingLiveId().' AND event_live_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
-		$totalPrize = Util::executeOne('SELECT SUM(event_live_player.PRIZE) FROM event_live_player, event_live WHERE event_live.VISIBLE=TRUE AND event_live.DELETED=FALSE AND event_live.SAVED_RESULT=TRUE AND event_live_player.EVENT_LIVE_ID=event_live.ID AND event_live.RANKING_LIVE_ID='.$this->getRankingLiveId().' AND event_live_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$totalPaid  = Util::executeOne('SELECT SUM(event_live_player.ENTRANCE_FEE+event_live_player.BUYIN+event_live_player.REBUY+event_live_player.ADDON) FROM event_live_player, event_live WHERE event_live.ENABLED AND event_live.VISIBLE=TRUE AND event_live.DELETED=FALSE AND event_live.SAVED_RESULT=TRUE AND event_live_player.EVENT_LIVE_ID=event_live.ID AND event_live.RANKING_LIVE_ID='.$this->getRankingLiveId().' AND event_live_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$totalPrize = Util::executeOne('SELECT SUM(event_live_player.PRIZE) FROM event_live_player, event_live WHERE event_live.ENABLED AND event_live.VISIBLE=TRUE AND event_live.DELETED=FALSE AND event_live.SAVED_RESULT=TRUE AND event_live_player.EVENT_LIVE_ID=event_live.ID AND event_live.RANKING_LIVE_ID='.$this->getRankingLiveId().' AND event_live_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
 		
 		$balanceValue = $totalPrize-$totalPaid;
 		$this->setTotalPaid(($totalPaid?$totalPaid:0.00));

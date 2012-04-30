@@ -1,7 +1,5 @@
+<div class="tabbarIntro"><?php echo __('ranking.importTab.intro') ?></div>
 <table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px" class="defaultForm">
-	<tr>
-		<td valign="top" style="padding: 5px 5px 5px 15px"><?php echo __('ranking.importTab.intro') ?><br/><br/></td>
-	</tr>
 	<tr>
 		<td valign="top">
 			<div class="row">

@@ -42,6 +42,12 @@ class EventLive extends BaseEventLive
 		$this->setVisible(false);
 		$this->setDeleted(true);
 		$this->save();
+		
+		$rankingLiveObj = $this->getRankingLive();
+		
+		// Se estiver excluindo um evento de um ranking, atualiza todo o histórico de classificação
+		if( is_object($rankingLiveObj) )
+			$rankingLiveObj->updateWholeHistory();
 	}
 	
 	public function quickSave($request){
@@ -180,9 +186,20 @@ class EventLive extends BaseEventLive
 			// Coloca por últimos os jogadores que não marcaram em que posição sairam
 			$criteria = new Criteria();
 			$criteria->add( EventLivePlayerPeer::PEOPLE_ID, $peopleIdList, Criteria::NOT_IN );
+			
+			$eventPosition = $lastValidEventPosition;
 			foreach($this->getEventLivePlayerList($criteria) as $eventLivePlayerObj){
 				
-				$eventLivePlayerObj->setEventPosition(++$lastValidEventPosition);
+				$eventPosition++;
+				$prize = $request->getParameter('prize-'.$eventPosition);
+				$score = $request->getParameter('score-'.$eventPosition);
+			
+				$prize = Util::formatFloat($prize);
+				$score = Util::formatFloat($score);
+				
+				$eventLivePlayerObj->setEventPosition($eventPosition);
+				$eventLivePlayerObj->setPrize($prize);
+				$eventLivePlayerObj->setScore($score);
 				$eventLivePlayerObj->save();
 				
 				$peopleId = $eventLivePlayerObj->getPeopleId();
@@ -203,6 +220,8 @@ class EventLive extends BaseEventLive
 				
 				$rankingLiveObj->updateScores();
 				$rankingLiveObj->updatePlayerEvents();
+				$rankingLiveObj->updatePlayers();
+				$rankingLiveObj->updateEvents();
 				$rankingLiveObj->updateHistory($this->getEventDate('d/m/Y'));
 			}
 		}
@@ -250,6 +269,33 @@ class EventLive extends BaseEventLive
 		$currentDateTime = time();
 		
 		return $currentDateTime > strtotime($eventDateTime);
+	}
+	
+	public function isEditable(){
+
+		$rankingLiveObj = $this->getRankingLive();
+		
+		// Se o evento não possui ranking então pode editar sempre
+		if( !is_object($rankingLiveObj) )
+		
+		// Se hoje for maior que a data final do ranking
+		if( $this->getSavedResult() && $rankingLiveObj->getFinishDate()!==null && $rankingLiveObj->getFinishDate(null) < time() )
+			return false;
+
+		$eventDate = $this->getEventDate();
+		if( $eventDate==null )
+			return true;
+		
+		$criteria = new Criteria();
+		$criteria->add( EventLivePeer::RANKING_LIVE_ID, $this->getRankingLiveId() );
+		$criteria->add( EventLivePeer::EVENT_DATE, $eventDate, Criteria::GREATER_THAN );
+		$criteria->add( EventLivePeer::SAVED_RESULT, true );
+		$criteria->add( EventLivePeer::ENABLED, true );
+		$criteria->add( EventLivePeer::VISIBLE, true );
+		$criteria->add( EventLivePeer::DELETED, false );
+		$eventCount = EventLivePeer::doCount($criteria);
+
+		return ($eventCount==0);
 	}
 	
 	public function getPlayerStatus($peopleId, $boolean=false){
@@ -349,14 +395,14 @@ class EventLive extends BaseEventLive
 		
 		// Se o evento tiver um ranking, retorna a classificação do ranking e não do evento
 		if( $this->getRankingLiveId() && !$forceEventResult )
-			return $this->getRankingLive()->getClassify();
+			return $this->getRankingLive()->getClassify($criteria);
 			
 		if( is_null($criteria) )
 			$criteria = new Criteria();
 			
 		$criteria->add( EventLivePlayerPeer::ENABLED, true );
 		$criteria->addAnd( EventLivePlayerPeer::EVENT_POSITION, 0, Criteria::GREATER_THAN );
-		$criteria->add( EventLivePlayerPeer::EVENT_POSITION, null, Criteria::NOT_EQUAL );
+		$criteria->addAnd( EventLivePlayerPeer::EVENT_POSITION, null, Criteria::NOT_EQUAL );
 		$criteria->addAscendingOrderByColumn( EventLivePlayerPeer::EVENT_POSITION );
 		
 		return $this->getEventLivePlayerList($criteria);
@@ -366,10 +412,26 @@ class EventLive extends BaseEventLive
 		
 		$description = parent::getDescription();
 		
-		if( $convertTags )
+		if( $convertTags ){
+			
 			$description = preg_replace('/<descri[çc]+[ã]+o ?do ?ranking>/i', $this->getRankingLive()->getDescription(), $description);
+			$description = preg_replace('/[\n]/i', '<br/>', $description);
+		}
 		
 		return $description;
+	}
+
+	public function getComments($convertTags=true){
+		
+		$comments = parent::getComments();
+		
+		if( $convertTags ){
+			
+			$comments = preg_replace('/<descri[çc]+[ã]+o ?do ?ranking>/i', $this->getRankingLive()->getDescription(), $comments);
+			$comments = preg_replace('/[\n]/i', '<br/>', $comments);
+		}
+		
+		return $comments;
 	}
 	
 	public function toString(){

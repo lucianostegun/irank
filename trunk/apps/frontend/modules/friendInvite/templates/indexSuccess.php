@@ -3,7 +3,7 @@
 	<?php echo __('friendInvite.intro') ?>
 </div>
 
-<div align="center">
+<div class="textC">
 	<table cellspacing="0" cellpadding="0" class="formTable" style="width: 750px">
 		<tr class="header">
 	  		<th><h1><?php echo __('friendInvite.formTitle') ?></h1></th>

@@ -10,6 +10,11 @@ function updateMainRecordName(recordName){
 	$('#lastPathName').html(recordName)
 }
 
+function getMainRecordName(){
+	
+	return $('#lastPathName').html()
+}
+
 function handleFormFieldError( content, instanceName ){
 
 	if( (/^formError:/).test(content) ){

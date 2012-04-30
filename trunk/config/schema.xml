@@ -767,5 +767,17 @@
 			<reference local="people_id" foreign="id" />
 		</foreign-key>
 	</table>
+
+	<table name="irank_ranking" phpName="iRankRanking">
+		<column name="people_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="events" type="INTEGER" />
+		<column name="score" type="NUMERIC" size="10" scale="3" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="people">
+			<reference local="people_id" foreign="id" />
+		</foreign-key>
+	</table>
 	
 </database>

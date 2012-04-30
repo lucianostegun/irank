@@ -11,7 +11,7 @@
 	</tr>
 	<?php
 		$rankingType          = $rankingObj->getRankingType(true);
-		$rankingPlayerObjList = $rankingObj->getClassify($rankingDate);
+		$rankingPlayerObjList = $rankingObj->getClassify(null, $rankingDate);
 		$position             = 0;
 		foreach($rankingPlayerObjList as $rankingPlayerObj):
   		

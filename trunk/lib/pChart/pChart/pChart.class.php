@@ -194,16 +194,19 @@
    var $MapID            = NULL;
 
    /* This function create the background picture */
-   function pChart($XSize,$YSize)
+   function pChart($XSize,$YSize, $transparentBackground=false)
     {
      $this->XSize   = $XSize;
      $this->YSize   = $YSize;
      $this->Picture = imagecreatetruecolor($XSize,$YSize);
 
-     $C_White =$this->AllocateColor($this->Picture,255,255,255);
-     imagefilledrectangle($this->Picture,0,0,$XSize,$YSize,$C_White);
+     $C_White       = $this->AllocateColor($this->Picture,255,255,255);
+     $C_Transparent = $this->AllocateColor($this->Picture,254,254,254);
+     imagefilledrectangle($this->Picture,0,0,$XSize,$YSize,$C_Transparent);
      
-//     imagecolortransparent($this->Picture,$C_White);
+     // Modificado por Luciano Stegun em 30/04/2012
+     if( $transparentBackground )
+     	imagecolortransparent($this->Picture, $C_Transparent);
 
      $this->setFontProperties("tahoma.ttf",8);
     }

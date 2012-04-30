@@ -121,7 +121,7 @@
 	<div class="formRow">
 		<label>Stack inicial</label>
 		<div class="formRight">
-			<?php echo input_tag('stackChips', $eventLiveObj->getStackChips(), array('size'=>7, 'maxlength'=>7, 'id'=>'eventLiveStackChips')) ?>
+			<?php echo input_tag('stackChips', $eventLiveObj->getStackChips(true), array('size'=>7, 'maxlength'=>7, 'id'=>'eventLiveStackChips')) ?>
 			<div class="formNote error" id="eventLiveFormErrorStackChips"></div>
 			<span class="formNote">Formato: 00000 ou 0K</span>
 		</div>

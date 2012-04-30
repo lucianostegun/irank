@@ -57,3 +57,17 @@ function setLastBarPath(pathName){
 	
 	$('lastCommonBarPath').innerHTML = pathName
 }
+
+function getTabLoader(){
+	
+	var html = '<center><br/><br/><br/>';
+	html    += '<table>';
+	html    += '	<tr>';
+	html    += '		<td><img src="'+_imageRoot+'/ajaxLoader32.gif" /></td>';
+	html    += '		<td style="font-weight: bold; font-size: 20px; padding-left: 15px">Carregando informações...</td>';
+	html    += '	</tr>';
+	html    += '</table>';
+	html    += '</center>';
+	
+	return html;
+}

@@ -27,15 +27,15 @@
 					
 					$className = ($eventLiveObj->isPastDate()?'dimmed':'');
 			?>
-			<tr class="gradeA <?php echo $className ?>" onclick="<?php echo $onclick ?>" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
+			<tr class="gradeA <?php echo $className ?>" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
 				<td><?php echo checkbox_tag('eventLiveId[]', $eventLiveId) ?></td> 
-				<td><?php echo $eventLiveObj->getEventName() ?></td> 
-				<td><?php echo $eventLiveObj->getRankingLive()->toString() ?></td> 
-				<td><?php echo $eventLiveObj->getClub()->toString() ?></td> 
-				<td class="textC"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
-				<td class="textR"><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
-				<td class="textC"><?php echo $eventLiveObj->getBlindTime('H:i') ?></td> 
-				<td class="textR"><?php echo $eventLiveObj->getStackChips(true) ?></td> 
+				<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getEventName() ?></td> 
+				<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getRankingLive()->toString() ?></td> 
+				<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getClub()->toString() ?></td> 
+				<td onclick="<?php echo $onclick ?>" class="textC"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
+				<td onclick="<?php echo $onclick ?>" class="textR"><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td> 
+				<td onclick="<?php echo $onclick ?>" class="textC"><?php echo $eventLiveObj->getBlindTime('H:i') ?></td> 
+				<td onclick="<?php echo $onclick ?>" class="textR"><?php echo $eventLiveObj->getStackChips(true) ?></td> 
 			</tr> 
 			<?php endforeach; ?>
 		</tbody> 

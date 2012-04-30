@@ -137,7 +137,10 @@ section.addPlayer li {
 	text-align: 	right;
 }
 
-.eventResult .emailAddress {
+.eventResult .playerName, 
+.eventResult .emailAddress, 
+.eventResult .prizeRo, 
+.eventResult .scoreRo {
 
 	color: 			#303030;
 	text-shadow: 	#e0e0e0 1px 1px;

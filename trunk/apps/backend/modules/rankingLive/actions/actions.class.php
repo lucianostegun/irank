@@ -227,4 +227,12 @@ class rankingLiveActions extends sfActions
     echo Util::parseInfo($rankingLiveObj->getInfo());
     exit;
   }
+
+  public function executeUpdateHistory($request){
+    
+    $rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
+    
+    $rankingLiveObj->updateWholeHistory();
+    exit;
+  }
 }
