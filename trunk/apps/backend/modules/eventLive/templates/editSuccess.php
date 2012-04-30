@@ -33,7 +33,7 @@
 			<div id="tab2" class="tab_content"><?php include_partial('eventLive/tab/players', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 			<div id="tab3" class="tab_content"><?php include_partial('eventLive/tab/result', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 			<div id="tab4" class="tab_content"><?php include_partial('eventLive/tab/photos', array('eventLiveId'=>$eventLiveObj->getId())) ?></div>
-			<div id="tab6" class="tab_content"><?php include_partial('eventLive/tab/disclosure', array('eventLiveId'=>$eventLiveObj->getId())) ?></div>
+			<div id="tab6" class="tab_content"><?php include_partial('eventLive/tab/disclosure', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 		</div>
 	</div>
 </div>
