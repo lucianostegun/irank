@@ -34,23 +34,11 @@
 			<col/>
 		</colgroup>
 		<tbody id="eventLiveResultTbody">
-			<tr class="thead">
-				<th colspan="4" class="mark"><div id="playerResultCountDiv"><?php echo $players.' Jogador'.($players==1?'':'es').' confirmado'.($players==1?'':'s') ?></div></th> 
-				<th colspan="2" class="calculateScore mark"><input type="button" value="Calcular pontuação" class="button greenB" onclick="calculateEventLiveScore()"></th> 
-			</tr>
-			<tr class="thead"> 
-				<th class="mark"></th>
-				<th class="mark">#</th> 
-				<th class="mark">Nome</th> 
-				<th class="mark">E-mail</th> 
-				<th class="mark">Premiação</th> 
-				<th class="mark">Pontos</th> 
-			</tr>
 			<?php include_partial('eventLive/include/result', array('eventLiveObj'=>$eventLiveObj)) ?>
-			<tr class="thead">
-				<th colspan="4" class="mark"></th> 
-				<th colspan="2" class="publishResult mark"><input type="submit" value="Divulgar resultados" class="button blueB" onclick="publishEventLiveResult()"></th> 
-			</tr>
 		</tbody>
 	</table>
 </div>
+
+<script type="text/javascript">
+	setupEventLiveResultAutoComplete();
+</script>

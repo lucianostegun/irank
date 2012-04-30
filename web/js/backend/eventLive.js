@@ -29,6 +29,20 @@ $(function() {
 		buildEventLiveLightbox()
 });
 
+function doDeleteEventLive(){
+	
+	var rankingLiveId  = $('#eventLiveRankingLiveId').val();
+	var mainRecordName = getMainRecordName();
+	
+	if( !confirm('Tem certeza que deseja excluir o evento "'+mainRecordName+'"?') )
+		return false;
+	
+	if( rankingLiveId && !confirm('ATENÇÃO!\n\nAo excluir este evento, o resultado de todos os eventos posteriores serão afetados!\nTem certeza que deseja excluir o evento?') )
+		return false;
+	
+	doDeleteMain();
+}
+
 function handleSuccessEventLive(content){
 
 	clearFormFieldErrors();
@@ -57,6 +71,9 @@ function handleFailureEventLiveResult(content){
 		
 		hideIndicator();
 		alert('Não foi possível salvar o resultado deste evento!\nPor favor, tente novamente.');
+		
+		if( isDebug() )
+			debug(content);
 	}
 }
 
@@ -122,10 +139,9 @@ function addPlayer(peopleId){
 	
 	var successFunc = function(content){
 		
-		hideIndicator();
-		
 		if( content=='noChange' ){
 			
+			hideIndicator();
 			$('#eventLivePeopleName').val('Jogador já confirmado no evento');
 			$('#eventLivePeopleName').select();
 			window.setTimeout('clearEventLivePeopleName()', 3000);
@@ -140,7 +156,10 @@ function addPlayer(peopleId){
 		players = (players+1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s');
 		
 		$('#playerCountDiv').html( players );
-		$('#playerResultCountDiv').html( players );
+		
+		// Aqui não oculta o indicator porque ainda vai executar o método updateEventPlayerResultTable() 
+//		hideIndicator();
+		updateEventPlayerResultTable();
 	}
 
 	var failureFunc = function(t){
@@ -178,9 +197,10 @@ function removePlayer(peopleId){
 		players     = (players-1)+' Jogador'+(players==0?'':'es')+' confirmado'+(players==0?'':'s')
 
 		$('#playerCountDiv').html( players );
-		$('#playerResultCountDiv').html( players );
 		
-		hideIndicator();
+		// Aqui não oculta o indicator porque ainda vai executar o método updateEventPlayerResultTable() 
+//		hideIndicator();
+		updateEventPlayerResultTable()
 	}
 	
 	var failureFunc = function(t){
@@ -608,4 +628,32 @@ function eventLiveFacebookShare(){
 function eventLiveTwitterShare(){
 
 	alert('A opção pelo Twitter estará disponível em breve');
+}
+
+function updateEventPlayerResultTable(){
+	
+	showIndicator();
+	
+	var eventLiveId = $('#eventLiveId').val();
+	
+	var successFunc = function(content){
+		
+		hideIndicator();
+		
+		$('#eventLiveResultTbody').html(content);
+		setupEventLiveResultAutoComplete();
+	}
+
+	var failureFunc = function(t){
+		
+		hideIndicator();
+		
+		alert('Ocorreu um erro ao recarregar a aba Resultado!\nPor favor, atualize a página caso queira lançar o resultado do evento.');
+		
+		if( isDebug() )
+			debug(t.responseText);
+	}
+	
+	var urlAjax = _webRoot+'/eventLive/getResultPlayerList/eventLiveId/'+eventLiveId;
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});	
 }

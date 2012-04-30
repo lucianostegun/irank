@@ -17,7 +17,10 @@
 		
 		<div class="contentItem" id="homeHighlight2" style="background: url('/images/home/highlight/calendar.jpg') left center no-repeat"></div>
 		<div class="contentItem" id="homeHighlight3" style="background: url('/images/temp/math.jpg') left center no-repeat"></div>
-		
+		<div class="contentItem" id="homeHighlight4" style="background: url('/images/home/highlight/0036499001297851037.jpg') left center no-repeat"></div>
+		<?php
+			$photoCaption = 'Foto enviada em <b>16/02/2011</b> pelo usuário <b>lstegun</b> registrada para o evento <b>Sit & Go - NLHE #2</b>';
+		?>
 		<div class="descriptionBorder">
 			<div class="descriptionArea"></div>
 			<div class="descriptionText">
@@ -25,6 +28,7 @@
 					<li id="contentItemText1" class="active"><p>Se você ainda não é cadastrado,<br/><?php echo link_to('clique aqui', 'sign') ?> e comece agora mesmo a controlar seus jogos!</p></li>
 					<li id="contentItemText2"><h1><?php echo link_to('Sincronize sua agenda', 'schedule/index') ?></h1><p>Assinando o calendário de eventos <b>iRank</b> em seu smartphone ou tablet você será sempre informado sobre os eventos que irão ocorrer próximo a você.</p></li>
 					<li id="contentItemText3"><h1>Pontuação personalizada</h1><p>Defina o modelo de pontuação mais adequado ao seu grupo com a nova opção no cadastro de rankings permite a você criar sua própria fórmula para cálculo dos pontos.</p></li>
+					<li id="contentItemText4"><h1><?php echo link_to_image('Foto do mês', '/uploads/eventPhoto/event-57/0036499001297851037.jpg', array('rel'=>'lightbox', 'title'=>$photoCaption)) ?></h1><p><?php echo $photoCaption ?></p></li>
 				</ul>
 			</div>
 		</div>
@@ -32,12 +36,13 @@
 			<li id="contentItemSelector1" onclick="changeContentItem(1)" class="active"></li>
 			<li id="contentItemSelector2" onclick="changeContentItem(2)"></li>
 			<li id="contentItemSelector3" onclick="changeContentItem(3)"></li>
+			<li id="contentItemSelector4" onclick="changeContentItem(4)"></li>
 		</ul>
 	</div>
 </div>
 
 <script>
-setupHomeHighlight(3);
+setupHomeHighlight(4);
 </script>
 
 <div class="channels">

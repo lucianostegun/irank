@@ -1,0 +1,296 @@
+.rankingDetailsArea {
+
+    background: 	-moz-linear-gradient(top, #FFFFFF, #DFDFDF);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#DFDFDF));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#DFDFDF', GradientType=0);
+    min-height: 	400px;
+    border-bottom: 	1px solid #C0C0C0;
+}
+
+.rankingDetailsArea .separator {
+
+	clear: 			both;
+	width: 			100%;
+	border-top: 	1px solid #DDDDDD;
+	border-bottom: 	1px solid #FFFFFF;
+	margin-top: 	10px;
+	margin-bottom: 	7px;
+}
+
+.rankingDetails {
+	
+	margin: 	10px 10px 0px 10px;
+}
+
+.rankingDetails .logo {
+
+	width: 			110px;
+	text-align: 	center;	
+}
+
+.rankingDetails h1 {
+
+	margin: 		0px;
+	padding: 		0px;
+	line-height: 	20px;
+	font-size: 		18px;
+	font-weight: 	bold;
+	font-family: 	Verdana, Sans serif;
+	text-align: 	left;
+	text-shadow: 	silver 1px 1px;	
+}
+
+.rankingDetails .info td {
+
+	font-size: 		11px;
+	padding-left: 	15px;	
+}
+
+.rankingDetails .clubInfo td {
+
+	font-size: 		13px;
+	padding-left: 	3px;
+	height: 		20px;
+	vertical-align: 	top
+}
+
+.rankingDetails .payInfo {
+
+	text-align: 		center;
+	vertical-align: 	top;
+	width: 				250px;
+}
+
+.rankingDetails .payInfo table {
+	
+	width: 	200px;
+}
+
+.rankingDetails .payInfo table tr th {
+	
+}
+
+.rankingDetails .payInfo table tr td {
+	
+	white-space: 	nowrap;
+	padding-top: 	8px;
+	text-align: 	center;
+	font-weight: 	bold;
+}
+
+.rankingDetails .payInfo table tr td.presence {
+	
+	padding: 	15px 0px 0px 35px;	
+}
+
+
+.rankingDetailsArea .channel td {
+
+	clear: 				both;
+	border-left: 		1px solid #D0D0D0;
+	border-right: 		1px solid #FFFFFF;
+	margin-top: 		10px;
+	margin-bottom: 		7px;
+	height: 			40px;
+	text-align: 		center;
+	font-size: 			18px;
+	font-family: 		Arial;
+	font-weight: 		bold;
+	text-shadow: 		white 1px 1px;
+	color: 				#A0A0A0;
+	padding: 			0px 15px 0px 15px;
+	cursor: 			pointer;
+}
+
+.rankingDetailsArea .channel td.hover {
+
+	color: 	#C91E1E;
+}
+
+.rankingDetailsArea .channel .rankingLiveTab.first {
+
+	border-left: 	none;	
+}
+
+.rankingDetailsArea .channel .rankingLiveTab.last {
+
+	border-right: 	none;	
+}
+
+.rankingDetailsArea .channel .rankingLiveTab.active {
+
+	color: 		#303030;	
+}
+
+.rankingDetailsArea .rankingLiveTab.chart {
+
+	background: 	url('/images/icon/stats.png') 10px 10px no-repeat;
+	text-indent: 	28px;
+}
+
+.rankingDetailsArea .rankingLiveTabContent {
+	
+	display: 		none;
+	font-size: 		12px;
+	text-align: 	left;
+	text-shadow: 	white 1px 1px;	
+}
+
+.rankingDetailsArea .rankingLiveTabContent.active {
+	
+	display: 		block;	
+}
+
+.rankingDetailsArea #rankingLiveInfoContent {
+	
+	margin: 		25px;
+}
+
+.rankingDetailsArea #rankingLiveEventsContent {
+	
+	margin: 		0px;
+}
+
+#rankingLiveList {
+
+	padding-top: 	30px;
+}
+
+#rankingLiveList .ranking {
+
+	position: 				relative;
+	clear: 					both;
+	margin-bottom: 			25px;
+	height: 				125px;
+	
+
+}
+
+#rankingLiveList .ranking .logo {
+
+	float: 			left;
+	text-align: 	center;
+}
+
+#rankingLiveList .ranking .logo img {
+
+	border: 				1px solid #DADADA;
+	padding: 				10px;
+	border-radius: 			4px;
+	-moz-border-radius: 	4px;
+	-webkit-border-radius: 	4px;
+	margin-bottom: 			4px;
+}
+
+#rankingLiveList .ranking .info {
+
+	position: 		relative;
+	float: 			left;
+	width: 			550px;
+	height: 		110px;	
+    margin-left: 	6px;
+    
+	border-radius: 			4px;
+	-moz-border-radius: 	4px;
+	-webkit-border-radius: 	4px;
+	border: 				1px solid #DADADA;
+	
+    background: 			-moz-linear-gradient(top, #F0F0F0, #FFFFFF);
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#F0F0F0', EndColorStr='#FFFFFF', GradientType=0);
+}
+
+#rankingLiveList .ranking .info h1 {
+
+	font-size: 		17px;
+	height: 		27px;
+	line-height: 	25px;
+	padding: 		0px;
+	margin: 		5px 0px 0px 6px;
+	text-indent: 	10px;
+}
+
+#rankingLiveList .ranking .info h1 a {
+
+	color: 				#2C6986;
+	text-decoration: 	none;
+}
+
+#rankingLiveList .ranking .info h1 a:hover {
+
+	color: 	#C91E1E
+}
+
+#rankingLiveList .ranking .info h2 {
+
+	position: 		relative;
+	left: 			15px;
+	font-size: 		11px;
+	margin: 		4px 0px 0px 5px;
+	padding: 		0px;
+	height: 		15px;
+	line-height: 	24px;
+	font-weight: 	normal
+}
+
+
+
+#rankingLiveList .ranking .info h3 {
+
+	font-size: 		12px;
+	padding: 		0px;
+	margin: 		0px 0px 10px 6px;
+	text-indent: 	10px;
+}
+
+#rankingLiveList .ranking .info h4 {
+
+	position: 		absolute;
+	right: 			20px;
+	font-size: 		11px;
+	padding: 		0px;
+	text-indent: 	10px;
+	font-weight: 	normal;
+	text-align: 	left;
+}
+
+#rankingLiveList .ranking .info h4.events {
+
+	top: 	10px;
+}
+
+#rankingLiveList .ranking .info h4.players {
+
+	top: 	25px;
+}
+
+#rankingLiveList .ranking .info h4.prize {
+
+	top: 	40px;
+}
+
+.detailsButton {
+
+	position: 	relative;
+	top: 		-14px;
+	float: right
+}
+
+.rankingInfo {
+
+	position: relative;
+	left: 100px
+}
+
+hr {
+
+	margin-top: 	20px;
+	margin-bottom: 	-12px;
+}
+
+.currentPlayer {
+
+	color: 			#C91E1E;
+	font-weight: 	bold;
+	font-style: 	italic
+}

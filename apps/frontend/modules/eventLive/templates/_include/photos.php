@@ -1,4 +1,4 @@
-<div align="center">
+<div class="textC">
 	<table cellspacing="15" cellpadding="0" border="0">
 		<tr>
 			<?php

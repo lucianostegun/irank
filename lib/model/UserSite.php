@@ -426,6 +426,13 @@ class UserSite extends BaseUserSite
 		fclose($fp);
 	}
 	
+	public static function isAuthenticated(){
+		
+		$hasCredentials = MyTools::hasCredential('iRankSite');
+		
+		return (MyTools::isAuthenticated() && $hasCredentials);
+	}
+	
 	public function getInfo($replaceNull=false){
 		
 		$infoList = array();

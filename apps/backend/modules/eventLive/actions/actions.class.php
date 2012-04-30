@@ -68,7 +68,13 @@ class eventLiveActions extends sfActions
     }
     
     $this->pathList[$eventLiveObj->toString()] = '#';
-    $this->toolbarList = array('new', 'save', 'delete');
+    $this->toolbarList = array('new', 'save', 'delete'=>'#doDeleteEventLive()');
+    
+    if( $eventLiveObj->isPastDate() && !$eventLiveObj->isEditable() ){
+    	
+	    $this->toolbarList = array('delete'=>'#doDeleteEventLive()');
+	    $this->setTemplate('show');
+    }
   }
 
   public function handleErrorSave(){
@@ -109,6 +115,14 @@ class eventLiveActions extends sfActions
     	
     	$eventLiveIdList = array();
     	foreach($eventLiveObjList as $eventLiveObj){
+    		
+		    if( !$eventLiveObj->isMyEvent() ){
+		    	
+			    $username = $this->getUser()->getAttribute('username');
+		
+		    	Log::doLog('Usuário <b>'.$username.'</b> tentou excluir o evento <b>('.$eventLiveObj->getId().') '.$eventLiveObj->toString().'</b>.', 'EventLive', array(), Log::LOG_CRITICAL);
+		    	throw new Exception('Você não tem permissão para excluir esse evento!');
+		    }
     		
     		$eventLiveObj->delete();
 	    	$eventLiveIdList[] = $eventLiveObj->getId();
@@ -362,5 +376,14 @@ class eventLiveActions extends sfActions
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	return $this->renderText(get_partial('eventLive/include/photos', array('eventLiveId'=>$this->eventLiveId)));
+  }
+
+  public function executeGetResultPlayerList($request){
+    
+    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+    
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('eventLive/include/result', array('eventLiveObj'=>$eventLiveObj)));
   }
 }

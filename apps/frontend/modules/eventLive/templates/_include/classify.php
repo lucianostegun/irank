@@ -7,7 +7,9 @@
 	</tr>
 	<tbody>
 <?php
-	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList();
+	$criteria = new Criteria();
+	$criteria->add( RankingLivePlayerPeer::TOTAL_EVENTS, 0, Criteria::GREATER_THAN );
+	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList($criteria);
 	
 	$eventPosition = 0;
 	

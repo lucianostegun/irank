@@ -64,11 +64,17 @@ redips_init = function () {
 			
 			$('#eventLivePositionLabel-'+eventPositionOld).attr('id',         'eventLivePositionLabel-'+eventPosition);
 			$('#eventLiveResultRow-'+eventPositionOld).attr('id',             'eventLiveResultRow-'+eventPosition);
+			$('#eventLivePeopleNameResult-'+eventPositionOld).attr('id',      'eventLivePeopleNameResult-'+eventPosition);
+			
 			$('#peopleIdPosition-'+eventPositionOld).attr('name',             'peopleIdPosition-'+eventPosition);
 			$('#peopleIdPosition-'+eventPositionOld).attr('id',               'peopleIdPosition-'+eventPosition);
-			$('#eventLivePeopleNameResult-'+eventPositionOld).attr('id',      'eventLivePeopleNameResult-'+eventPosition);
+			
+			$('#prize-'+eventPositionOld).attr('name',                        'prize-'+eventPosition);
 			$('#prize-'+eventPositionOld).attr('id',                          'prize-'+eventPosition);
+			
+			$('#score-'+eventPositionOld).attr('name',                        'score-'+eventPosition);
 			$('#score-'+eventPositionOld).attr('id',                          'score-'+eventPosition);
+			
 			$('#eventLiveResultEmailAddressTd-'+eventPositionOld).attr('id',  'eventLiveResultEmailAddressTd-'+eventPosition);
 		}
 		
