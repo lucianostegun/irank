@@ -1,3 +1,0 @@
-INSERT INTO virtual_table VALUES(nextval('virtual_table_seq'), 'userSiteOption', 'Receber resultado de todos os jogos', 'receiveAllResults', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO virtual_table_i18n VALUES((SELECT MAX(id) FROM virtual_table), 'pt_BR', 'Receber resultado de todos os eventos');
-INSERT INTO virtual_table_i18n VALUES((SELECT MAX(id) FROM virtual_table), 'en_US', 'Receive results from all events');

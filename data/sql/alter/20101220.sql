@@ -1,1 +1,0 @@
-ALTER TABLE event_photo ADD COLUMN is_shared BOOLEAN DEFAULT FALSE;
