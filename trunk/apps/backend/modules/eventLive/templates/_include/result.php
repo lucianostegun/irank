@@ -6,6 +6,7 @@
 	$totalPrizeValue = 0;
 	$eventPosition   = 0;
 	$eventLiveId     = $eventLiveObj->getId();
+	$rankingLiveObj  = $eventLiveObj->getRankingLive();
 ?>
 <tr class="thead">
 	<th colspan="4" class="mark"><div id="playerResultCountDiv"><?php echo $players.' Jogador'.($players==1?'':'es').' confirmado'.($players==1?'':'s') ?></div></th> 
@@ -48,6 +49,9 @@
 		$totalPrizeValue += $prize;
 		
 		$class = ($eventPosition%2==0?'rd':'rl odd');
+		
+		$readOnlyScore = (is_object($rankingLiveObj) && $rankingLiveObj->getScoreFormulaOption()=='multiple');
+		$scoreField    = input_tag('score-'.$eventPosition, Util::formatFloat($score, true, 3), array('maxlength'=>6, 'readonly'=>$readOnlyScore, 'class'=>'decimal', 'tabindex'=>(($players*2)+$eventPosition)));
 ?>
 <tr class="<?php echo $class ?> gradeB" id="eventLiveResultRow-<?php echo $eventPosition ?>">
 	<td width="10" class="rowhandler"><div class="drag row"></div></td> 
@@ -61,7 +65,7 @@
 	</td>
 	<td width="35%" class="emailAddress" id="eventLiveResultEmailAddressTd-<?php echo $eventPosition ?>"><?php echo $emailAddress ?></td>
 	<td class="prize"><?php echo input_tag('prize-'.$eventPosition, Util::formatFloat($prize, true), array('maxlength'=>7, 'class'=>'decimal', 'tabindex'=>($players+$eventPosition), 'onkeyup'=>'updateTotalPrizeValue()')); ?></td>
-	<td class="score"><?php echo input_tag('score-'.$eventPosition, Util::formatFloat($score, true, 3), array('maxlength'=>6, 'class'=>'decimal', 'tabindex'=>(($players*2)+$eventPosition))); ?></td>
+	<td class="score"><?php echo $scoreField ?></td>
 </tr>
 <?php endfor; ?>
 	<tr class="tfoot resumeEventResult"> 

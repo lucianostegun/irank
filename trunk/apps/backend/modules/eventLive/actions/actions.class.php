@@ -49,17 +49,16 @@ class eventLiveActions extends sfActions
     	$eventLiveObj = null;
     }
     
-    $this->mainBalanceLabel   = 'Total arrecadado';
-    $this->mainBalanceValue   = $this->eventLiveObj->getTotalBuyin(true);
-    $this->mainBalanceBase    = $this->eventLiveObj->getTotalBuyin();
-    $this->mainBalancePercent = 0;
+    $this->mainBalanceLabel        = 'Total arrecadado';
+    $this->mainBalanceValue        = $this->eventLiveObj->getTotalBuyin(true);
+    $this->mainBalanceBase         = $this->eventLiveObj->getTotalBuyin();
+    $this->mainBalanceChanges      = $this->eventLiveObj->getBalanceDifference();
+    $this->mainBalanceChangesLabel = 'Diferença de arrecadação em relação ao evento anterior';
     
     if( !is_object($eventLiveObj) )
     	return $this->redirect('eventLive/index');
     
-    $this->numStatList = array('Visitas'=>$eventLiveObj->getVisitCount(),
-    						   'Inscrições'=>$eventLiveObj->getPlayers(false, true),
-    						   'Confirm.'=>$eventLiveObj->getPlayers());
+    $this->numStatList = $eventLiveObj->getStats();
     	
     if( $eventLiveObj->getRankingLiveId() ){
     	
@@ -294,40 +293,15 @@ class eventLiveActions extends sfActions
   
   public function executeCalculateResult($request){
     
+	$totalRebuys = $request->getParameter('totalRebuys');
+	$prizeSplit  = $request->getParameter('prizeSplit');
+		
 	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
-	$totalRebuys  = $request->getParameter('totalRebuys');
-	$prizeSplit   = $request->getParameter('prizeSplit');
-	$prizeConfig   = split(EventLive::PRIZE_SPLIT_PATTERN, $prizeSplit);
-	$paidPlaces   = count($prizeConfig);
-	$players      = $eventLiveObj->getPlayers();
-	
     $eventLiveObj->setTotalRebuys(Util::formatFloat($totalRebuys));
     $eventLiveObj->setPrizeSplit($prizeSplit);
     $eventLiveObj->save();
 	
-	$buyin        = $eventLiveObj->getBuyin();
-	$rakePercent  = $eventLiveObj->getRakePercent();
-	$totalPrize   = $eventLiveObj->getTotalBuyin()+Util::formatFloat($totalRebuys);
-	$totalPrize  -= ($totalPrize*$rakePercent/100);
-	
-	$totalBuyins = $totalPrize/$buyin;
-	
-	$prizeConfigList = array();
-	$prizeConfigList['players'] = $players;
-	
-	$eventPosition = 0;
-	foreach($eventLiveObj->getEventLivePlayerList() as $eventLivePlayerObj){
-		
-		$eventPosition++;
-		
-		$prize  = ($eventPosition <= $paidPlaces?$totalPrize*$prizeConfig[$eventPosition-1]/100:0);
-		$events = 1; // Mudar para o cálculo da quantidade de eventos que o jogador já participou 
-		$score  = $eventLiveObj->parseScore($eventPosition, $events, $prize, $players, $totalBuyins, $buyin, $prize);
-		
-		$prizeConfigList[$eventPosition] = array('score'=>$score, 'prize'=>$prize);
-	}
-	
-	echo Util::parseInfo($prizeConfigList);
+	echo Util::parseInfo($eventLiveObj->getParsedScore());
 	exit;
   }
   

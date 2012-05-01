@@ -11,6 +11,9 @@ function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow, evt)
 
 function doDeleteMain(){
 	
+	if( !confirm('Tem certeza que deseja excluir o registro "'+getMainRecordName()+'"?') )
+		return false;
+	
 	showIndicator();
 	
 	var moduleName = getModuleName();
@@ -31,7 +34,7 @@ function doDeleteMain(){
 		var errorMessage = parseMessage(content);
 
 		hideIndicator();
-		alert('Não foi possível excluir o evento!\nPor favor, tente novamente.');
+		alert('Não foi possível excluir o registro!'+(errorMessage?errorMessage:'\nPor favor, tente novamente.'));
 		
 		if( !errorMessage && isDebug() )
 			debug(content);

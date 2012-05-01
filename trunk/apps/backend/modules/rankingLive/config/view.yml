@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    [backend/rankingLive]
-  javascripts:    [mask, backend/rankingLive, backend/plugins/tables/datatable_sort]
+  javascripts:    [mask, backend/rankingLive, backend/plugins/tables/datatable_sort, backend/plugins/forms/jquery.tagsinput.min.js]

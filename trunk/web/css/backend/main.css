@@ -389,8 +389,8 @@ ul.sub li ul li { padding-left: 10px; }
 
 /* Round statistics */
 
-.sRoundStats { width: 185px; margin: 0 auto; }
-.sRoundStats ul li { float: left; margin-left: 5px; text-align: center; color: white; font-size: 11px; }
+.sRoundStats { width: 202px; margin: 0 auto; }
+.sRoundStats ul li { float: left; margin-left: 14px; text-align: center; color: white; font-size: 11px; }
 .sRoundStats ul li:first-child { margin-left: 0; }
 .sRoundStats ul li a { background: url(/images/backend/backgrounds/roundStats.png) no-repeat 0 0; display: block; width: 58px; height: 58px; margin-top: 6px; }
 .sRoundStats ul li a:hover { background-position: 0 -60px; }

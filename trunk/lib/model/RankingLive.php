@@ -53,6 +53,8 @@ class RankingLive extends BaseRankingLive
 		$finishDate              = $request->getParameter('finishDate');
 		$isPrivate               = $request->getParameter('isPrivate');
 		$scoreFormula            = $request->getParameter('scoreFormula');
+		$scoreFormulaCustom      = $request->getParameter('scoreFormulaCustom');
+		$scoreFormulaOption      = $request->getParameter('scoreFormulaOption');
 		$description             = $request->getParameter('description');
 		$clubIdList              = $request->getParameter('clubId');
 		$startTime               = $request->getParameter('startTime');
@@ -73,8 +75,10 @@ class RankingLive extends BaseRankingLive
 
 		if( $isFreeroll )
 			$buyin = 0;
+			
+		if( $scoreFormulaOption=='multiple' )
+			$scoreFormula = $scoreFormulaCustom;
 
-		
 		$this->setRankingName($rankingName);
 		$this->setRankingTypeId($rankingTypeId);
 		$this->setGameTypeId($gameTypeId);
@@ -83,6 +87,7 @@ class RankingLive extends BaseRankingLive
 		$this->setFinishDate(($finishDate?Util::formatDate($finishDate):null));
 		$this->setIsPrivate(($isPrivate?true:false));
 		$this->setScoreFormula($scoreFormula);
+		$this->setScoreFormulaOption($scoreFormulaOption);
 		$this->setDescription($description);
 		
 		// Informações da aba Valores padrão

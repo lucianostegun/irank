@@ -18,7 +18,7 @@
 							<td widtd="16"></td> 
 							<td>Nome</td> 
 							<td>Ranking</td> 
-							<?php if($iRankAdmin): ?>
+							<?php if($iRankAdmin || !$clubId): ?>
 								<td>Clube</td>
 							<?php endif; ?> 
 							<td>Data/Hora</td> 
@@ -30,7 +30,8 @@
                     <tbody>
 						<?php
 							$criteria = new Criteria();
-							$criteria->add( EventLivePeer::CLUB_ID, $clubId );
+							if( $clubId )
+								$criteria->add( EventLivePeer::CLUB_ID, $clubId );
 							$criteria->add( EventLivePeer::EVENT_DATE, date('Y-m-d'), Criteria::LESS_THAN );
 							$criteria->add( EventLivePeer::SAVED_RESULT, false );
 							
@@ -61,7 +62,7 @@
 							<td width="10"><?php echo image_tag('backend/icons/'.$icon, array('title'=>$title)) ?></td> 
 							<td><?php echo $eventLiveObj->toString() ?></td> 
 							<td><?php echo $eventLiveObj->getRankingLive()->toString() ?></td> 
-							<?php if($iRankAdmin): ?>
+							<?php if($iRankAdmin || !$clubId): ?>
 								<td><?php echo $eventLiveObj->getClub()->toString() ?></td>
 							<?php endif; ?> 
 							<td align="center"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 
@@ -87,7 +88,7 @@
 							<td widtd="16"></td> 
 							<td>Nome</td> 
 							<td>Ranking</td> 
-							<?php if($iRankAdmin): ?>
+							<?php if($iRankAdmin || !$clubId): ?>
 								<td>Clube</td>
 							<?php endif; ?> 
 							<td>Data/Hora</td> 
@@ -99,7 +100,8 @@
                     <tbody>
 						<?php
 							$criteria = new Criteria();
-							$criteria->add( EventLivePeer::CLUB_ID, $clubId );
+							if( $clubId )
+								$criteria->add( EventLivePeer::CLUB_ID, $clubId );
 							$criteria->add( EventLivePeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
 							
 							$eventLiveIdList = array();
@@ -116,7 +118,7 @@
 							<td width="10"><?php echo image_tag('backend/icons/iconGray') ?></td> 
 							<td><?php echo $eventLiveObj->toString() ?></td> 
 							<td><?php echo $eventLiveObj->getRankingLive()->toString() ?></td>
-							<?php if($iRankAdmin): ?> 
+							<?php if($iRankAdmin || !$clubId): ?> 
 								<td><?php echo $eventLiveObj->getClub()->toString() ?></td>
 							<?php endif; ?> 
 							<td align="center"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 

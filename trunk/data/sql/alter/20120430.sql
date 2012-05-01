@@ -14,6 +14,7 @@ CREATE FUNCTION get_ranking_live_date_list(INTEGER, BOOLEAN) RETURNS SETOF DATE 
 '
 LANGUAGE 'sql';
 
+
 CREATE TABLE irank_ranking (
     people_id INTEGER NOT NULL PRIMARY KEY,
     score DECIMAL(10,3),
@@ -22,6 +23,7 @@ CREATE TABLE irank_ranking (
     updated_at TIMESTAMP,
     CONSTRAINT irank_ranking_FK_1 FOREIGN KEY (people_id) REFERENCES people (id)
 );
+
 
 CREATE OR REPLACE FUNCTION update_irank_ranking_players() RETURNS VOID AS '
 DECLARE
@@ -47,6 +49,7 @@ BEGIN
 END'
 LANGUAGE 'plpgsql';
 
+
 CREATE OR REPLACE FUNCTION get_irank_ranking_score(peopleId INTEGER) RETURNS DECIMAL(10, 3) AS '
 DECLARE
     totalScore DECIMAL(10, 3);
@@ -70,6 +73,7 @@ BEGIN
 
 END'
 LANGUAGE 'plpgsql';
+
 
 CREATE OR REPLACE FUNCTION get_irank_ranking_events(peopleId INTEGER) RETURNS DECIMAL(10, 3) AS '
 DECLARE
@@ -95,31 +99,51 @@ BEGIN
 END'
 LANGUAGE 'plpgsql';
 
+
 CREATE OR REPLACE FUNCTION update_irank_ranking() RETURNS VOID AS '
-DECLARE
 BEGIN
 
-    SELECT update_irank_ranking_players();
+    PERFORM update_irank_ranking_players();
 
     UPDATE 
         irank_ranking 
     SET 
         score = get_irank_ranking_score(irank_ranking.PEOPLE_ID),
-        score = get_irank_ranking_events(irank_ranking.PEOPLE_ID);
+        events = get_irank_ranking_events(irank_ranking.PEOPLE_ID);
 END'
 LANGUAGE 'plpgsql';
 
 
+CREATE OR REPLACE FUNCTION get_ranking_live_player_events(rankingLiveId INTEGER, peopleId INTEGER) RETURNS INTEGER AS '
+DECLARE
+    totalEvents INTEGER;
+BEGIN
+
+    SELECT
+        total_events INTO totalEvents
+    FROM
+        ranking_live_player
+    WHERE
+        ranking_live_player.RANKING_LIVE_ID = rankingLiveId
+        AND ranking_live_player.PEOPLE_ID = peopleId;
+
+  RETURN totalEvents;
+END'
+LANGUAGE 'plpgsql';
 
 
+ALTER TABLE ranking_live ADD COLUMN score_formula_option VARCHAR(8) DEFAULT 'simple';
+ALTER TABLE ranking_live ALTER COLUMN score_formula TYPE VARCHAR(512);
 
-
-
-delete FROM irank_ranking;
-SELECT * FROM irank_ranking;
-select update_irank_ranking_players();
-select get_irank_ranking_score(1);
-select get_irank_ranking_events(1);
-
-
-
+CREATE TABLE event_live_player_score (
+    event_live_id INTEGER NOT NULL,
+    people_id INTEGER NOT NULL,
+    label VARCHAR(50),
+    score DECIMAL(10, 3),
+    order_seq INTEGER,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    PRIMARY KEY(event_live_id, people_id, label),
+    CONSTRAINT event_live_player_score_FK_1 FOREIGN KEY (event_live_id) REFERENCES event_live (id),
+    CONSTRAINT event_live_player_score_FK_2 FOREIGN KEY (people_id) REFERENCES people (id)
+);

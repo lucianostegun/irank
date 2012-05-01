@@ -66,8 +66,14 @@ function hideDiv(divId){
 	$('#'+divId).hide();
 }
 
-function parseMessage(){
-	
+function parseMessage(errorMessage){
+
+	if( (errorMessage).match(/^!/) )
+		return errorMessage.replace('!', '\n\n');
+	else if( errorMessage.length < 100 )
+		return '\n\n'+errorMessage;
+	else
+		return null
 }
 
 function AjaxRequest(urlAjax, options){

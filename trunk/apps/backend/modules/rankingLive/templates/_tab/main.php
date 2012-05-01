@@ -1,3 +1,8 @@
+<?php
+
+	$scoreFormulaOption = $rankingLiveObj->getScoreFormulaOption();
+	$scoreFormula       = $rankingLiveObj->getScoreFormula();
+?>
 	<div class="formRow">
 		<label>Nome do ranking</label>
 		<div class="formRight">
@@ -68,12 +73,23 @@
 	<div class="formRow">
 		<label>Fórmula</label>
 		<div class="formRight">
-			<?php echo input_tag('scoreFormula', $rankingLiveObj->getScoreFormula(), array('size'=>45, 'maxlength'=>150, 'id'=>'rankingLiveScoreFormula')) ?>
-			<div class="formNote error" id="rankingLiveFormErrorScoreFormula"></div>
-			<div class="formNote">Opções: POSICAO, EVENTOS, PREMIO, JOGADORES, BUYINS, BUYIN, ITM</div>
+        	<span><?php echo radiobutton_tag('scoreFormulaOption', 'simple', ('simple'==$scoreFormulaOption), array('onclick'=>'handleScoreFormulaOption(this.value)', 'id'=>'rankingLiveScoreFormulaOptionSimple')) ?></span><label for="rankingLiveScoreFormulaOptionSimple">Simples</label>
+        	<span><?php echo radiobutton_tag('scoreFormulaOption', 'multiple', ('multiple'==$scoreFormulaOption), array('onclick'=>'handleScoreFormulaOption(this.value)', 'id'=>'rankingLiveScoreFormulaOptionMultiple')) ?></span><label for="rankingLiveScoreFormulaOptionMultiple">Múltipla</label>
+			<div class="clear mb10"></div>
+			<div id="rankingLiveScoreFormulaSimpleDiv" class="clear" style="display: <?php echo ($scoreFormulaOption=='simple'?'block':'none') ?>">
+				<?php echo input_tag('scoreFormula', ('simple'==$scoreFormulaOption?$scoreFormula:'1'), array('size'=>75, 'maxlength'=>150, 'id'=>'rankingLiveScoreFormula')) ?>
+			</div>
+			<div id="rankingLiveScoreFormulaMultipleDiv" class="clear" style="display: <?php echo ($scoreFormulaOption=='multiple'?'block':'none') ?>">
+			    <?php echo input_tag('scoreFormulaCustom', ('multiple'==$scoreFormulaOption?$scoreFormula:'1'), array('class'=>'tags', 'style'=>'display: none', 'id'=>'rankingLiveScoreFormulaCustom')) ?>
+			</div>
+			<div class="clear"></div>
+				<div class="formNote error" id="rankingLiveFormErrorScoreFormula"></div>
+				<div class="formNote">Variáveis: POSICAO, EVENTOS, PREMIO, JOGADORES, BUYINS, BUYIN, ITM</div>
+				<div class="formNote">Funções: ARRED_BAIXO(), ARRED_CIMA()</div>
 		</div>
 		<div class="clear"></div>
 	</div>
+
 	<?php
 		$fileNameLogo = $rankingLiveObj->getFileNameLogo();
 	?>

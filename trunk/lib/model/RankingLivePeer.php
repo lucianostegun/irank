@@ -10,7 +10,7 @@
 class RankingLivePeer extends BaseRankingLivePeer
 {
 	
-	public static function validateScoreFormula($formula){
+	public static function validateScoreFormula($scoreFormula){
 		
 		$position     = 1;
 		$events       = 1;
@@ -20,26 +20,76 @@ class RankingLivePeer extends BaseRankingLivePeer
 		$buyin        = 1;
 		$itm          = 1;
 		
-		$formula = strtolower($formula);
+		$scoreFormulaOption = MyTools::getRequestParameter('scoreFormulaOption');
+		$scoreFormulaCustom = MyTools::getRequestParameter('scoreFormulaCustom');
 		
-		$formula = preg_replace('/posi[cç][aã]o|position/', '$position', $formula);
-		$formula = preg_replace('/eventos|events/', '$events', $formula);
-		$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
-		$formula = preg_replace('/jogadores|players/', '$players', $formula);
-		$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
-		$formula = preg_replace('/buyin/', '$buyin', $formula);
-		$formula = preg_replace('/itm/', '$itm', $formula);
+		if( $scoreFormulaOption=='multiple' )
+			$scoreFormulaList = explode('|', $scoreFormulaCustom);
+		else
+			$scoreFormulaList = array($scoreFormula);
 		
-		$formulaResult = null;
+		$validate = true;
 		
-		@eval('$formulaResult = '.$formula.';');
+		foreach($scoreFormulaList as $scoreFormula){
+			
+			$scoreFormula = preg_replace('/^.*: ?/', '', $scoreFormula);
+			$validate &= self::validateFormulaPart($scoreFormula);
+		}
 
-		if( $formulaResult===null || !is_numeric($formulaResult) ){
+		if( !$validate ){
 			
 			MyTools::setError('scoreFormula', 'Fórmula de pontuação inválida');
 			return false;
 		}
+
+		return true;
+	}
+
+	public static function validateFormulaPart($formula){
 		
+		$position     = 1;
+		$events       = 1;
+		$prize        = 1;
+		$players      = 1;
+		$totalBuyins  = 1;
+		$buyin        = 1;
+		$itm          = 1;
+		
+		$scoreFormulaOption = MyTools::getRequestParameter('scoreFormulaOption');
+		
+		$formula = strtolower($formula);
+		
+		$patternList = array('/posi[cç][aã]o|position/'=>'$position',
+							 '/eventos|events/'=>'$events',
+							 '/pr[eê]mio|prize/'=>'$prize',
+							 '/jogadores|players/'=>'$players',
+							 '/buyins/'=>'$totalBuyins',
+							 '/buyin/'=>'$buyin',
+							 '/itm/'=>'$itm',
+							 '/arred_cima/'=>'ceil',
+							 '/arred_baixo/'=>'floor',
+							 '/%/'=>'/100');
+
+		// Valida se tem alguma variável ou função não permitida
+		$formulaCheck = $formula;
+		foreach($patternList as $pattern=>$replace)
+			$formulaCheck = preg_replace($pattern, '1', $formulaCheck);
+		
+		$formulaCheck  = !preg_match('/[^0-9 \.)\(%\-\+\*\/]/', $formulaCheck);
+		$formulaResult = null;
+		
+		// A partir daqui, com a fórmula já validada, verifica se a expressão matemática é valida
+		if( $formulaCheck ){
+			
+			foreach($patternList as $pattern=>$replace)
+				$formula = preg_replace($pattern, $replace, $formula);
+			
+			@eval('$formulaResult = ('.$formula.');');
+		}
+
+		if( $formulaResult===null || !is_numeric($formulaResult) )
+			return false;
+
 		return true;
 	}
 }

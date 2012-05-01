@@ -62,6 +62,8 @@ class userAdminActions extends sfActions
     if( empty($this->userAdminId) )
     	Util::forceError('!Nenhum registro foi selecionado!');
     
+    $peopleId = $this->getUser()->getAttribute('peopleId');
+    
     try{
     	
 	    $criteria = new Criteria();
@@ -73,6 +75,9 @@ class userAdminActions extends sfActions
     	
     	$userAdminIdList = array();
     	foreach($userAdminObjList as $userAdminObj){
+    		
+    		if( $userAdminObj->getPeopleId()==$peopleId )
+    			throw new Exception('Não é possível excluir seu próprio perfil de usuário.');
     		
     		$userAdminObj->delete();
 	    	$userAdminIdList[] = $userAdminObj->getId();

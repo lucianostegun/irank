@@ -1,6 +1,11 @@
 $(function() {
 	
 	createEventListTable();
+	
+	$('.tags').tagsInput({
+		width: '100%', 
+		delimiter: '|',
+		defaultText: 'Fórmula'});
 });
 
 function createEventListTable(){
@@ -193,4 +198,17 @@ function clearQuickEventLiveForm(){
 	
 	validateAllQuickAddEvent();
 	$.uniform.update();
+}
+
+function handleScoreFormulaOption(scoreFormulaOption){
+	
+	if( scoreFormulaOption=='simple' ){
+		
+		$('#rankingLiveScoreFormulaMultipleDiv').hide();
+		$('#rankingLiveScoreFormulaSimpleDiv').show();
+	}else{
+		
+		$('#rankingLiveScoreFormulaSimpleDiv').hide();
+		$('#rankingLiveScoreFormulaMultipleDiv').show();
+	}
 }
