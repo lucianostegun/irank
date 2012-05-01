@@ -638,8 +638,11 @@ class EventLive extends BaseEventLive
 		$criteria->addDescendingOrderByColumn( EventLivePeer::EVENT_DATE_TIME );
 		$eventLiveObj = EventLivePeer::doSelectOne($criteria);
 		
-		if( !is_object($eventLiveObj) )
+		if( !is_object($eventLiveObj) ){
+			
 			$eventLiveObj = new EventLive();
+			$eventLiveObj->setId(0);
+		}
 		
 		return $eventLiveObj;		
 	}
@@ -652,7 +655,7 @@ class EventLive extends BaseEventLive
 		
 		$difference = $totalBuyin-$totalBuyinPrevious;
 		
-		$percent    = ($difference*100/$totalBuyinPrevious);
+		$percent    = ($difference*100/($totalBuyinPrevious?$totalBuyinPrevious:1));
 		return $percent;
 	}
 	
