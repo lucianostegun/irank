@@ -62,7 +62,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         <?php endif; ?>
         <?php if( !is_null($mainBalanceChanges) ): ?>
         <a href="javascript:void(0)" title="" class="amChanges">
-            <strong class="<?php echo ($mainBalanceChanges<0?'sNegative':'sPositive') ?>" title="<?php echo $mainBalanceChangesLabel ?>" id="mainBalanceChanges"><?php echo Util::formatFloat($mainBalanceChanges, true, 1) ?>%</strong>
+            <strong class="<?php echo ($mainBalanceChanges<0?'sNegative':'sPositive') ?>" title="<?php echo $mainBalanceChangesLabel ?>" id="mainBalanceChanges"><?php echo Util::formatFloat(abs($mainBalanceChanges), true, 1) ?>%</strong>
         </a>
 	    <?php endif; ?>
     </div>

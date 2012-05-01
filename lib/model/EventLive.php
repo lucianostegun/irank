@@ -653,6 +653,9 @@ class EventLive extends BaseEventLive
 		$totalBuyin         = $this->getTotalBuyin(true);
 		$totalBuyinPrevious = $eventLiveObj->getTotalBuyin(true);
 		
+		if( $eventLiveObj->isNew() )
+			return 0;
+		
 		$difference = $totalBuyin-$totalBuyinPrevious;
 		
 		$percent    = ($difference*100/($totalBuyinPrevious?$totalBuyinPrevious:1));
@@ -666,9 +669,19 @@ class EventLive extends BaseEventLive
 		$playersConfirm = $this->getPlayers();
 		
 		$eventLiveObj           = $this->getPreviousEventLive();
-		$visitCountPrevious     = $eventLiveObj->getVisitCount();
-		$playersPrevious        = $eventLiveObj->getPlayers(false, true);
-		$playersConfirmPrevious = $eventLiveObj->getPlayers();
+		
+		if( $eventLiveObj->isNew() ){
+			
+			$visitCountPrevious     = $visitCount;
+			$playersPrevious        = $players;
+			$playersConfirmPrevious = $playersConfirm;
+		}else{
+			
+			$visitCountPrevious     = $eventLiveObj->getVisitCount();
+			$playersPrevious        = $eventLiveObj->getPlayers(false, true);
+			$playersConfirmPrevious = $eventLiveObj->getPlayers();
+		}
+		
 		
 		$numStatList = array();
 		$numStatList['Visitas']    = array('value'=>$visitCount, 'changes'=>(($visitCount-$visitCountPrevious)*100/($visitCountPrevious?$visitCountPrevious:1)));

@@ -40,7 +40,7 @@
 	<?php endforeach; ?>
 	<?php if($recordCount==0): ?>
 	<tr class="<?php echo $className ?>">
-		<td align="center" colspan="4">Não existem outras etapas cadastradas para este ranking</td>
+		<td colspan="4"><div class="textC mt20">Não existem outras etapas cadastradas para este ranking</div></td>
 	</tr>
 	<?php endif; ?>
 	</tbody>
