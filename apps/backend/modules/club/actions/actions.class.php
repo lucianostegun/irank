@@ -123,7 +123,7 @@ class clubActions extends sfActions
 	$fileName = $request->getFileName('Filedata');
 	$fileName = preg_replace('/(\.[^\.]*)$/', '-'.$this->clubId.'\1', $fileName);
 	
-    if( $clubId && $clubId!=$this->clubId ){
+    if( $clubId && $clubId!=$this->clubId && !$userAdminObj->getMaster() ){
     	
 	    $username = $userAdminObj->getUsername();
 	    $clubObj  = ClubPeer::retrieveByPK($this->clubId);

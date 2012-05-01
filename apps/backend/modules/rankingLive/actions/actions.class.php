@@ -117,7 +117,7 @@ class rankingLiveActions extends sfActions
   
   public function executeUploadLogo($request){
 
-	$userAdminId = $request->getParameter('userAdminId');
+	$userAdminId  = $request->getParameter('userAdminId');
     $userAdminObj = UserAdminPeer::retrieveByPK($userAdminId);
     
     $this->getUser()->setCulture('pt_BR');
@@ -133,7 +133,7 @@ class rankingLiveActions extends sfActions
 	
 	$rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
 	
-    if( !$rankingLiveObj->isMyRanking($userAdminId) ){
+    if( !$rankingLiveObj->isMyRanking($userAdminId) && !$userAdminObj->getMaster() ){
     	
 	    $username = $userAdminObj->getUsername();
 
