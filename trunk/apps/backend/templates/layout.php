@@ -39,13 +39,13 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
     <div class="sidebarSep mt0"></div>
     
     <!-- Search widget -->
-    <form action="" class="sidebarSearch">
+    <form action="" class="sidebarSearch" style="display: none">
 
         <input type="text" name="search" placeholder="pesquisa rápida..." id="ac" />
         <input type="submit" value="" />
-    </form>
     
     <div class="sidebarSep"></div>
+    </form>
 
 	<?php
 		if( isset($mainBalanceLabel) && isset($mainBalanceValue) ):
@@ -177,7 +177,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
                     </li>
                     -->
                     <?php if( $iRankAdmin ): ?>
-                    <li><?php echo link_to(image_tag('backend/icons/topnav/settings').'<span>Configurações</span>', 'settings/index') ?></li>
+                    <li style="display: none"><?php echo link_to(image_tag('backend/icons/topnav/settings').'<span>Configurações</span>', 'settings/index') ?></li>
                     <?php endif; ?>
                     <li><?php echo link_to(image_tag('backend/icons/topnav/logout').'<span>Logout</span>', 'login/logout') ?></li>
                 </ul>
