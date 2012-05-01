@@ -208,6 +208,7 @@ function handleScoreFormulaOption(scoreFormulaOption){
 		$('#rankingLiveScoreFormulaSimpleDiv').show();
 	}else{
 		
+		$('#rankingLiveScoreFormula').val('');
 		$('#rankingLiveScoreFormulaSimpleDiv').hide();
 		$('#rankingLiveScoreFormulaMultipleDiv').show();
 	}

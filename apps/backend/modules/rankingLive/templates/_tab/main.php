@@ -80,7 +80,7 @@
 				<?php echo input_tag('scoreFormula', ('simple'==$scoreFormulaOption?$scoreFormula:'1'), array('size'=>75, 'maxlength'=>150, 'id'=>'rankingLiveScoreFormula')) ?>
 			</div>
 			<div id="rankingLiveScoreFormulaMultipleDiv" class="clear" style="display: <?php echo ($scoreFormulaOption=='multiple'?'block':'none') ?>">
-			    <?php echo input_tag('scoreFormulaCustom', ('multiple'==$scoreFormulaOption?$scoreFormula:'1'), array('class'=>'tags', 'style'=>'display: none', 'id'=>'rankingLiveScoreFormulaCustom')) ?>
+			    <?php echo input_tag('scoreFormulaCustom', ('multiple'==$scoreFormulaOption?$scoreFormula:''), array('class'=>'tags', 'style'=>'display: none', 'id'=>'rankingLiveScoreFormulaCustom')) ?>
 			</div>
 			<div class="clear"></div>
 				<div class="formNote error" id="rankingLiveFormErrorScoreFormula"></div>
