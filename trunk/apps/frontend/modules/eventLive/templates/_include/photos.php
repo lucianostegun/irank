@@ -32,7 +32,7 @@
 			</td>
 			<?php endforeach; ?>
 			<?php if( $recordCount==0 ): ?>
-			Não existem fotos para este evento
+			<div class="textC mt40"><h2>Não existem fotos para este evento!</h2></div>
 			<?php endif; ?>
 		</tr>
 	</table>
