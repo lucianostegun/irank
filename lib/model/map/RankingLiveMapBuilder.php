@@ -58,6 +58,8 @@ class RankingLiveMapBuilder {
 
 		$tMap->addColumn('RANKING_TAG', 'RankingTag', 'string', CreoleTypes::VARCHAR, false, 20);
 
+		$tMap->addColumn('SCORE_FORMULA_OPTION', 'ScoreFormulaOption', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('SCORE_FORMULA', 'ScoreFormula', 'string', CreoleTypes::VARCHAR, false, 250);
 
 		$tMap->addColumn('FILE_NAME_LOGO', 'FileNameLogo', 'string', CreoleTypes::VARCHAR, false, 250);

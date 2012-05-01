@@ -31,11 +31,7 @@ $(function() {
 
 function doDeleteEventLive(){
 	
-	var rankingLiveId  = $('#eventLiveRankingLiveId').val();
-	var mainRecordName = getMainRecordName();
-	
-	if( !confirm('Tem certeza que deseja excluir o evento "'+mainRecordName+'"?') )
-		return false;
+	var rankingLiveId = $('#eventLiveRankingLiveId').val();
 	
 	if( rankingLiveId && !confirm('ATENÇÃO!\n\nAo excluir este evento, o resultado de todos os eventos posteriores serão afetados!\nTem certeza que deseja excluir o evento?') )
 		return false;

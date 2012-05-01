@@ -17,6 +17,8 @@ function getMainRecordName(){
 
 function handleFormFieldError( content, instanceName ){
 
+	hideIndicator();
+	
 	if( (/^formError:/).test(content) ){
 
 		showFormStatusError()

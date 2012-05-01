@@ -145,6 +145,12 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastiRankRankingCriteria = null;
 
 	
+	protected $collEventLivePlayerScoreList;
+
+	
+	protected $lastEventLivePlayerScoreCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -714,6 +720,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEventLivePlayerScoreList !== null) {
+				foreach($this->collEventLivePlayerScoreList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -861,6 +875,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 				if ($this->colliRankRankingList !== null) {
 					foreach($this->colliRankRankingList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventLivePlayerScoreList !== null) {
+					foreach($this->collEventLivePlayerScoreList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1160,6 +1182,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			foreach($this->getiRankRankingList() as $relObj) {
 				$copyObj->addiRankRanking($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEventLivePlayerScoreList() as $relObj) {
+				$copyObj->addEventLivePlayerScore($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -2544,6 +2570,111 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	{
 		$this->colliRankRankingList[] = $l;
 		$l->setPeople($this);
+	}
+
+	
+	public function initEventLivePlayerScoreList()
+	{
+		if ($this->collEventLivePlayerScoreList === null) {
+			$this->collEventLivePlayerScoreList = array();
+		}
+	}
+
+	
+	public function getEventLivePlayerScoreList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerScorePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePlayerScoreList === null) {
+			if ($this->isNew()) {
+			   $this->collEventLivePlayerScoreList = array();
+			} else {
+
+				$criteria->add(EventLivePlayerScorePeer::PEOPLE_ID, $this->getId());
+
+				EventLivePlayerScorePeer::addSelectColumns($criteria);
+				$this->collEventLivePlayerScoreList = EventLivePlayerScorePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventLivePlayerScorePeer::PEOPLE_ID, $this->getId());
+
+				EventLivePlayerScorePeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventLivePlayerScoreCriteria) || !$this->lastEventLivePlayerScoreCriteria->equals($criteria)) {
+					$this->collEventLivePlayerScoreList = EventLivePlayerScorePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventLivePlayerScoreCriteria = $criteria;
+		return $this->collEventLivePlayerScoreList;
+	}
+
+	
+	public function countEventLivePlayerScoreList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerScorePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventLivePlayerScorePeer::PEOPLE_ID, $this->getId());
+
+		return EventLivePlayerScorePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventLivePlayerScore(EventLivePlayerScore $l)
+	{
+		$this->collEventLivePlayerScoreList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getEventLivePlayerScoreListJoinEventLive($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerScorePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePlayerScoreList === null) {
+			if ($this->isNew()) {
+				$this->collEventLivePlayerScoreList = array();
+			} else {
+
+				$criteria->add(EventLivePlayerScorePeer::PEOPLE_ID, $this->getId());
+
+				$this->collEventLivePlayerScoreList = EventLivePlayerScorePeer::doSelectJoinEventLive($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePlayerScorePeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastEventLivePlayerScoreCriteria) || !$this->lastEventLivePlayerScoreCriteria->equals($criteria)) {
+				$this->collEventLivePlayerScoreList = EventLivePlayerScorePeer::doSelectJoinEventLive($criteria, $con);
+			}
+		}
+		$this->lastEventLivePlayerScoreCriteria = $criteria;
+
+		return $this->collEventLivePlayerScoreList;
 	}
 
 } 

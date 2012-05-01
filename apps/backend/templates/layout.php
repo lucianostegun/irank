@@ -13,17 +13,18 @@ $peopleName = $sf_user->getAttribute(($messages?'firstName':'fullName'));
 $moduleName = $sf_context->getModuleName();
 $actionName = $sf_context->getActionName();
 
-$mainBalanceValue   = isset($mainBalanceValue)?$mainBalanceValue:0;
-$mainBalanceBase    = isset($mainBalanceBase)?$mainBalanceBase:0;
-$mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:null;
-$numStatList        = isset($numStatList)?$numStatList:array();
+$mainBalanceValue        = isset($mainBalanceValue)?$mainBalanceValue:0;
+$mainBalanceBase         = isset($mainBalanceBase)?$mainBalanceBase:0;
+$mainBalanceChanges      = isset($mainBalanceChanges)?$mainBalanceChanges:null;
+$mainBalanceChangesLabel = isset($mainBalanceChangesLabel)?$mainBalanceChangesLabel:null;
+$numStatList             = isset($numStatList)?$numStatList:array();
 
 $toolbarList = isset($toolbarList)?$toolbarList:array();
 ?>
 <script>
 	var _mainBalanceValue   = <?php echo ($mainBalanceValue?$mainBalanceValue:'0') ?>;
 	var _mainBalanceBase    = <?php echo ($mainBalanceBase?$mainBalanceBase:'0') ?>;
-	var _mainBalancePercent = <?php echo ($mainBalancePercent?$mainBalancePercent:'0') ?>;
+	var _mainBalanceChanges = <?php echo ($mainBalanceChanges?$mainBalanceChanges:'0') ?>;
 	var _ModuleName         = '<?php echo $moduleName ?>';
 	var _ActionName         = '<?php echo $actionName ?>';
 </script>
@@ -49,7 +50,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
 	<?php
 		if( isset($mainBalanceLabel) && isset($mainBalanceValue) ):
 		
-			$mainBalancePercent = isset($mainBalancePercent)?$mainBalancePercent:null;
+			$mainBalanceChanges = isset($mainBalanceChanges)?$mainBalanceChanges:null;
 	?>
     <!-- General balance widget -->
     <div class="genBalance">
@@ -59,9 +60,9 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
             <span class="balanceAmount" id="mainBalanceAmount">R$ <?php echo Util::formatFloat($mainBalanceValue, true) ?></span>
         </a>
         <?php endif; ?>
-        <?php if( !is_null($mainBalancePercent) ): ?>
+        <?php if( !is_null($mainBalanceChanges) ): ?>
         <a href="javascript:void(0)" title="" class="amChanges">
-            <strong class="<?php echo ($mainBalancePercent<0?'sNegative':'sPositive') ?>" id="mainBalancePercent"><?php echo Util::formatFloat($mainBalancePercent, true, 1) ?>%</strong>
+            <strong class="<?php echo ($mainBalanceChanges<0?'sNegative':'sPositive') ?>" title="<?php echo $mainBalanceChangesLabel ?>" id="mainBalanceChanges"><?php echo Util::formatFloat($mainBalanceChanges, true, 1) ?>%</strong>
         </a>
 	    <?php endif; ?>
     </div>
@@ -74,11 +75,27 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
     	<ul>
     		<?php
     			$i = 0;
-    			foreach($numStatList as $label=>$value):
+    			foreach($numStatList as $label=>$info):
     				$i++;
     		?>
-        	<li class="<?php echo ($i==count($numStatList)?'last':'') ?>"><?php echo $value ?><span><?php echo $label ?></span></li>
+        	<li class="<?php echo ($i==count($numStatList)?'last':'') ?>"><?php echo $info['value'] ?><span><?php echo $label ?></span></li>
         	<?php endforeach; ?>
+        </ul>
+        <div class="clear"></div>
+    </div>
+	<div class="sRoundStats">
+    	<ul>
+    		<?php
+    			$i = 0;
+    			foreach($numStatList as $label=>$info):
+    				$i++;
+    				
+    				$changes = $info['changes'];
+    				$class = ($changes>0?'roundPos':($changes<0?'roundNeg':'roundZero'));
+    		?>
+        	<li><a href="javascript:void(0)"><span class="<?php echo $class ?>"><?php echo Util::formatFloat(abs($changes), true, 0) ?>%</span></a></li>
+        	<?php endforeach; ?>
+
         </ul>
         <div class="clear"></div>
     </div>

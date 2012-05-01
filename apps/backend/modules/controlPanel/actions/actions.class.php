@@ -12,8 +12,8 @@ class controlPanelActions extends sfActions
 
   public function preExecute(){
     
-    $this->hiddenToolbarList = array('new', 'cancel', 'delete');
-    $this->pathList = array('Painel de controle'=>'controlPanel/index');
+    $this->toolbarList = array('save');
+    $this->pathList    = array('Painel de controle'=>'controlPanel/index');
   }
   
   public function executeIndex($request){

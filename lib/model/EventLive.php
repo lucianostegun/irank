@@ -223,6 +223,9 @@ class EventLive extends BaseEventLive
 				$rankingLiveObj->updatePlayers();
 				$rankingLiveObj->updateEvents();
 				$rankingLiveObj->updateHistory($this->getEventDate('d/m/Y'));
+				
+				if( $rankingLiveObj->getScoreFormulaOption()=='multiple' )
+					$this->getParsedScore(true);
 			}
 		}
 	}
@@ -333,15 +336,63 @@ class EventLive extends BaseEventLive
 		return PeoplePeer::doSelect($criteria);
 	}
 	
-	public function parseScore($position, $events, $prize, $players, $totalBuyins, $buyin, $itm){
+	public function getParsedScore($save=false){
 		
-		$formula = $this->getRankingLive()->getScoreFormula();
+		$savedResult   = $this->getSavedResult();
+		$totalRebuys   = $this->getTotalRebuys();
+		$prizeSplit    = $this->getPrizeSplit();
+		$prizeConfig   = split(EventLive::PRIZE_SPLIT_PATTERN, $prizeSplit);
+		$paidPlaces    = count($prizeConfig);
+		$players       = $this->getPlayers();
+		$rankingLiveId = $this->getRankingLiveId();
+		
+		$buyin        = $this->getBuyin();
+		$rakePercent  = $this->getRakePercent();
+		$totalPrize   = $this->getTotalBuyin()+Util::formatFloat($totalRebuys);
+		$totalPrize  -= ($totalPrize*$rakePercent/100);
+		
+		$totalBuyins = $totalPrize/$buyin;
+		
+		$prizeConfigList = array();
+		$prizeConfigList['players'] = $players;
+		
+		$eventPosition = 0;
+		foreach($this->getEventLivePlayerList() as $eventLivePlayerObj){
+			
+			$eventPosition++;
+			
+			$peopleId = $eventLivePlayerObj->getPeopleId();
+			$prize    = ($eventPosition <= $paidPlaces?$totalPrize*$prizeConfig[$eventPosition-1]/100:0);
+			$events   = 1;
+			
+			if( $rankingLiveId ){
+				
+				$events  = Util::executeOne("SELECT get_ranking_live_player_events($rankingLiveId, $peopleId)");
+				$events += (!$savedResult?1:0); // Se o resultado do evento ainda não foi salvo, considera o evento atual na contagem de eventos
+			}
+			
+			// Se não for pra salvar, limpa a variável $peopleId que é o que define se vai salvar a pontuação no método parseScore
+			if( !$save )
+				$peopleId = null;
+			
+			$score = $this->parseScore($eventPosition, $events, $prize, $players, $totalBuyins, $buyin, $prize, $peopleId);
+			
+			$prizeConfigList[$eventPosition] = array('score'=>$score, 'prize'=>$prize);
+		}
+		
+		return $prizeConfigList;
+	}
+	
+	public function parseScore($position, $events, $prize, $players, $totalBuyins, $buyin, $itm, $peopleId=null){
+		
+		$eventLiveId = $this->getId();
+		$formula     = $this->getRankingLive()->getScoreFormula();
+		
 		if( !$formula )
 			$formula = RankingLive::DEFAULT_SCORE_FORMULA;
 			
 		$formula = strtolower($formula);
 		$formula = preg_replace('/\t\r\n /', '', $formula);
-		
 		$formula = preg_replace('/posi[cç][aã]o|position/', '$position', $formula);
 		$formula = preg_replace('/eventos|events/', '$events', $formula);
 		$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
@@ -349,15 +400,44 @@ class EventLive extends BaseEventLive
 		$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
 		$formula = preg_replace('/buyin/', '$buyin', $formula);
 		$formula = preg_replace('/itm/', '$itm', $formula);
+		$formula = preg_replace('/arred_cima/', 'ceil', $formula);
+		$formula = preg_replace('/arred_baixo/', 'floor', $formula);
 		
-		$score = null;
+		$formulaList = explode('|', $formula);
 		
-		@eval('$score = '.$formula.';');
+		if( $peopleId )
+			Util::executeQuery("DELETE from event_live_player_score WHERE event_live_id = $eventLiveId AND people_id = $peopleId");
+		
+		$scoreList = array();
+		foreach($formulaList as &$formula){
+			
+			preg_match('/^(.*): ?/', $formula, $matches);
+			
+			$label   = $matches[1];
+			$formula = preg_replace('/^'.$label.': */', '', $formula);
+			$score   = 0;
+			
+			@eval('$score = '.$formula.';');
+			$scoreList[$label] = $score;
+		}
+		
+		$score = array_sum($scoreList);
 		
 		if( $score===null )
 			throw new Exception('Erro ao processar a fórmula de pontuação:\n'.'$score = '.$formula.';');
+			
+		if( $peopleId ){
+			
+			$orderSeq = 0;
+			foreach($scoreList as $label=>$score)
+				EventLivePlayerScore::quickSave($eventLiveId, $peopleId, $score, $label, ++$orderSeq);
+			
+			return $scoreList;
+		}
 		
-		return number_format($score, 3);		
+		$score = number_format($score, 3);
+		
+		return $score;		
 	}
 	
 	public function getGameStyle($returnTagName=false){
@@ -546,6 +626,53 @@ class EventLive extends BaseEventLive
 		$eventName = substr($eventName, 0, 35);
 		
 		return $eventName;	
+	}
+	
+	public function getPreviousEventLive(){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventLivePeer::ENABLED, true );
+		$criteria->add( EventLivePeer::VISIBLE, true );
+		$criteria->add( EventLivePeer::DELETED, false );
+		$criteria->add( EventLivePeer::EVENT_DATE_TIME, $this->getEventDateTime(), Criteria::LESS_THAN );
+		$criteria->addDescendingOrderByColumn( EventLivePeer::EVENT_DATE_TIME );
+		$eventLiveObj = EventLivePeer::doSelectOne($criteria);
+		
+		if( !is_object($eventLiveObj) )
+			$eventLiveObj = new EventLive();
+		
+		return $eventLiveObj;		
+	}
+	
+	public function getBalanceDifference(){
+		
+		$eventLiveObj       = $this->getPreviousEventLive();
+		$totalBuyin         = $this->getTotalBuyin(true);
+		$totalBuyinPrevious = $eventLiveObj->getTotalBuyin(true);
+		
+		$difference = $totalBuyin-$totalBuyinPrevious;
+		
+		$percent    = ($difference*100/$totalBuyinPrevious);
+		return $percent;
+	}
+	
+	public function getStats(){
+		
+		$visitCount     = $this->getVisitCount();
+		$players        = $this->getPlayers(false, true);
+		$playersConfirm = $this->getPlayers();
+		
+		$eventLiveObj           = $this->getPreviousEventLive();
+		$visitCountPrevious     = $eventLiveObj->getVisitCount();
+		$playersPrevious        = $eventLiveObj->getPlayers(false, true);
+		$playersConfirmPrevious = $eventLiveObj->getPlayers();
+		
+		$numStatList = array();
+		$numStatList['Visitas']    = array('value'=>$visitCount, 'changes'=>(($visitCount-$visitCountPrevious)*100/($visitCountPrevious?$visitCountPrevious:1)));
+    	$numStatList['Inscrições'] = array('value'=>$players, 'changes'=>(($players-$playersPrevious)*100/($playersPrevious?$playersPrevious:1)));
+    	$numStatList['Confirm.']   = array('value'=>$playersConfirm, 'changes'=>(($playersConfirm-$playersConfirmPrevious)*100/($playersConfirmPrevious?$playersConfirmPrevious:1)));
+    	
+    	return $numStatList;
 	}
 	
 	public function getInfo(){
