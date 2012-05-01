@@ -204,14 +204,14 @@ function handleScoreFormulaOption(scoreFormulaOption){
 	
 	if( scoreFormulaOption=='simple' ){
 		
-		if( $('#rankingLiveScoreFormula').val()=='*' )
+		if( $('#rankingLiveScoreFormula').val()=='0' )
 			$('#rankingLiveScoreFormula').val('');
 		
 		$('#rankingLiveScoreFormulaMultipleDiv').hide();
 		$('#rankingLiveScoreFormulaSimpleDiv').show();
 	}else{
 		
-		$('#rankingLiveScoreFormula').val('*');
+		$('#rankingLiveScoreFormula').val('0');
 		$('#rankingLiveScoreFormulaSimpleDiv').hide();
 		$('#rankingLiveScoreFormulaMultipleDiv').show();
 	}
