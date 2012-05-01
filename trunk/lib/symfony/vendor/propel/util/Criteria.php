@@ -1486,16 +1486,16 @@ class Criterion  {
 					}
 				}
 				
-				$sb .= $field . $this->comparison;
-				//$sb .= $field.' IS NOT NULL AND to_ascii(CONVERT_TO('.$field.', \'latin1\'), \'latin1\') '.$this->comparison;
+//				$sb .= $field . $this->comparison;
+				$sb .= 'no_accent('.$field.') '.$this->comparison;
 				
 				// If selection is case insensitive use SQL UPPER() function
 				// on criteria or, if Postgres we are using ILIKE, so not necessary.
 				if ($this->ignoreStringCase && !($db instanceof DBPostgres)) {
 					$sb .= $db->ignoreCase('?');
 				} else {
-					$sb .= '?';
-					//$sb .= ' to_ascii(CONVERT_TO(?, \'latin1\'), \'latin1\')';
+//					$sb .= '?';
+					$sb .= ' no_accent(?)';
 				}
 
 				$params[] = array('table'=>$realtable, 'column'=>$this->column, 'value'=>$this->value);

@@ -1,0 +1,1 @@
+UPDATE user_site SET image_path = null;
