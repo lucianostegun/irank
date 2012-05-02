@@ -130,6 +130,8 @@ class UserSite extends BaseUserSite
         
         $this->setLastAccessDate(time());
         $this->save();
+        
+        $this->doLog();
 	}
 	
 	public static function logout(){

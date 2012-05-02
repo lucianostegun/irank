@@ -166,4 +166,8 @@ class homeActions extends sfActions
 	echo 'var i18n_formErrorRequiredField = "'.__('form.error.requiredField').'";'.$nl;
 	exit;
   }
+  
+  public function executeError404($request){
+  	
+  }
 }

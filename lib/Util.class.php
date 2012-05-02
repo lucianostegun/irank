@@ -700,7 +700,7 @@ class Util {
 	 * 
 	 * @author		Luciano Stegun
 	 */
-	public static function getFilePath($subPath, $rootDir){
+	public static function getFilePath($subPath, $rootDir=null){
 		
 		$subPath = ereg_replace('[\\\\/]', DIRECTORY_SEPARATOR, $subPath);
 		$subPath = ereg_replace('^[\\\\/]?', '', $subPath);

@@ -14,3 +14,7 @@ indexSuccess:
   stylesheets:    []
   javascripts:    [] 
   
+error404Success:
+  stylesheets:    [table]
+  javascripts:    [] 
+  
