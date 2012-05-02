@@ -44,6 +44,8 @@ function handleFormFieldError( content, instanceName ){
 		    	errorMessage = errorMessage.replace('form.error.requiredField', 'Este campo é obrigatório e não foi preenchido');
 		    	errorMessage = Trim(errorMessage);
 		    }
+		    
+		    errorMessage = errorMessage.replace(/\\n/gi, '<br/>');
 
 		    if( $('#'+instanceName+'FormError'+ucfirst(fieldName))!=null )
 		    	addFormError(instanceName, fieldName, errorMessage)

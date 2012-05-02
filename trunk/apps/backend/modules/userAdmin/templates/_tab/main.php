@@ -6,6 +6,8 @@
 		'loading'=>'showIndicator()',
 		),
 		array('class'=>'form', 'id'=>'userAdminForm'));
+
+//	echo form_tag('userAdmin/save', array('class'=>'form', 'id'=>'userAdminForm'));
 	
 	echo input_hidden_tag('userAdminId', $userAdminObj->getId());
 	echo input_hidden_tag('password', $userAdminObj->getPassword(), array('id'=>'userAdminPassword'));
@@ -30,39 +32,25 @@
 	<div class="formRow">
 		<label>Pessoa</label>
 		<div class="formRight">
-			<?php echo input_tag('peopleName', $userAdminObj->getPeople()->getName(), array('size'=>35, 'maxlength'=>200, 'id'=>'userAdminPeopleName')) ?>
-			<div class="formNote error" id="userAdminFormErrorPeopleName"></div>
+			<?php echo input_autocomplete_tag('peopleName', $userAdminObj->getPeople()->getName(), 'people/autoComplete', 'doSelectUserAdminPeople', array('size'=>35, 'maxlength'=>200, 'suggestNew'=>false, 'id'=>'userAdminPeopleName')) ?>
+			<div class="formNote error" id="userAdminFormErrorPeopleId"></div>
 		</div>
 		<div class="clear"></div>
 	</div>
 
-
-	<script>
-		var urlAjax = _webRoot+'/people/autoComplete';
-		
-	    $("#userAdminPeopleName").autocomplete({
-	        source: function(request, response) {
-				
-	            $.ajax({
-	                url: urlAjax,
-	                data: request,
-	                dataType: "json",
-	                success: function(data) {
-	                    response(data);
-	                },
-	                error: function(data) {
-	                	
-	                },
-	            });
-	        },
-            select: function(event, ui) { $('#userAdminPeopleId').val(ui.item.id) },
-	    });
-	</script>
-
+	<div class="formRow">
+		<label>E-mail</label>
+		<div class="formRight">
+			<?php echo input_tag('emailAddress', $userAdminObj->getPeople()->getEmailAddress(), array('autocomplete'=>'off', 'size'=>50, 'maxlength'=>150, 'id'=>'userAdminEmailAddress')) ?>
+			<div class="formNote error" id="userAdminFormErrorEmailAddress"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
 	<div class="formRow">
 		<label>Username</label>
 		<div class="formRight">
-			<?php echo input_tag('username', $userAdminObj->getUsername(), array('maxlength'=>15, 'id'=>'userAdminUsername')) ?>
+			<?php echo input_tag('username', $userAdminObj->getUsername(), array('autocomplete'=>'off', 'maxlength'=>15, 'id'=>'userAdminUsername')) ?>
 			<div class="formNote error" id="userAdminFormErrorUsername"></div>
 		</div>
 		<div class="clear"></div>
@@ -72,7 +60,7 @@
 		<div class="formRow">
 			<label>Senha</label>
 			<div class="formRight">
-				<?php echo input_password_tag('newPassword', ($password?'******':''), array('maxlength'=>15, 'id'=>'userAdminNewPassword')) ?>
+				<?php echo input_password_tag('newPassword', ($password?'******':''), array('autocomplete'=>'off', 'maxlength'=>15, 'id'=>'userAdminNewPassword')) ?>
 				<div class="formNote error" id="userAdminFormErrorNewPassword"></div>
 			</div>
 			<div class="clear"></div>

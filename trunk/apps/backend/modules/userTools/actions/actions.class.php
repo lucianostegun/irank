@@ -32,16 +32,15 @@ class userToolsActions extends sfActions
   public function executeSave($request){
     
     $fullName     = $request->getParameter('peopleName');
+    $emailAddress = $request->getParameter('emailAddress');
+    
     $userAdminObj = UserAdmin::getCurrentUser();
     $peopleObj    = $userAdminObj->getPeople();
     
-    $firstName = preg_replace('/ .*$/', '', $fullName);
-    $lastName  = preg_replace('/^'.$firstName.' /', '', $fullName);
-    
     $userAdminObj->quickSave($request, true);
-    $peopleObj->setFirstName($firstName);
-    $peopleObj->setLastName($lastName);
-    $peopleObj->setFullName($fullName);
+    
+    $peopleObj->setName($fullName);
+    $peopleObj->setEmailAddress($emailAddress);
     $peopleObj->save();
     exit;
   }

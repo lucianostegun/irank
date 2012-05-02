@@ -93,6 +93,12 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	protected $lastEventPersonalCriteria = null;
 
 	
+	protected $collAccessLogList;
+
+	
+	protected $lastAccessLogCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -638,6 +644,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collAccessLogList !== null) {
+				foreach($this->collAccessLogList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -705,6 +719,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 				if ($this->collEventPersonalList !== null) {
 					foreach($this->collEventPersonalList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collAccessLogList !== null) {
+					foreach($this->collAccessLogList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -986,6 +1008,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			foreach($this->getEventPersonalList() as $relObj) {
 				$copyObj->addEventPersonal($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getAccessLogList() as $relObj) {
+				$copyObj->addAccessLog($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1355,6 +1381,76 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		$this->lastEventPersonalCriteria = $criteria;
 
 		return $this->collEventPersonalList;
+	}
+
+	
+	public function initAccessLogList()
+	{
+		if ($this->collAccessLogList === null) {
+			$this->collAccessLogList = array();
+		}
+	}
+
+	
+	public function getAccessLogList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseAccessLogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAccessLogList === null) {
+			if ($this->isNew()) {
+			   $this->collAccessLogList = array();
+			} else {
+
+				$criteria->add(AccessLogPeer::USER_SITE_ID, $this->getId());
+
+				AccessLogPeer::addSelectColumns($criteria);
+				$this->collAccessLogList = AccessLogPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(AccessLogPeer::USER_SITE_ID, $this->getId());
+
+				AccessLogPeer::addSelectColumns($criteria);
+				if (!isset($this->lastAccessLogCriteria) || !$this->lastAccessLogCriteria->equals($criteria)) {
+					$this->collAccessLogList = AccessLogPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastAccessLogCriteria = $criteria;
+		return $this->collAccessLogList;
+	}
+
+	
+	public function countAccessLogList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseAccessLogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(AccessLogPeer::USER_SITE_ID, $this->getId());
+
+		return AccessLogPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addAccessLog(AccessLog $l)
+	{
+		$this->collAccessLogList[] = $l;
+		$l->setUserSite($this);
 	}
 
 } 

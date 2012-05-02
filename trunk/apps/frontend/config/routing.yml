@@ -1,4 +1,13 @@
 # default rules
+
+#CLUB ROUTING START
+
+club_vegas:
+  url:    /vegas
+  param:  { module: club, action: details, clubId: 334 }
+
+#CLUB ROUTING END
+
 homepage:
   url:   /
   param: { module: home, action: index }

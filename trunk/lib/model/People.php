@@ -44,6 +44,16 @@ class People extends BasePeople
 		return $firstName.($lastName?' '.$lastName:'');
 	}
 	
+	public function setName($fullName){
+		
+ 		$firstName = preg_replace('/ .*$/', '', $fullName);
+	    $lastName  = preg_replace('/^'.$firstName.' /', '', $fullName);
+	    
+	    $this->setFirstName($firstName);
+	    $this->setLastName($lastName);
+	    $this->setFullName($fullName);
+	}
+	
 	public static function getQuickPeople($firstName, $lastName=null, $peopleType, $peopleId=null, $defaultLanguage=null){
 
 		$peopleTypeId    = VirtualTable::getIdByTagName('peopleType', $peopleType);

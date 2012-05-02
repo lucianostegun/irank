@@ -40,6 +40,16 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+
+	<div class="formRow">
+		<label>E-mail</label>
+		<div class="formRight">
+			<?php echo input_tag('emailAddress', $userAdminObj->getPeople()->getEmailAddress(), array('size'=>50, 'maxlength'=>150, 'id'=>'userToolsEmailAddress')) ?>
+			<div class="formNote error" id="userToolsFormErrorEmailAddress"></div>
+			<div class="formNote">Você também pode se logar utilizando seu e-mail</div>
+		</div>
+		<div class="clear"></div>
+	</div>
 	
 	<div style="display: <?php echo ($password?'none':'block') ?>" id="passwordFieldDiv">
 		<div class="formRow">

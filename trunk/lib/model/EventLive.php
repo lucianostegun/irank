@@ -402,6 +402,7 @@ class EventLive extends BaseEventLive
 		$formula = preg_replace('/itm/', '$itm', $formula);
 		$formula = preg_replace('/arred_cima/', 'ceil', $formula);
 		$formula = preg_replace('/arred_baixo/', 'floor', $formula);
+		$formula = preg_replace('/%/', '/100', $formula);
 		
 		$formulaList = explode('|', $formula);
 		

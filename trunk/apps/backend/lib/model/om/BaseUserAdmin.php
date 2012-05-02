@@ -70,6 +70,12 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 	protected $aClub;
 
 	
+	protected $collAccessAdminLogList;
+
+	
+	protected $lastAccessAdminLogCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -538,6 +544,14 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collAccessAdminLogList !== null) {
+				foreach($this->collAccessAdminLogList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -592,6 +606,14 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collAccessAdminLogList !== null) {
+					foreach($this->collAccessAdminLogList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -833,6 +855,15 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 		$copyObj->setUpdatedAt($this->updated_at);
 
 
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach($this->getAccessAdminLogList() as $relObj) {
+				$copyObj->addAccessAdminLog($relObj->copy($deepCopy));
+			}
+
+		} 
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); 
@@ -912,6 +943,76 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aClub;
+	}
+
+	
+	public function initAccessAdminLogList()
+	{
+		if ($this->collAccessAdminLogList === null) {
+			$this->collAccessAdminLogList = array();
+		}
+	}
+
+	
+	public function getAccessAdminLogList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseAccessAdminLogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAccessAdminLogList === null) {
+			if ($this->isNew()) {
+			   $this->collAccessAdminLogList = array();
+			} else {
+
+				$criteria->add(AccessAdminLogPeer::USER_ADMIN_ID, $this->getId());
+
+				AccessAdminLogPeer::addSelectColumns($criteria);
+				$this->collAccessAdminLogList = AccessAdminLogPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(AccessAdminLogPeer::USER_ADMIN_ID, $this->getId());
+
+				AccessAdminLogPeer::addSelectColumns($criteria);
+				if (!isset($this->lastAccessAdminLogCriteria) || !$this->lastAccessAdminLogCriteria->equals($criteria)) {
+					$this->collAccessAdminLogList = AccessAdminLogPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastAccessAdminLogCriteria = $criteria;
+		return $this->collAccessAdminLogList;
+	}
+
+	
+	public function countAccessAdminLogList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseAccessAdminLogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(AccessAdminLogPeer::USER_ADMIN_ID, $this->getId());
+
+		return AccessAdminLogPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addAccessAdminLog(AccessAdminLog $l)
+	{
+		$this->collAccessAdminLogList[] = $l;
+		$l->setUserAdmin($this);
 	}
 
 } 

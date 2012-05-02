@@ -2,11 +2,21 @@ fields:
       
   peopleId:
     required:
-      msg:       form.error.requiredField
+      msg:       Selecione um nome na lista de sugestões
       
   peopleName:
     required:
       msg:       form.error.requiredField
+       
+  emailAddress:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       150
+      max_error: form.error.max150
+    sfEmailValidator:
+      strict:       true
+      email_error:  form.error.invalidEmail
        
   username:
     required:

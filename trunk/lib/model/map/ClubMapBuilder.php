@@ -38,6 +38,8 @@ class ClubMapBuilder {
 
 		$tMap->addColumn('CLUB_NAME', 'ClubName', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('TAG_NAME', 'TagName', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('FILE_NAME_LOGO', 'FileNameLogo', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ADDRESS_NAME', 'AddressName', 'string', CreoleTypes::VARCHAR, false, null);

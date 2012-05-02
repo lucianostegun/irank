@@ -53,4 +53,9 @@ class City extends BaseCity
 		
 		return $cityObj;
 	}
+	
+	public function toString(){
+		
+		return $this->getCityName().', '.$this->getState()->getInitial();
+	}
 }

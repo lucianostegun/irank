@@ -29,3 +29,20 @@ DELETE FROM virtual_table;
 
 SELECT SETVAL('virtual_table_seq', (SELECT MAX(id) FROM virtual_table));
 */
+
+
+
+DELETE FROM club_ranking_live;
+DELETE FROM event_live_player;
+DELETE FROM event_live_player_score;
+DELETE FROM event_live_photo;
+DELETE FROM event_live;
+DELETE FROM ranking_live_player;
+DELETE FROM ranking_live_history;
+DELETE FROM ranking_live;
+DELETE FROM club_photo;
+DELETE FROM club;
+
+
+select * from irank_ranking order by score desc;
+select * from people where id = 3
