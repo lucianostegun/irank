@@ -12,6 +12,7 @@
 			$clubId          = $clubObj->getId();
 			$fileNameLogo    = $clubObj->getFileNameLogo();
 			$clubName        = $clubObj->getClubName();
+			$tagName         = $clubObj->getTagName();
 			$clubSite        = $clubObj->getClubSite();
 			$mapsLink        = $clubObj->getMapsLink();
 			$addressName     = $clubObj->getAddressName();
@@ -27,10 +28,10 @@
 				$mapsLink = link_to(image_tag('mapsPin', array('align'=>'absmiddle')).'mapa', $mapsLink, array('target'=>'_blank'));
 	?>
 	<div class="house">
-		<div class="logo"><?php echo link_to(image_tag('club/'.$fileNameLogo), '#goToPage("club", "details", "clubId", '.$clubId.')') ?></div>
+		<div class="logo"><?php echo link_to(image_tag('club/'.$fileNameLogo), '#goToPage("'.$tagName.'", "", "", "")') ?></div>
 		<div class="info">
 			<div class="profile">
-				<h1><?php echo link_to($clubName, '#goToPage("club", "details", "clubId", '.$clubId.')') ?></h1>
+				<h1><?php echo link_to($clubName, '#goToPage("'.$tagName.'", "", "", "")') ?></h1>
 				<div class="address"><?php echo $addressName ?>, <?php echo $addressNumber ?><?php echo ($addressQuarter?', '.$addressQuarter:'') ?></div>
 				<div class="address"><?php echo $city ?>, <?php echo $initial ?> <?php echo $mapsLink ?> <?php echo ($clubSiteLink?link_to($clubSite, $clubSiteLink, array('target'=>$clubSiteTarget)):'') ?></div>
 				<div class="phoneList">
@@ -40,7 +41,7 @@
 				</div>
 			</div>
 			<div class="links">
-				<div class="link" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="goToPage('club', 'details', 'clubId', <?php echo $clubId ?>)">Detalhes</div>
+				<div class="link" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="goToPage('<?php echo $tagName ?>', '', '', '')">Detalhes</div>
 				<div class="link" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="goToPage('eventLive', 'index', 'clubId', <?php echo $clubId ?>)">Eventos</div>
 			</div>
 		</div>
