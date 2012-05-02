@@ -35,14 +35,20 @@ class Club extends BaseClub
 	
 	public function delete($con=null){
 		
+		$tagName = $this->getTagName();
+		
 		$this->setVisible(false);
 		$this->setDeleted(true);
+		$this->setTagName(null);
 		$this->save();
+		
+		$this->updateRounting($tagName);
 	}
 	
 	public function quickSave($request){
 		
 		$clubName       = $request->getParameter('clubName');
+		$tagName        = $request->getParameter('tagName');
 		$cityId         = $request->getParameter('cityId');
 		$addressName    = $request->getParameter('addressName');
 		$addressNumber  = $request->getParameter('addressNumber');
@@ -54,7 +60,10 @@ class Club extends BaseClub
 		$phoneNumber3   = $request->getParameter('phoneNumber3');
 		$description    = $request->getParameter('description');
 		
+		$tagNameOld = $this->getTagName();
+		
 		$this->setClubName($clubName);
+		$this->setTagName($tagName);
 		$this->setCityId($cityId);
 		$this->setAddressName($addressName);
 		$this->setAddressNumber($addressNumber);
@@ -69,6 +78,8 @@ class Club extends BaseClub
 		$this->setVisible(true);
 		$this->setDeleted(false);
 		$this->save();
+		
+		$this->updateRounting($tagNameOld);
 	}
 
 	public static function getList(Criteria $criteria=null){
@@ -239,5 +250,60 @@ class Club extends BaseClub
 		$criteria->addAscendingOrderByColumn( EventLivePeer::EVENT_DATE_TIME );
 		
 		return EventLivePeer::doSelect($criteria);
+	}
+	
+	/**
+	 * Método que atualiza o arquivo /apps/frontend/config/routing.yml
+	 * para que os usuários possam acessar as URLs irank.com.br/nomeDoClube
+	 */
+	public function updateRounting($tagNameOld=null){
+		
+		$clubId   = $this->getId();
+		$tagName  = $this->getTagName();
+		$rootDir  = sfConfig::get('sf_root_dir');
+		$filePath = Util::getFilePath('/apps/frontend/config/routing.yml', $rootDir);
+		$routing  = file_get_contents($filePath);
+		
+		$pattern = "/club_$tagNameOld:\n *url: *\/$tagNameOld\n *param: *\{ ?module: ?club, ?action: ?details, ?clubId: $clubId ?\}\n\n/";
+		// Se o clube foi excluído, remove a entrada do arquivo
+		if( $this->getDeleted() ){
+			
+			$routing = preg_replace($pattern, '', $routing);
+		}else{
+			
+			// Se o novo tagName for igual ao tagName anterior não modifica o arquivo
+			if( $tagName==$tagNameOld )
+				return true;
+			
+			// Se não tinha tagName, então é um novo clube e precisa incluir uma entrada no arquivo
+			if( !$tagNameOld ){
+				
+				$metaLine = "#CLUB ROUTING END\n";
+				
+				$newContent = "club_$tagName:\n".
+							  "  url:    /$tagName\n".
+							  "  param:  { module: club, action: details, clubId: $clubId }\n\n".
+							  $metaLine;
+							  
+				$routing = str_replace($metaLine, $newContent, $routing);
+	
+			// Se já tinha tagName mas mudou de nome substitui a entrada no arquivo
+			}elseif($tagName!=$tagNameOld){
+				
+				$newLine = "club_$tagName:\n  url:    /$tagName\n  param:  { module: club, action: details, clubId: $clubId }\n\n";
+				
+				$routing = preg_replace($pattern, $newLine, $routing);
+
+				// Trocou o nome? Então já aproveita aqui para renomear o nome da pasta do disco virtual (/web/uploads/fm/nomeDoClube)
+				@rename(Util::getFilePath('/uploads/fm/'.$tagNameOld), Util::getFilePath('/uploads/fm/'.$tagName));
+			}
+		}
+		
+		
+		$fp = fopen($filePath, 'w');
+		fwrite($fp, $routing);
+		fclose($fp);
+		
+		unset($fp);
 	}
 }

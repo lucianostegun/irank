@@ -12,13 +12,14 @@ class UserAdmin extends BaseUserAdmin
 	
 	public function quickSave($request, $fromUser=false){
 		
-		$peopleId    = $request->getParameter('peopleId');
-		$clubId      = $request->getParameter('clubId');
-		$username    = $request->getParameter('username');
-		$password    = $request->getParameter('password');
-		$newPassword = $request->getParameter('newPassword');
-		$master      = $request->getParameter('master');
-		$active      = $request->getParameter('active');
+		$peopleId     = $request->getParameter('peopleId');
+		$emailAddress = $request->getParameter('emailAddress');
+		$clubId       = $request->getParameter('clubId');
+		$username     = $request->getParameter('username');
+		$password     = $request->getParameter('password');
+		$newPassword  = $request->getParameter('newPassword');
+		$master       = $request->getParameter('master');
+		$active       = $request->getParameter('active');
 		
 		$password = ($newPassword && $newPassword!='******'?md5($newPassword):$this->getPassword());
 		
@@ -36,6 +37,10 @@ class UserAdmin extends BaseUserAdmin
 		$this->setUsername($username);
 		$this->setPassword($password);
 		$this->save();
+		
+		$peopleObj = $this->getPeople();
+		$peopleObj->setEmailAddress($emailAddress);
+		$peopleObj->save();
 	}
 	
 	public static function getList(){
@@ -89,6 +94,8 @@ class UserAdmin extends BaseUserAdmin
 		
 		$this->setLastAccessDate(date('Y-m-d H:i:s'));
 		$this->save();
+		
+		$this->doLog();
 	}
 
 	public static function logout(){
@@ -102,6 +109,16 @@ class UserAdmin extends BaseUserAdmin
 		MyTools::getUser()->removeCredential('iRankAdmin');
 		MyTools::getUser()->removeCredential('iRankClub');
 		MyTools::getUser()->setAuthenticated(false);
+	}
+	
+	public function doLog(){
+		
+		$accessAdminLogObj = new AccessAdminLog();
+		$accessAdminLogObj->setUserAdminId($this->getId());
+		$accessAdminLogObj->setIpAddress($_SERVER['REMOTE_ADDR']);
+		$accessAdminLogObj->save();
+		
+		unset($accessAdminLogObj);
 	}
 	
 	public function toString(){

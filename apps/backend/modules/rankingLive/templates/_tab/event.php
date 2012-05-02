@@ -4,7 +4,7 @@
 ?>
 <div class="widget" id="eventListDiv">
 	<div id="quickAddEventsLinkDiv" style="float: left; position: relative; margin-top: -25px">
-		<?php echo link_to('Adicionar eventos', '#showAddEventForm(true)', array('id'=>'showAddEventLink')) ?>
+		<?php echo link_to('Adicionar etapas', '#showAddEventForm(true)', array('id'=>'showAddEventLink')) ?>
 	</div>
 	<table cellpadding="0" cellspacing="0" width="100%" class="display dTableCustom" id="eventLiveTable">
 		<thead>

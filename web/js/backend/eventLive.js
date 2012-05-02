@@ -408,6 +408,8 @@ function calculateEventLiveScore(){
 	}else
 		removeFormError('eventLive', 'prizeSplit');
 	
+	showIndicator();
+	
 	var successFunc = function(content){
 		
 		var infoObj = parseInfo(content);
@@ -427,10 +429,13 @@ function calculateEventLiveScore(){
 		}
 		
 		updateTotalPrizeValue();
+		
+		hideIndicator();
 	}
 	
 	var failureFunc = function(t){
 		
+		hideIndicator();
 		alert('ERRO!\n\nNão foi possível calcular o resultado do evento!\nPor favor, tente novamente.');
 		
 		if( isDebug() )
@@ -438,31 +443,6 @@ function calculateEventLiveScore(){
 	}
 	
 	var urlAjax = _webRoot+'/eventLive/calculateResult';
-	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc, parameters:$('#eventLiveResultForm').serialize()});
-}
-
-function calculateEventLiveResult(){
-
-	return alert('O cálculo de resultados ainda não está disponível');
-	
-	var eventLiveId = $('#eventLiveId').val();
-	
-	var successFunc = function(t){
-		
-		var content = t.responseText;
-		
-		alert(content);
-	}
-	
-	var failureFunc = function(t){
-		
-		alert('Não foi possível calcular o resultado do evneto!\nPor favor, tente novamente');
-		
-		if( isDebug() )
-			debug(t.responseText);
-	}
-	
-	var urlAjax = _webRoot+'/eventLive/calculateResult/evenLiveId/'+eventLiveId;
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc, parameters:$('#eventLiveResultForm').serialize()});
 }
 

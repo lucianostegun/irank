@@ -145,6 +145,8 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
             </ul>
         </li>
         <?php endif; ?>
+        
+        <li class="files"><?php echo link_to('<span>Gerenciador de arquivos</span>', 'fileManager/index', array('class'=>($moduleName=='fileManager'?'active':''))); ?></li>
     </ul>
 </div>
 

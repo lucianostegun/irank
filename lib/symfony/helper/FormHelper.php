@@ -310,10 +310,10 @@ function input_tag($name, $value = null, $options = array())
   return tag('input', array_merge(array('type' => 'text', 'name' => $name, 'id' => get_id_from_name($name, $value), 'value' => $value), _convert_options($options)));
 }
 
-function input_autocomplete_tag($name, $searchUrl, $selectedFunction, $options = array())
+function input_autocomplete_tag($name, $value, $searchUrl, $selectedFunction, $options = array())
 {
 	
-  $value                   = null;
+//  $value                   = null;
   $options['id']           = (isset($options['id'])?$options['id']:get_id_from_name($name, $value));
   $suggestNew              = (isset($options['suggestNew'])?$options['suggestNew']:Util::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY);
   $options['autocomplete'] = 'off';

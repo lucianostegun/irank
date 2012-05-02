@@ -148,6 +148,16 @@ class UserSite extends BaseUserSite
         MyTools::getResponse()->sendHttpHeaders();
 	}
 	
+	public function doLog(){
+		
+		$accessLogObj = new AccessLog();
+		$accessLogObj->setUserSiteId($this->getId());
+		$accessLogObj->setIpAddress($_SERVER['REMOTE_ADDR']);
+		$accessLogObj->save();
+		
+		unset($accessLogObj);
+	}
+	
 	public function getRankingList($criteria=null, $con=null, $count=false){
 		
 		if( is_null($criteria) )

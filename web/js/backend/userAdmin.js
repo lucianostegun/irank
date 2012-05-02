@@ -1,29 +1,9 @@
-function handleSuccessUserAdminIndex(content){
-	
-	if( content ){
-		
-		var userAdminIdList = content.split(',');
-		
-		removeTableRows('userAdmin', userAdminIdList);
-	}
-	
-	hideIndicator();
-}
-
-function handleFailureUserAdminIndex(content){
-	
-	hideIndicator();
-	var errorMessage = parseMessage(content);
-	
-	alert('Não foi possível excluir um ou mais registros selecionados!'+errorMessage);
-}
-
 function handleSuccessUserAdmin(content){
 
 	showFormStatusSuccess();
 	clearFormFieldErrors();
 	
-	mainRecordName = $('#userAdminUserAdminName').val();
+	var mainRecordName = $('#userAdminUsername').val();
 	updateMainRecordName(mainRecordName, true);
 }
 
@@ -42,4 +22,17 @@ function togglePasswordField(){
 	hideDiv('passwordRoDiv');
 	
 	$('#userAdminNewPassword').focus();
+}
+
+function doSelectUserAdminPeople(peopleId, value){
+	
+	$('#userAdminPeopleId').val(peopleId);
+	
+	var successFunc = function(content){
+		
+		$('#userAdminEmailAddress').val(content);
+	}
+
+	var urlAjax = _webRoot+'/people/getEmailAddress/peopleId/'+peopleId;
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
 }

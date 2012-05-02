@@ -106,4 +106,13 @@ class peopleActions extends sfActions
 	echo $peopleObj->getId();
     exit;
   }
+
+  public function executeGetEmailAddress($request){
+    
+    $peopleId  = $request->getParameter('peopleId');
+    $peopleObj = PeoplePeer::retrieveByPK($peopleId);
+    
+    echo $peopleObj->getEmailAddress();
+    exit;
+  }
 }

@@ -17,6 +17,10 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 
 	
+	protected $tag_name;
+
+
+	
 	protected $file_name_logo;
 
 
@@ -132,6 +136,13 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	{
 
 		return $this->club_name;
+	}
+
+	
+	public function getTagName()
+	{
+
+		return $this->tag_name;
 	}
 
 	
@@ -315,6 +326,20 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		if ($this->club_name !== $v) {
 			$this->club_name = $v;
 			$this->modifiedColumns[] = ClubPeer::CLUB_NAME;
+		}
+
+	} 
+	
+	public function setTagName($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->tag_name !== $v) {
+			$this->tag_name = $v;
+			$this->modifiedColumns[] = ClubPeer::TAG_NAME;
 		}
 
 	} 
@@ -573,47 +598,49 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			$this->club_name = $rs->getString($startcol + 1);
 
-			$this->file_name_logo = $rs->getString($startcol + 2);
+			$this->tag_name = $rs->getString($startcol + 2);
 
-			$this->address_name = $rs->getString($startcol + 3);
+			$this->file_name_logo = $rs->getString($startcol + 3);
 
-			$this->address_number = $rs->getString($startcol + 4);
+			$this->address_name = $rs->getString($startcol + 4);
 
-			$this->address_quarter = $rs->getString($startcol + 5);
+			$this->address_number = $rs->getString($startcol + 5);
 
-			$this->city_id = $rs->getInt($startcol + 6);
+			$this->address_quarter = $rs->getString($startcol + 6);
 
-			$this->maps_link = $rs->getString($startcol + 7);
+			$this->city_id = $rs->getInt($startcol + 7);
 
-			$this->club_site = $rs->getString($startcol + 8);
+			$this->maps_link = $rs->getString($startcol + 8);
 
-			$this->description = $rs->getString($startcol + 9);
+			$this->club_site = $rs->getString($startcol + 9);
 
-			$this->phone_number_1 = $rs->getString($startcol + 10);
+			$this->description = $rs->getString($startcol + 10);
 
-			$this->phone_number_2 = $rs->getString($startcol + 11);
+			$this->phone_number_1 = $rs->getString($startcol + 11);
 
-			$this->phone_number_3 = $rs->getString($startcol + 12);
+			$this->phone_number_2 = $rs->getString($startcol + 12);
 
-			$this->visit_count = $rs->getInt($startcol + 13);
+			$this->phone_number_3 = $rs->getString($startcol + 13);
 
-			$this->enabled = $rs->getBoolean($startcol + 14);
+			$this->visit_count = $rs->getInt($startcol + 14);
 
-			$this->visible = $rs->getBoolean($startcol + 15);
+			$this->enabled = $rs->getBoolean($startcol + 15);
 
-			$this->deleted = $rs->getBoolean($startcol + 16);
+			$this->visible = $rs->getBoolean($startcol + 16);
 
-			$this->locked = $rs->getBoolean($startcol + 17);
+			$this->deleted = $rs->getBoolean($startcol + 17);
 
-			$this->created_at = $rs->getTimestamp($startcol + 18, null);
+			$this->locked = $rs->getBoolean($startcol + 18);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 19, null);
+			$this->created_at = $rs->getTimestamp($startcol + 19, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 20, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 20; 
+						return $startcol + 21; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Club object", $e);
 		}
@@ -838,57 +865,60 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				return $this->getClubName();
 				break;
 			case 2:
-				return $this->getFileNameLogo();
+				return $this->getTagName();
 				break;
 			case 3:
-				return $this->getAddressName();
+				return $this->getFileNameLogo();
 				break;
 			case 4:
-				return $this->getAddressNumber();
+				return $this->getAddressName();
 				break;
 			case 5:
-				return $this->getAddressQuarter();
+				return $this->getAddressNumber();
 				break;
 			case 6:
-				return $this->getCityId();
+				return $this->getAddressQuarter();
 				break;
 			case 7:
-				return $this->getMapsLink();
+				return $this->getCityId();
 				break;
 			case 8:
-				return $this->getClubSite();
+				return $this->getMapsLink();
 				break;
 			case 9:
-				return $this->getDescription();
+				return $this->getClubSite();
 				break;
 			case 10:
-				return $this->getPhoneNumber1();
+				return $this->getDescription();
 				break;
 			case 11:
-				return $this->getPhoneNumber2();
+				return $this->getPhoneNumber1();
 				break;
 			case 12:
-				return $this->getPhoneNumber3();
+				return $this->getPhoneNumber2();
 				break;
 			case 13:
-				return $this->getVisitCount();
+				return $this->getPhoneNumber3();
 				break;
 			case 14:
-				return $this->getEnabled();
+				return $this->getVisitCount();
 				break;
 			case 15:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 16:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 17:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 18:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 19:
+				return $this->getCreatedAt();
+				break;
+			case 20:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -903,24 +933,25 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getClubName(),
-			$keys[2]=>$this->getFileNameLogo(),
-			$keys[3]=>$this->getAddressName(),
-			$keys[4]=>$this->getAddressNumber(),
-			$keys[5]=>$this->getAddressQuarter(),
-			$keys[6]=>$this->getCityId(),
-			$keys[7]=>$this->getMapsLink(),
-			$keys[8]=>$this->getClubSite(),
-			$keys[9]=>$this->getDescription(),
-			$keys[10]=>$this->getPhoneNumber1(),
-			$keys[11]=>$this->getPhoneNumber2(),
-			$keys[12]=>$this->getPhoneNumber3(),
-			$keys[13]=>$this->getVisitCount(),
-			$keys[14]=>$this->getEnabled(),
-			$keys[15]=>$this->getVisible(),
-			$keys[16]=>$this->getDeleted(),
-			$keys[17]=>$this->getLocked(),
-			$keys[18]=>$this->getCreatedAt(),
-			$keys[19]=>$this->getUpdatedAt(),
+			$keys[2]=>$this->getTagName(),
+			$keys[3]=>$this->getFileNameLogo(),
+			$keys[4]=>$this->getAddressName(),
+			$keys[5]=>$this->getAddressNumber(),
+			$keys[6]=>$this->getAddressQuarter(),
+			$keys[7]=>$this->getCityId(),
+			$keys[8]=>$this->getMapsLink(),
+			$keys[9]=>$this->getClubSite(),
+			$keys[10]=>$this->getDescription(),
+			$keys[11]=>$this->getPhoneNumber1(),
+			$keys[12]=>$this->getPhoneNumber2(),
+			$keys[13]=>$this->getPhoneNumber3(),
+			$keys[14]=>$this->getVisitCount(),
+			$keys[15]=>$this->getEnabled(),
+			$keys[16]=>$this->getVisible(),
+			$keys[17]=>$this->getDeleted(),
+			$keys[18]=>$this->getLocked(),
+			$keys[19]=>$this->getCreatedAt(),
+			$keys[20]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -943,57 +974,60 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				$this->setClubName($value);
 				break;
 			case 2:
-				$this->setFileNameLogo($value);
+				$this->setTagName($value);
 				break;
 			case 3:
-				$this->setAddressName($value);
+				$this->setFileNameLogo($value);
 				break;
 			case 4:
-				$this->setAddressNumber($value);
+				$this->setAddressName($value);
 				break;
 			case 5:
-				$this->setAddressQuarter($value);
+				$this->setAddressNumber($value);
 				break;
 			case 6:
-				$this->setCityId($value);
+				$this->setAddressQuarter($value);
 				break;
 			case 7:
-				$this->setMapsLink($value);
+				$this->setCityId($value);
 				break;
 			case 8:
-				$this->setClubSite($value);
+				$this->setMapsLink($value);
 				break;
 			case 9:
-				$this->setDescription($value);
+				$this->setClubSite($value);
 				break;
 			case 10:
-				$this->setPhoneNumber1($value);
+				$this->setDescription($value);
 				break;
 			case 11:
-				$this->setPhoneNumber2($value);
+				$this->setPhoneNumber1($value);
 				break;
 			case 12:
-				$this->setPhoneNumber3($value);
+				$this->setPhoneNumber2($value);
 				break;
 			case 13:
-				$this->setVisitCount($value);
+				$this->setPhoneNumber3($value);
 				break;
 			case 14:
-				$this->setEnabled($value);
+				$this->setVisitCount($value);
 				break;
 			case 15:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 16:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 17:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 18:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 19:
+				$this->setCreatedAt($value);
+				break;
+			case 20:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1005,24 +1039,25 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setClubName($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setFileNameLogo($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setAddressName($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setAddressNumber($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setAddressQuarter($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCityId($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setMapsLink($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setClubSite($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setDescription($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setPhoneNumber1($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setPhoneNumber2($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setPhoneNumber3($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setVisitCount($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setEnabled($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setVisible($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setDeleted($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setLocked($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setCreatedAt($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setUpdatedAt($arr[$keys[19]]);
+		if (array_key_exists($keys[2], $arr)) $this->setTagName($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setFileNameLogo($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setAddressName($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setAddressNumber($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setAddressQuarter($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setCityId($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setMapsLink($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setClubSite($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setDescription($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setPhoneNumber1($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setPhoneNumber2($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setPhoneNumber3($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setVisitCount($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setEnabled($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setVisible($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setDeleted($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setLocked($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setCreatedAt($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setUpdatedAt($arr[$keys[20]]);
 	}
 
 	
@@ -1032,6 +1067,7 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(ClubPeer::ID)) $criteria->add(ClubPeer::ID, $this->id);
 		if ($this->isColumnModified(ClubPeer::CLUB_NAME)) $criteria->add(ClubPeer::CLUB_NAME, $this->club_name);
+		if ($this->isColumnModified(ClubPeer::TAG_NAME)) $criteria->add(ClubPeer::TAG_NAME, $this->tag_name);
 		if ($this->isColumnModified(ClubPeer::FILE_NAME_LOGO)) $criteria->add(ClubPeer::FILE_NAME_LOGO, $this->file_name_logo);
 		if ($this->isColumnModified(ClubPeer::ADDRESS_NAME)) $criteria->add(ClubPeer::ADDRESS_NAME, $this->address_name);
 		if ($this->isColumnModified(ClubPeer::ADDRESS_NUMBER)) $criteria->add(ClubPeer::ADDRESS_NUMBER, $this->address_number);
@@ -1081,6 +1117,8 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setClubName($this->club_name);
+
+		$copyObj->setTagName($this->tag_name);
 
 		$copyObj->setFileNameLogo($this->file_name_logo);
 

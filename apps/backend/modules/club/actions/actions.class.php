@@ -51,7 +51,9 @@ class clubActions extends sfActions
     
     $this->pathList[$clubObj->getClubName()] = '#';
     
-    if( $this->clubIdAttribute )
+    $isAdmin = $this->getUser()->hasCredential('iRankAdmin');
+    
+    if( $this->clubIdAttribute && !$isAdmin )
     	$this->toolbarList = array('save');
     else
     	$this->toolbarList = array('new', 'save', 'delete');

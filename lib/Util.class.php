@@ -700,13 +700,15 @@ class Util {
 	 * 
 	 * @author		Luciano Stegun
 	 */
-	public static function getFilePath( $subPath ){
+	public static function getFilePath($subPath, $rootDir){
 		
-		$subPath  = ereg_replace('[\\\\/]', DIRECTORY_SEPARATOR, $subPath);
-		$subPath  = ereg_replace('^[\\\\/]?', '', $subPath);
-		$rootPath = sfConfig::get('sf_web_dir');
+		$subPath = ereg_replace('[\\\\/]', DIRECTORY_SEPARATOR, $subPath);
+		$subPath = ereg_replace('^[\\\\/]?', '', $subPath);
 		
-		$path = $rootPath . DIRECTORY_SEPARATOR . $subPath;
+		if( !$rootDir )
+			$rootDir = sfConfig::get('sf_web_dir');
+		
+		$path = $rootDir . DIRECTORY_SEPARATOR . $subPath;
 		return $path;
 	}
 	

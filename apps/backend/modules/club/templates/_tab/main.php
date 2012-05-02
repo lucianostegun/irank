@@ -6,6 +6,8 @@
 		'loading'=>'showIndicator()',
 		),
 		array('class'=>'form', 'id'=>'clubForm'));
+
+//	echo form_tag('club/save', array('class'=>'form', 'id'=>'clubForm'));
 	
 	$clubId = $clubObj->getId();
 	
@@ -21,6 +23,16 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+
+	<div class="formRow">
+		<label>Página</label>
+		<div class="formRight">
+			<?php echo input_tag('tagName', $clubObj->getTagName(), array('size'=>15, 'maxlength'=>15, 'id'=>'clubTagName')) ?>
+			<div class="formNote error" id="clubFormErrorTagName"></div>
+			<div class="formNote">Nome utilizado na página do clube no site. Ex: www.irank.com.br/<b>nomeClube</b>.</div>
+		</div>
+		<div class="clear"></div>
+	</div>
 	
 	<?php
 		$cityId = $clubObj->getCityId();
@@ -30,7 +42,7 @@
 	<div class="formRow">
 		<label>Cidade</label>
 		<div class="formRight">
-			<?php echo input_autocomplete_tag('cityName', 'city/autoComplete', 'doSelectClubCity', array('size'=>50, 'maxlength'=>200, 'suggestNew'=>true, 'id'=>'clubCityName')) ?>
+			<?php echo input_autocomplete_tag('cityName', $clubObj->getCity()->toString(), 'city/autoComplete', 'doSelectClubCity', array('size'=>50, 'maxlength'=>200, 'suggestNew'=>true, 'id'=>'clubCityName')) ?>
 			<div class="formNote error" id="clubFormErrorCityId"></div>
 		</div>
 		<div class="clear"></div>
