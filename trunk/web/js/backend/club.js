@@ -11,11 +11,22 @@ $(function() {
 		filters : [
 			{title : "Arquivos de imagem", extensions : "jpg,png"}
 			//{title : "Zip files", extensions : "zip"}
-		]
+		],
+		init : {
+		Refresh: function(up) {
+			// Called when upload shim is moved
+		},
+		
+		StateChanged: function(up) {
+			// Called when the state of the queue is changed
+			if(up.state == plupload.STOPPED)
+				updateClubPhotoList();
+		},
+	},
 	});
 	
 	if( getActionName()!='index' )
-		$('.photoList a.lightbox').lightBox();
+		buildClubLightbox();
 });
 
 function handleSuccessClub(content){
@@ -101,4 +112,40 @@ function doSelectClubCity(id, value){
 		
 		$('#clubCityId').val(id)
 	}
+}
+
+function updateClubPhotoList(){
+	
+	var clubId = $('#clubId').val();
+	
+	var successFunc = function(content){
+		
+		$('#clubPhotoListDiv').html(content);
+		
+		buildClubLightbox();
+		
+		hideIndicator();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		hideIndicator();
+		alert('Não foi possível recarregar a listagem de fotos!\nPor favor, recarregue a página para visualizar as fotos carregadas.');
+		
+		if( isDebug() )
+			debug(content);
+	};
+
+	showIndicator();
+
+	var urlAjax = _webRoot+'/club/getPhotoList?clubId='+clubId;
+
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function buildClubLightbox(){
+	
+	$('.photoList a.lightbox').lightBox();
 }

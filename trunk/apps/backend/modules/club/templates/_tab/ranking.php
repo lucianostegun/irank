@@ -15,7 +15,7 @@
 			<?php
 				$criteria = new Criteria();
 				
-				$clubId = $sf_user->getAttribute('clubId');
+				$clubId = $clubObj->getId();
 				
 				if( $clubObj->getIsNew() )
 					$criteria->add( RankingLivePeer::ID, null);

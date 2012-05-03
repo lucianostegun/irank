@@ -20,7 +20,7 @@
                 </div>
                 
                 <div class="loginControl">
-                    <div class="rememberMe"><input type="checkbox" id="remMe" name="remMe" /><label for="remMe">Lembrar de mim</label></div>
+                    <div class="rememberMe"><input type="checkbox" id="remMe" name="keepLogin" /><label for="remMe">Lembrar de mim</label></div>
                     <input type="submit" value="Entrar" class="dredB logMeIn" />
                     <div class="clear"></div>
                 </div>

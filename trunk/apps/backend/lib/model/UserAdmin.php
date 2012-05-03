@@ -73,7 +73,7 @@ class UserAdmin extends BaseUserAdmin
 		return $clubObj;
 	}
 	
-	public function login(){
+	public function login($keepLogin=false){
 		
 		MyTools::getUser()->setCulture('pt_BR');
 	  	
@@ -95,11 +95,19 @@ class UserAdmin extends BaseUserAdmin
 		$this->setLastAccessDate(date('Y-m-d H:i:s'));
 		$this->save();
 		
+		if( $keepLogin ){
+
+        	$userAdminId = base64_encode(serialize(array($this->getId())));
+	        MyTools::setCookie('userAdminId', $userAdminId, (time()+(86400*15)), '/');
+	        MyTools::getResponse()->sendHttpHeaders();
+        }
+		
 		$this->doLog();
 	}
 
 	public static function logout(){
 		
+		MyTools::setCookie('userAdminId', null, time());
 		MyTools::getUser()->getAttributeHolder()->remove('userAdminId');
 		MyTools::getUser()->getAttributeHolder()->remove('peopleId');
 		MyTools::getUser()->getAttributeHolder()->remove('username');
@@ -109,6 +117,9 @@ class UserAdmin extends BaseUserAdmin
 		MyTools::getUser()->removeCredential('iRankAdmin');
 		MyTools::getUser()->removeCredential('iRankClub');
 		MyTools::getUser()->setAuthenticated(false);
+		
+		// Limpa todas as configurações salvas na sessão
+		MyTools::getUser()->getAttributeHolder()->removeNamespace('iRankSettings');
 	}
 	
 	public function doLog(){
@@ -131,5 +142,10 @@ class UserAdmin extends BaseUserAdmin
 		$userAdminId = MyTools::getAttribute('userAdminId');
 		
 		return UserAdminPeer::retrieveByPK($userAdminId);
+	}
+	
+	public function getSettings($tagName){
+		
+		return UserAdminSettingsPeer::retrieveByPK($this->getId(), $tagName)->getSettingsValue();
 	}
 }

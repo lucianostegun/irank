@@ -25,7 +25,6 @@ function loadRankingLiveTab(element, rankingLiveId, parameters, force){
 	element.addClassName('loaded');
 	
 	var completeFunc = function(t){
-		
 		Lightbox = new Lightbox();
 	}
 	

@@ -23,11 +23,11 @@
 					$eventLiveId       = $eventLiveObj->getId();
 					$eventLiveIdList[] = $eventLiveId;
 					
-					$onclick = 'goToPage(\'eventLive\', \'edit\', \'eventLiveId\', '.$eventLiveId.')"';
-					
-					$className = ($eventLiveObj->isPastDate()?'dimmed':'');
+					$onclick       = 'goToPage(\'eventLive\', \'edit\', \'eventLiveId\', '.$eventLiveId.')"';
+					$pendingResult = $eventLiveObj->isPendingResult();
+					$className     = ($eventLiveObj->isPastDate()?'dimmed':'');
 			?>
-			<tr class="gradeA <?php echo $className ?>" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
+			<tr class="<?php echo ($pendingResult?'gradeAlert':'gradeA') ?> <?php echo $className ?>" title="<?php echo ($pendingResult?__('eventLive.pendingResultAlert'):'') ?>" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
 				<td><?php echo checkbox_tag('eventLiveId[]', $eventLiveId) ?></td> 
 				<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getEventName() ?></td> 
 				<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getRankingLive()->toString() ?></td> 

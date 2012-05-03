@@ -54,7 +54,7 @@ fields:
     required:
       msg:       form.error.requiredField
     sfCallbackValidator:
-      callback:      [Validate, validateTime]
+      callback:      [RankingLivePeer, validateBlindTime]
       invalid_error: form.error.invalidTime
 
   stackChips:

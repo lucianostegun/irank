@@ -46,7 +46,7 @@
 		<?php echo input_hidden_tag('clubId'.$i, $clubId, array('id'=>'rankingLiveQuickEventLiveClubId'.$i)) ?>
 		<?php endif; ?>
 		<span class="multi" style="width: 100px"><?php echo input_tag('eventDate'.$i, null, array('maxlength'=>10, 'class'=>'datepickerClean maskDate', 'onblur'=>'validateQuickAddEvent('.$i.')', 'id'=>'rankingLiveQuickEventLiveEventDate'.$i)) ?></span>
-		<span class="multi" style="width: 90px"><?php echo input_tag('startTime'.$i, $rankingLiveObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'onblur'=>'validateQuickAddEvent('.$i.')', 'id'=>'rankingLiveQuickEventLiveStartTime'.$i)) ?></span>
+		<span class="multi" style="width: 90px"><?php echo input_tag('startTime'.$i, $rankingLiveObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'class'=>'rankingLiveQuickEventStartTime', 'onkeyup'=>'maskTime(event)', 'onblur'=>'validateQuickAddEvent('.$i.')', 'id'=>'rankingLiveQuickEventLiveStartTime'.$i)) ?></span>
 		<span class="multi" style="width: 30px; margin-top: 9px" id="quickAddEventLiveInfo<?php echo $i ?>"><?php echo image_tag('backend/icons/iconRed') ?></span>
 		<div class="clear"></div>
 	</div>

@@ -96,10 +96,40 @@
 				<target>Informe um valor maior ou igual a 0</target>
 			</trans-unit>
 			
-			
+			<trans-unit>
+				<source>form.error.expiredDate</source>
+				<target>A data informada não pode mais ser utilizada para eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenEventName</source>
+				<target>Já existe um evento cadastrado com este nome para esta mesma data</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidTime</source>
+				<target>A valor informado não é uma hora válida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterThan0</source>
+				<target>Informe um número maior que 0</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max140</source>
+				<target>Informe um valor de até 140 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>zero.zeroZero</source>
+				<target>0,00</target>
+			</trans-unit>
+
+
 			<trans-unit>
 				<source>select</source>
 				<target>Selecione</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>eventLive.pendingResultAlert</source>
+				<target>O resultado deste evento está pendente de publicação</target>
 			</trans-unit>
 			
 		</body>

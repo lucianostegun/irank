@@ -40,8 +40,10 @@ abstract class sfActions extends sfAction
 	$this->realModuleName = $realModuleName = $this->getModuleName();
 	
 	$userSiteId      = MyTools::getCookie('userSiteId');
+	$userAdminId     = MyTools::getCookie('userAdminId');
 	$isAuthenticated = $this->getUser()->isAuthenticated();
 
+	// Autentica o usuário do site se ele tiver o cookie de autenticação
 	if( $userSiteId && $moduleName!=='login' && !$isAuthenticated ){
 
 		$userSiteId = unserialize(base64_decode($userSiteId));
@@ -49,6 +51,16 @@ abstract class sfActions extends sfAction
 
 		$userSiteObj = UserSitePeer::retrieveByPK( $userSiteId );
 		$userSiteObj->login();
+	}
+
+	// Autentica o usuário da administração se ele tiver o cookie de autenticação
+	if( $userAdminId && $moduleName!=='login' && !$isAuthenticated ){
+
+		$userAdminId = unserialize(base64_decode($userAdminId));
+		$userAdminId = $userAdminId[0];
+
+		$userAdminObj = UserAdminPeer::retrieveByPK( $userAdminId );
+		$userAdminObj->login(true);
 	}
 
     // dispatch action

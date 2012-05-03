@@ -807,12 +807,50 @@
 		</foreign-key>
 	</table>
 
-	<table name="access_admin_log" phpName="AccessAdminLog">
+	<table name="access_admin_log" phpName="AccessAdminLog" package="...apps.backend.lib.model">
 		<column name="user_admin_id" type="INTEGER" primaryKey="true" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="ip_address" type="VARCHAR" />
 		<foreign-key foreignTable="user_admin">
 			<reference local="user_admin_id" foreign="id" />
+		</foreign-key>
+	</table>
+
+	<table name="settings" phpName="Settings" package="...apps.backend.lib.model">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true" />
+		<column name="tag_name" type="VARCHAR" />
+		<column name="settings_name" type="VARCHAR" />
+		<column name="description" type="VARCHAR" />
+		<column name="default_value" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+
+	<table name="club_settings" phpName="ClubSettings" package="...apps.backend.lib.model">
+		<column name="club_id" type="INTEGER" primaryKey="true" />
+		<column name="settings_id" type="INTEGER" primaryKey="true" />
+		<column name="settings_value" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="club">
+			<reference local="club_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="settings">
+			<reference local="settings_id" foreign="id" />
+		</foreign-key>
+	</table>
+	
+	<table name="user_admin_settings" phpName="UserAdminSettings" package="...apps.backend.lib.model">
+		<column name="user_admin_id" type="INTEGER" primaryKey="true" />
+		<column name="settings_id" type="INTEGER" primaryKey="true" />
+		<column name="settings_value" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="user_admin">
+			<reference local="user_admin_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="settings">
+			<reference local="settings_id" foreign="id" />
 		</foreign-key>
 	</table>
 	

@@ -51,6 +51,8 @@ class rankingLiveActions extends sfActions
 
   public function executeChart($request){
   	
+  	$this->rankingLiveId  = Util::decodeId($this->rankingLiveId);
+  	
   	$this->rankingLiveObj = $rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
   	
   	$rankingDateList          = $rankingLiveObj->getDateList();

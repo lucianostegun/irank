@@ -65,15 +65,18 @@ table.display td.center { text-align: center; }
 
 
 /* DataTables row classes*/
-table.display tr.gradeA td { cursor: pointer }
-table.display tr.odd.gradeA { background-color: #ddffdd; }
-table.display tr.even.gradeA { background-color: #eeffee; }
+table.display tr.gradeA td,
+table.display tr.gradeAlert td { cursor: pointer }
 
 table.display tr { border-bottom: 1px solid #d0d0d0; }
 table.display td { border-left: 1px solid #d0d0d0; }
 table.display td:first-child { border-left: none; }
 table.display tr.odd.gradeA { background-color: #fafafa; }
 table.display tr.even.gradeA { background-color: #e5e5e5; }
+
+table.display tr.gradeAlert { color: #a32200; font-weight: bold; text-shadow: #c0c0c0 1px 1px }
+table.display tr.odd.gradeAlert { background-color: #fafafa }
+table.display tr.even.gradeAlert { background-color: #e5e5e5 }
 
 table.display tr.odd.gradeC { background-color: #ddddff; }
 table.display tr.even.gradeC { background-color: #eeeeff; }
@@ -133,15 +136,19 @@ tr.even td.sorting_3 { background-color: #F9F9FF; }
 tr.odd.gradeA td.sorting_1 { background-color: #f4f4f4; }
 tr.odd.gradeA td.sorting_2 { background-color: #d1ffd1; }
 tr.odd.gradeA td.sorting_3 { background-color: #d1ffd1; }
-
 tr.even.gradeA td.sorting_1 { background-color: #e5e5e5; }
 tr.even.gradeA td.sorting_2 { background-color: #e2ffe2; }
 tr.even.gradeA td.sorting_3 { background-color: #e2ffe2; }
 
-table.display tr.gradeA:hover, 
-tr.gradeA:hover td.sorting_1,
-tr.gradeA:hover td.sorting_2,
-tr.gradeA:hover td.sorting_3 { 
+tr.odd.gradeAlert td.sorting_1 { background-color: #f4f4f4; }
+tr.odd.gradeAlert td.sorting_2 { background-color: #d1ffd1; }
+tr.odd.gradeAlert td.sorting_3 { background-color: #d1ffd1; }
+tr.even.gradeAlert td.sorting_1 { background-color: #e5e5e5; }
+tr.even.gradeAlert td.sorting_2 { background-color: #e2ffe2; }
+tr.even.gradeAlert td.sorting_3 { background-color: #e2ffe2; }
+
+table.display tr.gradeA:hover,  tr.gradeA:hover td.sorting_1, tr.gradeA:hover td.sorting_2, tr.gradeA:hover td.sorting_3,
+table.display tr.gradeAlert:hover,  tr.gradeAlert:hover td.sorting_1, tr.gradeAlert:hover td.sorting_2, tr.gradeAlert:hover td.sorting_3 { 
 	
 	background-color: #f8c05d;
 }

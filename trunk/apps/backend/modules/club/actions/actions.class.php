@@ -249,4 +249,11 @@ class clubActions extends sfActions
 
   	exit;
   }
+
+  public function executeGetPhotoList($request){
+    
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('club/include/photos', array('clubId'=>$this->clubId)));
+  }
 }

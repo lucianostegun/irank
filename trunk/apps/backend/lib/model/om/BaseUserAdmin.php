@@ -76,6 +76,12 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 	protected $lastAccessAdminLogCriteria = null;
 
 	
+	protected $collUserAdminSettingsList;
+
+	
+	protected $lastUserAdminSettingsCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -552,6 +558,14 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collUserAdminSettingsList !== null) {
+				foreach($this->collUserAdminSettingsList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -609,6 +623,14 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 
 				if ($this->collAccessAdminLogList !== null) {
 					foreach($this->collAccessAdminLogList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collUserAdminSettingsList !== null) {
+					foreach($this->collUserAdminSettingsList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -862,6 +884,10 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 				$copyObj->addAccessAdminLog($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getUserAdminSettingsList() as $relObj) {
+				$copyObj->addUserAdminSettings($relObj->copy($deepCopy));
+			}
+
 		} 
 
 		$copyObj->setNew(true);
@@ -956,7 +982,7 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 	
 	public function getAccessAdminLogList($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseAccessAdminLogPeer.php';
+				include_once 'apps/backend/lib/model/om/BaseAccessAdminLogPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -994,7 +1020,7 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 	
 	public function countAccessAdminLogList($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseAccessAdminLogPeer.php';
+				include_once 'apps/backend/lib/model/om/BaseAccessAdminLogPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1013,6 +1039,111 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 	{
 		$this->collAccessAdminLogList[] = $l;
 		$l->setUserAdmin($this);
+	}
+
+	
+	public function initUserAdminSettingsList()
+	{
+		if ($this->collUserAdminSettingsList === null) {
+			$this->collUserAdminSettingsList = array();
+		}
+	}
+
+	
+	public function getUserAdminSettingsList($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseUserAdminSettingsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collUserAdminSettingsList === null) {
+			if ($this->isNew()) {
+			   $this->collUserAdminSettingsList = array();
+			} else {
+
+				$criteria->add(UserAdminSettingsPeer::USER_ADMIN_ID, $this->getId());
+
+				UserAdminSettingsPeer::addSelectColumns($criteria);
+				$this->collUserAdminSettingsList = UserAdminSettingsPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(UserAdminSettingsPeer::USER_ADMIN_ID, $this->getId());
+
+				UserAdminSettingsPeer::addSelectColumns($criteria);
+				if (!isset($this->lastUserAdminSettingsCriteria) || !$this->lastUserAdminSettingsCriteria->equals($criteria)) {
+					$this->collUserAdminSettingsList = UserAdminSettingsPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastUserAdminSettingsCriteria = $criteria;
+		return $this->collUserAdminSettingsList;
+	}
+
+	
+	public function countUserAdminSettingsList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseUserAdminSettingsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(UserAdminSettingsPeer::USER_ADMIN_ID, $this->getId());
+
+		return UserAdminSettingsPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addUserAdminSettings(UserAdminSettings $l)
+	{
+		$this->collUserAdminSettingsList[] = $l;
+		$l->setUserAdmin($this);
+	}
+
+
+	
+	public function getUserAdminSettingsListJoinSettings($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseUserAdminSettingsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collUserAdminSettingsList === null) {
+			if ($this->isNew()) {
+				$this->collUserAdminSettingsList = array();
+			} else {
+
+				$criteria->add(UserAdminSettingsPeer::USER_ADMIN_ID, $this->getId());
+
+				$this->collUserAdminSettingsList = UserAdminSettingsPeer::doSelectJoinSettings($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(UserAdminSettingsPeer::USER_ADMIN_ID, $this->getId());
+
+			if (!isset($this->lastUserAdminSettingsCriteria) || !$this->lastUserAdminSettingsCriteria->equals($criteria)) {
+				$this->collUserAdminSettingsList = UserAdminSettingsPeer::doSelectJoinSettings($criteria, $con);
+			}
+		}
+		$this->lastUserAdminSettingsCriteria = $criteria;
+
+		return $this->collUserAdminSettingsList;
 	}
 
 } 

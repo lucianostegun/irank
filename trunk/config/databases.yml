@@ -3,6 +3,7 @@ all:
     class:          sfPropelDatabase
     param:
       dsn:                pgsql://postgres:unidunite@localhost/irank
+#      dsn:                pgsql://irank1:ir4nk4lph4@pgsql.irank.com.br/irank1
       phptype:            pgsql
       port:               5432
       encoding:           utf8

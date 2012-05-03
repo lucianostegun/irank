@@ -193,7 +193,7 @@ function linkToFunction(label, module, action, fieldName, fieldValue){
 
 function toCurrency(value, decimalPlaces){
 	
-	decimalPlaces = (decimalPlaces?decimalPlaces:2);
+	decimalPlaces = (typeof(decimalPlaces)!='undefined'?decimalPlaces:2);
 	return toFloat(value, true, decimalPlaces);
 }
 
@@ -201,13 +201,8 @@ function toFloat(value, display, decimalPlaces){
 
 	decimalPlaces = (typeof(decimalPlaces)=='undefined'?2:decimalPlaces);
 	
-	if( !value ){
-		
-		if( display )
-			return '0,00';
-		else
-			return 0;
-	}
+	if( !value )
+		value = 0;
 	
 	value = value+' ';
 	

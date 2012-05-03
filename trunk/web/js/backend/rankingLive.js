@@ -216,3 +216,8 @@ function handleScoreFormulaOption(scoreFormulaOption){
 		$('#rankingLiveScoreFormulaMultipleDiv').show();
 	}
 }
+
+function replicateStartTime(startTime){
+	
+	$('.rankingLiveQuickEventStartTime').val(startTime);
+}

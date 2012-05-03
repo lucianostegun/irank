@@ -12,7 +12,7 @@
 	<div id="eventLiveList">
 		<?php
 			$criteria = new Criteria();
-			$criteria->add( EventLivePeer::EVENT_DATE, Util::getDate('30d'), Criteria::LESS_THAN);
+//			$criteria->add( EventLivePeer::EVENT_DATE, Util::getDate('30d'), Criteria::LESS_THAN);
 			$eventLiveObjList = EventLivePeer::search($criteria);
 			
 			if( count($eventLiveObjList)==0 ):
@@ -55,7 +55,7 @@
 						<tr>
 							<td><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td>
 							<td><?php echo $eventLiveObj->getBlindTime('H:i') ?></td>
-							<td><?php echo $eventLiveObj->getStackChips() ?></td>
+							<td><?php echo $eventLiveObj->getStackChips(true) ?></td>
 							<td id="eventLive<?php echo $eventLiveId ?>ResumePlayers"><?php echo $eventLiveObj->getPlayers() ?></td>
 						</tr>
 					</table>

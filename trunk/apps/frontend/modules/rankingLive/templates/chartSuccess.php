@@ -28,7 +28,7 @@ $players = max(array_merge($totalRankingPositionList, $rankingPositionList));
 
 // Initialise the graph   
 $Test = new pChart($width,$height+60, true);
-$Test->loadColorPalette($libDir.'/pChart/tones/rankingLive/performance.txt');
+//$Test->loadColorPalette($libDir.'/pChart/tones/rankingLive/performance.txt');
 $Test->setFixedScale($players+1, 1, $players);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->setGraphArea(55,55,$width-45,$height-20);
@@ -56,9 +56,9 @@ $Test->drawCubicCurve($DataSet->GetData(),$DataSet->GetDataDescription());
 $Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),4,2,255,255,255);
 
 header('Content-Type: image/jpeg');
-//header('Content-Disposition: attachment; filename=performance.png');
-//header('Expires: 0');
-//header('Pragma: no-cache');   
+header('Content-Disposition: attachment; filename=performance.png');
+header('Expires: 0');
+header('Pragma: no-cache');   
  
 // Finish the graph   
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);

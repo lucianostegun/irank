@@ -339,6 +339,7 @@ ul.sub li ul li { padding-left: 10px; }
 .sNegative, .sPositive, .sZero { padding: 26px 0 2px 0; text-align: center; display: block; font-size: 14px; }
 .sNegative { color: #e77575; background: url(/images/backend/backgrounds/sidebarNegativeArrow.png) no-repeat 14px 10px;}
 .sPositive { color: #90c254; background: url(/images/backend/backgrounds/sidebarPositiveArrow.png) no-repeat 14px 10px; }
+.sZero { color: #FFFFFF; background: url(/images/backend/backgrounds/sidebarZero.png) no-repeat 13px 10px; }
 
 .genBalance .amountWide { width: 186px; float: left; margin-right: 1px; margin-bottom: 6px; border-right: 1px solid #3b4751; padding: 10px 14px 4px 14px; border-left: 1px solid #3b4751; }
 .genBalance .amountWide span { float: left; width: 100px }
@@ -770,7 +771,10 @@ ul.tabs li a { display: block; padding: 0px 12px; outline: none; color: #424242;
 ul.tabs li a:hover { color: #797979; }
 html ul.tabs li.activeTab  { background-color: #f9f9f9; height: 37px; }
 .rightTabs .activeTab, .leftTabs .activeTab { height: 36px!important; }
-html ul.tabs li.activeTab a { color: #2E6B9B; } 
+html ul.tabs li.activeTab a { color: #2E6B9B; }
+
+ul.tabs li.error a, html ul.tabs li.error.activeTab a { color: #c33210 }
+ul.tabs li.error a:hover { color: #c33210; } 
 
 .tab_container { overflow: hidden; width: 100%; }
 .tab_content { padding: 10px 12px; }
@@ -1001,12 +1005,6 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .sTable tbody td { border-left: 1px solid #e4e4e4; padding: 8px 12px; vertical-align: middle; }
 .sTable tbody td:first-child { border-left: none }
 .sTable tbody tr:first-child { border-top: none; }
-.sTable tbody tr.gradeA td { cursor: pointer }
-
-.sTable tbody tr .gradeA:hover { 
-	
-	background-color: #f8c05d;
-}
 
 .withCheck tbody tr td:first-child, .withCheck tbody tr th:first-child { padding: 11px; }
 .withCheck thead tr td:first-child { vertical-align: middle; width: 37px!important; padding: 0; }
@@ -1162,7 +1160,7 @@ div.tagsinput div { display: block; float: left; }
 
 div.selector { position: relative; height: 28px; background: url(/images/backend/forms/select_left.png) no-repeat top left; float: left; width: 190px; position: relative; padding-left: 10px; }
 div.selector select { width: 200px; font-size: 12px; position: absolute; height: 28px; top: 0; left: 0; }
-div.selector span { width: 190px; cursor: pointer; position: absolute; right: 0; height: 28px; background: url(/images/backend/forms/select_right.png) no-repeat center right; top: 0; line-height: 28px; font-size: 11px; }
+div.selector span { width: 170px; padding-right: 20px; cursor: pointer; position: absolute; right: 0; height: 28px; background: url(/images/backend/forms/select_right.png) no-repeat center right; top: 0; line-height: 28px; font-size: 11px; overflow: hidden }
 
 .dataTables_length div.selector { width: 45px; float: left; height: 22px; background: url(/images/backend/forms/select_left_datatable.png) no-repeat top left; padding-left: 8px; }
 .dataTables_length div.selector span { width: 45px; height: 22px; background: url(/images/backend/forms/select_right_datatable.png) no-repeat center right; line-height: 22px; }
@@ -1954,4 +1952,9 @@ height: 24px;
 background: url(/images/backend/breadcrumb_divider.png) no-repeat;
 float: left;
 margin: 0 5px;
+}
+
+.hidden {
+
+	display: 	none;
 }

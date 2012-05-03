@@ -51,7 +51,7 @@ fields:
       
   blindTime:
     sfCallbackValidator:
-      callback:      [Validate, validateTime]
+      callback:      [RankingLivePeer, validateBlindTime]
       invalid_error: form.error.invalidTime
 
   stackChips:
@@ -77,3 +77,10 @@ fields:
     sfCallbackValidator:
       callback:      [RankingLivePeer, validateScoreFormula]
       invalid_error: nullError
+       
+  prizeSplit:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [RankingLivePeer, validatePrizeSplit]
+      invalid_error: A divisão padrão de prêmios deve somar 100%

@@ -4,6 +4,11 @@ fields:
     required:
       msg:       Selecione um nome na lista de sugestões
       
+  clubId:
+    sfCallbackValidator:
+      callback:      [UserAdminPeer, validateMasterClub]
+      invalid_error: Um usuário não pode ser Master e pertencer a um clube
+      
   peopleName:
     required:
       msg:       form.error.requiredField

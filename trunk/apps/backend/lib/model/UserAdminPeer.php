@@ -10,7 +10,7 @@
 class UserAdminPeer extends BaseUserAdminPeer
 {
 	
-	public static function uniqueUsername( $username ){
+	public static function uniqueUsername($username){
 		
 		$userAdminId = MyTools::getAttribute('userAdminId');
 		
@@ -20,5 +20,18 @@ class UserAdminPeer extends BaseUserAdminPeer
 		$userAdminObj = UserAdminPeer::doSelectOne( $criteria );
 
 		return !is_object( $userAdminObj );
+	}
+
+	public static function validateMasterClub($clubId){
+		
+		$master = MyTools::getRequestParameter('master');
+		
+		if( $clubId && $master ){
+			
+			MyTools::setError('master', 'Um usuário não pode ser Master e pertencer a um clube');
+			return false;
+		}
+
+		return true;
 	}
 }

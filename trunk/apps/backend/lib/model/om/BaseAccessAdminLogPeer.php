@@ -10,7 +10,7 @@ abstract class BaseAccessAdminLogPeer {
 	const TABLE_NAME = 'access_admin_log';
 
 	
-	const CLASS_DEFAULT = 'lib.model.AccessAdminLog';
+	const CLASS_DEFAULT = '...apps.backend.lib.model.AccessAdminLog';
 
 	
 	const NUM_COLUMNS = 3;
@@ -52,8 +52,8 @@ abstract class BaseAccessAdminLogPeer {
 	
 	public static function getMapBuilder()
 	{
-		include_once 'lib/model/map/AccessAdminLogMapBuilder.php';
-		return BasePeer::getMapBuilder('lib.model.map.AccessAdminLogMapBuilder');
+		include_once 'apps/backend/lib/model/map/AccessAdminLogMapBuilder.php';
+		return BasePeer::getMapBuilder('...apps.backend.lib.model.map.AccessAdminLogMapBuilder');
 	}
 	
 	public static function getPhpNameMap()
@@ -530,6 +530,6 @@ if (Propel::isInit()) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
-			require_once 'lib/model/map/AccessAdminLogMapBuilder.php';
-	Propel::registerMapBuilder('lib.model.map.AccessAdminLogMapBuilder');
+			require_once 'apps/backend/lib/model/map/AccessAdminLogMapBuilder.php';
+	Propel::registerMapBuilder('...apps.backend.lib.model.map.AccessAdminLogMapBuilder');
 }

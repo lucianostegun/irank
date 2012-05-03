@@ -17,7 +17,6 @@ $mainBalanceValue        = isset($mainBalanceValue)?$mainBalanceValue:0;
 $mainBalanceBase         = isset($mainBalanceBase)?$mainBalanceBase:0;
 $mainBalanceChanges      = isset($mainBalanceChanges)?$mainBalanceChanges:null;
 $mainBalanceChangesLabel = isset($mainBalanceChangesLabel)?$mainBalanceChangesLabel:null;
-$numStatList             = isset($numStatList)?$numStatList:array();
 
 $toolbarList = isset($toolbarList)?$toolbarList:array();
 ?>
@@ -47,60 +46,11 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
     <div class="sidebarSep"></div>
     </form>
 
-	<?php
-		if( isset($mainBalanceLabel) && isset($mainBalanceValue) ):
-		
-			$mainBalanceChanges = isset($mainBalanceChanges)?$mainBalanceChanges:null;
-	?>
-    <!-- General balance widget -->
-    <div class="genBalance">
-    	<?php if( isset($mainBalanceLabel) ): ?>
-        <a href="javascript:void(0)" title="" class="amount">
-            <span><?php echo $mainBalanceLabel ?>:</span>
-            <span class="balanceAmount" id="mainBalanceAmount">R$ <?php echo Util::formatFloat($mainBalanceValue, true) ?></span>
-        </a>
-        <?php endif; ?>
-        <?php if( !is_null($mainBalanceChanges) ): ?>
-        <a href="javascript:void(0)" title="" class="amChanges">
-            <strong class="<?php echo ($mainBalanceChanges<0?'sNegative':'sPositive') ?>" title="<?php echo $mainBalanceChangesLabel ?>" id="mainBalanceChanges"><?php echo Util::formatFloat(abs($mainBalanceChanges), true, 1) ?>%</strong>
-        </a>
-	    <?php endif; ?>
-    </div>
-    <div class="sidebarSep"></div>
-    <?php endif; ?>
-    
+    <!-- Balance -->
+	<?php if( isset($balance) ) echo $balance; ?>
+	
     <!-- Statistics -->
-    <?php if( !empty($numStatList) ): ?>
-    <div class="numStats">
-    	<ul>
-    		<?php
-    			$i = 0;
-    			foreach($numStatList as $label=>$info):
-    				$i++;
-    		?>
-        	<li class="<?php echo ($i==count($numStatList)?'last':'') ?>"><?php echo $info['value'] ?><span><?php echo $label ?></span></li>
-        	<?php endforeach; ?>
-        </ul>
-        <div class="clear"></div>
-    </div>
-	<div class="sRoundStats">
-    	<ul>
-    		<?php
-    			$i = 0;
-    			foreach($numStatList as $label=>$info):
-    				$i++;
-    				
-    				$changes = $info['changes'];
-    				$class = ($changes>0?'roundPos':($changes<0?'roundNeg':'roundZero'));
-    		?>
-        	<li><a href="javascript:void(0)"><span class="<?php echo $class ?>"><?php echo Util::formatFloat(abs($changes), true, 0) ?>%</span></a></li>
-        	<?php endforeach; ?>
-
-        </ul>
-        <div class="clear"></div>
-    </div>
-    <div class="sidebarSep"></div>
-    <?php endif ?>
+	<?php if( isset($stats) ) echo $stats; ?>
     
     <!-- Left navigation -->
 	
@@ -178,9 +128,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
                         </ul>
                     </li>
                     -->
-                    <?php if( $iRankAdmin ): ?>
-                    <li style="display: none"><?php echo link_to(image_tag('backend/icons/topnav/settings').'<span>Configurações</span>', 'settings/index') ?></li>
-                    <?php endif; ?>
+                    <li><?php echo link_to(image_tag('backend/icons/topnav/settings').'<span>Configurações</span>', 'settings/index') ?></li>
                     <li><?php echo link_to(image_tag('backend/icons/topnav/logout').'<span>Logout</span>', 'login/logout') ?></li>
                 </ul>
             </div>
