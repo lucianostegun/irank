@@ -5,7 +5,7 @@
 class AccessAdminLogMapBuilder {
 
 	
-	const CLASS_NAME = 'lib.model.map.AccessAdminLogMapBuilder';
+	const CLASS_NAME = '...apps.backend.lib.model.map.AccessAdminLogMapBuilder';
 
 	
 	private $dbMap;

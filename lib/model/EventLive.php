@@ -11,6 +11,7 @@ class EventLive extends BaseEventLive
 {
 	
 	const PRIZE_SPLIT_PATTERN = '((; ?)|(, ?))';
+	private $eventLiveObjPrevious = null; // Variável que vai armazenar o evento imediatamente anterior a este
 	
 	public function getIsNew(){
 		
@@ -73,6 +74,8 @@ class EventLive extends BaseEventLive
 		
 		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $stackChips) )
 			$stackChips = Util::formatFloat($stackChips)*1000;
+			
+		$blindTime = RankingLive::convertBlindTime($blindTime);
 
 		if( $isFreeroll )
 			$buyin = 0;
@@ -385,8 +388,9 @@ class EventLive extends BaseEventLive
 	
 	public function parseScore($position, $events, $prize, $players, $totalBuyins, $buyin, $itm, $peopleId=null){
 		
-		$eventLiveId = $this->getId();
-		$formula     = $this->getRankingLive()->getScoreFormula();
+		$eventLiveId   = $this->getId();
+		$formula       = $this->getRankingLive()->getScoreFormula();
+		$formulaOption = $this->getRankingLive()->getScoreFormulaOption();
 		
 		if( !$formula )
 			$formula = RankingLive::DEFAULT_SCORE_FORMULA;
@@ -414,7 +418,7 @@ class EventLive extends BaseEventLive
 			
 			preg_match('/^(.*): ?/', $formula, $matches);
 			
-			$label   = $matches[1];
+			$label   = ($formulaOption=='multiple'?$matches[1]:'');
 			$formula = preg_replace('/^'.$label.': */', '', $formula);
 			$score   = 0;
 			
@@ -631,6 +635,9 @@ class EventLive extends BaseEventLive
 	
 	public function getPreviousEventLive(){
 		
+		if( is_object($this->eventLiveObjPrevious) )
+			return $this->eventLiveObjPrevious;
+		
 		$criteria = new Criteria();
 		$criteria->add( EventLivePeer::ENABLED, true );
 		$criteria->add( EventLivePeer::VISIBLE, true );
@@ -645,7 +652,9 @@ class EventLive extends BaseEventLive
 			$eventLiveObj->setId(0);
 		}
 		
-		return $eventLiveObj;		
+		$this->eventLiveObjPrevious = $eventLiveObj;
+		
+		return $eventLiveObj;
 	}
 	
 	public function getBalanceDifference(){
@@ -658,8 +667,8 @@ class EventLive extends BaseEventLive
 			return 0;
 		
 		$difference = $totalBuyin-$totalBuyinPrevious;
-		
 		$percent    = ($difference*100/($totalBuyinPrevious?$totalBuyinPrevious:1));
+		
 		return $percent;
 	}
 	
@@ -669,27 +678,47 @@ class EventLive extends BaseEventLive
 		$players        = $this->getPlayers(false, true);
 		$playersConfirm = $this->getPlayers();
 		
-		$eventLiveObj           = $this->getPreviousEventLive();
+		$eventLiveObj = $this->getPreviousEventLive();
 		
 		if( $eventLiveObj->isNew() ){
 			
-			$visitCountPrevious     = $visitCount;
-			$playersPrevious        = $players;
-			$playersConfirmPrevious = $playersConfirm;
+			$visitCountPrevious     = 0;
+			$playersPrevious        = 0;
+			$playersConfirmPrevious = 0;
+			
+			$changesVisitCount    = 0;
+			$changePlayers        = 0;
+			$changePlayersConfirm = 0;
 		}else{
 			
 			$visitCountPrevious     = $eventLiveObj->getVisitCount();
 			$playersPrevious        = $eventLiveObj->getPlayers(false, true);
 			$playersConfirmPrevious = $eventLiveObj->getPlayers();
+			
+			$changesVisitCount    = (($visitCount-$visitCountPrevious)*100/($visitCountPrevious?$visitCountPrevious:1));
+			$changePlayers        = (($players-$playersPrevious)*100/($playersPrevious?$playersPrevious:1));
+			$changePlayersConfirm = (($playersConfirm-$playersConfirmPrevious)*100/($playersConfirmPrevious?$playersConfirmPrevious:1));
 		}
 		
 		
 		$numStatList = array();
-		$numStatList['Visitas']    = array('value'=>$visitCount, 'changes'=>(($visitCount-$visitCountPrevious)*100/($visitCountPrevious?$visitCountPrevious:1)));
-    	$numStatList['Inscrições'] = array('value'=>$players, 'changes'=>(($players-$playersPrevious)*100/($playersPrevious?$playersPrevious:1)));
-    	$numStatList['Confirm.']   = array('value'=>$playersConfirm, 'changes'=>(($playersConfirm-$playersConfirmPrevious)*100/($playersConfirmPrevious?$playersConfirmPrevious:1)));
+		$numStatList['Visitas']    = array('tagName'=>'visitCount',     'value'=>$visitCount, 'changes'=>$changesVisitCount, 'previous'=>$visitCountPrevious);
+    	$numStatList['Inscrições'] = array('tagName'=>'players',        'value'=>$players, 'changes'=>$changePlayers, 'previous'=>$playersPrevious);
+    	$numStatList['Confirm.']   = array('tagName'=>'playersConfirm', 'value'=>$playersConfirm, 'changes'=>$changePlayersConfirm, 'previous'=>$playersConfirmPrevious);
     	
     	return $numStatList;
+	}
+	
+	public function hasPreviousPendingResult(){
+		
+		return Util::executeOne('SELECT has_previous_pending_results('.$this->getId().')', 'boolean');
+	}
+
+	public function isPendingResult(){
+		
+		$hoursToPending = Settings::getValue('hoursToPending');
+		
+		return (!$this->getSavedResult() && ($this->getEventDateTime(null) < (time()-(3600*$hoursToPending))));
 	}
 	
 	public function getInfo(){
@@ -710,6 +739,7 @@ class EventLive extends BaseEventLive
 		$infoList['blindTime']      = $this->getBlindTime('H:i');
 		$infoList['stackChips']     = $this->getStackChips();
 		$infoList['players']        = $this->getPlayers();
+		$infoList['savedResult']    = $this->getSavedResult();
 		
 		return $infoList;
 	}

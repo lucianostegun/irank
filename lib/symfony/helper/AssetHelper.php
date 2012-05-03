@@ -226,9 +226,9 @@ function decorate_with($layout)
  * @return string file path to the image file
  * @see    image_tag  
  */
-function image_path($source, $absolute = false)
+function image_path($source, $absolute = false, $noExtension=false)
 {
-  return _compute_public_path($source, 'images', 'png', $absolute);
+  return _compute_public_path($source, 'images', ($noExtension?'':'png'), $absolute);
 }
 
 /**
@@ -271,7 +271,14 @@ function image_tag($source, $options = array())
     $absolute = true;
   }
 
-  $options['src'] = image_path($source, $absolute);
+  $noExtension = false;
+  if (isset($options['noExtension']))
+  {
+    unset($options['noExtension']);
+    $noExtension = true;
+  }
+
+  $options['src'] = image_path($source, $absolute, $noExtension);
 
   if (isset($options['size']))
   {
@@ -305,7 +312,7 @@ function _compute_public_path($source, $dir, $ext, $absolute = false)
 
   if (false === strpos(basename($source), '.'))
   {
-    $source .= '.'.$ext;
+    $source .= ($ext?'.'.$ext:'');
   }
 
   if ($sf_relative_url_root && 0 !== strpos($source, $sf_relative_url_root))

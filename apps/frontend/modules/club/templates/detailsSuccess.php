@@ -24,8 +24,12 @@
 			<td valign="top">
 				<table cellspacing="0" cellpadding="0" class="clubDetails">
 					<tr>
-						<td valign="top" class="info" rowspan="6">
+						<td valign="top" class="info" colspan="2">
 							<h1><?php echo $clubName ?></h1>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top" class="info" rowspan="5">
 							<div class="location">
 								<?php echo $addressName.', '.$addressNumber.($addressQuarter?', '.$addressQuarter:'') ?><br/>
 								<?php echo $city ?>-<?php echo $state ?>

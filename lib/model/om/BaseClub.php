@@ -119,6 +119,12 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	protected $lastClubPhotoCriteria = null;
 
 	
+	protected $collClubSettingsList;
+
+	
+	protected $lastClubSettingsCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -759,6 +765,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collClubSettingsList !== null) {
+				foreach($this->collClubSettingsList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -834,6 +848,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 				if ($this->collClubPhotoList !== null) {
 					foreach($this->collClubPhotoList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collClubSettingsList !== null) {
+					foreach($this->collClubSettingsList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1174,6 +1196,10 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			foreach($this->getClubPhotoList() as $relObj) {
 				$copyObj->addClubPhoto($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getClubSettingsList() as $relObj) {
+				$copyObj->addClubSettings($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1648,6 +1674,111 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$this->lastClubPhotoCriteria = $criteria;
 
 		return $this->collClubPhotoList;
+	}
+
+	
+	public function initClubSettingsList()
+	{
+		if ($this->collClubSettingsList === null) {
+			$this->collClubSettingsList = array();
+		}
+	}
+
+	
+	public function getClubSettingsList($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubSettingsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubSettingsList === null) {
+			if ($this->isNew()) {
+			   $this->collClubSettingsList = array();
+			} else {
+
+				$criteria->add(ClubSettingsPeer::CLUB_ID, $this->getId());
+
+				ClubSettingsPeer::addSelectColumns($criteria);
+				$this->collClubSettingsList = ClubSettingsPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ClubSettingsPeer::CLUB_ID, $this->getId());
+
+				ClubSettingsPeer::addSelectColumns($criteria);
+				if (!isset($this->lastClubSettingsCriteria) || !$this->lastClubSettingsCriteria->equals($criteria)) {
+					$this->collClubSettingsList = ClubSettingsPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastClubSettingsCriteria = $criteria;
+		return $this->collClubSettingsList;
+	}
+
+	
+	public function countClubSettingsList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubSettingsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ClubSettingsPeer::CLUB_ID, $this->getId());
+
+		return ClubSettingsPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addClubSettings(ClubSettings $l)
+	{
+		$this->collClubSettingsList[] = $l;
+		$l->setClub($this);
+	}
+
+
+	
+	public function getClubSettingsListJoinSettings($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubSettingsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubSettingsList === null) {
+			if ($this->isNew()) {
+				$this->collClubSettingsList = array();
+			} else {
+
+				$criteria->add(ClubSettingsPeer::CLUB_ID, $this->getId());
+
+				$this->collClubSettingsList = ClubSettingsPeer::doSelectJoinSettings($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ClubSettingsPeer::CLUB_ID, $this->getId());
+
+			if (!isset($this->lastClubSettingsCriteria) || !$this->lastClubSettingsCriteria->equals($criteria)) {
+				$this->collClubSettingsList = ClubSettingsPeer::doSelectJoinSettings($criteria, $con);
+			}
+		}
+		$this->lastClubSettingsCriteria = $criteria;
+
+		return $this->collClubSettingsList;
 	}
 
 } 

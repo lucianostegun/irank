@@ -84,7 +84,11 @@
 
 	<div class="formRow">
 		<label>Master</label>
-		<div class="formRight"><?php echo checkbox_tag('master', true, $userAdminObj->getMaster(), array('id'=>'userAdminMaster')) ?></div>
+		<div class="formRight">
+			<?php echo checkbox_tag('master', true, $userAdminObj->getMaster(), array('id'=>'userAdminMaster')) ?>
+			<div class="clear"></div>
+			<div class="formNote error" id="userAdminFormErrorMaster"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 

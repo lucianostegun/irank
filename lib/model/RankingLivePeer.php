@@ -92,4 +92,22 @@ class RankingLivePeer extends BaseRankingLivePeer
 
 		return true;
 	}
+	
+	public static function validateBlindTime($blindTime){
+		
+		$blindTime = strtolower($blindTime);
+		$blindTime = str_replace(' ', '', $blindTime);
+		
+		if( preg_match('/^[0-5]?[0-9]+(m(in)?|h)$/', $blindTime) )
+			return true;
+		else
+			return Validate::validateTime($blindTime);
+	}
+	
+	public static function validatePrizeSplit($prizeSplit){
+		
+		$prizeConfig = split(EventLive::PRIZE_SPLIT_PATTERN, $prizeSplit);
+		
+		return array_sum($prizeConfig)==100;
+	}
 }

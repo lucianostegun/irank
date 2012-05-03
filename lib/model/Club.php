@@ -252,6 +252,16 @@ class Club extends BaseClub
 		return EventLivePeer::doSelect($criteria);
 	}
 	
+	public function getCity($con=null){
+		
+		$cityObj = parent::getCity($con);
+		
+		if( !is_object($cityObj) )
+			$cityObj = new City();
+		
+		return $cityObj;
+	}
+	
 	/**
 	 * Método que atualiza o arquivo /apps/frontend/config/routing.yml
 	 * para que os usuários possam acessar as URLs irank.com.br/nomeDoClube
@@ -305,5 +315,10 @@ class Club extends BaseClub
 		fclose($fp);
 		
 		unset($fp);
+	}
+	
+	public function getSettings($tagName){
+		
+		return ClubSettingsPeer::retrieveByPK($this->getId(), $tagName)->getSettingsValue();
 	}
 }

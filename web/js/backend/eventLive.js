@@ -1,3 +1,5 @@
+var _ConfirmSaveResult = true;
+
 $(function() {
 	
 	var eventLiveId = $('#eventLiveId').val();
@@ -25,8 +27,11 @@ $(function() {
 		},
 	});
 	
-	if( getActionName()!='index' )
-		buildEventLiveLightbox()
+	if( getActionName()!='index' ){
+	
+		buildEventLiveLightbox();
+		clearFormFieldErrors('eventLiveResult');
+	}
 });
 
 function doDeleteEventLive(){
@@ -57,11 +62,26 @@ function handleFailureEventLive(content){
 
 function handleSuccessEventLiveResult(content){
 	
-	if( $('#eventLiveResultPublish').val()=='1' )		
-		showFormStatusSuccess();
+	var eventLiveObj = parseInfo(content);
+
+	// Se o resultado já foi salvo
+	if( eventLiveObj.savedResult ){
+		
+		// Se pediu para publicar o resultado
+		if( $('#eventLiveResultPublish').val()=='1' )
+			showFormStatusSuccess();
+		
+		$('#pendingResultWarning').click();
+	}
+	
+	removeTabError('mainResultTab');
+	removeTabError('resultTab');
 }
 
 function handleFailureEventLiveResult(content){
+	
+	setTabError('mainResultTab');
+	setTabError('resultTab');
 	
 	if( $('#eventLiveResultPublish').val()=='1' ){
 		
@@ -70,6 +90,9 @@ function handleFailureEventLiveResult(content){
 		
 		if( isDebug() )
 			debug(content);
+	}else{
+		
+		handleFormFieldError(content, 'eventLiveResult');
 	}
 }
 
@@ -156,6 +179,9 @@ function addPlayer(peopleId){
 		// Aqui não oculta o indicator porque ainda vai executar o método updateEventPlayerResultTable() 
 //		hideIndicator();
 		updateEventPlayerResultTable();
+		
+		updateMainBalanceByEventLive();
+		updatePlayersCounter(1); // Incrementa 1 no contador de jogadores
 	}
 
 	var failureFunc = function(t){
@@ -196,7 +222,9 @@ function removePlayer(peopleId){
 		
 		// Aqui não oculta o indicator porque ainda vai executar o método updateEventPlayerResultTable() 
 //		hideIndicator();
-		updateEventPlayerResultTable()
+		updateEventPlayerResultTable();
+		updateMainBalanceByEventLive();
+		updatePlayersCounter(-1); // Decrementa 1 no contador de jogadores
 	}
 	
 	var failureFunc = function(t){
@@ -321,15 +349,27 @@ function publishEventLiveResult(){
 	
 	var players = getEventLivePlayers();
 	
+	var missingPlayerAlert = false;
+	var missingScoreAlert  = false;
+	
 	for(var eventPosition=1; eventPosition <= players; eventPosition++){
 		
-		if( $('#peopleIdPosition-'+eventPosition)==null || !$('#peopleIdPosition-'+eventPosition).val() ){
-			if( !confirm('ATENÇÃO!\n\nAlgumas posições não foram definidas, deseja realmente continuar?') )
-				return;
-			
-			break;
-		}
+		if( $('#peopleIdPosition-'+eventPosition)==null || !$('#peopleIdPosition-'+eventPosition).val() )
+			missingPlayerAlert = true;
+		if( $('#score-'+eventPosition)==null || toFloat($('#score-'+eventPosition).val())=='0' )
+			missingScoreAlert = true;
 	}
+	
+	if( missingPlayerAlert && !confirm('ATENÇÃO!\n\nAlgumas posições não foram definidas!\nDeseja salvar o resultado desta forma?') )
+		return;
+	
+	if( !missingPlayerAlert && missingScoreAlert && !confirm('ATENÇÃO!\n\nAlguns jogadores não tiveram a pontuação definida!\nDeseja salvar o resultado desta forma?') )
+		return;
+
+	if( _ConfirmSaveResult && !confirm('CONFIRMAÇÃO!\n\nConfirma a publicação do resultado deste evento?') )
+		return;
+	
+	_ConfirmSaveResult = false;
 	
 	showIndicator();
 	
@@ -439,7 +479,7 @@ function calculateEventLiveScore(){
 		alert('ERRO!\n\nNão foi possível calcular o resultado do evento!\nPor favor, tente novamente.');
 		
 		if( isDebug() )
-			debug(t.responseText);
+			debug(t.responseText?t.responseText:t);
 	}
 	
 	var urlAjax = _webRoot+'/eventLive/calculateResult';
@@ -618,6 +658,7 @@ function updateEventPlayerResultTable(){
 		
 		$('#eventLiveResultTbody').html(content);
 		setupEventLiveResultAutoComplete();
+		redips_init(); // Reinstancia o método para poder reordenar as linhas do resultado com drag and drop
 	}
 
 	var failureFunc = function(t){
@@ -632,4 +673,51 @@ function updateEventPlayerResultTable(){
 	
 	var urlAjax = _webRoot+'/eventLive/getResultPlayerList/eventLiveId/'+eventLiveId;
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});	
+}
+
+function updateMainBalanceByEventLive(){
+	
+	var players = getEventLivePlayers();
+	
+	if( players > 0 ){
+		
+		var totalRebuys      = toFloat($('#eventLiveTotalRebuys').val());
+		var totalBuyin       = toFloat($('#eventLiveBuyin').val());
+		var totalEntranceFee = toFloat($('#eventLiveEntranceFee').val());
+		var totalValue       = totalRebuys+((totalBuyin+totalEntranceFee)*players);
+	}else{
+		
+		var totalValue = 0
+	}
+	
+	var previousBalance = toFloat($('#previousBalanceAmount').html());
+	
+	if( !previousBalance )
+		var percent = 0;
+	else
+		var percent = ((totalValue-previousBalance)*100/(previousBalance?previousBalance:1));
+	
+	$('#mainBalanceChanges').html(toCurrency(Math.abs(percent), 1)+'%');
+	$('#mainBalanceChanges').attr('class', (percent>0?'sPositive':(percent<0?'sNegative':'sZero')));
+	updateMainBalance(totalValue);
+}
+
+function updatePlayersCounter(incrase){
+	
+	var players                = toFloat($('#statsPlayers').html());
+	var playersConfirm         = toFloat($('#statsPlayersConfirm').html());
+	var playersPrevious        = toFloat($('#statsPlayersPrevious').html());
+	var playersConfirmPrevious = toFloat($('#statsPlayersConfirmPrevious').html());
+
+	$('#statsPlayers').html(players+incrase);
+	$('#statsPlayersConfirm').html(playersConfirm+incrase);
+	
+	var percent        = (playersPrevious?(((players+incrase)-playersPrevious)*100/(playersPrevious?playersPrevious:1)):0);
+	var percentConfirm = (playersConfirmPrevious?(((playersConfirm+incrase)-playersConfirmPrevious)*100/(playersConfirmPrevious?playersConfirmPrevious:1)):0);
+	
+	$('#statsPlayersPercent').html(toCurrency(Math.abs(percent), 0)+'%');
+	$('#statsPlayersConfirmPercent').html(toCurrency(Math.abs(percentConfirm), 0)+'%');
+	
+	$('#statsPlayersPercent').attr('class', (percent>0?'roundPos':(percent<0?'roundNeg':'roundZero')));
+	$('#statsPlayersConfirmPercent').attr('class', (percentConfirm>0?'roundPos':(percentConfirm<0?'roundNeg':'roundZero')));
 }

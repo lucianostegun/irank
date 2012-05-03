@@ -54,7 +54,20 @@ class City extends BaseCity
 		return $cityObj;
 	}
 	
+	public function getState($con=null){
+		
+		$stateObj = parent::getState($con);
+		
+		if( !is_object($stateObj) )
+			$stateObj = new State();
+		
+		return $stateObj;
+	}
+	
 	public function toString(){
+		
+		if( $this->isNew() )
+			return null;
 		
 		return $this->getCityName().', '.$this->getState()->getInitial();
 	}

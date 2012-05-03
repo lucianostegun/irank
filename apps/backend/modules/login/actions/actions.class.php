@@ -10,17 +10,24 @@
 class loginActions extends sfActions
 {
 
-  public function preExecute(){
+  public function checkIsAuthenticated(){
   	
   	$actionName = $this->getContext()->getActionName();
+  	
   	if( $actionName!='logout' && $this->getUser()->isAuthenticated() && $this->getUser()->hasCredential('iRankAdmin') )
   		return $this->redirect('home/index');
+  }
+  
+  public function preExecute(){
+  	
+  	$this->checkIsAuthenticated();
   	
   	$this->pathList = array('Acesso negado'=>null);
   }
 
   public function executeIndex($request){
   	
+  	$this->checkIsAuthenticated();
   }
 
   public function executeAccessDenied($request){
@@ -29,8 +36,9 @@ class loginActions extends sfActions
 
   public function executeLogin($request){
   	
-	$username = $request->getParameter('username');
-	$password = $request->getParameter('password');
+	$username  = $request->getParameter('username');
+	$password  = $request->getParameter('password');
+	$keepLogin = $request->getParameter('keepLogin');
 	
 	$errorMessage = false;
 	
@@ -51,7 +59,7 @@ class loginActions extends sfActions
 		$userAdminObj = UserAdminPeer::doSelectOne( $criteria );
 		
 		if( is_object($userAdminObj) )
-	        $userAdminObj->login();
+	        $userAdminObj->login($keepLogin);
 		else
 			$errorMessage = '<b>ACESSO NEGADO!</b> - O usuário/senha não são válidos';
 	}else{

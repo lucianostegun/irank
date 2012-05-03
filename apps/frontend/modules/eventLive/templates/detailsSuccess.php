@@ -50,7 +50,7 @@
 					<tr>
 						<td><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td>
 						<td><?php echo $eventLiveObj->getBlindTime('H:i') ?></td>
-						<td><?php echo $eventLiveObj->getStackChips() ?></td>
+						<td><?php echo $eventLiveObj->getStackChips(true) ?></td>
 						<td id="eventLive<?php echo $eventLiveId ?>ResumePlayers"><?php echo $eventLiveObj->getPlayers() ?></td>
 					</tr>
 					<tr>

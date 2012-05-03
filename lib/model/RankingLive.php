@@ -18,6 +18,16 @@ class RankingLive extends BaseRankingLive
 		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
 	}
 	
+	public function getId($encode=false){
+		
+		$id = parent::getId();
+		
+		if( $encode )
+			$id = Util::encodeId($id);
+		
+		return $id;
+	}
+	
     public function save($con=null){
     	
     	try{
@@ -72,6 +82,8 @@ class RankingLive extends BaseRankingLive
 		
 		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $stackChips) )
 			$stackChips = Util::formatFloat($stackChips)*1000;
+		
+		$blindTime = RankingLive::convertBlindTime($blindTime);
 
 		if( $isFreeroll )
 			$buyin = 0;
@@ -621,6 +633,24 @@ class RankingLive extends BaseRankingLive
 			echo $eventDate.'<br/>';
 			$this->updateHistory($eventDate);
 		}
+	}
+	
+	public static function convertBlindTime($blindTime){
+		
+		$blindTime = strtolower($blindTime);
+		$blindTime = str_replace(' ', '', $blindTime);
+		
+		if( preg_match('/^([0-5]?[0-9]+)(m(in))$/', $blindTime, $matches) ){
+			
+			return sprintf('%02d:%02d', 0, $matches[1]);
+		}
+
+		if( preg_match('/^([0-5]?[0-9]+)h$/', $blindTime, $matches) ){
+			
+			return sprintf('%02d:%02d', $matches[1], 0);
+		}
+		
+		return $blindTime;
 	}
 	
 	public function getInfo(){

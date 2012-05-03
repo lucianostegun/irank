@@ -146,3 +146,13 @@ function hideFormStatusMessage(fade){
 	else
 		$('#formStatusTopMessage').hide();
 }
+
+function setTabError(tabId){
+	
+	$('#'+tabId).addClass('error');
+}
+
+function removeTabError(tabId){
+	
+	$('#'+tabId).removeClass('error');
+}

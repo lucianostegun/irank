@@ -5,7 +5,7 @@
  *
  * 
  *
- * @package lib.model
+ * @package ...apps.backend.lib.model
  */ 
 class AccessAdminLogPeer extends BaseAccessAdminLogPeer
 {

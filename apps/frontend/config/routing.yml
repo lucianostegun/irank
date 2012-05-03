@@ -6,6 +6,10 @@ club_vegas:
   url:    /vegas
   param:  { module: club, action: details, clubId: 334 }
 
+club_abluc:
+  url:    /abluc
+  param:  { module: club, action: details, clubId: 340 }
+
 #CLUB ROUTING END
 
 homepage:

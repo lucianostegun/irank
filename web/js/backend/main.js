@@ -38,7 +38,9 @@ $(function() {
 
 	//===== Form elements styling =====//
 	
-	$("select, input:checkbox, input:radio, input:file").uniform();
+	$("select, input:checkbox, input:radio, input:file").uniform({
+		maxSelectChars: 3
+	});
 	
 	
 	/* Tables
@@ -107,12 +109,9 @@ $(function() {
 		$(".maskPhone").mask("(99) 9999-9999");
 });
 
-function updateMainBalance(differenceValue){
+function updateMainBalance(mainBalanceValue){
 	
-	var mainBalanceBase = toFloat(_mainBalanceBase);
-	mainBalanceBase += toFloat(differenceValue);
-	
-	$('#mainBalanceAmount').html('R$ '+toCurrency(mainBalanceBase));
+	$('#mainBalanceAmount').html('R$ '+toCurrency(mainBalanceValue));
 }
 
 function doSaveMain(){

@@ -17,6 +17,9 @@ function doLogin(){
 			$(this).show();
 			$('#indicator').hide();
 		});
+		
+		if( isDebug() )
+			alert(t.responseText);
 	}
 	
 	var urlAjax = _webRoot+'/login/login';

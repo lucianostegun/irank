@@ -954,5 +954,15 @@ class Util {
 		
 		return $returnOptionList;
 	}
+	
+	public static function encodeId($id){
+		
+		return strrev(base64_encode($id));
+	}
+	
+	public static function decodeId($id){
+		
+		return base64_decode(strrev($id));
+	}
 }
 ?>

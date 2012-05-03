@@ -49,16 +49,12 @@ class eventLiveActions extends sfActions
     	$eventLiveObj = null;
     }
     
-    $this->mainBalanceLabel        = 'Total arrecadado';
-    $this->mainBalanceValue        = $this->eventLiveObj->getTotalBuyin(true);
-    $this->mainBalanceBase         = $this->eventLiveObj->getTotalBuyin();
-    $this->mainBalanceChanges      = $this->eventLiveObj->getBalanceDifference();
-    $this->mainBalanceChangesLabel = 'Diferença de arrecadação em relação ao evento anterior';
-    
     if( !is_object($eventLiveObj) )
     	return $this->redirect('eventLive/index');
     
-    $this->numStatList = $eventLiveObj->getStats();
+	sfLoader::loadHelpers('Partial');
+    $this->stats   = get_partial('eventLive/include/stats', array('eventLiveObj'=>$eventLiveObj));
+    $this->balance = get_partial('eventLive/include/balance', array('eventLiveObj'=>$eventLiveObj));
     	
     if( $eventLiveObj->getRankingLiveId() ){
     	
@@ -273,6 +269,11 @@ class eventLiveActions extends sfActions
     
     exit;
   }
+
+  public function handleErrorSaveResult(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
   
   public function executeSaveResult($request){
     
@@ -288,6 +289,7 @@ class eventLiveActions extends sfActions
     
     $eventLiveObj->saveResult($request);
 
+	echo Util::parseInfo($eventLiveObj->getInfo());
 	exit;
   }
   
