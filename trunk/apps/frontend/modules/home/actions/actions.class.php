@@ -170,4 +170,17 @@ class homeActions extends sfActions
   public function executeError404($request){
   	
   }
+  
+  public function executeImages($request){
+	
+	header('Content-Type: image/png');
+	header('Expires: 0');
+	header('Pragma: no-cache');
+	
+	$code = $request->getParameter('code');
+	Log::doLog('Carregou a imagem de teste, código: '.$code);
+	
+	print_r(file_get_contents(Util::getFilePath('images/layout/logo.png')));
+	exit;
+  }
 }

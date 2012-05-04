@@ -19,7 +19,7 @@
 					<span class="titleIcon"><input type="checkbox" id="titleCheck" name="titleCheck" /></span>
 					<h6>Lista de email do clube</h6>
 				</div>                          
-				<table cellpadding="0" cellspacing="0" width="100%" class="display dTable withCheck" id="checkAll">
+				<table cellpadding="0" cellspacing="0" width="100%" class="display sTable withCheck" id="checkAll">
 				    <thead>
 						<tr>
 							<th width="10"><?php echo image_tag('backend/icons/tableArrows') ?></th>
