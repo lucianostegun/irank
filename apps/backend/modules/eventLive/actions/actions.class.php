@@ -197,10 +197,16 @@ class eventLiveActions extends sfActions
   	if(!is_object($peopleObj) || !is_object($eventLiveObj))
   		Util::forceError('Não foi possível concluir o envio do email');
   	
-  	if(!$peopleObj->getEmailAddress())
+  	$emailAddress = $peopleObj->getEmailAddress();
+  	if(!$emailAddress)
   		Util::forceError('Email não encontrado');
   		
-  	$emailContent = 'teste';
+  	$code = rand(1000, 2000);
+  		
+  	$emailContent = file_get_contents(Util::getFilePath('templates/pt_BR/eventResult.htm'));	
+  	$emailContent = str_replace('<peopleName>', '<img src="http://alpha.irank.com.br/home/images?code='.$code.'">', $emailContent);
+  	$emailSubject = 'Mensagem de teste iRank';
+  	Report::sendMail($emailSubject, $emailAddress, $emailContent);
   	
   	exit;
   }
