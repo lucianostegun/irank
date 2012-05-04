@@ -56,6 +56,10 @@ class EventLivePlayerMapBuilder {
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
+		$tMap->addColumn('EMAIL_SENT_DATE', 'EmailSentDate', 'int', CreoleTypes::TIMESTAMP, false, null);
+
+		$tMap->addColumn('EMAIL_READ_DATE', 'EmailReadDate', 'int', CreoleTypes::TIMESTAMP, false, null);
+
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 	} 

@@ -676,6 +676,8 @@
 		<column name="addon" type="NUMERIC" size="10" scale="2" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP"/>
+		<column name="email_sent_date" type="TIMESTAMP"/>
+		<column name="email_read_date" type="TIMESTAMP"/>
 		<column name="updated_at" type="TIMESTAMP"/>
 		<foreign-key foreignTable="event_live">
 			<reference local="event_live_id" foreign="id"/>
