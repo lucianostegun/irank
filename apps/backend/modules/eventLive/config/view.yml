@@ -4,4 +4,4 @@ all:
 
 editSuccess:
   stylesheets:    [backend/tableReorder/eventLive, backend/plugins/jquery.lightbox-0.5.css]
-  javascripts:    [tableReorder/header, tableReorder/redips-drag-min, backend/tableReorder/eventLive, backend/plugins/jquery.lightbox-0.5.js]
+  javascripts:    [tableReorder/header, tableReorder/redips-drag-min, backend/tableReorder/eventLive, backend/plugins/jquery.lightbox-0.5.js, backend/plugins/ui/jquery.progress.js ]

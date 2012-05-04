@@ -311,7 +311,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -325,7 +327,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setClubName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -339,7 +343,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setTagName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -353,7 +359,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setFileNameLogo($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -367,7 +375,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setAddressName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -381,7 +391,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setAddressNumber($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -395,7 +407,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setAddressQuarter($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -409,7 +423,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setCityId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -427,7 +443,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setMapsLink($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -441,7 +459,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setClubSite($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -455,7 +475,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setDescription($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -469,7 +491,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setPhoneNumber1($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -483,7 +507,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setPhoneNumber2($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -497,7 +523,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setPhoneNumber3($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -511,7 +539,9 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	public function setVisitCount($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

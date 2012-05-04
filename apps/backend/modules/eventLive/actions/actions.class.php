@@ -187,6 +187,24 @@ class eventLiveActions extends sfActions
   	exit;	
   }
   
+  public function executeSendDiclosureEmail($request){
+  	
+  	$eventLiveId  = $request->getParameter('eventLiveId');
+  	$peopleId     = $request->getParameter('peopleId');
+  	$eventLiveObj = EventLivePeer::retrieveByPK( $eventLiveId );
+  	$peopleObj    = PeoplePeer::retrieveByPK( $peopleId );
+  	
+  	if(!is_object($peopleObj) || !is_object($eventLiveObj))
+  		Util::forceError('Não foi possível concluir o envio do email');
+  	
+  	if(!$peopleObj->getEmailAddress())
+  		Util::forceError('Email não encontrado');
+  		
+  	$emailContent = 'teste';
+  	
+  	exit;
+  }
+  
   public function executeAutoComplete($request){
     
 	$peopleName   = $request->getParameter('term');

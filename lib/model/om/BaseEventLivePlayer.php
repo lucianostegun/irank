@@ -57,6 +57,14 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 
 	
+	protected $email_sent_date;
+
+
+	
+	protected $email_read_date;
+
+
+	
 	protected $updated_at;
 
 	
@@ -171,6 +179,50 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getEmailSentDate($format = 'Y-m-d H:i:s')
+	{
+
+		if ($this->email_sent_date === null || $this->email_sent_date === '') {
+			return null;
+		} elseif (!is_int($this->email_sent_date)) {
+						$ts = strtotime($this->email_sent_date);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [email_sent_date] as date/time value: " . var_export($this->email_sent_date, true));
+			}
+		} else {
+			$ts = $this->email_sent_date;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
+	}
+
+	
+	public function getEmailReadDate($format = 'Y-m-d H:i:s')
+	{
+
+		if ($this->email_read_date === null || $this->email_read_date === '') {
+			return null;
+		} elseif (!is_int($this->email_read_date)) {
+						$ts = strtotime($this->email_read_date);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [email_read_date] as date/time value: " . var_export($this->email_read_date, true));
+			}
+		} else {
+			$ts = $this->email_read_date;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
+	}
+
+	
 	public function getUpdatedAt($format = 'Y-m-d H:i:s')
 	{
 
@@ -196,7 +248,9 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	public function setEventLiveId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -214,7 +268,9 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	public function setPeopleId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -242,7 +298,9 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	public function setEventPosition($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -340,6 +398,40 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setEmailSentDate($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [email_sent_date] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->email_sent_date !== $ts) {
+			$this->email_sent_date = $ts;
+			$this->modifiedColumns[] = EventLivePlayerPeer::EMAIL_SENT_DATE;
+		}
+
+	} 
+	
+	public function setEmailReadDate($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [email_read_date] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->email_read_date !== $ts) {
+			$this->email_read_date = $ts;
+			$this->modifiedColumns[] = EventLivePlayerPeer::EMAIL_READ_DATE;
+		}
+
+	} 
+	
 	public function setUpdatedAt($v)
 	{
 
@@ -385,13 +477,17 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 			$this->created_at = $rs->getTimestamp($startcol + 11, null);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 12, null);
+			$this->email_sent_date = $rs->getTimestamp($startcol + 12, null);
+
+			$this->email_read_date = $rs->getTimestamp($startcol + 13, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 14, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 13; 
+						return $startcol + 15; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLivePlayer object", $e);
 		}
@@ -594,6 +690,12 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				return $this->getCreatedAt();
 				break;
 			case 12:
+				return $this->getEmailSentDate();
+				break;
+			case 13:
+				return $this->getEmailReadDate();
+				break;
+			case 14:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -618,7 +720,9 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 			$keys[9]=>$this->getAddon(),
 			$keys[10]=>$this->getDeleted(),
 			$keys[11]=>$this->getCreatedAt(),
-			$keys[12]=>$this->getUpdatedAt(),
+			$keys[12]=>$this->getEmailSentDate(),
+			$keys[13]=>$this->getEmailReadDate(),
+			$keys[14]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -671,6 +775,12 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				$this->setCreatedAt($value);
 				break;
 			case 12:
+				$this->setEmailSentDate($value);
+				break;
+			case 13:
+				$this->setEmailReadDate($value);
+				break;
+			case 14:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -692,7 +802,9 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[9], $arr)) $this->setAddon($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setDeleted($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
+		if (array_key_exists($keys[12], $arr)) $this->setEmailSentDate($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setEmailReadDate($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
 	}
 
 	
@@ -712,6 +824,8 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePlayerPeer::ADDON)) $criteria->add(EventLivePlayerPeer::ADDON, $this->addon);
 		if ($this->isColumnModified(EventLivePlayerPeer::DELETED)) $criteria->add(EventLivePlayerPeer::DELETED, $this->deleted);
 		if ($this->isColumnModified(EventLivePlayerPeer::CREATED_AT)) $criteria->add(EventLivePlayerPeer::CREATED_AT, $this->created_at);
+		if ($this->isColumnModified(EventLivePlayerPeer::EMAIL_SENT_DATE)) $criteria->add(EventLivePlayerPeer::EMAIL_SENT_DATE, $this->email_sent_date);
+		if ($this->isColumnModified(EventLivePlayerPeer::EMAIL_READ_DATE)) $criteria->add(EventLivePlayerPeer::EMAIL_READ_DATE, $this->email_read_date);
 		if ($this->isColumnModified(EventLivePlayerPeer::UPDATED_AT)) $criteria->add(EventLivePlayerPeer::UPDATED_AT, $this->updated_at);
 
 		return $criteria;
@@ -773,6 +887,10 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		$copyObj->setDeleted($this->deleted);
 
 		$copyObj->setCreatedAt($this->created_at);
+
+		$copyObj->setEmailSentDate($this->email_sent_date);
+
+		$copyObj->setEmailReadDate($this->email_read_date);
 
 		$copyObj->setUpdatedAt($this->updated_at);
 

@@ -612,9 +612,73 @@ function buildEventLiveLightbox(){
 	$('.photoList a.lightbox').lightBox();
 }
 
-function eventLiveEmailShare(){
+function showEventLiveEmailOptions(){
 
-	alert('A opção por email estará disponível em breve');
+	hideDiv('disclosureMenuShareDiv');
+	
+	showDiv('emailSenderOptionsDiv');
+}
+
+function hideEventLiveEmailOptions(){
+	
+	showDiv('disclosureMenuShareDiv');
+	
+	hideDiv('emailSenderOptionsDiv');
+}
+
+function sendEmailToCheckedPeople(){
+	
+	var peopleIdList = new Array();
+	$("input[@name='peopleId[]']:checked").each(function() {peopleIdList.push($(this).val());});
+	 
+	if (peopleIdList.length == 0)
+	    return alert("Nenhum email foi selecionado.\nFavor selecionar ao menos um email.");
+	
+	hideDiv('emailSenderOptionsDiv');
+	
+	showDiv('emailSenderProgressBarDiv');
+	
+	sendEmailItem( peopleIdList, 0 );    
+}
+
+function concludeSendEmail(){
+	
+	showDiv('emailSenderOptionsDiv');
+	
+	hideDiv('emailSenderProgressBarDiv');
+}
+
+function sendEmailItem( peopleIdList, index ){
+	
+	var percent = ((100*(index))/peopleIdList.length);
+
+	updateProgressBar( percent );
+	
+	if(percent>=100)
+		return concludeSendEmail();
+	
+	$.ajax({
+		type:		'POST',
+		url:		_webRoot+'/eventLive/sendDiclosureEmail',
+		data: 		'peopleId='+peopleIdList[index],
+		dataType: 	'text',
+		success: function (request) {
+			
+			sendEmailItem( peopleIdList, ++index );
+	    },
+		error: function(request,error){
+	    	
+	    	sendEmailItem( peopleIdList, ++index );
+		}
+	});	
+}
+
+function updateProgressBar( percent ){
+	
+	// jQuery UI progress bar
+	$( "#progress" ).progressbar({
+			value: percent
+	});
 }
 
 function eventLiveFacebookShare(){
@@ -639,11 +703,6 @@ function eventLiveFacebookShare(){
 
 	form.appendChild( postParam );
 	form.submit();	
-}
-
-function eventLiveTwitterShare(){
-
-	alert('A opção pelo Twitter estará disponível em breve');
 }
 
 function updateEventPlayerResultTable(){
