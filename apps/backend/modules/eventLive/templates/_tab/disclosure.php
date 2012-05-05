@@ -13,7 +13,16 @@
 			<br/>
 			<?php echo link_to(image_tag('backend/icons/light/arrowLeft', array('class'=>'icon')).'<span>Voltar</span>', '#hideEventLiveEmailOptions()', array('class'=>'button greyishB', 'style'=>'margin-left: 10px')) ?>
 			<?php echo link_to(image_tag('backend/icons/light/mail', array('class'=>'icon')).'<span>Enviar para os selecionados</span>', '#sendEmailToCheckedPeople()', array('class'=>'button greyishB', 'style'=>'margin-left: 10px')) ?>
-				
+			<br/><br/>
+			
+			<div id="emailSenderProgressBarDiv" style="display: none">
+				<label><b>Enviando</b></label>
+	            <div class="formRight">
+	                <div id="progress"></div>
+	            </div>
+	            <br/>
+	        </div>
+	        
 	        <div class="widget">
 				<div class="title">
 					<span class="titleIcon"><input type="checkbox" id="titleCheck" name="titleCheck" /></span>
@@ -23,6 +32,7 @@
 				    <thead>
 						<tr>
 							<th width="10"><?php echo image_tag('backend/icons/tableArrows') ?></th>
+							<th>Status</th> 
 							<th>Email</th> 
 							<th>Data de envio</th> 
 							<th>Data da leitura</th>
@@ -34,26 +44,22 @@
 							
 							foreach(ClubPeer::getPlayerList($clubId, PeoplePeer::EMAIL_ADDRESS) as $peopleObj):
 								
-								$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK( $eventLiveObj->getId(), $peopleObj->getId() );
+								$eventLivePlayerObj  = EventLivePlayerPeer::retrieveByPK( $eventLiveObj->getId(), $peopleObj->getId() );
+								$emailLogObj         = $eventLivePlayerObj->getEmailLog();
+								$checkPeopleDisabled = (is_object($emailLogObj)?($emailLogObj->getErrorMessage()?false:true):false);
+								$emailLogObj         = is_object($emailLogObj)?$emailLogObj:new EmailLog();
 						?>
 						<tr class="gradeA" id="emailPeopleListRow-<?php echo $peopleObj->getId() ?>">
-							<td><?php echo checkbox_tag('peopleId[]', $peopleObj->getId(), false, array('disabled'=>($eventLivePlayerObj->getEmailSentDate()?true:false))) ?></td> 
+							<td><?php echo checkbox_tag('peopleId[]', $peopleObj->getId(), false, array('disabled'=>($checkPeopleDisabled?true:false))) ?></td> 
+							<td id="emailPeopleListStatusTd-<?php echo $peopleObj->getId() ?>" align="center"><?php echo ($emailLogObj->getCreatedAt()?image_tag('backend/icons/notifications/'.($emailLogObj->getErrorMessage()?'exclamation':'success'), array('title'=>$emailLogObj->getErrorMessage())):'&nbsp;') ?></td> 
 							<td><?php echo $peopleObj->getEmailAddress() ?></td> 
-							<td><?php echo $eventLivePlayerObj->getEmailSentDate('d/m/Y H:i:s') ?></td> 
-							<td><?php echo $eventLivePlayerObj->getEmailReadDate('d/m/Y H:i:s') ?></td> 
+							<td id="emailPeopleListCreatedAtTd-<?php echo $peopleObj->getId() ?>" align="center"><?php echo $emailLogObj->getCreatedAt('d/m/Y H:i:s') ?></td> 
+							<td align="center"><?php echo $emailLogObj->getReadAt('d/m/Y H:i:s') ?></td> 
 						</tr> 
 						<?php endforeach; ?>
 					</tbody> 
 				</table>
 			</div>		
-		</div>
-		
-		<div id="emailSenderProgressBarDiv" style="display: none">
-			<label>Enviando</label>
-            <div class="formRight">
-                <div id="progress"></div>
-            </div>
-            <div class="clear"></div>
 		</div>
 				
 	</div>

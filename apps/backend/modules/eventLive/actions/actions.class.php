@@ -200,13 +200,28 @@ class eventLiveActions extends sfActions
   	$emailAddress = $peopleObj->getEmailAddress();
   	if(!$emailAddress)
   		Util::forceError('Email não encontrado');
+  	
+  	try{
   		
-  	$code = rand(1000, 2000);
+  		$emailLogObj = new EmailLog();
+  		$emailLogObj->setEmailAddress($emailAddress);
+  		$emailLogObj->save();
   		
-  	$emailContent = file_get_contents(Util::getFilePath('templates/pt_BR/eventResult.htm'));	
-  	$emailContent = str_replace('<peopleName>', '<img src="http://alpha.irank.com.br/home/images?code='.$code.'">', $emailContent);
-  	$emailSubject = 'Mensagem de teste iRank';
-  	Report::sendMail($emailSubject, $emailAddress, $emailContent);
+  		$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($eventLiveId, $peopleId);
+  		$eventLivePlayerObj->setEmailLogId($emailLogObj->getId());
+  		$eventLivePlayerObj->save();
+  		
+	  	$emailContent = file_get_contents(Util::getFilePath('templates/pt_BR/emailDisclosure.htm'));	
+	  	$emailContent = str_replace('<imageCode>', '<img src="http://alpha.irank.com.br/home/images?code='.base64_encode($emailLogObj->getId()).'">', $emailContent);
+	  	$emailSubject = 'Divulgação de evento por email';
+	  	
+	  	Report::sendMail($emailSubject, $emailAddress, $emailContent);
+	  	
+	  	echo $emailLogObj->getCreatedAt('d/m/Y H:i:s');
+  	} catch ( Exception $e ) {
+        	
+    	Util::forceError( 'Ocorreu um erro no envio desse email.\n'.$e->getMessage() );
+    }
   	
   	exit;
   }

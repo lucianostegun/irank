@@ -4,7 +4,7 @@
 abstract class BaseEmailLogPeer {
 
 	
-	const DATABASE_NAME = 'log';
+	const DATABASE_NAME = 'propel';
 
 	
 	const TABLE_NAME = 'email_log';
@@ -20,19 +20,19 @@ abstract class BaseEmailLogPeer {
 
 
 	
+	const ID = 'email_log.ID';
+
+	
 	const EMAIL_ADDRESS = 'email_log.EMAIL_ADDRESS';
 
 	
-	const EMAIL_SUBJECT = 'email_log.EMAIL_SUBJECT';
-
-	
-	const SENDING_STATUS = 'email_log.SENDING_STATUS';
+	const ERROR_MESSAGE = 'email_log.ERROR_MESSAGE';
 
 	
 	const CREATED_AT = 'email_log.CREATED_AT';
 
 	
-	const UPDATED_AT = 'email_log.UPDATED_AT';
+	const READ_AT = 'email_log.READ_AT';
 
 	
 	private static $phpNameMap = null;
@@ -40,18 +40,18 @@ abstract class BaseEmailLogPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('EmailAddress', 'EmailSubject', 'SendingStatus', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EmailLogPeer::EMAIL_ADDRESS, EmailLogPeer::EMAIL_SUBJECT, EmailLogPeer::SENDING_STATUS, EmailLogPeer::CREATED_AT, EmailLogPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('email_address', 'email_subject', 'sending_status', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('EMAIL_ADDRESS'=>'', 'EMAIL_SUBJECT'=>'', 'SENDING_STATUS'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'EmailAddress', 'ErrorMessage', 'CreatedAt', 'ReadAt', ),
+		BasePeer::TYPE_COLNAME=>array (EmailLogPeer::ID, EmailLogPeer::EMAIL_ADDRESS, EmailLogPeer::ERROR_MESSAGE, EmailLogPeer::CREATED_AT, EmailLogPeer::READ_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'email_address', 'error_message', 'created_at', 'read_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EMAIL_ADDRESS'=>'', 'ERROR_MESSAGE'=>'', 'CREATED_AT'=>'', 'READ_AT'=>'', ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('EmailAddress'=>0, 'EmailSubject'=>1, 'SendingStatus'=>2, 'CreatedAt'=>3, 'UpdatedAt'=>4, ),
-		BasePeer::TYPE_COLNAME=>array (EmailLogPeer::EMAIL_ADDRESS=>0, EmailLogPeer::EMAIL_SUBJECT=>1, EmailLogPeer::SENDING_STATUS=>2, EmailLogPeer::CREATED_AT=>3, EmailLogPeer::UPDATED_AT=>4, ),
-		BasePeer::TYPE_FIELDNAME=>array ('email_address'=>0, 'email_subject'=>1, 'sending_status'=>2, 'created_at'=>3, 'updated_at'=>4, ),
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EmailAddress'=>1, 'ErrorMessage'=>2, 'CreatedAt'=>3, 'ReadAt'=>4, ),
+		BasePeer::TYPE_COLNAME=>array (EmailLogPeer::ID=>0, EmailLogPeer::EMAIL_ADDRESS=>1, EmailLogPeer::ERROR_MESSAGE=>2, EmailLogPeer::CREATED_AT=>3, EmailLogPeer::READ_AT=>4, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'email_address'=>1, 'error_message'=>2, 'created_at'=>3, 'read_at'=>4, ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
 	);
 
@@ -106,20 +106,20 @@ abstract class BaseEmailLogPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
+		$criteria->addSelectColumn(EmailLogPeer::ID);
+
 		$criteria->addSelectColumn(EmailLogPeer::EMAIL_ADDRESS);
 
-		$criteria->addSelectColumn(EmailLogPeer::EMAIL_SUBJECT);
-
-		$criteria->addSelectColumn(EmailLogPeer::SENDING_STATUS);
+		$criteria->addSelectColumn(EmailLogPeer::ERROR_MESSAGE);
 
 		$criteria->addSelectColumn(EmailLogPeer::CREATED_AT);
 
-		$criteria->addSelectColumn(EmailLogPeer::UPDATED_AT);
+		$criteria->addSelectColumn(EmailLogPeer::READ_AT);
 
 	}
 
-	const COUNT = 'COUNT(*)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT *)';
+	const COUNT = 'COUNT(email_log.ID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT email_log.ID)';
 
 	
 	public static function doCount(Criteria $criteria, $distinct = false, $con = null)
@@ -216,6 +216,7 @@ abstract class BaseEmailLogPeer {
 			$criteria = clone $values; 		} else {
 			$criteria = $values->buildCriteria(); 		}
 
+		$criteria->remove(EmailLogPeer::ID); 
 
 				$criteria->setDbName(self::DATABASE_NAME);
 
@@ -242,6 +243,9 @@ abstract class BaseEmailLogPeer {
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 
+			$comparison = $criteria->getComparison(EmailLogPeer::ID);
+			$selectCriteria->add(EmailLogPeer::ID, $criteria->remove(EmailLogPeer::ID), $comparison);
+
 		} else { 			$criteria = $values->buildCriteria(); 			$selectCriteria = $values->buildPkeyCriteria(); 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -276,19 +280,10 @@ abstract class BaseEmailLogPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 		} elseif ($values instanceof EmailLog) {
 
-			$criteria = $values->buildCriteria();
+			$criteria = $values->buildPkeyCriteria();
 		} else {
 						$criteria = new Criteria(self::DATABASE_NAME);
-												if(count($values) == count($values, COUNT_RECURSIVE))
-			{
-								$values = array($values);
-			}
-			$vals = array();
-			foreach($values as $value)
-			{
-
-			}
-
+			$criteria->add(EmailLogPeer::ID, (array) $values, Criteria::IN);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -339,6 +334,42 @@ abstract class BaseEmailLogPeer {
     }
 
     return $res;
+	}
+
+	
+	public static function retrieveByPK($pk, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$criteria = new Criteria(EmailLogPeer::DATABASE_NAME);
+		$criteria->setNoFilter(true);
+
+		$criteria->add(EmailLogPeer::ID, $pk);
+
+
+		$v = EmailLogPeer::doSelect($criteria, $con);
+
+		return !empty($v) > 0 ? $v[0] : null;
+	}
+
+	
+	public static function retrieveByPKs($pks, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$objs = null;
+		if (empty($pks)) {
+			$objs = array();
+		} else {
+			$criteria = new Criteria();
+			$criteria->add(EmailLogPeer::ID, $pks, Criteria::IN);
+			$objs = EmailLogPeer::doSelect($criteria, $con);
+		}
+		return $objs;
 	}
 
 } 
