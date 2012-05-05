@@ -177,10 +177,19 @@ class homeActions extends sfActions
 	header('Expires: 0');
 	header('Pragma: no-cache');
 	
-	$code = $request->getParameter('code');
-	Log::doLog('Carregou a imagem de teste, código: '.$code);
+	$code       = $request->getParameter('code');
+	$emailLogId = base64_decode($code);
+	
+	$emailLogObj = EmailLogPeer::retrieveByPK( $emailLogId );
+	
+	if(!is_object($emailLogObj))
+		Log::doLog('Não conseguiu localizar o email_log "'.$emailLogId.'"', 'EmailLog');
+	
+	$emailLogObj->setReadAt( date('Y-m-d H:i:s') );
+	$emailLogObj->save();
 	
 	print_r(file_get_contents(Util::getFilePath('images/layout/logo.png')));
+	
 	exit;
   }
 }

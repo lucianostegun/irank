@@ -633,9 +633,7 @@ function sendEmailToCheckedPeople(){
 	 
 	if (peopleIdList.length == 0)
 	    return alert("Nenhum email foi selecionado.\nFavor selecionar ao menos um email.");
-	
-	hideDiv('emailSenderOptionsDiv');
-	
+
 	showDiv('emailSenderProgressBarDiv');
 	
 	sendEmailItem( peopleIdList, 0 );    
@@ -643,9 +641,9 @@ function sendEmailToCheckedPeople(){
 
 function concludeSendEmail(){
 	
-	showDiv('emailSenderOptionsDiv');
-	
 	hideDiv('emailSenderProgressBarDiv');
+	
+	alert('Processo finalizado. Verifique o resultado na tabela');
 }
 
 function sendEmailItem( peopleIdList, index ){
@@ -657,17 +655,27 @@ function sendEmailItem( peopleIdList, index ){
 	if(percent>=100)
 		return concludeSendEmail();
 	
+	$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="/images/backend/loaders/loader8.gif"/>');
+	
+	var eventLiveId = $('#eventLiveId').val();
+	
 	$.ajax({
 		type:		'POST',
 		url:		_webRoot+'/eventLive/sendDiclosureEmail',
-		data: 		'peopleId='+peopleIdList[index],
+		data: 		'peopleId='+peopleIdList[index]+'&eventLiveId='+eventLiveId,
 		dataType: 	'text',
 		success: function (request) {
 			
-			sendEmailItem( peopleIdList, ++index );
-	    },
-		error: function(request,error){
+			$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="/images/backend/icons/notifications/success.png" title="Enviado com sucesso"/>');
+			$('#emailPeopleListCreatedAtTd-'+peopleIdList[index]).html(request);
 	    	
+			sendEmailItem( peopleIdList, ++index );
+		},
+		error: function(request,error){
+
+	    	$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="/images/backend/icons/notifications/exclamation.png"/>');
+	    	alert('E1'+request.responseText);
+	    	alert('E2'+error);
 	    	sendEmailItem( peopleIdList, ++index );
 		}
 	});	

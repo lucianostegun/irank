@@ -1832,6 +1832,41 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		return $this->collEventLivePlayerList;
 	}
 
+
+	
+	public function getEventLivePlayerListJoinEmailLog($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePlayerList === null) {
+			if ($this->isNew()) {
+				$this->collEventLivePlayerList = array();
+			} else {
+
+				$criteria->add(EventLivePlayerPeer::EVENT_LIVE_ID, $this->getId());
+
+				$this->collEventLivePlayerList = EventLivePlayerPeer::doSelectJoinEmailLog($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePlayerPeer::EVENT_LIVE_ID, $this->getId());
+
+			if (!isset($this->lastEventLivePlayerCriteria) || !$this->lastEventLivePlayerCriteria->equals($criteria)) {
+				$this->collEventLivePlayerList = EventLivePlayerPeer::doSelectJoinEmailLog($criteria, $con);
+			}
+		}
+		$this->lastEventLivePlayerCriteria = $criteria;
+
+		return $this->collEventLivePlayerList;
+	}
+
 	
 	public function initEventLivePhotoList()
 	{

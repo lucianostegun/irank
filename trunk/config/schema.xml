@@ -666,6 +666,7 @@
 	<table name="event_live_player" phpName="EventLivePlayer">
 		<column name="event_live_id" type="INTEGER" required="true" primaryKey="true"/>
 		<column name="people_id" type="INTEGER" required="true" primaryKey="true"/>
+		<column name="email_log_id" type="INTEGER"/>
 		<column name="enabled" type="BOOLEAN" />
 		<column name="event_position" type="INTEGER" />
 		<column name="prize" type="NUMERIC" size="10" scale="2" />
@@ -676,14 +677,15 @@
 		<column name="addon" type="NUMERIC" size="10" scale="2" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP"/>
-		<column name="email_sent_date" type="TIMESTAMP"/>
-		<column name="email_read_date" type="TIMESTAMP"/>
 		<column name="updated_at" type="TIMESTAMP"/>
 		<foreign-key foreignTable="event_live">
 			<reference local="event_live_id" foreign="id"/>
 		</foreign-key>
 		<foreign-key foreignTable="people">
 			<reference local="people_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="email_log">
+			<reference local="email_log_id" foreign="id"/>
 		</foreign-key>
 	</table>
 
@@ -854,6 +856,14 @@
 		<foreign-key foreignTable="settings">
 			<reference local="settings_id" foreign="id" />
 		</foreign-key>
+	</table>
+	
+	<table name="email_log" phpName="EmailLog">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="email_address" type="VARCHAR" />
+		<column name="error_message" type="LONGVARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="read_at" type="TIMESTAMP" />
 	</table>
 	
 </database>
