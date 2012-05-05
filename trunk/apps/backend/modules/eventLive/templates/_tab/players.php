@@ -5,20 +5,24 @@
 <div class="widget form">
 	<table cellpadding="0" cellspacing="0" width="100%" class="display sTable">
 		<thead>
-		    <tr>
+		    <tr id="playerIncluderRow">
 				<th><div id="playerCountDiv"><?php echo $players.' Jogador'.($players==1?'':'es').' confirmado'.($players==1?'':'s') ?></div></td> 
-				<th colspan="3">
-				<label style="margin: 0 15px">
-					Inclusão de jogador
-					<?php echo input_autocomplete_tag('pepleName', null, 'people/autoComplete', 'doSelectEventLivePlayer', array('size'=>'100%', 'maxlength'=>200, 'style'=>'margin-left: 10px', 'id'=>'eventLivePeopleName')) ?>
-				</label>
+				<th colspan="4">
+					<?php if( !$savedResult ): ?>
+					<label style="margin: 0 15px">
+						Inclusão de jogador
+						<?php echo input_autocomplete_tag('pepleName', null, 'people/autoComplete', 'doSelectEventLivePlayer', array('size'=>'100%', 'maxlength'=>200, 'style'=>'margin-left: 10px', 'id'=>'eventLivePeopleName')) ?>
+					</label>
+					<?php endif; ?>
 				</td> 
 			</tr>
 			<tr> 
 				<td>Nome</td>
 				<td>E-mail</td>
 				<td style="width: 150px">Confirmação</td>
-				<td style="width: 50px"></td>
+				<?php if( !$savedResult ): ?>
+				<td style="width: 50px" class="playerRemoveColumn"></td>
+				<?php endif; ?>
 			</tr>
 		</thead>
 		<tbody id="eventLivePlayerIdTbody"> 

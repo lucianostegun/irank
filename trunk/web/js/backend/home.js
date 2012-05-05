@@ -9,7 +9,7 @@ $(function() {
 			center: 'title',
 			right: 'month,basicWeek,basicDay'
 		},
-		editable: false,
+		editable: true,
 		eventSources: [{url: urlAjax}]
 	});
 });

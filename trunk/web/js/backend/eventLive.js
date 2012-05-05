@@ -91,6 +91,9 @@ function handleSuccessEventLiveResult(content){
 		
 		if( !$("#eventLiveEventDate").attr('readOnly') )
 			$("#eventLiveEventDate").attr('disabled', 'disabled');
+		
+		$("#playerIncluderRow").hide();
+		$(".playerRemoveColumn").hide();
 	}
 	
 	removeTabError('mainResultTab');

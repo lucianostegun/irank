@@ -1034,8 +1034,14 @@ function loadEventResultWindowContent(eventId){
 	if( $('windowEventResultDiv').innerHTML!='' )
 		return false;
 	
+	var successFunc = function(t){
+
+		$('windowEventResultDiv').innerHTML = t.responseText;
+		redips_init();
+	}
+	
 	var urlAjax = _webRoot+'/event/getResultWindow/eventId/'+eventId;
-	new Ajax.Updater('windowEventResultDiv', urlAjax, {asynchronous:true, evalScripts:false});
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
 }
 
 function lockEvent(eventId){

@@ -5,7 +5,7 @@
 	foreach($keyWordList as $keyWord){
 		
 		$where = '';
-
+		
 		if( preg_match('/buyin:/i', $keyWord) ){
 			
 			$keyWord = trim(str_ireplace('buyin:', '', $keyWord));
@@ -36,6 +36,27 @@
 			
 			$date = date('Y-m-d', mktime(0,0,0, date('m'), date('d')+$incrase, date('Y')));
 			$where = "event_date = '$date'$nl";
+		}elseif( Validate::validateDate($keyWord) ){
+			
+			$date = Util::formatDate($keyWord);
+			$where = "event_date = '$date'$nl";
+		}elseif( Validate::validateMonthYear($keyWord) ){
+			
+			$date      = Util::formatDate('01/'.$keyWord);
+			$timestamp = strtotime($date);
+			$dateStart = date('Y-m-d', mktime(0,0,0,date('m', $timestamp),1,date('Y', $timestamp)));
+			$dateEnd   = date('Y-m-d', mktime(0,0,0,date('m', $timestamp)+1,0,date('Y', $timestamp)));
+			$where = "event_date BETWEEN '$dateStart' AND '$dateEnd'$nl";
+		}elseif( $month=array_search($keyWord, Util::getMonthNames(true)) ){
+			
+			$dateStart = date('Y-m-d', mktime(0,0,0,$month,1,date('Y')));
+			$dateEnd   = date('Y-m-d', mktime(0,0,0,$month+1,0,date('Y')));
+			$where = "event_date BETWEEN '$dateStart' AND '$dateEnd'$nl";
+		}elseif( $keyWord >= 2011 && $keyWord <= date('Y')+3 ){
+			
+			$dateStart = date('Y-m-d', mktime(0,0,0,1,1,$keyWord));
+			$dateEnd   = date('Y-m-d', mktime(0,0,0,12,31,$keyWord));
+			$where = "event_date BETWEEN '$dateStart' AND '$dateEnd'$nl";
 		}elseif( preg_match('/!?free?roo?ll?/i', $keyWord) ){
 			
 			$where = (preg_match('/!/', $keyWord)?'NOT ':'').'is_freeroll'.$nl;
@@ -56,7 +77,7 @@
 			$where .= "OR no_accent(address_quarter) ILIKE '%$keyWord%' $nl";
 			$where .= "OR no_accent(description) ILIKE '%$keyWord%')$nl";
 		}
-		
+
 		if( empty($where) )
 			continue;
 		

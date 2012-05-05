@@ -602,6 +602,16 @@ class Util {
 	 */
 	public static function getMonthName($month, $short=false){
 		
+		$monthList = self::getMonthNames();
+		
+		if( $short )
+			return substr($monthList[$month*1], 0, 3);
+		else
+			return $monthList[$month*1];
+	}
+
+	public static function getMonthNames($lowercase=false){
+		
 		$monthList     = array();
 		$monthList[1]  = 'Janeiro';
 		$monthList[2]  = 'Fevereiro';
@@ -616,10 +626,11 @@ class Util {
 		$monthList[11] = 'Novembro';
 		$monthList[12] = 'Dezembro';
 		
-		if( $short )
-			return substr($monthList[$month*1], 0, 3);
-		else
-			return $monthList[$month*1];
+		if( $lowercase )
+			foreach($monthList as &$month)
+				$month = strtolower($month);
+		
+		return $monthList;
 	}
 	
 	/**
