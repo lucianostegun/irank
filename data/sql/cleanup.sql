@@ -41,7 +41,10 @@ DELETE FROM ranking_live_player;
 DELETE FROM ranking_live_history;
 DELETE FROM ranking_live;
 DELETE FROM club_photo;
+DELETE FROM club_settings;
 DELETE FROM club;
+DELETE FROM user_admin WHERE id > 1;
+UPDATE user_admin SET master=true, club_id=null;
 
 
 select * from irank_ranking order by score desc;

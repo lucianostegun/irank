@@ -20,18 +20,19 @@ class Report {
 	 * @param      Array: Array de opções gerais do módulo
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
-return;
-		$smtpComponent  = 'smtp';
-		$smtpHostname   = Config::getConfigByName( 'smtpHostname', true );
-		$smtpUsername   = Config::getConfigByName( 'smtpUsername', true );
-		$smtpPassword   = Config::getConfigByName( 'smtpPassword', true );
-		$senderName     = Config::getConfigByName( 'emailSenderName', true );
+	
+		$smtpComponent = 'smtp';
+		$smtpHostname  = Config::getConfigByName('smtpHostname', true);
+		$smtpUsername  = Config::getConfigByName('smtpUsername', true);
+		$smtpPassword  = Config::getConfigByName('smtpPassword', true);
+		$senderName    = Config::getConfigByName('emailSenderName', true);
 		
-		$contentType     = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
-		$emailTemplate   = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
-		$replyTo         = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
-		$attachmentList  = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
-		$entitiesEncode  = array_key_exists('entitiesEncode', $options)?$options['entitiesEncode']:true;
+		$contentType    = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
+		$emailTemplate  = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
+		$replyTo        = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
+		$attachmentList = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
+		$entitiesEncode = array_key_exists('entitiesEncode', $options)?$options['entitiesEncode']:true;
+		$emailLogId     = array_key_exists('emailLogId', $options)?$options['emailLogId']:null;
 
 		$emailAddressList = array('lucianostegun@gmail.com');
 		
@@ -71,6 +72,12 @@ return;
 			$emailContent = str_replace('<emailContent>', $emailContent, $emailTemplate);
 		}
 		
+		if( $emailLogId )
+			$footerLogoUrl = 'http://<host>/home/images/emailLogo.png?elid='.Util::encodeId($emailLogId);
+		else
+			$footerLogoUrl = 'http://<host>/images/emailLogo.png';
+		
+		$emailContent = str_replace('<footerLogoUrl>', $footerLogoUrl, $emailContent);
 		$emailContent = str_replace('<host>', $host, $emailContent);
 		$emailContent = str_replace('<emailTitle>', $emailSubject, $emailContent);
 		$emailContent = str_replace('<hr/>', '<div style="border-top: 1px solid #DADADA"></div>', $emailContent);
@@ -127,11 +134,11 @@ return;
 		
 			$sfMailObj->send();
 
-			EmailLog::doLog($emailAddressList, $emailSubject, 'success');
+			EmailLog::doLog($emailAddressList, $emailSubject, 'success', $emailLogId);
 		}catch(Exception $e){
 		
 			$sendResult = false;
-			EmailLog::doLog($emailAddressList, $emailSubject, 'error');
+			EmailLog::doLog($emailAddressList, $emailSubject, 'error', $emailLogId);
 		}
 		
 		return $sendResult;

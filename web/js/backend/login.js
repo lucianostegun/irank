@@ -19,7 +19,7 @@ function doLogin(){
 		});
 		
 		if( isDebug() )
-			alert(t.responseText);
+			debugAdd(t.responseText);
 	}
 	
 	var urlAjax = _webRoot+'/login/login';

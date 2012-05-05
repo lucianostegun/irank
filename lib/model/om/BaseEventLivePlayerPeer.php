@@ -13,7 +13,7 @@ abstract class BaseEventLivePlayerPeer {
 	const CLASS_DEFAULT = 'lib.model.EventLivePlayer';
 
 	
-	const NUM_COLUMNS = 14;
+	const NUM_COLUMNS = 13;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -24,9 +24,6 @@ abstract class BaseEventLivePlayerPeer {
 
 	
 	const PEOPLE_ID = 'event_live_player.PEOPLE_ID';
-
-	
-	const EMAIL_LOG_ID = 'event_live_player.EMAIL_LOG_ID';
 
 	
 	const ENABLED = 'event_live_player.ENABLED';
@@ -67,19 +64,19 @@ abstract class BaseEventLivePlayerPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventLiveId', 'PeopleId', 'EmailLogId', 'Enabled', 'EventPosition', 'Prize', 'Score', 'EntranceFee', 'Buyin', 'Rebuy', 'Addon', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePlayerPeer::PEOPLE_ID, EventLivePlayerPeer::EMAIL_LOG_ID, EventLivePlayerPeer::ENABLED, EventLivePlayerPeer::EVENT_POSITION, EventLivePlayerPeer::PRIZE, EventLivePlayerPeer::SCORE, EventLivePlayerPeer::ENTRANCE_FEE, EventLivePlayerPeer::BUYIN, EventLivePlayerPeer::REBUY, EventLivePlayerPeer::ADDON, EventLivePlayerPeer::DELETED, EventLivePlayerPeer::CREATED_AT, EventLivePlayerPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_live_id', 'people_id', 'email_log_id', 'enabled', 'event_position', 'prize', 'score', 'entrance_fee', 'buyin', 'rebuy', 'addon', 'deleted', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('EVENT_LIVE_ID'=>'', 'PEOPLE_ID'=>'', 'EMAIL_LOG_ID'=>'', 'ENABLED'=>'', 'EVENT_POSITION'=>'', 'PRIZE'=>'', 'SCORE'=>'', 'ENTRANCE_FEE'=>'', 'BUYIN'=>'', 'REBUY'=>'', 'ADDON'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+		BasePeer::TYPE_PHPNAME=>array ('EventLiveId', 'PeopleId', 'Enabled', 'EventPosition', 'Prize', 'Score', 'EntranceFee', 'Buyin', 'Rebuy', 'Addon', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePlayerPeer::PEOPLE_ID, EventLivePlayerPeer::ENABLED, EventLivePlayerPeer::EVENT_POSITION, EventLivePlayerPeer::PRIZE, EventLivePlayerPeer::SCORE, EventLivePlayerPeer::ENTRANCE_FEE, EventLivePlayerPeer::BUYIN, EventLivePlayerPeer::REBUY, EventLivePlayerPeer::ADDON, EventLivePlayerPeer::DELETED, EventLivePlayerPeer::CREATED_AT, EventLivePlayerPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('event_live_id', 'people_id', 'enabled', 'event_position', 'prize', 'score', 'entrance_fee', 'buyin', 'rebuy', 'addon', 'deleted', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('EVENT_LIVE_ID'=>'', 'PEOPLE_ID'=>'', 'ENABLED'=>'', 'EVENT_POSITION'=>'', 'PRIZE'=>'', 'SCORE'=>'', 'ENTRANCE_FEE'=>'', 'BUYIN'=>'', 'REBUY'=>'', 'ADDON'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventLiveId'=>0, 'PeopleId'=>1, 'EmailLogId'=>2, 'Enabled'=>3, 'EventPosition'=>4, 'Prize'=>5, 'Score'=>6, 'EntranceFee'=>7, 'Buyin'=>8, 'Rebuy'=>9, 'Addon'=>10, 'Deleted'=>11, 'CreatedAt'=>12, 'UpdatedAt'=>13, ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePlayerPeer::EVENT_LIVE_ID=>0, EventLivePlayerPeer::PEOPLE_ID=>1, EventLivePlayerPeer::EMAIL_LOG_ID=>2, EventLivePlayerPeer::ENABLED=>3, EventLivePlayerPeer::EVENT_POSITION=>4, EventLivePlayerPeer::PRIZE=>5, EventLivePlayerPeer::SCORE=>6, EventLivePlayerPeer::ENTRANCE_FEE=>7, EventLivePlayerPeer::BUYIN=>8, EventLivePlayerPeer::REBUY=>9, EventLivePlayerPeer::ADDON=>10, EventLivePlayerPeer::DELETED=>11, EventLivePlayerPeer::CREATED_AT=>12, EventLivePlayerPeer::UPDATED_AT=>13, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_live_id'=>0, 'people_id'=>1, 'email_log_id'=>2, 'enabled'=>3, 'event_position'=>4, 'prize'=>5, 'score'=>6, 'entrance_fee'=>7, 'buyin'=>8, 'rebuy'=>9, 'addon'=>10, 'deleted'=>11, 'created_at'=>12, 'updated_at'=>13, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+		BasePeer::TYPE_PHPNAME=>array ('EventLiveId'=>0, 'PeopleId'=>1, 'Enabled'=>2, 'EventPosition'=>3, 'Prize'=>4, 'Score'=>5, 'EntranceFee'=>6, 'Buyin'=>7, 'Rebuy'=>8, 'Addon'=>9, 'Deleted'=>10, 'CreatedAt'=>11, 'UpdatedAt'=>12, ),
+		BasePeer::TYPE_COLNAME=>array (EventLivePlayerPeer::EVENT_LIVE_ID=>0, EventLivePlayerPeer::PEOPLE_ID=>1, EventLivePlayerPeer::ENABLED=>2, EventLivePlayerPeer::EVENT_POSITION=>3, EventLivePlayerPeer::PRIZE=>4, EventLivePlayerPeer::SCORE=>5, EventLivePlayerPeer::ENTRANCE_FEE=>6, EventLivePlayerPeer::BUYIN=>7, EventLivePlayerPeer::REBUY=>8, EventLivePlayerPeer::ADDON=>9, EventLivePlayerPeer::DELETED=>10, EventLivePlayerPeer::CREATED_AT=>11, EventLivePlayerPeer::UPDATED_AT=>12, ),
+		BasePeer::TYPE_FIELDNAME=>array ('event_live_id'=>0, 'people_id'=>1, 'enabled'=>2, 'event_position'=>3, 'prize'=>4, 'score'=>5, 'entrance_fee'=>6, 'buyin'=>7, 'rebuy'=>8, 'addon'=>9, 'deleted'=>10, 'created_at'=>11, 'updated_at'=>12, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
@@ -136,8 +133,6 @@ abstract class BaseEventLivePlayerPeer {
 		$criteria->addSelectColumn(EventLivePlayerPeer::EVENT_LIVE_ID);
 
 		$criteria->addSelectColumn(EventLivePlayerPeer::PEOPLE_ID);
-
-		$criteria->addSelectColumn(EventLivePlayerPeer::EMAIL_LOG_ID);
 
 		$criteria->addSelectColumn(EventLivePlayerPeer::ENABLED);
 
@@ -296,34 +291,6 @@ abstract class BaseEventLivePlayerPeer {
 
 
 	
-	public static function doCountJoinEmailLog(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventLivePlayerPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(EventLivePlayerPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(EventLivePlayerPeer::EMAIL_LOG_ID, EmailLogPeer::ID);
-
-		$rs = EventLivePlayerPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
 	public static function doSelectJoinEventLive(Criteria $c, $con = null)
 	{
 		$c = clone $c;
@@ -418,53 +385,6 @@ abstract class BaseEventLivePlayerPeer {
 
 
 	
-	public static function doSelectJoinEmailLog(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-				if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		EventLivePlayerPeer::addSelectColumns($c);
-		$startcol = (EventLivePlayerPeer::NUM_COLUMNS - EventLivePlayerPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-		EmailLogPeer::addSelectColumns($c);
-
-		$c->addJoin(EventLivePlayerPeer::EMAIL_LOG_ID, EmailLogPeer::ID);
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = EventLivePlayerPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = EmailLogPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj2 = new $cls();
-			$obj2->hydrate($rs, $startcol);
-
-			$newObject = true;
-			foreach($results as $temp_obj1) {
-				$temp_obj2 = $temp_obj1->getEmailLog(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-										$temp_obj2->addEventLivePlayer($obj1); 					break;
-				}
-			}
-			if ($newObject) {
-				$obj2->initEventLivePlayerList();
-				$obj2->addEventLivePlayer($obj1); 			}
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
 	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
 	{
 		$criteria = clone $criteria;
@@ -484,8 +404,6 @@ abstract class BaseEventLivePlayerPeer {
 		$criteria->addJoin(EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID);
 
 		$criteria->addJoin(EventLivePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
-
-		$criteria->addJoin(EventLivePlayerPeer::EMAIL_LOG_ID, EmailLogPeer::ID);
 
 		$rs = EventLivePlayerPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -514,14 +432,9 @@ abstract class BaseEventLivePlayerPeer {
 		PeoplePeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + PeoplePeer::NUM_COLUMNS;
 
-		EmailLogPeer::addSelectColumns($c);
-		$startcol5 = $startcol4 + EmailLogPeer::NUM_COLUMNS;
-
 		$c->addJoin(EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID);
 
 		$c->addJoin(EventLivePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
-
-		$c->addJoin(EventLivePlayerPeer::EMAIL_LOG_ID, EmailLogPeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -581,29 +494,6 @@ abstract class BaseEventLivePlayerPeer {
 				$obj3->addEventLivePlayer($obj1);
 			}
 
-
-					
-			$omClass = EmailLogPeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj4 = new $cls();
-			$obj4->hydrate($rs, $startcol4);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj4 = $temp_obj1->getEmailLog(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj4->addEventLivePlayer($obj1); 					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj4->initEventLivePlayerList();
-				$obj4->addEventLivePlayer($obj1);
-			}
-
 			$results[] = $obj1;
 		}
 		return $results;
@@ -628,8 +518,6 @@ abstract class BaseEventLivePlayerPeer {
 		}
 
 		$criteria->addJoin(EventLivePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
-
-		$criteria->addJoin(EventLivePlayerPeer::EMAIL_LOG_ID, EmailLogPeer::ID);
 
 		$rs = EventLivePlayerPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -659,38 +547,6 @@ abstract class BaseEventLivePlayerPeer {
 
 		$criteria->addJoin(EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID);
 
-		$criteria->addJoin(EventLivePlayerPeer::EMAIL_LOG_ID, EmailLogPeer::ID);
-
-		$rs = EventLivePlayerPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
-	public static function doCountJoinAllExceptEmailLog(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventLivePlayerPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(EventLivePlayerPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID);
-
-		$criteria->addJoin(EventLivePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
-
 		$rs = EventLivePlayerPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
@@ -715,12 +571,7 @@ abstract class BaseEventLivePlayerPeer {
 		PeoplePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + PeoplePeer::NUM_COLUMNS;
 
-		EmailLogPeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + EmailLogPeer::NUM_COLUMNS;
-
 		$c->addJoin(EventLivePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
-
-		$c->addJoin(EventLivePlayerPeer::EMAIL_LOG_ID, EmailLogPeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -756,28 +607,6 @@ abstract class BaseEventLivePlayerPeer {
 				$obj2->addEventLivePlayer($obj1);
 			}
 
-			$omClass = EmailLogPeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj3  = new $cls();
-			$obj3->hydrate($rs, $startcol3);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj3 = $temp_obj1->getEmailLog(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj3->addEventLivePlayer($obj1);
-					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj3->initEventLivePlayerList();
-				$obj3->addEventLivePlayer($obj1);
-			}
-
 			$results[] = $obj1;
 		}
 		return $results;
@@ -799,12 +628,7 @@ abstract class BaseEventLivePlayerPeer {
 		EventLivePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + EventLivePeer::NUM_COLUMNS;
 
-		EmailLogPeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + EmailLogPeer::NUM_COLUMNS;
-
 		$c->addJoin(EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID);
-
-		$c->addJoin(EventLivePlayerPeer::EMAIL_LOG_ID, EmailLogPeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -838,112 +662,6 @@ abstract class BaseEventLivePlayerPeer {
 			if ($newObject) {
 				$obj2->initEventLivePlayerList();
 				$obj2->addEventLivePlayer($obj1);
-			}
-
-			$omClass = EmailLogPeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj3  = new $cls();
-			$obj3->hydrate($rs, $startcol3);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj3 = $temp_obj1->getEmailLog(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj3->addEventLivePlayer($obj1);
-					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj3->initEventLivePlayerList();
-				$obj3->addEventLivePlayer($obj1);
-			}
-
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
-	public static function doSelectJoinAllExceptEmailLog(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		EventLivePlayerPeer::addSelectColumns($c);
-		$startcol2 = (EventLivePlayerPeer::NUM_COLUMNS - EventLivePlayerPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-
-		EventLivePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + EventLivePeer::NUM_COLUMNS;
-
-		PeoplePeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + PeoplePeer::NUM_COLUMNS;
-
-		$c->addJoin(EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID);
-
-		$c->addJoin(EventLivePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
-
-
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = EventLivePlayerPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = EventLivePeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj2  = new $cls();
-			$obj2->hydrate($rs, $startcol2);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getEventLive(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj2->addEventLivePlayer($obj1);
-					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj2->initEventLivePlayerList();
-				$obj2->addEventLivePlayer($obj1);
-			}
-
-			$omClass = PeoplePeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj3  = new $cls();
-			$obj3->hydrate($rs, $startcol3);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj3 = $temp_obj1->getPeople(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj3->addEventLivePlayer($obj1);
-					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj3->initEventLivePlayerList();
-				$obj3->addEventLivePlayer($obj1);
 			}
 
 			$results[] = $obj1;

@@ -2,6 +2,7 @@
 	$rankingLiveId   = $rankingLiveObj->getId();
 	$rankingName     = $rankingLiveObj->getRankingName();
 	$clubObj         = $rankingLiveObj->getClub();
+	$clubTagName     = $clubObj->getTagName();
 	$clubName        = $clubObj->getClubName();
 	$clubId          = $clubObj->getId();
 	$addressQuarter  = $clubObj->getAddressQuarter();
@@ -15,7 +16,7 @@
 	$description = preg_replace('/___*/i', '<hr/>', $description);
 	
 	$pathList = array('Rankings ao vivo'=>$moduleName.'/index', 
-					  $clubName=>'#goToPage("club", "details", "clubId", '.$clubId.')', 
+					  $clubName=>'#goToPage("'.$clubTagName.'", "", "", "")', 
 					  $rankingName=>'#goToPage("ranking", "view", "rankingLiveId", '.$rankingLiveId.')', 
 					  $rankingName=>null);
 	

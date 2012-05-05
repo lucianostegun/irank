@@ -105,9 +105,7 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 	public function setLogId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -125,9 +123,7 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 	public function setFieldName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -141,9 +137,7 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 	public function setFieldValue($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

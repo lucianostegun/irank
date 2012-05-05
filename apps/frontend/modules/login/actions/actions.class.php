@@ -41,6 +41,7 @@ class loginActions extends sfActions
 			
 	        UserSite::logout();
 	        $userSiteObj->login($keepLogin);
+
 	        
 	        $options                    = array();
 	        $options['username']        = $userSiteObj->getUsername();

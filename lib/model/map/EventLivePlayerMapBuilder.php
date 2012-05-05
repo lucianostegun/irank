@@ -36,8 +36,6 @@ class EventLivePlayerMapBuilder {
 
 		$tMap->addForeignPrimaryKey('PEOPLE_ID', 'PeopleId', 'int' , CreoleTypes::INTEGER, 'people', 'ID', true, null);
 
-		$tMap->addForeignKey('EMAIL_LOG_ID', 'EmailLogId', 'int', CreoleTypes::INTEGER, 'email_log', 'ID', false, null);
-
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('EVENT_POSITION', 'EventPosition', 'int', CreoleTypes::INTEGER, false, null);

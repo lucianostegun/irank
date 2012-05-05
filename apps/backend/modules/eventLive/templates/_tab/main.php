@@ -3,6 +3,9 @@
 	$clubId        = $eventLiveObj->getClubId();
 	$rankingLiveId = $eventLiveObj->getRankingLiveId();
 	
+	if( !$clubId )
+		$clubId = $sf_user->getAttribute('clubId');
+	
 	$allowedRebuys = $eventLiveObj->getAllowedRebuys();
 	
 	echo input_hidden_tag('eventLiveId', $eventLiveObj->getId());
@@ -35,7 +38,7 @@
 		<label>Ranking</label>
 		<div class="formRight" id="eventLiveRankingLiveIdDiv">
 			<?php if( $isNew ): ?>
-			<?php echo select_tag('rankingLiveId', RankingLive::getOptionsForSelect($eventLiveObj->getClubId()|$clubId, $rankingLiveId), array('onchange'=>'loadDefaultValues(this.value)', 'id'=>'eventLiveRankingLiveId')) ?>
+			<?php echo select_tag('rankingLiveId', RankingLive::getOptionsForSelect($eventLiveObj->getClubId()|$clubId, $rankingLiveId), array('onchange'=>'loadDefaultValues(this.value); loadEventStats()', 'id'=>'eventLiveRankingLiveId')) ?>
 			<div class="clear"></div>
 			<div class="formNote error" id="eventLiveFormErrorRankingLiveId"></div>
 			<?php else: ?>
@@ -66,7 +69,7 @@
 	<div class="formRow">
 		<label>Data</label>
 		<div class="formRight">
-			<?php echo input_tag('eventDate', $eventLiveObj->getEventDate('d/m/Y'), array('maxlength'=>10, 'class'=>'datepicker maskDate', 'id'=>'eventLiveEventDate')) ?>
+			<?php echo input_tag('eventDate', $eventLiveObj->getEventDate('d/m/Y'), array('disabled'=>$eventLiveObj->getSavedResult(), 'maxlength'=>10, 'class'=>'maskDate', 'id'=>'eventLiveEventDate')) ?>
 			<div class="formNote error" id="eventLiveFormErrorEventDate"></div>
 		</div>
 		<div class="clear"></div>
@@ -84,9 +87,9 @@
 	<div class="formRow">
 		<label>Buy-in</label>
 		<div class="formRight">
-			<span class="multi"><?php echo input_tag('buyin', Util::formatFloat($eventLiveObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'onblur'=>'updateMainBalanceByEventLive()', 'disabled'=>$eventLiveObj->getIsFreeroll(), 'id'=>'eventLiveBuyin')) ?></span>
+			<span class="multi"><?php echo input_tag('buyin', Util::formatFloat($eventLiveObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'onkeyup'=>'updateMainBalanceByEventLive()', 'disabled'=>$eventLiveObj->getIsFreeroll(), 'id'=>'eventLiveBuyin')) ?></span>
 			<span class="multi"><label class="text">+</label></span>
-			<span class="multi"><?php echo input_tag('entranceFee', Util::formatFloat($eventLiveObj->getEntranceFee(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'onblur'=>'updateMainBalanceByEventLive()', 'id'=>'eventLiveEntranceFee')) ?></span>
+			<span class="multi"><?php echo input_tag('entranceFee', Util::formatFloat($eventLiveObj->getEntranceFee(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'onkeyup'=>'updateMainBalanceByEventLive()', 'id'=>'eventLiveEntranceFee')) ?></span>
 			<span class="multi"><?php echo checkbox_tag('isFreeroll', true, $eventLiveObj->getIsFreeroll(), array('onclick'=>'handleIsFreeroll(this.checked)', 'id'=>'eventLiveIsFreeroll')) ?></span>
 			<span class="multi"><label for="eventLiveIsFreeroll">Freeroll</label></span>
 			<div class="clear"></div>
@@ -111,9 +114,9 @@
 	<div class="formRow">
 		<label>Duração dos blinds</label>
 		<div class="formRight">
-			<?php echo input_tag('blindTime', $eventLiveObj->getBlindTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'eventLiveBlindTime')) ?>
+			<?php echo input_tag('blindTime', $eventLiveObj->getBlindTime('H:i'), array('size'=>5, 'maxlength'=>5, 'id'=>'eventLiveBlindTime')) ?>
 			<div class="formNote error" id="eventLiveFormErrorBlindTime"></div>
-			<span class="formNote">Formato: hh:mm</span>
+			<span class="formNote">Formato: hh:mm ou 00min</span>
 		</div>
 		<div class="clear"></div>
 	</div>

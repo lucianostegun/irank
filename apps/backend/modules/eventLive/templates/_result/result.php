@@ -5,7 +5,7 @@
 	<div class="formRow">
 		<label>Total Rebuys/Addons</label>
 		<div class="formRight">
-			<?php echo input_tag('totalRebuys', Util::formatFloat($eventLiveObj->getTotalRebuys(), true), array('maxlength'=>10, 'onblur'=>'updateMainBalanceByEventLive()', 'class'=>'decimal small100', 'id'=>'eventLiveTotalRebuys')) ?>
+			<?php echo input_tag('totalRebuys', Util::formatFloat($eventLiveObj->getTotalRebuys(), true), array('maxlength'=>10, 'onkeyup'=>'updateMainBalanceByEventLive()', 'class'=>'decimal small100', 'id'=>'eventLiveTotalRebuys')) ?>
 			<div class="formNote">Formato: 0000,00</div>
 		</div>
 		<div class="clear"></div>
@@ -34,7 +34,7 @@
 			<col/>
 		</colgroup>
 		<tbody id="eventLiveResultTbody">
-			<?php include_partial('eventLive/include/result', array('eventLiveObj'=>$eventLiveObj, 'hasPendingResult'=>$hasPendingResult)) ?>
+			<?php include_partial('eventLive/include/result', array('eventLiveObj'=>$eventLiveObj)) ?>
 		</tbody>
 	</table>
 </div>

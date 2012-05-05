@@ -4,7 +4,7 @@
 abstract class BaseEmailLogPeer {
 
 	
-	const DATABASE_NAME = 'propel';
+	const DATABASE_NAME = 'log';
 
 	
 	const TABLE_NAME = 'email_log';
@@ -13,7 +13,7 @@ abstract class BaseEmailLogPeer {
 	const CLASS_DEFAULT = 'lib.model.EmailLog';
 
 	
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 7;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -29,6 +29,12 @@ abstract class BaseEmailLogPeer {
 	const ERROR_MESSAGE = 'email_log.ERROR_MESSAGE';
 
 	
+	const EMAIL_SUBJECT = 'email_log.EMAIL_SUBJECT';
+
+	
+	const SENDING_STATUS = 'email_log.SENDING_STATUS';
+
+	
 	const CREATED_AT = 'email_log.CREATED_AT';
 
 	
@@ -40,19 +46,19 @@ abstract class BaseEmailLogPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'EmailAddress', 'ErrorMessage', 'CreatedAt', 'ReadAt', ),
-		BasePeer::TYPE_COLNAME=>array (EmailLogPeer::ID, EmailLogPeer::EMAIL_ADDRESS, EmailLogPeer::ERROR_MESSAGE, EmailLogPeer::CREATED_AT, EmailLogPeer::READ_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'email_address', 'error_message', 'created_at', 'read_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EMAIL_ADDRESS'=>'', 'ERROR_MESSAGE'=>'', 'CREATED_AT'=>'', 'READ_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'EmailAddress', 'ErrorMessage', 'EmailSubject', 'SendingStatus', 'CreatedAt', 'ReadAt', ),
+		BasePeer::TYPE_COLNAME=>array (EmailLogPeer::ID, EmailLogPeer::EMAIL_ADDRESS, EmailLogPeer::ERROR_MESSAGE, EmailLogPeer::EMAIL_SUBJECT, EmailLogPeer::SENDING_STATUS, EmailLogPeer::CREATED_AT, EmailLogPeer::READ_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'email_address', 'error_message', 'email_subject', 'sending_status', 'created_at', 'read_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EMAIL_ADDRESS'=>'', 'ERROR_MESSAGE'=>'', 'EMAIL_SUBJECT'=>'', 'SENDING_STATUS'=>'', 'CREATED_AT'=>'', 'READ_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EmailAddress'=>1, 'ErrorMessage'=>2, 'CreatedAt'=>3, 'ReadAt'=>4, ),
-		BasePeer::TYPE_COLNAME=>array (EmailLogPeer::ID=>0, EmailLogPeer::EMAIL_ADDRESS=>1, EmailLogPeer::ERROR_MESSAGE=>2, EmailLogPeer::CREATED_AT=>3, EmailLogPeer::READ_AT=>4, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'email_address'=>1, 'error_message'=>2, 'created_at'=>3, 'read_at'=>4, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EmailAddress'=>1, 'ErrorMessage'=>2, 'EmailSubject'=>3, 'SendingStatus'=>4, 'CreatedAt'=>5, 'ReadAt'=>6, ),
+		BasePeer::TYPE_COLNAME=>array (EmailLogPeer::ID=>0, EmailLogPeer::EMAIL_ADDRESS=>1, EmailLogPeer::ERROR_MESSAGE=>2, EmailLogPeer::EMAIL_SUBJECT=>3, EmailLogPeer::SENDING_STATUS=>4, EmailLogPeer::CREATED_AT=>5, EmailLogPeer::READ_AT=>6, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'email_address'=>1, 'error_message'=>2, 'email_subject'=>3, 'sending_status'=>4, 'created_at'=>5, 'read_at'=>6, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	
@@ -111,6 +117,10 @@ abstract class BaseEmailLogPeer {
 		$criteria->addSelectColumn(EmailLogPeer::EMAIL_ADDRESS);
 
 		$criteria->addSelectColumn(EmailLogPeer::ERROR_MESSAGE);
+
+		$criteria->addSelectColumn(EmailLogPeer::EMAIL_SUBJECT);
+
+		$criteria->addSelectColumn(EmailLogPeer::SENDING_STATUS);
 
 		$criteria->addSelectColumn(EmailLogPeer::CREATED_AT);
 

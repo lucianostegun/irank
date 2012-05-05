@@ -35,4 +35,20 @@ class EventLivePeer extends BaseEventLivePeer
 		
 		return preg_match('/^[0-9]*[,\.]?[0-9]*[kK]?$/', $stackChips);
 	}
+	
+	public static function validateEventDate($eventDate){
+		
+		$rankingId = MyTools::getRequestParameter('rankingId');
+
+		$criteria = new Criteria();
+		$criteria->add( EventPeer::RANKING_ID, $rankingId );
+		$criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate), Criteria::GREATER_THAN );
+		$criteria->add( EventPeer::SAVED_RESULT, true );
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::DELETED, false );
+		$eventCount = EventPeer::doCount($criteria);
+
+		return ($eventCount==0);
+	}
 }

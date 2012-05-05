@@ -18,7 +18,7 @@ class eventLiveActions extends sfActions
     $this->iRankAdmin = $this->getUser()->hasCredential('iRankAdmin');
 	$this->clubId     = $this->getUser()->getAttribute('clubId');
     
-    $this->pathList = array('Eventos ao vivo'=>'eventLive/index');
+    $this->pathList = array('Eventos'.($this->iRankAdmin?' ao vivo':'')=>'eventLive/index');
     $this->toolbarList = array('new');
   }
 
@@ -31,6 +31,10 @@ class eventLiveActions extends sfActions
     $this->eventLiveObj = Util::getNewObject('eventLive');
     
     $this->eventLiveObj->setDescription('<descrição do ranking>');
+    
+	sfLoader::loadHelpers('Partial');
+    $this->stats   = get_partial('eventLive/include/stats', array('eventLiveObj'=>$this->eventLiveObj));
+    $this->balance = get_partial('eventLive/include/balance', array('eventLiveObj'=>$this->eventLiveObj));
     
     $this->pathList['Novo evento'] = '#';
     $this->toolbarList = array('save');
@@ -189,39 +193,20 @@ class eventLiveActions extends sfActions
   
   public function executeSendDiclosureEmail($request){
   	
-  	$eventLiveId  = $request->getParameter('eventLiveId');
-  	$peopleId     = $request->getParameter('peopleId');
-  	$eventLiveObj = EventLivePeer::retrieveByPK( $eventLiveId );
-  	$peopleObj    = PeoplePeer::retrieveByPK( $peopleId );
+  	$peopleId = $request->getParameter('peopleId');
   	
-  	if(!is_object($peopleObj) || !is_object($eventLiveObj))
-  		Util::forceError('Não foi possível concluir o envio do email');
+  	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
   	
-  	$emailAddress = $peopleObj->getEmailAddress();
-  	if(!$emailAddress)
-  		Util::forceError('Email não encontrado');
+  	if( !is_object($eventLiveObj) )
+	  	throw new Exception('Evento não encontrado');
   	
   	try{
   		
-  		$emailLogObj = new EmailLog();
-  		$emailLogObj->setEmailAddress($emailAddress);
-  		$emailLogObj->save();
+	  	$eventLiveObj->notifyPlayer($peopleId);
+  	}catch(Exception $e){
   		
-  		$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($eventLiveId, $peopleId);
-  		$eventLivePlayerObj->setEmailLogId($emailLogObj->getId());
-  		$eventLivePlayerObj->save();
-  		
-	  	$emailContent = file_get_contents(Util::getFilePath('templates/pt_BR/emailDisclosure.htm'));	
-	  	$emailContent = str_replace('<imageCode>', '<img src="http://alpha.irank.com.br/home/images?code='.base64_encode($emailLogObj->getId()).'">', $emailContent);
-	  	$emailSubject = 'Divulgação de evento por email';
-	  	
-	  	Report::sendMail($emailSubject, $emailAddress, $emailContent);
-	  	
-	  	echo $emailLogObj->getCreatedAt('d/m/Y H:i:s');
-  	} catch ( Exception $e ) {
-        	
-    	Util::forceError( 'Ocorreu um erro no envio desse email.\n'.$e->getMessage() );
-    }
+  		Util::forceError( 'Ocorreu um erro no envio desse email.\n'.$e->getMessage() );
+  	}
   	
   	exit;
   }
@@ -400,5 +385,24 @@ class eventLiveActions extends sfActions
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	return $this->renderText(get_partial('eventLive/include/result', array('eventLiveObj'=>$eventLiveObj)));
+  }
+
+  public function executeGetStats($request){
+    
+    $rankingLiveId = $request->getParameter('rankingLiveId');
+    $eventDate     = $request->getParameter('eventDate');
+    
+    if( !$rankingLiveId | !$eventDate || !Validate::validateDate($eventDate) )
+    	throw new Exception('Parâmetros insuficientes ou inválidos!');
+    	
+    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+    $eventLiveObj->setRankingLiveId($rankingLiveId);
+    $eventLiveObj->setEventDateTime(Util::formatDate($eventDate).' '.date('H:i:s'));
+    
+    $infoList = $eventLiveObj->getStats(true);
+    $infoList['balance'] = $eventLiveObj->getBalanceStats();
+    
+    echo Util::parseInfo($infoList);
+    exit;
   }
 }

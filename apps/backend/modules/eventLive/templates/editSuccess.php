@@ -3,9 +3,13 @@
 	<div class="nNote nWarning hideit">
 	    <p><strong>ATENÇÃO: </strong>O resultado deste evento já foi salvo. As alterações na pontuação e premiação serão automaticamente atualizadas.</p>
 	</div>
+	<?php elseif( !$eventLiveObj->getIsNew() && $eventLiveObj->hasPreviousPendingResult() ): ?>
+	<div class="nNote nWarning hideit" id="previousPendingResultWarning">
+	    <p><strong>ATENÇÃO: </strong><?php echo __('eventLive.previousPendingResultAlert') ?></p>
+	</div>
 	<?php elseif( $eventLiveObj->isPendingResult() ): ?>
 	<div class="nNote nWarning hideit" id="pendingResultWarning">
-	    <p><strong>ATENÇÃO: </strong><?php echo __('eventLive.pendingResultAlert') ?>.</p>
+	    <p><strong>ATENÇÃO: </strong><?php echo __('eventLive.pendingResultAlert') ?></p>
 	</div>
 	<?php endif; ?>
 	
@@ -17,7 +21,7 @@
 			<li id="mainResultTab"><a href="#tab3" onclick="return activeResultTab()">Resultado</a></li>
 			<li><a href="#tab4">Fotos</a></li>
 			<li><a href="#tab5">Opções</a></li>
-			<li><a href="#tab6">Divulgação</a></li>
+			<li class="<?php echo ($eventLiveObj->getIsNew()?'hidden':'') ?>" id="mainDisclosureTab"><a href="#tab6">Divulgação</a></li>
 			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#eventLiveForm").submit()')); ?>
 		</ul>
 		<div class="tab_container">

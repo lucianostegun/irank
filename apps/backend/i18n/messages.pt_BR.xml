@@ -131,6 +131,12 @@
 				<source>eventLive.pendingResultAlert</source>
 				<target>O resultado deste evento está pendente de publicação</target>
 			</trans-unit>
+
+			<trans-unit>
+				<source>eventLive.previousPendingResultAlert</source>
+				<target>Existem resultados de eventos anteriores que ainda não foram lançados.&lt;br/&gt;
+    	O resultado desde evento só poderá ser salvo quando os resultadores anteriores forem lançados.</target>
+			</trans-unit>
 			
 		</body>
 	</file>

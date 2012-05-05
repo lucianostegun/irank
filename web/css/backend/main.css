@@ -334,6 +334,8 @@ ul.sub li ul li { padding-left: 10px; }
 .genBalance a { background: url(/images/backend/backgrounds/genBalance.png) repeat-x; display: block; border-top: 1px solid #4a535c; color: #e0e0e0; border-bottom: 1px solid #3c444c; }
 .genBalance a span { font-size: 11px; display: block; margin-bottom: 6px; }
 .genBalance a span.balanceAmount { font-size: 22px; font-weight: bold; margin: 0; }
+.genBalance a span.moneyCode { float: left; font-size: 22px; width: auto; font-weight: bold; margin: 0 3px 0 0; }
+.genBalance a span.moneyCode.small { font-size: 18px }
 .genBalance .amount { width: 124px; float: left; margin-right: 1px; border-right: 1px solid #3b4751; padding: 10px 14px; border-left: 1px solid #3b4751; }
 .genBalance .amChanges { width: 39px; float: left; border-left: 1px solid #3b4751; border-right: 1px solid #3b4751; padding: 9px 10px; }
 .sNegative, .sPositive, .sZero { padding: 26px 0 2px 0; text-align: center; display: block; font-size: 14px; }

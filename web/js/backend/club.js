@@ -44,6 +44,18 @@ function handleFailureClub(content){
 	handleFormFieldError(content, 'club');
 }
 
+function buildTagName(clubName){
+	
+	if( $('#clubTagName').val()!='' )
+		return;
+	
+	tagName = clubName.replace(/^ */gi, '');
+	tagName = tagName.replace(/ .*/gi, '');
+	tagName = tagName.toLowerCase();
+	
+	$('#clubTagName').val(tagName);
+}
+
 function updateFileUploadStatus(status, fileName){
 	
 	switch(status){

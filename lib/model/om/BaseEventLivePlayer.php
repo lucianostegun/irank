@@ -17,10 +17,6 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 
 	
-	protected $email_log_id;
-
-
-	
 	protected $enabled;
 
 
@@ -70,9 +66,6 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	protected $aPeople;
 
 	
-	protected $aEmailLog;
-
-	
 	protected $alreadyInSave = false;
 
 	
@@ -90,13 +83,6 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	{
 
 		return $this->people_id;
-	}
-
-	
-	public function getEmailLogId()
-	{
-
-		return $this->email_log_id;
 	}
 
 	
@@ -210,9 +196,7 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	public function setEventLiveId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -230,9 +214,7 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	public function setPeopleId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -243,26 +225,6 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 		if ($this->aPeople !== null && $this->aPeople->getId() !== $v) {
 			$this->aPeople = null;
-		}
-
-	} 
-	
-	public function setEmailLogId($v)
-	{
-
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->email_log_id !== $v) {
-			$this->email_log_id = $v;
-			$this->modifiedColumns[] = EventLivePlayerPeer::EMAIL_LOG_ID;
-		}
-
-		if ($this->aEmailLog !== null && $this->aEmailLog->getId() !== $v) {
-			$this->aEmailLog = null;
 		}
 
 	} 
@@ -280,9 +242,7 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	public function setEventPosition($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -405,35 +365,33 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 			$this->people_id = $rs->getInt($startcol + 1);
 
-			$this->email_log_id = $rs->getInt($startcol + 2);
+			$this->enabled = $rs->getBoolean($startcol + 2);
 
-			$this->enabled = $rs->getBoolean($startcol + 3);
+			$this->event_position = $rs->getInt($startcol + 3);
 
-			$this->event_position = $rs->getInt($startcol + 4);
+			$this->prize = $rs->getFloat($startcol + 4);
 
-			$this->prize = $rs->getFloat($startcol + 5);
+			$this->score = $rs->getFloat($startcol + 5);
 
-			$this->score = $rs->getFloat($startcol + 6);
+			$this->entrance_fee = $rs->getFloat($startcol + 6);
 
-			$this->entrance_fee = $rs->getFloat($startcol + 7);
+			$this->buyin = $rs->getFloat($startcol + 7);
 
-			$this->buyin = $rs->getFloat($startcol + 8);
+			$this->rebuy = $rs->getFloat($startcol + 8);
 
-			$this->rebuy = $rs->getFloat($startcol + 9);
+			$this->addon = $rs->getFloat($startcol + 9);
 
-			$this->addon = $rs->getFloat($startcol + 10);
+			$this->deleted = $rs->getBoolean($startcol + 10);
 
-			$this->deleted = $rs->getBoolean($startcol + 11);
+			$this->created_at = $rs->getTimestamp($startcol + 11, null);
 
-			$this->created_at = $rs->getTimestamp($startcol + 12, null);
-
-			$this->updated_at = $rs->getTimestamp($startcol + 13, null);
+			$this->updated_at = $rs->getTimestamp($startcol + 12, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 14; 
+						return $startcol + 13; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLivePlayer object", $e);
 		}
@@ -515,13 +473,6 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				$this->setPeople($this->aPeople);
 			}
 
-			if ($this->aEmailLog !== null) {
-				if ($this->aEmailLog->isModified()) {
-					$affectedRows += $this->aEmailLog->save($con);
-				}
-				$this->setEmailLog($this->aEmailLog);
-			}
-
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
@@ -582,12 +533,6 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->aEmailLog !== null) {
-				if (!$this->aEmailLog->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aEmailLog->getValidationFailures());
-				}
-			}
-
 
 			if (($retval = EventLivePlayerPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -619,39 +564,36 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				return $this->getPeopleId();
 				break;
 			case 2:
-				return $this->getEmailLogId();
-				break;
-			case 3:
 				return $this->getEnabled();
 				break;
-			case 4:
+			case 3:
 				return $this->getEventPosition();
 				break;
-			case 5:
+			case 4:
 				return $this->getPrize();
 				break;
-			case 6:
+			case 5:
 				return $this->getScore();
 				break;
-			case 7:
+			case 6:
 				return $this->getEntranceFee();
 				break;
-			case 8:
+			case 7:
 				return $this->getBuyin();
 				break;
-			case 9:
+			case 8:
 				return $this->getRebuy();
 				break;
-			case 10:
+			case 9:
 				return $this->getAddon();
 				break;
-			case 11:
+			case 10:
 				return $this->getDeleted();
 				break;
-			case 12:
+			case 11:
 				return $this->getCreatedAt();
 				break;
-			case 13:
+			case 12:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -666,18 +608,17 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getEventLiveId(),
 			$keys[1]=>$this->getPeopleId(),
-			$keys[2]=>$this->getEmailLogId(),
-			$keys[3]=>$this->getEnabled(),
-			$keys[4]=>$this->getEventPosition(),
-			$keys[5]=>$this->getPrize(),
-			$keys[6]=>$this->getScore(),
-			$keys[7]=>$this->getEntranceFee(),
-			$keys[8]=>$this->getBuyin(),
-			$keys[9]=>$this->getRebuy(),
-			$keys[10]=>$this->getAddon(),
-			$keys[11]=>$this->getDeleted(),
-			$keys[12]=>$this->getCreatedAt(),
-			$keys[13]=>$this->getUpdatedAt(),
+			$keys[2]=>$this->getEnabled(),
+			$keys[3]=>$this->getEventPosition(),
+			$keys[4]=>$this->getPrize(),
+			$keys[5]=>$this->getScore(),
+			$keys[6]=>$this->getEntranceFee(),
+			$keys[7]=>$this->getBuyin(),
+			$keys[8]=>$this->getRebuy(),
+			$keys[9]=>$this->getAddon(),
+			$keys[10]=>$this->getDeleted(),
+			$keys[11]=>$this->getCreatedAt(),
+			$keys[12]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -700,39 +641,36 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				$this->setPeopleId($value);
 				break;
 			case 2:
-				$this->setEmailLogId($value);
-				break;
-			case 3:
 				$this->setEnabled($value);
 				break;
-			case 4:
+			case 3:
 				$this->setEventPosition($value);
 				break;
-			case 5:
+			case 4:
 				$this->setPrize($value);
 				break;
-			case 6:
+			case 5:
 				$this->setScore($value);
 				break;
-			case 7:
+			case 6:
 				$this->setEntranceFee($value);
 				break;
-			case 8:
+			case 7:
 				$this->setBuyin($value);
 				break;
-			case 9:
+			case 8:
 				$this->setRebuy($value);
 				break;
-			case 10:
+			case 9:
 				$this->setAddon($value);
 				break;
-			case 11:
+			case 10:
 				$this->setDeleted($value);
 				break;
-			case 12:
+			case 11:
 				$this->setCreatedAt($value);
 				break;
-			case 13:
+			case 12:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -744,18 +682,17 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setEventLiveId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setEmailLogId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setEnabled($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setEventPosition($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setPrize($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setScore($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setEntranceFee($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setBuyin($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setRebuy($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setAddon($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setCreatedAt($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setUpdatedAt($arr[$keys[13]]);
+		if (array_key_exists($keys[2], $arr)) $this->setEnabled($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setEventPosition($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setPrize($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setScore($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEntranceFee($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setBuyin($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setRebuy($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setAddon($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setDeleted($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
 	}
 
 	
@@ -765,7 +702,6 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(EventLivePlayerPeer::EVENT_LIVE_ID)) $criteria->add(EventLivePlayerPeer::EVENT_LIVE_ID, $this->event_live_id);
 		if ($this->isColumnModified(EventLivePlayerPeer::PEOPLE_ID)) $criteria->add(EventLivePlayerPeer::PEOPLE_ID, $this->people_id);
-		if ($this->isColumnModified(EventLivePlayerPeer::EMAIL_LOG_ID)) $criteria->add(EventLivePlayerPeer::EMAIL_LOG_ID, $this->email_log_id);
 		if ($this->isColumnModified(EventLivePlayerPeer::ENABLED)) $criteria->add(EventLivePlayerPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventLivePlayerPeer::EVENT_POSITION)) $criteria->add(EventLivePlayerPeer::EVENT_POSITION, $this->event_position);
 		if ($this->isColumnModified(EventLivePlayerPeer::PRIZE)) $criteria->add(EventLivePlayerPeer::PRIZE, $this->prize);
@@ -817,8 +753,6 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	
 	public function copyInto($copyObj, $deepCopy = false)
 	{
-
-		$copyObj->setEmailLogId($this->email_log_id);
 
 		$copyObj->setEnabled($this->enabled);
 
@@ -923,35 +857,6 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aPeople;
-	}
-
-	
-	public function setEmailLog($v)
-	{
-
-
-		if ($v === null) {
-			$this->setEmailLogId(NULL);
-		} else {
-			$this->setEmailLogId($v->getId());
-		}
-
-
-		$this->aEmailLog = $v;
-	}
-
-
-	
-	public function getEmailLog($con = null)
-	{
-		if ($this->aEmailLog === null && ($this->email_log_id !== null)) {
-						include_once 'lib/model/om/BaseEmailLogPeer.php';
-
-			$this->aEmailLog = EmailLogPeer::retrieveByPK($this->email_log_id, $con);
-
-			
-		}
-		return $this->aEmailLog;
 	}
 
 } 
