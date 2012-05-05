@@ -38,6 +38,9 @@ class EventLivePlayer extends BaseEventLivePlayer
 	
 	public function confirmPresence(){
 		
+		if( $this->getEventLive()->getSavedResult() )
+			throw new Exception('Não é possível incluir jogadores de um evento já publicado');
+			
 		$this->setEnabled(true);
 		$this->save();
 		
@@ -45,6 +48,9 @@ class EventLivePlayer extends BaseEventLivePlayer
 	}
 	
 	public function declinePresence(){
+		
+		if( $this->getEventLive()->getSavedResult() )
+			throw new Exception('Não é possível remover jogadores de um evento já publicado');
 		
 		$this->setEnabled(false);
 		$this->save();

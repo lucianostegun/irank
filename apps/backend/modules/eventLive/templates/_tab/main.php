@@ -2,6 +2,7 @@
 	$isNew         = $eventLiveObj->getIsNew();
 	$clubId        = $eventLiveObj->getClubId();
 	$rankingLiveId = $eventLiveObj->getRankingLiveId();
+	$savedResult   = $eventLiveObj->getSavedResult();
 	
 	if( !$clubId )
 		$clubId = $sf_user->getAttribute('clubId');
@@ -17,6 +18,9 @@
 		if( !$isNew )
 			echo input_hidden_tag('rankingLiveId', $rankingLiveId, array('id'=>'eventLiveRankingLiveId'));
 	}
+	
+	if( $savedResult )
+		echo input_hidden_tag('eventDate', $eventLiveObj->getEventDate('d/m/Y'));
 ?>
 	<?php if( $iRankAdmin ): ?>
 	<div class="formRow">
@@ -69,7 +73,7 @@
 	<div class="formRow">
 		<label>Data</label>
 		<div class="formRight">
-			<?php echo input_tag('eventDate', $eventLiveObj->getEventDate('d/m/Y'), array('disabled'=>$eventLiveObj->getSavedResult(), 'maxlength'=>10, 'class'=>'maskDate', 'id'=>'eventLiveEventDate')) ?>
+			<?php echo input_tag((!$savedResult?'eventDate':'eventDateOld'), $eventLiveObj->getEventDate('d/m/Y'), array('disabled'=>$savedResult, 'maxlength'=>10, 'class'=>'maskDate', 'id'=>'eventLiveEventDate')) ?>
 			<div class="formNote error" id="eventLiveFormErrorEventDate"></div>
 		</div>
 		<div class="clear"></div>

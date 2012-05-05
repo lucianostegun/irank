@@ -25,10 +25,27 @@
 			$buyinMax = is_numeric($buyinMax)?$buyinMax:0;
 			
 			$where = "buyin BETWEEN $buyinMin AND $buyinMax";
-		}elseif( preg_match('/[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4}/i', $keyWord) ){
+		}elseif( Validate::validateDate($keyWord) ){
 			
-			$keyWord = Util::formatDate($keyWord);
-			$where   = "event_date = '$keyWord' ";
+			$date = Util::formatDate($keyWord);
+			$where = "event_date = '$date'$nl";
+		}elseif( Validate::validateMonthYear($keyWord) ){
+			
+			$date      = Util::formatDate('01/'.$keyWord);
+			$timestamp = strtotime($date);
+			$dateStart = date('Y-m-d', mktime(0,0,0,date('m', $timestamp),1,date('Y', $timestamp)));
+			$dateEnd   = date('Y-m-d', mktime(0,0,0,date('m', $timestamp)+1,0,date('Y', $timestamp)));
+			$where = "event_date BETWEEN '$dateStart' AND '$dateEnd'$nl";
+		}elseif( $month=array_search($keyWord, Util::getMonthNames(true)) ){
+			
+			$dateStart = date('Y-m-d', mktime(0,0,0,$month,1,date('Y')));
+			$dateEnd   = date('Y-m-d', mktime(0,0,0,$month+1,0,date('Y')));
+			$where = "event_date BETWEEN '$dateStart' AND '$dateEnd'$nl";
+		}elseif( $keyWord >= 2011 && $keyWord <= date('Y')+3 ){
+			
+			$dateStart = date('Y-m-d', mktime(0,0,0,1,1,$keyWord));
+			$dateEnd   = date('Y-m-d', mktime(0,0,0,12,31,$keyWord));
+			$where = "event_date BETWEEN '$dateStart' AND '$dateEnd'$nl";
 		}elseif( preg_match('/(hoje|ontem|amanh[aã])/i', $keyWord) ){
 			
 			switch($keyWord){

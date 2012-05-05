@@ -9,6 +9,10 @@ var redips_init;
 
 // redips initialization
 redips_init = function () {
+	
+	if( $('drag')==null )
+		return;
+
 	// reference to the REDIPS.drag library and message line
 	var	rd = REDIPS.drag,
 		msg;

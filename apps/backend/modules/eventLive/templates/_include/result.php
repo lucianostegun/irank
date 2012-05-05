@@ -3,14 +3,21 @@
 	
 	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList(null, true);
 	
+	$hasPreviousPendingResult = $eventLiveObj->hasPreviousPendingResult();
+	
 	$totalPrizeValue = 0;
 	$eventPosition   = 0;
 	$eventLiveId     = $eventLiveObj->getId();
 	$rankingLiveObj  = $eventLiveObj->getRankingLive();
 ?>
 <tr class="thead">
-	<th colspan="4" class="mark"><div id="playerResultCountDiv"><?php echo $players.' Jogador'.($players==1?'':'es').' confirmado'.($players==1?'':'s') ?></div></th> 
-	<th colspan="2" class="calculateScore mark"><input type="button" value="Calcular pontuação" class="button greenB" onclick="calculateEventLiveScore()"></th> 
+	<th colspan="3" class="mark"><div id="playerResultCountDiv"><?php echo $players.' Jogador'.($players==1?'':'es').' confirmado'.($players==1?'':'s') ?></div></th>
+	<th align="right" class="calculateScore mark"><input type="button" value="Calcular pontuação" class="button greenB" onclick="calculateEventLiveScore()"></th> 
+	<?php if( $hasPreviousPendingResult ): ?>
+		<th colspan="2">&nbsp;</th> 
+	<?php else: ?>
+		<th colspan="2" class="publishResult mark"><input type="button" value="Divulgar resultados" class="button blueB" onclick="publishEventLiveResult()"></th> 
+	<?php endif; ?>
 </tr>
 <tr class="thead"> 
 	<th class="mark"></th>
@@ -76,9 +83,12 @@
 		<th id="totalPrizeValue"><?php echo Util::formatFloat($totalPrizeValue, true) ?></th> 
 		<th></th> 
 	</tr>
-	<?php if( !$eventLiveObj->hasPreviousPendingResult() ): ?>
 	<tr class="thead">
-		<th colspan="4" class="mark"></th> 
+		<th colspan="3" class="mark"></th>
+		<th align="right" class="calculateScore mark"><input type="button" value="Calcular pontuação" class="button greenB" onclick="calculateEventLiveScore()"></th> 
+		<?php if( $hasPreviousPendingResult ): ?>
+		<th colspan="2"></th> 
+		<?php else: ?>
 		<th colspan="2" class="publishResult mark"><input type="button" value="Divulgar resultados" class="button blueB" onclick="publishEventLiveResult()"></th> 
+		<?php endif; ?>
 	</tr>
-	<?php endif; ?>

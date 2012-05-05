@@ -24,7 +24,7 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 		var formErrorObj    = parseInfo(content);
 		var fieldNameList   = formErrorObj._fieldNameList
 		var fieldErrorCount = formErrorObj._fieldErrorCount
-
+		
 		for(var i=0; i < fieldErrorCount; i++){
 
 			var ignoreHidden = false;
@@ -35,18 +35,18 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 
 			if( errorMessageSplit.length > 1 ){
 
-				formFieldId      = errorMessageSplit[0];
-				formFieldId      = formFieldId.substring(1, formFieldId.length);
+				fieldName      = errorMessageSplit[0];
+				fieldName      = fieldName.substring(1, fieldName.length);
 				
 				errorMessage = formFieldMessageSplit[1];
 				ignoreHidden = true;
 				
-				if( (/^[a-zA-Z]+[a-zA-Z0-9_]*\([a-zA-Z0-9_\'\"]*\)/).exec(formFieldId) )
-					eval(formFieldId+';');
+				if( (/^[a-zA-Z]+[a-zA-Z0-9_]*\([a-zA-Z0-9_\'\"]*\)/).exec(fieldName) )
+					eval(fieldName+';');
 			}
 			
-			formFieldId = prefix+ucfirst(formFieldId);
-
+			var formFieldId = prefix+ucfirst(fieldName);
+			
 			objectForm  = $(formFieldId);
 			
 			var isDiv = false;
