@@ -6,6 +6,7 @@
 	<div id="quickAddEventsLinkDiv" style="position: relative; margin-top: -25px">
 		<?php echo link_to(image_tag('backend/icons/light/add', array('class'=>'icon')).'<span>Adicionar etapas</span>', '#showAddEventForm(true)', array('class'=>'button greyishB', 'id'=>'showAddEventLink')) ?>
 	</div>
+	<br/>
 	<table cellpadding="0" cellspacing="0" width="100%" class="display dTableCustom mt20" id="eventLiveTable">
 		<thead>
 		    <tr>
