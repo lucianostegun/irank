@@ -2,12 +2,14 @@
 	$isAdmin = MyTools::getUser()->hasCredential('iRankAdmin');
 	$clubId  = $sf_user->getAttribute('clubId');
 ?>
-<div class="widget" id="eventListDiv">
-	<div id="quickAddEventsLinkDiv" style="position: relative; margin-top: -25px">
+	<div id="quickAddEventsLinkDiv" style="position: absolute">
 		<?php echo link_to(image_tag('backend/icons/light/add', array('class'=>'icon')).'<span>Adicionar etapas</span>', '#showAddEventForm(true)', array('class'=>'button greyishB', 'id'=>'showAddEventLink')) ?>
+		<?php echo link_to('<span>Voltar</span>', '#showAddEventForm(false)', array('class'=>'button greyishB', 'style'=>'display: none', 'id'=>'hideAddEventLink')) ?>
 	</div>
-	<br/>
-	<table cellpadding="0" cellspacing="0" width="100%" class="display dTableCustom mt20" id="eventLiveTable">
+	<div class="mt40"></div>
+<div class="widget" id="eventListDiv">
+	
+	<table cellpadding="0" cellspacing="0" width="100%" class="display dTableCustom" id="eventLiveTable">
 		<thead>
 		    <tr>
 				<th><div>Etapa<span></span></div></th>
@@ -24,9 +26,6 @@
 	</table>
 </div>
 <div id="quickAddEventFormDiv" class="form" style="display: none">
-	<?php echo link_to('Voltar', '#showAddEventForm(false)', array('id'=>'hideAddEventLink', 'style'=>'display: none')) ?>
-	<br/>
-	<br/>
 	<h3>Inclusão rápida de etapas </h3>
 	<hr/><br/>
 	<div class="formRow">
