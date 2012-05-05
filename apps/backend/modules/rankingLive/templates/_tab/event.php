@@ -5,6 +5,7 @@
 <div class="widget" id="eventListDiv">
 	<div id="quickAddEventsLinkDiv" style="float: left; position: relative; margin-top: -25px">
 		<?php echo link_to(image_tag('backend/icons/light/add', array('class'=>'icon')).'<span>Adicionar etapas</span>', '#showAddEventForm(true)', array('class'=>'button greyishB', 'id'=>'showAddEventLink')) ?>
+		<br/>
 	</div>
 	<table cellpadding="0" cellspacing="0" width="100%" class="display dTableCustom" id="eventLiveTable">
 		<thead>
