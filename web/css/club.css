@@ -161,14 +161,16 @@
 
 .clubDetails {
 	
-	margin: 	10px 10px 0px 10px;
-	width: 		610px;
+	margin: 		0px 10px 0px 10px;
+	width: 			610px;
+	empty-cells: 	show;
 }
 
 .clubDetails .logo {
 
+	text-align: 	center;
+	empty-cells: 	show;	
 	width: 			150px;
-	text-align: 	center;	
 }
 
 .clubDetails h1 {
@@ -201,6 +203,7 @@
 
 	padding: 	5px 10px 5px 10px;
 	font-size: 	13px;
+	width: 		160px;
 }
 
 .clubDetails td.link img {
@@ -216,9 +219,17 @@
 	text-align: 	left;
 }
 
-.clubDetails td.phone {
+.clubDetails th.phones label {
 
-	padding: 		5px 10px;
+	float: 	left;
+	margin-top: 	2px;
+}
+
+.clubDetails .phone {
+
+	float: 			left;
+	margin-left: 	7px;
+	padding: 		0px 5px;
 	font-size: 		13px;
 	font-weight: 	normal;
 	text-align: 	left;
