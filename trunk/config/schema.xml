@@ -528,7 +528,7 @@
 		<column name="phone_number_1" type="VARCHAR" />
 		<column name="phone_number_2" type="VARCHAR" />
 		<column name="phone_number_3" type="VARCHAR" />
-		<column name="visit_count" type="INTEGER" />
+		<column name="visit_count" type="INTEGER" default="0" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -602,7 +602,7 @@
 		<column name="rake_percent" type="NUMERIC" size="5" scale="2" />
 		<column name="blind_time" type="TIME"/>
 		<column name="stack_chips" type="DOUBLE"/>
-		<column name="players" type="INTEGER"/>
+		<column name="players" type="INTEGER" default="0" />
 		<column name="allowed_rebuys" type="INTEGER" default="0" />
 		<column name="allowed_addons" type="INTEGER" default="0" />
 		<column name="is_ilimited_rebuys" type="BOOLEAN"/>
@@ -611,7 +611,7 @@
 		<column name="publish_prize" type="BOOLEAN"/>
 		<column name="suppress_schedule" type="BOOLEAN"/>
 		<column name="prize_split" type="VARCHAR" />
-		<column name="visit_count" type="INTEGER" />
+		<column name="visit_count" type="INTEGER" default="0" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -666,7 +666,6 @@
 	<table name="event_live_player" phpName="EventLivePlayer">
 		<column name="event_live_id" type="INTEGER" required="true" primaryKey="true"/>
 		<column name="people_id" type="INTEGER" required="true" primaryKey="true"/>
-		<column name="email_log_id" type="INTEGER"/>
 		<column name="enabled" type="BOOLEAN" />
 		<column name="event_position" type="INTEGER" />
 		<column name="prize" type="NUMERIC" size="10" scale="2" />
@@ -683,9 +682,6 @@
 		</foreign-key>
 		<foreign-key foreignTable="people">
 			<reference local="people_id" foreign="id"/>
-		</foreign-key>
-		<foreign-key foreignTable="email_log">
-			<reference local="email_log_id" foreign="id"/>
 		</foreign-key>
 	</table>
 
@@ -857,13 +853,18 @@
 			<reference local="settings_id" foreign="id" />
 		</foreign-key>
 	</table>
-	
-	<table name="email_log" phpName="EmailLog">
-		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
-		<column name="email_address" type="VARCHAR" />
-		<column name="error_message" type="LONGVARCHAR" />
+  
+	<table name="event_live_player_disclosure" phpName="EventLivePlayerDisclosure">
+		<column name="event_live_id" type="INTEGER" required="true" primaryKey="true"/>
+		<column name="people_id" type="INTEGER" required="true" primaryKey="true"/>
+		<column name="email_log_id" type="INTEGER"/>
 		<column name="created_at" type="TIMESTAMP" />
-		<column name="read_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="event_live">
+			<reference local="event_live_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="people">
+			<reference local="people_id" foreign="id"/>
+		</foreign-key>
 	</table>
 	
 </database>

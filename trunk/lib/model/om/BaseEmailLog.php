@@ -21,17 +21,19 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 
 
 	
+	protected $email_subject;
+
+
+	
+	protected $sending_status;
+
+
+	
 	protected $created_at;
 
 
 	
 	protected $read_at;
-
-	
-	protected $collEventLivePlayerList;
-
-	
-	protected $lastEventLivePlayerCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -58,6 +60,20 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	{
 
 		return $this->error_message;
+	}
+
+	
+	public function getEmailSubject()
+	{
+
+		return $this->email_subject;
+	}
+
+	
+	public function getSendingStatus()
+	{
+
+		return $this->sending_status;
 	}
 
 	
@@ -108,9 +124,7 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -124,9 +138,7 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setEmailAddress($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -140,15 +152,41 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setErrorMessage($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
 		if ($this->error_message !== $v) {
 			$this->error_message = $v;
 			$this->modifiedColumns[] = EmailLogPeer::ERROR_MESSAGE;
+		}
+
+	} 
+	
+	public function setEmailSubject($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->email_subject !== $v) {
+			$this->email_subject = $v;
+			$this->modifiedColumns[] = EmailLogPeer::EMAIL_SUBJECT;
+		}
+
+	} 
+	
+	public function setSendingStatus($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->sending_status !== $v) {
+			$this->sending_status = $v;
+			$this->modifiedColumns[] = EmailLogPeer::SENDING_STATUS;
 		}
 
 	} 
@@ -197,15 +235,19 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 
 			$this->error_message = $rs->getString($startcol + 2);
 
-			$this->created_at = $rs->getTimestamp($startcol + 3, null);
+			$this->email_subject = $rs->getString($startcol + 3);
 
-			$this->read_at = $rs->getTimestamp($startcol + 4, null);
+			$this->sending_status = $rs->getString($startcol + 4);
+
+			$this->created_at = $rs->getTimestamp($startcol + 5, null);
+
+			$this->read_at = $rs->getTimestamp($startcol + 6, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 5; 
+						return $startcol + 7; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EmailLog object", $e);
 		}
@@ -278,14 +320,6 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
-			if ($this->collEventLivePlayerList !== null) {
-				foreach($this->collEventLivePlayerList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -327,14 +361,6 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collEventLivePlayerList !== null) {
-					foreach($this->collEventLivePlayerList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
 
 			$this->alreadyInValidation = false;
 		}
@@ -363,9 +389,15 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 				return $this->getErrorMessage();
 				break;
 			case 3:
-				return $this->getCreatedAt();
+				return $this->getEmailSubject();
 				break;
 			case 4:
+				return $this->getSendingStatus();
+				break;
+			case 5:
+				return $this->getCreatedAt();
+				break;
+			case 6:
 				return $this->getReadAt();
 				break;
 			default:
@@ -381,8 +413,10 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getEmailAddress(),
 			$keys[2]=>$this->getErrorMessage(),
-			$keys[3]=>$this->getCreatedAt(),
-			$keys[4]=>$this->getReadAt(),
+			$keys[3]=>$this->getEmailSubject(),
+			$keys[4]=>$this->getSendingStatus(),
+			$keys[5]=>$this->getCreatedAt(),
+			$keys[6]=>$this->getReadAt(),
 		);
 		return $result;
 	}
@@ -408,9 +442,15 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 				$this->setErrorMessage($value);
 				break;
 			case 3:
-				$this->setCreatedAt($value);
+				$this->setEmailSubject($value);
 				break;
 			case 4:
+				$this->setSendingStatus($value);
+				break;
+			case 5:
+				$this->setCreatedAt($value);
+				break;
+			case 6:
 				$this->setReadAt($value);
 				break;
 		} 	}
@@ -423,8 +463,10 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setEmailAddress($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setErrorMessage($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setReadAt($arr[$keys[4]]);
+		if (array_key_exists($keys[3], $arr)) $this->setEmailSubject($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setSendingStatus($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setReadAt($arr[$keys[6]]);
 	}
 
 	
@@ -435,6 +477,8 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EmailLogPeer::ID)) $criteria->add(EmailLogPeer::ID, $this->id);
 		if ($this->isColumnModified(EmailLogPeer::EMAIL_ADDRESS)) $criteria->add(EmailLogPeer::EMAIL_ADDRESS, $this->email_address);
 		if ($this->isColumnModified(EmailLogPeer::ERROR_MESSAGE)) $criteria->add(EmailLogPeer::ERROR_MESSAGE, $this->error_message);
+		if ($this->isColumnModified(EmailLogPeer::EMAIL_SUBJECT)) $criteria->add(EmailLogPeer::EMAIL_SUBJECT, $this->email_subject);
+		if ($this->isColumnModified(EmailLogPeer::SENDING_STATUS)) $criteria->add(EmailLogPeer::SENDING_STATUS, $this->sending_status);
 		if ($this->isColumnModified(EmailLogPeer::CREATED_AT)) $criteria->add(EmailLogPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EmailLogPeer::READ_AT)) $criteria->add(EmailLogPeer::READ_AT, $this->read_at);
 
@@ -471,19 +515,14 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 
 		$copyObj->setErrorMessage($this->error_message);
 
+		$copyObj->setEmailSubject($this->email_subject);
+
+		$copyObj->setSendingStatus($this->sending_status);
+
 		$copyObj->setCreatedAt($this->created_at);
 
 		$copyObj->setReadAt($this->read_at);
 
-
-		if ($deepCopy) {
-									$copyObj->setNew(false);
-
-			foreach($this->getEventLivePlayerList() as $relObj) {
-				$copyObj->addEventLivePlayer($relObj->copy($deepCopy));
-			}
-
-		} 
 
 		$copyObj->setNew(true);
 
@@ -506,146 +545,6 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 			self::$peer = new EmailLogPeer();
 		}
 		return self::$peer;
-	}
-
-	
-	public function initEventLivePlayerList()
-	{
-		if ($this->collEventLivePlayerList === null) {
-			$this->collEventLivePlayerList = array();
-		}
-	}
-
-	
-	public function getEventLivePlayerList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventLivePlayerPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventLivePlayerList === null) {
-			if ($this->isNew()) {
-			   $this->collEventLivePlayerList = array();
-			} else {
-
-				$criteria->add(EventLivePlayerPeer::EMAIL_LOG_ID, $this->getId());
-
-				EventLivePlayerPeer::addSelectColumns($criteria);
-				$this->collEventLivePlayerList = EventLivePlayerPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(EventLivePlayerPeer::EMAIL_LOG_ID, $this->getId());
-
-				EventLivePlayerPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventLivePlayerCriteria) || !$this->lastEventLivePlayerCriteria->equals($criteria)) {
-					$this->collEventLivePlayerList = EventLivePlayerPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastEventLivePlayerCriteria = $criteria;
-		return $this->collEventLivePlayerList;
-	}
-
-	
-	public function countEventLivePlayerList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventLivePlayerPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(EventLivePlayerPeer::EMAIL_LOG_ID, $this->getId());
-
-		return EventLivePlayerPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addEventLivePlayer(EventLivePlayer $l)
-	{
-		$this->collEventLivePlayerList[] = $l;
-		$l->setEmailLog($this);
-	}
-
-
-	
-	public function getEventLivePlayerListJoinEventLive($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventLivePlayerPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventLivePlayerList === null) {
-			if ($this->isNew()) {
-				$this->collEventLivePlayerList = array();
-			} else {
-
-				$criteria->add(EventLivePlayerPeer::EMAIL_LOG_ID, $this->getId());
-
-				$this->collEventLivePlayerList = EventLivePlayerPeer::doSelectJoinEventLive($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(EventLivePlayerPeer::EMAIL_LOG_ID, $this->getId());
-
-			if (!isset($this->lastEventLivePlayerCriteria) || !$this->lastEventLivePlayerCriteria->equals($criteria)) {
-				$this->collEventLivePlayerList = EventLivePlayerPeer::doSelectJoinEventLive($criteria, $con);
-			}
-		}
-		$this->lastEventLivePlayerCriteria = $criteria;
-
-		return $this->collEventLivePlayerList;
-	}
-
-
-	
-	public function getEventLivePlayerListJoinPeople($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventLivePlayerPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventLivePlayerList === null) {
-			if ($this->isNew()) {
-				$this->collEventLivePlayerList = array();
-			} else {
-
-				$criteria->add(EventLivePlayerPeer::EMAIL_LOG_ID, $this->getId());
-
-				$this->collEventLivePlayerList = EventLivePlayerPeer::doSelectJoinPeople($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(EventLivePlayerPeer::EMAIL_LOG_ID, $this->getId());
-
-			if (!isset($this->lastEventLivePlayerCriteria) || !$this->lastEventLivePlayerCriteria->equals($criteria)) {
-				$this->collEventLivePlayerList = EventLivePlayerPeer::doSelectJoinPeople($criteria, $con);
-			}
-		}
-		$this->lastEventLivePlayerCriteria = $criteria;
-
-		return $this->collEventLivePlayerList;
 	}
 
 } 

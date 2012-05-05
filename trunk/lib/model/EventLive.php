@@ -80,8 +80,16 @@ class EventLive extends BaseEventLive
 		if( $isFreeroll )
 			$buyin = 0;
 		
-		$this->setClubid($clubId);
-		$this->setRankingLiveId(($rankingLiveId?$rankingLiveId:null));
+		// Se o evento já foi salvo, não deixa alterar a data
+		if( $this->getSavedResult() )
+			$eventDate = $this->getEventDate('d/m/Y');
+		
+		if( $this->getIsNew() ){
+			
+			$this->setClubid($clubId);
+			$this->setRankingLiveId(($rankingLiveId?$rankingLiveId:null));
+		}
+		
 		$this->setEventName($eventName);
 		$this->setEventShortName(($eventShortName?$eventShortName:null));
 		$this->setEventDate(Util::formatDate($eventDate));
@@ -321,7 +329,7 @@ class EventLive extends BaseEventLive
 		
 		if( $countAll )
 			// Considera todos os jogadores que se inscreveram
-			return Util::executeOne('SELECT COUNT(1) FROM event_live_player WHERE event_live_id = '.$this->getId());
+			return Util::executeOne('SELECT COALESCE(COUNT(1), 0) FROM event_live_player WHERE event_live_id = '.$this->getId());
 		elseif( $updated )
 			return Util::executeOne('SELECT get_event_live_players('.$this->getId().')');
 		else
@@ -642,6 +650,7 @@ class EventLive extends BaseEventLive
 		$criteria->add( EventLivePeer::ENABLED, true );
 		$criteria->add( EventLivePeer::VISIBLE, true );
 		$criteria->add( EventLivePeer::DELETED, false );
+		$criteria->add( EventLivePeer::RANKING_LIVE_ID, $this->getRankingLiveId() );
 		$criteria->add( EventLivePeer::EVENT_DATE_TIME, $this->getEventDateTime(), Criteria::LESS_THAN );
 		$criteria->addDescendingOrderByColumn( EventLivePeer::EVENT_DATE_TIME );
 		$eventLiveObj = EventLivePeer::doSelectOne($criteria);
@@ -663,7 +672,7 @@ class EventLive extends BaseEventLive
 		$totalBuyin         = $this->getTotalBuyin(true);
 		$totalBuyinPrevious = $eventLiveObj->getTotalBuyin(true);
 		
-		if( $eventLiveObj->isNew() )
+		if( $eventLiveObj->isNew() || $this->getIsNew() )
 			return 0;
 		
 		$difference = $totalBuyin-$totalBuyinPrevious;
@@ -672,7 +681,18 @@ class EventLive extends BaseEventLive
 		return $percent;
 	}
 	
-	public function getStats(){
+	public function getBalanceStats(){
+		
+	    $balanceValue         = $this->getTotalBuyin(true);
+	    $balanceChanges       = $this->getBalanceDifference();
+		$previousBalanceValue = $this->getPreviousEventLive()->getTotalBuyin(true);
+	    
+	    return array('value'=>$balanceValue,
+	    			 'changes'=>$balanceChanges,
+	    			 'previous'=>$previousBalanceValue);
+	}
+	
+	public function getStats($jsKeys=false){
 		
 		$visitCount     = $this->getVisitCount();
 		$players        = $this->getPlayers(false, true);
@@ -695,16 +715,22 @@ class EventLive extends BaseEventLive
 			$playersPrevious        = $eventLiveObj->getPlayers(false, true);
 			$playersConfirmPrevious = $eventLiveObj->getPlayers();
 			
-			$changesVisitCount    = (($visitCount-$visitCountPrevious)*100/($visitCountPrevious?$visitCountPrevious:1));
-			$changePlayers        = (($players-$playersPrevious)*100/($playersPrevious?$playersPrevious:1));
-			$changePlayersConfirm = (($playersConfirm-$playersConfirmPrevious)*100/($playersConfirmPrevious?$playersConfirmPrevious:1));
+			if( $this->getIsNew() ){
+				
+				$changesVisitCount = $changePlayers = $changePlayersConfirm = 0;
+			}else{
+			
+				$changesVisitCount    = (($visitCount-$visitCountPrevious)*100/($visitCountPrevious?$visitCountPrevious:1));
+				$changePlayers        = (($players-$playersPrevious)*100/($playersPrevious?$playersPrevious:1));
+				$changePlayersConfirm = (($playersConfirm-$playersConfirmPrevious)*100/($playersConfirmPrevious?$playersConfirmPrevious:1));
+			}
 		}
 		
 		
 		$numStatList = array();
-		$numStatList['Visitas']    = array('tagName'=>'visitCount',     'value'=>$visitCount, 'changes'=>$changesVisitCount, 'previous'=>$visitCountPrevious);
-    	$numStatList['Inscrições'] = array('tagName'=>'players',        'value'=>$players, 'changes'=>$changePlayers, 'previous'=>$playersPrevious);
-    	$numStatList['Confirm.']   = array('tagName'=>'playersConfirm', 'value'=>$playersConfirm, 'changes'=>$changePlayersConfirm, 'previous'=>$playersConfirmPrevious);
+		$numStatList[($jsKeys?'visitCount':'Visitas')]      = array('tagName'=>'visitCount',     'value'=>$visitCount, 'changes'=>$changesVisitCount, 'previous'=>$visitCountPrevious);
+    	$numStatList[($jsKeys?'players':'Inscrições')]      = array('tagName'=>'players',        'value'=>$players, 'changes'=>$changePlayers, 'previous'=>$playersPrevious);
+    	$numStatList[($jsKeys?'playersConfirm':'Confirm.')] = array('tagName'=>'playersConfirm', 'value'=>$playersConfirm, 'changes'=>$changePlayersConfirm, 'previous'=>$playersConfirmPrevious);
     	
     	return $numStatList;
 	}
@@ -719,6 +745,68 @@ class EventLive extends BaseEventLive
 		$hoursToPending = Settings::getValue('hoursToPending');
 		
 		return (!$this->getSavedResult() && ($this->getEventDateTime(null) < (time()-(3600*$hoursToPending))));
+	}
+	
+	public function notifyPlayer($peopleId){
+		
+	  	$peopleObj = PeoplePeer::retrieveByPK( $peopleId );
+	  	
+	  	if( !is_object($peopleObj) )
+	  		throw new Exception ('Não foi possível concluir o envio do email');
+	  	
+	  	$emailAddress = $peopleObj->getEmailAddress();
+	  	
+	  	if(!$emailAddress)
+	  		throw new Exception('Email não cadastrado');
+	  		
+	  	$eventLivePlayerDisclosureObj = EventLivePlayerDisclosurePeer::retrieveByPK($this->getId(), $peopleId);
+  		$emailLogObj = $eventLivePlayerDisclosureObj->getEmailLog();
+  		
+  		if( $emailLogObj->getSendingSuccess() )
+  			die($emailLogObj->getCreatedAt('d/m/Y H:i'));
+  		
+  		$emailLogObj->setEmailAddress($emailAddress);
+  		$emailLogObj->save();
+  		
+  		$emailLogId = $emailLogObj->getId();
+  		
+  		$eventLivePlayerDisclosureObj->setEmailLogId($emailLogId);
+  		$eventLivePlayerDisclosureObj->save();
+  		
+  		$emailContent = $this->getDisclosureEmailTemplate();
+  		$emailSubject = $this->getDisclosureEmailSubject();
+  		
+  		$options = array('emailLogId'=>$emailLogId);
+	  	Report::sendMail($emailSubject, $emailAddress, $emailContent, $options);
+	  	
+	  	echo $emailLogObj->getCreatedAt('d/m/Y H:i');
+	}
+	
+	public function getDisclosureEmailTemplate(){
+		
+	  	$emailContent = file_get_contents(Util::getFilePath('templates/pt_BR/eventLiveDisclosure.htm'));
+		
+		$entranceFee = $this->getEntranceFee();
+		$buyin       = $this->getBuyin();
+		
+		$infoList = array();
+		$infoList['eventName']   = $this->getEventName();
+		$infoList['rankingName'] = $this->getRankingLive()->getRankingName();
+		$infoList['gameStyle']   = $this->getGameStyle()->getDescription();
+		$infoList['eventPlace']  = $this->getEventPlace();
+		$infoList['mapsLink']    = $this->getClub()->getMapsLink();
+		$infoList['eventDate']   = $this->getEventDate('d/m/Y');
+		$infoList['startTime']   = $this->getStartTime('H:i');
+		$infoList['entranceFee'] = Util::formatFloat($entranceFee, true);
+		$infoList['buyin']       = Util::formatFloat($buyin, true).($entranceFee?'+'.$infoList['entranceFee']:'');
+		$infoList['comments']    = $this->getComments();
+		
+		return Report::replace($emailContent, $infoList);	
+	}
+
+	public function getDisclosureEmailSubject(){
+		
+	  	return 'Notificação de evento iRank / '.$this->getClub()->toString();		
 	}
 	
 	public function getInfo(){

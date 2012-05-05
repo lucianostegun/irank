@@ -76,7 +76,7 @@
 		<th id="totalPrizeValue"><?php echo Util::formatFloat($totalPrizeValue, true) ?></th> 
 		<th></th> 
 	</tr>
-	<?php if( !$hasPendingResult ): ?>
+	<?php if( !$eventLiveObj->hasPreviousPendingResult() ): ?>
 	<tr class="thead">
 		<th colspan="4" class="mark"></th> 
 		<th colspan="2" class="publishResult mark"><input type="button" value="Divulgar resultados" class="button blueB" onclick="publishEventLiveResult()"></th> 

@@ -18,7 +18,7 @@
 	<div class="formRow">
 		<label>Nome do clube</label>
 		<div class="formRight">
-			<?php echo input_tag('clubName', $clubObj->getClubName(), array('size'=>35, 'maxlength'=>60, 'id'=>'clubClubName')) ?>
+			<?php echo input_tag('clubName', $clubObj->getClubName(), array('size'=>35, 'maxlength'=>60, 'onblur'=>'buildTagName(this.value)', 'id'=>'clubClubName')) ?>
 			<div class="formNote error" id="clubFormErrorClubName"></div>
 		</div>
 		<div class="clear"></div>

@@ -73,17 +73,15 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         
         <li class="ranking">
         	<?php
-        		echo link_to('<span>Rankings ao vivo</span>', 'rankingLive/index', array('class'=>($moduleName=='rankingLive'?'active':'')));
-        		if( $iRankAdmin )
-        			echo link_to('<strong>+</strong>', 'rankingLive/new', array('class'=>'quickAdd'));
+        		echo link_to('<span>Rankings'.($iRankAdmin?' ao vivo':'').'</span>', 'rankingLive/index', array('class'=>($moduleName=='rankingLive'?'active':'')));
+       			echo link_to('<strong>+</strong>', 'rankingLive/new', array('class'=>'quickAdd'));
         	?>
         </li>
         
         <li class="event">
         	<?php
-        		echo link_to('<span>Eventos ao vivo</span>', 'eventLive/index', array('class'=>($moduleName=='eventLive'?'active':'')));
-        		if( $iRankAdmin )
-        			echo link_to('<strong>+</strong>', 'eventLive/new', array('class'=>'quickAdd'));
+        		echo link_to('<span>Eventos'.($iRankAdmin?' ao vivo':'').'</span>', 'eventLive/index', array('class'=>($moduleName=='eventLive'?'active':'')));
+       			echo link_to('<strong>+</strong>', 'eventLive/new', array('class'=>'quickAdd'));
         	?>
         </li>
 

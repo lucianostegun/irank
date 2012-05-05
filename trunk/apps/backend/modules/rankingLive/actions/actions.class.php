@@ -18,7 +18,7 @@ class rankingLiveActions extends sfActions
     $this->iRankAdmin = $this->getUser()->hasCredential('iRankAdmin');
 	$this->clubId     = $this->getUser()->getAttribute('clubId');
     
-    $this->pathList = array('Rakings ao vivo'=>'rankingLive/index');
+    $this->pathList = array('Rakings'.($this->iRankAdmin?' ao vivo':'')=>'rankingLive/index');
     $this->toolbarList = array('new');
   }
 

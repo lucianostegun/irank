@@ -102,13 +102,14 @@ class UserSite extends BaseUserSite
 	
 	public function login($keepLogin=false){
 		
+        $peopleObj = $this->getPeople();
+        
 		if( MyTools::getUser()->isAuthenticated() ){
 
 			MyTools::setCulture( $peopleObj->getDefaultLanguage());	
 			return true;
 		}
 		
-        $peopleObj = $this->getPeople();
         
         if( $keepLogin ){
 
@@ -145,6 +146,7 @@ class UserSite extends BaseUserSite
 		MyTools::getUser()->getAttributeHolder()->remove('firstName');
 		MyTools::getUser()->getAttributeHolder()->remove('lastName');
 		MyTools::getUser()->removeCredential('iRankSite');
+		
 		MyTools::getUser()->setAuthenticated( false );
 		
         MyTools::getResponse()->sendHttpHeaders();

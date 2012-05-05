@@ -25,7 +25,7 @@ class EmailLogMapBuilder {
 	
 	public function doBuild()
 	{
-		$this->dbMap = Propel::getDatabaseMap('propel');
+		$this->dbMap = Propel::getDatabaseMap('log');
 
 		$tMap = $this->dbMap->addTable('email_log');
 		$tMap->setPhpName('EmailLog');
@@ -38,7 +38,11 @@ class EmailLogMapBuilder {
 
 		$tMap->addColumn('EMAIL_ADDRESS', 'EmailAddress', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('ERROR_MESSAGE', 'ErrorMessage', 'string', CreoleTypes::LONGVARCHAR, false, null);
+		$tMap->addColumn('ERROR_MESSAGE', 'ErrorMessage', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('EMAIL_SUBJECT', 'EmailSubject', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('SENDING_STATUS', 'SendingStatus', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

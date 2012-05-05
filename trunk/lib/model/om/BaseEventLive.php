@@ -73,7 +73,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 
 	
-	protected $players;
+	protected $players = 0;
 
 
 	
@@ -109,7 +109,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 
 	
-	protected $visit_count;
+	protected $visit_count = 0;
 
 
 	
@@ -158,6 +158,12 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 	
 	protected $lastEventLivePlayerScoreCriteria = null;
+
+	
+	protected $collEventLivePlayerDisclosureList;
+
+	
+	protected $lastEventLivePlayerDisclosureCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -483,9 +489,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -499,9 +503,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setRankingLiveId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -519,9 +521,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setEventName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -535,9 +535,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setEventShortName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -602,9 +600,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setComments($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -618,9 +614,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setDescription($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -644,9 +638,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setClubId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -721,13 +713,11 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setPlayers($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
-		if ($this->players !== $v) {
+		if ($this->players !== $v || $v === 0) {
 			$this->players = $v;
 			$this->modifiedColumns[] = EventLivePeer::PLAYERS;
 		}
@@ -737,9 +727,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setAllowedRebuys($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -753,9 +741,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setAllowedAddons($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -819,9 +805,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setPrizeSplit($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -835,13 +819,11 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setVisitCount($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
-		if ($this->visit_count !== $v) {
+		if ($this->visit_count !== $v || $v === 0) {
 			$this->visit_count = $v;
 			$this->modifiedColumns[] = EventLivePeer::VISIT_COUNT;
 		}
@@ -1112,6 +1094,14 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEventLivePlayerDisclosureList !== null) {
+				foreach($this->collEventLivePlayerDisclosureList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -1185,6 +1175,14 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 				if ($this->collEventLivePlayerScoreList !== null) {
 					foreach($this->collEventLivePlayerScoreList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventLivePlayerDisclosureList !== null) {
+					foreach($this->collEventLivePlayerDisclosureList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1644,6 +1642,10 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$copyObj->addEventLivePlayerScore($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getEventLivePlayerDisclosureList() as $relObj) {
+				$copyObj->addEventLivePlayerDisclosure($relObj->copy($deepCopy));
+			}
+
 		} 
 
 		$copyObj->setNew(true);
@@ -1825,41 +1827,6 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 			if (!isset($this->lastEventLivePlayerCriteria) || !$this->lastEventLivePlayerCriteria->equals($criteria)) {
 				$this->collEventLivePlayerList = EventLivePlayerPeer::doSelectJoinPeople($criteria, $con);
-			}
-		}
-		$this->lastEventLivePlayerCriteria = $criteria;
-
-		return $this->collEventLivePlayerList;
-	}
-
-
-	
-	public function getEventLivePlayerListJoinEmailLog($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventLivePlayerPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventLivePlayerList === null) {
-			if ($this->isNew()) {
-				$this->collEventLivePlayerList = array();
-			} else {
-
-				$criteria->add(EventLivePlayerPeer::EVENT_LIVE_ID, $this->getId());
-
-				$this->collEventLivePlayerList = EventLivePlayerPeer::doSelectJoinEmailLog($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(EventLivePlayerPeer::EVENT_LIVE_ID, $this->getId());
-
-			if (!isset($this->lastEventLivePlayerCriteria) || !$this->lastEventLivePlayerCriteria->equals($criteria)) {
-				$this->collEventLivePlayerList = EventLivePlayerPeer::doSelectJoinEmailLog($criteria, $con);
 			}
 		}
 		$this->lastEventLivePlayerCriteria = $criteria;
@@ -2075,6 +2042,111 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		$this->lastEventLivePlayerScoreCriteria = $criteria;
 
 		return $this->collEventLivePlayerScoreList;
+	}
+
+	
+	public function initEventLivePlayerDisclosureList()
+	{
+		if ($this->collEventLivePlayerDisclosureList === null) {
+			$this->collEventLivePlayerDisclosureList = array();
+		}
+	}
+
+	
+	public function getEventLivePlayerDisclosureList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerDisclosurePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePlayerDisclosureList === null) {
+			if ($this->isNew()) {
+			   $this->collEventLivePlayerDisclosureList = array();
+			} else {
+
+				$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->getId());
+
+				EventLivePlayerDisclosurePeer::addSelectColumns($criteria);
+				$this->collEventLivePlayerDisclosureList = EventLivePlayerDisclosurePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->getId());
+
+				EventLivePlayerDisclosurePeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventLivePlayerDisclosureCriteria) || !$this->lastEventLivePlayerDisclosureCriteria->equals($criteria)) {
+					$this->collEventLivePlayerDisclosureList = EventLivePlayerDisclosurePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventLivePlayerDisclosureCriteria = $criteria;
+		return $this->collEventLivePlayerDisclosureList;
+	}
+
+	
+	public function countEventLivePlayerDisclosureList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerDisclosurePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->getId());
+
+		return EventLivePlayerDisclosurePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventLivePlayerDisclosure(EventLivePlayerDisclosure $l)
+	{
+		$this->collEventLivePlayerDisclosureList[] = $l;
+		$l->setEventLive($this);
+	}
+
+
+	
+	public function getEventLivePlayerDisclosureListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerDisclosurePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePlayerDisclosureList === null) {
+			if ($this->isNew()) {
+				$this->collEventLivePlayerDisclosureList = array();
+			} else {
+
+				$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->getId());
+
+				$this->collEventLivePlayerDisclosureList = EventLivePlayerDisclosurePeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->getId());
+
+			if (!isset($this->lastEventLivePlayerDisclosureCriteria) || !$this->lastEventLivePlayerDisclosureCriteria->equals($criteria)) {
+				$this->collEventLivePlayerDisclosureList = EventLivePlayerDisclosurePeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastEventLivePlayerDisclosureCriteria = $criteria;
+
+		return $this->collEventLivePlayerDisclosureList;
 	}
 
 } 

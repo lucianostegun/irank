@@ -234,9 +234,7 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -250,9 +248,7 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	public function setEventId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -270,9 +266,7 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	public function setFileId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -290,9 +284,7 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	public function setPeopleId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -320,9 +312,7 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	public function setWidth($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -336,9 +326,7 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	public function setHeight($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -352,9 +340,7 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	public function setOrientation($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -368,9 +354,7 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	public function setContestRuns($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -384,9 +368,7 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	public function setContestWins($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

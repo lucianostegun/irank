@@ -1,25 +1,27 @@
 <?php
-	$eventLiveId    = $eventLiveObj->getId();
-	$rankingLiveObj = $eventLiveObj->getRankingLive();
-	$rankingName    = $rankingLiveObj->getRankingName();
-	$rankingLiveId  = $eventLiveObj->getRankingLiveId();
-	$eventShortName = $eventLiveObj->toString();
-	$clubObj        = $eventLiveObj->getClub();
-	$clubName       = $clubObj->getClubName();
-	$clubId         = $eventLiveObj->getClubId();
-	$addressQuarter = $clubObj->getAddressQuarter();
-	$city           = $clubObj->getCity()->getCityName();
-	$state          = $clubObj->getCity()->getState()->getInitial();
-	$description    = $eventLiveObj->getDescription();
-	$description    = str_replace(chr(10), '<br/>', $description);
-	$weekDay        = Util::getWeekDay($eventLiveObj->getEventDate('d/m/Y'));
-	$publishPrize   = $eventLiveObj->getPublishPrize();
+	$eventLiveId        = $eventLiveObj->getId();
+	$rankingLiveObj     = $eventLiveObj->getRankingLive();
+	$rankingName        = $rankingLiveObj->getRankingName();
+	$rankingLiveId      = $eventLiveObj->getRankingLiveId();
+	$eventShortName     = $eventLiveObj->toString();
+	$clubObj            = $eventLiveObj->getClub();
+	$clubTagName        = $clubObj->getTagName();
+	$clubName           = $clubObj->getClubName();
+	$clubId             = $eventLiveObj->getClubId();
+	$addressQuarter     = $clubObj->getAddressQuarter();
+	$city               = $clubObj->getCity()->getCityName();
+	$state              = $clubObj->getCity()->getState()->getInitial();
+	$description        = $eventLiveObj->getDescription();
+	$description        = str_replace(chr(10), '<br/>', $description);
+	$weekDay            = Util::getWeekDay($eventLiveObj->getEventDate('d/m/Y'));
+	$publishPrize       = $eventLiveObj->getPublishPrize();
+	$isPastDate         = $eventLiveObj->isPastDate();
 	
 	$peopleId = $sf_user->getAttribute('peopleId');
 	
-	$pathList = array('Eventos ao vivo'=>$moduleName.'/index', 
-					  $clubName=>'#goToPage("club", "details", "clubId", '.$clubId.')', 
-					  $rankingName=>'#goToPage("ranking", "view", "rankingLiveId", '.$rankingLiveId.')', 
+	$pathList = array('Agenda'=>$moduleName.'/index', 
+					  $clubName=>'#goToPage("'.$clubTagName.'", "", "", "")', 
+					  $rankingName=>'#goToPage("rankingLive", "details", "rankingLiveId", '.$rankingLiveId.')', 
 					  $eventShortName=>null);
 	
 	$fileNameLogo = $rankingLiveObj->getFileNameLogo();
@@ -42,10 +44,10 @@
 				<div align="center">
 				<table cellspacing="0" cellpadding="0">
 					<tr>
-						<th><?php echo image_tag('event/coins') ?></th>
-						<th><?php echo image_tag('event/timer') ?></th>
-						<th><?php echo image_tag('event/chips') ?></th>
-						<th><?php echo image_tag('event/players') ?></th>
+						<th><?php echo image_tag('event/coins', array('title'=>'Valor do buy-in')) ?></th>
+						<th><?php echo image_tag('event/timer', array('title'=>'Tempo dos blinds')) ?></th>
+						<th><?php echo image_tag('event/chips', array('title'=>'Stack inicial')) ?></th>
+						<th><?php echo image_tag('event/players', array('title'=>'Jogadores confirmados')) ?></th>
 					</tr>
 					<tr>
 						<td><?php echo Util::formatFloat($eventLiveObj->getBuyin(), true) ?></td>
@@ -59,7 +61,7 @@
 					</tr>
 				</table>
 				<?php
-					if( !$eventLiveObj->isPastDate() ){
+					if( !$isPastDate ){
 						
 						if( $peopleId && $eventLiveObj->getPlayerStatus($peopleId, true) )
 							echo button_tag('presenceConfirm'.$eventLiveId, 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'class'=>'buttonPresenceYes', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')', 'title'=>'Clique para confirmar sua presença no evento'));
@@ -89,7 +91,9 @@
 			<?php if( !is_null($rankingLiveId) ): ?>
 			<td id="eventLiveEvents" class="eventLiveTab" onclick="loadEventLiveTab(this, <?php echo $eventLiveId ?>); showEventLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Etapas</td>
 			<?php endif; ?>
+			<?php if( $isPastDate ): ?>
 			<td id="eventLiveResult" class="eventLiveTab" onclick="loadEventLiveTab(this, <?php echo $eventLiveId ?>); showEventLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Resultado</td>
+			<?php endif; ?>
 			<?php if( $publishPrize ): ?>
 			<td id="eventLivePrize" class="eventLiveTab" onclick="loadEventLiveTab(this, <?php echo $eventLiveId ?>); showEventLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Premiação</td>
 			<?php endif ?>
@@ -112,9 +116,11 @@
 		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
 	<?php endif; ?>
+	<?php if( $isPastDate ): ?>
 	<div id="eventLiveResultContent" class="eventLiveTabContent">
 		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
+	<?php endif; ?>
 	<?php if( $publishPrize ): ?>
 	<div id="eventLivePrizeContent" class="eventLiveTabContent">
 		<?php include_partial('home/include/tabLoading', array()) ?>

@@ -25,13 +25,15 @@
 			<reference local="log_id" foreign="id" />
 		</foreign-key>
 	</table>
-
+	
 	<table name="email_log" phpName="EmailLog">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
 		<column name="email_address" type="VARCHAR" />
+		<column name="error_message" type="VARCHAR" />
 		<column name="email_subject" type="VARCHAR" />
 		<column name="sending_status" type="VARCHAR" />
 		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
+		<column name="read_at" type="TIMESTAMP" />
 	</table>
 	
 </database>

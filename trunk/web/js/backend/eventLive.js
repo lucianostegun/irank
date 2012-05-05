@@ -12,7 +12,7 @@ $(function() {
 		unique_names : true,
 		filters : [
 			{title : "Arquivos de imagem", extensions : "jpg,png"}
-			//{title : "Zip files", extensions : "zip"}
+			// {title : "Zip files", extensions : "zip"}
 		],
 		init : {
 			Refresh: function(up) {
@@ -31,6 +31,19 @@ $(function() {
 	
 		buildEventLiveLightbox();
 		clearFormFieldErrors('eventLiveResult');
+		
+		if( !$("#eventLiveEventDate").attr('disabled') ){
+			
+			$("#eventLiveEventDate").datepicker({ 
+				defaultDate: +0,
+				autoSize: false,
+				appendText: '(dd/mm/aaaa)',
+				dateFormat: 'dd/mm/yy',
+				onSelect: function(dateText){
+					loadEventStats();
+				}
+			});
+		}
 	}
 });
 
@@ -48,6 +61,8 @@ function handleSuccessEventLive(content){
 
 	clearFormFieldErrors();
 	showFormStatusSuccess();
+	
+	$('#mainDisclosureTab').show();
 	
 	mainRecordName = ($('#eventLiveEventShortName').val()?$('#eventLiveEventShortName').val():$('#eventLiveEventName').val());
 	updateMainRecordName(mainRecordName, true);
@@ -71,7 +86,11 @@ function handleSuccessEventLiveResult(content){
 		if( $('#eventLiveResultPublish').val()=='1' )
 			showFormStatusSuccess();
 		
-		$('#pendingResultWarning').click();
+		if( $('#pendingResultWarning').is('visible') )
+			$('#pendingResultWarning').click();
+		
+		if( !$("#eventLiveEventDate").attr('readOnly') )
+			$("#eventLiveEventDate").attr('disabled', 'disabled');
 	}
 	
 	removeTabError('mainResultTab');
@@ -176,12 +195,11 @@ function addPlayer(peopleId){
 		
 		$('#playerCountDiv').html( players );
 		
-		// Aqui não oculta o indicator porque ainda vai executar o método updateEventPlayerResultTable() 
-//		hideIndicator();
+		// Aqui não oculta o indicator porque ainda vai executar o método
+		// updateEventPlayerResultTable()
 		updateEventPlayerResultTable();
-		
-		updateMainBalanceByEventLive();
 		updatePlayersCounter(1); // Incrementa 1 no contador de jogadores
+		updateMainBalanceByEventLive();
 	}
 
 	var failureFunc = function(t){
@@ -220,11 +238,11 @@ function removePlayer(peopleId){
 
 		$('#playerCountDiv').html( players );
 		
-		// Aqui não oculta o indicator porque ainda vai executar o método updateEventPlayerResultTable() 
-//		hideIndicator();
+		// Aqui não oculta o indicator porque ainda vai executar o método
+		// updateEventPlayerResultTable()
 		updateEventPlayerResultTable();
-		updateMainBalanceByEventLive();
 		updatePlayersCounter(-1); // Decrementa 1 no contador de jogadores
+		updateMainBalanceByEventLive();
 	}
 	
 	var failureFunc = function(t){
@@ -439,6 +457,40 @@ function loadDefaultValues(rankingLiveId){
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
+function loadEventStats(){
+	
+	var eventLiveId   = $('#eventLiveId').val();
+	var rankingLiveId = $('#eventLiveRankingLiveId').val();
+	var eventDate     = $('#eventLiveEventDate').val();
+	
+	if( !eventLiveId || !rankingLiveId || !eventDate )
+		return;
+	
+	var successFunc = function(content){
+		
+		var infoObj = parseInfo(content);
+		
+		$('#previousBalanceAmount').html(infoObj.balance.previous);
+		
+		$('#statsPlayersPrevious').html(infoObj.players.previous);
+		$('#statsPlayersConfirmPrevious').html(infoObj.playersConfirm.previous);
+		updatePlayersCounter(0);
+	}
+	
+	var failureFunc = function(t){
+		
+		if( isDebug() )
+			debugAdd(t.responseText);
+	}
+	
+	var urlAjax = _webRoot+'/eventLive/getStats';
+	urlAjax    += '?eventLiveId='+eventLiveId;
+	urlAjax    += '&rankingLiveId='+rankingLiveId;
+	urlAjax    += '&eventDate='+eventDate;
+	
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}
+
 function calculateEventLiveScore(){
 	
 	if( !$('#eventLivePrizeSplit').val() ){
@@ -570,8 +622,11 @@ function updateTotalPrizeValue(){
 
 function activeResultTab(){
 	
-	$("#resultTab").find("ul.tabs li:first").addClass("activeTab").show(); //Activate first tab
-	$("#resultTab").find(".tab_content:first").show(); //Show first tab content
+	$("#resultTab").find("ul.tabs li:first").addClass("activeTab").show(); // Activate
+																			// first
+																			// tab
+	$("#resultTab").find(".tab_content:first").show(); // Show first tab
+														// content
 	
 	return false;
 }
@@ -615,35 +670,35 @@ function buildEventLiveLightbox(){
 function showEventLiveEmailOptions(){
 
 	hideDiv('disclosureMenuShareDiv');
-	
 	showDiv('emailSenderOptionsDiv');
 }
 
 function hideEventLiveEmailOptions(){
 	
 	showDiv('disclosureMenuShareDiv');
-	
 	hideDiv('emailSenderOptionsDiv');
 }
 
-function sendEmailToCheckedPeople(){
+function sendEmailToSelectedPlayers(){
+	
+	if( !confirm('Confirma o envio do e-mail de divulgação do evento para todos os jogadores selecionados?') )
+		return;
 	
 	var peopleIdList = new Array();
 	$("input[@name='peopleId[]']:checked").each(function() {peopleIdList.push($(this).val());});
 	 
 	if (peopleIdList.length == 0)
-	    return alert("Nenhum email foi selecionado.\nFavor selecionar ao menos um email.");
+	    return alert("Nenhum email foi selecionado!\nPor favor, selecione pelo menos um jogador para enviar o e-mail.");
 
 	showDiv('emailSenderProgressBarDiv');
 	
-	sendEmailItem( peopleIdList, 0 );    
+	sendEmailItem( peopleIdList, 0 );
 }
 
 function concludeSendEmail(){
 	
 	hideDiv('emailSenderProgressBarDiv');
-	
-	alert('Processo finalizado. Verifique o resultado na tabela');
+	alert('E-mails enviados com sucesso.\nVerifique na lista abaixo o resultado de envio e o relatório de leitura dos e-mails.');
 }
 
 function sendEmailItem( peopleIdList, index ){
@@ -655,7 +710,7 @@ function sendEmailItem( peopleIdList, index ){
 	if(percent>=100)
 		return concludeSendEmail();
 	
-	$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="/images/backend/loaders/loader8.gif"/>');
+	$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="'+_imageRoot+'/backend/loaders/loader8.gif"/>');
 	
 	var eventLiveId = $('#eventLiveId').val();
 	
@@ -666,16 +721,17 @@ function sendEmailItem( peopleIdList, index ){
 		dataType: 	'text',
 		success: function (request) {
 			
-			$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="/images/backend/icons/notifications/success.png" title="Enviado com sucesso"/>');
+			$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="'+_imageRoot+'/backend/icons/notifications/successGreen.png" title="Enviado com sucesso"/>');
+			$('#emailPeopleListReadTd-'+peopleIdList[index]).html('<img src="'+_imageRoot+'/backend/icons/unreadMail.png" title="Sem confirmação de leitura"/>');
 			$('#emailPeopleListCreatedAtTd-'+peopleIdList[index]).html(request);
 	    	
 			sendEmailItem( peopleIdList, ++index );
 		},
 		error: function(request,error){
 
-	    	$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="/images/backend/icons/notifications/exclamation.png"/>');
-	    	alert('E1'+request.responseText);
-	    	alert('E2'+error);
+	    	$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="'+_imageRoot+'/backend/icons/notifications/exclamation.png"/>');
+//	    	alert('E1'+request.responseText);
+//	    	alert('E2'+error);
 	    	sendEmailItem( peopleIdList, ++index );
 		}
 	});	
@@ -692,9 +748,6 @@ function updateProgressBar( percent ){
 function eventLiveFacebookShare(){
 	
 	var eventLiveId = $('#eventLiveId').val();
-	
-	if(!eventLiveId)
-		return alert('Salve o evento antes de divulgá-lo');
 	
 	var form = document.createElement('form');
 	
@@ -725,7 +778,8 @@ function updateEventPlayerResultTable(){
 		
 		$('#eventLiveResultTbody').html(content);
 		setupEventLiveResultAutoComplete();
-		redips_init(); // Reinstancia o método para poder reordenar as linhas do resultado com drag and drop
+		redips_init(); // Reinstancia o método para poder reordenar as linhas
+						// do resultado com drag and drop
 	}
 
 	var failureFunc = function(t){
@@ -764,8 +818,7 @@ function updateMainBalanceByEventLive(){
 	else
 		var percent = ((totalValue-previousBalance)*100/(previousBalance?previousBalance:1));
 	
-	$('#mainBalanceChanges').html(toCurrency(Math.abs(percent), 1)+'%');
-	$('#mainBalanceChanges').attr('class', (percent>0?'sPositive':(percent<0?'sNegative':'sZero')));
+	updateMainBalanceChanges(percent);
 	updateMainBalance(totalValue);
 }
 
@@ -776,15 +829,17 @@ function updatePlayersCounter(incrase){
 	var playersPrevious        = toFloat($('#statsPlayersPrevious').html());
 	var playersConfirmPrevious = toFloat($('#statsPlayersConfirmPrevious').html());
 
-	$('#statsPlayers').html(players+incrase);
+	// Se um jogador for excluido da lista, ele continua contando como inscrito, a contagem de inscritos nunca deve diminuir
+	if( incrase >= 0 ){
+		
+		$('#statsPlayers').html(players+incrase);
+		var percent = ((players+incrase) && playersPrevious?(((players+incrase)-playersPrevious)*100/(playersPrevious?playersPrevious:1)):0);
+		$('#statsPlayersPercent').html(toCurrency(Math.abs(percent), 0)+'%');
+		$('#statsPlayersPercent').attr('class', (percent>0?'roundPos':(percent<0?'roundNeg':'roundZero')));
+	}
+	
 	$('#statsPlayersConfirm').html(playersConfirm+incrase);
-	
-	var percent        = (playersPrevious?(((players+incrase)-playersPrevious)*100/(playersPrevious?playersPrevious:1)):0);
-	var percentConfirm = (playersConfirmPrevious?(((playersConfirm+incrase)-playersConfirmPrevious)*100/(playersConfirmPrevious?playersConfirmPrevious:1)):0);
-	
-	$('#statsPlayersPercent').html(toCurrency(Math.abs(percent), 0)+'%');
+	var percentConfirm = ((playersConfirm+incrase) && playersConfirmPrevious?(((playersConfirm+incrase)-playersConfirmPrevious)*100/(playersConfirmPrevious?playersConfirmPrevious:1)):0);
 	$('#statsPlayersConfirmPercent').html(toCurrency(Math.abs(percentConfirm), 0)+'%');
-	
-	$('#statsPlayersPercent').attr('class', (percent>0?'roundPos':(percent<0?'roundNeg':'roundZero')));
 	$('#statsPlayersConfirmPercent').attr('class', (percentConfirm>0?'roundPos':(percentConfirm<0?'roundNeg':'roundZero')));
 }

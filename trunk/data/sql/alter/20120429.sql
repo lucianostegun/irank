@@ -54,15 +54,6 @@ BEGIN
 END'
 LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE FUNCTION update_ranking_live_visit_count(rankingLiveId INTEGER) RETURNS VOID AS 
-'
-BEGIN
-
-    UPDATE event_live SET visit_count = visit_count+1 WHERE ranking_live_id = rankingLiveId;
-
-END'
-LANGUAGE 'plpgsql';
-
 CREATE OR REPLACE FUNCTION is_ranking_live_player(rankingLiveId INTEGER, peopleId INTEGER) RETURNS BOOLEAN AS '
 DECLARE
     events INTEGER;

@@ -1,19 +1,10 @@
 default:
   is_secure: on
-  credentials: [iRankAdmin]
+  credentials: [[iRankAdmin, iRankClub]]
 
 index:
-  credentials: [[iRankAdmin, iRankClub]]
+  credentials: [iRankAdmin]
 
-edit:
-  credentials: [[iRankAdmin, iRankClub]]
-
-save:
-  credentials: [[iRankAdmin, iRankClub]]
-
-getCalendar:
-  credentials: [[iRankAdmin, iRankClub]]
-  
 uploadLogo:
   is_secure: off
 

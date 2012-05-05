@@ -111,7 +111,18 @@ $(function() {
 
 function updateMainBalance(mainBalanceValue){
 	
-	$('#mainBalanceAmount').html('R$ '+toCurrency(mainBalanceValue));
+	if( mainBalanceValue > 10000 )
+		$('#mainBalanceCode').addClass('small');
+	else
+		$('#mainBalanceCode').removeClass('small');
+	
+	$('#mainBalanceAmount').html(toCurrency(mainBalanceValue));
+}
+
+function updateMainBalanceChanges(percent){
+	
+	$('#mainBalanceChanges').attr('class', (percent>0?'sPositive':(percent<0?'sNegative':'sZero')));
+	$('#mainBalanceChanges').html(toCurrency(Math.abs(percent), 0)+'%');
 }
 
 function doSaveMain(){

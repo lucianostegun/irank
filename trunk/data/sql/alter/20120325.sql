@@ -9,26 +9,6 @@ CREATE TABLE event_live_player (
     CONSTRAINT ranking_live_player_FK_2 FOREIGN KEY (people_id) REFERENCES people (id)
 );
 
-CREATE OR REPLACE FUNCTION get_event_live_players(eventLiveId INTEGER) RETURNS INTEGER AS
-'
-DECLARE
-    result INTEGER;
-BEGIN
-	
-    SELECT
-       COUNT(1) INTO result
-   FROM
-       event_live_player
-   WHERE
-       event_live_player.EVENT_LIVE_ID = eventLiveId
-       AND enabled;
-
-   RETURN result;
-
-END
-'
-LANGUAGE 'plpgsql';
-
 CREATE OR REPLACE FUNCTION update_event_live_players(eventLiveId INTEGER) RETURNS VOID AS
 '
 DECLARE

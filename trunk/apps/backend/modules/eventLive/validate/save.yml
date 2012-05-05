@@ -1,3 +1,15 @@
+validators:      
+  validateDate:
+    class:           sfCallbackValidator
+    param:
+      callback:      [Validate, validateDate]
+      invalid_error: form.error.invalidDate
+  validateEventDate:
+    class:           sfCallbackValidator
+    param:
+      callback:      [EventLivePeer, validateEventDate]
+      invalid_error: form.error.expiredDate
+      
 fields:
       
   clubId:
@@ -19,9 +31,8 @@ fields:
   eventDate:
     required:
       msg:       form.error.requiredField
-    sfCallbackValidator:
-      callback:      [Validate, validateDate]
-      invalid_error: form.error.invalidDate
+    validateDate:
+    validateEventDate:
 
   startTime:
     required:
