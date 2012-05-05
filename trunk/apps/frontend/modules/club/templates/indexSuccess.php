@@ -22,7 +22,7 @@
 			$initial         = $clubObj->getCity()->getState()->getInitial();
 			$clubSiteLink    = ($clubSite?(preg_match('/^[a-zA-Z0-9\-_\.]*@/', $clubSite)?'mailto:'.$clubSite:'http://'.$clubSite):null);
 			$clubSiteTarget  = ($clubSite?(preg_match('/^[a-zA-Z0-9\-_\.]*@/', $clubSite)?'_top':'_blank'):null);
-			$clubSite        = str_replace('http://', '', $clubSite);
+			$clubSite        = str_ireplace('http://', '', $clubSite);
 			$phoneNumberList = $clubObj->getPhoneNumberList();
 			
 			if( $mapsLink )
