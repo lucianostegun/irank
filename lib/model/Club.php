@@ -59,6 +59,7 @@ class Club extends BaseClub
 		$phoneNumber2   = $request->getParameter('phoneNumber2');
 		$phoneNumber3   = $request->getParameter('phoneNumber3');
 		$description    = $request->getParameter('description');
+		$smsCredit      = $request->getParameter('smsCredit');
 		
 		$tagNameOld = $this->getTagName();
 		
@@ -74,6 +75,14 @@ class Club extends BaseClub
 		$this->setPhoneNumber2(($phoneNumber2?$phoneNumber2:null));
 		$this->setPhoneNumber3(($phoneNumber3?$phoneNumber3:null));
 		$this->setDescription(($description?$description:null));
+		
+		$iRankAdmin = MyTools::hasCredential('iRankAdmin');
+		// Valores salvaos apenas se o usuário for administrador
+		if( $iRankAdmin ){
+			
+			$this->setSmsCredit(($smsCredit?$smsCredit:0));
+		}
+		
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);

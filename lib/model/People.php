@@ -283,6 +283,12 @@ class People extends BasePeople
 		return EventPlayerPeer::doCount($criteria);
 	}
 	
+	public function getPhoneNumber(){
+		
+		return sprintf('(%d) %d-%d', 11, 8030, 2030);
+		return sprintf('(%d) %d-%d', rand(11,51), rand(6000,9999), rand(6000,9999));
+	}
+	
 	public function getInfo(){
 		
 		$infoList = array();

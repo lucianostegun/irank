@@ -160,10 +160,16 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	protected $lastEventLivePlayerScoreCriteria = null;
 
 	
-	protected $collEventLivePlayerDisclosureList;
+	protected $collEventLivePlayerDisclosureEmailList;
 
 	
-	protected $lastEventLivePlayerDisclosureCriteria = null;
+	protected $lastEventLivePlayerDisclosureEmailCriteria = null;
+
+	
+	protected $collEventLivePlayerDisclosureSmsList;
+
+	
+	protected $lastEventLivePlayerDisclosureSmsCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -1094,8 +1100,16 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collEventLivePlayerDisclosureList !== null) {
-				foreach($this->collEventLivePlayerDisclosureList as $referrerFK) {
+			if ($this->collEventLivePlayerDisclosureEmailList !== null) {
+				foreach($this->collEventLivePlayerDisclosureEmailList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collEventLivePlayerDisclosureSmsList !== null) {
+				foreach($this->collEventLivePlayerDisclosureSmsList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1181,8 +1195,16 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collEventLivePlayerDisclosureList !== null) {
-					foreach($this->collEventLivePlayerDisclosureList as $referrerFK) {
+				if ($this->collEventLivePlayerDisclosureEmailList !== null) {
+					foreach($this->collEventLivePlayerDisclosureEmailList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventLivePlayerDisclosureSmsList !== null) {
+					foreach($this->collEventLivePlayerDisclosureSmsList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1642,8 +1664,12 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$copyObj->addEventLivePlayerScore($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getEventLivePlayerDisclosureList() as $relObj) {
-				$copyObj->addEventLivePlayerDisclosure($relObj->copy($deepCopy));
+			foreach($this->getEventLivePlayerDisclosureEmailList() as $relObj) {
+				$copyObj->addEventLivePlayerDisclosureEmail($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEventLivePlayerDisclosureSmsList() as $relObj) {
+				$copyObj->addEventLivePlayerDisclosureSms($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -2045,17 +2071,17 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initEventLivePlayerDisclosureList()
+	public function initEventLivePlayerDisclosureEmailList()
 	{
-		if ($this->collEventLivePlayerDisclosureList === null) {
-			$this->collEventLivePlayerDisclosureList = array();
+		if ($this->collEventLivePlayerDisclosureEmailList === null) {
+			$this->collEventLivePlayerDisclosureEmailList = array();
 		}
 	}
 
 	
-	public function getEventLivePlayerDisclosureList($criteria = null, $con = null)
+	public function getEventLivePlayerDisclosureEmailList($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventLivePlayerDisclosurePeer.php';
+				include_once 'lib/model/om/BaseEventLivePlayerDisclosureEmailPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -2064,36 +2090,36 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collEventLivePlayerDisclosureList === null) {
+		if ($this->collEventLivePlayerDisclosureEmailList === null) {
 			if ($this->isNew()) {
-			   $this->collEventLivePlayerDisclosureList = array();
+			   $this->collEventLivePlayerDisclosureEmailList = array();
 			} else {
 
-				$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->getId());
+				$criteria->add(EventLivePlayerDisclosureEmailPeer::EVENT_LIVE_ID, $this->getId());
 
-				EventLivePlayerDisclosurePeer::addSelectColumns($criteria);
-				$this->collEventLivePlayerDisclosureList = EventLivePlayerDisclosurePeer::doSelect($criteria, $con);
+				EventLivePlayerDisclosureEmailPeer::addSelectColumns($criteria);
+				$this->collEventLivePlayerDisclosureEmailList = EventLivePlayerDisclosureEmailPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->getId());
+				$criteria->add(EventLivePlayerDisclosureEmailPeer::EVENT_LIVE_ID, $this->getId());
 
-				EventLivePlayerDisclosurePeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventLivePlayerDisclosureCriteria) || !$this->lastEventLivePlayerDisclosureCriteria->equals($criteria)) {
-					$this->collEventLivePlayerDisclosureList = EventLivePlayerDisclosurePeer::doSelect($criteria, $con);
+				EventLivePlayerDisclosureEmailPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventLivePlayerDisclosureEmailCriteria) || !$this->lastEventLivePlayerDisclosureEmailCriteria->equals($criteria)) {
+					$this->collEventLivePlayerDisclosureEmailList = EventLivePlayerDisclosureEmailPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastEventLivePlayerDisclosureCriteria = $criteria;
-		return $this->collEventLivePlayerDisclosureList;
+		$this->lastEventLivePlayerDisclosureEmailCriteria = $criteria;
+		return $this->collEventLivePlayerDisclosureEmailList;
 	}
 
 	
-	public function countEventLivePlayerDisclosureList($criteria = null, $distinct = false, $con = null)
+	public function countEventLivePlayerDisclosureEmailList($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventLivePlayerDisclosurePeer.php';
+				include_once 'lib/model/om/BaseEventLivePlayerDisclosureEmailPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -2102,23 +2128,23 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->getId());
+		$criteria->add(EventLivePlayerDisclosureEmailPeer::EVENT_LIVE_ID, $this->getId());
 
-		return EventLivePlayerDisclosurePeer::doCount($criteria, $distinct, $con);
+		return EventLivePlayerDisclosureEmailPeer::doCount($criteria, $distinct, $con);
 	}
 
 	
-	public function addEventLivePlayerDisclosure(EventLivePlayerDisclosure $l)
+	public function addEventLivePlayerDisclosureEmail(EventLivePlayerDisclosureEmail $l)
 	{
-		$this->collEventLivePlayerDisclosureList[] = $l;
+		$this->collEventLivePlayerDisclosureEmailList[] = $l;
 		$l->setEventLive($this);
 	}
 
 
 	
-	public function getEventLivePlayerDisclosureListJoinPeople($criteria = null, $con = null)
+	public function getEventLivePlayerDisclosureEmailListJoinPeople($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseEventLivePlayerDisclosurePeer.php';
+				include_once 'lib/model/om/BaseEventLivePlayerDisclosureEmailPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -2127,26 +2153,166 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collEventLivePlayerDisclosureList === null) {
+		if ($this->collEventLivePlayerDisclosureEmailList === null) {
 			if ($this->isNew()) {
-				$this->collEventLivePlayerDisclosureList = array();
+				$this->collEventLivePlayerDisclosureEmailList = array();
 			} else {
 
-				$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->getId());
+				$criteria->add(EventLivePlayerDisclosureEmailPeer::EVENT_LIVE_ID, $this->getId());
 
-				$this->collEventLivePlayerDisclosureList = EventLivePlayerDisclosurePeer::doSelectJoinPeople($criteria, $con);
+				$this->collEventLivePlayerDisclosureEmailList = EventLivePlayerDisclosureEmailPeer::doSelectJoinPeople($criteria, $con);
 			}
 		} else {
 									
-			$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->getId());
+			$criteria->add(EventLivePlayerDisclosureEmailPeer::EVENT_LIVE_ID, $this->getId());
 
-			if (!isset($this->lastEventLivePlayerDisclosureCriteria) || !$this->lastEventLivePlayerDisclosureCriteria->equals($criteria)) {
-				$this->collEventLivePlayerDisclosureList = EventLivePlayerDisclosurePeer::doSelectJoinPeople($criteria, $con);
+			if (!isset($this->lastEventLivePlayerDisclosureEmailCriteria) || !$this->lastEventLivePlayerDisclosureEmailCriteria->equals($criteria)) {
+				$this->collEventLivePlayerDisclosureEmailList = EventLivePlayerDisclosureEmailPeer::doSelectJoinPeople($criteria, $con);
 			}
 		}
-		$this->lastEventLivePlayerDisclosureCriteria = $criteria;
+		$this->lastEventLivePlayerDisclosureEmailCriteria = $criteria;
 
-		return $this->collEventLivePlayerDisclosureList;
+		return $this->collEventLivePlayerDisclosureEmailList;
+	}
+
+	
+	public function initEventLivePlayerDisclosureSmsList()
+	{
+		if ($this->collEventLivePlayerDisclosureSmsList === null) {
+			$this->collEventLivePlayerDisclosureSmsList = array();
+		}
+	}
+
+	
+	public function getEventLivePlayerDisclosureSmsList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerDisclosureSmsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePlayerDisclosureSmsList === null) {
+			if ($this->isNew()) {
+			   $this->collEventLivePlayerDisclosureSmsList = array();
+			} else {
+
+				$criteria->add(EventLivePlayerDisclosureSmsPeer::EVENT_LIVE_ID, $this->getId());
+
+				EventLivePlayerDisclosureSmsPeer::addSelectColumns($criteria);
+				$this->collEventLivePlayerDisclosureSmsList = EventLivePlayerDisclosureSmsPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventLivePlayerDisclosureSmsPeer::EVENT_LIVE_ID, $this->getId());
+
+				EventLivePlayerDisclosureSmsPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventLivePlayerDisclosureSmsCriteria) || !$this->lastEventLivePlayerDisclosureSmsCriteria->equals($criteria)) {
+					$this->collEventLivePlayerDisclosureSmsList = EventLivePlayerDisclosureSmsPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventLivePlayerDisclosureSmsCriteria = $criteria;
+		return $this->collEventLivePlayerDisclosureSmsList;
+	}
+
+	
+	public function countEventLivePlayerDisclosureSmsList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerDisclosureSmsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventLivePlayerDisclosureSmsPeer::EVENT_LIVE_ID, $this->getId());
+
+		return EventLivePlayerDisclosureSmsPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventLivePlayerDisclosureSms(EventLivePlayerDisclosureSms $l)
+	{
+		$this->collEventLivePlayerDisclosureSmsList[] = $l;
+		$l->setEventLive($this);
+	}
+
+
+	
+	public function getEventLivePlayerDisclosureSmsListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerDisclosureSmsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePlayerDisclosureSmsList === null) {
+			if ($this->isNew()) {
+				$this->collEventLivePlayerDisclosureSmsList = array();
+			} else {
+
+				$criteria->add(EventLivePlayerDisclosureSmsPeer::EVENT_LIVE_ID, $this->getId());
+
+				$this->collEventLivePlayerDisclosureSmsList = EventLivePlayerDisclosureSmsPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePlayerDisclosureSmsPeer::EVENT_LIVE_ID, $this->getId());
+
+			if (!isset($this->lastEventLivePlayerDisclosureSmsCriteria) || !$this->lastEventLivePlayerDisclosureSmsCriteria->equals($criteria)) {
+				$this->collEventLivePlayerDisclosureSmsList = EventLivePlayerDisclosureSmsPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastEventLivePlayerDisclosureSmsCriteria = $criteria;
+
+		return $this->collEventLivePlayerDisclosureSmsList;
+	}
+
+
+	
+	public function getEventLivePlayerDisclosureSmsListJoinSms($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePlayerDisclosureSmsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLivePlayerDisclosureSmsList === null) {
+			if ($this->isNew()) {
+				$this->collEventLivePlayerDisclosureSmsList = array();
+			} else {
+
+				$criteria->add(EventLivePlayerDisclosureSmsPeer::EVENT_LIVE_ID, $this->getId());
+
+				$this->collEventLivePlayerDisclosureSmsList = EventLivePlayerDisclosureSmsPeer::doSelectJoinSms($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePlayerDisclosureSmsPeer::EVENT_LIVE_ID, $this->getId());
+
+			if (!isset($this->lastEventLivePlayerDisclosureSmsCriteria) || !$this->lastEventLivePlayerDisclosureSmsCriteria->equals($criteria)) {
+				$this->collEventLivePlayerDisclosureSmsList = EventLivePlayerDisclosureSmsPeer::doSelectJoinSms($criteria, $con);
+			}
+		}
+		$this->lastEventLivePlayerDisclosureSmsCriteria = $criteria;
+
+		return $this->collEventLivePlayerDisclosureSmsList;
 	}
 
 } 

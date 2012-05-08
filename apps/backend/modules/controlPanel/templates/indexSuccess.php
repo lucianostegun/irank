@@ -3,7 +3,8 @@
 	<div class="widget">       
 		<ul class="tabs">
 			<li><a href="#tab1">E-mail</a></li>
-			<li><a href="#tab2">Diretórios</a></li>
+			<li><a href="#tab2">SMS</a></li>
+			<li><a href="#tab3">Diretórios</a></li>
 			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#controlPanelForm").submit()')); ?>
 		</ul>
 		<?php
@@ -17,7 +18,8 @@
 		?>
 		<div class="tab_container">
 			<div id="tab1" class="tab_content"><?php include_partial('controlPanel/tab/email', array()) ?></div>
-			<div id="tab2" class="tab_content"><?php include_partial('controlPanel/tab/paths', array()) ?></div>
+			<div id="tab2" class="tab_content"><?php include_partial('controlPanel/tab/sms', array()) ?></div>
+			<div id="tab3" class="tab_content"><?php include_partial('controlPanel/tab/paths', array()) ?></div>
 		</div>
 		</form>
 	</div>

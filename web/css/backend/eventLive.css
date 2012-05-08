@@ -166,3 +166,13 @@ section.addPlayer li {
 }
 
 #eventLiveEventDate { width: 70px!important; }
+
+#smsCredit,
+#smsCreditMessages {
+
+	font-size: 		15px;
+	font-weight: 	bold;
+	color: 			#707070;
+	position: 		relative;
+	top: 			4px;
+}

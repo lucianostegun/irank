@@ -205,7 +205,45 @@ class eventLiveActions extends sfActions
 	  	$eventLiveObj->notifyPlayer($peopleId);
   	}catch(Exception $e){
   		
-  		Util::forceError( 'Ocorreu um erro no envio desse email.\n'.$e->getMessage() );
+  		Util::forceError('Ocorreu um erro no envio desse e-mail!', false);
+  		
+  		if( Util::isDebug() )
+  			echo $e->getMessage();
+  	}
+  	
+  	exit;
+  }
+  
+  public function executeSendDiclosureSms($request){
+  	
+  	$clubId          = $this->getUser()->getAttribute('clubId');
+  	$peopleIdCurrent = $this->getUser()->getAttribute('peopleId');
+  	$peopleId        = $request->getParameter('peopleId');
+  	$smsId           = $request->getParameter('smsId');
+  	$token           = $request->getParameter('token');
+  	
+  	try{
+  		
+	  	Sms::validateToken($clubId, $peopleIdCurrent, $smsId, $token, 'EventLive', $this->eventLiveId);
+  	}catch(Exception $e){
+  		
+  		Util::forceError($e->getMessage());
+  	}
+  	
+  	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+  	
+  	if( !is_object($eventLiveObj) )
+	  	throw new Exception('Evento não encontrado');
+  	
+  	try{
+  		
+	  	$eventLiveObj->notifyPlayerSms($peopleId, $smsId);
+  	}catch(Exception $e){
+  		
+  		Util::forceError('Ocorreu um erro no envio desse sms!', false);
+  		
+  		if( Util::isDebug() )
+  			echo $e->getMessage();
   	}
   	
   	exit;

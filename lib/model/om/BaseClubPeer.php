@@ -13,7 +13,7 @@ abstract class BaseClubPeer {
 	const CLASS_DEFAULT = 'lib.model.Club';
 
 	
-	const NUM_COLUMNS = 21;
+	const NUM_COLUMNS = 22;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -65,6 +65,9 @@ abstract class BaseClubPeer {
 	const VISIT_COUNT = 'club.VISIT_COUNT';
 
 	
+	const SMS_CREDIT = 'club.SMS_CREDIT';
+
+	
 	const ENABLED = 'club.ENABLED';
 
 	
@@ -88,19 +91,19 @@ abstract class BaseClubPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'ClubName', 'TagName', 'FileNameLogo', 'AddressName', 'AddressNumber', 'AddressQuarter', 'CityId', 'MapsLink', 'ClubSite', 'Description', 'PhoneNumber1', 'PhoneNumber2', 'PhoneNumber3', 'VisitCount', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (ClubPeer::ID, ClubPeer::CLUB_NAME, ClubPeer::TAG_NAME, ClubPeer::FILE_NAME_LOGO, ClubPeer::ADDRESS_NAME, ClubPeer::ADDRESS_NUMBER, ClubPeer::ADDRESS_QUARTER, ClubPeer::CITY_ID, ClubPeer::MAPS_LINK, ClubPeer::CLUB_SITE, ClubPeer::DESCRIPTION, ClubPeer::PHONE_NUMBER_1, ClubPeer::PHONE_NUMBER_2, ClubPeer::PHONE_NUMBER_3, ClubPeer::VISIT_COUNT, ClubPeer::ENABLED, ClubPeer::VISIBLE, ClubPeer::DELETED, ClubPeer::LOCKED, ClubPeer::CREATED_AT, ClubPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'club_name', 'tag_name', 'file_name_logo', 'address_name', 'address_number', 'address_quarter', 'city_id', 'maps_link', 'club_site', 'description', 'phone_number_1', 'phone_number_2', 'phone_number_3', 'visit_count', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CLUB_NAME'=>'', 'TAG_NAME'=>'', 'FILE_NAME_LOGO'=>'', 'ADDRESS_NAME'=>'', 'ADDRESS_NUMBER'=>'', 'ADDRESS_QUARTER'=>'', 'CITY_ID'=>'', 'MAPS_LINK'=>'', 'CLUB_SITE'=>'', 'DESCRIPTION'=>'', 'PHONE_NUMBER_1'=>'', 'PHONE_NUMBER_2'=>'', 'PHONE_NUMBER_3'=>'', 'VISIT_COUNT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'ClubName', 'TagName', 'FileNameLogo', 'AddressName', 'AddressNumber', 'AddressQuarter', 'CityId', 'MapsLink', 'ClubSite', 'Description', 'PhoneNumber1', 'PhoneNumber2', 'PhoneNumber3', 'VisitCount', 'SmsCredit', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (ClubPeer::ID, ClubPeer::CLUB_NAME, ClubPeer::TAG_NAME, ClubPeer::FILE_NAME_LOGO, ClubPeer::ADDRESS_NAME, ClubPeer::ADDRESS_NUMBER, ClubPeer::ADDRESS_QUARTER, ClubPeer::CITY_ID, ClubPeer::MAPS_LINK, ClubPeer::CLUB_SITE, ClubPeer::DESCRIPTION, ClubPeer::PHONE_NUMBER_1, ClubPeer::PHONE_NUMBER_2, ClubPeer::PHONE_NUMBER_3, ClubPeer::VISIT_COUNT, ClubPeer::SMS_CREDIT, ClubPeer::ENABLED, ClubPeer::VISIBLE, ClubPeer::DELETED, ClubPeer::LOCKED, ClubPeer::CREATED_AT, ClubPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'club_name', 'tag_name', 'file_name_logo', 'address_name', 'address_number', 'address_quarter', 'city_id', 'maps_link', 'club_site', 'description', 'phone_number_1', 'phone_number_2', 'phone_number_3', 'visit_count', 'sms_credit', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CLUB_NAME'=>'', 'TAG_NAME'=>'', 'FILE_NAME_LOGO'=>'', 'ADDRESS_NAME'=>'', 'ADDRESS_NUMBER'=>'', 'ADDRESS_QUARTER'=>'', 'CITY_ID'=>'', 'MAPS_LINK'=>'', 'CLUB_SITE'=>'', 'DESCRIPTION'=>'', 'PHONE_NUMBER_1'=>'', 'PHONE_NUMBER_2'=>'', 'PHONE_NUMBER_3'=>'', 'VISIT_COUNT'=>'', 'SMS_CREDIT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ClubName'=>1, 'TagName'=>2, 'FileNameLogo'=>3, 'AddressName'=>4, 'AddressNumber'=>5, 'AddressQuarter'=>6, 'CityId'=>7, 'MapsLink'=>8, 'ClubSite'=>9, 'Description'=>10, 'PhoneNumber1'=>11, 'PhoneNumber2'=>12, 'PhoneNumber3'=>13, 'VisitCount'=>14, 'Enabled'=>15, 'Visible'=>16, 'Deleted'=>17, 'Locked'=>18, 'CreatedAt'=>19, 'UpdatedAt'=>20, ),
-		BasePeer::TYPE_COLNAME=>array (ClubPeer::ID=>0, ClubPeer::CLUB_NAME=>1, ClubPeer::TAG_NAME=>2, ClubPeer::FILE_NAME_LOGO=>3, ClubPeer::ADDRESS_NAME=>4, ClubPeer::ADDRESS_NUMBER=>5, ClubPeer::ADDRESS_QUARTER=>6, ClubPeer::CITY_ID=>7, ClubPeer::MAPS_LINK=>8, ClubPeer::CLUB_SITE=>9, ClubPeer::DESCRIPTION=>10, ClubPeer::PHONE_NUMBER_1=>11, ClubPeer::PHONE_NUMBER_2=>12, ClubPeer::PHONE_NUMBER_3=>13, ClubPeer::VISIT_COUNT=>14, ClubPeer::ENABLED=>15, ClubPeer::VISIBLE=>16, ClubPeer::DELETED=>17, ClubPeer::LOCKED=>18, ClubPeer::CREATED_AT=>19, ClubPeer::UPDATED_AT=>20, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'club_name'=>1, 'tag_name'=>2, 'file_name_logo'=>3, 'address_name'=>4, 'address_number'=>5, 'address_quarter'=>6, 'city_id'=>7, 'maps_link'=>8, 'club_site'=>9, 'description'=>10, 'phone_number_1'=>11, 'phone_number_2'=>12, 'phone_number_3'=>13, 'visit_count'=>14, 'enabled'=>15, 'visible'=>16, 'deleted'=>17, 'locked'=>18, 'created_at'=>19, 'updated_at'=>20, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ClubName'=>1, 'TagName'=>2, 'FileNameLogo'=>3, 'AddressName'=>4, 'AddressNumber'=>5, 'AddressQuarter'=>6, 'CityId'=>7, 'MapsLink'=>8, 'ClubSite'=>9, 'Description'=>10, 'PhoneNumber1'=>11, 'PhoneNumber2'=>12, 'PhoneNumber3'=>13, 'VisitCount'=>14, 'SmsCredit'=>15, 'Enabled'=>16, 'Visible'=>17, 'Deleted'=>18, 'Locked'=>19, 'CreatedAt'=>20, 'UpdatedAt'=>21, ),
+		BasePeer::TYPE_COLNAME=>array (ClubPeer::ID=>0, ClubPeer::CLUB_NAME=>1, ClubPeer::TAG_NAME=>2, ClubPeer::FILE_NAME_LOGO=>3, ClubPeer::ADDRESS_NAME=>4, ClubPeer::ADDRESS_NUMBER=>5, ClubPeer::ADDRESS_QUARTER=>6, ClubPeer::CITY_ID=>7, ClubPeer::MAPS_LINK=>8, ClubPeer::CLUB_SITE=>9, ClubPeer::DESCRIPTION=>10, ClubPeer::PHONE_NUMBER_1=>11, ClubPeer::PHONE_NUMBER_2=>12, ClubPeer::PHONE_NUMBER_3=>13, ClubPeer::VISIT_COUNT=>14, ClubPeer::SMS_CREDIT=>15, ClubPeer::ENABLED=>16, ClubPeer::VISIBLE=>17, ClubPeer::DELETED=>18, ClubPeer::LOCKED=>19, ClubPeer::CREATED_AT=>20, ClubPeer::UPDATED_AT=>21, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'club_name'=>1, 'tag_name'=>2, 'file_name_logo'=>3, 'address_name'=>4, 'address_number'=>5, 'address_quarter'=>6, 'city_id'=>7, 'maps_link'=>8, 'club_site'=>9, 'description'=>10, 'phone_number_1'=>11, 'phone_number_2'=>12, 'phone_number_3'=>13, 'visit_count'=>14, 'sms_credit'=>15, 'enabled'=>16, 'visible'=>17, 'deleted'=>18, 'locked'=>19, 'created_at'=>20, 'updated_at'=>21, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, )
 	);
 
 	
@@ -183,6 +186,8 @@ abstract class BaseClubPeer {
 		$criteria->addSelectColumn(ClubPeer::PHONE_NUMBER_3);
 
 		$criteria->addSelectColumn(ClubPeer::VISIT_COUNT);
+
+		$criteria->addSelectColumn(ClubPeer::SMS_CREDIT);
 
 		$criteria->addSelectColumn(ClubPeer::ENABLED);
 

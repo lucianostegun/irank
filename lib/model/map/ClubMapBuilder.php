@@ -64,6 +64,8 @@ class ClubMapBuilder {
 
 		$tMap->addColumn('VISIT_COUNT', 'VisitCount', 'int', CreoleTypes::INTEGER, false, null);
 
+		$tMap->addColumn('SMS_CREDIT', 'SmsCredit', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

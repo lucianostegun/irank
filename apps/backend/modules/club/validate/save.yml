@@ -30,3 +30,7 @@ fields:
   phoneNumber1:
     required:
       msg:       form.error.requiredField
+       
+  smsCredit:
+    sfNumberValidator:
+      nan_error:    form.error.invalidNumber
