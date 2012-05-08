@@ -60,6 +60,16 @@ $(function() {
 						$(this).closest('.checker > span').addClass('checked');
 					}
 			});
+			
+			$("#checkAll2 tbody tr td:first-child input:checkbox").each(function() {
+				this.checked = checkedStatus;
+				if (checkedStatus == this.checked) {
+					$(this).closest('.checker > span').removeClass('checked');
+				}
+				if (this.checked) {
+					$(this).closest('.checker > span').addClass('checked');
+				}
+			});
 		});
 		
 		$('#checkAll tbody tr td:first-child').next('td').css('border-left-color', '#CBCBCB');

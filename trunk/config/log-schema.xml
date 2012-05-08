@@ -36,4 +36,13 @@
 		<column name="read_at" type="TIMESTAMP" />
 	</table>
 	
+	<table name="sms_log" phpName="SmsLog">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="sms_id" type="INTEGER" />
+		<column name="message_id" type="VARCHAR" />
+		<column name="phone_number" type="VARCHAR" />
+		<column name="sending_status" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+	</table>
+	
 </database>

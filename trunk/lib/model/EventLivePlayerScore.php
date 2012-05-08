@@ -19,5 +19,6 @@ class EventLivePlayerScore extends BaseEventLivePlayerScore
 		$eventLivePlayerScoreObj->setLabel($label);
 		$eventLivePlayerScoreObj->setOrderSeq($orderSeq);
 		$eventLivePlayerScoreObj->save();
+		echo '<pre>';print_r($eventLivePlayerScoreObj);exit;
 	}
 }

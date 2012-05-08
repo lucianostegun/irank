@@ -12,6 +12,8 @@
 	$clubId = $clubObj->getId();
 	
 	echo input_hidden_tag('clubId', $clubId);
+	
+	$iRankAdmin = $sf_user->hasCredential('iRankAdmin');
 
 	$userAdminId = $sf_user->getAttribute('userAdminId');
 ?>
@@ -33,6 +35,17 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+	
+	<?php if( $iRankAdmin ): ?>
+	<div class="formRow">
+		<label>Créditos SMS</label>
+		<div class="formRight">
+			<?php echo input_tag('smsCredit', $clubObj->getSmsCredit(), array('size'=>5, 'maxlength'=>4, 'id'=>'clubSmsCredit')) ?>
+			<div class="formNote error" id="clubFormErrorSmsCredit"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<?php endif; ?>
 	
 	<?php
 		$cityId = $clubObj->getCityId();

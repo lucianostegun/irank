@@ -2,10 +2,10 @@
 
 
 
-class EventLivePlayerDisclosureMapBuilder {
+class EventLivePlayerDisclosureEmailMapBuilder {
 
 	
-	const CLASS_NAME = 'lib.model.map.EventLivePlayerDisclosureMapBuilder';
+	const CLASS_NAME = 'lib.model.map.EventLivePlayerDisclosureEmailMapBuilder';
 
 	
 	private $dbMap;
@@ -27,8 +27,8 @@ class EventLivePlayerDisclosureMapBuilder {
 	{
 		$this->dbMap = Propel::getDatabaseMap('propel');
 
-		$tMap = $this->dbMap->addTable('event_live_player_disclosure');
-		$tMap->setPhpName('EventLivePlayerDisclosure');
+		$tMap = $this->dbMap->addTable('event_live_player_disclosure_email');
+		$tMap->setPhpName('EventLivePlayerDisclosureEmail');
 
 		$tMap->setUseIdGenerator(false);
 

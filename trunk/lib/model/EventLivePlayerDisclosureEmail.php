@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Subclasse de representação de objetos da tabela 'event_live_player_disclosure'.
+ * Subclasse de representação de objetos da tabela 'event_live_player_disclosure_email'.
  *
  * 
  *
  * @package lib.model
  */ 
-class EventLivePlayerDisclosure extends BaseEventLivePlayerDisclosure
+class EventLivePlayerDisclosureEmail extends BaseEventLivePlayerDisclosureEmail
 {
 	
 	public function getEmailLog(){

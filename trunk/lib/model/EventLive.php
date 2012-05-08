@@ -759,8 +759,8 @@ class EventLive extends BaseEventLive
 	  	if(!$emailAddress)
 	  		throw new Exception('Email não cadastrado');
 	  		
-	  	$eventLivePlayerDisclosureObj = EventLivePlayerDisclosurePeer::retrieveByPK($this->getId(), $peopleId);
-  		$emailLogObj = $eventLivePlayerDisclosureObj->getEmailLog();
+	  	$eventLivePlayerDisclosureEmailObj = EventLivePlayerDisclosureEmailPeer::retrieveByPK($this->getId(), $peopleId);
+  		$emailLogObj = $eventLivePlayerDisclosureEmailObj->getEmailLog();
   		
   		if( $emailLogObj->getSendingSuccess() )
   			die($emailLogObj->getCreatedAt('d/m/Y H:i'));
@@ -770,8 +770,8 @@ class EventLive extends BaseEventLive
   		
   		$emailLogId = $emailLogObj->getId();
   		
-  		$eventLivePlayerDisclosureObj->setEmailLogId($emailLogId);
-  		$eventLivePlayerDisclosureObj->save();
+  		$eventLivePlayerDisclosureEmailObj->setEmailLogId($emailLogId);
+  		$eventLivePlayerDisclosureEmailObj->save();
   		
   		$emailContent = $this->getDisclosureEmailTemplate();
   		$emailSubject = $this->getDisclosureEmailSubject();
@@ -780,6 +780,46 @@ class EventLive extends BaseEventLive
 	  	Report::sendMail($emailSubject, $emailAddress, $emailContent, $options);
 	  	
 	  	echo $emailLogObj->getCreatedAt('d/m/Y H:i');
+	}
+
+	public function notifyPlayerSms($peopleId, $smsId){
+		
+		$clubId = MyTools::getAttribute('clubId');
+		
+	  	$peopleObj = PeoplePeer::retrieveByPK( $peopleId );
+	  	
+	  	if( !is_object($peopleObj) )
+	  		throw new Exception ('Não foi possível concluir o envio do ss');
+	  	
+	  	$phoneNumber = $peopleObj->getPhoneNumber();
+	  	$phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
+	  	
+	  	if(!$phoneNumber)
+	  		throw new Exception('Telefone não cadastrado');
+	  		
+	  	$eventLivePlayerDisclosureSmsObj = EventLivePlayerDisclosureSmsPeer::retrieveByPK($this->getId(), $peopleId);
+  		$smsLogObj = $eventLivePlayerDisclosureSmsObj->getSmsLog();
+  		
+  		if( $smsLogObj->getSendingSuccess() )
+  			die($smsLogObj->getCreatedAt('d/m/Y H:i'));
+  		
+  		$smsLogObj->setPhoneNumber('55'.$phoneNumber);
+  		$smsLogObj->setSmsId($smsId);
+  		$smsLogObj->save();
+  		
+  		$smsLogId = $smsLogObj->getId();
+  		
+  		$eventLivePlayerDisclosureSmsObj->setSmsLogId($smsLogId);
+  		$eventLivePlayerDisclosureSmsObj->setSmsId($smsId);
+  		$eventLivePlayerDisclosureSmsObj->save();
+  		
+  		$smsObj = SmsPeer::retrieveByPK($smsId);
+	  	$result = $smsObj->sendSms($phoneNumber, $smsLogObj, $clubId);
+	  	
+	  	if( $result=='000' )
+	  		echo $smsLogObj->getCreatedAt('d/m/Y H:i');
+	  	else
+	  		Util::forceError($smsLogObj->getErrorMessage());
 	}
 	
 	public function getDisclosureEmailTemplate(){

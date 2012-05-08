@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Persistent {
+abstract class BaseEventLivePlayerDisclosureEmail extends BaseObject  implements Persistent {
 
 
 	
@@ -88,7 +88,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 
 		if ($this->event_live_id !== $v) {
 			$this->event_live_id = $v;
-			$this->modifiedColumns[] = EventLivePlayerDisclosurePeer::EVENT_LIVE_ID;
+			$this->modifiedColumns[] = EventLivePlayerDisclosureEmailPeer::EVENT_LIVE_ID;
 		}
 
 		if ($this->aEventLive !== null && $this->aEventLive->getId() !== $v) {
@@ -106,7 +106,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 
 		if ($this->people_id !== $v) {
 			$this->people_id = $v;
-			$this->modifiedColumns[] = EventLivePlayerDisclosurePeer::PEOPLE_ID;
+			$this->modifiedColumns[] = EventLivePlayerDisclosureEmailPeer::PEOPLE_ID;
 		}
 
 		if ($this->aPeople !== null && $this->aPeople->getId() !== $v) {
@@ -124,7 +124,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 
 		if ($this->email_log_id !== $v) {
 			$this->email_log_id = $v;
-			$this->modifiedColumns[] = EventLivePlayerDisclosurePeer::EMAIL_LOG_ID;
+			$this->modifiedColumns[] = EventLivePlayerDisclosureEmailPeer::EMAIL_LOG_ID;
 		}
 
 	} 
@@ -141,7 +141,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 		}
 		if ($this->created_at !== $ts) {
 			$this->created_at = $ts;
-			$this->modifiedColumns[] = EventLivePlayerDisclosurePeer::CREATED_AT;
+			$this->modifiedColumns[] = EventLivePlayerDisclosureEmailPeer::CREATED_AT;
 		}
 
 	} 
@@ -164,7 +164,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 
 						return $startcol + 4; 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating EventLivePlayerDisclosure object", $e);
+			throw new PropelException("Error populating EventLivePlayerDisclosureEmail object", $e);
 		}
 	}
 
@@ -176,12 +176,12 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(EventLivePlayerDisclosurePeer::DATABASE_NAME);
+			$con = Propel::getConnection(EventLivePlayerDisclosureEmailPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->begin();
-			EventLivePlayerDisclosurePeer::doDelete($this, $con);
+			EventLivePlayerDisclosureEmailPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -193,7 +193,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 	
 	public function save($con = null)
 	{
-    if ($this->isNew() && !$this->isColumnModified(EventLivePlayerDisclosurePeer::CREATED_AT))
+    if ($this->isNew() && !$this->isColumnModified(EventLivePlayerDisclosureEmailPeer::CREATED_AT))
     {
       $this->setCreatedAt(time());
     }
@@ -203,7 +203,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(EventLivePlayerDisclosurePeer::DATABASE_NAME);
+			$con = Propel::getConnection(EventLivePlayerDisclosureEmailPeer::DATABASE_NAME);
 		}
 
 		try {
@@ -242,11 +242,11 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = EventLivePlayerDisclosurePeer::doInsert($this, $con);
+					$pk = EventLivePlayerDisclosureEmailPeer::doInsert($this, $con);
 					$affectedRows += 1; 										 										 
 					$this->setNew(false);
 				} else {
-					$affectedRows += EventLivePlayerDisclosurePeer::doUpdate($this, $con);
+					$affectedRows += EventLivePlayerDisclosureEmailPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); 			}
 
@@ -300,7 +300,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 			}
 
 
-			if (($retval = EventLivePlayerDisclosurePeer::doValidate($this, $columns)) !== true) {
+			if (($retval = EventLivePlayerDisclosureEmailPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -315,7 +315,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 	
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = EventLivePlayerDisclosurePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = EventLivePlayerDisclosureEmailPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->getByPosition($pos);
 	}
 
@@ -343,7 +343,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 	
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = EventLivePlayerDisclosurePeer::getFieldNames($keyType);
+		$keys = EventLivePlayerDisclosureEmailPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0]=>$this->getEventLiveId(),
 			$keys[1]=>$this->getPeopleId(),
@@ -356,7 +356,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 	
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = EventLivePlayerDisclosurePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = EventLivePlayerDisclosureEmailPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -381,7 +381,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 	
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = EventLivePlayerDisclosurePeer::getFieldNames($keyType);
+		$keys = EventLivePlayerDisclosureEmailPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setEventLiveId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
@@ -392,12 +392,12 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 	
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(EventLivePlayerDisclosurePeer::DATABASE_NAME);
+		$criteria = new Criteria(EventLivePlayerDisclosureEmailPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID)) $criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->event_live_id);
-		if ($this->isColumnModified(EventLivePlayerDisclosurePeer::PEOPLE_ID)) $criteria->add(EventLivePlayerDisclosurePeer::PEOPLE_ID, $this->people_id);
-		if ($this->isColumnModified(EventLivePlayerDisclosurePeer::EMAIL_LOG_ID)) $criteria->add(EventLivePlayerDisclosurePeer::EMAIL_LOG_ID, $this->email_log_id);
-		if ($this->isColumnModified(EventLivePlayerDisclosurePeer::CREATED_AT)) $criteria->add(EventLivePlayerDisclosurePeer::CREATED_AT, $this->created_at);
+		if ($this->isColumnModified(EventLivePlayerDisclosureEmailPeer::EVENT_LIVE_ID)) $criteria->add(EventLivePlayerDisclosureEmailPeer::EVENT_LIVE_ID, $this->event_live_id);
+		if ($this->isColumnModified(EventLivePlayerDisclosureEmailPeer::PEOPLE_ID)) $criteria->add(EventLivePlayerDisclosureEmailPeer::PEOPLE_ID, $this->people_id);
+		if ($this->isColumnModified(EventLivePlayerDisclosureEmailPeer::EMAIL_LOG_ID)) $criteria->add(EventLivePlayerDisclosureEmailPeer::EMAIL_LOG_ID, $this->email_log_id);
+		if ($this->isColumnModified(EventLivePlayerDisclosureEmailPeer::CREATED_AT)) $criteria->add(EventLivePlayerDisclosureEmailPeer::CREATED_AT, $this->created_at);
 
 		return $criteria;
 	}
@@ -405,10 +405,10 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 	
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(EventLivePlayerDisclosurePeer::DATABASE_NAME);
+		$criteria = new Criteria(EventLivePlayerDisclosureEmailPeer::DATABASE_NAME);
 
-		$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $this->event_live_id);
-		$criteria->add(EventLivePlayerDisclosurePeer::PEOPLE_ID, $this->people_id);
+		$criteria->add(EventLivePlayerDisclosureEmailPeer::EVENT_LIVE_ID, $this->event_live_id);
+		$criteria->add(EventLivePlayerDisclosureEmailPeer::PEOPLE_ID, $this->people_id);
 
 		return $criteria;
 	}
@@ -463,7 +463,7 @@ abstract class BaseEventLivePlayerDisclosure extends BaseObject  implements Pers
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new EventLivePlayerDisclosurePeer();
+			self::$peer = new EventLivePlayerDisclosureEmailPeer();
 		}
 		return self::$peer;
 	}

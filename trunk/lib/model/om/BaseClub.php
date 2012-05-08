@@ -69,6 +69,10 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 
 	
+	protected $sms_credit = 0;
+
+
+	
 	protected $enabled;
 
 
@@ -123,6 +127,12 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 	
 	protected $lastClubSettingsCriteria = null;
+
+	
+	protected $collSmsList;
+
+	
+	protected $lastSmsCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -233,6 +243,13 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	{
 
 		return $this->visit_count;
+	}
+
+	
+	public function getSmsCredit()
+	{
+
+		return $this->sms_credit;
 	}
 
 	
@@ -522,6 +539,20 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setSmsCredit($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->sms_credit !== $v || $v === 0) {
+			$this->sms_credit = $v;
+			$this->modifiedColumns[] = ClubPeer::SMS_CREDIT;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -630,23 +661,25 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			$this->visit_count = $rs->getInt($startcol + 14);
 
-			$this->enabled = $rs->getBoolean($startcol + 15);
+			$this->sms_credit = $rs->getInt($startcol + 15);
 
-			$this->visible = $rs->getBoolean($startcol + 16);
+			$this->enabled = $rs->getBoolean($startcol + 16);
 
-			$this->deleted = $rs->getBoolean($startcol + 17);
+			$this->visible = $rs->getBoolean($startcol + 17);
 
-			$this->locked = $rs->getBoolean($startcol + 18);
+			$this->deleted = $rs->getBoolean($startcol + 18);
 
-			$this->created_at = $rs->getTimestamp($startcol + 19, null);
+			$this->locked = $rs->getBoolean($startcol + 19);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 20, null);
+			$this->created_at = $rs->getTimestamp($startcol + 20, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 21, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 21; 
+						return $startcol + 22; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Club object", $e);
 		}
@@ -773,6 +806,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collSmsList !== null) {
+				foreach($this->collSmsList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -862,6 +903,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collSmsList !== null) {
+					foreach($this->collSmsList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 
 			$this->alreadyInValidation = false;
 		}
@@ -926,21 +975,24 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				return $this->getVisitCount();
 				break;
 			case 15:
-				return $this->getEnabled();
+				return $this->getSmsCredit();
 				break;
 			case 16:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 17:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 18:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 19:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 20:
+				return $this->getCreatedAt();
+				break;
+			case 21:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -968,12 +1020,13 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 			$keys[12]=>$this->getPhoneNumber2(),
 			$keys[13]=>$this->getPhoneNumber3(),
 			$keys[14]=>$this->getVisitCount(),
-			$keys[15]=>$this->getEnabled(),
-			$keys[16]=>$this->getVisible(),
-			$keys[17]=>$this->getDeleted(),
-			$keys[18]=>$this->getLocked(),
-			$keys[19]=>$this->getCreatedAt(),
-			$keys[20]=>$this->getUpdatedAt(),
+			$keys[15]=>$this->getSmsCredit(),
+			$keys[16]=>$this->getEnabled(),
+			$keys[17]=>$this->getVisible(),
+			$keys[18]=>$this->getDeleted(),
+			$keys[19]=>$this->getLocked(),
+			$keys[20]=>$this->getCreatedAt(),
+			$keys[21]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1035,21 +1088,24 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				$this->setVisitCount($value);
 				break;
 			case 15:
-				$this->setEnabled($value);
+				$this->setSmsCredit($value);
 				break;
 			case 16:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 17:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 18:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 19:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 20:
+				$this->setCreatedAt($value);
+				break;
+			case 21:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1074,12 +1130,13 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[12], $arr)) $this->setPhoneNumber2($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setPhoneNumber3($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setVisitCount($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setEnabled($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setVisible($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setDeleted($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setLocked($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setCreatedAt($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setUpdatedAt($arr[$keys[20]]);
+		if (array_key_exists($keys[15], $arr)) $this->setSmsCredit($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setEnabled($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setVisible($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setDeleted($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setLocked($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setCreatedAt($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setUpdatedAt($arr[$keys[21]]);
 	}
 
 	
@@ -1102,6 +1159,7 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ClubPeer::PHONE_NUMBER_2)) $criteria->add(ClubPeer::PHONE_NUMBER_2, $this->phone_number_2);
 		if ($this->isColumnModified(ClubPeer::PHONE_NUMBER_3)) $criteria->add(ClubPeer::PHONE_NUMBER_3, $this->phone_number_3);
 		if ($this->isColumnModified(ClubPeer::VISIT_COUNT)) $criteria->add(ClubPeer::VISIT_COUNT, $this->visit_count);
+		if ($this->isColumnModified(ClubPeer::SMS_CREDIT)) $criteria->add(ClubPeer::SMS_CREDIT, $this->sms_credit);
 		if ($this->isColumnModified(ClubPeer::ENABLED)) $criteria->add(ClubPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(ClubPeer::VISIBLE)) $criteria->add(ClubPeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(ClubPeer::DELETED)) $criteria->add(ClubPeer::DELETED, $this->deleted);
@@ -1166,6 +1224,8 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 		$copyObj->setVisitCount($this->visit_count);
 
+		$copyObj->setSmsCredit($this->sms_credit);
+
 		$copyObj->setEnabled($this->enabled);
 
 		$copyObj->setVisible($this->visible);
@@ -1200,6 +1260,10 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			foreach($this->getClubSettingsList() as $relObj) {
 				$copyObj->addClubSettings($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getSmsList() as $relObj) {
+				$copyObj->addSms($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1779,6 +1843,111 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$this->lastClubSettingsCriteria = $criteria;
 
 		return $this->collClubSettingsList;
+	}
+
+	
+	public function initSmsList()
+	{
+		if ($this->collSmsList === null) {
+			$this->collSmsList = array();
+		}
+	}
+
+	
+	public function getSmsList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsList === null) {
+			if ($this->isNew()) {
+			   $this->collSmsList = array();
+			} else {
+
+				$criteria->add(SmsPeer::CLUB_ID, $this->getId());
+
+				SmsPeer::addSelectColumns($criteria);
+				$this->collSmsList = SmsPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(SmsPeer::CLUB_ID, $this->getId());
+
+				SmsPeer::addSelectColumns($criteria);
+				if (!isset($this->lastSmsCriteria) || !$this->lastSmsCriteria->equals($criteria)) {
+					$this->collSmsList = SmsPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastSmsCriteria = $criteria;
+		return $this->collSmsList;
+	}
+
+	
+	public function countSmsList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(SmsPeer::CLUB_ID, $this->getId());
+
+		return SmsPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addSms(Sms $l)
+	{
+		$this->collSmsList[] = $l;
+		$l->setClub($this);
+	}
+
+
+	
+	public function getSmsListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsList === null) {
+			if ($this->isNew()) {
+				$this->collSmsList = array();
+			} else {
+
+				$criteria->add(SmsPeer::CLUB_ID, $this->getId());
+
+				$this->collSmsList = SmsPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(SmsPeer::CLUB_ID, $this->getId());
+
+			if (!isset($this->lastSmsCriteria) || !$this->lastSmsCriteria->equals($criteria)) {
+				$this->collSmsList = SmsPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastSmsCriteria = $criteria;
+
+		return $this->collSmsList;
 	}
 
 } 

@@ -1,35 +1,56 @@
 <?php
 
 
-abstract class BaseEventLivePlayerDisclosurePeer {
+abstract class BaseSmsPeer {
 
 	
 	const DATABASE_NAME = 'propel';
 
 	
-	const TABLE_NAME = 'event_live_player_disclosure';
+	const TABLE_NAME = 'sms';
 
 	
-	const CLASS_DEFAULT = 'lib.model.EventLivePlayerDisclosure';
+	const CLASS_DEFAULT = 'lib.model.Sms';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 11;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 
 	
-	const EVENT_LIVE_ID = 'event_live_player_disclosure.EVENT_LIVE_ID';
+	const ID = 'sms.ID';
 
 	
-	const PEOPLE_ID = 'event_live_player_disclosure.PEOPLE_ID';
+	const CLUB_ID = 'sms.CLUB_ID';
 
 	
-	const EMAIL_LOG_ID = 'event_live_player_disclosure.EMAIL_LOG_ID';
+	const PEOPLE_ID = 'sms.PEOPLE_ID';
 
 	
-	const CREATED_AT = 'event_live_player_disclosure.CREATED_AT';
+	const TOKEN = 'sms.TOKEN';
+
+	
+	const TEXT_MESSAGE = 'sms.TEXT_MESSAGE';
+
+	
+	const TOTAL_MESSAGES = 'sms.TOTAL_MESSAGES';
+
+	
+	const SUCCESS_MESSAGES = 'sms.SUCCESS_MESSAGES';
+
+	
+	const ERROR_MESSAGES = 'sms.ERROR_MESSAGES';
+
+	
+	const CLASS_NAME = 'sms.CLASS_NAME';
+
+	
+	const OBJECT_ID = 'sms.OBJECT_ID';
+
+	
+	const CREATED_AT = 'sms.CREATED_AT';
 
 	
 	private static $phpNameMap = null;
@@ -37,32 +58,32 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventLiveId', 'PeopleId', 'EmailLogId', 'CreatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, EventLivePlayerDisclosurePeer::PEOPLE_ID, EventLivePlayerDisclosurePeer::EMAIL_LOG_ID, EventLivePlayerDisclosurePeer::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_live_id', 'people_id', 'email_log_id', 'created_at', ),
-		BasePeer::TYPE_ALIAS=>array ('EVENT_LIVE_ID'=>'', 'PEOPLE_ID'=>'', 'EMAIL_LOG_ID'=>'', 'CREATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'ClubId', 'PeopleId', 'Token', 'TextMessage', 'TotalMessages', 'SuccessMessages', 'ErrorMessages', 'ClassName', 'ObjectId', 'CreatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (SmsPeer::ID, SmsPeer::CLUB_ID, SmsPeer::PEOPLE_ID, SmsPeer::TOKEN, SmsPeer::TEXT_MESSAGE, SmsPeer::TOTAL_MESSAGES, SmsPeer::SUCCESS_MESSAGES, SmsPeer::ERROR_MESSAGES, SmsPeer::CLASS_NAME, SmsPeer::OBJECT_ID, SmsPeer::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'club_id', 'people_id', 'token', 'text_message', 'total_messages', 'success_messages', 'error_messages', 'class_name', 'object_id', 'created_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CLUB_ID'=>'', 'PEOPLE_ID'=>'', 'TOKEN'=>'', 'TEXT_MESSAGE'=>'', 'TOTAL_MESSAGES'=>'', 'SUCCESS_MESSAGES'=>'', 'ERROR_MESSAGES'=>'', 'CLASS_NAME'=>'', 'OBJECT_ID'=>'', 'CREATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventLiveId'=>0, 'PeopleId'=>1, 'EmailLogId'=>2, 'CreatedAt'=>3, ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePlayerDisclosurePeer::EVENT_LIVE_ID=>0, EventLivePlayerDisclosurePeer::PEOPLE_ID=>1, EventLivePlayerDisclosurePeer::EMAIL_LOG_ID=>2, EventLivePlayerDisclosurePeer::CREATED_AT=>3, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_live_id'=>0, 'people_id'=>1, 'email_log_id'=>2, 'created_at'=>3, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ClubId'=>1, 'PeopleId'=>2, 'Token'=>3, 'TextMessage'=>4, 'TotalMessages'=>5, 'SuccessMessages'=>6, 'ErrorMessages'=>7, 'ClassName'=>8, 'ObjectId'=>9, 'CreatedAt'=>10, ),
+		BasePeer::TYPE_COLNAME=>array (SmsPeer::ID=>0, SmsPeer::CLUB_ID=>1, SmsPeer::PEOPLE_ID=>2, SmsPeer::TOKEN=>3, SmsPeer::TEXT_MESSAGE=>4, SmsPeer::TOTAL_MESSAGES=>5, SmsPeer::SUCCESS_MESSAGES=>6, SmsPeer::ERROR_MESSAGES=>7, SmsPeer::CLASS_NAME=>8, SmsPeer::OBJECT_ID=>9, SmsPeer::CREATED_AT=>10, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'club_id'=>1, 'people_id'=>2, 'token'=>3, 'text_message'=>4, 'total_messages'=>5, 'success_messages'=>6, 'error_messages'=>7, 'class_name'=>8, 'object_id'=>9, 'created_at'=>10, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
 	public static function getMapBuilder()
 	{
-		include_once 'lib/model/map/EventLivePlayerDisclosureMapBuilder.php';
-		return BasePeer::getMapBuilder('lib.model.map.EventLivePlayerDisclosureMapBuilder');
+		include_once 'lib/model/map/SmsMapBuilder.php';
+		return BasePeer::getMapBuilder('lib.model.map.SmsMapBuilder');
 	}
 	
 	public static function getPhpNameMap()
 	{
 		if (self::$phpNameMap === null) {
-			$map = EventLivePlayerDisclosurePeer::getTableMap();
+			$map = SmsPeer::getTableMap();
 			$columns = $map->getColumns();
 			$nameMap = array();
 			foreach ($columns as $column) {
@@ -96,25 +117,39 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 	
 	public static function alias($alias, $column)
 	{
-		return str_replace(EventLivePlayerDisclosurePeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(SmsPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID);
+		$criteria->addSelectColumn(SmsPeer::ID);
 
-		$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::PEOPLE_ID);
+		$criteria->addSelectColumn(SmsPeer::CLUB_ID);
 
-		$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::EMAIL_LOG_ID);
+		$criteria->addSelectColumn(SmsPeer::PEOPLE_ID);
 
-		$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::CREATED_AT);
+		$criteria->addSelectColumn(SmsPeer::TOKEN);
+
+		$criteria->addSelectColumn(SmsPeer::TEXT_MESSAGE);
+
+		$criteria->addSelectColumn(SmsPeer::TOTAL_MESSAGES);
+
+		$criteria->addSelectColumn(SmsPeer::SUCCESS_MESSAGES);
+
+		$criteria->addSelectColumn(SmsPeer::ERROR_MESSAGES);
+
+		$criteria->addSelectColumn(SmsPeer::CLASS_NAME);
+
+		$criteria->addSelectColumn(SmsPeer::OBJECT_ID);
+
+		$criteria->addSelectColumn(SmsPeer::CREATED_AT);
 
 	}
 
-	const COUNT = 'COUNT(event_live_player_disclosure.EVENT_LIVE_ID)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT event_live_player_disclosure.EVENT_LIVE_ID)';
+	const COUNT = 'COUNT(sms.ID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT sms.ID)';
 
 	
 	public static function doCount(Criteria $criteria, $distinct = false, $con = null)
@@ -123,9 +158,9 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(SmsPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT);
+			$criteria->addSelectColumn(SmsPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -133,7 +168,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$rs = EventLivePlayerDisclosurePeer::doSelectRS($criteria, $con);
+		$rs = SmsPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -145,7 +180,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = EventLivePlayerDisclosurePeer::doSelect($critcopy, $con);
+		$objects = SmsPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -154,7 +189,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 	
 	public static function doSelect(Criteria $criteria, $con = null)
 	{
-		return EventLivePlayerDisclosurePeer::populateObjects(EventLivePlayerDisclosurePeer::doSelectRS($criteria, $con));
+		return SmsPeer::populateObjects(SmsPeer::doSelectRS($criteria, $con));
 	}
 	
 	public static function doSelectRS(Criteria $criteria, $con = null)
@@ -165,7 +200,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			EventLivePlayerDisclosurePeer::addSelectColumns($criteria);
+			SmsPeer::addSelectColumns($criteria);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -177,7 +212,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 	{
 		$results = array();
 	
-				$cls = EventLivePlayerDisclosurePeer::getOMClass();
+				$cls = SmsPeer::getOMClass();
 		$cls = Propel::import($cls);
 				while($rs->next()) {
 		
@@ -190,15 +225,15 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 	}
 
 	
-	public static function doCountJoinEventLive(Criteria $criteria, $distinct = false, $con = null)
+	public static function doCountJoinClub(Criteria $criteria, $distinct = false, $con = null)
 	{
 				$criteria = clone $criteria;
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(SmsPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT);
+			$criteria->addSelectColumn(SmsPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -206,9 +241,9 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, EventLivePeer::ID);
+		$criteria->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
 
-		$rs = EventLivePlayerDisclosurePeer::doSelectRS($criteria, $con);
+		$rs = SmsPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -224,9 +259,9 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(SmsPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT);
+			$criteria->addSelectColumn(SmsPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -234,9 +269,9 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(EventLivePlayerDisclosurePeer::PEOPLE_ID, PeoplePeer::ID);
+		$criteria->addJoin(SmsPeer::PEOPLE_ID, PeoplePeer::ID);
 
-		$rs = EventLivePlayerDisclosurePeer::doSelectRS($criteria, $con);
+		$rs = SmsPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -246,7 +281,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 
 	
-	public static function doSelectJoinEventLive(Criteria $c, $con = null)
+	public static function doSelectJoinClub(Criteria $c, $con = null)
 	{
 		$c = clone $c;
 
@@ -254,23 +289,23 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		EventLivePlayerDisclosurePeer::addSelectColumns($c);
-		$startcol = (EventLivePlayerDisclosurePeer::NUM_COLUMNS - EventLivePlayerDisclosurePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-		EventLivePeer::addSelectColumns($c);
+		SmsPeer::addSelectColumns($c);
+		$startcol = (SmsPeer::NUM_COLUMNS - SmsPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		ClubPeer::addSelectColumns($c);
 
-		$c->addJoin(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, EventLivePeer::ID);
+		$c->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while($rs->next()) {
 
-			$omClass = EventLivePlayerDisclosurePeer::getOMClass();
+			$omClass = SmsPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj1 = new $cls();
 			$obj1->hydrate($rs);
 
-			$omClass = EventLivePeer::getOMClass();
+			$omClass = ClubPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj2 = new $cls();
@@ -278,14 +313,14 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 			$newObject = true;
 			foreach($results as $temp_obj1) {
-				$temp_obj2 = $temp_obj1->getEventLive(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+				$temp_obj2 = $temp_obj1->getClub(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-										$temp_obj2->addEventLivePlayerDisclosure($obj1); 					break;
+										$temp_obj2->addSms($obj1); 					break;
 				}
 			}
 			if ($newObject) {
-				$obj2->initEventLivePlayerDisclosureList();
-				$obj2->addEventLivePlayerDisclosure($obj1); 			}
+				$obj2->initSmsList();
+				$obj2->addSms($obj1); 			}
 			$results[] = $obj1;
 		}
 		return $results;
@@ -301,17 +336,17 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		EventLivePlayerDisclosurePeer::addSelectColumns($c);
-		$startcol = (EventLivePlayerDisclosurePeer::NUM_COLUMNS - EventLivePlayerDisclosurePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		SmsPeer::addSelectColumns($c);
+		$startcol = (SmsPeer::NUM_COLUMNS - SmsPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 		PeoplePeer::addSelectColumns($c);
 
-		$c->addJoin(EventLivePlayerDisclosurePeer::PEOPLE_ID, PeoplePeer::ID);
+		$c->addJoin(SmsPeer::PEOPLE_ID, PeoplePeer::ID);
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while($rs->next()) {
 
-			$omClass = EventLivePlayerDisclosurePeer::getOMClass();
+			$omClass = SmsPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj1 = new $cls();
@@ -327,12 +362,12 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			foreach($results as $temp_obj1) {
 				$temp_obj2 = $temp_obj1->getPeople(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-										$temp_obj2->addEventLivePlayerDisclosure($obj1); 					break;
+										$temp_obj2->addSms($obj1); 					break;
 				}
 			}
 			if ($newObject) {
-				$obj2->initEventLivePlayerDisclosureList();
-				$obj2->addEventLivePlayerDisclosure($obj1); 			}
+				$obj2->initSmsList();
+				$obj2->addSms($obj1); 			}
 			$results[] = $obj1;
 		}
 		return $results;
@@ -346,9 +381,9 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(SmsPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT);
+			$criteria->addSelectColumn(SmsPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -356,11 +391,11 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, EventLivePeer::ID);
+		$criteria->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
 
-		$criteria->addJoin(EventLivePlayerDisclosurePeer::PEOPLE_ID, PeoplePeer::ID);
+		$criteria->addJoin(SmsPeer::PEOPLE_ID, PeoplePeer::ID);
 
-		$rs = EventLivePlayerDisclosurePeer::doSelectRS($criteria, $con);
+		$rs = SmsPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -378,25 +413,25 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		EventLivePlayerDisclosurePeer::addSelectColumns($c);
-		$startcol2 = (EventLivePlayerDisclosurePeer::NUM_COLUMNS - EventLivePlayerDisclosurePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		SmsPeer::addSelectColumns($c);
+		$startcol2 = (SmsPeer::NUM_COLUMNS - SmsPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 
-		EventLivePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + EventLivePeer::NUM_COLUMNS;
+		ClubPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + ClubPeer::NUM_COLUMNS;
 
 		PeoplePeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + PeoplePeer::NUM_COLUMNS;
 
-		$c->addJoin(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, EventLivePeer::ID);
+		$c->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
 
-		$c->addJoin(EventLivePlayerDisclosurePeer::PEOPLE_ID, PeoplePeer::ID);
+		$c->addJoin(SmsPeer::PEOPLE_ID, PeoplePeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while($rs->next()) {
 
-			$omClass = EventLivePlayerDisclosurePeer::getOMClass();
+			$omClass = SmsPeer::getOMClass();
 
 
 			$cls = Propel::import($omClass);
@@ -405,7 +440,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 
 					
-			$omClass = EventLivePeer::getOMClass();
+			$omClass = ClubPeer::getOMClass();
 
 
 			$cls = Propel::import($omClass);
@@ -415,15 +450,15 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getEventLive(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+				$temp_obj2 = $temp_obj1->getClub(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj2->addEventLivePlayerDisclosure($obj1); 					break;
+					$temp_obj2->addSms($obj1); 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj2->initEventLivePlayerDisclosureList();
-				$obj2->addEventLivePlayerDisclosure($obj1);
+				$obj2->initSmsList();
+				$obj2->addSms($obj1);
 			}
 
 
@@ -440,13 +475,13 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj3 = $temp_obj1->getPeople(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj3->addEventLivePlayerDisclosure($obj1); 					break;
+					$temp_obj3->addSms($obj1); 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj3->initEventLivePlayerDisclosureList();
-				$obj3->addEventLivePlayerDisclosure($obj1);
+				$obj3->initSmsList();
+				$obj3->addSms($obj1);
 			}
 
 			$results[] = $obj1;
@@ -456,15 +491,15 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 
 	
-	public static function doCountJoinAllExceptEventLive(Criteria $criteria, $distinct = false, $con = null)
+	public static function doCountJoinAllExceptClub(Criteria $criteria, $distinct = false, $con = null)
 	{
 				$criteria = clone $criteria;
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(SmsPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT);
+			$criteria->addSelectColumn(SmsPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -472,9 +507,9 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(EventLivePlayerDisclosurePeer::PEOPLE_ID, PeoplePeer::ID);
+		$criteria->addJoin(SmsPeer::PEOPLE_ID, PeoplePeer::ID);
 
-		$rs = EventLivePlayerDisclosurePeer::doSelectRS($criteria, $con);
+		$rs = SmsPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -490,9 +525,9 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(SmsPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(EventLivePlayerDisclosurePeer::COUNT);
+			$criteria->addSelectColumn(SmsPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -500,9 +535,9 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, EventLivePeer::ID);
+		$criteria->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
 
-		$rs = EventLivePlayerDisclosurePeer::doSelectRS($criteria, $con);
+		$rs = SmsPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -512,7 +547,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 
 	
-	public static function doSelectJoinAllExceptEventLive(Criteria $c, $con = null)
+	public static function doSelectJoinAllExceptClub(Criteria $c, $con = null)
 	{
 		$c = clone $c;
 
@@ -520,13 +555,13 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		EventLivePlayerDisclosurePeer::addSelectColumns($c);
-		$startcol2 = (EventLivePlayerDisclosurePeer::NUM_COLUMNS - EventLivePlayerDisclosurePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		SmsPeer::addSelectColumns($c);
+		$startcol2 = (SmsPeer::NUM_COLUMNS - SmsPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 
 		PeoplePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + PeoplePeer::NUM_COLUMNS;
 
-		$c->addJoin(EventLivePlayerDisclosurePeer::PEOPLE_ID, PeoplePeer::ID);
+		$c->addJoin(SmsPeer::PEOPLE_ID, PeoplePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -534,7 +569,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 		while($rs->next()) {
 
-			$omClass = EventLivePlayerDisclosurePeer::getOMClass();
+			$omClass = SmsPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj1 = new $cls();
@@ -552,14 +587,14 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj2 = $temp_obj1->getPeople(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj2->addEventLivePlayerDisclosure($obj1);
+					$temp_obj2->addSms($obj1);
 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj2->initEventLivePlayerDisclosureList();
-				$obj2->addEventLivePlayerDisclosure($obj1);
+				$obj2->initSmsList();
+				$obj2->addSms($obj1);
 			}
 
 			$results[] = $obj1;
@@ -577,13 +612,13 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		EventLivePlayerDisclosurePeer::addSelectColumns($c);
-		$startcol2 = (EventLivePlayerDisclosurePeer::NUM_COLUMNS - EventLivePlayerDisclosurePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		SmsPeer::addSelectColumns($c);
+		$startcol2 = (SmsPeer::NUM_COLUMNS - SmsPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 
-		EventLivePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + EventLivePeer::NUM_COLUMNS;
+		ClubPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + ClubPeer::NUM_COLUMNS;
 
-		$c->addJoin(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, EventLivePeer::ID);
+		$c->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -591,13 +626,13 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 		while($rs->next()) {
 
-			$omClass = EventLivePlayerDisclosurePeer::getOMClass();
+			$omClass = SmsPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj1 = new $cls();
 			$obj1->hydrate($rs);
 
-			$omClass = EventLivePeer::getOMClass();
+			$omClass = ClubPeer::getOMClass();
 
 
 			$cls = Propel::import($omClass);
@@ -607,16 +642,16 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getEventLive(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+				$temp_obj2 = $temp_obj1->getClub(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj2->addEventLivePlayerDisclosure($obj1);
+					$temp_obj2->addSms($obj1);
 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj2->initEventLivePlayerDisclosureList();
-				$obj2->addEventLivePlayerDisclosure($obj1);
+				$obj2->initSmsList();
+				$obj2->addSms($obj1);
 			}
 
 			$results[] = $obj1;
@@ -633,7 +668,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 	
 	public static function getOMClass()
 	{
-		return EventLivePlayerDisclosurePeer::CLASS_DEFAULT;
+		return SmsPeer::CLASS_DEFAULT;
 	}
 
 	
@@ -647,6 +682,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 			$criteria = clone $values; 		} else {
 			$criteria = $values->buildCriteria(); 		}
 
+		$criteria->remove(SmsPeer::ID); 
 
 				$criteria->setDbName(self::DATABASE_NAME);
 
@@ -673,11 +709,8 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 
-			$comparison = $criteria->getComparison(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID);
-			$selectCriteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $criteria->remove(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID), $comparison);
-
-			$comparison = $criteria->getComparison(EventLivePlayerDisclosurePeer::PEOPLE_ID);
-			$selectCriteria->add(EventLivePlayerDisclosurePeer::PEOPLE_ID, $criteria->remove(EventLivePlayerDisclosurePeer::PEOPLE_ID), $comparison);
+			$comparison = $criteria->getComparison(SmsPeer::ID);
+			$selectCriteria->add(SmsPeer::ID, $criteria->remove(SmsPeer::ID), $comparison);
 
 		} else { 			$criteria = $values->buildCriteria(); 			$selectCriteria = $values->buildPkeyCriteria(); 		}
 
@@ -694,7 +727,7 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 		}
 		$affectedRows = 0; 		try {
 									$con->begin();
-			$affectedRows += BasePeer::doDeleteAll(EventLivePlayerDisclosurePeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(SmsPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -707,29 +740,16 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 	 public static function doDelete($values, $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(EventLivePlayerDisclosurePeer::DATABASE_NAME);
+			$con = Propel::getConnection(SmsPeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
-			$criteria = clone $values; 		} elseif ($values instanceof EventLivePlayerDisclosure) {
+			$criteria = clone $values; 		} elseif ($values instanceof Sms) {
 
 			$criteria = $values->buildPkeyCriteria();
 		} else {
 						$criteria = new Criteria(self::DATABASE_NAME);
-												if(count($values) == count($values, COUNT_RECURSIVE))
-			{
-								$values = array($values);
-			}
-			$vals = array();
-			foreach($values as $value)
-			{
-
-				$vals[0][] = $value[0];
-				$vals[1][] = $value[1];
-			}
-
-			$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $vals[0], Criteria::IN);
-			$criteria->add(EventLivePlayerDisclosurePeer::PEOPLE_ID, $vals[1], Criteria::IN);
+			$criteria->add(SmsPeer::ID, (array) $values, Criteria::IN);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -748,13 +768,13 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 	}
 
 	
-	public static function doValidate(EventLivePlayerDisclosure $obj, $cols = null)
+	public static function doValidate(Sms $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(EventLivePlayerDisclosurePeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(EventLivePlayerDisclosurePeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(SmsPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(SmsPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -770,11 +790,11 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 
 		}
 
-		$res =  BasePeer::doValidate(EventLivePlayerDisclosurePeer::DATABASE_NAME, EventLivePlayerDisclosurePeer::TABLE_NAME, $columns);
+		$res =  BasePeer::doValidate(SmsPeer::DATABASE_NAME, SmsPeer::TABLE_NAME, $columns);
     if ($res !== true) {
         $request = sfContext::getInstance()->getRequest();
         foreach ($res as $failed) {
-            $col = EventLivePlayerDisclosurePeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
+            $col = SmsPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
             $request->setError($col, $failed->getMessage());
         }
     }
@@ -783,25 +803,49 @@ abstract class BaseEventLivePlayerDisclosurePeer {
 	}
 
 	
-	public static function retrieveByPK( $event_live_id, $people_id, $con = null) {
+	public static function retrieveByPK($pk, $con = null)
+	{
 		if ($con === null) {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
-		$criteria = new Criteria();
-		$criteria->add(EventLivePlayerDisclosurePeer::EVENT_LIVE_ID, $event_live_id);
-		$criteria->add(EventLivePlayerDisclosurePeer::PEOPLE_ID, $people_id);
-		$v = EventLivePlayerDisclosurePeer::doSelect($criteria, $con);
 
-		return !empty($v) ? $v[0] : null;
+		$criteria = new Criteria(SmsPeer::DATABASE_NAME);
+		$criteria->setNoFilter(true);
+
+		$criteria->add(SmsPeer::ID, $pk);
+
+
+		$v = SmsPeer::doSelect($criteria, $con);
+
+		return !empty($v) > 0 ? $v[0] : null;
 	}
+
+	
+	public static function retrieveByPKs($pks, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$objs = null;
+		if (empty($pks)) {
+			$objs = array();
+		} else {
+			$criteria = new Criteria();
+			$criteria->add(SmsPeer::ID, $pks, Criteria::IN);
+			$objs = SmsPeer::doSelect($criteria, $con);
+		}
+		return $objs;
+	}
+
 } 
 if (Propel::isInit()) {
 			try {
-		BaseEventLivePlayerDisclosurePeer::getMapBuilder();
+		BaseSmsPeer::getMapBuilder();
 	} catch (Exception $e) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
-			require_once 'lib/model/map/EventLivePlayerDisclosureMapBuilder.php';
-	Propel::registerMapBuilder('lib.model.map.EventLivePlayerDisclosureMapBuilder');
+			require_once 'lib/model/map/SmsMapBuilder.php';
+	Propel::registerMapBuilder('lib.model.map.SmsMapBuilder');
 }

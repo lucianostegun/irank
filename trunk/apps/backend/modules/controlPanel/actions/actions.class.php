@@ -30,6 +30,9 @@ class controlPanelActions extends sfActions
 	Config::saveConfig('decodeEmailFromUTF8', $request);
 
 	Config::saveConfig('htpasswdFilePath', $request);
+	
+	Config::saveConfig('smsCredit', $request);
+	Config::saveConfig('smsMobileProntoKey', $request);
 	exit;
   }
 }
