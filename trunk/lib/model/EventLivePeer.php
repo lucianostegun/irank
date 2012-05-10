@@ -38,9 +38,9 @@ class EventLivePeer extends BaseEventLivePeer
 		return preg_match('/^[0-9]*[,\.]?[0-9]*[kK]?$/', $stackChips);
 	}
 	
-	public static function validateEventDate($eventDate){
+	public static function validateEventDate($eventDate, $rankingLiveId=null){
 		
-		$rankingLiveId = MyTools::getRequestParameter('rankingLiveId');
+		$rankingLiveId = MyTools::getRequestParameter('rankingLiveId', $rankingLiveId);
 
 		$criteria = new Criteria();
 		$criteria->add( EventLivePeer::RANKING_LIVE_ID, $rankingLiveId );

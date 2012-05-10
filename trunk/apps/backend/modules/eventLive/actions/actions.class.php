@@ -408,49 +408,35 @@ class eventLiveActions extends sfActions
 	
   	exit;
   }
-
-  public function executeGetPhotoList($request){
-    
-  	sfConfig::set('sf_web_debug', false);
-	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('eventLive/include/photos', array('eventLiveId'=>$this->eventLiveId)));
-  }
-
-  public function executeGetResultPlayerList($request){
+  
+  public function executeUpdateEventDate($request){
     
     $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
     
-  	sfConfig::set('sf_web_debug', false);
-	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('eventLive/include/result', array('eventLiveObj'=>$eventLiveObj)));
-  }
-
-  public function executeGetStats($request){
-    
-    $rankingLiveId = $request->getParameter('rankingLiveId');
-    $eventDate     = $request->getParameter('eventDate');
-    
-    if( !$rankingLiveId | !$eventDate || !Validate::validateDate($eventDate) )
-    	throw new Exception('Parâmetros insuficientes ou inválidos!');
+    if( !$eventLiveObj->isMyEvent() ){
     	
-    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
-    $eventLiveObj->setRankingLiveId($rankingLiveId);
-    $eventLiveObj->setEventDateTime(Util::formatDate($eventDate).' '.date('H:i:s'));
-    
-    $infoList = $eventLiveObj->getStats(true);
-    $infoList['balance'] = $eventLiveObj->getBalanceStats();
-    
-    echo Util::parseInfo($infoList);
-    exit;
-  }
+	    $username = $this->getUser()->getAttribute('username');
 
-  public function executeGetTabContent($request){
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou editar a data do evento <b>('.$eventLiveObj->getId().') '.$eventLiveObj->toString().'</b>.', 'EventLive', array(), Log::LOG_CRITICAL);
+    	throw new Exception('Você não tem permissão para editar as informações deste evento!');
+    }
     
-    $tabName      = $request->getParameter('tabName');
-    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+    try{
+	    if( $eventLiveObj->isPastDate() && !$eventLiveObj->isEditable() )
+		    throw new Exception('Este evento não pode mais ser editado!');
+	
+		$eventDate = $request->getParameter('eventDate');
+	    
+	    if( !EventLivePeer::validateEventDate($eventDate, $eventLiveObj->getRankingLiveId()) )
+		    throw new Exception('Esta data não pode mais alocar eventos pois já possui eventos com resultados salvos!');
+		
+		$eventLiveObj->setEventDate(Util::formatDate($eventDate));
+		$eventLiveObj->save();
+    }catch(Exception $e){
+    	
+    	Util::forceError($e->getMessage());
+    }
     
-  	sfConfig::set('sf_web_debug', false);
-	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('eventLive/tab/'.$tabName, array('eventLiveObj'=>$eventLiveObj)));
+	exit;
   }
 }
