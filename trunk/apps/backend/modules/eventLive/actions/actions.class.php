@@ -443,4 +443,14 @@ class eventLiveActions extends sfActions
     echo Util::parseInfo($infoList);
     exit;
   }
+
+  public function executeGetTabContent($request){
+    
+    $tabName      = $request->getParameter('tabName');
+    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+    
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('eventLive/tab/'.$tabName, array('eventLiveObj'=>$eventLiveObj)));
+  }
 }

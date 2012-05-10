@@ -1960,3 +1960,33 @@ margin: 0 5px;
 
 	display: 	none;
 }
+
+.tabIndicator {
+
+	margin-top: 	50px;
+	font-size: 		18px;
+	font-weight: 	bold;
+	color: 			#505050;
+	text-shadow: 	#FFFFFF 1px 1px;
+	text-align: 	center;
+}
+
+.tabIndicator span {
+
+	position: 		relative;
+	top: 			-10px;
+	left: 			10px;
+}
+
+.tabContentError {
+
+	margin-top: 	50px;
+	font-size: 		18px;
+	font-weight: 	bold;
+	color: 			#505050;
+	text-shadow: 	#FFFFFF 1px 1px;
+	text-align: 	center;
+	position: 		relative;
+	top: 			-10px;
+	left: 			10px;
+}

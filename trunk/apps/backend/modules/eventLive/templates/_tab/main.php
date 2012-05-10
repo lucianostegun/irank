@@ -19,8 +19,7 @@
 			echo input_hidden_tag('rankingLiveId', $rankingLiveId, array('id'=>'eventLiveRankingLiveId'));
 	}
 	
-	if( $savedResult )
-		echo input_hidden_tag('eventDate', $eventLiveObj->getEventDate('d/m/Y'));
+	echo input_hidden_tag(($savedResult?'eventDate':'eventDateTmp'), $eventLiveObj->getEventDate('d/m/Y'), array('id'=>'eventLiveEventDateTmp'));
 ?>
 	<?php if( $iRankAdmin ): ?>
 	<div class="formRow">

@@ -38,7 +38,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
     <div class="sidebarSep mt0"></div>
     
     <!-- Search widget -->
-    <form action="" class="sidebarSearch" style="display: none">
+    <form action="" class="sidebarSearch">
 
         <input type="text" name="search" placeholder="pesquisa rápida..." id="ac" />
         <input type="submit" value="" />

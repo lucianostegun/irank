@@ -31,11 +31,11 @@
 			
 			$recordCount++;
 	?>
-	<tr onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" class="<?php echo $className ?>">
-		<td onclick="<?php echo $onclick ?>" align="left"><?php echo $eventLiveObj->getEventName() ?></td>
-		<td onclick="<?php echo $onclick ?>" align="center"><?php echo $eventLiveObj->getEventDate('d/m/Y').' '.$eventLiveObj->getStartTime('H:i') ?></td>
-		<td onclick="<?php echo $onclick ?>" align="left"><?php echo $eventLiveObj->getEventPlace() ?></td>
-		<td onclick="<?php echo $onclick ?>" align="center"><?php echo $eventLiveObj->getPlayers() ?></td>
+	<tr onclick="<?php echo $onclick ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" class="<?php echo $className ?>">
+		<td class="textL"><?php echo $eventLiveObj->getEventName() ?></td>
+		<td class="textC"><?php echo $eventLiveObj->getEventDate('d/m/Y').' '.$eventLiveObj->getStartTime('H:i') ?></td>
+		<td class="textL"><?php echo $eventLiveObj->getEventPlace() ?></td>
+		<td class="textC"><?php echo $eventLiveObj->getPlayers() ?></td>
 	</tr>
 	<?php endforeach; ?>
 	<?php if($recordCount==0): ?>

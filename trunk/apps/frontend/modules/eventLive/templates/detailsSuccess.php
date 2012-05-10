@@ -36,7 +36,7 @@
 <div class="eventDetailsArea" align="center">
 	<table cellspacing="0" cellpadding="0" width="100%" class="eventDetails">
 		<tr>
-			<td rowspan="5" class="logo"><?php echo image_tag($fileNameLogo) ?></td>
+			<td rowspan="5" class="logo"><?php echo image_tag($fileNameLogo, array('width'=>90)) ?></td>
 		</tr>
 		<tr>
 			<th valign="top"><h1><?php echo $eventLiveObj->getEventName() ?></h1></th>

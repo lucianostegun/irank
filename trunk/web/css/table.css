@@ -20,6 +20,23 @@
 	text-shadow: 	white -1px 1px;
 }
 
+.gridTable .header th a {
+	
+	color: 	#333333
+}
+
+.gridTable .header th a:hover {
+	
+	text-decoration: 	none;
+	color: 				#C91E1E
+}
+
+.gridTable .header th img {
+	
+	position: 	relative;
+	left: 		3px;
+}
+
 .gridTable .header th.first {
 
 	border-left: 	none

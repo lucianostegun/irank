@@ -12,7 +12,7 @@
         
         <div class="tab_container">
             <div id="tab1" class="tab_content np">
-                <table cellpadding="0" cellspacing="0" width="100%" class="sTable">
+                <table cellpadding="0" cellspacing="0" width="100%" class="display sTable">
                     <thead>
                         <tr>
 							<td widtd="16"></td> 
@@ -82,7 +82,7 @@
                 </table>
             </div>
             <div id="tab2" class="tab_content np">
-                <table cellpadding="0" cellspacing="0" width="100%" class="sTable">
+                <table cellpadding="0" cellspacing="0" width="100%" class="display sTable">
                     <thead>
                         <tr>
 							<td widtd="16"></td> 
