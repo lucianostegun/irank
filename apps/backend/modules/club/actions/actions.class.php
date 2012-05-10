@@ -235,12 +235,16 @@ class clubActions extends sfActions
 	
 	Util::getHelper('Url');
 	
-	foreach($eventLiveObjList as $eventLiveObj){
+	foreach($eventLiveObjList as $key=>$eventLiveObj){
 		
-		$event = array('title'=>$eventLiveObj->toString(), 
+		$draggable = ($eventLiveObj->isEditable() && !$eventLiveObj->getSavedResult());
+		
+		$event = array('id'=>$eventLiveObj->getId(), 
+					   'title'=>$eventLiveObj->toString(), 
+					   'draggable'=>$draggable, 
 					   'start'=>date('r', $eventLiveObj->getEventDateTime(null)), 
 					   'allDay'=>false, 
-					   'color'=>'#d57656', 
+					   'color'=>($draggable?'#609dd5':'#d57656'), 
 					   'url'=>url_for('eventLive/edit?id='.$eventLiveObj->getId()));
 		$eventList[] = $event;
 	}

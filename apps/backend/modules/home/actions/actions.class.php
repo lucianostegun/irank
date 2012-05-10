@@ -11,7 +11,7 @@ class homeActions extends sfActions
 {
 
   public function preExecute(){
-  	
+
   	$this->pathList = array('Resumo geral'=>'home/index');
   }
   

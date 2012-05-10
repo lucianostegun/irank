@@ -1,25 +1,3 @@
-CREATE OR REPLACE FUNCTION has_previous_pending_results(eventLiveId INTEGER) RETURNS BOOLEAN AS '
-DECLARE
-    hasPendingResults BOOLEAN;
-BEGIN
-
-    SELECT
-        (COUNT(1) > 0) INTO hasPendingResults
-    FROM
-        event_live
-    WHERE
-        enabled
-        AND visible
-        AND NOT deleted
-        AND NOT saved_result
-        AND event_date_time < (SELECT event_date_time FROM event_live WHERE id = eventLiveId)
-        AND id <> eventLiveId;
-
-    RETURN hasPendingResults;
-
-END'
-LANGUAGE 'plpgsql';
-
 CREATE SEQUENCE settings_seq;
 CREATE TABLE settings (
     id INTEGER NOT NULL DEFAULT nextval('settings_seq'::regclass) PRIMARY KEY,
