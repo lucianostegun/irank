@@ -25,6 +25,8 @@ class EventLivePeer extends BaseEventLivePeer
 		if( $clubId )
 			$criteria->add( EventLivePeer::CLUB_ID, $clubId );
 		
+		$criteria->addJoin( EventLivePeer::CLUB_ID, ClubPeer::ID, Criteria::INNER_JOIN );
+		
 		$criteria->addDescendingOrderByColumn( EventLivePeer::EVENT_DATE );
 		$criteria->addAscendingOrderByColumn( EventLivePeer::START_TIME );
 		
@@ -38,17 +40,17 @@ class EventLivePeer extends BaseEventLivePeer
 	
 	public static function validateEventDate($eventDate){
 		
-		$rankingId = MyTools::getRequestParameter('rankingId');
+		$rankingLiveId = MyTools::getRequestParameter('rankingLiveId');
 
 		$criteria = new Criteria();
-		$criteria->add( EventPeer::RANKING_ID, $rankingId );
-		$criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate), Criteria::GREATER_THAN );
-		$criteria->add( EventPeer::SAVED_RESULT, true );
-		$criteria->add( EventPeer::ENABLED, true );
-		$criteria->add( EventPeer::VISIBLE, true );
-		$criteria->add( EventPeer::DELETED, false );
-		$eventCount = EventPeer::doCount($criteria);
+		$criteria->add( EventLivePeer::RANKING_LIVE_ID, $rankingLiveId );
+		$criteria->add( EventLivePeer::EVENT_DATE, Util::formatDate($eventDate), Criteria::GREATER_THAN );
+		$criteria->add( EventLivePeer::SAVED_RESULT, true );
+		$criteria->add( EventLivePeer::ENABLED, true );
+		$criteria->add( EventLivePeer::VISIBLE, true );
+		$criteria->add( EventLivePeer::DELETED, false );
+		$eventLiveCount = EventLivePeer::doCount($criteria);
 
-		return ($eventCount==0);
+		return ($eventLiveCount==0);
 	}
 }

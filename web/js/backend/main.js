@@ -144,3 +144,35 @@ function doGetNew(){
 	
 	location.href = _webRoot+'/'+getModuleName()+'/new';
 }
+
+function getTabIndicator(){
+	
+	var html = '<div class="tabIndicator">';
+	html += '<img src="'+_imageRoot+'/backend/loaders/loader9.gif" /> <span class="mt10">Carregando informações, por favor aguarde...</span>';
+	html += '</div>';
+	
+	return html;
+}
+
+function loadTabContent(tabId, urlAjax){
+	
+	if( $('#'+tabId).hasClass('loaded') )
+		return;
+	
+	var successFunc = function(content){
+		
+		$('#'+tabId).html(content);
+		$('#'+tabId).addClass('loaded');
+	}
+
+	var failureFunc = function(t){
+		
+		$('#'+tabId).html('<div class="tabContentError">Não foi possível carregar as informações da aba selecionada!\nPor favor, tente novamente.</div>');
+		
+		if( isDebug() )
+			debug(t.responseText);
+	}
+	
+	urlAjax = _webRoot+urlAjax;
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}

@@ -147,7 +147,7 @@ tr.even.gradeAlert td.sorting_1 { background-color: #e5e5e5; }
 tr.even.gradeAlert td.sorting_2 { background-color: #e2ffe2; }
 tr.even.gradeAlert td.sorting_3 { background-color: #e2ffe2; }
 
-table.display tr.gradeA:hover,  tr.gradeA:hover td.sorting_1, tr.gradeA:hover td.sorting_2, tr.gradeA:hover td.sorting_3,
+table.display tr.gradeA:hover, tr.gradeA:hover td.sorting_1, tr.gradeA:hover td.sorting_2, tr.gradeA:hover td.sorting_3,
 table.display tr.gradeAlert:hover,  tr.gradeAlert:hover td.sorting_1, tr.gradeAlert:hover td.sorting_2, tr.gradeAlert:hover td.sorting_3 { 
 	
 	background-color: #f8c05d;
@@ -156,7 +156,7 @@ table.display tr.gradeAlert:hover,  tr.gradeAlert:hover td.sorting_1, tr.gradeAl
 table.display tr.gradeA img {
 
 	position: relative;
-	top: 1px;
+	top: 0px;
 }
 
 tr.odd.gradeC td.sorting_1 { background-color: #c4c4ff; }

@@ -103,6 +103,7 @@ class EventLive extends BaseEventLive
 		$this->setAllowedRebuys($allowedRebuys);
 		$this->setAllowedAddons($allowedAddons);
 		$this->setIsIlimitedRebuys(($isIlimitedRebuys?true:false));
+		
 		$this->setDescription($description);
 		$this->setComments(($comments?$comments:null));
 		
@@ -221,7 +222,7 @@ class EventLive extends BaseEventLive
 			
 			$rankingLiveObj = $this->getRankingLive();
 				
-			if( is_object($rankingLiveObj) ){
+			if( $this->getRankingLiveId() && is_object($rankingLiveObj) ){
 				
 				/**
 				 * Reimporta todos os jogadores que ainda não fazem parte do ranking,
@@ -505,7 +506,7 @@ class EventLive extends BaseEventLive
 		
 		$description = parent::getDescription();
 		
-		if( $convertTags ){
+		if( $convertTags && !is_null($this->getRankingLiveId()) ){
 			
 			$description = preg_replace('/<descri[çc]+[ã]+o ?do ?ranking>/i', $this->getRankingLive()->getDescription(), $description);
 			$description = preg_replace('/[\n]/i', '<br/>', $description);
@@ -544,11 +545,11 @@ class EventLive extends BaseEventLive
 		$entranceFee = str_replace(',00', '', $entranceFee);
 
 		$buyin = Util::formatFloat($buyin, true);
-		$buyin = str_replace(',00', '', $buyin);
+//		$buyin = str_replace(',00', '', $buyin);
 		
 		$buyinInfo = '';
 		$buyinInfo = ($buyin?$buyin.($entranceFee?'+':''):'');
-		$buyinInfo = $buyinInfo.($entranceFee?Util::formatFloat($entranceFee, true):'');
+		$buyinInfo = $buyinInfo.($entranceFee?$entranceFee:'');
 		
 		return $buyinInfo;
 	}
@@ -737,6 +738,10 @@ class EventLive extends BaseEventLive
 	
 	public function hasPreviousPendingResult(){
 		
+		// Se não possui ranking não tem evento para comparar resultados pendentes
+		if( !$this->getRankingLiveId() )
+			return false;
+
 		return Util::executeOne('SELECT has_previous_pending_results('.$this->getId().')', 'boolean');
 	}
 
@@ -847,6 +852,18 @@ class EventLive extends BaseEventLive
 	public function getDisclosureEmailSubject(){
 		
 	  	return 'Notificação de evento iRank / '.$this->getClub()->toString();		
+	}
+	
+	public function getFileNameLogo(){
+		
+		$fileNameLogo = $this->getRankingLive()->getFileNameLogo();
+	
+		if( $fileNameLogo=='noImage.png' )
+			$fileNameLogo = 'club/original/'.$this->getClub()->getFileNameLogo();
+		else
+			$fileNameLogo = 'ranking/'.$fileNameLogo;
+		
+		return $fileNameLogo;
 	}
 	
 	public function getInfo(){

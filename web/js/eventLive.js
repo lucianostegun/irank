@@ -10,15 +10,17 @@ function showEventLiveTab(element){
 
 	currentContentDiv.removeClassName('active');
 	currentActiveTab.removeClassName('active');
-
+	
 	element.addClassName('active');
 	$(divId+'Content').addClassName('active');
 }
 
 function loadEventLiveTab(element, eventLiveId){
 	
-	if((/ loaded/).test(element.className) )
+	if( element.hasClassName('loaded') )
 		return;
+	
+	eventLiveId = (eventLiveId?eventLiveId:'');
 	
 	var tabId = element.id.replace('eventLive', '');
 	
@@ -28,8 +30,8 @@ function loadEventLiveTab(element, eventLiveId){
 		
 		Lightbox = new Lightbox();
 	}
-	
-	var urlAjax = _webRoot+'/eventLive/getTabContent/tabId/'+tabId+'/eventLiveId/'+eventLiveId
+
+	var urlAjax = _webRoot+'/eventLive/getTabContent/tabId/'+tabId+'/eventLiveId/'+eventLiveId;
 	new Ajax.Updater('eventLive'+tabId+'Content', urlAjax, {asynchronous:true, evalScripts:false, onComplete:completeFunc});
 }
 
@@ -94,4 +96,27 @@ function confirmEventLivePresence(eventLiveId){
 	
 	var urlAjax = _webRoot+'/eventLive/togglePresence/eventLiveId/'+eventLiveId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});	
+}
+
+function sortDataTable(sortField, sortDesc){
+
+	showIndicator();
+	
+	var successFunc = function(t){
+		
+		hideIndicator();
+		$('eventLiveTableContent').innerHTML = t.responseText;
+	}
+
+	var failureFunc = function(t){
+		
+		hideIndicator();
+		
+		alert('Não foi possível carregar as informações!\nPor favor, tente novamente.');
+		if( isDebug() )
+			debugAdd(t.responseText);
+	}
+	
+	var urlAjax = _webRoot+'/eventLive/getTabContent/tabId/table/sortField/'+sortField+'/sortDesc/'+(sortDesc?'1':'0');
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }

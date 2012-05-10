@@ -60,6 +60,7 @@ function doDeleteEventLive(){
 function handleSuccessEventLive(content){
 
 	clearFormFieldErrors();
+	clearFormFieldErrors('eventLiveResult');
 	showFormStatusSuccess();
 	
 	$('#mainDisclosureTab').show();
@@ -73,6 +74,7 @@ function handleSuccessEventLive(content){
 function handleFailureEventLive(content){
 	
 	handleFormFieldError(content, 'eventLive');
+	handleFormFieldError(content, 'eventLiveResult');
 }
 
 function handleSuccessEventLiveResult(content){
@@ -89,8 +91,12 @@ function handleSuccessEventLiveResult(content){
 		if( $('#pendingResultWarning').is('visible') )
 			$('#pendingResultWarning').click();
 		
-		if( !$("#eventLiveEventDate").attr('readOnly') )
+		if( !$("#eventLiveEventDate").attr('readOnly') ){
+			
 			$("#eventLiveEventDate").attr('disabled', 'disabled');
+			$("#eventLiveEventDate").attr('name', 'eventDateOld');
+			$("#eventLiveEventDateTmp").attr('name', 'eventDate');
+		}
 		
 		$("#playerIncluderRow").hide();
 		$(".playerRemoveColumn").hide();
@@ -113,7 +119,7 @@ function handleFailureEventLiveResult(content){
 		if( isDebug() )
 			debug(content);
 	}else{
-		
+
 		handleFormFieldError(content, 'eventLiveResult');
 	}
 }

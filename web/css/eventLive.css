@@ -7,7 +7,18 @@
     border-bottom: 	1px solid #C0C0C0;
 }
 
-.eventDetailsArea .separator {
+.eventDetailsArea.index {
+
+    background: 	-moz-linear-gradient(top, #FFFFFF, #f9f9f9);
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#f9f9f9));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#f9f9f9', GradientType=0);
+    min-height: 	50px;
+    border-bottom: 	1px solid #C0C0C0;
+    border-bottom: 	none;
+}
+
+.eventDetailsArea .separator,
+.eventDetailsList .separator {
 
 	clear: 			both;
 	width: 			100%;
@@ -76,7 +87,8 @@
 }
 
 
-.eventDetailsArea .channel td {
+.eventDetailsArea .channel td,
+.eventDetailsList .channel td {
 
 	clear: 				both;
 	border-left: 		1px solid #D0D0D0;
@@ -94,27 +106,32 @@
 	cursor: 			pointer;
 }
 
-.eventDetailsArea .channel td.hover {
+.eventDetailsArea .channel td.hover,
+.eventDetailsList .channel td.hover {
 
 	color: 	#C91E1E;
 }
 
-.eventDetailsArea .channel .eventLiveTab.first {
+.eventDetailsArea .channel .eventLiveTab.first,
+.eventDetailsList .channel .eventLiveTab.first {
 
 	border-left: 	none;	
 }
 
-.eventDetailsArea .channel .eventLiveTab.last {
+.eventDetailsArea .channel .eventLiveTab.last,
+.eventDetailsList .channel .eventLiveTab.last {
 
 	border-right: 	none;	
 }
 
-.eventDetailsArea .channel .eventLiveTab.active {
+.eventDetailsArea .channel .eventLiveTab.active,
+.eventDetailsList .channel .eventLiveTab.active {
 
 	color: 		#303030;	
 }
 
-.eventDetailsArea .eventLiveTabContent {
+.eventDetailsArea .eventLiveTabContent,
+.eventDetailsList .eventLiveTabContent {
 	
 	display: 		none;
 	font-size: 		12px;
@@ -122,17 +139,20 @@
 	text-shadow: 	white 1px 1px;	
 }
 
-.eventDetailsArea .eventLiveTabContent.active {
+.eventDetailsArea .eventLiveTabContent.active,
+.eventLiveTabContent.active {
 	
 	display: 		block;	
 }
 
-.eventDetailsArea #eventLiveInfoContent {
+.eventDetailsArea #eventLiveInfoContent,
+.eventDetailsList #eventLiveInfoContent {
 	
 	margin: 		25px;
 }
 
-.eventDetailsArea #eventLiveEventsContent {
+.eventDetailsArea #eventLiveEventsContent,
+.eventDetailsList #eventLiveEventsContent {
 	
 	margin: 		0px;
 }
@@ -141,6 +161,11 @@
 #eventLiveList {
 
 	padding-top: 	30px;
+}
+
+.eventDetailsList #eventLiveList {
+
+	padding-top: 	10px;
 }
 
 #eventLiveList .event {

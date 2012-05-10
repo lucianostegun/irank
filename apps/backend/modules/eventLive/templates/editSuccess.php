@@ -21,7 +21,7 @@
 			<li id="mainResultTab"><a href="#tab3" onclick="return activeResultTab()">Resultado</a></li>
 			<li><a href="#tab4">Fotos</a></li>
 			<li><a href="#tab5">Opções</a></li>
-			<li class="<?php echo ($eventLiveObj->getIsNew()?'hidden':'') ?>" id="mainDisclosureTab"><a href="#tab6">Divulgação</a></li>
+			<li class="<?php echo ($eventLiveObj->getIsNew()?'hidden':'') ?>" onclick="loadTabContent('tab6', '/eventLive/getTabContent/tabName/disclosure/eventLiveId/<?php echo $eventLiveObj->getId() ?>')" id="mainDisclosureTab"><a href="#tab6">Divulgação</a></li>
 			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#eventLiveForm").submit()')); ?>
 		</ul>
 		<div class="tab_container">
@@ -41,7 +41,7 @@
 			<div id="tab2" class="tab_content"><?php include_partial('eventLive/tab/players', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 			<div id="tab3" class="tab_content"><?php include_partial('eventLive/tab/result', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 			<div id="tab4" class="tab_content"><?php include_partial('eventLive/tab/photos', array('eventLiveId'=>$eventLiveObj->getId())) ?></div>
-			<div id="tab6" class="tab_content"><?php include_partial('eventLive/tab/disclosure', array('eventLiveObj'=>$eventLiveObj)) ?></div>
+			<div id="tab6" class="tab_content"><?php include_partial('home/include/tabLoading') ?></div>
 		</div>
 	</div>
 </div>
