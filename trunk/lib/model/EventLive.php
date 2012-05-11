@@ -888,4 +888,28 @@ class EventLive extends BaseEventLive
 		
 		return $infoList;
 	}
+	
+	public function getTwitterStatus(){
+		
+		$twitterStatus = $genericObj->getSettings('twitterTemplate');
+		
+		$twitterStatus = str_replace('<eventName>',     $this->getEventName(), 					$twitterStatus);
+		$twitterStatus = str_replace('<eventDateTime>', $this->getEventDateTime('d/m/Y H:i'), 	$twitterStatus);
+		$twitterStatus = str_replace('<weekDay>',       Util::getWeekDay($this->getEventDateTime('d/m/Y')), $twitterStatus);
+		$twitterStatus = str_replace('<clubName>',      $this->getClub()->toString(), 			$twitterStatus);
+		$twitterStatus = str_replace('<clubLocation>',  $this->getClub()->getLocation(), 		$twitterStatus);
+		$twitterStatus = str_replace('<allowedRebuys>', $this->getAllowedRebuys(), 				$twitterStatus);
+		$twitterStatus = str_replace('<allowedAddons>', $this->getAllowedAddons(), 				$twitterStatus);
+		$twitterStatus = str_replace('<isFreeroll>',    $this->getIsFreeroll(), 				$twitterStatus);
+		$twitterStatus = str_replace('<rakePercent>',   $this->getRakePercent(), 				$twitterStatus);
+		$twitterStatus = str_replace('<entranceFee>',   $this->getEntranceFee(), 				$twitterStatus);
+		$twitterStatus = str_replace('<buyin>',         $this->getBuyin(), 						$twitterStatus);
+		$twitterStatus = str_replace('<blindTime>',     $this->getBlindTime('H:i'), 			$twitterStatus);
+		$twitterStatus = str_replace('<stackChips>',    $this->getStackChips(), 				$twitterStatus);
+		$twitterStatus = str_replace('<players>',       $this->getPlayers(), 					$twitterStatus);
+		$twitterStatus = str_replace('<savedResult>',   $this->getSavedResult(), 				$twitterStatus);
+		$twitterStatus = str_replace('<eventUrl>',   	'Em http://'.MyTools::getRequest()->getHost().'/index.php/eventLive/details/eventLiveId/'.$this->getId(), $twitterStatus);
+		
+		return $twitterStatus;
+	}
 }
