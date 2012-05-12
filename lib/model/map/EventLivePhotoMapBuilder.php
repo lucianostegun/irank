@@ -36,9 +36,9 @@ class EventLivePhotoMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignKey('EVENT_LIVE_ID', 'EventLiveId', 'int', CreoleTypes::INTEGER, 'event_live', 'ID', true, null);
+		$tMap->addForeignKey('EVENT_LIVE_ID', 'EventLiveId', 'int', CreoleTypes::INTEGER, 'event_live', 'ID', false, null);
 
-		$tMap->addForeignKey('FILE_ID', 'FileId', 'int', CreoleTypes::INTEGER, 'file', 'ID', true, null);
+		$tMap->addForeignKey('FILE_ID', 'FileId', 'int', CreoleTypes::INTEGER, 'file', 'ID', false, null);
 
 		$tMap->addColumn('WIDTH', 'Width', 'int', CreoleTypes::INTEGER, false, null);
 

@@ -30,7 +30,7 @@
 	<div class="horControlT" style="height: 37px">
     	<ul>
             <?php
-            	if( array_key_exists('new', $toolbarList) || in_array('new', $toolbarList) )
+            	if( in_array('new', $toolbarList) )
             		echo '<li>'.link_to(image_tag('backend/toolbar/new').'<span>Novo</span>', '#doGetNew()').'</li>';
             	
             	if( array_key_exists('save', $toolbarList) || in_array('save', $toolbarList) )
@@ -41,6 +41,9 @@
             		$executeAction = array_key_exists('delete', $toolbarList)?$toolbarList['delete']:'#doDeleteMain()';
 					echo '<li>'.link_to(image_tag('backend/toolbar/delete').'<span>Excluir</span>', $executeAction).'</li>';
             	}
+            	
+//            	foreach($toolbarList as $toolbar)
+//            		echo '<li>'.link_to(image_tag('backend/toolbar/'.$toolbar['image']).'<span>'.$toolbar['label'].'</span>', $toolbar['url']).'</li>';
 			?>
         </ul>
     </div>

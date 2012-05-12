@@ -54,7 +54,9 @@ class Settings extends BaseSettings
 	
 	public static function getValue($tagName){
 		
-		if( $settingsValue = MyTools::getAttribute('iRankAdminSettings-'.$tagName, null, 'iRankSettings') )
+		$settingsValue = MyTools::getAttribute('iRankAdminSettings-'.$tagName, null, 'iRankSettings');
+		
+		if( $settingsValue )
 			return $settingsValue;
 		
   		if( $clubId = MyTools::getAttribute('clubId') )

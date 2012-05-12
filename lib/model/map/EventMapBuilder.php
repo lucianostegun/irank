@@ -36,11 +36,11 @@ class EventMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, 'ranking', 'ID', true, null);
+		$tMap->addForeignKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, 'ranking', 'ID', false, null);
 
 		$tMap->addColumn('EVENT_NAME', 'EventName', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addForeignKey('RANKING_PLACE_ID', 'RankingPlaceId', 'int', CreoleTypes::INTEGER, 'ranking_place', 'ID', true, null);
+		$tMap->addForeignKey('RANKING_PLACE_ID', 'RankingPlaceId', 'int', CreoleTypes::INTEGER, 'ranking_place', 'ID', false, null);
 
 		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::NUMERIC, false, 10);
 

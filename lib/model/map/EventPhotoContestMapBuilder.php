@@ -36,11 +36,11 @@ class EventPhotoContestMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignKey('EVENT_PHOTO_ID_LEFT', 'EventPhotoIdLeft', 'int', CreoleTypes::INTEGER, 'event_photo', 'ID', true, null);
+		$tMap->addForeignKey('EVENT_PHOTO_ID_LEFT', 'EventPhotoIdLeft', 'int', CreoleTypes::INTEGER, 'event_photo', 'ID', false, null);
 
-		$tMap->addForeignKey('EVENT_PHOTO_ID_RIGHT', 'EventPhotoIdRight', 'int', CreoleTypes::INTEGER, 'event_photo', 'ID', true, null);
+		$tMap->addForeignKey('EVENT_PHOTO_ID_RIGHT', 'EventPhotoIdRight', 'int', CreoleTypes::INTEGER, 'event_photo', 'ID', false, null);
 
-		$tMap->addForeignKey('EVENT_PHOTO_ID_WINNER', 'EventPhotoIdWinner', 'int', CreoleTypes::INTEGER, 'event_photo', 'ID', true, null);
+		$tMap->addForeignKey('EVENT_PHOTO_ID_WINNER', 'EventPhotoIdWinner', 'int', CreoleTypes::INTEGER, 'event_photo', 'ID', false, null);
 
 		$tMap->addColumn('LOCK_KEY', 'LockKey', 'string', CreoleTypes::VARCHAR, false, null);
 

@@ -24,12 +24,9 @@
 					if( $clubId )
 						$criteria->add( ClubPeer::ID, $clubId);
 					
-					$clubIdList = array();
 					foreach(Club::getList($criteria) as $clubObj):
 						
-						$clubId       = $clubObj->getId();
-						$clubIdList[] = $clubId;
-						
+						$clubId  = $clubObj->getId();
 						$onclick = 'goToPage(\'club\', \'edit\', \'clubId\', '.$clubId.')"';
 				?>
 				<tr class="gradeA" id="clubIdRow-<?php echo $clubId ?>">
