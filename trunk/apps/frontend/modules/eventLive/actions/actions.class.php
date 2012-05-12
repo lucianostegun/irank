@@ -20,6 +20,9 @@ class eventLiveActions extends sfActions
   	
   	$this->eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
   	
+  	$this->facebookMetaList = array('title'=>$this->eventLiveObj->getEventName(),
+  									'description'=>$this->eventLiveObj->getFacebookDescription());
+  	
   	if( !is_object($this->eventLiveObj) )
   		return $this->redirect('eventLive/index');
   		

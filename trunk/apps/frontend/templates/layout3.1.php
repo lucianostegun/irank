@@ -5,6 +5,9 @@
 <?php
 include_http_metas();
 include_metas();
+
+include_facebook_metas(isset($facebookMetaList)?$facebookMetaList:array());
+
 include_title();
 
 $culture = 'pt_BR';

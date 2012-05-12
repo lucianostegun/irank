@@ -106,9 +106,11 @@ class Ranking extends BaseRanking
 		return options_for_select( $optionList, $defaultValue );
 	}
 	
-	public function getPeopleList($returnPeople=false, $orderByList=null){
+	public function getPeopleList($returnPeople=false, $orderByList=null, $criteria=null){
 		
-		$criteria = new Criteria();
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
 		$criteria->add( RankingPlayerPeer::ENABLED, true );
 		$criteria->add( RankingPlayerPeer::RANKING_ID, $this->getId() );
 		$criteria->addJoin( RankingPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
@@ -132,9 +134,9 @@ class Ranking extends BaseRanking
 			return RankingPlayerPeer::doSelect($criteria);
 	}
 	
-	public function getPlayerList($orderByList=null){
+	public function getPlayerList($orderByList=null, $criteria=null){
 		
-		return $this->getPeopleList(false, $orderByList);
+		return $this->getPeopleList(false, $orderByList, $criteria);
 	}
 	
 	public function addPlayer($peopleId, $allowEdit=false){
@@ -509,7 +511,7 @@ class Ranking extends BaseRanking
 	  	return $rankingHistoryObjListReturn;
 	}
 	
-	public function getClassify($rankingDate=null){
+	public function getClassify($rankingDate=null, $criteria=null){
 		
 		if( $rankingDate )
 			return $this->getRankingHistoryByDate($rankingDate);
@@ -536,7 +538,7 @@ class Ranking extends BaseRanking
 	  	$orderByList[RankingPlayerPeer::TOTAL_AVERAGE] = 'desc';
 	  	$orderByList[RankingPlayerPeer::PEOPLE_ID]     = 'asc';
 	  	
-	  	$rankingPlayerObjList = $this->getPlayerList($orderByList);
+	  	$rankingPlayerObjList = $this->getPlayerList($orderByList, $criteria);
 	  	$lastList = array();
 	  	foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 	  		

@@ -1,9 +1,3 @@
 all:
   stylesheets:    [eventLive, table, lightbox]
   javascripts:    [eventLive, /sf/prototype/js/scriptaculous, lightbox]
-  
-detailsSuccess:
-  metas:
-    og|title :       <?php $eventLiveId = MyTools::getRequestParameter('id'); $eventLiveId = MyTools::getRequestParameter('eventLiveId', $eventLiveId); $eventLiveObj = EventLivePeer::retrieveByPK($eventLiveId); $eventLiveObj = (is_object(eventLiveObj)?eventLiveObj:new EventLive()); echo $eventLiveObj->getEventShortName() ?>
-    og|description:  <?php echo $eventLiveObj->getEventName() ?> 
-    og|image:        http://<?php echo MyTools::getRequest()->getHost() ?>/images/facebookLogo.gif      

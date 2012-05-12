@@ -364,6 +364,16 @@ function include_metas()
   }
 }
 
+function include_facebook_metas($facbookMetaList)
+{
+	
+	if( !array_key_exists('image', $facbookMetaList) )
+		$facbookMetaList['image'] = 'http://'.MyTools::getRequest()->getHost().'/images/facebookLogo.gif';
+
+	foreach($facbookMetaList as $property=>$content)
+		echo "<meta property=\"og:$property\" content=\"$content\" />\n";
+}
+
 /**
  * Returns a set of <meta http-equiv> tags according to the response attributes,
  * to be included in the <head> section of a HTML document.

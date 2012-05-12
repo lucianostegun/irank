@@ -36,7 +36,7 @@ class PeopleMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignKey('PEOPLE_TYPE_ID', 'PeopleTypeId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', true, null);
+		$tMap->addForeignKey('PEOPLE_TYPE_ID', 'PeopleTypeId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
 
 		$tMap->addColumn('FIRST_NAME', 'FirstName', 'string', CreoleTypes::VARCHAR, false, null);
 

@@ -36,7 +36,7 @@ class RankingPrizeSplitMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, 'ranking', 'ID', true, null);
+		$tMap->addForeignKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, 'ranking', 'ID', false, null);
 
 		$tMap->addColumn('BUYINS', 'Buyins', 'int', CreoleTypes::INTEGER, false, null);
 

@@ -36,6 +36,14 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
     <div class="logo"><?php echo link_to(image_tag('backend/logo'), 'home/index', array('title'=>'Voltar para a página inicial')) ?></div>
     
     <div class="sidebarSep mt0"></div>
+
+    <!-- Balance -->
+	<?php if( isset($balance) ) echo $balance; ?>
+	
+    <!-- Statistics -->
+	<?php if( isset($stats) ) echo $stats; ?>
+    
+    <!-- Left navigation -->
     
     <!-- Search widget -->
     <form action="" class="sidebarSearch">
@@ -45,14 +53,6 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
     
     <div class="sidebarSep"></div>
     </form>
-
-    <!-- Balance -->
-	<?php if( isset($balance) ) echo $balance; ?>
-	
-    <!-- Statistics -->
-	<?php if( isset($stats) ) echo $stats; ?>
-    
-    <!-- Left navigation -->
 	
     <ul id="menu" class="nav">
         <li class="dash"><?php echo link_to('<span>Resumo geral</span>', 'home/index', array('class'=>($moduleName=='home'?'active':''))) ?></li>
@@ -66,6 +66,13 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         	?>
         </li>
         <?php endif; ?>
+        <li class="cash">
+        	<?php
+        		echo link_to('<span>Cash game</span>', 'cashTable/index', array('class'=>($moduleName=='cashTable'?'active':'')));
+//        		if( $iRankAdmin )
+//        			echo link_to('<strong>+</strong>', 'cashGame/new', array('class'=>'quickAdd'));
+        	?>
+        </li>
         
         <?php if( !$iRankAdmin && $iRankClub ): ?>
         <li class="club"><a href="<?php echo url_for('club/edit') ?>"><span>Informações do clube</span></a></li>

@@ -891,7 +891,7 @@ class EventLive extends BaseEventLive
 	
 	public function getTwitterStatus(){
 		
-		$twitterStatus = $genericObj->getSettings('twitterTemplate');
+  		$twitterStatus = Settings::getValue('twitterTemplate');
 		
 		$twitterStatus = str_replace('<eventName>',     $this->getEventName(), 					$twitterStatus);
 		$twitterStatus = str_replace('<eventDateTime>', $this->getEventDateTime('d/m/Y H:i'), 	$twitterStatus);
@@ -911,5 +911,10 @@ class EventLive extends BaseEventLive
 		$twitterStatus = str_replace('<eventUrl>',   	'Em http://'.MyTools::getRequest()->getHost().'/index.php/eventLive/details/eventLiveId/'.$this->getId(), $twitterStatus);
 		
 		return $twitterStatus;
+	}
+	
+	public function getFacebookDescription(){
+		
+		return $this->getEventName();
 	}
 }

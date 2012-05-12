@@ -3,8 +3,11 @@ Util::getHelper('I18N');
 
 $libDir = sfConfig::get('sf_lib_dir');
 
+$criteria = new Criteria();
+$criteria->add( RankingPlayerPeer::TOTAL_EVENTS, 0, Criteria::GREATER_THAN );
+
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
-$rankingPlayerObjList = $rankingObj->getClassify();
+$rankingPlayerObjList = $rankingObj->getClassify(null, $criteria);
 $playerNameList = array();
 $totalPaidList = array();
 $totalPrizeList = array();

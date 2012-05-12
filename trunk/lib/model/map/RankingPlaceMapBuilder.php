@@ -36,7 +36,7 @@ class RankingPlaceMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, 'ranking', 'ID', true, null);
+		$tMap->addForeignKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, 'ranking', 'ID', false, null);
 
 		$tMap->addColumn('PLACE_NAME', 'PlaceName', 'string', CreoleTypes::VARCHAR, false, null);
 

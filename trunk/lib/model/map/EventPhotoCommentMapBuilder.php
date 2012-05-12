@@ -36,9 +36,9 @@ class EventPhotoCommentMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignKey('EVENT_PHOTO_ID', 'EventPhotoId', 'int', CreoleTypes::INTEGER, 'event_photo', 'ID', true, null);
+		$tMap->addForeignKey('EVENT_PHOTO_ID', 'EventPhotoId', 'int', CreoleTypes::INTEGER, 'event_photo', 'ID', false, null);
 
-		$tMap->addForeignKey('PEOPLE_ID', 'PeopleId', 'int', CreoleTypes::INTEGER, 'people', 'ID', true, null);
+		$tMap->addForeignKey('PEOPLE_ID', 'PeopleId', 'int', CreoleTypes::INTEGER, 'people', 'ID', false, null);
 
 		$tMap->addColumn('COMMENT', 'Comment', 'string', CreoleTypes::VARCHAR, false, null);
 

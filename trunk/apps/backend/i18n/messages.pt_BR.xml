@@ -40,6 +40,10 @@
 				<target>Informe um valor de até 30 caracteres</target>
 			</trans-unit>
 			<trans-unit>
+				<source>form.error.max32</source>
+				<target>Informe um valor de até 32 caracteres</target>
+			</trans-unit>
+			<trans-unit>
 				<source>form.error.max35</source>
 				<target>Informe um valor de até 35 caracteres</target>
 			</trans-unit>
@@ -94,6 +98,18 @@
 			<trans-unit>
 				<source>form.error.greaterEqual0</source>
 				<target>Informe um valor maior ou igual a 0</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual1</source>
+				<target>Informe um valor maior ou igual a 1</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual2</source>
+				<target>Informe um valor maior ou igual a 2</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.lessEqual10</source>
+				<target>Informe um valor menor ou igual a 10</target>
 			</trans-unit>
 			
 			<trans-unit>

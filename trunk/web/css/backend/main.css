@@ -217,6 +217,7 @@ ul.userDropdown li a:hover { border-right: none; border-left: none; }
 .nav li.dash a span { background-image: url(/images/backend/icons/light/home.png); }
 .nav li.charts span { background-image: url(/images/backend/icons/light/stats.png); }
 .nav li.ranking span { background-image: url(/images/backend/icons/light/signal.png); }
+.nav li.cash span { background-image: url(/images/backend/icons/light/money.png); }
 .nav li.event span { background-image: url(/images/backend/icons/light/globe.png); }
 .nav li.admin span { background-image: url(/images/backend/icons/light/adminUser.png); }
 .nav li.club span { background-image: url(/images/backend/icons/light/building.png); }
@@ -1956,11 +1957,6 @@ float: left;
 margin: 0 5px;
 }
 
-.hidden {
-
-	display: 	none;
-}
-
 .tabIndicator {
 
 	margin-top: 	50px;
@@ -1989,4 +1985,10 @@ margin: 0 5px;
 	position: 		relative;
 	top: 			-10px;
 	left: 			10px;
+}
+
+.hidden,
+.formRow .formRight.hidden {
+
+	display: 	none;
 }
