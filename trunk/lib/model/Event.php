@@ -406,8 +406,8 @@ class Event extends BaseEvent
 		$attachmentList  = array('invite.ics'=>$iCalFile);
 		$optionList      = array('attachmentList'=>$attachmentList);
 
-		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
-		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
+		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
 		$emailSubjectList['pt_BR'] = __($emailSubject, null, 'messages', 'pt_BR');
 		$emailSubjectList['en_US'] = __($emailSubject, null, 'messages', 'en_US');
 
@@ -419,8 +419,8 @@ class Event extends BaseEvent
 			$emailContent = $emailContentList[$culture];
 			$emailSubject = $emailSubjectList[$culture];
 			
-			$emailContent = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
-			$emailContent = str_replace('<confirmCode>', $eventPlayerObj->getConfirmCode(), $emailContent);
+			$emailContent = str_replace('[peopleName]', $peopleObj->getFirstName(), $emailContent);
+			$emailContent = str_replace('[confirmCode]', $eventPlayerObj->getConfirmCode(), $emailContent);
 
 			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 		}
@@ -443,12 +443,12 @@ class Event extends BaseEvent
 		$infoList['classifyList'] = $classifyList;
 		$infoList                 = array_merge($infoList, $this->getInfo());
 		
-//		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
-//		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
+//		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+//		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
 //		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
 //		$emailSubjectList['en_US'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
 
-		$emailContent = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContent = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
 		$emailSubject = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
 		
 		$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', 'receiveAllResults');
@@ -468,7 +468,7 @@ class Event extends BaseEvent
 			$peopleObj    = $eventPlayerObj->getPeople();
 			$emailAddress = $peopleObj->getEmailAddress();
 			
-			$emailContent = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
+			$emailContent = str_replace('[peopleName]', $peopleObj->getFirstName(), $emailContent);
 			
 			$congratsMessage = '';
 			
@@ -483,7 +483,7 @@ class Event extends BaseEvent
 				$congratsMessage = __('event.congratMessage', array('%eventPosition%'=>$eventPosition, '%sufix%'=>$sufix), 'messages', $culture).'<br/><br/>';
 			}
 
-			$emailContent = str_replace('<congratsMessage>', $congratsMessage, $emailContent);
+			$emailContent = str_replace('[congratsMessage]', $congratsMessage, $emailContent);
 
 			Report::sendMail($emailSubject, $emailAddress, $emailContent);
 		}
@@ -502,8 +502,8 @@ class Event extends BaseEvent
 		$infoList['classifyList'] = $classifyList;
 		$infoList                 = array_merge($infoList, $this->getInfo());
 		
-		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
-		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
+		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
 		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
 		$emailSubjectList['en_US'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
 		
@@ -541,8 +541,8 @@ class Event extends BaseEvent
 		
 		$infoList = $this->getInfo();
 		
-		$emailContentList['pt_BR']  = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), array_merge($infoList, array('eventSchedule'=>$eventScheduleList['pt_BR'])));
-		$emailContentList['en_US']  = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), array_merge($infoList, array('eventSchedule'=>$eventScheduleList['en_US'])));
+		$emailContentList['pt_BR']  = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), array_merge($infoList, array('eventSchedule'=>$eventScheduleList['pt_BR'])));
+		$emailContentList['en_US']  = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), array_merge($infoList, array('eventSchedule'=>$eventScheduleList['en_US'])));
 		$emailSubjectList['pt_BR']  = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
 		$emailSubjectList['en_US']  = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
 
@@ -580,14 +580,14 @@ class Event extends BaseEvent
 			
 			$peopleObj = $eventPlayerObj->getPeople();
 			
-			$resultList .= '  <tr class="boxcontent">'.$nl;
-			$resultList .= '    <td style="background: #606060">#'.$eventPosition.'</td>'.$nl;
-			$resultList .= '    <td style="background: #606060">'.$peopleObj->getFullName().'</td>'.$nl;
-			$resultList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($eventPlayerObj->getBuyin(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($eventPlayerObj->getPrize(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($eventPlayerObj->getRebuy(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($eventPlayerObj->getAddon(), true).'</td>'.$nl;
-			$resultList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($eventPlayerObj->getScore(), true, 3).'</td>'.$nl;
+			$resultList .= '  <tr>'.$nl;
+			$resultList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">#'.$eventPosition.'</td>'.$nl;
+			$resultList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF">'.$peopleObj->getFullName().'</td>'.$nl;
+			$resultList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">'.Util::formatFloat($eventPlayerObj->getBuyin(), true).'</td>'.$nl;
+			$resultList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">'.Util::formatFloat($eventPlayerObj->getPrize(), true).'</td>'.$nl;
+			$resultList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">'.Util::formatFloat($eventPlayerObj->getRebuy(), true).'</td>'.$nl;
+			$resultList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">'.Util::formatFloat($eventPlayerObj->getAddon(), true).'</td>'.$nl;
+			$resultList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">'.Util::formatFloat($eventPlayerObj->getScore(), true, 3).'</td>'.$nl;
 			$resultList .= '  </tr>'.$nl;
 	  	}
 	  	

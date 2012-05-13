@@ -2,10 +2,10 @@
 
 
 
-class AuxiliarTextMapBuilder {
+class EmailTemplateMapBuilder {
 
 	
-	const CLASS_NAME = 'lib.model.map.AuxiliarTextMapBuilder';
+	const CLASS_NAME = 'lib.model.map.EmailTemplateMapBuilder';
 
 	
 	private $dbMap;
@@ -27,18 +27,28 @@ class AuxiliarTextMapBuilder {
 	{
 		$this->dbMap = Propel::getDatabaseMap('propel');
 
-		$tMap = $this->dbMap->addTable('auxiliar_text');
-		$tMap->setPhpName('AuxiliarText');
+		$tMap = $this->dbMap->addTable('email_template');
+		$tMap->setPhpName('EmailTemplate');
 
 		$tMap->setUseIdGenerator(true);
 
-		$tMap->setPrimaryKeyMethodInfo('auxiliar_text_SEQ');
+		$tMap->setPrimaryKeyMethodInfo('email_template_SEQ');
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
+
+		$tMap->addColumn('TEMPLATE_NAME', 'TemplateName', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addForeignKey('FILE_ID', 'FileId', 'int', CreoleTypes::INTEGER, 'file', 'ID', false, null);
+
+		$tMap->addForeignKey('CLUB_ID', 'ClubId', 'int', CreoleTypes::INTEGER, 'club', 'ID', false, null);
+
+		$tMap->addForeignKey('EMAIL_TEMPLATE_ID', 'EmailTemplateId', 'int', CreoleTypes::INTEGER, 'email_template', 'ID', false, null);
+
+		$tMap->addColumn('IS_AVAILABLE_FOR_USE', 'IsAvailableForUse', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('IS_AVAILABLE_FOR_SALE', 'IsAvailableForSale', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('TAG_NAME', 'TagName', 'string', CreoleTypes::VARCHAR, false, null);
 

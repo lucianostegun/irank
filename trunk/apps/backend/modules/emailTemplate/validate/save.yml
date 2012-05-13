@@ -1,0 +1,26 @@
+fields:
+      
+  templateName:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       50
+      max_error: form.error.max50
+
+  tagName:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       32
+      max_error: form.error.max32
+    sfCallbackValidator:
+      callback:      [EmailTemplatePeer, uniqueTagName]
+      invalid_error: Esta tag name já está em uso por outro template
+    sfRegexValidator:
+      match:        Yes
+      match_error:  Tag name inválida. Utilize apenas letras e números
+      pattern:      /^[a-zA-Z]+[a-zA-Z0-9]*$/si
+
+  fileName:
+    required:
+      msg:       form.error.requiredField

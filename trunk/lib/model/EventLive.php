@@ -508,7 +508,7 @@ class EventLive extends BaseEventLive
 		
 		if( $convertTags && !is_null($this->getRankingLiveId()) ){
 			
-			$description = preg_replace('/<descri[çc]+[ã]+o ?do ?ranking>/i', $this->getRankingLive()->getDescription(), $description);
+			$description = preg_replace('/[descri[çc]+[ã]+o ?do ?ranking]/i', $this->getRankingLive()->getDescription(), $description);
 			$description = preg_replace('/[\n]/i', '<br/>', $description);
 		}
 		
@@ -521,7 +521,7 @@ class EventLive extends BaseEventLive
 		
 		if( $convertTags ){
 			
-			$comments = preg_replace('/<descri[çc]+[ã]+o ?do ?ranking>/i', $this->getRankingLive()->getDescription(), $comments);
+			$comments = preg_replace('/[descri[çc]+[ã]+o ?do ?ranking]/i', $this->getRankingLive()->getDescription(), $comments);
 			$comments = preg_replace('/[\n]/i', '<br/>', $comments);
 		}
 		
@@ -893,22 +893,22 @@ class EventLive extends BaseEventLive
 		
   		$twitterStatus = Settings::getValue('twitterTemplate');
 		
-		$twitterStatus = str_replace('<eventName>',     $this->getEventName(), 					$twitterStatus);
-		$twitterStatus = str_replace('<eventDateTime>', $this->getEventDateTime('d/m/Y H:i'), 	$twitterStatus);
-		$twitterStatus = str_replace('<weekDay>',       Util::getWeekDay($this->getEventDateTime('d/m/Y')), $twitterStatus);
-		$twitterStatus = str_replace('<clubName>',      $this->getClub()->toString(), 			$twitterStatus);
-		$twitterStatus = str_replace('<clubLocation>',  $this->getClub()->getLocation(), 		$twitterStatus);
-		$twitterStatus = str_replace('<allowedRebuys>', $this->getAllowedRebuys(), 				$twitterStatus);
-		$twitterStatus = str_replace('<allowedAddons>', $this->getAllowedAddons(), 				$twitterStatus);
-		$twitterStatus = str_replace('<isFreeroll>',    $this->getIsFreeroll(), 				$twitterStatus);
-		$twitterStatus = str_replace('<rakePercent>',   $this->getRakePercent(), 				$twitterStatus);
-		$twitterStatus = str_replace('<entranceFee>',   $this->getEntranceFee(), 				$twitterStatus);
-		$twitterStatus = str_replace('<buyin>',         $this->getBuyin(), 						$twitterStatus);
-		$twitterStatus = str_replace('<blindTime>',     $this->getBlindTime('H:i'), 			$twitterStatus);
-		$twitterStatus = str_replace('<stackChips>',    $this->getStackChips(), 				$twitterStatus);
-		$twitterStatus = str_replace('<players>',       $this->getPlayers(), 					$twitterStatus);
-		$twitterStatus = str_replace('<savedResult>',   $this->getSavedResult(), 				$twitterStatus);
-		$twitterStatus = str_replace('<eventUrl>',   	'Em http://'.MyTools::getRequest()->getHost().'/index.php/eventLive/details/eventLiveId/'.$this->getId(), $twitterStatus);
+		$twitterStatus = str_replace('[eventName]',     $this->getEventName(), 					$twitterStatus);
+		$twitterStatus = str_replace('[eventDateTime]', $this->getEventDateTime('d/m/Y H:i'), 	$twitterStatus);
+		$twitterStatus = str_replace('[weekDay]',       Util::getWeekDay($this->getEventDateTime('d/m/Y')), $twitterStatus);
+		$twitterStatus = str_replace('[clubName]',      $this->getClub()->toString(), 			$twitterStatus);
+		$twitterStatus = str_replace('[clubLocation]',  $this->getClub()->getLocation(), 		$twitterStatus);
+		$twitterStatus = str_replace('[allowedRebuys]', $this->getAllowedRebuys(), 				$twitterStatus);
+		$twitterStatus = str_replace('[allowedAddons]', $this->getAllowedAddons(), 				$twitterStatus);
+		$twitterStatus = str_replace('[isFreeroll]',    $this->getIsFreeroll(), 				$twitterStatus);
+		$twitterStatus = str_replace('[rakePercent]',   $this->getRakePercent(), 				$twitterStatus);
+		$twitterStatus = str_replace('[entranceFee]',   $this->getEntranceFee(), 				$twitterStatus);
+		$twitterStatus = str_replace('[buyin]',         $this->getBuyin(), 						$twitterStatus);
+		$twitterStatus = str_replace('[blindTime]',     $this->getBlindTime('H:i'), 			$twitterStatus);
+		$twitterStatus = str_replace('[stackChips]',    $this->getStackChips(), 				$twitterStatus);
+		$twitterStatus = str_replace('[players]',       $this->getPlayers(), 					$twitterStatus);
+		$twitterStatus = str_replace('[savedResult]',   $this->getSavedResult(), 				$twitterStatus);
+		$twitterStatus = str_replace('[eventUrl]',   	'Em http://'.MyTools::getRequest()->getHost().'/index.php/eventLive/details/eventLiveId/'.$this->getId(), $twitterStatus);
 		
 		return $twitterStatus;
 	}

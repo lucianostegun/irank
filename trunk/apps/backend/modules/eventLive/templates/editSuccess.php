@@ -34,6 +34,8 @@
 					),
 					array('class'=>'form', 'id'=>'eventLiveForm'));
 //				echo form_tag('eventLive/save', array('class'=>'form', 'id'=>'eventLiveForm'));
+
+				echo input_hidden_tag('eventLiveId', $eventLiveObj->getId());
 			?>
 			<div id="tab1" class="tab_content"><?php include_partial('eventLive/tab/main', array('eventLiveObj'=>$eventLiveObj, 'clubId'=>$clubId, 'iRankAdmin'=>$iRankAdmin)) ?></div>
 			<div id="tab5" class="tab_content"><?php include_partial('eventLive/tab/options', array('eventLiveObj'=>$eventLiveObj)) ?></div>

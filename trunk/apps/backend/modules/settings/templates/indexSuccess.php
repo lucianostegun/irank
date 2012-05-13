@@ -16,19 +16,27 @@
 	</div>
 	
 <div class="wrapper">
+	
 	<!-- Fullscreen tabs -->
-	<div class="widget">       
-		<?php
-			echo form_remote_tag(array(
-				'url'=>'settings/save',
-				'success'=>'handleSuccessSettings(response)',
-				'failure'=>'handleFailureSettings(response.responseText)',
-				),
-				array('class'=>'form', 'id'=>'settingsForm'));
-	//		echo form_tag('settings/save', array('class'=>'form', 'id'=>'settingsForm'));
-			
-			include_partial('settings/tab/main', array('genericObj'=>$genericObj));
-		?>
-		</form>
+    <div class="widget form">    
+	    <ul class="tabs">
+			<li><a href="#tab1">Principal</a></li>
+			<li><a href="#tab2">Templates</a></li>
+			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#settingsForm").submit()')); ?>
+		</ul>
+		<div class="tab_container">
+			<?php
+				echo form_remote_tag(array(
+					'url'=>'settings/save',
+					'success'=>'handleSuccessSettings(response)',
+					'failure'=>'handleFailureSettings(response.responseText)',
+					),
+					array('class'=>'form', 'id'=>'settingsForm'));
+		//		echo form_tag('settings/save', array('class'=>'form', 'id'=>'settingsForm'));
+			?>
+			<div id="tab1" class="tab_content"><?php include_partial('settings/tab/main', array('genericObj'=>$genericObj)) ?></div>
+			<div id="tab2" class="tab_content"><?php include_partial('settings/tab/template', array('genericObj'=>$genericObj)) ?></div>
+			</form>
+		</div>
 	</div>
 </div>

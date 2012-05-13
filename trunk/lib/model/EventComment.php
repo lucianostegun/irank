@@ -88,8 +88,8 @@ class EventComment extends BaseEventComment
 		
 		$emailAddressInfoList = $eventObj->getEmailAddressList('receiveEventCommentNotify', false, true);
 
-		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
-		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName($templateName, false, 'en_US'), $infoList);
+		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
 		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventCode%'=>$eventObj->getCode()), 'messages', 'pt_BR');
 		$emailSubjectList['en_US'] = __($emailSubject, array('%eventCode%'=>$eventObj->getCode()), 'messages', 'en_US');
 		

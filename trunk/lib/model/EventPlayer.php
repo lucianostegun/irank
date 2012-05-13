@@ -64,8 +64,8 @@ class EventPlayer extends BaseEventPlayer
 		$infoList['playerList'] = $playerList;
 		$infoList['peopleName'] = $this->getPeople()->getFirstName();
 
-		$emailContentList['pt_BR'] = Report::replace(AuxiliarText::getContentByTagName('confirmPresenceNotify', false, 'pt_BR'), $infoList);
-		$emailContentList['en_US'] = Report::replace(AuxiliarText::getContentByTagName('confirmPresenceNotify', false, 'en_US'), $infoList);
+		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName('confirmPresenceNotify', false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName('confirmPresenceNotify', false, 'en_US'), $infoList);
 		$emailSubjectList['pt_BR'] = __('email.subject.presenceConfirm', null, 'messages', 'pt_BR');
 		$emailSubjectList['en_US'] = __('email.subject.presenceConfirm', null, 'messages', 'en_US');
 

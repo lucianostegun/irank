@@ -51,7 +51,6 @@ CREATE TABLE cash_table (
     updated_at TIMESTAMP,
     CONSTRAINT cash_table_FK_1 FOREIGN KEY (club_id) REFERENCES club (id)
 );
-LANGUAGE 'plpgsql';
 
-INSERT INTO settings VALUES(nextval('settings_seq'), 'facebookTemplate', 'Texto padrão Facebook', 'Texto padrão para divulgação no Facebook.', '<eventName>. Disponível em <eventUrl>', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO settings VALUES(nextval('settings_seq'), 'twitterTemplate', 'Texto padrão Twitter', 'Texto padrão para divulgação no Twitter.', '<eventName>. Disponível em <eventUrl>', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO settings VALUES(nextval('settings_seq'), 'facebookTemplate', 'Texto padrão Facebook', 'Texto padrão para divulgação no Facebook.', '[eventName]. Disponível em [eventUrl]', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO settings VALUES(nextval('settings_seq'), 'twitterTemplate', 'Texto padrão Twitter', 'Texto padrão para divulgação no Twitter.', '[eventName]. Disponível em [eventUrl]', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

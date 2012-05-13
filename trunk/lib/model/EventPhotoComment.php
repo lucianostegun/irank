@@ -82,7 +82,7 @@ class EventPhotoComment extends BaseEventPhotoComment
 		Util::getHelper('I18N');
 
 		$eventObj     = $this->getEventPhoto()->getEvent();
-		$emailContent = AuxiliarText::getContentByTagName('eventPhotoCommentNotify');
+		$emailContent = EmailTemplate::getContentByTagName('eventPhotoCommentNotify');
 
 		$emailContent = str_replace('<eventName>', $eventObj->getEventName(), $emailContent);
 		$emailContent = str_replace('<rankingName>', $eventObj->getRanking()->getRankingName(), $emailContent);

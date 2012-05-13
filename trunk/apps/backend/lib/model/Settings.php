@@ -50,6 +50,8 @@ class Settings extends BaseSettings
 		
 		$genericSettingsObj->setSettingsValue($settingsValue);
 		$genericSettingsObj->save();
+		
+		MyTools::setAttribute('iRankAdminSettings-'.$tagName, $settingsValue, 'iRankSettings');
 	}
 	
 	public static function getValue($tagName){
