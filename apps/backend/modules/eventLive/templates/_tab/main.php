@@ -9,8 +9,6 @@
 	
 	$allowedRebuys = $eventLiveObj->getAllowedRebuys();
 	
-	echo input_hidden_tag('eventLiveId', $eventLiveObj->getId());
-	
 	if( !$isNew || !$iRankAdmin ){
 		
 		echo input_hidden_tag('clubId', $clubId, array('id'=>'eventLiveClubId'));

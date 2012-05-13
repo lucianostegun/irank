@@ -33,6 +33,7 @@ class settingsActions extends sfActions
     $attribute = ($this->clubId?'club':'userAdmin');
     
 	Settings::saveValue('hoursToPending', $request, $attribute);
+	Settings::saveValue('emailDebug', $request, $attribute);
 	Settings::saveValue('facebookTemplate', $request, $attribute);
 	Settings::saveValue('twitterTemplate', $request, $attribute);
 	exit;

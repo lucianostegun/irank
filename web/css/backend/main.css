@@ -1992,3 +1992,13 @@ margin: 0 5px;
 
 	display: 	none;
 }
+
+table.display tr.gradeA td {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+table.display tr.gradeA td .checker {
+	position: 	relative;
+	top: 3px;
+}

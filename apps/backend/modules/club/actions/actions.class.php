@@ -183,8 +183,6 @@ class clubActions extends sfActions
 	header('Content-type: image/png');
 	Util::forceDownload($originalFileName, 'image/'.$fileExtension);
 
-	
-	
 	echo file_get_contents($filePath);
 	
   	exit;

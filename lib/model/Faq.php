@@ -45,7 +45,7 @@ class Faq extends BaseFaq
 		$ipAddress    = $_SERVER['REMOTE_ADDR'];
 		$question     = $this->getQuestion();
 		
-		$emailContent = AuxiliarText::getContentByTagName('faqQuestion', false, 'pt_BR');
+		$emailContent = EmailTemplate::getContentByTagName('faqQuestion', false, 'pt_BR');
 		
 		if( is_object($userSiteObj) ){
 

@@ -200,7 +200,7 @@ class UserSite extends BaseUserSite
 
 		Util::getHelper('I18N');
 		
-		$emailContent = AuxiliarText::getContentByTagName('signWelcome'.ucfirst($sufix));
+		$emailContent = EmailTemplate::getContentByTagName('signWelcome'.ucfirst($sufix));
 		$emailContent = str_replace('<password>', $request->getParameter('password'), $emailContent);
 		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
 		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent); 		
@@ -214,14 +214,13 @@ class UserSite extends BaseUserSite
 
 		Util::getHelper('I18N');
 		
-		$emailContent  = AuxiliarText::getContentByTagName('passwordRecovery');
+		$emailContent  = EmailTemplate::getContentByTagName('passwordRecovery');
 		
 		$newPassword = String::createRandom(7);
 		
 		$emailContent = str_replace('<password>', $newPassword, $emailContent);
 		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
 		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
-		$emailContent = utf8_encode($emailContent); 		
 		
 		$emailAddress = $this->getPeople()->getEmailAddress();
 		

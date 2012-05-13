@@ -132,10 +132,10 @@ class People extends BasePeople
 
 		$rankingOwner = $rankingObj->getUserSite()->getPeople()->getFullName();
 		
-		$emailContent = AuxiliarText::getContentByTagName('rankingPlayerAdd');
+		$emailContent = EmailTemplate::getContentByTagName('rankingPlayerAdd');
 		
 		if( !$this->isUserSite() )
-			$emailContent .= AuxiliarText::getContentByTagName('newUserInvite');
+			$emailContent .= EmailTemplate::getContentByTagName('newUserInvite');
 		
 		$emailContent = str_replace('<peopleName>', $this->getFirstName(), $emailContent);
 		$emailContent = str_replace('<rankingName>', $rankingObj->getRankingName(), $emailContent);

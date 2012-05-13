@@ -95,8 +95,10 @@ $(function() {
 		
 		oTable = $('.dTable').dataTable({
 			"bJQueryUI": true,
+			"iDisplayLength": 15,
 			"sPaginationType": "full_numbers",
 			"sDom": '<""l>t<"F"fp>',
+			"aaSorting": [],
 		});
 		
 		$(".datepicker").datepicker({ 
@@ -154,15 +156,18 @@ function getTabIndicator(){
 	return html;
 }
 
-function loadTabContent(tabId, urlAjax){
+function loadTabContent(tabId, urlAjax, force, successHandler){
 	
-	if( $('#'+tabId).hasClass('loaded') )
+	if( !force && $('#'+tabId).hasClass('loaded') )
 		return;
 	
 	var successFunc = function(content){
 		
 		$('#'+tabId).html(content);
 		$('#'+tabId).addClass('loaded');
+		
+		if( typeof(successHandler)=='function' )
+			successHandler();
 	}
 
 	var failureFunc = function(t){

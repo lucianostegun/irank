@@ -31,7 +31,7 @@ class friendInviteActions extends sfActions
   	$peopleName   = $request->getParameter('peopleName');
   	$emailAddress = $request->getParameter('emailAddress');
   	
-	$emailContent = AuxiliarText::getContentByTagName('friendInvite');
+	$emailContent = EmailTemplate::getContentByTagName('friendInvite');
   	
   	$resultList = array();
   	for($i=1; $i<=10; $i++){

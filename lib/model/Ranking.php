@@ -644,7 +644,7 @@ class Ranking extends BaseRanking
 
 		Util::getHelper('i18n');
 
-		$emailContent = AuxiliarText::getContentByTagName('rankingDeleteNotify');
+		$emailContent = EmailTemplate::getContentByTagName('rankingDeleteNotify');
 
 		$peopleObj    = People::getCurrentPeople();
 	  	$classifyList = $this->getEmailClassifyList();
@@ -680,13 +680,13 @@ class Ranking extends BaseRanking
 			$peopleObj = $rankingPlayerObj->getPeople();
 			
 			$classifyList .= '  <tr class="boxcontent">'.$nl;
-			$classifyList .= '    <td style="background: #606060">#'.(($position++)+1).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #606060">'.$peopleObj->getFullName().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #606060" align="right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
-			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">#'.(($position++)+1).'</td>'.$nl;
+			$classifyList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF">'.$peopleObj->getFullName().'</td>'.$nl;
+			$classifyList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
+			$classifyList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="height: 30px; padding: 3px; font-size: 12px; color: #303030; border-bottom: 1px solid #DADADA; background: #FFFFFF; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
 			$classifyList .= '  </tr>'.$nl;
 	  	}
 	  	
