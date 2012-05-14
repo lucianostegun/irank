@@ -38,7 +38,11 @@ class EventLiveMapBuilder {
 
 		$tMap->addForeignKey('RANKING_LIVE_ID', 'RankingLiveId', 'int', CreoleTypes::INTEGER, 'ranking_live', 'ID', false, null);
 
-		$tMap->addColumn('EVENT_NAME', 'EventName', 'string', CreoleTypes::VARCHAR, false, 100);
+		$tMap->addForeignKey('CLUB_ID', 'ClubId', 'int', CreoleTypes::INTEGER, 'club', 'ID', false, null);
+
+		$tMap->addForeignKey('EMAIL_TEMPLATE_ID', 'EmailTemplateId', 'int', CreoleTypes::INTEGER, 'email_template', 'ID', false, null);
+
+		$tMap->addColumn('EVENT_NAME', 'EventName', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('EVENT_SHORT_NAME', 'EventShortName', 'string', CreoleTypes::VARCHAR, false, 50);
 
@@ -48,13 +52,15 @@ class EventLiveMapBuilder {
 
 		$tMap->addColumn('EVENT_DATE_TIME', 'EventDateTime', 'int', CreoleTypes::TIMESTAMP, false, null);
 
+		$tMap->addColumn('STEP_NUMBER', 'StepNumber', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('STEP_DAY', 'StepDay', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('COMMENTS', 'Comments', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
 		$tMap->addColumn('IS_FREEROLL', 'IsFreeroll', 'boolean', CreoleTypes::BOOLEAN, false, null);
-
-		$tMap->addForeignKey('CLUB_ID', 'ClubId', 'int', CreoleTypes::INTEGER, 'club', 'ID', false, null);
 
 		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::NUMERIC, false, 10);
 

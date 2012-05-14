@@ -18,18 +18,8 @@
     cursor: 			pointer;
 }
 
-#leftMenu .item.hover {
-
-    background-image: 	url(/images/layout/leftMenuHoverBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
-    background-image: 	url(/images/layout/leftMenuHoverBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
-}
-
-#leftMenu .item.active {
-
-    background-image: 	url(/images/layout/leftMenuDistinctBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
-    background-image: 	url(/images/layout/leftMenuDistinctBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
-}
-
+#leftMenu .item.hover,
+#leftMenu .item.active,
 #leftMenu .item.stats {
 
     background-image: 	url(/images/layout/leftMenuDistinctBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
@@ -77,23 +67,15 @@
 	display: 	block
 }
 
-#leftMenu .item .label.stats {
-
-	background: 	url(/images/layout/leftMenu/stats.png) center left no-repeat;
-}
-
-#leftMenu .item .label.config {
-
-	background: 	url(/images/layout/leftMenu/config.png) center left no-repeat;
-}
-
-#leftMenu .item .label.logout {
-
-	background: 	url(/images/layout/leftMenu/logout.png) center left no-repeat;
-}
+#leftMenu .item .label.stats { background: url(/images/layout/leftMenu/stats.png) center left no-repeat }
+#leftMenu .item .label.invites { background: url(/images/layout/leftMenu/invite.png) center left no-repeat }
+#leftMenu .item .label.config { background: url(/images/layout/leftMenu/config.png) center left no-repeat }
+#leftMenu .item .label.logout { background: url(/images/layout/leftMenu/logout.png) center left no-repeat }
 
 
 
+.numberTop, .numberMiddle, .numberRight, .groupNum { text-align: center; background: url(/images/backgrounds/numberBg.png) repeat-x; display: inline-block; padding: 1px 5px; color: #fff; -moz-border-radius: 2px; -webkit-border-radius: 2px; -khtml-border-radius: 2px; border-radius: 2px; font-size: 11px; line-height: 13px; width: auto; height: auto!important; }
+.numberTop { margin: 0px 4px 0px -24px; padding: 1px 5px 1px 6px!important; position: relative; top: 1px }
 
 
 

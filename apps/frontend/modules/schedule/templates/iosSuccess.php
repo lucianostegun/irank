@@ -71,7 +71,7 @@
 					<p>Caso queira apenas sincronizar a agenda e não ser notificado dos eventos, marque a opção <b>Remover alarmes</b>.</p>
 					<p>Toque no botão <b>Salvar</b>.</p>
 					<p>&nbsp;</p>
-					<p><i>Obs: Não utilize seu e-mail no campo <b>Nomde usuário</b>.</p><p>Após assinar o calendário você poderá trocar a senha padrão para uma senha de sua preferência.</i></p>
+					<p><i>Obs: Não utilize seu e-mail no campo <b>Nome de usuário</b>.</p><p>Após assinar o calendário você poderá trocar a senha padrão para uma senha de sua preferência.</i></p>
 				</div>
 		</div>
 	</div>

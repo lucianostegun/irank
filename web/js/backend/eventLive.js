@@ -129,6 +129,15 @@ function replicateEventName(eventName){
 	if( $('#eventLiveEventShortName').val()!='' )
 		return;
 	
+	matches = eventName.match(/([0-9]*)[ºªa] *etapa/i);
+	if( matches.length > 0 )
+		$('#eventLiveEventStepNumber').val( matches[1] );
+
+	matches = eventName.match(/Dia *([0-9]*-?[a-zA-z]*) ?/i);
+	if( matches.length > 0 )
+		$('#eventLiveEventStepDay').val( matches[1] );
+		
+	
 	eventName = eventName.replace(/ ?-.*Garantidos?/i, '');
 	eventName = eventName.replace(/ ?Garantidos?/i, '');
 	eventName = eventName.replace(/ ?-.*/, '');
@@ -676,11 +685,11 @@ function buildEventLiveLightbox(){
 	$('.photoList a.lightbox').lightBox();
 }
 
-function updateProgressBar( percent ){
+function updateProgressBar( percent, progressBarId ){
 	
 	// jQuery UI progress bar
-	$( "#progress" ).progressbar({
-			value: percent
+	$("#"+progressBarId).progressbar({
+		value: percent
 	});
 }
 
@@ -781,4 +790,34 @@ function updatePlayersCounter(incrase){
 	var percentConfirm = ((playersConfirm+incrase) && playersConfirmPrevious?(((playersConfirm+incrase)-playersConfirmPrevious)*100/(playersConfirmPrevious?playersConfirmPrevious:1)):0);
 	$('#statsPlayersConfirmPercent').html(toCurrency(Math.abs(percentConfirm), 0)+'%');
 	$('#statsPlayersConfirmPercent').attr('class', (percentConfirm>0?'roundPos':(percentConfirm<0?'roundNeg':'roundZero')));
+}
+
+function loadDisclosureTab(){
+	
+	var eventLiveId = $('#eventLiveId').val();
+	
+	loadTabContent('tab6', '/eventLive/getTabContent/tabName/disclosure/eventLiveId/'+eventLiveId, false, uniformUpdate)
+}
+
+function uniformUpdate(){
+	
+	buildCheckboxTable();
+	$('#emailSenderOptionsDiv select').uniform();
+	$("#tab6 input:checkbox").uniform();
+}
+
+function saveEmailTemplate(emailTemplateId){
+	
+	var eventLiveId = $('#eventLiveId').val();
+	
+	var successFunc = function(content){
+		
+	}
+
+	var failureFunc = function(t){
+		
+	}
+	
+	var urlAjax = _webRoot+'/eventLive/saveEmailTemplate/eventLiveId/'+eventLiveId+'/emailTemplateId/'+emailTemplateId;
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});	
 }

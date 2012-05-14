@@ -40,6 +40,8 @@ class RankingLiveMapBuilder {
 
 		$tMap->addForeignKey('RANKING_TYPE_ID', 'RankingTypeId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
 
+		$tMap->addForeignKey('EMAIL_TEMPLATE_ID', 'EmailTemplateId', 'int', CreoleTypes::INTEGER, 'email_template', 'ID', false, null);
+
 		$tMap->addColumn('START_DATE', 'StartDate', 'int', CreoleTypes::DATE, false, null);
 
 		$tMap->addColumn('FINISH_DATE', 'FinishDate', 'int', CreoleTypes::DATE, false, null);

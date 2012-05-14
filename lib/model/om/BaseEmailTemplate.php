@@ -77,6 +77,18 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	protected $aEmailTemplateRelatedByEmailTemplateId;
 
 	
+	protected $collRankingLiveList;
+
+	
+	protected $lastRankingLiveCriteria = null;
+
+	
+	protected $collEventLiveList;
+
+	
+	protected $lastEventLiveCriteria = null;
+
+	
 	protected $collEmailTemplateListRelatedByEmailTemplateId;
 
 	
@@ -567,6 +579,22 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collRankingLiveList !== null) {
+				foreach($this->collRankingLiveList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collEventLiveList !== null) {
+				foreach($this->collEventLiveList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collEmailTemplateListRelatedByEmailTemplateId !== null) {
 				foreach($this->collEmailTemplateListRelatedByEmailTemplateId as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -635,6 +663,22 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collRankingLiveList !== null) {
+					foreach($this->collRankingLiveList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventLiveList !== null) {
+					foreach($this->collEventLiveList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -890,6 +934,14 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
+			foreach($this->getRankingLiveList() as $relObj) {
+				$copyObj->addRankingLive($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEventLiveList() as $relObj) {
+				$copyObj->addEventLive($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getEmailTemplateListRelatedByEmailTemplateId() as $relObj) {
 				if($this->getPrimaryKey() === $relObj->getPrimaryKey()) {
 						continue;
@@ -1008,6 +1060,321 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aEmailTemplateRelatedByEmailTemplateId;
+	}
+
+	
+	public function initRankingLiveList()
+	{
+		if ($this->collRankingLiveList === null) {
+			$this->collRankingLiveList = array();
+		}
+	}
+
+	
+	public function getRankingLiveList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveList === null) {
+			if ($this->isNew()) {
+			   $this->collRankingLiveList = array();
+			} else {
+
+				$criteria->add(RankingLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				RankingLivePeer::addSelectColumns($criteria);
+				$this->collRankingLiveList = RankingLivePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				RankingLivePeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingLiveCriteria) || !$this->lastRankingLiveCriteria->equals($criteria)) {
+					$this->collRankingLiveList = RankingLivePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingLiveCriteria = $criteria;
+		return $this->collRankingLiveList;
+	}
+
+	
+	public function countRankingLiveList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+		return RankingLivePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingLive(RankingLive $l)
+	{
+		$this->collRankingLiveList[] = $l;
+		$l->setEmailTemplate($this);
+	}
+
+
+	
+	public function getRankingLiveListJoinVirtualTableRelatedByRankingTypeId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveList === null) {
+			if ($this->isNew()) {
+				$this->collRankingLiveList = array();
+			} else {
+
+				$criteria->add(RankingLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				$this->collRankingLiveList = RankingLivePeer::doSelectJoinVirtualTableRelatedByRankingTypeId($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+			if (!isset($this->lastRankingLiveCriteria) || !$this->lastRankingLiveCriteria->equals($criteria)) {
+				$this->collRankingLiveList = RankingLivePeer::doSelectJoinVirtualTableRelatedByRankingTypeId($criteria, $con);
+			}
+		}
+		$this->lastRankingLiveCriteria = $criteria;
+
+		return $this->collRankingLiveList;
+	}
+
+
+	
+	public function getRankingLiveListJoinVirtualTableRelatedByGameStyleId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveList === null) {
+			if ($this->isNew()) {
+				$this->collRankingLiveList = array();
+			} else {
+
+				$criteria->add(RankingLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				$this->collRankingLiveList = RankingLivePeer::doSelectJoinVirtualTableRelatedByGameStyleId($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+			if (!isset($this->lastRankingLiveCriteria) || !$this->lastRankingLiveCriteria->equals($criteria)) {
+				$this->collRankingLiveList = RankingLivePeer::doSelectJoinVirtualTableRelatedByGameStyleId($criteria, $con);
+			}
+		}
+		$this->lastRankingLiveCriteria = $criteria;
+
+		return $this->collRankingLiveList;
+	}
+
+
+	
+	public function getRankingLiveListJoinVirtualTableRelatedByGameTypeId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveList === null) {
+			if ($this->isNew()) {
+				$this->collRankingLiveList = array();
+			} else {
+
+				$criteria->add(RankingLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				$this->collRankingLiveList = RankingLivePeer::doSelectJoinVirtualTableRelatedByGameTypeId($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+			if (!isset($this->lastRankingLiveCriteria) || !$this->lastRankingLiveCriteria->equals($criteria)) {
+				$this->collRankingLiveList = RankingLivePeer::doSelectJoinVirtualTableRelatedByGameTypeId($criteria, $con);
+			}
+		}
+		$this->lastRankingLiveCriteria = $criteria;
+
+		return $this->collRankingLiveList;
+	}
+
+	
+	public function initEventLiveList()
+	{
+		if ($this->collEventLiveList === null) {
+			$this->collEventLiveList = array();
+		}
+	}
+
+	
+	public function getEventLiveList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLiveList === null) {
+			if ($this->isNew()) {
+			   $this->collEventLiveList = array();
+			} else {
+
+				$criteria->add(EventLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				EventLivePeer::addSelectColumns($criteria);
+				$this->collEventLiveList = EventLivePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				EventLivePeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventLiveCriteria) || !$this->lastEventLiveCriteria->equals($criteria)) {
+					$this->collEventLiveList = EventLivePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventLiveCriteria = $criteria;
+		return $this->collEventLiveList;
+	}
+
+	
+	public function countEventLiveList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+		return EventLivePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventLive(EventLive $l)
+	{
+		$this->collEventLiveList[] = $l;
+		$l->setEmailTemplate($this);
+	}
+
+
+	
+	public function getEventLiveListJoinRankingLive($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLiveList === null) {
+			if ($this->isNew()) {
+				$this->collEventLiveList = array();
+			} else {
+
+				$criteria->add(EventLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				$this->collEventLiveList = EventLivePeer::doSelectJoinRankingLive($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+			if (!isset($this->lastEventLiveCriteria) || !$this->lastEventLiveCriteria->equals($criteria)) {
+				$this->collEventLiveList = EventLivePeer::doSelectJoinRankingLive($criteria, $con);
+			}
+		}
+		$this->lastEventLiveCriteria = $criteria;
+
+		return $this->collEventLiveList;
+	}
+
+
+	
+	public function getEventLiveListJoinClub($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLiveList === null) {
+			if ($this->isNew()) {
+				$this->collEventLiveList = array();
+			} else {
+
+				$criteria->add(EventLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				$this->collEventLiveList = EventLivePeer::doSelectJoinClub($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+			if (!isset($this->lastEventLiveCriteria) || !$this->lastEventLiveCriteria->equals($criteria)) {
+				$this->collEventLiveList = EventLivePeer::doSelectJoinClub($criteria, $con);
+			}
+		}
+		$this->lastEventLiveCriteria = $criteria;
+
+		return $this->collEventLiveList;
 	}
 
 	

@@ -103,16 +103,16 @@ class RankingLive extends BaseRankingLive
 		$this->setDescription($description);
 		
 		// Informações da aba Valores padrão
-		$this->setStartTime(($startTime?$startTime:null));
+		$this->setStartTime(nvl($startTime));
 		$this->setIsFreeroll(($isFreeroll?true:false));
 		$this->setBuyin(Util::formatFloat($buyin));
 		$this->setEntranceFee(Util::formatFloat($entranceFee));
-		$this->setBlindTime(($blindTime?$blindTime:null));
+		$this->setBlindTime(nvl($blindTime));
 		$this->setStackChips($stackChips);
 		$this->setAllowedRebuys($allowedRebuys);
 		$this->setAllowedAddons($allowedAddons);
 		$this->setIsIlimitedRebuys(($isIlimitedRebuys?true:false));
-		$this->setPrizeSplit(($prizeSplit?$prizeSplit:null));
+		$this->setPrizeSplit(nvl($prizeSplit));
 		$this->setRakePercent(Util::formatFloat($rakePercent));
 		$this->setPublishPrize(($publishPrize?true:false));
 		
@@ -177,7 +177,8 @@ class RankingLive extends BaseRankingLive
 			$eventLiveObj->setPrizeSplit($this->getPrizeSplit());
 			$eventLiveObj->setPublishPrize($this->getPublishPrize());
 			$eventLiveObj->setRakePercent($this->getRakePercent());
-			$eventLiveObj->setDescription('<descrição do ranking>');
+			$eventLiveObj->setEmailTemplateId($this->getEmailTemplateId());
+			$eventLiveObj->setDescription('[descrição do ranking]');
 			$eventLiveObj->setEnabled(true);
 			$eventLiveObj->setVisible(true);
 			$eventLiveObj->setDeleted(false);

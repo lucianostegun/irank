@@ -7,24 +7,6 @@
 	
 <div class="emailTemplatePreview">
 <?php
-	$emailContent = $emailTemplateObj->getContent();
-	
-	$eventObj = EventPeer::retrieveByPK(10);
-	
-	$infoList = array('resultList'=>$eventObj->getEmailResultList(),
-					  'classifyList'=>$eventObj->getEmailClassifyList(),
-					  'emailTitle'=>$emailTemplateObj->toString(),
-					  'peopleName'=>$sf_user->getAttribute('fullName'));
-	
-	$infoList = array_merge($infoList, $eventObj->getInfo());
-	
-	if( !is_null($emailTemplateObj->getEmailTemplateId()) ){
-		
-		$emailTemplate = $emailTemplateObj->getEmailTemplate()->getContent();
-		$emailContent = str_replace('[emailContent]', $emailContent, $emailTemplate);
-	}
-					  
-	$emailContent = Report::defaultReplace($emailContent, $infoList);
-	echo $emailContent;
+	echo $emailTemplateObj->getContentPreview();
 ?>
 </div>

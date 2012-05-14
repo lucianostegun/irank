@@ -61,11 +61,24 @@
 	<div class="formRow">
 		<label>Nome curto</label>
 		<div class="formRight">
-			<?php echo input_tag('eventShortName', $eventLiveObj->getEventShortName(), array('size'=>30, 'maxlength'=>40, 'id'=>'eventLiveEventShortName')) ?>
+			<?php echo input_tag('eventShortName', $eventLiveObj->getEventShortName(), array('size'=>50, 'maxlength'=>100, 'id'=>'eventLiveEventShortName')) ?>
 			<div class="formNote error" id="eventLiveFormErrorEventShortName"></div>
 		</div>
 		<div class="clear"></div>
 	</div>
+
+	<div class="formRow">
+		<label>Nº etapa / Dia</label>
+		<div class="formRight">
+			<?php echo input_tag('stepNumber', $eventLiveObj->getStepNumber(), array('size'=>3, 'maxlength'=>2, 'id'=>'eventLiveEventStepNumber')) ?>
+			<?php echo input_tag('stepDay', $eventLiveObj->getStepDay(), array('size'=>7, 'maxlength'=>5, 'id'=>'eventLiveEventStepDay')) ?>
+			<div class="formNote error" id="eventLiveFormErrorEventStepNumber"></div>
+			<div class="formNote error" id="eventLiveFormErrorEventStepDay"></div>
+			<div class="formNote">Utilizado na divulgação do evento por e-mail/sms</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
 
 	<div class="formRow">
 		<label>Data</label>

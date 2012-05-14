@@ -42,14 +42,14 @@ foreach($eventDateList as $key=>$eventDate){
 	
 	$position      = $rankingHistoryObj->getRankingPosition();
 	$totalPosition = $rankingHistoryObj->getTotalRankingPosition();
-	$myPositionByDayList[] = ($position?$position:null);
-	$myPositionProgressList[] = ($totalPosition?$totalPosition:null);
+	$myPositionByDayList[] = (nvl($position));
+	$myPositionProgressList[] = (nvl($totalPosition));
 	
 	$rankingHistoryObj = RankingHistoryPeer::retrieveByPK($rankingObj->getId(), $peopleIdOther, $eventDate);
 	$position          = $rankingHistoryObj->getRankingPosition();
 	$totalPosition     = $rankingHistoryObj->getTotalRankingPosition();
-	$otherPlaceByDayList[] = ($position?$position:null);
-	$otherPlaceProgressList[] = ($totalPosition?$totalPosition:null);
+	$otherPlaceByDayList[] = (nvl($position));
+	$otherPlaceProgressList[] = (nvl($totalPosition));
 }
 
 //

@@ -1522,6 +1522,41 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 		$l->setVirtualTableRelatedByRankingTypeId($this);
 	}
 
+
+	
+	public function getRankingLiveListRelatedByRankingTypeIdJoinEmailTemplate($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveListRelatedByRankingTypeId === null) {
+			if ($this->isNew()) {
+				$this->collRankingLiveListRelatedByRankingTypeId = array();
+			} else {
+
+				$criteria->add(RankingLivePeer::RANKING_TYPE_ID, $this->getId());
+
+				$this->collRankingLiveListRelatedByRankingTypeId = RankingLivePeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingLivePeer::RANKING_TYPE_ID, $this->getId());
+
+			if (!isset($this->lastRankingLiveRelatedByRankingTypeIdCriteria) || !$this->lastRankingLiveRelatedByRankingTypeIdCriteria->equals($criteria)) {
+				$this->collRankingLiveListRelatedByRankingTypeId = RankingLivePeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		}
+		$this->lastRankingLiveRelatedByRankingTypeIdCriteria = $criteria;
+
+		return $this->collRankingLiveListRelatedByRankingTypeId;
+	}
+
 	
 	public function initRankingLiveListRelatedByGameStyleId()
 	{
@@ -1592,6 +1627,41 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 		$l->setVirtualTableRelatedByGameStyleId($this);
 	}
 
+
+	
+	public function getRankingLiveListRelatedByGameStyleIdJoinEmailTemplate($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveListRelatedByGameStyleId === null) {
+			if ($this->isNew()) {
+				$this->collRankingLiveListRelatedByGameStyleId = array();
+			} else {
+
+				$criteria->add(RankingLivePeer::GAME_STYLE_ID, $this->getId());
+
+				$this->collRankingLiveListRelatedByGameStyleId = RankingLivePeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingLivePeer::GAME_STYLE_ID, $this->getId());
+
+			if (!isset($this->lastRankingLiveRelatedByGameStyleIdCriteria) || !$this->lastRankingLiveRelatedByGameStyleIdCriteria->equals($criteria)) {
+				$this->collRankingLiveListRelatedByGameStyleId = RankingLivePeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		}
+		$this->lastRankingLiveRelatedByGameStyleIdCriteria = $criteria;
+
+		return $this->collRankingLiveListRelatedByGameStyleId;
+	}
+
 	
 	public function initRankingLiveListRelatedByGameTypeId()
 	{
@@ -1660,6 +1730,41 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	{
 		$this->collRankingLiveListRelatedByGameTypeId[] = $l;
 		$l->setVirtualTableRelatedByGameTypeId($this);
+	}
+
+
+	
+	public function getRankingLiveListRelatedByGameTypeIdJoinEmailTemplate($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingLiveListRelatedByGameTypeId === null) {
+			if ($this->isNew()) {
+				$this->collRankingLiveListRelatedByGameTypeId = array();
+			} else {
+
+				$criteria->add(RankingLivePeer::GAME_TYPE_ID, $this->getId());
+
+				$this->collRankingLiveListRelatedByGameTypeId = RankingLivePeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingLivePeer::GAME_TYPE_ID, $this->getId());
+
+			if (!isset($this->lastRankingLiveRelatedByGameTypeIdCriteria) || !$this->lastRankingLiveRelatedByGameTypeIdCriteria->equals($criteria)) {
+				$this->collRankingLiveListRelatedByGameTypeId = RankingLivePeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		}
+		$this->lastRankingLiveRelatedByGameTypeIdCriteria = $criteria;
+
+		return $this->collRankingLiveListRelatedByGameTypeId;
 	}
 
   public function getCulture()

@@ -11,7 +11,7 @@ class eventLiveActions extends sfActions
 {
 
   public function preExecute(){
-    
+  	
     $this->eventLiveId = $this->getRequestParameter('id');
     $this->eventLiveId = $this->getRequestParameter('eventLiveId', $this->eventLiveId);
     
@@ -30,7 +30,7 @@ class eventLiveActions extends sfActions
     
     $this->eventLiveObj = Util::getNewObject('eventLive');
     
-    $this->eventLiveObj->setDescription('<descrição do ranking>');
+    $this->eventLiveObj->setDescription('[descrição do ranking]');
     
 	sfLoader::loadHelpers('Partial');
     $this->stats   = get_partial('eventLive/include/stats', array('eventLiveObj'=>$this->eventLiveObj));
@@ -94,6 +94,17 @@ class eventLiveActions extends sfActions
     }
     
     $eventLiveObj->quickSave($request);
+    
+    exit;
+  }
+
+  public function executeSaveEmailTemplate($request){
+    
+    $emailTemplateId = $request->getParameter('emailTemplateId');
+    $eventLiveObj    = EventLivePeer::retrieveByPK($this->eventLiveId);
+    
+    $eventLiveObj->setEmailTemplateId(nvl($emailTemplateId));
+    $eventLiveObj->save();
     
     exit;
   }

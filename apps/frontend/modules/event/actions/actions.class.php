@@ -101,12 +101,12 @@ class eventActions extends sfActions
 	$eventObj->setRankingPlaceId( $rankingPlaceId );
 	$eventObj->setEventDate( Util::formatDate($eventDate) );
 	$eventObj->setStartTime( $startTime );
-	$eventObj->setPaidPlaces( ($paidPlaces?$paidPlaces:null) );
+	$eventObj->setPaidPlaces(nvl($paidPlaces));
 	$eventObj->setBuyin( Util::formatFloat($buyin) );
 	$eventObj->setEntranceFee( Util::formatFloat($entranceFee) );
 	$eventObj->setIsFreeroll( ($isFreeroll?true:false) );
 	$eventObj->setPrizePot( Util::formatFloat($prizePot) );
-	$eventObj->setComments( ($comments?$comments:null) );
+	$eventObj->setComments(nvl($comments));
 	$eventObj->setAllowRebuy(($allowRebuy?true:false));
 	$eventObj->setAllowAddon(($allowAddon?true:false));
 	$eventObj->setVisible(true);

@@ -13,7 +13,7 @@ abstract class BaseEventLivePeer {
 	const CLASS_DEFAULT = 'lib.model.EventLive';
 
 	
-	const NUM_COLUMNS = 32;
+	const NUM_COLUMNS = 35;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -24,6 +24,12 @@ abstract class BaseEventLivePeer {
 
 	
 	const RANKING_LIVE_ID = 'event_live.RANKING_LIVE_ID';
+
+	
+	const CLUB_ID = 'event_live.CLUB_ID';
+
+	
+	const EMAIL_TEMPLATE_ID = 'event_live.EMAIL_TEMPLATE_ID';
 
 	
 	const EVENT_NAME = 'event_live.EVENT_NAME';
@@ -41,6 +47,12 @@ abstract class BaseEventLivePeer {
 	const EVENT_DATE_TIME = 'event_live.EVENT_DATE_TIME';
 
 	
+	const STEP_NUMBER = 'event_live.STEP_NUMBER';
+
+	
+	const STEP_DAY = 'event_live.STEP_DAY';
+
+	
 	const COMMENTS = 'event_live.COMMENTS';
 
 	
@@ -48,9 +60,6 @@ abstract class BaseEventLivePeer {
 
 	
 	const IS_FREEROLL = 'event_live.IS_FREEROLL';
-
-	
-	const CLUB_ID = 'event_live.CLUB_ID';
 
 	
 	const BUYIN = 'event_live.BUYIN';
@@ -121,19 +130,19 @@ abstract class BaseEventLivePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingLiveId', 'EventName', 'EventShortName', 'EventDate', 'StartTime', 'EventDateTime', 'Comments', 'Description', 'IsFreeroll', 'ClubId', 'Buyin', 'EntranceFee', 'RakePercent', 'BlindTime', 'StackChips', 'Players', 'AllowedRebuys', 'AllowedAddons', 'IsIlimitedRebuys', 'SavedResult', 'TotalRebuys', 'PublishPrize', 'SuppressSchedule', 'PrizeSplit', 'VisitCount', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID, EventLivePeer::RANKING_LIVE_ID, EventLivePeer::EVENT_NAME, EventLivePeer::EVENT_SHORT_NAME, EventLivePeer::EVENT_DATE, EventLivePeer::START_TIME, EventLivePeer::EVENT_DATE_TIME, EventLivePeer::COMMENTS, EventLivePeer::DESCRIPTION, EventLivePeer::IS_FREEROLL, EventLivePeer::CLUB_ID, EventLivePeer::BUYIN, EventLivePeer::ENTRANCE_FEE, EventLivePeer::RAKE_PERCENT, EventLivePeer::BLIND_TIME, EventLivePeer::STACK_CHIPS, EventLivePeer::PLAYERS, EventLivePeer::ALLOWED_REBUYS, EventLivePeer::ALLOWED_ADDONS, EventLivePeer::IS_ILIMITED_REBUYS, EventLivePeer::SAVED_RESULT, EventLivePeer::TOTAL_REBUYS, EventLivePeer::PUBLISH_PRIZE, EventLivePeer::SUPPRESS_SCHEDULE, EventLivePeer::PRIZE_SPLIT, EventLivePeer::VISIT_COUNT, EventLivePeer::ENABLED, EventLivePeer::VISIBLE, EventLivePeer::DELETED, EventLivePeer::LOCKED, EventLivePeer::CREATED_AT, EventLivePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_live_id', 'event_name', 'event_short_name', 'event_date', 'start_time', 'event_date_time', 'comments', 'description', 'is_freeroll', 'club_id', 'buyin', 'entrance_fee', 'rake_percent', 'blind_time', 'stack_chips', 'players', 'allowed_rebuys', 'allowed_addons', 'is_ilimited_rebuys', 'saved_result', 'total_rebuys', 'publish_prize', 'suppress_schedule', 'prize_split', 'visit_count', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_LIVE_ID'=>'', 'EVENT_NAME'=>'', 'EVENT_SHORT_NAME'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'COMMENTS'=>'', 'DESCRIPTION'=>'', 'IS_FREEROLL'=>'', 'CLUB_ID'=>'', 'BUYIN'=>'', 'ENTRANCE_FEE'=>'', 'RAKE_PERCENT'=>'', 'BLIND_TIME'=>'', 'STACK_CHIPS'=>'', 'PLAYERS'=>'', 'ALLOWED_REBUYS'=>'', 'ALLOWED_ADDONS'=>'', 'IS_ILIMITED_REBUYS'=>'', 'SAVED_RESULT'=>'', 'TOTAL_REBUYS'=>'', 'PUBLISH_PRIZE'=>'', 'SUPPRESS_SCHEDULE'=>'', 'PRIZE_SPLIT'=>'', 'VISIT_COUNT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingLiveId', 'ClubId', 'EmailTemplateId', 'EventName', 'EventShortName', 'EventDate', 'StartTime', 'EventDateTime', 'StepNumber', 'StepDay', 'Comments', 'Description', 'IsFreeroll', 'Buyin', 'EntranceFee', 'RakePercent', 'BlindTime', 'StackChips', 'Players', 'AllowedRebuys', 'AllowedAddons', 'IsIlimitedRebuys', 'SavedResult', 'TotalRebuys', 'PublishPrize', 'SuppressSchedule', 'PrizeSplit', 'VisitCount', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID, EventLivePeer::RANKING_LIVE_ID, EventLivePeer::CLUB_ID, EventLivePeer::EMAIL_TEMPLATE_ID, EventLivePeer::EVENT_NAME, EventLivePeer::EVENT_SHORT_NAME, EventLivePeer::EVENT_DATE, EventLivePeer::START_TIME, EventLivePeer::EVENT_DATE_TIME, EventLivePeer::STEP_NUMBER, EventLivePeer::STEP_DAY, EventLivePeer::COMMENTS, EventLivePeer::DESCRIPTION, EventLivePeer::IS_FREEROLL, EventLivePeer::BUYIN, EventLivePeer::ENTRANCE_FEE, EventLivePeer::RAKE_PERCENT, EventLivePeer::BLIND_TIME, EventLivePeer::STACK_CHIPS, EventLivePeer::PLAYERS, EventLivePeer::ALLOWED_REBUYS, EventLivePeer::ALLOWED_ADDONS, EventLivePeer::IS_ILIMITED_REBUYS, EventLivePeer::SAVED_RESULT, EventLivePeer::TOTAL_REBUYS, EventLivePeer::PUBLISH_PRIZE, EventLivePeer::SUPPRESS_SCHEDULE, EventLivePeer::PRIZE_SPLIT, EventLivePeer::VISIT_COUNT, EventLivePeer::ENABLED, EventLivePeer::VISIBLE, EventLivePeer::DELETED, EventLivePeer::LOCKED, EventLivePeer::CREATED_AT, EventLivePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_live_id', 'club_id', 'email_template_id', 'event_name', 'event_short_name', 'event_date', 'start_time', 'event_date_time', 'step_number', 'step_day', 'comments', 'description', 'is_freeroll', 'buyin', 'entrance_fee', 'rake_percent', 'blind_time', 'stack_chips', 'players', 'allowed_rebuys', 'allowed_addons', 'is_ilimited_rebuys', 'saved_result', 'total_rebuys', 'publish_prize', 'suppress_schedule', 'prize_split', 'visit_count', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_LIVE_ID'=>'', 'CLUB_ID'=>'', 'EMAIL_TEMPLATE_ID'=>'', 'EVENT_NAME'=>'', 'EVENT_SHORT_NAME'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'STEP_NUMBER'=>'', 'STEP_DAY'=>'', 'COMMENTS'=>'', 'DESCRIPTION'=>'', 'IS_FREEROLL'=>'', 'BUYIN'=>'', 'ENTRANCE_FEE'=>'', 'RAKE_PERCENT'=>'', 'BLIND_TIME'=>'', 'STACK_CHIPS'=>'', 'PLAYERS'=>'', 'ALLOWED_REBUYS'=>'', 'ALLOWED_ADDONS'=>'', 'IS_ILIMITED_REBUYS'=>'', 'SAVED_RESULT'=>'', 'TOTAL_REBUYS'=>'', 'PUBLISH_PRIZE'=>'', 'SUPPRESS_SCHEDULE'=>'', 'PRIZE_SPLIT'=>'', 'VISIT_COUNT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingLiveId'=>1, 'EventName'=>2, 'EventShortName'=>3, 'EventDate'=>4, 'StartTime'=>5, 'EventDateTime'=>6, 'Comments'=>7, 'Description'=>8, 'IsFreeroll'=>9, 'ClubId'=>10, 'Buyin'=>11, 'EntranceFee'=>12, 'RakePercent'=>13, 'BlindTime'=>14, 'StackChips'=>15, 'Players'=>16, 'AllowedRebuys'=>17, 'AllowedAddons'=>18, 'IsIlimitedRebuys'=>19, 'SavedResult'=>20, 'TotalRebuys'=>21, 'PublishPrize'=>22, 'SuppressSchedule'=>23, 'PrizeSplit'=>24, 'VisitCount'=>25, 'Enabled'=>26, 'Visible'=>27, 'Deleted'=>28, 'Locked'=>29, 'CreatedAt'=>30, 'UpdatedAt'=>31, ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID=>0, EventLivePeer::RANKING_LIVE_ID=>1, EventLivePeer::EVENT_NAME=>2, EventLivePeer::EVENT_SHORT_NAME=>3, EventLivePeer::EVENT_DATE=>4, EventLivePeer::START_TIME=>5, EventLivePeer::EVENT_DATE_TIME=>6, EventLivePeer::COMMENTS=>7, EventLivePeer::DESCRIPTION=>8, EventLivePeer::IS_FREEROLL=>9, EventLivePeer::CLUB_ID=>10, EventLivePeer::BUYIN=>11, EventLivePeer::ENTRANCE_FEE=>12, EventLivePeer::RAKE_PERCENT=>13, EventLivePeer::BLIND_TIME=>14, EventLivePeer::STACK_CHIPS=>15, EventLivePeer::PLAYERS=>16, EventLivePeer::ALLOWED_REBUYS=>17, EventLivePeer::ALLOWED_ADDONS=>18, EventLivePeer::IS_ILIMITED_REBUYS=>19, EventLivePeer::SAVED_RESULT=>20, EventLivePeer::TOTAL_REBUYS=>21, EventLivePeer::PUBLISH_PRIZE=>22, EventLivePeer::SUPPRESS_SCHEDULE=>23, EventLivePeer::PRIZE_SPLIT=>24, EventLivePeer::VISIT_COUNT=>25, EventLivePeer::ENABLED=>26, EventLivePeer::VISIBLE=>27, EventLivePeer::DELETED=>28, EventLivePeer::LOCKED=>29, EventLivePeer::CREATED_AT=>30, EventLivePeer::UPDATED_AT=>31, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_live_id'=>1, 'event_name'=>2, 'event_short_name'=>3, 'event_date'=>4, 'start_time'=>5, 'event_date_time'=>6, 'comments'=>7, 'description'=>8, 'is_freeroll'=>9, 'club_id'=>10, 'buyin'=>11, 'entrance_fee'=>12, 'rake_percent'=>13, 'blind_time'=>14, 'stack_chips'=>15, 'players'=>16, 'allowed_rebuys'=>17, 'allowed_addons'=>18, 'is_ilimited_rebuys'=>19, 'saved_result'=>20, 'total_rebuys'=>21, 'publish_prize'=>22, 'suppress_schedule'=>23, 'prize_split'=>24, 'visit_count'=>25, 'enabled'=>26, 'visible'=>27, 'deleted'=>28, 'locked'=>29, 'created_at'=>30, 'updated_at'=>31, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingLiveId'=>1, 'ClubId'=>2, 'EmailTemplateId'=>3, 'EventName'=>4, 'EventShortName'=>5, 'EventDate'=>6, 'StartTime'=>7, 'EventDateTime'=>8, 'StepNumber'=>9, 'StepDay'=>10, 'Comments'=>11, 'Description'=>12, 'IsFreeroll'=>13, 'Buyin'=>14, 'EntranceFee'=>15, 'RakePercent'=>16, 'BlindTime'=>17, 'StackChips'=>18, 'Players'=>19, 'AllowedRebuys'=>20, 'AllowedAddons'=>21, 'IsIlimitedRebuys'=>22, 'SavedResult'=>23, 'TotalRebuys'=>24, 'PublishPrize'=>25, 'SuppressSchedule'=>26, 'PrizeSplit'=>27, 'VisitCount'=>28, 'Enabled'=>29, 'Visible'=>30, 'Deleted'=>31, 'Locked'=>32, 'CreatedAt'=>33, 'UpdatedAt'=>34, ),
+		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID=>0, EventLivePeer::RANKING_LIVE_ID=>1, EventLivePeer::CLUB_ID=>2, EventLivePeer::EMAIL_TEMPLATE_ID=>3, EventLivePeer::EVENT_NAME=>4, EventLivePeer::EVENT_SHORT_NAME=>5, EventLivePeer::EVENT_DATE=>6, EventLivePeer::START_TIME=>7, EventLivePeer::EVENT_DATE_TIME=>8, EventLivePeer::STEP_NUMBER=>9, EventLivePeer::STEP_DAY=>10, EventLivePeer::COMMENTS=>11, EventLivePeer::DESCRIPTION=>12, EventLivePeer::IS_FREEROLL=>13, EventLivePeer::BUYIN=>14, EventLivePeer::ENTRANCE_FEE=>15, EventLivePeer::RAKE_PERCENT=>16, EventLivePeer::BLIND_TIME=>17, EventLivePeer::STACK_CHIPS=>18, EventLivePeer::PLAYERS=>19, EventLivePeer::ALLOWED_REBUYS=>20, EventLivePeer::ALLOWED_ADDONS=>21, EventLivePeer::IS_ILIMITED_REBUYS=>22, EventLivePeer::SAVED_RESULT=>23, EventLivePeer::TOTAL_REBUYS=>24, EventLivePeer::PUBLISH_PRIZE=>25, EventLivePeer::SUPPRESS_SCHEDULE=>26, EventLivePeer::PRIZE_SPLIT=>27, EventLivePeer::VISIT_COUNT=>28, EventLivePeer::ENABLED=>29, EventLivePeer::VISIBLE=>30, EventLivePeer::DELETED=>31, EventLivePeer::LOCKED=>32, EventLivePeer::CREATED_AT=>33, EventLivePeer::UPDATED_AT=>34, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_live_id'=>1, 'club_id'=>2, 'email_template_id'=>3, 'event_name'=>4, 'event_short_name'=>5, 'event_date'=>6, 'start_time'=>7, 'event_date_time'=>8, 'step_number'=>9, 'step_day'=>10, 'comments'=>11, 'description'=>12, 'is_freeroll'=>13, 'buyin'=>14, 'entrance_fee'=>15, 'rake_percent'=>16, 'blind_time'=>17, 'stack_chips'=>18, 'players'=>19, 'allowed_rebuys'=>20, 'allowed_addons'=>21, 'is_ilimited_rebuys'=>22, 'saved_result'=>23, 'total_rebuys'=>24, 'publish_prize'=>25, 'suppress_schedule'=>26, 'prize_split'=>27, 'visit_count'=>28, 'enabled'=>29, 'visible'=>30, 'deleted'=>31, 'locked'=>32, 'created_at'=>33, 'updated_at'=>34, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, )
 	);
 
 	
@@ -191,6 +200,10 @@ abstract class BaseEventLivePeer {
 
 		$criteria->addSelectColumn(EventLivePeer::RANKING_LIVE_ID);
 
+		$criteria->addSelectColumn(EventLivePeer::CLUB_ID);
+
+		$criteria->addSelectColumn(EventLivePeer::EMAIL_TEMPLATE_ID);
+
 		$criteria->addSelectColumn(EventLivePeer::EVENT_NAME);
 
 		$criteria->addSelectColumn(EventLivePeer::EVENT_SHORT_NAME);
@@ -201,13 +214,15 @@ abstract class BaseEventLivePeer {
 
 		$criteria->addSelectColumn(EventLivePeer::EVENT_DATE_TIME);
 
+		$criteria->addSelectColumn(EventLivePeer::STEP_NUMBER);
+
+		$criteria->addSelectColumn(EventLivePeer::STEP_DAY);
+
 		$criteria->addSelectColumn(EventLivePeer::COMMENTS);
 
 		$criteria->addSelectColumn(EventLivePeer::DESCRIPTION);
 
 		$criteria->addSelectColumn(EventLivePeer::IS_FREEROLL);
-
-		$criteria->addSelectColumn(EventLivePeer::CLUB_ID);
 
 		$criteria->addSelectColumn(EventLivePeer::BUYIN);
 
@@ -386,6 +401,34 @@ abstract class BaseEventLivePeer {
 
 
 	
+	public static function doCountJoinEmailTemplate(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(EventLivePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(EventLivePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(EventLivePeer::EMAIL_TEMPLATE_ID, EmailTemplatePeer::ID);
+
+		$rs = EventLivePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
 	public static function doSelectJoinRankingLive(Criteria $c, $con = null)
 	{
 		$c = clone $c;
@@ -480,6 +523,53 @@ abstract class BaseEventLivePeer {
 
 
 	
+	public static function doSelectJoinEmailTemplate(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		EventLivePeer::addSelectColumns($c);
+		$startcol = (EventLivePeer::NUM_COLUMNS - EventLivePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		EmailTemplatePeer::addSelectColumns($c);
+
+		$c->addJoin(EventLivePeer::EMAIL_TEMPLATE_ID, EmailTemplatePeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = EventLivePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = EmailTemplatePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getEmailTemplate(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addEventLive($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initEventLiveList();
+				$obj2->addEventLive($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
 	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
 	{
 		$criteria = clone $criteria;
@@ -499,6 +589,8 @@ abstract class BaseEventLivePeer {
 		$criteria->addJoin(EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID);
 
 		$criteria->addJoin(EventLivePeer::CLUB_ID, ClubPeer::ID);
+
+		$criteria->addJoin(EventLivePeer::EMAIL_TEMPLATE_ID, EmailTemplatePeer::ID);
 
 		$rs = EventLivePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -527,9 +619,14 @@ abstract class BaseEventLivePeer {
 		ClubPeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + ClubPeer::NUM_COLUMNS;
 
+		EmailTemplatePeer::addSelectColumns($c);
+		$startcol5 = $startcol4 + EmailTemplatePeer::NUM_COLUMNS;
+
 		$c->addJoin(EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID);
 
 		$c->addJoin(EventLivePeer::CLUB_ID, ClubPeer::ID);
+
+		$c->addJoin(EventLivePeer::EMAIL_TEMPLATE_ID, EmailTemplatePeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -589,6 +686,29 @@ abstract class BaseEventLivePeer {
 				$obj3->addEventLive($obj1);
 			}
 
+
+					
+			$omClass = EmailTemplatePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj4 = new $cls();
+			$obj4->hydrate($rs, $startcol4);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj4 = $temp_obj1->getEmailTemplate(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj4->addEventLive($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj4->initEventLiveList();
+				$obj4->addEventLive($obj1);
+			}
+
 			$results[] = $obj1;
 		}
 		return $results;
@@ -613,6 +733,8 @@ abstract class BaseEventLivePeer {
 		}
 
 		$criteria->addJoin(EventLivePeer::CLUB_ID, ClubPeer::ID);
+
+		$criteria->addJoin(EventLivePeer::EMAIL_TEMPLATE_ID, EmailTemplatePeer::ID);
 
 		$rs = EventLivePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -642,6 +764,38 @@ abstract class BaseEventLivePeer {
 
 		$criteria->addJoin(EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID);
 
+		$criteria->addJoin(EventLivePeer::EMAIL_TEMPLATE_ID, EmailTemplatePeer::ID);
+
+		$rs = EventLivePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doCountJoinAllExceptEmailTemplate(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(EventLivePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(EventLivePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID);
+
+		$criteria->addJoin(EventLivePeer::CLUB_ID, ClubPeer::ID);
+
 		$rs = EventLivePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
@@ -666,7 +820,12 @@ abstract class BaseEventLivePeer {
 		ClubPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + ClubPeer::NUM_COLUMNS;
 
+		EmailTemplatePeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + EmailTemplatePeer::NUM_COLUMNS;
+
 		$c->addJoin(EventLivePeer::CLUB_ID, ClubPeer::ID);
+
+		$c->addJoin(EventLivePeer::EMAIL_TEMPLATE_ID, EmailTemplatePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -702,6 +861,28 @@ abstract class BaseEventLivePeer {
 				$obj2->addEventLive($obj1);
 			}
 
+			$omClass = EmailTemplatePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getEmailTemplate(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addEventLive($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initEventLiveList();
+				$obj3->addEventLive($obj1);
+			}
+
 			$results[] = $obj1;
 		}
 		return $results;
@@ -723,7 +904,12 @@ abstract class BaseEventLivePeer {
 		RankingLivePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + RankingLivePeer::NUM_COLUMNS;
 
+		EmailTemplatePeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + EmailTemplatePeer::NUM_COLUMNS;
+
 		$c->addJoin(EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID);
+
+		$c->addJoin(EventLivePeer::EMAIL_TEMPLATE_ID, EmailTemplatePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -757,6 +943,112 @@ abstract class BaseEventLivePeer {
 			if ($newObject) {
 				$obj2->initEventLiveList();
 				$obj2->addEventLive($obj1);
+			}
+
+			$omClass = EmailTemplatePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getEmailTemplate(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addEventLive($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initEventLiveList();
+				$obj3->addEventLive($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptEmailTemplate(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		EventLivePeer::addSelectColumns($c);
+		$startcol2 = (EventLivePeer::NUM_COLUMNS - EventLivePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		RankingLivePeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + RankingLivePeer::NUM_COLUMNS;
+
+		ClubPeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + ClubPeer::NUM_COLUMNS;
+
+		$c->addJoin(EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID);
+
+		$c->addJoin(EventLivePeer::CLUB_ID, ClubPeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = EventLivePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = RankingLivePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getRankingLive(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addEventLive($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initEventLiveList();
+				$obj2->addEventLive($obj1);
+			}
+
+			$omClass = ClubPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getClub(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addEventLive($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initEventLiveList();
+				$obj3->addEventLive($obj1);
 			}
 
 			$results[] = $obj1;

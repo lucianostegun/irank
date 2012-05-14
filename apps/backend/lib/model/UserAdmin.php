@@ -26,7 +26,7 @@ class UserAdmin extends BaseUserAdmin
 		if( $fromUser===false ){
 			
 			$this->setPeopleId($peopleId);
-			$this->setClubId(($clubId?$clubId:null));
+			$this->setClubId(nvl($clubId));
 			$this->setMaster(($master?true:false));
 			$this->setActive(($active?true:false));
 			$this->setEnabled(true);

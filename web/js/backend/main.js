@@ -49,30 +49,7 @@ $(function() {
 
 		//===== Check all checbboxes =====//
 		
-		$(".titleIcon input:checkbox").click(function() {
-			var checkedStatus = this.checked;
-			$("#checkAll tbody tr td:first-child input:checkbox").each(function() {
-				this.checked = checkedStatus;
-					if (checkedStatus == this.checked) {
-						$(this).closest('.checker > span').removeClass('checked');
-					}
-					if (this.checked) {
-						$(this).closest('.checker > span').addClass('checked');
-					}
-			});
-			
-			$("#checkAll2 tbody tr td:first-child input:checkbox").each(function() {
-				this.checked = checkedStatus;
-				if (checkedStatus == this.checked) {
-					$(this).closest('.checker > span').removeClass('checked');
-				}
-				if (this.checked) {
-					$(this).closest('.checker > span').addClass('checked');
-				}
-			});
-		});
-		
-		$('#checkAll tbody tr td:first-child').next('td').css('border-left-color', '#CBCBCB');
+		buildCheckboxTable(1);
 		
 		
 		
@@ -180,4 +157,38 @@ function loadTabContent(tabId, urlAjax, force, successHandler){
 	
 	urlAjax = _webRoot+urlAjax;
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}
+
+function buildCheckboxTable(){
+	
+	$(".titleIcon input:checkbox").click(function() {
+		var checkedStatus = this.checked;
+		
+		$("#checkAll tbody tr td:first-child input").each(function() {
+			this.checked = checkedStatus;
+				if (checkedStatus == this.checked) {
+					$(this).closest('.checker > span').removeClass('checked');
+				}
+				if (this.checked) {
+					$(this).closest('.checker > span').addClass('checked');
+				}
+		});
+	});
+
+	$(".titleIcon.titleIcon2 input:checkbox").click(function() {
+		var checkedStatus = this.checked;
+		
+		$("#checkAll2 tbody tr td:first-child input:checkbox").each(function() {
+			this.checked = checkedStatus;
+			if (checkedStatus == this.checked) {
+				$(this).closest('.checker > span').removeClass('checked');
+			}
+			if (this.checked) {
+				$(this).closest('.checker > span').addClass('checked');
+			}
+		});
+	});
+		
+	$('#checkAll tbody tr td:first-child').next('td').css('border-left-color', '#CBCBCB');
+	$('#checkAll2 tbody tr td:first-child').next('td').css('border-left-color', '#CBCBCB');
 }

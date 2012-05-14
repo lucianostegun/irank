@@ -146,10 +146,12 @@ class emailTemplateActions extends sfActions
 	
 	$emailAddress = Settings::getValue('emailDebug');
 	$emailSubject = 'Preview: '.$emailTemplateObj->toString();
-	$emailContent = $emailTemplateObj->getContent();
+	$emailContent = $emailTemplateObj->getContentPreview(false);
 	$emailContent = Report::defaultReplace($emailContent);
 	
-	Report::sendMail($emailSubject, $emailAddress, $emailContent);
+	$options = array('emailTemplateObj'=>$emailTemplateObj);
+	
+	Report::sendMail($emailSubject, $emailAddress, $emailContent, $options);
 	
   	exit;
   }

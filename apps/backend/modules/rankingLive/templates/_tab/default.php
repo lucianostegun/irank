@@ -67,7 +67,22 @@
 	</div>
 	
 	<br/>
-	<h5>Opções de resultado</h5>
+	<h5>Divulgação</h5>
+	<hr/>
+	<br/>
+
+	<div class="formRow">
+		<label>Template padrão</label>
+		<div class="formRight">
+			<span class="multi"><?php echo select_tag('emailTemplateId', EmailTemplate::getOptionsForSelectClub(($rankingLiveObj->getEmailTemplateId()|Settings::getValue('emailTemplateIdEventCreateNotify'))), array('id'=>'rankingLiveEmailTemplateIdEventCreateNotify')) ?></span>
+			<div class="clear"></div>
+			<div class="formNote">Template padrão de divulgação dos eventos por e-mail</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<br/>
+	<h5>Resultado</h5>
 	<hr/>
 	<br/>
 

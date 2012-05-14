@@ -37,8 +37,8 @@ class Log extends BaseLog
         $message = str_replace('\\', '/', $message);
         
         $logObj = new Log;
-        $logObj->setUserSiteId(($userSiteId?$userSiteId:null)); // Logs sem usuários são logs do sistema
-        $logObj->setUserAdminId(($userAdminId?$userAdminId:null)); // Logs sem usuários são logs do sistema
+        $logObj->setUserSiteId(nvl($userSiteId)); // Logs sem usuários são logs do sistema
+        $logObj->setUserAdminId(nvl($userAdminId)); // Logs sem usuários são logs do sistema
         $logObj->setApp( $app );
         $logObj->setModuleName( $moduleName );
         $logObj->setActionName( $actionName );

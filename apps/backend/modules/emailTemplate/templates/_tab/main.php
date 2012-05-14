@@ -1,5 +1,7 @@
 <?php
 	$userAdminId = $sf_user->getAttribute('userAdminId');
+	$criteria = new Criteria();
+	$criteria->add( EmailTemplatePeer::EMAIL_TEMPLATE_ID, null );
 ?>
 	<div class="formRow">
 		<label>Clube</label>
@@ -12,7 +14,7 @@
 	<div class="formRow">
 		<label>Template global</label>
 		<div class="formRight">
-			<?php echo select_tag('emailTemplateIdParent', EmailTemplate::getOptionsForSelect($emailTemplateObj->getEmailTemplateId()), array('id'=>'emailTemplateEmailTemplateId')) ?>
+			<?php echo select_tag('emailTemplateIdParent', EmailTemplate::getOptionsForSelect($emailTemplateObj->getEmailTemplateId(), false, $criteria), array('id'=>'emailTemplateEmailTemplateId')) ?>
 			<div class="formNote error" id="emailTemplateFormErrorEmailTemplateId"></div>
 		</div>
 		<div class="clear"></div>
