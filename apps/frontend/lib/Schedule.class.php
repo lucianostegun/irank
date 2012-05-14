@@ -160,7 +160,8 @@ class Schedule {
     	
 	    $resultSet = Util::executeQuery(sprintf("SELECT * FROM event_live_schedule_view WHERE event_date >= '%s'", $this->startDate));
 	    
-	    $nl = Schedule::NEW_LINE;
+	    $nl   = Schedule::NEW_LINE;
+	    $host = MyTools::getRequest()->getHost();
 	    
 	    while( $resultSet->next() ){
     
@@ -220,8 +221,8 @@ class Schedule {
 	    	$eventLiveIdBase64 = base64_encode($eventLiveId);
 	    	
 	    	$eventLiveIdMd5 = $this->getMd5Id('eventLive-'.$eventLiveIdBase64.'-rankingLive-'.$rankingLiveId);
-	    	$alarmId    = $this->getMd5Id('eventLive-'.$eventLiveIdBase64.'-rankingLive-'.$rankingLiveId.'-alarm');
-	    
+	    	$alarmId        = $this->getMd5Id('eventLive-'.$eventLiveIdBase64.'-rankingLive-'.$rankingLiveId.'-alarm');
+	    	
 			$event  = "BEGIN:VEVENT".$nl;
 			$event .= "TRANSP:TRANSPARENT".$nl;
 //			$event .= "DTEND;TZID=America/Sao_Paulo:$eventDateTimeEnd".$nl;
@@ -230,7 +231,7 @@ class Schedule {
 			$event .= "LOCATION:$clubName\\n{$cityName}-$initial{$mapsLink}".$nl;
 			if( $comments )
 				$event .= "DESCRIPTION:$comments".$nl;
-			$event .= "URL;VALUE=URI:http://www.irank.com.br/eventLive/details/$eventLiveIdBase64".$nl;
+			$event .= "URL;VALUE=URI:http://$host/eventLive/details/$eventLiveIdBase64".$nl;
 			$event .= "STATUS:CONFIRMED".$nl;
 			$event .= "SEQUENCE:{$this->sequence}".$nl;
 			$event .= "SUMMARY:$eventName".$nl;
@@ -289,11 +290,13 @@ class Schedule {
 		$md5Id = md5($md5Id);
 	    $md5Id = strtoupper($md5Id);
 	    $md5Id = sprintf('%s-%s-%s-%s-%s', substr($md5Id, 0, 8), substr($md5Id, 8, 4), substr($md5Id, 12, 4), substr($md5Id, 16, 4), substr($md5Id, 20, 12));
+	    return $md5Id;
     }
     
     public function buildFile(){
     	
-		Util::forceDownload(Schedule::FILE_NAME_EXPORT, 'text/calendar');
+//		Util::forceDownload(Schedule::FILE_NAME_EXPORT, 'text/calendar');
+echo '<pre>';
 		
 		$fileNameTmp = $this->getFilePathTmp();
 		echo file_get_contents($this->getFilePathTemplate());
