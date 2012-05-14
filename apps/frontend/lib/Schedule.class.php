@@ -295,8 +295,7 @@ class Schedule {
     
     public function buildFile(){
     	
-//		Util::forceDownload(Schedule::FILE_NAME_EXPORT, 'text/calendar');
-echo '<pre>';
+		Util::forceDownload(Schedule::FILE_NAME_EXPORT, 'text/calendar');
 		
 		$fileNameTmp = $this->getFilePathTmp();
 		echo file_get_contents($this->getFilePathTemplate());
