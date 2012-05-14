@@ -1477,6 +1477,41 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		return $this->collEventLiveList;
 	}
 
+
+	
+	public function getEventLiveListJoinEmailTemplate($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLivePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLiveList === null) {
+			if ($this->isNew()) {
+				$this->collEventLiveList = array();
+			} else {
+
+				$criteria->add(EventLivePeer::CLUB_ID, $this->getId());
+
+				$this->collEventLiveList = EventLivePeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLivePeer::CLUB_ID, $this->getId());
+
+			if (!isset($this->lastEventLiveCriteria) || !$this->lastEventLiveCriteria->equals($criteria)) {
+				$this->collEventLiveList = EventLivePeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		}
+		$this->lastEventLiveCriteria = $criteria;
+
+		return $this->collEventLiveList;
+	}
+
 	
 	public function initUserAdminList()
 	{

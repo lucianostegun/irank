@@ -34,6 +34,9 @@ class settingsActions extends sfActions
     
 	Settings::saveValue('hoursToPending', $request, $attribute);
 	Settings::saveValue('emailDebug', $request, $attribute);
+
+	// Configurações da aba Template
+	Settings::saveValue('emailTemplateIdEventCreateNotify', $request, $attribute);
 	Settings::saveValue('facebookTemplate', $request, $attribute);
 	Settings::saveValue('twitterTemplate', $request, $attribute);
 	exit;

@@ -236,7 +236,7 @@ class UserSite extends BaseUserSite
 		
 		$userSiteOptionId  = VirtualTable::getIdByTagName('userSiteOption', $tagName);
 		$userSiteOptionObj = UserSiteOptionPeer::retrieveByPK($this->getPeopleId(), $userSiteOptionId);
-		$userSiteOptionObj->setOptionValue(($optionValue?$optionValue:null));
+		$userSiteOptionObj->setOptionValue(nvl($optionValue));
 		$userSiteOptionObj->save();
 	}
 	

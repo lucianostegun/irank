@@ -12,8 +12,13 @@ function hideEventLiveEmailOptions(){
 
 function sendEmailToSelectedPlayers(){
 	
+	var emailTemplateId = $('#eventLiveEmailTemplateId').val();
+	
+	if( !emailTemplateId )
+		return alert('Nenhum template de e-mail foi definido para o envio do e-mail!\nPor favor, selecione um dos templates disponíveis');
+		
 	var peopleIdList = new Array();
-	$("input[@name='peopleId[]']:checked").each(function() {peopleIdList.push($(this).val());});
+	$("#emailSenderOptionsDiv input.peopleId:checked").each(function() {peopleIdList.push($(this).val());});
 	 
 	if (peopleIdList.length == 0)
 	    return alert("Nenhum jogador foi selecionado!\nPor favor, selecione pelo menos um jogador para enviar o e-mail.");
@@ -36,7 +41,7 @@ function sendEmailItem( peopleIdList, index ){
 	
 	var percent = ((100*(index))/peopleIdList.length);
 
-	updateProgressBar( percent );
+	updateProgressBar(percent, 'progressBarEmail');
 	
 	if(percent>=100)
 		return concludeSendEmail();

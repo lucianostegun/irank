@@ -102,7 +102,7 @@ class eventPersonalActions extends sfActions
 	$eventPersonalObj->setRebuy( Util::formatFloat($rebuy) );
 	$eventPersonalObj->setAddon( Util::formatFloat($addon) );
 	$eventPersonalObj->setPrize( Util::formatFloat($prize) );
-	$eventPersonalObj->setComments( ($comments?$comments:null) );
+	$eventPersonalObj->setComments(nvl($comments));
 	$eventPersonalObj->setVisible(true);
 	$eventPersonalObj->setEnabled(true);
 	$eventPersonalObj->save();

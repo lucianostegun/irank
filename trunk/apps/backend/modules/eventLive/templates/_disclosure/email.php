@@ -1,28 +1,40 @@
-		<div id="emailSenderOptionsDiv" style="display: none">
+		<div id="emailSenderOptionsDiv" style="display: none" class="form">
 			
 			<div class="mt20 mb20">
 			<?php echo link_to(image_tag('backend/icons/light/arrowLeft', array('class'=>'icon')).'<span>Voltar</span>', '#hideEventLiveEmailOptions()', array('class'=>'button greyishB', 'style'=>'margin-left: 10px')) ?>
 			<?php echo link_to(image_tag('backend/icons/light/mail', array('class'=>'icon')).'<span>Enviar para os selecionados</span>', '#sendEmailToSelectedPlayers()', array('class'=>'button greyishB', 'style'=>'margin-left: 10px')) ?>
 			</div>
 			
-			<div id="emailSenderProgressBarDiv" style="display: none">
-				<label><b>Enviando</b></label>
+	        
+			<div class="formRow">
+				<label>Template do e-mail</label>
+				<div class="formRight">
+					<?php echo select_tag('emailTemplateId', EmailTemplate::getOptionsForSelectClub($eventLiveObj->getEmailTemplateId()), array('onchange'=>'saveEmailTemplate(this.value)', 'id'=>'eventLiveEmailTemplateId')) ?>
+					<div class="clear"></div>
+					<div class="formNote error" id="eventLiveFormErrorEmailTemplateId"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+
+
+			<div id="emailSenderProgressBarDiv" style="display: none" class="mb20 mt20">
+				<label><b>Enviando e-mail</b></label>
 	            <div class="formRight">
-	                <div id="progress"></div>
+	                <div id="progressBarEmail"></div>
 	            </div>
 	            <br/>
 	        </div>
 	        
 	        <div class="widget">
 				<div class="title">
-					<span class="titleIcon"><input type="checkbox" id="titleCheck" name="titleCheck" /></span>
+					<span class="titleIcon"><input type="checkbox" checked id="titleCheck" name="titleCheck" /></span>
 					<h6>Lista de jogadores do clube</h6>
 				</div>                          
 				<table cellpadding="0" cellspacing="0" width="100%" class="display sTable withCheck" id="checkAll">
 				    <thead>
 						<tr>
-							<th width="5%"><?php echo image_tag('backend/icons/tableArrows') ?></th>
-							<th width="25%">Jogador</th> 
+							<th width="30"><?php echo image_tag('backend/icons/tableArrows') ?></th>
+							<th>Jogador</th> 
 							<th width="20%">Email</th> 
 							<th width="15%">Data de envio</th> 
 							<th width="15%">Data da leitura</th>
@@ -45,7 +57,7 @@
 								$readAt = $emailLogObj->getReadAt('d/m/Y H:i');
 						?>
 						<tr class="gradeA" id="emailPeopleListRow-<?php echo $peopleObj->getId() ?>">
-							<td><?php echo checkbox_tag('peopleId[]', $peopleObj->getId(), !$checkPeopleDisabled, array('disabled'=>$checkPeopleDisabled, 'class'=>($checkPeopleDisabled?'disabled':''))) ?></td> 
+							<td><?php echo checkbox_tag('peopleId', $peopleObj->getId(), !$checkPeopleDisabled, array('disabled'=>$checkPeopleDisabled, 'class'=>($checkPeopleDisabled?'peopleId disabled':'peopleId'))) ?></td> 
 							<td><?php echo $peopleObj->getName() ?></td> 
 							<td><?php echo $peopleObj->getEmailAddress() ?></td> 
 							<td id="emailPeopleListCreatedAtTd-<?php echo $peopleObj->getId() ?>" align="center"><?php echo $emailLogObj->getCreatedAt('d/m/Y H:i') ?></td> 

@@ -12,6 +12,10 @@ club_irank:
 
 #CLUB ROUTING END
 
+event_details:
+  url:    /eventLive/details/:eventCode
+  param:  { module: eventLive, action: details }
+
 homepage:
   url:   /
   param: { module: home, action: index }

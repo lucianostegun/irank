@@ -41,9 +41,13 @@ class Sms extends BaseSms
 		$auxuser       = ($clubId?$tagName:'iRank');
 		$sendproj      = 'N';
 		$url           = "http://www.mpgateway.com/v_2_00/smsfollow/smsfollow.aspx?Credencial=".$credencial."&Principal_User=".$principal."&Aux_User=".$auxuser."&Mobile=".$mobile."&Send_Project=".$sendproj."&Message=".$msg;
-		$response      = @fopen($url,",r");
-		$sendingStatus = @fgets($response,40);
-		$messageId     = null;
+		
+//		$response = @fopen($url,",r");
+//		$sendingStatus = @fgets($response,40);
+
+		// Quando estiver em desenvolvimento
+		$sendingStatus = '000:0A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R';
+		$messageId = null;
 		
 		if( preg_match('/^000:(.*)$/i', $sendingStatus, $matches) ){
 			

@@ -50,10 +50,10 @@ class EmailTemplate extends BaseEmailTemplate
 		
 		$isNew = $this->getIsNew();
 		
-		$this->setEmailTemplateId(($emailTemplateId?$emailTemplateId:null));
+		$this->setEmailTemplateId(nvl($emailTemplateId));
 		$this->setTemplateName($templateName);
-		$this->setTagName(($tagName?$tagName:null));
-		$this->setDescription(($description?$description:null));
+		$this->setTagName(nvl($tagName));
+		$this->setDescription(nvl($description));
 		$this->setIsAvailableForUse(($isAvailableForUse?true:false));
 		$this->setIsAvailableForSale(($isAvailableForSale?true:false));
 		$this->setEnabled(true);
@@ -128,19 +128,35 @@ class EmailTemplate extends BaseEmailTemplate
 		return EmailTemplatePeer::doSelect( $criteria );
 	}
 
-	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false ){
+	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false, $criteria=null ){
 		
-		$emailTemplateObjList = self::getList();
+		$emailTemplateObjList = self::getList($criteria);
 		
 		$optionList = array();
 		$optionList[''] = __('select');
 		foreach($emailTemplateObjList as $emailTemplateObj)
-			$optionList[$emailTemplateObj->getId()] = $emailTemplateObj->getDescription();
+			$optionList[$emailTemplateObj->getId()] = $emailTemplateObj->getTemplateName();
 		
 		if( $returnArray )
 			return $optionList;
 
 		return options_for_select( $optionList, $defaultValue );
+	}
+
+	public static function getOptionsForSelectClub( $defaultValue=false, $returnArray=false ){
+		
+		$clubId = MyTools::getAttribute('clubId');
+		$criteria = new Criteria();
+		$criteria->add( EmailTemplatePeer::IS_AVAILABLE_FOR_USE, true );
+		
+		if( $clubId ){
+			
+			$criterion = $criteria->getNewCriterion( EmailTemplatePeer::CLUB_ID, $clubId );
+			$criterion->addOr( $criteria->getNewCriterion( EmailTemplatePeer::CLUB_ID, NULL ) );
+			$criteria->add( $criterion );
+		}
+
+		return self::getOptionsForSelect($defaultValue, $returnArray, $criteria);
 	}
 	
 	public static function getContentByTagName($tagName, $encodeUTF8=false, $culture=false){
@@ -201,6 +217,39 @@ class EmailTemplate extends BaseEmailTemplate
 			$emailTemplateObj = new EmailTemplate();
 		
 		return $emailTemplateObj;
+	}
+	
+	public function getContentPreview($includeTemplate=true){
+		
+		$tagName      = $this->getTagName();
+		$emailContent = $this->getContent();
+		
+		$peopleObj = People::getCurrentPeople();
+		
+		$infoList = array('emailTitle'=>$this->toString(),
+						  'peopleName'=>$peopleObj->getFirstName());
+		
+		if( preg_match('/eventLive/', $tagName) ){
+			
+			$eventLiveObj = EventLivePeer::retrieveByPK(12);
+			
+			$infoList = array_merge($infoList, $eventLiveObj->getReplaceTags($peopleObj));
+			
+		}elseif( preg_match('/event/', $tagName) ){
+			
+			$eventObj = EventPeer::retrieveByPK(10);	
+			$infoList['resultList']   = $eventObj->getEmailResultList();
+			$infoList['classifyList'] = $eventObj->getEmailClassifyList();
+			$infoList = array_merge($infoList, $eventObj->getInfo());
+		}
+		
+		if( $includeTemplate && !is_null($this->getEmailTemplateId()) ){
+			
+			$emailTemplate = $this->getEmailTemplate()->getContent();
+			$emailContent = str_replace('[emailContent]', $emailContent, $emailTemplate);
+		}
+						  
+		return Report::defaultReplace($emailContent, $infoList);
 	}
 	
 	public function toString(){

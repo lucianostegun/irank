@@ -6,7 +6,7 @@
     <div class="widget">    
         <ul class="tabs">
             <li><a href="#tab1">Principal</a></li>
-            <li><a href="#tab2">Valores padrão</a></li>
+            <li><a href="#tab2">Padrão</a></li>
             <li><a href="#tab3">Etapas</a></li>
             <li><a href="#tab4">Classificação</a></li>
 			<?php if( $iRankAdmin ): ?>

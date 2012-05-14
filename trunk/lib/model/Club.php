@@ -69,12 +69,12 @@ class Club extends BaseClub
 		$this->setAddressName($addressName);
 		$this->setAddressNumber($addressNumber);
 		$this->setAddressQuarter($addressQuarter);
-		$this->setClubSite(($clubSite?$clubSite:null));
-		$this->setMapsLink(($mapsLink?$mapsLink:null));
+		$this->setClubSite(nvl($clubSite));
+		$this->setMapsLink(nvl($mapsLink));
 		$this->setPhoneNumber1($phoneNumber1);
-		$this->setPhoneNumber2(($phoneNumber2?$phoneNumber2:null));
-		$this->setPhoneNumber3(($phoneNumber3?$phoneNumber3:null));
-		$this->setDescription(($description?$description:null));
+		$this->setPhoneNumber2(nvl($phoneNumber2));
+		$this->setPhoneNumber3(nvl($phoneNumber3));
+		$this->setDescription(nvl($description));
 		
 		$iRankAdmin = MyTools::hasCredential('iRankAdmin');
 		// Valores salvaos apenas se o usuário for administrador
@@ -324,6 +324,14 @@ class Club extends BaseClub
 		fclose($fp);
 		
 		unset($fp);
+	}
+	
+	public function getLink(){
+		
+		$host    = MyTools::getRequest()->getHost();
+		$tagName = $this->getTagName();
+		
+		return 'http://'.$host.'/'.$tagName;
 	}
 	
 	public function getSettings($tagName){

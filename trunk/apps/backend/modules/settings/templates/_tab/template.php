@@ -1,5 +1,14 @@
 	<div class="formRow">
-		<div class="clear" style="height: 25px"></div>
+		<label>Notificação de eventos</label>
+		<div class="formRight">
+			<?php echo select_tag('emailTemplateIdEventCreateNotify', EmailTemplate::getOptionsForSelectClub($genericObj->getSettings('emailTemplateIdEventCreateNotify')), array('id'=>'settingsEmailTemplateIdEventCreateNotify')) ?>
+			<div class="clear"></div>
+			<div class="formNote">Template de e-mail padrão para notificação de novos eventos</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
 		<label>Texto padrão Facebook</label>
 		<div class="formRight">
 			<?php echo textarea_tag('facebookTemplate', $genericObj->getSettings('facebookTemplate'), array('style'=>'width: 500px; height: 80px', 'id'=>'settingsFacebookTemplate')) ?>
@@ -28,6 +37,7 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+
 	<div class="formRow">
 		<label>Texto padrão Twitter</label>
 		<div class="formRight">

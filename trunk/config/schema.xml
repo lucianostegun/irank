@@ -529,6 +529,7 @@
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 		<column name="ranking_name" type="VARCHAR" size="25"/>
 		<column name="ranking_type_id" type="INTEGER"/>
+		<column name="email_template_id" type="INTEGER"/>
 		<column name="start_date" type="DATE"/>
 		<column name="finish_date" type="DATE"/>
 		<column name="is_private" type="BOOLEAN" default="false"/>
@@ -568,20 +569,26 @@
 		<foreign-key foreignTable="virtual_table">
 			<reference local="game_type_id" foreign="id"/>
 		</foreign-key>
+	    <foreign-key foreignTable="email_template">
+	      <reference local="email_template_id" foreign="id" />
+	    </foreign-key>
 	</table>
   
 	<table name="event_live" phpName="EventLive">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 		<column name="ranking_live_id" type="INTEGER"/>
-		<column name="event_name" type="VARCHAR" size="100"/>
+		<column name="club_id" type="INTEGER"/>
+		<column name="email_template_id" type="INTEGER"/>
+		<column name="event_name" type="VARCHAR"/>
 		<column name="event_short_name" type="VARCHAR" size="50"/>
 		<column name="event_date" type="DATE"/>
 		<column name="start_time" type="TIME"/>
 		<column name="event_date_time" type="TIMESTAMP" />
+		<column name="step_number" type="VARCHAR" />
+		<column name="step_day" type="VARCHAR" />
 		<column name="comments" type="VARCHAR" />
 		<column name="description" type="LONGVARCHAR"/>
 		<column name="is_freeroll" type="BOOLEAN" />
-		<column name="club_id" type="INTEGER"/>
 		<column name="buyin" type="NUMERIC" size="10" scale="2" />
 		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />
 		<column name="rake_percent" type="NUMERIC" size="5" scale="2" />
@@ -609,6 +616,9 @@
 		<foreign-key foreignTable="club">
 			<reference local="club_id" foreign="id"/>
 		</foreign-key>
+	    <foreign-key foreignTable="email_template">
+	      <reference local="email_template_id" foreign="id" />
+	    </foreign-key>
 	</table>
 	
 	<table name="user_admin" phpName="UserAdmin" package="...apps.backend.lib.model">

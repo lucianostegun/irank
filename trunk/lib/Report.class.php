@@ -20,21 +20,22 @@ class Report {
 	 * @param      Array: Array de opções gerais do módulo
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
-
+return;
 		$smtpComponent = 'smtp';
 		$smtpHostname  = Config::getConfigByName('smtpHostname', true);
 		$smtpUsername  = Config::getConfigByName('smtpUsername', true);
 		$smtpPassword  = Config::getConfigByName('smtpPassword', true);
 		$senderName    = Config::getConfigByName('emailSenderName', true);
 		
-		$contentType    = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
-		$emailTemplate  = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
-		$replyTo        = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
-		$attachmentList = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
-		$entitiesEncode = array_key_exists('entitiesEncode', $options)?$options['entitiesEncode']:true;
-		$emailLogId     = array_key_exists('emailLogId', $options)?$options['emailLogId']:null;
+		$contentType      = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
+		$emailTemplate    = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
+		$replyTo          = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
+		$attachmentList   = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
+		$entitiesEncode   = array_key_exists('entitiesEncode', $options)?$options['entitiesEncode']:true;
+		$emailLogId       = array_key_exists('emailLogId', $options)?$options['emailLogId']:null;
+		$emailTemplateObj = array_key_exists('emailTemplateObj', $options)?$options['emailTemplateObj']:null;
 
-		$emailAddressList = array('lucianostegun@gmail.com');
+		$emailAddressList = array('lucianostegun@hotmail.com');//, 'stegunalmeida@terra.com.br', 'lucianostegun@gmail.com');
 		
 		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
 		$encodeEmail = Config::getConfigByName('encodeEmailToUTF8', true);
@@ -64,6 +65,12 @@ class Report {
 			$emailSubject = utf8_decode($emailSubject);
 		}
 
+		if( $emailTemplateObj && $emailTemplateObj->getEmailTemplateId() ){
+			
+			$emailContent  = str_replace('[emailContent]', $emailContent, $emailTemplateObj->getEmailTemplate()->getContent());
+			$emailTemplate = null;
+		}
+		
 		if( $emailTemplate ){
 			
 			$emailTemplate = EmailTemplate::getContentByTagName($emailTemplate);
@@ -147,6 +154,7 @@ class Report {
     	$infoList['footerLogoUrl'] = $footerLogoUrl;
 		$infoList['host']          = $host;
 		$content = str_replace('<hr/>', '<div style="border-top: 1px solid #C0C0C0"></div>', $content);
+		$content = str_replace('<separator>', '<div style="margin: 10px 0px 10px 0px; height: 1px; background: #E0E0E0; border-bottom: 1px solid #FEFEFE"></div>', $content);
 		
 		return self::replace($content, $infoList);
     }

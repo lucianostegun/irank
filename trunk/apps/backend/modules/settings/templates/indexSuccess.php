@@ -30,6 +30,7 @@
 					'url'=>'settings/save',
 					'success'=>'handleSuccessSettings(response)',
 					'failure'=>'handleFailureSettings(response.responseText)',
+					'loading'=>'showIndicator()',
 					),
 					array('class'=>'form', 'id'=>'settingsForm'));
 		//		echo form_tag('settings/save', array('class'=>'form', 'id'=>'settingsForm'));

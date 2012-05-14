@@ -25,13 +25,13 @@ class CashTable extends BaseCashTable
 		$comments      = $request->getParameter('comments');
 		
 		if( $this->getIsNew() )
-			$this->setClubId(($clubId?$clubId:null));
+			$this->setClubId(nvl($clubId));
 		
 		$this->setCashTableName($cashTableName);
 		$this->setSeats($seats);
 		$this->setBuyin(Util::formatFloat($buyin));
 		$this->setEntranceFee(Util::formatFloat($entranceFee));
-		$this->setComments(($comments?$comments:null));
+		$this->setComments(nvl($comments));
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);

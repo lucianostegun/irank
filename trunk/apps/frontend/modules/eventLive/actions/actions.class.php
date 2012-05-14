@@ -5,8 +5,11 @@ class eventLiveActions extends sfActions
 
   public function preExecute(){
   	
-  	$this->eventLiveId = $this->getRequestParameter('id');
-  	$this->eventLiveId = $this->getRequestParameter('eventLiveId', $this->eventLiveId);
+  	$eventCode = $this->getRequestParameter('eventCode');
+  	$eventCode = ($eventCode?base64_decode($eventCode):null);
+  	
+  	$this->eventLiveId   = $this->getRequestParameter('id', $eventCode);
+  	$this->eventLiveId   = $this->getRequestParameter('eventLiveId', $this->eventLiveId);
   }
   
   public function executeIndex($request){

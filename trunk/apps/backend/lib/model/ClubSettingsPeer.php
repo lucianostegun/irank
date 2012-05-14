@@ -12,7 +12,7 @@ class ClubSettingsPeer extends BaseClubSettingsPeer
 	
 	public static function retrieveByPK($clubId, $tagName, $con=null){
 		
-		$clubId = ($clubId?$clubId:null);
+		$clubId = (nvl($clubId));
 		
 		$settingsObj     = SettingsPeer::retrieveByTagName($tagName);
 		$clubSettingsObj = parent::retrieveByPK($clubId, $settingsObj->getId(), $con);

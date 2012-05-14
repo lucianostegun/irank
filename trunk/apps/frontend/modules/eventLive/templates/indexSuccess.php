@@ -21,7 +21,7 @@
 </div>
 <div class="eventDetailsList">
 	<div id="eventLiveNormalContent" class="eventLiveTabContent active">
-		<?php include_partial('eventLive/include/list/normal') ?>
+		<?php include_partial('eventLive/include/list/normal', array('peopleId'=>$peopleId)) ?>
 	</div>
 	<div id="eventLiveTableContent" class="eventLiveTabContent">
 		<?php include_partial('home/include/tabLoading', array()) ?>

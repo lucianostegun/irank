@@ -130,7 +130,7 @@ class Schedule {
 			$event .= "LOCATION:$eventPlace".$nl;
 			if( $comments )
 				$event .= "DESCRIPTION:$comments".$nl;
-			$event .= "URL;VALUE=URI:http://www.irank.com.br/event/details/$eventIdBase64".$nl;
+			$event .= "URL;VALUE=URI:http://www.irank.com.br/eventLive/details/$eventIdBase64".$nl;
 			$event .= "STATUS:CONFIRMED".$nl;
 			$event .= "SEQUENCE:{$this->sequence}".$nl;
 			$event .= "SUMMARY:$rankingName\\n$eventName".$nl;

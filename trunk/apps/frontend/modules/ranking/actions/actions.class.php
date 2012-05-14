@@ -213,7 +213,7 @@ class rankingActions extends sfActions
 		
 		$peopleObj = People::getQuickPeople($firstName, $lastName, 'rankingPlayer', $peopleId );
 		
-		$peopleObj->setEmailAddress(($emailAddress?$emailAddress:null));
+		$peopleObj->setEmailAddress(nvl($emailAddress));
 		$peopleObj->save();
 	}
 	

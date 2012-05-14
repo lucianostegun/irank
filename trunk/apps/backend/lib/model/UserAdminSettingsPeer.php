@@ -12,7 +12,7 @@ class UserAdminSettingsPeer extends BaseUserAdminSettingsPeer
 	
 	public static function retrieveByPK($userAdminId, $tagName, $con=null){
 		
-		$userAdminId = ($userAdminId?$userAdminId:null);
+		$userAdminId = (nvl($userAdminId));
 		
 		$settingsObj          = SettingsPeer::retrieveByTagName($tagName);
 		$userAdminSettingsObj = parent::retrieveByPK($userAdminId, $settingsObj->getId(), $con);

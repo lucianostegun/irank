@@ -6,9 +6,16 @@
 	
 	$moduleName = MyTools::getContext()->getModuleName();
 	$actionName = MyTools::getContext()->getActionName();
+	
+	$invites = People::getPendingInvites();
 ?>
 <div class="userInfo">Olá <b><?php echo $firstName ?></b></div>
 <div id="leftMenu">
+
+	<div class="item<?php echo ($moduleName=='myAccount' && $actionName=='invites'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon invites" onclick="goToPage('myAccount', 'invites')"><span class="numberTop"><?php echo $invites ?></span> Meus convites</div></div>
+	
+	<div class="separator"></div>
+	
 	<div class="item<?php echo ($moduleName=='ranking'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('ranking', 'index', false, false, false, event)">Meus rankings</div><div class="iconRight<?php echo ($moduleName=='ranking'?' active':'') ?>" onclick="goToPage('ranking', 'new', false, false, false, event)" title="Criar novo ranking"><?php echo image_tag('layout/leftMenu/add') ?></div></div>
 	<?php if($moduleName=='ranking' && $actionName!='index') include_partial('ranking/include/leftMenu', array('rankingObj'=>$innerObj, 'actionName'=>$actionName)) ?>
 	<?php if($moduleName=='ranking' && $actionName=='index') include_partial('ranking/include/leftFilter', array()) ?>

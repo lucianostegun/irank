@@ -59,6 +59,8 @@ class EventLive extends BaseEventLive
 		$eventShortName   = $request->getParameter('eventShortName');
 		$eventDate        = $request->getParameter('eventDate');
 		$startTime        = $request->getParameter('startTime');
+		$stepNumber       = $request->getParameter('stepNumber');
+		$stepDay          = $request->getParameter('stepDay');
 		$isFreeroll       = $request->getParameter('isFreeroll');
 		$entranceFee      = $request->getParameter('entranceFee');
 		$buyin            = $request->getParameter('buyin');
@@ -87,11 +89,11 @@ class EventLive extends BaseEventLive
 		if( $this->getIsNew() ){
 			
 			$this->setClubid($clubId);
-			$this->setRankingLiveId(($rankingLiveId?$rankingLiveId:null));
+			$this->setRankingLiveId(nvl($rankingLiveId));
 		}
 		
 		$this->setEventName($eventName);
-		$this->setEventShortName(($eventShortName?$eventShortName:null));
+		$this->setEventShortName(nvl($eventShortName));
 		$this->setEventDate(Util::formatDate($eventDate));
 		$this->setStartTime($startTime);
 		$this->setIsFreeroll(($isFreeroll?true:false));
@@ -103,9 +105,11 @@ class EventLive extends BaseEventLive
 		$this->setAllowedRebuys($allowedRebuys);
 		$this->setAllowedAddons($allowedAddons);
 		$this->setIsIlimitedRebuys(($isIlimitedRebuys?true:false));
+		$this->setStepNumber(nvl($stepNumber));
+		$this->setStepDay(nvl($stepDay));
 		
 		$this->setDescription($description);
-		$this->setComments(($comments?$comments:null));
+		$this->setComments(nvl($comments));
 		
 		// Informações da aba Options
 		$this->setSuppressSchedule(($suppressSchedule?true:false));
@@ -528,11 +532,6 @@ class EventLive extends BaseEventLive
 		return $comments;
 	}
 	
-	public function toString(){
-	
-		return ($this->getEventShortName()?$this->getEventShortName():$this->getEventName());	
-	}
-	
 	public function getBuyinInfo(){
 		
 		if( $this->getIsFreeroll() )
@@ -778,7 +777,7 @@ class EventLive extends BaseEventLive
   		$eventLivePlayerDisclosureEmailObj->setEmailLogId($emailLogId);
   		$eventLivePlayerDisclosureEmailObj->save();
   		
-  		$emailContent = $this->getDisclosureEmailTemplate();
+  		$emailContent = $this->getDisclosureEmailTemplate($peopleObj);
   		$emailSubject = $this->getDisclosureEmailSubject();
   		
   		$options = array('emailLogId'=>$emailLogId);
@@ -827,31 +826,61 @@ class EventLive extends BaseEventLive
 	  		Util::forceError($smsLogObj->getErrorMessage());
 	}
 	
-	public function getDisclosureEmailTemplate(){
+	public function getDisclosureEmailTemplate($peopleObj){
 		
-	  	$emailContent = file_get_contents(Util::getFilePath('templates/pt_BR/eventLiveDisclosure.htm'));
+	  	$emailContent = $this->getEmailTemplate()->getContent();
+		
+		return Report::replace($emailContent, $this->getReplaceTags($peopleObj));	
+	}
+	
+	public function getReplaceTags($peopleObj){
 		
 		$entranceFee = $this->getEntranceFee();
 		$buyin       = $this->getBuyin();
 		
-		$infoList = array();
-		$infoList['eventName']   = $this->getEventName();
-		$infoList['rankingName'] = $this->getRankingLive()->getRankingName();
-		$infoList['gameStyle']   = $this->getGameStyle()->getDescription();
-		$infoList['eventPlace']  = $this->getEventPlace();
-		$infoList['mapsLink']    = $this->getClub()->getMapsLink();
-		$infoList['eventDate']   = $this->getEventDate('d/m/Y');
-		$infoList['startTime']   = $this->getStartTime('H:i');
-		$infoList['entranceFee'] = Util::formatFloat($entranceFee, true);
-		$infoList['buyin']       = Util::formatFloat($buyin, true).($entranceFee?'+'.$infoList['entranceFee']:'');
-		$infoList['comments']    = $this->getComments();
+		$comments = $this->getComments();
 		
-		return Report::replace($emailContent, $infoList);	
+		$infoList = $this->getInfo();
+		$infoList['eventName']      = $this->getEventName();
+		$infoList['eventShortName'] = $this->getEventShortName();
+		$infoList['stepNumber']     = $this->getStepNumber();
+		$infoList['stepDay']        = $this->getStepDay();
+		$infoList['rankingName']    = $this->getRankingLive()->getRankingName();
+		$infoList['gameStyle']      = $this->getGameStyle()->getDescription();
+		$infoList['gameType']       = $this->getGameType()->getDescription();
+		$infoList['eventPlace']     = $this->getEventPlace();
+		$infoList['mapsLink']       = $this->getClub()->getMapsLink();
+		$infoList['eventDate']      = $this->getEventDate('d/m/Y');
+		$infoList['startTime']      = $this->getStartTime('H:i');
+		$infoList['entranceFee']    = Util::formatFloat($entranceFee, true);
+		$infoList['buyin']          = Util::formatFloat($buyin, true).($entranceFee?'+'.$infoList['entranceFee']:'');
+		$infoList['eventDateWrite'] = $this->getEventDateWrite();
+		$infoList['fileNameLogo']   = $this->getFileNameLogo();
+		$infoList['description']    = $this->getDescription(true);
+		$infoList['comments']       = ($comments?'<separator>'.$comments:'');
+		$infoList['eventWeekDay']   = $weekDay = Util::getWeekDay($this->getEventDate('d/m/Y'));
+		$infoList['clubLink']       = $this->getClub()->getLink();
+		$infoList['eventLink']      = $this->getLink();
+		
+		if( is_object($peopleObj) )
+			$infoList['peopleName'] = $peopleObj->getFirstName();
+		
+		return $infoList;
+	}
+	
+	public function getLink(){
+		
+		$host        = MyTools::getRequest()->getHost();
+		$eventLiveId = $this->getId();
+		
+		$code = base64_encode($eventLiveId);
+		
+		return 'http://'.$host.'/eventLive/'.$code;
 	}
 
 	public function getDisclosureEmailSubject(){
 		
-	  	return 'Notificação de evento iRank / '.$this->getClub()->toString();		
+	  	return 'Notificação de evento / '.$this->getClub()->toString();		
 	}
 	
 	public function getFileNameLogo(){
@@ -864,29 +893,6 @@ class EventLive extends BaseEventLive
 			$fileNameLogo = 'ranking/'.$fileNameLogo;
 		
 		return $fileNameLogo;
-	}
-	
-	public function getInfo(){
-		
-		$infoList = array();
-		
-		$infoList['eventName']      = $this->getEventName();
-		$infoList['eventDateTime']  = $this->getEventDateTime('d/m/Y H:i');
-		$infoList['weekDay']        = Util::getWeekDay($this->getEventDateTime('d/m/Y'));
-		$infoList['clubName']       = $this->getClub()->toString();
-		$infoList['clubLocation']   = $this->getClub()->getLocation();
-		$infoList['allowedRebuys']  = $this->getAllowedRebuys();
-		$infoList['allowedAddons']  = $this->getAllowedAddons();
-		$infoList['isFreeroll']     = $this->getIsFreeroll();
-		$infoList['rakePercent']    = $this->getRakePercent();
-		$infoList['entranceFee']    = $this->getEntranceFee();
-		$infoList['buyin']          = $this->getBuyin();
-		$infoList['blindTime']      = $this->getBlindTime('H:i');
-		$infoList['stackChips']     = $this->getStackChips();
-		$infoList['players']        = $this->getPlayers();
-		$infoList['savedResult']    = $this->getSavedResult();
-		
-		return $infoList;
 	}
 	
 	public function getTwitterStatus(){
@@ -916,5 +922,38 @@ class EventLive extends BaseEventLive
 	public function getFacebookDescription(){
 		
 		return $this->getEventName();
+	}
+	
+	public function getEventDateWrite(){
+		
+		return $this->getEventDateTime('d/m/Y H:i');
+	}
+	
+	public function toString(){
+	
+		return $this->getEventName();	
+	}
+	
+	public function getInfo(){
+		
+		$infoList = array();
+		
+		$infoList['eventName']      = $this->getEventName();
+		$infoList['eventDateTime']  = $this->getEventDateTime('d/m/Y H:i');
+		$infoList['weekDay']        = Util::getWeekDay($this->getEventDateTime('d/m/Y'));
+		$infoList['clubName']       = $this->getClub()->toString();
+		$infoList['clubLocation']   = $this->getClub()->getLocation();
+		$infoList['allowedRebuys']  = $this->getAllowedRebuys();
+		$infoList['allowedAddons']  = $this->getAllowedAddons();
+		$infoList['isFreeroll']     = $this->getIsFreeroll();
+		$infoList['rakePercent']    = $this->getRakePercent();
+		$infoList['entranceFee']    = $this->getEntranceFee();
+		$infoList['buyin']          = $this->getBuyin();
+		$infoList['blindTime']      = $this->getBlindTime('H:i');
+		$infoList['stackChips']     = $this->getStackChips();
+		$infoList['players']        = $this->getPlayers();
+		$infoList['savedResult']    = $this->getSavedResult();
+		
+		return $infoList;
 	}
 }

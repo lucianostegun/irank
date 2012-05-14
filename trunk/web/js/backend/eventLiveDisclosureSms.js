@@ -21,7 +21,7 @@ function sendSmsToSelectedPlayers(){
 	clearFormFieldErrors('eventLiveDisclosureSms');
 	
 	_peopleIdListSms = new Array();
-	$("#smsSenderOptionsDiv input[@name='peopleId[]']:checked").each(function() {_peopleIdListSms.push($(this).val());});
+	$("#smsSenderOptionsDiv input.peopleId:checked").each(function() {_peopleIdListSms.push($(this).val());});
 	
 	if (_peopleIdListSms.length == 0)
 	    return alert("Nenhum jogador foi selecionado!\nPor favor, selecione pelo menos um jogador para enviar a mensagem.");
@@ -70,7 +70,7 @@ function sendSmsItem( peopleIdList, index, smsId, token ){
 	
 	var percent = ((100*(index))/peopleIdList.length);
 
-	updateProgressBar( percent );
+	updateProgressBar(percent, 'progressBarSms');
 	
 	if(percent>=100)
 		return concludeSendSms();
@@ -78,6 +78,9 @@ function sendSmsItem( peopleIdList, index, smsId, token ){
 	$('#smsPeopleListStatusTd-'+peopleIdList[index]).html('<img src="'+_imageRoot+'/backend/loaders/loader8.gif"/>');
 	
 	var eventLiveId = $('#eventLiveId').val();
+	
+//	var urlAjax = _webRoot+'/eventLive/sendDiclosureSms?peopleId='+peopleIdList[index]+'&eventLiveId='+eventLiveId+'&smsId='+smsId+'&token='+token;
+//	debugAdd(urlAjax);
 	
 	$.ajax({
 		type:		'POST',

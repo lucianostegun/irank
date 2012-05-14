@@ -35,24 +35,24 @@
 			</div>
 			</form>
 			
-			<div id="smsSenderProgressBarDiv" style="display: none">
+			<div id="smsSenderProgressBarDiv" style="display: none" class="mb20 mt20">
 				<label><b>Enviando</b></label>
 	            <div class="formRight">
-	                <div id="progress"></div>
+	                <div id="progressBarSms"></div>
 	            </div>
 	            <br/>
 	        </div>
 	        
 	        <div class="widget">
 				<div class="title">
-					<span class="titleIcon"><input type="checkbox" id="titleCheck" name="titleCheck" /></span>
+					<span class="titleIcon titleIcon2"><input type="checkbox" checked id="titleCheck" name="titleCheck" /></span>
 					<h6>Lista de jogadores do clube</h6>
 				</div>                          
 				<table cellpadding="0" cellspacing="0" width="100%" class="display sTable withCheck" id="checkAll2">
 				    <thead>
 						<tr>
-							<th width="5%"><?php echo image_tag('backend/icons/tableArrows') ?></th>
-							<th width="25%">Jogador</th> 
+							<th width="30"><?php echo image_tag('backend/icons/tableArrows') ?></th>
+							<th>Jogador</th> 
 							<th width="20%">Telefone</th> 
 							<th width="15%">Data de envio</th> 
 							<th width="10%" colspan="2">Status</th> 
@@ -70,7 +70,7 @@
 								$checkPeopleDisabled             = ($errorMessage || $isNew?false:true);							
 						?>
 						<tr class="gradeA" id="emailPeopleListRow-<?php echo $peopleObj->getId() ?>">
-							<td><?php echo checkbox_tag('peopleId[]', $peopleObj->getId(), !$checkPeopleDisabled, array('disabled'=>$checkPeopleDisabled, 'class'=>($checkPeopleDisabled?'disabled':''))) ?></td> 
+							<td><?php echo checkbox_tag('peopleId', $peopleObj->getId(), !$checkPeopleDisabled, array('disabled'=>$checkPeopleDisabled, 'class'=>($checkPeopleDisabled?'peopleId disabled':'peopleId'))) ?></td> 
 							<td><?php echo $peopleObj->getName() ?></td> 
 							<td><?php echo $peopleObj->getPhoneNumber() ?></td> 
 							<td id="smsPeopleListCreatedAtTd-<?php echo $peopleObj->getId() ?>" align="center"><?php echo $emailLogObj->getCreatedAt('d/m/Y H:i') ?></td>
