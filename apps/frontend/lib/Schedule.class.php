@@ -71,7 +71,8 @@ class Schedule {
     	
 	    $resultSet = Util::executeQuery(sprintf("SELECT * FROM event_schedule_view WHERE people_id = %d AND event_date >= '%s'", $this->peopleId, $this->startDate));
 	    
-	    $nl = Schedule::NEW_LINE;
+	    $nl   = Schedule::NEW_LINE;
+	    $host = MyTools::getRequest()->getHost();
 	    
 	    while( $resultSet->next() ){
 	    	
@@ -130,7 +131,7 @@ class Schedule {
 			$event .= "LOCATION:$eventPlace".$nl;
 			if( $comments )
 				$event .= "DESCRIPTION:$comments".$nl;
-			$event .= "URL;VALUE=URI:http://www.irank.com.br/eventLive/details/$eventIdBase64".$nl;
+			$event .= "URL;VALUE=URI:http://$host/eventLive/details/$eventIdBase64".$nl;
 			$event .= "STATUS:CONFIRMED".$nl;
 			$event .= "SEQUENCE:{$this->sequence}".$nl;
 			$event .= "SUMMARY:$rankingName\\n$eventName".$nl;

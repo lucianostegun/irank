@@ -2000,13 +2000,5 @@ table.display tr.gradeA td {
 
 table.display tr.gradeA td .checker {
 	position: 	relative;
-	margin-left: 50%;
-	top: -2px;
-	left: -8px;
-}
-
-.title .titleIcon .checker {
-	position: 	relative;
-	top: -4px;
-	left: 6px;
+	top: 3px;
 }
