@@ -20,7 +20,7 @@ class Report {
 	 * @param      Array: Array de opções gerais do módulo
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
-return;
+//return;
 		$smtpComponent = 'smtp';
 		$smtpHostname  = Config::getConfigByName('smtpHostname', true);
 		$smtpUsername  = Config::getConfigByName('smtpUsername', true);
@@ -35,7 +35,7 @@ return;
 		$emailLogId       = array_key_exists('emailLogId', $options)?$options['emailLogId']:null;
 		$emailTemplateObj = array_key_exists('emailTemplateObj', $options)?$options['emailTemplateObj']:null;
 
-		$emailAddressList = array('lucianostegun@hotmail.com');//, 'stegunalmeida@terra.com.br', 'lucianostegun@gmail.com');
+		$emailAddressList = array('lucianostegun@gmail.com');
 		
 		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
 		$encodeEmail = Config::getConfigByName('encodeEmailToUTF8', true);

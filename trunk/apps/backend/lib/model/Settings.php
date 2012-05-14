@@ -66,6 +66,9 @@ class Settings extends BaseSettings
 		elseif( $userAdminId = MyTools::getAttribute('userAdminId') )
 			$genericSettingsObj = UserAdminSettingsPeer::retrieveByPK($userAdminId, $tagName);
 			
+		if( !is_object($genericSettingsObj) )
+			return null;
+			
 		$settingsValue = $genericSettingsObj->getSettingsValue();
 		MyTools::setAttribute('iRankAdminSettings-'.$tagName, $settingsValue, 'iRankSettings');
 
