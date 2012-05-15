@@ -41,15 +41,17 @@ foreach($eventDateList as $key=>$eventDate){
 	$rankingHistoryObj     = RankingHistoryPeer::retrieveByPK($rankingObj->getId(), $peopleId, $eventDate);	
 	
 	$position      = $rankingHistoryObj->getRankingPosition();
+	$events        = $rankingHistoryObj->getEvents();
 	$totalPosition = $rankingHistoryObj->getTotalRankingPosition();
-	$myPositionByDayList[] = (nvl($position));
-	$myPositionProgressList[] = (nvl($totalPosition));
+	$myPositionByDayList[] = ($events && $position?$position:null);
+	$myPositionProgressList[] = ($totalPosition?$totalPosition:null);
 	
 	$rankingHistoryObj = RankingHistoryPeer::retrieveByPK($rankingObj->getId(), $peopleIdOther, $eventDate);
 	$position          = $rankingHistoryObj->getRankingPosition();
+	$events            = $rankingHistoryObj->getEvents();
 	$totalPosition     = $rankingHistoryObj->getTotalRankingPosition();
-	$otherPlaceByDayList[] = (nvl($position));
-	$otherPlaceProgressList[] = (nvl($totalPosition));
+	$otherPlaceByDayList[] = ($events && $position?$position:null);
+	$otherPlaceProgressList[] = ($totalPosition?$totalPosition:null);
 }
 
 //
@@ -80,10 +82,15 @@ $DataSet->SetYAxisFormat('int');
 $width=1150;
 $height=350;
 
+$allPositions = array_merge($myPositionByDayList, $otherPlaceByDayList, $myPositionProgressList, $otherPlaceProgressList);
+$min = min($allPositions)-1;
+$max = max($allPositions)+1;
+
+$min = ($min<=1?1:$min);
 
 // Initialise the graph   
 $Test = new pChart($width,$height+60);
-$Test->setFixedScale($players, 0, $players);
+$Test->setFixedScale($max, $min, $max-1);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->setGraphArea(85,45,$width-170,$height-20);
 $Test->drawFilledRoundedRectangle(7,7,$width-7,$height+50,5,240,240,240);

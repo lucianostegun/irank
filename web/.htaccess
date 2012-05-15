@@ -1,6 +1,6 @@
 #AuthUserFile /Users/lucianostegun/Sites/iRank/.htpasswd
 #AuthType Basic
-#AuthName "Agenda iRank"
+#AuthName "Acesso a versao beta iRank 3.0"
 #Require valid-user
 
 Options +FollowSymLinks +ExecCGI

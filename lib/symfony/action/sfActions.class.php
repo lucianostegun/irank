@@ -42,6 +42,14 @@ abstract class sfActions extends sfAction
 	$userSiteId      = MyTools::getCookie('userSiteId');
 	$userAdminId     = MyTools::getCookie('userAdminId');
 	$isAuthenticated = $this->getUser()->isAuthenticated();
+	
+	$PHP_AUTH_USER = isset($PHP_AUTH_USER)?$_SERVER['PHP_AUTH_USER']:null;
+	if( !$isAuthenticated && $PHP_AUTH_USER ){
+		
+		$userSiteObj = UserSitePeer::retrieveByUsername($PHP_AUTH_USER);
+		if( is_object($userSiteObj) )
+			$userSiteObj->login();
+	}
 
 	// Autentica o usuário do site se ele tiver o cookie de autenticação
 	if( $userSiteId && $moduleName!=='login' && !$isAuthenticated ){
