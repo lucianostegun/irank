@@ -206,7 +206,9 @@ class MyTools
     
     public static function getCulture()
     {
-        return sfContext::getInstance()->getUser()->getCulture();
+    	$culture = sfContext::getInstance()->getUser()->getCulture();
+    	$culture = ($culture?$culture:'pt_BR');
+    	return $culture;
     }
  
     public static function setError( $errorName, $errorMessage )

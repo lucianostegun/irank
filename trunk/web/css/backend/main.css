@@ -226,6 +226,7 @@ ul.userDropdown li a:hover { border-right: none; border-left: none; }
 .nav li.tables a span { background-image: url(/images/backend/icons/light/frames.png); }
 .nav li.errors a span { background-image: url(/images/backend/icons/light/alert.png); }
 .nav li.files a span { background-image: url(/images/backend/icons/light/files.png); }
+.nav li.users a span { background-image: url(/images/backend/icons/light/users.png); }
 .nav li.ui a span { background-image: url(/images/backend/icons/light/user.png); }
 .nav li.widgets a span { background-image: url(/images/backend/icons/light/fullscreen.png); }
 
@@ -1868,7 +1869,9 @@ border: 1px solid #BABABA;
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 border-radius: 5px;
-background: 	-moz-linear-gradient(top, #FFFFFF, #D5D5D5);
+background: 	#FFFFFF;
+background-image: 	-o-linear-gradient(#FFFFFF, #D5D5D5);
+background: 	-moz-linear-gradient(top, #FFFFFF, #D5D5D5);;
 background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#D5D5D5));
 filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#D5D5D5', GradientType=0);
 height: 21px;

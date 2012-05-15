@@ -45,7 +45,7 @@ function sendComment(eventCommentId){
 		
 		var commentDiv = document.createElement('div');
 		commentDiv.id = 'event'+(isPhoto?'Photo':'')+'Comment'+eventCommentIdNew+'TmpDiv';
-		
+		alert(content)
 		commentDiv.innerHTML = content;		
 		
 		$('comment'+(isPhoto?'Photo':'')+'ListDiv').appendChild(commentDiv);

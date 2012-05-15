@@ -26,7 +26,9 @@
 	-webkit-border-radius: 	4px;
 	border: 				1px solid #DADADA;
 	
-    background: 			-moz-linear-gradient(top, #F0F0F0, #FFFFFF);
+    background: 			#F0F0F0;
+    background-image: 			-o-linear-gradient(#F0F0F0, #FFFFFF);
+    background: 			-moz-linear-gradient(top, #F0F0F0, #FFFFFF);;
     background: 			-webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
     filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#F0F0F0', EndColorStr='#FFFFFF', GradientType=0);
     
@@ -142,7 +144,9 @@
 
 .clubDetailsArea {
 
-    background: 	-moz-linear-gradient(top, #FFFFFF, #DFDFDF);
+    background: 	#DFDFDF;
+    background-image: 	-o-linear-gradient(#FFFFFF, #DFDFDF);
+    background: 	-moz-linear-gradient(top, #FFFFFF, #DFDFDF);;
     background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#DFDFDF));
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#DFDFDF', GradientType=0);
     min-height: 	400px;

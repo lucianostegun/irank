@@ -45,6 +45,10 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 
 	
+	protected $tag_name_parent;
+
+
+	
 	protected $enabled;
 
 
@@ -161,6 +165,13 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	{
 
 		return $this->tag_name;
+	}
+
+	
+	public function getTagNameParent()
+	{
+
+		return $this->tag_name_parent;
 	}
 
 	
@@ -366,6 +377,20 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setTagNameParent($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->tag_name_parent !== $v) {
+			$this->tag_name_parent = $v;
+			$this->modifiedColumns[] = EmailTemplatePeer::TAG_NAME_PARENT;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -462,23 +487,25 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 			$this->tag_name = $rs->getString($startcol + 8);
 
-			$this->enabled = $rs->getBoolean($startcol + 9);
+			$this->tag_name_parent = $rs->getString($startcol + 9);
 
-			$this->visible = $rs->getBoolean($startcol + 10);
+			$this->enabled = $rs->getBoolean($startcol + 10);
 
-			$this->deleted = $rs->getBoolean($startcol + 11);
+			$this->visible = $rs->getBoolean($startcol + 11);
 
-			$this->locked = $rs->getBoolean($startcol + 12);
+			$this->deleted = $rs->getBoolean($startcol + 12);
 
-			$this->created_at = $rs->getTimestamp($startcol + 13, null);
+			$this->locked = $rs->getBoolean($startcol + 13);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 14, null);
+			$this->created_at = $rs->getTimestamp($startcol + 14, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 15, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 15; 
+						return $startcol + 16; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EmailTemplate object", $e);
 		}
@@ -726,21 +753,24 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 				return $this->getTagName();
 				break;
 			case 9:
-				return $this->getEnabled();
+				return $this->getTagNameParent();
 				break;
 			case 10:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 11:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 12:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 13:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 14:
+				return $this->getCreatedAt();
+				break;
+			case 15:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -762,12 +792,13 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 			$keys[6]=>$this->getIsAvailableForUse(),
 			$keys[7]=>$this->getIsAvailableForSale(),
 			$keys[8]=>$this->getTagName(),
-			$keys[9]=>$this->getEnabled(),
-			$keys[10]=>$this->getVisible(),
-			$keys[11]=>$this->getDeleted(),
-			$keys[12]=>$this->getLocked(),
-			$keys[13]=>$this->getCreatedAt(),
-			$keys[14]=>$this->getUpdatedAt(),
+			$keys[9]=>$this->getTagNameParent(),
+			$keys[10]=>$this->getEnabled(),
+			$keys[11]=>$this->getVisible(),
+			$keys[12]=>$this->getDeleted(),
+			$keys[13]=>$this->getLocked(),
+			$keys[14]=>$this->getCreatedAt(),
+			$keys[15]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -811,21 +842,24 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 				$this->setTagName($value);
 				break;
 			case 9:
-				$this->setEnabled($value);
+				$this->setTagNameParent($value);
 				break;
 			case 10:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 11:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 12:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 13:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 14:
+				$this->setCreatedAt($value);
+				break;
+			case 15:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -844,12 +878,13 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setIsAvailableForUse($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setIsAvailableForSale($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setTagName($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setEnabled($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setVisible($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setLocked($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
+		if (array_key_exists($keys[9], $arr)) $this->setTagNameParent($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setEnabled($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setVisible($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setDeleted($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setLocked($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setCreatedAt($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setUpdatedAt($arr[$keys[15]]);
 	}
 
 	
@@ -866,6 +901,7 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EmailTemplatePeer::IS_AVAILABLE_FOR_USE)) $criteria->add(EmailTemplatePeer::IS_AVAILABLE_FOR_USE, $this->is_available_for_use);
 		if ($this->isColumnModified(EmailTemplatePeer::IS_AVAILABLE_FOR_SALE)) $criteria->add(EmailTemplatePeer::IS_AVAILABLE_FOR_SALE, $this->is_available_for_sale);
 		if ($this->isColumnModified(EmailTemplatePeer::TAG_NAME)) $criteria->add(EmailTemplatePeer::TAG_NAME, $this->tag_name);
+		if ($this->isColumnModified(EmailTemplatePeer::TAG_NAME_PARENT)) $criteria->add(EmailTemplatePeer::TAG_NAME_PARENT, $this->tag_name_parent);
 		if ($this->isColumnModified(EmailTemplatePeer::ENABLED)) $criteria->add(EmailTemplatePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EmailTemplatePeer::VISIBLE)) $criteria->add(EmailTemplatePeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(EmailTemplatePeer::DELETED)) $criteria->add(EmailTemplatePeer::DELETED, $this->deleted);
@@ -917,6 +953,8 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 		$copyObj->setIsAvailableForSale($this->is_available_for_sale);
 
 		$copyObj->setTagName($this->tag_name);
+
+		$copyObj->setTagNameParent($this->tag_name_parent);
 
 		$copyObj->setEnabled($this->enabled);
 

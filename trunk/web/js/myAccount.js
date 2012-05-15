@@ -194,3 +194,56 @@ function loadCityField(stateId){
 	var urlAjax = _webRoot+'/myAccount/getCityField/stateId/'+stateId;
 	new Ajax.Updater('myAccountScheduleStateIdDiv', urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc});
 }
+
+function sortDataTable(sortField, sortDesc){
+
+	showIndicator();
+	
+	var successFunc = function(t){
+		
+		hideIndicator();
+		$('eventLiveTableContent').innerHTML = t.responseText;
+	}
+
+	var failureFunc = function(t){
+		
+		hideIndicator();
+		
+		alert('Não foi possível carregar as informações!\nPor favor, tente novamente.');
+		if( isDebug() )
+			debugAdd(t.responseText);
+	}
+	
+	var urlAjax = _webRoot+'/myAccount/getTabContent/tabId/table/sortField/'+sortField+'/sortDesc/'+(sortDesc?'1':'0');
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}
+
+function showQuickConfirmButton(eventLiveId){
+	
+	showDiv('quickConfirmButton-'+eventLiveId);
+}
+
+function hideQuickConfirmButton(eventLiveId){
+	
+	hideDiv('quickConfirmButton-'+eventLiveId);
+}
+
+function removePendingInvite(eventLiveId){
+	
+	$('pendingInviteRow-'+eventLiveId).removeClassName('pendingInviteRow');
+	$('pendingInviteRow-'+eventLiveId).addClassName('hidden');
+	
+	var visibleRows = document.getElementsByClassName('pendingInviteRow');
+	
+	if( visibleRows.length==0 )
+		$('pendingInviteRowEmpty').removeClassName('hidden');
+	
+	var pendingInvites = $('pendingInvitesCount').innerHTML*1;
+	pendingInvites -= 1;
+	pendingInvites  = (pendingInvites>0?pendingInvites:0);
+	
+	$('pendingInvitesCount').innerHTML = pendingInvites;
+	
+	var urlAjax = _webRoot+'/myAccount/deletePendingInvite/eventLiveId/'+eventLiveId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false});
+}

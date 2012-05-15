@@ -13,6 +13,7 @@ class Schedule {
 	const NEW_STRING_LINE    = "\\n";
 	const FILE_PATH_TMP      = 'temp/schedule';
 	const FILE_PATH_TEMPLATE = 'templates/schedule.ics';
+	const HOSTNAME           = 'alpha.irank.com.br';
 	private $peopleId;
 	private $fileName;
 	private $startDate;
@@ -72,7 +73,7 @@ class Schedule {
 	    $resultSet = Util::executeQuery(sprintf("SELECT * FROM event_schedule_view WHERE people_id = %d AND event_date >= '%s'", $this->peopleId, $this->startDate));
 	    
 	    $nl   = Schedule::NEW_LINE;
-	    $host = MyTools::getRequest()->getHost();
+	    $host = Schedule::HOSTNAME;
 	    
 	    while( $resultSet->next() ){
 	    	
@@ -161,7 +162,7 @@ class Schedule {
 	    $resultSet = Util::executeQuery(sprintf("SELECT * FROM event_live_schedule_view WHERE event_date >= '%s'", $this->startDate));
 	    
 	    $nl   = Schedule::NEW_LINE;
-	    $host = MyTools::getRequest()->getHost();
+	    $host = Schedule::HOSTNAME;
 	    
 	    while( $resultSet->next() ){
     

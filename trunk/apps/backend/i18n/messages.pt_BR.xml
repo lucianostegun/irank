@@ -137,6 +137,11 @@
 				<target>0,00</target>
 			</trans-unit>
 
+			<trans-unit>
+				<source>form.error.invalidPhoneNumber</source>
+				<target>Númer de telefone inválido</target>
+			</trans-unit>
+
 
 			<trans-unit>
 				<source>select</source>

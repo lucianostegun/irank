@@ -150,7 +150,7 @@ class emailTemplateActions extends sfActions
 	$emailContent = Report::defaultReplace($emailContent);
 	
 	$options = array('emailTemplateObj'=>$emailTemplateObj);
-	
+
 	Report::sendMail($emailSubject, $emailAddress, $emailContent, $options);
 	
   	exit;

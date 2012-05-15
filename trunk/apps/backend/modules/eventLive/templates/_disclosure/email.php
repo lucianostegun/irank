@@ -45,7 +45,10 @@
 						<?php
 							$clubId = $sf_user->getAttribute('clubId');
 							
-							foreach(ClubPeer::getPlayerList($clubId, PeoplePeer::EMAIL_ADDRESS) as $peopleObj):
+							$criteria = new Criteria();
+							$criteria->add( PeoplePeer::EMAIL_ADDRESS, null, Criteria::NOT_EQUAL );
+							
+							foreach(Club::getPlayerList($clubId, $criteria) as $peopleObj):
 								
 								$eventLivePlayerDisclosureEmailObj = EventLivePlayerDisclosureEmailPeer::retrieveByPK( $eventLiveObj->getId(), $peopleObj->getId() );
 								$emailLogObj                       = $eventLivePlayerDisclosureEmailObj->getEmailLog();

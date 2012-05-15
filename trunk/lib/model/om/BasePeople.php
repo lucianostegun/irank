@@ -33,6 +33,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 
 	
+	protected $phone_number;
+
+
+	
 	protected $birthday;
 
 
@@ -214,6 +218,13 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	{
 
 		return $this->email_address;
+	}
+
+	
+	public function getPhoneNumber()
+	{
+
+		return $this->phone_number;
 	}
 
 	
@@ -406,6 +417,20 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setPhoneNumber($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->phone_number !== $v) {
+			$this->phone_number = $v;
+			$this->modifiedColumns[] = PeoplePeer::PHONE_NUMBER;
+		}
+
+	} 
+	
 	public function setBirthday($v)
 	{
 
@@ -527,27 +552,29 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			$this->email_address = $rs->getString($startcol + 5);
 
-			$this->birthday = $rs->getDate($startcol + 6, null);
+			$this->phone_number = $rs->getString($startcol + 6);
 
-			$this->default_language = $rs->getString($startcol + 7);
+			$this->birthday = $rs->getDate($startcol + 7, null);
 
-			$this->enabled = $rs->getBoolean($startcol + 8);
+			$this->default_language = $rs->getString($startcol + 8);
 
-			$this->visible = $rs->getBoolean($startcol + 9);
+			$this->enabled = $rs->getBoolean($startcol + 9);
 
-			$this->deleted = $rs->getBoolean($startcol + 10);
+			$this->visible = $rs->getBoolean($startcol + 10);
 
-			$this->locked = $rs->getBoolean($startcol + 11);
+			$this->deleted = $rs->getBoolean($startcol + 11);
 
-			$this->created_at = $rs->getTimestamp($startcol + 12, null);
+			$this->locked = $rs->getBoolean($startcol + 12);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 13, null);
+			$this->created_at = $rs->getTimestamp($startcol + 13, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 14, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 14; 
+						return $startcol + 15; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating People object", $e);
 		}
@@ -992,27 +1019,30 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				return $this->getEmailAddress();
 				break;
 			case 6:
-				return $this->getBirthday();
+				return $this->getPhoneNumber();
 				break;
 			case 7:
-				return $this->getDefaultLanguage();
+				return $this->getBirthday();
 				break;
 			case 8:
-				return $this->getEnabled();
+				return $this->getDefaultLanguage();
 				break;
 			case 9:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 10:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 11:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 12:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 13:
+				return $this->getCreatedAt();
+				break;
+			case 14:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1031,14 +1061,15 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$keys[3]=>$this->getLastName(),
 			$keys[4]=>$this->getFullName(),
 			$keys[5]=>$this->getEmailAddress(),
-			$keys[6]=>$this->getBirthday(),
-			$keys[7]=>$this->getDefaultLanguage(),
-			$keys[8]=>$this->getEnabled(),
-			$keys[9]=>$this->getVisible(),
-			$keys[10]=>$this->getDeleted(),
-			$keys[11]=>$this->getLocked(),
-			$keys[12]=>$this->getCreatedAt(),
-			$keys[13]=>$this->getUpdatedAt(),
+			$keys[6]=>$this->getPhoneNumber(),
+			$keys[7]=>$this->getBirthday(),
+			$keys[8]=>$this->getDefaultLanguage(),
+			$keys[9]=>$this->getEnabled(),
+			$keys[10]=>$this->getVisible(),
+			$keys[11]=>$this->getDeleted(),
+			$keys[12]=>$this->getLocked(),
+			$keys[13]=>$this->getCreatedAt(),
+			$keys[14]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1073,27 +1104,30 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				$this->setEmailAddress($value);
 				break;
 			case 6:
-				$this->setBirthday($value);
+				$this->setPhoneNumber($value);
 				break;
 			case 7:
-				$this->setDefaultLanguage($value);
+				$this->setBirthday($value);
 				break;
 			case 8:
-				$this->setEnabled($value);
+				$this->setDefaultLanguage($value);
 				break;
 			case 9:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 10:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 11:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 12:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 13:
+				$this->setCreatedAt($value);
+				break;
+			case 14:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1109,14 +1143,15 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setLastName($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setFullName($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setEmailAddress($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setBirthday($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setDefaultLanguage($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setEnabled($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setVisible($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setDeleted($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setLocked($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setCreatedAt($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setUpdatedAt($arr[$keys[13]]);
+		if (array_key_exists($keys[6], $arr)) $this->setPhoneNumber($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setBirthday($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setDefaultLanguage($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setEnabled($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setVisible($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setLocked($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
 	}
 
 	
@@ -1130,6 +1165,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PeoplePeer::LAST_NAME)) $criteria->add(PeoplePeer::LAST_NAME, $this->last_name);
 		if ($this->isColumnModified(PeoplePeer::FULL_NAME)) $criteria->add(PeoplePeer::FULL_NAME, $this->full_name);
 		if ($this->isColumnModified(PeoplePeer::EMAIL_ADDRESS)) $criteria->add(PeoplePeer::EMAIL_ADDRESS, $this->email_address);
+		if ($this->isColumnModified(PeoplePeer::PHONE_NUMBER)) $criteria->add(PeoplePeer::PHONE_NUMBER, $this->phone_number);
 		if ($this->isColumnModified(PeoplePeer::BIRTHDAY)) $criteria->add(PeoplePeer::BIRTHDAY, $this->birthday);
 		if ($this->isColumnModified(PeoplePeer::DEFAULT_LANGUAGE)) $criteria->add(PeoplePeer::DEFAULT_LANGUAGE, $this->default_language);
 		if ($this->isColumnModified(PeoplePeer::ENABLED)) $criteria->add(PeoplePeer::ENABLED, $this->enabled);
@@ -1177,6 +1213,8 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$copyObj->setFullName($this->full_name);
 
 		$copyObj->setEmailAddress($this->email_address);
+
+		$copyObj->setPhoneNumber($this->phone_number);
 
 		$copyObj->setBirthday($this->birthday);
 

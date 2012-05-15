@@ -35,22 +35,6 @@ class eventLiveActions extends sfActions
   		return $this->redirect('eventLive/index');
   }
 
-  public function executeGetTabContent($request){
-  	
-  	$tabId = $request->getParameter('tabId');
-  	$tabId = strtolower($tabId);
-  	
-  	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
-  	
-  	if( is_object($eventLiveObj) )
-  		$tabPath = 'eventLive/include/'.$tabId;
-  	else
-  		$tabPath = 'eventLive/include/list/'.$tabId;
-  	
-	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
-	return $this->renderText(get_partial($tabPath, array('eventLiveObj'=>$eventLiveObj)));
-  }
-
   public function executeTogglePresence($request){
   	
   	$isAuthenticated = $this->getUser()->isAuthenticated();
@@ -102,5 +86,21 @@ class eventLiveActions extends sfActions
   	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
   	echo Util::parseInfo($eventLiveObj->getInfo());
   	exit;
+  }
+
+  public function executeGetTabContent($request){
+  	
+  	$tabId = $request->getParameter('tabId');
+  	$tabId = strtolower($tabId);
+  	
+  	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+  	
+  	if( is_object($eventLiveObj) )
+  		$tabPath = 'eventLive/include/'.$tabId;
+  	else
+  		$tabPath = 'eventLive/include/list/'.$tabId;
+  	
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
+	return $this->renderText(get_partial($tabPath, array('eventLiveObj'=>$eventLiveObj)));
   }
 }

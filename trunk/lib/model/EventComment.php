@@ -74,7 +74,6 @@ class EventComment extends BaseEventComment
 		Util::getHelper('I18N');
 
 		$eventObj     = $this->getEvent();
-		$templateName = 'eventCommentNotify';
 		$emailSubject = 'email.subject.eventComment';
 			
 		$infoList['eventName']   = $eventObj->getEventName();
@@ -88,21 +87,20 @@ class EventComment extends BaseEventComment
 		
 		$emailAddressInfoList = $eventObj->getEmailAddressList('receiveEventCommentNotify', false, true);
 
-		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
-		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
-		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventCode%'=>$eventObj->getCode()), 'messages', 'pt_BR');
-		$emailSubjectList['en_US'] = __($emailSubject, array('%eventCode%'=>$eventObj->getCode()), 'messages', 'en_US');
+		$emailTemplateObj = EmailTemplatePeer::retrieveByTagName('eventCommentNotify');
+
+		$emailContent = $emailTemplateObj->getContent();
+		$emailContent = Report::replace($emailContent, $infoList);
+		$emailSubject = __($emailSubject, array('%eventCode%'=>$eventObj->getCode()), 'messages', 'pt_BR');
 		
 		$optionList = array();
-		$optionList['emailTemplate'] = null;
-		$optionList['replyTo']       = 'event_comment@irank.com.br';
+		$optionList['emailTemplateObj'] = $emailTemplateObj;
+		$optionList['replyTo']          = 'event_comment@irank.com.br';
 		
 		foreach($emailAddressInfoList as $emailAddressInfo){
 
 			$emailAddress = $emailAddressInfo['emailAddress'];
 			$culture      = $emailAddressInfo['culture'];
-			$emailContent = $emailContentList[$culture];
-			$emailSubject = $emailSubjectList[$culture];
 			
 			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 		}

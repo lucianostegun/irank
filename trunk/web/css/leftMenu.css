@@ -6,7 +6,7 @@
 
 #leftMenu .item {
 	
-    background: 		#E0E0E0;
+    background: 		#E6E6E6;
     background-image: 	url(/images/layout/leftMenuBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
     background-image: 	url(/images/layout/leftMenuBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
     filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E6E6E6', EndColorStr='#D6D6D6', GradientType=0);
@@ -96,7 +96,7 @@
 
 #leftMenu .subitem {
 	
-    background: 		#E0E0E0;
+    background: 		#E6E6E6;
     background-image: 	url(/images/layout/leftMenuHoverBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
     background-image: 	url(/images/layout/leftMenuHoverBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
     filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E6E6E6', EndColorStr='#D6D6D6', GradientType=0);
@@ -176,7 +176,7 @@
 
     margin-bottom: 		35px;
 	margin-left: 		15px;
-    background: 		#E0E0E0;
+    background: 		#E6E6E6;
     background-image: 	url(/images/layout/leftMenuHoverBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
     background-image: 	url(/images/layout/leftMenuHoverBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
     filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E6E6E6', EndColorStr='#D6D6D6', GradientType=0);

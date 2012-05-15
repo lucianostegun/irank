@@ -156,16 +156,18 @@
 
 #quickEventLiveDetail {
 
-	display: 		none;
-    background: 	-moz-linear-gradient(top, #FFFFFF, #EAEAEA);
-    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#EAEAEA));
-    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#EAEAEA', GradientType=0);
-	position: 		absolute;
-	margin: 		auto 130px;
-	width: 			500px;
-	height: 		125px;
-	z-index: 		1000001;
-	border: 		7px solid #A0A0A0;
+	display: 			none;
+    background: 		#FFFFFF;
+    background-image: 	-o-linear-gradient(#FFFFFF, #EAEAEA);
+    background: 		-moz-linear-gradient(top, #FFFFFF, #EAEAEA);
+    background: 		-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#EAEAEA));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#EAEAEA', GradientType=0);
+	position: 			absolute;
+	margin: 			auto 130px;
+	width: 				500px;
+	height: 			125px;
+	z-index: 			1000001;
+	border: 			7px solid #A0A0A0;
 	
 	filter: 				alpha(opacity=90);
 	-moz-opacity: 			0.90;

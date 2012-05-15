@@ -27,11 +27,6 @@ class People extends BasePeople
         }
     }
 	
-	public function toString(){
-		
-		return $this->getName();
-	}
-	
 	public function cleanRecord(){
 		
 	}
@@ -82,14 +77,39 @@ class People extends BasePeople
 	  	$firstName = $request->getParameter('firstName');
 	  	$lastName  = $request->getParameter('lastName');
 	  	$birthday  = $request->getParameter('birthday');
+		$phoneNumber = $request->getParameter('phoneNumber');
+	  	
 	  	$culture   = MyTools::getCulture();
 	
 	  	$this->setFirstName( $firstName );
 	  	$this->setLastName( $lastName );
 	  	$this->setBirthday( Util::formatDate($birthday) );
 	  	$this->setDefaultLanguage( $culture );
+	  	$this->setPhoneNumber( nvl($phoneNumber) );
 	  	$this->setEnabled(true);
 	  	$this->setVisible(true);
+	  	$this->save();
+	}
+
+	public function quickSaveAdmin($request){
+		
+	  	$firstName = $request->getParameter('firstName');
+	  	$lastName  = $request->getParameter('lastName');
+	  	$birthday  = $request->getParameter('birthday');
+		$phoneNumber = $request->getParameter('phoneNumber');
+	  	
+	  	$this->setFirstName( $firstName );
+	  	$this->setLastName( $lastName );
+	  	$this->setBirthday( Util::formatDate($birthday) );
+	  	$this->setPhoneNumber( nvl($phoneNumber) );
+	  	$this->save();
+	}
+
+	public function quickSaveClub($request){
+		
+	  	$phoneNumber = $request->getParameter('phoneNumber');
+	
+	  	$this->setPhoneNumber( $phoneNumber );
 	  	$this->save();
 	}
 	
@@ -99,6 +119,7 @@ class People extends BasePeople
 		$criteria->add( PeoplePeer::ENABLED, true );
 		$criteria->add( PeoplePeer::VISIBLE, true );
 		$criteria->add( PeoplePeer::DELETED, false );
+		$criteria->addAscendingOrderByColumn( PeoplePeer::FULL_NAME, false );
 		
 		return PeoplePeer::doSelect( $criteria );
 	}
@@ -195,9 +216,10 @@ class People extends BasePeople
 		return UserSitePeer::doSelectOne( $criteria );
 	}
 	
-	public static function getQuickResume($quickResume){
+	public static function getQuickResume($quickResume, $peopleId=null){
 		
-		$peopleId = MyTools::getAttribute('peopleId');
+		if( is_null($peopleId) )
+			$peopleId = MyTools::getAttribute('peopleId');
 		
 		switch($quickResume){
 			case 'balance':
@@ -283,16 +305,52 @@ class People extends BasePeople
 		return EventPlayerPeer::doCount($criteria);
 	}
 	
-	public function getPhoneNumber(){
-		
-		return sprintf('(%d) %d-%d', 11, 8030, 2030);
-	}
-	
-	public static function getPendingInvites(){
+	public static function getPendingInvites($returnIdList=false){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
 		
-		return Util::executeOne("SELECT get_pending_invites($peopleId)"); 
+		if( $returnIdList ){
+		
+			$eventLiveIdList = Util::executeOne("SELECT get_pending_invite_list($peopleId)", 'string');
+			return explode(',', $eventLiveIdList);
+		}else 
+			return Util::executeOne("SELECT get_pending_invites($peopleId)"); 
+	}
+	
+	public function getPeopleType(){
+		
+		return $this->getVirtualTable();
+	}
+	
+	public function isMyPlayer(){
+		
+		if( !$this->getVisible()  && !$this->getEnabled() && !$this->getDeleted() )
+			return true;
+		
+		$iRankAdmin = MyTools::hasCredential('iRankAdmin');
+
+		if( $iRankAdmin )
+			return true;
+
+		$clubId = MyTools::getAttribute('clubId');
+			
+		$criteria = new Criteria();
+		$criteria->setDistinct( PeoplePeer::ID );
+		$criteria->add( EventLivePlayerPeer::PEOPLE_ID, $this->getId() );
+		$criteria->add( EventLivePeer::CLUB_ID, $clubId );
+		$criteria->addJoin( PeoplePeer::ID, EventLivePlayerPeer::PEOPLE_ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID, Criteria::INNER_JOIN );
+		$count = PeoplePeer::doCount( $criteria );
+		
+		if( $count==0 )
+			return false;
+		
+		return true;
+	}
+	
+	public function toString(){
+		
+		return $this->getName();
 	}
 	
 	public function getInfo(){

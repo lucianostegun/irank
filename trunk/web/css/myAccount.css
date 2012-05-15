@@ -1,0 +1,17 @@
+.quickConfirmButton {
+	
+	position: absolute;
+	width: 175px;
+	right: 20px;
+	margin-top: -22px;
+	z-index: 200;
+	background: #f6b957;
+	padding: 3px 0px 3px 10px;
+	display: none;
+}
+
+.quickConfirmButton .button .buttonMiddle img {
+	
+	position: relative;
+	top: 0px
+}

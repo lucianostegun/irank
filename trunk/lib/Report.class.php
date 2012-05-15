@@ -28,13 +28,13 @@ class Report {
 		$senderName    = Config::getConfigByName('emailSenderName', true);
 		
 		$contentType      = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
-		$emailTemplate    = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
 		$replyTo          = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
 		$attachmentList   = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
 		$entitiesEncode   = array_key_exists('entitiesEncode', $options)?$options['entitiesEncode']:true;
 		$emailLogId       = array_key_exists('emailLogId', $options)?$options['emailLogId']:null;
 		$emailTemplateObj = array_key_exists('emailTemplateObj', $options)?$options['emailTemplateObj']:null;
-
+		$emailTemplate    = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
+		
 		$emailAddressList = array('lucianostegun@gmail.com');
 		
 		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
@@ -65,9 +65,10 @@ class Report {
 			$emailSubject = utf8_decode($emailSubject);
 		}
 
-		if( $emailTemplateObj && $emailTemplateObj->getEmailTemplateId() ){
+		if( is_object($emailTemplateObj) && !is_null($emailTemplateObj->getTagNameParent()) ){
 			
-			$emailContent  = str_replace('[emailContent]', $emailContent, $emailTemplateObj->getEmailTemplate()->getContent());
+			$emailTemplate = EmailTemplate::getContentByTagName($emailTemplateObj->getTagNameParent());
+			$emailContent  = str_replace('[emailContent]', $emailContent, $emailTemplate);
 			$emailTemplate = null;
 		}
 		
@@ -132,13 +133,16 @@ class Report {
 			$sfMailObj->send();
 
 			EmailLog::doLog($emailAddressList, $emailSubject, 'success', $emailLogId);
+			
+			// Debug
+			return;
+			
 		}catch(Exception $e){
 		
 			$sendResult = false;
 			EmailLog::doLog($emailAddressList, $emailSubject, 'error', $emailLogId);
 		}
 		
-		exit;
 		return $sendResult;
     }
     

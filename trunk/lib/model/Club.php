@@ -118,6 +118,22 @@ class Club extends BaseClub
 		return options_for_select( $optionList, $defaultValue );
 	}
 	
+	public static function getPlayerList($clubId=null, $criteria=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
+		$criteria->setDistinct( PeoplePeer::ID );
+		
+		if($clubId)
+			$criteria->add( EventLivePeer::CLUB_ID, $clubId );
+			
+		$criteria->addJoin( PeoplePeer::ID, EventLivePlayerPeer::PEOPLE_ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID, Criteria::INNER_JOIN );
+		
+		return PeoplePeer::doSelect( $criteria );
+	}
+	
 	public function getLocation(){
 		
 		if( !$this->getCityId() )

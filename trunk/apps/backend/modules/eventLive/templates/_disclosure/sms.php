@@ -60,7 +60,9 @@
 					</thead> 
 					<tbody id="smsPeopleListTbody"> 
 						<?php
-							foreach(ClubPeer::getPlayerList($clubId, PeoplePeer::EMAIL_ADDRESS) as $peopleObj):
+							$criteria = new Criteria();
+							$criteria->add( PeoplePeer::PHONE_NUMBER, null, Criteria::NOT_EQUAL );
+							foreach(Club::getPlayerList($clubId, $criteria) as $peopleObj):
 
 								$eventLivePlayerDisclosureSmsObj = EventLivePlayerDisclosureSmsPeer::retrieveByPK( $eventLiveObj->getId(), $peopleObj->getId() );
 								
