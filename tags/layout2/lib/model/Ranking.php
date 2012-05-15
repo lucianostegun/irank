@@ -990,7 +990,7 @@ class Ranking extends BaseRanking
 		$infoList['visible']       = $this->getVisible();
 		$infoList['locked']        = $this->getLocked();
 		$infoList['deleted']       = $this->getDeleted();
-		$infoList['defaultBuyin']  = $this->getDefaultBuyin();
+		$infoList['buyin']  = $this->getBuyin();
 		$infoList['gameStyleId']   = $this->getGameStyleId();
 		$infoList['gameStyle']     = $this->getGameStyle()->getDescription();
 		$infoList['gameStyleTag']  = $this->getGameStyle()->getTagName();

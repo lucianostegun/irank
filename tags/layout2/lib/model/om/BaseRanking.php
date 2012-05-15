@@ -45,7 +45,7 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 
 	
-	protected $default_buyin;
+	protected $buyin;
 
 
 	
@@ -238,10 +238,10 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getDefaultBuyin()
+	public function getBuyin()
 	{
 
-		return $this->default_buyin;
+		return $this->buyin;
 	}
 
 	
@@ -485,12 +485,12 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setDefaultBuyin($v)
+	public function setBuyin($v)
 	{
 
-		if ($this->default_buyin !== $v) {
-			$this->default_buyin = $v;
-			$this->modifiedColumns[] = RankingPeer::DEFAULT_BUYIN;
+		if ($this->buyin !== $v) {
+			$this->buyin = $v;
+			$this->modifiedColumns[] = RankingPeer::BUYIN;
 		}
 
 	} 
@@ -647,7 +647,7 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 			$this->is_private = $rs->getBoolean($startcol + 8);
 
-			$this->default_buyin = $rs->getFloat($startcol + 9);
+			$this->buyin = $rs->getFloat($startcol + 9);
 
 			$this->players = $rs->getInt($startcol + 10);
 
@@ -993,7 +993,7 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				return $this->getIsPrivate();
 				break;
 			case 9:
-				return $this->getDefaultBuyin();
+				return $this->getBuyin();
 				break;
 			case 10:
 				return $this->getPlayers();
@@ -1044,7 +1044,7 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 			$keys[6]=>$this->getStartDate(),
 			$keys[7]=>$this->getFinishDate(),
 			$keys[8]=>$this->getIsPrivate(),
-			$keys[9]=>$this->getDefaultBuyin(),
+			$keys[9]=>$this->getBuyin(),
 			$keys[10]=>$this->getPlayers(),
 			$keys[11]=>$this->getEvents(),
 			$keys[12]=>$this->getScoreSchema(),
@@ -1098,7 +1098,7 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				$this->setIsPrivate($value);
 				break;
 			case 9:
-				$this->setDefaultBuyin($value);
+				$this->setBuyin($value);
 				break;
 			case 10:
 				$this->setPlayers($value);
@@ -1146,7 +1146,7 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setStartDate($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setFinishDate($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setIsPrivate($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setDefaultBuyin($arr[$keys[9]]);
+		if (array_key_exists($keys[9], $arr)) $this->setBuyin($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setPlayers($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setEvents($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setScoreSchema($arr[$keys[12]]);
@@ -1173,7 +1173,7 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RankingPeer::START_DATE)) $criteria->add(RankingPeer::START_DATE, $this->start_date);
 		if ($this->isColumnModified(RankingPeer::FINISH_DATE)) $criteria->add(RankingPeer::FINISH_DATE, $this->finish_date);
 		if ($this->isColumnModified(RankingPeer::IS_PRIVATE)) $criteria->add(RankingPeer::IS_PRIVATE, $this->is_private);
-		if ($this->isColumnModified(RankingPeer::DEFAULT_BUYIN)) $criteria->add(RankingPeer::DEFAULT_BUYIN, $this->default_buyin);
+		if ($this->isColumnModified(RankingPeer::BUYIN)) $criteria->add(RankingPeer::BUYIN, $this->buyin);
 		if ($this->isColumnModified(RankingPeer::PLAYERS)) $criteria->add(RankingPeer::PLAYERS, $this->players);
 		if ($this->isColumnModified(RankingPeer::EVENTS)) $criteria->add(RankingPeer::EVENTS, $this->events);
 		if ($this->isColumnModified(RankingPeer::SCORE_SCHEMA)) $criteria->add(RankingPeer::SCORE_SCHEMA, $this->score_schema);
@@ -1230,7 +1230,7 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 		$copyObj->setIsPrivate($this->is_private);
 
-		$copyObj->setDefaultBuyin($this->default_buyin);
+		$copyObj->setBuyin($this->buyin);
 
 		$copyObj->setPlayers($this->players);
 

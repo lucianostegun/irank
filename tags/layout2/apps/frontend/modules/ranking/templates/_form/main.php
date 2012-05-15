@@ -62,9 +62,9 @@
 				<div class="error" id="rankingRankingTypeIdError" onclick="showFormErrorDetails('ranking', 'RankingTypeId')"></div>
 			</div>
 			<div class="row">
-				<div class="label" id="rankingDefaultBuyinLabel"><?php echo __('ranking.defaultBuyin') ?></div>
-				<div class="field"><?php echo input_tag('defaultBuyin', Util::formatFloat($rankingObj->getDefaultBuyin(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'rankingDefaultBuyin')) ?></div>
-				<div class="error" id="rankingDefaultBuyinError" onclick="showFormErrorDetails('ranking', 'defaultBuyin')"></div>
+				<div class="label" id="rankingBuyinLabel"><?php echo __('ranking.buyin') ?></div>
+				<div class="field"><?php echo input_tag('buyin', Util::formatFloat($rankingObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'rankingBuyin')) ?></div>
+				<div class="error" id="rankingBuyinError" onclick="showFormErrorDetails('ranking', 'buyin')"></div>
 				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 			<div class="row">

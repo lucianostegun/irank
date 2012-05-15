@@ -116,7 +116,7 @@ class RankingPeer extends BaseRankingPeer
 		$prize        = 1;
 		$players      = 1;
 		$totalBuyins  = 1;
-		$defaultBuyin = 1;
+		$buyin = 1;
 		$itm          = 1;
 		
 		$formula = strtolower($formula);
@@ -126,7 +126,7 @@ class RankingPeer extends BaseRankingPeer
 		$formula = preg_replace('/pr[eê]mio|prize/', '$prize', $formula);
 		$formula = preg_replace('/jogadores|players/', '$players', $formula);
 		$formula = preg_replace('/buyins/', '$totalBuyins', $formula);
-		$formula = preg_replace('/buyin/', '$defaultBuyin', $formula);
+		$formula = preg_replace('/buyin/', '$buyin', $formula);
 		$formula = preg_replace('/itm/', '$itm', $formula);
 		
 		$formulaResult = null;

@@ -33,7 +33,7 @@
 					</tr>
 					<tr>
 						<th><?php echo __('ranking.defaultBuyIn') ?></th>
-						<td><?php echo Util::formatFloat($rankingObj->getDefaultBuyin(), true) ?></td>
+						<td><?php echo Util::formatFloat($rankingObj->getBuyin(), true) ?></td>
 					</tr>
 					<tr>
 						<th><?php echo __('ranking.heldEvents') ?></th>

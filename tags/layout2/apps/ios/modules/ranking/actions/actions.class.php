@@ -113,7 +113,7 @@ class rankingActions extends sfActions
 				$rankingNode['finishDate']   = $rankingObj->getFinishDate('d/m/Y');
 				$rankingNode['isPrivate']    = $rankingObj->getIsPrivate()?'true':'false';
 				$rankingNode['rankingType']  = $rankingObj->getRankingType()->getDescription();
-				$rankingNode['defaultBuyin'] = $rankingObj->getDefaultBuyin();
+				$rankingNode['buyin'] = $rankingObj->getBuyin();
 				$rankingNode['isMyRanking']  = $rankingObj->isMyRanking();
 				
 				$rankingList[] = $rankingNode;

@@ -72,7 +72,7 @@
 		<column name="start_date" type="DATE" />
 		<column name="finish_date" type="DATE" />
 		<column name="is_private" type="BOOLEAN" />
-		<column name="default_buyin" type="FLOAT" />
+		<column name="buyin" type="FLOAT" />
 		<column name="players" type="INTEGER" />
 		<column name="events" type="INTEGER" />
 		<column name="score_schema" type="VARCHAR" />

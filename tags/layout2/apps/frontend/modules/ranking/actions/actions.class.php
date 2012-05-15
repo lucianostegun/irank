@@ -8,7 +8,7 @@ class rankingActions extends sfActions
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
 	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
 	
-	$freeActionList = array('edit', 'getDefaultBuyin', 'getRankingHistory', 'validateUnsubscribe', 'unsubscribe', 'saveMobile');
+	$freeActionList = array('edit', 'getBuyin', 'getRankingHistory', 'validateUnsubscribe', 'unsubscribe', 'saveMobile');
 	$actionName     = sfContext::getInstance()->getActionName();
 		
 	$rankingId = $this->getRequestParameter('rankingId');
@@ -81,7 +81,7 @@ class rankingActions extends sfActions
 	$finishDate       = $request->getParameter('finishDate');
 	$isPrivate        = $request->getParameter('isPrivate');
 	$rankingTypeId    = $request->getParameter('rankingTypeId');
-	$defaultBuyin     = $request->getParameter('defaultBuyin');
+	$buyin     = $request->getParameter('buyin');
 	$scoreSchema      = $request->getParameter('scoreSchema');
 	$scoreFormula     = $request->getParameter('scoreFormula');
 	$recalculateScore = $request->getParameter('recalculateScore');
@@ -106,7 +106,7 @@ $recalculateScore = true;
 	$rankingObj->setGameStyleId( $gameStyleId );
 	$rankingObj->setStartDate( Util::formatDate($startDate) );
 	$rankingObj->setFinishDate( Util::formatDate($finishDate) );
-	$rankingObj->setDefaultBuyin( Util::formatFloat($defaultBuyin) );
+	$rankingObj->setBuyin( Util::formatFloat($buyin) );
 	$rankingObj->setIsPrivate( ($isPrivate?true:false) );
 	$rankingObj->setRankingTypeId( $rankingTypeId );
 	$rankingObj->setScoreSchema( $scoreSchema );
@@ -159,7 +159,7 @@ $recalculateScore = true;
 	$finishDate      = $request->getParameter('finishDate');
 	$isPrivate       = $request->getParameter('isPrivate');
 	$rankingTypeId   = $request->getParameter('rankingTypeId');
-	$defaultBuyin    = $request->getParameter('defaultBuyin');
+	$buyin    = $request->getParameter('buyin');
 
 //	$rankingObj = $this->rankingObj;
 //
@@ -322,7 +322,7 @@ $recalculateScore = true;
     exit;
   }
   
-  public function executeGetDefaultBuyin($request){
+  public function executeGetBuyin($request){
 
 	$rankingId  = $request->getParameter('rankingId');
 	$rankingObj = RankingPeer::retrieveByPK( $rankingId );
@@ -481,7 +481,7 @@ $recalculateScore = true;
 		$ranking['startDate']    = $rankingObj->getStartDate('d/m/Y');
 		$ranking['finishDate']   = $rankingObj->getFinishDate('d/m/Y');
 		$ranking['isPrivate']    = ($rankingObj->getIsPrivate()?'1':'0');
-		$ranking['defaultBuyin'] = Util::formatFloat($rankingObj->getDefaultBuyin(), true);
+		$ranking['buyin'] = Util::formatFloat($rankingObj->getBuyin(), true);
 		$ranking['players']      = $rankingObj->getPlayers();
 		$ranking['events']       = $rankingObj->getEvents();
 		

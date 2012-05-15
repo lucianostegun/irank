@@ -192,6 +192,7 @@ class People extends BasePeople
 				$sql = 'SELECT get_player_balance('.$peopleId.')';
 				break;
 			case 'profit':
+			default:
 				$sql = 'SELECT get_player_profit('.$peopleId.')';
 				break;
 			case 'score':
