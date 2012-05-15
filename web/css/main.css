@@ -434,3 +434,8 @@ a:hover {
 .pt30 { padding-top: 30px }
 .pt40 { padding-top: 40px }
 .pt50 { padding-top: 50px }
+
+.hidden {
+
+	display: none
+}

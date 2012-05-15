@@ -22,10 +22,11 @@
 	height: 				340px;
 	border: 				1px solid #303030;
 	
-	background: 	#000000;
-    background: 	-moz-linear-gradient(top, #000000, #454545);
-    background: 	-webkit-gradient(linear, left top, left bottom, from(#000000), to(#454545));
-    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#000000', EndColorStr='#454545', GradientType=0);
+	background: 		#000000;
+    background-image: 		-o-linear-gradient(#000000, #454545);
+    background: 		-moz-linear-gradient(top, #000000, #454545);;
+    background: 		-webkit-gradient(linear, left top, left bottom, from(#000000), to(#454545));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#000000', EndColorStr='#454545', GradientType=0);
     
 	-moz-border-radius: 	5px;
 	-webkit-border-radius: 	5px;
@@ -590,7 +591,9 @@
 #userResume #eventResume #eventList .event.noEvent {
 
 	border: 		1px solid #D0D0D0;
-    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+    background: 	#FFFFFF;
+    background-image: 	-o-linear-gradient(#FFFFFF, #F0F0F0);
+    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
     background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);	
 }
@@ -608,10 +611,11 @@
 	border: 		1px solid #DADADA;
 	
 	
-	background: 	#F0F0F0;
-    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);
-    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
-    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);
+	background: 		#FFFFFF;
+    background-image: 	-o-linear-gradient(#FFFFFF, #F0F0F0);
+    background: 		-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
+    background: 		-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);
 }
 
 #userResume #eventResume .loadEvents a {

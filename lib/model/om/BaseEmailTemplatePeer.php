@@ -13,7 +13,7 @@ abstract class BaseEmailTemplatePeer {
 	const CLASS_DEFAULT = 'lib.model.EmailTemplate';
 
 	
-	const NUM_COLUMNS = 15;
+	const NUM_COLUMNS = 16;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -47,6 +47,9 @@ abstract class BaseEmailTemplatePeer {
 	const TAG_NAME = 'email_template.TAG_NAME';
 
 	
+	const TAG_NAME_PARENT = 'email_template.TAG_NAME_PARENT';
+
+	
 	const ENABLED = 'email_template.ENABLED';
 
 	
@@ -70,19 +73,19 @@ abstract class BaseEmailTemplatePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'TemplateName', 'Description', 'FileId', 'ClubId', 'EmailTemplateId', 'IsAvailableForUse', 'IsAvailableForSale', 'TagName', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EmailTemplatePeer::ID, EmailTemplatePeer::TEMPLATE_NAME, EmailTemplatePeer::DESCRIPTION, EmailTemplatePeer::FILE_ID, EmailTemplatePeer::CLUB_ID, EmailTemplatePeer::EMAIL_TEMPLATE_ID, EmailTemplatePeer::IS_AVAILABLE_FOR_USE, EmailTemplatePeer::IS_AVAILABLE_FOR_SALE, EmailTemplatePeer::TAG_NAME, EmailTemplatePeer::ENABLED, EmailTemplatePeer::VISIBLE, EmailTemplatePeer::DELETED, EmailTemplatePeer::LOCKED, EmailTemplatePeer::CREATED_AT, EmailTemplatePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'template_name', 'description', 'file_id', 'club_id', 'email_template_id', 'is_available_for_use', 'is_available_for_sale', 'tag_name', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'TEMPLATE_NAME'=>'', 'DESCRIPTION'=>'', 'FILE_ID'=>'', 'CLUB_ID'=>'', 'EMAIL_TEMPLATE_ID'=>'', 'IS_AVAILABLE_FOR_USE'=>'', 'IS_AVAILABLE_FOR_SALE'=>'', 'TAG_NAME'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'TemplateName', 'Description', 'FileId', 'ClubId', 'EmailTemplateId', 'IsAvailableForUse', 'IsAvailableForSale', 'TagName', 'TagNameParent', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EmailTemplatePeer::ID, EmailTemplatePeer::TEMPLATE_NAME, EmailTemplatePeer::DESCRIPTION, EmailTemplatePeer::FILE_ID, EmailTemplatePeer::CLUB_ID, EmailTemplatePeer::EMAIL_TEMPLATE_ID, EmailTemplatePeer::IS_AVAILABLE_FOR_USE, EmailTemplatePeer::IS_AVAILABLE_FOR_SALE, EmailTemplatePeer::TAG_NAME, EmailTemplatePeer::TAG_NAME_PARENT, EmailTemplatePeer::ENABLED, EmailTemplatePeer::VISIBLE, EmailTemplatePeer::DELETED, EmailTemplatePeer::LOCKED, EmailTemplatePeer::CREATED_AT, EmailTemplatePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'template_name', 'description', 'file_id', 'club_id', 'email_template_id', 'is_available_for_use', 'is_available_for_sale', 'tag_name', 'tag_name_parent', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'TEMPLATE_NAME'=>'', 'DESCRIPTION'=>'', 'FILE_ID'=>'', 'CLUB_ID'=>'', 'EMAIL_TEMPLATE_ID'=>'', 'IS_AVAILABLE_FOR_USE'=>'', 'IS_AVAILABLE_FOR_SALE'=>'', 'TAG_NAME'=>'', 'TAG_NAME_PARENT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'TemplateName'=>1, 'Description'=>2, 'FileId'=>3, 'ClubId'=>4, 'EmailTemplateId'=>5, 'IsAvailableForUse'=>6, 'IsAvailableForSale'=>7, 'TagName'=>8, 'Enabled'=>9, 'Visible'=>10, 'Deleted'=>11, 'Locked'=>12, 'CreatedAt'=>13, 'UpdatedAt'=>14, ),
-		BasePeer::TYPE_COLNAME=>array (EmailTemplatePeer::ID=>0, EmailTemplatePeer::TEMPLATE_NAME=>1, EmailTemplatePeer::DESCRIPTION=>2, EmailTemplatePeer::FILE_ID=>3, EmailTemplatePeer::CLUB_ID=>4, EmailTemplatePeer::EMAIL_TEMPLATE_ID=>5, EmailTemplatePeer::IS_AVAILABLE_FOR_USE=>6, EmailTemplatePeer::IS_AVAILABLE_FOR_SALE=>7, EmailTemplatePeer::TAG_NAME=>8, EmailTemplatePeer::ENABLED=>9, EmailTemplatePeer::VISIBLE=>10, EmailTemplatePeer::DELETED=>11, EmailTemplatePeer::LOCKED=>12, EmailTemplatePeer::CREATED_AT=>13, EmailTemplatePeer::UPDATED_AT=>14, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'template_name'=>1, 'description'=>2, 'file_id'=>3, 'club_id'=>4, 'email_template_id'=>5, 'is_available_for_use'=>6, 'is_available_for_sale'=>7, 'tag_name'=>8, 'enabled'=>9, 'visible'=>10, 'deleted'=>11, 'locked'=>12, 'created_at'=>13, 'updated_at'=>14, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'TemplateName'=>1, 'Description'=>2, 'FileId'=>3, 'ClubId'=>4, 'EmailTemplateId'=>5, 'IsAvailableForUse'=>6, 'IsAvailableForSale'=>7, 'TagName'=>8, 'TagNameParent'=>9, 'Enabled'=>10, 'Visible'=>11, 'Deleted'=>12, 'Locked'=>13, 'CreatedAt'=>14, 'UpdatedAt'=>15, ),
+		BasePeer::TYPE_COLNAME=>array (EmailTemplatePeer::ID=>0, EmailTemplatePeer::TEMPLATE_NAME=>1, EmailTemplatePeer::DESCRIPTION=>2, EmailTemplatePeer::FILE_ID=>3, EmailTemplatePeer::CLUB_ID=>4, EmailTemplatePeer::EMAIL_TEMPLATE_ID=>5, EmailTemplatePeer::IS_AVAILABLE_FOR_USE=>6, EmailTemplatePeer::IS_AVAILABLE_FOR_SALE=>7, EmailTemplatePeer::TAG_NAME=>8, EmailTemplatePeer::TAG_NAME_PARENT=>9, EmailTemplatePeer::ENABLED=>10, EmailTemplatePeer::VISIBLE=>11, EmailTemplatePeer::DELETED=>12, EmailTemplatePeer::LOCKED=>13, EmailTemplatePeer::CREATED_AT=>14, EmailTemplatePeer::UPDATED_AT=>15, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'template_name'=>1, 'description'=>2, 'file_id'=>3, 'club_id'=>4, 'email_template_id'=>5, 'is_available_for_use'=>6, 'is_available_for_sale'=>7, 'tag_name'=>8, 'tag_name_parent'=>9, 'enabled'=>10, 'visible'=>11, 'deleted'=>12, 'locked'=>13, 'created_at'=>14, 'updated_at'=>15, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 
 	
@@ -153,6 +156,8 @@ abstract class BaseEmailTemplatePeer {
 		$criteria->addSelectColumn(EmailTemplatePeer::IS_AVAILABLE_FOR_SALE);
 
 		$criteria->addSelectColumn(EmailTemplatePeer::TAG_NAME);
+
+		$criteria->addSelectColumn(EmailTemplatePeer::TAG_NAME_PARENT);
 
 		$criteria->addSelectColumn(EmailTemplatePeer::ENABLED);
 

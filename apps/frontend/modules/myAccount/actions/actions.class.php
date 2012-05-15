@@ -220,6 +220,35 @@ class myAccountActions extends sfActions
 	imagedestroy($newImg);
 	exit;
   }
+
+  public function executeInvites($request){
+
+  }
+
+  public function executeGetTabContent($request){
+  	
+  	$tabId = $request->getParameter('tabId');
+  	$tabId = strtolower($tabId);
+  	
+ 	$tabPath = 'myAccount/include/'.$tabId;
+  	
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
+	return $this->renderText(get_partial($tabPath, array()));
+  }
+  
+  public function executeDeletePendingInvite($request){
+
+	$peopleId        = MyTools::getAttribute('peopleId');  	
+  	$eventLiveId     = $request->getParameter('eventLiveId');
+  	$eventLiveIdList = People::getPendingInvites(true);
+  	
+  	if( !in_array($eventLiveId, $eventLiveIdList) )
+  		exit;
+  	
+  	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPk($eventLiveId, $peopleId);
+  	$eventLivePlayerObj->save();
+  	exit;
+  }
   
   public function executeJavascript($request){
 

@@ -40,20 +40,4 @@ class ClubPeer extends BaseClubPeer
 		
 		return !is_object($clubObj);
 	}
-	
-	public static function getPlayerList($clubId=null, $orderByColumn=PeoplePeer::FULL_NAME){
-		
-		$criteria = new Criteria();
-		$criteria->setDistinct( PeoplePeer::ID );
-		
-		if($clubId)
-			$criteria->add( EventLivePeer::CLUB_ID, $clubId );
-			
-		$criteria->add( PeoplePeer::EMAIL_ADDRESS, null, Criteria::NOT_EQUAL );
-		
-		$criteria->addJoin( PeoplePeer::ID, EventLivePlayerPeer::PEOPLE_ID, Criteria::INNER_JOIN );
-		$criteria->addJoin( EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID, Criteria::INNER_JOIN );
-		
-		return PeoplePeer::doSelect( $criteria );
-	}
 }

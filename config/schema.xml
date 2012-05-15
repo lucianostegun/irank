@@ -25,13 +25,14 @@
 	
 	<table name="people" phpName="People">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
-		<column name="people_type_id" type="INTEGER" description="Tipo de pessoa" />
-		<column name="first_name" description="Nome" type="VARCHAR" />
-		<column name="last_name" description="Sobrenome" type="VARCHAR" />
+		<column name="people_type_id" type="INTEGER" />
+		<column name="first_name" type="VARCHAR" />
+		<column name="last_name" type="VARCHAR" />
 		<column name="full_name" type="VARCHAR" />
-		<column name="email_address" type="VARCHAR" description="E-mail" />
-		<column name="birthday" description="Nascimento" type="DATE" />
-		<column name="default_language" type="CHAR" description="Idioma padrão" />
+		<column name="email_address" type="VARCHAR" />
+		<column name="phone_number" type="VARCHAR" />
+		<column name="birthday" type="DATE" />
+		<column name="default_language" type="CHAR" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -46,18 +47,18 @@
 	<table name="user_site" phpName="UserSite">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
 		<column name="people_id" type="INTEGER" />
-		<column name="username" type="VARCHAR" description="Username" />
+		<column name="username" type="VARCHAR" />
 		<column name="password" type="VARCHAR" />
 		<column name="htpasswd_line" type="INTEGER" />
 		<column name="image_path" type="VARCHAR" />
-		<column name="signed_schedule" type="BOOLEAN" description="Assina calendário" />
-		<column name="schedule_start_date" type="DATE" description="Início do calendário" />
-		<column name="active" type="BOOLEAN" description="Ativo" />
+		<column name="signed_schedule" type="BOOLEAN" />
+		<column name="schedule_start_date" type="DATE" />
+		<column name="active" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="locked" type="BOOLEAN" />
-		<column name="last_access_date" type="TIMESTAMP" description="Último acesso" />
+		<column name="last_access_date" type="TIMESTAMP" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="people">
@@ -220,8 +221,8 @@
 	</table>
 	
 	<table name="config" phpName="Config">
-		<column name="config_name" type="VARCHAR" description="Configuração" primaryKey="true" />
-		<column name="description" type="VARCHAR" description="Descrição" />
+		<column name="config_name" type="VARCHAR" primaryKey="true" />
+		<column name="description" type="VARCHAR" />
 		<column name="config_value" type="VARCHAR" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -930,6 +931,7 @@
 		<column name="is_available_for_use" type="BOOLEAN" />
 		<column name="is_available_for_sale" type="BOOLEAN" />
 		<column name="tag_name" type="VARCHAR" />
+		<column name="tag_name_parent" type="VARCHAR" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />

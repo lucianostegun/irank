@@ -48,7 +48,9 @@ class EmailTemplate extends BaseEmailTemplate
 		$description        = $request->getParameter('description');
 		$content            = $request->getParameter('content');
 		
-		$isNew = $this->getIsNew();
+		$isNew              = $this->getIsNew();
+		$tagNameOld         = $this->getTagName();
+		$emailTemplateIdOld = $this->getEmailTemplateId();
 		
 		$this->setEmailTemplateId(nvl($emailTemplateId));
 		$this->setTemplateName($templateName);
@@ -59,13 +61,24 @@ class EmailTemplate extends BaseEmailTemplate
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);
+		
+		if( $emailTemplateIdOld!=$emailTemplateId )
+			$this->updateTagNameParent();
+		
 		$this->save();
 		
 		if( $content )
 			$this->updateContent($content);
 		
-		if( $isNew )
+		if( $isNew || ($tagNameOld!=$tagName) )
 			$this->renameFile();
+	}
+	
+	public function updateTagNameParent(){
+		
+		$tagName = $this->getEmailTemplate()->getTagName();
+		$this->setTagNameParent( nvl($tagName) );
+		unset($tagName);
 	}
 	
 	public function renameFile(){
@@ -161,19 +174,8 @@ class EmailTemplate extends BaseEmailTemplate
 	
 	public static function getContentByTagName($tagName, $encodeUTF8=false, $culture=false){
 
-		if( !$culture )
-			$culture = MyTools::getCulture();
-		
-		$criteria = new Criteria();
-		$criteria->add( EmailTemplatePeer::VISIBLE, true );
-		$criteria->add( EmailTemplatePeer::DELETED, false );
-		$criteria->add( EmailTemplatePeer::TAG_NAME, $tagName );
-		$emailTemplateObj = EmailTemplatePeer::doSelectOne( $criteria );
-
-		if( !is_object($emailTemplateObj) )
-			return null;
-
-		$content = $emailTemplateObj->getContent($culture);
+		$filePath = Util::getFilePath('/templates/email/'.$tagName.'.htm');
+		$content = file_get_contents($filePath);
 		
 		if( $encodeUTF8 )
 			$content = utf8_encode($content);
@@ -184,7 +186,6 @@ class EmailTemplate extends BaseEmailTemplate
 	public function getContent($culture=false){
 
 		$filePath = $this->getFilePath(true);
-//		$filePath = str_replace('templates', 'templates', $filePath);
 
 		return file_get_contents($filePath);
 	}

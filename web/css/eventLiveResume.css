@@ -190,8 +190,9 @@
 
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.next {
 
-	background: 	#D2E3EA;
-    background: 	-moz-linear-gradient(top, #FFFFFF, #D2E3EA);
+	background: 	#FFFFFF;
+    background-image: 	-o-linear-gradient(#FFFFFF, #D2E3EA);
+    background: 	-moz-linear-gradient(top, #FFFFFF, #D2E3EA);;
     background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#D2E3EA));
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#D2E3EA', GradientType=0);
 }
@@ -200,8 +201,9 @@
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.hover,
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.pending.hover {
 
-	background: 	#E8F3F7;
-    background: 	-moz-linear-gradient(top, #FFFFFF, #b9ccd8);
+	background: 	#FFFFFF;
+    background-image: 	-o-linear-gradient(#FFFFFF, #b9ccd8);
+    background: 	-moz-linear-gradient(top, #FFFFFF, #b9ccd8);;
     background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#b9ccd8));
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#b9ccd8', GradientType=0);
 }
@@ -220,7 +222,9 @@
 .eventLiveResume #eventLiveResume #eventLiveList .eventLive.noEvent {
 
 	border: 		1px solid #D0D0D0;
-    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+    background: 	#FFFFFF;
+    background-image: 	-o-linear-gradient(#FFFFFF, #F0F0F0);
+    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
     background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);	
 }
@@ -238,8 +242,9 @@
 	border: 		1px solid #DADADA;
 	
 	
-	background: 	#F0F0F0;
-    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+	background: 	#FFFFFF;
+    background-image: 	-o-linear-gradient(#FFFFFF, #F0F0F0);
+    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
     background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);
 }

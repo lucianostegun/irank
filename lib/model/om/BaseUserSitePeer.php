@@ -76,7 +76,7 @@ abstract class BaseUserSitePeer {
 		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'Username', 'Password', 'HtpasswdLine', 'ImagePath', 'SignedSchedule', 'ScheduleStartDate', 'Active', 'Enabled', 'Visible', 'Deleted', 'Locked', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
 		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID, UserSitePeer::PEOPLE_ID, UserSitePeer::USERNAME, UserSitePeer::PASSWORD, UserSitePeer::HTPASSWD_LINE, UserSitePeer::IMAGE_PATH, UserSitePeer::SIGNED_SCHEDULE, UserSitePeer::SCHEDULE_START_DATE, UserSitePeer::ACTIVE, UserSitePeer::ENABLED, UserSitePeer::VISIBLE, UserSitePeer::DELETED, UserSitePeer::LOCKED, UserSitePeer::LAST_ACCESS_DATE, UserSitePeer::CREATED_AT, UserSitePeer::UPDATED_AT, ),
 		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'username', 'password', 'htpasswd_line', 'image_path', 'signed_schedule', 'schedule_start_date', 'active', 'enabled', 'visible', 'deleted', 'locked', 'last_access_date', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'Username', 'PASSWORD'=>'', 'HTPASSWD_LINE'=>'', 'IMAGE_PATH'=>'', 'SIGNED_SCHEDULE'=>'Assina calendário', 'SCHEDULE_START_DATE'=>'Início do calendário', 'ACTIVE'=>'Ativo', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'LAST_ACCESS_DATE'=>'Último acesso', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'', 'PASSWORD'=>'', 'HTPASSWD_LINE'=>'', 'IMAGE_PATH'=>'', 'SIGNED_SCHEDULE'=>'', 'SCHEDULE_START_DATE'=>'', 'ACTIVE'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'LAST_ACCESS_DATE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 

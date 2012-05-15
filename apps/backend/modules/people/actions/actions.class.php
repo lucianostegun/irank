@@ -11,7 +11,72 @@ class peopleActions extends sfActions
 {
 
   public function preExecute(){
+
+    $this->peopleId = $this->getRequestParameter('id');
+    $this->peopleId = $this->getRequestParameter('peopleId', $this->peopleId);
+        
+    $this->clubId = $this->getUser()->getAttribute('clubId');
     
+    $this->pathList = array('Usuários'=>'people/index');
+    
+    if( !$this->clubId )
+    	$this->toolbarList = array('new');
+  }
+  
+  public function executeIndex($request){
+  }
+  
+  public function executeEdit($request){
+    
+    $this->peopleObj = $peopleObj = PeoplePeer::retrieveByPK($this->peopleId);
+    
+    if( !$peopleObj->isMyPlayer() ){
+    	
+	    $username = $this->getUser()->getAttribute('username');
+
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou acessar as informações da pessoa <b>('.$peopleObj->getId().') '.$peopleObj->toString().'</b>.', 'People', array(), Log::LOG_CRITICAL);
+    	$peopleObj = null;
+    }
+    
+    if( !is_object($peopleObj) )
+    	return $this->redirect('people/index');
+    
+	sfLoader::loadHelpers('Partial');
+    $this->stats   = get_partial('people/include/stats', array('peopleObj'=>$peopleObj));
+    $this->balance = get_partial('people/include/balance', array('peopleObj'=>$peopleObj));
+    	
+    $this->pathList[$peopleObj->toString()] = '#';
+    
+    if( $this->clubId )
+    	$this->toolbarList = array('save');
+    else
+    	$this->toolbarList = array('new', 'save', 'delete'=>'#doDeletePeople()');
+  }
+
+  public function handleErrorSave(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
+
+  public function executeSave($request){
+    
+    $peopleObj = PeoplePeer::retrieveByPK($this->peopleId);
+	
+    if( !$peopleObj->isMyPlayer() ){
+    	
+	    $username = $this->getUser()->getAttribute('username');
+
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou editar as informações da pessoa <b>('.$peopleObj->getId().') '.$peopleObj->toString().'</b>.', 'People', array(), Log::LOG_CRITICAL);
+    	throw new Exception('Você não tem permissão para editar esse registro!');
+    }
+    
+    if( $this->clubId )
+    	$peopleObj->quickSaveClub($request);
+    else
+    	$peopleObj->quickSave($request);
+    
+    echo Util::parseInfo($peopleObj->getInfo());
+    exit;
   }
   
   public function executeAutoComplete($request){

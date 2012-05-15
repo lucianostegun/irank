@@ -1,0 +1,26 @@
+fields:
+       
+  emailAddress:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       150
+      max_error: form.error.max150
+    sfEmailValidator:
+      strict:       true
+      email_error:  form.error.invalidEmail
+    sfCallbackValidator:
+      callback:      [UserSitePeer, uniqueEmailAddress]
+      invalid_error: form.error.takenEmail
+       
+  firstName:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       25
+      max_error: form.error.max25
+       
+  phoneNumber:
+    sfPhoneValidator:
+      strict:       true
+      phone_error:  form.error.invalidPhoneNumber
