@@ -1,0 +1,2 @@
+INSERT INTO config VALUES('maintenanceScheduleDate', 'Manutenção programada', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO config VALUES('isUnderMaintenance', 'Site em manutenção', '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
