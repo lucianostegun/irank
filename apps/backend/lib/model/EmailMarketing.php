@@ -158,6 +158,9 @@ class EmailMarketing extends BaseEmailMarketing
 			$emailContent = Report::defaultReplace($emailContent, $infoList);
 		}
 		
+		$emailTemplate = $this->getEmailTemplate()->getContent();
+		$emailContent  = str_replace('[emailContent]', $emailContent, $emailTemplate);
+		
 		return $emailContent;
 	}
 	
@@ -249,7 +252,7 @@ class EmailMarketing extends BaseEmailMarketing
   		$emailContent = $this->getContent($peopleObj);
   		$emailSubject = $this->getEmailSubject();
   		
-  		$options = array('emailLogId'=>$emailLogId);
+  		$options = array('emailLogId'=>$emailLogId, 'emailTemplate'=>null);
 	  	Report::sendMail($emailSubject, $emailAddress, $emailContent, $options);
 	  	
 	  	echo $emailLogObj->getCreatedAt('d/m/Y H:i');
