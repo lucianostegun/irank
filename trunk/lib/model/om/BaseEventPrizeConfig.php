@@ -64,7 +64,9 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 	public function setEventId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -82,7 +84,9 @@ abstract class BaseEventPrizeConfig extends BaseObject  implements Persistent {
 	public function setEventPosition($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

@@ -165,7 +165,9 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -179,7 +181,9 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function setClubId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -197,7 +201,9 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function setPeopleId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -215,7 +221,9 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function setToken($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -229,7 +237,9 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function setTextMessage($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -243,7 +253,9 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function setTotalMessages($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -257,7 +269,9 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function setSuccessMessages($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -271,7 +285,9 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function setErrorMessages($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -285,7 +301,9 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function setClassName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -299,7 +317,9 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function setObjectId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
