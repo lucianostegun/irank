@@ -468,7 +468,10 @@ class File extends BaseFile
 		$extension      = $this->getExtension();
 		$fileDimensions = $this->getDimensions();
 
-		$newImg = imagecreatefromjpeg( $filePath );
+		if( $extension=='jpg' || $extension=='jpeg' )
+			$newImg = imagecreatefromjpeg( $filePath );
+		elseif( $extension=='png' )
+			$newImg = imagecreatefrompng( $filePath );
 			
 		$width  = $fileDimensions['width'];
 		$height = $fileDimensions['height'];
