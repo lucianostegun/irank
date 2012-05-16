@@ -492,13 +492,18 @@ class File extends BaseFile
 		$srcW = imagesx($newImg);
 		$srcH = imagesy($newImg);
 	
-	
 		$new = imagecreatetruecolor($newWidth, $newHeight);
 		imagecopyresampled($new, $newImg, 0, 0, 0, 0, $newWidth, $newHeight, $srcW, $srcH);
 
-		header('Content-Type: image/jpeg');
-
-		imagejpeg($new, ''	, 100);
+		if( $extension=='jpg' || $extension=='jpeg' ){
+			
+			header('Content-Type: image/jpeg');
+			imagejpeg($new, '', 100);
+		}elseif( $extension=='png' ){
+			
+			header('Content-Type: image/png');
+			imagepng($new, '', 100);
+		}
 		imagedestroy($new);
 		imagedestroy($newImg);
 	}
