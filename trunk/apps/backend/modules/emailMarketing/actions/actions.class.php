@@ -146,9 +146,9 @@ class emailMarketingActions extends sfActions
 	$emailContent = $emailMarketingObj->getContentPreview(true);
 	$emailContent = Report::defaultReplace($emailContent);
 	
-//	$options = array('emailTemplateObj'=>$emailMarketingObj->getEmailTemplate());
+	$options = array('emailTemplate'=>null);
 
-	Report::sendMail($emailSubject, $emailAddress, $emailContent);
+	Report::sendMail($emailSubject, $emailAddress, $emailContent, $options);
 	
   	exit;
   }
