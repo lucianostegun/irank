@@ -5,7 +5,7 @@
 	$charsLeft = $charLimit-strlen(String::removeAccents($defaultMessage));
 	$clubId    = $sf_user->getAttribute('clubId');
 ?>
-		<div id="smsSenderOptionsDiv" style="display: none" class="form">
+		<div id="smsSenderOptionsDiv" style="display: none" class="form internalTable">
 			
 			<div class="mt20 mb20">
 			<?php echo link_to(image_tag('backend/icons/light/arrowLeft', array('class'=>'icon')).'<span>Voltar</span>', '#hideEventLiveSmsOptions()', array('class'=>'button greyishB', 'style'=>'margin-left: 10px')) ?>

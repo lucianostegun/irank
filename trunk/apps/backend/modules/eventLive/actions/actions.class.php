@@ -419,6 +419,22 @@ class eventLiveActions extends sfActions
 	
   	exit;
   }
+
+  public function executeGetPhotoList($request){
+    
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('eventLive/include/photos', array('eventLiveId'=>$this->eventLiveId)));
+  }
+
+  public function executeGetResultPlayerList($request){
+    
+    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+    
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('eventLive/include/result', array('eventLiveObj'=>$eventLiveObj)));
+  }
   
   public function executeUpdateEventDate($request){
     
@@ -449,6 +465,25 @@ class eventLiveActions extends sfActions
     }
     
 	exit;
+  }
+
+  public function executeGetStats($request){
+    
+    $rankingLiveId = $request->getParameter('rankingLiveId');
+    $eventDate     = $request->getParameter('eventDate');
+    
+    if( !$rankingLiveId | !$eventDate || !Validate::validateDate($eventDate) )
+    	throw new Exception('Parâmetros insuficientes ou inválidos!');
+    	
+    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+    $eventLiveObj->setRankingLiveId($rankingLiveId);
+    $eventLiveObj->setEventDateTime(Util::formatDate($eventDate).' '.date('H:i:s'));
+    
+    $infoList = $eventLiveObj->getStats(true);
+    $infoList['balance'] = $eventLiveObj->getBalanceStats();
+    
+    echo Util::parseInfo($infoList);
+    exit;
   }
 
   public function executeGetTabContent($request){

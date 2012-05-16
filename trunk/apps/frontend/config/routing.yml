@@ -10,6 +10,10 @@ club_irank:
   url:    /irank
   param:  { module: club, action: details, clubId: 6 }
 
+club_irank:
+  url:    /irank
+  param:  { module: club, action: details, clubId: 5 }
+
 #CLUB ROUTING END
 
 event_details:

@@ -446,16 +446,20 @@ class UserSite extends BaseUserSite
 		return (MyTools::isAuthenticated() && $hasCredentials);
 	}
 	
-	public function getInfo($replaceNull=false){
+	public function getInfo($replaceNull=false, $withBalance=true){
 		
 		$infoList = array();
 		$infoList['id']           = $this->getId();
 		$infoList['firstName']    = $this->getPeople()->getFirstName();
 		$infoList['lastName']     = $this->getPeople()->getLastName();
+		$infoList['username']     = $this->getUsername();
 		$infoList['emailAddress'] = $this->getPeople()->getEmailAddress();
 		
-		$resumeList = People::getResumeBalance($this->getPeopleId(), $this->getId(), true);
-		$infoList = array_merge($infoList, $resumeList);
+		if( $withBalance ){
+			
+			$resumeList = People::getResumeBalance($this->getPeopleId(), $this->getId(), true);
+			$infoList = array_merge($infoList, $resumeList);
+		}
 		
 		if( $replaceNull ){
 			

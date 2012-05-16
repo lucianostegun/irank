@@ -227,6 +227,7 @@ ul.userDropdown li a:hover { border-right: none; border-left: none; }
 .nav li.errors a span { background-image: url(/images/backend/icons/light/alert.png); }
 .nav li.files a span { background-image: url(/images/backend/icons/light/files.png); }
 .nav li.users a span { background-image: url(/images/backend/icons/light/users.png); }
+.nav li.mail a span { background-image: url(/images/backend/icons/light/mail.png); }
 .nav li.ui a span { background-image: url(/images/backend/icons/light/user.png); }
 .nav li.widgets a span { background-image: url(/images/backend/icons/light/fullscreen.png); }
 

@@ -1,0 +1,22 @@
+.emailMarketingPreview {
+
+	margin: 		20px;
+	position: 		relative;
+	width: 			auto;
+	height: 		auto;
+	padding: 		20px;
+	display: 		auto;
+	background: 	#FFFFFF;
+	border: 		1px solid #DADADA
+}
+
+.emailMarketingPreview table,
+.emailMarketingPreview table tr th,
+.emailMarketingPreview table tr td,
+.emailMarketingPreview table tr {
+
+	border-collapse: separate;
+	padding: 0px;
+	height: auto;
+	vertical-align: middle
+}

@@ -113,9 +113,10 @@ class People extends BasePeople
 	  	$this->save();
 	}
 	
-	public static function getList(){
+	public static function getList($criteria=null){
 		
-		$criteria = new Criteria();
+		if( is_null($criteria) )
+			$criteria = new Criteria();
 		$criteria->add( PeoplePeer::ENABLED, true );
 		$criteria->add( PeoplePeer::VISIBLE, true );
 		$criteria->add( PeoplePeer::DELETED, false );

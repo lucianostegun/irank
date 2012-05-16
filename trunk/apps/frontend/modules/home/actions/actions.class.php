@@ -173,6 +173,7 @@ class homeActions extends sfActions
   
   public function executeImages($request){
 	
+	$email       = $request->getParameter('email');
 	$code        = $request->getParameter('elid');
 	$emailLogId  = Util::decodeId($code);
 	$emailLogObj = EmailLogPeer::retrieveByPK($emailLogId);
@@ -186,7 +187,7 @@ class homeActions extends sfActions
 	header('Content-Type: image/png');
 	header('Expires: 0');
 	header('Pragma: no-cache');
-	print_r(file_get_contents(Util::getFilePath('images/emailLogo.png')));
+	print_r(file_get_contents(Util::getFilePath('images/email/'.$email)));
 	
 	exit;
   }

@@ -117,7 +117,7 @@ class emailTemplateActions extends sfActions
 		if( !$emailTemplateObj->getIsNew() ){
 			
 			$options['fileName'] = $emailTemplateObj->getTagName();
-			$uploadDir = '/templates/pt_BR/email';
+			$uploadDir = '/templates/email';
 		}
 					 
 		$fileObj = File::upload($request, 'Filedata', $uploadDir, $options);

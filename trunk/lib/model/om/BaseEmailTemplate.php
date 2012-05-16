@@ -99,6 +99,12 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	protected $lastEmailTemplateRelatedByEmailTemplateIdCriteria = null;
 
 	
+	protected $collEmailMarketingList;
+
+	
+	protected $lastEmailMarketingCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -630,6 +636,14 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEmailMarketingList !== null) {
+				foreach($this->collEmailMarketingList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -701,6 +715,14 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 				if ($this->collEventLiveList !== null) {
 					foreach($this->collEventLiveList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEmailMarketingList !== null) {
+					foreach($this->collEmailMarketingList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -986,6 +1008,10 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 				}
 
 				$copyObj->addEmailTemplateRelatedByEmailTemplateId($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEmailMarketingList() as $relObj) {
+				$copyObj->addEmailMarketing($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1553,6 +1579,146 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 		$this->lastEmailTemplateRelatedByEmailTemplateIdCriteria = $criteria;
 
 		return $this->collEmailTemplateListRelatedByEmailTemplateId;
+	}
+
+	
+	public function initEmailMarketingList()
+	{
+		if ($this->collEmailMarketingList === null) {
+			$this->collEmailMarketingList = array();
+		}
+	}
+
+	
+	public function getEmailMarketingList($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseEmailMarketingPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEmailMarketingList === null) {
+			if ($this->isNew()) {
+			   $this->collEmailMarketingList = array();
+			} else {
+
+				$criteria->add(EmailMarketingPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				EmailMarketingPeer::addSelectColumns($criteria);
+				$this->collEmailMarketingList = EmailMarketingPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EmailMarketingPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				EmailMarketingPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEmailMarketingCriteria) || !$this->lastEmailMarketingCriteria->equals($criteria)) {
+					$this->collEmailMarketingList = EmailMarketingPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEmailMarketingCriteria = $criteria;
+		return $this->collEmailMarketingList;
+	}
+
+	
+	public function countEmailMarketingList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseEmailMarketingPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EmailMarketingPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+		return EmailMarketingPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEmailMarketing(EmailMarketing $l)
+	{
+		$this->collEmailMarketingList[] = $l;
+		$l->setEmailTemplate($this);
+	}
+
+
+	
+	public function getEmailMarketingListJoinFile($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseEmailMarketingPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEmailMarketingList === null) {
+			if ($this->isNew()) {
+				$this->collEmailMarketingList = array();
+			} else {
+
+				$criteria->add(EmailMarketingPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				$this->collEmailMarketingList = EmailMarketingPeer::doSelectJoinFile($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EmailMarketingPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+			if (!isset($this->lastEmailMarketingCriteria) || !$this->lastEmailMarketingCriteria->equals($criteria)) {
+				$this->collEmailMarketingList = EmailMarketingPeer::doSelectJoinFile($criteria, $con);
+			}
+		}
+		$this->lastEmailMarketingCriteria = $criteria;
+
+		return $this->collEmailMarketingList;
+	}
+
+
+	
+	public function getEmailMarketingListJoinClub($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseEmailMarketingPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEmailMarketingList === null) {
+			if ($this->isNew()) {
+				$this->collEmailMarketingList = array();
+			} else {
+
+				$criteria->add(EmailMarketingPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				$this->collEmailMarketingList = EmailMarketingPeer::doSelectJoinClub($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EmailMarketingPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+			if (!isset($this->lastEmailMarketingCriteria) || !$this->lastEmailMarketingCriteria->equals($criteria)) {
+				$this->collEmailMarketingList = EmailMarketingPeer::doSelectJoinClub($criteria, $con);
+			}
+		}
+		$this->lastEmailMarketingCriteria = $criteria;
+
+		return $this->collEmailMarketingList;
 	}
 
 } 

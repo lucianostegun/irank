@@ -92,6 +92,16 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         	?>
         </li>
 
+        <?php if( $iRankAdmin ): ?>
+        <li class="mail">
+        	<?php
+        		echo link_to('<span>E-mail marketing</span>', 'emailMarketing/index', array('class'=>($moduleName=='emailMarketing'?'active':'')));
+        		if( $iRankAdmin )
+        			echo link_to('<strong>+</strong>', 'emailMarketing/new', array('class'=>'quickAdd'));
+        	?>
+        </li>
+        <?php endif; ?>
+
 		<?php if( $iRankAdmin ): ?>
         <li class="poll">
             <?php

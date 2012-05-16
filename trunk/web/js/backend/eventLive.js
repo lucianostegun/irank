@@ -129,12 +129,12 @@ function replicateEventName(eventName){
 	if( $('#eventLiveEventShortName').val()!='' )
 		return;
 	
-	matches = eventName.match(/([0-9]*)[ºªa] *etapa/i);
-	if( matches.length > 0 )
+	var matches = eventName.match(/([0-9]*)[ºªa] *etapa/i);
+	if( matches && matches.length > 0 )
 		$('#eventLiveEventStepNumber').val( matches[1] );
 
 	matches = eventName.match(/Dia *([0-9]*-?[a-zA-z]*) ?/i);
-	if( matches.length > 0 )
+	if( matches && matches.length > 0 )
 		$('#eventLiveEventStepDay').val( matches[1] );
 		
 	
@@ -505,7 +505,6 @@ function loadEventStats(){
 	urlAjax    += '?eventLiveId='+eventLiveId;
 	urlAjax    += '&rankingLiveId='+rankingLiveId;
 	urlAjax    += '&eventDate='+eventDate;
-	
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
@@ -683,14 +682,6 @@ function updateEventLivePhotoList(){
 function buildEventLiveLightbox(){
 	
 	$('.photoList a.lightbox').lightBox();
-}
-
-function updateProgressBar( percent, progressBarId ){
-	
-	// jQuery UI progress bar
-	$("#"+progressBarId).progressbar({
-		value: percent
-	});
 }
 
 function eventLiveFacebookShare(){

@@ -27,6 +27,7 @@ UPDATE email_template SET email_template_id = (SELECT id FROM email_template WHE
 UPDATE email_template SET email_template_id = (SELECT id FROM email_template WHERE tag_name = 'emailTemplateAdmin') WHERE tag_name IN ('faqQuestion', 'feedbackMessage', 'contactMessage');
 
 UPDATE file SET file_path = REPLACE(file_path, 'templates/pt_BR/', 'templates/pt_BR/email/') WHERE id IN (SELECT id FROM file WHERE id IN (SELECT file_id FROM email_template));
+UPDATE file SET file_path = REPLACE(file_path, 'templates/', 'templates/email/') WHERE id IN (SELECT id FROM file WHERE id IN (SELECT file_id FROM email_template));
 UPDATE file SET file_path = REPLACE(file_path, 'email/email/', 'email/') WHERE id IN (SELECT id FROM file WHERE id IN (SELECT file_id FROM email_template));
 UPDATE file SET file_path = REPLACE(file_path, 'pt_BR/', '') WHERE id IN (SELECT id FROM file WHERE id IN (SELECT file_id FROM email_template));
 
