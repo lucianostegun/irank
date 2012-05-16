@@ -505,7 +505,7 @@ class File extends BaseFile
 		}elseif( $extension=='png' ){
 			
 			header('Content-Type: image/png');
-			imagepng($new, '', 100);
+			imagepng($new);
 		}
 		imagedestroy($new);
 		imagedestroy($newImg);
