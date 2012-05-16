@@ -85,6 +85,7 @@ class homeActions extends sfActions
 	
 	$fileObj = $eventPhotoObj->getFile();
 	$fileObj->getResized(($zoom?750:366));
+	exit;
   }
 
   public function executeSavePhotoContestVote($request){
