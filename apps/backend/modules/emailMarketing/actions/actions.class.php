@@ -98,9 +98,6 @@ class emailMarketingActions extends sfActions
     if( !is_object($userAdminObj) )
     	throw new Exception('Usuário não definido para carregamento do arquivo');
     
-    $fileName = $request->getFileName('Filedata');
-	$fileName = preg_replace('/(\.[^\.]*)$/', '-'.$this->clubId.'\1', $fileName);
-	
     $allowedExtensionList = array('htm', 'html');
 	$maxFileSize          = (1024*300);
 	
@@ -116,7 +113,7 @@ class emailMarketingActions extends sfActions
 		
 		if( !$emailMarketingObj->getIsNew() ){
 			
-			$options['fileName'] = $emailMarketingObj->getTagName();
+			$options['fileName'] = $emailMarketingObj->getFileName();
 			$uploadDir = '/templates/email/marketing';
 		}
 					 
