@@ -114,3 +114,17 @@
 	border-color: #a25d5b;
 	background: #d6b6b5;
 }
+
+
+.internalTable table.display tr.gradeA td .checker {
+	position: 	relative;
+	margin-left: 50%;
+	top: 0px;
+	left: -8px;
+}
+
+.internalTable .title .titleIcon .checker {
+	position: 	relative;
+	top: 0px;
+	left: 0px;
+}

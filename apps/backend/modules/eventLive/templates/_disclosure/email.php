@@ -1,4 +1,4 @@
-		<div id="emailSenderOptionsDiv" style="display: none" class="form">
+		<div id="emailSenderOptionsDiv" style="display: none" class="form internalTable">
 			
 			<div class="mt20 mb20">
 			<?php echo link_to(image_tag('backend/icons/light/arrowLeft', array('class'=>'icon')).'<span>Voltar</span>', '#hideEventLiveEmailOptions()', array('class'=>'button greyishB', 'style'=>'margin-left: 10px')) ?>

@@ -150,11 +150,16 @@ class Report {
     	
     	$host = MyTools::getRequest()->getHost();
     	
-		if( $emailLogId )
-			$footerLogoUrl = 'http://[host]/home/images/emailLogo.png?elid='.Util::encodeId($emailLogId);
-		else
-			$footerLogoUrl = 'http://[host]/images/emailLogo.png';
+		if( $emailLogId ){
+			$headerLogoUrl = 'http://[host]/home/images/email/logoHeader.png?elid='.Util::encodeId($emailLogId);
+			$footerLogoUrl = 'http://[host]/home/images/email/logoFooter.png?elid='.Util::encodeId($emailLogId);
+		}else{
 			
+			$headerLogoUrl = 'http://[host]/images/email/logoHeader.png';
+			$footerLogoUrl = 'http://[host]/images/email/logoFooter.png';
+		}
+			
+    	$infoList['headerLogoUrl'] = $headerLogoUrl;
     	$infoList['footerLogoUrl'] = $footerLogoUrl;
 		$infoList['host']          = $host;
 		$content = str_replace('<hr/>', '<div style="border-top: 1px solid #C0C0C0"></div>', $content);

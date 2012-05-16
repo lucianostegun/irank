@@ -192,3 +192,13 @@ function buildCheckboxTable(){
 	$('#checkAll tbody tr td:first-child').next('td').css('border-left-color', '#CBCBCB');
 	$('#checkAll2 tbody tr td:first-child').next('td').css('border-left-color', '#CBCBCB');
 }
+
+
+
+function updateProgressBar( percent, progressBarId ){
+	
+	// jQuery UI progress bar
+	$("#"+progressBarId).progressbar({
+		value: percent
+	});
+}
