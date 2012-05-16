@@ -93,6 +93,12 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         </li>
 
 		<?php if( $iRankAdmin ): ?>
+        <li class="poll">
+            <?php
+        		echo link_to('<span>Enquetes</span>', 'poll/index', array('class'=>($moduleName=='poll'?'active':'')));
+       			echo link_to('<strong>+</strong>', 'poll/new', array('class'=>'quickAdd'));
+        	?>
+        </li>
         <li class="admin"><a href="javascript:void(0)" title="" class="<?php echo (in_array($moduleName, array('emailTemplate', 'userAdmin', 'controlPanel'))?'active':'exp') ?>"><span>Administração</span><strong>3</strong></a>
             <ul class="sub">
                 <li><?php echo link_to('Templates de e-mail', 'emailTemplate/index') ?></li>

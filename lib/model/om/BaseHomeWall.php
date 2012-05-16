@@ -149,7 +149,9 @@ abstract class BaseHomeWall extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -163,7 +165,9 @@ abstract class BaseHomeWall extends BaseObject  implements Persistent {
 	public function setPeopleName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -177,7 +181,9 @@ abstract class BaseHomeWall extends BaseObject  implements Persistent {
 	public function setUserSiteId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -195,7 +201,9 @@ abstract class BaseHomeWall extends BaseObject  implements Persistent {
 	public function setMessage($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -209,7 +217,9 @@ abstract class BaseHomeWall extends BaseObject  implements Persistent {
 	public function setIcon($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

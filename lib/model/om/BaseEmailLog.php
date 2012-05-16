@@ -124,7 +124,9 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -138,7 +140,9 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setEmailAddress($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -152,7 +156,9 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setErrorMessage($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -166,7 +172,9 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setEmailSubject($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -180,7 +188,9 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setSendingStatus($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
