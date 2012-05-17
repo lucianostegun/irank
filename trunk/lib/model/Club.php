@@ -321,6 +321,7 @@ class Club extends BaseClub
 							  $metaLine;
 							  
 				$routing = str_replace($metaLine, $newContent, $routing);
+				mkdir(Util::getFilePath('/uploads/fm/'.$tagName), 0777, true);
 	
 			// Se já tinha tagName mas mudou de nome substitui a entrada no arquivo
 			}elseif($tagName!=$tagNameOld){
@@ -333,7 +334,6 @@ class Club extends BaseClub
 				@rename(Util::getFilePath('/uploads/fm/'.$tagNameOld), Util::getFilePath('/uploads/fm/'.$tagName));
 			}
 		}
-		
 		
 		$fp = fopen($filePath, 'w');
 		fwrite($fp, $routing);

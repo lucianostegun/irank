@@ -1,7 +1,10 @@
-.eventLiveResume {
+.eventLiveResumeArea {
 	
-	height: 		760px;
-	margin-top: 	20px
+	position: 		relative;
+	width: 			385px;
+	overflow: 		hidden;
+	margin-top: 	20px;
+	left: 			2px;
 }
 
 .eventLiveResume.logged {
@@ -9,22 +12,21 @@
 	display: block;
 }
 
-.eventLiveResume #eventLiveResume {
+.eventLiveResumeArea .eventLiveResume {
 	
 	position: 			relative;
 	top: 				4px;
-	padding-bottom: 	15px;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList {
+.eventLiveResumeArea .eventLiveResume .eventLiveList {
 	
 	float: 		left;
 	position: 	relative;
-	left: 		12px;
-	top: 		8px;
+	left: 		4px;
+	top: 		2px;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList h1 {
+.eventLiveResumeArea .eventLiveResume .eventLiveList h1 {
 
 	width: 								190px;
 	font-size: 							15px;
@@ -47,20 +49,19 @@
 	position: 							relative;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList #eventLiveResumeList {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLiveResumeList {
 
-	height: 		700px;
-	overflow: 		hidden;
 	border-top: 	1px solid #337495;
 	padding-top: 	10px;
 	z-index: 		0;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive {
 
-	width: 			752px;
-	height: 		61px;
-	margin-bottom: 	15px;
+	position: 		relative;
+	width: 			370px;
+	height: 		81px;
+	margin-bottom: 	8px;
 	border: 		1px solid #b5ccd6;
 	padding: 		3px 5px 5px 3px;
 	cursor: 		pointer;
@@ -74,80 +75,87 @@
 	user-select: 			none;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .image {
-
-	float: 	left;
-	width: 	65px;
-}
-
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .eventInfo {
-
-	float: 	left;
-}
-
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .when {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .title {
 
 	clear: 			both;
-	float: 			left;
-	height: 		18px;
-	line-height: 	18px;
-	margin-left: 	12px;
-	font-size: 		12px;
-}
-
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .title {
-
-	clear: 			both;
-	float: 			left;
 	font-weight: 	bold;
-	font-size: 		16px;
-	margin-left: 	12px;
-	margin-top: 	2px;
-	height: 		23px;
-	line-height: 	23px;
+	font-size: 		15px;
+	position: 		absolute;
+	top: 			5px;
+	left: 			93px;
 	color: 			#303030;
 	text-shadow: 	#F5F5F5 1px 1px;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .where {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .image {
 
-	float: 			left;
-	margin-left: 	12px;
-	height: 		18px;
-	line-height: 	18px;
+	position: 	absolute;
+	top: 		2px;
+	left: 		2px;
+	width: 		65px;
+}
+
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .image img {
+
+	width: 		85px;
+	height: 	85px
+}
+
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .eventInfo {
+
+	position: 	relative;
+	height: 	50px;
+	top: 		21px;
+	left: 		88px;
+	width: 		282px;
+}
+
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .when {
+
+	position: 		absolute;
+	left: 			3px;
+	font-size: 		11px;
+}
+
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .where {
+
+	position: 		absolute;
+	font-size: 		12px;
+	top: 			18px;
+	left: 			3px;
+	overflow: 		hidden;
+}
+
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .howMuch {
+
+	position: 		absolute;
+	left: 			8px;
+	top: 			42px;
 	font-size: 		12px;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch {
-
-	clear: 			both;
-	margin-left: 	12px;
-	padding-top: 	2px;
-	height: 		18px;
-	line-height: 	18px;
-	font-size: 		12px;
-}
-
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch label {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .howMuch label {
 
 	font-weight: 	bold;
 	font-size: 		11px;
 	margin-right: 	5px;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch span {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .howMuch span {
 
 	padding-right: 	16px;
 	font-size: 		11px;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .howMuch label.ranking {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .ranking {
 
-	margin-left: 	20px;
+	position: 		absolute;
+	right: 			8px;
+	top; 			0px;
 	font-size: 		12px;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .presence {
 
 	position: 				absolute;
 	top: 					0px;
@@ -162,18 +170,18 @@
 	background: 			#FFFFFF url('/images/home/presenceToYes.png') 3px center no-repeat;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence.hover,
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence.yes.hover {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .presence.hover,
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .presence.yes.hover {
 
 	background-color: 	#FFFFFF
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence.yes {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .presence.yes {
 
 	background: 	#FFFFFF url('/images/home/presenceYes.png') 3px center no-repeat;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence a {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .presence a {
 
 	margin-left: 		5px;
 	margin-right: 		5px;
@@ -181,14 +189,14 @@
 	text-decoration: 	none;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive .presence a.yes {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .presence a.yes {
 
 	margin-left: 	5px;
 	margin-right: 	5px;
 	color: 			#44780E;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive.next {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive.next {
 
 	background: 	#FFFFFF;
     background-image: 	-o-linear-gradient(#FFFFFF, #D2E3EA);
@@ -197,9 +205,9 @@
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#D2E3EA', GradientType=0);
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive.next.hover,
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.hover,
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.pending.hover {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive.next.hover,
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive.previous.hover,
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive.previous.pending.hover {
 
 	background: 	#FFFFFF;
     background-image: 	-o-linear-gradient(#FFFFFF, #b9ccd8);
@@ -208,48 +216,48 @@
     filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#b9ccd8', GradientType=0);
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive.previous {
 
 	background: 		#DEEAEF;
 	background-repeat: 	no-repeat;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive.previous.pending {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive.previous.pending {
 
 	background: 	#DEEAEF url('/images/home/podiumAlert.png') 2px center no-repeat;
 }
 
-.eventLiveResume #eventLiveResume #eventLiveList .eventLive.noEvent {
+.eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive.noEvent {
 
-	border: 		1px solid #D0D0D0;
-    background: 	#FFFFFF;
+	border: 			1px solid #D0D0D0;
+    background: 		#FFFFFF;
     background-image: 	-o-linear-gradient(#FFFFFF, #F0F0F0);
-    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
-    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
-    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);	
+    background: 		-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
+    background: 		-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);	
 }
 
-.eventLiveResume #eventLiveResume .loadEvents {
+.eventLiveResumeArea .eventLiveResume .loadEvents {
 
 	clear: 			both;
 	position: 		relative;
-	top: 			8px;
-	left: 			12px;
-	width: 			745px;
+	top: 			-5px;
+	left: 			4px;
+	width: 			363px;
 	padding: 		2px 10px 2px 5px;
 	cursor: 		pointer;
 	text-align: 	right;
 	border: 		1px solid #DADADA;
 	
 	
-	background: 	#FFFFFF;
+	background: 		#FFFFFF;
     background-image: 	-o-linear-gradient(#FFFFFF, #F0F0F0);
-    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
-    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
-    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);
+    background: 		-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
+    background: 		-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);
 }
 
-.eventLiveResume #eventLiveResume .loadEvents a {
+.eventLiveResumeArea .eventLiveResume .loadEvents a {
 
 	color: 			#5C6377;
 	font-size: 		12px;

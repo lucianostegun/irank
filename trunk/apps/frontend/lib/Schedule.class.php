@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Classe responsável por gerar os arquivos de sincronização de calendário de eventos 
+ * Classe respons√°vel por gerar os arquivos de sincroniza√ß√£o de calend√°rio de eventos 
  *
  * @package    iRank
  * @author     Luciano Stegun
@@ -13,7 +13,6 @@ class Schedule {
 	const NEW_STRING_LINE    = "\\n";
 	const FILE_PATH_TMP      = 'temp/schedule';
 	const FILE_PATH_TEMPLATE = 'templates/schedule.ics';
-	const HOSTNAME           = 'alpha.irank.com.br';
 	private $peopleId;
 	private $fileName;
 	private $startDate;
@@ -58,7 +57,7 @@ class Schedule {
 		
 		$this->buildTmpFile();
 		
-		// Se não for usuário "irank" gera os eventos dos rankings pessoais
+		// Se n√£o for usu√°rio "irank" gera os eventos dos rankings pessoais
 		if( strtolower($username)!='irank' )
 			$this->buildEvent();
 			
@@ -73,7 +72,7 @@ class Schedule {
 	    $resultSet = Util::executeQuery(sprintf("SELECT * FROM event_schedule_view WHERE people_id = %d AND event_date >= '%s'", $this->peopleId, $this->startDate));
 	    
 	    $nl   = Schedule::NEW_LINE;
-	    $host = Schedule::HOSTNAME;
+	    $host = MyTools::getRequest()->getHost();
 	    
 	    while( $resultSet->next() ){
 	    	
@@ -162,7 +161,7 @@ class Schedule {
 	    $resultSet = Util::executeQuery(sprintf("SELECT * FROM event_live_schedule_view WHERE event_date >= '%s'", $this->startDate));
 	    
 	    $nl   = Schedule::NEW_LINE;
-	    $host = Schedule::HOSTNAME;
+	    $host = MyTools::getRequest()->getHost();
 	    
 	    while( $resultSet->next() ){
     
@@ -296,8 +295,7 @@ class Schedule {
     
     public function buildFile(){
     	
-		Util::forceDownload(Schedule::FILE_NAME_EXPORT, 'text/calendar');
-		
+		Util::forceDownload(Schedule::FILE_NAME_EXPORT, 'text/calendar; charset=utf-8');
 		$fileNameTmp = $this->getFilePathTmp();
 		echo file_get_contents($this->getFilePathTemplate());
 		echo file_get_contents($fileNameTmp);

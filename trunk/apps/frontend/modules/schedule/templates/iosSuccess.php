@@ -5,7 +5,7 @@
 	<?php echo image_tag('schedule/ios', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
 	Veja abaixo como sincronizar seu iPhone, iPad ou iPod touch com a agenda <b>iRank</b>.<br/><br/>
 	
-	Saiba também como configurar seu smartphone ou tablet com <?php echo link_to('android', 'schedule/android') ?>.
+	<!--Saiba também como configurar seu smartphone ou tablet com <?php echo link_to('android', 'schedule/android') ?>.-->
 </div>
 <div class="clear"></div>
 

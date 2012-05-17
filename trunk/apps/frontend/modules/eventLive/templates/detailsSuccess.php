@@ -77,7 +77,10 @@
 		</tr>
 		<?php if( $rankingLiveId ): ?>
 		<tr class="info">
-			<td><?php echo $eventLiveObj->getGameStyle()->getDescription() ?> | <?php echo $eventLiveObj->getGameType()->getDescription() ?></th>
+			<td>
+				<?php echo $eventLiveObj->getGameStyle()->getDescription() ?> | <?php echo $eventLiveObj->getGameType()->getDescription() ?>
+				<?php echo ($rankingName?' | #'.link_to($rankingName, 'goToPage("rankingLive", "details", "rankingLiveId", '.$rankingLiveId.')', array('class'=>'rankingLive')):'') ?>
+			</td>
 		</tr>
 		<?php endif; ?>
 		<tr class="info">

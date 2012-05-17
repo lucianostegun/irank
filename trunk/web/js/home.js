@@ -122,7 +122,7 @@ function toggleMyPresence(eventId, choice){
 }
 
 
-function selectPhotoContest(photoSide){
+function selectPhotoContest(photoSide, isReported){
 	
 	if( _photoContestVoted )
 		return false;
@@ -155,6 +155,12 @@ function selectPhotoContest(photoSide){
 		Cookie.init({name: 'eventPhotoContestKey', path:'/', expires: 90});
 		Cookie.setData('eventPhotoContestKey', eventPhotoContestObj.lockKey);
 		
+		if( isReported ){
+			
+			$('photoContestReport'+ucfirst(photoSide)).style.visibility = 'visible';
+			window.setTimeout('hidePhotoContestReport()', 1500);
+		}
+		
 		_photoContestVoted = false;
 	};
 		
@@ -164,6 +170,12 @@ function selectPhotoContest(photoSide){
 		_photoContestVoted = false;
 	};
 	
-	var urlAjax = _webRoot+'/home/savePhotoContestVote/photoSide/'+photoSide;
+	var urlAjax = _webRoot+'/home/savePhotoContestVote/photoSide/'+photoSide+'/isReported/'+(isReported?'1':'0');
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function hidePhotoContestReport(){
+	
+	$('photoContestReportLeft').style.visibility = 'hidden';
+	$('photoContestReportRight').style.visibility = 'hidden';
 }

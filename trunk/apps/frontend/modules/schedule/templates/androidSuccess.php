@@ -3,8 +3,7 @@
 ?>
 <div class="moduleIntro">
 	<?php echo image_tag('schedule/android', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
-	Veja abaixo como sincronizar seu smartphone ou table Andoid com a agenda <b>iRank</b>.<br/><br/>
-	
-	Saiba também como configurar seu smartphone ou tablet com <?php echo link_to('iPhone, iPad e iPod touch', 'schedule/ios') ?>.
+	Ainda estamos trabalhando para que a sincronização de nossa agenda possa ser feita também em dispositivos Android.<br/>
+	Você será notificado a sincronização estiver disponível.
 </div>
 <div class="clear"></div>
