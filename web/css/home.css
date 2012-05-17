@@ -22,16 +22,16 @@
 	height: 				340px;
 	border: 				1px solid #303030;
 	
-	background: 		#000000;
+	background: 			#000000;
     background-image: 		-o-linear-gradient(#000000, #454545);
-    background: 		-moz-linear-gradient(top, #000000, #454545);;
-    background: 		-webkit-gradient(linear, left top, left bottom, from(#000000), to(#454545));
-    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#000000', EndColorStr='#454545', GradientType=0);
+    background: 			-moz-linear-gradient(top, #000000, #454545);;
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#000000), to(#454545));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#000000', EndColorStr='#454545', GradientType=0);
     
 	-moz-border-radius: 	5px;
 	-webkit-border-radius: 	5px;
 	border-radius: 			5px;
-	overflow: hidden;
+	overflow: 				hidden;
 }
 
 .homeHighlight .content .descriptionBorder {
@@ -259,7 +259,7 @@
 	background: 	#F0F0F0;
 	padding: 		5px 10px 10px 10px;
 	position: 		relative;
-	top: 			20px;
+	top: 			5px;
 	left: 			5px;
 	width: 			756px;
 }
@@ -362,8 +362,24 @@
 #photoVote .photoOption .optionBar .report {
 
 	float: 			left;
-	left: 			303px;
+	left: 			180px;
 	background: 	url('/images/home/alert.png') no-repeat;
+}
+
+#photoVote .photoOption .optionBar .reported {
+
+	float: 				left;
+	top: 				8px;
+	left: 				95px;
+	text-align: 		center;
+	font-weight: 		bold;
+	color: 				#FFA800;
+	text-shadow: 		#000000 2px 2px;
+	font-family: 		Arial, "sans-serif", "Sans serif";
+	width: 				125px;
+	text-transform: 	uppercase;
+	visibility: 		hidden;
+	
 }
 
 #photoVote .photoOption .optionBar .zoom {

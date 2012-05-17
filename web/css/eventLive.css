@@ -161,6 +161,11 @@
 	margin: 		0px;
 }
 
+.eventDetailsArea a.rankingLive {
+
+	color: 	#303030;
+}
+
 
 #eventLiveList {
 
@@ -254,7 +259,6 @@
 	margin: 		0px 0px 0px 6px;
 	text-indent: 	10px;
 }
-
 
 table.presenceTable {
 	

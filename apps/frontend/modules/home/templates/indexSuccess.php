@@ -87,8 +87,14 @@ $zoomLeft  = 'home/eventPhoto?id='.$eventPhotoIdLeft.'&zoom=1';
 $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 ?>
 
-<div class="eventLiveResume">
-<?php include_partial('home/resume/liveEvents'); ?>
+<div style="position: relative">
+<div class="eventLiveResumeArea">
+	<?php include_partial('home/resume/eventLive', array('limit'=>3, 'offset'=>0, 'includeTitle'=>true)); ?>
+</div>
+
+<div class="eventLiveResumeArea" style="position: absolute; top: 3px; left: 393px">
+	<?php include_partial('home/resume/eventLive', array('limit'=>5, 'offset'=>3, 'includeTitle'=>false)); ?>
+</div>
 </div>
 
 <div id="photoVote">
@@ -100,7 +106,8 @@ $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 			<div class="option zoom" title="aumentar foto" onmouseover="changeClassName(this, 'option zoom hover')" onclick="" onmouseout="changeClassName(this, 'option zoom')">
 				<?php echo link_to(image_tag('blank.gif', array('width'=>32)), $zoomLeft, array('id'=>'eventPhotoContestLinkLeft', 'rel'=>'lightbox')) ?>
 			</div>
-			<div class="option report" title="denunciar foto" onmouseover="changeClassName(this, 'option report hover')" onmouseout="changeClassName(this, 'option report')"></div>
+			<div class="option reported" id="photoContestReportLeft">Foto denunciada!</div>
+			<div class="option report" title="denunciar foto" onclick="selectPhotoContest('left', true)" onmouseover="changeClassName(this, 'option report hover')" onmouseout="changeClassName(this, 'option report')"></div>
 		</div>
 	</div>
 	
@@ -111,7 +118,8 @@ $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 			<div class="option zoom" title="aumentar foto" onmouseover="changeClassName(this, 'option zoom hover')" onclick="" onmouseout="changeClassName(this, 'option zoom')">
 				<?php echo link_to(image_tag('blank.gif', array('width'=>32)), $zoomRight, array('id'=>'eventPhotoContestLinkRight', 'rel'=>'lightbox')) ?>
 			</div>
-			<div class="option report" title="denunciar foto" onmouseover="changeClassName(this, 'option report hover')" onmouseout="changeClassName(this, 'option report')"></div>
+			<div class="option reported" id="photoContestReportRight">Foto denunciada!</div>
+			<div class="option report" title="denunciar foto" onclick="selectPhotoContest('right')" onmouseover="changeClassName(this, 'option report hover')" onmouseout="changeClassName(this, 'option report')"></div>
 		</div>
 	</div>
 	
@@ -124,4 +132,8 @@ $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 </div>
 
 <div class="clear"></div>
+
+
+
+
 <br/>

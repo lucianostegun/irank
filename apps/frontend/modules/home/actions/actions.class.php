@@ -90,7 +90,8 @@ class homeActions extends sfActions
 
   public function executeSavePhotoContestVote($request){
 	
-	$photoSide = $request->getParameter('photoSide');
+	$photoSide  = $request->getParameter('photoSide');
+	$isReported = $request->getParameter('isReported');
 	
 	$lockKey = MyTools::getCookie('eventPhotoContestKey');
 	
@@ -99,6 +100,9 @@ class homeActions extends sfActions
 	
 	if( is_object($eventPhotoContestObj) ){
 		
+		if( $isReported )
+			$photoSide = ($photoSide=='left'?'right':'left');
+		
 		$functionWinner = 'getEventPhotoId'.ucfirst($photoSide);
 		$functionLoser  = 'getEventPhotoId'.ucfirst(($photoSide=='left'?'right':'left'));
 		
@@ -106,6 +110,7 @@ class homeActions extends sfActions
 		$eventPhotoIdLoser  = $eventPhotoContestObj->$functionLoser();
 		
 		$eventPhotoContestObj->setEventPhotoIdWinner($eventPhotoIdWinner);
+		$eventPhotoContestObj->setIsReported(($isReported?true:false));
 		$eventPhotoContestObj->save();
 		
 		Util::executeQuery("SELECT update_photo_contest($eventPhotoIdWinner, $eventPhotoIdLoser)");

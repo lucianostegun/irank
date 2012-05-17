@@ -6,13 +6,11 @@
 	$criteria->add( EventLivePeer::EVENT_DATE, Util::getDate('1m'), Criteria::LESS_EQUAL );
 	$criteria->add( RankingLivePeer::IS_PRIVATE, false );
 	$criteria->addJoin( EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID, Criteria::LEFT_JOIN );
-	$criteria->setLimit(8);
+	$criteria->setLimit($limit);
+	$criteria->setOffset($offset);
 	
 	$eventLiveObjList = EventLive::getList($criteria);
-	if( empty($eventLiveObjList) )
-		include_partial('home/resume/event/noEvent');
-	else{
-		
+	if( !empty($eventLiveObjList) ){
 		foreach($eventLiveObjList as $eventLiveObj){
 			
 			if( $eventLiveObj->isPastDate() )
