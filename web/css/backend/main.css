@@ -220,6 +220,7 @@ ul.userDropdown li a:hover { border-right: none; border-left: none; }
 .nav li.cash span { background-image: url(/images/backend/icons/light/money.png); }
 .nav li.event span { background-image: url(/images/backend/icons/light/globe.png); }
 .nav li.admin span { background-image: url(/images/backend/icons/light/adminUser.png); }
+.nav li.poll span { background-image: url(/images/backend/icons/light/book.png); }
 .nav li.club span { background-image: url(/images/backend/icons/light/building.png); }
 .nav li.forms a span { background-image: url(/images/backend/icons/light/pencil.png); }
 .nav li.typo span { background-image: url(/images/backend/icons/light/create.png); }

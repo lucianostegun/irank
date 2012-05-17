@@ -34,12 +34,23 @@ class Poll extends BasePoll
 	
 	public function quickSave($request){
 		
-		$question = $request->getParameter('question');
+		$question   = $request->getParameter('question');
+		$answerList = $request->getParameter('answer');
 		
 		$this->setQuestion( $question );
 		$this->setVisible( true );
 		$this->setEnabled( true );
 		$this->save();
+		
+		Util::executeQuery( 'DELETE FROM poll_answer WHERE poll_id='.$this->getId().' AND (user_response IS NULL OR user_response=0)' );
+		
+		foreach( $answerList as $answer ){
+			
+			$pollAnswerObj = new PollAnswer();
+			$pollAnswerObj->setPollId($this->getId());
+			$pollAnswerObj->setAnswer($answer);
+			$pollAnswerObj->save();
+		}
 	}
 	
 	public static function getList(){
