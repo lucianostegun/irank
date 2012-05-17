@@ -22,38 +22,60 @@ function concludeSendEmail(){
 
 function sendEmailItem( peopleIdList, index ){
 	
-	var percent = ((100*(index))/peopleIdList.length);
+	var peopleId = peopleIdList[index];
+	var percent  = ((100*(index))/peopleIdList.length);
 
 	updateProgressBar(percent, 'progressBarEmail');
 	
 	if(percent>=100)
 		return concludeSendEmail();
 	
-	$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="'+_imageRoot+'/backend/loaders/loader8.gif"/>');
+	$('#emailPeopleListStatusTd-'+peopleId).html('<img src="'+_imageRoot+'/backend/loaders/loader8.gif"/>');
 	
 	var emailMarketingId = $('#emailMarketingId').val();
+	var randomCode       = $('#randomCode'+peopleId).val();
 	
-	var urlAjax = _webRoot+'/emailMarketing/sendEmail?peopleId='+peopleIdList[index]+'&emailMarketingId='+emailMarketingId;
+	if( typeof(randomCode)=='undefined' )
+		randomCode = '';
+	
+	var urlAjax = _webRoot+'/emailMarketing/sendEmail?peopleId='+peopleId+'&emailMarketingId='+emailMarketingId;
 	
 	$.ajax({
 		type:		'POST',
 		url:		_webRoot+'/emailMarketing/sendEmail',
-		data: 		'peopleId='+peopleIdList[index]+'&emailMarketingId='+emailMarketingId,
+		data: 		'peopleId='+peopleId+'&emailMarketingId='+emailMarketingId+'&randomCode='+randomCode,
 		dataType: 	'text',
 		success: function (request) {
 			
-			$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="'+_imageRoot+'/backend/icons/notifications/successGreen.png" title="Enviado com sucesso"/>');
-			$('#emailPeopleListReadTd-'+peopleIdList[index]).html('<img src="'+_imageRoot+'/backend/icons/unreadMail.png" title="Sem confirmação de leitura"/>');
-			$('#emailPeopleListCreatedAtTd-'+peopleIdList[index]).html(request);
+			$('#emailPeopleListStatusTd-'+peopleId).html('<img src="'+_imageRoot+'/backend/icons/notifications/successGreen.png" title="Enviado com sucesso"/>');
+			$('#emailPeopleListReadTd-'+peopleId).html('<img src="'+_imageRoot+'/backend/icons/unreadMail.png" title="Sem confirmação de leitura"/>');
+			$('#emailPeopleListCreatedAtTd-'+peopleId).html(request);
+			$('#randomCodeTd-'+peopleId).html(randomCode);
 	    	
 			sendEmailItem( peopleIdList, ++index );
 		},
 		error: function(request,error){
 
-	    	$('#emailPeopleListStatusTd-'+peopleIdList[index]).html('<img src="'+_imageRoot+'/backend/icons/notifications/exclamation.png"/>');
+	    	$('#emailPeopleListStatusTd-'+peopleId).html('<img src="'+_imageRoot+'/backend/icons/notifications/exclamation.png"/>');
 //	    	alert('E1'+request.responseText);
 //	    	alert('E2'+error);
 	    	sendEmailItem( peopleIdList, ++index );
 		}
 	});	
+}
+
+function getRandomCode(stringLength){
+	
+    var text = "";
+    var possible = "2A3B4C5D6E7F8G9H2I3J4K5L6M7N8P9Q2R3S4T5U6V7W8X9Y3";
+
+    for( var i=0; i < stringLength; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+function buildRandomCodes(){
+	
+	$("#emailMarketingPeopleListDiv input.randomCode").each(function() {$(this).val(getRandomCode(7));});
 }

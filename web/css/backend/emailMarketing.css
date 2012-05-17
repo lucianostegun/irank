@@ -20,3 +20,24 @@
 	height: auto;
 	vertical-align: middle
 }
+
+.widget .gradeA input.randomCode,
+.randomCodeTd {
+	
+	font-family: 	Courier, Courier New;
+	font-weight: 	bold;
+	font-size: 		16px;
+	text-align: 	center;
+}
+
+.widget .gradeA input.randomCode {
+
+	width: 		80px;
+	height: 	16px;
+	padding: 	2px 5px;
+}
+
+input.emailMarketingFilter {
+	
+	width: 100%;
+}

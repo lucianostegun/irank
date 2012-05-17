@@ -21,6 +21,10 @@ abstract class BaseEmailMarketingPeople extends BaseObject  implements Persisten
 
 
 	
+	protected $random_code;
+
+
+	
 	protected $created_at;
 
 	
@@ -54,6 +58,13 @@ abstract class BaseEmailMarketingPeople extends BaseObject  implements Persisten
 	{
 
 		return $this->email_log_id;
+	}
+
+	
+	public function getRandomCode()
+	{
+
+		return $this->random_code;
 	}
 
 	
@@ -135,6 +146,20 @@ abstract class BaseEmailMarketingPeople extends BaseObject  implements Persisten
 
 	} 
 	
+	public function setRandomCode($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->random_code !== $v) {
+			$this->random_code = $v;
+			$this->modifiedColumns[] = EmailMarketingPeoplePeer::RANDOM_CODE;
+		}
+
+	} 
+	
 	public function setCreatedAt($v)
 	{
 
@@ -162,13 +187,15 @@ abstract class BaseEmailMarketingPeople extends BaseObject  implements Persisten
 
 			$this->email_log_id = $rs->getInt($startcol + 2);
 
-			$this->created_at = $rs->getTimestamp($startcol + 3, null);
+			$this->random_code = $rs->getString($startcol + 3);
+
+			$this->created_at = $rs->getTimestamp($startcol + 4, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 4; 
+						return $startcol + 5; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EmailMarketingPeople object", $e);
 		}
@@ -339,6 +366,9 @@ abstract class BaseEmailMarketingPeople extends BaseObject  implements Persisten
 				return $this->getEmailLogId();
 				break;
 			case 3:
+				return $this->getRandomCode();
+				break;
+			case 4:
 				return $this->getCreatedAt();
 				break;
 			default:
@@ -354,7 +384,8 @@ abstract class BaseEmailMarketingPeople extends BaseObject  implements Persisten
 			$keys[0]=>$this->getEmailMarketingId(),
 			$keys[1]=>$this->getPeopleId(),
 			$keys[2]=>$this->getEmailLogId(),
-			$keys[3]=>$this->getCreatedAt(),
+			$keys[3]=>$this->getRandomCode(),
+			$keys[4]=>$this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -380,6 +411,9 @@ abstract class BaseEmailMarketingPeople extends BaseObject  implements Persisten
 				$this->setEmailLogId($value);
 				break;
 			case 3:
+				$this->setRandomCode($value);
+				break;
+			case 4:
 				$this->setCreatedAt($value);
 				break;
 		} 	}
@@ -392,7 +426,8 @@ abstract class BaseEmailMarketingPeople extends BaseObject  implements Persisten
 		if (array_key_exists($keys[0], $arr)) $this->setEmailMarketingId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setEmailLogId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRandomCode($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
 	}
 
 	
@@ -403,6 +438,7 @@ abstract class BaseEmailMarketingPeople extends BaseObject  implements Persisten
 		if ($this->isColumnModified(EmailMarketingPeoplePeer::EMAIL_MARKETING_ID)) $criteria->add(EmailMarketingPeoplePeer::EMAIL_MARKETING_ID, $this->email_marketing_id);
 		if ($this->isColumnModified(EmailMarketingPeoplePeer::PEOPLE_ID)) $criteria->add(EmailMarketingPeoplePeer::PEOPLE_ID, $this->people_id);
 		if ($this->isColumnModified(EmailMarketingPeoplePeer::EMAIL_LOG_ID)) $criteria->add(EmailMarketingPeoplePeer::EMAIL_LOG_ID, $this->email_log_id);
+		if ($this->isColumnModified(EmailMarketingPeoplePeer::RANDOM_CODE)) $criteria->add(EmailMarketingPeoplePeer::RANDOM_CODE, $this->random_code);
 		if ($this->isColumnModified(EmailMarketingPeoplePeer::CREATED_AT)) $criteria->add(EmailMarketingPeoplePeer::CREATED_AT, $this->created_at);
 
 		return $criteria;
@@ -446,6 +482,8 @@ abstract class BaseEmailMarketingPeople extends BaseObject  implements Persisten
 	{
 
 		$copyObj->setEmailLogId($this->email_log_id);
+
+		$copyObj->setRandomCode($this->random_code);
 
 		$copyObj->setCreatedAt($this->created_at);
 

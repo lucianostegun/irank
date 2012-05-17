@@ -338,9 +338,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -354,9 +352,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	public function setPeopleTypeId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -374,9 +370,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	public function setFirstName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -390,9 +384,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	public function setLastName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -406,9 +398,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	public function setFullName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -422,9 +412,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	public function setEmailAddress($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -471,9 +459,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	public function setDefaultLanguage($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

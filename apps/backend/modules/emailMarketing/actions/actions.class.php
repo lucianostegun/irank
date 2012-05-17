@@ -143,7 +143,7 @@ class emailMarketingActions extends sfActions
 	
 	$emailAddress = Settings::getValue('emailDebug');
 	$emailSubject = 'Preview: '.$emailMarketingObj->getEmailSubject();
-	$emailContent = $emailMarketingObj->getContentPreview(true);
+	$emailContent = $emailMarketingObj->getContentPreview(false);
 	$emailContent = Report::defaultReplace($emailContent);
 	
 	$options = array('emailTemplate'=>null);
@@ -165,17 +165,15 @@ class emailMarketingActions extends sfActions
 
   public function executeGetPeopleList($request){
     
-    $isUserSite      = $request->getParameter('isUserSite');
-    $isRankingPlayer = $request->getParameter('isRankingPlayer');
-    
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('emailMarketing/include/people', array('emailMarketingId'=>$this->emailMarketingId, 'isUserSite'=>$isUserSite, 'isRankingPlayer'=>$isRankingPlayer)));
+	return $this->renderText(get_partial('emailMarketing/include/people', array('emailMarketingId'=>$this->emailMarketingId)));
   }
   
   public function executeSendEmail($request){
   	
   	$peopleId          = $request->getParameter('peopleId');
+  	$randomCode        = $request->getParameter('randomCode');
   	$emailMarketingObj = EmailMarketingPeer::retrieveByPK($this->emailMarketingId);
   	
   	if( !is_object($emailMarketingObj) )
@@ -183,7 +181,7 @@ class emailMarketingActions extends sfActions
   	
   	try{
   		
-	  	$emailMarketingObj->sendEmail($peopleId);
+	  	$emailMarketingObj->sendEmail($peopleId, $randomCode);
   	}catch(Exception $e){
   		
   		Util::forceError('Ocorreu um erro no envio desse e-mail!', false);

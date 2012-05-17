@@ -22,7 +22,22 @@
 		<div class="clear"></div>
 	</div>
 	<div class="formRow">
+		<label>Nome</label>
+		<div class="formRight">
+			<?php echo input_tag('peopleName', null, array('class'=>'emailMarketingFilter', 'id'=>'emailMarketingPeopleName')) ?>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="formRow">
+		<label>E-mail</label>
+		<div class="formRight">
+			<?php echo input_tag('emailAddress', null, array('class'=>'emailMarketingFilter', 'id'=>'emailMarketingEmailAddress')) ?>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="formRow">
 		<?php echo link_to(image_tag('backend/icons/light/refresh', array('class'=>'icon')).'<span>Pesquisar</span>', '#loadPeopleList()', array('class'=>'button blueB', 'style'=>'margin-left: 10px')) ?>
+		<?php echo link_to(image_tag('backend/icons/light/cog3', array('class'=>'icon')).'<span>Gerar código</span>', '#buildRandomCodes()', array('class'=>'button greenB', 'style'=>'margin-left: 10px')) ?>
 	</div>
 	
 	<div id="emailSenderProgressBarDiv" style="display: none" class="mb20 mt20">

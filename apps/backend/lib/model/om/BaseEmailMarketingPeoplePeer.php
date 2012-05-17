@@ -13,7 +13,7 @@ abstract class BaseEmailMarketingPeoplePeer {
 	const CLASS_DEFAULT = '...apps.backend.lib.model.EmailMarketingPeople';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -29,6 +29,9 @@ abstract class BaseEmailMarketingPeoplePeer {
 	const EMAIL_LOG_ID = 'email_marketing_people.EMAIL_LOG_ID';
 
 	
+	const RANDOM_CODE = 'email_marketing_people.RANDOM_CODE';
+
+	
 	const CREATED_AT = 'email_marketing_people.CREATED_AT';
 
 	
@@ -37,19 +40,19 @@ abstract class BaseEmailMarketingPeoplePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('EmailMarketingId', 'PeopleId', 'EmailLogId', 'CreatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EmailMarketingPeoplePeer::EMAIL_MARKETING_ID, EmailMarketingPeoplePeer::PEOPLE_ID, EmailMarketingPeoplePeer::EMAIL_LOG_ID, EmailMarketingPeoplePeer::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('email_marketing_id', 'people_id', 'email_log_id', 'created_at', ),
-		BasePeer::TYPE_ALIAS=>array ('EMAIL_MARKETING_ID'=>'', 'PEOPLE_ID'=>'', 'EMAIL_LOG_ID'=>'', 'CREATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME=>array ('EmailMarketingId', 'PeopleId', 'EmailLogId', 'RandomCode', 'CreatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EmailMarketingPeoplePeer::EMAIL_MARKETING_ID, EmailMarketingPeoplePeer::PEOPLE_ID, EmailMarketingPeoplePeer::EMAIL_LOG_ID, EmailMarketingPeoplePeer::RANDOM_CODE, EmailMarketingPeoplePeer::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('email_marketing_id', 'people_id', 'email_log_id', 'random_code', 'created_at', ),
+		BasePeer::TYPE_ALIAS=>array ('EMAIL_MARKETING_ID'=>'', 'PEOPLE_ID'=>'', 'EMAIL_LOG_ID'=>'', 'RANDOM_CODE'=>'', 'CREATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('EmailMarketingId'=>0, 'PeopleId'=>1, 'EmailLogId'=>2, 'CreatedAt'=>3, ),
-		BasePeer::TYPE_COLNAME=>array (EmailMarketingPeoplePeer::EMAIL_MARKETING_ID=>0, EmailMarketingPeoplePeer::PEOPLE_ID=>1, EmailMarketingPeoplePeer::EMAIL_LOG_ID=>2, EmailMarketingPeoplePeer::CREATED_AT=>3, ),
-		BasePeer::TYPE_FIELDNAME=>array ('email_marketing_id'=>0, 'people_id'=>1, 'email_log_id'=>2, 'created_at'=>3, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME=>array ('EmailMarketingId'=>0, 'PeopleId'=>1, 'EmailLogId'=>2, 'RandomCode'=>3, 'CreatedAt'=>4, ),
+		BasePeer::TYPE_COLNAME=>array (EmailMarketingPeoplePeer::EMAIL_MARKETING_ID=>0, EmailMarketingPeoplePeer::PEOPLE_ID=>1, EmailMarketingPeoplePeer::EMAIL_LOG_ID=>2, EmailMarketingPeoplePeer::RANDOM_CODE=>3, EmailMarketingPeoplePeer::CREATED_AT=>4, ),
+		BasePeer::TYPE_FIELDNAME=>array ('email_marketing_id'=>0, 'people_id'=>1, 'email_log_id'=>2, 'random_code'=>3, 'created_at'=>4, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
 	);
 
 	
@@ -108,6 +111,8 @@ abstract class BaseEmailMarketingPeoplePeer {
 		$criteria->addSelectColumn(EmailMarketingPeoplePeer::PEOPLE_ID);
 
 		$criteria->addSelectColumn(EmailMarketingPeoplePeer::EMAIL_LOG_ID);
+
+		$criteria->addSelectColumn(EmailMarketingPeoplePeer::RANDOM_CODE);
 
 		$criteria->addSelectColumn(EmailMarketingPeoplePeer::CREATED_AT);
 

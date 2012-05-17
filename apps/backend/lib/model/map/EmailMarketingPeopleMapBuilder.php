@@ -38,6 +38,8 @@ class EmailMarketingPeopleMapBuilder {
 
 		$tMap->addColumn('EMAIL_LOG_ID', 'EmailLogId', 'int', CreoleTypes::INTEGER, false, null);
 
+		$tMap->addColumn('RANDOM_CODE', 'RandomCode', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 	} 
