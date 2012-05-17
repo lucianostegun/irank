@@ -64,9 +64,7 @@ abstract class BaseNewsI18n extends BaseObject  implements Persistent {
 	public function setNewsId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -84,9 +82,7 @@ abstract class BaseNewsI18n extends BaseObject  implements Persistent {
 	public function setCulture($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -100,9 +96,7 @@ abstract class BaseNewsI18n extends BaseObject  implements Persistent {
 	public function setNewsTitleI18n($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -116,9 +110,7 @@ abstract class BaseNewsI18n extends BaseObject  implements Persistent {
 	public function setDescriptionI18n($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

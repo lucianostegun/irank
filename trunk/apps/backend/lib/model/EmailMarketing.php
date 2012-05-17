@@ -140,26 +140,31 @@ class EmailMarketing extends BaseEmailMarketing
 		return options_for_select( $optionList, $defaultValue );
 	}
 	
-	public function getContent($peopleObj=null){
+	public function getContent($peopleObj=null, $randomCode=null, $includeTemplate=true){
 
 		$filePath = $this->getFilePath(true);
 
 		$emailContent = file_get_contents($filePath);
 		
+		$infoList = array('randomCode'=>$randomCode);
+		
 		if( is_object($peopleObj) ){
 			
-			$infoList = array('emailTitle'=>$this->getEmailSubject(),
-						  'peopleName'=>$peopleObj->getFirstName());
+			$infoList['emailTitle'] = $this->getEmailSubject();
+			$infoList['peopleName'] = $peopleObj->getFirstName();
 						  
 			$userSiteObj = $peopleObj->getUserSite();
 			if( is_object($userSiteObj) )
 				$infoList = array_merge($infoList, $userSiteObj->getInfo(false, false));
-			
-			$emailContent = Report::defaultReplace($emailContent, $infoList);
 		}
 		
-		$emailTemplate = $this->getEmailTemplate()->getContent();
-		$emailContent  = str_replace('[emailContent]', $emailContent, $emailTemplate);
+		$emailContent = Report::defaultReplace($emailContent, $infoList);
+		
+		if( $includeTemplate ){
+			
+			$emailTemplate = $this->getEmailTemplate()->getContent();
+			$emailContent  = str_replace('[emailContent]', $emailContent, $emailTemplate);
+		}
 		
 		return $emailContent;
 	}
@@ -186,12 +191,12 @@ class EmailMarketing extends BaseEmailMarketing
 
 	public function getContentPreview($includeTemplate=true){
 		
-		$emailContent = $this->getContent();
+		$randomCode = String::createRandom(7, true);
 		
 		$peopleObj = People::getCurrentPeople();
+		$emailContent = $this->getContent($peopleObj, $randomCode, false);
 		
-		$infoList = array('emailTitle'=>$this->getEmailSubject(),
-						  'peopleName'=>$peopleObj->getFirstName());
+		$infoList = array('emailTitle'=>$this->getEmailSubject());
 		
 		if( $includeTemplate && $this->getEmailTemplateId() ){
 			
@@ -223,7 +228,7 @@ class EmailMarketing extends BaseEmailMarketing
 		return $sendingStatus;
 	}
 	
-	public function sendEmail($peopleId){
+	public function sendEmail($peopleId, $randomCode=null){
 		
 	  	$peopleObj = PeoplePeer::retrieveByPK( $peopleId );
 	  	
@@ -246,10 +251,15 @@ class EmailMarketing extends BaseEmailMarketing
   		
   		$emailLogId = $emailLogObj->getId();
   		
+  		if( is_null($emailMarketingPeopleObj->getRandomCode()) )
+  			$emailMarketingPeopleObj->setRandomCode(nvl($randomCode));
+  			
   		$emailMarketingPeopleObj->setEmailLogId($emailLogId);
   		$emailMarketingPeopleObj->save();
   		
-  		$emailContent = $this->getContent($peopleObj);
+  		$randomCode = ($randomCode?$randomCode:$emailMarketingPeopleObj->getRandomCode());
+  		
+  		$emailContent = $this->getContent($peopleObj, $randomCode, false);
   		$emailSubject = $this->getEmailSubject();
   		
   		$options = array('emailLogId'=>$emailLogId, 'emailTemplate'=>null);

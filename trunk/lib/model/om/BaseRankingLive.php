@@ -517,9 +517,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -533,9 +531,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setRankingName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -549,9 +545,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setRankingTypeId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -633,9 +627,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setPlayers($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -649,9 +641,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setEvents($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -665,9 +655,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setDescription($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -681,9 +669,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setGameStyleId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -701,9 +687,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setGameTypeId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -721,9 +705,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setRankingTag($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -737,9 +719,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setScoreFormulaOption($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -753,9 +733,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setScoreFormula($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -769,9 +747,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setFileNameLogo($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -859,9 +835,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setAllowedRebuys($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -875,9 +849,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setAllowedAddons($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -911,9 +883,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	public function setPrizeSplit($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

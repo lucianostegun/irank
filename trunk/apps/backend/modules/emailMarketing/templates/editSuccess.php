@@ -9,7 +9,7 @@
 			<li><a href="#tab1">Principal</a></li>
 			<li class="<?php echo ($isNew?'hidden':'') ?>" id="mainPreviewTab"><a href="#tab2">Visualização</a></li>
 			<li class="hidden" id="mainEditTab"><a href="#tab3">Edição</a></li>
-			<li class="<?php echo ($isNew?'hidden':'') ?>" id="mainPeopleTab"><a href="#tab4">Envio</a></li>
+			<li class="<?php echo ($isNew?'hidden':'') ?>" id="mainPeopleTab"><a href="#tab4">Envios</a></li>
 			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#emailMarketingForm").submit()')); ?>
 		</ul>
 		<div class="tab_container">
