@@ -5,7 +5,7 @@ $rankingObj = RankingPeer::retrieveByPK($rankingId);
 $peopleObj  = PeoplePeer::retrieveByPK($peopleId);
 
 $culture        = MyTools::getCulture();
-$inputFilePath  = Util::getFilePath('/templates/'.$culture.'/rankHistory.xls');
+$inputFilePath  = Util::getFilePath('/templates/rankHistory.xls');
 $outputFilePath = Util::getFilePath('/temp/rankHistory-'.microtime().'.xls');
 
 $eventDateList = $rankingObj->getEventDateList();

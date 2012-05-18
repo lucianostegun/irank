@@ -1035,7 +1035,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.commentTab.commentDeleteError</source>
-				<target>Não foi possível excluir o comentário!\nTente novamente mais tarde.</target>
+				<target>Não foi possível excluir o comentário!\nPor favor, tente novamente.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>button.publish</source>
@@ -1075,7 +1075,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.commentsTab.photoDeleteError</source>
-				<target>Erro ao excluir a foto!\nTente novamente mais tarde.</target>
+				<target>Erro ao excluir a foto!\nPor favor, tente novamente.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.commentsTab.photoDeleteConfirm</source>
@@ -1121,15 +1121,15 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playersTab.playerDeleteError</source>
-				<target>Não foi possível excluir o jogador do grupo!\nTente novamente mais tarde.</target>
+				<target>Não foi possível excluir o jogador do grupo!\nPor favor, tente novamente.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.classifyTab.logLoadError</source>
-				<target>Não foi possível carregar o histórico de classificação!\nTente novamente mais tarde.</target>
+				<target>Não foi possível carregar o histórico de classificação!\nPor favor, tente novamente.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.classifyTab.shareError</source>
-				<target>Não foi possível habilitar o jogador do grupo para edição do ranking!\nTente novamente mais tarde.</target>
+				<target>Não foi possível habilitar o jogador do grupo para edição do ranking!\nPor favor, tente novamente.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.deleteConfirm</source>
@@ -1141,7 +1141,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>tryAgain</source>
-				<target>Tente novamente mais tarde.</target>
+				<target>Por favor, tente novamente.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.exception.editionDenied</source>
@@ -1252,7 +1252,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.playersTab.togglePresenceError</source>
-				<target>Ocorreu um erro ao confirmar a presença!\nTente novamente mais tarde.</target>
+				<target>Ocorreu um erro ao confirmar a presença!\nPor favor, tente novamente.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.playersTab.presenceNotifyConfirm</source>

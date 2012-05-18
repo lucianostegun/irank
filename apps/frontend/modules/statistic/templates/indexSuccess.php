@@ -16,7 +16,7 @@
 					'success'=>'handleSuccessStats(request.responseText)',
 					'failure'=>'handleFailureStats(request.responseText)',
 					'encoding'=>'UTF8',
-					), array( 'id'=>'statisticForm' ));
+					), array('id'=>'statisticForm'));
 					
 					echo input_hidden_tag('export', null);
 			?>			

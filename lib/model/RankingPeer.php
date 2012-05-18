@@ -30,9 +30,12 @@ class RankingPeer extends BaseRankingPeer
 			
 			if( !$criteria->isNoFilter() ){
 
-				$criterion = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
-				$criterion->addOr( $criteria->getNewCriterion( self::USER_SITE_ID, $userSiteId ) );
-				$criteria->add($criterion);
+				$criterion1 = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
+				$criterion1->addAnd( $criteria->getNewCriterion( RankingPlayerPeer::ENABLED, true ) );
+				$criterion2 = $criteria->getNewCriterion( self::USER_SITE_ID, $userSiteId );
+				
+				$criterion1->addOr($criterion2);
+				$criteria->add($criterion1);
 				
 				$criteria->addAnd( self::DELETED, false );
 			}else{

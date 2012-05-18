@@ -50,7 +50,7 @@ $Test->setGraphArea(65,45,$width-88,$height-80);
 $Test->drawFilledRoundedRectangle(7,7,$width-7,$height-7,5,240,240,240);
 $Test->drawRoundedRectangle(5,5,$width-5,$height-5,5,230,230,230);
 $Test->drawGraphArea(255,255,255,TRUE);
-$Test->drawScale($DataSet->GetData(),$DataSet->GetDataDescription(),SCALE_NORMAL,150,150,150,TRUE,65,2,TRUE);
+$Test->drawScale($DataSet->GetData(),$DataSet->GetDataDescription(),SCALE_NORMAL,50,50,50,TRUE,35,2,TRUE);
 $Test->drawGrid(4,TRUE,230,230,230,50);
 
 // Draw the 0 line
@@ -69,10 +69,10 @@ header('Pragma: no-cache');
 // Finish the graph
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawLegend($width-82,30,$DataSet->GetDataDescription(),255,255,255);
-$Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',11);
+$Test->setFontProperties($libDir.'/pChart/Fonts/tahomabd.ttf',11);
 $Test->drawTitle(100,30,__('statistic.chart.title.playersBalance').' - '.$rankingObj->getRankingName(),50,50,50);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
-$Test->drawCredits($width, $height-40);
+$Test->drawCredits();
 $Test->Stroke();
    	
 exit;

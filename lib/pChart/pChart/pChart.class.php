@@ -1028,11 +1028,16 @@
       }
     }
     
-    function drawCredits($width, $height){
+    function drawCredits(){
     	
-    	$C_TextColor =$this->AllocateColor($this->Picture,100,100,100);
-
-    	imagettftext($this->Picture,$this->FontSize,90,$width-20,$height-10,$C_TextColor,$this->FontName,'iRank - '.__('statistic.chart.reservedRights'));
+    	
+		$filePath = Util::getFilePath('/images/backgrounds/chart.png');
+	
+		$newImg = imagecreatefrompng( $filePath );
+		imagealphablending($newImg, true);
+		imagesavealpha($newImg, true);
+		
+		imagecopymerge_alpha($this->Picture, $newImg, $this->XSize-146, $this->YSize-199, 0, 0, 140, 190, 70); //cordenas
     }
 
    /* Draw the data legends */
