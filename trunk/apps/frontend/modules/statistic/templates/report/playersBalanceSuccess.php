@@ -7,7 +7,7 @@ $rankingPlayerObjList = $rankingObj->getClassify();
 $players = $rankingObj->getPlayers();
 
 $culture        = MyTools::getCulture();
-$inputFilePath  = Util::getFilePath('/templates/'.$culture.'/playersBalance.xls');
+$inputFilePath  = Util::getFilePath('/templates/playersBalance.xls');
 $outputFilePath = Util::getFilePath('/temp/playersBalance-'.microtime().'.xls');
 
 $phpExcelObj = PHPExcel_IOFactory::load($inputFilePath);

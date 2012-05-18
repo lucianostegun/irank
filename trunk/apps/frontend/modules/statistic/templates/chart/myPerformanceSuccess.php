@@ -122,7 +122,7 @@ $DataSet->RemoveSerie('myPositionProgress');
 $Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
 $Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255);
 
-header('Content-Type: image/jpeg');
+header('Content-Type: image/png');
 header('Content-Disposition: attachment; filename='.__('statistic.fileName.myPerformance').'.png');
 header('Expires: 0');
 header('Pragma: no-cache');
@@ -130,10 +130,10 @@ header('Pragma: no-cache');
 // Finish the graph
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawLegend($width-160,35,$DataSet->GetDataDescription(),255,255,255);
-$Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',11);
+$Test->setFontProperties($libDir.'/pChart/Fonts/tahomabd.ttf',11);
 $Test->drawTitle(100,30,__('statistic.chart.title.rankingLog').' - '.$rankingObj->getRankingName(),50,50,50);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
-$Test->drawCredits($width, $height);
+$Test->drawCredits();
 $Test->Stroke();
    	
 exit;

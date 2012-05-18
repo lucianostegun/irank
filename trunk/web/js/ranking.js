@@ -219,6 +219,14 @@ function loadRankingHistory(rankingDate){
 	
 	var rankingId = $('rankingId').value;
 	
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		
+		$('rankingClassifyDiv').innerHTML = content;
+		adjustContentTab();
+	};
+	
 	var failureFunc = function(t){
 
 		var content = t.responseText;
@@ -229,7 +237,7 @@ function loadRankingHistory(rankingDate){
 	putLoading('rankingClassifyDiv');
 	
 	var urlAjax = _webRoot+'/ranking/getRankingHistory/rankingId/'+rankingId+'?rankingDate='+rankingDate;
-	new Ajax.Updater('rankingClassifyDiv', urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc});	
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});	
 }
 
 function toggleRankingShare(peopleId){

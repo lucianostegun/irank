@@ -1049,15 +1049,23 @@ class Event extends BaseEvent
 		
 		$culture = $peopleObj->getDefaultLanguage();
 		
-		$filePath         = Util::getFilePath('/templates/'.$culture.'/facebook/eventResult.jpg');
-		$filePathFavorite = Util::getFilePath('/images/favorite.png');
+		$filePath         = Util::getFilePath('/templates/facebook/eventResult.jpg');
+		$filePathUp       = Util::getFilePath('/images/misc/up.png');
+		$filePathDown     = Util::getFilePath('/images/misc/down.png');
+		$filePathNeutral  = Util::getFilePath('/images/misc/neutral.png');
 		$fontPath         = Util::getFilePath('/../lib/pChart/Fonts');
 	
-		$newImg = imagecreatefromjpeg( $filePath );
-		$newFav = imagecreatefrompng( $filePathFavorite );
+		$newImg     = imagecreatefromjpeg( $filePath );
+		$imgUp      = imagecreatefrompng( $filePathUp );
+		$imgDown    = imagecreatefrompng( $filePathDown );
+		$imgNeutral = imagecreatefrompng( $filePathNeutral );
 		
-		imagealphablending($newFav, false);
-		imagesavealpha($newFav, true);
+		imagealphablending($imgUp, false);
+		imagesavealpha($imgUp, true);
+		imagealphablending($imgDown, false);
+		imagesavealpha($imgDown, true);
+		imagealphablending($imgNeutral, false);
+		imagesavealpha($imgNeutral, true);
 		
 		$fileDimensions = File::getFileDimension($filePath);
 			
@@ -1082,11 +1090,12 @@ class Event extends BaseEvent
 		$tahoma      = $fontPath.'/tahoma.ttf';
 		$tahomaB     = $fontPath.'/tahomabd.ttf';
 	
-		imagettftext($newImg, 8, 0, 15, 43, $colorBlack, $verdana, $eventName);
+		imagettftext($newImg, 8, 0, 15, 43, $colorBlack, $verdanaB, $eventName);
 		imagettftext($newImg, 8, 0, 10, 265, $colorWhite, $verdana, $eventDate);
 		imagettftext($newImg, 8, 0, 230, 265, $colorWhite, $verdanaB, $rankingName);
 		
-		$peopleIdCurrent = $peopleObj->getId();
+		$peopleIdCurrent     = $peopleObj->getId();
+		$lastRankingPosition = Util::executeOne('SELECT get_previous_player_position('.$rankingId.', '.$peopleId.', \''.$this->getEventDate('Y-m-d').'\')');
 		
 		$positionY   = 0;
 		$playerList  = array();
@@ -1104,6 +1113,7 @@ class Event extends BaseEvent
 			$playerList[$peopleId] = array('playerName'=>$eventPlayerObj->getPeople()->getName(),
 										   'score'=>$eventPlayerObj->getScore(),
 										   'ranking'=>$rankingPosition.'º',
+										   'rankingPosition'=>$rankingPosition,
 										   'eventPosition'=>$eventPosition.'º');
 			
 			if( $peopleId==$peopleIdCurrent )
@@ -1129,7 +1139,9 @@ class Event extends BaseEvent
 			
 			$fontColor = ($peopleIdCurrent==$peopleId?$colorRed:$colorBlack);
 			
-			$eventPosition = $playerInfo['eventPosition'];
+			$eventPosition   = $playerInfo['eventPosition'];
+			$rankingPosition = $playerInfo['rankingPosition'];
+
 			$playerName    = truncate_text('- '.$playerInfo['playerName'], 50);
 			$score         = $playerInfo['score'];
 			$ranking       = $playerInfo['ranking'];
@@ -1146,8 +1158,14 @@ class Event extends BaseEvent
 			
 			imagettftext($newImg, 8, 0, $width-$length3-390, 85+$positionY, $fontColor, $verdana, $eventPosition);
 			imagettftext($newImg, 8, 0, 37, 85+$positionY, $fontColor, $verdana, $playerName);
-			imagettftext($newImg, 8, 0, $width-$length1-74, 85+$positionY, $fontColor, $verdana, $score);
-			imagettftext($newImg, 8, 0, $width-$length2-17, 85+$positionY, $fontColor, $verdana, $ranking);
+			imagettftext($newImg, 8, 0, $width-$length1-85, 85+$positionY, $fontColor, $verdana, $score);
+			imagettftext($newImg, 8, 0, $width-$length2-34, 85+$positionY, $fontColor, $verdana, $ranking);
+			
+			if( $peopleIdCurrent==$peopleId && !is_null($lastRankingPosition) ){
+				
+				$imgPos = ($rankingPosition < $lastRankingPosition?$imgUp:($rankingPosition>$lastRankingPosition?$imgDown:$imgNeutral));
+				imagecopymerge_alpha($newImg, $imgPos, $width-27, 77+$positionY, 0, 0, 13, 8, 0);
+			}
 			
 			$positionY += 20;
 		}

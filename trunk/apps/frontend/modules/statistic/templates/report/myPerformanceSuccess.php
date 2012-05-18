@@ -22,7 +22,7 @@ if( $peopleIdOther==$peopleId ){
 }
 
 $culture        = MyTools::getCulture();
-$inputFilePath  = Util::getFilePath('/templates/'.$culture.'/myPerformance.xls');
+$inputFilePath  = Util::getFilePath('/templates/myPerformance.xls');
 $outputFilePath = Util::getFilePath('/temp/myPerformance-'.microtime().'.xls');
 
 $phpExcelObj = PHPExcel_IOFactory::load($inputFilePath);

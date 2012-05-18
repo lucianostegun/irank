@@ -151,7 +151,7 @@ class homeActions extends sfActions
 	$isDebug    = ($isDebug?'true':'false');
 	$peopleId   = $this->getUser()->getAttribute('peopleId');
 	
-	if( sfConfig::get('sf_no_script_name') )
+	if( sfConfig::get('sf_no_script_name') && !$isDebug )
 		$scriptName = '';
 	
 	echo 'var _CurrentPeopleId = "'.$peopleId.'";'.$nl.$nl;

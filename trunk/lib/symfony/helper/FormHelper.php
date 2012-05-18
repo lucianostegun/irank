@@ -1240,7 +1240,7 @@ function getFormStatus( $statusId=null, $window=false, $errorMessage=null, $succ
 	echo get_partial( 'home/include/formStatus', array('statusId'=>$statusId, 'window'=>$window, 'errorMessage'=>$errorMessage, 'successMessage'=>$successMessage) );
 }
 
-function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct, $trans = NULL)
+function imagecopymerge_alpha2($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct, $trans = NULL)
 {
   $dst_w = imagesx($dst_im);
   $dst_h = imagesy($dst_im);
@@ -1281,4 +1281,28 @@ function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, 
       }
     }
   return true;
+}
+
+/**
+* PNG ALPHA CHANNEL SUPPORT for imagecopymerge();
+* This is a function like imagecopymerge but it handle alpha channel well!!!
+**/
+function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct){
+
+	$opacity=$pct;
+	// getting the watermark width
+	$w = imagesx($src_im);
+	// getting the watermark height
+	$h = imagesy($src_im);
+	 
+	// creating a cut resource
+	$cut = imagecreatetruecolor($src_w, $src_h);
+	// copying that section of the background to the cut
+	imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h);
+	// inverting the opacity
+	$opacity = 100 - $opacity;
+	 
+	// placing the watermark now
+	imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h);
+	imagecopymerge($dst_im, $cut, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $opacity);
 }

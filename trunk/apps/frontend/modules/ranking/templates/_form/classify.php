@@ -7,9 +7,15 @@
 				$orderByList   = array(EventPeer::EVENT_DATE=>'desc');
 				$eventDateList = $rankingObj->getEventDateList('d/m/Y', true, $orderByList);
 				$optionList    = array();
-				foreach($eventDateList as $eventDate)
-					$optionList[$eventDate] = $eventDate;
+				$firstDate     = null;
+				foreach($eventDateList as $key=>$eventDate){
 					
+					if( $key===0 )
+						$firstDate = $eventDate;
+						
+					$optionList[$eventDate] = $eventDate;
+				}
+
 				echo select_tag('rankingDate', $optionList, array('onchange'=>'loadRankingHistory(this.value)'));
 			?>
 		</div>
@@ -17,5 +23,5 @@
 	<div class="clear"></div>
 </div>
 <div id="rankingClassifyDiv">
-	<?php include_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>null)); ?>
+	<?php include_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$firstDate)); ?>
 </div>

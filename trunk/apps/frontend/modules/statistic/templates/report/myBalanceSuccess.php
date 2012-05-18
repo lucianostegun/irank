@@ -22,7 +22,7 @@ if( $peopleIdOther==$peopleId ){
 }
 
 $culture        = MyTools::getCulture();
-$inputFilePath  = Util::getFilePath('/templates/'.$culture.'/myBalance.xls');
+$inputFilePath  = Util::getFilePath('/templates/myBalance.xls');
 $outputFilePath = Util::getFilePath('/temp/myBalance-'.microtime().'.xls');
 
 $phpExcelObj = PHPExcel_IOFactory::load($inputFilePath);
@@ -41,10 +41,10 @@ for($line=7; $line <= 7+$events-1; $line++)
 	);
 
 $phpExcelObj->setActiveSheetIndex(0)
-			->setCellValue('E2', $rankingObj->getRankingName())
-			->setCellValue('E3', $rankingObj->getPlayers())
-			->setCellValue('E4', $rankingObj->getEvents())
-			->setCellValue('G4', $rankingObj->getRankingType()->getDescription())
+			->setCellValue('D2', $rankingObj->getRankingName())
+			->setCellValue('D3', $rankingObj->getPlayers())
+			->setCellValue('D4', $rankingObj->getEvents())
+			->setCellValue('F4', $rankingObj->getRankingType()->getDescription())
 			;
 						
 $currentLine = 7;
