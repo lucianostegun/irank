@@ -125,6 +125,14 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 
 	
+	protected $schedule_start_date;
+
+
+	
+	protected $enrollment_start_date;
+
+
+	
 	protected $enabled;
 
 
@@ -456,6 +464,50 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getScheduleStartDate($format = 'Y-m-d')
+	{
+
+		if ($this->schedule_start_date === null || $this->schedule_start_date === '') {
+			return null;
+		} elseif (!is_int($this->schedule_start_date)) {
+						$ts = strtotime($this->schedule_start_date);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [schedule_start_date] as date/time value: " . var_export($this->schedule_start_date, true));
+			}
+		} else {
+			$ts = $this->schedule_start_date;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
+	}
+
+	
+	public function getEnrollmentStartDate($format = 'Y-m-d')
+	{
+
+		if ($this->enrollment_start_date === null || $this->enrollment_start_date === '') {
+			return null;
+		} elseif (!is_int($this->enrollment_start_date)) {
+						$ts = strtotime($this->enrollment_start_date);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [enrollment_start_date] as date/time value: " . var_export($this->enrollment_start_date, true));
+			}
+		} else {
+			$ts = $this->enrollment_start_date;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
+	}
+
+	
 	public function getEnabled()
 	{
 
@@ -531,9 +583,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -547,9 +597,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setRankingLiveId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -567,9 +615,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setClubId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -587,9 +633,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setEmailTemplateId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -607,9 +651,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setEventName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -623,9 +665,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setEventShortName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -690,9 +730,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setStepNumber($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -706,9 +744,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setStepDay($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -722,9 +758,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setComments($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -738,9 +772,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setDescription($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -821,9 +853,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setPlayers($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -837,9 +867,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setAllowedRebuys($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -853,9 +881,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setAllowedAddons($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -919,9 +945,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setPrizeSplit($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -935,15 +959,47 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setVisitCount($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
 		if ($this->visit_count !== $v || $v === 0) {
 			$this->visit_count = $v;
 			$this->modifiedColumns[] = EventLivePeer::VISIT_COUNT;
+		}
+
+	} 
+	
+	public function setScheduleStartDate($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [schedule_start_date] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->schedule_start_date !== $ts) {
+			$this->schedule_start_date = $ts;
+			$this->modifiedColumns[] = EventLivePeer::SCHEDULE_START_DATE;
+		}
+
+	} 
+	
+	public function setEnrollmentStartDate($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [enrollment_start_date] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->enrollment_start_date !== $ts) {
+			$this->enrollment_start_date = $ts;
+			$this->modifiedColumns[] = EventLivePeer::ENROLLMENT_START_DATE;
 		}
 
 	} 
@@ -1084,23 +1140,27 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 			$this->visit_count = $rs->getInt($startcol + 28);
 
-			$this->enabled = $rs->getBoolean($startcol + 29);
+			$this->schedule_start_date = $rs->getDate($startcol + 29, null);
 
-			$this->visible = $rs->getBoolean($startcol + 30);
+			$this->enrollment_start_date = $rs->getDate($startcol + 30, null);
 
-			$this->deleted = $rs->getBoolean($startcol + 31);
+			$this->enabled = $rs->getBoolean($startcol + 31);
 
-			$this->locked = $rs->getBoolean($startcol + 32);
+			$this->visible = $rs->getBoolean($startcol + 32);
 
-			$this->created_at = $rs->getTimestamp($startcol + 33, null);
+			$this->deleted = $rs->getBoolean($startcol + 33);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 34, null);
+			$this->locked = $rs->getBoolean($startcol + 34);
+
+			$this->created_at = $rs->getTimestamp($startcol + 35, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 36, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 35; 
+						return $startcol + 37; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLive object", $e);
 		}
@@ -1448,21 +1508,27 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				return $this->getVisitCount();
 				break;
 			case 29:
-				return $this->getEnabled();
+				return $this->getScheduleStartDate();
 				break;
 			case 30:
-				return $this->getVisible();
+				return $this->getEnrollmentStartDate();
 				break;
 			case 31:
-				return $this->getDeleted();
+				return $this->getEnabled();
 				break;
 			case 32:
-				return $this->getLocked();
+				return $this->getVisible();
 				break;
 			case 33:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 34:
+				return $this->getLocked();
+				break;
+			case 35:
+				return $this->getCreatedAt();
+				break;
+			case 36:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1504,12 +1570,14 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$keys[26]=>$this->getSuppressSchedule(),
 			$keys[27]=>$this->getPrizeSplit(),
 			$keys[28]=>$this->getVisitCount(),
-			$keys[29]=>$this->getEnabled(),
-			$keys[30]=>$this->getVisible(),
-			$keys[31]=>$this->getDeleted(),
-			$keys[32]=>$this->getLocked(),
-			$keys[33]=>$this->getCreatedAt(),
-			$keys[34]=>$this->getUpdatedAt(),
+			$keys[29]=>$this->getScheduleStartDate(),
+			$keys[30]=>$this->getEnrollmentStartDate(),
+			$keys[31]=>$this->getEnabled(),
+			$keys[32]=>$this->getVisible(),
+			$keys[33]=>$this->getDeleted(),
+			$keys[34]=>$this->getLocked(),
+			$keys[35]=>$this->getCreatedAt(),
+			$keys[36]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1613,21 +1681,27 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$this->setVisitCount($value);
 				break;
 			case 29:
-				$this->setEnabled($value);
+				$this->setScheduleStartDate($value);
 				break;
 			case 30:
-				$this->setVisible($value);
+				$this->setEnrollmentStartDate($value);
 				break;
 			case 31:
-				$this->setDeleted($value);
+				$this->setEnabled($value);
 				break;
 			case 32:
-				$this->setLocked($value);
+				$this->setVisible($value);
 				break;
 			case 33:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 34:
+				$this->setLocked($value);
+				break;
+			case 35:
+				$this->setCreatedAt($value);
+				break;
+			case 36:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1666,12 +1740,14 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[26], $arr)) $this->setSuppressSchedule($arr[$keys[26]]);
 		if (array_key_exists($keys[27], $arr)) $this->setPrizeSplit($arr[$keys[27]]);
 		if (array_key_exists($keys[28], $arr)) $this->setVisitCount($arr[$keys[28]]);
-		if (array_key_exists($keys[29], $arr)) $this->setEnabled($arr[$keys[29]]);
-		if (array_key_exists($keys[30], $arr)) $this->setVisible($arr[$keys[30]]);
-		if (array_key_exists($keys[31], $arr)) $this->setDeleted($arr[$keys[31]]);
-		if (array_key_exists($keys[32], $arr)) $this->setLocked($arr[$keys[32]]);
-		if (array_key_exists($keys[33], $arr)) $this->setCreatedAt($arr[$keys[33]]);
-		if (array_key_exists($keys[34], $arr)) $this->setUpdatedAt($arr[$keys[34]]);
+		if (array_key_exists($keys[29], $arr)) $this->setScheduleStartDate($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setEnrollmentStartDate($arr[$keys[30]]);
+		if (array_key_exists($keys[31], $arr)) $this->setEnabled($arr[$keys[31]]);
+		if (array_key_exists($keys[32], $arr)) $this->setVisible($arr[$keys[32]]);
+		if (array_key_exists($keys[33], $arr)) $this->setDeleted($arr[$keys[33]]);
+		if (array_key_exists($keys[34], $arr)) $this->setLocked($arr[$keys[34]]);
+		if (array_key_exists($keys[35], $arr)) $this->setCreatedAt($arr[$keys[35]]);
+		if (array_key_exists($keys[36], $arr)) $this->setUpdatedAt($arr[$keys[36]]);
 	}
 
 	
@@ -1708,6 +1784,8 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePeer::SUPPRESS_SCHEDULE)) $criteria->add(EventLivePeer::SUPPRESS_SCHEDULE, $this->suppress_schedule);
 		if ($this->isColumnModified(EventLivePeer::PRIZE_SPLIT)) $criteria->add(EventLivePeer::PRIZE_SPLIT, $this->prize_split);
 		if ($this->isColumnModified(EventLivePeer::VISIT_COUNT)) $criteria->add(EventLivePeer::VISIT_COUNT, $this->visit_count);
+		if ($this->isColumnModified(EventLivePeer::SCHEDULE_START_DATE)) $criteria->add(EventLivePeer::SCHEDULE_START_DATE, $this->schedule_start_date);
+		if ($this->isColumnModified(EventLivePeer::ENROLLMENT_START_DATE)) $criteria->add(EventLivePeer::ENROLLMENT_START_DATE, $this->enrollment_start_date);
 		if ($this->isColumnModified(EventLivePeer::ENABLED)) $criteria->add(EventLivePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventLivePeer::VISIBLE)) $criteria->add(EventLivePeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(EventLivePeer::DELETED)) $criteria->add(EventLivePeer::DELETED, $this->deleted);
@@ -1799,6 +1877,10 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		$copyObj->setPrizeSplit($this->prize_split);
 
 		$copyObj->setVisitCount($this->visit_count);
+
+		$copyObj->setScheduleStartDate($this->schedule_start_date);
+
+		$copyObj->setEnrollmentStartDate($this->enrollment_start_date);
 
 		$copyObj->setEnabled($this->enabled);
 

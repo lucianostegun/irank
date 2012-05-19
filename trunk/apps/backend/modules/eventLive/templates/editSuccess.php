@@ -17,11 +17,11 @@
     <div class="widget form">    
 	    <ul class="tabs">
 			<li><a href="#tab1">Principal</a></li>
+			<li><a href="#tab5">Opções</a></li>
 			<li><a href="#tab2">Jogadores</a></li>
 			<li class="<?php echo ($eventLiveObj->getIsNew()?'hidden':'') ?>" onclick="loadDisclosureTab()" id="mainDisclosureTab"><a href="#tab6">Divulgação</a></li>
 			<li><a href="#tab4">Fotos</a></li>
-			<li><a href="#tab5">Opções</a></li>
-			<li id="mainResultTab"><a href="#tab3" onclick="return activeResultTab()">Resultado</a></li>
+			<li class="<?php echo ($eventLiveObj->getIsNew()?'hidden':'') ?>" id="mainResultTab"><a href="#tab3" onclick="return activeResultTab()">Resultado</a></li>
 			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#eventLiveForm").submit()')); ?>
 		</ul>
 		<div class="tab_container">

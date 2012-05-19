@@ -2,7 +2,6 @@
 	
 	position: 		relative;
 	width: 			385px;
-	overflow: 		hidden;
 	margin-top: 	20px;
 	left: 			2px;
 }
@@ -83,8 +82,8 @@
 	position: 		absolute;
 	top: 			5px;
 	left: 			93px;
-	color: 			#303030;
-	text-shadow: 	#F5F5F5 1px 1px;
+	color: 			#344F7C;
+	text-shadow: 	#FFFFFF 1px 1px;
 }
 
 .eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .image {
@@ -138,7 +137,7 @@
 
 	font-weight: 	bold;
 	font-size: 		11px;
-	margin-right: 	5px;
+	margin-right: 	3px;
 }
 
 .eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .howMuch span {
@@ -241,7 +240,7 @@
 
 	clear: 			both;
 	position: 		relative;
-	top: 			-5px;
+	top: 			0px;
 	left: 			4px;
 	width: 			363px;
 	padding: 		2px 10px 2px 5px;

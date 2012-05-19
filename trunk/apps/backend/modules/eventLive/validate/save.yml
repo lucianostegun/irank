@@ -95,3 +95,9 @@ fields:
     sfStringValidator:
       max:       250
       max_error: form.error.max250
+      
+  scheduleStartDate:
+    validateDate:
+      
+  enrollmentStartDate:
+    validateDate:

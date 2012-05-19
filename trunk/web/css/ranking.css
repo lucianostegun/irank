@@ -3,6 +3,12 @@
 	background: 	url(/images/layout/leftMenu/unsubscribe.png) center left no-repeat;
 }
 
-.itsMe td {
-	font-weight: bold
+.classifyTable a {
+	color: #303030;
+}
+
+.itsMe td,
+.itsMe td a {
+	font-weight: bold;
+	color: #C91E1E
 }

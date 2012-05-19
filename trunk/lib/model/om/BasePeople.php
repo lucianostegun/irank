@@ -426,9 +426,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	public function setPhoneNumber($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

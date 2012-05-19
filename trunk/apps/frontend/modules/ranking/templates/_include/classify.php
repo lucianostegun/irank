@@ -1,4 +1,4 @@
-<table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable">
+<table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable classifyTable">
 	<tr class="header">
 		<th class="first" ></th>
 		<th >#</th>
@@ -33,7 +33,7 @@
 			if( $rankingDate ){
 				
 				$lastRankingPosition = Util::executeOne('SELECT get_previous_player_position('.$rankingObj->getId().', '.$peopleId.', \''.Util::formatDate($rankingDate).'\')');
-				$positionChangeIcon  = (is_null($lastRankingPosition)?'blank.gif':($rankingPosition < $lastRankingPosition?'misc/up':($rankingPosition>$lastRankingPosition?'misc/down':'misc/neutral')));
+				$positionChangeIcon  = (is_null($lastRankingPosition)?'blank.gif':($rankingPosition < $lastRankingPosition?'misc/up2':($rankingPosition>$lastRankingPosition?'misc/down2':'misc/neutral2')));
 				$positionChangeTitle = (is_null($lastRankingPosition)?'Primeira participação no ranking':($rankingPosition < $lastRankingPosition?"Subiu da {$lastRankingPosition}ª para a {$rankingPosition}ª posição":($rankingPosition>$lastRankingPosition?"Caiu da {$lastRankingPosition}ª para a {$rankingPosition}ª posição":"Se manteve na {$rankingPosition}ª posição")));
 			}
 	?>

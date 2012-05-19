@@ -433,9 +433,6 @@ class Event extends BaseEvent
 	
 	public function notifyResult(){
 
-		$templateName = 'eventResult';
-		$emailSubject = 'email.subject.eventResult';
-		
 		$resultList   = $this->getEmailResultList();
 	  	$classifyList = $this->getEmailClassifyList();
 		
@@ -443,12 +440,9 @@ class Event extends BaseEvent
 		$infoList['classifyList'] = $classifyList;
 		$infoList                 = array_merge($infoList, $this->getInfo());
 		
-//		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
-//		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
-//		$emailSubjectList['pt_BR'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
-//		$emailSubjectList['en_US'] = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
-
-		$emailContent = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailSubject = 'email.subject.eventResult';
+		
+		$emailContent = Report::replace(EmailTemplate::getContentByTagName('eventResult'), $infoList);
 		$emailSubject = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
 		
 		$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', 'receiveAllResults');
@@ -484,7 +478,7 @@ class Event extends BaseEvent
 			}
 
 			$emailContent = str_replace('[congratsMessage]', $congratsMessage, $emailContent);
-
+			
 			Report::sendMail($emailSubject, $emailAddress, $emailContent);
 		}
 	}
@@ -597,7 +591,7 @@ class Event extends BaseEvent
 	public function getEmailClassifyList(){
 		
 		$rankingObj   = $this->getRanking();
-		$classifyList = $rankingObj->getEmailClassifyList();
+		$classifyList = $rankingObj->getEmailClassifyList($this->getEventDate('d/m/Y'));
 	  	
 	  	return $classifyList;
 	}

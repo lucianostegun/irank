@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Classe respons√°vel por gerar os arquivos de sincroniza√ß√£o de calend√°rio de eventos 
+ * Classe responsável por gerar os arquivos de sincronização de calendário de eventos 
  *
  * @package    iRank
  * @author     Luciano Stegun
@@ -18,10 +18,12 @@ class Schedule {
 	private $startDate;
 	private $sequence = 0;
 	private $scheduleAlarmTime = '4H';
+	private $scheduleStateId = null;
+	private $scheduleCityId  = null;
 	
     function __construct($username=null) {
     	
-    	if( !$username )
+    	if( !$username && isset($_SERVER['PHP_AUTH_USER']) )
     		$username = $_SERVER['PHP_AUTH_USER'];
     	
     	if( !$username )
@@ -33,7 +35,10 @@ class Schedule {
 		    $peopleId    = $userSiteObj->getPeopleId();
 		    $startDate   = $userSiteObj->getScheduleStartDate('Y-m-d');
 		    
-		    $this->scheduleAlarmTime = $userSiteObj->getOptionValue('scheduleAlarmTime', '4H');
+		    $this->scheduleStateId = $userSiteObj->getOptionValue('scheduleStateId');
+		    $this->scheduleCityId  = $userSiteObj->getOptionValue('scheduleCityId');
+		    
+		    $this->scheduleAlarmTime = $userSiteObj->getOptionValue('scheduleAlarmTime', $this->scheduleAlarmTime);
 		    
 		    if( !$startDate ){
 		    	
@@ -57,7 +62,7 @@ class Schedule {
 		
 		$this->buildTmpFile();
 		
-		// Se n√£o for usu√°rio "irank" gera os eventos dos rankings pessoais
+		// Se não for usuário "irank" gera os eventos dos rankings pessoais
 		if( strtolower($username)!='irank' )
 			$this->buildEvent();
 			
@@ -69,7 +74,15 @@ class Schedule {
     
     private function buildEvent(){
     	
-	    $resultSet = Util::executeQuery(sprintf("SELECT * FROM event_schedule_view WHERE people_id = %d AND event_date >= '%s'", $this->peopleId, $this->startDate));
+    	$sql = "SELECT
+    				*
+    			FROM
+    				event_schedule_view 
+    			WHERE
+    				people_id = %d
+    				AND event_date >= '%s'";
+    	
+	    $resultSet = Util::executeQuery(sprintf($sql, $this->peopleId, $this->startDate));
 	    
 	    $nl   = Schedule::NEW_LINE;
 	    $host = MyTools::getRequest()->getHost();
@@ -158,7 +171,21 @@ class Schedule {
 
     private function buildEventLive(){
     	
-	    $resultSet = Util::executeQuery(sprintf("SELECT * FROM event_live_schedule_view WHERE event_date >= '%s'", $this->startDate));
+    	$locationClause = 'true';
+    	if( $this->scheduleStateId )
+    		$locationClause = 'state_id = '.$this->scheduleStateId;
+    	if( $this->scheduleCityId )
+    		$locationClause .= ' AND city_id = '.$this->scheduleCityId;
+    	
+    	$sql = "SELECT
+    				*
+    			FROM
+    				event_live_schedule_view 
+    			WHERE
+    				event_date >= '%s'
+    				AND ($locationClause)";
+    				
+	    $resultSet = Util::executeQuery(sprintf($sql, $this->startDate));
 	    
 	    $nl   = Schedule::NEW_LINE;
 	    $host = MyTools::getRequest()->getHost();
@@ -179,10 +206,10 @@ class Schedule {
 	    	$rankingName      = $resultSet->getString(14);
 	    	$clubName         = $resultSet->getString(15);
 	    	$mapsLink         = $resultSet->getString(16);
-	    	$cityName         = $resultSet->getString(17);
-	    	$initial          = $resultSet->getString(18);
-	    	$createdAt        = $resultSet->getTimestamp(19);
-	    	$rankingLiveId    = $resultSet->getInt(20);
+	    	$cityName         = $resultSet->getString(18);
+	    	$initial          = $resultSet->getString(20);
+	    	$createdAt        = $resultSet->getTimestamp(21);
+	    	$rankingLiveId    = $resultSet->getInt(22);
 	    	
 	    	if( $isFreeroll ){
 	    		
@@ -296,6 +323,8 @@ class Schedule {
     public function buildFile(){
     	
 		Util::forceDownload(Schedule::FILE_NAME_EXPORT, 'text/calendar; charset=utf-8');
+//		echo '<pre>';
+		
 		$fileNameTmp = $this->getFilePathTmp();
 		echo file_get_contents($this->getFilePathTemplate());
 		echo file_get_contents($fileNameTmp);

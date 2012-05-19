@@ -29,7 +29,7 @@
 						$clubId  = $clubObj->getId();
 						$onclick = 'goToPage(\'club\', \'edit\', \'clubId\', '.$clubId.')"';
 				?>
-				<tr class="gradeA" id="clubIdRow-<?php echo $clubId ?>">
+				<tr class="gradeA higher" id="clubIdRow-<?php echo $clubId ?>">
 					<?php if( $allowDelete ): ?>
 						<td><?php echo checkbox_tag('clubId[]', $clubId) ?></td>
 					<?php endif; ?> 

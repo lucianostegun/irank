@@ -4,7 +4,6 @@
 		include_partial('home/resume/events');
 ?>
 </div>
-
 <div class="homeHighlight">
 	<div class="content">
 

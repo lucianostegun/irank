@@ -111,8 +111,8 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         </li>
         <li class="admin"><a href="javascript:void(0)" title="" class="<?php echo (in_array($moduleName, array('emailTemplate', 'userAdmin', 'controlPanel'))?'active':'exp') ?>"><span>Administração</span><strong>3</strong></a>
             <ul class="sub">
-                <li><?php echo link_to('Templates de e-mail', 'emailTemplate/index') ?></li>
                 <li><?php echo link_to('Painel de controle', 'controlPanel/index') ?></li>
+                <li><?php echo link_to('Templates de e-mail', 'emailTemplate/index') ?></li>
                 <li class="last"><?php echo link_to('Usuários', 'userAdmin/index') ?></li>
             </ul>
         </li>
