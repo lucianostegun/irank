@@ -14,7 +14,7 @@
 <div class="widget form" id="resultTab">
     <ul class="tabs">
 		<li><a href="#result">Resultado</a></li>
-		<li><a href="#resultOptions">Opções de divulgação</a></li>
+		<li><a href="#resultOptions">Divulgação de resultado</a></li>
 	</ul>
 	<div class="tab_container">
 		<div id="result" class="tab_content resultTabContent"><?php include_partial('eventLive/result/result', array('eventLiveObj'=>$eventLiveObj)) ?></div>

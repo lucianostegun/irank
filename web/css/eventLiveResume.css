@@ -150,8 +150,11 @@
 
 	position: 		absolute;
 	right: 			8px;
-	top; 			0px;
+	top: 			0px;
 	font-size: 		12px;
+	width: 			100px;
+	overflow: 		hidden;
+	white-space: 	nowrap
 }
 
 .eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .presence {

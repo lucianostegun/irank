@@ -19,6 +19,7 @@
 	<tbody>
 <?php
 	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList(null, true);
+	$peopleIdCurrent        = $sf_user->getAttribute('peopleId');
 	
 	$eventPosition = 0;
 	foreach($eventLivePlayerObjList as $eventLivePlayerObj):
@@ -31,13 +32,15 @@
 		$emailAddress = $peopleObj->getEmailAddress();
 		$prize        = $eventLivePlayerObj->getPrize();
 		$score        = $eventLivePlayerObj->getScore();
+		
+		$class = ($peopleIdCurrent==$peopleId?'itsMe':'');
 ?>
 <tr class="<?php echo $class ?>">
-	<td><?php echo $eventPosition ?>º</td> 
+	<td class="textR"><?php echo $eventPosition ?>º</td> 
 	<td><?php echo $peopleName ?></td>
-	<td style="text-align: right"><?php echo Util::formatFloat($score, true, 3) ?></td>
+	<td class="textR"><?php echo Util::formatFloat($score, true, 3) ?></td>
 	<?php if( $publishPrize ): ?>
-	<td style="text-align: right"><?php echo Util::formatFloat($prize, true) ?></td>
+	<td class="textR"><?php echo Util::formatFloat($prize, true) ?></td>
 	<?php endif; ?>
 </tr>
 <?php endforeach; ?>

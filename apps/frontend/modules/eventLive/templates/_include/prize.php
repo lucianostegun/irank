@@ -31,10 +31,10 @@
 		$score        = $eventLivePlayerObj->getScore();
 ?>
 <tr class="<?php echo $class ?>">
-	<td><?php echo $eventPosition ?>º</td> 
+	<td class="textR"><?php echo $eventPosition ?>º</td> 
 	<td><?php echo $peopleName ?></td>
-	<td style="text-align: right"><?php echo Util::formatFloat($score, true, 3) ?></td>
-	<td style="text-align: right"><?php echo Util::formatFloat($prize, true) ?></td>
+	<td class="textR"><?php echo Util::formatFloat($score, true, 3) ?></td>
+	<td class="textR"><?php echo Util::formatFloat($prize, true) ?></td>
 </tr>
 <?php endforeach; ?>
 </tbody>

@@ -413,12 +413,7 @@ a:hover {
 	width: 	100%
 }
 
-
-#debugDiv {
-
-	background: #FFFFFF
-}
-
+#debugDiv { background: #FFFFFF }
 
 .textL { text-align: left }
 .textC { text-align: center }
@@ -435,7 +430,11 @@ a:hover {
 .pt40 { padding-top: 40px }
 .pt50 { padding-top: 50px }
 
-.hidden {
+.hidden { display: none }
 
-	display: none
+.itsMe td,
+.itsMe td a {
+	
+	font-weight: bold;
+	color: #C91E1E
 }

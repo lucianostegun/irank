@@ -151,10 +151,12 @@ class RankingLive extends BaseRankingLive
 		
 		for($i=1; $i <= 12; $i++ ){
 			
-			$eventName = $request->getParameter('eventName'.$i);
-			$clubId    = $request->getParameter('clubId'.$i);
-			$eventDate = $request->getParameter('eventDate'.$i);
-			$startTime = $request->getParameter('startTime'.$i);
+			$eventName  = $request->getParameter('eventName'.$i);
+			$clubId     = $request->getParameter('clubId'.$i);
+			$eventDate  = $request->getParameter('eventDate'.$i);
+			$startTime  = $request->getParameter('startTime'.$i);
+			$stepNumber = $request->getParameter('stepNumber'.$i);
+			$stepDay    = $request->getParameter('stepDay'.$i);
 
 			if( !$eventName || !$clubId || !Validate::validateDate($eventDate) || !Validate::validateTime($startTime) )
 				continue;
@@ -162,6 +164,8 @@ class RankingLive extends BaseRankingLive
 			$eventLiveObj = new EventLive();
 			$eventLiveObj->setEventName($eventName);
 			$eventLiveObj->setEventShortName($eventLiveObj->buildShortName());
+			$eventLiveObj->setStepNumber(nvl($stepNumber));
+			$eventLiveObj->setStepDay(nvl($stepDay));
 			$eventLiveObj->setRankingLiveId($this->getId());
 			$eventLiveObj->setClubId($clubId);
 			$eventLiveObj->setEventDate(Util::formatDate($eventDate));

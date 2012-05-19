@@ -486,6 +486,13 @@ class eventLiveActions extends sfActions
     exit;
   }
 
+  public function executeBuildResultPdf($request){
+    
+    $this->eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+    $this->setLayout('pdf');
+    $this->setTemplate('_pdf/eventResult');
+  }
+
   public function executeGetTabContent($request){
     
     $tabName      = $request->getParameter('tabName'); 

@@ -24,7 +24,7 @@
 			<label>Blinds:</label><span><?php echo $eventLiveObj->getBlindTime('H:i') ?></span>
 			<label>Stack:</label><span><?php echo $eventLiveObj->getStackChips(true) ?></span>
 		</div>
-		<?php echo ($rankingName?'<div class="ranking"><label>#</label><span>'.$rankingName.'</span></div>':'') ?>
+		<?php echo ($rankingName?'<div class="ranking"><label>#</label><span>'.truncate_text($rankingName, 15).'</span></div>':'') ?>
 	</div>
 	<div class="clear"></div>
 </div>

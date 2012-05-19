@@ -1,0 +1,95 @@
+StartFontMetrics 4.1
+Notice Converted by PHP-font-lib
+Comment http://php-font-lib.googlecode.com/
+EncodingScheme FontSpecific
+Copyright 1.01 Coffee Tin  Copr.1993                   By Richard William Mueller
+FontName CoffeeTin
+FontSubfamily Initials
+UniqueID CoffeeTin Initials
+FullName CoffeeTin Initials
+Version 1.01
+PostScriptName CoffeeTinInitials
+Trademark 
+Weight Medium
+ItalicAngle 0
+IsFixedPitch false
+UnderlineThickness 20
+UnderlinePosition -133
+FontHeightOffset 0
+Ascender 865
+Descender -96
+FontBBox -3 -96 889 900
+StartCharMetrics 74
+U 32 ; WX 350 ; N space ; G 3
+U 33 ; WX 370 ; N exclam ; G 4
+U 34 ; WX 550 ; N quotedbl ; G 5
+U 39 ; WX 330 ; N quotesingle ; G 6
+U 44 ; WX 300 ; N comma ; G 7
+U 45 ; WX 460 ; N hyphen ; G 8
+U 46 ; WX 330 ; N period ; G 9
+U 58 ; WX 330 ; N colon ; G 10
+U 59 ; WX 330 ; N semicolon ; G 11
+U 65 ; WX 720 ; N A ; G 12
+U 66 ; WX 660 ; N B ; G 13
+U 67 ; WX 535 ; N C ; G 14
+U 68 ; WX 665 ; N D ; G 15
+U 69 ; WX 605 ; N E ; G 16
+U 70 ; WX 595 ; N F ; G 17
+U 71 ; WX 670 ; N G ; G 18
+U 72 ; WX 685 ; N H ; G 19
+U 73 ; WX 430 ; N I ; G 20
+U 74 ; WX 575 ; N J ; G 21
+U 75 ; WX 730 ; N K ; G 22
+U 76 ; WX 620 ; N L ; G 23
+U 77 ; WX 900 ; N M ; G 24
+U 78 ; WX 680 ; N N ; G 25
+U 79 ; WX 590 ; N O ; G 26
+U 80 ; WX 630 ; N P ; G 27
+U 81 ; WX 680 ; N Q ; G 28
+U 82 ; WX 700 ; N R ; G 29
+U 83 ; WX 530 ; N S ; G 30
+U 84 ; WX 635 ; N T ; G 31
+U 85 ; WX 655 ; N U ; G 32
+U 86 ; WX 675 ; N V ; G 33
+U 87 ; WX 935 ; N W ; G 34
+U 88 ; WX 705 ; N X ; G 35
+U 89 ; WX 720 ; N Y ; G 36
+U 90 ; WX 590 ; N Z ; G 37
+U 97 ; WX 720 ; N a ; G 38
+U 98 ; WX 660 ; N b ; G 39
+U 99 ; WX 535 ; N c ; G 40
+U 100 ; WX 665 ; N d ; G 41
+U 101 ; WX 605 ; N e ; G 42
+U 102 ; WX 595 ; N f ; G 43
+U 103 ; WX 670 ; N g ; G 44
+U 104 ; WX 685 ; N h ; G 45
+U 105 ; WX 430 ; N i ; G 46
+U 106 ; WX 575 ; N j ; G 47
+U 107 ; WX 730 ; N k ; G 48
+U 108 ; WX 620 ; N l ; G 49
+U 109 ; WX 900 ; N m ; G 50
+U 110 ; WX 680 ; N n ; G 51
+U 111 ; WX 590 ; N o ; G 52
+U 112 ; WX 630 ; N p ; G 53
+U 113 ; WX 680 ; N q ; G 54
+U 114 ; WX 700 ; N r ; G 55
+U 115 ; WX 530 ; N s ; G 56
+U 116 ; WX 635 ; N t ; G 57
+U 117 ; WX 655 ; N u ; G 58
+U 118 ; WX 675 ; N v ; G 59
+U 119 ; WX 935 ; N w ; G 60
+U 120 ; WX 705 ; N x ; G 61
+U 121 ; WX 720 ; N y ; G 62
+U 122 ; WX 590 ; N z ; G 63
+U 160 ; WX 300 ; N nbspace ; G 73
+U 166 ; WX 500 ; N brokenbar ; G 64
+U 8208 ; WX 460 ; N hyphen ; G 8
+U 8216 ; WX 290 ; N quoteleft ; G 65
+U 8217 ; WX 290 ; N quoteright ; G 66
+U 8220 ; WX 550 ; N quotedblleft ; G 67
+U 8221 ; WX 550 ; N quotedblright ; G 68
+U 8225 ; WX 840 ; N daggerdbl ; G 69
+U 8226 ; WX 450 ; N bullet ; G 70
+U 61440 ; WX 682 ; N applelogo ; G 72
+EndCharMetrics
+EndFontMetrics
