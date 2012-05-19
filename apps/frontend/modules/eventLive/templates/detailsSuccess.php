@@ -16,6 +16,7 @@
 	$weekDay            = Util::getWeekDay($eventLiveObj->getEventDate('d/m/Y'));
 	$publishPrize       = $eventLiveObj->getPublishPrize();
 	$isPastDate         = $eventLiveObj->isPastDate();
+	$isEnrollmentOpen   = $eventLiveObj->isEnrollmentOpen();
 	
 	$peopleId = $sf_user->getAttribute('peopleId');
 	
@@ -61,12 +62,15 @@
 					</tr>
 				</table>
 				<?php
-					if( !$isPastDate ){
+					if( !$isPastDate && $isEnrollmentOpen ){
 						
 						if( $peopleId && $eventLiveObj->getPlayerStatus($peopleId, true) )
 							echo button_tag('presenceConfirm'.$eventLiveId, 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'class'=>'buttonPresenceYes', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')', 'title'=>'Clique para confirmar sua presença no evento'));
 						else
 							echo button_tag('presenceConfirm'.$eventLiveId, 'CONFIRMAR PRESENÇA', array('image'=>'ok.png', 'class'=>'buttonPresenceNo', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')', 'title'=>'Clique para cancelar sua confirmação de presença para o evento'));
+					}elseif( !$isEnrollmentOpen ){
+						
+						echo 'Inscrições a partir de '.$eventLiveObj->getEnrollmentStartDate('d/m/Y');
 					}
 				?>
 				</div>

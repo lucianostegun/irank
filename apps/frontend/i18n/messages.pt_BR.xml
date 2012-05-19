@@ -1173,7 +1173,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.rankingDelete</source>
-				<target>Exclusão do ranking @ %rankingName%</target>
+				<target>Exclusão do ranking %rankingName%</target>
 			</trans-unit>
 			<trans-unit>
 				<source>disable</source>
@@ -1308,7 +1308,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.eventResult</source>
-				<target>Resultado de evento @ %eventName%</target>
+				<target>Resultado do evento %eventName%</target>
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.eventChangeNotify</source>
@@ -1320,7 +1320,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.eventDeleteNotify</source>
-				<target>Exclusão do evento @ %eventName%</target>
+				<target>Exclusão do evento %eventName%</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.congratMessage</source>
@@ -1340,7 +1340,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.eventReminder</source>
-				<target>Lembrete de evento @ %eventName%</target>
+				<target>Lembrete de evento %eventName%</target>
 			</trans-unit>
 			
 			

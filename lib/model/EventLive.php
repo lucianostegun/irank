@@ -53,26 +53,28 @@ class EventLive extends BaseEventLive
 	
 	public function quickSave($request){
 		
-		$clubId           = $request->getParameter('clubId');
-		$rankingLiveId    = $request->getParameter('rankingLiveId');
-		$eventName        = $request->getParameter('eventName');
-		$eventShortName   = $request->getParameter('eventShortName');
-		$eventDate        = $request->getParameter('eventDate');
-		$startTime        = $request->getParameter('startTime');
-		$stepNumber       = $request->getParameter('stepNumber');
-		$stepDay          = $request->getParameter('stepDay');
-		$isFreeroll       = $request->getParameter('isFreeroll');
-		$entranceFee      = $request->getParameter('entranceFee');
-		$buyin            = $request->getParameter('buyin');
-		$rakePercent      = $request->getParameter('rakePercent');
-		$blindTime        = $request->getParameter('blindTime');
-		$stackChips       = $request->getParameter('stackChips');
-		$allowedRebuys    = $request->getParameter('allowedRebuys');
-		$allowedAddons    = $request->getParameter('allowedAddons');
-		$isIlimitedRebuys = $request->getParameter('isIlimitedRebuys');
-		$description      = $request->getParameter('description');
-		$comments         = $request->getParameter('comments');
-		$suppressSchedule = $request->getParameter('suppressSchedule');
+		$clubId              = $request->getParameter('clubId');
+		$rankingLiveId       = $request->getParameter('rankingLiveId');
+		$eventName           = $request->getParameter('eventName');
+		$eventShortName      = $request->getParameter('eventShortName');
+		$eventDate           = $request->getParameter('eventDate');
+		$startTime           = $request->getParameter('startTime');
+		$stepNumber          = $request->getParameter('stepNumber');
+		$stepDay             = $request->getParameter('stepDay');
+		$isFreeroll          = $request->getParameter('isFreeroll');
+		$entranceFee         = $request->getParameter('entranceFee');
+		$buyin               = $request->getParameter('buyin');
+		$rakePercent         = $request->getParameter('rakePercent');
+		$blindTime           = $request->getParameter('blindTime');
+		$stackChips          = $request->getParameter('stackChips');
+		$allowedRebuys       = $request->getParameter('allowedRebuys');
+		$allowedAddons       = $request->getParameter('allowedAddons');
+		$isIlimitedRebuys    = $request->getParameter('isIlimitedRebuys');
+		$description         = $request->getParameter('description');
+		$comments            = $request->getParameter('comments');
+		$suppressSchedule    = $request->getParameter('suppressSchedule');
+		$scheduleStartDate   = $request->getParameter('scheduleStartDate');
+		$enrollmentStartDate = $request->getParameter('enrollmentStartDate');
 		
 		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $stackChips) )
 			$stackChips = Util::formatFloat($stackChips)*1000;
@@ -113,6 +115,8 @@ class EventLive extends BaseEventLive
 		
 		// Informações da aba Options
 		$this->setSuppressSchedule(($suppressSchedule?true:false));
+		$this->setScheduleStartDate(Util::formatDate($scheduleStartDate));
+		$this->setEnrollmentStartDate(Util::formatDate($enrollmentStartDate));
 		
 		$this->setEnabled(true);
 		$this->setVisible(true);
@@ -510,9 +514,13 @@ class EventLive extends BaseEventLive
 		
 		$description = parent::getDescription();
 		
-		if( $convertTags && !is_null($this->getRankingLiveId()) ){
+		if( $convertTags ){
 			
-			$description = preg_replace('/[descri[çc]+[ã]+o ?do ?ranking]/i', $this->getRankingLive()->getDescription(), $description);
+			$rankingDescription = $this->getRankingLive()->getDescription();
+			if( empty($rankingDescription) )
+				$rankingDescription = 'Sem descrição';
+			
+			$description = preg_replace('/[descri[çc]+[ã]+o ?do ?ranking]/i', $rankingDescription, $description);
 			$description = preg_replace('/[\n]/i', '<br/>', $description);
 		}
 		
@@ -525,7 +533,11 @@ class EventLive extends BaseEventLive
 		
 		if( $convertTags ){
 			
-			$comments = preg_replace('/[descri[çc]+[ã]+o ?do ?ranking]/i', $this->getRankingLive()->getDescription(), $comments);
+			$rankingDescription = $this->getRankingLive()->getDescription();
+			
+			if( $rankingDescription )
+				$comments = preg_replace('/[descri[çc]+[ã]+o ?do ?ranking]/i', $rankingDescription, $comments);
+
 			$comments = preg_replace('/[\n]/i', '<br/>', $comments);
 		}
 		
@@ -927,6 +939,13 @@ class EventLive extends BaseEventLive
 	public function getEventDateWrite(){
 		
 		return $this->getEventDateTime('d/m/Y H:i');
+	}
+	
+	public function isEnrollmentOpen(){
+		
+		$enrollmentStartDate = $this->getEnrollmentStartDate(null);
+		
+		return (is_null($enrollmentStartDate) || $enrollmentStartDate <= time());
 	}
 	
 	public function toString(){

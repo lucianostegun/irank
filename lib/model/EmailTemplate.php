@@ -35,6 +35,7 @@ class EmailTemplate extends BaseEmailTemplate
 		
 		$this->setVisible(false);
 		$this->setDeleted(true);
+		$this->setTagName($this->getTagName().'_'.time());
 		$this->save();
 	}
 	
@@ -173,7 +174,7 @@ class EmailTemplate extends BaseEmailTemplate
 	}
 	
 	public static function getContentByTagName($tagName, $encodeUTF8=false, $culture=false){
-
+		
 		$filePath = Util::getFilePath('/templates/email/'.$tagName.'.htm');
 		$content = file_get_contents($filePath);
 		

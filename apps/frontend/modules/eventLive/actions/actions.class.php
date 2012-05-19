@@ -57,6 +57,10 @@ class eventLiveActions extends sfActions
 	  		
 	  		$result       = 'error';
 	  		$errorMessage = 'Este evento já foi realizado.';
+	  	}elseif( !$eventLiveObj->isEnrollmentOpen() ){
+	  		
+	  		$result       = 'error';
+	  		$errorMessage = 'As inscrições deste evento iniciam apenas em '.$eventLiveObj->getEnrollmentStartDate('d/m/Y').'.';
 	  	}else{
 	  		
 	  		$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($this->eventLiveId, $peopleId);

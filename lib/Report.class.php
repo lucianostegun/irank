@@ -26,6 +26,7 @@ class Report {
 		$smtpUsername  = Config::getConfigByName('smtpUsername', true);
 		$smtpPassword  = Config::getConfigByName('smtpPassword', true);
 		$senderName    = Config::getConfigByName('emailSenderName', true);
+		$senderEmail   = $smtpUsername;
 		
 		$contentType      = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
 		$replyTo          = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
@@ -47,9 +48,6 @@ class Report {
 		$sfMailObj = new sfMail();
 		$sfMailObj->initialize();
 		$sfMailObj->setCharset('UTF-8');
-		
-		if( Util::isDebug() )
-			$emailSubject = 'DEV: '.$emailSubject;
 		
 		if( $encodeEmail ){
 			
@@ -89,7 +87,6 @@ class Report {
 		$emailContent = str_replace('&lt;', '<', $emailContent);
 		
 //		echo $emailContent;exit;
-		
 //		Util::forceError($emailContent);exit;
 			
 		$sfMailObj->setContentType( $contentType );
@@ -101,7 +98,8 @@ class Report {
 
 		$sfMailObj->setMailer( $smtpComponent );
 		
-		$senderEmail = $smtpUsername;
+		if( Util::isDebug() )
+			$emailSubject = 'DEV: '.$emailSubject;
 
 		// definition of the required parameters
 		$sfMailObj->setSender( $senderEmail, $senderName);
@@ -133,9 +131,6 @@ class Report {
 			$sfMailObj->send();
 
 			EmailLog::doLog($emailAddressList, $emailSubject, 'success', $emailLogId);
-			
-			// Debug
-			return;
 			
 		}catch(Exception $e){
 		

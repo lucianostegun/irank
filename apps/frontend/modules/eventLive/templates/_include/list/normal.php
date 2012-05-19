@@ -13,10 +13,11 @@
 			
 			foreach($eventLiveObjList as $eventLiveObj):
 				
-				$eventLiveId    = $eventLiveObj->getId();
-				$rankingLiveObj = $eventLiveObj->getRankingLive();
-				$rankingLiveId  = $rankingLiveObj->getId();
-				$fileNameLogo   = $rankingLiveObj->getFileNameLogo();
+				$eventLiveId      = $eventLiveObj->getId();
+				$rankingLiveObj   = $eventLiveObj->getRankingLive();
+				$rankingLiveId    = $rankingLiveObj->getId();
+				$fileNameLogo     = $rankingLiveObj->getFileNameLogo();
+				$isEnrollmentOpen = $eventLiveObj->isEnrollmentOpen();
 		?>
 		<div class="event">
 			<a href="javascript:void(0)" onclick="goToPage('eventLive', 'details', 'id', <?php echo $eventLiveId ?>)" title="Abrir detalhes do evento">
@@ -51,14 +52,17 @@
 					</table>
 					
 					<?php
-						if( $eventLiveObj->isPastDate() )
+						if( $eventLiveObj->isPastDate() && $isEnrollmentOpen )
 								echo button_tag('resultButton'.$eventLiveId, 'VER RESULTADO', array('image'=>'result.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'goToPage("eventLive", "details", "id", '.$eventLiveId.')'));
-						else{
+						elseif( $isEnrollmentOpen ){
 							
 							if( $peopleId && $eventLiveObj->getPlayerStatus($peopleId, true) )
 								echo button_tag('presenceConfirm'.$eventLiveId, 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'style'=>'margin-top: 37px; float: right', 'class'=>'confirmedButton', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
 							else
 								echo button_tag('presenceConfirm'.$eventLiveId, 'CONFIRMAR PRESENÇA', array('image'=>'ok.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
+						}elseif( !$isEnrollmentOpen ){
+							
+							echo '<span class="enrollmentInfo">Inscrições a partir de '.$eventLiveObj->getEnrollmentStartDate('d/m/Y').'</span>';
 						}
 					?>
 				</div>

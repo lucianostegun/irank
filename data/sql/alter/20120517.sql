@@ -12,6 +12,7 @@ BEGIN
         people_id = peopleId
         AND ranking_id = rankingId
         AND ranking_date < rankingDate
+        AND events > 0
     ORDER BY
         ranking_date DESC LIMIT 1;
 

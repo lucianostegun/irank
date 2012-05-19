@@ -282,6 +282,14 @@ table.presenceTable tr td {
 	font-weight: 	bold;
 }
 
+.profile .enrollmentInfo {
+	
+	position: 		relative;
+	left: 			150px;
+	top: 			37px;
+	font-style: 	italic
+}
+
 .button.confirmedButton .buttonMiddle .buttonLabel {
 
 	color: #909090;

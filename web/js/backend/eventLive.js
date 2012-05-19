@@ -63,6 +63,7 @@ function handleSuccessEventLive(content){
 	clearFormFieldErrors('eventLiveResult');
 	showFormStatusSuccess();
 	
+	$('#mainResultTab').show();
 	$('#mainDisclosureTab').show();
 	
 	mainRecordName = ($('#eventLiveEventShortName').val()?$('#eventLiveEventShortName').val():$('#eventLiveEventName').val());
@@ -812,3 +813,14 @@ function saveEmailTemplate(emailTemplateId){
 	var urlAjax = _webRoot+'/eventLive/saveEmailTemplate/eventLiveId/'+eventLiveId+'/emailTemplateId/'+emailTemplateId;
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});	
 }
+
+function handleSuppressSchedule(checked){
+	
+	$('#eventLiveScheduleStartDate').attr('disabled', checked);
+}
+
+
+
+
+
+

@@ -262,6 +262,7 @@
 	top: 			5px;
 	left: 			5px;
 	width: 			756px;
+	margin-top: 	15px;
 }
 
 #photoVote h1 {
@@ -404,7 +405,7 @@
 
 #userResume {
 	
-	height: 	270px;
+	height: 	250px;
 	display: 	none;
 }
 
