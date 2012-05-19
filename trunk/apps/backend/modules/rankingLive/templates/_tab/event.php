@@ -29,7 +29,9 @@
 	<h3>Inclusão rápida de etapas </h3>
 	<hr/><br/>
 	<div class="formRow">
-		<span class="multi" style="width: 380px; padding-left: 20px; font-weight: bold"><label>Título do evento</label></span>
+		<span class="multi" style="width: 300px; padding-left: 20px; font-weight: bold"><label>Título</label></span>
+		<span class="multi" style="width: 40px; padding-left: 20px; font-weight: bold"><label>Etapa</label></span>
+		<span class="multi" style="width: 40px; padding-left: 20px; font-weight: bold"><label>Dia</label></span>
 		<?php if(!$clubId || $isAdmin): ?>
 		<span class="multi" style="width: 180px; padding-left: 20px; font-weight: bold"><label>Clube</label></span>
 		<?php endif; ?>
@@ -39,7 +41,9 @@
 	</div>
 	<?php for($i=1; $i<=12; $i++): ?>
 	<div class="formRow">
-		<span class="multi" style="width: 400px"><?php echo input_tag('eventName'.$i, null, array('style'=>'width: 388px', 'onblur'=>'validateQuickAddEvent('.$i.')', 'id'=>'rankingLiveQuickEventLiveEventName'.$i)) ?></span>
+		<span class="multi" style="width: 320px"><?php echo input_tag('eventName'.$i, null, array('style'=>'width: 300px', 'onblur'=>'validateQuickAddEvent('.$i.')', 'id'=>'rankingLiveQuickEventLiveEventName'.$i)) ?></span>
+		<span class="multi" style="width: 60px"><?php echo input_tag('stepNumber'.$i, null, array('style'=>'width: 40px', 'onblur'=>'validateQuickAddEvent('.$i.')', 'id'=>'rankingLiveQuickEventLiveStepNumber'.$i)) ?></span>
+		<span class="multi" style="width: 60px"><?php echo input_tag('stepDay'.$i, null, array('style'=>'width: 40px', 'onblur'=>'validateQuickAddEvent('.$i.')', 'id'=>'rankingLiveQuickEventLiveStepDate'.$i)) ?></span>
 		<?php if(!$clubId || $isAdmin): ?>
 		<span class="multi" style="width: 200px; margin-top: 1px"><?php echo select_tag('clubId'.$i, Club::getOptionsForSelect(), array('onchange'=>'validateQuickAddEvent('.$i.')', 'id'=>'rankingLiveQuickEventLiveClubId'.$i)) ?></span>
 		<?php else: ?>

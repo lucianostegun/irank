@@ -95,6 +95,7 @@
 	<table cellspacing="0" cellpadding="0" class="channel">
 		<tr>
 			<td id="eventLiveInfo" class="eventLiveTab first active" onclick="showEventLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Informações</td>
+			<!--<td id="eventLiveCovering" class="eventLiveTab" onclick="loadEventLiveTab(this, <?php echo $eventLiveId ?>); showEventLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Cobertura</td>-->
 			<?php if( !is_null($rankingLiveId) ): ?>
 			<td id="eventLiveEvents" class="eventLiveTab" onclick="loadEventLiveTab(this, <?php echo $eventLiveId ?>); showEventLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Etapas</td>
 			<?php endif; ?>

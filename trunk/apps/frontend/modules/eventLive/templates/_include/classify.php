@@ -11,7 +11,8 @@
 	$criteria->add( RankingLivePlayerPeer::TOTAL_EVENTS, 0, Criteria::GREATER_THAN );
 	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList($criteria);
 	
-	$eventPosition = 0;
+	$eventPosition   = 0;
+	$peopleIdCurrent = $sf_user->getAttribute('peopleId');
 	
 	foreach($eventLivePlayerObjList as $eventLivePlayerObj):
 	
@@ -23,12 +24,14 @@
 		$emailAddress = $peopleObj->getEmailAddress();
 		$score        = $eventLivePlayerObj->getScore();
 		$events       = $eventLivePlayerObj->getEvents();
+		
+		$class = ($peopleIdCurrent==$peopleId?'itsMe':'');
 ?>
 <tr class="<?php echo $class ?>">
-	<td><?php echo $eventPosition ?>º</td> 
+	<td class="textR"><?php echo $eventPosition ?>º</td> 
 	<td><?php echo $peopleName ?></td>
-	<td style="text-align: right"><?php echo Util::formatFloat($score, true, 3) ?></td>
-	<td style="text-align: right"><?php echo Util::formatFloat($events) ?></td>
+	<td class="textR"><?php echo Util::formatFloat($score, true, 3) ?></td>
+	<td class="textR"><?php echo Util::formatFloat($events) ?></td>
 </tr>
 <?php endforeach; ?>
 </tbody>

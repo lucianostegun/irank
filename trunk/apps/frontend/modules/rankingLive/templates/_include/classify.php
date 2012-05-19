@@ -30,7 +30,7 @@
 			$score        = $rankingLivePlayerObj->getTotalScore();
 			$events       = $rankingLivePlayerObj->getTotalEvents();
 			
-			$class = ($peopleIdCurrent==$peopleId?'currentPlayer':'');
+			$class = ($peopleIdCurrent==$peopleId?'itsMe':'');
 	?>
 		<tr class="<?php echo $class ?>">
 			<td align="right"><?php echo $eventPosition ?>º</td> 

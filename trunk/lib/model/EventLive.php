@@ -870,7 +870,7 @@ class EventLive extends BaseEventLive
 		$infoList['fileNameLogo']   = $this->getFileNameLogo();
 		$infoList['description']    = $this->getDescription(true);
 		$infoList['comments']       = ($comments?'<separator>'.$comments:'');
-		$infoList['eventWeekDay']   = $weekDay = Util::getWeekDay($this->getEventDate('d/m/Y'));
+		$infoList['eventWeekDay']   = $weekDay = $this->getWeekDay();
 		$infoList['clubLink']       = $this->getClub()->getLink();
 		$infoList['eventLink']      = $this->getLink();
 		
@@ -913,7 +913,7 @@ class EventLive extends BaseEventLive
 		
 		$twitterStatus = str_replace('[eventName]',     $this->getEventName(), 					$twitterStatus);
 		$twitterStatus = str_replace('[eventDateTime]', $this->getEventDateTime('d/m/Y H:i'), 	$twitterStatus);
-		$twitterStatus = str_replace('[weekDay]',       Util::getWeekDay($this->getEventDateTime('d/m/Y')), $twitterStatus);
+		$twitterStatus = str_replace('[weekDay]',       $this->getWeekDay(), $twitterStatus);
 		$twitterStatus = str_replace('[clubName]',      $this->getClub()->toString(), 			$twitterStatus);
 		$twitterStatus = str_replace('[clubLocation]',  $this->getClub()->getLocation(), 		$twitterStatus);
 		$twitterStatus = str_replace('[allowedRebuys]', $this->getAllowedRebuys(), 				$twitterStatus);
@@ -948,6 +948,20 @@ class EventLive extends BaseEventLive
 		return (is_null($enrollmentStartDate) || $enrollmentStartDate <= time());
 	}
 	
+	public function getWeekDay(){
+		
+		return Util::getWeekDay($this->getEventDateTime('d/m/Y'));
+	}
+	
+	public function getPhotoList(){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventLivePhotoPeer::EVENT_LIVE_ID, $this->getId() );
+		$criteria->add( EventLivePhotoPeer::DELETED, false );
+		$criteria->addDescendingOrderByColumn( EventLivePhotoPeer::CREATED_AT );
+		return EventLivePhotoPeer::doSelect($criteria);
+	}
+	
 	public function toString(){
 	
 		return $this->getEventName();	
@@ -959,7 +973,7 @@ class EventLive extends BaseEventLive
 		
 		$infoList['eventName']      = $this->getEventName();
 		$infoList['eventDateTime']  = $this->getEventDateTime('d/m/Y H:i');
-		$infoList['weekDay']        = Util::getWeekDay($this->getEventDateTime('d/m/Y'));
+		$infoList['weekDay']        = $this->getWeekDay();
 		$infoList['clubName']       = $this->getClub()->toString();
 		$infoList['clubLocation']   = $this->getClub()->getLocation();
 		$infoList['allowedRebuys']  = $this->getAllowedRebuys();

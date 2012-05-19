@@ -819,8 +819,9 @@ function handleSuppressSchedule(checked){
 	$('#eventLiveScheduleStartDate').attr('disabled', checked);
 }
 
-
-
-
-
-
+function buildEventResultPdf(){
+	
+	var eventLiveId = $('#eventLiveId').val();
+	var urlAjax = _webRoot+'/eventLive/buildEventResultPdf/eventLiveId/'+eventLiveId;
+	window.location = urlAjax;
+}

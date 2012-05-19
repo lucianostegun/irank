@@ -92,7 +92,7 @@ $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 </div>
 
 <div class="eventLiveResumeArea" style="position: absolute; top: 3px; left: 393px">
-	<?php include_partial('home/resume/eventLive', array('limit'=>5, 'offset'=>3, 'includeTitle'=>false)); ?>
+	<?php include_partial('home/resume/eventLive', array('limit'=>3, 'offset'=>3, 'includeTitle'=>false)); ?>
 </div>
 </div>
 
