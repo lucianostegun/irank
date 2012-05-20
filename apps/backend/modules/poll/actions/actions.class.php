@@ -25,6 +25,10 @@ class pollActions extends sfActions
   public function executeIndex($request){
     
   }
+
+  public function executeUpload($request){
+    
+  }
  
   public function executeNew($request){
   	
@@ -91,7 +95,7 @@ class pollActions extends sfActions
   }
   
   public function executeUploadImage($request){
-Log::doLog('master');  	
+	
     $userAdminId  = $request->getParameter('userAdminId');
     $userAdminObj = UserAdminPeer::retrieveByPK($userAdminId);
     
@@ -116,11 +120,7 @@ Log::doLog('master');
 	$options = array('allowedExtensionList'=>$allowedExtensionList,
 					 'maxFileSize'=>$maxFileSize,
 					 'noFile'=>true,
-					 'fileName'=>$fileName,
-					 'minWidth'=>90,
-					 'maxWidth'=>90,
-					 'minHeight'=>100,
-					 'maxHeight'=>100);
+					 'fileName'=>$fileName);
 
 	try {
 

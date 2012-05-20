@@ -11,7 +11,7 @@
 					<?php if( !$savedResult ): ?>
 					<label style="margin: 0 15px">
 						Inclusão de jogador
-						<?php echo input_autocomplete_tag('pepleName', null, 'people/autoComplete', 'doSelectEventLivePlayer', array('size'=>'100%', 'maxlength'=>200, 'style'=>'margin-left: 10px', 'id'=>'eventLivePeopleName')) ?>
+						<?php echo input_autocomplete_tag('pepleName', null, 'eventLive/autoComplete?instanceName=players&eventLiveId='.$eventLiveObj->getId(), 'doSelectEventLivePlayer', array('size'=>'100%', 'maxlength'=>200, 'style'=>'margin-left: 10px', 'id'=>'eventLivePeopleName')) ?>
 					</label>
 					<?php endif; ?>
 				</td> 
