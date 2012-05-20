@@ -17,6 +17,10 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 
 
 	
+	protected $poll_image;
+
+
+	
 	protected $locked;
 
 
@@ -63,6 +67,13 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 	{
 
 		return $this->question;
+	}
+
+	
+	public function getPollImage()
+	{
+
+		return $this->poll_image;
 	}
 
 	
@@ -141,7 +152,9 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -155,13 +168,31 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 	public function setQuestion($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
 		if ($this->question !== $v) {
 			$this->question = $v;
 			$this->modifiedColumns[] = PollPeer::QUESTION;
+		}
+
+	} 
+	
+	public function setPollImage($v)
+	{
+
+		
+		
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->poll_image !== $v) {
+			$this->poll_image = $v;
+			$this->modifiedColumns[] = PollPeer::POLL_IMAGE;
 		}
 
 	} 
@@ -248,23 +279,25 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 
 			$this->question = $rs->getString($startcol + 1);
 
-			$this->locked = $rs->getBoolean($startcol + 2);
+			$this->poll_image = $rs->getString($startcol + 2);
 
-			$this->enabled = $rs->getBoolean($startcol + 3);
+			$this->locked = $rs->getBoolean($startcol + 3);
 
-			$this->visible = $rs->getBoolean($startcol + 4);
+			$this->enabled = $rs->getBoolean($startcol + 4);
 
-			$this->deleted = $rs->getBoolean($startcol + 5);
+			$this->visible = $rs->getBoolean($startcol + 5);
 
-			$this->created_at = $rs->getTimestamp($startcol + 6, null);
+			$this->deleted = $rs->getBoolean($startcol + 6);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 7, null);
+			$this->created_at = $rs->getTimestamp($startcol + 7, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 8, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 8; 
+						return $startcol + 9; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Poll object", $e);
 		}
@@ -424,21 +457,24 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 				return $this->getQuestion();
 				break;
 			case 2:
-				return $this->getLocked();
+				return $this->getPollImage();
 				break;
 			case 3:
-				return $this->getEnabled();
+				return $this->getLocked();
 				break;
 			case 4:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 5:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 6:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 7:
+				return $this->getCreatedAt();
+				break;
+			case 8:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -453,12 +489,13 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getQuestion(),
-			$keys[2]=>$this->getLocked(),
-			$keys[3]=>$this->getEnabled(),
-			$keys[4]=>$this->getVisible(),
-			$keys[5]=>$this->getDeleted(),
-			$keys[6]=>$this->getCreatedAt(),
-			$keys[7]=>$this->getUpdatedAt(),
+			$keys[2]=>$this->getPollImage(),
+			$keys[3]=>$this->getLocked(),
+			$keys[4]=>$this->getEnabled(),
+			$keys[5]=>$this->getVisible(),
+			$keys[6]=>$this->getDeleted(),
+			$keys[7]=>$this->getCreatedAt(),
+			$keys[8]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -481,21 +518,24 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 				$this->setQuestion($value);
 				break;
 			case 2:
-				$this->setLocked($value);
+				$this->setPollImage($value);
 				break;
 			case 3:
-				$this->setEnabled($value);
+				$this->setLocked($value);
 				break;
 			case 4:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 5:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 6:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 7:
+				$this->setCreatedAt($value);
+				break;
+			case 8:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -507,12 +547,13 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setQuestion($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setLocked($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setEnabled($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setVisible($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setDeleted($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[2], $arr)) $this->setPollImage($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setLocked($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setEnabled($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setVisible($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setDeleted($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
 	}
 
 	
@@ -522,6 +563,7 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(PollPeer::ID)) $criteria->add(PollPeer::ID, $this->id);
 		if ($this->isColumnModified(PollPeer::QUESTION)) $criteria->add(PollPeer::QUESTION, $this->question);
+		if ($this->isColumnModified(PollPeer::POLL_IMAGE)) $criteria->add(PollPeer::POLL_IMAGE, $this->poll_image);
 		if ($this->isColumnModified(PollPeer::LOCKED)) $criteria->add(PollPeer::LOCKED, $this->locked);
 		if ($this->isColumnModified(PollPeer::ENABLED)) $criteria->add(PollPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(PollPeer::VISIBLE)) $criteria->add(PollPeer::VISIBLE, $this->visible);
@@ -559,6 +601,8 @@ abstract class BasePoll extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setQuestion($this->question);
+
+		$copyObj->setPollImage($this->poll_image);
 
 		$copyObj->setLocked($this->locked);
 

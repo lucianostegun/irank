@@ -89,4 +89,68 @@ class pollActions extends sfActions
     
     exit;
   }
+  
+  public function executeUploadImage($request){
+Log::doLog('master');  	
+    $userAdminId  = $request->getParameter('userAdminId');
+    $userAdminObj = UserAdminPeer::retrieveByPK($userAdminId);
+    
+    if( !is_object($userAdminObj) )
+    	throw new Exception('Usuário não definido para carregamento da imagem');
+    
+    $fileName = $request->getFileName('Filedata');
+	$fileName = preg_replace('/(\.[^\.]*)$/', '-'.$this->pollId.'\1', $fileName);
+	
+    if( !$userAdminObj->getMaster() ){
+    	
+	    $username = $userAdminObj->getUsername();
+	    $pollObj  = PollPeer::retrieveByPK($this->pollId);
+
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou carregar o arquivo <b>'.$fileName.'</b> para a enquete <b>'.$pollObj->getId().'</b>.', 'Poll', array(), Log::LOG_CRITICAL);
+    	throw new Exception('Você não tem permissão para editar esse registro!');
+    }
+
+	$allowedExtensionList = array('jpg', 'jpeg', 'png');
+	$maxFileSize          = (1024*300);
+	
+	$options = array('allowedExtensionList'=>$allowedExtensionList,
+					 'maxFileSize'=>$maxFileSize,
+					 'noFile'=>true,
+					 'fileName'=>$fileName,
+					 'minWidth'=>90,
+					 'maxWidth'=>90,
+					 'minHeight'=>100,
+					 'maxHeight'=>100);
+
+	try {
+
+		$fileObj = File::upload($request, 'Filedata', '/images/poll', $options);
+
+		$pollObj = PollPeer::retrieveByPK($this->pollId);
+		$pollObj->setPollImage($fileName);
+		$pollObj->save();
+	}catch( Exception $e ){
+
+		Util::forceError($e);	
+	}
+	
+	exit;
+  }
+  
+  public function executeDownloadImage($request){
+
+	$pollObj          = PollPeer::retrieveByPK($this->pollId);
+	$fileName         = $pollObj->getFileNameLogo();
+	$originalFileName = $pollObj->getFileNameLogo(true);
+	$fileExtension    = File::getFileExtension($fileName);
+	$filePath         = Util::getFilePath('/images/poll/'.$fileName);
+
+	header('Content-type: image/png');
+	Util::forceDownload($originalFileName, 'image/'.$fileExtension);
+
+	echo file_get_contents($filePath);
+	
+  	exit;
+  }
+  
 }

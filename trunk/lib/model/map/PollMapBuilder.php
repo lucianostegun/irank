@@ -38,6 +38,8 @@ class PollMapBuilder {
 
 		$tMap->addColumn('QUESTION', 'Question', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('POLL_IMAGE', 'PollImage', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('LOCKED', 'Locked', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);

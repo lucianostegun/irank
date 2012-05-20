@@ -166,7 +166,7 @@ class File extends BaseFile
 		$destinationPath = Util::getFilePath($destinationPath); 
 
 		if( !is_dir($destinationPath) )
-			mkdir($destinationPath, 0755);
+			mkdir($destinationPath, 0755, true);
 		
 		if( $isNew )
 			$filePath = $destinationPath.DIRECTORY_SEPARATOR.$fileName;
