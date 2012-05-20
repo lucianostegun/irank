@@ -13,7 +13,7 @@ abstract class BasePollPeer {
 	const CLASS_DEFAULT = 'lib.model.Poll';
 
 	
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 9;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -24,6 +24,9 @@ abstract class BasePollPeer {
 
 	
 	const QUESTION = 'poll.QUESTION';
+
+	
+	const POLL_IMAGE = 'poll.POLL_IMAGE';
 
 	
 	const LOCKED = 'poll.LOCKED';
@@ -49,19 +52,19 @@ abstract class BasePollPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'Question', 'Locked', 'Enabled', 'Visible', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (PollPeer::ID, PollPeer::QUESTION, PollPeer::LOCKED, PollPeer::ENABLED, PollPeer::VISIBLE, PollPeer::DELETED, PollPeer::CREATED_AT, PollPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'question', 'locked', 'enabled', 'visible', 'deleted', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'QUESTION'=>'', 'LOCKED'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'Question', 'PollImage', 'Locked', 'Enabled', 'Visible', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (PollPeer::ID, PollPeer::QUESTION, PollPeer::POLL_IMAGE, PollPeer::LOCKED, PollPeer::ENABLED, PollPeer::VISIBLE, PollPeer::DELETED, PollPeer::CREATED_AT, PollPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'question', 'poll_image', 'locked', 'enabled', 'visible', 'deleted', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'QUESTION'=>'', 'POLL_IMAGE'=>'', 'LOCKED'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'Question'=>1, 'Locked'=>2, 'Enabled'=>3, 'Visible'=>4, 'Deleted'=>5, 'CreatedAt'=>6, 'UpdatedAt'=>7, ),
-		BasePeer::TYPE_COLNAME=>array (PollPeer::ID=>0, PollPeer::QUESTION=>1, PollPeer::LOCKED=>2, PollPeer::ENABLED=>3, PollPeer::VISIBLE=>4, PollPeer::DELETED=>5, PollPeer::CREATED_AT=>6, PollPeer::UPDATED_AT=>7, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'question'=>1, 'locked'=>2, 'enabled'=>3, 'visible'=>4, 'deleted'=>5, 'created_at'=>6, 'updated_at'=>7, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'Question'=>1, 'PollImage'=>2, 'Locked'=>3, 'Enabled'=>4, 'Visible'=>5, 'Deleted'=>6, 'CreatedAt'=>7, 'UpdatedAt'=>8, ),
+		BasePeer::TYPE_COLNAME=>array (PollPeer::ID=>0, PollPeer::QUESTION=>1, PollPeer::POLL_IMAGE=>2, PollPeer::LOCKED=>3, PollPeer::ENABLED=>4, PollPeer::VISIBLE=>5, PollPeer::DELETED=>6, PollPeer::CREATED_AT=>7, PollPeer::UPDATED_AT=>8, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'question'=>1, 'poll_image'=>2, 'locked'=>3, 'enabled'=>4, 'visible'=>5, 'deleted'=>6, 'created_at'=>7, 'updated_at'=>8, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
@@ -118,6 +121,8 @@ abstract class BasePollPeer {
 		$criteria->addSelectColumn(PollPeer::ID);
 
 		$criteria->addSelectColumn(PollPeer::QUESTION);
+
+		$criteria->addSelectColumn(PollPeer::POLL_IMAGE);
 
 		$criteria->addSelectColumn(PollPeer::LOCKED);
 

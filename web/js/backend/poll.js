@@ -34,3 +34,25 @@ function removePollAnswer(index){
 	
 	$('#pollPollAnswerRow-'+index).remove();
 }
+
+function updateFileUploadStatus(status, fileName){
+	
+	switch(status){
+		case 'success':
+			var pollId = $('#pollId').val();
+			
+			fileName = fileName.replace(/(\.[a-zA-Z]*)$/, '-'+pollId+'$1');
+			
+			var link = '<a href="javascript:void(0)" onclick="goToPage(\'poll\', \'downloadImage\', \'pollId\', '+pollId+')"><img src="'+_imageRoot+'/poll/'+fileName+'?time='+time()+'" /></a>'
+
+			$('#pollPollImageDiv').html(link);
+			break;
+		case 'loading':
+			$('#pollPollImageDiv').html('Carregando arquivo...');
+			break;
+		case 'error':
+			$('#pollPollImageDiv').html('Não informado');
+			alert('Erro ao carregar o arquivo!\nVerifique se o arquivo é uma imagem JPG ou PNG de 90x100 pixels');
+			break;
+	}
+}

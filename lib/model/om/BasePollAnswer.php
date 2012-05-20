@@ -105,7 +105,9 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	public function setPollId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -123,7 +125,9 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	public function setAnswer($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -137,7 +141,9 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	public function setUserResponse($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
