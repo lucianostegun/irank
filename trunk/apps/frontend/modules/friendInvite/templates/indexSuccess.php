@@ -4,7 +4,7 @@
 </div>
 
 <div class="textC">
-	<table cellspacing="0" cellpadding="0" class="formTable" style="width: 750px">
+	<table cellspacing="0" cellpadding="0" class="formTable" style="margin-left: 20px; width: 750px">
 		<tr class="header">
 	  		<th><h1><?php echo __('friendInvite.formTitle') ?></h1></th>
 	  	</tr>

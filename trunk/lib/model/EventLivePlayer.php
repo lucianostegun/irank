@@ -67,4 +67,25 @@ class EventLivePlayer extends BaseEventLivePlayer
 		
 		return ($this->getEnabled()?'yes':'no');
 	}
+	
+	public function getScoreList($returnArray=false){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventLivePlayerScorePeer::EVENT_LIVE_ID, $this->getEventLiveId() );
+		$criteria->add( EventLivePlayerScorePeer::PEOPLE_ID, $this->getPeopleId() );
+		$criteria->addAscendingOrderByColumn( EventLivePlayerScorePeer::ORDER_SEQ );
+		
+		if( $returnArray ){
+			
+			$eventLivePlayerScoreObjList = EventLivePlayerScorePeer::doSelect($criteria);
+			$eventLivePlayerScoreList = array();
+			
+			foreach($eventLivePlayerScoreObjList as $eventLivePlayerScoreObj)
+				$eventLivePlayerScoreList[String::removeAccents(strtolower($eventLivePlayerScoreObj->getLabel()))] = $eventLivePlayerScoreObj->getScore();
+				
+			return $eventLivePlayerScoreList;
+		}
+		
+		return EventLivePlayerScorePeer::doSelect($criteria);
+	}
 }

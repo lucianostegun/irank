@@ -276,12 +276,18 @@ class eventLiveActions extends sfActions
 	$peopleName   = str_replace(' ', '%', trim($peopleName));
 	$emailAddress = str_replace(' ', '%', trim($emailAddress));
 	
-	$table      = 'people INNER JOIN event_live_player ON event_live_player.PEOPLE_ID=people.ID AND event_live_player.EVENT_LIVE_ID='.$this->eventLiveId.' AND event_live_player.ENABLED';
+	$table      = 'people LEFT JOIN event_live_player ON event_live_player.PEOPLE_ID=people.ID AND event_live_player.EVENT_LIVE_ID='.$this->eventLiveId.' AND event_live_player.ENABLED';
 	$fieldId    = 'id';
 	$fieldName  = "FULL_NAME||', '||COALESCE(EMAIL_ADDRESS, 'Não informado')$nl";
 	$fieldValue = "FULL_NAME$nl";
 	$condition  = "people.ENABLED AND people.VISIBLE AND NOT people.DELETED $nl";
-	$condition .= "AND (event_live_player.EVENT_POSITION IS NULL OR event_live_player.EVENT_POSITION=0) $nl";
+	
+	if( $instanceName=='player' ){
+		$condition .= "AND (event_live_player.EVENT_POSITION IS NULL OR event_live_player.EVENT_POSITION=0) $nl";
+	}elseif( $instanceName=='players' ){
+		$condition .= "AND (event_live_player.PEOPLE_ID IS NULL) $nl";
+	}
+	
 	$condition .= "AND ((no_accent(full_name) ILIKE no_accent('%$peopleName%') OR no_accent(email_address) ILIKE no_accent('%$peopleName%'))";
 	
 	if( $emailAddress )

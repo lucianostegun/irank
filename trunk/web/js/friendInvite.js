@@ -31,7 +31,7 @@ function handleSuccessFriendInvite(content){
 					break;
 				default:
 					$('friendInviteImage'+i+'Div').innerHTML = '<img src="/images/icon/info.png"/>';
-					$('friendInviteStatus'+i+'Div').innerHTML = i18n_friendInvite_status_alreadyUser+' ('+result+')';
+					$('friendInviteStatus'+i+'Div').innerHTML = i18n_friendInvite_status_alreadyUser;
 			}
 		}
 	}
