@@ -11,6 +11,8 @@
 	$pollAnswerObjList = $pollObj->getPollAnswerList();
 	$pollAnswerObjList = empty($pollAnswerObjList)?array(new PollAnswer()):$pollAnswerObjList;
 	
+	$userAdminId = $sf_user->getAttribute('userAdminId');
+	
 	echo input_hidden_tag('pollId', $pollId);
 	echo input_hidden_tag('pollPollAnswerCurrentIndex', (count($pollAnswerObjList)-1));
 ?>

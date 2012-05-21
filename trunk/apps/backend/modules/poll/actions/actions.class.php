@@ -12,9 +12,6 @@ class pollActions extends sfActions
 
   public function preExecute(){
     
-    if( !$this->getUser()->hasCredential('iRankAdmin') )
-    	$this->redirect('home/error404');
-    
     $this->pollId = $this->getRequestParameter('id');
     $this->pollId = $this->getRequestParameter('pollId', $this->pollId);
     
