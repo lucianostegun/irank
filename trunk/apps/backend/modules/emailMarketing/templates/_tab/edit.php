@@ -4,7 +4,7 @@
 </div>
 
 <?php
-	$emailContent = $emailMarketingObj->getContent();
+	$emailContent = $emailMarketingObj->getContent(null, null, false);
 ?>
 	<div class="formRow">
 			<?php echo textarea_tag('content', $emailContent, array('style'=>'height: 450px; width: 100%', 'id'=>'emailMarketingContent')) ?>
