@@ -98,9 +98,7 @@ abstract class BaseSmsLog extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -114,9 +112,7 @@ abstract class BaseSmsLog extends BaseObject  implements Persistent {
 	public function setSmsId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -130,9 +126,7 @@ abstract class BaseSmsLog extends BaseObject  implements Persistent {
 	public function setMessageId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -146,9 +140,7 @@ abstract class BaseSmsLog extends BaseObject  implements Persistent {
 	public function setPhoneNumber($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -162,9 +154,7 @@ abstract class BaseSmsLog extends BaseObject  implements Persistent {
 	public function setSendingStatus($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

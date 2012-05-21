@@ -256,9 +256,7 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -272,9 +270,7 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	public function setTemplateName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -288,9 +284,7 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	public function setDescription($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -304,9 +298,7 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	public function setFileId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -324,9 +316,7 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	public function setClubId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -344,9 +334,7 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	public function setEmailTemplateId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -384,9 +372,7 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	public function setTagName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -400,9 +386,7 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	public function setTagNameParent($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

@@ -1,6 +1,2 @@
 default:
-  is_secure: on
-  credentials: [iRankAdmin]
-
-uploadImage:
   is_secure: off
