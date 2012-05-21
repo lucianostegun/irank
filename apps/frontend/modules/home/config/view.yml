@@ -10,7 +10,7 @@ all:
   javascripts:    [home, highlight, /sf/prototype/js/scriptaculous, lightbox]
   
 indexSuccess:
-  stylesheets:    []
+  stylesheets:    [quickResume]
   javascripts:    [] 
   
 error404Success:

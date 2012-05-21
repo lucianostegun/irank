@@ -140,7 +140,7 @@ class EmailMarketing extends BaseEmailMarketing
 		return options_for_select( $optionList, $defaultValue );
 	}
 	
-	public function getContent($peopleObj=null, $randomCode=null, $includeTemplate=true){
+	public function getContent($peopleObj=null, $randomCode=null, $includeTemplate=true, $emailLogId=null){
 
 		$filePath = $this->getFilePath(true);
 
@@ -158,7 +158,7 @@ class EmailMarketing extends BaseEmailMarketing
 				$infoList = array_merge($infoList, $userSiteObj->getInfo(false, false));
 		}
 		
-		$emailContent = Report::defaultReplace($emailContent, $infoList);
+		$emailContent = Report::defaultReplace($emailContent, $infoList, $emailLogId);
 		
 		if( $includeTemplate ){
 			
@@ -259,10 +259,10 @@ class EmailMarketing extends BaseEmailMarketing
   		
   		$randomCode = ($randomCode?$randomCode:$emailMarketingPeopleObj->getRandomCode());
   		
-  		$emailContent = $this->getContent($peopleObj, $randomCode, false);
+  		$emailContent = $this->getContent($peopleObj, $randomCode, false, $emailLogId);
   		$emailSubject = $this->getEmailSubject();
   		
-  		$options = array('emailLogId'=>$emailLogId, 'emailTemplate'=>null);
+  		$options = array('emailTemplate'=>null);
 	  	Report::sendMail($emailSubject, $emailAddress, $emailContent, $options);
 	  	
 	  	echo $emailLogObj->getCreatedAt('d/m/Y H:i');
