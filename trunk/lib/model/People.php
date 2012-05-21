@@ -159,14 +159,14 @@ class People extends BasePeople
 		if( !$this->isUserSite() )
 			$emailContent .= EmailTemplate::getContentByTagName('newUserInvite');
 		
-		$emailContent = str_replace('<peopleName>', $this->getFirstName(), $emailContent);
-		$emailContent = str_replace('<rankingName>', $rankingObj->getRankingName(), $emailContent);
-		$emailContent = str_replace('<createdAt>', $rankingObj->getCreatedAt('d/m/Y'), $emailContent);
-		$emailContent = str_replace('<startDate>', $rankingObj->getStartDate('d/m/Y'), $emailContent);
-		$emailContent = str_replace('<rankingType>', $rankingObj->getRankingType()->getDescription(), $emailContent);
-		$emailContent = str_replace('<players>', $rankingObj->getPlayers(), $emailContent);
-		$emailContent = str_replace('<events>', $rankingObj->getEvents(), $emailContent);
-		$emailContent = str_replace('<rankingOwner>', $rankingOwner, $emailContent);
+		$emailContent = str_replace('[peopleName]', $this->getFirstName(), $emailContent);
+		$emailContent = str_replace('[rankingName]', $rankingObj->getRankingName(), $emailContent);
+		$emailContent = str_replace('[createdAt]', $rankingObj->getCreatedAt('d/m/Y'), $emailContent);
+		$emailContent = str_replace('[startDate]', $rankingObj->getStartDate('d/m/Y'), $emailContent);
+		$emailContent = str_replace('[rankingType]', $rankingObj->getRankingType()->getDescription(), $emailContent);
+		$emailContent = str_replace('[players]', $rankingObj->getPlayers(), $emailContent);
+		$emailContent = str_replace('[events]', $rankingObj->getEvents(), $emailContent);
+		$emailContent = str_replace('[rankingOwner]', $rankingOwner, $emailContent);
 		
 		$emailAddress = $this->getEmailAddress();
 		
@@ -313,6 +313,9 @@ class People extends BasePeople
 		if( $returnIdList ){
 		
 			$eventLiveIdList = Util::executeOne("SELECT get_pending_invite_list($peopleId)", 'string');
+			if( empty($eventLiveIdList) )
+				return array();
+			
 			return explode(',', $eventLiveIdList);
 		}else 
 			return Util::executeOne("SELECT get_pending_invites($peopleId)"); 

@@ -1,6 +1,10 @@
 #userResume {
 	
-	display: 	none;
+	display: 		none;
+	position: 		relative;
+	width: 			780px;
+	left: 			3px;
+	margin-bottom: 	5px;
 }
 
 #userResume.logged {
@@ -10,6 +14,7 @@
 
 #userResume #eventResume {
 	
+	float: 				left;
 	position: 			relative;
 	top: 				4px;
 	padding-bottom: 	15px;
@@ -17,9 +22,8 @@
 
 #userResume #eventResume #eventList {
 	
-	float: 		left;
 	position: 	relative;
-	left: 		12px;
+	left: 		4px;
 	top: 		8px;
 }
 
@@ -199,21 +203,22 @@
 
 #userResume #eventResume #eventList .event.noEvent {
 
-	border: 		1px solid #D0D0D0;
-    background: 	#FFFFFF;
+	border: 			1px solid #D0D0D0;
+	width: 				727px;
+    background: 		#FFFFFF;
     background-image: 	-o-linear-gradient(#FFFFFF, #F0F0F0);
-    background: 	-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
-    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
-    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);	
+    background: 		-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
+    background: 		-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);
+    padding: 			27px 10px 10px 25px;
 }
 
 #userResume #eventResume .loadEvents {
 
 	clear: 			both;
 	position: 		relative;
-	top: 			8px;
-	left: 			12px;
-	width: 			745px;
+	top: 			0px;
+	left: 			0px;
 	padding: 		2px 10px 2px 5px;
 	cursor: 		pointer;
 	text-align: 	right;

@@ -650,15 +650,15 @@ class Ranking extends BaseRanking
 	  	$classifyList = $this->getEmailClassifyList();
 	  	$rankingOwner = $this->getUserSite()->getPeople()->getFullName();
 		
-		$emailContent = str_replace('<classifyList>', $classifyList, $emailContent);
-		$emailContent = str_replace('<peopleName>', $peopleObj->getName(), $emailContent);
-		$emailContent = str_replace('<rankingName>', $this->getRankingName(), $emailContent);
-		$emailContent = str_replace('<createdAt>', $this->getCreatedAt('d/m/Y'), $emailContent);
-		$emailContent = str_replace('<startDate>', $this->getStartDate('d/m/Y'), $emailContent);
-		$emailContent = str_replace('<rankingType>', $this->getRankingType()->getDescription(), $emailContent);
-		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
-		$emailContent = str_replace('<events>', $this->getEvents(), $emailContent);
-		$emailContent = str_replace('<rankingOwner>', $rankingOwner, $emailContent);
+		$emailContent = str_replace('[classifyList]', $classifyList, $emailContent);
+		$emailContent = str_replace('[peopleName]', $peopleObj->getName(), $emailContent);
+		$emailContent = str_replace('[rankingName]', $this->getRankingName(), $emailContent);
+		$emailContent = str_replace('[createdAt]', $this->getCreatedAt('d/m/Y'), $emailContent);
+		$emailContent = str_replace('[startDate]', $this->getStartDate('d/m/Y'), $emailContent);
+		$emailContent = str_replace('[rankingType]', $this->getRankingType()->getDescription(), $emailContent);
+		$emailContent = str_replace('[players]', $this->getPlayers(), $emailContent);
+		$emailContent = str_replace('[events]', $this->getEvents(), $emailContent);
+		$emailContent = str_replace('[rankingOwner]', $rankingOwner, $emailContent);
 		
 		$emailAddressList = $this->getEmailAddressList();
 		

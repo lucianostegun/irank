@@ -201,9 +201,9 @@ class UserSite extends BaseUserSite
 		Util::getHelper('I18N');
 		
 		$emailContent = EmailTemplate::getContentByTagName('signWelcome'.ucfirst($sufix));
-		$emailContent = str_replace('<password>', $request->getParameter('password'), $emailContent);
-		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
-		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent); 		
+		$emailContent = str_replace('[password]', $request->getParameter('password'), $emailContent);
+		$emailContent = str_replace('[username]', $this->getUsername(), $emailContent);
+		$emailContent = str_replace('[peopleName]', $this->getPeople()->getFirstName(), $emailContent); 		
 
 		$emailAddress = $this->getPeople()->getEmailAddress();
 		
@@ -218,9 +218,9 @@ class UserSite extends BaseUserSite
 		
 		$newPassword = String::createRandom(7);
 		
-		$emailContent = str_replace('<password>', $newPassword, $emailContent);
-		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
-		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
+		$emailContent = str_replace('[password]', $newPassword, $emailContent);
+		$emailContent = str_replace('[username]', $this->getUsername(), $emailContent);
+		$emailContent = str_replace('[peopleName]', $this->getPeople()->getFirstName(), $emailContent);
 		
 		$emailAddress = $this->getPeople()->getEmailAddress();
 		
