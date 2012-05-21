@@ -162,7 +162,7 @@ function stylesheet_tag()
   foreach ($sources as $source)
   {
     $source  = stylesheet_path($source);
-    $options = array_merge(array('rel' => 'stylesheet', 'type' => 'text/css', 'media' => 'screen, print', 'href' => $source), $sourceOptions);
+    $options = array_merge(array('rel' => 'stylesheet', 'type' => 'text/css', 'media' => 'screen, print', 'href' => $source.'?time='.time()), $sourceOptions);
     $html   .= tag('link', $options)."\n";
   }
 

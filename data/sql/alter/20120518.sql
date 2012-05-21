@@ -1,3 +1,6 @@
+ALTER TABLE event_live ADD COLUMN schedule_start_date DATE;
+ALTER TABLE event_live ADD COLUMN enrollment_start_date DATE;
+
 DROP VIEW IF EXISTS event_live_schedule_view;
 CREATE OR REPLACE VIEW event_live_schedule_view AS
 SELECT
@@ -36,7 +39,3 @@ WHERE
     AND NOT event_live.DELETED
     AND NOT ranking_live.IS_PRIVATE
     AND (event_live.SCHEDULE_START_DATE IS NULL OR event_live.SCHEDULE_START_DATE <= CURRENT_DATE);
-
-
-ALTER TABLE event_live ADD COLUMN schedule_start_date DATE;
-ALTER TABLE event_live ADD COLUMN enrollment_start_date DATE;
