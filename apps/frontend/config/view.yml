@@ -5,8 +5,8 @@ default:
   metas:
     title:           iRank - Poker Ranking
     robots:          index, follow
-    description:     iRank - O primeiro site de gerenciamento de rankings pessoais de poker para você e seus amigos
-    keywords:        irank, rank, poker, poquer, ranking, pessoal, classificação, torneio, holdem, amigos, histórico, jogo, agenda, fotos, etapa, cobertura
+    description:     O primeiro site de gerenciamento de rankings pessoais de poker para você e seus amigos. Agenda, rankings, estatísticas, bankroll e muito mais.
+    keywords:        irank, rank, poker, poquer, ranking, pessoal, classificação, torneio, holdem, amigos, histórico, jogo, agenda, fotos, etapa, cobertura, estatisticas
     language:        pt
     viewport:        width=device-width; initial-scale=0.7; maximum-scale=1; user-scalable=yes
     
@@ -14,5 +14,5 @@ default:
   javascripts:    [phpEquivalents, util, form, /sf/prototype/js/prototype, record, /index.php/home/javascript/debug/<?php echo Util::isDebug(true) ?>/js, main]
 
   has_layout:     on
-  layout:         layout3.1
+  layout:         layout
   culture:        pt_BR

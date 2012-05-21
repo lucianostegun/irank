@@ -1,8 +1,12 @@
 <div id="userResume" class="<?php echo ($isAuthenticated?'logged':'') ?>">
 <?php
-	if( $isAuthenticated )
+	if( $isAuthenticated ){
+		
 		include_partial('home/resume/events');
+		include_partial('home/resume/quickResume');
+	}
 ?>
+<div class="clear"></div>
 </div>
 <div class="homeHighlight">
 	<div class="content">

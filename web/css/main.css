@@ -418,7 +418,9 @@ a:hover {
 .textL { text-align: left }
 .textC { text-align: center }
 .textR { text-align: right }
+.mt5 { margin-top: 5px }
 .mt10 { margin-top: 10px }
+.mt15 { margin-top: 15px }
 .mt20 { margin-top: 20px }
 .mt30 { margin-top: 30px }
 .mt40 { margin-top: 40px }

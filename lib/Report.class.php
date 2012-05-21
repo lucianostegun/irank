@@ -20,7 +20,7 @@ class Report {
 	 * @param      Array: Array de opções gerais do módulo
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
-//return;
+return;
 		$smtpComponent = 'smtp';
 		$smtpHostname  = Config::getConfigByName('smtpHostname', true);
 		$smtpUsername  = Config::getConfigByName('smtpUsername', true);
@@ -158,7 +158,7 @@ class Report {
     	$infoList['footerLogoUrl'] = $footerLogoUrl;
 		$infoList['host']          = $host;
 		$content = str_replace('<hr/>', '<div style="border-top: 1px solid #C0C0C0"></div>', $content);
-		$content = str_replace('<separator>', '<div style="margin: 10px 0px 10px 0px; height: 1px; background: #E0E0E0; border-bottom: 1px solid #FEFEFE"></div>', $content);
+		$content = str_replace('[separator]', '<div style="margin: 10px 0px 10px 0px; height: 1px; background: #E0E0E0; border-bottom: 1px solid #FEFEFE"></div>', $content);
 		
 		return self::replace($content, $infoList);
     }

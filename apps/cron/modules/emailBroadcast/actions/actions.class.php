@@ -14,7 +14,7 @@ class emailBroadcastActions extends sfActions
 	foreach($peopleObjList as $peopleObj){
 		
 		$emailAddress    = $peopleObj->getEmailAddress();
-		$emailContentTmp = str_replace('<peopleName>', $peopleObj->getFirstName(), $emailContent);
+		$emailContentTmp = str_replace('[peopleName]', $peopleObj->getFirstName(), $emailContent);
 
 		$sendResult = Report::sendMail($emailSubject, $emailAddress, $emailContentTmp);
 		

@@ -54,12 +54,12 @@ class Faq extends BaseFaq
 			$username     = $userSiteObj->getUsername();
 		}
 		
-		$emailContent = str_replace('<fullName>', $fullName, $emailContent);
-		$emailContent = str_replace('<emailAddress>', $emailAddress, $emailContent);
-		$emailContent = str_replace('<username>', $username, $emailContent);
-		$emailContent = str_replace('<ipAddress>', $ipAddress, $emailContent);
-		$emailContent = str_replace('<questionDate>', date('d/m/Y H:i:s'), $emailContent);
-		$emailContent = str_replace('<question>', $question, $emailContent);
+		$emailContent = str_replace('[fullName]', $fullName, $emailContent);
+		$emailContent = str_replace('[emailAddress]', $emailAddress, $emailContent);
+		$emailContent = str_replace('[username]', $username, $emailContent);
+		$emailContent = str_replace('[ipAddress]', $ipAddress, $emailContent);
+		$emailContent = str_replace('[questionDate]', date('d/m/Y H:i:s'), $emailContent);
+		$emailContent = str_replace('[question]', $question, $emailContent);
 		
 		$emailAddress = 'lucianostegun@gmail.com';
 		$options      = array();

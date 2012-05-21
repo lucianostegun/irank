@@ -65,7 +65,9 @@ var _ModuleName = '<?php echo $moduleName ?>';
 	    								if( $isAuthenticated ){
 
 	    									include_partial('home/include/leftMenu', array('innerObj'=>$innerObj));
-	    									include_partial('home/include/quickResume', array());
+	    									
+	    									if( $moduleName!='home' )
+	    										include_partial('home/include/quickResume', array());
 	    								}
 	    								else
 	    									include_partial('login/include/login', array());

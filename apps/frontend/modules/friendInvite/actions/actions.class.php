@@ -54,9 +54,9 @@ class friendInviteActions extends sfActions
 	  	}
 	  	
 	  	$emailContentTmp = $emailContent;
-	  	$emailContentTmp = str_replace('<peopleName>', $peopleName, $emailContentTmp);
-	  	$emailContentTmp = str_replace('<friendName>', $friendName, $emailContentTmp);
-	  	$emailContentTmp = str_replace('<emailAddress>', $emailAddress, $emailContentTmp);
+	  	$emailContentTmp = str_replace('[peopleName]', $peopleName, $emailContentTmp);
+	  	$emailContentTmp = str_replace('[friendName]', $friendName, $emailContentTmp);
+	  	$emailContentTmp = str_replace('[emailAddress]', $emailAddress, $emailContentTmp);
 	  	
 	  	$invite = Report::sendMail(__('email.subject.friendInvite'), $friendEmailAddress, $emailContentTmp);
 	  	if($invite)

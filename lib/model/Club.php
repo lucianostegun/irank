@@ -130,6 +130,7 @@ class Club extends BaseClub
 			
 		$criteria->addJoin( PeoplePeer::ID, EventLivePlayerPeer::PEOPLE_ID, Criteria::INNER_JOIN );
 		$criteria->addJoin( EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID, Criteria::INNER_JOIN );
+		$criteria->addAscendingOrderByColumn( PeoplePeer::FULL_NAME );
 		
 		return PeoplePeer::doSelect( $criteria );
 	}
