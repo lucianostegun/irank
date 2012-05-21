@@ -27,6 +27,7 @@ class EventLivePeer extends BaseEventLivePeer
 		
 		$criteria->addJoin( EventLivePeer::CLUB_ID, ClubPeer::ID, Criteria::INNER_JOIN );
 		
+		$criteria->addAscendingOrderByColumn( EventLivePeer::ENROLLMENT_START_DATE );
 		$criteria->addDescendingOrderByColumn( EventLivePeer::EVENT_DATE );
 		$criteria->addAscendingOrderByColumn( EventLivePeer::START_TIME );
 		

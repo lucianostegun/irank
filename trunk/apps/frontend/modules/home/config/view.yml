@@ -6,7 +6,7 @@ all:
     og|image*1:      http://<?php echo $host=MyTools::getRequest()->getHost() ?>/images/layout/chipsFooter.png
     og|image:        http://<?php echo $host ?>/images/layout/mediaLogoFull.png
     
-  stylesheets:    [home, lightbox, eventResume, eventLiveResume]
+  stylesheets:    [home, lightbox, quickResume, eventResume, eventLiveResume]
   javascripts:    [home, highlight, /sf/prototype/js/scriptaculous, lightbox]
   
 indexSuccess:
