@@ -74,9 +74,11 @@
 		<column name="ranking_type_id" type="INTEGER" />
 		<column name="game_style_id" type="INTEGER" />
 		<column name="start_date" type="DATE" />
+		<column name="start_time" type="TIME" />
 		<column name="finish_date" type="DATE" />
 		<column name="is_private" type="BOOLEAN" />
 		<column name="buyin" type="NUMERIC" size="10" scale="2" />
+		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />
 		<column name="players" type="INTEGER" />
 		<column name="events" type="INTEGER" />
 		<column name="score_schema" type="VARCHAR" />

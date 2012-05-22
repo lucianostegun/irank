@@ -423,6 +423,12 @@ function handleRankingChoice(rankingId){
 		if( $('eventBuyin').value==i18n_zero_zeroZero || $('eventBuyin').value=='' )
 			$('eventBuyin').value = toCurrency(rankingObj.buyin);
 		
+		if( $('eventEntranceFee').value==i18n_zero_zeroZero || $('eventEntranceFee').value=='' )
+			$('eventEntranceFee').value = toCurrency(rankingObj.entranceFee);
+
+		if( $('eventStartTime').value=='' )
+			$('eventStartTime').value = rankingObj.startTime;
+		
 		if( rankingObj.gameStyleTag=='ring' ){
 			
 			toggleFreerollFields(false);
