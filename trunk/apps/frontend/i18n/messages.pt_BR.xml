@@ -650,7 +650,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.noRankings</source>
-				<target>Nenhum evento encontrado para os parâmetros pesquisados</target>
+				<target>Nenhum ranking encontrado para os parâmetros pesquisados</target>
 			</trans-unit>
 			
 			<trans-unit>
@@ -932,6 +932,14 @@
 			<trans-unit>
 				<source>event.startTime</source>
 				<target>Hora</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.startTime</source>
+				<target>Hora de início padrão</target>
+			</trans-unit>
+			<trans-unit>
+				<source>ranking.entranceFee</source>
+				<target>Taxa padrão</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.paidPlaces</source>

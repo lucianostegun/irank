@@ -17,7 +17,7 @@ class rankingActions extends sfActions
 
 		$this->rankingObj = RankingPeer::retrieveByPK( $rankingId );
 		
-		if( !$this->rankingObj->isMyRanking() ){
+		if( is_object($this->rankingObj) && !$this->rankingObj->isMyRanking() ){
 			
 			Util::getHelper('i18n');
 			throw new Exception(__('ranking.exception.editionDenied'));
@@ -81,6 +81,8 @@ class rankingActions extends sfActions
 	$isPrivate        = $request->getParameter('isPrivate');
 	$rankingTypeId    = $request->getParameter('rankingTypeId');
 	$buyin            = $request->getParameter('buyin');
+	$startTime        = $request->getParameter('startTime');
+	$entranceFee      = $request->getParameter('entranceFee');
 	$scoreSchema      = $request->getParameter('scoreSchema');
 	$scoreFormula     = $request->getParameter('scoreFormula');
 	$recalculateScore = $request->getParameter('recalculateScore');
@@ -104,6 +106,8 @@ class rankingActions extends sfActions
 	$rankingObj->setStartDate( Util::formatDate($startDate) );
 	$rankingObj->setFinishDate( Util::formatDate($finishDate) );
 	$rankingObj->setBuyin( Util::formatFloat($buyin) );
+	$rankingObj->setEntranceFee( Util::formatFloat($entranceFee) );
+	$rankingObj->setStartTime( $startTime );
 	$rankingObj->setIsPrivate( ($isPrivate?true:false) );
 	$rankingObj->setRankingTypeId( $rankingTypeId );
 	$rankingObj->setScoreSchema( $scoreSchema );
@@ -116,30 +120,30 @@ class rankingActions extends sfActions
 		
 	$rankingObj->save();
 	
-	if( $buildEmailGroup ){
-		
-		$rankingObj->setRankingTag($rankingTag);
-		$rankingObj->createEmailGroup();
-	}
-	
-	$rankingObj->addPlayer( $this->peopleId, true );
-	
-	if( $isNew ){
-		
-		$rankingObj->resetOptions();
-	}else{
-		
-		if( $recalculateScore ){
-			
-			$rankingObj->updateWholeScore();
-			$rankingObj->updateScores();
-		}
-		
-		$rankingObj->saveOptions($request);
-		
-		if( $updateHistory || $recalculateScore )
-			$rankingObj->updateWholeHistory();
-	}
+//	if( $buildEmailGroup ){
+//		
+//		$rankingObj->setRankingTag($rankingTag);
+//		$rankingObj->createEmailGroup();
+//	}
+//	
+//	$rankingObj->addPlayer( $this->peopleId, true );
+//	
+//	if( $isNew ){
+//		
+//		$rankingObj->resetOptions();
+//	}else{
+//		
+//		if( $recalculateScore ){
+//			
+//			$rankingObj->updateWholeScore();
+//			$rankingObj->updateScores();
+//		}
+//		
+//		$rankingObj->saveOptions($request);
+//		
+//		if( $updateHistory || $recalculateScore )
+//			$rankingObj->updateWholeHistory();
+//	}
 	
 	echo $rankingObj->getId();
 	exit;

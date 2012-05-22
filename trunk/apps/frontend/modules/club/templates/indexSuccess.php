@@ -23,6 +23,7 @@
 			$clubSiteLink    = ($clubSite?(preg_match('/^[a-zA-Z0-9\-_\.]*@/', $clubSite)?'mailto:'.$clubSite:'http://'.$clubSite):null);
 			$clubSiteTarget  = ($clubSite?(preg_match('/^[a-zA-Z0-9\-_\.]*@/', $clubSite)?'_top':'_blank'):null);
 			$clubSite        = str_ireplace('http://', '', $clubSite);
+			$clubSiteLink    = str_ireplace('http://http://', 'http://', $clubSiteLink);
 			$phoneNumberList = $clubObj->getPhoneNumberList();
 			
 			if( $mapsLink )

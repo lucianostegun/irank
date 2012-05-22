@@ -998,6 +998,7 @@ class Ranking extends BaseRanking
 		$infoList['rankingType']   = $this->getRankingType()->getDescription();
 		$infoList['startDate']     = $this->getStartDate('d/m/Y');
 		$infoList['finishDate']    = $this->getFinishDate('d/m/Y');
+		$infoList['startTime']     = $this->getStartTime('H:i');
 		$infoList['isPrivate']     = $this->getIsPrivate();
 		$infoList['players']       = $this->getPlayers();
 		$infoList['credit']        = $this->getCredit();
@@ -1006,7 +1007,8 @@ class Ranking extends BaseRanking
 		$infoList['visible']       = $this->getVisible();
 		$infoList['locked']        = $this->getLocked();
 		$infoList['deleted']       = $this->getDeleted();
-		$infoList['buyin']  = $this->getBuyin();
+		$infoList['buyin']         = $this->getBuyin();
+		$infoList['entranceFee']   = $this->getEntranceFee();
 		$infoList['gameStyleId']   = $this->getGameStyleId();
 		$infoList['gameStyle']     = $this->getGameStyle()->getDescription();
 		$infoList['gameStyleTag']  = $this->getGameStyle()->getTagName();

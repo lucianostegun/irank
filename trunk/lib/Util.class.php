@@ -224,8 +224,6 @@ class Util {
 		
 		$date = substr( $date, 0, 10 );
 		
-		
-		
 		if( $destination=='database' ){
 			
 			if( ereg('^[0-9]{2}-[0-9]{2}-[0-9]{4}$', $date) )

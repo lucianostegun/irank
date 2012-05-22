@@ -10,6 +10,11 @@
 class VirtualTable extends BaseVirtualTable
 {
 	
+	public function __construct(){
+		
+		$this->setCulture(MyTools::getCulture());
+	}
+	
 	public function toString(){
 		
 		return $this->getDescription();
