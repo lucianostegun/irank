@@ -13,11 +13,14 @@ abstract class BasePollAnswerPeer {
 	const CLASS_DEFAULT = 'lib.model.PollAnswer';
 
 	
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
+
+	
+	const ID = 'poll_answer.ID';
 
 	
 	const POLL_ID = 'poll_answer.POLL_ID';
@@ -40,19 +43,19 @@ abstract class BasePollAnswerPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('PollId', 'Answer', 'UserResponse', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (PollAnswerPeer::POLL_ID, PollAnswerPeer::ANSWER, PollAnswerPeer::USER_RESPONSE, PollAnswerPeer::CREATED_AT, PollAnswerPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('poll_id', 'answer', 'user_response', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('POLL_ID'=>'', 'ANSWER'=>'', 'USER_RESPONSE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PollId', 'Answer', 'UserResponse', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (PollAnswerPeer::ID, PollAnswerPeer::POLL_ID, PollAnswerPeer::ANSWER, PollAnswerPeer::USER_RESPONSE, PollAnswerPeer::CREATED_AT, PollAnswerPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'poll_id', 'answer', 'user_response', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'POLL_ID'=>'', 'ANSWER'=>'', 'USER_RESPONSE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('PollId'=>0, 'Answer'=>1, 'UserResponse'=>2, 'CreatedAt'=>3, 'UpdatedAt'=>4, ),
-		BasePeer::TYPE_COLNAME=>array (PollAnswerPeer::POLL_ID=>0, PollAnswerPeer::ANSWER=>1, PollAnswerPeer::USER_RESPONSE=>2, PollAnswerPeer::CREATED_AT=>3, PollAnswerPeer::UPDATED_AT=>4, ),
-		BasePeer::TYPE_FIELDNAME=>array ('poll_id'=>0, 'answer'=>1, 'user_response'=>2, 'created_at'=>3, 'updated_at'=>4, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PollId'=>1, 'Answer'=>2, 'UserResponse'=>3, 'CreatedAt'=>4, 'UpdatedAt'=>5, ),
+		BasePeer::TYPE_COLNAME=>array (PollAnswerPeer::ID=>0, PollAnswerPeer::POLL_ID=>1, PollAnswerPeer::ANSWER=>2, PollAnswerPeer::USER_RESPONSE=>3, PollAnswerPeer::CREATED_AT=>4, PollAnswerPeer::UPDATED_AT=>5, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'poll_id'=>1, 'answer'=>2, 'user_response'=>3, 'created_at'=>4, 'updated_at'=>5, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
@@ -106,6 +109,8 @@ abstract class BasePollAnswerPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
+		$criteria->addSelectColumn(PollAnswerPeer::ID);
+
 		$criteria->addSelectColumn(PollAnswerPeer::POLL_ID);
 
 		$criteria->addSelectColumn(PollAnswerPeer::ANSWER);
@@ -118,8 +123,8 @@ abstract class BasePollAnswerPeer {
 
 	}
 
-	const COUNT = 'COUNT(*)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT *)';
+	const COUNT = 'COUNT(poll_answer.ID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT poll_answer.ID)';
 
 	
 	public static function doCount(Criteria $criteria, $distinct = false, $con = null)
@@ -377,6 +382,7 @@ abstract class BasePollAnswerPeer {
 			$criteria = clone $values; 		} else {
 			$criteria = $values->buildCriteria(); 		}
 
+		$criteria->remove(PollAnswerPeer::ID); 
 
 				$criteria->setDbName(self::DATABASE_NAME);
 
@@ -403,6 +409,9 @@ abstract class BasePollAnswerPeer {
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 
+			$comparison = $criteria->getComparison(PollAnswerPeer::ID);
+			$selectCriteria->add(PollAnswerPeer::ID, $criteria->remove(PollAnswerPeer::ID), $comparison);
+
 		} else { 			$criteria = $values->buildCriteria(); 			$selectCriteria = $values->buildPkeyCriteria(); 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -437,19 +446,10 @@ abstract class BasePollAnswerPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 		} elseif ($values instanceof PollAnswer) {
 
-			$criteria = $values->buildCriteria();
+			$criteria = $values->buildPkeyCriteria();
 		} else {
 						$criteria = new Criteria(self::DATABASE_NAME);
-												if(count($values) == count($values, COUNT_RECURSIVE))
-			{
-								$values = array($values);
-			}
-			$vals = array();
-			foreach($values as $value)
-			{
-
-			}
-
+			$criteria->add(PollAnswerPeer::ID, (array) $values, Criteria::IN);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -500,6 +500,42 @@ abstract class BasePollAnswerPeer {
     }
 
     return $res;
+	}
+
+	
+	public static function retrieveByPK($pk, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$criteria = new Criteria(PollAnswerPeer::DATABASE_NAME);
+		$criteria->setNoFilter(true);
+
+		$criteria->add(PollAnswerPeer::ID, $pk);
+
+
+		$v = PollAnswerPeer::doSelect($criteria, $con);
+
+		return !empty($v) > 0 ? $v[0] : null;
+	}
+
+	
+	public static function retrieveByPKs($pks, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$objs = null;
+		if (empty($pks)) {
+			$objs = array();
+		} else {
+			$criteria = new Criteria();
+			$criteria->add(PollAnswerPeer::ID, $pks, Criteria::IN);
+			$objs = PollAnswerPeer::doSelect($criteria, $con);
+		}
+		return $objs;
 	}
 
 } 

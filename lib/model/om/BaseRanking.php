@@ -385,7 +385,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -399,7 +401,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setRankingName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -413,7 +417,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setRankingTag($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -427,7 +433,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setUserSiteId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -445,7 +453,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setRankingTypeId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -463,7 +473,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setGameStyleId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -562,7 +574,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setPlayers($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -576,7 +590,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setEvents($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -590,7 +606,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setScoreSchema($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -604,7 +622,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setScoreFormula($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

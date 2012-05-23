@@ -82,7 +82,9 @@ abstract class BaseEventLivePlayerDisclosureEmail extends BaseObject  implements
 	public function setEventLiveId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -100,7 +102,9 @@ abstract class BaseEventLivePlayerDisclosureEmail extends BaseObject  implements
 	public function setPeopleId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -118,7 +122,9 @@ abstract class BaseEventLivePlayerDisclosureEmail extends BaseObject  implements
 	public function setEmailLogId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

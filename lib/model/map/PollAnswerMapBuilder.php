@@ -30,7 +30,11 @@ class PollAnswerMapBuilder {
 		$tMap = $this->dbMap->addTable('poll_answer');
 		$tMap->setPhpName('PollAnswer');
 
-		$tMap->setUseIdGenerator(false);
+		$tMap->setUseIdGenerator(true);
+
+		$tMap->setPrimaryKeyMethodInfo('poll_answer_SEQ');
+
+		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
 		$tMap->addForeignKey('POLL_ID', 'PollId', 'int', CreoleTypes::INTEGER, 'poll', 'ID', true, null);
 

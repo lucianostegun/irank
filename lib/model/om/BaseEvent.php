@@ -397,7 +397,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -411,7 +413,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setRankingId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -429,7 +433,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setEventName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -443,7 +449,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setRankingPlaceId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -481,7 +489,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setPaidPlaces($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -546,7 +556,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setComments($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -570,7 +582,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setInvites($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -584,7 +598,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setPlayers($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
