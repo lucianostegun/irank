@@ -173,6 +173,29 @@ class homeActions extends sfActions
 	exit;
   }
   
+  public function executePoll($request){
+  	
+  	$pollId        = $request->getParameter('pollId');
+  	$pollAnswerId  = $request->getParameter('pollAnswerId');
+  	$pollAnswerObj = PollAnswerPeer::retrieveByPK($pollAnswerId);
+  	
+  	if(is_object($pollAnswerObj)){
+  		
+  		$userResponse = $pollAnswerObj->getUserResponse() | 0;
+  		$pollAnswerObj->setUserResponse(($userResponse+1));
+  		$pollAnswerObj->save();
+  		
+  		$pollIdList   = MyTools::getAttribute('answeredPollIdList');
+  		$pollIdList   = explode(',', $pollIdList);
+  		$pollIdList[] = $pollId;
+  		
+  		MyTools::setAttribute('answeredPollIdList', implode(',', $pollIdList) );
+  	}
+  	
+  	sfConfig::set('sf_web_debug', false);
+  	$this->setLayout(false);
+  }
+  
   public function executeError404($request){
   	
   }

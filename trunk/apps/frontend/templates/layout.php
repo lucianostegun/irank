@@ -87,7 +87,8 @@ var _ModuleName = '<?php echo $moduleName ?>';
 							    		
 						    		</div>
 						    	</div>
-					    		<?php include_partial('home/include/quiz', array()) ?>
+						    	<h2>Enquete de mãos</h2>
+					    		<iframe src="<?php echo url_for('home/poll')?>" style="border: none; height: 200px"></iframe>
     						</div>
 				    		
     						<div class="rightContent">

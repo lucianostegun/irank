@@ -9,6 +9,10 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 
 
 	
+	protected $id;
+
+
+	
 	protected $poll_id;
 
 
@@ -35,6 +39,13 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 
 	
 	protected $alreadyInValidation = false;
+
+	
+	public function getId()
+	{
+
+		return $this->id;
+	}
 
 	
 	public function getPollId()
@@ -102,10 +113,28 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	}
 
 	
+	public function setId($v)
+	{
+
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->id !== $v) {
+			$this->id = $v;
+			$this->modifiedColumns[] = PollAnswerPeer::ID;
+		}
+
+	} 
+	
 	public function setPollId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -123,7 +152,9 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	public function setAnswer($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -137,7 +168,9 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	public function setUserResponse($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -186,21 +219,23 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->poll_id = $rs->getInt($startcol + 0);
+			$this->id = $rs->getInt($startcol + 0);
 
-			$this->answer = $rs->getString($startcol + 1);
+			$this->poll_id = $rs->getInt($startcol + 1);
 
-			$this->user_response = $rs->getInt($startcol + 2);
+			$this->answer = $rs->getString($startcol + 2);
 
-			$this->created_at = $rs->getTimestamp($startcol + 3, null);
+			$this->user_response = $rs->getInt($startcol + 3);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 4, null);
+			$this->created_at = $rs->getTimestamp($startcol + 4, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 5, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 5; 
+						return $startcol + 6; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating PollAnswer object", $e);
 		}
@@ -280,6 +315,7 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 				if ($this->isNew()) {
 					$pk = PollAnswerPeer::doInsert($this, $con);
 					$affectedRows += 1; 										 										 
+					$this->setId($pk);  
 					$this->setNew(false);
 				} else {
 					$affectedRows += PollAnswerPeer::doUpdate($this, $con);
@@ -354,18 +390,21 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getPollId();
+				return $this->getId();
 				break;
 			case 1:
-				return $this->getAnswer();
+				return $this->getPollId();
 				break;
 			case 2:
-				return $this->getUserResponse();
+				return $this->getAnswer();
 				break;
 			case 3:
-				return $this->getCreatedAt();
+				return $this->getUserResponse();
 				break;
 			case 4:
+				return $this->getCreatedAt();
+				break;
+			case 5:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -378,11 +417,12 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	{
 		$keys = PollAnswerPeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0]=>$this->getPollId(),
-			$keys[1]=>$this->getAnswer(),
-			$keys[2]=>$this->getUserResponse(),
-			$keys[3]=>$this->getCreatedAt(),
-			$keys[4]=>$this->getUpdatedAt(),
+			$keys[0]=>$this->getId(),
+			$keys[1]=>$this->getPollId(),
+			$keys[2]=>$this->getAnswer(),
+			$keys[3]=>$this->getUserResponse(),
+			$keys[4]=>$this->getCreatedAt(),
+			$keys[5]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -399,18 +439,21 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setPollId($value);
+				$this->setId($value);
 				break;
 			case 1:
-				$this->setAnswer($value);
+				$this->setPollId($value);
 				break;
 			case 2:
-				$this->setUserResponse($value);
+				$this->setAnswer($value);
 				break;
 			case 3:
-				$this->setCreatedAt($value);
+				$this->setUserResponse($value);
 				break;
 			case 4:
+				$this->setCreatedAt($value);
+				break;
+			case 5:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -420,11 +463,12 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	{
 		$keys = PollAnswerPeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setPollId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setAnswer($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setUserResponse($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setUpdatedAt($arr[$keys[4]]);
+		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setPollId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setAnswer($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setUserResponse($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setUpdatedAt($arr[$keys[5]]);
 	}
 
 	
@@ -432,6 +476,7 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(PollAnswerPeer::DATABASE_NAME);
 
+		if ($this->isColumnModified(PollAnswerPeer::ID)) $criteria->add(PollAnswerPeer::ID, $this->id);
 		if ($this->isColumnModified(PollAnswerPeer::POLL_ID)) $criteria->add(PollAnswerPeer::POLL_ID, $this->poll_id);
 		if ($this->isColumnModified(PollAnswerPeer::ANSWER)) $criteria->add(PollAnswerPeer::ANSWER, $this->answer);
 		if ($this->isColumnModified(PollAnswerPeer::USER_RESPONSE)) $criteria->add(PollAnswerPeer::USER_RESPONSE, $this->user_response);
@@ -446,6 +491,7 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(PollAnswerPeer::DATABASE_NAME);
 
+		$criteria->add(PollAnswerPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -453,13 +499,14 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 	
 	public function getPrimaryKey()
 	{
-		return null;
+		return $this->getId();
 	}
 
 	
-	 public function setPrimaryKey($pk)
-	 {
-		 	 }
+	public function setPrimaryKey($key)
+	{
+		$this->setId($key);
+	}
 
 	
 	public function copyInto($copyObj, $deepCopy = false)
@@ -478,6 +525,7 @@ abstract class BasePollAnswer extends BaseObject  implements Persistent {
 
 		$copyObj->setNew(true);
 
+		$copyObj->setId(NULL); 
 	}
 
 	

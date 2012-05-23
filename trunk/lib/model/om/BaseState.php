@@ -119,7 +119,9 @@ abstract class BaseState extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -133,7 +135,9 @@ abstract class BaseState extends BaseObject  implements Persistent {
 	public function setInitial($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -147,7 +151,9 @@ abstract class BaseState extends BaseObject  implements Persistent {
 	public function setStateName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -161,7 +167,9 @@ abstract class BaseState extends BaseObject  implements Persistent {
 	public function setOrderSeq($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

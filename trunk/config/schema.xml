@@ -917,6 +917,7 @@
 	</table>
   
 	<table name="poll_answer" phpName="PollAnswer">
+		<column name="id" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
 		<column name="poll_id" type="INTEGER" required="true" />
 		<column name="answer" type="VARCHAR"/>
 		<column name="user_response" type="INTEGER"/>
