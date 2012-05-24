@@ -1,0 +1,60 @@
+#handPoll {
+	
+	position: relative;
+	left: 0px;
+	top: 0px;
+	background: #FAFAFA;
+	padding-top: 10px;
+}
+
+#handPoll .question {
+	
+	margin: -2px 8px 5px 8px;
+}
+
+#handPoll .image {
+	
+	float: left;
+	margin: 5px
+}
+	
+#handPoll .options {
+
+	float: 			left;
+	position: 		relative;
+	top: 			5px
+}
+
+#handPoll .options .option {
+
+	margin-top: 	2px;
+	margin-left: 	3px;
+	background: 	#F0F0F0 url('/images/quiz/optionBg.gif') repeat-x;
+	padding: 		2px 4px 2px 8px;
+	width: 			76px;
+	font-size: 		12px;
+	font-family:	Arial;
+	cursor: 		pointer;
+	
+	border: 				1px solid #D0D0D0;
+	-moz-border-radius: 	5px;
+	-webkit-border-radius: 	5px;
+	border-radius: 			5px;
+}
+
+#handPoll .options .option:hover {
+
+	background-position: 	0 -20px;
+}
+
+#handPoll .options .option:selected {
+
+	background-position: 	0 -40px;
+	font-weight: 			bold;
+}
+
+#handPoll .options a {
+
+	color: 				#505050;
+	text-decoration: 	none;
+}

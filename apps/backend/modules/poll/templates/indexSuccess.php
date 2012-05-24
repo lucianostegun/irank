@@ -21,7 +21,7 @@
 				<tr class="gradeA" id="pollIdRow-<?php echo $pollId ?>">
 					<td><?php echo checkbox_tag('pollId[]', $pollId) ?></td>
 					<td onclick="<?php echo $onclick ?>"><?php echo $pollObj->getQuestion() ?></td> 
-					<td onclick="<?php echo $onclick ?>"><?php echo $pollObj->getCreatedAt('d/m/Y H:i:s') ?></td> 
+					<td onclick="<?php echo $onclick ?>"><?php echo $pollObj->getCreatedAt('d/m/Y H:i') ?></td> 
 				</tr> 
 				<?php
 					endforeach;

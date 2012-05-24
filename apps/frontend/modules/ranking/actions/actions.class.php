@@ -120,30 +120,30 @@ class rankingActions extends sfActions
 		
 	$rankingObj->save();
 	
-//	if( $buildEmailGroup ){
-//		
-//		$rankingObj->setRankingTag($rankingTag);
-//		$rankingObj->createEmailGroup();
-//	}
-//	
-//	$rankingObj->addPlayer( $this->peopleId, true );
-//	
-//	if( $isNew ){
-//		
-//		$rankingObj->resetOptions();
-//	}else{
-//		
-//		if( $recalculateScore ){
-//			
-//			$rankingObj->updateWholeScore();
-//			$rankingObj->updateScores();
-//		}
-//		
-//		$rankingObj->saveOptions($request);
-//		
-//		if( $updateHistory || $recalculateScore )
-//			$rankingObj->updateWholeHistory();
-//	}
+	if( $buildEmailGroup ){
+		
+		$rankingObj->setRankingTag($rankingTag);
+		$rankingObj->createEmailGroup();
+	}
+	
+	$rankingObj->addPlayer( $this->peopleId, true );
+	
+	if( $isNew ){
+		
+		$rankingObj->resetOptions();
+	}else{
+		
+		if( $recalculateScore ){
+			
+			$rankingObj->updateWholeScore();
+			$rankingObj->updateScores();
+		}
+		
+		$rankingObj->saveOptions($request);
+		
+		if( $updateHistory || $recalculateScore )
+			$rankingObj->updateWholeHistory();
+	}
 	
 	echo $rankingObj->getId();
 	exit;
@@ -382,9 +382,9 @@ class rankingActions extends sfActions
 
 	$count = Util::executeOne('SELECT COUNT(1) FROM ranking_player WHERE ranking_id = '.$rankingId.' AND enabled AND allow_edit');
 	
-	if( $rankingObj->getUserSiteId()==$userSiteId && !$count )
+	if( $rankingObj->getUserSiteId()==$userSiteId && $count < 2 )
 		// <!-- I18N -->
-		Util::forceError('!Você é o criador do ranking.\nSelecione um ou mais jogadores para adminsitrarem este ranking.'.$count);
+		Util::forceError("!Você é o único moderador do ranking.\nSelecione um ou mais jogadores para controlarem este ranking.");
 
 	exit;
   }
@@ -396,13 +396,9 @@ class rankingActions extends sfActions
 
 	$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($rankingId, $peopleId);
 	
-	if( !is_object($rankingPlayerObj) ){
-	
-		Util::getHelper('i18n');
-		// <!-- I18N -->
+	if( !is_object($rankingPlayerObj) )
 		throw new Exception('Você não faz parte deste ranking!');
-	}
-	
+		
 	$rankingPlayerObj->setEnabled(false);
 	$rankingPlayerObj->save();
 	

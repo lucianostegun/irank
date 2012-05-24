@@ -115,8 +115,9 @@
 
 .gridTable td.footer {
 	
-	background: 	none;
-	padding-top: 	20px;
+	background: 		#FAFAFA;
+	padding-top: 		20px;
+	padding-bottom: 	7px;
 }
 
 .gridTable .intro {

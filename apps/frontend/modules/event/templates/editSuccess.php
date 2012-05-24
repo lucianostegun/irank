@@ -74,7 +74,7 @@
 				echo $facebookButton;
 			
 			echo getFormLoading('event');
-			echo getFormStatus();
+			echo getFormStatus('Evento salvo com sucesso!', 'Erro ao salvar as informações do evento!');
 		?>
 	</div>
 <?php else: ?>

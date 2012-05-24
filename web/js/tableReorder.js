@@ -75,6 +75,9 @@ redips_init = function () {
 			$('eventRebuy'+peopleId).tabIndex         = rowIndex+1+players*2;
 			$('eventAddon'+peopleId).tabIndex         = rowIndex+1+players*3;
 			$('eventPrize'+peopleId).tabIndex         = rowIndex+1+players*4;
+			
+			toggleBuyin(peopleId);
+			checkBuyin(peopleId);
 		}
 	};
 	// row was dropped to the source - event handler

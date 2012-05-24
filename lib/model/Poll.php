@@ -42,7 +42,7 @@ class Poll extends BasePoll
 		$this->setEnabled( true );
 		$this->save();
 		
-		Util::executeQuery( 'DELETE FROM poll_answer WHERE poll_id='.$this->getId().' AND (user_response IS NULL OR user_response=0)' );
+		Util::executeQuery( 'DELETE FROM poll_answer WHERE poll_id='.$this->getId() );
 		
 		foreach( $answerList as $answer ){
 			

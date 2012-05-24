@@ -242,9 +242,9 @@ function parseInfo(infoList){
 
 function parseMessage(errorMessage){
 
-	if( (errorMessage).match(/^!/) )
-		return errorMessage.replace('!', '\n\n');
-	else
+	if( (errorMessage).match(/^!/) ){
+		return errorMessage.replace(/^!/, '\n\n');
+	}else
 		return null;
 }
 

@@ -27,6 +27,9 @@
 	if( count($eventObjList)==0 ):
 ?>
 <tr class="boxcontent">
-	<td colspan="7"><?php echo __('event.noEvents') ?></td>
+	<td colspan="7">
+		Nenhum evento foi encontrado para os parâmetros pesquisados.<br/>
+		<?php echo link_to('Clique aqui', 'event/new') ?> para criar um novo evento.
+	</td>
 </tr>
 <?php endif; ?>
