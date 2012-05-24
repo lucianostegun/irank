@@ -1,4 +1,4 @@
 all:
 
-  stylesheets:    []
+  stylesheets:    [backend/poll]
   javascripts:    [backend/poll]

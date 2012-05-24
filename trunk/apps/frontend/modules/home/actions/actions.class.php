@@ -173,7 +173,11 @@ class homeActions extends sfActions
 	exit;
   }
   
-  public function executePoll($request){
+  public function executeError404($request){
+  	
+  }
+
+  public function executeSavePollAnswer($request){
   	
   	$pollId        = $request->getParameter('pollId');
   	$pollAnswerId  = $request->getParameter('pollAnswerId');
@@ -192,12 +196,7 @@ class homeActions extends sfActions
   		MyTools::setAttribute('answeredPollIdList', implode(',', $pollIdList) );
   	}
   	
-  	sfConfig::set('sf_web_debug', false);
-  	$this->setLayout(false);
-  }
-  
-  public function executeError404($request){
-  	
+  	exit;
   }
   
   public function executeImages($request){

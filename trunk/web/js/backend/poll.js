@@ -15,24 +15,26 @@ function handleFailurePoll(content){
 
 function addPollAnswer(){
 	
-	var index = $('#pollPollAnswerCurrentIndex').val();
-	++index;
+	var index = $('#pollAnswers').val();
+	index++;
 	
-	var htmlRow = '<div class="formRow" id="pollPollAnswerRow-'+index+'">'+
-					'	<label></label>'+
-					'	<div class="formRight">'+
-					'		<input name="answer[]" id="answer" value="" size="20" maxlength="20" autocomplete="off" type="text"><a href="javascript:void(0)" onclick="removePollAnswer('+index+')" ><img src="/images/backend/icons/color/cross.png" title="Excluir" style="margin-left: 5px"/></a>'+					
-					'	</div>'+
-					'	<div class="clear"></div>'+
-				   '</div>';
+	var htmlRow = '<div class="formRight mt5" id="pollPollAnswerRow-'+index+'">'+
+				  '	<input name="answer[]" id="answer" value="" size="20" maxlength="20" autocomplete="off" type="text">'+					
+				  '	<a href="javascript:void(0)" onclick="removePollAnswer('+index+')" ><img src="'+_imageRoot+'/backend/icons/color/cross.png" title="Excluir" class="formIcon"/></a>'+					
+				  '</div>'+
+				  '<div class="clear"></div>';
 	
 	$('#pollPollAnswerListDiv').html( $('#pollPollAnswerListDiv').html()+htmlRow );
-	$('#pollPollAnswerCurrentIndex').val(index);
+	$('#pollAnswers').val(index);
 }
 
 function removePollAnswer(index){
 	
 	$('#pollPollAnswerRow-'+index).remove();
+
+	var index = $('#pollAnswers').val()*1;
+	index--;
+	$('#pollAnswers').val(index);
 }
 
 function updateFileUploadStatus(status, fileName){

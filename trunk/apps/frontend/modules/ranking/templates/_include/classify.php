@@ -19,6 +19,7 @@
 		$positionChangeIcon   = 'blank.gif';
 		$positionChangeTitle  = 'Primeira participação no ranking';
 		
+		$players = 0;
 		foreach($rankingPlayerObjList as $rankingPlayerObj):
   		
 			$peopleObj = $rankingPlayerObj->getPeople();
@@ -26,6 +27,8 @@
 			
 			if( !$rankingPlayerObj->getTotalEvents() )
 				continue;
+				
+			$players++;
 			
 			$class = ($peopleId==$peopleIdCurrent?'itsMe':'');
 			$rankingPosition++;
@@ -51,7 +54,7 @@
 	<?php
 		endforeach;
 		
-		if( count($rankingPlayerObjList)==0 ):
+		if( !$players ):
 	?>
 	<tr>
 		<td colspan="9"><?php echo __('ranking.classifyTab.noPlayers') ?></td>

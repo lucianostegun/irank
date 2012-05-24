@@ -437,7 +437,7 @@ function doUnsubscribeRanking(){
 		
 		var errorMessage = parseMessage(content);
 		// <!-- I18N -->
-		alert('Não foi possível sair deste ranking!'+content);
+		alert('Não foi possível abandonar este ranking!'+errorMessage);
 		
 		hideIndicator('ranking');
 		

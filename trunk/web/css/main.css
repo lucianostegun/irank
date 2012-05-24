@@ -55,7 +55,7 @@ a:hover {
 	position: 		relative;
 	width: 			70px;
 	left: 			860px;
-	top: 			41px;
+	top: 			38px;
 	z-index: 		3;
 }
 
@@ -433,6 +433,7 @@ a:hover {
 .pt50 { padding-top: 50px }
 
 .hidden { display: none }
+.strong { font-weight: bold }
 
 .itsMe td,
 .itsMe td a {

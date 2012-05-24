@@ -73,21 +73,21 @@ class EventPeer extends BaseEventPeer
 	
 	public static function validateEventDate($eventDate){
 		
-		$rankingLiveId = MyTools::getRequestParameter('rankingLiveId');
+		$rankingId = MyTools::getRequestParameter('rankingId');
 		
-		if( !$rankingLiveId )
+		if( !$rankingId )
 			return true;
 
 		$criteria = new Criteria();
-		$criteria->add( EventLivePeer::RANKING_LIVE_ID, $rankingLiveId );
-		$criteria->add( EventLivePeer::EVENT_DATE, Util::formatDate($eventDate), Criteria::GREATER_THAN );
-		$criteria->add( EventLivePeer::SAVED_RESULT, true );
-		$criteria->add( EventLivePeer::ENABLED, true );
-		$criteria->add( EventLivePeer::VISIBLE, true );
-		$criteria->add( EventLivePeer::DELETED, false );
-		$eventLiveCount = EventLivePeer::doCount($criteria);
+		$criteria->add( EventPeer::RANKING_ID, $rankingId );
+		$criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate), Criteria::GREATER_THAN );
+		$criteria->add( EventPeer::SAVED_RESULT, true );
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::DELETED, false );
+		$eventCount = EventPeer::doCount($criteria);
 
-		return ($eventLiveCount==0);
+		return ($eventCount==0);
 	}
 	
 	public static function validatePrizeShare($prizePot){

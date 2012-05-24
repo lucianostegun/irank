@@ -121,7 +121,7 @@
 			if( count($eventPlayerObjList) > 0 ):
 		  ?>
 		</tbody>
-		<tr class="resultTotal">
+		<tr class="resultTotal mark">
 			<td class="mark" colspan="2">TOTAL</td>
 			<?php if( !$isFreeroll ): ?>
 			<td class="mark" align="right" id="eventResultTotalBuyin"><?php echo Util::formatFloat($totalBuyin, true) ?></td>
@@ -141,7 +141,7 @@
 		</tr>
 		<?php endif; ?>
 		<tr>
-			<td class="mark" colspan="7" class="footer">
+			<td class="mark" colspan="7">
 				<?php echo __('event.resultTab.footerMessage') ?>
 			</td>
 		</tr>

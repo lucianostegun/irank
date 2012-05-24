@@ -780,6 +780,10 @@ function calculateResultTotal(type){
 	for(var i=0; i < peopleIdList.length; i++){
 		
 		var peopleId = peopleIdList[i];
+		
+		if( $('event'+ucfirst(type)+peopleId)==null )
+			continue;
+		
 		value = $('event'+ucfirst(type)+peopleId).value;
 		value = toFloat(value);
 		

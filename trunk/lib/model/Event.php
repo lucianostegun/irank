@@ -462,7 +462,8 @@ class Event extends BaseEvent
 			$peopleObj    = $eventPlayerObj->getPeople();
 			$emailAddress = $peopleObj->getEmailAddress();
 			
-			$emailContent = str_replace('[peopleName]', $peopleObj->getFirstName(), $emailContent);
+			$emailContentTmp = $emailContent;
+			$emailContentTmp = str_replace('[peopleName]', $peopleObj->getFirstName(), $emailContentTmp);
 			
 			$congratsMessage = '';
 			
@@ -477,9 +478,9 @@ class Event extends BaseEvent
 				$congratsMessage = __('event.congratMessage', array('%eventPosition%'=>$eventPosition, '%sufix%'=>$sufix), 'messages', $culture).'<br/><br/>';
 			}
 
-			$emailContent = str_replace('[congratsMessage]', $congratsMessage, $emailContent);
+			$emailContentTmp = str_replace('[congratsMessage]', $congratsMessage, $emailContentTmp);
 			
-			Report::sendMail($emailSubject, $emailAddress, $emailContent);
+			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp);
 		}
 	}
 	

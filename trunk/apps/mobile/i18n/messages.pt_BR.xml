@@ -128,7 +128,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.classify.noPlayers</source>
-				<target>Este ranking ainda não possui membros cadastrados</target>
+				<target>Este ranking ainda não possui jogadores cadastrados</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.classify.legend.score</source>
@@ -262,7 +262,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.noPlayers</source>
-				<target>Este ranking ainda não possui membros cadastrados</target>
+				<target>Este ranking ainda não possui jogadores cadastrados</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.show.result.intro</source>
