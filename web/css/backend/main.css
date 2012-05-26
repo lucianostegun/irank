@@ -1702,7 +1702,7 @@ color: #656565;
 	.dataTables_filter input[type="text"] { width: 169px!important; }
 	.dataTables_paginate { text-align: center; margin: 8px 6px 40px 6px; }
 	.ui-buttonset .ui-button { margin: 0 2px; }
-	.dataTables_paginate .ui-button { margin-right: 0; }
+	.dataTables_paginate .ui-button { margin-right: 10px; }
 	.dataTables_filter { margin: 4px 12px 2px 12px; left: 50%; margin-left: -123px; }
 	.dataTables_paginate .last { border-bottom: 1px solid #d5d5d5!important }
 	
@@ -1997,6 +1997,8 @@ margin: 0 5px;
 
 	display: 	none;
 }
+
+.invisible { visibility: hidden }
 
 table.display tr.gradeA td {
 	padding-top: 3px;

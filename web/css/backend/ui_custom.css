@@ -400,9 +400,9 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 1px; background: #fafafa; }
 .ui-dialog .ui-dialog-content { position: relative; overflow: auto; zoom: 1; padding: 10px 12px; background: #FAFAFA; clear: both; }
 .ui-dialog .ui-dialog-buttonpane { padding: 0 12px; font-size: .9em; background: url(/images/backend/backgrounds/titleBg.png) repeat-x 0 0; border-top: 1px solid #cdcdcd; height: 36px; }
-.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { /*float: right;*/ text-align: center; margin: 0 2px; }
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; text-align: center; margin: 0 2px; }
 
-.ui-dialog .ui-dialog-buttonpane button { font-size: 10px; font-weight: bold; text-transform: uppercase; padding: 4px 18px 5px 18px; cursor: pointer; font-family: Arial, Helvetica, sans-serif; border: 1px solid #576270; color: #fff; margin: 6px 0 5px 0; background: url(/images/backend/ui/usualButtons.png) repeat-x 0 -255px; border-radius: 0!important; }
+.ui-dialog .ui-dialog-buttonpane button { font-size: 10px; font-weight: bold; text-transform: uppercase; padding: 4px 18px 5px 18px; cursor: pointer; font-family: Arial, Helvetica, sans-serif; border: 1px solid #576270; color: #fff; margin: 6px 0px 5px 10px; background: url(/images/backend/ui/usualButtons.png) repeat-x 0 -255px; border-radius: 0!important; }
 .ui-dialog .ui-dialog-buttonpane button:hover { background-position: 0 -283px; }
 .ui-dialog .ui-dialog-buttonpane button:active { background-position: 0 -311px; }
 
