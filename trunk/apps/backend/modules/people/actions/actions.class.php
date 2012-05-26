@@ -174,10 +174,22 @@ class peopleActions extends sfActions
 
   public function executeGetEmailAddress($request){
     
-    $peopleId  = $request->getParameter('peopleId');
-    $peopleObj = PeoplePeer::retrieveByPK($peopleId);
+    $peopleObj = PeoplePeer::retrieveByPK($this->peopleId);
     
     echo $peopleObj->getEmailAddress();
+    exit;
+  }
+
+  public function executeGetPlayerInfo($request){
+    
+    $peopleObj = PeoplePeer::retrieveByPK($this->peopleId);
+    
+    $infoList = $peopleObj->getInfo();
+    $infoList['lastGame']    = '(primeira vez)';
+    $infoList['restriction'] = 'Nenhuma';
+    
+    echo Util::parseInfo($infoList);
+    
     exit;
   }
 }

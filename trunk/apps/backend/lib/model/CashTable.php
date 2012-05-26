@@ -10,6 +10,32 @@
 class CashTable extends BaseCashTable
 {
 	
+	private $totalEntranceFee = null;
+	private $totalBuyin       = null;
+	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+        	Log::quickLog('cash_table', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('cash_table', $this->getPrimaryKey(), $e);
+        }
+    }
+	
+	public function delete($con=null){
+		
+		$this->setVisible(false);
+		$this->setDeleted(true);
+		$this->save();
+	}
+	
 	public function getIsNew(){
 		
 		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
@@ -52,27 +78,37 @@ class CashTable extends BaseCashTable
 	
 	public function getCurrentValue(){
 		
-		return 0;
+		return $this->getTotalBuyin()+$this->getTotalEntranceFee();
+	}
+	
+	public function getTotalBuyin(){
+		
+		if( !is_null($this->totalBuyin) )
+			return $this->totalBuyin;
+			
+		$this->totalBuyin = Util::executeOne('SELECT get_cash_table_total_buyin('.$this->getId().')', 'float');
+		
+		return $this->totalBuyin;
+	}
+
+	public function getTotalEntranceFee(){
+		
+		if( !is_null($this->totalEntranceFee) )
+			return $this->totalEntranceFee;
+			
+		$this->totalEntranceFee = Util::executeOne('SELECT get_cash_table_entrance_fee('.$this->getId().')', 'float');
+		
+		return $this->totalEntranceFee;
 	}
 	
 	public function getBalanceDifference(){
 		
-//		$eventLiveObj       = $this->getPreviousEventLive();
-//		$totalBuyin         = $this->getTotalBuyin(true);
-//		$totalBuyinPrevious = $eventLiveObj->getTotalBuyin(true);
-//		
-//		if( $eventLiveObj->isNew() || $this->getIsNew() )
-//			return 0;
-//		
-//		$difference = $totalBuyin-$totalBuyinPrevious;
-//		$percent    = ($difference*100/($totalBuyinPrevious?$totalBuyinPrevious:1));
-		
-		return 0;//$percent;
+		return 0;
 	}
 	
 	public function getBalanceStats(){
 		
-	    $balanceValue         = 0;//$this->getTotalBuyin(true);
+	    $balanceValue         = $this->getCurrentValue();
 	    $balanceChanges       = 0;//$this->getBalanceDifference();
 		$previousBalanceValue = 0;//$this->getPreviousEventLive()->getTotalBuyin(true);
 	    
@@ -83,7 +119,7 @@ class CashTable extends BaseCashTable
 	
 	public function getStats($jsKeys=false){
 		
-		$players         = 0;
+		$players         = $this->getPlayers();
 		$changePlayers   = 0;
 		$playersPrevious = 0;
 			
@@ -125,16 +161,91 @@ class CashTable extends BaseCashTable
 	
 	public function openTable(){
 		
-		$this->setLastOpenedAt(date('Y-m-d H:i:s'));
-		$this->setTableStatus('open');
-		$this->save();
+		if( $this->isOpen() )
+    		throw new Exception('A mesa já está aberta');
+    		
+	    if( !$this->isMyCashTable() ){
+	    	
+		    $username = MyTools::getAttribute('username');
+	    	Log::doLog('Usuário <b>'.$username.'</b> tentou abrir a mesa <b>('.$this->getId().') '.$this->toString().'</b>.', 'CashTable', array(), Log::LOG_CRITICAL);
+	    	
+	    	throw new Exception('Você não tem permissão para editar esta mesa!');
+	    }
+    	
+    	$userAdminId = MyTools::getAttribute('userAdminId');
+    	
+		$con = Propel::getConnection();
+		$con->begin();
+		
+		try{
+			
+			$cashTableSessionObj = new CashTableSession();
+			$cashTableSessionObj->setCashTableId($this->getId());
+			$cashTableSessionObj->setOpenedAt(time());
+			$cashTableSessionObj->setClosedAt(null);
+			$cashTableSessionObj->setTotalPlayers(0);
+			$cashTableSessionObj->setTotalDealers(0);
+			$cashTableSessionObj->setUserAdminIdOpen($userAdminId);
+			$cashTableSessionObj->setUserAdminIdClose(null);
+			$cashTableSessionObj->save($con);
+			
+			$this->setCashTableSession($cashTableSessionObj);
+			$this->setLastOpenedAt(date('Y-m-d H:i:s'));
+			$this->setTableStatus('open');
+			$this->save($con);
+			
+			$con->commit();
+			
+			return true;
+		}catch(Exception $e){
+			
+			$con->rollback();
+			
+			return false;
+		}
 	}
 
 	public function closeTable(){
 		
-		$this->setLastOpenedAt(null);
-		$this->setTableStatus('closed');
-		$this->save();
+		if( $this->isClosed() )
+    		throw new Exception('A mesa já está fechada');
+    		
+	    if( !$this->isMyCashTable() ){
+	    	
+		    $username = MyTools::getAttribute('username');
+	    	Log::doLog('Usuário <b>'.$username.'</b> tentou fechar a mesa <b>('.$this->getId().') '.$this->toString().'</b>.', 'CashTable', array(), Log::LOG_CRITICAL);
+	    	
+	    	throw new Exception('Você não tem permissão para editar esta mesa!');
+	    }
+    	
+    	$userAdminId = MyTools::getAttribute('userAdminId');
+    	
+		$con = Propel::getConnection();
+		$con->begin();
+		
+		try{
+			$cashTableSessionObj = $this->getCashTableSession();
+			$cashTableSessionObj->setClosedAt(time());
+			$cashTableSessionObj->setUserAdminIdClose($userAdminId);
+			
+			if( $cashTableSessionObj->getTotalPlayers()==0 )
+				$cashTableSessionObj->delete($con);
+			else
+				$cashTableSessionObj->save($con);
+			
+			$this->setLastOpenedAt(null);
+			$this->setCashTableSession(null);
+			$this->setTableStatus('closed');
+			$this->save($con);
+			
+			$con->commit();
+			
+			return true;
+		}catch(Exception $e){
+			
+			$con->rollback();
+			return false;
+		}
 	}
 	
 	public function isOpen(){
@@ -145,6 +256,62 @@ class CashTable extends BaseCashTable
 	public function isClosed(){
 		
 		return $this->getTableStatus()=='closed';
+	}
+	
+	/**
+	 * Método que verifica se uma posição da mesa está disponível para aquela sessão
+	 */
+	private function checkTablePosition($tablePosition){
+		
+		$cashTableSessionId = $this->getCashTableSessionId();
+		
+		$peopleId = Util::executeOne("SELECT people_id FROM cash_table_player WHERE cash_table_session_id = $cashTableSessionId AND table_position = $tablePosition AND checkout_at IS NULL");
+		
+		return is_null($peopleId);
+	}
+	
+	public function seatPlayer($peopleId, $tablePosition, $buyin){
+		
+		$con = Propel::getConnection();
+		$con->begin();
+		
+		if( !$this->checkTablePosition($tablePosition) )
+			throw new Exception('O assento selecionado já está ocupado por outro jogador');
+		
+		try{
+			
+			$cashTablePlayerObj = new CashTablePlayer();
+			$cashTablePlayerObj->setCashTableId($this->getId());
+			$cashTablePlayerObj->setCashTableSessionId($this->getCashTableSessionId());
+			$cashTablePlayerObj->setPeopleId($peopleId);
+			$cashTablePlayerObj->setTablePosition($tablePosition);
+			$cashTablePlayerObj->setBuyin(Util::formatFloat($buyin));
+			$cashTablePlayerObj->setEntranceFee($this->getEntranceFee());
+			$cashTablePlayerObj->setCheckinAt(time());
+			$cashTablePlayerObj->setCheckoutAt(null);
+			$cashTablePlayerObj->setCashOut(0);
+	    	$cashTablePlayerObj->save($con);
+			
+			$this->setPlayers($this->getPlayers()+1);
+			$this->save($con);
+			
+			$con->commit();
+			
+			return true;
+		}catch(Exception $e){
+			
+			$con->rollback();
+			return false;
+		}
+	}
+	
+	public function getPlayerList(){
+		
+		$criteria = new Criteria();
+		$criteria->add( CashTablePlayerPeer::CHECKOUT_AT, null );
+		$criteria->add( CashTablePlayerPeer::CASH_TABLE_SESSION_ID, $this->getCashTableSessionId() );
+		$criteria->addAscendingOrderByColumn( CashTablePlayerPeer::TABLE_POSITION );
+		return $this->getCashTablePlayerListJoinPeople();
 	}
 
 	public function getComments($format=false){
@@ -160,5 +327,16 @@ class CashTable extends BaseCashTable
 	public function toString(){
 		
 		return $this->getCashTableName();
+	}
+	
+	public function getInfo(){
+		
+		$infoList = array();
+		$infoList['players']          = $this->getPlayers();
+		$infoList['totalBuyin']       = $this->getTotalBuyin();
+		$infoList['totalEntranceFee'] = $this->getTotalEntranceFee();
+		$infoList['currentValue']     = $this->getCurrentValue();
+		
+		return $infoList;
 	}
 }

@@ -1,5 +1,6 @@
-var _isRunning     = false;
-var _tablePosition = null;
+var _isRunning          = false;
+var _tablePosition      = null;
+var currentCashTableObj = {};
 
 $(function() {
 	
@@ -33,7 +34,7 @@ $(function() {
 		startRunninTimer(false);
 	
 	
-	$('#dialog-message').dialog({
+	$('#playerSelectDialog').dialog({
 		autoOpen: false,
 		modal: true,
 		resizable: false,
@@ -183,16 +184,93 @@ function validatePlayerAdd(){
 	return !hasError;
 }
 
+function togglePlayer(position){
+	
+	$('#playerSelectDialog').dialog('open');
+	_tablePosition = position;
+	
+	clearFormFieldErrors('cashTablePlayerSelect');
+	
+	$('#cashTablePlayerSelectPeopleId').val('');
+	$('#cashTablePlayerSelectPeopleName').val('');
+	$('#cashTablePlayerSelectBuyin').val('');
+	$('#cashTablePlayerSelectTablePosition').val(position);
+	$('#cashTablePlayerSelectPosition').html(position);
+	
+	
+	$('#cashTablePlayerSelectPeopleName').focus();
+}
+
+function doSelectCashTablePlayer(peopleId, peopleName){
+	
+	$('#cashTablePlayerSelectPeopleId').val(peopleId);
+	// carregar aqui as informações do jogador
+	
+	var successFunc = function(content){
+		
+		var peopleObj = parseInfo(content);
+		$('#cashTablePlayerSelectEmailAddress').html(peopleObj.emailAddress);
+		$('#cashTablePlayerSelectPhoneNumber').html(peopleObj.phoneNumber);
+		$('#cashTablePlayerSelectLastGame').html(peopleObj.lastGame);
+		$('#cashTablePlayerSelectRestriction').html(peopleObj.restriction);
+		
+		$('#cashTablePlayerSelectBuyin').focus();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		var errorMessage = parseMessage(content);
+
+		addFormError('cashTablePlayerSelect', 'peopleName', 'Não foi possível recuperar as informações do jogador');
+		
+		if( !errorMessage && isDebug() )
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/people/getPlayerInfo?peopleId='+peopleId;
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
 function addPlayer(){
 	
 	if( !validatePlayerAdd() )
 		return;
 	
-	var playerName = $('#cashTablePlayerSelectPeopleName').val();
-	var buyin      = toFloat($('#cashTablePlayerSelectBuyin').val());
+	showIndicator();
 	
-	$('#seat-'+_tablePosition).removeClass('empty');
-	$('#playerName-'+_tablePosition).html(playerName)
-	$('#bankRoll-'+_tablePosition).html(toCurrency(buyin));
-	$('#dialog-message').dialog('close');
+	var successFunc = function(content){
+		
+		var playerName = $('#cashTablePlayerSelectPeopleName').val();
+		var buyin      = toFloat($('#cashTablePlayerSelectBuyin').val());
+		
+		var cashTableObj = parseInfo(content);
+		
+		$('#mainBalanceAmount').html(toCurrency(cashTableObj.currentValue));
+		
+		$('#seat-'+_tablePosition).removeClass('empty');
+		$('#playerName-'+_tablePosition).html(playerName)
+		$('#bankRoll-'+_tablePosition).html(toCurrency(buyin));
+		$('#playerSelectDialog').dialog('close');
+		
+		hideIndicator();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+		debug(content)
+		var errorMessage = parseMessage(content);
+
+		addFormError('cashTablePlayerSelect', 'peopleName', 'Não foi possível incluir o jogador na posição selecionada');
+		
+		hideIndicator();
+		
+		if( !errorMessage && isDebug() )
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/cashTable/seatPlayer';
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:$('#cashTablePlayerSelectForm').serialize()});
 }

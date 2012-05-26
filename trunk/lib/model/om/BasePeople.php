@@ -173,10 +173,22 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastEventLivePlayerDisclosureSmsCriteria = null;
 
 	
+	protected $collCashTableList;
+
+	
+	protected $lastCashTableCriteria = null;
+
+	
 	protected $collEmailMarketingPeopleList;
 
 	
 	protected $lastEmailMarketingPeopleCriteria = null;
+
+	
+	protected $collCashTablePlayerList;
+
+	
+	protected $lastCashTablePlayerCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -803,8 +815,24 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collCashTableList !== null) {
+				foreach($this->collCashTableList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collEmailMarketingPeopleList !== null) {
 				foreach($this->collEmailMarketingPeopleList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collCashTablePlayerList !== null) {
+				foreach($this->collCashTablePlayerList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -996,8 +1024,24 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collCashTableList !== null) {
+					foreach($this->collCashTableList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 				if ($this->collEmailMarketingPeopleList !== null) {
 					foreach($this->collEmailMarketingPeopleList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collCashTablePlayerList !== null) {
+					foreach($this->collCashTablePlayerList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1326,8 +1370,16 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				$copyObj->addEventLivePlayerDisclosureSms($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getCashTableList() as $relObj) {
+				$copyObj->addCashTable($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getEmailMarketingPeopleList() as $relObj) {
 				$copyObj->addEmailMarketingPeople($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getCashTablePlayerList() as $relObj) {
+				$copyObj->addCashTablePlayer($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -3170,6 +3222,146 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	}
 
 	
+	public function initCashTableList()
+	{
+		if ($this->collCashTableList === null) {
+			$this->collCashTableList = array();
+		}
+	}
+
+	
+	public function getCashTableList($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableList === null) {
+			if ($this->isNew()) {
+			   $this->collCashTableList = array();
+			} else {
+
+				$criteria->add(CashTablePeer::PEOPLE_ID_DEALER, $this->getId());
+
+				CashTablePeer::addSelectColumns($criteria);
+				$this->collCashTableList = CashTablePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(CashTablePeer::PEOPLE_ID_DEALER, $this->getId());
+
+				CashTablePeer::addSelectColumns($criteria);
+				if (!isset($this->lastCashTableCriteria) || !$this->lastCashTableCriteria->equals($criteria)) {
+					$this->collCashTableList = CashTablePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastCashTableCriteria = $criteria;
+		return $this->collCashTableList;
+	}
+
+	
+	public function countCashTableList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(CashTablePeer::PEOPLE_ID_DEALER, $this->getId());
+
+		return CashTablePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addCashTable(CashTable $l)
+	{
+		$this->collCashTableList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getCashTableListJoinClub($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableList === null) {
+			if ($this->isNew()) {
+				$this->collCashTableList = array();
+			} else {
+
+				$criteria->add(CashTablePeer::PEOPLE_ID_DEALER, $this->getId());
+
+				$this->collCashTableList = CashTablePeer::doSelectJoinClub($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePeer::PEOPLE_ID_DEALER, $this->getId());
+
+			if (!isset($this->lastCashTableCriteria) || !$this->lastCashTableCriteria->equals($criteria)) {
+				$this->collCashTableList = CashTablePeer::doSelectJoinClub($criteria, $con);
+			}
+		}
+		$this->lastCashTableCriteria = $criteria;
+
+		return $this->collCashTableList;
+	}
+
+
+	
+	public function getCashTableListJoinCashTableSession($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableList === null) {
+			if ($this->isNew()) {
+				$this->collCashTableList = array();
+			} else {
+
+				$criteria->add(CashTablePeer::PEOPLE_ID_DEALER, $this->getId());
+
+				$this->collCashTableList = CashTablePeer::doSelectJoinCashTableSession($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePeer::PEOPLE_ID_DEALER, $this->getId());
+
+			if (!isset($this->lastCashTableCriteria) || !$this->lastCashTableCriteria->equals($criteria)) {
+				$this->collCashTableList = CashTablePeer::doSelectJoinCashTableSession($criteria, $con);
+			}
+		}
+		$this->lastCashTableCriteria = $criteria;
+
+		return $this->collCashTableList;
+	}
+
+	
 	public function initEmailMarketingPeopleList()
 	{
 		if ($this->collEmailMarketingPeopleList === null) {
@@ -3272,6 +3464,146 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$this->lastEmailMarketingPeopleCriteria = $criteria;
 
 		return $this->collEmailMarketingPeopleList;
+	}
+
+	
+	public function initCashTablePlayerList()
+	{
+		if ($this->collCashTablePlayerList === null) {
+			$this->collCashTablePlayerList = array();
+		}
+	}
+
+	
+	public function getCashTablePlayerList($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTablePlayerList === null) {
+			if ($this->isNew()) {
+			   $this->collCashTablePlayerList = array();
+			} else {
+
+				$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $this->getId());
+
+				CashTablePlayerPeer::addSelectColumns($criteria);
+				$this->collCashTablePlayerList = CashTablePlayerPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $this->getId());
+
+				CashTablePlayerPeer::addSelectColumns($criteria);
+				if (!isset($this->lastCashTablePlayerCriteria) || !$this->lastCashTablePlayerCriteria->equals($criteria)) {
+					$this->collCashTablePlayerList = CashTablePlayerPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastCashTablePlayerCriteria = $criteria;
+		return $this->collCashTablePlayerList;
+	}
+
+	
+	public function countCashTablePlayerList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $this->getId());
+
+		return CashTablePlayerPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addCashTablePlayer(CashTablePlayer $l)
+	{
+		$this->collCashTablePlayerList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getCashTablePlayerListJoinCashTable($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTablePlayerList === null) {
+			if ($this->isNew()) {
+				$this->collCashTablePlayerList = array();
+			} else {
+
+				$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $this->getId());
+
+				$this->collCashTablePlayerList = CashTablePlayerPeer::doSelectJoinCashTable($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastCashTablePlayerCriteria) || !$this->lastCashTablePlayerCriteria->equals($criteria)) {
+				$this->collCashTablePlayerList = CashTablePlayerPeer::doSelectJoinCashTable($criteria, $con);
+			}
+		}
+		$this->lastCashTablePlayerCriteria = $criteria;
+
+		return $this->collCashTablePlayerList;
+	}
+
+
+	
+	public function getCashTablePlayerListJoinCashTableSession($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTablePlayerList === null) {
+			if ($this->isNew()) {
+				$this->collCashTablePlayerList = array();
+			} else {
+
+				$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $this->getId());
+
+				$this->collCashTablePlayerList = CashTablePlayerPeer::doSelectJoinCashTableSession($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastCashTablePlayerCriteria) || !$this->lastCashTablePlayerCriteria->equals($criteria)) {
+				$this->collCashTablePlayerList = CashTablePlayerPeer::doSelectJoinCashTableSession($criteria, $con);
+			}
+		}
+		$this->lastCashTablePlayerCriteria = $criteria;
+
+		return $this->collCashTablePlayerList;
 	}
 
 } 

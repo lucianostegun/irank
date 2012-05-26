@@ -5,7 +5,7 @@
 <!-- General balance widget -->
 <div class="genBalance">
     <a href="javascript:void(0)" title="" class="amount">
-        <span>Total atual</span>
+        <span>Valor total (Buyin+Rake)</span>
         <span class="moneyCode <?php echo ($balanceInfo['value']>10000?'small':'') ?>" id="mainBalanceCode">R$</span>
         <span class="balanceAmount" id="mainBalanceAmount"><?php echo Util::formatFloat($balanceInfo['value'], true) ?></span>
     </a>
@@ -16,4 +16,3 @@
     </a>
     <?php endif; ?>
 </div>
-<div class="sidebarSep"></div>

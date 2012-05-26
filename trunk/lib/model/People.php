@@ -361,16 +361,18 @@ class People extends BasePeople
 		
 		$infoList = array();
 		
-		$infoList['id']         = $this->getId();
-		$infoList['firstName']  = $this->getFirstName();
-		$infoList['lastName']   = $this->getLastName();
-		$infoList['birthday']   = $this->getBirthday('d/m/Y');
-		$infoList['enabled']    = $this->getEnabled();
-		$infoList['visible']    = $this->getVisible();
-		$infoList['deleted']    = $this->getDeleted();
-		$infoList['locked']     = $this->getLocked();
-		$infoList['createdAt']  = $this->getCreatedAt('d/m/Y H:i:s');
-		$infoList['updatedAt']  = $this->getUpdatedAt('d/m/Y H:i:s');
+		$infoList['id']           = $this->getId();
+		$infoList['firstName']    = $this->getFirstName();
+		$infoList['lastName']     = $this->getLastName();
+		$infoList['emailAddress'] = $this->getEmailAddress();
+		$infoList['phoneNumber']  = $this->getPhoneNumber();
+		$infoList['birthday']     = $this->getBirthday('d/m/Y');
+		$infoList['enabled']      = $this->getEnabled();
+		$infoList['visible']      = $this->getVisible();
+		$infoList['deleted']      = $this->getDeleted();
+		$infoList['locked']       = $this->getLocked();
+		$infoList['createdAt']    = $this->getCreatedAt('d/m/Y H:i:s');
+		$infoList['updatedAt']    = $this->getUpdatedAt('d/m/Y H:i:s');
 		
 		return $infoList;
 	}

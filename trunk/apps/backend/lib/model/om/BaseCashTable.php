@@ -17,6 +17,10 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 
 	
+	protected $people_id_dealer;
+
+
+	
 	protected $cash_table_name;
 
 
@@ -49,6 +53,10 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 
 	
+	protected $cash_table_session_id;
+
+
+	
 	protected $enabled;
 
 
@@ -75,6 +83,24 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 	protected $aClub;
 
 	
+	protected $aCashTableSession;
+
+	
+	protected $aPeople;
+
+	
+	protected $collCashTableSessionList;
+
+	
+	protected $lastCashTableSessionCriteria = null;
+
+	
+	protected $collCashTablePlayerList;
+
+	
+	protected $lastCashTablePlayerCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -92,6 +118,13 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 	{
 
 		return $this->club_id;
+	}
+
+	
+	public function getPeopleIdDealer()
+	{
+
+		return $this->people_id_dealer;
 	}
 
 	
@@ -163,6 +196,13 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 		} else {
 			return date($format, $ts);
 		}
+	}
+
+	
+	public function getCashTableSessionId()
+	{
+
+		return $this->cash_table_session_id;
 	}
 
 	
@@ -266,6 +306,24 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 		if ($this->aClub !== null && $this->aClub->getId() !== $v) {
 			$this->aClub = null;
+		}
+
+	} 
+	
+	public function setPeopleIdDealer($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->people_id_dealer !== $v) {
+			$this->people_id_dealer = $v;
+			$this->modifiedColumns[] = CashTablePeer::PEOPLE_ID_DEALER;
+		}
+
+		if ($this->aPeople !== null && $this->aPeople->getId() !== $v) {
+			$this->aPeople = null;
 		}
 
 	} 
@@ -377,6 +435,24 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setCashTableSessionId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->cash_table_session_id !== $v) {
+			$this->cash_table_session_id = $v;
+			$this->modifiedColumns[] = CashTablePeer::CASH_TABLE_SESSION_ID;
+		}
+
+		if ($this->aCashTableSession !== null && $this->aCashTableSession->getId() !== $v) {
+			$this->aCashTableSession = null;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -459,39 +535,43 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 			$this->club_id = $rs->getInt($startcol + 1);
 
-			$this->cash_table_name = $rs->getString($startcol + 2);
+			$this->people_id_dealer = $rs->getInt($startcol + 2);
 
-			$this->table_status = $rs->getString($startcol + 3);
+			$this->cash_table_name = $rs->getString($startcol + 3);
 
-			$this->players = $rs->getInt($startcol + 4);
+			$this->table_status = $rs->getString($startcol + 4);
 
-			$this->seats = $rs->getInt($startcol + 5);
+			$this->players = $rs->getInt($startcol + 5);
 
-			$this->entrance_fee = $rs->getFloat($startcol + 6);
+			$this->seats = $rs->getInt($startcol + 6);
 
-			$this->buyin = $rs->getFloat($startcol + 7);
+			$this->entrance_fee = $rs->getFloat($startcol + 7);
 
-			$this->comments = $rs->getString($startcol + 8);
+			$this->buyin = $rs->getFloat($startcol + 8);
 
-			$this->last_opened_at = $rs->getTimestamp($startcol + 9, null);
+			$this->comments = $rs->getString($startcol + 9);
 
-			$this->enabled = $rs->getBoolean($startcol + 10);
+			$this->last_opened_at = $rs->getTimestamp($startcol + 10, null);
 
-			$this->visible = $rs->getBoolean($startcol + 11);
+			$this->cash_table_session_id = $rs->getInt($startcol + 11);
 
-			$this->deleted = $rs->getBoolean($startcol + 12);
+			$this->enabled = $rs->getBoolean($startcol + 12);
 
-			$this->locked = $rs->getBoolean($startcol + 13);
+			$this->visible = $rs->getBoolean($startcol + 13);
 
-			$this->created_at = $rs->getTimestamp($startcol + 14, null);
+			$this->deleted = $rs->getBoolean($startcol + 14);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 15, null);
+			$this->locked = $rs->getBoolean($startcol + 15);
+
+			$this->created_at = $rs->getTimestamp($startcol + 16, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 17, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 16; 
+						return $startcol + 18; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating CashTable object", $e);
 		}
@@ -566,6 +646,20 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 				$this->setClub($this->aClub);
 			}
 
+			if ($this->aCashTableSession !== null) {
+				if ($this->aCashTableSession->isModified()) {
+					$affectedRows += $this->aCashTableSession->save($con);
+				}
+				$this->setCashTableSession($this->aCashTableSession);
+			}
+
+			if ($this->aPeople !== null) {
+				if ($this->aPeople->isModified()) {
+					$affectedRows += $this->aPeople->save($con);
+				}
+				$this->setPeople($this->aPeople);
+			}
+
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
@@ -577,6 +671,22 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 					$affectedRows += CashTablePeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); 			}
+
+			if ($this->collCashTableSessionList !== null) {
+				foreach($this->collCashTableSessionList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collCashTablePlayerList !== null) {
+				foreach($this->collCashTablePlayerList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
 
 			$this->alreadyInSave = false;
 		}
@@ -621,11 +731,39 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aCashTableSession !== null) {
+				if (!$this->aCashTableSession->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aCashTableSession->getValidationFailures());
+				}
+			}
+
+			if ($this->aPeople !== null) {
+				if (!$this->aPeople->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aPeople->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = CashTablePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collCashTableSessionList !== null) {
+					foreach($this->collCashTableSessionList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collCashTablePlayerList !== null) {
+					foreach($this->collCashTablePlayerList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -652,45 +790,51 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 				return $this->getClubId();
 				break;
 			case 2:
-				return $this->getCashTableName();
+				return $this->getPeopleIdDealer();
 				break;
 			case 3:
-				return $this->getTableStatus();
+				return $this->getCashTableName();
 				break;
 			case 4:
-				return $this->getPlayers();
+				return $this->getTableStatus();
 				break;
 			case 5:
-				return $this->getSeats();
+				return $this->getPlayers();
 				break;
 			case 6:
-				return $this->getEntranceFee();
+				return $this->getSeats();
 				break;
 			case 7:
-				return $this->getBuyin();
+				return $this->getEntranceFee();
 				break;
 			case 8:
-				return $this->getComments();
+				return $this->getBuyin();
 				break;
 			case 9:
-				return $this->getLastOpenedAt();
+				return $this->getComments();
 				break;
 			case 10:
-				return $this->getEnabled();
+				return $this->getLastOpenedAt();
 				break;
 			case 11:
-				return $this->getVisible();
+				return $this->getCashTableSessionId();
 				break;
 			case 12:
-				return $this->getDeleted();
+				return $this->getEnabled();
 				break;
 			case 13:
-				return $this->getLocked();
+				return $this->getVisible();
 				break;
 			case 14:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 15:
+				return $this->getLocked();
+				break;
+			case 16:
+				return $this->getCreatedAt();
+				break;
+			case 17:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -705,20 +849,22 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getClubId(),
-			$keys[2]=>$this->getCashTableName(),
-			$keys[3]=>$this->getTableStatus(),
-			$keys[4]=>$this->getPlayers(),
-			$keys[5]=>$this->getSeats(),
-			$keys[6]=>$this->getEntranceFee(),
-			$keys[7]=>$this->getBuyin(),
-			$keys[8]=>$this->getComments(),
-			$keys[9]=>$this->getLastOpenedAt(),
-			$keys[10]=>$this->getEnabled(),
-			$keys[11]=>$this->getVisible(),
-			$keys[12]=>$this->getDeleted(),
-			$keys[13]=>$this->getLocked(),
-			$keys[14]=>$this->getCreatedAt(),
-			$keys[15]=>$this->getUpdatedAt(),
+			$keys[2]=>$this->getPeopleIdDealer(),
+			$keys[3]=>$this->getCashTableName(),
+			$keys[4]=>$this->getTableStatus(),
+			$keys[5]=>$this->getPlayers(),
+			$keys[6]=>$this->getSeats(),
+			$keys[7]=>$this->getEntranceFee(),
+			$keys[8]=>$this->getBuyin(),
+			$keys[9]=>$this->getComments(),
+			$keys[10]=>$this->getLastOpenedAt(),
+			$keys[11]=>$this->getCashTableSessionId(),
+			$keys[12]=>$this->getEnabled(),
+			$keys[13]=>$this->getVisible(),
+			$keys[14]=>$this->getDeleted(),
+			$keys[15]=>$this->getLocked(),
+			$keys[16]=>$this->getCreatedAt(),
+			$keys[17]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -741,45 +887,51 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 				$this->setClubId($value);
 				break;
 			case 2:
-				$this->setCashTableName($value);
+				$this->setPeopleIdDealer($value);
 				break;
 			case 3:
-				$this->setTableStatus($value);
+				$this->setCashTableName($value);
 				break;
 			case 4:
-				$this->setPlayers($value);
+				$this->setTableStatus($value);
 				break;
 			case 5:
-				$this->setSeats($value);
+				$this->setPlayers($value);
 				break;
 			case 6:
-				$this->setEntranceFee($value);
+				$this->setSeats($value);
 				break;
 			case 7:
-				$this->setBuyin($value);
+				$this->setEntranceFee($value);
 				break;
 			case 8:
-				$this->setComments($value);
+				$this->setBuyin($value);
 				break;
 			case 9:
-				$this->setLastOpenedAt($value);
+				$this->setComments($value);
 				break;
 			case 10:
-				$this->setEnabled($value);
+				$this->setLastOpenedAt($value);
 				break;
 			case 11:
-				$this->setVisible($value);
+				$this->setCashTableSessionId($value);
 				break;
 			case 12:
-				$this->setDeleted($value);
+				$this->setEnabled($value);
 				break;
 			case 13:
-				$this->setLocked($value);
+				$this->setVisible($value);
 				break;
 			case 14:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 15:
+				$this->setLocked($value);
+				break;
+			case 16:
+				$this->setCreatedAt($value);
+				break;
+			case 17:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -791,20 +943,22 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setClubId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setCashTableName($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setTableStatus($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setPlayers($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setSeats($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setEntranceFee($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setBuyin($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setComments($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setLastOpenedAt($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setEnabled($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setVisible($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setDeleted($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setLocked($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setCreatedAt($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setUpdatedAt($arr[$keys[15]]);
+		if (array_key_exists($keys[2], $arr)) $this->setPeopleIdDealer($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setCashTableName($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setTableStatus($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setPlayers($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setSeats($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEntranceFee($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setBuyin($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setComments($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setLastOpenedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setCashTableSessionId($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setEnabled($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setVisible($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setDeleted($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setLocked($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setCreatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setUpdatedAt($arr[$keys[17]]);
 	}
 
 	
@@ -814,6 +968,7 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(CashTablePeer::ID)) $criteria->add(CashTablePeer::ID, $this->id);
 		if ($this->isColumnModified(CashTablePeer::CLUB_ID)) $criteria->add(CashTablePeer::CLUB_ID, $this->club_id);
+		if ($this->isColumnModified(CashTablePeer::PEOPLE_ID_DEALER)) $criteria->add(CashTablePeer::PEOPLE_ID_DEALER, $this->people_id_dealer);
 		if ($this->isColumnModified(CashTablePeer::CASH_TABLE_NAME)) $criteria->add(CashTablePeer::CASH_TABLE_NAME, $this->cash_table_name);
 		if ($this->isColumnModified(CashTablePeer::TABLE_STATUS)) $criteria->add(CashTablePeer::TABLE_STATUS, $this->table_status);
 		if ($this->isColumnModified(CashTablePeer::PLAYERS)) $criteria->add(CashTablePeer::PLAYERS, $this->players);
@@ -822,6 +977,7 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(CashTablePeer::BUYIN)) $criteria->add(CashTablePeer::BUYIN, $this->buyin);
 		if ($this->isColumnModified(CashTablePeer::COMMENTS)) $criteria->add(CashTablePeer::COMMENTS, $this->comments);
 		if ($this->isColumnModified(CashTablePeer::LAST_OPENED_AT)) $criteria->add(CashTablePeer::LAST_OPENED_AT, $this->last_opened_at);
+		if ($this->isColumnModified(CashTablePeer::CASH_TABLE_SESSION_ID)) $criteria->add(CashTablePeer::CASH_TABLE_SESSION_ID, $this->cash_table_session_id);
 		if ($this->isColumnModified(CashTablePeer::ENABLED)) $criteria->add(CashTablePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(CashTablePeer::VISIBLE)) $criteria->add(CashTablePeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(CashTablePeer::DELETED)) $criteria->add(CashTablePeer::DELETED, $this->deleted);
@@ -860,6 +1016,8 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 		$copyObj->setClubId($this->club_id);
 
+		$copyObj->setPeopleIdDealer($this->people_id_dealer);
+
 		$copyObj->setCashTableName($this->cash_table_name);
 
 		$copyObj->setTableStatus($this->table_status);
@@ -876,6 +1034,8 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 		$copyObj->setLastOpenedAt($this->last_opened_at);
 
+		$copyObj->setCashTableSessionId($this->cash_table_session_id);
+
 		$copyObj->setEnabled($this->enabled);
 
 		$copyObj->setVisible($this->visible);
@@ -888,6 +1048,19 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 		$copyObj->setUpdatedAt($this->updated_at);
 
+
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach($this->getCashTableSessionList() as $relObj) {
+				$copyObj->addCashTableSession($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getCashTablePlayerList() as $relObj) {
+				$copyObj->addCashTablePlayer($relObj->copy($deepCopy));
+			}
+
+		} 
 
 		$copyObj->setNew(true);
 
@@ -939,6 +1112,344 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aClub;
+	}
+
+	
+	public function setCashTableSession($v)
+	{
+
+
+		if ($v === null) {
+			$this->setCashTableSessionId(NULL);
+		} else {
+			$this->setCashTableSessionId($v->getId());
+		}
+
+
+		$this->aCashTableSession = $v;
+	}
+
+
+	
+	public function getCashTableSession($con = null)
+	{
+		if ($this->aCashTableSession === null && ($this->cash_table_session_id !== null)) {
+						include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+
+			$this->aCashTableSession = CashTableSessionPeer::retrieveByPK($this->cash_table_session_id, $con);
+
+			
+		}
+		return $this->aCashTableSession;
+	}
+
+	
+	public function setPeople($v)
+	{
+
+
+		if ($v === null) {
+			$this->setPeopleIdDealer(NULL);
+		} else {
+			$this->setPeopleIdDealer($v->getId());
+		}
+
+
+		$this->aPeople = $v;
+	}
+
+
+	
+	public function getPeople($con = null)
+	{
+		if ($this->aPeople === null && ($this->people_id_dealer !== null)) {
+						include_once 'lib/model/om/BasePeoplePeer.php';
+
+			$this->aPeople = PeoplePeer::retrieveByPK($this->people_id_dealer, $con);
+
+			
+		}
+		return $this->aPeople;
+	}
+
+	
+	public function initCashTableSessionList()
+	{
+		if ($this->collCashTableSessionList === null) {
+			$this->collCashTableSessionList = array();
+		}
+	}
+
+	
+	public function getCashTableSessionList($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableSessionList === null) {
+			if ($this->isNew()) {
+			   $this->collCashTableSessionList = array();
+			} else {
+
+				$criteria->add(CashTableSessionPeer::CASH_TABLE_ID, $this->getId());
+
+				CashTableSessionPeer::addSelectColumns($criteria);
+				$this->collCashTableSessionList = CashTableSessionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(CashTableSessionPeer::CASH_TABLE_ID, $this->getId());
+
+				CashTableSessionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastCashTableSessionCriteria) || !$this->lastCashTableSessionCriteria->equals($criteria)) {
+					$this->collCashTableSessionList = CashTableSessionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastCashTableSessionCriteria = $criteria;
+		return $this->collCashTableSessionList;
+	}
+
+	
+	public function countCashTableSessionList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(CashTableSessionPeer::CASH_TABLE_ID, $this->getId());
+
+		return CashTableSessionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addCashTableSession(CashTableSession $l)
+	{
+		$this->collCashTableSessionList[] = $l;
+		$l->setCashTable($this);
+	}
+
+
+	
+	public function getCashTableSessionListJoinUserAdminRelatedByUserAdminIdOpen($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableSessionList === null) {
+			if ($this->isNew()) {
+				$this->collCashTableSessionList = array();
+			} else {
+
+				$criteria->add(CashTableSessionPeer::CASH_TABLE_ID, $this->getId());
+
+				$this->collCashTableSessionList = CashTableSessionPeer::doSelectJoinUserAdminRelatedByUserAdminIdOpen($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTableSessionPeer::CASH_TABLE_ID, $this->getId());
+
+			if (!isset($this->lastCashTableSessionCriteria) || !$this->lastCashTableSessionCriteria->equals($criteria)) {
+				$this->collCashTableSessionList = CashTableSessionPeer::doSelectJoinUserAdminRelatedByUserAdminIdOpen($criteria, $con);
+			}
+		}
+		$this->lastCashTableSessionCriteria = $criteria;
+
+		return $this->collCashTableSessionList;
+	}
+
+
+	
+	public function getCashTableSessionListJoinUserAdminRelatedByUserAdminIdClose($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableSessionList === null) {
+			if ($this->isNew()) {
+				$this->collCashTableSessionList = array();
+			} else {
+
+				$criteria->add(CashTableSessionPeer::CASH_TABLE_ID, $this->getId());
+
+				$this->collCashTableSessionList = CashTableSessionPeer::doSelectJoinUserAdminRelatedByUserAdminIdClose($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTableSessionPeer::CASH_TABLE_ID, $this->getId());
+
+			if (!isset($this->lastCashTableSessionCriteria) || !$this->lastCashTableSessionCriteria->equals($criteria)) {
+				$this->collCashTableSessionList = CashTableSessionPeer::doSelectJoinUserAdminRelatedByUserAdminIdClose($criteria, $con);
+			}
+		}
+		$this->lastCashTableSessionCriteria = $criteria;
+
+		return $this->collCashTableSessionList;
+	}
+
+	
+	public function initCashTablePlayerList()
+	{
+		if ($this->collCashTablePlayerList === null) {
+			$this->collCashTablePlayerList = array();
+		}
+	}
+
+	
+	public function getCashTablePlayerList($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTablePlayerList === null) {
+			if ($this->isNew()) {
+			   $this->collCashTablePlayerList = array();
+			} else {
+
+				$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $this->getId());
+
+				CashTablePlayerPeer::addSelectColumns($criteria);
+				$this->collCashTablePlayerList = CashTablePlayerPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $this->getId());
+
+				CashTablePlayerPeer::addSelectColumns($criteria);
+				if (!isset($this->lastCashTablePlayerCriteria) || !$this->lastCashTablePlayerCriteria->equals($criteria)) {
+					$this->collCashTablePlayerList = CashTablePlayerPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastCashTablePlayerCriteria = $criteria;
+		return $this->collCashTablePlayerList;
+	}
+
+	
+	public function countCashTablePlayerList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $this->getId());
+
+		return CashTablePlayerPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addCashTablePlayer(CashTablePlayer $l)
+	{
+		$this->collCashTablePlayerList[] = $l;
+		$l->setCashTable($this);
+	}
+
+
+	
+	public function getCashTablePlayerListJoinCashTableSession($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTablePlayerList === null) {
+			if ($this->isNew()) {
+				$this->collCashTablePlayerList = array();
+			} else {
+
+				$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $this->getId());
+
+				$this->collCashTablePlayerList = CashTablePlayerPeer::doSelectJoinCashTableSession($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $this->getId());
+
+			if (!isset($this->lastCashTablePlayerCriteria) || !$this->lastCashTablePlayerCriteria->equals($criteria)) {
+				$this->collCashTablePlayerList = CashTablePlayerPeer::doSelectJoinCashTableSession($criteria, $con);
+			}
+		}
+		$this->lastCashTablePlayerCriteria = $criteria;
+
+		return $this->collCashTablePlayerList;
+	}
+
+
+	
+	public function getCashTablePlayerListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTablePlayerList === null) {
+			if ($this->isNew()) {
+				$this->collCashTablePlayerList = array();
+			} else {
+
+				$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $this->getId());
+
+				$this->collCashTablePlayerList = CashTablePlayerPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $this->getId());
+
+			if (!isset($this->lastCashTablePlayerCriteria) || !$this->lastCashTablePlayerCriteria->equals($criteria)) {
+				$this->collCashTablePlayerList = CashTablePlayerPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastCashTablePlayerCriteria = $criteria;
+
+		return $this->collCashTablePlayerList;
 	}
 
 } 
