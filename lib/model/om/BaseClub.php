@@ -2133,6 +2133,76 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$l->setClub($this);
 	}
 
+
+	
+	public function getCashTableListJoinCashTableSession($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableList === null) {
+			if ($this->isNew()) {
+				$this->collCashTableList = array();
+			} else {
+
+				$criteria->add(CashTablePeer::CLUB_ID, $this->getId());
+
+				$this->collCashTableList = CashTablePeer::doSelectJoinCashTableSession($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePeer::CLUB_ID, $this->getId());
+
+			if (!isset($this->lastCashTableCriteria) || !$this->lastCashTableCriteria->equals($criteria)) {
+				$this->collCashTableList = CashTablePeer::doSelectJoinCashTableSession($criteria, $con);
+			}
+		}
+		$this->lastCashTableCriteria = $criteria;
+
+		return $this->collCashTableList;
+	}
+
+
+	
+	public function getCashTableListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableList === null) {
+			if ($this->isNew()) {
+				$this->collCashTableList = array();
+			} else {
+
+				$criteria->add(CashTablePeer::CLUB_ID, $this->getId());
+
+				$this->collCashTableList = CashTablePeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePeer::CLUB_ID, $this->getId());
+
+			if (!isset($this->lastCashTableCriteria) || !$this->lastCashTableCriteria->equals($criteria)) {
+				$this->collCashTableList = CashTablePeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastCashTableCriteria = $criteria;
+
+		return $this->collCashTableList;
+	}
+
 	
 	public function initEmailTemplateList()
 	{

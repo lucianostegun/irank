@@ -82,6 +82,18 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 	protected $lastUserAdminSettingsCriteria = null;
 
 	
+	protected $collCashTableSessionListRelatedByUserAdminIdOpen;
+
+	
+	protected $lastCashTableSessionRelatedByUserAdminIdOpenCriteria = null;
+
+	
+	protected $collCashTableSessionListRelatedByUserAdminIdClose;
+
+	
+	protected $lastCashTableSessionRelatedByUserAdminIdCloseCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -566,6 +578,22 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collCashTableSessionListRelatedByUserAdminIdOpen !== null) {
+				foreach($this->collCashTableSessionListRelatedByUserAdminIdOpen as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collCashTableSessionListRelatedByUserAdminIdClose !== null) {
+				foreach($this->collCashTableSessionListRelatedByUserAdminIdClose as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -631,6 +659,22 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 
 				if ($this->collUserAdminSettingsList !== null) {
 					foreach($this->collUserAdminSettingsList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collCashTableSessionListRelatedByUserAdminIdOpen !== null) {
+					foreach($this->collCashTableSessionListRelatedByUserAdminIdOpen as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collCashTableSessionListRelatedByUserAdminIdClose !== null) {
+					foreach($this->collCashTableSessionListRelatedByUserAdminIdClose as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -886,6 +930,14 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 
 			foreach($this->getUserAdminSettingsList() as $relObj) {
 				$copyObj->addUserAdminSettings($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getCashTableSessionListRelatedByUserAdminIdOpen() as $relObj) {
+				$copyObj->addCashTableSessionRelatedByUserAdminIdOpen($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getCashTableSessionListRelatedByUserAdminIdClose() as $relObj) {
+				$copyObj->addCashTableSessionRelatedByUserAdminIdClose($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1144,6 +1196,216 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 		$this->lastUserAdminSettingsCriteria = $criteria;
 
 		return $this->collUserAdminSettingsList;
+	}
+
+	
+	public function initCashTableSessionListRelatedByUserAdminIdOpen()
+	{
+		if ($this->collCashTableSessionListRelatedByUserAdminIdOpen === null) {
+			$this->collCashTableSessionListRelatedByUserAdminIdOpen = array();
+		}
+	}
+
+	
+	public function getCashTableSessionListRelatedByUserAdminIdOpen($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableSessionListRelatedByUserAdminIdOpen === null) {
+			if ($this->isNew()) {
+			   $this->collCashTableSessionListRelatedByUserAdminIdOpen = array();
+			} else {
+
+				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_OPEN, $this->getId());
+
+				CashTableSessionPeer::addSelectColumns($criteria);
+				$this->collCashTableSessionListRelatedByUserAdminIdOpen = CashTableSessionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_OPEN, $this->getId());
+
+				CashTableSessionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria) || !$this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria->equals($criteria)) {
+					$this->collCashTableSessionListRelatedByUserAdminIdOpen = CashTableSessionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria = $criteria;
+		return $this->collCashTableSessionListRelatedByUserAdminIdOpen;
+	}
+
+	
+	public function countCashTableSessionListRelatedByUserAdminIdOpen($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_OPEN, $this->getId());
+
+		return CashTableSessionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addCashTableSessionRelatedByUserAdminIdOpen(CashTableSession $l)
+	{
+		$this->collCashTableSessionListRelatedByUserAdminIdOpen[] = $l;
+		$l->setUserAdminRelatedByUserAdminIdOpen($this);
+	}
+
+
+	
+	public function getCashTableSessionListRelatedByUserAdminIdOpenJoinCashTable($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableSessionListRelatedByUserAdminIdOpen === null) {
+			if ($this->isNew()) {
+				$this->collCashTableSessionListRelatedByUserAdminIdOpen = array();
+			} else {
+
+				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_OPEN, $this->getId());
+
+				$this->collCashTableSessionListRelatedByUserAdminIdOpen = CashTableSessionPeer::doSelectJoinCashTable($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_OPEN, $this->getId());
+
+			if (!isset($this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria) || !$this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria->equals($criteria)) {
+				$this->collCashTableSessionListRelatedByUserAdminIdOpen = CashTableSessionPeer::doSelectJoinCashTable($criteria, $con);
+			}
+		}
+		$this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria = $criteria;
+
+		return $this->collCashTableSessionListRelatedByUserAdminIdOpen;
+	}
+
+	
+	public function initCashTableSessionListRelatedByUserAdminIdClose()
+	{
+		if ($this->collCashTableSessionListRelatedByUserAdminIdClose === null) {
+			$this->collCashTableSessionListRelatedByUserAdminIdClose = array();
+		}
+	}
+
+	
+	public function getCashTableSessionListRelatedByUserAdminIdClose($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableSessionListRelatedByUserAdminIdClose === null) {
+			if ($this->isNew()) {
+			   $this->collCashTableSessionListRelatedByUserAdminIdClose = array();
+			} else {
+
+				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_CLOSE, $this->getId());
+
+				CashTableSessionPeer::addSelectColumns($criteria);
+				$this->collCashTableSessionListRelatedByUserAdminIdClose = CashTableSessionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_CLOSE, $this->getId());
+
+				CashTableSessionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria) || !$this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria->equals($criteria)) {
+					$this->collCashTableSessionListRelatedByUserAdminIdClose = CashTableSessionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria = $criteria;
+		return $this->collCashTableSessionListRelatedByUserAdminIdClose;
+	}
+
+	
+	public function countCashTableSessionListRelatedByUserAdminIdClose($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_CLOSE, $this->getId());
+
+		return CashTableSessionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addCashTableSessionRelatedByUserAdminIdClose(CashTableSession $l)
+	{
+		$this->collCashTableSessionListRelatedByUserAdminIdClose[] = $l;
+		$l->setUserAdminRelatedByUserAdminIdClose($this);
+	}
+
+
+	
+	public function getCashTableSessionListRelatedByUserAdminIdCloseJoinCashTable($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableSessionListRelatedByUserAdminIdClose === null) {
+			if ($this->isNew()) {
+				$this->collCashTableSessionListRelatedByUserAdminIdClose = array();
+			} else {
+
+				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_CLOSE, $this->getId());
+
+				$this->collCashTableSessionListRelatedByUserAdminIdClose = CashTableSessionPeer::doSelectJoinCashTable($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_CLOSE, $this->getId());
+
+			if (!isset($this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria) || !$this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria->equals($criteria)) {
+				$this->collCashTableSessionListRelatedByUserAdminIdClose = CashTableSessionPeer::doSelectJoinCashTable($criteria, $con);
+			}
+		}
+		$this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria = $criteria;
+
+		return $this->collCashTableSessionListRelatedByUserAdminIdClose;
 	}
 
 } 

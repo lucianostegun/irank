@@ -1,4 +1,4 @@
-<?php include_partial('cashTable/include/table') ?>
+<?php include_partial('cashTable/include/table', array('cashTableObj'=>$cashTableObj)); ?>
 
 <?php
 	echo form_remote_tag(array(

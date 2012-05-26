@@ -1,4 +1,4 @@
 all:
 
-  stylesheets:    []
-  javascripts:    [backend/plugins/jquery.countdown.js, backend/cashTable]
+  stylesheets:    [backend/cashTable]
+  javascripts:    [backend/cashTable]
