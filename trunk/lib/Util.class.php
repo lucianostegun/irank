@@ -404,6 +404,8 @@ class Util {
 			switch( $format ){
 				case '%h:%m:%s':
 					return sprintf('%02d', ($hours+($days*24))).':'.$minutes.':'.$seconds;
+				case '%hh %mm %ss':
+					return sprintf('%02d', ($hours+($days*24))).'h '.$minutes.'m '.$seconds.'s';
 				case '%h:%m':
 					return sprintf('%02d', ($hours+($days*24))).':'.$minutes;
 			}

@@ -52,6 +52,8 @@ class CashTableMapBuilder {
 
 		$tMap->addColumn('COMMENTS', 'Comments', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('LAST_OPENED_AT', 'LastOpenedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

@@ -13,7 +13,7 @@ abstract class BaseCashTablePeer {
 	const CLASS_DEFAULT = '...apps.backend.lib.model.CashTable';
 
 	
-	const NUM_COLUMNS = 15;
+	const NUM_COLUMNS = 16;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -47,6 +47,9 @@ abstract class BaseCashTablePeer {
 	const COMMENTS = 'cash_table.COMMENTS';
 
 	
+	const LAST_OPENED_AT = 'cash_table.LAST_OPENED_AT';
+
+	
 	const ENABLED = 'cash_table.ENABLED';
 
 	
@@ -70,19 +73,19 @@ abstract class BaseCashTablePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'ClubId', 'CashTableName', 'TableStatus', 'Players', 'Seats', 'EntranceFee', 'Buyin', 'Comments', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (CashTablePeer::ID, CashTablePeer::CLUB_ID, CashTablePeer::CASH_TABLE_NAME, CashTablePeer::TABLE_STATUS, CashTablePeer::PLAYERS, CashTablePeer::SEATS, CashTablePeer::ENTRANCE_FEE, CashTablePeer::BUYIN, CashTablePeer::COMMENTS, CashTablePeer::ENABLED, CashTablePeer::VISIBLE, CashTablePeer::DELETED, CashTablePeer::LOCKED, CashTablePeer::CREATED_AT, CashTablePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'club_id', 'cash_table_name', 'table_status', 'players', 'seats', 'entrance_fee', 'buyin', 'comments', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CLUB_ID'=>'', 'CASH_TABLE_NAME'=>'', 'TABLE_STATUS'=>'', 'PLAYERS'=>'', 'SEATS'=>'', 'ENTRANCE_FEE'=>'', 'BUYIN'=>'', 'COMMENTS'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'ClubId', 'CashTableName', 'TableStatus', 'Players', 'Seats', 'EntranceFee', 'Buyin', 'Comments', 'LastOpenedAt', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (CashTablePeer::ID, CashTablePeer::CLUB_ID, CashTablePeer::CASH_TABLE_NAME, CashTablePeer::TABLE_STATUS, CashTablePeer::PLAYERS, CashTablePeer::SEATS, CashTablePeer::ENTRANCE_FEE, CashTablePeer::BUYIN, CashTablePeer::COMMENTS, CashTablePeer::LAST_OPENED_AT, CashTablePeer::ENABLED, CashTablePeer::VISIBLE, CashTablePeer::DELETED, CashTablePeer::LOCKED, CashTablePeer::CREATED_AT, CashTablePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'club_id', 'cash_table_name', 'table_status', 'players', 'seats', 'entrance_fee', 'buyin', 'comments', 'last_opened_at', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CLUB_ID'=>'', 'CASH_TABLE_NAME'=>'', 'TABLE_STATUS'=>'', 'PLAYERS'=>'', 'SEATS'=>'', 'ENTRANCE_FEE'=>'', 'BUYIN'=>'', 'COMMENTS'=>'', 'LAST_OPENED_AT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ClubId'=>1, 'CashTableName'=>2, 'TableStatus'=>3, 'Players'=>4, 'Seats'=>5, 'EntranceFee'=>6, 'Buyin'=>7, 'Comments'=>8, 'Enabled'=>9, 'Visible'=>10, 'Deleted'=>11, 'Locked'=>12, 'CreatedAt'=>13, 'UpdatedAt'=>14, ),
-		BasePeer::TYPE_COLNAME=>array (CashTablePeer::ID=>0, CashTablePeer::CLUB_ID=>1, CashTablePeer::CASH_TABLE_NAME=>2, CashTablePeer::TABLE_STATUS=>3, CashTablePeer::PLAYERS=>4, CashTablePeer::SEATS=>5, CashTablePeer::ENTRANCE_FEE=>6, CashTablePeer::BUYIN=>7, CashTablePeer::COMMENTS=>8, CashTablePeer::ENABLED=>9, CashTablePeer::VISIBLE=>10, CashTablePeer::DELETED=>11, CashTablePeer::LOCKED=>12, CashTablePeer::CREATED_AT=>13, CashTablePeer::UPDATED_AT=>14, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'club_id'=>1, 'cash_table_name'=>2, 'table_status'=>3, 'players'=>4, 'seats'=>5, 'entrance_fee'=>6, 'buyin'=>7, 'comments'=>8, 'enabled'=>9, 'visible'=>10, 'deleted'=>11, 'locked'=>12, 'created_at'=>13, 'updated_at'=>14, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ClubId'=>1, 'CashTableName'=>2, 'TableStatus'=>3, 'Players'=>4, 'Seats'=>5, 'EntranceFee'=>6, 'Buyin'=>7, 'Comments'=>8, 'LastOpenedAt'=>9, 'Enabled'=>10, 'Visible'=>11, 'Deleted'=>12, 'Locked'=>13, 'CreatedAt'=>14, 'UpdatedAt'=>15, ),
+		BasePeer::TYPE_COLNAME=>array (CashTablePeer::ID=>0, CashTablePeer::CLUB_ID=>1, CashTablePeer::CASH_TABLE_NAME=>2, CashTablePeer::TABLE_STATUS=>3, CashTablePeer::PLAYERS=>4, CashTablePeer::SEATS=>5, CashTablePeer::ENTRANCE_FEE=>6, CashTablePeer::BUYIN=>7, CashTablePeer::COMMENTS=>8, CashTablePeer::LAST_OPENED_AT=>9, CashTablePeer::ENABLED=>10, CashTablePeer::VISIBLE=>11, CashTablePeer::DELETED=>12, CashTablePeer::LOCKED=>13, CashTablePeer::CREATED_AT=>14, CashTablePeer::UPDATED_AT=>15, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'club_id'=>1, 'cash_table_name'=>2, 'table_status'=>3, 'players'=>4, 'seats'=>5, 'entrance_fee'=>6, 'buyin'=>7, 'comments'=>8, 'last_opened_at'=>9, 'enabled'=>10, 'visible'=>11, 'deleted'=>12, 'locked'=>13, 'created_at'=>14, 'updated_at'=>15, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 
 	
@@ -153,6 +156,8 @@ abstract class BaseCashTablePeer {
 		$criteria->addSelectColumn(CashTablePeer::BUYIN);
 
 		$criteria->addSelectColumn(CashTablePeer::COMMENTS);
+
+		$criteria->addSelectColumn(CashTablePeer::LAST_OPENED_AT);
 
 		$criteria->addSelectColumn(CashTablePeer::ENABLED);
 

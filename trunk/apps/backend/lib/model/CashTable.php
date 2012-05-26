@@ -125,12 +125,14 @@ class CashTable extends BaseCashTable
 	
 	public function openTable(){
 		
+		$this->setLastOpenedAt(date('Y-m-d H:i:s'));
 		$this->setTableStatus('open');
 		$this->save();
 	}
 
 	public function closeTable(){
 		
+		$this->setLastOpenedAt(null);
 		$this->setTableStatus('closed');
 		$this->save();
 	}
@@ -143,6 +145,16 @@ class CashTable extends BaseCashTable
 	public function isClosed(){
 		
 		return $this->getTableStatus()=='closed';
+	}
+
+	public function getComments($format=false){
+		
+		$comments = parent::getComments();
+		
+		if( $format )
+			$comments = preg_replace('/[\n\r]/i', '<br/>', $comments);
+		
+		return $comments;
 	}
 	
 	public function toString(){

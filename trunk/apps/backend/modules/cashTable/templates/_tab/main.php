@@ -1,3 +1,5 @@
+<?php include_partial('cashTable/include/table') ?>
+
 <?php
 	echo form_remote_tag(array(
 		'url'=>'cashTable/save',
@@ -37,6 +39,9 @@
 			<label><?php echo $cashTableObj->getClub()->toString() ?></label>
 			<?php endif; ?>
 		</div>
+		<div class="formRight <?php echo $readOnlyClass ?>">
+			<label><?php echo $cashTableObj->getClub()->toString() ?></label>
+		</div>
 		<div class="clear"></div>
 	</div>
 	<?php endif; ?>
@@ -47,6 +52,9 @@
 			<?php echo input_tag('cashTableName', $cashTableObj->getCashTableName(), array('size'=>35, 'maxlength'=>50, 'id'=>'cashTableCashTableName')) ?>
 			<div class="formNote error" id="cashTableFormErrorCashTableName"></div>
 		</div>
+		<div class="formRight <?php echo $readOnlyClass ?>">
+			<label><?php echo $cashTableObj->getCashTableName() ?></label>
+		</div>
 		<div class="clear"></div>
 	</div>
 	
@@ -56,12 +64,15 @@
 			<?php echo input_tag('seats', $cashTableObj->getSeats(), array('size'=>3, 'maxlength'=>2, 'id'=>'cashTableSeats')) ?>
 			<div class="formNote error" id="cashTableFormErrorSeats"></div>
 		</div>
+		<div class="formRight <?php echo $readOnlyClass ?>">
+			<label><?php echo $cashTableObj->getSeats() ?></label>
+		</div>
 		<div class="clear"></div>
 	</div>
 	
 	<div class="formRow">
 		<label>Jogadores</label>
-		<div class="formRight <?php echo $fieldClass ?>">
+		<div class="formRight">
 			<label><?php echo $cashTableObj->getPlayers() ?></label>
 		</div>
 		<div class="clear"></div>
@@ -69,7 +80,7 @@
 	
 	<div class="formRow">
 		<label>Valor atual</label>
-		<div class="formRight <?php echo $fieldClass ?>">
+		<div class="formRight">
 			<label><?php echo Util::formatFloat($cashTableObj->getCurrentValue(), true) ?></label>
 		</div>
 		<div class="clear"></div>
@@ -85,6 +96,12 @@
 			<div class="formNote error" id="cashTableFormErrorBuyin"></div>
 			<div class="formNote">Buyin + Taxa de entrada</div>
 		</div>
+		<div class="formRight <?php echo $readOnlyClass ?>">
+			<label><?php echo Util::formatFloat($cashTableObj->getBuyin(), true) ?></label>
+			<label>+</label>
+			<label><?php echo Util::formatFloat($cashTableObj->getEntranceFee(), true) ?>
+			<div class="clear"></div>
+		</div>
 		<div class="clear"></div>
 	</div>
 	
@@ -93,6 +110,9 @@
 		<div class="formRight <?php echo $fieldClass ?>">
 			<?php echo textarea_tag('comments', $cashTableObj->getComments(), array('style'=>'width: 80%; height: 250px', 'id'=>'cashTableComments')) ?>
 			<div class="formNote error" id="clubFormErrorComments"></div>
+		</div>
+		<div class="formRight <?php echo $fieldClass ?>">
+			<label><?php echo $cashTableObj->getComments(true) ?>
 		</div>
 		<div class="clear"></div>
 	</div>

@@ -131,4 +131,26 @@ class cashTableActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	return $this->renderText(get_partial('cashTable/tab/main', array('cashTableObj'=>$cashTableObj)));
   }
+
+  public function executeCloseTable($request){
+    
+    $cashTableObj = CashTablePeer::retrieveByPK($this->cashTableId);
+    
+    if( !$cashTableObj->isMyCashTable() ){
+    	
+	    $username = $this->getUser()->getAttribute('username');
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou fechar a mesa <b>('.$cashTableObj->getId().') '.$cashTableObj->toString().'</b>.', 'CashTable', array(), Log::LOG_CRITICAL);
+    	
+    	throw new Exception('Você não tem permissão para editar esta mesa!');
+    }
+    
+    if( $cashTableObj->isClosed() )
+    	Util::forceError('!A mesa já está fechada');
+    	
+    $cashTableObj->closeTable();
+
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('cashTable/tab/main', array('cashTableObj'=>$cashTableObj)));
+  }
 }

@@ -1,5 +1,9 @@
 <?php
-	$numStatList = $cashTableObj->getStats();
+	$numStatList  = $cashTableObj->getStats();
+	$lastOpenedAt = $cashTableObj->getLastOpenedAt(null);
+	$runningTime  = (is_null($lastOpenedAt)?0:(time()-$lastOpenedAt));
+	
+	echo input_hidden_tag('statsRunningTime', $runningTime);
 ?>
 <div class="numStats">
 	<ul>
@@ -17,7 +21,7 @@
     	</li>
     	<?php endforeach; ?>
     	<li class="last">
-    		<label id="statsTimeRunning" style="white-space: nowrap">00h 00m 00s</label>
+    		<label id="statsRunningTimeLabel" style="white-space: nowrap"><?php echo Util::formatTimeString($runningTime, '%hh %mm %ss') ?></label>
     		<span style="white-space: nowrap; margin-left: 16px">Tempo de jogo</span>
     	</li>
     </ul>

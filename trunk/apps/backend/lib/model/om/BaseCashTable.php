@@ -45,6 +45,10 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 
 	
+	protected $last_opened_at;
+
+
+	
 	protected $enabled;
 
 
@@ -140,6 +144,28 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getLastOpenedAt($format = 'Y-m-d H:i:s')
+	{
+
+		if ($this->last_opened_at === null || $this->last_opened_at === '') {
+			return null;
+		} elseif (!is_int($this->last_opened_at)) {
+						$ts = strtotime($this->last_opened_at);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [last_opened_at] as date/time value: " . var_export($this->last_opened_at, true));
+			}
+		} else {
+			$ts = $this->last_opened_at;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
+	}
+
+	
 	public function getEnabled()
 	{
 
@@ -215,9 +241,7 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -231,9 +255,7 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 	public function setClubId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -251,9 +273,7 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 	public function setCashTableName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -267,9 +287,7 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 	public function setTableStatus($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -283,9 +301,7 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 	public function setPlayers($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -299,9 +315,7 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 	public function setSeats($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -335,15 +349,30 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 	public function setComments($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
 		if ($this->comments !== $v) {
 			$this->comments = $v;
 			$this->modifiedColumns[] = CashTablePeer::COMMENTS;
+		}
+
+	} 
+	
+	public function setLastOpenedAt($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [last_opened_at] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->last_opened_at !== $ts) {
+			$this->last_opened_at = $ts;
+			$this->modifiedColumns[] = CashTablePeer::LAST_OPENED_AT;
 		}
 
 	} 
@@ -444,23 +473,25 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 
 			$this->comments = $rs->getString($startcol + 8);
 
-			$this->enabled = $rs->getBoolean($startcol + 9);
+			$this->last_opened_at = $rs->getTimestamp($startcol + 9, null);
 
-			$this->visible = $rs->getBoolean($startcol + 10);
+			$this->enabled = $rs->getBoolean($startcol + 10);
 
-			$this->deleted = $rs->getBoolean($startcol + 11);
+			$this->visible = $rs->getBoolean($startcol + 11);
 
-			$this->locked = $rs->getBoolean($startcol + 12);
+			$this->deleted = $rs->getBoolean($startcol + 12);
 
-			$this->created_at = $rs->getTimestamp($startcol + 13, null);
+			$this->locked = $rs->getBoolean($startcol + 13);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 14, null);
+			$this->created_at = $rs->getTimestamp($startcol + 14, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 15, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 15; 
+						return $startcol + 16; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating CashTable object", $e);
 		}
@@ -642,21 +673,24 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 				return $this->getComments();
 				break;
 			case 9:
-				return $this->getEnabled();
+				return $this->getLastOpenedAt();
 				break;
 			case 10:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 11:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 12:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 13:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 14:
+				return $this->getCreatedAt();
+				break;
+			case 15:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -678,12 +712,13 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 			$keys[6]=>$this->getEntranceFee(),
 			$keys[7]=>$this->getBuyin(),
 			$keys[8]=>$this->getComments(),
-			$keys[9]=>$this->getEnabled(),
-			$keys[10]=>$this->getVisible(),
-			$keys[11]=>$this->getDeleted(),
-			$keys[12]=>$this->getLocked(),
-			$keys[13]=>$this->getCreatedAt(),
-			$keys[14]=>$this->getUpdatedAt(),
+			$keys[9]=>$this->getLastOpenedAt(),
+			$keys[10]=>$this->getEnabled(),
+			$keys[11]=>$this->getVisible(),
+			$keys[12]=>$this->getDeleted(),
+			$keys[13]=>$this->getLocked(),
+			$keys[14]=>$this->getCreatedAt(),
+			$keys[15]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -727,21 +762,24 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 				$this->setComments($value);
 				break;
 			case 9:
-				$this->setEnabled($value);
+				$this->setLastOpenedAt($value);
 				break;
 			case 10:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 11:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 12:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 13:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 14:
+				$this->setCreatedAt($value);
+				break;
+			case 15:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -760,12 +798,13 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setEntranceFee($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setBuyin($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setComments($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setEnabled($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setVisible($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setLocked($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
+		if (array_key_exists($keys[9], $arr)) $this->setLastOpenedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setEnabled($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setVisible($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setDeleted($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setLocked($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setCreatedAt($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setUpdatedAt($arr[$keys[15]]);
 	}
 
 	
@@ -782,6 +821,7 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(CashTablePeer::ENTRANCE_FEE)) $criteria->add(CashTablePeer::ENTRANCE_FEE, $this->entrance_fee);
 		if ($this->isColumnModified(CashTablePeer::BUYIN)) $criteria->add(CashTablePeer::BUYIN, $this->buyin);
 		if ($this->isColumnModified(CashTablePeer::COMMENTS)) $criteria->add(CashTablePeer::COMMENTS, $this->comments);
+		if ($this->isColumnModified(CashTablePeer::LAST_OPENED_AT)) $criteria->add(CashTablePeer::LAST_OPENED_AT, $this->last_opened_at);
 		if ($this->isColumnModified(CashTablePeer::ENABLED)) $criteria->add(CashTablePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(CashTablePeer::VISIBLE)) $criteria->add(CashTablePeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(CashTablePeer::DELETED)) $criteria->add(CashTablePeer::DELETED, $this->deleted);
@@ -833,6 +873,8 @@ abstract class BaseCashTable extends BaseObject  implements Persistent {
 		$copyObj->setBuyin($this->buyin);
 
 		$copyObj->setComments($this->comments);
+
+		$copyObj->setLastOpenedAt($this->last_opened_at);
 
 		$copyObj->setEnabled($this->enabled);
 
