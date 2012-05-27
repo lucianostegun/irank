@@ -12,6 +12,7 @@ class CashTable extends BaseCashTable
 	
 	private $totalEntranceFee = null;
 	private $totalBuyin       = null;
+	private $totalCashout     = null;
 	
     public function save($con=null){
     	
@@ -76,19 +77,17 @@ class CashTable extends BaseCashTable
 		return CashTablePeer::doSelect($criteria);
 	}
 	
-	public function getCurrentValue(){
+	public function getCurrentValue($withEntranceFee=true){
 		
-		return $this->getTotalBuyin()+$this->getTotalEntranceFee();
+		return $this->getTotalBuyin()+($withEntranceFee?$this->getTotalEntranceFee():0);
 	}
 	
 	public function getTotalBuyin(){
 		
-		if( !is_null($this->totalBuyin) )
-			return $this->totalBuyin;
-			
-		$this->totalBuyin = Util::executeOne('SELECT get_cash_table_total_buyin('.$this->getId().')', 'float');
+		if( is_null($this->totalBuyin) )
+			$this->totalBuyin = Util::executeOne('SELECT get_cash_table_total_buyin('.$this->getId().')', 'float');
 		
-		return $this->totalBuyin;
+		return $this->totalBuyin - $this->getTotalCashout();
 	}
 
 	public function getTotalEntranceFee(){
@@ -99,6 +98,16 @@ class CashTable extends BaseCashTable
 		$this->totalEntranceFee = Util::executeOne('SELECT get_cash_table_entrance_fee('.$this->getId().')', 'float');
 		
 		return $this->totalEntranceFee;
+	}
+
+	public function getTotalCashout(){
+		
+		if( !is_null($this->totalCashout) )
+			return $this->totalCashout;
+			
+		$this->totalCashout = Util::executeOne('SELECT get_cash_table_cashout('.$this->getId().')', 'float');
+		
+		return $this->totalCashout;
 	}
 	
 	public function getBalanceDifference(){
@@ -115,18 +124,6 @@ class CashTable extends BaseCashTable
 	    return array('value'=>$balanceValue,
 	    			 'changes'=>$balanceChanges,
 	    			 'previous'=>$previousBalanceValue);
-	}
-	
-	public function getStats($jsKeys=false){
-		
-		$players         = $this->getPlayers();
-		$changePlayers   = 0;
-		$playersPrevious = 0;
-			
-		$numStatList = array();
-    	$numStatList[($jsKeys?'players':'Jogadores')]      = array('tagName'=>'players',        'value'=>$players, 'changes'=>$changePlayers, 'previous'=>$playersPrevious);
-    	
-    	return $numStatList;
 	}
 	
 	public function getTableStatus($description=false){
@@ -157,6 +154,16 @@ class CashTable extends BaseCashTable
 			return false;
 		
 		return true;
+	}
+	
+	public function getClub($con=null){
+		
+		$clubObj = parent::getClub($con);
+		
+		if( !is_object($clubObj) )
+			$clubObj = new Club();
+		
+		return $clubObj;
 	}
 	
 	public function openTable(){
@@ -195,7 +202,6 @@ class CashTable extends BaseCashTable
 			$this->save($con);
 			
 			$con->commit();
-			
 			return true;
 		}catch(Exception $e){
 			
@@ -239,7 +245,6 @@ class CashTable extends BaseCashTable
 			$this->save($con);
 			
 			$con->commit();
-			
 			return true;
 		}catch(Exception $e){
 			
@@ -270,13 +275,28 @@ class CashTable extends BaseCashTable
 		return is_null($peopleId);
 	}
 	
+	/**
+	 * Método que verifica se o jogador já está sentado na mesa
+	 */
+	private function checkPlayer($peopleId){
+		
+		$cashTableSessionId = $this->getCashTableSessionId();
+		
+		$peopleId = Util::executeOne("SELECT people_id FROM cash_table_player WHERE cash_table_session_id = $cashTableSessionId AND people_id = $peopleId AND checkout_at IS NULL");
+		
+		return is_null($peopleId);
+	}
+	
 	public function seatPlayer($peopleId, $tablePosition, $buyin){
 		
 		$con = Propel::getConnection();
 		$con->begin();
 		
 		if( !$this->checkTablePosition($tablePosition) )
-			throw new Exception('O assento selecionado já está ocupado por outro jogador');
+			throw new Exception('O assento selecionado já está ocupado por outro jogador.');
+
+		if( !$this->checkPlayer($peopleId) )
+			throw new Exception('O jogador já está jogando em outra mesa.');
 		
 		try{
 			
@@ -285,18 +305,23 @@ class CashTable extends BaseCashTable
 			$cashTablePlayerObj->setCashTableSessionId($this->getCashTableSessionId());
 			$cashTablePlayerObj->setPeopleId($peopleId);
 			$cashTablePlayerObj->setTablePosition($tablePosition);
-			$cashTablePlayerObj->setBuyin(Util::formatFloat($buyin));
-			$cashTablePlayerObj->setEntranceFee($this->getEntranceFee());
 			$cashTablePlayerObj->setCheckinAt(time());
 			$cashTablePlayerObj->setCheckoutAt(null);
-			$cashTablePlayerObj->setCashOut(0);
+			$cashTablePlayerObj->setCashoutValue(0);
+	    	$cashTablePlayerObj->addBuyin($buyin, $this->getEntranceFee(), $con);
 	    	$cashTablePlayerObj->save($con);
+	    	
+	    	$cashTableSessionObj = $this->getCashTableSession();
+	    	$cashTableSessionId  = $cashTableSessionObj->getId();
+			
+			$players = Util::executeOne("SELECT COUNT(DISTINCT people_id) FROM cash_table_player WHERE cash_table_session_id = $cashTableSessionId");
+			$cashTableSessionObj->setTotalPlayers($players);
+			$this->save($con);
 			
 			$this->setPlayers($this->getPlayers()+1);
 			$this->save($con);
 			
 			$con->commit();
-			
 			return true;
 		}catch(Exception $e){
 			
@@ -305,13 +330,62 @@ class CashTable extends BaseCashTable
 		}
 	}
 	
+	public function addBuyin($peopleId, $buyin){
+		
+		$con = Propel::getConnection();
+		$con->begin();
+		
+		$cashTablePlayerObj = CashTablePlayerPeer::retrieveByPK($this->getId(), $this->getCashTableSessionId(), $peopleId);
+		$result = $cashTablePlayerObj->addBuyin($buyin, $this->getEntranceFee());
+		
+		if( $result===true ){
+			
+			$cashTablePlayerObj->save($con);
+			
+			$con->commit();
+			return true;
+		}else{
+			
+			$con->rollback();
+			return false;
+		}
+	}
+
+	public function addDealer($peopleId){
+		
+		$con = Propel::getConnection();
+		$con->begin();
+		
+		try{
+			$cashTableSessionObj = $this->getCashTableSession();
+			$cashTableSessionObj->setTotalDealers($cashTableSessionObj->getTotalDealers()+1);
+			$cashTableSessionObj->save($con);
+			
+			$this->setPeopleIdDealer($peopleId);
+			$this->save();
+			
+			$con->commit();
+			return true;
+		}catch(Exception $e){
+			
+			$con->rollback();
+			return false;
+		}
+	}
+
+	public function cashout($peopleId, $buyin){
+		
+		$cashTablePlayerObj = CashTablePlayerPeer::retrieveByPK($this->getId(), $this->getCashTableSessionId(), $peopleId);
+		$cashTablePlayerObj->cashout($buyin);
+	}
+	
 	public function getPlayerList(){
 		
 		$criteria = new Criteria();
 		$criteria->add( CashTablePlayerPeer::CHECKOUT_AT, null );
 		$criteria->add( CashTablePlayerPeer::CASH_TABLE_SESSION_ID, $this->getCashTableSessionId() );
 		$criteria->addAscendingOrderByColumn( CashTablePlayerPeer::TABLE_POSITION );
-		return $this->getCashTablePlayerListJoinPeople();
+		return $this->getCashTablePlayerListJoinPeople($criteria);
 	}
 
 	public function getComments($format=false){
@@ -332,10 +406,13 @@ class CashTable extends BaseCashTable
 	public function getInfo(){
 		
 		$infoList = array();
+		$infoList['seats']            = $this->getSeats();
 		$infoList['players']          = $this->getPlayers();
 		$infoList['totalBuyin']       = $this->getTotalBuyin();
 		$infoList['totalEntranceFee'] = $this->getTotalEntranceFee();
 		$infoList['currentValue']     = $this->getCurrentValue();
+		$infoList['tableStatus']      = $this->getTableStatus();
+		$infoList['isOpen']           = $this->isOpen();
 		
 		return $infoList;
 	}

@@ -77,6 +77,8 @@ class cashTableActions extends sfActions
     
     $cashTableObj->quickSave($request);
     
+    echo Util::parseInfo($cashTableObj->getInfo());
+    
     exit;
   }
 
@@ -114,14 +116,6 @@ class cashTableActions extends sfActions
     
     $cashTableObj = CashTablePeer::retrieveByPK($this->cashTableId);
     
-    if( !$cashTableObj->isMyCashTable() ){
-    	
-	    $username = $this->getUser()->getAttribute('username');
-    	Log::doLog('Usuário <b>'.$username.'</b> tentou abrir a mesa <b>('.$cashTableObj->getId().') '.$cashTableObj->toString().'</b>.', 'CashTable', array(), Log::LOG_CRITICAL);
-    	
-    	throw new Exception('Você não tem permissão para editar esta mesa!');
-    }
-    
 	try{
 		
 	    $cashTableObj->openTable();
@@ -132,7 +126,7 @@ class cashTableActions extends sfActions
 
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('cashTable/tab/main', array('cashTableObj'=>$cashTableObj)));
+	return $this->renderText(get_partial('cashTable/tab/table', array('cashTableObj'=>$cashTableObj)));
   }
 
   public function executeCloseTable($request){
@@ -149,27 +143,60 @@ class cashTableActions extends sfActions
     	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('cashTable/tab/main', array('cashTableObj'=>$cashTableObj)));
+	return $this->renderText(get_partial('cashTable/tab/table', array('cashTableObj'=>$cashTableObj)));
   }
 
-  public function executeSeatPlayer($request){
-    
+  public function handleErrorSavePlayer(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
+
+  public function executeSavePlayer($request){
+  	
     $peopleId      = $request->getParameter('peopleId');
     $tablePosition = $request->getParameter('tablePosition');
     $buyin         = $request->getParameter('buyin');
+    $saveAction    = $request->getParameter('saveAction');
     
     $cashTableObj = CashTablePeer::retrieveByPK($this->cashTableId);
     
 	try{
 		
-	    $cashTableObj->seatPlayer($peopleId, $tablePosition, $buyin);
-	    
-	    echo Util::parseInfo($cashTableObj->getInfo());
+		if( $cashTableObj->isClosed() )
+			throw new Exception('A mesa está fechada!');
+		
+		$buyin = Util::formatFloat($buyin);
+		
+		switch($saveAction){
+			case 'seatPlayer':
+				$cashTableObj->seatPlayer($peopleId, $tablePosition, $buyin);
+				break;
+			case 'rebuy':
+				$cashTableObj->addBuyin($peopleId, $buyin);
+				break;
+			case 'cashout':
+				$cashTableObj->cashout($peopleId, $buyin);
+			case 'seatDealer':
+				$cashTableObj->addDealer($peopleId);
+				break;
+		}
 	}catch(Exception $e){
 		
     	Util::forceError('!'.$e->getMessage());
 	}
 	
-	exit;
+	echo Util::parseInfo($cashTableObj->getInfo());
+    
+    exit;
+  }
+
+  public function executeGetTabContent($request){
+    
+    $tabName      = $request->getParameter('tabName'); 
+    $cashTableObj = CashTablePeer::retrieveByPK($this->cashTableId);
+
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('cashTable/tab/'.$tabName, array('cashTableObj'=>$cashTableObj)));
   }
 }

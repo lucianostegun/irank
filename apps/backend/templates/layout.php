@@ -119,7 +119,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         <?php endif; ?>
         
         <li class="files"><?php echo link_to('<span>Gerenciador de arquivos</span>', 'fileManager/index', array('class'=>($moduleName=='fileManager'?'active':''))); ?></li>
-        <li class="users"><?php echo link_to('<span>Cadastro de usuários</span>', 'people/index', array('class'=>($moduleName=='people'?'active':''))); ?></li>
+        <li class="users"><?php echo link_to('<span>Cadastro de jogadores</span>', 'people/index', array('class'=>($moduleName=='people'?'active':''))); ?></li>
     </ul>
 </div>
 

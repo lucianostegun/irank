@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
+abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persistent {
 
 
 	
@@ -25,27 +25,11 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 
 
 	
-	protected $table_position;
+	protected $buyin;
 
 
 	
-	protected $total_buyin;
-
-
-	
-	protected $total_entrance_fee;
-
-
-	
-	protected $cashout_value;
-
-
-	
-	protected $checkin_at;
-
-
-	
-	protected $checkout_at;
+	protected $entrance_fee;
 
 
 	
@@ -99,75 +83,17 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getTablePosition()
+	public function getBuyin()
 	{
 
-		return $this->table_position;
+		return $this->buyin;
 	}
 
 	
-	public function getTotalBuyin()
+	public function getEntranceFee()
 	{
 
-		return $this->total_buyin;
-	}
-
-	
-	public function getTotalEntranceFee()
-	{
-
-		return $this->total_entrance_fee;
-	}
-
-	
-	public function getCashoutValue()
-	{
-
-		return $this->cashout_value;
-	}
-
-	
-	public function getCheckinAt($format = 'Y-m-d H:i:s')
-	{
-
-		if ($this->checkin_at === null || $this->checkin_at === '') {
-			return null;
-		} elseif (!is_int($this->checkin_at)) {
-						$ts = strtotime($this->checkin_at);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [checkin_at] as date/time value: " . var_export($this->checkin_at, true));
-			}
-		} else {
-			$ts = $this->checkin_at;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
-	}
-
-	
-	public function getCheckoutAt($format = 'Y-m-d H:i:s')
-	{
-
-		if ($this->checkout_at === null || $this->checkout_at === '') {
-			return null;
-		} elseif (!is_int($this->checkout_at)) {
-						$ts = strtotime($this->checkout_at);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [checkout_at] as date/time value: " . var_export($this->checkout_at, true));
-			}
-		} else {
-			$ts = $this->checkout_at;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
+		return $this->entrance_fee;
 	}
 
 	
@@ -224,7 +150,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = CashTablePlayerPeer::ID;
+			$this->modifiedColumns[] = CashTablePlayerBuyinPeer::ID;
 		}
 
 	} 
@@ -238,7 +164,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 
 		if ($this->cash_table_id !== $v) {
 			$this->cash_table_id = $v;
-			$this->modifiedColumns[] = CashTablePlayerPeer::CASH_TABLE_ID;
+			$this->modifiedColumns[] = CashTablePlayerBuyinPeer::CASH_TABLE_ID;
 		}
 
 		if ($this->aCashTable !== null && $this->aCashTable->getId() !== $v) {
@@ -256,7 +182,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 
 		if ($this->cash_table_session_id !== $v) {
 			$this->cash_table_session_id = $v;
-			$this->modifiedColumns[] = CashTablePlayerPeer::CASH_TABLE_SESSION_ID;
+			$this->modifiedColumns[] = CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID;
 		}
 
 		if ($this->aCashTableSession !== null && $this->aCashTableSession->getId() !== $v) {
@@ -274,7 +200,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 
 		if ($this->people_id !== $v) {
 			$this->people_id = $v;
-			$this->modifiedColumns[] = CashTablePlayerPeer::PEOPLE_ID;
+			$this->modifiedColumns[] = CashTablePlayerBuyinPeer::PEOPLE_ID;
 		}
 
 		if ($this->aPeople !== null && $this->aPeople->getId() !== $v) {
@@ -283,80 +209,22 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setTablePosition($v)
+	public function setBuyin($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->table_position !== $v) {
-			$this->table_position = $v;
-			$this->modifiedColumns[] = CashTablePlayerPeer::TABLE_POSITION;
+		if ($this->buyin !== $v) {
+			$this->buyin = $v;
+			$this->modifiedColumns[] = CashTablePlayerBuyinPeer::BUYIN;
 		}
 
 	} 
 	
-	public function setTotalBuyin($v)
+	public function setEntranceFee($v)
 	{
 
-		if ($this->total_buyin !== $v) {
-			$this->total_buyin = $v;
-			$this->modifiedColumns[] = CashTablePlayerPeer::TOTAL_BUYIN;
-		}
-
-	} 
-	
-	public function setTotalEntranceFee($v)
-	{
-
-		if ($this->total_entrance_fee !== $v) {
-			$this->total_entrance_fee = $v;
-			$this->modifiedColumns[] = CashTablePlayerPeer::TOTAL_ENTRANCE_FEE;
-		}
-
-	} 
-	
-	public function setCashoutValue($v)
-	{
-
-		if ($this->cashout_value !== $v) {
-			$this->cashout_value = $v;
-			$this->modifiedColumns[] = CashTablePlayerPeer::CASHOUT_VALUE;
-		}
-
-	} 
-	
-	public function setCheckinAt($v)
-	{
-
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [checkin_at] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->checkin_at !== $ts) {
-			$this->checkin_at = $ts;
-			$this->modifiedColumns[] = CashTablePlayerPeer::CHECKIN_AT;
-		}
-
-	} 
-	
-	public function setCheckoutAt($v)
-	{
-
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [checkout_at] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->checkout_at !== $ts) {
-			$this->checkout_at = $ts;
-			$this->modifiedColumns[] = CashTablePlayerPeer::CHECKOUT_AT;
+		if ($this->entrance_fee !== $v) {
+			$this->entrance_fee = $v;
+			$this->modifiedColumns[] = CashTablePlayerBuyinPeer::ENTRANCE_FEE;
 		}
 
 	} 
@@ -373,7 +241,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 		}
 		if ($this->created_at !== $ts) {
 			$this->created_at = $ts;
-			$this->modifiedColumns[] = CashTablePlayerPeer::CREATED_AT;
+			$this->modifiedColumns[] = CashTablePlayerBuyinPeer::CREATED_AT;
 		}
 
 	} 
@@ -390,7 +258,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 		}
 		if ($this->updated_at !== $ts) {
 			$this->updated_at = $ts;
-			$this->modifiedColumns[] = CashTablePlayerPeer::UPDATED_AT;
+			$this->modifiedColumns[] = CashTablePlayerBuyinPeer::UPDATED_AT;
 		}
 
 	} 
@@ -407,29 +275,21 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 
 			$this->people_id = $rs->getInt($startcol + 3);
 
-			$this->table_position = $rs->getInt($startcol + 4);
+			$this->buyin = $rs->getFloat($startcol + 4);
 
-			$this->total_buyin = $rs->getFloat($startcol + 5);
+			$this->entrance_fee = $rs->getFloat($startcol + 5);
 
-			$this->total_entrance_fee = $rs->getFloat($startcol + 6);
+			$this->created_at = $rs->getTimestamp($startcol + 6, null);
 
-			$this->cashout_value = $rs->getFloat($startcol + 7);
-
-			$this->checkin_at = $rs->getTimestamp($startcol + 8, null);
-
-			$this->checkout_at = $rs->getTimestamp($startcol + 9, null);
-
-			$this->created_at = $rs->getTimestamp($startcol + 10, null);
-
-			$this->updated_at = $rs->getTimestamp($startcol + 11, null);
+			$this->updated_at = $rs->getTimestamp($startcol + 7, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 12; 
+						return $startcol + 8; 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating CashTablePlayer object", $e);
+			throw new PropelException("Error populating CashTablePlayerBuyin object", $e);
 		}
 	}
 
@@ -441,12 +301,12 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(CashTablePlayerPeer::DATABASE_NAME);
+			$con = Propel::getConnection(CashTablePlayerBuyinPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->begin();
-			CashTablePlayerPeer::doDelete($this, $con);
+			CashTablePlayerBuyinPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -458,12 +318,12 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 	
 	public function save($con = null)
 	{
-    if ($this->isNew() && !$this->isColumnModified(CashTablePlayerPeer::CREATED_AT))
+    if ($this->isNew() && !$this->isColumnModified(CashTablePlayerBuyinPeer::CREATED_AT))
     {
       $this->setCreatedAt(time());
     }
 
-    if ($this->isModified() && !$this->isColumnModified(CashTablePlayerPeer::UPDATED_AT))
+    if ($this->isModified() && !$this->isColumnModified(CashTablePlayerBuyinPeer::UPDATED_AT))
     {
       $this->setUpdatedAt(time());
     }
@@ -473,7 +333,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(CashTablePlayerPeer::DATABASE_NAME);
+			$con = Propel::getConnection(CashTablePlayerBuyinPeer::DATABASE_NAME);
 		}
 
 		try {
@@ -519,11 +379,11 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = CashTablePlayerPeer::doInsert($this, $con);
+					$pk = CashTablePlayerBuyinPeer::doInsert($this, $con);
 					$affectedRows += 1; 										 										 
 					$this->setNew(false);
 				} else {
-					$affectedRows += CashTablePlayerPeer::doUpdate($this, $con);
+					$affectedRows += CashTablePlayerBuyinPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); 			}
 
@@ -583,7 +443,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 			}
 
 
-			if (($retval = CashTablePlayerPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = CashTablePlayerBuyinPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -598,7 +458,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 	
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = CashTablePlayerPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = CashTablePlayerBuyinPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->getByPosition($pos);
 	}
 
@@ -619,27 +479,15 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 				return $this->getPeopleId();
 				break;
 			case 4:
-				return $this->getTablePosition();
+				return $this->getBuyin();
 				break;
 			case 5:
-				return $this->getTotalBuyin();
+				return $this->getEntranceFee();
 				break;
 			case 6:
-				return $this->getTotalEntranceFee();
-				break;
-			case 7:
-				return $this->getCashoutValue();
-				break;
-			case 8:
-				return $this->getCheckinAt();
-				break;
-			case 9:
-				return $this->getCheckoutAt();
-				break;
-			case 10:
 				return $this->getCreatedAt();
 				break;
-			case 11:
+			case 7:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -650,20 +498,16 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 	
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = CashTablePlayerPeer::getFieldNames($keyType);
+		$keys = CashTablePlayerBuyinPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getCashTableId(),
 			$keys[2]=>$this->getCashTableSessionId(),
 			$keys[3]=>$this->getPeopleId(),
-			$keys[4]=>$this->getTablePosition(),
-			$keys[5]=>$this->getTotalBuyin(),
-			$keys[6]=>$this->getTotalEntranceFee(),
-			$keys[7]=>$this->getCashoutValue(),
-			$keys[8]=>$this->getCheckinAt(),
-			$keys[9]=>$this->getCheckoutAt(),
-			$keys[10]=>$this->getCreatedAt(),
-			$keys[11]=>$this->getUpdatedAt(),
+			$keys[4]=>$this->getBuyin(),
+			$keys[5]=>$this->getEntranceFee(),
+			$keys[6]=>$this->getCreatedAt(),
+			$keys[7]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -671,7 +515,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 	
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = CashTablePlayerPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = CashTablePlayerBuyinPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -692,27 +536,15 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 				$this->setPeopleId($value);
 				break;
 			case 4:
-				$this->setTablePosition($value);
+				$this->setBuyin($value);
 				break;
 			case 5:
-				$this->setTotalBuyin($value);
+				$this->setEntranceFee($value);
 				break;
 			case 6:
-				$this->setTotalEntranceFee($value);
-				break;
-			case 7:
-				$this->setCashoutValue($value);
-				break;
-			case 8:
-				$this->setCheckinAt($value);
-				break;
-			case 9:
-				$this->setCheckoutAt($value);
-				break;
-			case 10:
 				$this->setCreatedAt($value);
 				break;
-			case 11:
+			case 7:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -720,39 +552,31 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 	
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = CashTablePlayerPeer::getFieldNames($keyType);
+		$keys = CashTablePlayerBuyinPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setCashTableId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setCashTableSessionId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPeopleId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setTablePosition($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setTotalBuyin($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setTotalEntranceFee($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setCashoutValue($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setCheckinAt($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setCheckoutAt($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setUpdatedAt($arr[$keys[11]]);
+		if (array_key_exists($keys[4], $arr)) $this->setBuyin($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setEntranceFee($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
 	}
 
 	
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(CashTablePlayerPeer::DATABASE_NAME);
+		$criteria = new Criteria(CashTablePlayerBuyinPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(CashTablePlayerPeer::ID)) $criteria->add(CashTablePlayerPeer::ID, $this->id);
-		if ($this->isColumnModified(CashTablePlayerPeer::CASH_TABLE_ID)) $criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $this->cash_table_id);
-		if ($this->isColumnModified(CashTablePlayerPeer::CASH_TABLE_SESSION_ID)) $criteria->add(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, $this->cash_table_session_id);
-		if ($this->isColumnModified(CashTablePlayerPeer::PEOPLE_ID)) $criteria->add(CashTablePlayerPeer::PEOPLE_ID, $this->people_id);
-		if ($this->isColumnModified(CashTablePlayerPeer::TABLE_POSITION)) $criteria->add(CashTablePlayerPeer::TABLE_POSITION, $this->table_position);
-		if ($this->isColumnModified(CashTablePlayerPeer::TOTAL_BUYIN)) $criteria->add(CashTablePlayerPeer::TOTAL_BUYIN, $this->total_buyin);
-		if ($this->isColumnModified(CashTablePlayerPeer::TOTAL_ENTRANCE_FEE)) $criteria->add(CashTablePlayerPeer::TOTAL_ENTRANCE_FEE, $this->total_entrance_fee);
-		if ($this->isColumnModified(CashTablePlayerPeer::CASHOUT_VALUE)) $criteria->add(CashTablePlayerPeer::CASHOUT_VALUE, $this->cashout_value);
-		if ($this->isColumnModified(CashTablePlayerPeer::CHECKIN_AT)) $criteria->add(CashTablePlayerPeer::CHECKIN_AT, $this->checkin_at);
-		if ($this->isColumnModified(CashTablePlayerPeer::CHECKOUT_AT)) $criteria->add(CashTablePlayerPeer::CHECKOUT_AT, $this->checkout_at);
-		if ($this->isColumnModified(CashTablePlayerPeer::CREATED_AT)) $criteria->add(CashTablePlayerPeer::CREATED_AT, $this->created_at);
-		if ($this->isColumnModified(CashTablePlayerPeer::UPDATED_AT)) $criteria->add(CashTablePlayerPeer::UPDATED_AT, $this->updated_at);
+		if ($this->isColumnModified(CashTablePlayerBuyinPeer::ID)) $criteria->add(CashTablePlayerBuyinPeer::ID, $this->id);
+		if ($this->isColumnModified(CashTablePlayerBuyinPeer::CASH_TABLE_ID)) $criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_ID, $this->cash_table_id);
+		if ($this->isColumnModified(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID)) $criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, $this->cash_table_session_id);
+		if ($this->isColumnModified(CashTablePlayerBuyinPeer::PEOPLE_ID)) $criteria->add(CashTablePlayerBuyinPeer::PEOPLE_ID, $this->people_id);
+		if ($this->isColumnModified(CashTablePlayerBuyinPeer::BUYIN)) $criteria->add(CashTablePlayerBuyinPeer::BUYIN, $this->buyin);
+		if ($this->isColumnModified(CashTablePlayerBuyinPeer::ENTRANCE_FEE)) $criteria->add(CashTablePlayerBuyinPeer::ENTRANCE_FEE, $this->entrance_fee);
+		if ($this->isColumnModified(CashTablePlayerBuyinPeer::CREATED_AT)) $criteria->add(CashTablePlayerBuyinPeer::CREATED_AT, $this->created_at);
+		if ($this->isColumnModified(CashTablePlayerBuyinPeer::UPDATED_AT)) $criteria->add(CashTablePlayerBuyinPeer::UPDATED_AT, $this->updated_at);
 
 		return $criteria;
 	}
@@ -760,11 +584,11 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 	
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(CashTablePlayerPeer::DATABASE_NAME);
+		$criteria = new Criteria(CashTablePlayerBuyinPeer::DATABASE_NAME);
 
-		$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $this->cash_table_id);
-		$criteria->add(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, $this->cash_table_session_id);
-		$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $this->people_id);
+		$criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_ID, $this->cash_table_id);
+		$criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, $this->cash_table_session_id);
+		$criteria->add(CashTablePlayerBuyinPeer::PEOPLE_ID, $this->people_id);
 
 		return $criteria;
 	}
@@ -801,17 +625,9 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 
 		$copyObj->setId($this->id);
 
-		$copyObj->setTablePosition($this->table_position);
+		$copyObj->setBuyin($this->buyin);
 
-		$copyObj->setTotalBuyin($this->total_buyin);
-
-		$copyObj->setTotalEntranceFee($this->total_entrance_fee);
-
-		$copyObj->setCashoutValue($this->cashout_value);
-
-		$copyObj->setCheckinAt($this->checkin_at);
-
-		$copyObj->setCheckoutAt($this->checkout_at);
+		$copyObj->setEntranceFee($this->entrance_fee);
 
 		$copyObj->setCreatedAt($this->created_at);
 
@@ -838,7 +654,7 @@ abstract class BaseCashTablePlayer extends BaseObject  implements Persistent {
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new CashTablePlayerPeer();
+			self::$peer = new CashTablePlayerBuyinPeer();
 		}
 		return self::$peer;
 	}

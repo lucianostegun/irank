@@ -1053,16 +1053,36 @@
 	</table>
 
 	<table name="cash_table_player" phpName="CashTablePlayer" package="...apps.backend.lib.model">
-		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
-		<column name="cash_table_id" type="INTEGER" />
-		<column name="cash_table_session_id" type="INTEGER" />
-		<column name="people_id" type="INTEGER" />
+		<column name="id" type="INTEGER" autoIncrement="true" />
+		<column name="cash_table_id" type="INTEGER" primaryKey="true" />
+		<column name="cash_table_session_id" type="INTEGER" primaryKey="true" />
+		<column name="people_id" type="INTEGER" primaryKey="true" />
 		<column name="table_position" type="INTEGER" />
-		<column name="buyin" type="NUMERIC" size="10" scale="2" />
-		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />
-		<column name="cash_out" type="NUMERIC" size="10" scale="2" />
+		<column name="total_buyin" type="NUMERIC" size="10" scale="2" />
+		<column name="total_entrance_fee" type="NUMERIC" size="10" scale="2" />
+		<column name="cashout_value" type="NUMERIC" size="10" scale="2" />
 		<column name="checkin_at" type="TIMESTAMP" />
 		<column name="checkout_at" type="TIMESTAMP" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="cash_table">
+			<reference local="cash_table_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="cash_table_session">
+			<reference local="cash_table_session_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="people">
+			<reference local="people_id" foreign="id" />
+		</foreign-key>
+	</table>
+
+	<table name="cash_table_player_buyin" phpName="CashTablePlayerBuyin" package="...apps.backend.lib.model">
+		<column name="id" type="INTEGER" autoIncrement="true" />
+		<column name="cash_table_id" type="INTEGER" primaryKey="true" />
+		<column name="cash_table_session_id" type="INTEGER" primaryKey="true" />
+		<column name="people_id" type="INTEGER" primaryKey="true" />
+		<column name="buyin" type="NUMERIC" size="10" scale="2" />
+		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="cash_table">

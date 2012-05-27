@@ -41,8 +41,13 @@ class peopleActions extends sfActions
     if( !is_object($peopleObj) )
     	return $this->redirect('people/index');
     
+    $userSiteObj = $peopleObj->getUserSite();
+    
 	sfLoader::loadHelpers('Partial');
-    $this->stats   = get_partial('people/include/stats', array('peopleObj'=>$peopleObj));
+	
+	if( is_object($userSiteObj) )
+    	$this->stats = get_partial('people/include/stats', array('peopleObj'=>$peopleObj, 'userSiteObj'=>$userSiteObj));
+    	
     $this->balance = get_partial('people/include/balance', array('peopleObj'=>$peopleObj));
     	
     $this->pathList[$peopleObj->toString()] = '#';

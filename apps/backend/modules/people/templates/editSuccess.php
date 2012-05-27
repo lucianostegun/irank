@@ -15,7 +15,7 @@
 				),
 				array('class'=>'form', 'id'=>'peopleForm'));
 //			echo form_tag('people/save', array('class'=>'form', 'id'=>'peopleForm'));
-		
+			
 			$iRankAdmin  = $sf_user->hasCredential('iRankAdmin');
 			
 			echo input_hidden_tag('peopleId', $peopleObj->getId());
