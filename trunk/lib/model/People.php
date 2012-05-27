@@ -364,6 +364,7 @@ class People extends BasePeople
 		$infoList['id']           = $this->getId();
 		$infoList['firstName']    = $this->getFirstName();
 		$infoList['lastName']     = $this->getLastName();
+		$infoList['fullName']     = $this->getFullName();
 		$infoList['emailAddress'] = $this->getEmailAddress();
 		$infoList['phoneNumber']  = $this->getPhoneNumber();
 		$infoList['birthday']     = $this->getBirthday('d/m/Y');

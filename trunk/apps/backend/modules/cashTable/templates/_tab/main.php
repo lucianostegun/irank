@@ -1,5 +1,3 @@
-<?php include_partial('cashTable/include/table', array('cashTableObj'=>$cashTableObj)); ?>
-
 <?php
 	echo form_remote_tag(array(
 		'url'=>'cashTable/save',
@@ -17,6 +15,7 @@
 	$readOnly    = $cashTableObj->isOpen();
 	
 	echo input_hidden_tag('cashTableId', $cashTableId);
+	echo input_hidden_tag('tableStatus', $cashTableObj->getTableStatus(), array('id'=>'cashTableTableStatus'));
 	
 	$iRankAdmin  = $sf_user->hasCredential('iRankAdmin');
 	$userAdminId = $sf_user->getAttribute('userAdminId');
@@ -71,6 +70,14 @@
 	</div>
 	
 	<div class="formRow">
+		<label>Situação</label>
+		<div class="formRight">
+			<label><?php echo $cashTableObj->getTableStatus(true) ?></label>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="formRow">
 		<label>Jogadores</label>
 		<div class="formRight">
 			<label><?php echo $cashTableObj->getPlayers() ?></label>
@@ -89,7 +96,7 @@
 	<div class="formRow">
 		<label>Buy-in mínimo</label>
 		<div class="formRight <?php echo $fieldClass ?>">
-			<span class="multi"><?php echo input_tag('buyin', Util::formatFloat($cashTableObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'onblur'=>'validateAllQuickAddEvent()', 'class'=>'textR', 'id'=>'cashTableBuyin')) ?></span>
+			<span class="multi"><?php echo input_tag('buyin', Util::formatFloat($cashTableObj->getBuyin(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'id'=>'cashTableBuyin')) ?></span>
 			<span class="multi"><label class="text">+</label></span>
 			<span class="multi"><?php echo input_tag('entranceFee', Util::formatFloat($cashTableObj->getEntranceFee(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'textR', 'id'=>'cashTableEntranceFee')) ?></span>
 			<div class="clear"></div>

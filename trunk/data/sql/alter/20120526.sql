@@ -25,9 +25,9 @@ CREATE TABLE cash_table_player (
     cash_table_session_id INTEGER NOT NULL,
     people_id INTEGER NOT NULL,
     table_position INTEGER,
-    buyin DECIMAL(10, 2),
-    entrance_fee DECIMAL(10, 2),
-    cash_out DECIMAL(10, 2),
+    total_buyin DECIMAL(10, 2),
+    total_entrance_fee DECIMAL(10, 2),
+    cashout_value DECIMAL(10, 2),
     checkin_at TIMESTAMP,
     checkout_at TIMESTAMP,
     created_at TIMESTAMP,
@@ -35,6 +35,21 @@ CREATE TABLE cash_table_player (
     CONSTRAINT cash_table_player_FK_1 FOREIGN KEY (cash_table_id) REFERENCES cash_table (id),
     CONSTRAINT cash_table_player_FK_2 FOREIGN KEY (cash_table_session_id) REFERENCES cash_table_session (id),
     CONSTRAINT cash_table_player_FK_3 FOREIGN KEY (people_id) REFERENCES people (id)
+);
+
+CREATE SEQUENCE cash_table_player_buyin_seq;
+CREATE TABLE cash_table_player_buyin (
+    id INTEGER NOT NULL DEFAULT nextval('cash_table_player_buyin_seq'::regclass) PRIMARY KEY,
+    cash_table_id INTEGER NOT NULL,
+    cash_table_session_id INTEGER NOT NULL,
+    people_id INTEGER NOT NULL,
+    buyin DECIMAL(10, 2),
+    entrance_fee DECIMAL(10, 2),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    CONSTRAINT cash_table_player_buyin_FK_1 FOREIGN KEY (cash_table_id) REFERENCES cash_table (id),
+    CONSTRAINT cash_table_player_buyin_FK_2 FOREIGN KEY (cash_table_session_id) REFERENCES cash_table_session (id),
+    CONSTRAINT cash_table_player_buyin_FK_3 FOREIGN KEY (people_id) REFERENCES people (id)
 );
 
 ALTER TABLE cash_table ADD COLUMN cash_table_session_id INTEGER;
@@ -49,13 +64,12 @@ DECLARE
 BEGIN
 
     SELECT
-        SUM(cash_table_player.BUYIN) INTO totalBuyin
+        SUM(cash_table_player.TOTAL_BUYIN) INTO totalBuyin
     FROM
         cash_table_player
         INNER JOIN cash_table ON cash_table_player.CASH_TABLE_ID=cash_table.ID AND cash_table_player.CASH_TABLE_SESSION_ID=cash_table.CASH_TABLE_SESSION_ID
     WHERE
-        cash_table.ID = cashTableId
-        AND cash_table_player.CHECKOUT_AT IS NULL;
+        cash_table.ID = cashTableId;
     
     IF totalBuyin IS NULL THEN
         totalBuyin := 0;
@@ -65,24 +79,46 @@ BEGIN
 END'
 LANGUAGE 'plpgsql';
 
+
 CREATE OR REPLACE FUNCTION get_cash_table_entrance_fee(cashTableId INTEGER) RETURNS DECIMAL(10, 2) AS '
 DECLARE
     totalEntranceFee DECIMAL(10,2);
 BEGIN
 
     SELECT
-        SUM(cash_table_player.ENTRANCE_FEE) INTO totalEntranceFee
+        SUM(cash_table_player.TOTAL_ENTRANCE_FEE) INTO totalEntranceFee
     FROM
         cash_table_player
         INNER JOIN cash_table ON cash_table_player.CASH_TABLE_ID=cash_table.ID AND cash_table_player.CASH_TABLE_SESSION_ID=cash_table.CASH_TABLE_SESSION_ID
     WHERE
-        cash_table.ID = cashTableId
-        AND cash_table_player.CHECKOUT_AT IS NULL;
+        cash_table.ID = cashTableId;
     
     IF totalEntranceFee IS NULL THEN
         totalEntranceFee := 0;
     END IF;
 
     RETURN totalEntranceFee;
+END'
+LANGUAGE 'plpgsql';
+
+
+CREATE OR REPLACE FUNCTION get_cash_table_cashout(cashTableId INTEGER) RETURNS DECIMAL(10, 2) AS '
+DECLARE
+    totalCashoutValue DECIMAL(10,2);
+BEGIN
+
+    SELECT
+        SUM(cash_table_player.CASHOUT_VALUE) INTO totalCashoutValue
+    FROM
+        cash_table_player
+        INNER JOIN cash_table ON cash_table_player.CASH_TABLE_ID=cash_table.ID AND cash_table_player.CASH_TABLE_SESSION_ID=cash_table.CASH_TABLE_SESSION_ID
+    WHERE
+        cash_table.ID = cashTableId;
+    
+    IF totalCashoutValue IS NULL THEN
+        totalCashoutValue := 0;
+    END IF;
+
+    RETURN totalCashoutValue;
 END'
 LANGUAGE 'plpgsql';

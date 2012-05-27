@@ -52,9 +52,11 @@ function handleFormFieldError( content, instanceName ){
 		}
 	}else{
 		
-		alert('Não foi possível concluir seu cadastro!\nPor favor, tente novamente.');
+		var errorMessage = parseMessage(content);
 		
-		if( isDebug() )
+		alert('Não foi possível concluir a operação!'+(errorMessage?errorMessage:'\nPor favor, tente novamente.'));
+		
+		if( isDebug() && !errorMessage )
     	   debug(content)
 	}
 }

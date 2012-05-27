@@ -1,59 +1,47 @@
 <?php
 
 
-abstract class BaseCashTablePlayerPeer {
+abstract class BaseCashTablePlayerBuyinPeer {
 
 	
 	const DATABASE_NAME = 'propel';
 
 	
-	const TABLE_NAME = 'cash_table_player';
+	const TABLE_NAME = 'cash_table_player_buyin';
 
 	
-	const CLASS_DEFAULT = '...apps.backend.lib.model.CashTablePlayer';
+	const CLASS_DEFAULT = '...apps.backend.lib.model.CashTablePlayerBuyin';
 
 	
-	const NUM_COLUMNS = 12;
+	const NUM_COLUMNS = 8;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 
 	
-	const ID = 'cash_table_player.ID';
+	const ID = 'cash_table_player_buyin.ID';
 
 	
-	const CASH_TABLE_ID = 'cash_table_player.CASH_TABLE_ID';
+	const CASH_TABLE_ID = 'cash_table_player_buyin.CASH_TABLE_ID';
 
 	
-	const CASH_TABLE_SESSION_ID = 'cash_table_player.CASH_TABLE_SESSION_ID';
+	const CASH_TABLE_SESSION_ID = 'cash_table_player_buyin.CASH_TABLE_SESSION_ID';
 
 	
-	const PEOPLE_ID = 'cash_table_player.PEOPLE_ID';
+	const PEOPLE_ID = 'cash_table_player_buyin.PEOPLE_ID';
 
 	
-	const TABLE_POSITION = 'cash_table_player.TABLE_POSITION';
+	const BUYIN = 'cash_table_player_buyin.BUYIN';
 
 	
-	const TOTAL_BUYIN = 'cash_table_player.TOTAL_BUYIN';
+	const ENTRANCE_FEE = 'cash_table_player_buyin.ENTRANCE_FEE';
 
 	
-	const TOTAL_ENTRANCE_FEE = 'cash_table_player.TOTAL_ENTRANCE_FEE';
+	const CREATED_AT = 'cash_table_player_buyin.CREATED_AT';
 
 	
-	const CASHOUT_VALUE = 'cash_table_player.CASHOUT_VALUE';
-
-	
-	const CHECKIN_AT = 'cash_table_player.CHECKIN_AT';
-
-	
-	const CHECKOUT_AT = 'cash_table_player.CHECKOUT_AT';
-
-	
-	const CREATED_AT = 'cash_table_player.CREATED_AT';
-
-	
-	const UPDATED_AT = 'cash_table_player.UPDATED_AT';
+	const UPDATED_AT = 'cash_table_player_buyin.UPDATED_AT';
 
 	
 	private static $phpNameMap = null;
@@ -61,32 +49,32 @@ abstract class BaseCashTablePlayerPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'CashTableId', 'CashTableSessionId', 'PeopleId', 'TablePosition', 'TotalBuyin', 'TotalEntranceFee', 'CashoutValue', 'CheckinAt', 'CheckoutAt', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (CashTablePlayerPeer::ID, CashTablePlayerPeer::CASH_TABLE_ID, CashTablePlayerPeer::CASH_TABLE_SESSION_ID, CashTablePlayerPeer::PEOPLE_ID, CashTablePlayerPeer::TABLE_POSITION, CashTablePlayerPeer::TOTAL_BUYIN, CashTablePlayerPeer::TOTAL_ENTRANCE_FEE, CashTablePlayerPeer::CASHOUT_VALUE, CashTablePlayerPeer::CHECKIN_AT, CashTablePlayerPeer::CHECKOUT_AT, CashTablePlayerPeer::CREATED_AT, CashTablePlayerPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'cash_table_id', 'cash_table_session_id', 'people_id', 'table_position', 'total_buyin', 'total_entrance_fee', 'cashout_value', 'checkin_at', 'checkout_at', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CASH_TABLE_ID'=>'', 'CASH_TABLE_SESSION_ID'=>'', 'PEOPLE_ID'=>'', 'TABLE_POSITION'=>'', 'TOTAL_BUYIN'=>'', 'TOTAL_ENTRANCE_FEE'=>'', 'CASHOUT_VALUE'=>'', 'CHECKIN_AT'=>'', 'CHECKOUT_AT'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'CashTableId', 'CashTableSessionId', 'PeopleId', 'Buyin', 'EntranceFee', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (CashTablePlayerBuyinPeer::ID, CashTablePlayerBuyinPeer::CASH_TABLE_ID, CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, CashTablePlayerBuyinPeer::PEOPLE_ID, CashTablePlayerBuyinPeer::BUYIN, CashTablePlayerBuyinPeer::ENTRANCE_FEE, CashTablePlayerBuyinPeer::CREATED_AT, CashTablePlayerBuyinPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'cash_table_id', 'cash_table_session_id', 'people_id', 'buyin', 'entrance_fee', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CASH_TABLE_ID'=>'', 'CASH_TABLE_SESSION_ID'=>'', 'PEOPLE_ID'=>'', 'BUYIN'=>'', 'ENTRANCE_FEE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'CashTableId'=>1, 'CashTableSessionId'=>2, 'PeopleId'=>3, 'TablePosition'=>4, 'TotalBuyin'=>5, 'TotalEntranceFee'=>6, 'CashoutValue'=>7, 'CheckinAt'=>8, 'CheckoutAt'=>9, 'CreatedAt'=>10, 'UpdatedAt'=>11, ),
-		BasePeer::TYPE_COLNAME=>array (CashTablePlayerPeer::ID=>0, CashTablePlayerPeer::CASH_TABLE_ID=>1, CashTablePlayerPeer::CASH_TABLE_SESSION_ID=>2, CashTablePlayerPeer::PEOPLE_ID=>3, CashTablePlayerPeer::TABLE_POSITION=>4, CashTablePlayerPeer::TOTAL_BUYIN=>5, CashTablePlayerPeer::TOTAL_ENTRANCE_FEE=>6, CashTablePlayerPeer::CASHOUT_VALUE=>7, CashTablePlayerPeer::CHECKIN_AT=>8, CashTablePlayerPeer::CHECKOUT_AT=>9, CashTablePlayerPeer::CREATED_AT=>10, CashTablePlayerPeer::UPDATED_AT=>11, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'cash_table_id'=>1, 'cash_table_session_id'=>2, 'people_id'=>3, 'table_position'=>4, 'total_buyin'=>5, 'total_entrance_fee'=>6, 'cashout_value'=>7, 'checkin_at'=>8, 'checkout_at'=>9, 'created_at'=>10, 'updated_at'=>11, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'CashTableId'=>1, 'CashTableSessionId'=>2, 'PeopleId'=>3, 'Buyin'=>4, 'EntranceFee'=>5, 'CreatedAt'=>6, 'UpdatedAt'=>7, ),
+		BasePeer::TYPE_COLNAME=>array (CashTablePlayerBuyinPeer::ID=>0, CashTablePlayerBuyinPeer::CASH_TABLE_ID=>1, CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID=>2, CashTablePlayerBuyinPeer::PEOPLE_ID=>3, CashTablePlayerBuyinPeer::BUYIN=>4, CashTablePlayerBuyinPeer::ENTRANCE_FEE=>5, CashTablePlayerBuyinPeer::CREATED_AT=>6, CashTablePlayerBuyinPeer::UPDATED_AT=>7, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'cash_table_id'=>1, 'cash_table_session_id'=>2, 'people_id'=>3, 'buyin'=>4, 'entrance_fee'=>5, 'created_at'=>6, 'updated_at'=>7, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
 	public static function getMapBuilder()
 	{
-		include_once 'apps/backend/lib/model/map/CashTablePlayerMapBuilder.php';
-		return BasePeer::getMapBuilder('...apps.backend.lib.model.map.CashTablePlayerMapBuilder');
+		include_once 'apps/backend/lib/model/map/CashTablePlayerBuyinMapBuilder.php';
+		return BasePeer::getMapBuilder('...apps.backend.lib.model.map.CashTablePlayerBuyinMapBuilder');
 	}
 	
 	public static function getPhpNameMap()
 	{
 		if (self::$phpNameMap === null) {
-			$map = CashTablePlayerPeer::getTableMap();
+			$map = CashTablePlayerBuyinPeer::getTableMap();
 			$columns = $map->getColumns();
 			$nameMap = array();
 			foreach ($columns as $column) {
@@ -120,41 +108,33 @@ abstract class BaseCashTablePlayerPeer {
 	
 	public static function alias($alias, $column)
 	{
-		return str_replace(CashTablePlayerPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(CashTablePlayerBuyinPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(CashTablePlayerPeer::ID);
+		$criteria->addSelectColumn(CashTablePlayerBuyinPeer::ID);
 
-		$criteria->addSelectColumn(CashTablePlayerPeer::CASH_TABLE_ID);
+		$criteria->addSelectColumn(CashTablePlayerBuyinPeer::CASH_TABLE_ID);
 
-		$criteria->addSelectColumn(CashTablePlayerPeer::CASH_TABLE_SESSION_ID);
+		$criteria->addSelectColumn(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID);
 
-		$criteria->addSelectColumn(CashTablePlayerPeer::PEOPLE_ID);
+		$criteria->addSelectColumn(CashTablePlayerBuyinPeer::PEOPLE_ID);
 
-		$criteria->addSelectColumn(CashTablePlayerPeer::TABLE_POSITION);
+		$criteria->addSelectColumn(CashTablePlayerBuyinPeer::BUYIN);
 
-		$criteria->addSelectColumn(CashTablePlayerPeer::TOTAL_BUYIN);
+		$criteria->addSelectColumn(CashTablePlayerBuyinPeer::ENTRANCE_FEE);
 
-		$criteria->addSelectColumn(CashTablePlayerPeer::TOTAL_ENTRANCE_FEE);
+		$criteria->addSelectColumn(CashTablePlayerBuyinPeer::CREATED_AT);
 
-		$criteria->addSelectColumn(CashTablePlayerPeer::CASHOUT_VALUE);
-
-		$criteria->addSelectColumn(CashTablePlayerPeer::CHECKIN_AT);
-
-		$criteria->addSelectColumn(CashTablePlayerPeer::CHECKOUT_AT);
-
-		$criteria->addSelectColumn(CashTablePlayerPeer::CREATED_AT);
-
-		$criteria->addSelectColumn(CashTablePlayerPeer::UPDATED_AT);
+		$criteria->addSelectColumn(CashTablePlayerBuyinPeer::UPDATED_AT);
 
 	}
 
-	const COUNT = 'COUNT(cash_table_player.CASH_TABLE_ID)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT cash_table_player.CASH_TABLE_ID)';
+	const COUNT = 'COUNT(cash_table_player_buyin.CASH_TABLE_ID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT cash_table_player_buyin.CASH_TABLE_ID)';
 
 	
 	public static function doCount(Criteria $criteria, $distinct = false, $con = null)
@@ -163,9 +143,9 @@ abstract class BaseCashTablePlayerPeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -173,7 +153,7 @@ abstract class BaseCashTablePlayerPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$rs = CashTablePlayerPeer::doSelectRS($criteria, $con);
+		$rs = CashTablePlayerBuyinPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -185,7 +165,7 @@ abstract class BaseCashTablePlayerPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = CashTablePlayerPeer::doSelect($critcopy, $con);
+		$objects = CashTablePlayerBuyinPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -194,7 +174,7 @@ abstract class BaseCashTablePlayerPeer {
 	
 	public static function doSelect(Criteria $criteria, $con = null)
 	{
-		return CashTablePlayerPeer::populateObjects(CashTablePlayerPeer::doSelectRS($criteria, $con));
+		return CashTablePlayerBuyinPeer::populateObjects(CashTablePlayerBuyinPeer::doSelectRS($criteria, $con));
 	}
 	
 	public static function doSelectRS(Criteria $criteria, $con = null)
@@ -205,7 +185,7 @@ abstract class BaseCashTablePlayerPeer {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			CashTablePlayerPeer::addSelectColumns($criteria);
+			CashTablePlayerBuyinPeer::addSelectColumns($criteria);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -217,7 +197,7 @@ abstract class BaseCashTablePlayerPeer {
 	{
 		$results = array();
 	
-				$cls = CashTablePlayerPeer::getOMClass();
+				$cls = CashTablePlayerBuyinPeer::getOMClass();
 		$cls = Propel::import($cls);
 				while($rs->next()) {
 		
@@ -236,9 +216,9 @@ abstract class BaseCashTablePlayerPeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -246,9 +226,9 @@ abstract class BaseCashTablePlayerPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(CashTablePlayerPeer::CASH_TABLE_ID, CashTablePeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_ID, CashTablePeer::ID);
 
-		$rs = CashTablePlayerPeer::doSelectRS($criteria, $con);
+		$rs = CashTablePlayerBuyinPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -264,9 +244,9 @@ abstract class BaseCashTablePlayerPeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -274,9 +254,9 @@ abstract class BaseCashTablePlayerPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
 
-		$rs = CashTablePlayerPeer::doSelectRS($criteria, $con);
+		$rs = CashTablePlayerBuyinPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -292,9 +272,9 @@ abstract class BaseCashTablePlayerPeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -302,9 +282,9 @@ abstract class BaseCashTablePlayerPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(CashTablePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::PEOPLE_ID, PeoplePeer::ID);
 
-		$rs = CashTablePlayerPeer::doSelectRS($criteria, $con);
+		$rs = CashTablePlayerBuyinPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -322,17 +302,17 @@ abstract class BaseCashTablePlayerPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		CashTablePlayerPeer::addSelectColumns($c);
-		$startcol = (CashTablePlayerPeer::NUM_COLUMNS - CashTablePlayerPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		CashTablePlayerBuyinPeer::addSelectColumns($c);
+		$startcol = (CashTablePlayerBuyinPeer::NUM_COLUMNS - CashTablePlayerBuyinPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 		CashTablePeer::addSelectColumns($c);
 
-		$c->addJoin(CashTablePlayerPeer::CASH_TABLE_ID, CashTablePeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_ID, CashTablePeer::ID);
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while($rs->next()) {
 
-			$omClass = CashTablePlayerPeer::getOMClass();
+			$omClass = CashTablePlayerBuyinPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj1 = new $cls();
@@ -348,12 +328,12 @@ abstract class BaseCashTablePlayerPeer {
 			foreach($results as $temp_obj1) {
 				$temp_obj2 = $temp_obj1->getCashTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-										$temp_obj2->addCashTablePlayer($obj1); 					break;
+										$temp_obj2->addCashTablePlayerBuyin($obj1); 					break;
 				}
 			}
 			if ($newObject) {
-				$obj2->initCashTablePlayerList();
-				$obj2->addCashTablePlayer($obj1); 			}
+				$obj2->initCashTablePlayerBuyinList();
+				$obj2->addCashTablePlayerBuyin($obj1); 			}
 			$results[] = $obj1;
 		}
 		return $results;
@@ -369,17 +349,17 @@ abstract class BaseCashTablePlayerPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		CashTablePlayerPeer::addSelectColumns($c);
-		$startcol = (CashTablePlayerPeer::NUM_COLUMNS - CashTablePlayerPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		CashTablePlayerBuyinPeer::addSelectColumns($c);
+		$startcol = (CashTablePlayerBuyinPeer::NUM_COLUMNS - CashTablePlayerBuyinPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 		CashTableSessionPeer::addSelectColumns($c);
 
-		$c->addJoin(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while($rs->next()) {
 
-			$omClass = CashTablePlayerPeer::getOMClass();
+			$omClass = CashTablePlayerBuyinPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj1 = new $cls();
@@ -395,12 +375,12 @@ abstract class BaseCashTablePlayerPeer {
 			foreach($results as $temp_obj1) {
 				$temp_obj2 = $temp_obj1->getCashTableSession(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-										$temp_obj2->addCashTablePlayer($obj1); 					break;
+										$temp_obj2->addCashTablePlayerBuyin($obj1); 					break;
 				}
 			}
 			if ($newObject) {
-				$obj2->initCashTablePlayerList();
-				$obj2->addCashTablePlayer($obj1); 			}
+				$obj2->initCashTablePlayerBuyinList();
+				$obj2->addCashTablePlayerBuyin($obj1); 			}
 			$results[] = $obj1;
 		}
 		return $results;
@@ -416,17 +396,17 @@ abstract class BaseCashTablePlayerPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		CashTablePlayerPeer::addSelectColumns($c);
-		$startcol = (CashTablePlayerPeer::NUM_COLUMNS - CashTablePlayerPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		CashTablePlayerBuyinPeer::addSelectColumns($c);
+		$startcol = (CashTablePlayerBuyinPeer::NUM_COLUMNS - CashTablePlayerBuyinPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 		PeoplePeer::addSelectColumns($c);
 
-		$c->addJoin(CashTablePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::PEOPLE_ID, PeoplePeer::ID);
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while($rs->next()) {
 
-			$omClass = CashTablePlayerPeer::getOMClass();
+			$omClass = CashTablePlayerBuyinPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj1 = new $cls();
@@ -442,12 +422,12 @@ abstract class BaseCashTablePlayerPeer {
 			foreach($results as $temp_obj1) {
 				$temp_obj2 = $temp_obj1->getPeople(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-										$temp_obj2->addCashTablePlayer($obj1); 					break;
+										$temp_obj2->addCashTablePlayerBuyin($obj1); 					break;
 				}
 			}
 			if ($newObject) {
-				$obj2->initCashTablePlayerList();
-				$obj2->addCashTablePlayer($obj1); 			}
+				$obj2->initCashTablePlayerBuyinList();
+				$obj2->addCashTablePlayerBuyin($obj1); 			}
 			$results[] = $obj1;
 		}
 		return $results;
@@ -461,9 +441,9 @@ abstract class BaseCashTablePlayerPeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -471,13 +451,13 @@ abstract class BaseCashTablePlayerPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(CashTablePlayerPeer::CASH_TABLE_ID, CashTablePeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_ID, CashTablePeer::ID);
 
-		$criteria->addJoin(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
 
-		$criteria->addJoin(CashTablePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::PEOPLE_ID, PeoplePeer::ID);
 
-		$rs = CashTablePlayerPeer::doSelectRS($criteria, $con);
+		$rs = CashTablePlayerBuyinPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -495,8 +475,8 @@ abstract class BaseCashTablePlayerPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		CashTablePlayerPeer::addSelectColumns($c);
-		$startcol2 = (CashTablePlayerPeer::NUM_COLUMNS - CashTablePlayerPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		CashTablePlayerBuyinPeer::addSelectColumns($c);
+		$startcol2 = (CashTablePlayerBuyinPeer::NUM_COLUMNS - CashTablePlayerBuyinPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 
 		CashTablePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + CashTablePeer::NUM_COLUMNS;
@@ -507,18 +487,18 @@ abstract class BaseCashTablePlayerPeer {
 		PeoplePeer::addSelectColumns($c);
 		$startcol5 = $startcol4 + PeoplePeer::NUM_COLUMNS;
 
-		$c->addJoin(CashTablePlayerPeer::CASH_TABLE_ID, CashTablePeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_ID, CashTablePeer::ID);
 
-		$c->addJoin(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
 
-		$c->addJoin(CashTablePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::PEOPLE_ID, PeoplePeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while($rs->next()) {
 
-			$omClass = CashTablePlayerPeer::getOMClass();
+			$omClass = CashTablePlayerBuyinPeer::getOMClass();
 
 
 			$cls = Propel::import($omClass);
@@ -539,13 +519,13 @@ abstract class BaseCashTablePlayerPeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj2 = $temp_obj1->getCashTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj2->addCashTablePlayer($obj1); 					break;
+					$temp_obj2->addCashTablePlayerBuyin($obj1); 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj2->initCashTablePlayerList();
-				$obj2->addCashTablePlayer($obj1);
+				$obj2->initCashTablePlayerBuyinList();
+				$obj2->addCashTablePlayerBuyin($obj1);
 			}
 
 
@@ -562,13 +542,13 @@ abstract class BaseCashTablePlayerPeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj3 = $temp_obj1->getCashTableSession(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj3->addCashTablePlayer($obj1); 					break;
+					$temp_obj3->addCashTablePlayerBuyin($obj1); 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj3->initCashTablePlayerList();
-				$obj3->addCashTablePlayer($obj1);
+				$obj3->initCashTablePlayerBuyinList();
+				$obj3->addCashTablePlayerBuyin($obj1);
 			}
 
 
@@ -585,13 +565,13 @@ abstract class BaseCashTablePlayerPeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj4 = $temp_obj1->getPeople(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj4->addCashTablePlayer($obj1); 					break;
+					$temp_obj4->addCashTablePlayerBuyin($obj1); 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj4->initCashTablePlayerList();
-				$obj4->addCashTablePlayer($obj1);
+				$obj4->initCashTablePlayerBuyinList();
+				$obj4->addCashTablePlayerBuyin($obj1);
 			}
 
 			$results[] = $obj1;
@@ -607,9 +587,9 @@ abstract class BaseCashTablePlayerPeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -617,11 +597,11 @@ abstract class BaseCashTablePlayerPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
 
-		$criteria->addJoin(CashTablePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::PEOPLE_ID, PeoplePeer::ID);
 
-		$rs = CashTablePlayerPeer::doSelectRS($criteria, $con);
+		$rs = CashTablePlayerBuyinPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -637,9 +617,9 @@ abstract class BaseCashTablePlayerPeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -647,11 +627,11 @@ abstract class BaseCashTablePlayerPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(CashTablePlayerPeer::CASH_TABLE_ID, CashTablePeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_ID, CashTablePeer::ID);
 
-		$criteria->addJoin(CashTablePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::PEOPLE_ID, PeoplePeer::ID);
 
-		$rs = CashTablePlayerPeer::doSelectRS($criteria, $con);
+		$rs = CashTablePlayerBuyinPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -667,9 +647,9 @@ abstract class BaseCashTablePlayerPeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(CashTablePlayerPeer::COUNT);
+			$criteria->addSelectColumn(CashTablePlayerBuyinPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -677,11 +657,11 @@ abstract class BaseCashTablePlayerPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(CashTablePlayerPeer::CASH_TABLE_ID, CashTablePeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_ID, CashTablePeer::ID);
 
-		$criteria->addJoin(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
+		$criteria->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
 
-		$rs = CashTablePlayerPeer::doSelectRS($criteria, $con);
+		$rs = CashTablePlayerBuyinPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -699,8 +679,8 @@ abstract class BaseCashTablePlayerPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		CashTablePlayerPeer::addSelectColumns($c);
-		$startcol2 = (CashTablePlayerPeer::NUM_COLUMNS - CashTablePlayerPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		CashTablePlayerBuyinPeer::addSelectColumns($c);
+		$startcol2 = (CashTablePlayerBuyinPeer::NUM_COLUMNS - CashTablePlayerBuyinPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 
 		CashTableSessionPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + CashTableSessionPeer::NUM_COLUMNS;
@@ -708,9 +688,9 @@ abstract class BaseCashTablePlayerPeer {
 		PeoplePeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + PeoplePeer::NUM_COLUMNS;
 
-		$c->addJoin(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
 
-		$c->addJoin(CashTablePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::PEOPLE_ID, PeoplePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -718,7 +698,7 @@ abstract class BaseCashTablePlayerPeer {
 
 		while($rs->next()) {
 
-			$omClass = CashTablePlayerPeer::getOMClass();
+			$omClass = CashTablePlayerBuyinPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj1 = new $cls();
@@ -736,14 +716,14 @@ abstract class BaseCashTablePlayerPeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj2 = $temp_obj1->getCashTableSession(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj2->addCashTablePlayer($obj1);
+					$temp_obj2->addCashTablePlayerBuyin($obj1);
 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj2->initCashTablePlayerList();
-				$obj2->addCashTablePlayer($obj1);
+				$obj2->initCashTablePlayerBuyinList();
+				$obj2->addCashTablePlayerBuyin($obj1);
 			}
 
 			$omClass = PeoplePeer::getOMClass();
@@ -758,14 +738,14 @@ abstract class BaseCashTablePlayerPeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj3 = $temp_obj1->getPeople(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj3->addCashTablePlayer($obj1);
+					$temp_obj3->addCashTablePlayerBuyin($obj1);
 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj3->initCashTablePlayerList();
-				$obj3->addCashTablePlayer($obj1);
+				$obj3->initCashTablePlayerBuyinList();
+				$obj3->addCashTablePlayerBuyin($obj1);
 			}
 
 			$results[] = $obj1;
@@ -783,8 +763,8 @@ abstract class BaseCashTablePlayerPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		CashTablePlayerPeer::addSelectColumns($c);
-		$startcol2 = (CashTablePlayerPeer::NUM_COLUMNS - CashTablePlayerPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		CashTablePlayerBuyinPeer::addSelectColumns($c);
+		$startcol2 = (CashTablePlayerBuyinPeer::NUM_COLUMNS - CashTablePlayerBuyinPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 
 		CashTablePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + CashTablePeer::NUM_COLUMNS;
@@ -792,9 +772,9 @@ abstract class BaseCashTablePlayerPeer {
 		PeoplePeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + PeoplePeer::NUM_COLUMNS;
 
-		$c->addJoin(CashTablePlayerPeer::CASH_TABLE_ID, CashTablePeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_ID, CashTablePeer::ID);
 
-		$c->addJoin(CashTablePlayerPeer::PEOPLE_ID, PeoplePeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::PEOPLE_ID, PeoplePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -802,7 +782,7 @@ abstract class BaseCashTablePlayerPeer {
 
 		while($rs->next()) {
 
-			$omClass = CashTablePlayerPeer::getOMClass();
+			$omClass = CashTablePlayerBuyinPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj1 = new $cls();
@@ -820,14 +800,14 @@ abstract class BaseCashTablePlayerPeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj2 = $temp_obj1->getCashTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj2->addCashTablePlayer($obj1);
+					$temp_obj2->addCashTablePlayerBuyin($obj1);
 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj2->initCashTablePlayerList();
-				$obj2->addCashTablePlayer($obj1);
+				$obj2->initCashTablePlayerBuyinList();
+				$obj2->addCashTablePlayerBuyin($obj1);
 			}
 
 			$omClass = PeoplePeer::getOMClass();
@@ -842,14 +822,14 @@ abstract class BaseCashTablePlayerPeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj3 = $temp_obj1->getPeople(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj3->addCashTablePlayer($obj1);
+					$temp_obj3->addCashTablePlayerBuyin($obj1);
 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj3->initCashTablePlayerList();
-				$obj3->addCashTablePlayer($obj1);
+				$obj3->initCashTablePlayerBuyinList();
+				$obj3->addCashTablePlayerBuyin($obj1);
 			}
 
 			$results[] = $obj1;
@@ -867,8 +847,8 @@ abstract class BaseCashTablePlayerPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		CashTablePlayerPeer::addSelectColumns($c);
-		$startcol2 = (CashTablePlayerPeer::NUM_COLUMNS - CashTablePlayerPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		CashTablePlayerBuyinPeer::addSelectColumns($c);
+		$startcol2 = (CashTablePlayerBuyinPeer::NUM_COLUMNS - CashTablePlayerBuyinPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 
 		CashTablePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + CashTablePeer::NUM_COLUMNS;
@@ -876,9 +856,9 @@ abstract class BaseCashTablePlayerPeer {
 		CashTableSessionPeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + CashTableSessionPeer::NUM_COLUMNS;
 
-		$c->addJoin(CashTablePlayerPeer::CASH_TABLE_ID, CashTablePeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_ID, CashTablePeer::ID);
 
-		$c->addJoin(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
+		$c->addJoin(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -886,7 +866,7 @@ abstract class BaseCashTablePlayerPeer {
 
 		while($rs->next()) {
 
-			$omClass = CashTablePlayerPeer::getOMClass();
+			$omClass = CashTablePlayerBuyinPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj1 = new $cls();
@@ -904,14 +884,14 @@ abstract class BaseCashTablePlayerPeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj2 = $temp_obj1->getCashTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj2->addCashTablePlayer($obj1);
+					$temp_obj2->addCashTablePlayerBuyin($obj1);
 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj2->initCashTablePlayerList();
-				$obj2->addCashTablePlayer($obj1);
+				$obj2->initCashTablePlayerBuyinList();
+				$obj2->addCashTablePlayerBuyin($obj1);
 			}
 
 			$omClass = CashTableSessionPeer::getOMClass();
@@ -926,14 +906,14 @@ abstract class BaseCashTablePlayerPeer {
 				$temp_obj1 = $results[$j];
 				$temp_obj3 = $temp_obj1->getCashTableSession(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj3->addCashTablePlayer($obj1);
+					$temp_obj3->addCashTablePlayerBuyin($obj1);
 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj3->initCashTablePlayerList();
-				$obj3->addCashTablePlayer($obj1);
+				$obj3->initCashTablePlayerBuyinList();
+				$obj3->addCashTablePlayerBuyin($obj1);
 			}
 
 			$results[] = $obj1;
@@ -950,7 +930,7 @@ abstract class BaseCashTablePlayerPeer {
 	
 	public static function getOMClass()
 	{
-		return CashTablePlayerPeer::CLASS_DEFAULT;
+		return CashTablePlayerBuyinPeer::CLASS_DEFAULT;
 	}
 
 	
@@ -990,14 +970,14 @@ abstract class BaseCashTablePlayerPeer {
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 
-			$comparison = $criteria->getComparison(CashTablePlayerPeer::CASH_TABLE_ID);
-			$selectCriteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $criteria->remove(CashTablePlayerPeer::CASH_TABLE_ID), $comparison);
+			$comparison = $criteria->getComparison(CashTablePlayerBuyinPeer::CASH_TABLE_ID);
+			$selectCriteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_ID, $criteria->remove(CashTablePlayerBuyinPeer::CASH_TABLE_ID), $comparison);
 
-			$comparison = $criteria->getComparison(CashTablePlayerPeer::CASH_TABLE_SESSION_ID);
-			$selectCriteria->add(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, $criteria->remove(CashTablePlayerPeer::CASH_TABLE_SESSION_ID), $comparison);
+			$comparison = $criteria->getComparison(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID);
+			$selectCriteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, $criteria->remove(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID), $comparison);
 
-			$comparison = $criteria->getComparison(CashTablePlayerPeer::PEOPLE_ID);
-			$selectCriteria->add(CashTablePlayerPeer::PEOPLE_ID, $criteria->remove(CashTablePlayerPeer::PEOPLE_ID), $comparison);
+			$comparison = $criteria->getComparison(CashTablePlayerBuyinPeer::PEOPLE_ID);
+			$selectCriteria->add(CashTablePlayerBuyinPeer::PEOPLE_ID, $criteria->remove(CashTablePlayerBuyinPeer::PEOPLE_ID), $comparison);
 
 		} else { 			$criteria = $values->buildCriteria(); 			$selectCriteria = $values->buildPkeyCriteria(); 		}
 
@@ -1014,7 +994,7 @@ abstract class BaseCashTablePlayerPeer {
 		}
 		$affectedRows = 0; 		try {
 									$con->begin();
-			$affectedRows += BasePeer::doDeleteAll(CashTablePlayerPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(CashTablePlayerBuyinPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -1027,11 +1007,11 @@ abstract class BaseCashTablePlayerPeer {
 	 public static function doDelete($values, $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(CashTablePlayerPeer::DATABASE_NAME);
+			$con = Propel::getConnection(CashTablePlayerBuyinPeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
-			$criteria = clone $values; 		} elseif ($values instanceof CashTablePlayer) {
+			$criteria = clone $values; 		} elseif ($values instanceof CashTablePlayerBuyin) {
 
 			$criteria = $values->buildPkeyCriteria();
 		} else {
@@ -1049,9 +1029,9 @@ abstract class BaseCashTablePlayerPeer {
 				$vals[2][] = $value[2];
 			}
 
-			$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $vals[0], Criteria::IN);
-			$criteria->add(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, $vals[1], Criteria::IN);
-			$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $vals[2], Criteria::IN);
+			$criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_ID, $vals[0], Criteria::IN);
+			$criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, $vals[1], Criteria::IN);
+			$criteria->add(CashTablePlayerBuyinPeer::PEOPLE_ID, $vals[2], Criteria::IN);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -1070,13 +1050,13 @@ abstract class BaseCashTablePlayerPeer {
 	}
 
 	
-	public static function doValidate(CashTablePlayer $obj, $cols = null)
+	public static function doValidate(CashTablePlayerBuyin $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(CashTablePlayerPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(CashTablePlayerPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(CashTablePlayerBuyinPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(CashTablePlayerBuyinPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -1092,11 +1072,11 @@ abstract class BaseCashTablePlayerPeer {
 
 		}
 
-		$res =  BasePeer::doValidate(CashTablePlayerPeer::DATABASE_NAME, CashTablePlayerPeer::TABLE_NAME, $columns);
+		$res =  BasePeer::doValidate(CashTablePlayerBuyinPeer::DATABASE_NAME, CashTablePlayerBuyinPeer::TABLE_NAME, $columns);
     if ($res !== true) {
         $request = sfContext::getInstance()->getRequest();
         foreach ($res as $failed) {
-            $col = CashTablePlayerPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
+            $col = CashTablePlayerBuyinPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
             $request->setError($col, $failed->getMessage());
         }
     }
@@ -1110,21 +1090,21 @@ abstract class BaseCashTablePlayerPeer {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 		$criteria = new Criteria();
-		$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $cash_table_id);
-		$criteria->add(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, $cash_table_session_id);
-		$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $people_id);
-		$v = CashTablePlayerPeer::doSelect($criteria, $con);
+		$criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_ID, $cash_table_id);
+		$criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, $cash_table_session_id);
+		$criteria->add(CashTablePlayerBuyinPeer::PEOPLE_ID, $people_id);
+		$v = CashTablePlayerBuyinPeer::doSelect($criteria, $con);
 
 		return !empty($v) ? $v[0] : null;
 	}
 } 
 if (Propel::isInit()) {
 			try {
-		BaseCashTablePlayerPeer::getMapBuilder();
+		BaseCashTablePlayerBuyinPeer::getMapBuilder();
 	} catch (Exception $e) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
-			require_once 'apps/backend/lib/model/map/CashTablePlayerMapBuilder.php';
-	Propel::registerMapBuilder('...apps.backend.lib.model.map.CashTablePlayerMapBuilder');
+			require_once 'apps/backend/lib/model/map/CashTablePlayerBuyinMapBuilder.php';
+	Propel::registerMapBuilder('...apps.backend.lib.model.map.CashTablePlayerBuyinMapBuilder');
 }

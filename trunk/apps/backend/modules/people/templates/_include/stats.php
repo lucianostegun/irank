@@ -1,7 +1,5 @@
 <?php
-	$userSiteObj = $peopleObj->getUserSite();
 	$numStatList = People::getFullResume($peopleObj->getId(), $userSiteObj->getId());
-	
 	foreach($numStatList as &$numStat){
 		
 		$numStat = array('value'=>$numStat);

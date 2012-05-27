@@ -1,11 +1,22 @@
 .cashTable {
-	width: 737px;
-	height: 438px;
 	position: relative;
 	left: -369px;
 	margin-left: 50%;
 	margin-top: 30px;
+}
+
+.cashTable.large {
+
+	width: 737px;
+	height: 438px;
 	background: url('/images/backend/cashTable/tableLarge.png') no-repeat;
+}
+
+.cashTable.small {
+
+	width: 619px;
+	height: 379px;
+	background: url('/images/backend/cashTable/table.png') no-repeat;
 }
 
 .cashTable .seat {
@@ -32,6 +43,7 @@
 	overflow: 			hidden;
 	white-space: 		nowrap;
 	z-index: 			3;
+	text-shadow: 		#000000 1px 1px;
 }
 
 .cashTable .seat.empty label {
@@ -41,6 +53,9 @@
 	color: 				#FFBA00;
 	text-shadow: 		#000000 1px 1px
 }
+
+.cashTable .seat.dealer label { color: #FF7E00; top: 6px; left: 14px }
+.cashTable .seat.dealer.empty label { top: 6px; color: #FFBA00 }
 
 .cashTable .seat span.bankRoll {
 	
@@ -76,28 +91,53 @@
 	z-index: 		1;
 }
 
-.cashTable #seat-1 {left: 486px; top: 53px}
-.cashTable #seat-2 {left: 553px; top: 123px}
-.cashTable #seat-3 {left: 583px; top: 195px}
-.cashTable #seat-4 {left: 533px; top: 275px}
-.cashTable #seat-5 {left: 395px; top: 334px}
-.cashTable #seat-6 {left: 200px; top: 334px}
-.cashTable #seat-7 {left: 62px; top: 275px}
-.cashTable #seat-8 {left: 4px; top: 195px}
-.cashTable #seat-9 {left: 42px; top: 123px}
-.cashTable #seat-10 {left: 101px; top: 53px}
+.cashTable.large #seat-1 {left: 486px; top: 53px}
+.cashTable.large #seat-2 {left: 553px; top: 123px}
+.cashTable.large #seat-3 {left: 583px; top: 195px}
+.cashTable.large #seat-4 {left: 533px; top: 275px}
+.cashTable.large #seat-5 {left: 395px; top: 334px}
+.cashTable.large #seat-6 {left: 200px; top: 334px}
+.cashTable.large #seat-7 {left: 62px; top: 275px}
+.cashTable.large #seat-8 {left: 4px; top: 195px}
+.cashTable.large #seat-9 {left: 42px; top: 123px}
+.cashTable.large #seat-10 {left: 101px; top: 53px}
 
-.cashTable #seat-1 span.tablePosition,
-.cashTable #seat-2 span.tablePosition,
-.cashTable #seat-3 span.tablePosition,
-.cashTable #seat-4 span.tablePosition,
-.cashTable #seat-5 span.tablePosition {bottom: -5px; left: 0px}
+.cashTable.large #seat-1 span.tablePosition,
+.cashTable.large #seat-2 span.tablePosition,
+.cashTable.large #seat-3 span.tablePosition,
+.cashTable.large #seat-4 span.tablePosition,
+.cashTable.large #seat-5 span.tablePosition {bottom: -5px; left: 0px}
 
-.cashTable #seat-6 span.tablePosition,
-.cashTable #seat-7 span.tablePosition,
-.cashTable #seat-8 span.tablePosition,
-.cashTable #seat-9 span.tablePosition,
-.cashTable #seat-10 span.tablePosition {bottom: -5px; right: 0px}
+.cashTable.large #seat-6 span.tablePosition,
+.cashTable.large #seat-7 span.tablePosition,
+.cashTable.large #seat-8 span.tablePosition,
+.cashTable.large #seat-9 span.tablePosition,
+.cashTable.large #seat-10 span.tablePosition {bottom: -5px; right: 0px}
+
+
+.cashTable.small #seat-1 {left: 435px; top: 55px}
+.cashTable.small #seat-2 {left: 465px; top: 154px}
+.cashTable.small #seat-3 {left: 356px; top: 253px}
+.cashTable.small #seat-4 {left: 113px; top: 253px}
+.cashTable.small #seat-5 {left: 5px;   top: 154px}
+.cashTable.small #seat-6 {left: 34px;  top: 55px}
+
+
+.cashTable.small #seat-1 span.tablePosition,
+.cashTable.small #seat-2 span.tablePosition,
+.cashTable.small #seat-3 span.tablePosition {bottom: -5px; left: 0px}
+
+.cashTable.small #seat-4 span.tablePosition,
+.cashTable.small #seat-5 span.tablePosition,
+.cashTable.small #seat-6 span.tablePosition {bottom: -5px; right: 0px}
+
+.cashTable.small #seat-dealer {left: 235px;  top: 3px}
+.cashTable.small #seat-dealer span.tablePosition {bottom: -7px; left: 51px; font-size: 9px; text-transform: uppercase}
+
+
+
+
+
 
 #cashTablePeoplePicture {
 	
@@ -142,4 +182,28 @@ table .formRow .formRight input {
 #dialog-message a img {
 	
 	position: relative; top: 3px
+}
+
+#playerSelectDialog .form .formRow .button {
+	
+	margin-top: 	3px;
+	margin-bottom: 	3px;
+}
+
+#playerSelectDialog .form .formRow .button span {
+	
+	color: #FFFFFF
+}
+
+#cashTablePeoplePeopleNameLabel {
+	
+	text-align: 	left;
+	padding: 		8px;
+}
+
+#cashTablePeoplePeopleName {
+	
+	font-size: 16px;
+	font-weight: bold;
+	width: 100%;
 }

@@ -1,0 +1,16 @@
+fields:
+       
+  peopleId:
+    required:
+      msg:       [peopleName]Selecione um jogador para adicionar na mesa
+      
+  buyin:
+    required:
+      msg:       Informe o valor do buyin
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
+    sfCallbackValidator:
+      callback:      [CashTablePeer, validateBuyin]
+      invalid_error: nullError

@@ -5,6 +5,7 @@ var currentCashTableObj = {};
 $(function() {
 	
 	statsRunningTime = $('#statsRunningTime').val()*1;
+	var tableStatus  = $('#cashTableTableStatus').val();
 
 	updateRunningTimer = function(){
 		
@@ -33,7 +34,6 @@ $(function() {
 	if( statsRunningTime )
 		startRunninTimer(false);
 	
-	
 	$('#playerSelectDialog').dialog({
 		autoOpen: false,
 		modal: true,
@@ -42,40 +42,36 @@ $(function() {
 		height: 450,
 		buttons: {
 			Ok: function() {
-				addPlayer();
+				doSavePlayer();
 			},
 			Cancelar: function() {
-				$( this ).dialog('close');
+				$(this).dialog('close');
 			}
 		}
 	});
+	
+	if( tableStatus=='open' )
+		$('#cashTableTableTab').mousedown();
 });
-
-function resetRunningTimer(){
-	
-	statsRunningTime = 0;
-}
-
-function startRunninTimer(reset){
-	
-	if( reset )
-		resetRunningTimer();
-	
-	_isRunning = true;
-	updateRunningTimer();
-}
-
-function stopRunninTimer(){
-	
-	_isRunning = false;
-}
 
 function handleSuccessCashTable(content){
 
 	clearFormFieldErrors();
 	showFormStatusSuccess();
 	
+	var cashTableObj = parseInfo(content);
+	
 	mainRecordName = $('#cashTableCashTableName').val();
+	
+	if( cashTableObj.isOpen ){
+		
+		$('#cashTableOpenButton').hide();
+		$('#cashTableCloseButton').show();
+	}else{
+	
+		$('#cashTableOpenButton').show();
+		$('#cashTableCloseButton').hide();
+	}
 	
 	updateMainRecordName(mainRecordName, true);
 }
@@ -84,6 +80,66 @@ function handleFailureCashTable(content){
 	
 	handleFormFieldError(content, 'cashTable');
 }
+
+function confirmCashout(){
+
+	if( getSaveAction()=='cashout' ){
+		
+		var buyin      = toFloat($('#cashTablePeopleBuyin').val());
+		var peopleName = $('#playerName-'+_tablePosition).html();
+			
+		if( !confirm('ATENÇÃO!\n\nConfirma o cashout do jogador '+peopleName+' no valor de R$ '+toCurrency(buyin)+'?') )
+			return false;
+	}
+	
+	return true;
+}
+
+function doSavePlayer(){
+
+	$('#cashTablePeopleForm').submit()
+}
+
+function handleSuccessCashTablePeople(content){
+	
+	var cashTableObj = parseInfo(content);
+	
+	if( !cashTableObj ){
+		
+		alert('Ocorreu um erro ao processar a requisição!\nPor favor, tente novamente.');
+		return hideIndicator();
+	}
+	
+	switch( getSaveAction() ){
+		case 'seatPlayer':
+			seatPlayer(content);
+			break;
+		case 'seatDealer':
+			seatDealer(content);
+			break;
+		case 'rebuy':
+			updatePlayerBankroll();
+			break;
+		case 'cashout':
+			doCashout();
+			break;
+		default:
+			break;
+	}
+	
+	updateMainBalance(cashTableObj);
+	closePeopleDialog()
+	hideIndicator();
+}
+
+function handleFailureCashTablePeople(content){
+	
+	handleFormFieldError(content, 'cashTablePeople');
+}
+
+
+
+
 
 function openCashTable(){
 	
@@ -97,7 +153,11 @@ function openCashTable(){
 		
 		$('#cashTableOpenButton').hide();
 		$('#cashTableCloseButton').show();
-		$('#tab1').html(content);
+		$('#tab2').html(content);
+		
+		$('#cashTableTableTab').mousedown();
+		
+		loadTabContent('tab1', '/cashTable/getTabContent/tabName/main/cashTableId/'+cashTableId, true)
 		
 		startRunninTimer(true);
 	}
@@ -133,12 +193,14 @@ function closeCashTable(){
 	
 	var successFunc = function(content){
 		
-		hideIndicator();
+		stopRunninTimer();
 		
 		$('#cashTableCloseButton').hide();
 		$('#cashTableOpenButton').show();
-		$('#tab1').html(content);
-		stopRunninTimer();
+		$('#tab2').html(content);
+		
+		loadTabContent('tab1', '/cashTable/getTabContent/tabName/main/cashTableId/'+cashTableId, true)
+		hideIndicator();
 	}
 	
 	var failureFunc = function(t){
@@ -159,62 +221,107 @@ function closeCashTable(){
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
-function validatePlayerAdd(){
+function togglePlayer(tablePosition){
 	
-	var peopleId = $('#cashTablePlayerSelectPeopleId').val();
-	var buyin    = toFloat($('#cashTablePlayerSelectBuyin').val());
-	var buyinMin = toFloat($('#cashTableBuyin').val());
+	_tablePosition = tablePosition;
 	
-	var hasError = false;
+	clearFormFieldErrors('cashTablePeople');
+	var playerInfoObj = currentCashTableObj['tablePosition'+tablePosition];
 	
-	clearFormFieldErrors('cashTablePlayerSelect');
+	var isSeatOcupied = playerInfoObj!=null;
 	
-	if( !peopleId ){
+	if( isSeatOcupied ){
 		
-		addFormError('cashTablePlayerSelect', 'peopleName', 'Selecione um jogador para adicionar na mesa');
-		hasError = true;
-	}
+		doSelectCashTablePlayer(playerInfoObj.peopleId, playerInfoObj.peopleName, null, true);
+		$('#cashTablePeoplePeopleName').hide();
+		$('#cashTablePeoplePeopleNameLabel').show();
+		
+		showPeopleExtraOptions();
+	}else{
 
-	if( !buyin || buyin < buyinMin ){
+		$('#cashTablePeoplePeopleNameLabel').hide();
+		$('#cashTablePeoplePeopleName').show();
 		
-		addFormError('cashTablePlayerSelect', 'buyin', 'Informe um valor maior que '+toCurrency(buyinMin));
-		hasError = true;
+		$('#cashTablePeoplePeopleId').val('');
+		$('#cashTablePeoplePeopleName').val('');
+		$('#cashTablePeopleBuyin').val('');
+		$('#cashTablePeopleTablePosition').val(tablePosition);
+		
+		$('#cashTablePeoplePeopleId').val('');
+		$('#cashTablePeoplePeopleNameLabel').html('');
+		$('#cashTablePeopleEmailAddress').html('');
+		$('#cashTablePeoplePhoneNumber').html('');
+		$('#cashTablePeopleLastGame').html('');
+		$('#cashTablePeopleRestriction').html('');
+		
+		showPeopleAddPlayerOptions(tablePosition);
+		
+		openPeopleDialog();
+		
+		$('#cashTablePeoplePeopleName').focus();
 	}
-	
-	return !hasError;
 }
 
-function togglePlayer(position){
+function toggleDealer(){
 	
-	$('#playerSelectDialog').dialog('open');
-	_tablePosition = position;
+	clearFormFieldErrors('cashTablePeople');
+	var dealerInfoObj = currentCashTableObj['dealer'];
 	
-	clearFormFieldErrors('cashTablePlayerSelect');
+	var isSeatOcupied = dealerInfoObj!=null;
 	
-	$('#cashTablePlayerSelectPeopleId').val('');
-	$('#cashTablePlayerSelectPeopleName').val('');
-	$('#cashTablePlayerSelectBuyin').val('');
-	$('#cashTablePlayerSelectTablePosition').val(position);
-	$('#cashTablePlayerSelectPosition').html(position);
-	
-	
-	$('#cashTablePlayerSelectPeopleName').focus();
+	if( isSeatOcupied ){
+		
+		doSelectCashTablePlayer(dealerInfoObj.peopleId, dealerInfoObj.peopleName, null, true);
+		$('#cashTablePeoplePeopleName').hide();
+		$('#cashTablePeoplePeopleNameLabel').show();
+		
+		showPeopleDealerExtraOptions();
+	}else{
+
+		$('#cashTablePeoplePeopleNameLabel').hide();
+		$('#cashTablePeoplePeopleName').show();
+		
+		$('#cashTablePeoplePeopleId').val('');
+		$('#cashTablePeoplePeopleName').val('');
+		$('#cashTablePeoplePeopleNameLabel').html('');
+		$('#cashTablePeopleEmailAddress').html('');
+		$('#cashTablePeoplePhoneNumber').html('');
+		
+		showPeopleDealerOptions();
+		
+		openPeopleDialog();
+		
+		$('#cashTablePeoplePeopleName').focus();
+	}
 }
 
-function doSelectCashTablePlayer(peopleId, peopleName){
+function doSelectCashTablePlayer(peopleId, peopleName, successFunc, openDialog){
 	
-	$('#cashTablePlayerSelectPeopleId').val(peopleId);
+	if( peopleId=='quickNew' )
+		return addQuickNewPlayer(peopleName, doSelectCashTablePlayer)
+	
+	$('#cashTablePeoplePeopleId').val(peopleId);
 	// carregar aqui as informações do jogador
+	
+	showIndicator();
 	
 	var successFunc = function(content){
 		
 		var peopleObj = parseInfo(content);
-		$('#cashTablePlayerSelectEmailAddress').html(peopleObj.emailAddress);
-		$('#cashTablePlayerSelectPhoneNumber').html(peopleObj.phoneNumber);
-		$('#cashTablePlayerSelectLastGame').html(peopleObj.lastGame);
-		$('#cashTablePlayerSelectRestriction').html(peopleObj.restriction);
+		$('#cashTablePeoplePeopleId').val(peopleObj.id);
+		$('#cashTablePeoplePeopleName').val(peopleObj.fullName);
+		$('#cashTablePeoplePeopleNameLabel').html(peopleObj.fullName);
+		$('#cashTablePeopleEmailAddress').html(peopleObj.emailAddress);
+		$('#cashTablePeoplePhoneNumber').html(peopleObj.phoneNumber);
+		$('#cashTablePeopleLastGame').html(peopleObj.lastGame);
+		$('#cashTablePeopleRestriction').html(peopleObj.restriction);
 		
-		$('#cashTablePlayerSelectBuyin').focus();
+		if( openDialog )
+			openPeopleDialog()
+		else
+			$('#cashTablePeopleBuyin').focus();
+		
+		hideIndicator();
 	};
 		
 	var failureFunc = function(t){
@@ -223,7 +330,9 @@ function doSelectCashTablePlayer(peopleId, peopleName){
 
 		var errorMessage = parseMessage(content);
 
-		addFormError('cashTablePlayerSelect', 'peopleName', 'Não foi possível recuperar as informações do jogador');
+		addFormError('cashTablePeople', 'peopleName', 'Não foi possível recuperar as informações do jogador');
+		
+		hideIndicator();
 		
 		if( !errorMessage && isDebug() )
 			debug(content);
@@ -233,44 +342,151 @@ function doSelectCashTablePlayer(peopleId, peopleName){
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
-function addPlayer(){
+function updatePlayerBankroll(){
 	
-	if( !validatePlayerAdd() )
-		return;
+	var peopleId        = $('#cashTablePeoplePeopleId').val();
+	var playerName      = $('#cashTablePeoplePeopleName').val();
+	var buyin           = toFloat($('#cashTablePeopleBuyin').val());
+	var currentBankroll = toFloat($('#bankRoll-'+_tablePosition).html());
 	
-	showIndicator();
-	
-	var successFunc = function(content){
-		
-		var playerName = $('#cashTablePlayerSelectPeopleName').val();
-		var buyin      = toFloat($('#cashTablePlayerSelectBuyin').val());
-		
-		var cashTableObj = parseInfo(content);
-		
-		$('#mainBalanceAmount').html(toCurrency(cashTableObj.currentValue));
-		
-		$('#seat-'+_tablePosition).removeClass('empty');
-		$('#playerName-'+_tablePosition).html(playerName)
-		$('#bankRoll-'+_tablePosition).html(toCurrency(buyin));
-		$('#playerSelectDialog').dialog('close');
-		
-		hideIndicator();
-	};
-		
-	var failureFunc = function(t){
+	$('#seat-'+_tablePosition).removeClass('empty');
+	$('#playerName-'+_tablePosition).html(playerName)
+	$('#bankRoll-'+_tablePosition).html(toCurrency(currentBankroll+buyin));
+	currentCashTableObj['tablePosition'+_tablePosition] = {peopleId: peopleId, bankroll: buyin, peopleName: playerName};
+}
 
-		var content = t.responseText;
-		debug(content)
-		var errorMessage = parseMessage(content);
-
-		addFormError('cashTablePlayerSelect', 'peopleName', 'Não foi possível incluir o jogador na posição selecionada');
-		
-		hideIndicator();
-		
-		if( !errorMessage && isDebug() )
-			debug(content);
-	};
+function doCashout(){
 	
-	var urlAjax = _webRoot+'/cashTable/seatPlayer';
-	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:$('#cashTablePlayerSelectForm').serialize()});
+	$('#seat-'+_tablePosition).addClass('empty');
+	$('#playerName-'+_tablePosition).html('Vazio')
+	$('#bankRoll-'+_tablePosition).html('');
+	currentCashTableObj['tablePosition'+_tablePosition] = null;
+}
+
+function updateMainBalance(cashTableObj){
+	
+	$('#mainBalanceAmount').html(toCurrency(cashTableObj.currentValue));
+	$('#statsTotalBuyin').html(toCurrency(cashTableObj.totalBuyin));
+	$('#statsTotalEntranceFee').html(toCurrency(cashTableObj.totalEntranceFee));
+	$('#statsPlayers').html(cashTableObj.players);
+}
+
+function seatPlayer(){
+	
+	updatePlayerBankroll();
+}
+
+function seatDealer(){
+	
+	var peopleId        = $('#cashTablePeoplePeopleId').val();
+	var playerName      = $('#cashTablePeoplePeopleName').val();
+	var buyin           = toFloat($('#cashTablePeopleBuyin').val());
+	
+	$('#seat-dealer').removeClass('empty');
+	$('#dealerName').html(playerName)
+	currentCashTableObj['dealer'] = {peopleId: peopleId, peopleName: playerName};
+}
+
+function resetRunningTimer(){
+	
+	statsRunningTime = 0;
+}
+
+function startRunninTimer(reset){
+	
+	if( reset )
+		resetRunningTimer();
+	
+	_isRunning = true;
+	updateRunningTimer();
+}
+
+function stopRunninTimer(){
+	
+	_isRunning = false;
+}
+
+function openPeopleDialog(){
+	
+	$('#playerSelectDialog').dialog('open');
+}
+
+function closePeopleDialog(){
+	
+	$('#playerSelectDialog').dialog('close');
+}
+
+function showPeopleAddPlayerOptions(tablePosition){
+	
+	$('#cashTablePeopleExtraOptionDiv').hide();
+	$('#cashTablePeopleCashoutDiv').hide();
+	
+	$('#cashTablePeopleBuyinDiv').show();
+	$('#cashTablePeopleLastGameDiv').show();
+	$('#cashTablePeopleRestrictionDiv').show();
+	setSaveAction('seatPlayer');
+	
+	$('#cashTablePeopleBuyin').val('');
+	$('#cashTablePeopleBuyin').focus();
+	$('#cashTablePeopleBuyinDiv label').first().html('Buyin');
+	
+	$('#playerSelectDialog').dialog({title:'Inclusão de jogador'});
+	$('#playerSelectIntro').html('Informe o nome ou e-mail do jogador que deseja incluir na posição '+tablePosition);
+}
+
+function showPeopleExtraOptions(){
+	
+	$('#cashTablePeopleBuyinDiv').hide();
+	$('#cashTablePeopleExtraOptionDiv').show();
+	$('#cashTablePeopleLastGameDiv').show();
+	$('#cashTablePeopleRestrictionDiv').show();
+	
+	setSaveAction('');
+	
+	$('#playerSelectDialog').dialog({title:'Edição de jogador na mesa'});
+	$('#playerSelectIntro').html('Escolha uma das opções para gerenciar o jogador na mesa.');
+}
+
+function showPeopleRebuyOptions(){
+	
+	showPeopleAddPlayerOptions();
+	
+	setSaveAction('rebuy');
+	$('#cashTablePeopleBuyinDiv label').first().html('Valor');
+	$('#playerSelectDialog').dialog({title:'Recompra'});
+	$('#playerSelectIntro').html('Informe o valor da recompra do jogador.');
+}
+
+function showPeopleCashoutOptions(){
+
+	showPeopleAddPlayerOptions();
+
+	setSaveAction('cashout');
+	$('#cashTablePeopleBuyinDiv label').first().html('Retirada');
+	$('#playerSelectDialog').dialog({title:'Saída do jogador'});
+	$('#playerSelectIntro').html('Informe o valor de retirada do jogador.');
+}
+
+function showPeopleDealerOptions(){
+	
+	$('#cashTablePeopleExtraOptionDiv').hide();
+	$('#cashTablePeopleCashoutDiv').hide();
+	$('#cashTablePeopleBuyinDiv').hide();
+	$('#cashTablePeopleLastGameDiv').hide();
+	$('#cashTablePeopleRestrictionDiv').hide();
+	
+	setSaveAction('seatDealer');
+	
+	$('#playerSelectDialog').dialog({title:'Definição do dealer'});
+	$('#playerSelectIntro').html('Informe o nome do dealer do jogo');
+}
+
+function setSaveAction(saveAction){
+	
+	$('#cashTablePeopleSaveAction').val(saveAction);
+}
+
+function getSaveAction(){
+	
+	return $('#cashTablePeopleSaveAction').val();
 }
