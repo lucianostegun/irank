@@ -1,6 +1,7 @@
 <?php
 	$players      = $cashTableObj->getPlayers();
 	$lastOpenedAt = $cashTableObj->getLastOpenedAt(null);
+	$isClosed     = $cashTableObj->isClosed();
 	$runningTime  = (is_null($lastOpenedAt)?0:(time()-$lastOpenedAt));
 	
 	$totalBuyin       = $cashTableObj->getTotalBuyin();
@@ -30,7 +31,14 @@
     		<span>Jogadores</span>
     	</li>
     	<li class="last">
-    		<label id="statsRunningTimeLabel" style="white-space: nowrap"><?php echo Util::formatTimeString($runningTime, '%hh %mm %ss') ?></label>
+    		<label id="statsRunningTimeLabel" style="white-space: nowrap">
+    			<?php 
+    				if( $isClosed )
+    					echo 'Mesa fechada';
+    				else
+    					echo Util::formatTimeString($runningTime, '%hh %mm %ss');
+    			?>
+    		</label>
     		<span style="white-space: nowrap; margin-left: 16px">Tempo de jogo</span>
     	</li>
     </ul>

@@ -288,7 +288,7 @@ th.ui-state-default:first-child { border-left: none; }
 .ui-corner-all { -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; }
 
 /* Overlays */
-.ui-widget-overlay { background: #aaaaaa url(/images/backend/jquery_ui/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .30;filter:Alpha(Opacity=30); }
+.ui-widget-overlay { background: #000000; opacity: .55;filter:Alpha(Opacity=55); }
 .ui-widget-shadow { margin: -8px 0 0 -8px; padding: 8px; background: #aaaaaa url(/images/backend/jquery_ui/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .30;filter:Alpha(Opacity=30); -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }
 
 
@@ -394,7 +394,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog .icon { padding: 1px 6px 0 0; float: left; }
 .ui-dialog p { padding: 0!important; }
 .ui-dialog .ui-dialog-titlebar { position: relative;  background: url(/images/backend/backgrounds/titleBg.png) repeat-x 0 0; border-bottom: 1px solid #cdcdcd; border-radius: 0!important; }
-.ui-dialog .ui-dialog-title { height: 36px; padding: 0 12px 0 12px; line-height: 36px; } 
+.ui-dialog .ui-dialog-title { height: 25px; padding: 0 12px 0 12px; line-height: 28px } 
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: 6px; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
 .ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; opacity: 0.6; }
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 1px; background: #fafafa; }

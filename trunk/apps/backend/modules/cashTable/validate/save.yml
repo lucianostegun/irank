@@ -11,6 +11,10 @@ fields:
       max:       32
       max_error: form.error.max32
       
+  gameTypeId:
+    required:
+      msg:       form.error.requiredField
+      
   buyin:
     required:
       msg:       form.error.requiredField

@@ -57,7 +57,7 @@
 .cashTable .seat.dealer label { color: #FF7E00; top: 6px; left: 14px }
 .cashTable .seat.dealer.empty label { top: 6px; color: #FFBA00 }
 
-.cashTable .seat span.bankRoll {
+.cashTable .seat span.bankroll {
 	
 	display: 		table-cell;
 	position: 		absolute;
@@ -71,7 +71,7 @@
 	z-index: 		2;
 }
 
-.cashTable .seat.empty span.bankRoll {
+.cashTable .seat.empty span.bankroll {
 	
 	display: 		none;
 }
@@ -131,9 +131,34 @@
 .cashTable.small #seat-5 span.tablePosition,
 .cashTable.small #seat-6 span.tablePosition {bottom: -5px; right: 0px}
 
+
+
+
+
+
+
+
+.cashTable.large #seat-dealer {left: 293px;  top: 17px}
+.cashTable.large #seat-dealer span.tablePosition {bottom: -7px; left: 51px; font-size: 9px; text-transform: uppercase}
+
 .cashTable.small #seat-dealer {left: 235px;  top: 3px}
 .cashTable.small #seat-dealer span.tablePosition {bottom: -7px; left: 51px; font-size: 9px; text-transform: uppercase}
 
+
+
+
+
+#dealerButton { position: absolute; display: none }
+.cashTable.large #dealerButton.position-1 { top: 100px; left: 450px; display: block }
+.cashTable.large #dealerButton.position-2 { top: 155px; left: 510px; display: block }
+.cashTable.large #dealerButton.position-3 { top: 198px; left: 535px; display: block }
+.cashTable.large #dealerButton.position-4 { top: 243px; left: 498px; display: block }
+.cashTable.large #dealerButton.position-5 { top: 288px; left: 388px; display: block }
+.cashTable.large #dealerButton.position-6 { top: 288px; left: 323px; display: block }
+.cashTable.large #dealerButton.position-7 { top: 243px; left: 214px; display: block }
+.cashTable.large #dealerButton.position-8 { top: 198px; left: 171px; display: block }
+.cashTable.large #dealerButton.position-9 { top: 155px; left: 199px; display: block }
+.cashTable.large #dealerButton.position-10 { top: 100px; left: 250px; display: block }
 
 
 
@@ -184,13 +209,13 @@ table .formRow .formRight input {
 	position: relative; top: 3px
 }
 
-#playerSelectDialog .form .formRow .button {
+#peopleSelectDialog .form .formRow .button {
 	
-	margin-top: 	3px;
+	margin-top: 	4px;
 	margin-bottom: 	3px;
 }
 
-#playerSelectDialog .form .formRow .button span {
+#peopleSelectDialog .form .formRow .button span {
 	
 	color: #FFFFFF
 }

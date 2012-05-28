@@ -1,5 +1,19 @@
 $(function() {
 	
+	//===== Alerta padrão =====//
+	$('#mainAlertDialog').dialog({
+		autoOpen: false,
+		modal: true,
+		resizable: false,
+		width: 550,
+		height: 150,
+		buttons: {
+			Ok: function() {
+				$('#mainAlertDialog').dialog('close');
+			}
+		}
+	});
+	
 	//===== Collapsible elements management =====//
 	
 	$('.exp').collapsible({
@@ -193,12 +207,24 @@ function buildCheckboxTable(){
 	$('#checkAll2 tbody tr td:first-child').next('td').css('border-left-color', '#CBCBCB');
 }
 
-
-
 function updateProgressBar( percent, progressBarId ){
 	
 	// jQuery UI progress bar
 	$("#"+progressBarId).progressbar({
 		value: percent
 	});
+}
+
+function alert(message, title){
+	
+	title = (title?title:'Alerta interno');
+	
+	message = message.replace(/\n/g, '<br/>');
+	
+	$('#mainAlertMessage').html(message);
+	$('#mainAlertDialog').dialog({
+        title: title
+    });
+	
+	$('#mainAlertDialog').dialog('open');
 }

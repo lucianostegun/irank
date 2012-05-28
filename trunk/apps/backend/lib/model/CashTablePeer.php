@@ -18,7 +18,7 @@ class CashTablePeer extends BaseCashTablePeer
 		
 		$buyin = Util::formatFloat($buyin);
 		
-		if( !in_array($saveAction, array('cashout', 'seatDealer')) && $buyin < $cashTableObj->getBuyin() )
+		if( !in_array($saveAction, array('cashout', 'cashoutDealer', 'seatDealer')) && $buyin < $cashTableObj->getBuyin() )
 			MyTools::setError('buyin', 'Informe um valor maior que '.$cashTableObj->getBuyin());
 		
 		return !MyTools::getRequest()->hasErrors();

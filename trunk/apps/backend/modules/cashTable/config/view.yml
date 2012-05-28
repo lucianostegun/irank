@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    [backend/cashTable]
-  javascripts:    [backend/people, backend/cashTable]
+  javascripts:    [backend/people, backend/cashTable, backend/cashTablePeople]

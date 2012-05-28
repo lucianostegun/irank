@@ -167,7 +167,10 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
 	?>
     
     <div style="padding-top: 65px">
-    <?php echo $sf_data->getRaw('sf_content') ?> 
+    <?php
+    	echo $sf_data->getRaw('sf_content');
+    	include_partial('home/component/alert');
+    ?> 
     </div>
     <!-- Footer line -->
     <div id="footer">

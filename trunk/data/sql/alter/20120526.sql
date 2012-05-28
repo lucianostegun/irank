@@ -8,6 +8,7 @@ CREATE TABLE cash_table_session (
     user_admin_id_close INTEGER,
     total_players INTEGER,
     total_dealers INTEGER,
+    dealer_start_position INTEGER,
     enabled BOOLEAN DEFAULT TRUE,
     visible BOOLEAN DEFAULT TRUE,
     deleted BOOLEAN DEFAULT FALSE,
@@ -58,6 +59,8 @@ ALTER TABLE cash_table ADD CONSTRAINT cash_table_FK_2 FOREIGN KEY (cash_table_se
 ALTER TABLE cash_table ADD COLUMN people_id_dealer INTEGER;
 ALTER TABLE cash_table ADD CONSTRAINT cash_table_FK_3 FOREIGN KEY (people_id_dealer) REFERENCES people (id);
 
+
+
 CREATE OR REPLACE FUNCTION get_cash_table_total_buyin(cashTableId INTEGER) RETURNS DECIMAL(10, 2) AS '
 DECLARE
     totalBuyin DECIMAL(10,2);
@@ -104,21 +107,35 @@ LANGUAGE 'plpgsql';
 
 CREATE OR REPLACE FUNCTION get_cash_table_cashout(cashTableId INTEGER) RETURNS DECIMAL(10, 2) AS '
 DECLARE
-    totalCashoutValue DECIMAL(10,2);
+    totalCashoutValuePlayer DECIMAL(10,2);
+    totalCashoutValueDealer DECIMAL(10,2);
 BEGIN
 
     SELECT
-        SUM(cash_table_player.CASHOUT_VALUE) INTO totalCashoutValue
+        SUM(cash_table_player.CASHOUT_VALUE) INTO totalCashoutValuePlayer
     FROM
         cash_table_player
         INNER JOIN cash_table ON cash_table_player.CASH_TABLE_ID=cash_table.ID AND cash_table_player.CASH_TABLE_SESSION_ID=cash_table.CASH_TABLE_SESSION_ID
     WHERE
         cash_table.ID = cashTableId;
-    
-    IF totalCashoutValue IS NULL THEN
-        totalCashoutValue := 0;
+
+
+    SELECT
+        SUM(cash_table_dealer.CASHOUT_VALUE) INTO totalCashoutValueDealer
+    FROM
+        cash_table_dealer
+        INNER JOIN cash_table ON cash_table_dealer.CASH_TABLE_ID=cash_table.ID AND cash_table_dealer.CASH_TABLE_SESSION_ID=cash_table.CASH_TABLE_SESSION_ID
+    WHERE
+        cash_table.ID = cashTableId;
+
+    IF totalCashoutValuePlayer IS NULL THEN
+        totalCashoutValuePlayer := 0;
     END IF;
 
-    RETURN totalCashoutValue;
+    IF totalCashoutValueDealer IS NULL THEN
+        totalCashoutValueDealer := 0;
+    END IF;
+
+    RETURN totalCashoutValuePlayer+totalCashoutValueDealer;
 END'
 LANGUAGE 'plpgsql';

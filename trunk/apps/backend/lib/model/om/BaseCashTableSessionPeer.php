@@ -13,7 +13,7 @@ abstract class BaseCashTableSessionPeer {
 	const CLASS_DEFAULT = '...apps.backend.lib.model.CashTableSession';
 
 	
-	const NUM_COLUMNS = 13;
+	const NUM_COLUMNS = 14;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,6 +44,9 @@ abstract class BaseCashTableSessionPeer {
 	const TOTAL_DEALERS = 'cash_table_session.TOTAL_DEALERS';
 
 	
+	const DEALER_START_POSITION = 'cash_table_session.DEALER_START_POSITION';
+
+	
 	const ENABLED = 'cash_table_session.ENABLED';
 
 	
@@ -64,19 +67,19 @@ abstract class BaseCashTableSessionPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'CashTableId', 'OpenedAt', 'ClosedAt', 'UserAdminIdOpen', 'UserAdminIdClose', 'TotalPlayers', 'TotalDealers', 'Enabled', 'Visible', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (CashTableSessionPeer::ID, CashTableSessionPeer::CASH_TABLE_ID, CashTableSessionPeer::OPENED_AT, CashTableSessionPeer::CLOSED_AT, CashTableSessionPeer::USER_ADMIN_ID_OPEN, CashTableSessionPeer::USER_ADMIN_ID_CLOSE, CashTableSessionPeer::TOTAL_PLAYERS, CashTableSessionPeer::TOTAL_DEALERS, CashTableSessionPeer::ENABLED, CashTableSessionPeer::VISIBLE, CashTableSessionPeer::DELETED, CashTableSessionPeer::CREATED_AT, CashTableSessionPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'cash_table_id', 'opened_at', 'closed_at', 'user_admin_id_open', 'user_admin_id_close', 'total_players', 'total_dealers', 'enabled', 'visible', 'deleted', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CASH_TABLE_ID'=>'', 'OPENED_AT'=>'', 'CLOSED_AT'=>'', 'USER_ADMIN_ID_OPEN'=>'', 'USER_ADMIN_ID_CLOSE'=>'', 'TOTAL_PLAYERS'=>'', 'TOTAL_DEALERS'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'CashTableId', 'OpenedAt', 'ClosedAt', 'UserAdminIdOpen', 'UserAdminIdClose', 'TotalPlayers', 'TotalDealers', 'DealerStartPosition', 'Enabled', 'Visible', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (CashTableSessionPeer::ID, CashTableSessionPeer::CASH_TABLE_ID, CashTableSessionPeer::OPENED_AT, CashTableSessionPeer::CLOSED_AT, CashTableSessionPeer::USER_ADMIN_ID_OPEN, CashTableSessionPeer::USER_ADMIN_ID_CLOSE, CashTableSessionPeer::TOTAL_PLAYERS, CashTableSessionPeer::TOTAL_DEALERS, CashTableSessionPeer::DEALER_START_POSITION, CashTableSessionPeer::ENABLED, CashTableSessionPeer::VISIBLE, CashTableSessionPeer::DELETED, CashTableSessionPeer::CREATED_AT, CashTableSessionPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'cash_table_id', 'opened_at', 'closed_at', 'user_admin_id_open', 'user_admin_id_close', 'total_players', 'total_dealers', 'dealer_start_position', 'enabled', 'visible', 'deleted', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CASH_TABLE_ID'=>'', 'OPENED_AT'=>'', 'CLOSED_AT'=>'', 'USER_ADMIN_ID_OPEN'=>'', 'USER_ADMIN_ID_CLOSE'=>'', 'TOTAL_PLAYERS'=>'', 'TOTAL_DEALERS'=>'', 'DEALER_START_POSITION'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'CashTableId'=>1, 'OpenedAt'=>2, 'ClosedAt'=>3, 'UserAdminIdOpen'=>4, 'UserAdminIdClose'=>5, 'TotalPlayers'=>6, 'TotalDealers'=>7, 'Enabled'=>8, 'Visible'=>9, 'Deleted'=>10, 'CreatedAt'=>11, 'UpdatedAt'=>12, ),
-		BasePeer::TYPE_COLNAME=>array (CashTableSessionPeer::ID=>0, CashTableSessionPeer::CASH_TABLE_ID=>1, CashTableSessionPeer::OPENED_AT=>2, CashTableSessionPeer::CLOSED_AT=>3, CashTableSessionPeer::USER_ADMIN_ID_OPEN=>4, CashTableSessionPeer::USER_ADMIN_ID_CLOSE=>5, CashTableSessionPeer::TOTAL_PLAYERS=>6, CashTableSessionPeer::TOTAL_DEALERS=>7, CashTableSessionPeer::ENABLED=>8, CashTableSessionPeer::VISIBLE=>9, CashTableSessionPeer::DELETED=>10, CashTableSessionPeer::CREATED_AT=>11, CashTableSessionPeer::UPDATED_AT=>12, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'cash_table_id'=>1, 'opened_at'=>2, 'closed_at'=>3, 'user_admin_id_open'=>4, 'user_admin_id_close'=>5, 'total_players'=>6, 'total_dealers'=>7, 'enabled'=>8, 'visible'=>9, 'deleted'=>10, 'created_at'=>11, 'updated_at'=>12, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'CashTableId'=>1, 'OpenedAt'=>2, 'ClosedAt'=>3, 'UserAdminIdOpen'=>4, 'UserAdminIdClose'=>5, 'TotalPlayers'=>6, 'TotalDealers'=>7, 'DealerStartPosition'=>8, 'Enabled'=>9, 'Visible'=>10, 'Deleted'=>11, 'CreatedAt'=>12, 'UpdatedAt'=>13, ),
+		BasePeer::TYPE_COLNAME=>array (CashTableSessionPeer::ID=>0, CashTableSessionPeer::CASH_TABLE_ID=>1, CashTableSessionPeer::OPENED_AT=>2, CashTableSessionPeer::CLOSED_AT=>3, CashTableSessionPeer::USER_ADMIN_ID_OPEN=>4, CashTableSessionPeer::USER_ADMIN_ID_CLOSE=>5, CashTableSessionPeer::TOTAL_PLAYERS=>6, CashTableSessionPeer::TOTAL_DEALERS=>7, CashTableSessionPeer::DEALER_START_POSITION=>8, CashTableSessionPeer::ENABLED=>9, CashTableSessionPeer::VISIBLE=>10, CashTableSessionPeer::DELETED=>11, CashTableSessionPeer::CREATED_AT=>12, CashTableSessionPeer::UPDATED_AT=>13, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'cash_table_id'=>1, 'opened_at'=>2, 'closed_at'=>3, 'user_admin_id_open'=>4, 'user_admin_id_close'=>5, 'total_players'=>6, 'total_dealers'=>7, 'dealer_start_position'=>8, 'enabled'=>9, 'visible'=>10, 'deleted'=>11, 'created_at'=>12, 'updated_at'=>13, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	
@@ -145,6 +148,8 @@ abstract class BaseCashTableSessionPeer {
 		$criteria->addSelectColumn(CashTableSessionPeer::TOTAL_PLAYERS);
 
 		$criteria->addSelectColumn(CashTableSessionPeer::TOTAL_DEALERS);
+
+		$criteria->addSelectColumn(CashTableSessionPeer::DEALER_START_POSITION);
 
 		$criteria->addSelectColumn(CashTableSessionPeer::ENABLED);
 
