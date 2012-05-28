@@ -124,9 +124,11 @@ class cashTableActions extends sfActions
     	Util::forceError('!'.$e->getMessage());
 	}
 
-  	sfConfig::set('sf_web_debug', false);
-	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('cashTable/tab/table', array('cashTableObj'=>$cashTableObj)));
+	echo Util::parseInfo($cashTableObj->getInfo());
+	exit;
+//  sfConfig::set('sf_web_debug', false);
+//	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+//	return $this->renderText(get_partial('cashTable/tab/table', array('cashTableObj'=>$cashTableObj)));
   }
 
   public function executeCloseTable($request){
@@ -176,8 +178,12 @@ class cashTableActions extends sfActions
 				break;
 			case 'cashout':
 				$cashTableObj->cashout($peopleId, $buyin);
+				break;
 			case 'seatDealer':
-				$cashTableObj->addDealer($peopleId);
+				$cashTableObj->seatDealer($peopleId);
+				break;
+			case 'cashoutDealer':
+				$cashTableObj->cashoutDealer($peopleId, $buyin);
 				break;
 		}
 	}catch(Exception $e){

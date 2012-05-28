@@ -69,9 +69,9 @@ function hideDiv(divId){
 function parseMessage(errorMessage){
 
 	if( (errorMessage).match(/^!/) )
-		return errorMessage.replace('!', '\n\n');
+		return errorMessage.replace('!', '\n');
 	else if( errorMessage.length < 100 )
-		return '\n\n'+errorMessage;
+		return '\n'+errorMessage;
 	else
 		return null
 }

@@ -50,6 +50,8 @@ class CashTableSessionMapBuilder {
 
 		$tMap->addColumn('TOTAL_DEALERS', 'TotalDealers', 'int', CreoleTypes::INTEGER, false, null);
 
+		$tMap->addColumn('DEALER_START_POSITION', 'DealerStartPosition', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

@@ -12,7 +12,7 @@ class UserAdminPeer extends BaseUserAdminPeer
 	
 	public static function uniqueUsername($username){
 		
-		$userAdminId = MyTools::getAttribute('userAdminId');
+		$userAdminId = MyTools::getRequestParameter('userAdminId');
 		
 		$criteria = new Criteria();
 		$criteria->add( UserAdminPeer::ID, $userAdminId, Criteria::NOT_EQUAL );

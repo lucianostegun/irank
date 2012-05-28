@@ -1,11 +1,12 @@
 <?php
-	$players = $cashTableObj->getPlayers();
+	$seats               = $cashTableObj->getSeats();
+	$dealerStartPosition = $cashTableObj->getDealerStartPosition();
 ?>
-<div class="cashTable <?php echo ($players <= 6?'small':'large') ?>">
+<div class="cashTable <?php echo ($seats <= 6?'small':'large') ?>" id="cashTableArea">
 	<?php
 		$currentCashTableObj = new stdClass();
 		
-		for($tablePosition=1; $tablePosition <= $cashTableObj->getSeats(); $tablePosition++){
+		for($tablePosition=1; $tablePosition <= $seats; $tablePosition++){
 			
 			$fieldName = "tablePosition$tablePosition";
 			$currentCashTableObj->$fieldName = null;
@@ -24,7 +25,7 @@
 													 'bankroll'=>$bankroll,
 													 'playerName'=>$peopleName);
 	?>
-	<div class="seat" onclick="togglePlayer(<?php echo $tablePosition ?>)" id="seat-<?php echo $tablePosition ?>"><label id="playerName-<?php echo $tablePosition ?>"><?php echo $peopleName ?></label><span class="bankRoll" id="bankRoll-<?php echo $tablePosition ?>"><?php echo Util::formatFloat($bankroll, true) ?></span><span class="tablePosition"><?php echo $tablePosition ?></span></div>
+	<div class="seat" onclick="togglePlayer(<?php echo $tablePosition ?>)" id="seat-<?php echo $tablePosition ?>"><label id="playerName-<?php echo $tablePosition ?>"><?php echo $peopleName ?></label><span class="bankroll" id="bankroll-<?php echo $tablePosition ?>"><?php echo Util::formatFloat($bankroll, true) ?></span><span class="tablePosition"><?php echo $tablePosition ?></span></div>
 	<?php endforeach; ?>
 	
 	<?php
@@ -36,7 +37,7 @@
 			$tablePosition = str_replace('tablePosition', '', $tablePosition);
 			$cashTablePlayer = null;
 	?>
-	<div class="seat empty" onclick="togglePlayer(<?php echo $tablePosition ?>)" id="seat-<?php echo $tablePosition ?>"><label id="playerName-<?php echo $tablePosition ?>">Vazio</label><span class="bankRoll" id="bankRoll-<?php echo $tablePosition ?>"><?php echo Util::formatFloat(0, true) ?></span><span class="tablePosition"><?php echo $tablePosition ?></span></div>
+	<div class="seat empty" onclick="togglePlayer(<?php echo $tablePosition ?>)" id="seat-<?php echo $tablePosition ?>"><label id="playerName-<?php echo $tablePosition ?>">Vazio</label><span class="bankroll" id="bankroll-<?php echo $tablePosition ?>"><?php echo Util::formatFloat(0, true) ?></span><span class="tablePosition"><?php echo $tablePosition ?></span></div>
 	<?php
 		endforeach;
 	
@@ -55,6 +56,7 @@
 		}
 	?>
 	<div class="seat dealer <?php echo $class ?>" onclick="toggleDealer()" id="seat-dealer"><label id="dealerName"><?php echo $peopleName ?></label><span class="tablePosition">dealer</span></div>
+	<div id="dealerButton" class="position-<?php echo $dealerStartPosition ?>"><?php echo image_tag('backend/cashTable/dealer') ?></div>
 </div>
 <script>
 	currentCashTableObj = <?php echo Util::parseInfo($currentCashTableObj) ?>

@@ -40,6 +40,8 @@ class CashTableMapBuilder {
 
 		$tMap->addForeignKey('PEOPLE_ID_DEALER', 'PeopleIdDealer', 'int', CreoleTypes::INTEGER, 'people', 'ID', false, null);
 
+		$tMap->addForeignKey('GAME_TYPE_ID', 'GameTypeId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
+
 		$tMap->addColumn('CASH_TABLE_NAME', 'CashTableName', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('TABLE_STATUS', 'TableStatus', 'string', CreoleTypes::VARCHAR, false, null);

@@ -14,6 +14,8 @@
 	$clubId      = $cashTableObj->getClubId();
 	$readOnly    = $cashTableObj->isOpen();
 	
+	$clubId |= $sf_user->getAttribute('clubId');
+	
 	echo input_hidden_tag('cashTableId', $cashTableId);
 	echo input_hidden_tag('tableStatus', $cashTableObj->getTableStatus(), array('id'=>'cashTableTableStatus'));
 	
@@ -65,6 +67,16 @@
 		</div>
 		<div class="formRight <?php echo $readOnlyClass ?>">
 			<label><?php echo $cashTableObj->getSeats() ?></label>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
+		<label>Modalidade</label>
+		<div class="formRight">
+			<?php echo select_tag('gameTypeId', VirtualTable::getOptionsForSelect('gameType', $cashTableObj->getGameTypeId()), array('id'=>'cashTableGameTypeId')) ?>
+			<div class="clear"></div>
+			<div class="formNote error" id="cashTableFormErrorGameTypeId"></div>
 		</div>
 		<div class="clear"></div>
 	</div>

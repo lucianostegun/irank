@@ -932,6 +932,7 @@
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
 		<column name="club_id" type="INTEGER" />
 		<column name="people_id_dealer" type="INTEGER" />
+		<column name="game_type_id" type="INTEGER" />
 		<column name="cash_table_name" type="VARCHAR" />
 		<column name="table_status" type="VARCHAR" default="closed" />
 		<column name="players" type="INTEGER" default="0" />
@@ -955,6 +956,9 @@
 		</foreign-key>
 		<foreign-key foreignTable="people">
 			<reference local="people_id_dealer" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="virtual_table">
+			<reference local="game_type_id" foreign="id" />
 		</foreign-key>
 	</table>
 	
@@ -1036,6 +1040,7 @@
 		<column name="user_admin_id_close" type="INTEGER" />
 		<column name="total_players" type="INTEGER" />
 		<column name="total_dealers" type="INTEGER" />
+		<column name="dealer_start_position" type="INTEGER" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -1060,6 +1065,27 @@
 		<column name="table_position" type="INTEGER" />
 		<column name="total_buyin" type="NUMERIC" size="10" scale="2" />
 		<column name="total_entrance_fee" type="NUMERIC" size="10" scale="2" />
+		<column name="cashout_value" type="NUMERIC" size="10" scale="2" />
+		<column name="checkin_at" type="TIMESTAMP" />
+		<column name="checkout_at" type="TIMESTAMP" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="cash_table">
+			<reference local="cash_table_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="cash_table_session">
+			<reference local="cash_table_session_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="people">
+			<reference local="people_id" foreign="id" />
+		</foreign-key>
+	</table>
+
+	<table name="cash_table_dealer" phpName="CashTableDealer" package="...apps.backend.lib.model">
+		<column name="id" type="INTEGER" autoIncrement="true" />
+		<column name="cash_table_id" type="INTEGER" primaryKey="true" />
+		<column name="cash_table_session_id" type="INTEGER" primaryKey="true" />
+		<column name="people_id" type="INTEGER" primaryKey="true" />
 		<column name="cashout_value" type="NUMERIC" size="10" scale="2" />
 		<column name="checkin_at" type="TIMESTAMP" />
 		<column name="checkout_at" type="TIMESTAMP" />

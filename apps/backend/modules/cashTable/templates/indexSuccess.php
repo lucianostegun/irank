@@ -14,6 +14,7 @@
 					<?php endif; ?> 
 					<th>Mesa</th> 
 					<th>Situação</th> 
+					<th>Modalidade</th> 
 					<th>Jogadores</th> 
 					<th>Buyin</th> 
 					<th>Valor atual</th> 
@@ -36,6 +37,7 @@
 					<?php endif; ?> 
 					<td onclick="<?php echo $onclick ?>"><?php echo $cashTableObj->getCashTableName() ?></td> 
 					<td width="10%" onclick="<?php echo $onclick ?>"><?php echo $cashTableObj->getTableStatus(true) ?></td> 
+					<td width="10%" onclick="<?php echo $onclick ?>" class="textC"><?php echo $cashTableObj->getGameType()->getDescription() ?></td> 
 					<td width="10%" onclick="<?php echo $onclick ?>" class="textC"><?php echo $cashTableObj->getPlayers() ?></td> 
 					<td width="10%" onclick="<?php echo $onclick ?>" class="textR"><?php echo Util::formatFloat($cashTableObj->getBuyin(), true) ?></td> 
 					<td width="10%" onclick="<?php echo $onclick ?>" class="textR"><?php echo Util::formatFloat($cashTableObj->getCurrentValue(), true) ?></td> 

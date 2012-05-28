@@ -1,6 +1,6 @@
 <div class="uDialog">
-    <div id="playerSelectDialog" title="Inclusão de jogador">
-        <p id="playerSelectIntro"></p>
+    <div id="peopleSelectDialog" title="Inclusão de jogador">
+        <p id="peopleSelectIntro"></p>
         
         <?php
 			echo form_remote_tag(array(
@@ -44,8 +44,16 @@
 	        		</div>
 
 	        		<div class="formRow" id="cashTablePeopleExtraOptionDiv">
-						<?php echo link_to(image_tag('backend/icons/light/money2', array('class'=>'icon')).'<span>Recompra</span>', '#showPeopleRebuyOptions()', array('class'=>'button greenB')) ?>
+						<?php echo link_to(image_tag('backend/icons/light/money2', array('class'=>'icon')).'<span>Recompra</span>', '#showPeopleRebuyOptions()', array('class'=>'button greenB', 'id'=>'cashTablePeopleSelectRebuyLink')) ?>
 						<?php echo link_to(image_tag('backend/icons/light/maleContour', array('class'=>'icon')).'<span>Cash out</span>', '#showPeopleCashoutOptions()', array('class'=>'button redB')) ?>
+						<div class="clear"></div>
+	        		</div>
+
+	        		<div class="formRow" id="cashTablePeopleBankrollDiv">
+						<label>Bankroll atual</label>
+						<div class="formRight">
+							<label id="cashTablePeopleBankroll"></label>
+						</div>
 						<div class="clear"></div>
 	        		</div>
 	        		
