@@ -108,6 +108,7 @@ a { text-decoration: none; color: #2b6893; }
 
 /* + Correction paddings + */
 .pb0 { padding-bottom: 0!important; }
+.pb3 { padding-bottom: 3px; }
 .pb5 { padding-bottom: 5px; }
 .pb10 { padding-bottom: 10px; }
 .pb15 { padding-bottom: 15px; }
@@ -116,6 +117,7 @@ a { text-decoration: none; color: #2b6893; }
 .pb30 { padding-bottom: 30px; }
 
 .pt0 { padding-top: 0; }
+.pt3 { padding-top: 3px; }
 .pt5 { padding-top: 5px; }
 .pt10 { padding-top: 10px; }
 .pt15 { padding-top: 15px; }

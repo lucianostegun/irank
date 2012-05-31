@@ -1,6 +1,6 @@
 $(function() {
 	
-	clearFormFieldErrors();
+	clearFormFieldErrors(false, true);
 });
 
 
@@ -76,12 +76,17 @@ function removeFormError(instanceName, fieldName){
 	$('#'+instanceName+ucfirst(fieldName)).removeClass('fieldError');
 }
 
-function clearFormFieldErrors(formId){
+function clearFormFieldErrors(formId, clearAll){
 
+	var errorList;
+	
 	if( !formId )
 		formId = getModuleName();
-	
+
 	var errorList = $('#'+formId+'Form .formNote.error');
+	
+	if( clearAll )
+		errorList = $('.formNote.error');
 	
 	errorList.each(function(index, Element){
 		$(Element).hide();

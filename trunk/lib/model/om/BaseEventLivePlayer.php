@@ -49,6 +49,10 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 
 	
+	protected $enrollment_status;
+
+
+	
 	protected $deleted;
 
 
@@ -139,6 +143,13 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 	{
 
 		return $this->addon;
+	}
+
+	
+	public function getEnrollmentStatus()
+	{
+
+		return $this->enrollment_status;
 	}
 
 	
@@ -313,6 +324,20 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setEnrollmentStatus($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->enrollment_status !== $v) {
+			$this->enrollment_status = $v;
+			$this->modifiedColumns[] = EventLivePlayerPeer::ENROLLMENT_STATUS;
+		}
+
+	} 
+	
 	public function setDeleted($v)
 	{
 
@@ -381,17 +406,19 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 
 			$this->addon = $rs->getFloat($startcol + 9);
 
-			$this->deleted = $rs->getBoolean($startcol + 10);
+			$this->enrollment_status = $rs->getString($startcol + 10);
 
-			$this->created_at = $rs->getTimestamp($startcol + 11, null);
+			$this->deleted = $rs->getBoolean($startcol + 11);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 12, null);
+			$this->created_at = $rs->getTimestamp($startcol + 12, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 13, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 13; 
+						return $startcol + 14; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLivePlayer object", $e);
 		}
@@ -588,12 +615,15 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				return $this->getAddon();
 				break;
 			case 10:
-				return $this->getDeleted();
+				return $this->getEnrollmentStatus();
 				break;
 			case 11:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 12:
+				return $this->getCreatedAt();
+				break;
+			case 13:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -616,9 +646,10 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 			$keys[7]=>$this->getBuyin(),
 			$keys[8]=>$this->getRebuy(),
 			$keys[9]=>$this->getAddon(),
-			$keys[10]=>$this->getDeleted(),
-			$keys[11]=>$this->getCreatedAt(),
-			$keys[12]=>$this->getUpdatedAt(),
+			$keys[10]=>$this->getEnrollmentStatus(),
+			$keys[11]=>$this->getDeleted(),
+			$keys[12]=>$this->getCreatedAt(),
+			$keys[13]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -665,12 +696,15 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 				$this->setAddon($value);
 				break;
 			case 10:
-				$this->setDeleted($value);
+				$this->setEnrollmentStatus($value);
 				break;
 			case 11:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 12:
+				$this->setCreatedAt($value);
+				break;
+			case 13:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -690,9 +724,10 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[7], $arr)) $this->setBuyin($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setRebuy($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setAddon($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setDeleted($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
+		if (array_key_exists($keys[10], $arr)) $this->setEnrollmentStatus($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setCreatedAt($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setUpdatedAt($arr[$keys[13]]);
 	}
 
 	
@@ -710,6 +745,7 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePlayerPeer::BUYIN)) $criteria->add(EventLivePlayerPeer::BUYIN, $this->buyin);
 		if ($this->isColumnModified(EventLivePlayerPeer::REBUY)) $criteria->add(EventLivePlayerPeer::REBUY, $this->rebuy);
 		if ($this->isColumnModified(EventLivePlayerPeer::ADDON)) $criteria->add(EventLivePlayerPeer::ADDON, $this->addon);
+		if ($this->isColumnModified(EventLivePlayerPeer::ENROLLMENT_STATUS)) $criteria->add(EventLivePlayerPeer::ENROLLMENT_STATUS, $this->enrollment_status);
 		if ($this->isColumnModified(EventLivePlayerPeer::DELETED)) $criteria->add(EventLivePlayerPeer::DELETED, $this->deleted);
 		if ($this->isColumnModified(EventLivePlayerPeer::CREATED_AT)) $criteria->add(EventLivePlayerPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EventLivePlayerPeer::UPDATED_AT)) $criteria->add(EventLivePlayerPeer::UPDATED_AT, $this->updated_at);
@@ -769,6 +805,8 @@ abstract class BaseEventLivePlayer extends BaseObject  implements Persistent {
 		$copyObj->setRebuy($this->rebuy);
 
 		$copyObj->setAddon($this->addon);
+
+		$copyObj->setEnrollmentStatus($this->enrollment_status);
 
 		$copyObj->setDeleted($this->deleted);
 

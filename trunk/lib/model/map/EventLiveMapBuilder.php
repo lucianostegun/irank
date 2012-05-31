@@ -96,6 +96,8 @@ class EventLiveMapBuilder {
 
 		$tMap->addColumn('ENROLLMENT_START_DATE', 'EnrollmentStartDate', 'int', CreoleTypes::DATE, false, null);
 
+		$tMap->addColumn('ENROLLMENT_MODE', 'EnrollmentMode', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

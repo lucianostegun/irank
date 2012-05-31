@@ -78,10 +78,20 @@ class peopleActions extends sfActions
     if( $this->clubId )
     	$peopleObj->quickSaveClub($request);
     else
-    	$peopleObj->quickSave($request);
+    	$peopleObj->quickSaveAdmin($request);
     
     echo Util::parseInfo($peopleObj->getInfo());
     exit;
+  }
+
+  public function handleErrorSaveQuick(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
+
+  public function executeSaveQuick($request){
+    
+    return $this->executeSave($request);
   }
   
   public function executeAutoComplete($request){
@@ -172,7 +182,7 @@ class peopleActions extends sfActions
 		$peopleObj->setEmailAddress($emailAddress);
 		$peopleObj->save();
 	}
-
+	
 	echo $peopleObj->getId();
     exit;
   }
@@ -185,6 +195,24 @@ class peopleActions extends sfActions
     exit;
   }
 
+  public function executeGetInfo($request){
+    
+    $peopleObj = PeoplePeer::retrieveByPK($this->peopleId);
+    $clubId    = $this->getUser()->getAttribute('clubId');
+    
+    if( $clubId && !$peopleObj->isMyPlayer($clubId) ){
+
+	    $username = $this->getUser()->getAttribute('username');
+
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou recuperar as informações da pessoa <b>('.$peopleObj->getId().') '.$peopleObj->toString().'</b>.', 'People', array(), Log::LOG_CRITICAL);
+    	throw new Exception('Você não tem permissão para visualizar esse registro!');
+    }
+    
+    echo Util::parseInfo($peopleObj->getInfo());
+    
+    exit;
+  }
+  
   public function executeGetPlayerInfo($request){
     
     $peopleObj = PeoplePeer::retrieveByPK($this->peopleId);

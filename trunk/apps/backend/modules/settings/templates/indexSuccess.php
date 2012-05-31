@@ -22,7 +22,7 @@
 	    <ul class="tabs">
 			<li><a href="#tab1">Principal</a></li>
 			<li><a href="#tab2">Templates</a></li>
-			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#settingsForm").submit()')); ?>
+			<?php echo submit_tag('salvar', array('class'=>'button blueB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#settingsForm").submit()')); ?>
 		</ul>
 		<div class="tab_container">
 			<?php

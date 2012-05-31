@@ -22,28 +22,6 @@ CREATE TABLE event_live_player_disclosure (
     CONSTRAINT event_live_player_disclosure_FK_2 FOREIGN KEY (people_id) REFERENCES people (id)
 );
 
-
-CREATE OR REPLACE FUNCTION get_event_live_players(eventLiveId INTEGER) RETURNS INTEGER AS
-'
-DECLARE
-    result INTEGER;
-BEGIN
-	
-    SELECT
-       COALESCE(null, COUNT(1)) INTO result
-   FROM
-       event_live_player
-   WHERE
-       event_live_player.EVENT_LIVE_ID = eventLiveId
-       AND enabled;
-
-   RETURN result;
-
-END
-'
-LANGUAGE 'plpgsql';
-
-
 CREATE OR REPLACE FUNCTION update_ranking_live_visit_count(rankingLiveId INTEGER) RETURNS VOID AS 
 '
 BEGIN

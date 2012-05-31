@@ -79,7 +79,7 @@ class People extends BasePeople
 	  	$birthday  = $request->getParameter('birthday');
 		$phoneNumber = $request->getParameter('phoneNumber');
 	  	
-	  	$culture   = MyTools::getCulture();
+	  	$culture = 'pt_BR';
 	
 	  	$this->setFirstName( $firstName );
 	  	$this->setLastName( $lastName );
@@ -93,13 +93,22 @@ class People extends BasePeople
 
 	public function quickSaveAdmin($request){
 		
-	  	$firstName = $request->getParameter('firstName');
-	  	$lastName  = $request->getParameter('lastName');
-	  	$birthday  = $request->getParameter('birthday');
-		$phoneNumber = $request->getParameter('phoneNumber');
+	  	$firstName    = $request->getParameter('firstName');
+	  	$lastName     = $request->getParameter('lastName');
+	  	$peopleName   = $request->getParameter('peopleName');
+	  	$birthday     = $request->getParameter('birthday');
+	  	$emailAddress = $request->getParameter('emailAddress');
+		$phoneNumber  = $request->getParameter('phoneNumber');
+		
+		if( $peopleName )
+		  	$this->setName( $peopleName );
+	  	else{
+	  		
+		  	$this->setFirstName( $firstName );
+		  	$this->setLastName( $lastName );
+	  	}
 	  	
-	  	$this->setFirstName( $firstName );
-	  	$this->setLastName( $lastName );
+	  	$this->setEmailAddress( nvl($emailAddress) );
 	  	$this->setBirthday( Util::formatDate($birthday) );
 	  	$this->setPhoneNumber( nvl($phoneNumber) );
 	  	$this->save();
@@ -107,9 +116,13 @@ class People extends BasePeople
 
 	public function quickSaveClub($request){
 		
-	  	$phoneNumber = $request->getParameter('phoneNumber');
-	
-	  	$this->setPhoneNumber( $phoneNumber );
+	  	$peopleName   = $request->getParameter('peopleName');
+	  	$emailAddress = $request->getParameter('emailAddress');
+	  	$phoneNumber  = $request->getParameter('phoneNumber');
+	  	
+	  	$this->setName( $peopleName );
+	  	$this->setEmailAddress( nvl($emailAddress) );
+	  	$this->setPhoneNumber( nvl($phoneNumber) );
 	  	$this->save();
 	}
 	
@@ -339,17 +352,20 @@ class People extends BasePeople
 		$clubId = MyTools::getAttribute('clubId');
 			
 		$criteria = new Criteria();
-		$criteria->setDistinct( PeoplePeer::ID );
-		$criteria->add( EventLivePlayerPeer::PEOPLE_ID, $this->getId() );
-		$criteria->add( EventLivePeer::CLUB_ID, $clubId );
-		$criteria->addJoin( PeoplePeer::ID, EventLivePlayerPeer::PEOPLE_ID, Criteria::INNER_JOIN );
-		$criteria->addJoin( EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID, Criteria::INNER_JOIN );
-		$count = PeoplePeer::doCount( $criteria );
+		$criteria->add( ClubPlayer::PEOPLE_ID, $this->getId() );
+		$criteria->add( ClubPlayer::CLUB_ID, $clubId );
+		$count = ClubPlayerPeer::doCount( $criteria );
 		
 		if( $count==0 )
 			return false;
 		
 		return true;
+	}
+	
+	public function addToClub($clubId){
+		
+		$clubPlayerObj = ClubPlayerPeer::retrieveByPK($clubId, $this->getId());
+		$clubPlayerObj->save();
 	}
 	
 	public function toString(){

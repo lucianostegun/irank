@@ -77,11 +77,10 @@ class Club extends BaseClub
 		$this->setDescription(nvl($description));
 		
 		$iRankAdmin = MyTools::hasCredential('iRankAdmin');
-		// Valores salvaos apenas se o usuário for administrador
-		if( $iRankAdmin ){
-			
+		// Valores salvos apenas se o usuário for administrador
+		
+		if( $iRankAdmin )
 			$this->setSmsCredit(($smsCredit?$smsCredit:0));
-		}
 		
 		$this->setEnabled(true);
 		$this->setVisible(true);
@@ -126,10 +125,9 @@ class Club extends BaseClub
 		$criteria->setDistinct( PeoplePeer::ID );
 		
 		if($clubId)
-			$criteria->add( EventLivePeer::CLUB_ID, $clubId );
+			$criteria->add( ClubPeer::CLUB_ID, $clubId );
 			
-		$criteria->addJoin( PeoplePeer::ID, EventLivePlayerPeer::PEOPLE_ID, Criteria::INNER_JOIN );
-		$criteria->addJoin( EventLivePlayerPeer::EVENT_LIVE_ID, EventLivePeer::ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( PeoplePeer::ID, ClubPlayerPeer::PEOPLE_ID, Criteria::INNER_JOIN );
 		$criteria->addAscendingOrderByColumn( PeoplePeer::FULL_NAME );
 		
 		return PeoplePeer::doSelect( $criteria );

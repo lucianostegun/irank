@@ -17,7 +17,7 @@
 			echo input_hidden_tag('tablePosition', null, array('id'=>'cashTablePeopleTablePosition'));
 			echo input_hidden_tag('saveAction', null, array('id'=>'cashTablePeopleSaveAction'));
 		?>
-        <table>
+        <table width="100%" cellspacing="0" cellpadding="0">
         	<tr>
         		<td style="width: 145px">
         			<div id="cashTablePeoplePicture"></div>

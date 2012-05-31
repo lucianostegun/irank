@@ -5,7 +5,7 @@
 			<li><a href="#tab1">E-mail</a></li>
 			<li><a href="#tab2">SMS</a></li>
 			<li><a href="#tab3">Diretórios</a></li>
-			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#controlPanelForm").submit()')); ?>
+			<?php echo submit_tag('salvar', array('class'=>'button blueB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#controlPanelForm").submit()')); ?>
 		</ul>
 		<?php
 			echo form_remote_tag(array(

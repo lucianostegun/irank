@@ -29,8 +29,15 @@
 </tr>
 <?php
 	$eventPlayerPositionList = array();
-	foreach($eventLivePlayerObjList as $eventPosition=>$eventLivePlayerObj)
-		$eventPlayerPositionList[$eventPosition+1] = $eventLivePlayerObj;
+	foreach($eventLivePlayerObjList as $eventPosition=>$eventLivePlayerObj){
+		
+		if( $eventPositionReal = $eventLivePlayerObj->getEventPosition() )
+			$eventPosition = $eventPositionReal;
+		else
+			$eventPosition = $eventPosition+1;
+		
+		$eventPlayerPositionList[$eventPosition] = $eventLivePlayerObj;
+	}
 	
 	for($eventPosition=1; $eventPosition <= $players; $eventPosition++):
 	

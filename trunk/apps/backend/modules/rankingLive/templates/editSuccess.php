@@ -12,7 +12,7 @@
 			<?php if( $iRankAdmin ): ?>
             <li><a href="#tab5">Clubes</a></li>
 			<?php endif; ?>
-			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#rankingLiveForm").submit()')); ?>
+			<?php echo submit_tag('salvar', array('class'=>'button blueB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#rankingLiveForm").submit()')); ?>
         </ul>
         <div class="tab_container">
 		<?php
