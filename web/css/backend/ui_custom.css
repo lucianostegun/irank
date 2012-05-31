@@ -388,9 +388,8 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 
 .ui-dialog { position: absolute; padding: 5px; width: auto; background: #585858; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
 
-.ui-dialog input[type=text], .ui-dialog input[type=password], .ui-dialog textarea { font-size: 11px; padding: 6px 5px; background: white; border: 1px solid #DDD; width: 100%; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #f4f4f4; color: #656565; width: 95%; margin: 10px auto; display: block; }
+.ui-dialog input[type=text], .ui-dialog input[type=password], .ui-dialog textarea { font-size: 11px; padding: 6px 5px; background: white; border: 1px solid #DDD; width: 100%; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #f4f4f4; color: #656565; width: auto; margin-left: 10px; display: block; }
 .ui-dialog form { text-align: center; }
-.ui-dialog form label { float: left; margin: 3px 0 0 10px; cursor: pointer; }
 .ui-dialog .icon { padding: 1px 6px 0 0; float: left; }
 .ui-dialog p { padding: 0!important; }
 .ui-dialog .ui-dialog-titlebar { position: relative;  background: url(/images/backend/backgrounds/titleBg.png) repeat-x 0 0; border-bottom: 1px solid #cdcdcd; border-radius: 0!important; }
@@ -409,6 +408,12 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 5px; bottom: 5px; opacity: 0.3; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
 
+
+.ui-dialog form label { float: left; margin: 3px 0 0 10px; width: 30%; cursor: pointer; text-align: left }
+.ui-dialog form .formRight { width: auto; float: left }
+.ui-dialog form .formNote { float: left; margin: 3px 0 0 10px; cursor: pointer; }
+.ui-dialog a { color: #606060 }
+.ui-dialog .linkIcon { margin-top: 5px; margin-right: 7px; position: relative; top: 2px }
 
 
 

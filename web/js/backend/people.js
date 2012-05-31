@@ -34,7 +34,7 @@ function addQuickNewPlayer(peopleName, successHandlerFunc){
 
 		alert('Não foi possível adicionar o novo jogador!\nPor favor, tente novamente.');
 		
-		if( !errorMessage && isDebug() )
+		if( isDebug() )
 			debug(content);
 	};
 	

@@ -133,6 +133,10 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 
 	
+	protected $enrollment_mode;
+
+
+	
 	protected $enabled;
 
 
@@ -505,6 +509,13 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		} else {
 			return date($format, $ts);
 		}
+	}
+
+	
+	public function getEnrollmentMode()
+	{
+
+		return $this->enrollment_mode;
 	}
 
 	
@@ -1004,6 +1015,20 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setEnrollmentMode($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->enrollment_mode !== $v) {
+			$this->enrollment_mode = $v;
+			$this->modifiedColumns[] = EventLivePeer::ENROLLMENT_MODE;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -1144,23 +1169,25 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 			$this->enrollment_start_date = $rs->getDate($startcol + 30, null);
 
-			$this->enabled = $rs->getBoolean($startcol + 31);
+			$this->enrollment_mode = $rs->getString($startcol + 31);
 
-			$this->visible = $rs->getBoolean($startcol + 32);
+			$this->enabled = $rs->getBoolean($startcol + 32);
 
-			$this->deleted = $rs->getBoolean($startcol + 33);
+			$this->visible = $rs->getBoolean($startcol + 33);
 
-			$this->locked = $rs->getBoolean($startcol + 34);
+			$this->deleted = $rs->getBoolean($startcol + 34);
 
-			$this->created_at = $rs->getTimestamp($startcol + 35, null);
+			$this->locked = $rs->getBoolean($startcol + 35);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 36, null);
+			$this->created_at = $rs->getTimestamp($startcol + 36, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 37, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 37; 
+						return $startcol + 38; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLive object", $e);
 		}
@@ -1514,21 +1541,24 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				return $this->getEnrollmentStartDate();
 				break;
 			case 31:
-				return $this->getEnabled();
+				return $this->getEnrollmentMode();
 				break;
 			case 32:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 33:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 34:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 35:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 36:
+				return $this->getCreatedAt();
+				break;
+			case 37:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1572,12 +1602,13 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$keys[28]=>$this->getVisitCount(),
 			$keys[29]=>$this->getScheduleStartDate(),
 			$keys[30]=>$this->getEnrollmentStartDate(),
-			$keys[31]=>$this->getEnabled(),
-			$keys[32]=>$this->getVisible(),
-			$keys[33]=>$this->getDeleted(),
-			$keys[34]=>$this->getLocked(),
-			$keys[35]=>$this->getCreatedAt(),
-			$keys[36]=>$this->getUpdatedAt(),
+			$keys[31]=>$this->getEnrollmentMode(),
+			$keys[32]=>$this->getEnabled(),
+			$keys[33]=>$this->getVisible(),
+			$keys[34]=>$this->getDeleted(),
+			$keys[35]=>$this->getLocked(),
+			$keys[36]=>$this->getCreatedAt(),
+			$keys[37]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1687,21 +1718,24 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$this->setEnrollmentStartDate($value);
 				break;
 			case 31:
-				$this->setEnabled($value);
+				$this->setEnrollmentMode($value);
 				break;
 			case 32:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 33:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 34:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 35:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 36:
+				$this->setCreatedAt($value);
+				break;
+			case 37:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1742,12 +1776,13 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[28], $arr)) $this->setVisitCount($arr[$keys[28]]);
 		if (array_key_exists($keys[29], $arr)) $this->setScheduleStartDate($arr[$keys[29]]);
 		if (array_key_exists($keys[30], $arr)) $this->setEnrollmentStartDate($arr[$keys[30]]);
-		if (array_key_exists($keys[31], $arr)) $this->setEnabled($arr[$keys[31]]);
-		if (array_key_exists($keys[32], $arr)) $this->setVisible($arr[$keys[32]]);
-		if (array_key_exists($keys[33], $arr)) $this->setDeleted($arr[$keys[33]]);
-		if (array_key_exists($keys[34], $arr)) $this->setLocked($arr[$keys[34]]);
-		if (array_key_exists($keys[35], $arr)) $this->setCreatedAt($arr[$keys[35]]);
-		if (array_key_exists($keys[36], $arr)) $this->setUpdatedAt($arr[$keys[36]]);
+		if (array_key_exists($keys[31], $arr)) $this->setEnrollmentMode($arr[$keys[31]]);
+		if (array_key_exists($keys[32], $arr)) $this->setEnabled($arr[$keys[32]]);
+		if (array_key_exists($keys[33], $arr)) $this->setVisible($arr[$keys[33]]);
+		if (array_key_exists($keys[34], $arr)) $this->setDeleted($arr[$keys[34]]);
+		if (array_key_exists($keys[35], $arr)) $this->setLocked($arr[$keys[35]]);
+		if (array_key_exists($keys[36], $arr)) $this->setCreatedAt($arr[$keys[36]]);
+		if (array_key_exists($keys[37], $arr)) $this->setUpdatedAt($arr[$keys[37]]);
 	}
 
 	
@@ -1786,6 +1821,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePeer::VISIT_COUNT)) $criteria->add(EventLivePeer::VISIT_COUNT, $this->visit_count);
 		if ($this->isColumnModified(EventLivePeer::SCHEDULE_START_DATE)) $criteria->add(EventLivePeer::SCHEDULE_START_DATE, $this->schedule_start_date);
 		if ($this->isColumnModified(EventLivePeer::ENROLLMENT_START_DATE)) $criteria->add(EventLivePeer::ENROLLMENT_START_DATE, $this->enrollment_start_date);
+		if ($this->isColumnModified(EventLivePeer::ENROLLMENT_MODE)) $criteria->add(EventLivePeer::ENROLLMENT_MODE, $this->enrollment_mode);
 		if ($this->isColumnModified(EventLivePeer::ENABLED)) $criteria->add(EventLivePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventLivePeer::VISIBLE)) $criteria->add(EventLivePeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(EventLivePeer::DELETED)) $criteria->add(EventLivePeer::DELETED, $this->deleted);
@@ -1881,6 +1917,8 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		$copyObj->setScheduleStartDate($this->schedule_start_date);
 
 		$copyObj->setEnrollmentStartDate($this->enrollment_start_date);
+
+		$copyObj->setEnrollmentMode($this->enrollment_mode);
 
 		$copyObj->setEnabled($this->enabled);
 

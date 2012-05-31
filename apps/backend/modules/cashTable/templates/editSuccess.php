@@ -10,7 +10,7 @@
 			<li class="<?php echo ($isNew?'hidden':'') ?>" id="cashTableTableTab"><a href="#tab2">Mesa</a></li>
 			<li><a href="#tab3">Movimentações</a></li>
 			<?php
-				echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#cashTableForm").submit()'));
+				echo submit_tag('salvar', array('class'=>'button blueB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#cashTableForm").submit()'));
 				
 				echo submit_tag('abrir mesa', array('class'=>'button basic', 'style'=>'margin: 3px 10px; float: right; display: '.(!$isOpen && !$isNew?'block':'none'), 'onclick'=>'openCashTable()', 'id'=>'cashTableOpenButton'));
 				echo submit_tag('fechar mesa', array('class'=>'button greyishB', 'style'=>'margin: 3px 10px; float: right; display: '.($isOpen && !$isNew?'block':'none'), 'onclick'=>'closeCashTable()', 'id'=>'cashTableCloseButton'));

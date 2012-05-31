@@ -326,12 +326,14 @@ class EventLive extends BaseEventLive
 		if( !$peopleId )
 			return 'no';
 		
-		$enabled = Util::executeOne('SELECT enabled FROM event_live_player WHERE event_live_id = '.$this->getId().' AND people_id = '.$peopleId, 'boolean');
+		$enrollmentStatus = Util::executeOne('SELECT enrollment_status FROM event_live_player WHERE event_live_id = '.$this->getId().' AND people_id = '.$peopleId, 'string');
+		
+		$enrolled = in_array($enrollmentStatus, array('enrolled', 'confirmed'));
 		
 		if( $boolean )
-			return $enabled;
+			return $enrolled;
 		else
-			return ($enabled?'yes':'no');
+			return ($enrolled?'yes':'no');
 	}
 	
 	public function getPlayers($updated=false, $countAll=false){
@@ -340,7 +342,7 @@ class EventLive extends BaseEventLive
 			// Considera todos os jogadores que se inscreveram
 			return Util::executeOne('SELECT COALESCE(COUNT(1), 0) FROM event_live_player WHERE event_live_id = '.$this->getId());
 		elseif( $updated )
-			return Util::executeOne('SELECT get_event_live_players('.$this->getId().')');
+			return Util::executeOne('SELECT get_event_live_players('.$this->getId().', true)');
 		else
 			return parent::getPlayers();
 	}
@@ -487,7 +489,8 @@ class EventLive extends BaseEventLive
 		if( is_null($criteria) )
 			$criteria = new Criteria();
 			
-		$criteria->add( EventLivePlayerPeer::ENABLED, true );
+		$criteria->add( EventLivePlayerPeer::ENROLLMENT_STATUS, array('enrolled', 'confirmed'), Criteria::IN );
+		$criteria->addJoin( EventLivePlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$criteria->addAscendingOrderByColumn( EventLivePlayerPeer::EVENT_POSITION );
 		
 		return parent::getEventLivePlayerList($criteria, $con);
@@ -606,7 +609,7 @@ class EventLive extends BaseEventLive
 	
 	public function getTotalBuyin($includeRebuys=false){
 		
-		$players = $this->getPlayers();
+		$players = $this->getPlayers(true, false);
 		
 		$totalBuyin   = $players * $this->getBuyin();
 		$totalBuyin  += $players * $this->getEntranceFee();
@@ -690,6 +693,9 @@ class EventLive extends BaseEventLive
 		$difference = $totalBuyin-$totalBuyinPrevious;
 		$percent    = ($difference*100/($totalBuyinPrevious?$totalBuyinPrevious:1));
 		
+		if( !$totalBuyinPrevious )
+			return 0;
+		
 		return $percent;
 	}
 	
@@ -708,7 +714,7 @@ class EventLive extends BaseEventLive
 		
 		$visitCount     = $this->getVisitCount();
 		$players        = $this->getPlayers(false, true);
-		$playersConfirm = $this->getPlayers();
+		$playersConfirm = $this->getPlayers(true, false);
 		
 		$eventLiveObj = $this->getPreviousEventLive();
 		
@@ -960,6 +966,17 @@ class EventLive extends BaseEventLive
 		$criteria->add( EventLivePhotoPeer::DELETED, false );
 		$criteria->addDescendingOrderByColumn( EventLivePhotoPeer::CREATED_AT );
 		return EventLivePhotoPeer::doSelect($criteria);
+	}
+	
+	public function updatePlayers(){
+		
+		Util::executeQuery('SELECT update_event_live_players('.$this->getId().')');
+	}
+	
+	public function cutUnconfirmedPlayers(){
+		
+		Util::executeQuery('UPDATE event_live_player SET enrollment_status = \'\' WHERE event_live_id = '.$this->getId().' AND NOT enabled');
+		$this->updatePlayers();
 	}
 	
 	public function toString(){

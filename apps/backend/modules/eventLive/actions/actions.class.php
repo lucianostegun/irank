@@ -149,20 +149,38 @@ class eventLiveActions extends sfActions
 
   public function executeAddPlayer($request){
     
-    $peopleId    = $request->getParameter('peopleId');
-    $eventLiveId = $this->eventLiveId;
+    $peopleId = $request->getParameter('peopleId');
 
     try{
     	
-    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($eventLiveId, $peopleId);
+    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($this->eventLiveId, $peopleId);
     	
-    	if( $eventLivePlayerObj->getEnabled() ){
+		$result = $eventLivePlayerObj->confirmPresence();
+    	
+    	if( $result=='noChange' ){
     		
-    		echo 'noChange';
+    		echo $result;
     		exit;
     	}
-    		
-	    $eventLivePlayerObj->confirmPresence();
+    }catch(Exception $e){
+    	
+    	Util::forceError('!Erro ao incluir o jogador ao evento.'.Util::isDebug()?$e->getMessage():'');
+    }
+    
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('eventLive/include/players', array('eventLiveObj'=>$eventLivePlayerObj->getEventLive())));
+  }
+
+  public function executeEliminatePlayer($request){
+    
+    $peopleId      = $request->getParameter('peopleId');
+    $eventPosition = $request->getParameter('eventPosition');
+
+    try{
+    	
+    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($this->eventLiveId, $peopleId);
+		$result = $eventLivePlayerObj->eliminate($eventPosition);
     }catch(Exception $e){
     	
     	Util::forceError('!Erro ao incluir o jogador ao evento.'.Util::isDebug()?$e->getMessage():'');
@@ -175,17 +193,35 @@ class eventLiveActions extends sfActions
 
   public function executeRemovePlayer($request){
     
-    $peopleId    = $request->getParameter('peopleId');
-    $eventLiveId = $this->eventLiveId;
+    $peopleId = $request->getParameter('peopleId');
 
     try{
     	
-    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($eventLiveId, $peopleId);
+    	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($this->eventLiveId, $peopleId);
 	    $eventLivePlayerObj->declinePresence();
     }catch(Exception $e){
     	
     	Util::forceError('!Erro ao remover o jogador ao evento.'.Util::isDebug()?$e->getMessage():'');
     }
+    
+    exit;
+  }
+
+  public function executeCutUnconfirmedPlayers($request){
+    
+    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+    $eventLiveObj->cutUnconfirmedPlayers();
+    
+    return $this->forward('eventLive', 'getEventStats');
+  }
+  
+  public function executeGetEventStats($request){
+    
+    $eventLiveObj        = EventLivePeer::retrieveByPK($this->eventLiveId);
+    $infoList            = $eventLiveObj->getStats(true);
+    $infoList['balance'] = $eventLiveObj->getBalanceStats();
+    
+    echo Util::parseInfo($infoList);
     
     exit;
   }
@@ -264,7 +300,7 @@ class eventLiveActions extends sfActions
     
 	$peopleName   = $request->getParameter('term');
 	$instanceName = $request->getParameter('instanceName');
-	$suggestNew   = $request->getParameter('suggestNew');
+	$suggestNew   = true;
 
 	$nl = chr(10);
 
@@ -273,25 +309,46 @@ class eventLiveActions extends sfActions
 	if( preg_match('/,/', $peopleName) )
 		list($peopleName, $emailAddress) = explode(',', $peopleName);
 		
-	$peopleName   = str_replace(' ', '%', trim($peopleName));
-	$emailAddress = str_replace(' ', '%', trim($emailAddress));
-	
-	$table      = 'people LEFT JOIN event_live_player ON event_live_player.PEOPLE_ID=people.ID AND event_live_player.EVENT_LIVE_ID='.$this->eventLiveId.' AND event_live_player.ENABLED';
+	$enrollmentMode = Util::executeOne('SELECT enrollment_mode FROM event_live WHERE id = '.$this->eventLiveId, 'string');
+		
+	$table      = 'people LEFT JOIN event_live_player ON event_live_player.PEOPLE_ID=people.ID AND event_live_player.EVENT_LIVE_ID='.$this->eventLiveId.' AND event_live_player.ENABLED'.$nl;
 	$fieldId    = 'id';
 	$fieldName  = "FULL_NAME||', '||COALESCE(EMAIL_ADDRESS, 'Não informado')$nl";
 	$fieldValue = "FULL_NAME$nl";
 	$condition  = "people.ENABLED AND people.VISIBLE AND NOT people.DELETED $nl";
 	
 	if( $instanceName=='player' ){
-		$condition .= "AND (event_live_player.EVENT_POSITION IS NULL OR event_live_player.EVENT_POSITION=0) $nl";
+		
+//		switch($enrollmentMode){
+//			case 'enrollment':
+				$condition .= "AND (event_live_player.EVENT_POSITION IS NULL OR event_live_player.EVENT_POSITION=0) $nl";
+//				break;
+//			case 'confirmation':
+//				$condition .= "";
+//				break;
+//			case 'elimination':
+//				$condition .= "AND event_live_player.EVENT_POSITION IS NOT NULL $nl";
+//				$suggestNew = false;
+//				break;
+//		}
 	}elseif( $instanceName=='players' ){
-		$condition .= "AND (event_live_player.PEOPLE_ID IS NULL) $nl";
+		
+		switch($enrollmentMode){
+			case 'enrollment':
+			case 'confirmation':
+				$condition .= "AND (event_live_player.PEOPLE_ID IS NULL) $nl";
+				break;
+			case 'elimination':
+				$condition .= "AND (event_live_player.PEOPLE_ID IS NOT NULL AND event_live_player.ENABLED) $nl";
+				$suggestNew = false;
+				break;
+		}
 	}
 	
-	$condition .= "AND ((no_accent(full_name) ILIKE no_accent('%$peopleName%') OR no_accent(email_address) ILIKE no_accent('%$peopleName%'))";
+	$condition .= "AND ((no_accent(full_name) ILIKE no_accent('%".addslashes(str_replace(' ', '%', trim($peopleName)))."%') OR no_accent(email_address) ILIKE no_accent('%".addslashes(str_replace(' ', '%', trim($peopleName)))."%'))";
 	
 	if( $emailAddress )
-		$condition .= " OR email_address ILIKE '%$emailAddress%'";
+		$condition .= " OR email_address ILIKE '%".addslashes(str_replace(' ', '%', trim($emailAddress)))."%'";
 		
 	$condition .= ")";
 	
@@ -433,6 +490,15 @@ class eventLiveActions extends sfActions
 	return $this->renderText(get_partial('eventLive/include/photos', array('eventLiveId'=>$this->eventLiveId)));
   }
 
+  public function executeGetPlayerList($request){
+    
+    $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+    
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('eventLive/include/players', array('eventLiveObj'=>$eventLiveObj)));
+  }
+
   public function executeGetResultPlayerList($request){
     
     $eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
@@ -497,6 +563,16 @@ class eventLiveActions extends sfActions
     $this->eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
     $this->setLayout('pdf');
     $this->setTemplate('_pdf/eventResult');
+  }
+
+  public function executeToggleEnrollmentMode($request){
+    
+    $enrollmentMode = $request->getParameter('enrollmentMode'); 
+    $eventLiveObj   = EventLivePeer::retrieveByPK($this->eventLiveId);
+    
+    $eventLiveObj->setEnrollmentMode($enrollmentMode);
+    $eventLiveObj->save();
+    exit;
   }
 
   public function executeGetTabContent($request){

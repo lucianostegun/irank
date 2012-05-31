@@ -52,6 +52,8 @@ class EventLivePlayerMapBuilder {
 
 		$tMap->addColumn('ADDON', 'Addon', 'double', CreoleTypes::NUMERIC, false, 10);
 
+		$tMap->addColumn('ENROLLMENT_STATUS', 'EnrollmentStatus', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

@@ -203,6 +203,12 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastCashTablePlayerBuyinCriteria = null;
 
 	
+	protected $collClubPlayerList;
+
+	
+	protected $lastClubPlayerCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -867,6 +873,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collClubPlayerList !== null) {
+				foreach($this->collClubPlayerList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -1086,6 +1100,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 				if ($this->collCashTablePlayerBuyinList !== null) {
 					foreach($this->collCashTablePlayerBuyinList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collClubPlayerList !== null) {
+					foreach($this->collClubPlayerList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1432,6 +1454,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			foreach($this->getCashTablePlayerBuyinList() as $relObj) {
 				$copyObj->addCashTablePlayerBuyin($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getClubPlayerList() as $relObj) {
+				$copyObj->addClubPlayer($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -3971,6 +3997,111 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$this->lastCashTablePlayerBuyinCriteria = $criteria;
 
 		return $this->collCashTablePlayerBuyinList;
+	}
+
+	
+	public function initClubPlayerList()
+	{
+		if ($this->collClubPlayerList === null) {
+			$this->collClubPlayerList = array();
+		}
+	}
+
+	
+	public function getClubPlayerList($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubPlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubPlayerList === null) {
+			if ($this->isNew()) {
+			   $this->collClubPlayerList = array();
+			} else {
+
+				$criteria->add(ClubPlayerPeer::PEOPLE_ID, $this->getId());
+
+				ClubPlayerPeer::addSelectColumns($criteria);
+				$this->collClubPlayerList = ClubPlayerPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ClubPlayerPeer::PEOPLE_ID, $this->getId());
+
+				ClubPlayerPeer::addSelectColumns($criteria);
+				if (!isset($this->lastClubPlayerCriteria) || !$this->lastClubPlayerCriteria->equals($criteria)) {
+					$this->collClubPlayerList = ClubPlayerPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastClubPlayerCriteria = $criteria;
+		return $this->collClubPlayerList;
+	}
+
+	
+	public function countClubPlayerList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubPlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ClubPlayerPeer::PEOPLE_ID, $this->getId());
+
+		return ClubPlayerPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addClubPlayer(ClubPlayer $l)
+	{
+		$this->collClubPlayerList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getClubPlayerListJoinClub($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubPlayerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubPlayerList === null) {
+			if ($this->isNew()) {
+				$this->collClubPlayerList = array();
+			} else {
+
+				$criteria->add(ClubPlayerPeer::PEOPLE_ID, $this->getId());
+
+				$this->collClubPlayerList = ClubPlayerPeer::doSelectJoinClub($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ClubPlayerPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastClubPlayerCriteria) || !$this->lastClubPlayerCriteria->equals($criteria)) {
+				$this->collClubPlayerList = ClubPlayerPeer::doSelectJoinClub($criteria, $con);
+			}
+		}
+		$this->lastClubPlayerCriteria = $criteria;
+
+		return $this->collClubPlayerList;
 	}
 
 } 

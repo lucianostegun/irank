@@ -22,7 +22,7 @@
 			<li class="<?php echo ($eventLiveObj->getIsNew()?'hidden':'') ?>" onclick="loadDisclosureTab()" id="mainDisclosureTab"><a href="#tab6">Divulgação</a></li>
 			<li><a href="#tab4">Fotos</a></li>
 			<li class="<?php echo ($eventLiveObj->getIsNew()?'hidden':'') ?>" id="mainResultTab"><a href="#tab3" onclick="return activeResultTab()">Resultado</a></li>
-			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#eventLiveForm").submit()')); ?>
+			<?php echo submit_tag('salvar', array('class'=>'button blueB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#eventLiveForm").submit()')); ?>
 		</ul>
 		<div class="tab_container">
 			<?php
@@ -36,10 +36,12 @@
 //				echo form_tag('eventLive/save', array('class'=>'form', 'id'=>'eventLiveForm'));
 
 				echo input_hidden_tag('eventLiveId', $eventLiveObj->getId());
+				echo input_hidden_tag('enrollmentMode', $eventLiveObj->getEnrollmentMode(), array('id'=>'eventLiveEnrollmentMode'));
 			?>
 			<div id="tab1" class="tab_content"><?php include_partial('eventLive/tab/main', array('eventLiveObj'=>$eventLiveObj, 'clubId'=>$clubId, 'iRankAdmin'=>$iRankAdmin)) ?></div>
 			<div id="tab5" class="tab_content"><?php include_partial('eventLive/tab/options', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 			</form>
+
 			<div id="tab2" class="tab_content"><?php include_partial('eventLive/tab/players', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 			<div id="tab3" class="tab_content"><?php include_partial('eventLive/tab/result', array('eventLiveObj'=>$eventLiveObj)) ?></div>
 			<div id="tab4" class="tab_content"><?php include_partial('eventLive/tab/photos', array('eventLiveId'=>$eventLiveObj->getId())) ?></div>
@@ -47,3 +49,6 @@
 		</div>
 	</div>
 </div>
+
+
+	<?php include_partial('people/dialog/quickEdit') ?>

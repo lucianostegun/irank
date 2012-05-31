@@ -28,9 +28,24 @@ class EventLivePlayer extends BaseEventLivePlayer
         }
     }
 	
-	public function togglePresence(){
+	public function togglePresence($enrollmentStatus='enrolled'){
+
+		// Se estiver confirmado (enabled=true) marca como desconfirmado		
+		if( $this->isEnrollmentStatus(array('enrolled', 'confirmed')) ){
+			
+			$this->setEnrollmentStatus('declined');
+			$this->setEnabled(false);
+			$this->setDeleted(true);
+		}else{
+			
+			// Se não estiver confirmado, apenas marca como inscrito e não como confirmado
+			$this->setEnrollmentStatus($enrollmentStatus);
+			$this->setDeleted(false);
+			
+			if( $enrollmentStatus=='confirmed' )
+				$this->setEnabled(true);
+		}
 		
-		$this->setEnabled( !$this->getEnabled() );
 		$this->save();
 		
 		$this->updatePlayers();
@@ -40,11 +55,34 @@ class EventLivePlayer extends BaseEventLivePlayer
 		
 		if( $this->getEventLive()->getSavedResult() )
 			throw new Exception('Não é possível incluir jogadores de um evento já publicado');
-			
-		$this->setEnabled(true);
-		$this->save();
 		
-		$this->updatePlayers();
+		$con = Propel::getConnection();
+		$con->begin();
+		
+		try{
+			
+			$eventLiveObj       = $this->getEventLive();
+    		$enabled            = $this->getEnabled();
+    		$enrollmentMode     = $eventLiveObj->getEnrollmentMode();
+    	
+	    	if( $enabled )
+	    		return 'noChange';
+    	
+			$this->setEnabled(($enrollmentMode=='enrollment'?false:true));
+			$this->setEnrollmentStatus(($enrollmentMode=='enrollment'?'enrolled':'confirmed'));
+			$this->save($con);
+			
+			$clubId = $this->getEventLive()->getClubId();
+			
+			if( $clubId )
+				$this->getPeople()->addToClub($clubId);
+			
+			$this->updatePlayers();
+			$con->commit();
+		}catch(Exception $e){
+			
+			$con->rollback();
+		}
 	}
 	
 	public function declinePresence(){
@@ -52,10 +90,21 @@ class EventLivePlayer extends BaseEventLivePlayer
 		if( $this->getEventLive()->getSavedResult() )
 			throw new Exception('Não é possível remover jogadores de um evento já publicado');
 		
+		$this->setEnrollmentStatus('declined');
 		$this->setEnabled(false);
 		$this->save();
 		
 		$this->updatePlayers();
+	}
+	
+	public function eliminate($eventPosition){
+		
+		$eventLiveId = $this->getEventLiveId();
+		
+		Util::executeQuery("UPDATE event_live_player SET event_position = 0 WHERE event_live_id = $eventLiveId AND event_position = $eventPosition");
+		
+		$this->setEventPosition($eventPosition);
+		$this->save();
 	}
 
 	public function updatePlayers(){
@@ -66,6 +115,27 @@ class EventLivePlayer extends BaseEventLivePlayer
 	public function getCurrentStatus(){
 		
 		return ($this->getEnabled()?'yes':'no');
+	}
+	
+	public function getEnrollmentStatus($description=false){
+		
+		$enrollmentStatus = parent::getEnrollmentStatus();
+		
+		if( $description ){
+			switch($enrollmentStatus){
+				case 'enrolled':
+					$enrollmentStatus = 'Inscrito';
+					break;
+				case 'confirmed':
+					$enrollmentStatus = 'Confirmado';
+					break;
+				case 'canceled':
+					$enrollmentStatus = 'Cancelado';
+					break;
+			}
+		}
+		
+		return $enrollmentStatus;
 	}
 	
 	public function getScoreList($returnArray=false){
@@ -87,5 +157,12 @@ class EventLivePlayer extends BaseEventLivePlayer
 		}
 		
 		return EventLivePlayerScorePeer::doSelect($criteria);
+	}
+	
+	public function isEnrollmentStatus($enrollmentStatusList){
+		
+		$enrollmentStatus = $this->getEnrollmentStatus();
+		
+		return in_array($enrollmentStatus, $enrollmentStatusList);
 	}
 }

@@ -87,7 +87,7 @@ function confirmEventLivePresence(eventLiveId){
 		
 		hideIndicator();
 		
-		var errorMessage = parseError(t.responseText);
+		var errorMessage = parseMessage(t.responseText);
 		errorMessage = (errorMessage?errorMessage:'\nPor favor, tente novamente.');
 		
 		if( errorMessage )

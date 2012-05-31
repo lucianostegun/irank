@@ -215,7 +215,7 @@ function updateProgressBar( percent, progressBarId ){
 	});
 }
 
-function alert(message, title){
+function showAlert(message, title){
 	
 	title = (title?title:'Alerta interno');
 	

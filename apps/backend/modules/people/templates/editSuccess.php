@@ -3,7 +3,7 @@
     <div class="widget">    
         <ul class="tabs">
             <li><a href="#tab1">Principal</a></li>
-			<?php echo submit_tag('salvar', array('class'=>'button redB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#peopleForm").submit()')); ?>
+			<?php echo submit_tag('salvar', array('class'=>'button blueB', 'style'=>'margin: 3px 10px', 'onclick'=>'$("#peopleForm").submit()')); ?>
         </ul>
         <div class="tab_container">
 		<?php
