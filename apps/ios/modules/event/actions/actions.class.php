@@ -337,6 +337,7 @@ class eventActions extends sfActions
 				$eventNode['rankingName']  = $eventObj->getRanking()->getRankingName();
 				$eventNode['eventPlace']   = $eventObj->getRankingPlace()->getPlaceName();
 				$eventNode['paidPlaces']   = $eventObj->getPaidPlaces();
+				$eventNode['players']      = $eventObj->getPlayers();
 				$eventNode['entranceFee']  = $eventObj->getEntranceFee();
 				$eventNode['buyin']        = $eventObj->getBuyin();
 				$eventNode['rankingBuyin'] = $eventObj->getRanking()->getBuyin();

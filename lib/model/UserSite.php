@@ -46,12 +46,12 @@ class UserSite extends BaseUserSite
 		  	$this->setUsername( $username );
 		}
 		
-		if( strlen($password)!=32 || $this->isNew() ){
-			if( !$this->getSignedSchedule() )
-				$password = 'irank';
-		  	
-		  	$this->updateHtpasswd($password);
-		}
+//		if( strlen($password)!=32 || $this->isNew() ){
+//			if( !$this->getSignedSchedule() )
+//				$password = 'irank';
+//		  	
+//		  	$this->updateHtpasswd($password);
+//		}
 		
 	  	$peopleObj->setEmailAddress( $emailAddress );
 	  	$this->setPassword( (strlen($password)==32?$password:md5($password)) );
@@ -457,7 +457,7 @@ class UserSite extends BaseUserSite
 		
 		if( $withBalance ){
 			
-			$resumeList = People::getResumeBalance($this->getPeopleId(), $this->getId(), true);
+			$resumeList = People::getFullResume($this->getPeopleId(), $this->getId(), true);
 			$infoList = array_merge($infoList, $resumeList);
 		}
 		
