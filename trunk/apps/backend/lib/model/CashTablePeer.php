@@ -23,4 +23,30 @@ class CashTablePeer extends BaseCashTablePeer
 		
 		return !MyTools::getRequest()->hasErrors();
 	}
+	
+	public static function validateCheckFields($payMethodId){
+		
+		$payMethodIdDatedCheck = VirtualTable::getIdByTagName('payMethod', 'datedCheck');
+		
+		if( $payMethodId!=$payMethodIdDatedCheck )
+			return true;
+	
+		$checkDate = MyTools::getRequestParameter('checkNumber');
+		
+		return !empty($checkDate);		
+	}
+
+	public static function validateRequiredFields($cashTableId){
+		
+		$saveAction = MyTools::getRequestParameter('saveAction');
+		
+		if( in_array($saveAction, array('seatPlayer', 'rebuy')) ){
+			
+			$payMethodId = MyTools::getRequestParameter('saveAction');
+			if( !$payMethodId )
+				MyTools::setError('payMethodId', 'Informe a forma de pagamento');
+		}
+		
+		return !MyTools::getRequest()->hasErrors();
+	}
 }

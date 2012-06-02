@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    [backend/cashTable]
-  javascripts:    [backend/people, backend/cashTable, backend/cashTablePeople]
+  javascripts:    [/backend.php/cashTable/javascript/debug/<?php echo Util::isDebug(true) ?>/js, backend/people, backend/cashTable, backend/cashTablePeople]

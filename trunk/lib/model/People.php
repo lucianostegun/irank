@@ -368,6 +368,12 @@ class People extends BasePeople
 		$clubPlayerObj->save();
 	}
 	
+	public function getLastCashGame($clubId){
+		
+		$lastCashGame = Util::executeOne('SELECT get_player_last_cash_game('.$this->getId().', '.($clubId?$clubId:'NULL').')', 'string');
+		return ($lastCashGame?$lastCashGame:'(primeira vez)');
+	}
+	
 	public function toString(){
 		
 		return $this->getName();

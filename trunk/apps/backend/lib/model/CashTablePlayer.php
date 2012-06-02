@@ -10,12 +10,31 @@
 class CashTablePlayer extends BaseCashTablePlayer
 {
 	
-	public function addBuyin($buyin, $entranceFee, $con=null){
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+        	Log::quickLog('cash_table_player', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('cash_table_player', $this->getPrimaryKey(), $e);
+        }
+    }
+	
+	public function addBuyin($buyin, $entranceFee, $payMethodId, $checkInfo, $con=null){
 		
 		if( is_null($con) )
 			$con = Propel::getConnection();
 		
 		$con->begin();
+		
+		$payMethodIdCheck      = VirtualTable::getIdByTagName('payMethod', 'check');
+		$payMethodIdDatedCheck = VirtualTable::getIdByTagName('payMethod', 'datedCheck');
 		
 		try{
 			
@@ -27,7 +46,12 @@ class CashTablePlayer extends BaseCashTablePlayer
 			$cashTablePlayerBuyinObj->setCashTableSessionId($this->getCashTableSessionId());
 			$cashTablePlayerBuyinObj->setPeopleId($this->getPeopleId());
 			$cashTablePlayerBuyinObj->setBuyin($buyin);
+			$cashTablePlayerBuyinObj->setPayMethodId($payMethodId);
 			$cashTablePlayerBuyinObj->setEntranceFee($entranceFee);
+			
+			if( in_array($payMethodId, array($payMethodIdCheck, $payMethodIdDatedCheck)) )
+	    		$cashTablePlayerBuyinObj->addCheck($checkInfo, $con);
+			
 	    	$cashTablePlayerBuyinObj->save($con);
 	    	
 	    	$con->commit();

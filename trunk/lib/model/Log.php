@@ -56,6 +56,15 @@ class Log extends BaseLog
 			
 			$sql     = 'INSERT INTO log_field VALUES';
 			$sqlList = array();
+			
+			if( !is_array($columnModifiedList) ){
+				
+				Util::forceError('<pre>', false);
+				echo "$message, $className<hr/>";
+				print_r($columnModifiedList);
+				exit;
+			}
+			
 			foreach($columnModifiedList as $fieldName=>$fieldValue){
 			
 				$fieldValue = substr($fieldValue,0,255);

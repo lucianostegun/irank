@@ -25,6 +25,14 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 
 
 	
+	protected $pay_method_id;
+
+
+	
+	protected $club_check_id;
+
+
+	
 	protected $buyin;
 
 
@@ -47,6 +55,12 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 
 	
 	protected $aPeople;
+
+	
+	protected $aVirtualTable;
+
+	
+	protected $aClubCheck;
 
 	
 	protected $alreadyInSave = false;
@@ -80,6 +94,20 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 	{
 
 		return $this->people_id;
+	}
+
+	
+	public function getPayMethodId()
+	{
+
+		return $this->pay_method_id;
+	}
+
+	
+	public function getClubCheckId()
+	{
+
+		return $this->club_check_id;
 	}
 
 	
@@ -209,6 +237,42 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 
 	} 
 	
+	public function setPayMethodId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->pay_method_id !== $v) {
+			$this->pay_method_id = $v;
+			$this->modifiedColumns[] = CashTablePlayerBuyinPeer::PAY_METHOD_ID;
+		}
+
+		if ($this->aVirtualTable !== null && $this->aVirtualTable->getId() !== $v) {
+			$this->aVirtualTable = null;
+		}
+
+	} 
+	
+	public function setClubCheckId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->club_check_id !== $v) {
+			$this->club_check_id = $v;
+			$this->modifiedColumns[] = CashTablePlayerBuyinPeer::CLUB_CHECK_ID;
+		}
+
+		if ($this->aClubCheck !== null && $this->aClubCheck->getId() !== $v) {
+			$this->aClubCheck = null;
+		}
+
+	} 
+	
 	public function setBuyin($v)
 	{
 
@@ -275,19 +339,23 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 
 			$this->people_id = $rs->getInt($startcol + 3);
 
-			$this->buyin = $rs->getFloat($startcol + 4);
+			$this->pay_method_id = $rs->getInt($startcol + 4);
 
-			$this->entrance_fee = $rs->getFloat($startcol + 5);
+			$this->club_check_id = $rs->getInt($startcol + 5);
 
-			$this->created_at = $rs->getTimestamp($startcol + 6, null);
+			$this->buyin = $rs->getFloat($startcol + 6);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 7, null);
+			$this->entrance_fee = $rs->getFloat($startcol + 7);
+
+			$this->created_at = $rs->getTimestamp($startcol + 8, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 9, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 8; 
+						return $startcol + 10; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating CashTablePlayerBuyin object", $e);
 		}
@@ -376,6 +444,20 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 				$this->setPeople($this->aPeople);
 			}
 
+			if ($this->aVirtualTable !== null) {
+				if ($this->aVirtualTable->isModified() || $this->aVirtualTable->getCurrentVirtualTableI18n()->isModified()) {
+					$affectedRows += $this->aVirtualTable->save($con);
+				}
+				$this->setVirtualTable($this->aVirtualTable);
+			}
+
+			if ($this->aClubCheck !== null) {
+				if ($this->aClubCheck->isModified()) {
+					$affectedRows += $this->aClubCheck->save($con);
+				}
+				$this->setClubCheck($this->aClubCheck);
+			}
+
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
@@ -442,6 +524,18 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 				}
 			}
 
+			if ($this->aVirtualTable !== null) {
+				if (!$this->aVirtualTable->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aVirtualTable->getValidationFailures());
+				}
+			}
+
+			if ($this->aClubCheck !== null) {
+				if (!$this->aClubCheck->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aClubCheck->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = CashTablePlayerBuyinPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -479,15 +573,21 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 				return $this->getPeopleId();
 				break;
 			case 4:
-				return $this->getBuyin();
+				return $this->getPayMethodId();
 				break;
 			case 5:
-				return $this->getEntranceFee();
+				return $this->getClubCheckId();
 				break;
 			case 6:
-				return $this->getCreatedAt();
+				return $this->getBuyin();
 				break;
 			case 7:
+				return $this->getEntranceFee();
+				break;
+			case 8:
+				return $this->getCreatedAt();
+				break;
+			case 9:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -504,10 +604,12 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 			$keys[1]=>$this->getCashTableId(),
 			$keys[2]=>$this->getCashTableSessionId(),
 			$keys[3]=>$this->getPeopleId(),
-			$keys[4]=>$this->getBuyin(),
-			$keys[5]=>$this->getEntranceFee(),
-			$keys[6]=>$this->getCreatedAt(),
-			$keys[7]=>$this->getUpdatedAt(),
+			$keys[4]=>$this->getPayMethodId(),
+			$keys[5]=>$this->getClubCheckId(),
+			$keys[6]=>$this->getBuyin(),
+			$keys[7]=>$this->getEntranceFee(),
+			$keys[8]=>$this->getCreatedAt(),
+			$keys[9]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -536,15 +638,21 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 				$this->setPeopleId($value);
 				break;
 			case 4:
-				$this->setBuyin($value);
+				$this->setPayMethodId($value);
 				break;
 			case 5:
-				$this->setEntranceFee($value);
+				$this->setClubCheckId($value);
 				break;
 			case 6:
-				$this->setCreatedAt($value);
+				$this->setBuyin($value);
 				break;
 			case 7:
+				$this->setEntranceFee($value);
+				break;
+			case 8:
+				$this->setCreatedAt($value);
+				break;
+			case 9:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -558,10 +666,12 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 		if (array_key_exists($keys[1], $arr)) $this->setCashTableId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setCashTableSessionId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPeopleId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setBuyin($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setEntranceFee($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[4], $arr)) $this->setPayMethodId($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setClubCheckId($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setBuyin($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEntranceFee($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setCreatedAt($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setUpdatedAt($arr[$keys[9]]);
 	}
 
 	
@@ -573,6 +683,8 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 		if ($this->isColumnModified(CashTablePlayerBuyinPeer::CASH_TABLE_ID)) $criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_ID, $this->cash_table_id);
 		if ($this->isColumnModified(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID)) $criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, $this->cash_table_session_id);
 		if ($this->isColumnModified(CashTablePlayerBuyinPeer::PEOPLE_ID)) $criteria->add(CashTablePlayerBuyinPeer::PEOPLE_ID, $this->people_id);
+		if ($this->isColumnModified(CashTablePlayerBuyinPeer::PAY_METHOD_ID)) $criteria->add(CashTablePlayerBuyinPeer::PAY_METHOD_ID, $this->pay_method_id);
+		if ($this->isColumnModified(CashTablePlayerBuyinPeer::CLUB_CHECK_ID)) $criteria->add(CashTablePlayerBuyinPeer::CLUB_CHECK_ID, $this->club_check_id);
 		if ($this->isColumnModified(CashTablePlayerBuyinPeer::BUYIN)) $criteria->add(CashTablePlayerBuyinPeer::BUYIN, $this->buyin);
 		if ($this->isColumnModified(CashTablePlayerBuyinPeer::ENTRANCE_FEE)) $criteria->add(CashTablePlayerBuyinPeer::ENTRANCE_FEE, $this->entrance_fee);
 		if ($this->isColumnModified(CashTablePlayerBuyinPeer::CREATED_AT)) $criteria->add(CashTablePlayerBuyinPeer::CREATED_AT, $this->created_at);
@@ -624,6 +736,10 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 	{
 
 		$copyObj->setId($this->id);
+
+		$copyObj->setPayMethodId($this->pay_method_id);
+
+		$copyObj->setClubCheckId($this->club_check_id);
 
 		$copyObj->setBuyin($this->buyin);
 
@@ -744,6 +860,64 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 			
 		}
 		return $this->aPeople;
+	}
+
+	
+	public function setVirtualTable($v)
+	{
+
+
+		if ($v === null) {
+			$this->setPayMethodId(NULL);
+		} else {
+			$this->setPayMethodId($v->getId());
+		}
+
+
+		$this->aVirtualTable = $v;
+	}
+
+
+	
+	public function getVirtualTable($con = null)
+	{
+		if ($this->aVirtualTable === null && ($this->pay_method_id !== null)) {
+						include_once 'lib/model/om/BaseVirtualTablePeer.php';
+
+			$this->aVirtualTable = VirtualTablePeer::retrieveByPK($this->pay_method_id, $con);
+
+			
+		}
+		return $this->aVirtualTable;
+	}
+
+	
+	public function setClubCheck($v)
+	{
+
+
+		if ($v === null) {
+			$this->setClubCheckId(NULL);
+		} else {
+			$this->setClubCheckId($v->getId());
+		}
+
+
+		$this->aClubCheck = $v;
+	}
+
+
+	
+	public function getClubCheck($con = null)
+	{
+		if ($this->aClubCheck === null && ($this->club_check_id !== null)) {
+						include_once 'apps/backend/lib/model/om/BaseClubCheckPeer.php';
+
+			$this->aClubCheck = ClubCheckPeer::retrieveByPK($this->club_check_id, $con);
+
+			
+		}
+		return $this->aClubCheck;
 	}
 
 } 

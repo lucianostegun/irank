@@ -1053,6 +1053,7 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 /* ===== General form styles ===== */
 
 .formRow { padding: 5px 14px; clear: both; border-bottom: 1px solid #E2E2E2; border-top: 1px solid white; position: relative; }
+.formRowWrapper { border-bottom: 1px solid #E2E2E2 }
 .formRow:first-child { border-top: none; }
 .formRow:last-child { border-bottom: none; }
 .ui-formwizard .formRow:last-child { border-bottom: 1px solid #E2E2E2 ; }
