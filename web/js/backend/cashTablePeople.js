@@ -69,7 +69,6 @@ function handleFailureCashTablePeople(content){
 function openPeopleDialog(){
 	
 	$('#cashTablePeopleCheckInfoDiv').hide();
-	$('#cashTablePeopleForm')[0].reset();
 	$('#cashTablePeoplePayMethodId').val('');
 	$.uniform.update();
 	
@@ -107,7 +106,7 @@ function togglePlayer(tablePosition){
 	
 	if( isSeatOcupied ){
 		
-		doSelectCashTablePlayer(playerInfoObj.peopleId, playerInfoObj.peopleName, null, true);
+		doSelectCashTablePlayer(playerInfoObj.peopleId, playerInfoObj.playerName, null, true);
 		$('#cashTablePeoplePeopleName').hide();
 		$('#cashTablePeoplePeopleNameLabel').show();
 		

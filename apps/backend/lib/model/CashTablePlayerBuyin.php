@@ -41,4 +41,9 @@ class CashTablePlayerBuyin extends BaseCashTablePlayerBuyin
     	
     	$this->setClubCheckId($clubCheckObj->getId());
     }
+    
+    public function getPayMethod(){
+    	
+    	return $this->getVirtualTable();
+    }
 }

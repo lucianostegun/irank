@@ -1270,7 +1270,7 @@ abstract class BaseCashTableSession extends BaseObject  implements Persistent {
 
 
 	
-	public function getCashTableListJoinVirtualTable($criteria = null, $con = null)
+	public function getCashTableListJoinVirtualTableRelatedByGameTypeId($criteria = null, $con = null)
 	{
 				include_once 'apps/backend/lib/model/om/BaseCashTablePeer.php';
 		if ($criteria === null) {
@@ -1288,14 +1288,49 @@ abstract class BaseCashTableSession extends BaseObject  implements Persistent {
 
 				$criteria->add(CashTablePeer::CASH_TABLE_SESSION_ID, $this->getId());
 
-				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTable($criteria, $con);
+				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTableRelatedByGameTypeId($criteria, $con);
 			}
 		} else {
 									
 			$criteria->add(CashTablePeer::CASH_TABLE_SESSION_ID, $this->getId());
 
 			if (!isset($this->lastCashTableCriteria) || !$this->lastCashTableCriteria->equals($criteria)) {
-				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTable($criteria, $con);
+				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTableRelatedByGameTypeId($criteria, $con);
+			}
+		}
+		$this->lastCashTableCriteria = $criteria;
+
+		return $this->collCashTableList;
+	}
+
+
+	
+	public function getCashTableListJoinVirtualTableRelatedByGameLimitId($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableList === null) {
+			if ($this->isNew()) {
+				$this->collCashTableList = array();
+			} else {
+
+				$criteria->add(CashTablePeer::CASH_TABLE_SESSION_ID, $this->getId());
+
+				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTableRelatedByGameLimitId($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePeer::CASH_TABLE_SESSION_ID, $this->getId());
+
+			if (!isset($this->lastCashTableCriteria) || !$this->lastCashTableCriteria->equals($criteria)) {
+				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTableRelatedByGameLimitId($criteria, $con);
 			}
 		}
 		$this->lastCashTableCriteria = $criteria;
@@ -1786,6 +1821,41 @@ abstract class BaseCashTableSession extends BaseObject  implements Persistent {
 
 			if (!isset($this->lastCashTablePlayerBuyinCriteria) || !$this->lastCashTablePlayerBuyinCriteria->equals($criteria)) {
 				$this->collCashTablePlayerBuyinList = CashTablePlayerBuyinPeer::doSelectJoinClubCheck($criteria, $con);
+			}
+		}
+		$this->lastCashTablePlayerBuyinCriteria = $criteria;
+
+		return $this->collCashTablePlayerBuyinList;
+	}
+
+
+	
+	public function getCashTablePlayerBuyinListJoinCashTablePlayer($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerBuyinPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTablePlayerBuyinList === null) {
+			if ($this->isNew()) {
+				$this->collCashTablePlayerBuyinList = array();
+			} else {
+
+				$criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, $this->getId());
+
+				$this->collCashTablePlayerBuyinList = CashTablePlayerBuyinPeer::doSelectJoinCashTablePlayer($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePlayerBuyinPeer::CASH_TABLE_SESSION_ID, $this->getId());
+
+			if (!isset($this->lastCashTablePlayerBuyinCriteria) || !$this->lastCashTablePlayerBuyinCriteria->equals($criteria)) {
+				$this->collCashTablePlayerBuyinList = CashTablePlayerBuyinPeer::doSelectJoinCashTablePlayer($criteria, $con);
 			}
 		}
 		$this->lastCashTablePlayerBuyinCriteria = $criteria;

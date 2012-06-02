@@ -153,8 +153,8 @@ abstract class BaseCashTablePlayerPeer {
 
 	}
 
-	const COUNT = 'COUNT(cash_table_player.CASH_TABLE_ID)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT cash_table_player.CASH_TABLE_ID)';
+	const COUNT = 'COUNT(cash_table_player.ID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT cash_table_player.ID)';
 
 	
 	public static function doCount(Criteria $criteria, $distinct = false, $con = null)
@@ -964,6 +964,7 @@ abstract class BaseCashTablePlayerPeer {
 			$criteria = clone $values; 		} else {
 			$criteria = $values->buildCriteria(); 		}
 
+		$criteria->remove(CashTablePlayerPeer::ID); 
 
 				$criteria->setDbName(self::DATABASE_NAME);
 
@@ -990,14 +991,8 @@ abstract class BaseCashTablePlayerPeer {
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 
-			$comparison = $criteria->getComparison(CashTablePlayerPeer::CASH_TABLE_ID);
-			$selectCriteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $criteria->remove(CashTablePlayerPeer::CASH_TABLE_ID), $comparison);
-
-			$comparison = $criteria->getComparison(CashTablePlayerPeer::CASH_TABLE_SESSION_ID);
-			$selectCriteria->add(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, $criteria->remove(CashTablePlayerPeer::CASH_TABLE_SESSION_ID), $comparison);
-
-			$comparison = $criteria->getComparison(CashTablePlayerPeer::PEOPLE_ID);
-			$selectCriteria->add(CashTablePlayerPeer::PEOPLE_ID, $criteria->remove(CashTablePlayerPeer::PEOPLE_ID), $comparison);
+			$comparison = $criteria->getComparison(CashTablePlayerPeer::ID);
+			$selectCriteria->add(CashTablePlayerPeer::ID, $criteria->remove(CashTablePlayerPeer::ID), $comparison);
 
 		} else { 			$criteria = $values->buildCriteria(); 			$selectCriteria = $values->buildPkeyCriteria(); 		}
 
@@ -1036,22 +1031,7 @@ abstract class BaseCashTablePlayerPeer {
 			$criteria = $values->buildPkeyCriteria();
 		} else {
 						$criteria = new Criteria(self::DATABASE_NAME);
-												if(count($values) == count($values, COUNT_RECURSIVE))
-			{
-								$values = array($values);
-			}
-			$vals = array();
-			foreach($values as $value)
-			{
-
-				$vals[0][] = $value[0];
-				$vals[1][] = $value[1];
-				$vals[2][] = $value[2];
-			}
-
-			$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $vals[0], Criteria::IN);
-			$criteria->add(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, $vals[1], Criteria::IN);
-			$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $vals[2], Criteria::IN);
+			$criteria->add(CashTablePlayerPeer::ID, (array) $values, Criteria::IN);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -1105,18 +1085,41 @@ abstract class BaseCashTablePlayerPeer {
 	}
 
 	
-	public static function retrieveByPK( $cash_table_id, $cash_table_session_id, $people_id, $con = null) {
+	public static function retrieveByPK($pk, $con = null)
+	{
 		if ($con === null) {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
-		$criteria = new Criteria();
-		$criteria->add(CashTablePlayerPeer::CASH_TABLE_ID, $cash_table_id);
-		$criteria->add(CashTablePlayerPeer::CASH_TABLE_SESSION_ID, $cash_table_session_id);
-		$criteria->add(CashTablePlayerPeer::PEOPLE_ID, $people_id);
+
+		$criteria = new Criteria(CashTablePlayerPeer::DATABASE_NAME);
+		$criteria->setNoFilter(true);
+
+		$criteria->add(CashTablePlayerPeer::ID, $pk);
+
+
 		$v = CashTablePlayerPeer::doSelect($criteria, $con);
 
-		return !empty($v) ? $v[0] : null;
+		return !empty($v) > 0 ? $v[0] : null;
 	}
+
+	
+	public static function retrieveByPKs($pks, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$objs = null;
+		if (empty($pks)) {
+			$objs = array();
+		} else {
+			$criteria = new Criteria();
+			$criteria->add(CashTablePlayerPeer::ID, $pks, Criteria::IN);
+			$objs = CashTablePlayerPeer::doSelect($criteria, $con);
+		}
+		return $objs;
+	}
+
 } 
 if (Propel::isInit()) {
 			try {

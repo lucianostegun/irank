@@ -34,13 +34,13 @@ class CashTablePlayerMapBuilder {
 
 		$tMap->setPrimaryKeyMethodInfo('cash_table_player_SEQ');
 
-		$tMap->addColumn('ID', 'Id', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignPrimaryKey('CASH_TABLE_ID', 'CashTableId', 'int' , CreoleTypes::INTEGER, 'cash_table', 'ID', true, null);
+		$tMap->addForeignKey('CASH_TABLE_ID', 'CashTableId', 'int', CreoleTypes::INTEGER, 'cash_table', 'ID', false, null);
 
-		$tMap->addForeignPrimaryKey('CASH_TABLE_SESSION_ID', 'CashTableSessionId', 'int' , CreoleTypes::INTEGER, 'cash_table_session', 'ID', true, null);
+		$tMap->addForeignKey('CASH_TABLE_SESSION_ID', 'CashTableSessionId', 'int', CreoleTypes::INTEGER, 'cash_table_session', 'ID', false, null);
 
-		$tMap->addForeignPrimaryKey('PEOPLE_ID', 'PeopleId', 'int' , CreoleTypes::INTEGER, 'people', 'ID', true, null);
+		$tMap->addForeignKey('PEOPLE_ID', 'PeopleId', 'int', CreoleTypes::INTEGER, 'people', 'ID', false, null);
 
 		$tMap->addColumn('TABLE_POSITION', 'TablePosition', 'int', CreoleTypes::INTEGER, false, null);
 

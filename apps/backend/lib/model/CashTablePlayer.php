@@ -44,6 +44,7 @@ class CashTablePlayer extends BaseCashTablePlayer
 			$cashTablePlayerBuyinObj = new CashTablePlayerBuyin();
 			$cashTablePlayerBuyinObj->setCashTableId($this->getCashTableId());
 			$cashTablePlayerBuyinObj->setCashTableSessionId($this->getCashTableSessionId());
+			$cashTablePlayerBuyinObj->setCashTablePlayer($this);
 			$cashTablePlayerBuyinObj->setPeopleId($this->getPeopleId());
 			$cashTablePlayerBuyinObj->setBuyin($buyin);
 			$cashTablePlayerBuyinObj->setPayMethodId($payMethodId);

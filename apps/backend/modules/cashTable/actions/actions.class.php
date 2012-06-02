@@ -184,7 +184,7 @@ class cashTableActions extends sfActions
 				$cashTableObj->seatPlayer($peopleId, $tablePosition, $buyin, $payMethodId, $checkInfo);
 				break;
 			case 'rebuy':
-				$cashTableObj->addBuyin($peopleId, $buyin, $payMethodId, $checkInfo);
+				$cashTableObj->addRebuy($peopleId, $buyin, $payMethodId, $checkInfo);
 				break;
 			case 'cashout':
 				$cashTableObj->cashout($peopleId, $buyin);
@@ -204,6 +204,36 @@ class cashTableActions extends sfActions
 	echo Util::parseInfo($cashTableObj->getInfo());
     
     exit;
+  }
+
+  public function executeUpdateTablePosition($request){
+    
+    $top  = $request->getParameter('top');
+    $left = $request->getParameter('left');
+    
+    $cashTableObj = CashTablePeer::retrieveByPK($this->cashTableId);
+    
+    if( !$cashTableObj->isMyCashTable() ){
+    	
+	    $username = $this->getUser()->getAttribute('username');
+
+    	Log::doLog('Usuário <b>'.$username.'</b> tentou editar as informações da mesa <b>('.$cashTableObj->getId().') '.$cashTableObj->toString().'</b>.', 'CashTable', array(), Log::LOG_CRITICAL);
+    	throw new Exception('Você não tem permissão para editar esse registro!');
+    }
+	
+	$cashTableObj->setLayoutTop($top);
+	$cashTableObj->setLayoutLeft($left);
+	$cashTableObj->save();
+	exit;
+  }
+  
+  public function executeExport($request){
+    
+  	$exportFormat = $request->getParameter('exportFormat');
+  	$reportType   = $request->getParameter('reportType');
+  	
+  	$this->setTemplate("_report/$exportFormat/$reportType");
+  	$this->setLayout($exportFormat);
   }
 
   public function executeGetTabContent($request){

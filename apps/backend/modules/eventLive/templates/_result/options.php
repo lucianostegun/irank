@@ -9,7 +9,7 @@
 	<div class="formRow">
 		<div id="resultDisclosureMenuShareDiv">
 			<br/>
-			<?php echo link_to(image_tag('backend/icons/light/pdfDoc', array('class'=>'icon')).'<span>Gerar PDF do resultado</span>', '#buildEventResultPdf()', array('class'=>'button greyishB', 'style'=>'margin-left: 10px')) ?>
+			<?php echo link_to(image_tag('backend/icons/light/pdfDoc', array('class'=>'icon')).'<span>Gerar PDF do resultado</span>', '#buildEventLiveResultPdf()', array('class'=>'button greyishB', 'style'=>'margin-left: 10px')) ?>
 			<br/>
 			<br/>
 		</div>

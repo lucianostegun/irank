@@ -32,4 +32,9 @@ class CashTableSession extends BaseCashTableSession
 		$this->setDeleted(true);
 		$this->save();
 	}
+	
+	public function getCode(){
+		
+		return '#'.sprintf('%04d', $this->getId());
+	}
 }

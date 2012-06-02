@@ -40,6 +40,8 @@ class CashTablePlayerBuyinMapBuilder {
 
 		$tMap->addForeignPrimaryKey('CASH_TABLE_SESSION_ID', 'CashTableSessionId', 'int' , CreoleTypes::INTEGER, 'cash_table_session', 'ID', true, null);
 
+		$tMap->addForeignKey('CASH_TABLE_PLAYER_ID', 'CashTablePlayerId', 'int', CreoleTypes::INTEGER, 'cash_table_player', 'ID', false, null);
+
 		$tMap->addForeignPrimaryKey('PEOPLE_ID', 'PeopleId', 'int' , CreoleTypes::INTEGER, 'people', 'ID', true, null);
 
 		$tMap->addForeignKey('PAY_METHOD_ID', 'PayMethodId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);

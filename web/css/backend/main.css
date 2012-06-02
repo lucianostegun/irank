@@ -54,6 +54,7 @@ p { padding-top: 12px; }
 .textL { text-align: left; }
 .textR { text-align: right; }
 .textC { text-align: center; }
+.textB { font-weight: bold }
 
 .red { color: #A73939; }
 .green { color: #599414; }
@@ -1006,7 +1007,8 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .sTable tbody tr { border-top: 1px solid #e4e4e4; }
 .sTable tbody tr:nth-child(even) { background-color: #f6f6f6; }
 
-.sTable tbody tr.gradeB:nth-child(even) { background-color: #e1ecf2; }
+.sTable tbody tr.gradeB:nth-child(even) { background-color: #FFFFFF; }
+.sTable tbody tr.gradeB:nth-child(odd) { background-color: #F0F0F0; }
 
 .sTable tbody td { border-left: 1px solid #e4e4e4; padding: 8px 12px; vertical-align: middle; }
 .sTable tbody td:first-child { border-left: none }
@@ -2001,12 +2003,8 @@ margin: 0 5px;
 
 .invisible { visibility: hidden }
 
-table.display tr.gradeA td {
-	padding-top: 3px;
-	padding-bottom: 3px;
-}
+table.display tr.gradeA td { padding-top: 3px; padding-bottom: 3px; }
+table.display tr.gradeB td { padding-top: 3px; padding-bottom: 3px; }
 
-table.display tr.gradeA td .checker {
-	position: 	relative;
-	top: 3px;
-}
+table.display tr.gradeA td .checker { position: relative; top: 3px; }
+

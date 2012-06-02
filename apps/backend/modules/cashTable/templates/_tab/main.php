@@ -50,7 +50,7 @@
 	<div class="formRow">
 		<label>Nome da mesa</label>
 		<div class="formRight <?php echo $fieldClass ?>">
-			<?php echo input_tag('cashTableName', $cashTableObj->getCashTableName(), array('size'=>35, 'maxlength'=>50, 'id'=>'cashTableCashTableName')) ?>
+			<?php echo input_tag('cashTableName', $cashTableObj->getCashTableName(), array('size'=>30, 'maxlength'=>25, 'id'=>'cashTableCashTableName')) ?>
 			<div class="formNote error" id="cashTableFormErrorCashTableName"></div>
 		</div>
 		<div class="formRight <?php echo $readOnlyClass ?>">
@@ -73,10 +73,26 @@
 
 	<div class="formRow">
 		<label>Modalidade</label>
-		<div class="formRight">
+		<div class="formRight <?php echo $fieldClass ?>">
 			<?php echo select_tag('gameTypeId', VirtualTable::getOptionsForSelect('gameType', $cashTableObj->getGameTypeId()), array('id'=>'cashTableGameTypeId')) ?>
 			<div class="clear"></div>
 			<div class="formNote error" id="cashTableFormErrorGameTypeId"></div>
+		</div>
+		<div class="formRight <?php echo $readOnlyClass ?>">
+			<label><?php echo $cashTableObj->getGameType()->getDescription() ?></label>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
+		<label>Limite</label>
+		<div class="formRight <?php echo $fieldClass ?>">
+			<?php echo select_tag('gameLimitId', VirtualTable::getOptionsForSelect('gameLimit', $cashTableObj->getGameLimitId(), false, false, VirtualTablePeer::ID), array('id'=>'cashTableGameLimitId')) ?>
+			<div class="clear"></div>
+			<div class="formNote error" id="cashTableFormErrorGameLimitId"></div>
+		</div>
+		<div class="formRight <?php echo $readOnlyClass ?>">
+			<label><?php echo $cashTableObj->getGameLimit()->getDescription() ?></label>
 		</div>
 		<div class="clear"></div>
 	</div>

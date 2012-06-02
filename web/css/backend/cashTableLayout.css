@@ -1,0 +1,56 @@
+.cashTableLayout {
+	
+	position: 	absolute;
+	width: 		260px;
+	height: 	170px;
+	left: 		0px;
+	top: 		0px;
+	background: url('/images/backend/cashTable/thumb/table.png') center 3px no-repeat;
+	z-index: 	1000;
+}
+
+.cashTableLayout * {
+	
+	cursor: pointer
+}
+
+.cashTableLayout.full {
+	
+	left: 		0px;
+	top: 		0px;
+	background: url('/images/backend/cashTable/thumb/tableFull.png') no-repeat;
+}
+
+.cashTableLayout .cashTableInfo {
+	
+	width:100%;
+	text-align: center;
+	font-size: 12px;
+	color: #FAFAFA;
+	margin-top: 3px;
+	font-weight: bold
+}
+
+.cashTableLayout .cashTableInfo.open { color: #89e923 }
+.cashTableLayout .cashTableInfo.closed { color: #e95123 }
+
+.cashTableLayout .cashTableInfo.base {
+	
+	width:100%;
+	text-align: center;
+	font-size: 12px;
+	color: #303030;
+	font-weight: bold;
+	margin-top: 0px;
+}
+
+.cashTableLayout .cashTableInfo.tableStatus {
+	
+	margin-top: 35px
+}
+
+.cashTableLayout .cashTableInfo.tableName {
+	
+	font-size: 17px;
+	color: 	#FFBA00
+}
