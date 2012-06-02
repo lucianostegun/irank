@@ -109,7 +109,6 @@ function openCashTable(){
 		var cashTableObj = parseInfo(content);
 		
 		startRunninTimer(true);
-		
 		$('#dealerButton').attr('class', 'position-'+cashTableObj.dealerStartPosition);
 	}
 
@@ -236,4 +235,35 @@ function refreshCashTable(seats){
 	
 	$('#cashTableArea').html(seatHtml);
 	$('#cashTableArea').attr('class', 'cashTable '+(seats>6?'large':'small'));
+}
+
+function exportCashGame(reportType, exportFormat){
+	
+	var form    = document.createElement('form');
+	form.action = _webRoot+'/cashTable/export';
+	form.method = 'POST';
+	form.target = '_blank';
+	
+	var cashTableId = $('#cashTableId').val();
+	var cashTableIdField   = document.createElement('input');
+	cashTableIdField.type  = 'hidden';
+	cashTableIdField.name  = 'cashTableId';
+	cashTableIdField.value = cashTableId;
+
+	var reportTypeField   = document.createElement('input');
+	reportTypeField.type  = 'hidden';
+	reportTypeField.name  = 'reportType';
+	reportTypeField.value = reportType;
+
+	var exportFormatField   = document.createElement('input');
+	exportFormatField.type  = 'hidden';
+	exportFormatField.name  = 'exportFormat';
+	exportFormatField.value = exportFormat;
+	
+	form.appendChild(cashTableIdField);
+	form.appendChild(reportTypeField);
+	form.appendChild(exportFormatField);
+	
+	document.body.appendChild(form);
+	form.submit();
 }

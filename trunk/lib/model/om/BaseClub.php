@@ -2257,7 +2257,7 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 
 	
-	public function getCashTableListJoinVirtualTable($criteria = null, $con = null)
+	public function getCashTableListJoinVirtualTableRelatedByGameTypeId($criteria = null, $con = null)
 	{
 				include_once 'apps/backend/lib/model/om/BaseCashTablePeer.php';
 		if ($criteria === null) {
@@ -2275,14 +2275,49 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 				$criteria->add(CashTablePeer::CLUB_ID, $this->getId());
 
-				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTable($criteria, $con);
+				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTableRelatedByGameTypeId($criteria, $con);
 			}
 		} else {
 									
 			$criteria->add(CashTablePeer::CLUB_ID, $this->getId());
 
 			if (!isset($this->lastCashTableCriteria) || !$this->lastCashTableCriteria->equals($criteria)) {
-				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTable($criteria, $con);
+				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTableRelatedByGameTypeId($criteria, $con);
+			}
+		}
+		$this->lastCashTableCriteria = $criteria;
+
+		return $this->collCashTableList;
+	}
+
+
+	
+	public function getCashTableListJoinVirtualTableRelatedByGameLimitId($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTableList === null) {
+			if ($this->isNew()) {
+				$this->collCashTableList = array();
+			} else {
+
+				$criteria->add(CashTablePeer::CLUB_ID, $this->getId());
+
+				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTableRelatedByGameLimitId($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePeer::CLUB_ID, $this->getId());
+
+			if (!isset($this->lastCashTableCriteria) || !$this->lastCashTableCriteria->equals($criteria)) {
+				$this->collCashTableList = CashTablePeer::doSelectJoinVirtualTableRelatedByGameLimitId($criteria, $con);
 			}
 		}
 		$this->lastCashTableCriteria = $criteria;

@@ -15,6 +15,10 @@ fields:
     required:
       msg:       form.error.requiredField
       
+  gameLimitId:
+    required:
+      msg:       form.error.requiredField
+      
   buyin:
     required:
       msg:       form.error.requiredField

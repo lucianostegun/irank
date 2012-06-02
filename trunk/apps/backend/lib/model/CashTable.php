@@ -47,6 +47,7 @@ class CashTable extends BaseCashTable
 		$clubId        = $request->getParameter('clubId');
 		$cashTableName = $request->getParameter('cashTableName');
 		$gameTypeId    = $request->getParameter('gameTypeId');
+		$gameLimitId   = $request->getParameter('gameLimitId');
 		$seats         = $request->getParameter('seats');
 		$buyin         = $request->getParameter('buyin');
 		$entranceFee   = $request->getParameter('entranceFee');
@@ -58,6 +59,7 @@ class CashTable extends BaseCashTable
 		$this->setCashTableName($cashTableName);
 		$this->setSeats($seats);
 		$this->setGameTypeId($gameTypeId);
+		$this->setGameLimitId($gameLimitId);
 		$this->setBuyin(Util::formatFloat($buyin));
 		$this->setEntranceFee(Util::formatFloat($entranceFee));
 		$this->setComments(nvl($comments));
@@ -188,7 +190,7 @@ class CashTable extends BaseCashTable
 		
 		try{
 			
-			$dealerStartPosition = rand(0, $this->getSeats());
+			$dealerStartPosition = rand(1, $this->getSeats());
 			
 			$cashTableSessionObj = new CashTableSession();
 			$cashTableSessionObj->setCashTableId($this->getId());
@@ -359,13 +361,13 @@ class CashTable extends BaseCashTable
 		}
 	}
 	
-	public function addBuyin($peopleId, $buyin, $payMethodId, $checkInfo){
+	public function addRebuy($peopleId, $buyin, $payMethodId, $checkInfo){
 		
 		$con = Propel::getConnection();
 		$con->begin();
 		
-		$cashTablePlayerObj = CashTablePlayerPeer::retrieveByPK($this->getId(), $this->getCashTableSessionId(), $peopleId);
-		$result = $cashTablePlayerObj->addBuyin($buyin, $this->getEntranceFee(), $payMethodId, $checkInfo);
+		$cashTablePlayerObj = CashTablePlayerPeer::retrieveByFields($this->getId(), $this->getCashTableSessionId(), $peopleId);
+		$result = $cashTablePlayerObj->addBuyin($buyin, 0, $payMethodId, $checkInfo);
 		
 		if( $result===true ){
 			
@@ -471,7 +473,22 @@ class CashTable extends BaseCashTable
 	
 	public function getGameType(){
 		
-		return $this->getVirtualTable();
+		$virtualTableObj = $this->getVirtualTableRelatedByGameTypeId();
+		
+		if( !is_object($virtualTableObj) )
+			$virtualTableObj = new VirtualTable();
+		
+		return $virtualTableObj;
+	}
+	
+	public function getGameLimit(){
+		
+		$virtualTableObj = $this->getVirtualTableRelatedByGameLimitId();
+		
+		if( !is_object($virtualTableObj) )
+			$virtualTableObj = new VirtualTable();
+		
+		return $virtualTableObj;
 	}
 	
 	public function toString(){

@@ -134,6 +134,8 @@
 	.textB { font-weight: bold }
 	
 	.mt5 { margin-top: 5mm }
+	
+	.pl2 { padding-left: 20mm }
 </style>
 </head>
 <body>
@@ -145,10 +147,10 @@
 		<div style="position: absolute; left: 50mm; top: 7mm; font-size: 0.8em"><?php echo sprintf('%s, %s @%s', $eventLiveObj->getWeekDay(), $eventLiveObj->getEventDateTime('d/m/Y H:i'), $eventLiveObj->getClub()->toString()); ?></div>
 	</div>
 	
-	
 	<?php
 		$eventLivePlayerObjList  = $eventLiveObj->getEventLivePlayerResultList(null, true);
 		$players                 = count($eventLivePlayerObjList);
+		$rankingLiveObj          = $eventLiveObj->getRankingLive();
 		
 		$eventLivePlayerObjGroup = array_split($eventLivePlayerObjList, 50);
 		
@@ -165,9 +167,9 @@
 			<td valign="top" width="33.3%">
 				<table class="resultTable" cellspacing="0" cellpadding="0" style="width: 100%">
 					<tr>
-						<th>#</th>
+						<th width="5%">#</th>
 						<th>Jogador</th>
-						<th>Pts</th>
+						<th width="8%">Pts</th>
 					</tr>
 				<?php
 					$class = 'even';
@@ -178,7 +180,7 @@
 				?>
 					<tr class="<?php echo $class ?>">
 						<td class="position textR"><?php echo $eventLivePlayerObj->getEventPosition() ?>º</td>
-						<td><?php echo truncate_text($peopleObj->getName(), 35) ?></td>
+						<td class="pl2"><?php echo truncate_text($peopleObj->getName(), 35) ?></td>
 						<td class="textR"><?php echo Util::formatFloat($eventLivePlayerObj->getScore(), true, 3) ?></td>
 					</tr>
 				<?php endforeach; ?>
@@ -200,7 +202,7 @@
 
 
 
-
+<?php if( $rankingLiveObj->getScoreFormulaOption()=='multiple' ): ?>
 <div class="page resultFull">
 	<h1>Pontuacao Detalhada</h1>
 	<?php
@@ -269,18 +271,21 @@
 		?>
 	</table>
 </div>
+<?php endif; ?>
 
 
 
-
-
-
+<?php
+	$eventLivePhotoObjList = $eventLiveObj->getPhotoList();
+	
+	if( !empty($eventLivePhotoObjList) ):
+?>
 <div class="page eventPhotos">
 	<h1>Fotos do evento</h1>
 	<?php
 		$classList = array('left1', 'right1', 'normal');
 		$lastClass = null;
-		foreach($eventLiveObj->getPhotoList() as $key=>$eventLivePhotoObj):
+		foreach($eventLivePhotoObjList as $key=>$eventLivePhotoObj):
 		
 		do{
 			
@@ -297,6 +302,7 @@
 		endforeach;
 	?>
 </div>
+<?php endif; ?>
 </body>
 </html>
 

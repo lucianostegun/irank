@@ -1136,4 +1136,39 @@ abstract class BaseClubCheck extends BaseObject  implements Persistent {
 		return $this->collCashTablePlayerBuyinList;
 	}
 
+
+	
+	public function getCashTablePlayerBuyinListJoinCashTablePlayer($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerBuyinPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTablePlayerBuyinList === null) {
+			if ($this->isNew()) {
+				$this->collCashTablePlayerBuyinList = array();
+			} else {
+
+				$criteria->add(CashTablePlayerBuyinPeer::CLUB_CHECK_ID, $this->getId());
+
+				$this->collCashTablePlayerBuyinList = CashTablePlayerBuyinPeer::doSelectJoinCashTablePlayer($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePlayerBuyinPeer::CLUB_CHECK_ID, $this->getId());
+
+			if (!isset($this->lastCashTablePlayerBuyinCriteria) || !$this->lastCashTablePlayerBuyinCriteria->equals($criteria)) {
+				$this->collCashTablePlayerBuyinList = CashTablePlayerBuyinPeer::doSelectJoinCashTablePlayer($criteria, $con);
+			}
+		}
+		$this->lastCashTablePlayerBuyinCriteria = $criteria;
+
+		return $this->collCashTablePlayerBuyinList;
+	}
+
 } 

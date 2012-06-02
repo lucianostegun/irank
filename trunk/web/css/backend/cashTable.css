@@ -160,9 +160,12 @@
 .cashTable.large #dealerButton.position-9 { top: 155px; left: 199px; display: block }
 .cashTable.large #dealerButton.position-10 { top: 100px; left: 250px; display: block }
 
-
-
-
+.cashTable.small #dealerButton.position-1 { top: 95px; left: 395px; display: block }
+.cashTable.small #dealerButton.position-2 { top: 156px; left: 418px; display: block }
+.cashTable.small #dealerButton.position-3 { top: 213px; left: 338px; display: block }
+.cashTable.small #dealerButton.position-4 { top: 213px; left: 258px; display: block }
+.cashTable.small #dealerButton.position-5 { top: 156px; left: 166px; display: block }
+.cashTable.small #dealerButton.position-6 { top: 95px; left: 190px; display: block }
 
 #cashTablePeoplePicture {
 	

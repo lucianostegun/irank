@@ -923,10 +923,10 @@ function handleSuppressSchedule(checked){
 	$('#eventLiveScheduleStartDate').attr('disabled', checked);
 }
 
-function buildEventResultPdf(){
+function buildEventLiveResultPdf(){
 	
 	var eventLiveId = $('#eventLiveId').val();
-	var urlAjax = _webRoot+'/eventLive/buildEventResultPdf/eventLiveId/'+eventLiveId;
+	var urlAjax = _webRoot+'/eventLive/buildResultPdf/eventLiveId/'+eventLiveId;
 	window.location = urlAjax;
 }
 

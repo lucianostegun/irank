@@ -13,7 +13,7 @@ abstract class BaseCashTablePeer {
 	const CLASS_DEFAULT = '...apps.backend.lib.model.CashTable';
 
 	
-	const NUM_COLUMNS = 19;
+	const NUM_COLUMNS = 22;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -30,6 +30,9 @@ abstract class BaseCashTablePeer {
 
 	
 	const GAME_TYPE_ID = 'cash_table.GAME_TYPE_ID';
+
+	
+	const GAME_LIMIT_ID = 'cash_table.GAME_LIMIT_ID';
 
 	
 	const CASH_TABLE_NAME = 'cash_table.CASH_TABLE_NAME';
@@ -59,6 +62,12 @@ abstract class BaseCashTablePeer {
 	const CASH_TABLE_SESSION_ID = 'cash_table.CASH_TABLE_SESSION_ID';
 
 	
+	const LAYOUT_TOP = 'cash_table.LAYOUT_TOP';
+
+	
+	const LAYOUT_LEFT = 'cash_table.LAYOUT_LEFT';
+
+	
 	const ENABLED = 'cash_table.ENABLED';
 
 	
@@ -82,19 +91,19 @@ abstract class BaseCashTablePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'ClubId', 'PeopleIdDealer', 'GameTypeId', 'CashTableName', 'TableStatus', 'Players', 'Seats', 'EntranceFee', 'Buyin', 'Comments', 'LastOpenedAt', 'CashTableSessionId', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (CashTablePeer::ID, CashTablePeer::CLUB_ID, CashTablePeer::PEOPLE_ID_DEALER, CashTablePeer::GAME_TYPE_ID, CashTablePeer::CASH_TABLE_NAME, CashTablePeer::TABLE_STATUS, CashTablePeer::PLAYERS, CashTablePeer::SEATS, CashTablePeer::ENTRANCE_FEE, CashTablePeer::BUYIN, CashTablePeer::COMMENTS, CashTablePeer::LAST_OPENED_AT, CashTablePeer::CASH_TABLE_SESSION_ID, CashTablePeer::ENABLED, CashTablePeer::VISIBLE, CashTablePeer::DELETED, CashTablePeer::LOCKED, CashTablePeer::CREATED_AT, CashTablePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'club_id', 'people_id_dealer', 'game_type_id', 'cash_table_name', 'table_status', 'players', 'seats', 'entrance_fee', 'buyin', 'comments', 'last_opened_at', 'cash_table_session_id', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CLUB_ID'=>'', 'PEOPLE_ID_DEALER'=>'', 'GAME_TYPE_ID'=>'', 'CASH_TABLE_NAME'=>'', 'TABLE_STATUS'=>'', 'PLAYERS'=>'', 'SEATS'=>'', 'ENTRANCE_FEE'=>'', 'BUYIN'=>'', 'COMMENTS'=>'', 'LAST_OPENED_AT'=>'', 'CASH_TABLE_SESSION_ID'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'ClubId', 'PeopleIdDealer', 'GameTypeId', 'GameLimitId', 'CashTableName', 'TableStatus', 'Players', 'Seats', 'EntranceFee', 'Buyin', 'Comments', 'LastOpenedAt', 'CashTableSessionId', 'LayoutTop', 'LayoutLeft', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (CashTablePeer::ID, CashTablePeer::CLUB_ID, CashTablePeer::PEOPLE_ID_DEALER, CashTablePeer::GAME_TYPE_ID, CashTablePeer::GAME_LIMIT_ID, CashTablePeer::CASH_TABLE_NAME, CashTablePeer::TABLE_STATUS, CashTablePeer::PLAYERS, CashTablePeer::SEATS, CashTablePeer::ENTRANCE_FEE, CashTablePeer::BUYIN, CashTablePeer::COMMENTS, CashTablePeer::LAST_OPENED_AT, CashTablePeer::CASH_TABLE_SESSION_ID, CashTablePeer::LAYOUT_TOP, CashTablePeer::LAYOUT_LEFT, CashTablePeer::ENABLED, CashTablePeer::VISIBLE, CashTablePeer::DELETED, CashTablePeer::LOCKED, CashTablePeer::CREATED_AT, CashTablePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'club_id', 'people_id_dealer', 'game_type_id', 'game_limit_id', 'cash_table_name', 'table_status', 'players', 'seats', 'entrance_fee', 'buyin', 'comments', 'last_opened_at', 'cash_table_session_id', 'layout_top', 'layout_left', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CLUB_ID'=>'', 'PEOPLE_ID_DEALER'=>'', 'GAME_TYPE_ID'=>'', 'GAME_LIMIT_ID'=>'', 'CASH_TABLE_NAME'=>'', 'TABLE_STATUS'=>'', 'PLAYERS'=>'', 'SEATS'=>'', 'ENTRANCE_FEE'=>'', 'BUYIN'=>'', 'COMMENTS'=>'', 'LAST_OPENED_AT'=>'', 'CASH_TABLE_SESSION_ID'=>'', 'LAYOUT_TOP'=>'', 'LAYOUT_LEFT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ClubId'=>1, 'PeopleIdDealer'=>2, 'GameTypeId'=>3, 'CashTableName'=>4, 'TableStatus'=>5, 'Players'=>6, 'Seats'=>7, 'EntranceFee'=>8, 'Buyin'=>9, 'Comments'=>10, 'LastOpenedAt'=>11, 'CashTableSessionId'=>12, 'Enabled'=>13, 'Visible'=>14, 'Deleted'=>15, 'Locked'=>16, 'CreatedAt'=>17, 'UpdatedAt'=>18, ),
-		BasePeer::TYPE_COLNAME=>array (CashTablePeer::ID=>0, CashTablePeer::CLUB_ID=>1, CashTablePeer::PEOPLE_ID_DEALER=>2, CashTablePeer::GAME_TYPE_ID=>3, CashTablePeer::CASH_TABLE_NAME=>4, CashTablePeer::TABLE_STATUS=>5, CashTablePeer::PLAYERS=>6, CashTablePeer::SEATS=>7, CashTablePeer::ENTRANCE_FEE=>8, CashTablePeer::BUYIN=>9, CashTablePeer::COMMENTS=>10, CashTablePeer::LAST_OPENED_AT=>11, CashTablePeer::CASH_TABLE_SESSION_ID=>12, CashTablePeer::ENABLED=>13, CashTablePeer::VISIBLE=>14, CashTablePeer::DELETED=>15, CashTablePeer::LOCKED=>16, CashTablePeer::CREATED_AT=>17, CashTablePeer::UPDATED_AT=>18, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'club_id'=>1, 'people_id_dealer'=>2, 'game_type_id'=>3, 'cash_table_name'=>4, 'table_status'=>5, 'players'=>6, 'seats'=>7, 'entrance_fee'=>8, 'buyin'=>9, 'comments'=>10, 'last_opened_at'=>11, 'cash_table_session_id'=>12, 'enabled'=>13, 'visible'=>14, 'deleted'=>15, 'locked'=>16, 'created_at'=>17, 'updated_at'=>18, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ClubId'=>1, 'PeopleIdDealer'=>2, 'GameTypeId'=>3, 'GameLimitId'=>4, 'CashTableName'=>5, 'TableStatus'=>6, 'Players'=>7, 'Seats'=>8, 'EntranceFee'=>9, 'Buyin'=>10, 'Comments'=>11, 'LastOpenedAt'=>12, 'CashTableSessionId'=>13, 'LayoutTop'=>14, 'LayoutLeft'=>15, 'Enabled'=>16, 'Visible'=>17, 'Deleted'=>18, 'Locked'=>19, 'CreatedAt'=>20, 'UpdatedAt'=>21, ),
+		BasePeer::TYPE_COLNAME=>array (CashTablePeer::ID=>0, CashTablePeer::CLUB_ID=>1, CashTablePeer::PEOPLE_ID_DEALER=>2, CashTablePeer::GAME_TYPE_ID=>3, CashTablePeer::GAME_LIMIT_ID=>4, CashTablePeer::CASH_TABLE_NAME=>5, CashTablePeer::TABLE_STATUS=>6, CashTablePeer::PLAYERS=>7, CashTablePeer::SEATS=>8, CashTablePeer::ENTRANCE_FEE=>9, CashTablePeer::BUYIN=>10, CashTablePeer::COMMENTS=>11, CashTablePeer::LAST_OPENED_AT=>12, CashTablePeer::CASH_TABLE_SESSION_ID=>13, CashTablePeer::LAYOUT_TOP=>14, CashTablePeer::LAYOUT_LEFT=>15, CashTablePeer::ENABLED=>16, CashTablePeer::VISIBLE=>17, CashTablePeer::DELETED=>18, CashTablePeer::LOCKED=>19, CashTablePeer::CREATED_AT=>20, CashTablePeer::UPDATED_AT=>21, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'club_id'=>1, 'people_id_dealer'=>2, 'game_type_id'=>3, 'game_limit_id'=>4, 'cash_table_name'=>5, 'table_status'=>6, 'players'=>7, 'seats'=>8, 'entrance_fee'=>9, 'buyin'=>10, 'comments'=>11, 'last_opened_at'=>12, 'cash_table_session_id'=>13, 'layout_top'=>14, 'layout_left'=>15, 'enabled'=>16, 'visible'=>17, 'deleted'=>18, 'locked'=>19, 'created_at'=>20, 'updated_at'=>21, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, )
 	);
 
 	
@@ -156,6 +165,8 @@ abstract class BaseCashTablePeer {
 
 		$criteria->addSelectColumn(CashTablePeer::GAME_TYPE_ID);
 
+		$criteria->addSelectColumn(CashTablePeer::GAME_LIMIT_ID);
+
 		$criteria->addSelectColumn(CashTablePeer::CASH_TABLE_NAME);
 
 		$criteria->addSelectColumn(CashTablePeer::TABLE_STATUS);
@@ -173,6 +184,10 @@ abstract class BaseCashTablePeer {
 		$criteria->addSelectColumn(CashTablePeer::LAST_OPENED_AT);
 
 		$criteria->addSelectColumn(CashTablePeer::CASH_TABLE_SESSION_ID);
+
+		$criteria->addSelectColumn(CashTablePeer::LAYOUT_TOP);
+
+		$criteria->addSelectColumn(CashTablePeer::LAYOUT_LEFT);
 
 		$criteria->addSelectColumn(CashTablePeer::ENABLED);
 
@@ -349,7 +364,7 @@ abstract class BaseCashTablePeer {
 
 
 	
-	public static function doCountJoinVirtualTable(Criteria $criteria, $distinct = false, $con = null)
+	public static function doCountJoinVirtualTableRelatedByGameTypeId(Criteria $criteria, $distinct = false, $con = null)
 	{
 				$criteria = clone $criteria;
 
@@ -366,6 +381,34 @@ abstract class BaseCashTablePeer {
 		}
 
 		$criteria->addJoin(CashTablePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
+
+		$rs = CashTablePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doCountJoinVirtualTableRelatedByGameLimitId(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(CashTablePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(CashTablePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(CashTablePeer::GAME_LIMIT_ID, VirtualTablePeer::ID);
 
 		$rs = CashTablePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -518,7 +561,7 @@ abstract class BaseCashTablePeer {
 
 
 	
-	public static function doSelectJoinVirtualTable(Criteria $c, $con = null)
+	public static function doSelectJoinVirtualTableRelatedByGameTypeId(Criteria $c, $con = null)
 	{
 		$c = clone $c;
 
@@ -550,14 +593,61 @@ abstract class BaseCashTablePeer {
 
 			$newObject = true;
 			foreach($results as $temp_obj1) {
-				$temp_obj2 = $temp_obj1->getVirtualTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+				$temp_obj2 = $temp_obj1->getVirtualTableRelatedByGameTypeId(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-										$temp_obj2->addCashTable($obj1); 					break;
+										$temp_obj2->addCashTableRelatedByGameTypeId($obj1); 					break;
 				}
 			}
 			if ($newObject) {
-				$obj2->initCashTableList();
-				$obj2->addCashTable($obj1); 			}
+				$obj2->initCashTableListRelatedByGameTypeId();
+				$obj2->addCashTableRelatedByGameTypeId($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinVirtualTableRelatedByGameLimitId(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		CashTablePeer::addSelectColumns($c);
+		$startcol = (CashTablePeer::NUM_COLUMNS - CashTablePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		VirtualTablePeer::addSelectColumns($c);
+
+		$c->addJoin(CashTablePeer::GAME_LIMIT_ID, VirtualTablePeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = CashTablePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = VirtualTablePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getVirtualTableRelatedByGameLimitId(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addCashTableRelatedByGameLimitId($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initCashTableListRelatedByGameLimitId();
+				$obj2->addCashTableRelatedByGameLimitId($obj1); 			}
 			$results[] = $obj1;
 		}
 		return $results;
@@ -588,6 +678,8 @@ abstract class BaseCashTablePeer {
 		$criteria->addJoin(CashTablePeer::PEOPLE_ID_DEALER, PeoplePeer::ID);
 
 		$criteria->addJoin(CashTablePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
+
+		$criteria->addJoin(CashTablePeer::GAME_LIMIT_ID, VirtualTablePeer::ID);
 
 		$rs = CashTablePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -622,6 +714,9 @@ abstract class BaseCashTablePeer {
 		VirtualTablePeer::addSelectColumns($c);
 		$startcol6 = $startcol5 + VirtualTablePeer::NUM_COLUMNS;
 
+		VirtualTablePeer::addSelectColumns($c);
+		$startcol7 = $startcol6 + VirtualTablePeer::NUM_COLUMNS;
+
 		$c->addJoin(CashTablePeer::CLUB_ID, ClubPeer::ID);
 
 		$c->addJoin(CashTablePeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
@@ -629,6 +724,8 @@ abstract class BaseCashTablePeer {
 		$c->addJoin(CashTablePeer::PEOPLE_ID_DEALER, PeoplePeer::ID);
 
 		$c->addJoin(CashTablePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
+
+		$c->addJoin(CashTablePeer::GAME_LIMIT_ID, VirtualTablePeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -723,15 +820,38 @@ abstract class BaseCashTablePeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj5 = $temp_obj1->getVirtualTable(); 				if ($temp_obj5->getPrimaryKey() === $obj5->getPrimaryKey()) {
+				$temp_obj5 = $temp_obj1->getVirtualTableRelatedByGameTypeId(); 				if ($temp_obj5->getPrimaryKey() === $obj5->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj5->addCashTable($obj1); 					break;
+					$temp_obj5->addCashTableRelatedByGameTypeId($obj1); 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj5->initCashTableList();
-				$obj5->addCashTable($obj1);
+				$obj5->initCashTableListRelatedByGameTypeId();
+				$obj5->addCashTableRelatedByGameTypeId($obj1);
+			}
+
+
+					
+			$omClass = VirtualTablePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj6 = new $cls();
+			$obj6->hydrate($rs, $startcol6);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj6 = $temp_obj1->getVirtualTableRelatedByGameLimitId(); 				if ($temp_obj6->getPrimaryKey() === $obj6->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj6->addCashTableRelatedByGameLimitId($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj6->initCashTableListRelatedByGameLimitId();
+				$obj6->addCashTableRelatedByGameLimitId($obj1);
 			}
 
 			$results[] = $obj1;
@@ -762,6 +882,8 @@ abstract class BaseCashTablePeer {
 		$criteria->addJoin(CashTablePeer::PEOPLE_ID_DEALER, PeoplePeer::ID);
 
 		$criteria->addJoin(CashTablePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
+
+		$criteria->addJoin(CashTablePeer::GAME_LIMIT_ID, VirtualTablePeer::ID);
 
 		$rs = CashTablePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -795,6 +917,8 @@ abstract class BaseCashTablePeer {
 
 		$criteria->addJoin(CashTablePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
 
+		$criteria->addJoin(CashTablePeer::GAME_LIMIT_ID, VirtualTablePeer::ID);
+
 		$rs = CashTablePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
@@ -827,6 +951,8 @@ abstract class BaseCashTablePeer {
 
 		$criteria->addJoin(CashTablePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
 
+		$criteria->addJoin(CashTablePeer::GAME_LIMIT_ID, VirtualTablePeer::ID);
+
 		$rs = CashTablePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
@@ -837,7 +963,39 @@ abstract class BaseCashTablePeer {
 
 
 	
-	public static function doCountJoinAllExceptVirtualTable(Criteria $criteria, $distinct = false, $con = null)
+	public static function doCountJoinAllExceptVirtualTableRelatedByGameTypeId(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(CashTablePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(CashTablePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(CashTablePeer::CLUB_ID, ClubPeer::ID);
+
+		$criteria->addJoin(CashTablePeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
+
+		$criteria->addJoin(CashTablePeer::PEOPLE_ID_DEALER, PeoplePeer::ID);
+
+		$rs = CashTablePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doCountJoinAllExceptVirtualTableRelatedByGameLimitId(Criteria $criteria, $distinct = false, $con = null)
 	{
 				$criteria = clone $criteria;
 
@@ -889,11 +1047,16 @@ abstract class BaseCashTablePeer {
 		VirtualTablePeer::addSelectColumns($c);
 		$startcol5 = $startcol4 + VirtualTablePeer::NUM_COLUMNS;
 
+		VirtualTablePeer::addSelectColumns($c);
+		$startcol6 = $startcol5 + VirtualTablePeer::NUM_COLUMNS;
+
 		$c->addJoin(CashTablePeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
 
 		$c->addJoin(CashTablePeer::PEOPLE_ID_DEALER, PeoplePeer::ID);
 
 		$c->addJoin(CashTablePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
+
+		$c->addJoin(CashTablePeer::GAME_LIMIT_ID, VirtualTablePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -961,16 +1124,38 @@ abstract class BaseCashTablePeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj4 = $temp_obj1->getVirtualTable(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
+				$temp_obj4 = $temp_obj1->getVirtualTableRelatedByGameTypeId(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj4->addCashTable($obj1);
+					$temp_obj4->addCashTableRelatedByGameTypeId($obj1);
 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj4->initCashTableList();
-				$obj4->addCashTable($obj1);
+				$obj4->initCashTableListRelatedByGameTypeId();
+				$obj4->addCashTableRelatedByGameTypeId($obj1);
+			}
+
+			$omClass = VirtualTablePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj5  = new $cls();
+			$obj5->hydrate($rs, $startcol5);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj5 = $temp_obj1->getVirtualTableRelatedByGameLimitId(); 				if ($temp_obj5->getPrimaryKey() === $obj5->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj5->addCashTableRelatedByGameLimitId($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj5->initCashTableListRelatedByGameLimitId();
+				$obj5->addCashTableRelatedByGameLimitId($obj1);
 			}
 
 			$results[] = $obj1;
@@ -1000,11 +1185,16 @@ abstract class BaseCashTablePeer {
 		VirtualTablePeer::addSelectColumns($c);
 		$startcol5 = $startcol4 + VirtualTablePeer::NUM_COLUMNS;
 
+		VirtualTablePeer::addSelectColumns($c);
+		$startcol6 = $startcol5 + VirtualTablePeer::NUM_COLUMNS;
+
 		$c->addJoin(CashTablePeer::CLUB_ID, ClubPeer::ID);
 
 		$c->addJoin(CashTablePeer::PEOPLE_ID_DEALER, PeoplePeer::ID);
 
 		$c->addJoin(CashTablePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
+
+		$c->addJoin(CashTablePeer::GAME_LIMIT_ID, VirtualTablePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -1072,16 +1262,38 @@ abstract class BaseCashTablePeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj4 = $temp_obj1->getVirtualTable(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
+				$temp_obj4 = $temp_obj1->getVirtualTableRelatedByGameTypeId(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj4->addCashTable($obj1);
+					$temp_obj4->addCashTableRelatedByGameTypeId($obj1);
 					break;
 				}
 			}
 
 			if ($newObject) {
-				$obj4->initCashTableList();
-				$obj4->addCashTable($obj1);
+				$obj4->initCashTableListRelatedByGameTypeId();
+				$obj4->addCashTableRelatedByGameTypeId($obj1);
+			}
+
+			$omClass = VirtualTablePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj5  = new $cls();
+			$obj5->hydrate($rs, $startcol5);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj5 = $temp_obj1->getVirtualTableRelatedByGameLimitId(); 				if ($temp_obj5->getPrimaryKey() === $obj5->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj5->addCashTableRelatedByGameLimitId($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj5->initCashTableListRelatedByGameLimitId();
+				$obj5->addCashTableRelatedByGameLimitId($obj1);
 			}
 
 			$results[] = $obj1;
@@ -1111,11 +1323,16 @@ abstract class BaseCashTablePeer {
 		VirtualTablePeer::addSelectColumns($c);
 		$startcol5 = $startcol4 + VirtualTablePeer::NUM_COLUMNS;
 
+		VirtualTablePeer::addSelectColumns($c);
+		$startcol6 = $startcol5 + VirtualTablePeer::NUM_COLUMNS;
+
 		$c->addJoin(CashTablePeer::CLUB_ID, ClubPeer::ID);
 
 		$c->addJoin(CashTablePeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
 
 		$c->addJoin(CashTablePeer::GAME_TYPE_ID, VirtualTablePeer::ID);
+
+		$c->addJoin(CashTablePeer::GAME_LIMIT_ID, VirtualTablePeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -1183,7 +1400,140 @@ abstract class BaseCashTablePeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj4 = $temp_obj1->getVirtualTable(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
+				$temp_obj4 = $temp_obj1->getVirtualTableRelatedByGameTypeId(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj4->addCashTableRelatedByGameTypeId($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj4->initCashTableListRelatedByGameTypeId();
+				$obj4->addCashTableRelatedByGameTypeId($obj1);
+			}
+
+			$omClass = VirtualTablePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj5  = new $cls();
+			$obj5->hydrate($rs, $startcol5);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj5 = $temp_obj1->getVirtualTableRelatedByGameLimitId(); 				if ($temp_obj5->getPrimaryKey() === $obj5->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj5->addCashTableRelatedByGameLimitId($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj5->initCashTableListRelatedByGameLimitId();
+				$obj5->addCashTableRelatedByGameLimitId($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptVirtualTableRelatedByGameTypeId(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		CashTablePeer::addSelectColumns($c);
+		$startcol2 = (CashTablePeer::NUM_COLUMNS - CashTablePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		ClubPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + ClubPeer::NUM_COLUMNS;
+
+		CashTableSessionPeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + CashTableSessionPeer::NUM_COLUMNS;
+
+		PeoplePeer::addSelectColumns($c);
+		$startcol5 = $startcol4 + PeoplePeer::NUM_COLUMNS;
+
+		$c->addJoin(CashTablePeer::CLUB_ID, ClubPeer::ID);
+
+		$c->addJoin(CashTablePeer::CASH_TABLE_SESSION_ID, CashTableSessionPeer::ID);
+
+		$c->addJoin(CashTablePeer::PEOPLE_ID_DEALER, PeoplePeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = CashTablePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = ClubPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getClub(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addCashTable($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initCashTableList();
+				$obj2->addCashTable($obj1);
+			}
+
+			$omClass = CashTableSessionPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getCashTableSession(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addCashTable($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initCashTableList();
+				$obj3->addCashTable($obj1);
+			}
+
+			$omClass = PeoplePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj4  = new $cls();
+			$obj4->hydrate($rs, $startcol4);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj4 = $temp_obj1->getPeople(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
 					$newObject = false;
 					$temp_obj4->addCashTable($obj1);
 					break;
@@ -1202,7 +1552,7 @@ abstract class BaseCashTablePeer {
 
 
 	
-	public static function doSelectJoinAllExceptVirtualTable(Criteria $c, $con = null)
+	public static function doSelectJoinAllExceptVirtualTableRelatedByGameLimitId(Criteria $c, $con = null)
 	{
 		$c = clone $c;
 

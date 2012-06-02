@@ -19,6 +19,6 @@
 	$dompdf->load_html($sf_content);
 	$dompdf->set_paper($paper, $orientation);
 	$dompdf->render();
-	$dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
+	$dompdf->stream("irank.pdf", array("Attachment" => !Util::isDebug()));
 	exit;
 ?>

@@ -42,6 +42,8 @@ class CashTableMapBuilder {
 
 		$tMap->addForeignKey('GAME_TYPE_ID', 'GameTypeId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
 
+		$tMap->addForeignKey('GAME_LIMIT_ID', 'GameLimitId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
+
 		$tMap->addColumn('CASH_TABLE_NAME', 'CashTableName', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('TABLE_STATUS', 'TableStatus', 'string', CreoleTypes::VARCHAR, false, null);
@@ -59,6 +61,10 @@ class CashTableMapBuilder {
 		$tMap->addColumn('LAST_OPENED_AT', 'LastOpenedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 		$tMap->addForeignKey('CASH_TABLE_SESSION_ID', 'CashTableSessionId', 'int', CreoleTypes::INTEGER, 'cash_table_session', 'ID', false, null);
+
+		$tMap->addColumn('LAYOUT_TOP', 'LayoutTop', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('LAYOUT_LEFT', 'LayoutLeft', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
