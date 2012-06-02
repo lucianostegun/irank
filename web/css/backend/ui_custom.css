@@ -332,7 +332,7 @@ th.ui-state-default:first-child { border-left: none; }
 .ui-menu .ui-menu-item { margin:0; padding: 0; zoom: 1; float: left; clear: left; width: 100%; border-bottom: 1px solid #BABABA; border-top: 1px solid #FFFFFF; background: #F0F0F0; }
 .ui-menu .ui-menu-item a { text-decoration:none; display:block; padding: 8px 10px 8px 28px; line-height:1.5; zoom:1; font-size: 12px; color: #707070; cursor: pointer; background: url(/images/backend/subIcon.png) no-repeat 12px 14px }
 .ui-menu .ui-menu-item a.ui-state-hover  { color: #303030; background: #D0D0D0 url(/images/backend/subIconDark.png) no-repeat 12px 14px }
-.ui-menu .ui-menu-item a.ui-state-hover, .ui-menu .ui-menu-item a.ui-state-active { font-weight: normal;  }
+.ui-menu .ui-menu-item a.ui-state-hover, .ui-menu .ui-menu-item a.ui-state-active { font-weight: normal }
 
 
 
@@ -389,7 +389,6 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog { position: absolute; padding: 5px; width: auto; background: #585858; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
 
 .ui-dialog input[type=text], .ui-dialog input[type=password], .ui-dialog textarea { font-size: 11px; padding: 6px 5px; background: white; border: 1px solid #DDD; width: 100%; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #f4f4f4; color: #656565; width: auto; margin-left: 10px; display: block; }
-.ui-dialog form { text-align: center; }
 .ui-dialog .icon { padding: 1px 6px 0 0; float: left; }
 .ui-dialog p { padding: 0!important; }
 .ui-dialog .ui-dialog-titlebar { position: relative;  background: url(/images/backend/backgrounds/titleBg.png) repeat-x 0 0; border-bottom: 1px solid #cdcdcd; border-radius: 0!important; }

@@ -173,14 +173,11 @@
 	background: 	url('/images/backend/cashTable/unavailable.png') no-repeat;
 }
 
-table .formRow .formRight {
-	
-	width: 200px;
-}
 
 table .formRow label {
 	
 	font-weight: bold;
+	width: 35%;
 }
 
 table .formRow .formRight label {
@@ -230,5 +227,15 @@ table .formRow .formRight input {
 	
 	font-size: 16px;
 	font-weight: bold;
-	width: 100%;
+	width: 95%;
 }
+
+#peopleSelectDialog .form .formRow label {
+	
+	white-space: nowrap
+}
+
+.formNote { position: relative; left: 0px }
+.formRow .formRight .formNote { left: -10px }
+
+.ui-menu .ui-menu-item a { font-size: 16px; color: #404040 }

@@ -59,3 +59,19 @@ UPDATE user_admin SET master=true, club_id=null;
 
 select * from irank_ranking order by score desc;
 select * from people where id = 3
+
+
+
+
+
+
+
+
+
+
+DELETE FROM cash_table_player;
+DELETE FROM cash_table_player_buyin;
+DELETE FROM cash_table_dealer;
+UPDATE cash_table SET cash_table_session_id = NULL;
+DELETE FROM cash_table_session;
+DELETE FROM cash_table;

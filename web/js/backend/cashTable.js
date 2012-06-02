@@ -37,9 +37,9 @@ $(function() {
 	$('#peopleSelectDialog').dialog({
 		autoOpen: false,
 		modal: true,
-		resizable: false,
-		width: 550,
-		height: 450,
+		resizable: true,
+		width: 600,
+		height: 500,
 		buttons: {
 			Ok: function() {
 				doSavePlayer();

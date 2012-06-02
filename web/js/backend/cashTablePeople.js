@@ -68,6 +68,11 @@ function handleFailureCashTablePeople(content){
 
 function openPeopleDialog(){
 	
+	$('#cashTablePeopleCheckInfoDiv').hide();
+	$('#cashTablePeopleForm')[0].reset();
+	$('#cashTablePeoplePayMethodId').val('');
+	$.uniform.update();
+	
 	$('#peopleSelectDialog').dialog('open');
 }
 
@@ -175,6 +180,8 @@ function doSelectCashTablePlayer(peopleId, peopleName, successFunc, openDialog){
 	
 	showIndicator();
 	
+	var clubId = $('#cashTableClubId').val();
+	
 	var successFunc = function(content){
 		
 		var peopleObj = parseInfo(content);
@@ -188,8 +195,12 @@ function doSelectCashTablePlayer(peopleId, peopleName, successFunc, openDialog){
 		
 		if( openDialog )
 			openPeopleDialog()
-		else
+		else{
+			
+			$('#cashTablePeopleBuyin').val('0');
 			$('#cashTablePeopleBuyin').focus();
+			$('#cashTablePeopleBuyin').select();
+		}
 		
 		hideIndicator();
 	};
@@ -208,7 +219,7 @@ function doSelectCashTablePlayer(peopleId, peopleName, successFunc, openDialog){
 			debug(content);
 	};
 	
-	var urlAjax = _webRoot+'/people/getPlayerInfo?peopleId='+peopleId;
+	var urlAjax = _webRoot+'/people/getPlayerInfo/peopleId/'+peopleId+'/clubId/'+clubId;
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
@@ -268,6 +279,7 @@ function showPeopleSeatPlayerOptions(tablePosition){
 	$('#cashTablePeopleBankrollDiv').hide();
 	
 	$('#cashTablePeopleBuyinDiv').show();
+	$('#cashTablePeoplePayMethodIdDiv').show();
 	$('#cashTablePeopleLastGameDiv').show();
 	$('#cashTablePeopleRestrictionDiv').show();
 	
@@ -285,6 +297,7 @@ function showPeopleSeatPlayerOptions(tablePosition){
 function showPeopleExtraOptions(){
 	
 	$('#cashTablePeopleBuyinDiv').hide();
+	$('#cashTablePeoplePayMethodIdDiv').hide();
 	$('#cashTablePeopleExtraOptionDiv').show();
 	$('#cashTablePeopleLastGameDiv').show();
 	$('#cashTablePeopleRestrictionDiv').show();
@@ -321,6 +334,7 @@ function showPeopleCashoutOptions(){
 	var bankrollValue = $('#bankroll-'+_tablePosition).html();
 	
 	$('#cashTablePeopleBankrollDiv').show();
+	$('#cashTablePeoplePayMethodIdDiv').hide();
 //	$('#cashTablePeopleBuyin').val(bankrollValue);
 	$('#cashTablePeopleBuyin').select();
 
@@ -348,6 +362,7 @@ function showPeopleDealerOptions(){
 	$('#cashTablePeopleCashoutDiv').hide();
 	$('#cashTablePeopleBankrollDiv').hide();
 	$('#cashTablePeopleBuyinDiv').hide();
+	$('#cashTablePeoplePayMethodIdDiv').hide();
 	$('#cashTablePeopleLastGameDiv').hide();
 	$('#cashTablePeopleRestrictionDiv').hide();
 	
@@ -360,6 +375,7 @@ function showPeopleDealerOptions(){
 function showPeopleDealerExtraOptions(){
 	
 	$('#cashTablePeopleBuyinDiv').hide();
+	$('#cashTablePeoplePayMethodIdDiv').hide();
 	$('#cashTablePeopleBankrollDiv').hide();
 	$('#cashTablePeopleLastGameDiv').hide();
 	$('#cashTablePeopleRestrictionDiv').hide();
@@ -372,4 +388,32 @@ function showPeopleDealerExtraOptions(){
 	
 	$('#peopleSelectDialog').dialog({title:'Escolha do dealer'});
 	$('#peopleSelectIntro').html('Informe o nome do dealer do jogo');
+}
+
+function checkPayMethod(payMethodId){
+	
+	if( payMethodId==payMethodIdCheck || payMethodId==payMethodIdDatedCheck ){
+		
+		$('#cashTablePeopleCheckNumber').val('');
+		$('#cashTablePeopleCheckNominal').val('');
+		$('#cashTablePeopleCheckBank').val('');
+		$('#cashTablePeopleCheckDate').val('');
+		
+		if( payMethodId==payMethodIdCheck )
+			$('#cashTablePeopleCheckDateDiv').hide();
+		else
+			$('#cashTablePeopleCheckDateDiv').show();
+		
+		$('#cashTablePeopleCheckInfoDiv').show();
+		$('#cashTablePeopleCheckNumber').focus();
+	}else{
+	
+		$('#cashTablePeopleCheckInfoDiv').hide();
+		
+		// Define tudo como 1 para que a validação dos campos (que define esses campos como obrigatorios) nao de erro caso a forma de pagamento não seja cheque 
+		$('#cashTablePeopleCheckNumber').val('1');
+		$('#cashTablePeopleCheckNominal').val('1');
+		$('#cashTablePeopleCheckBank').val('1');
+		$('#cashTablePeopleCheckDate').val('');
+	}
 }

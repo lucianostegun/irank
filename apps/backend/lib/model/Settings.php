@@ -9,6 +9,22 @@
  */ 
 class Settings extends BaseSettings
 {
+	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+        	Log::quickLog('settings', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('settings', $this->getPrimaryKey(), $e);
+        }
+    }
 
 	public static function getList(Criteria $criteria=null){
 		

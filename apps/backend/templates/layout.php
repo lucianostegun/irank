@@ -67,11 +67,12 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         </li>
         <?php endif; ?>
         <li class="cash">
-        	<?php
-        		echo link_to('<span>Cash game</span>', 'cashTable/index', array('class'=>($moduleName=='cashTable'?'active':'')));
-//        		if( $iRankAdmin )
-//        			echo link_to('<strong>+</strong>', 'cashGame/new', array('class'=>'quickAdd'));
-        	?>
+        	<a href="javascript:void(0)" title="" class="<?php echo (in_array($moduleName, array('cashTable'))?'active':'exp') ?>"><span>Cash game</span><strong>3</strong></a>
+            <ul class="sub">
+                <li><?php echo link_to('Cadastro de mesas', 'cashTable/index') ?></li>
+                <li><?php echo link_to('Layout de mesas', 'cashTable/layout') ?></li>
+                <li class="last"><?php echo link_to('Relatórios', 'cashTable/report') ?></li>
+            </ul>
         </li>
         
         <?php if( !$iRankAdmin && $iRankClub ): ?>
@@ -170,7 +171,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
     <?php
     	echo $sf_data->getRaw('sf_content');
     	include_partial('home/component/alert');
-    ?> 
+    ?>
     </div>
     <!-- Footer line -->
     <div id="footer">

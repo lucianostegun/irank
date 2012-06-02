@@ -215,10 +215,12 @@ class peopleActions extends sfActions
   
   public function executeGetPlayerInfo($request){
     
+    $clubId    = $this->getUser()->getAttribute('clubId');
+    $clubId    = $request->getParameter('clubId', $clubId);
     $peopleObj = PeoplePeer::retrieveByPK($this->peopleId);
     
     $infoList = $peopleObj->getInfo();
-    $infoList['lastGame']    = '(primeira vez)';
+    $infoList['lastGame']    = $peopleObj->getLastCashGame($clubId);
     $infoList['restriction'] = 'Nenhuma';
     
     echo Util::parseInfo($infoList);

@@ -209,6 +209,12 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastClubPlayerCriteria = null;
 
 	
+	protected $collClubCheckList;
+
+	
+	protected $lastClubCheckCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -881,6 +887,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collClubCheckList !== null) {
+				foreach($this->collClubCheckList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -1108,6 +1122,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 				if ($this->collClubPlayerList !== null) {
 					foreach($this->collClubPlayerList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collClubCheckList !== null) {
+					foreach($this->collClubCheckList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1458,6 +1480,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			foreach($this->getClubPlayerList() as $relObj) {
 				$copyObj->addClubPlayer($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getClubCheckList() as $relObj) {
+				$copyObj->addClubCheck($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -3999,6 +4025,76 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		return $this->collCashTablePlayerBuyinList;
 	}
 
+
+	
+	public function getCashTablePlayerBuyinListJoinVirtualTable($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerBuyinPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTablePlayerBuyinList === null) {
+			if ($this->isNew()) {
+				$this->collCashTablePlayerBuyinList = array();
+			} else {
+
+				$criteria->add(CashTablePlayerBuyinPeer::PEOPLE_ID, $this->getId());
+
+				$this->collCashTablePlayerBuyinList = CashTablePlayerBuyinPeer::doSelectJoinVirtualTable($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePlayerBuyinPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastCashTablePlayerBuyinCriteria) || !$this->lastCashTablePlayerBuyinCriteria->equals($criteria)) {
+				$this->collCashTablePlayerBuyinList = CashTablePlayerBuyinPeer::doSelectJoinVirtualTable($criteria, $con);
+			}
+		}
+		$this->lastCashTablePlayerBuyinCriteria = $criteria;
+
+		return $this->collCashTablePlayerBuyinList;
+	}
+
+
+	
+	public function getCashTablePlayerBuyinListJoinClubCheck($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseCashTablePlayerBuyinPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCashTablePlayerBuyinList === null) {
+			if ($this->isNew()) {
+				$this->collCashTablePlayerBuyinList = array();
+			} else {
+
+				$criteria->add(CashTablePlayerBuyinPeer::PEOPLE_ID, $this->getId());
+
+				$this->collCashTablePlayerBuyinList = CashTablePlayerBuyinPeer::doSelectJoinClubCheck($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CashTablePlayerBuyinPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastCashTablePlayerBuyinCriteria) || !$this->lastCashTablePlayerBuyinCriteria->equals($criteria)) {
+				$this->collCashTablePlayerBuyinList = CashTablePlayerBuyinPeer::doSelectJoinClubCheck($criteria, $con);
+			}
+		}
+		$this->lastCashTablePlayerBuyinCriteria = $criteria;
+
+		return $this->collCashTablePlayerBuyinList;
+	}
+
 	
 	public function initClubPlayerList()
 	{
@@ -4102,6 +4198,181 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$this->lastClubPlayerCriteria = $criteria;
 
 		return $this->collClubPlayerList;
+	}
+
+	
+	public function initClubCheckList()
+	{
+		if ($this->collClubCheckList === null) {
+			$this->collClubCheckList = array();
+		}
+	}
+
+	
+	public function getClubCheckList($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubCheckPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubCheckList === null) {
+			if ($this->isNew()) {
+			   $this->collClubCheckList = array();
+			} else {
+
+				$criteria->add(ClubCheckPeer::PEOPLE_ID, $this->getId());
+
+				ClubCheckPeer::addSelectColumns($criteria);
+				$this->collClubCheckList = ClubCheckPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ClubCheckPeer::PEOPLE_ID, $this->getId());
+
+				ClubCheckPeer::addSelectColumns($criteria);
+				if (!isset($this->lastClubCheckCriteria) || !$this->lastClubCheckCriteria->equals($criteria)) {
+					$this->collClubCheckList = ClubCheckPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastClubCheckCriteria = $criteria;
+		return $this->collClubCheckList;
+	}
+
+	
+	public function countClubCheckList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubCheckPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ClubCheckPeer::PEOPLE_ID, $this->getId());
+
+		return ClubCheckPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addClubCheck(ClubCheck $l)
+	{
+		$this->collClubCheckList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getClubCheckListJoinClub($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubCheckPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubCheckList === null) {
+			if ($this->isNew()) {
+				$this->collClubCheckList = array();
+			} else {
+
+				$criteria->add(ClubCheckPeer::PEOPLE_ID, $this->getId());
+
+				$this->collClubCheckList = ClubCheckPeer::doSelectJoinClub($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ClubCheckPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastClubCheckCriteria) || !$this->lastClubCheckCriteria->equals($criteria)) {
+				$this->collClubCheckList = ClubCheckPeer::doSelectJoinClub($criteria, $con);
+			}
+		}
+		$this->lastClubCheckCriteria = $criteria;
+
+		return $this->collClubCheckList;
+	}
+
+
+	
+	public function getClubCheckListJoinCashTable($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubCheckPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubCheckList === null) {
+			if ($this->isNew()) {
+				$this->collClubCheckList = array();
+			} else {
+
+				$criteria->add(ClubCheckPeer::PEOPLE_ID, $this->getId());
+
+				$this->collClubCheckList = ClubCheckPeer::doSelectJoinCashTable($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ClubCheckPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastClubCheckCriteria) || !$this->lastClubCheckCriteria->equals($criteria)) {
+				$this->collClubCheckList = ClubCheckPeer::doSelectJoinCashTable($criteria, $con);
+			}
+		}
+		$this->lastClubCheckCriteria = $criteria;
+
+		return $this->collClubCheckList;
+	}
+
+
+	
+	public function getClubCheckListJoinCashTableSession($criteria = null, $con = null)
+	{
+				include_once 'apps/backend/lib/model/om/BaseClubCheckPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collClubCheckList === null) {
+			if ($this->isNew()) {
+				$this->collClubCheckList = array();
+			} else {
+
+				$criteria->add(ClubCheckPeer::PEOPLE_ID, $this->getId());
+
+				$this->collClubCheckList = ClubCheckPeer::doSelectJoinCashTableSession($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ClubCheckPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastClubCheckCriteria) || !$this->lastClubCheckCriteria->equals($criteria)) {
+				$this->collClubCheckList = ClubCheckPeer::doSelectJoinCashTableSession($criteria, $con);
+			}
+		}
+		$this->lastClubCheckCriteria = $criteria;
+
+		return $this->collClubCheckList;
 	}
 
 } 

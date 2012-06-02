@@ -314,7 +314,7 @@ class CashTable extends BaseCashTable
 		return is_null($peopleId);
 	}
 	
-	public function seatPlayer($peopleId, $tablePosition, $buyin){
+	public function seatPlayer($peopleId, $tablePosition, $buyin, $payMethodId, $checkInfo){
 		
 		$con = Propel::getConnection();
 		$con->begin();
@@ -324,7 +324,7 @@ class CashTable extends BaseCashTable
 
 		if( !$this->checkPlayer($peopleId) )
 			throw new Exception('O jogador já está jogando em outra mesa.');
-		
+			
 		try{
 			
 			$cashTablePlayerObj = new CashTablePlayer();
@@ -335,7 +335,7 @@ class CashTable extends BaseCashTable
 			$cashTablePlayerObj->setCheckinAt(time());
 			$cashTablePlayerObj->setCheckoutAt(null);
 			$cashTablePlayerObj->setCashoutValue(0);
-	    	$cashTablePlayerObj->addBuyin($buyin, $this->getEntranceFee(), $con);
+	    	$cashTablePlayerObj->addBuyin($buyin, $this->getEntranceFee(), $payMethodId, $checkInfo, $con);
 	    	$cashTablePlayerObj->save($con);
 	    	
 	    	$cashTableSessionObj = $this->getCashTableSession();
@@ -353,17 +353,19 @@ class CashTable extends BaseCashTable
 		}catch(Exception $e){
 			
 			$con->rollback();
+			
+			echo $e->getMessage();
 			return false;
 		}
 	}
 	
-	public function addBuyin($peopleId, $buyin){
+	public function addBuyin($peopleId, $buyin, $payMethodId, $checkInfo){
 		
 		$con = Propel::getConnection();
 		$con->begin();
 		
 		$cashTablePlayerObj = CashTablePlayerPeer::retrieveByPK($this->getId(), $this->getCashTableSessionId(), $peopleId);
-		$result = $cashTablePlayerObj->addBuyin($buyin, $this->getEntranceFee());
+		$result = $cashTablePlayerObj->addBuyin($buyin, $this->getEntranceFee(), $payMethodId, $checkInfo);
 		
 		if( $result===true ){
 			

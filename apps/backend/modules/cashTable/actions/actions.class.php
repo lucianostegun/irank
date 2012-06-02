@@ -26,6 +26,10 @@ class cashTableActions extends sfActions
   public function executeIndex($request){
     
   }
+  
+  public function executeLayout($request){
+    
+  }
 
   public function executeNew($request){
   	
@@ -158,7 +162,13 @@ class cashTableActions extends sfActions
     $peopleId      = $request->getParameter('peopleId');
     $tablePosition = $request->getParameter('tablePosition');
     $buyin         = $request->getParameter('buyin');
+    $payMethodId   = $request->getParameter('payMethodId');
     $saveAction    = $request->getParameter('saveAction');
+    
+    $checkInfo = array('checkNumber'=>$request->getParameter('checkNumber'),
+    				   'checkNominal'=>$request->getParameter('checkNominal'),
+    				   'checkBank'=>$request->getParameter('checkBank'),
+    				   'checkDate'=>$request->getParameter('checkDate'));
     
     $cashTableObj = CashTablePeer::retrieveByPK($this->cashTableId);
     
@@ -171,10 +181,10 @@ class cashTableActions extends sfActions
 		
 		switch($saveAction){
 			case 'seatPlayer':
-				$cashTableObj->seatPlayer($peopleId, $tablePosition, $buyin);
+				$cashTableObj->seatPlayer($peopleId, $tablePosition, $buyin, $payMethodId, $checkInfo);
 				break;
 			case 'rebuy':
-				$cashTableObj->addBuyin($peopleId, $buyin);
+				$cashTableObj->addBuyin($peopleId, $buyin, $payMethodId, $checkInfo);
 				break;
 			case 'cashout':
 				$cashTableObj->cashout($peopleId, $buyin);
@@ -204,5 +214,21 @@ class cashTableActions extends sfActions
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	return $this->renderText(get_partial('cashTable/tab/'.$tabName, array('cashTableObj'=>$cashTableObj)));
+  }
+  
+  public function executeJavascript($request){
+	
+	Util::getHelper('i18n');
+	
+    header('Content-type: text/x-javascript');
+		
+	$nl = chr(10);
+	
+	$payMethodIdCheck      = VirtualTable::getIdByTagName('payMethod', 'check');
+	$payMethodIdDatedCheck = VirtualTable::getIdByTagName('payMethod', 'datedCheck');
+	
+	echo "var payMethodIdCheck      = $payMethodIdCheck;".$nl;
+	echo "var payMethodIdDatedCheck = $payMethodIdDatedCheck;".$nl;
+	exit;
   }
 }

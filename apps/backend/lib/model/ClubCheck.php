@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Subclasse de representação de objetos da tabela 'club_settings'.
+ * Subclasse de representação de objetos da tabela 'club_check'.
  *
  * 
  *
  * @package ...apps.backend.lib.model
  */ 
-class ClubSettings extends BaseClubSettings
+class ClubCheck extends BaseClubCheck
 {
 	
     public function save($con=null){
@@ -19,10 +19,10 @@ class ClubSettings extends BaseClubSettings
 
 			parent::save();
 			
-        	Log::quickLog('club_settings', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        	Log::quickLog('club_check', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
         } catch ( Exception $e ) {
         	
-            Log::quickLogError('club_settings', $this->getPrimaryKey(), $e);
+            Log::quickLogError('club_check', $this->getPrimaryKey(), $e);
         }
     }
 }
