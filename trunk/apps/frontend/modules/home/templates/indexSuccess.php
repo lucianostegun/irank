@@ -81,10 +81,10 @@ setupHomeHighlight(4);
 
 <div class="clear"></div>
 <?php
-//$eventPhotoContestObj = EventPhotoContest::getPhotoPair();
+$eventPhotoContestObj = EventPhotoContest::getPhotoPair();
 
-$eventPhotoIdLeft  = null;//$eventPhotoContestObj->getEventPhotoIdLeft();
-$eventPhotoIdRight = null;//$eventPhotoContestObj->getEventPhotoIdRight();
+$eventPhotoIdLeft  = $eventPhotoContestObj->getEventPhotoIdLeft();
+$eventPhotoIdRight = $eventPhotoContestObj->getEventPhotoIdRight();
 
 $zoomLeft  = 'home/eventPhoto?id='.$eventPhotoIdLeft.'&zoom=1';
 $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';

@@ -42,7 +42,9 @@ class homeActions extends sfActions
 	
 	if( $isDebug )
 		$scriptName = '/backend_dev.php';
-	
+	else
+		$scriptName = '/backend.php';
+
 	$isDebug    = ($isDebug?'true':'false');
 	
 	$peopleId   = $this->getUser()->getAttribute('peopleId');

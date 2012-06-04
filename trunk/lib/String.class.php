@@ -13,26 +13,19 @@ class String
 											'to'   => 'AAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaaceeeeiiiionoooooouuuuyy' );
 
     public static function createRandom($length, $upper=true, $chars='2a3b4c5d6e7f8g9h2i3j4k5l6m7n8p9q2r3s4t5u6v7w8x9y3'){
-    
-        srand((double)microtime()*1000000);
-        $i = 0;
-        $string = '' ;
 
-        while ($i < $length){
-        	
-            $num = rand() % 33;
-            $tmp = substr($chars, $num, 1);
-            $string = $string . $tmp;
-            
-            if($tmp)
-            	$i++;
-        }
-    
-    	if( $upper )
-    		$string = strtoupper($string);
-    
-        return $string;
-    }
+		$size = strlen( $chars );
+
+		$string = '';
+
+		for($i=0; $i < $length; $i++)
+			$string .= $chars[ rand( 0, $size - 1 ) ];
+	
+		if( $upper )
+			$string = strtoupper($string);
+		
+		return $string;
+	}
     
 	public static function removeAccents( $string ){
 		

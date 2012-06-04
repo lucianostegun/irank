@@ -38,7 +38,7 @@ CREATE TABLE club_check (
     check_nominal VARCHAR(50),
     check_bank VARCHAR(25),
     check_date DATE,
-    is_pending BOOLEAN BOOLEAN,
+    is_pending BOOLEAN,
     created_at TIMESTAMP,
     CONSTRAINT check_FK_1 FOREIGN KEY (club_id) REFERENCES club (id),
     CONSTRAINT check_FK_2 FOREIGN KEY (cash_table_id) REFERENCES cash_table (id),

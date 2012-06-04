@@ -50,6 +50,10 @@ class UserSiteMapBuilder {
 
 		$tMap->addColumn('SCHEDULE_START_DATE', 'ScheduleStartDate', 'int', CreoleTypes::DATE, false, null);
 
+		$tMap->addColumn('DEVICEUDID', 'Deviceudid', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('MOBILE_TOKEN', 'MobileToken', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('ACTIVE', 'Active', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
