@@ -446,6 +446,21 @@ class UserSite extends BaseUserSite
 		return (MyTools::isAuthenticated() && $hasCredentials);
 	}
 	
+	public function buildMobileToken($deviceUDID){
+		
+		$tokenChars  = $this->getId();
+		$tokenChars .= $deviceUDID;
+		$tokenChars .= $this->getPeopleId();
+		$tokenChars .= $this->getUsername();
+		$tokenChars .= $this->getCreatedAt('dmYHis');
+		
+		$mobileToken = String::createRandom(40, true, $tokenChars);
+		
+		$this->setDeviceUDID($deviceUDID);
+		$this->setMobileToken($mobileToken);
+		$this->save();
+	}
+	
 	public function getInfo($replaceNull=false, $withBalance=true){
 		
 		$infoList = array();

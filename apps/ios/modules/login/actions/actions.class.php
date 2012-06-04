@@ -22,11 +22,12 @@ class loginActions extends sfActions
 
   public function executeDoLogin($request)
   {
-
-	$username = $request->getParameter('username');
-	$password = $request->getParameter('password');
+  	
+	$username   = $request->getParameter('username');
+	$password   = $request->getParameter('password');
+	$deviceUDID = $request->getParameter('deviceUDID');
 	
-	if( $username && $password ){
+	if( $username && $password && $deviceUDID ){
 		
 		$criteria = new Criteria();
 		$criteria->add( UserSitePeer::ACTIVE, true );
@@ -42,10 +43,15 @@ class loginActions extends sfActions
 			
 		$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
+		$userSiteObj->buildMobileToken($deviceUDID);
 		
-		if( is_object($userSiteObj) )
-			echo Util::parseInfo($userSiteObj->getInfo(true));
-		else
+		if( is_object($userSiteObj) ){
+			
+			$infoList = $userSiteObj->getInfo(true);
+			$infoList['mobileToken']  = $userSiteObj->getMobileToken();
+			
+			echo Util::parseInfo($infoList);
+		}else
 			echo 'denied';
 	}else{
 		
@@ -69,11 +75,6 @@ class loginActions extends sfActions
   public function executeSave($request){
   	
   	$xmlString = $request->getParameter('userSiteXml');
-
-//	$file = fopen(Util::getFilePath('/xml.xml'), 'w');
-//	fwrite($file, $xmlString);
-//	fclose($file);
-//	$xmlString = file_get_contents(Util::getFilePath('/xml.xml'));
 
 	$xmlString = simplexml_load_string( $xmlString );
 	$validate  = new DOMDocument;
