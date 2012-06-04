@@ -1,5 +1,5 @@
 <?php
-	$status       = 'maybe';//$eventLiveObj->getInviteStatus();
+	$status       = $eventLiveObj->getInviteStatus();
 	$toggleStatus = ($status=='yes'?'no':'yes');
 	$toggleLabel  = ($status=='yes'?'presença confirmada':'confirmar presença');
 	

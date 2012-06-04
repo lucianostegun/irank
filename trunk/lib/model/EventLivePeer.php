@@ -21,6 +21,10 @@ class EventLivePeer extends BaseEventLivePeer
 		$criteria->add( EventLivePeer::ENABLED, true );
 		$criteria->add( EventLivePeer::VISIBLE, true );
 		$criteria->add( EventLivePeer::DELETED, false );
+
+		$criteria->add( RankingLivePeer::ENABLED, true );
+		$criteria->add( RankingLivePeer::VISIBLE, true );
+		$criteria->add( RankingLivePeer::DELETED, false );
 		
 		if( $clubId )
 			$criteria->add( EventLivePeer::CLUB_ID, $clubId );
