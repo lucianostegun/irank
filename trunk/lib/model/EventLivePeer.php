@@ -22,14 +22,19 @@ class EventLivePeer extends BaseEventLivePeer
 		$criteria->add( EventLivePeer::VISIBLE, true );
 		$criteria->add( EventLivePeer::DELETED, false );
 
-		$criteria->add( RankingLivePeer::ENABLED, true );
-		$criteria->add( RankingLivePeer::VISIBLE, true );
-		$criteria->add( RankingLivePeer::DELETED, false );
+		$criterion = $criteria->getNewCriterion( RankingLivePeer::ENABLED, true );
+		$criterion->addAnd( $criteria->getNewCriterion( RankingLivePeer::VISIBLE, true ) );
+		$criterion->addAnd( $criteria->getNewCriterion( RankingLivePeer::DELETED, false ) );
+		
+		$criterion2 = $criteria->getNewCriterion( EventLivePeer::RANKING_LIVE_ID, NULL );
+		$criterion->addOr($criterion2);
+		$criteria->add($criterion);
 		
 		if( $clubId )
 			$criteria->add( EventLivePeer::CLUB_ID, $clubId );
 		
 		$criteria->addJoin( EventLivePeer::CLUB_ID, ClubPeer::ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID, Criteria::LEFT_JOIN );
 		
 		$criteria->addAscendingOrderByColumn( EventLivePeer::ENROLLMENT_START_DATE );
 		$criteria->addDescendingOrderByColumn( EventLivePeer::EVENT_DATE );
