@@ -1,8 +1,4 @@
 <?php
-	$status       = $eventLiveObj->getInviteStatus();
-	$toggleStatus = ($status=='yes'?'no':'yes');
-	$toggleLabel  = ($status=='yes'?'presença confirmada':'confirmar presença');
-	
 	$buyin       = Util::formatFloat($eventLiveObj->getBuyin(), true);
 	$entranceFee = $eventLiveObj->getEntranceFee();
 	
