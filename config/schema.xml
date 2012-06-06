@@ -594,6 +594,7 @@
 		<column name="comments" type="VARCHAR" />
 		<column name="description" type="LONGVARCHAR"/>
 		<column name="is_freeroll" type="BOOLEAN" />
+		<column name="tables_number" type="INTEGER"/>
 		<column name="buyin" type="NUMERIC" size="10" scale="2" />
 		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />
 		<column name="rake_percent" type="NUMERIC" size="5" scale="2" />

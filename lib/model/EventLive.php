@@ -69,6 +69,7 @@ class EventLive extends BaseEventLive
 		$stackChips          = $request->getParameter('stackChips');
 		$allowedRebuys       = $request->getParameter('allowedRebuys');
 		$allowedAddons       = $request->getParameter('allowedAddons');
+		$tablesNumber        = $request->getParameter('tablesNumber');
 		$isIlimitedRebuys    = $request->getParameter('isIlimitedRebuys');
 		$description         = $request->getParameter('description');
 		$comments            = $request->getParameter('comments');
@@ -106,6 +107,7 @@ class EventLive extends BaseEventLive
 		$this->setStackChips($stackChips);
 		$this->setAllowedRebuys($allowedRebuys);
 		$this->setAllowedAddons($allowedAddons);
+		$this->setTablesNumber($tablesNumber);
 		$this->setIsIlimitedRebuys(($isIlimitedRebuys?true:false));
 		$this->setStepNumber(nvl($stepNumber));
 		$this->setStepDay(nvl($stepDay));

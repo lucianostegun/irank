@@ -167,6 +167,15 @@
 	</div>
 
 	<div class="formRow">
+		<label>Nº de mesas</label>
+		<div class="formRight">
+			<?php echo input_tag('tablesNumber', $eventLiveObj->getTablesNumber(), array('size'=>1, 'maxlength'=>2, 'id'=>'eventLiveTablesNumber')) ?>
+			<div class="formNote error" id="eventLiveFormErrorTablesNumber"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
 		<label>Informações</label>
 		<div class="formRight">
 			<?php echo textarea_tag('description', $eventLiveObj->getDescription(false), array('style'=>'height: 400px', 'id'=>'eventLiveDescription')) ?>

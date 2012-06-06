@@ -102,7 +102,9 @@ abstract class BaseConfig extends BaseObject  implements Persistent {
 	public function setConfigName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -116,7 +118,9 @@ abstract class BaseConfig extends BaseObject  implements Persistent {
 	public function setDescription($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -130,7 +134,9 @@ abstract class BaseConfig extends BaseObject  implements Persistent {
 	public function setConfigValue($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
