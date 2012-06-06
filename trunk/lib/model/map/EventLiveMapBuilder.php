@@ -62,6 +62,8 @@ class EventLiveMapBuilder {
 
 		$tMap->addColumn('IS_FREEROLL', 'IsFreeroll', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
+		$tMap->addColumn('TABLES_NUMBER', 'TablesNumber', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::NUMERIC, false, 10);
 
 		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);

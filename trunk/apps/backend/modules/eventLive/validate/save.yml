@@ -87,6 +87,12 @@ fields:
       min_error: form.error.greaterEqual0
       nan_error: form.error.greaterEqual0
 
+  tablesNumber:
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
+
   description:
     required:
       msg:       form.error.requiredField

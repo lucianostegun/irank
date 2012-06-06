@@ -270,7 +270,9 @@ abstract class BaseCashTableSession extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -284,7 +286,9 @@ abstract class BaseCashTableSession extends BaseObject  implements Persistent {
 	public function setCashTableId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -336,7 +340,9 @@ abstract class BaseCashTableSession extends BaseObject  implements Persistent {
 	public function setUserAdminIdOpen($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -354,7 +360,9 @@ abstract class BaseCashTableSession extends BaseObject  implements Persistent {
 	public function setUserAdminIdClose($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -372,7 +380,9 @@ abstract class BaseCashTableSession extends BaseObject  implements Persistent {
 	public function setTotalPlayers($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -386,7 +396,9 @@ abstract class BaseCashTableSession extends BaseObject  implements Persistent {
 	public function setTotalDealers($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -400,7 +412,9 @@ abstract class BaseCashTableSession extends BaseObject  implements Persistent {
 	public function setDealerStartPosition($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

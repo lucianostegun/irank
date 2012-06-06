@@ -186,7 +186,9 @@ abstract class BaseClubCheck extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -200,7 +202,9 @@ abstract class BaseClubCheck extends BaseObject  implements Persistent {
 	public function setClubId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -218,7 +222,9 @@ abstract class BaseClubCheck extends BaseObject  implements Persistent {
 	public function setCashTableId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -236,7 +242,9 @@ abstract class BaseClubCheck extends BaseObject  implements Persistent {
 	public function setCashTableSessionId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -254,7 +262,9 @@ abstract class BaseClubCheck extends BaseObject  implements Persistent {
 	public function setPeopleId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -272,7 +282,9 @@ abstract class BaseClubCheck extends BaseObject  implements Persistent {
 	public function setCheckNumber($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -286,7 +298,9 @@ abstract class BaseClubCheck extends BaseObject  implements Persistent {
 	public function setCheckNominal($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -300,7 +314,9 @@ abstract class BaseClubCheck extends BaseObject  implements Persistent {
 	public function setCheckBank($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

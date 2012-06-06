@@ -130,7 +130,9 @@ abstract class BaseEventLivePlayerScore extends BaseObject  implements Persisten
 	public function setEventLiveId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -148,7 +150,9 @@ abstract class BaseEventLivePlayerScore extends BaseObject  implements Persisten
 	public function setPeopleId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -166,7 +170,9 @@ abstract class BaseEventLivePlayerScore extends BaseObject  implements Persisten
 	public function setLabel($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -190,7 +196,9 @@ abstract class BaseEventLivePlayerScore extends BaseObject  implements Persisten
 	public function setOrderSeq($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

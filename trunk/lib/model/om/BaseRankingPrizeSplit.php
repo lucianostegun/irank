@@ -127,7 +127,9 @@ abstract class BaseRankingPrizeSplit extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -141,7 +143,9 @@ abstract class BaseRankingPrizeSplit extends BaseObject  implements Persistent {
 	public function setRankingId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -159,7 +163,9 @@ abstract class BaseRankingPrizeSplit extends BaseObject  implements Persistent {
 	public function setBuyins($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -173,7 +179,9 @@ abstract class BaseRankingPrizeSplit extends BaseObject  implements Persistent {
 	public function setPaidPlaces($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -187,7 +195,9 @@ abstract class BaseRankingPrizeSplit extends BaseObject  implements Persistent {
 	public function setPercentList($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
