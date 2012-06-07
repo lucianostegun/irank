@@ -9,6 +9,10 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 
 
 	
+	protected $id;
+
+
+	
 	protected $event_live_id;
 
 
@@ -43,6 +47,13 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 
 	
 	protected $alreadyInValidation = false;
+
+	
+	public function getId()
+	{
+
+		return $this->id;
+	}
 
 	
 	public function getEventLiveId()
@@ -153,6 +164,20 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 		}
 	}
 
+	
+	public function setId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->id !== $v) {
+			$this->id = $v;
+			$this->modifiedColumns[] = EventLiveSchedulePeer::ID;
+		}
+
+	} 
 	
 	public function setEventLiveId($v)
 	{
@@ -272,25 +297,27 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->event_live_id = $rs->getInt($startcol + 0);
+			$this->id = $rs->getInt($startcol + 0);
 
-			$this->event_date = $rs->getDate($startcol + 1, null);
+			$this->event_live_id = $rs->getInt($startcol + 1);
 
-			$this->start_time = $rs->getTime($startcol + 2, null);
+			$this->event_date = $rs->getDate($startcol + 2, null);
 
-			$this->event_date_time = $rs->getTimestamp($startcol + 3, null);
+			$this->start_time = $rs->getTime($startcol + 3, null);
 
-			$this->days_after = $rs->getInt($startcol + 4);
+			$this->event_date_time = $rs->getTimestamp($startcol + 4, null);
 
-			$this->step_day = $rs->getString($startcol + 5);
+			$this->days_after = $rs->getInt($startcol + 5);
 
-			$this->created_at = $rs->getTimestamp($startcol + 6, null);
+			$this->step_day = $rs->getString($startcol + 6);
+
+			$this->created_at = $rs->getTimestamp($startcol + 7, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 7; 
+						return $startcol + 8; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLiveSchedule object", $e);
 		}
@@ -439,24 +466,27 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getEventLiveId();
+				return $this->getId();
 				break;
 			case 1:
-				return $this->getEventDate();
+				return $this->getEventLiveId();
 				break;
 			case 2:
-				return $this->getStartTime();
+				return $this->getEventDate();
 				break;
 			case 3:
-				return $this->getEventDateTime();
+				return $this->getStartTime();
 				break;
 			case 4:
-				return $this->getDaysAfter();
+				return $this->getEventDateTime();
 				break;
 			case 5:
-				return $this->getStepDay();
+				return $this->getDaysAfter();
 				break;
 			case 6:
+				return $this->getStepDay();
+				break;
+			case 7:
 				return $this->getCreatedAt();
 				break;
 			default:
@@ -469,13 +499,14 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	{
 		$keys = EventLiveSchedulePeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0]=>$this->getEventLiveId(),
-			$keys[1]=>$this->getEventDate(),
-			$keys[2]=>$this->getStartTime(),
-			$keys[3]=>$this->getEventDateTime(),
-			$keys[4]=>$this->getDaysAfter(),
-			$keys[5]=>$this->getStepDay(),
-			$keys[6]=>$this->getCreatedAt(),
+			$keys[0]=>$this->getId(),
+			$keys[1]=>$this->getEventLiveId(),
+			$keys[2]=>$this->getEventDate(),
+			$keys[3]=>$this->getStartTime(),
+			$keys[4]=>$this->getEventDateTime(),
+			$keys[5]=>$this->getDaysAfter(),
+			$keys[6]=>$this->getStepDay(),
+			$keys[7]=>$this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -492,24 +523,27 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setEventLiveId($value);
+				$this->setId($value);
 				break;
 			case 1:
-				$this->setEventDate($value);
+				$this->setEventLiveId($value);
 				break;
 			case 2:
-				$this->setStartTime($value);
+				$this->setEventDate($value);
 				break;
 			case 3:
-				$this->setEventDateTime($value);
+				$this->setStartTime($value);
 				break;
 			case 4:
-				$this->setDaysAfter($value);
+				$this->setEventDateTime($value);
 				break;
 			case 5:
-				$this->setStepDay($value);
+				$this->setDaysAfter($value);
 				break;
 			case 6:
+				$this->setStepDay($value);
+				break;
+			case 7:
 				$this->setCreatedAt($value);
 				break;
 		} 	}
@@ -519,13 +553,14 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	{
 		$keys = EventLiveSchedulePeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setEventLiveId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setEventDate($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setStartTime($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setEventDateTime($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setDaysAfter($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setStepDay($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setEventLiveId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setEventDate($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setStartTime($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setEventDateTime($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setDaysAfter($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setStepDay($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
 	}
 
 	
@@ -533,6 +568,7 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(EventLiveSchedulePeer::DATABASE_NAME);
 
+		if ($this->isColumnModified(EventLiveSchedulePeer::ID)) $criteria->add(EventLiveSchedulePeer::ID, $this->id);
 		if ($this->isColumnModified(EventLiveSchedulePeer::EVENT_LIVE_ID)) $criteria->add(EventLiveSchedulePeer::EVENT_LIVE_ID, $this->event_live_id);
 		if ($this->isColumnModified(EventLiveSchedulePeer::EVENT_DATE)) $criteria->add(EventLiveSchedulePeer::EVENT_DATE, $this->event_date);
 		if ($this->isColumnModified(EventLiveSchedulePeer::START_TIME)) $criteria->add(EventLiveSchedulePeer::START_TIME, $this->start_time);
@@ -585,6 +621,8 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	
 	public function copyInto($copyObj, $deepCopy = false)
 	{
+
+		$copyObj->setId($this->id);
 
 		$copyObj->setEventDateTime($this->event_date_time);
 

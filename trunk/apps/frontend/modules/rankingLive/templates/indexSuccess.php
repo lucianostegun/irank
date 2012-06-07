@@ -30,7 +30,7 @@
 		<div class="ranking">
 			<a href="javascript:void(0)" onclick="goToPage('rankingLive', 'details', 'id', <?php echo $rankingLiveId ?>)" title="Abrir detalhes do ranking">
 				<div class="logo">
-					<?php echo image_tag('ranking/'.$fileNameLogo) ?><br/>
+					<?php echo image_tag('ranking/small/'.$fileNameLogo) ?><br/>
 					+ Detalhes
 				</div>
 			</a>

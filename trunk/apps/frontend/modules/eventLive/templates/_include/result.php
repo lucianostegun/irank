@@ -1,7 +1,7 @@
 <?php
 	if( !$eventLiveObj->getSavedResult() ){
 		
-		echo '<div class="textC mt40"><h2>O resultado deste evento ainda não foi processado!</h2></div>';
+		echo '<div class="textC mt40"><h2>O resultado deste evento ainda não foi lançado!</h2></div>';
 		return;
 	}
 	

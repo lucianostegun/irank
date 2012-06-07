@@ -86,7 +86,7 @@
 	
 	$whereClause = implode(chr(10).chr(9).'AND ', $whereList);
 	
-	$sql = "SELECT$nl id, event_name, event_date_time, buyin, entrance_fee, is_freeroll, club_name, city_name, initial$nl FROM$nl event_live_search$nl WHERE$nl $whereClause$nl ORDER BY event_date_time DESC";
+	$sql = "SELECT$nl id, event_live_schedule_id, step_number, event_name, step_day, event_date_time, buyin, entrance_fee, is_freeroll, club_name, city_name, initial$nl FROM$nl event_live_search$nl WHERE$nl $whereClause$nl ORDER BY event_date_time ASC";
 //	echo "<Pre>$sql";exit;
 	
 	$resultSet   = Util::executeQuery($sql);
@@ -115,15 +115,20 @@
 <?php
 	while($resultSet->next()):
 	
-		$eventLiveId   = $resultSet->getInt(1);
-		$eventName     = $resultSet->getString(2);
-		$eventDateTime = $resultSet->getTimestamp(3);
-		$buyin         = $resultSet->getFloat(4);
-		$entranceFee   = $resultSet->getFloat(5);
-		$isFreeroll    = $resultSet->getBoolean(6);
-		$clubName      = $resultSet->getString(7);
-		$cityName      = $resultSet->getString(8);
-		$initial       = $resultSet->getString(9);
+		$eventLiveId         = $resultSet->getInt(1);
+		$eventLiveScheduleId = $resultSet->getInt(2);
+		$stepNumber          = $resultSet->getString(3);
+		$eventName           = $resultSet->getString(4);
+		$stepDay             = $resultSet->getString(5);
+		$eventDateTime       = $resultSet->getTimestamp(6);
+		$buyin               = $resultSet->getFloat(7);
+		$entranceFee         = $resultSet->getFloat(8);
+		$isFreeroll          = $resultSet->getBoolean(9);
+		$clubName            = $resultSet->getString(10);
+		$cityName            = $resultSet->getString(11);
+		$initial             = $resultSet->getString(12);
+		
+		$eventName = ($stepNumber?$stepNumber.' ª Etapa ':'').$eventName.($stepDay?' - Dia '.$stepDay:'');
 		
 		$entranceFee = Util::formatFloat($entranceFee, true);
 		$entranceFee = preg_replace('/[,\.]00$/', '', $entranceFee);

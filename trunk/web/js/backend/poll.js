@@ -18,7 +18,8 @@ function addPollAnswer(){
 	var index = $('#pollAnswers').val();
 	index++;
 	
-	var htmlRow = '<div class="formRight mt5" id="pollPollAnswerRow-'+index+'">'+
+	var htmlRow = '<div class="clear mt6"></div>'+
+				  '<div id="pollPollAnswerRow-'+index+'">'+
 				  '	<input name="answer[]" id="answer" value="" size="20" maxlength="20" autocomplete="off" type="text">'+					
 				  '	<a href="javascript:void(0)" onclick="removePollAnswer('+index+')" ><img src="'+_imageRoot+'/backend/icons/color/cross.png" title="Excluir" class="formIcon"/></a>'+					
 				  '</div>'+

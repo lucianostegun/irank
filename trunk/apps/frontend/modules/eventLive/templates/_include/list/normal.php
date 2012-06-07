@@ -2,7 +2,8 @@
 	<div id="eventLiveList">
 		<?php
 			$criteria = new Criteria();
-//			$criteria->add( EventLivePeer::EVENT_DATE, Util::getDate('30d'), Criteria::LESS_THAN);
+			$criteria->add( EventLivePeer::EVENT_DATE, Util::getDate('-2d'), Criteria::GREATER_THAN);
+			$criteria->addAscendingOrderByColumn( EventLivePeer::EVENT_DATE_TIME );
 			$eventLiveObjList = EventLivePeer::search($criteria);
 			
 			if( count($eventLiveObjList)==0 ):
@@ -13,14 +14,22 @@
 			
 			foreach($eventLiveObjList as $eventLiveObj):
 				
-				$eventLiveId      = $eventLiveObj->getId();
-				$rankingLiveObj   = $eventLiveObj->getRankingLive();
-				$rankingLiveId    = $rankingLiveObj->getId();
-				$fileNameLogo     = $rankingLiveObj->getFileNameLogo();
-				$isEnrollmentOpen = $eventLiveObj->isEnrollmentOpen();
+				$eventLiveId         = $eventLiveObj->getId();
+				$rankingLiveObj      = $eventLiveObj->getRankingLive();
+				$rankingLiveId       = $rankingLiveObj->getId();
+				$fileNameLogo        = $rankingLiveObj->getFileNameLogo();
+				$isEnrollmentOpen    = $eventLiveObj->isEnrollmentOpen();
+
+				$criteria = new Criteria();
+				$criteria->add( EventLiveSchedulePeer::EVENT_DATE, Util::getDate('-2d'), Criteria::GREATER_THAN);
+				foreach($eventLiveObj->getScheduleList($criteria) as $eventLiveScheduleObj):
+					
+					$eventLiveScheduleId = nvl($eventLiveScheduleObj->getId(), 0);
+					$stepDay             = $eventLiveScheduleObj->getStepDay();
+					$stepDay             = ($stepDay?' - Dia '.$stepDay:'');
 		?>
 		<div class="event">
-			<a href="javascript:void(0)" onclick="goToPage('eventLive', 'details', 'id', <?php echo $eventLiveId ?>)" title="Abrir detalhes do evento">
+			<a href="javascript:void(0)" onclick="goToPage('eventLive', 'details', 'id', <?php echo $eventLiveId ?>, false, event, 'eventLiveScheduleId', <?php echo $eventLiveScheduleId ?>)" title="Abrir detalhes do evento">
 				<div class="logo">
 					<?php echo image_tag('ranking/small/'.$fileNameLogo) ?><br/>
 					+ Detalhes
@@ -28,12 +37,12 @@
 			</a>
 			<div class="info">
 				<div class="profile">
-					<h1><?php echo Util::getWeekDay($eventLiveObj->getEventDateTime('d/m/Y')).', '.$eventLiveObj->getEventDateTime('d/m/Y H:i') ?>
+					<h1><?php echo Util::getWeekDay($eventLiveScheduleObj->getEventDateTime('d/m/Y')).', '.$eventLiveScheduleObj->getEventDateTime('d/m/Y H:i') ?>
 					<?php if( $rankingLiveId ): ?>
 					 - <?php echo $eventLiveObj->getGameStyle()->getDescription() ?> | <?php echo $eventLiveObj->getGameType()->getDescription() ?>
 					<?php endif; ?>
 					</h1>
-					<h2><?php echo link_to($eventLiveObj->getEventName(), '#goToPage("eventLive", "details", "id", '.$eventLiveId.')') ?></h2>
+					<h2><?php echo link_to($eventLiveObj->toString().$stepDay, '#goToPage("eventLive", "details", "id", '.$eventLiveId.', false, event, "eventLiveScheduleId", '.$eventLiveScheduleId.')') ?></h2>
 					<h3>@ <?php echo $eventLiveObj->getClub()->toString() ?> - <?php echo $eventLiveObj->getClub()->getLocation() ?></h3>
 					
 					<table cellspacing="0" cellpadding="0" class="presenceTable">
@@ -53,7 +62,7 @@
 					
 					<?php
 						if( $eventLiveObj->isPastDate() && $isEnrollmentOpen )
-								echo button_tag('resultButton'.$eventLiveId, 'VER RESULTADO', array('image'=>'result.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'goToPage("eventLive", "details", "id", '.$eventLiveId.')'));
+								echo button_tag('resultButton'.$eventLiveId, 'VER RESULTADO', array('image'=>'result.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'goToPage("eventLive", "details", "id", '.$eventLiveId.', false, event, "eventLiveScheduleId", '.$eventLiveScheduleId.')'));
 						elseif( $isEnrollmentOpen ){
 							
 							if( $peopleId && $eventLiveObj->getPlayerStatus($peopleId, true) )
@@ -68,6 +77,7 @@
 				</div>
 			</div>
 		</div>
+			<?php endforeach; ?>
 		<?php endforeach; ?>
 	</div>
 </blockquote>

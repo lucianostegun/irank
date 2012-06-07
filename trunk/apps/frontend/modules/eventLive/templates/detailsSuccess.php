@@ -1,22 +1,34 @@
 <?php
-	$eventLiveId        = $eventLiveObj->getId();
-	$rankingLiveObj     = $eventLiveObj->getRankingLive();
-	$rankingName        = $rankingLiveObj->getRankingName();
-	$rankingLiveId      = $eventLiveObj->getRankingLiveId();
-	$eventShortName     = $eventLiveObj->toString();
-	$clubObj            = $eventLiveObj->getClub();
-	$clubTagName        = $clubObj->getTagName();
-	$clubName           = $clubObj->getClubName();
-	$clubId             = $eventLiveObj->getClubId();
-	$addressQuarter     = $clubObj->getAddressQuarter();
-	$city               = $clubObj->getCity()->getCityName();
-	$state              = $clubObj->getCity()->getState()->getInitial();
-	$description        = $eventLiveObj->getDescription();
-	$description        = str_replace(chr(10), '<br/>', $description);
-	$weekDay            = Util::getWeekDay($eventLiveObj->getEventDate('d/m/Y'));
-	$publishPrize       = $eventLiveObj->getPublishPrize();
-	$isPastDate         = $eventLiveObj->isPastDate();
-	$isEnrollmentOpen   = $eventLiveObj->isEnrollmentOpen();
+	$eventLiveId          = $eventLiveObj->getId();
+	$eventLiveScheduleObj = EventLiveSchedulePeer::retrieveById($eventLiveScheduleId);
+	$rankingLiveObj       = $eventLiveObj->getRankingLive();
+	$rankingName          = $rankingLiveObj->getRankingName();
+	$rankingLiveId        = $eventLiveObj->getRankingLiveId();
+	$eventShortName       = $eventLiveObj->toString();
+	$clubObj              = $eventLiveObj->getClub();
+	$clubTagName          = $clubObj->getTagName();
+	$clubName             = $clubObj->getClubName();
+	$clubId               = $eventLiveObj->getClubId();
+	$addressQuarter       = $clubObj->getAddressQuarter();
+	$city                 = $clubObj->getCity()->getCityName();
+	$state                = $clubObj->getCity()->getState()->getInitial();
+	$description          = $eventLiveObj->getDescription();
+	$description          = str_replace(chr(10), '<br/>', $description);
+	$publishPrize         = $eventLiveObj->getPublishPrize();
+	$isPastDate           = $eventLiveObj->isPastDate();
+	$isEnrollmentOpen     = $eventLiveObj->isEnrollmentOpen();
+	
+	if( is_object($eventLiveScheduleObj) ){
+		
+		$stepDay       = ' - Dia '.$eventLiveScheduleObj->getStepDay();
+		$eventDateTime = $eventLiveScheduleObj->getEventDateTime('d/m/Y H:i');
+		$weekDay       = Util::getWeekDay($eventLiveScheduleObj->getEventDate('d/m/Y'));
+	}else{
+		
+		$stepDay       = '';
+		$eventDateTime = $eventLiveObj->getEventDateTime('d/m/Y H:i');
+		$weekDay       = Util::getWeekDay($eventLiveObj->getEventDate('d/m/Y'));
+	}
 	
 	$peopleId = $sf_user->getAttribute('peopleId');
 	
@@ -40,7 +52,7 @@
 			<td rowspan="5" class="logo"><?php echo image_tag($fileNameLogo, array('width'=>90)) ?></td>
 		</tr>
 		<tr>
-			<th valign="top"><h1><?php echo $eventLiveObj->getEventName() ?></h1></th>
+			<th valign="top"><h1><?php echo $eventLiveObj->toString().$stepDay ?></h1></th>
 			<td class="payInfo" align="center" rowspan="5">
 				<div align="center">
 				<table cellspacing="0" cellpadding="0">
@@ -77,7 +89,7 @@
 			</th>
 		</tr>
 		<tr class="info">
-			<td><?php echo $weekDay ?>, <?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></th>
+			<td><?php echo $weekDay ?>, <?php echo $eventDateTime ?></th>
 		</tr>
 		<?php if( $rankingLiveId ): ?>
 		<tr class="info">

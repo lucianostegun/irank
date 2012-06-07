@@ -355,11 +355,11 @@ function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow, evt)
 		newWindow = true
 	
 	if( fieldName && fieldValue || newWindow )
-		return goModule(moduleName, actionName, fieldName, fieldValue, newWindow );
+		return goModule(moduleName, actionName, fieldName, fieldValue, newWindow, arguments );
 	
 	var urlLocation = _webRoot+'/'+moduleName+'/'+actionName;
 	urlLocation = urlLocation.replace(/\/\//g, '/');
 	urlLocation = urlLocation.replace(/\/$/g, '');
 
-	location.href = urlLocation;
+//	location.href = urlLocation;
 }

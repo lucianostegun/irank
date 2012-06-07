@@ -159,8 +159,8 @@
 
 	<div class="formRow">
 		<label>Informações</label>
-		<div class="formRight">
-			<?php echo textarea_tag('description', $clubObj->getDescription(), array('style'=>'width: 80%; height: 350px', 'id'=>'clubDescription')) ?>
+		<div class="formRight" style="width: 70%">
+			<?php echo textarea_tag('description', $clubObj->getDescription(), array('style'=>'height: 350px', 'id'=>'clubDescription')) ?>
 			<div class="formNote error" id="clubFormErrorDescription"></div>
 		</div>
 		<div class="clear"></div>

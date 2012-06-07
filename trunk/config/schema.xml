@@ -1189,6 +1189,7 @@
 	</table>
 	
 	<table name="event_live_schedule" phpName="EventLiveSchedule">
+		<column name="id" type="INTEGER" />
 		<column name="event_live_id" type="INTEGER" primaryKey="true" />
 		<column name="event_date" type="DATE" primaryKey="true" />
 		<column name="start_time" type="TIME" primaryKey="true" />

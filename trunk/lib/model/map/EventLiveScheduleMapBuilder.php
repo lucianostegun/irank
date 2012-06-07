@@ -32,6 +32,8 @@ class EventLiveScheduleMapBuilder {
 
 		$tMap->setUseIdGenerator(false);
 
+		$tMap->addColumn('ID', 'Id', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addForeignPrimaryKey('EVENT_LIVE_ID', 'EventLiveId', 'int' , CreoleTypes::INTEGER, 'event_live', 'ID', true, null);
 
 		$tMap->addPrimaryKey('EVENT_DATE', 'EventDate', 'int', CreoleTypes::DATE, true, null);

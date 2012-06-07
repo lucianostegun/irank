@@ -1,6 +1,6 @@
 <?php
 	$sortField = $sf_request->getParameter('sortField', 'eventDateTime');
-	$sortDesc  = $sf_request->getParameter('sortDesc', '1');
+	$sortDesc  = $sf_request->getParameter('sortDesc', '0');
 ?>
 <table border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr class="header">
@@ -15,6 +15,7 @@
 	<tbody>
 <?php
 	$criteria = new Criteria();
+	$criteria->add( EventLivePeer::EVENT_DATE, Util::getDate('-2d'), Criteria::GREATER_THAN);
 	
 	switch($sortField){
 		case 'eventDateTime':
@@ -42,6 +43,8 @@
 	
 	$sortFunction = ($sortDesc?'addDescendingOrderByColumn':'addAscendingOrderByColumn');
 	$criteria->$sortFunction($fieldName);
+	$criteria->addAscendingOrderByColumn( EventLivePeer::EVENT_DATE_TIME );
+			
 	$eventLiveObjList = EventLivePeer::search($criteria);
 	
 	if( count($eventLiveObjList)==0 ):
@@ -59,16 +62,25 @@
 		$rankingLiveId  = $rankingLiveObj->getId();
 		$fileNameLogo   = $rankingLiveObj->getFileNameLogo();
 		
-		$onclick = 'goModule(\'eventLive\', \'details\', \'id\', '.$eventLiveId.')';
+		$criteria = new Criteria();
+		$criteria->add( EventLiveSchedulePeer::EVENT_DATE, Util::getDate('-2d'), Criteria::GREATER_THAN);
+		foreach($eventLiveObj->getScheduleList($criteria) as $eventLiveScheduleObj):
+			
+			$eventLiveScheduleId = nvl($eventLiveScheduleObj->getId(), 0);
+			$stepDay             = $eventLiveScheduleObj->getStepDay();
+			$stepDay             = ($stepDay?' - Dia '.$stepDay:'');
+		
+		$onclick = 'goToPage(\'eventLive\', \'details\', \'id\', '.$eventLiveId.', false, event, \'eventLiveScheduleId\', '.$eventLiveScheduleId.')';
 ?>
 	<tr onclick="<?php echo $onclick ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" class="<?php echo $className ?>">
 		<td class="textC"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td>
-		<td><?php echo $eventLiveObj->toString() ?></td>
+		<td><?php echo $eventLiveObj->toString().$stepDay ?></td>
 		<td><?php echo $eventLiveObj->getClub()->getClubName() ?></td>
 		<td class="textR"><?php echo $eventLiveObj->getBuyinInfo() ?></td>
 		<td class="textC"><?php echo $eventLiveObj->getStackChips(true) ?></td>
 		<td class="textC"><?php echo $eventLiveObj->getBlindTime('H:i') ?></td>
 		<td class="textC"><?php echo $eventLiveObj->getPlayers() ?></td>
 	</tr>
+	<?php endforeach; ?>
 <?php endforeach; ?>
 </table>

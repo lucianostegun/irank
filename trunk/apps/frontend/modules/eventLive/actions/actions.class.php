@@ -10,6 +10,8 @@ class eventLiveActions extends sfActions
   	
   	$this->eventLiveId   = $this->getRequestParameter('id', $eventCode);
   	$this->eventLiveId   = $this->getRequestParameter('eventLiveId', $this->eventLiveId);
+  	
+  	$this->eventLiveScheduleId = $this->getRequestParameter('eventLiveScheduleId');
   }
   
   public function executeIndex($request){
