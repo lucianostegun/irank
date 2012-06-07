@@ -35,10 +35,11 @@ class homeActions extends sfActions
 		
 	$nl = chr(10);
 	
+	$isAuthenticated = $this->getUser()->isAuthenticated();
+	
 	$scriptName = $request->getScriptName();
 	$hostname   = $request->getHost();
 	$isDebug    = $request->getParameter('debug');
-	$emailDebug = Settings::getValue('emailDebug');
 	
 	if( $isDebug )
 		$scriptName = '/backend_dev.php';
@@ -55,8 +56,14 @@ class homeActions extends sfActions
 	echo "var _imageRoot   = 'http://$hostname/images';".$nl;
 	echo "var _isDebug     = $isDebug;".$nl;
 	echo "var _isMobile    = false;".$nl;
-	echo "var _emailDebug  = '$emailDebug';".$nl.$nl;
 	echo "var i18n_culture = 'pt_BR';".$nl.$nl;
+	
+	if( $isAuthenticated ){
+		
+		$emailDebug = Settings::getValue('emailDebug');
+		echo "var _emailDebug  = '$emailDebug';".$nl.$nl;
+	}
+	
 	exit;
   }
 }
