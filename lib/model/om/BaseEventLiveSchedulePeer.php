@@ -13,11 +13,14 @@ abstract class BaseEventLiveSchedulePeer {
 	const CLASS_DEFAULT = 'lib.model.EventLiveSchedule';
 
 	
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 8;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
+
+	
+	const ID = 'event_live_schedule.ID';
 
 	
 	const EVENT_LIVE_ID = 'event_live_schedule.EVENT_LIVE_ID';
@@ -46,19 +49,19 @@ abstract class BaseEventLiveSchedulePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventLiveId', 'EventDate', 'StartTime', 'EventDateTime', 'DaysAfter', 'StepDay', 'CreatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventLiveSchedulePeer::EVENT_LIVE_ID, EventLiveSchedulePeer::EVENT_DATE, EventLiveSchedulePeer::START_TIME, EventLiveSchedulePeer::EVENT_DATE_TIME, EventLiveSchedulePeer::DAYS_AFTER, EventLiveSchedulePeer::STEP_DAY, EventLiveSchedulePeer::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_live_id', 'event_date', 'start_time', 'event_date_time', 'days_after', 'step_day', 'created_at', ),
-		BasePeer::TYPE_ALIAS=>array ('EVENT_LIVE_ID'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'DAYS_AFTER'=>'', 'STEP_DAY'=>'', 'CREATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventLiveId', 'EventDate', 'StartTime', 'EventDateTime', 'DaysAfter', 'StepDay', 'CreatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventLiveSchedulePeer::ID, EventLiveSchedulePeer::EVENT_LIVE_ID, EventLiveSchedulePeer::EVENT_DATE, EventLiveSchedulePeer::START_TIME, EventLiveSchedulePeer::EVENT_DATE_TIME, EventLiveSchedulePeer::DAYS_AFTER, EventLiveSchedulePeer::STEP_DAY, EventLiveSchedulePeer::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_live_id', 'event_date', 'start_time', 'event_date_time', 'days_after', 'step_day', 'created_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_LIVE_ID'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'DAYS_AFTER'=>'', 'STEP_DAY'=>'', 'CREATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('EventLiveId'=>0, 'EventDate'=>1, 'StartTime'=>2, 'EventDateTime'=>3, 'DaysAfter'=>4, 'StepDay'=>5, 'CreatedAt'=>6, ),
-		BasePeer::TYPE_COLNAME=>array (EventLiveSchedulePeer::EVENT_LIVE_ID=>0, EventLiveSchedulePeer::EVENT_DATE=>1, EventLiveSchedulePeer::START_TIME=>2, EventLiveSchedulePeer::EVENT_DATE_TIME=>3, EventLiveSchedulePeer::DAYS_AFTER=>4, EventLiveSchedulePeer::STEP_DAY=>5, EventLiveSchedulePeer::CREATED_AT=>6, ),
-		BasePeer::TYPE_FIELDNAME=>array ('event_live_id'=>0, 'event_date'=>1, 'start_time'=>2, 'event_date_time'=>3, 'days_after'=>4, 'step_day'=>5, 'created_at'=>6, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventLiveId'=>1, 'EventDate'=>2, 'StartTime'=>3, 'EventDateTime'=>4, 'DaysAfter'=>5, 'StepDay'=>6, 'CreatedAt'=>7, ),
+		BasePeer::TYPE_COLNAME=>array (EventLiveSchedulePeer::ID=>0, EventLiveSchedulePeer::EVENT_LIVE_ID=>1, EventLiveSchedulePeer::EVENT_DATE=>2, EventLiveSchedulePeer::START_TIME=>3, EventLiveSchedulePeer::EVENT_DATE_TIME=>4, EventLiveSchedulePeer::DAYS_AFTER=>5, EventLiveSchedulePeer::STEP_DAY=>6, EventLiveSchedulePeer::CREATED_AT=>7, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_live_id'=>1, 'event_date'=>2, 'start_time'=>3, 'event_date_time'=>4, 'days_after'=>5, 'step_day'=>6, 'created_at'=>7, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
@@ -111,6 +114,8 @@ abstract class BaseEventLiveSchedulePeer {
 	
 	public static function addSelectColumns(Criteria $criteria)
 	{
+
+		$criteria->addSelectColumn(EventLiveSchedulePeer::ID);
 
 		$criteria->addSelectColumn(EventLiveSchedulePeer::EVENT_LIVE_ID);
 

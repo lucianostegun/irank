@@ -1,3 +1,12 @@
+<?php
+	$criteria = new Criteria();
+	$criteria->add( RankingLivePlayerPeer::TOTAL_EVENTS, 0, Criteria::GREATER_THAN );
+	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList($criteria);
+	
+	if( empty($eventLivePlayerObjList) ):
+?>
+	<div class="textC mt40"><h2>Os resultados deste evento ainda não foram lançados!</h2></div>
+<?php else: ?>
 <table border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr class="header">
 		<th style="width: 55px" class="first">Posição</th>
@@ -7,10 +16,6 @@
 	</tr>
 	<tbody>
 <?php
-	$criteria = new Criteria();
-	$criteria->add( RankingLivePlayerPeer::TOTAL_EVENTS, 0, Criteria::GREATER_THAN );
-	$eventLivePlayerObjList = $eventLiveObj->getEventLivePlayerResultList($criteria);
-	
 	$eventPosition   = 0;
 	$peopleIdCurrent = $sf_user->getAttribute('peopleId');
 	
@@ -36,3 +41,4 @@
 <?php endforeach; ?>
 </tbody>
 </table>
+<?php endif; ?>

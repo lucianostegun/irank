@@ -1,6 +1,9 @@
 var _RecordSaved = null;
 
-function goModule(module, action, fieldName, fieldValue, newWindow ){
+function goModule(module, action, fieldName, fieldValue, newWindow, argumentList ){
+	
+	if( !argumentList )
+		argumentList = arguments;
 	
 	if( isDebug() ){
 		
@@ -8,6 +11,10 @@ function goModule(module, action, fieldName, fieldValue, newWindow ){
 		urlLocation    += (action?'/'+action:'');
 		urlLocation    += (fieldName?'/'+fieldName:'');
 		urlLocation    += (fieldValue?'/'+fieldValue:'');
+		
+		if( argumentList.length > 6 )
+			for(var i=6; i < argumentList.length; i++, i++)
+				urlLocation += '/'+argumentList[i]+'/'+argumentList[i+1];
 		
 		if( newWindow )
 			window.open(urlLocation);
@@ -30,8 +37,19 @@ function goModule(module, action, fieldName, fieldValue, newWindow ){
 		fieldId.type  = 'hidden';
 		fieldId.name  = fieldName;
 		fieldId.value = fieldValue;
-		
 		form.appendChild(fieldId);
+		
+		if( argumentList.length > 6 ){
+			for(var i=6; i < argumentList.length; i++, i++){
+				
+				var fieldId   = document.createElement('input');
+				fieldId.type  = 'hidden';
+				fieldId.name  = argumentList[i];
+				fieldId.value = argumentList[i+1];
+				form.appendChild(fieldId);
+			}
+		}
+		
 		document.body.appendChild(form);
 		form.submit();
 	}

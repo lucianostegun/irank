@@ -1105,9 +1105,22 @@ class EventLive extends BaseEventLive
 		$this->updatePlayers();
 	}
 	
-	public function getScheduleList(){
+	public function getScheduleList($criteria=null){
 		
-		$criteria = new Criteria();
+		if( !$this->getIsMultiday() ){
+			
+			$eventLiveScheduleObj = new EventLiveSchedule();
+			$eventLiveScheduleObj->setEventDate($this->getEventDate());
+			$eventLiveScheduleObj->setStartTime($this->getStartTime());
+			$eventLiveScheduleObj->setEventDateTime($this->getEventDateTime());
+			$eventLiveScheduleObj->setDaysAfter(0);
+			
+			return array($eventLiveScheduleObj);
+		}
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
 		$criteria->addAscendingOrderByColumn( EventLiveSchedulePeer::EVENT_DATE_TIME );
 		return $this->getEventLiveScheduleList($criteria);
 	}

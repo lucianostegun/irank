@@ -52,9 +52,10 @@
 	
 	<div class="formRow">
 		<label>Respostas possíveis</label>
-		<div id="pollPollAnswerListDiv">
+		<div class="formRight" id="pollPollAnswerListDiv">
 			<?php foreach($pollAnswerObjList as $key=>$pollAnswerObj): ?>
-			<div class="formRight mt5" id="pollPollAnswerRow-<?php echo ($key+1) ?>">
+			<?php if( $key > 0 ): ?><div class="clear mt6"></div><?php endif; ?>
+			<div id="pollPollAnswerRow-<?php echo ($key+1) ?>">
 				<?php
 					echo input_tag('answer[]', $pollAnswerObj->getAnswer(), array('size'=>20, 'maxlength'=>20));
 					
@@ -67,5 +68,6 @@
 			<div class="clear"></div>
 			<?php endforeach; ?>
 		</div>
+		<div class="clear"></div>
 	</div>
 </form>

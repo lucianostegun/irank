@@ -10,7 +10,7 @@
 	$eventId = $eventLiveObj->getId();
 ?>
 <div class="eventLive next" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="loadEventLive(<?php echo $eventId ?>)">
-	<div class="title"><?php echo $eventLiveObj->getEventName() ?></div>
+	<div class="title"><?php echo $eventLiveObj->toString() ?></div>
 	<div class="image"><?php echo image_tag('ranking/'.$eventLiveObj->getRankingLive()->getFileNameLogo()) ?></div>
 	<div class="eventInfo">
 		<div class="when"><?php echo Util::getWeekDay($eventLiveObj->getEventDateTime('d/m/Y')).', '.$eventLiveObj->getEventDateTime('d/m/Y H:i') ?></div>

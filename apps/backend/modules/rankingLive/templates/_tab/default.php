@@ -161,14 +161,14 @@
 			<div class="formRight" id="rankingLiveTemplateListDiv">
 				<?php foreach($rankingLiveScheduleObjList as $key=>$rankingLiveScheduleObj): ?>
 				<?php if( $key > 0 ): ?><div class="clear mt6"></div><?php endif; ?>
-				<div id="stepEventLiveDayRow-<?php echo $key ?>">
+				<div id="rankingLiveTemplateRow-<?php echo $key ?>">
 					<span class="multi"><?php echo input_tag('stepDay[]', $rankingLiveScheduleObj->getStepDay(), array('size'=>5, 'maxlength'=>10, 'id'=>'rankingLiveTemplateStepDay')) ?></span>
 					<span class="multi"><?php echo input_tag('daysAfter[]', $rankingLiveScheduleObj->getDaysAfter(), array('size'=>3, 'maxlength'=>3, 'readonly'=>($key==0), 'id'=>'rankingLiveTemplateDaysAfter')) ?></span>
 					<span class="multi"><?php echo input_tag('templateStartTime[]', $rankingLiveScheduleObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'rankingLiveTemplateStartTime')) ?></span>
 					<?php if( $key==0 ): ?>
 					<span class="multi"><?php echo link_to(image_tag('backend/icons/color/plus', array('title'=>'Adicionar dia', 'class'=>'mt7')), '#addTemplate()') ?></span>
 					<?php else: ?>
-					<span class="multi"><?php echo link_to(image_tag('backend/icons/color/cross', array('title'=>'Excluir dia', 'class'=>'mt7')), '#removeTemplate()') ?></span>
+					<span class="multi"><?php echo link_to(image_tag('backend/icons/color/cross', array('title'=>'Excluir dia', 'class'=>'mt7')), '#removeTemplate('.$key.')') ?></span>
 					<?php endif; ?>
 					<div class="clear"></div>
 				</div>
