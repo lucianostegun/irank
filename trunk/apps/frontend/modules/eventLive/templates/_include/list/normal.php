@@ -22,7 +22,7 @@
 		<div class="event">
 			<a href="javascript:void(0)" onclick="goToPage('eventLive', 'details', 'id', <?php echo $eventLiveId ?>)" title="Abrir detalhes do evento">
 				<div class="logo">
-					<?php echo image_tag('ranking/'.$fileNameLogo) ?><br/>
+					<?php echo image_tag('ranking/small/'.$fileNameLogo) ?><br/>
 					+ Detalhes
 				</div>
 			</a>

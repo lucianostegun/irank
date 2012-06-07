@@ -30,7 +30,7 @@
 	if( $fileNameLogo=='noImage.png' )
 		$fileNameLogo = 'club/original/'.$clubObj->getFileNameLogo();
 	else
-		$fileNameLogo = 'ranking/'.$fileNameLogo;
+		$fileNameLogo = 'ranking/small/'.$fileNameLogo;
 	
 	include_partial('home/component/commonBar', array('pathList'=>$pathList));
 ?>

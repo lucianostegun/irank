@@ -96,9 +96,7 @@ abstract class BaseEventLivePlayerDisclosureSms extends BaseObject  implements P
 	public function setEventLiveId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -116,9 +114,7 @@ abstract class BaseEventLivePlayerDisclosureSms extends BaseObject  implements P
 	public function setPeopleId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -136,9 +132,7 @@ abstract class BaseEventLivePlayerDisclosureSms extends BaseObject  implements P
 	public function setSmsLogId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -152,9 +146,7 @@ abstract class BaseEventLivePlayerDisclosureSms extends BaseObject  implements P
 	public function setSmsId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

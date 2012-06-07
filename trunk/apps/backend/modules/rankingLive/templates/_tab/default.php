@@ -1,5 +1,9 @@
 <?php
 	$allowedRebuys = $rankingLiveObj->getAllowedRebuys();
+	$isMultiday    = $rankingLiveObj->getIsMultiday();
+	
+	$rankingLiveScheduleObjList = $rankingLiveObj->getTemplateList();
+	echo input_hidden_tag('templateCurrentIndex', count($rankingLiveScheduleObjList)-1, array('id'=>'rankingLiveTemplateCurrentIndex'));
 ?>
 	<div class="formRow">
 		<label>Hora</label>
@@ -21,6 +25,15 @@
 			<div class="clear"></div>
 			<div class="formNote error" id="rankingLiveFormErrorBuyin"></div>
 			<div class="formNote">Buyin + Taxa de entrada</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
+		<label>Garantido</label>
+		<div class="formRight">
+			<?php echo input_tag('guaranteedPrize', Util::formatFloat($rankingLiveObj->getGuaranteedPrize(), true), array('size'=>10, 'maxlength'=>10, 'class'=>'textR', 'id'=>'rankingLiveGuaranteedPrize')) ?>
+			<div class="formNote error" id="rankingLiveFormErrorGuaranteedPrize"></div>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -123,6 +136,48 @@
 		<label>Divulgar premiação</label>
 		<div class="formRight">
 			<?php echo checkbox_tag('publishPrize', true, $rankingLiveObj->getPublishPrize(), array('id'=>'rankingLivePublishPrize')) ?>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<br/>
+	<h5>Template de eventos</h5>
+	<hr/>
+	<br/>
+	
+	<div class="formRow">
+		<label class="">Múltiplos dias</label>
+		<div class="formRight">
+			<?php echo checkbox_tag('isMultiday', true, $isMultiday, array('onclick'=>'handleIsMultiday(this.checked)', 'id'=>'eventLiveIsMultiday')) ?>
+			<div class="clear"></div>
+			<div class="formNote error" id="eventLiveFormErrorIsMultiday"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="formRow <?php echo ($isMultiday?'':'hidden') ?>" id="rankingLiveTemplateRowDiv">
+		<label class="">Dia / Intervalo / Hora</label>
+		<div class="formRight">
+			<div class="formRight" id="rankingLiveTemplateListDiv">
+				<?php foreach($rankingLiveScheduleObjList as $key=>$rankingLiveScheduleObj): ?>
+				<?php if( $key > 0 ): ?><div class="clear mt6"></div><?php endif; ?>
+				<div id="stepEventLiveDayRow-<?php echo $key ?>">
+					<span class="multi"><?php echo input_tag('stepDay[]', $rankingLiveScheduleObj->getStepDay(), array('size'=>5, 'maxlength'=>10, 'id'=>'rankingLiveTemplateStepDay')) ?></span>
+					<span class="multi"><?php echo input_tag('daysAfter[]', $rankingLiveScheduleObj->getDaysAfter(), array('size'=>3, 'maxlength'=>3, 'readonly'=>($key==0), 'id'=>'rankingLiveTemplateDaysAfter')) ?></span>
+					<span class="multi"><?php echo input_tag('templateStartTime[]', $rankingLiveScheduleObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'rankingLiveTemplateStartTime')) ?></span>
+					<?php if( $key==0 ): ?>
+					<span class="multi"><?php echo link_to(image_tag('backend/icons/color/plus', array('title'=>'Adicionar dia', 'class'=>'mt7')), '#addTemplate()') ?></span>
+					<?php else: ?>
+					<span class="multi"><?php echo link_to(image_tag('backend/icons/color/cross', array('title'=>'Excluir dia', 'class'=>'mt7')), '#removeTemplate()') ?></span>
+					<?php endif; ?>
+					<div class="clear"></div>
+				</div>
+				<?php endforeach; ?>
+			</div>
+			<div class="clear"></div>
+			<div class="formNote error" id="rankingLiveFormErrorStepDayError"></div>
+			<div class="formNote error" id="rankingLiveFormErrorDaysAfterError"></div>
+			<div class="formNote error" id="rankingLiveFormErrorTemplateStartTimeError"></div>
 		</div>
 		<div class="clear"></div>
 	</div>

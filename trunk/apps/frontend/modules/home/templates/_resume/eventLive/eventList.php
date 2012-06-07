@@ -11,7 +11,7 @@
 	$criteria->add( RankingLivePeer::DELETED, false );
 //	$criteria->add( EventLivePeer::EVENT_DATE, Util::getDate('1m'), Criteria::LESS_EQUAL );
 	$criteria->add( RankingLivePeer::IS_PRIVATE, false );
-	$criteria->addJoin( EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID, Criteria::LEFT_JOIN );
+//	$criteria->addJoin( EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID, Criteria::LEFT_JOIN );
 	$criteria->setLimit($limit);
 	$criteria->setOffset($offset);
 	

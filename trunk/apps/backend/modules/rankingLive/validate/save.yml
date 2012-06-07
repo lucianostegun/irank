@@ -36,6 +36,12 @@ fields:
       min:       0
       min_error: form.error.greaterEqual0
       nan_error: form.error.greaterEqual0
+       
+  guaranteedPrize:
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
 
   rakePercent:
     sfNumberValidator:
@@ -90,3 +96,8 @@ fields:
     sfCallbackValidator:
       callback:      [RankingLivePeer, validatePrizeSplit]
       invalid_error: A divisão padrão de prêmios deve somar 100%
+       
+  isMultiday:
+    sfCallbackValidator:
+      callback:      [RankingLivePeer, validateTemplate]
+      invalid_error: nullError

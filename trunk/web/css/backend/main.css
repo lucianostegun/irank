@@ -700,7 +700,8 @@ input[type=submit], input[type=reset], input[type=button], button { padding: 7px
 
 .multi { width: auto; float: left; margin-left: 15px }
 .multi:first-child { margin-left: 0; }
-.multi label { margin-top: 4px; margin-left: -20px }
+.multi label { margin-top: 2px; margin-left: -20px }
+.multi .label { font-weight: bold; margin-right: 7px; }
 .multi label.text { margin-top: 4px; margin-left: 0px; margin-right: 0px }
 
 
@@ -1062,7 +1063,7 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .wizButtons { border-top: 1px solid #fff; }
 .formRow .inputImg { position: absolute; top: 29px; right: 25px; }
 .formRow .labelImg { float: left; margin: 2px 10px 0 0; }
-.formRow > label { padding: 4px 0; display: block; float: left; }
+.formRow > label { padding: 4px 15px 4px 0; display: block; float: left; width: 20%; text-align: right; font-weight: bold; color: #303030 }
 .formRight label { float: left; margin-right: 24px; padding: 2px 0; cursor: pointer; padding-top: 4px }
 .formRow .text { padding: 4px 0; display: block; float: left; }
 .formNote { display: block; text-align: left; font-size: 11px; padding-top: 5px; color: #939393; }
@@ -1076,7 +1077,7 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .sliderSpecs > input { border: none; background: none; width: 30%; padding: 5px; color: #595959; }
 
 .formRow .checker, .formRow .radio { margin-right: 12px; margin-top: 4px; }
-.formRow .formRight { display: block; float: right; width: 80%; margin-right: 18px; }
+.formRow .formRight { display: block; float: left; margin-right: 18px; }
 .formRow .multi .checker { margin-top: 8px }
 
 .form input[type=text], .form input[type=password], .form textarea { font-size: 13px; padding: 7px 6px; background: white; border: 1px solid #AAAAAA; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #F0F0F0; -webkit-box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; color: #656565; } 
@@ -2008,3 +2009,6 @@ table.display tr.gradeB td { padding-top: 3px; padding-bottom: 3px; }
 
 table.display tr.gradeA td .checker { position: relative; top: 3px; }
 
+
+
+.ml0 { margin-left: 0px; }

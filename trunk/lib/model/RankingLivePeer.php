@@ -110,4 +110,65 @@ class RankingLivePeer extends BaseRankingLivePeer
 		
 		return array_sum($prizeConfig)==100;
 	}
+	
+	public static function validateTemplate($isMultiday){
+		
+		$request       = MyTools::getRequest();
+		$stepDayList   = $request->getParameter('stepDay');
+		$daysAfterList = $request->getParameter('daysAfter');
+		$startTimeList = $request->getParameter('templateStartTime');
+		
+		$defaultStartTime = $request->getParameter('startTime');
+		
+		foreach($startTimeList as $startTime){
+			
+			if( $startTime && !Validate::validateTime($startTime) ){
+				
+				MyTools::setError('templateStartTimeError', 'Informe corretamente todos os horários das etapas');
+				break;
+			}
+
+			if( !$defaultStartTime && empty($stepEventDate) ){
+				
+				MyTools::setError('templateStartTimeError', 'Informe todos os horários das etapas');
+				break;
+			}
+		}
+
+		foreach($stepDayList as $stepDay){
+			
+			if( !$stepDay ){
+				
+				MyTools::setError('stepDayError', 'Informe a indicação do dia de cada etapa');
+				break;
+			}
+		}
+
+		foreach($daysAfterList as $daysAfter){
+			
+			if( $daysAfter==='' ){
+				
+				MyTools::setError('daysAfterError', 'Informe o intervalo de todos os dias');
+				break;
+			}
+
+			if( !is_numeric($daysAfter) ){
+				
+				MyTools::setError('daysAfterError', 'Informe um número inteiro no intervalo de todos os dias');
+				break;
+			}
+		}
+		
+		// INICIO - Verifica se não possui duas linhas iguais
+		$checkList = array();
+		foreach($startTimeList as $key=>$startTime)
+			$checkList[] = $startTime.'-'.$daysAfterList[$key];
+		
+		$checkList = array_unique($checkList);
+		if( count($checkList) < count($startTimeList) )
+			MyTools::setError('templateStartTimeError', 'Não é possível cadastrar dois dias com o mesmo horário');
+		// FIM
+
+		return !$request->hasErrors();
+	}
 }

@@ -37,7 +37,7 @@ class RankingLive extends BaseRankingLive
 
 //    		$this->postOnWall();
     		
-			parent::save();
+			parent::save($con);
 			
        		Log::quickLog('ranking_live', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
         } catch ( Exception $e ) {
@@ -50,7 +50,7 @@ class RankingLive extends BaseRankingLive
 		
 		$this->setVisible(false);
 		$this->setDeleted(true);
-		$this->save();
+		$this->save($con);
 	}
 	
 	public function quickSave($request){
@@ -69,8 +69,10 @@ class RankingLive extends BaseRankingLive
 		$clubIdList              = $request->getParameter('clubId');
 		$startTime               = $request->getParameter('startTime');
 		$isFreeroll              = $request->getParameter('isFreeroll');
+		$isMultiday              = $request->getParameter('isMultiday');
 		$buyin                   = $request->getParameter('buyin');
 		$entranceFee             = $request->getParameter('entranceFee');
+		$guaranteedPrize         = $request->getParameter('guaranteedPrize');
 		$blindTime               = $request->getParameter('blindTime');
 		$stackChips              = $request->getParameter('stackChips');
 		$allowedRebuys           = $request->getParameter('allowedRebuys');
@@ -106,8 +108,10 @@ class RankingLive extends BaseRankingLive
 		// Informações da aba Valores padrão
 		$this->setStartTime(nvl($startTime));
 		$this->setIsFreeroll(($isFreeroll?true:false));
+		$this->setIsMultiday(($isMultiday?true:false));
 		$this->setBuyin(Util::formatFloat($buyin));
 		$this->setEntranceFee(Util::formatFloat($entranceFee));
+		$this->setGuaranteedPrize(Util::formatFloat($guaranteedPrize));
 		$this->setBlindTime(nvl($blindTime));
 		$this->setStackChips($stackChips);
 		$this->setAllowedRebuys($allowedRebuys);
@@ -121,14 +125,28 @@ class RankingLive extends BaseRankingLive
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);
-		$this->save();
 		
-		$iRankAdmin = MyTools::hasCredential('iRankAdmin');
-		
-		if( $iRankAdmin )
-			$this->saveClub($clubIdList, true);
-		else
-			$this->saveClub(array($clubIdList), false);
+		try{
+			
+			$con = Propel::getConnection();
+			$con->begin();
+			
+			$this->save($con);
+			
+			$iRankAdmin = MyTools::hasCredential('iRankAdmin');
+			
+			if( $iRankAdmin )
+				$this->saveClub($clubIdList, true);
+			else
+				$this->saveClub(array($clubIdList), false);
+				
+			$this->saveTemplate($request, $con);
+			
+			$con->commit();
+		}catch(Exception $e){
+			
+			$con->rollback();
+		}
 	}
 	
 	public function saveClub($clubIdList, $delete){
@@ -149,48 +167,95 @@ class RankingLive extends BaseRankingLive
 		}
 	}
 	
+	public function saveTemplate($request, $con){
+		
+		$this->deleteTemplate($con);
+		
+		$stepDayList   = $request->getParameter('stepDay');
+		$daysAfterList = $request->getParameter('daysAfter');
+		$startTimeList = $request->getParameter('templateStartTime');
+		
+		$defaultStartTime = $this->getStartTime('H:i');
+		
+		foreach($stepDayList as $key=>$stepDay){
+			
+			$startTime = nvl($startTimeList[$key], $this->getStartTime('H:i'));
+			
+			$stepDay = preg_replace('/dia ?/i', '', $stepDay);
+			
+			$eventLiveTemplateObj = new RankingLiveTemplate();
+			$eventLiveTemplateObj->setRankingLiveId($this->getId());
+			$eventLiveTemplateObj->setStepDay($stepDay);
+			$eventLiveTemplateObj->setDaysAfter($daysAfterList[$key]);
+			$eventLiveTemplateObj->setStartTime($startTime);
+			$eventLiveTemplateObj->save($con);
+		}
+	}
+	
+	public function deleteTemplate($con){
+		
+		Util::executeQuery('DELETE FROM ranking_live_template WHERE ranking_live_id = '.$this->getId(), $con);
+	}
+	
 	public function saveQuickEvents($request){
 		
-		for($i=1; $i <= 12; $i++ ){
+		$quickEventEventDateList = $request->getParameter('quickEventEventDateList');
+		$quickEventEventDateList = explode(',', $quickEventEventDateList);
+		
+		$eventName = $request->getParameter('eventName');
+		$clubId    = $request->getParameter('quickEventLiveClubId');
+		$startTime = $this->getStartTime();
+		
+		if( !$eventName || !$startTime )
+			return false;
+		
+		try{
 			
-			$eventName  = $request->getParameter('eventName'.$i);
-			$clubId     = $request->getParameter('clubId'.$i);
-			$eventDate  = $request->getParameter('eventDate'.$i);
-			$startTime  = $request->getParameter('startTime'.$i);
-			$stepNumber = $request->getParameter('stepNumber'.$i);
-			$stepDay    = $request->getParameter('stepDay'.$i);
+			$con = Propel::getConnection();
+			$con->begin();
+			
+			foreach($quickEventEventDateList as $eventDate){
+				
+				$stepNumber = $request->getParameter('stepNumber-'.$eventDate);
+				
+				$eventLiveObj = new EventLive();
+				$eventLiveObj->setEventName($eventName);
+				$eventLiveObj->setEventShortName($eventLiveObj->buildShortName());
+				$eventLiveObj->setStepNumber(nvl($stepNumber));
+				$eventLiveObj->setRankingLiveId($this->getId());
+				$eventLiveObj->setClubId($clubId);
+				$eventLiveObj->setEventDate(Util::formatDate($eventDate));
+				$eventLiveObj->setStartTime($startTime);
+				$eventLiveObj->setIsFreeroll($this->getIsFreeroll());
+				$eventLiveObj->setIsMultiday($this->getIsMultiday());
+				$eventLiveObj->setBuyin($this->getBuyin());
+				$eventLiveObj->setEntranceFee($this->getEntranceFee());
+				$eventLiveObj->setGuaranteedPrize($this->getGuaranteedPrize());
+				$eventLiveObj->setRakePercent($this->getRakePercent());
+				$eventLiveObj->setBlindTime($this->getBlindTime());
+				$eventLiveObj->setStackChips($this->getStackChips());
+				$eventLiveObj->setAllowedRebuys($this->getAllowedRebuys());
+				$eventLiveObj->setAllowedAddons($this->getAllowedAddons());
+				$eventLiveObj->setIsIlimitedRebuys($this->getIsIlimitedRebuys());
+				$eventLiveObj->setPrizeSplit($this->getPrizeSplit());
+				$eventLiveObj->setPublishPrize($this->getPublishPrize());
+				$eventLiveObj->setRakePercent($this->getRakePercent());
+				$eventLiveObj->setEmailTemplateId($this->getEmailTemplateId());
+				$eventLiveObj->setDescription('[descrição do ranking]');
+				$eventLiveObj->setEnabled(true);
+				$eventLiveObj->setVisible(true);
+				$eventLiveObj->setDeleted(false);
 
-			if( !$eventName || !$clubId || !Validate::validateDate($eventDate) || !Validate::validateTime($startTime) )
-				continue;
+				$eventLiveObj->save($con);
+				$eventLiveObj->saveScheduleFromTemplate($con);
+				
+				$this->reloadEvents = true;
+			}
 			
-			$eventLiveObj = new EventLive();
-			$eventLiveObj->setEventName($eventName);
-			$eventLiveObj->setEventShortName($eventLiveObj->buildShortName());
-			$eventLiveObj->setStepNumber(nvl($stepNumber));
-			$eventLiveObj->setStepDay(nvl($stepDay));
-			$eventLiveObj->setRankingLiveId($this->getId());
-			$eventLiveObj->setClubId($clubId);
-			$eventLiveObj->setEventDate(Util::formatDate($eventDate));
-			$eventLiveObj->setStartTime($startTime);
-			$eventLiveObj->setBuyin($this->getBuyin());
-			$eventLiveObj->setEntranceFee($this->getEntranceFee());
-			$eventLiveObj->setRakePercent($this->getRakePercent());
-			$eventLiveObj->setBlindTime($this->getBlindTime());
-			$eventLiveObj->setStackChips($this->getStackChips());
-			$eventLiveObj->setAllowedRebuys($this->getAllowedRebuys());
-			$eventLiveObj->setAllowedAddons($this->getAllowedAddons());
-			$eventLiveObj->setIsIlimitedRebuys($this->getIsIlimitedRebuys());
-			$eventLiveObj->setPrizeSplit($this->getPrizeSplit());
-			$eventLiveObj->setPublishPrize($this->getPublishPrize());
-			$eventLiveObj->setRakePercent($this->getRakePercent());
-			$eventLiveObj->setEmailTemplateId($this->getEmailTemplateId());
-			$eventLiveObj->setDescription('[descrição do ranking]');
-			$eventLiveObj->setEnabled(true);
-			$eventLiveObj->setVisible(true);
-			$eventLiveObj->setDeleted(false);
-			$eventLiveObj->save();
-			
-			$this->reloadEvents = true;
+			$con->commit();
+		}catch(Exception $e){
+				
+			$con->rollback();
 		}
 	}
 	
@@ -233,7 +298,7 @@ class RankingLive extends BaseRankingLive
 		$this->setFileNameLogo(null);
 	}
 	
-	public function getFileNameLogo($original=false){
+	public function getFileNameLogo($original=false, $size=null){
 		
 		$fileNameLogo = parent::getFileNameLogo();
 		
@@ -242,6 +307,9 @@ class RankingLive extends BaseRankingLive
 			$rankingLiveId = $this->getId();
 			$fileNameLogo  = preg_replace('/-[0-9]*(\.[^\.]*)$/', '\1', $fileNameLogo);
 		}
+		
+		if( $size )
+			$fileNameLogo = str_replace('/ranking/', '/ranking/'.$size.'/', $fileNameLogo);
 		
 		if( !$fileNameLogo )
 			return 'noImage.png';
@@ -658,6 +726,14 @@ class RankingLive extends BaseRankingLive
 		}
 		
 		return $blindTime;
+	}
+	
+	public function getTemplateList(){
+		
+		$criteria = new Criteria();
+		$criteria->addAscendingOrderByColumn( RankingLiveTemplatePeer::DAYS_AFTER );
+		
+		return $this->getRankingLiveTemplateList($criteria);
 	}
 	
 	public function getInfo(){

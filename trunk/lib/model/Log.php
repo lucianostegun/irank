@@ -72,7 +72,7 @@ class Log extends BaseLog
 			}
 			
 		    $sql .= chr(10).chr(9).implode(','.chr(10).chr(9), $sqlList);
-		    Util::executeQuery($sql, 'log');
+		    Util::executeQuery($sql, null, 'log');
         }
         
         return $logId;

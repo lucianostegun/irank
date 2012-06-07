@@ -108,9 +108,7 @@ abstract class BaseUserAdminSettings extends BaseObject  implements Persistent {
 	public function setUserAdminId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -128,9 +126,7 @@ abstract class BaseUserAdminSettings extends BaseObject  implements Persistent {
 	public function setSettingsId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -148,9 +144,7 @@ abstract class BaseUserAdminSettings extends BaseObject  implements Persistent {
 	public function setSettingsValue($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

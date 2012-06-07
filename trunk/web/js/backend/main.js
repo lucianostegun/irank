@@ -97,19 +97,24 @@ $(function() {
 			autoSize: false,
 			appendText: '(dd/mm/aaaa)',
 			dateFormat: 'dd/mm/yy'
-		});
+			});
 
 		$(".datepickerClean").datepicker({ 
-			defaultDate: +7,
+			defaultDate: +0,
 			autoSize: true,
 			dateFormat: 'dd/mm/yy',
 		});
 		
 		//===== Masked input =====//
 		
-		$.mask.definitions['~'] = "[+-]";
-		$(".maskDate").mask("99/99/9999");
-		$(".maskPhone").mask("(99) 9999-9999");
+		updateFieldMasks = function(){
+			
+			$.mask.definitions['~'] = "[+-]";
+			$(".maskDate").mask("99/99/9999");
+			$(".maskPhone").mask("(99) 9999-9999");
+		}
+		
+		updateFieldMasks();
 });
 
 function updateMainBalance(mainBalanceValue){

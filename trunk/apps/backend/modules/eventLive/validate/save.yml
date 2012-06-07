@@ -41,6 +41,11 @@ fields:
       callback:      [Validate, validateTime]
       invalid_error: form.error.invalidTime
 
+  isMultiday:
+    sfCallbackValidator:
+      callback:      [EventLivePeer, validateStepDays]
+      invalid_error: nullError
+
   entranceFee:
     required:
       msg:       form.error.requiredField
@@ -50,6 +55,12 @@ fields:
       nan_error: form.error.greaterEqual0
 
   buyin:
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
+
+  guaranteedPrize:
     sfNumberValidator:
       min:       0
       min_error: form.error.greaterEqual0

@@ -29,7 +29,7 @@
 			?>
 			<tr class="<?php echo ($pendingResult?'gradeAlert':'gradeA') ?> <?php echo $className ?>" title="<?php echo ($pendingResult?__('eventLive.pendingResultAlert'):'') ?>" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
 				<td><?php echo checkbox_tag('eventLiveId[]', $eventLiveId) ?></td> 
-				<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getEventName() ?></td> 
+				<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->toString() ?></td> 
 				<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getRankingLive()->toString() ?></td> 
 				<td onclick="<?php echo $onclick ?>"><?php echo $eventLiveObj->getClub()->toString() ?></td> 
 				<td onclick="<?php echo $onclick ?>" class="textC"><?php echo $eventLiveObj->getEventDateTime('d/m/Y H:i') ?></td> 

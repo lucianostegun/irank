@@ -80,6 +80,8 @@ a { text-decoration: none; color: #2b6893; }
 
 .mt0 { margin-top: 0!important; }
 .mt5 { margin-top: 5px; }
+.mt6 { margin-top: 6px; }
+.mt7 { margin-top: 7px; }
 .mt8 { margin-top: 8px; }
 .mt10 { margin-top: 10px; }
 .mt12 { margin-top: 12px; }
@@ -89,13 +91,14 @@ a { text-decoration: none; color: #2b6893; }
 .mt30 { margin-top: 30px; }
 
 
+.ml0 { margin-left: 0px; }
 .ml5 { margin-left: 5px; }
+.ml7 { margin-left: 7px; }
 .ml10 { margin-left: 10px; }
 .ml15 { margin-left: 15px; }
 .ml20 { margin-left: 20px; }
 .ml25 { margin-left: 25px; }
 .ml30 { margin-left: 30px; }
-
 
 .mr5 { margin-right: 5px; }
 .mr10 { margin-right: 10px; }
@@ -141,4 +144,15 @@ a.button::-moz-focus-inner /*Remove button padding in FF*/
 { 
     border: 0;
     padding: 0;
+}
+
+.noSelect,
+.noSelect * {
+	
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }

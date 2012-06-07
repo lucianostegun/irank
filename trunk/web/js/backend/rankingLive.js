@@ -186,18 +186,15 @@ function clearQuickEventLiveForm(){
 	
 	showAddEventForm();
 	
-	for(var i=1; i <= 12; i++){
-		
-		$('#rankingLiveQuickEventLiveEventName'+i).val('');
-		$('#rankingLiveQuickEventLiveEventDate'+i).val('');
-		$('#rankingLiveQuickEventLiveStartTime'+i).val($('#rankingLiveStartTime').val());
-		
-		if( $('#rankingLiveQuickEventLiveClubId1').prop('type')!='hidden' )
-			$('#rankingLiveQuickEventLiveClubId'+i).val('');
-	}
+	$('#rankingLiveQuickEventLiveEventName').val('');
+	$('#rankingLiveQuickEventLiveClubId').val('');
+	$('#rankingLiveQuickEventEventDate').val('');
 	
-	validateAllQuickAddEvent();
-	$.uniform.update();
+	$('.quickEventSelected').each(function(){
+		
+		$(this).removeClass('quickEventSelected');
+		$(this).html('');
+	});
 }
 
 function handleScoreFormulaOption(scoreFormulaOption){
@@ -220,6 +217,117 @@ function handleScoreFormulaOption(scoreFormulaOption){
 function replicateStartTime(startTime){
 	
 	$('.rankingLiveQuickEventStartTime').val(startTime);
+}
+
+function handleIsMultiday(checked){
+	
+	if( checked ){
+		
+		$('#rankingLiveTemplateRowDiv').show();
+		
+		if( $('#rankingLiveTemplateCurrentIndex').val()*1 < 0 )
+			addTemplate()
+		
+	}else{
+		
+		$('#rankingLiveTemplateRowDiv').hide();
+	}
+}
+
+function addTemplate(){
+	
+	var index = $('#rankingLiveTemplateCurrentIndex').val();
+	++index;
+	
+	var actionButton = '<a href="javascript:void(0)" onclick="removeTemplate('+index+')" ><img src="'+_imageRoot+'/backend/icons/color/cross.png" title="Excluir dia" class="mt7"/></a>';
+
+	if( index==0 )
+		actionButton = '<a href="javascript:void(0)" onclick="addTemplate()" ><img src="'+_imageRoot+'/backend/icons/color/plus.png" title="Adicionar dia" class="mt7"/></a>';
+	
+	var html = '<div class="clear mt6"></div>'+
+			   '<div id="rankingLiveTemplateRow-'+index+'">'+
+			   '	<span class="multi"><input name="stepDay[]" id="rankingLiveTemplateStepDay" value="" size="5" maxlength="10" autocomplete="off" type="text"></span>'+
+			   '	<span class="multi"><input name="daysAfter[]" id="rankingLiveTemplateDaysAfter" value="'+index+'" size="3" maxlength="3" autocomplete="off" '+(index==0?'readonly':'')+' type="text"></span>'+
+			   '	<span class="multi"><input name="templateStartTime[]" value="'+$('#rankingLiveStartTime').val()+'" size="5" maxlength="5" onkeyup="maskTime(event)" autocomplete="off" type="text"></span>'+
+			   '	<span class="multi">'+actionButton+'</span>'+
+			   '	<div class="clear"></div>';
+			   '</div>';
+	
+	var divElement = document.createElement('div');
+	divElement.innerHTML = html;
+
+	$('#rankingLiveTemplateListDiv').append( divElement );
+	$('#rankingLiveTemplateCurrentIndex').val(index);
+}
+
+function removeTemplate(index){
+	
+	$('#rankingLiveTemplateRow-'+index).remove();
+}
+
+var _rankingLiveSuppressToggleQuickEvent = false;
+
+function setSuppressToggle(suppressToggle){
+	
+	_rankingLiveSuppressToggleQuickEvent = suppressToggle;
+}
+
+function toggleQuickEvent(eventDate, force){
+	
+	if( $('#rankingLiveQuickEvent-'+eventDate).html()=='' ){
+		
+		var fieldHtml = '<input type="text" maxlength="2" name="stepNumber-'+eventDate+'" autocomplete="off" onmouseover="setSuppressToggle(true)" onmouseout="setSuppressToggle(false)" id="stepNumber-'+eventDate+'" />';
+		
+		$('#rankingLiveQuickEvent-'+eventDate).html(fieldHtml);
+		$('#rankingLiveQuickEvent-'+eventDate).addClass('quickEventSelected');
+		$('#rankingLiveQuickEventTd-'+eventDate).addClass('selected');
+		
+	}else{
+		
+		if( !_rankingLiveSuppressToggleQuickEvent ){
+			
+			$('#rankingLiveQuickEvent-'+eventDate).removeClass('quickEventSelected');
+			$('#rankingLiveQuickEventTd-'+eventDate).removeClass('selected');
+			$('#rankingLiveQuickEvent-'+eventDate).html('');
+		}
+	}
+	
+	var eventDateList = [];
+	$('.quickEventSelected').each(function(){
+		
+		var eventDate = this.id.replace('rankingLiveQuickEvent-', '');
+		eventDateList.push(eventDate)
+	});
+	
+	$('#rankingLiveQuickEventEventDate').val(eventDateList);
+	$('#stepNumber-'+eventDate).focus();
+}
+
+function loadQuickEventCalendar(month, year){
+
+	if( $('#rankingLiveQuickEventEventDate').val()!='' )
+		if( !confirm('ATENÇÃO!\n\nAo recarregar o calendário você irá perder os eventos não salvos.\nDeseja continuar?') )
+			return false;
+	
+	showIndicator();
+	var successFunc = function(content){
+
+		$('#quickEventCalendar').html(content);
+		hideIndicator();
+	};
+		
+	var failureFunc = function(t){
+
+		hideIndicator();
+		
+		var content = t.responseText;
+
+		if( isDebug() )
+			debug(content);
+	};
+	
+	var urlAjax = _webRoot+'/rankingLive/getCalendar?month='+month+'&year='+year;
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
 function loadRankingLiveHistory(rankingDate){

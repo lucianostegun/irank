@@ -1,5 +1,5 @@
 var _eventLiveConfirmSaveResult = true;
-var _eventLivePeopleId = null;
+var _eventLivePeopleId          = null;
 
 $(function() {
 	
@@ -38,7 +38,6 @@ $(function() {
 			$('#eventLiveEventDate').datepicker({ 
 				defaultDate: +0,
 				autoSize: false,
-				appendText: '(dd/mm/aaaa)',
 				dateFormat: 'dd/mm/yy',
 				onSelect: function(dateText){
 					loadEventStats();
@@ -46,6 +45,22 @@ $(function() {
 			});
 		}
 	}
+	
+	updateEventLiveStepDatePicker = function(){
+		
+		$('.stepEventDate').datepicker({ 
+			defaultDate: +0,
+			autoSize: false,
+			dateFormat: 'dd/mm/yy',
+			onSelect: function(dateText){
+				
+			}
+		});
+
+		updateFieldMasks();
+	}
+	
+	updateEventLiveStepDatePicker();
 });
 
 function doDeleteEventLive(){
@@ -136,14 +151,37 @@ function replicateEventName(eventName){
 		$('#eventLiveEventStepNumber').val( matches[1] );
 
 	matches = eventName.match(/Dia *([0-9]*-?[a-zA-z]*) ?/i);
-	if( matches && matches.length > 0 )
-		$('#eventLiveEventStepDay').val( matches[1] );
+//	if( matches && matches.length > 0 )
+//		$('#eventLiveEventStepDay').val( matches[1] );
 		
 	
 	eventName = eventName.replace(/ ?-.*Garantidos?/i, '');
 	eventName = eventName.replace(/ ?Garantidos?/i, '');
 	eventName = eventName.replace(/ ?-.*/, '');
 	$('#eventLiveEventShortName').val( eventName.substring(0, 35) );
+}
+
+function updateEventNamePreview(){
+	
+	var stepNumber      = $('#eventLiveEventStepNumber').val();
+	var eventName       = $('#eventLiveEventName').val();
+	var guaranteedPrize = toFloat($('#eventLiveGuaranteedPrize').val());
+	
+	if( stepNumber )
+		stepNumber = stepNumber+'ª Etapa ';
+	
+	if( guaranteedPrize && guaranteedPrize > 0 ){
+		
+		if( guaranteedPrize >= 1000 )
+			guaranteedPrize = (guaranteedPrize/1000)+'K';
+		
+		guaranteedPrize = ' - '+guaranteedPrize+' GTD';
+	}else
+		guaranteedPrize = '';
+	
+	var eventNamePreview = stepNumber+eventName+guaranteedPrize;
+	
+	$('#eventLiveEventNamePreview').html(eventNamePreview);
 }
 
 function handleIsIlimitedRebuys(checked){
@@ -154,6 +192,23 @@ function handleIsIlimitedRebuys(checked){
 function handleIsFreeroll(checked){
 	
 	$('#eventLiveBuyin').attr('disabled', checked);
+}
+
+function handleIsMultiday(checked){
+	
+	if( checked ){
+		
+		$('#eventLiveStepDayRowDiv').show();
+		$('#eventLiveEventDateRowDiv').hide();
+		
+		if( $('#eventLiveStepDayCurrentIndex').val()*1 < 0 )
+			addStepDay()
+		
+	}else{
+		
+		$('#eventLiveEventDateRowDiv').show();
+		$('#eventLiveStepDayRowDiv').hide();
+	}
 }
 
 function handleSelectEventLivePlayer(peopleId, peopleName){
@@ -969,4 +1024,37 @@ function editPlayerInfoEventLive(peopleId){
 	}
 	
 	quickEditPeople(peopleId);
+}
+
+function addStepDay(){
+	
+	var index = $('#eventLiveStepDayCurrentIndex').val();
+	++index;
+	
+	var actionButton = '<a href="javascript:void(0)" onclick="removeStepDay('+index+')" ><img src="'+_imageRoot+'/backend/icons/color/cross.png" title="Excluir dia" class="mt7"/></a>';
+
+	if( index==0 )
+		actionButton = '<a href="javascript:void(0)" onclick="addStepDay()" ><img src="'+_imageRoot+'/backend/icons/color/plus.png" title="Adicionar dia" class="mt7"/></a>';
+	
+	var html = '<div class="clear mt6"></div>'+
+			   '<div id="eventLiveStepDayRow-'+index+'">'+
+			   '	<span class="multi"><input name="stepDay[]" id="eventLiveStepDay" value="" size="5" maxlength="5" autocomplete="off" type="text"></span>'+
+			   '	<span class="multi"><input name="stepEventDate[]" id="eventLiveStepEventDate-'+index+'" value="" maxlength="10" class="stepEventDate maskDate" autocomplete="off" type="text"></span>'+
+			   '	<span class="multi"><input name="stepStartTime[]" value="" size="5" maxlength="5" onkeyup="maskTime(event)" autocomplete="off" type="text"></span>'+
+			   '	<span class="multi">'+actionButton+'</span>'+
+			   '	<div class="clear"></div>';
+			   '</div>';
+	
+	var divElement = document.createElement('div');
+	divElement.innerHTML = html;
+
+	$('#eventLiveStepDayListDiv').append( divElement );
+	$('#eventLiveStepDayCurrentIndex').val(index);
+	
+	updateEventLiveStepDatePicker();
+}
+
+function removeStepDay(index){
+	
+	$('#eventLiveStepDayRow-'+index).remove();
 }

@@ -160,9 +160,7 @@ abstract class BasePartner extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -176,9 +174,7 @@ abstract class BasePartner extends BaseObject  implements Persistent {
 	public function setPartnerName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -192,9 +188,7 @@ abstract class BasePartner extends BaseObject  implements Persistent {
 	public function setExternalUrl($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -208,9 +202,7 @@ abstract class BasePartner extends BaseObject  implements Persistent {
 	public function setFileId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

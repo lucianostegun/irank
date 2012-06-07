@@ -28,8 +28,9 @@ class EventLive extends BaseEventLive
 //    		$this->postOnWall();
     		
     		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
+    		$this->setEnrollmentStartDate(nvl($this->getEnrollmentStartDate(), '2012-01-01'));
 
-			parent::save();
+			parent::save($con);
 			
         	Log::quickLog('event_live', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
         } catch ( Exception $e ) {
@@ -57,12 +58,13 @@ class EventLive extends BaseEventLive
 		$rankingLiveId       = $request->getParameter('rankingLiveId');
 		$eventName           = $request->getParameter('eventName');
 		$eventShortName      = $request->getParameter('eventShortName');
+		$isMultiday          = $request->getParameter('isMultiday');
 		$eventDate           = $request->getParameter('eventDate');
 		$startTime           = $request->getParameter('startTime');
 		$stepNumber          = $request->getParameter('stepNumber');
-		$stepDay             = $request->getParameter('stepDay');
 		$isFreeroll          = $request->getParameter('isFreeroll');
 		$entranceFee         = $request->getParameter('entranceFee');
+		$guaranteedPrize     = $request->getParameter('guaranteedPrize');
 		$buyin               = $request->getParameter('buyin');
 		$rakePercent         = $request->getParameter('rakePercent');
 		$blindTime           = $request->getParameter('blindTime');
@@ -101,6 +103,7 @@ class EventLive extends BaseEventLive
 		$this->setStartTime($startTime);
 		$this->setIsFreeroll(($isFreeroll?true:false));
 		$this->setEntranceFee(Util::formatFloat($entranceFee));
+		$this->setGuaranteedPrize(Util::formatFloat($guaranteedPrize));
 		$this->setBuyin(Util::formatFloat($buyin));
 		$this->setBlindTime($blindTime);
 		$this->setRakePercent(Util::formatFloat($rakePercent));
@@ -109,8 +112,8 @@ class EventLive extends BaseEventLive
 		$this->setAllowedAddons($allowedAddons);
 		$this->setTablesNumber($tablesNumber);
 		$this->setIsIlimitedRebuys(($isIlimitedRebuys?true:false));
+		$this->setIsMultiday(($isMultiday?true:false));
 		$this->setStepNumber(nvl($stepNumber));
-		$this->setStepDay(nvl($stepDay));
 		
 		$this->setDescription($description);
 		$this->setComments(nvl($comments));
@@ -123,7 +126,107 @@ class EventLive extends BaseEventLive
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);
-		$this->save();
+		
+		try{
+			
+			$con = Propel::getConnection();
+			$con->begin();
+			
+			$this->save($con);
+			
+			if( $isMultiday )
+				$this->saveSchedule($request, $con);
+			else
+				$this->deleteSchedule($con);
+			
+			$con->commit();
+		}catch(Exception $e){
+			
+			$con->rollback();
+		}
+		
+	}
+	
+	public function saveSchedule($request, $con){
+		
+		$this->deleteSchedule($con);
+		
+		$stepEventDateList = $request->getParameter('stepEventDate');
+		$stepStartTimeList = $request->getParameter('stepStartTime');
+		$stepDayList       = $request->getParameter('stepDay');
+		
+		$eventDate        = null;
+		$startTime        = null;
+		$defaultStartTime = $this->getRankingLive()->getStartTime();
+				
+		foreach($stepEventDateList as $key=>$stepEventDate){
+			
+			$stepEventDate = Util::formatDate($stepEventDate);
+			$stepStartTime = nvl($stepStartTimeList[$key], $defaultStartTime);
+			
+			if( $key==0 ){
+				
+				$eventDate = $stepEventDate;
+				$startTime = $stepStartTime;
+				$daysAfter = 0;
+			}else{
+				
+				$daysAfter = Util::differenceDays($stepEventDate, $eventDate);
+			}
+			
+			$stepDay = $stepDayList[$key];
+			$stepDay = preg_replace('/dia ?/i', '', $stepDay);
+			
+			$eventLiveScheduleObj = new EventLiveSchedule();
+			$eventLiveScheduleObj->setEventLiveId($this->getId());
+			$eventLiveScheduleObj->setEventDate($stepEventDate);
+			$eventLiveScheduleObj->setStartTime($stepStartTime);
+			$eventLiveScheduleObj->setStepDay($stepDay);
+			$eventLiveScheduleObj->setDaysAfter($daysAfter);
+			$eventLiveScheduleObj->save($con);
+		}
+		
+		$this->setEventDate($eventDate);
+		$this->setStartTime($startTime);
+		$this->save($con);
+	}
+
+	public function saveScheduleFromTemplate($con){
+		
+		$this->deleteSchedule($con);
+		
+		$eventDate = null;
+		$startTime = null;
+		
+		$eventDate = $this->getEventDate(null);
+		
+		foreach($this->getRankingLive()->getTemplateList() as $key=>$rankingLiveTemplateObj){
+			
+			$stepEventDate = $eventDate+(86400*$rankingLiveTemplateObj->getDaysAfter());
+			
+			if( $key==0 ){
+				
+				$eventDate = $stepEventDate;
+				$startTime = $rankingLiveTemplateObj->getStartTime();
+			}
+
+			$eventLiveScheduleObj = new EventLiveSchedule();
+			$eventLiveScheduleObj->setEventLiveId($this->getId());
+			$eventLiveScheduleObj->setEventDate($stepEventDate);
+			$eventLiveScheduleObj->setStartTime($rankingLiveTemplateObj->getStartTime());
+			$eventLiveScheduleObj->setStepDay($rankingLiveTemplateObj->getStepDay());
+			$eventLiveScheduleObj->setDaysAfter($rankingLiveTemplateObj->getDaysAfter());
+			$eventLiveScheduleObj->save($con);
+		}
+		
+		$this->setEventDate($eventDate);
+		$this->setStartTime($startTime);
+		$this->save($con);
+	}
+	
+	public function deleteSchedule($con){
+		
+		Util::executeQuery('DELETE FROM event_live_schedule WHERE event_live_id = '.$this->getId(), $con);
 	}
 	
 	public static function getList(Criteria $criteria=null, $clubId=null){
@@ -134,9 +237,19 @@ class EventLive extends BaseEventLive
 		$criteria->add( EventLivePeer::ENABLED, true );
 		$criteria->add( EventLivePeer::VISIBLE, true );
 		$criteria->add( EventLivePeer::DELETED, false );
+
+		$criterion = $criteria->getNewCriterion( RankingLivePeer::ENABLED, true );
+		$criterion->addAnd( $criteria->getNewCriterion( RankingLivePeer::VISIBLE, true ) );
+		$criterion->addAnd( $criteria->getNewCriterion( RankingLivePeer::DELETED, false ) );
+		
+		$criterion2 = $criteria->getNewCriterion( EventLivePeer::RANKING_LIVE_ID, NULL );
+		$criterion->addOr($criterion2);
+		$criteria->add($criterion);
 		
 		if( $clubId )
 			$criteria->add( EventLivePeer::CLUB_ID, $clubId );
+			
+		$criteria->addJoin( EventLivePeer::RANKING_LIVE_ID, RankingLivePeer::ID, Criteria::LEFT_JOIN );
 
 		$criteria->addDescendingOrderByColumn( EventLivePeer::EVENT_DATE );
 		$criteria->addAscendingOrderByColumn( EventLivePeer::START_TIME );
@@ -755,6 +868,15 @@ class EventLive extends BaseEventLive
     	return $numStatList;
 	}
 	
+	public function getLastEventDateTime($format='Y-m-d H:i:s'){
+		
+		$isMultiday = $this->getIsMultiday();
+		if( $isMultiday )
+			return Util::executeOne('SELECT MAX(event_date_time) FROM event_live_schedule WHERE event_live_id = '.$this->getId(), 'timestamp');
+		else
+			return $this->getEventDateTime($format);
+	}
+	
 	public function hasPreviousPendingResult(){
 		
 		// Se não possui ranking não tem evento para comparar resultados pendentes
@@ -766,9 +888,11 @@ class EventLive extends BaseEventLive
 
 	public function isPendingResult(){
 		
-		$hoursToPending = Settings::getValue('hoursToPending');
+		$hoursToPending    = Settings::getValue('hoursToPending');
+		$lastEventDateTime = $this->getLastEventDateTime();
+		$lastEventDateTime = strtotime($lastEventDateTime);
 		
-		return (!$this->getSavedResult() && ($this->getEventDateTime(null) < (time()-(3600*$hoursToPending))));
+		return (!$this->getSavedResult() && ($lastEventDateTime < (time()-(3600*$hoursToPending))));
 	}
 	
 	public function notifyPlayer($peopleId){
@@ -861,26 +985,26 @@ class EventLive extends BaseEventLive
 		$comments = $this->getComments();
 		
 		$infoList = $this->getInfo();
-		$infoList['eventName']      = $this->getEventName();
-		$infoList['eventShortName'] = $this->getEventShortName();
-		$infoList['stepNumber']     = $this->getStepNumber();
-		$infoList['stepDay']        = $this->getStepDay();
-		$infoList['rankingName']    = $this->getRankingLive()->getRankingName();
-		$infoList['gameStyle']      = $this->getGameStyle()->getDescription();
-		$infoList['gameType']       = $this->getGameType()->getDescription();
-		$infoList['eventPlace']     = $this->getEventPlace();
-		$infoList['mapsLink']       = $this->getClub()->getMapsLink();
-		$infoList['eventDate']      = $this->getEventDate('d/m/Y');
-		$infoList['startTime']      = $this->getStartTime('H:i');
-		$infoList['entranceFee']    = Util::formatFloat($entranceFee, true);
-		$infoList['buyin']          = Util::formatFloat($buyin, true).($entranceFee?'+'.$infoList['entranceFee']:'');
-		$infoList['eventDateWrite'] = $this->getEventDateWrite();
-		$infoList['fileNameLogo']   = $this->getFileNameLogo();
-		$infoList['description']    = $this->getDescription(true);
-		$infoList['comments']       = ($comments?'<separator>'.$comments:'');
-		$infoList['eventWeekDay']   = $weekDay = $this->getWeekDay();
-		$infoList['clubLink']       = $this->getClub()->getLink();
-		$infoList['eventLink']      = $this->getLink();
+		$infoList['eventName']       = $this->getEventName();
+		$infoList['eventShortName']  = $this->getEventShortName();
+		$infoList['stepNumber']      = $this->getStepNumber();
+		$infoList['rankingName']     = $this->getRankingLive()->getRankingName();
+		$infoList['gameStyle']       = $this->getGameStyle()->getDescription();
+		$infoList['gameType']        = $this->getGameType()->getDescription();
+		$infoList['eventPlace']      = $this->getEventPlace();
+		$infoList['mapsLink']        = $this->getClub()->getMapsLink();
+		$infoList['eventDate']       = $this->getEventDate('d/m/Y');
+		$infoList['startTime']       = $this->getStartTime('H:i');
+		$infoList['entranceFee']     = Util::formatFloat($entranceFee, true);
+		$infoList['buyin']           = Util::formatFloat($buyin, true).($entranceFee?'+'.$infoList['entranceFee']:'');
+		$infoList['guaranteedPrize'] = Util::formatFloat($this->getGuaranteedPrize(), true);
+		$infoList['eventDateWrite']  = $this->getEventDateWrite();
+		$infoList['fileNameLogo']    = $this->getFileNameLogo();
+		$infoList['description']     = $this->getDescription(true);
+		$infoList['comments']        = ($comments?'<separator>'.$comments:'');
+		$infoList['eventWeekDay']    = $weekDay = $this->getWeekDay();
+		$infoList['clubLink']        = $this->getClub()->getLink();
+		$infoList['eventLink']       = $this->getLink();
 		
 		if( is_object($peopleObj) )
 			$infoList['peopleName'] = $peopleObj->getFirstName();
@@ -981,9 +1105,31 @@ class EventLive extends BaseEventLive
 		$this->updatePlayers();
 	}
 	
+	public function getScheduleList(){
+		
+		$criteria = new Criteria();
+		$criteria->addAscendingOrderByColumn( EventLiveSchedulePeer::EVENT_DATE_TIME );
+		return $this->getEventLiveScheduleList($criteria);
+	}
+	
 	public function toString(){
 	
-		return $this->getEventName();	
+		$stepNumber      = $this->getStepNumber();
+		$guaranteedPrize = $this->getGuaranteedPrize();
+		
+		if( $stepNumber )
+			$stepNumber = $stepNumber.'ª Etapa ';
+		
+		if( $guaranteedPrize ){
+			
+			if( $guaranteedPrize >=1000 )
+				$guaranteedPrize = ($guaranteedPrize/1000).'K';
+				
+			$guaranteedPrize = " - $guaranteedPrize GTD";
+		}else
+			$guaranteedPrize = '';
+		
+		return $stepNumber.$this->getEventName().$guaranteedPrize;
 	}
 	
 	public function getInfo(){

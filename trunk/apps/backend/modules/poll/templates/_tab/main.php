@@ -16,7 +16,7 @@
 	
 	echo input_hidden_tag('pollId', $pollId);
 	echo input_hidden_tag('answers', count($pollAnswerObjList), array('id'=>'pollAnswers'));
-
+	
 	$pollImage = $pollObj->getPollImage(true);
 ?>
 	<div class="formRow">

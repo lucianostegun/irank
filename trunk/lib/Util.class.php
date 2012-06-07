@@ -96,10 +96,12 @@ class Util {
 	 * @param      String: Comando SQL a ser executado na base de dados, deve ser um comando único
 	 * @return     Object: ResultSet
 	 */
-	public static function executeQuery($query, $con=null){
+	public static function executeQuery($query, $con=null, $connectionName=null){
 		
-		$connection = Propel::getConnection($con);
-    	$statement  = $connection->prepareStatement( $query );
+		if( is_null($con) )
+			$con = Propel::getConnection($connectionName);
+		
+    	$statement  = $con->prepareStatement( $query );
     	$resultset  = $statement->executeQuery($query, ResultSet::FETCHMODE_NUM);
     	
     	return $resultset;
@@ -974,6 +976,20 @@ class Util {
 	public static function decodeId($id){
 		
 		return base64_decode(strrev($id));
+	}
+	
+	public static function differenceDays($date1, $date2){
+		
+//		$date1 = "2007-03-24";
+//		$date2 = "2009-06-26";
+		
+		$diff = abs(strtotime($date2) - strtotime($date1));
+		
+		$years  = floor($diff / (365*60*60*24));
+		$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+		$days   = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+		
+		return $days;
 	}
 }
 ?>

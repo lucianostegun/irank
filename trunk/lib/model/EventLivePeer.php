@@ -63,4 +63,60 @@ class EventLivePeer extends BaseEventLivePeer
 
 		return ($eventLiveCount==0);
 	}
+	
+	public static function validateStepDays($isMultiday){
+		
+		$request             = MyTools::getRequest();
+		$stepDayCurrentIndex = $request->getParameter('stepDayCurrentIndex');
+		
+		$stepEventDateList = $request->getParameter('stepEventDate');
+		$stepStartTimeList = $request->getParameter('stepStartTime');
+		$stepDayList       = $request->getParameter('stepDay');
+		
+		// INICIO - Verifica se não possu duas linhas iguais
+		$checkList = array();
+		foreach($stepEventDateList as $key=>$stepEventDate)
+			$checkList[] = $stepEventDate.'-'.$stepStartTimeList[$key];
+		
+		$checkList = array_unique($checkList);
+		if( count($checkList) < count($stepEventDateList) )
+			MyTools::setError('stepEventDate', 'Não é possível cadastrar duas datas com o mesmo horário');
+		// FIM
+		
+		// INICIO - Verifica se a data mais curta ainda pode ser utilizada para eventos
+		$eventDateList = array();
+		foreach($stepEventDateList as $key=>$stepEventDate)
+			$eventDateList[] = Util::formatDate($stepEventDate);
+		$minEventDate = min($eventDateList);
+		
+		if( !self::validateEventDate(Util::formatDate($minEventDate, 'screen')) )
+			MyTools::setError('stepEventDate', 'form.error.expiredDate');
+		// FIM
+		 
+		foreach($stepEventDateList as $stepEventDate){
+			
+			if( !Validate::validateDate($stepEventDate) ){
+				
+				MyTools::setError('stepEventDate', 'Informe corretamente todas as datas das etapas');
+				break;
+			}
+
+			if( empty($stepEventDate) ){
+				
+				MyTools::setError('stepEventDate', 'Informe todas as datas das etapas');
+				break;
+			}
+		}
+
+		foreach($stepDayList as $stepDay){
+			
+			if( !$stepDay ){
+				
+				MyTools::setError('stepDay', 'Informe a indicação do dia de cada etapa');
+				break;
+			}
+		}
+
+		return !$request->hasErrors();
+	}
 }
