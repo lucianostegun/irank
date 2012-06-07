@@ -96,7 +96,7 @@
 	<div class="formRow">
 		<label>Logo</label>
 		<div class="formRight">
-			<label id="rankingLiveFileNameLogoDiv" style="height: 90px; width: 90px">
+			<label id="rankingLiveFileNameLogoDiv" style="height: 150px; width: 150px">
 				<?php echo ($fileNameLogo?link_to(image_tag('ranking/'.$fileNameLogo), '#goToPage("rankingLive", "downloadLogo", "rankingLiveId", '.$rankingLiveObj->getId().')'):'Não disponível') ?>
 			</label>
 			<div class="upload">
@@ -110,14 +110,14 @@
 					<embed src="/flash/uploadFile.swf?scriptName=backend&moduleName=rankingLive&actionName=uploadLogo&fieldName=rankingLiveId&objectId=<?php echo $rankingLiveObj->getId() ?>&uid=<?php echo $userAdminId ?>&time=<?php echo time() ?>" quality="high" bgcolor="#FAFAFA" width="32" height="32" name="uploadFileLink" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" />
 				</object>
 			</div>
-			<label>Imagem JPG com 90 x 90 pixels</label>
+			<label>Imagem JPG com 150 x 150 pixels</label>
 		</div>
 		<div class="clear"></div>
 	</div>
 	
 	<div class="formRow">
 		<label>Informações</label>
-		<div class="formRight">
+		<div class="formRight" style="width: 70%">
 			<?php echo textarea_tag('description', $rankingLiveObj->getDescription(), array('style'=>'height: 400px', 'id'=>'rankingLiveDescription')) ?>
 			<div class="formNote error" id="rankingLiveFormErrorDescription"></div>
 		</div>

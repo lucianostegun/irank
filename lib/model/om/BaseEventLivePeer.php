@@ -13,7 +13,7 @@ abstract class BaseEventLivePeer {
 	const CLASS_DEFAULT = 'lib.model.EventLive';
 
 	
-	const NUM_COLUMNS = 39;
+	const NUM_COLUMNS = 41;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -50,9 +50,6 @@ abstract class BaseEventLivePeer {
 	const STEP_NUMBER = 'event_live.STEP_NUMBER';
 
 	
-	const STEP_DAY = 'event_live.STEP_DAY';
-
-	
 	const COMMENTS = 'event_live.COMMENTS';
 
 	
@@ -60,6 +57,9 @@ abstract class BaseEventLivePeer {
 
 	
 	const IS_FREEROLL = 'event_live.IS_FREEROLL';
+
+	
+	const IS_MULTIDAY = 'event_live.IS_MULTIDAY';
 
 	
 	const TABLES_NUMBER = 'event_live.TABLES_NUMBER';
@@ -72,6 +72,9 @@ abstract class BaseEventLivePeer {
 
 	
 	const RAKE_PERCENT = 'event_live.RAKE_PERCENT';
+
+	
+	const GUARANTEED_PRIZE = 'event_live.GUARANTEED_PRIZE';
 
 	
 	const BLIND_TIME = 'event_live.BLIND_TIME';
@@ -119,6 +122,9 @@ abstract class BaseEventLivePeer {
 	const ENROLLMENT_MODE = 'event_live.ENROLLMENT_MODE';
 
 	
+	const SUPPRESS_RANKING = 'event_live.SUPPRESS_RANKING';
+
+	
 	const ENABLED = 'event_live.ENABLED';
 
 	
@@ -142,19 +148,19 @@ abstract class BaseEventLivePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingLiveId', 'ClubId', 'EmailTemplateId', 'EventName', 'EventShortName', 'EventDate', 'StartTime', 'EventDateTime', 'StepNumber', 'StepDay', 'Comments', 'Description', 'IsFreeroll', 'TablesNumber', 'Buyin', 'EntranceFee', 'RakePercent', 'BlindTime', 'StackChips', 'Players', 'AllowedRebuys', 'AllowedAddons', 'IsIlimitedRebuys', 'SavedResult', 'TotalRebuys', 'PublishPrize', 'SuppressSchedule', 'PrizeSplit', 'VisitCount', 'ScheduleStartDate', 'EnrollmentStartDate', 'EnrollmentMode', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID, EventLivePeer::RANKING_LIVE_ID, EventLivePeer::CLUB_ID, EventLivePeer::EMAIL_TEMPLATE_ID, EventLivePeer::EVENT_NAME, EventLivePeer::EVENT_SHORT_NAME, EventLivePeer::EVENT_DATE, EventLivePeer::START_TIME, EventLivePeer::EVENT_DATE_TIME, EventLivePeer::STEP_NUMBER, EventLivePeer::STEP_DAY, EventLivePeer::COMMENTS, EventLivePeer::DESCRIPTION, EventLivePeer::IS_FREEROLL, EventLivePeer::TABLES_NUMBER, EventLivePeer::BUYIN, EventLivePeer::ENTRANCE_FEE, EventLivePeer::RAKE_PERCENT, EventLivePeer::BLIND_TIME, EventLivePeer::STACK_CHIPS, EventLivePeer::PLAYERS, EventLivePeer::ALLOWED_REBUYS, EventLivePeer::ALLOWED_ADDONS, EventLivePeer::IS_ILIMITED_REBUYS, EventLivePeer::SAVED_RESULT, EventLivePeer::TOTAL_REBUYS, EventLivePeer::PUBLISH_PRIZE, EventLivePeer::SUPPRESS_SCHEDULE, EventLivePeer::PRIZE_SPLIT, EventLivePeer::VISIT_COUNT, EventLivePeer::SCHEDULE_START_DATE, EventLivePeer::ENROLLMENT_START_DATE, EventLivePeer::ENROLLMENT_MODE, EventLivePeer::ENABLED, EventLivePeer::VISIBLE, EventLivePeer::DELETED, EventLivePeer::LOCKED, EventLivePeer::CREATED_AT, EventLivePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_live_id', 'club_id', 'email_template_id', 'event_name', 'event_short_name', 'event_date', 'start_time', 'event_date_time', 'step_number', 'step_day', 'comments', 'description', 'is_freeroll', 'tables_number', 'buyin', 'entrance_fee', 'rake_percent', 'blind_time', 'stack_chips', 'players', 'allowed_rebuys', 'allowed_addons', 'is_ilimited_rebuys', 'saved_result', 'total_rebuys', 'publish_prize', 'suppress_schedule', 'prize_split', 'visit_count', 'schedule_start_date', 'enrollment_start_date', 'enrollment_mode', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_LIVE_ID'=>'', 'CLUB_ID'=>'', 'EMAIL_TEMPLATE_ID'=>'', 'EVENT_NAME'=>'', 'EVENT_SHORT_NAME'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'STEP_NUMBER'=>'', 'STEP_DAY'=>'', 'COMMENTS'=>'', 'DESCRIPTION'=>'', 'IS_FREEROLL'=>'', 'TABLES_NUMBER'=>'', 'BUYIN'=>'', 'ENTRANCE_FEE'=>'', 'RAKE_PERCENT'=>'', 'BLIND_TIME'=>'', 'STACK_CHIPS'=>'', 'PLAYERS'=>'', 'ALLOWED_REBUYS'=>'', 'ALLOWED_ADDONS'=>'', 'IS_ILIMITED_REBUYS'=>'', 'SAVED_RESULT'=>'', 'TOTAL_REBUYS'=>'', 'PUBLISH_PRIZE'=>'', 'SUPPRESS_SCHEDULE'=>'', 'PRIZE_SPLIT'=>'', 'VISIT_COUNT'=>'', 'SCHEDULE_START_DATE'=>'', 'ENROLLMENT_START_DATE'=>'', 'ENROLLMENT_MODE'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingLiveId', 'ClubId', 'EmailTemplateId', 'EventName', 'EventShortName', 'EventDate', 'StartTime', 'EventDateTime', 'StepNumber', 'Comments', 'Description', 'IsFreeroll', 'IsMultiday', 'TablesNumber', 'Buyin', 'EntranceFee', 'RakePercent', 'GuaranteedPrize', 'BlindTime', 'StackChips', 'Players', 'AllowedRebuys', 'AllowedAddons', 'IsIlimitedRebuys', 'SavedResult', 'TotalRebuys', 'PublishPrize', 'SuppressSchedule', 'PrizeSplit', 'VisitCount', 'ScheduleStartDate', 'EnrollmentStartDate', 'EnrollmentMode', 'SuppressRanking', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID, EventLivePeer::RANKING_LIVE_ID, EventLivePeer::CLUB_ID, EventLivePeer::EMAIL_TEMPLATE_ID, EventLivePeer::EVENT_NAME, EventLivePeer::EVENT_SHORT_NAME, EventLivePeer::EVENT_DATE, EventLivePeer::START_TIME, EventLivePeer::EVENT_DATE_TIME, EventLivePeer::STEP_NUMBER, EventLivePeer::COMMENTS, EventLivePeer::DESCRIPTION, EventLivePeer::IS_FREEROLL, EventLivePeer::IS_MULTIDAY, EventLivePeer::TABLES_NUMBER, EventLivePeer::BUYIN, EventLivePeer::ENTRANCE_FEE, EventLivePeer::RAKE_PERCENT, EventLivePeer::GUARANTEED_PRIZE, EventLivePeer::BLIND_TIME, EventLivePeer::STACK_CHIPS, EventLivePeer::PLAYERS, EventLivePeer::ALLOWED_REBUYS, EventLivePeer::ALLOWED_ADDONS, EventLivePeer::IS_ILIMITED_REBUYS, EventLivePeer::SAVED_RESULT, EventLivePeer::TOTAL_REBUYS, EventLivePeer::PUBLISH_PRIZE, EventLivePeer::SUPPRESS_SCHEDULE, EventLivePeer::PRIZE_SPLIT, EventLivePeer::VISIT_COUNT, EventLivePeer::SCHEDULE_START_DATE, EventLivePeer::ENROLLMENT_START_DATE, EventLivePeer::ENROLLMENT_MODE, EventLivePeer::SUPPRESS_RANKING, EventLivePeer::ENABLED, EventLivePeer::VISIBLE, EventLivePeer::DELETED, EventLivePeer::LOCKED, EventLivePeer::CREATED_AT, EventLivePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_live_id', 'club_id', 'email_template_id', 'event_name', 'event_short_name', 'event_date', 'start_time', 'event_date_time', 'step_number', 'comments', 'description', 'is_freeroll', 'is_multiday', 'tables_number', 'buyin', 'entrance_fee', 'rake_percent', 'guaranteed_prize', 'blind_time', 'stack_chips', 'players', 'allowed_rebuys', 'allowed_addons', 'is_ilimited_rebuys', 'saved_result', 'total_rebuys', 'publish_prize', 'suppress_schedule', 'prize_split', 'visit_count', 'schedule_start_date', 'enrollment_start_date', 'enrollment_mode', 'suppress_ranking', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_LIVE_ID'=>'', 'CLUB_ID'=>'', 'EMAIL_TEMPLATE_ID'=>'', 'EVENT_NAME'=>'', 'EVENT_SHORT_NAME'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'STEP_NUMBER'=>'', 'COMMENTS'=>'', 'DESCRIPTION'=>'', 'IS_FREEROLL'=>'', 'IS_MULTIDAY'=>'', 'TABLES_NUMBER'=>'', 'BUYIN'=>'', 'ENTRANCE_FEE'=>'', 'RAKE_PERCENT'=>'', 'GUARANTEED_PRIZE'=>'', 'BLIND_TIME'=>'', 'STACK_CHIPS'=>'', 'PLAYERS'=>'', 'ALLOWED_REBUYS'=>'', 'ALLOWED_ADDONS'=>'', 'IS_ILIMITED_REBUYS'=>'', 'SAVED_RESULT'=>'', 'TOTAL_REBUYS'=>'', 'PUBLISH_PRIZE'=>'', 'SUPPRESS_SCHEDULE'=>'', 'PRIZE_SPLIT'=>'', 'VISIT_COUNT'=>'', 'SCHEDULE_START_DATE'=>'', 'ENROLLMENT_START_DATE'=>'', 'ENROLLMENT_MODE'=>'', 'SUPPRESS_RANKING'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingLiveId'=>1, 'ClubId'=>2, 'EmailTemplateId'=>3, 'EventName'=>4, 'EventShortName'=>5, 'EventDate'=>6, 'StartTime'=>7, 'EventDateTime'=>8, 'StepNumber'=>9, 'StepDay'=>10, 'Comments'=>11, 'Description'=>12, 'IsFreeroll'=>13, 'TablesNumber'=>14, 'Buyin'=>15, 'EntranceFee'=>16, 'RakePercent'=>17, 'BlindTime'=>18, 'StackChips'=>19, 'Players'=>20, 'AllowedRebuys'=>21, 'AllowedAddons'=>22, 'IsIlimitedRebuys'=>23, 'SavedResult'=>24, 'TotalRebuys'=>25, 'PublishPrize'=>26, 'SuppressSchedule'=>27, 'PrizeSplit'=>28, 'VisitCount'=>29, 'ScheduleStartDate'=>30, 'EnrollmentStartDate'=>31, 'EnrollmentMode'=>32, 'Enabled'=>33, 'Visible'=>34, 'Deleted'=>35, 'Locked'=>36, 'CreatedAt'=>37, 'UpdatedAt'=>38, ),
-		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID=>0, EventLivePeer::RANKING_LIVE_ID=>1, EventLivePeer::CLUB_ID=>2, EventLivePeer::EMAIL_TEMPLATE_ID=>3, EventLivePeer::EVENT_NAME=>4, EventLivePeer::EVENT_SHORT_NAME=>5, EventLivePeer::EVENT_DATE=>6, EventLivePeer::START_TIME=>7, EventLivePeer::EVENT_DATE_TIME=>8, EventLivePeer::STEP_NUMBER=>9, EventLivePeer::STEP_DAY=>10, EventLivePeer::COMMENTS=>11, EventLivePeer::DESCRIPTION=>12, EventLivePeer::IS_FREEROLL=>13, EventLivePeer::TABLES_NUMBER=>14, EventLivePeer::BUYIN=>15, EventLivePeer::ENTRANCE_FEE=>16, EventLivePeer::RAKE_PERCENT=>17, EventLivePeer::BLIND_TIME=>18, EventLivePeer::STACK_CHIPS=>19, EventLivePeer::PLAYERS=>20, EventLivePeer::ALLOWED_REBUYS=>21, EventLivePeer::ALLOWED_ADDONS=>22, EventLivePeer::IS_ILIMITED_REBUYS=>23, EventLivePeer::SAVED_RESULT=>24, EventLivePeer::TOTAL_REBUYS=>25, EventLivePeer::PUBLISH_PRIZE=>26, EventLivePeer::SUPPRESS_SCHEDULE=>27, EventLivePeer::PRIZE_SPLIT=>28, EventLivePeer::VISIT_COUNT=>29, EventLivePeer::SCHEDULE_START_DATE=>30, EventLivePeer::ENROLLMENT_START_DATE=>31, EventLivePeer::ENROLLMENT_MODE=>32, EventLivePeer::ENABLED=>33, EventLivePeer::VISIBLE=>34, EventLivePeer::DELETED=>35, EventLivePeer::LOCKED=>36, EventLivePeer::CREATED_AT=>37, EventLivePeer::UPDATED_AT=>38, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_live_id'=>1, 'club_id'=>2, 'email_template_id'=>3, 'event_name'=>4, 'event_short_name'=>5, 'event_date'=>6, 'start_time'=>7, 'event_date_time'=>8, 'step_number'=>9, 'step_day'=>10, 'comments'=>11, 'description'=>12, 'is_freeroll'=>13, 'tables_number'=>14, 'buyin'=>15, 'entrance_fee'=>16, 'rake_percent'=>17, 'blind_time'=>18, 'stack_chips'=>19, 'players'=>20, 'allowed_rebuys'=>21, 'allowed_addons'=>22, 'is_ilimited_rebuys'=>23, 'saved_result'=>24, 'total_rebuys'=>25, 'publish_prize'=>26, 'suppress_schedule'=>27, 'prize_split'=>28, 'visit_count'=>29, 'schedule_start_date'=>30, 'enrollment_start_date'=>31, 'enrollment_mode'=>32, 'enabled'=>33, 'visible'=>34, 'deleted'=>35, 'locked'=>36, 'created_at'=>37, 'updated_at'=>38, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingLiveId'=>1, 'ClubId'=>2, 'EmailTemplateId'=>3, 'EventName'=>4, 'EventShortName'=>5, 'EventDate'=>6, 'StartTime'=>7, 'EventDateTime'=>8, 'StepNumber'=>9, 'Comments'=>10, 'Description'=>11, 'IsFreeroll'=>12, 'IsMultiday'=>13, 'TablesNumber'=>14, 'Buyin'=>15, 'EntranceFee'=>16, 'RakePercent'=>17, 'GuaranteedPrize'=>18, 'BlindTime'=>19, 'StackChips'=>20, 'Players'=>21, 'AllowedRebuys'=>22, 'AllowedAddons'=>23, 'IsIlimitedRebuys'=>24, 'SavedResult'=>25, 'TotalRebuys'=>26, 'PublishPrize'=>27, 'SuppressSchedule'=>28, 'PrizeSplit'=>29, 'VisitCount'=>30, 'ScheduleStartDate'=>31, 'EnrollmentStartDate'=>32, 'EnrollmentMode'=>33, 'SuppressRanking'=>34, 'Enabled'=>35, 'Visible'=>36, 'Deleted'=>37, 'Locked'=>38, 'CreatedAt'=>39, 'UpdatedAt'=>40, ),
+		BasePeer::TYPE_COLNAME=>array (EventLivePeer::ID=>0, EventLivePeer::RANKING_LIVE_ID=>1, EventLivePeer::CLUB_ID=>2, EventLivePeer::EMAIL_TEMPLATE_ID=>3, EventLivePeer::EVENT_NAME=>4, EventLivePeer::EVENT_SHORT_NAME=>5, EventLivePeer::EVENT_DATE=>6, EventLivePeer::START_TIME=>7, EventLivePeer::EVENT_DATE_TIME=>8, EventLivePeer::STEP_NUMBER=>9, EventLivePeer::COMMENTS=>10, EventLivePeer::DESCRIPTION=>11, EventLivePeer::IS_FREEROLL=>12, EventLivePeer::IS_MULTIDAY=>13, EventLivePeer::TABLES_NUMBER=>14, EventLivePeer::BUYIN=>15, EventLivePeer::ENTRANCE_FEE=>16, EventLivePeer::RAKE_PERCENT=>17, EventLivePeer::GUARANTEED_PRIZE=>18, EventLivePeer::BLIND_TIME=>19, EventLivePeer::STACK_CHIPS=>20, EventLivePeer::PLAYERS=>21, EventLivePeer::ALLOWED_REBUYS=>22, EventLivePeer::ALLOWED_ADDONS=>23, EventLivePeer::IS_ILIMITED_REBUYS=>24, EventLivePeer::SAVED_RESULT=>25, EventLivePeer::TOTAL_REBUYS=>26, EventLivePeer::PUBLISH_PRIZE=>27, EventLivePeer::SUPPRESS_SCHEDULE=>28, EventLivePeer::PRIZE_SPLIT=>29, EventLivePeer::VISIT_COUNT=>30, EventLivePeer::SCHEDULE_START_DATE=>31, EventLivePeer::ENROLLMENT_START_DATE=>32, EventLivePeer::ENROLLMENT_MODE=>33, EventLivePeer::SUPPRESS_RANKING=>34, EventLivePeer::ENABLED=>35, EventLivePeer::VISIBLE=>36, EventLivePeer::DELETED=>37, EventLivePeer::LOCKED=>38, EventLivePeer::CREATED_AT=>39, EventLivePeer::UPDATED_AT=>40, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_live_id'=>1, 'club_id'=>2, 'email_template_id'=>3, 'event_name'=>4, 'event_short_name'=>5, 'event_date'=>6, 'start_time'=>7, 'event_date_time'=>8, 'step_number'=>9, 'comments'=>10, 'description'=>11, 'is_freeroll'=>12, 'is_multiday'=>13, 'tables_number'=>14, 'buyin'=>15, 'entrance_fee'=>16, 'rake_percent'=>17, 'guaranteed_prize'=>18, 'blind_time'=>19, 'stack_chips'=>20, 'players'=>21, 'allowed_rebuys'=>22, 'allowed_addons'=>23, 'is_ilimited_rebuys'=>24, 'saved_result'=>25, 'total_rebuys'=>26, 'publish_prize'=>27, 'suppress_schedule'=>28, 'prize_split'=>29, 'visit_count'=>30, 'schedule_start_date'=>31, 'enrollment_start_date'=>32, 'enrollment_mode'=>33, 'suppress_ranking'=>34, 'enabled'=>35, 'visible'=>36, 'deleted'=>37, 'locked'=>38, 'created_at'=>39, 'updated_at'=>40, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, )
 	);
 
 	
@@ -228,13 +234,13 @@ abstract class BaseEventLivePeer {
 
 		$criteria->addSelectColumn(EventLivePeer::STEP_NUMBER);
 
-		$criteria->addSelectColumn(EventLivePeer::STEP_DAY);
-
 		$criteria->addSelectColumn(EventLivePeer::COMMENTS);
 
 		$criteria->addSelectColumn(EventLivePeer::DESCRIPTION);
 
 		$criteria->addSelectColumn(EventLivePeer::IS_FREEROLL);
+
+		$criteria->addSelectColumn(EventLivePeer::IS_MULTIDAY);
 
 		$criteria->addSelectColumn(EventLivePeer::TABLES_NUMBER);
 
@@ -243,6 +249,8 @@ abstract class BaseEventLivePeer {
 		$criteria->addSelectColumn(EventLivePeer::ENTRANCE_FEE);
 
 		$criteria->addSelectColumn(EventLivePeer::RAKE_PERCENT);
+
+		$criteria->addSelectColumn(EventLivePeer::GUARANTEED_PRIZE);
 
 		$criteria->addSelectColumn(EventLivePeer::BLIND_TIME);
 
@@ -273,6 +281,8 @@ abstract class BaseEventLivePeer {
 		$criteria->addSelectColumn(EventLivePeer::ENROLLMENT_START_DATE);
 
 		$criteria->addSelectColumn(EventLivePeer::ENROLLMENT_MODE);
+
+		$criteria->addSelectColumn(EventLivePeer::SUPPRESS_RANKING);
 
 		$criteria->addSelectColumn(EventLivePeer::ENABLED);
 

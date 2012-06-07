@@ -155,9 +155,7 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -171,9 +169,7 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 	public function setEventPhotoIdLeft($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -191,9 +187,7 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 	public function setEventPhotoIdRight($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -211,9 +205,7 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 	public function setEventPhotoIdWinner($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -231,9 +223,7 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 	public function setLockKey($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -247,9 +237,7 @@ abstract class BaseEventPhotoContest extends BaseObject  implements Persistent {
 	public function setIpAddress($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

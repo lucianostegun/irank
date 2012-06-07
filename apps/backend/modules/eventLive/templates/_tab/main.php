@@ -3,6 +3,7 @@
 	$clubId        = $eventLiveObj->getClubId();
 	$rankingLiveId = $eventLiveObj->getRankingLiveId();
 	$savedResult   = $eventLiveObj->getSavedResult();
+	$isMultiday    = $eventLiveObj->getIsMultiday();
 	
 	if( !$clubId )
 		$clubId = $sf_user->getAttribute('clubId');
@@ -17,7 +18,10 @@
 			echo input_hidden_tag('rankingLiveId', $rankingLiveId, array('id'=>'eventLiveRankingLiveId'));
 	}
 	
+	$eventLiveScheduleObjList = $eventLiveObj->getScheduleList();
+	
 	echo input_hidden_tag(($savedResult?'eventDate':'eventDateTmp'), $eventLiveObj->getEventDate('d/m/Y'), array('id'=>'eventLiveEventDateTmp'));
+	echo input_hidden_tag('stepDayCurrentIndex', count($eventLiveScheduleObjList)-1, array('id'=>'eventLiveStepDayCurrentIndex'));
 ?>
 	<?php if( $iRankAdmin ): ?>
 	<div class="formRow">
@@ -50,15 +54,17 @@
 	</div>
 	
 	<div class="formRow">
-		<label>Nome do evento</label>
+		<label>Etapa / Título</label>
 		<div class="formRight">
-			<?php echo input_tag('eventName', $eventLiveObj->getEventName(), array('size'=>50, 'maxlength'=>100, 'onblur'=>'replicateEventName(this.value)', 'id'=>'eventLiveEventName')) ?>
+			<?php echo input_tag('stepNumber', $eventLiveObj->getStepNumber(), array('size'=>3, 'maxlength'=>2, 'onblur'=>'updateEventNamePreview()', 'id'=>'eventLiveEventStepNumber')) ?>
+			<?php echo input_tag('eventName', $eventLiveObj->getEventName(), array('size'=>50, 'maxlength'=>100, 'onblur'=>'replicateEventName(this.value); updateEventNamePreview()', 'id'=>'eventLiveEventName')) ?>
+			<div class="formNote error" id="eventLiveFormErrorEventStepNumber"></div>
 			<div class="formNote error" id="eventLiveFormErrorEventName"></div>
 		</div>
 		<div class="clear"></div>
 	</div>
 
-	<div class="formRow">
+	<div class="formRow hidden">
 		<label>Nome curto</label>
 		<div class="formRight">
 			<?php echo input_tag('eventShortName', $eventLiveObj->getEventShortName(), array('size'=>50, 'maxlength'=>100, 'id'=>'eventLiveEventShortName')) ?>
@@ -68,32 +74,76 @@
 	</div>
 
 	<div class="formRow">
-		<label>Nº etapa / Dia</label>
+		<label>Garantido</label>
 		<div class="formRight">
-			<?php echo input_tag('stepNumber', $eventLiveObj->getStepNumber(), array('size'=>3, 'maxlength'=>2, 'id'=>'eventLiveEventStepNumber')) ?>
-			<?php echo input_tag('stepDay', $eventLiveObj->getStepDay(), array('size'=>7, 'maxlength'=>5, 'id'=>'eventLiveEventStepDay')) ?>
-			<div class="formNote error" id="eventLiveFormErrorEventStepNumber"></div>
-			<div class="formNote error" id="eventLiveFormErrorEventStepDay"></div>
-			<div class="formNote">Utilizado na divulgação do evento por e-mail/sms</div>
+			<?php echo input_tag('guaranteedPrize', Util::formatFloat($eventLiveObj->getGuaranteedPrize(), true), array('size'=>10, 'maxlength'=>10, 'class'=>'textR', 'onblur'=>'updateEventNamePreview()', 'id'=>'eventLiveGuaranteedPrize')) ?>
+			<div class="formNote error" id="eventLiveFormErrorGuaranteedPrize"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
+		<label>Preview</label>
+		<div class="formRight">
+			<label style="margin-right: 5px" id="eventLiveEventNamePreview">
+				<?php
+					$eventNamePreview = $eventLiveObj->toString();
+					echo nvl($eventNamePreview, 'Preview do nome do evento');
+				?>
+			</label>
+			<label style="color: #909090"> - Dia X</label>
 		</div>
 		<div class="clear"></div>
 	</div>
 	
 
 	<div class="formRow">
-		<label>Data</label>
+		<label class="">Múltiplos dias</label>
 		<div class="formRight">
-			<?php echo input_tag((!$savedResult?'eventDate':'eventDateOld'), $eventLiveObj->getEventDate('d/m/Y'), array('disabled'=>$savedResult, 'maxlength'=>10, 'class'=>'maskDate', 'id'=>'eventLiveEventDate')) ?>
+			<?php echo checkbox_tag('isMultiday', true, $isMultiday, array('onclick'=>'handleIsMultiday(this.checked)', 'id'=>'eventLiveIsMultiday')) ?>
+			<div class="clear"></div>
+			<div class="formNote error" id="eventLiveFormErrorIsMultiday"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="formRow <?php echo ($isMultiday?'hidden':'') ?>" id="eventLiveEventDateRowDiv">
+		<label class="">Data/Hora</label>
+		<div class="formRight">
+			<div>
+				<span class="multi"><?php echo input_tag((!$savedResult?'eventDate':'eventDateOld'), $eventLiveObj->getEventDate('d/m/Y'), array('disabled'=>$savedResult, 'maxlength'=>10, 'class'=>'maskDate', 'id'=>'eventLiveEventDate')) ?></span>
+				<span class="multi"><?php echo input_tag('startTime', $eventLiveObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'eventLiveStartTime')) ?></span>
+			</div>
+			<div class="clear"></div>
 			<div class="formNote error" id="eventLiveFormErrorEventDate"></div>
+			<div class="formNote error" id="eventLiveFormErrorStartTime"></div>
 		</div>
 		<div class="clear"></div>
 	</div>
 
-	<div class="formRow">
-		<label>Hora</label>
+	<div class="formRow <?php echo ($isMultiday?'':'hidden') ?>" id="eventLiveStepDayRowDiv">
+		<label class="">Dia / Data / Hora</label>
 		<div class="formRight">
-			<?php echo input_tag('startTime', $eventLiveObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'eventLiveStartTime')) ?>
-			<div class="formNote error" id="eventLiveFormErrorStartTime"></div>
+			<div class="formRight" id="eventLiveStepDayListDiv">
+				<?php foreach($eventLiveScheduleObjList as $key=>$eventLiveScheduleObj): ?>
+				<?php if( $key > 0 ): ?><div class="clear mt6"></div><?php endif; ?>
+				<div id="eventLiveStepDayRow-<?php echo $key ?>">
+					<span class="multi"><?php echo input_tag('stepDay[]', $eventLiveScheduleObj->getStepDay(), array('size'=>5, 'maxlength'=>5, 'id'=>'eventLiveStepDay')) ?></span>
+					<span class="multi"><?php echo input_tag('stepEventDate[]', $eventLiveScheduleObj->getEventDate('d/m/Y'), array('disabled'=>$savedResult, 'maxlength'=>10, 'class'=>'stepEventDate maskDate', 'id'=>'eventLiveStepEventDate-')) ?></span>
+					<span class="multi"><?php echo input_tag('stepStartTime[]', $eventLiveScheduleObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'eventLiveStepStartTime')) ?></span>
+					<?php if( $key==0 ): ?>
+					<span class="multi"><?php echo link_to(image_tag('backend/icons/color/plus', array('title'=>'Adicionar dia', 'class'=>'mt7')), '#addStepDay()') ?></span>
+					<?php else: ?>
+					<span class="multi"><?php echo link_to(image_tag('backend/icons/color/cross', array('title'=>'Excluir dia', 'class'=>'mt7')), '#removeStepDay('.$key.')') ?></span>
+					<?php endif; ?>
+					<div class="clear"></div>
+				</div>
+				<?php endforeach; ?>
+			</div>
+			<div class="clear"></div>
+			<div class="formNote error" id="eventLiveFormErrorStepDay"></div>
+			<div class="formNote error" id="eventLiveFormErrorStepEventDate"></div>
+			<div class="formNote error" id="eventLiveFormErrorStepStartTime"></div>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -177,7 +227,7 @@
 
 	<div class="formRow">
 		<label>Informações</label>
-		<div class="formRight">
+		<div class="formRight" style="width: 70%">
 			<?php echo textarea_tag('description', $eventLiveObj->getDescription(false), array('style'=>'height: 400px', 'id'=>'eventLiveDescription')) ?>
 			<div class="formNote error" id="eventLiveFormErrorDescription"></div>
 		</div>
@@ -186,7 +236,7 @@
 
 	<div class="formRow">
 		<label>Observações</label>
-		<div class="formRight">
+		<div class="formRight" style="width: 70%">
 			<?php echo textarea_tag('comments', $eventLiveObj->getComments(), array('style'=>'height: 150px', 'id'=>'eventLiveComments')) ?>
 			<div class="formNote error" id="eventLiveFormErrorComments"></div>
 		</div>

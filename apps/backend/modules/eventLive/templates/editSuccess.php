@@ -49,6 +49,4 @@
 		</div>
 	</div>
 </div>
-
-
-	<?php include_partial('people/dialog/quickEdit') ?>
+<?php include_partial('people/dialog/quickEdit') ?>

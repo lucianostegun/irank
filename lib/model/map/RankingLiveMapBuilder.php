@@ -70,9 +70,13 @@ class RankingLiveMapBuilder {
 
 		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
 
+		$tMap->addColumn('GUARANTEED_PRIZE', 'GuaranteedPrize', 'double', CreoleTypes::NUMERIC, false, 5);
+
 		$tMap->addColumn('START_TIME', 'StartTime', 'int', CreoleTypes::TIME, false, null);
 
 		$tMap->addColumn('IS_FREEROLL', 'IsFreeroll', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('IS_MULTIDAY', 'IsMultiday', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('BLIND_TIME', 'BlindTime', 'int', CreoleTypes::TIME, false, null);
 

@@ -1,3 +1,7 @@
+<?php
+	$enrollmentStartDate = $eventLiveObj->getEnrollmentStartDate('d/m/Y');
+	$enrollmentStartDate = ($enrollmentStartDate=='01/01/2012'?'':$enrollmentStartDate);
+?>
 	<div class="formRow">
 		<label>Não publicar na agenda</label>
 		<div class="formRight">
@@ -22,7 +26,7 @@
 	<div class="formRow">
 		<label>Inscrições</label>
 		<div class="formRight">
-			<?php echo input_tag('enrollmentStartDate', $eventLiveObj->getEnrollmentStartDate('d/m/Y'), array('maxlength'=>10, 'class'=>'datepicker maskDate', 'id'=>'eventLiveEnrollmentStartDate')) ?>
+			<?php echo input_tag('enrollmentStartDate', $enrollmentStartDate, array('maxlength'=>10, 'class'=>'datepicker maskDate', 'id'=>'eventLiveEnrollmentStartDate')) ?>
 			<div class="formNote error" id="eventLiveFormErrorEnrollmentStartDate"></div>
 			<div class="formNote">Data em que os jogadores poderão começar a se inscrever. <i>(Vazio para imediatamente)</i></div>
 		</div>

@@ -54,13 +54,13 @@ class EventLiveMapBuilder {
 
 		$tMap->addColumn('STEP_NUMBER', 'StepNumber', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('STEP_DAY', 'StepDay', 'string', CreoleTypes::VARCHAR, false, null);
-
 		$tMap->addColumn('COMMENTS', 'Comments', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
 		$tMap->addColumn('IS_FREEROLL', 'IsFreeroll', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('IS_MULTIDAY', 'IsMultiday', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('TABLES_NUMBER', 'TablesNumber', 'int', CreoleTypes::INTEGER, false, null);
 
@@ -69,6 +69,8 @@ class EventLiveMapBuilder {
 		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
 
 		$tMap->addColumn('RAKE_PERCENT', 'RakePercent', 'double', CreoleTypes::NUMERIC, false, 5);
+
+		$tMap->addColumn('GUARANTEED_PRIZE', 'GuaranteedPrize', 'double', CreoleTypes::NUMERIC, false, 5);
 
 		$tMap->addColumn('BLIND_TIME', 'BlindTime', 'int', CreoleTypes::TIME, false, null);
 
@@ -99,6 +101,8 @@ class EventLiveMapBuilder {
 		$tMap->addColumn('ENROLLMENT_START_DATE', 'EnrollmentStartDate', 'int', CreoleTypes::DATE, false, null);
 
 		$tMap->addColumn('ENROLLMENT_MODE', 'EnrollmentMode', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('SUPPRESS_RANKING', 'SuppressRanking', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

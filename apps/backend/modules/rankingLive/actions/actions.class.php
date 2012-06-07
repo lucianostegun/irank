@@ -145,14 +145,15 @@ class rankingLiveActions extends sfActions
 					 'maxFileSize'=>$maxFileSize,
 					 'noFile'=>true,
 					 'fileName'=>$fileName,
-					 'minWidth'=>90,
-					 'maxWidth'=>90,
-					 'minHeight'=>90,
-					 'maxHeight'=>90);
+					 'minWidth'=>150,
+					 'maxWidth'=>150,
+					 'minHeight'=>150,
+					 'maxHeight'=>150);
 
 	try {
 		
 		$fileObj = File::upload($request, 'Filedata', '/images/ranking', $options);
+		$fileObj->createThumbnail('/images/ranking/small', 90, 90);
 		$fileObj->createThumbnail('/images/ranking/thumb', 65, 65);
 		
 		$rankingLiveObj->setFileNameLogo($fileName);
@@ -228,6 +229,13 @@ class rankingLiveActions extends sfActions
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	return $this->renderText(get_partial('rankingLive/include/classify', array('rankingLiveObj'=>$rankingLiveObj, 'rankingDate'=>$rankingDate)));
+  }
+
+  public function executeGetCalendar($request){
+    
+	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('rankingLive/include/eventCalendar', array()));
   }
 
   public function executeGetInfo($request){

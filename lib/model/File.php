@@ -397,12 +397,20 @@ class File extends BaseFile
 		$left = 0;
 	
 		$new = imagecreatetruecolor($minWidth, $minHeight);
+		
+		if( $extension=='png' ){
+			
+			imagealphablending($new, false);
+			imagesavealpha($new,true);
+		}
+		
 		imagecopyresampled($new, $newImg, 0, 0, $left, $top, $minWidth, $newHeight, $srcW, $srcH);
 
-//		header('Content-Type: image/jpeg');
+		if( $extension=='png' )
+			imagepng($new, $thumbFilePath);
+		else
+			imagejpeg($new, $thumbFilePath, 100);
 
-		imagejpeg($new, $thumbFilePath, 100);
-//		imagejpeg($new, ''	, 100);
 		imagedestroy($new);
 		imagedestroy($newImg);
 	}

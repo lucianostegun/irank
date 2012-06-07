@@ -186,9 +186,7 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -202,9 +200,7 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 	public function setCashTableId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -222,9 +218,7 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 	public function setCashTableSessionId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -242,9 +236,7 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 	public function setCashTablePlayerId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -262,9 +254,7 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 	public function setPeopleId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -282,9 +272,7 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 	public function setPayMethodId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -302,9 +290,7 @@ abstract class BaseCashTablePlayerBuyin extends BaseObject  implements Persisten
 	public function setClubCheckId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

@@ -21,7 +21,7 @@ class CashTable extends BaseCashTable
 			$isNew              = $this->isNew();
 			$columnModifiedList = Log::getModifiedColumnList($this);
 
-			parent::save();
+			parent::save($con);
 			
         	Log::quickLog('cash_table', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
         } catch ( Exception $e ) {
@@ -34,7 +34,7 @@ class CashTable extends BaseCashTable
 		
 		$this->setVisible(false);
 		$this->setDeleted(true);
-		$this->save();
+		$this->save($con);
 	}
 	
 	public function getIsNew(){

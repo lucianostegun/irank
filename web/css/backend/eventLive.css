@@ -165,7 +165,7 @@ section.addPlayer li {
 	line-height: 	30px;
 }
 
-#eventLiveEventDate { width: 70px!important; }
+#eventLiveEventDate, .stepEventDate { width: 70px!important; }
 
 #smsCredit,
 #smsCreditMessages {
