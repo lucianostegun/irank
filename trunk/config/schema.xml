@@ -555,6 +555,7 @@
 		<column name="stack_chips" type="DOUBLE"/>
 		<column name="allowed_rebuys" type="INTEGER" default="0" />
 		<column name="allowed_addons" type="INTEGER" default="0" />
+		<column name="tables_number" type="INTEGER" />
 		<column name="is_ilimited_rebuys" type="BOOLEAN"/>
 		<column name="publish_prize" type="BOOLEAN"/>
 		<column name="prize_split" type="VARCHAR" />

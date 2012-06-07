@@ -82,6 +82,8 @@ class RankingLiveMapBuilder {
 
 		$tMap->addColumn('ALLOWED_ADDONS', 'AllowedAddons', 'int', CreoleTypes::INTEGER, false, null);
 
+		$tMap->addColumn('TABLES_NUMBER', 'TablesNumber', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('IS_ILIMITED_REBUYS', 'IsIlimitedRebuys', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('PUBLISH_PRIZE', 'PublishPrize', 'boolean', CreoleTypes::BOOLEAN, false, null);

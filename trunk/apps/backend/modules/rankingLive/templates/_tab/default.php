@@ -65,6 +65,15 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+
+	<div class="formRow">
+		<label>Nº de mesas</label>
+		<div class="formRight">
+			<?php echo input_tag('tablesNumber', $rankingLiveObj->getTablesNumber(), array('size'=>1, 'maxlength'=>2, 'id'=>'rankingLiveTablesNumber')) ?>
+			<div class="formNote error" id="rankingLiveFormErrorTablesNumber"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
 	
 	<br/>
 	<h5>Divulgação</h5>
