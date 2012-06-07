@@ -1,5 +1,5 @@
 <?php
-	foreach($rankingLiveObj->getClassify() as $rankingPosition=>$rankingLivePlayerObj):
+	foreach($rankingLiveObj->getClassify(null, $rankingDate) as $rankingPosition=>$rankingLivePlayerObj):
 		$rankingPosition++;
 		$peopleName   = $rankingLivePlayerObj->getPeople()->getName();
 		$emailAddress = $rankingLivePlayerObj->getPeople()->getEmailAddress();

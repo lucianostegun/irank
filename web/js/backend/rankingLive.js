@@ -221,3 +221,30 @@ function replicateStartTime(startTime){
 	
 	$('.rankingLiveQuickEventStartTime').val(startTime);
 }
+
+function loadRankingLiveHistory(rankingDate){
+
+	showIndicator();
+	
+	var rankingLiveId = $('#rankingLiveId').val();
+	
+	var successFunc = function(content){
+		
+		hideIndicator();
+		
+		$('#rankingLiveClassifyTbody').html(content);
+	}
+
+	var failureFunc = function(t){
+		
+		hideIndicator();
+		
+		if( isDebug() )
+			debug(t.responseText);
+		else
+			alert('Ocorreu um erro ao recarregar a lista de classificação.');
+	}
+	
+	var urlAjax = _webRoot+'/rankingLive/getClassifyList?rankingLiveId='+rankingLiveId+'&rankingDate='+rankingDate;
+	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}

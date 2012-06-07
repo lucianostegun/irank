@@ -682,4 +682,15 @@ class RankingLive extends BaseRankingLive
 		
 		return $infoList;
 	}
+	
+	public function getHistoryClassifyOptions( $defaultValue='' ){
+		
+		$eventLiveObjList = $this->getEventLiveList();
+		$options          = array(''=>'Todos eventos');
+		
+		foreach($eventLiveObjList as $eventLiveObj)
+			$options[$eventLiveObj->getEventDate('d/m/Y')] = $eventLiveObj->getEventDate('d/m/Y');
+		
+		return options_for_select($options, $defaultValue);
+	}
 }

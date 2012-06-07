@@ -219,6 +219,16 @@ class rankingLiveActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	return $this->renderText(get_partial('rankingLive/include/event', array('rankingLiveObj'=>$rankingLiveObj)));
   }
+  
+  public function executeGetClassifyList($request){
+  	
+  	$rankingDate    = $request->getParameter('rankingDate');
+  	$rankingLiveObj = RankingLivePeer::retrieveByPK($this->rankingLiveId);
+  	
+  	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('rankingLive/include/classify', array('rankingLiveObj'=>$rankingLiveObj, 'rankingDate'=>$rankingDate)));
+  }
 
   public function executeGetInfo($request){
     
