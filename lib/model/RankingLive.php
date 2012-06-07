@@ -75,6 +75,7 @@ class RankingLive extends BaseRankingLive
 		$stackChips              = $request->getParameter('stackChips');
 		$allowedRebuys           = $request->getParameter('allowedRebuys');
 		$allowedAddons           = $request->getParameter('allowedAddons');
+		$tablesNumber            = $request->getParameter('tablesNumber');
 		$isIlimitedRebuys        = $request->getParameter('isIlimitedRebuys');
 		$prizeSplit              = $request->getParameter('prizeSplit');
 		$rakePercent             = $request->getParameter('rakePercent');
@@ -111,6 +112,7 @@ class RankingLive extends BaseRankingLive
 		$this->setStackChips($stackChips);
 		$this->setAllowedRebuys($allowedRebuys);
 		$this->setAllowedAddons($allowedAddons);
+		$this->setTablesNumber($tablesNumber);
 		$this->setIsIlimitedRebuys(($isIlimitedRebuys?true:false));
 		$this->setPrizeSplit(nvl($prizeSplit));
 		$this->setRakePercent(Util::formatFloat($rakePercent));
@@ -671,6 +673,7 @@ class RankingLive extends BaseRankingLive
 		$infoList['stackChips']       = $this->getStackChips(true);
 		$infoList['allowedRebuys']    = $this->getAllowedRebuys();
 		$infoList['allowedAddons']    = $this->getAllowedAddons();
+		$infoList['tablesNumber']     = $this->getTablesNumber();
 		$infoList['isIlimitedRebuys'] = $this->getIsIlimitedRebuys();
 		$infoList['rakePercent']      = $this->getRakePercent();
 		$infoList['prizeSplit']       = $this->getPrizeSplit();

@@ -105,6 +105,10 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 
 	
+	protected $tables_number;
+
+
+	
 	protected $is_ilimited_rebuys;
 
 
@@ -411,6 +415,13 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	{
 
 		return $this->allowed_addons;
+	}
+
+	
+	public function getTablesNumber()
+	{
+
+		return $this->tables_number;
 	}
 
 	
@@ -888,6 +899,22 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setTablesNumber($v)
+	{
+
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->tables_number !== $v) {
+			$this->tables_number = $v;
+			$this->modifiedColumns[] = RankingLivePeer::TABLES_NUMBER;
+		}
+
+	} 
+	
 	public function setIsIlimitedRebuys($v)
 	{
 
@@ -1060,31 +1087,33 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 			$this->allowed_addons = $rs->getInt($startcol + 23);
 
-			$this->is_ilimited_rebuys = $rs->getBoolean($startcol + 24);
+			$this->tables_number = $rs->getInt($startcol + 24);
 
-			$this->publish_prize = $rs->getBoolean($startcol + 25);
+			$this->is_ilimited_rebuys = $rs->getBoolean($startcol + 25);
 
-			$this->prize_split = $rs->getString($startcol + 26);
+			$this->publish_prize = $rs->getBoolean($startcol + 26);
 
-			$this->rake_percent = $rs->getFloat($startcol + 27);
+			$this->prize_split = $rs->getString($startcol + 27);
 
-			$this->enabled = $rs->getBoolean($startcol + 28);
+			$this->rake_percent = $rs->getFloat($startcol + 28);
 
-			$this->visible = $rs->getBoolean($startcol + 29);
+			$this->enabled = $rs->getBoolean($startcol + 29);
 
-			$this->locked = $rs->getBoolean($startcol + 30);
+			$this->visible = $rs->getBoolean($startcol + 30);
 
-			$this->deleted = $rs->getBoolean($startcol + 31);
+			$this->locked = $rs->getBoolean($startcol + 31);
 
-			$this->created_at = $rs->getTimestamp($startcol + 32, null);
+			$this->deleted = $rs->getBoolean($startcol + 32);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 33, null);
+			$this->created_at = $rs->getTimestamp($startcol + 33, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 34, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 34; 
+						return $startcol + 35; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating RankingLive object", $e);
 		}
@@ -1414,33 +1443,36 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				return $this->getAllowedAddons();
 				break;
 			case 24:
-				return $this->getIsIlimitedRebuys();
+				return $this->getTablesNumber();
 				break;
 			case 25:
-				return $this->getPublishPrize();
+				return $this->getIsIlimitedRebuys();
 				break;
 			case 26:
-				return $this->getPrizeSplit();
+				return $this->getPublishPrize();
 				break;
 			case 27:
-				return $this->getRakePercent();
+				return $this->getPrizeSplit();
 				break;
 			case 28:
-				return $this->getEnabled();
+				return $this->getRakePercent();
 				break;
 			case 29:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 30:
-				return $this->getLocked();
+				return $this->getVisible();
 				break;
 			case 31:
-				return $this->getDeleted();
+				return $this->getLocked();
 				break;
 			case 32:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 33:
+				return $this->getCreatedAt();
+				break;
+			case 34:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1477,16 +1509,17 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 			$keys[21]=>$this->getStackChips(),
 			$keys[22]=>$this->getAllowedRebuys(),
 			$keys[23]=>$this->getAllowedAddons(),
-			$keys[24]=>$this->getIsIlimitedRebuys(),
-			$keys[25]=>$this->getPublishPrize(),
-			$keys[26]=>$this->getPrizeSplit(),
-			$keys[27]=>$this->getRakePercent(),
-			$keys[28]=>$this->getEnabled(),
-			$keys[29]=>$this->getVisible(),
-			$keys[30]=>$this->getLocked(),
-			$keys[31]=>$this->getDeleted(),
-			$keys[32]=>$this->getCreatedAt(),
-			$keys[33]=>$this->getUpdatedAt(),
+			$keys[24]=>$this->getTablesNumber(),
+			$keys[25]=>$this->getIsIlimitedRebuys(),
+			$keys[26]=>$this->getPublishPrize(),
+			$keys[27]=>$this->getPrizeSplit(),
+			$keys[28]=>$this->getRakePercent(),
+			$keys[29]=>$this->getEnabled(),
+			$keys[30]=>$this->getVisible(),
+			$keys[31]=>$this->getLocked(),
+			$keys[32]=>$this->getDeleted(),
+			$keys[33]=>$this->getCreatedAt(),
+			$keys[34]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1575,33 +1608,36 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				$this->setAllowedAddons($value);
 				break;
 			case 24:
-				$this->setIsIlimitedRebuys($value);
+				$this->setTablesNumber($value);
 				break;
 			case 25:
-				$this->setPublishPrize($value);
+				$this->setIsIlimitedRebuys($value);
 				break;
 			case 26:
-				$this->setPrizeSplit($value);
+				$this->setPublishPrize($value);
 				break;
 			case 27:
-				$this->setRakePercent($value);
+				$this->setPrizeSplit($value);
 				break;
 			case 28:
-				$this->setEnabled($value);
+				$this->setRakePercent($value);
 				break;
 			case 29:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 30:
-				$this->setLocked($value);
+				$this->setVisible($value);
 				break;
 			case 31:
-				$this->setDeleted($value);
+				$this->setLocked($value);
 				break;
 			case 32:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 33:
+				$this->setCreatedAt($value);
+				break;
+			case 34:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1635,16 +1671,17 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[21], $arr)) $this->setStackChips($arr[$keys[21]]);
 		if (array_key_exists($keys[22], $arr)) $this->setAllowedRebuys($arr[$keys[22]]);
 		if (array_key_exists($keys[23], $arr)) $this->setAllowedAddons($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setIsIlimitedRebuys($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setPublishPrize($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setPrizeSplit($arr[$keys[26]]);
-		if (array_key_exists($keys[27], $arr)) $this->setRakePercent($arr[$keys[27]]);
-		if (array_key_exists($keys[28], $arr)) $this->setEnabled($arr[$keys[28]]);
-		if (array_key_exists($keys[29], $arr)) $this->setVisible($arr[$keys[29]]);
-		if (array_key_exists($keys[30], $arr)) $this->setLocked($arr[$keys[30]]);
-		if (array_key_exists($keys[31], $arr)) $this->setDeleted($arr[$keys[31]]);
-		if (array_key_exists($keys[32], $arr)) $this->setCreatedAt($arr[$keys[32]]);
-		if (array_key_exists($keys[33], $arr)) $this->setUpdatedAt($arr[$keys[33]]);
+		if (array_key_exists($keys[24], $arr)) $this->setTablesNumber($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setIsIlimitedRebuys($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setPublishPrize($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setPrizeSplit($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setRakePercent($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setEnabled($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setVisible($arr[$keys[30]]);
+		if (array_key_exists($keys[31], $arr)) $this->setLocked($arr[$keys[31]]);
+		if (array_key_exists($keys[32], $arr)) $this->setDeleted($arr[$keys[32]]);
+		if (array_key_exists($keys[33], $arr)) $this->setCreatedAt($arr[$keys[33]]);
+		if (array_key_exists($keys[34], $arr)) $this->setUpdatedAt($arr[$keys[34]]);
 	}
 
 	
@@ -1676,6 +1713,7 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RankingLivePeer::STACK_CHIPS)) $criteria->add(RankingLivePeer::STACK_CHIPS, $this->stack_chips);
 		if ($this->isColumnModified(RankingLivePeer::ALLOWED_REBUYS)) $criteria->add(RankingLivePeer::ALLOWED_REBUYS, $this->allowed_rebuys);
 		if ($this->isColumnModified(RankingLivePeer::ALLOWED_ADDONS)) $criteria->add(RankingLivePeer::ALLOWED_ADDONS, $this->allowed_addons);
+		if ($this->isColumnModified(RankingLivePeer::TABLES_NUMBER)) $criteria->add(RankingLivePeer::TABLES_NUMBER, $this->tables_number);
 		if ($this->isColumnModified(RankingLivePeer::IS_ILIMITED_REBUYS)) $criteria->add(RankingLivePeer::IS_ILIMITED_REBUYS, $this->is_ilimited_rebuys);
 		if ($this->isColumnModified(RankingLivePeer::PUBLISH_PRIZE)) $criteria->add(RankingLivePeer::PUBLISH_PRIZE, $this->publish_prize);
 		if ($this->isColumnModified(RankingLivePeer::PRIZE_SPLIT)) $criteria->add(RankingLivePeer::PRIZE_SPLIT, $this->prize_split);
@@ -1761,6 +1799,8 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 		$copyObj->setAllowedRebuys($this->allowed_rebuys);
 
 		$copyObj->setAllowedAddons($this->allowed_addons);
+
+		$copyObj->setTablesNumber($this->tables_number);
 
 		$copyObj->setIsIlimitedRebuys($this->is_ilimited_rebuys);
 

@@ -515,6 +515,7 @@ function loadDefaultValues(rankingLiveId){
 		$('#eventLiveStackChips').val(infoObj.stackChips);
 		$('#eventLiveAllowedRebuys').val(infoObj.allowedRebuys);
 		$('#eventLiveAllowedAddons').val(infoObj.allowedAddons);
+		$('#eventLiveTablesNumber').val(infoObj.tablesNumber);
 		$('#eventLivePrizeSplit').val(infoObj.prizeSplit);
 		$('#eventLiveRakePercent').val(infoObj.rakePercent);
 		$('#eventLiveIsIlimitedRebuys').prop('checked', infoObj.isIlimitedRebuys);
