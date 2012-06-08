@@ -25,7 +25,7 @@
 				$clubObj    = $rankingLiveObj->getClub();
 				$startDate  = $rankingLiveObj->getStartDate('d/m/Y');
 				$finishDate = $rankingLiveObj->getFinishDate('d/m/Y');
-				$events     = $rankingLiveObj->getEvents();
+				$events     = $rankingLiveObj->getEventCount();
 		?>
 		<div class="ranking">
 			<a href="javascript:void(0)" onclick="goToPage('rankingLive', 'details', 'id', <?php echo $rankingLiveId ?>)" title="Abrir detalhes do ranking">
