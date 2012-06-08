@@ -82,6 +82,7 @@ class RankingLive extends BaseRankingLive
 		$prizeSplit              = $request->getParameter('prizeSplit');
 		$rakePercent             = $request->getParameter('rakePercent');
 		$publishPrize            = $request->getParameter('publishPrize');
+		$emailTemplateId         = $request->getParameter('emailTemplateId');
 		
 		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $stackChips) )
 			$stackChips = Util::formatFloat($stackChips)*1000;
@@ -121,6 +122,7 @@ class RankingLive extends BaseRankingLive
 		$this->setPrizeSplit(nvl($prizeSplit));
 		$this->setRakePercent(Util::formatFloat($rakePercent));
 		$this->setPublishPrize(($publishPrize?true:false));
+		$this->setEmailTemplateId($emailTemplateId);
 		
 		$this->setEnabled(true);
 		$this->setVisible(true);
@@ -241,13 +243,16 @@ class RankingLive extends BaseRankingLive
 				$eventLiveObj->setPublishPrize($this->getPublishPrize());
 				$eventLiveObj->setRakePercent($this->getRakePercent());
 				$eventLiveObj->setEmailTemplateId($this->getEmailTemplateId());
+				$eventLiveObj->setTablesNumber($this->getTablesNumber());
 				$eventLiveObj->setDescription('[descrição do ranking]');
 				$eventLiveObj->setEnabled(true);
 				$eventLiveObj->setVisible(true);
 				$eventLiveObj->setDeleted(false);
 
 				$eventLiveObj->save($con);
-				$eventLiveObj->saveScheduleFromTemplate($con);
+				
+				if( $this->getIsMultiday() )
+					$eventLiveObj->saveScheduleFromTemplate($con);
 				
 				$this->reloadEvents = true;
 			}
