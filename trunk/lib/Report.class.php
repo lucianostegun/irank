@@ -144,6 +144,7 @@ class Report {
     public static function defaultReplace($content, $infoList=array(), $emailLogId=false){
     	
     	$host = MyTools::getRequest()->getHost();
+    	$host = str_replace('backend', 'beta', $host);
     	
 		if( $emailLogId ){
 			$headerLogoUrl = 'http://[host]/home/images/email/logoHeader.png?elid='.Util::encodeId($emailLogId);
