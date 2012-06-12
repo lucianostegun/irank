@@ -114,7 +114,9 @@ class EventLivePlayer extends BaseEventLivePlayer
 	
 	public function getCurrentStatus(){
 		
-		return ($this->getEnabled()?'yes':'no');
+		$enrollmentStatus = $this->getEnrollmentStatus();
+		
+		return (in_array($enrollmentStatus, array('enrolled', 'confirmed'))?'yes':'no');
 	}
 	
 	public function getEnrollmentStatus($description=false){

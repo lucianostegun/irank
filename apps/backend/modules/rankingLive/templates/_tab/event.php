@@ -24,5 +24,5 @@
 <div id="quickAddEventFormDiv" class="form" style="display: none">
 	<h3>Inclusão rápida de etapas </h3>
 	<hr/><br/>
-	<?php include_partial('rankingLive/include/quickEvent'); ?>
+	<?php include_partial('rankingLive/include/quickEvent', array('rankingLiveObj'=>$rankingLiveObj)); ?>
 </div>

@@ -2,8 +2,8 @@
 	$allowedRebuys = $rankingLiveObj->getAllowedRebuys();
 	$isMultiday    = $rankingLiveObj->getIsMultiday();
 	
-	$rankingLiveScheduleObjList = $rankingLiveObj->getTemplateList();
-	echo input_hidden_tag('templateCurrentIndex', count($rankingLiveScheduleObjList)-1, array('id'=>'rankingLiveTemplateCurrentIndex'));
+	$rankingLiveTemplateObjList = $rankingLiveObj->getTemplateList();
+	echo input_hidden_tag('templateCurrentIndex', count($rankingLiveTemplateObjList)-1, array('id'=>'rankingLiveTemplateCurrentIndex'));
 ?>
 	<div class="formRow">
 		<label>Hora</label>
@@ -159,12 +159,14 @@
 		<label class="">Dia / Intervalo / Hora</label>
 		<div class="formRight">
 			<div class="formRight" id="rankingLiveTemplateListDiv">
-				<?php foreach($rankingLiveScheduleObjList as $key=>$rankingLiveScheduleObj): ?>
+				<?php foreach($rankingLiveTemplateObjList as $key=>$rankingLiveTemplateObj): ?>
 				<?php if( $key > 0 ): ?><div class="clear mt6"></div><?php endif; ?>
 				<div id="rankingLiveTemplateRow-<?php echo $key ?>">
-					<span class="multi"><?php echo input_tag('stepDay[]', $rankingLiveScheduleObj->getStepDay(), array('size'=>5, 'maxlength'=>10, 'id'=>'rankingLiveTemplateStepDay')) ?></span>
-					<span class="multi"><?php echo input_tag('daysAfter[]', $rankingLiveScheduleObj->getDaysAfter(), array('size'=>3, 'maxlength'=>3, 'readonly'=>($key==0), 'id'=>'rankingLiveTemplateDaysAfter')) ?></span>
-					<span class="multi"><?php echo input_tag('templateStartTime[]', $rankingLiveScheduleObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'rankingLiveTemplateStartTime')) ?></span>
+					<span class="multi"><?php echo input_tag('stepDay[]', $rankingLiveTemplateObj->getStepDay(), array('size'=>5, 'maxlength'=>10, 'id'=>'rankingLiveTemplateStepDay')) ?></span>
+					<span class="multi"><?php echo input_tag('daysAfter[]', $rankingLiveTemplateObj->getDaysAfter(), array('size'=>3, 'maxlength'=>3, 'readonly'=>($key==0), 'id'=>'rankingLiveTemplateDaysAfter')) ?></span>
+					<span class="multi"><?php echo input_tag('templateStartTime[]', $rankingLiveTemplateObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'rankingLiveTemplateStartTime')) ?></span>
+					<span class="multi"><?php echo checkbox_tag('isSatellite[]', true, $rankingLiveTemplateObj->getIsSatellite(), array('id'=>'rankingLiveTemplateIsSatellite-'.$key)) ?></span>
+					<span class="multi"><label for="rankingLiveTemplateIsSatellite-<?php echo $key ?>">Satélite</label></span>
 					<?php if( $key==0 ): ?>
 					<span class="multi"><?php echo link_to(image_tag('backend/icons/color/plus', array('title'=>'Adicionar dia', 'class'=>'mt7')), '#addTemplate()') ?></span>
 					<?php else: ?>

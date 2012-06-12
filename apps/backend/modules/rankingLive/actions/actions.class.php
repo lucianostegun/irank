@@ -80,7 +80,7 @@ class rankingLiveActions extends sfActions
     
     $rankingLiveObj->quickSave($request);
     $rankingLiveObj->saveQuickEvents($request);
-    
+
     echo Util::parseInfo($rankingLiveObj->getInfo());
     exit;
   }

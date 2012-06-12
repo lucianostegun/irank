@@ -25,6 +25,10 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 
 
 	
+	protected $is_satellite;
+
+
+	
 	protected $created_at;
 
 	
@@ -77,6 +81,13 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 	{
 
 		return $this->step_day;
+	}
+
+	
+	public function getIsSatellite()
+	{
+
+		return $this->is_satellite;
 	}
 
 	
@@ -165,6 +176,16 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 
 	} 
 	
+	public function setIsSatellite($v)
+	{
+
+		if ($this->is_satellite !== $v) {
+			$this->is_satellite = $v;
+			$this->modifiedColumns[] = RankingLiveTemplatePeer::IS_SATELLITE;
+		}
+
+	} 
+	
 	public function setCreatedAt($v)
 	{
 
@@ -194,13 +215,15 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 
 			$this->step_day = $rs->getString($startcol + 3);
 
-			$this->created_at = $rs->getTimestamp($startcol + 4, null);
+			$this->is_satellite = $rs->getBoolean($startcol + 4);
+
+			$this->created_at = $rs->getTimestamp($startcol + 5, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 5; 
+						return $startcol + 6; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating RankingLiveTemplate object", $e);
 		}
@@ -361,6 +384,9 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 				return $this->getStepDay();
 				break;
 			case 4:
+				return $this->getIsSatellite();
+				break;
+			case 5:
 				return $this->getCreatedAt();
 				break;
 			default:
@@ -377,7 +403,8 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 			$keys[1]=>$this->getDaysAfter(),
 			$keys[2]=>$this->getStartTime(),
 			$keys[3]=>$this->getStepDay(),
-			$keys[4]=>$this->getCreatedAt(),
+			$keys[4]=>$this->getIsSatellite(),
+			$keys[5]=>$this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -406,6 +433,9 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 				$this->setStepDay($value);
 				break;
 			case 4:
+				$this->setIsSatellite($value);
+				break;
+			case 5:
 				$this->setCreatedAt($value);
 				break;
 		} 	}
@@ -419,7 +449,8 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 		if (array_key_exists($keys[1], $arr)) $this->setDaysAfter($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setStartTime($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setStepDay($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
+		if (array_key_exists($keys[4], $arr)) $this->setIsSatellite($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
 	}
 
 	
@@ -431,6 +462,7 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 		if ($this->isColumnModified(RankingLiveTemplatePeer::DAYS_AFTER)) $criteria->add(RankingLiveTemplatePeer::DAYS_AFTER, $this->days_after);
 		if ($this->isColumnModified(RankingLiveTemplatePeer::START_TIME)) $criteria->add(RankingLiveTemplatePeer::START_TIME, $this->start_time);
 		if ($this->isColumnModified(RankingLiveTemplatePeer::STEP_DAY)) $criteria->add(RankingLiveTemplatePeer::STEP_DAY, $this->step_day);
+		if ($this->isColumnModified(RankingLiveTemplatePeer::IS_SATELLITE)) $criteria->add(RankingLiveTemplatePeer::IS_SATELLITE, $this->is_satellite);
 		if ($this->isColumnModified(RankingLiveTemplatePeer::CREATED_AT)) $criteria->add(RankingLiveTemplatePeer::CREATED_AT, $this->created_at);
 
 		return $criteria;
@@ -479,6 +511,8 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 	{
 
 		$copyObj->setStepDay($this->step_day);
+
+		$copyObj->setIsSatellite($this->is_satellite);
 
 		$copyObj->setCreatedAt($this->created_at);
 

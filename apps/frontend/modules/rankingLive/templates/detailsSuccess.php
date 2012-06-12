@@ -12,6 +12,7 @@
 	$description     = str_replace(chr(10), '<br/>', $description);
 	$startDate       = $rankingLiveObj->getStartDate('d/m/Y');
 	$finishDate      = $rankingLiveObj->getFinishDate('d/m/Y');
+	$noRanking       = $rankingLiveObj->getNoRanking();
 	
 	$description = preg_replace('/___*/i', '<hr/>', $description);
 	
@@ -79,8 +80,10 @@
 		<tr>
 			<td id="rankingLiveInfo" class="rankingLiveTab first active" onclick="showRankingLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Informações</td>
 			<td id="rankingLiveEvents" class="rankingLiveTab" onclick="loadRankingLiveTab(this, <?php echo $rankingLiveId ?>); showRankingLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Etapas</td>
+			<?php if( !$noRanking ): ?>
 			<td id="rankingLiveClassify" class="rankingLiveTab" onclick="loadRankingLiveTab(this, <?php echo $rankingLiveId ?>); showRankingLiveTab(this)" class="last" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Classificação</td>
 			<td id="rankingLivePerformance" class="rankingLiveTab last chart" onclick="loadRankingLiveTab(this, <?php echo $rankingLiveId ?>); showRankingLiveTab(this)" class="last" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Desempenho</td>
+			<?php endif; ?>
 		</tr>
 	</table>
 	<div class="separator"></div>
@@ -91,12 +94,14 @@
 	<div id="rankingLiveEventsContent" class="rankingLiveTabContent">
 		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
+	<?php if( !$noRanking ): ?>
 	<div id="rankingLiveClassifyContent" class="rankingLiveTabContent">
 		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
 	<div id="rankingLivePerformanceContent" class="rankingLiveTabContent">
 		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
+	<?php endif; ?>
 	<br/><br/>
 </div>
 

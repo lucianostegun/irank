@@ -13,7 +13,7 @@ abstract class BaseRankingLiveTemplatePeer {
 	const CLASS_DEFAULT = '...apps.backend.lib.model.RankingLiveTemplate';
 
 	
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -32,6 +32,9 @@ abstract class BaseRankingLiveTemplatePeer {
 	const STEP_DAY = 'ranking_live_template.STEP_DAY';
 
 	
+	const IS_SATELLITE = 'ranking_live_template.IS_SATELLITE';
+
+	
 	const CREATED_AT = 'ranking_live_template.CREATED_AT';
 
 	
@@ -40,19 +43,19 @@ abstract class BaseRankingLiveTemplatePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('RankingLiveId', 'DaysAfter', 'StartTime', 'StepDay', 'CreatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (RankingLiveTemplatePeer::RANKING_LIVE_ID, RankingLiveTemplatePeer::DAYS_AFTER, RankingLiveTemplatePeer::START_TIME, RankingLiveTemplatePeer::STEP_DAY, RankingLiveTemplatePeer::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('ranking_live_id', 'days_after', 'start_time', 'step_day', 'created_at', ),
-		BasePeer::TYPE_ALIAS=>array ('RANKING_LIVE_ID'=>'', 'DAYS_AFTER'=>'', 'START_TIME'=>'', 'STEP_DAY'=>'', 'CREATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME=>array ('RankingLiveId', 'DaysAfter', 'StartTime', 'StepDay', 'IsSatellite', 'CreatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (RankingLiveTemplatePeer::RANKING_LIVE_ID, RankingLiveTemplatePeer::DAYS_AFTER, RankingLiveTemplatePeer::START_TIME, RankingLiveTemplatePeer::STEP_DAY, RankingLiveTemplatePeer::IS_SATELLITE, RankingLiveTemplatePeer::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('ranking_live_id', 'days_after', 'start_time', 'step_day', 'is_satellite', 'created_at', ),
+		BasePeer::TYPE_ALIAS=>array ('RANKING_LIVE_ID'=>'', 'DAYS_AFTER'=>'', 'START_TIME'=>'', 'STEP_DAY'=>'', 'IS_SATELLITE'=>'', 'CREATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('RankingLiveId'=>0, 'DaysAfter'=>1, 'StartTime'=>2, 'StepDay'=>3, 'CreatedAt'=>4, ),
-		BasePeer::TYPE_COLNAME=>array (RankingLiveTemplatePeer::RANKING_LIVE_ID=>0, RankingLiveTemplatePeer::DAYS_AFTER=>1, RankingLiveTemplatePeer::START_TIME=>2, RankingLiveTemplatePeer::STEP_DAY=>3, RankingLiveTemplatePeer::CREATED_AT=>4, ),
-		BasePeer::TYPE_FIELDNAME=>array ('ranking_live_id'=>0, 'days_after'=>1, 'start_time'=>2, 'step_day'=>3, 'created_at'=>4, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME=>array ('RankingLiveId'=>0, 'DaysAfter'=>1, 'StartTime'=>2, 'StepDay'=>3, 'IsSatellite'=>4, 'CreatedAt'=>5, ),
+		BasePeer::TYPE_COLNAME=>array (RankingLiveTemplatePeer::RANKING_LIVE_ID=>0, RankingLiveTemplatePeer::DAYS_AFTER=>1, RankingLiveTemplatePeer::START_TIME=>2, RankingLiveTemplatePeer::STEP_DAY=>3, RankingLiveTemplatePeer::IS_SATELLITE=>4, RankingLiveTemplatePeer::CREATED_AT=>5, ),
+		BasePeer::TYPE_FIELDNAME=>array ('ranking_live_id'=>0, 'days_after'=>1, 'start_time'=>2, 'step_day'=>3, 'is_satellite'=>4, 'created_at'=>5, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
@@ -113,6 +116,8 @@ abstract class BaseRankingLiveTemplatePeer {
 		$criteria->addSelectColumn(RankingLiveTemplatePeer::START_TIME);
 
 		$criteria->addSelectColumn(RankingLiveTemplatePeer::STEP_DAY);
+
+		$criteria->addSelectColumn(RankingLiveTemplatePeer::IS_SATELLITE);
 
 		$criteria->addSelectColumn(RankingLiveTemplatePeer::CREATED_AT);
 

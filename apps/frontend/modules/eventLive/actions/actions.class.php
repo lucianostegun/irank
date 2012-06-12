@@ -52,6 +52,7 @@ class eventLiveActions extends sfActions
   	$currentStatus = 'no';
   	
   	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+  	$players      = $eventLiveObj->getPlayers(false, false);
   	
   	if( is_object($eventLiveObj) ){
 
@@ -68,9 +69,15 @@ class eventLiveActions extends sfActions
 	  		$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($this->eventLiveId, $peopleId);
 	  		$eventLivePlayerObj->togglePresence();
 	  		$currentStatus = $eventLivePlayerObj->getCurrentStatus();
+	  		
+	  		
+	  		if( $currentStatus=='yes' )
+	  			$players++;
+	  		else
+	  			$players--;
 	  	}
 	  	
-  		$players = $eventLiveObj->getPlayers(true);
+  		
   	}else{
 
   		$result       = 'error';

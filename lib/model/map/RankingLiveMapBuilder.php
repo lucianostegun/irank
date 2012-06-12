@@ -48,6 +48,8 @@ class RankingLiveMapBuilder {
 
 		$tMap->addColumn('IS_PRIVATE', 'IsPrivate', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
+		$tMap->addColumn('NO_RANKING', 'NoRanking', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('PLAYERS', 'Players', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('EVENTS', 'Events', 'int', CreoleTypes::INTEGER, false, null);
@@ -103,6 +105,28 @@ class RankingLiveMapBuilder {
 		$tMap->addColumn('LOCKED', 'Locked', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('BUYIN_SATELLITE', 'BuyinSatellite', 'double', CreoleTypes::NUMERIC, false, 10);
+
+		$tMap->addColumn('ENTRANCE_FEE_SATELLITE', 'EntranceFeeSatellite', 'double', CreoleTypes::NUMERIC, false, 10);
+
+		$tMap->addColumn('GUARANTEED_PRIZE_SATELLITE', 'GuaranteedPrizeSatellite', 'double', CreoleTypes::NUMERIC, false, 5);
+
+		$tMap->addColumn('START_TIME_SATELLITE', 'StartTimeSatellite', 'int', CreoleTypes::TIME, false, null);
+
+		$tMap->addColumn('IS_FREEROLL_SATELLITE', 'IsFreerollSatellite', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('BLIND_TIME_SATELLITE', 'BlindTimeSatellite', 'int', CreoleTypes::TIME, false, null);
+
+		$tMap->addColumn('STACK_CHIPS_SATELLITE', 'StackChipsSatellite', 'double', CreoleTypes::DOUBLE, false, null);
+
+		$tMap->addColumn('ALLOWED_REBUYS_SATELLITE', 'AllowedRebuysSatellite', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('ALLOWED_ADDONS_SATELLITE', 'AllowedAddonsSatellite', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('TABLES_NUMBER_SATELLITE', 'TablesNumberSatellite', 'int', CreoleTypes::INTEGER, false, null);
+
+		$tMap->addColumn('IS_ILIMITED_REBUYS_SATELLITE', 'IsIlimitedRebuysSatellite', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

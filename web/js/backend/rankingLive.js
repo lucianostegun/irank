@@ -30,6 +30,8 @@ function handleSuccessRankingLive(content){
 
 	var rankingLiveObj = parseInfo(content);
 	
+	$('#rankingLiveIsNew').val('');
+	
 	clearFormFieldErrors();
 	showFormStatusSuccess();
 	
@@ -79,6 +81,16 @@ function handleIsIlimitedRebuys(checked){
 	$('#rankingLiveAllowedRebuys').attr('disabled', checked);
 }
 
+function handleIsFreerollSatellite(checked){
+	
+	$('#rankingLiveBuyinSatellite').attr('disabled', checked);
+}
+
+function handleIsIlimitedRebuysSatellite(checked){
+	
+	$('#rankingLiveAllowedRebuysSatellite').attr('disabled', checked);
+}
+
 function updatePrizeSplitLabel(){
 	
 	var splitValue = $('#rankingLivePrizeSplit').val();
@@ -96,9 +108,34 @@ function updatePrizeSplitLabel(){
 	$('#prizeSplitTotalLabel').html(totalPercent);
 }
 
+function isNew(){
+	
+	return ($('#rankingLiveIsNew').val()=='1');
+}
+
 function showAddEventForm( showForm ){
 	
 	if( showForm ){
+		
+		if( isNew() ){
+			
+			$('#rankingLiveStartTimeSatellite').val($('#rankingLiveStartTime').val());
+			$('#rankingLiveBuyinSatellite').val($('#rankingLiveBuyin').val());
+			$('#rankingLiveEntranceFeeSatellite').val($('#rankingLiveEntranceFee').val());
+			$('#rankingLiveIsFreerollSatellite').prop('checked', $('#rankingLiveIsFreeroll').prop('checked'));
+			$('#rankingLiveGuaranteedPrizeSatellite').val($('#rankingLiveGuaranteedPrize').val());
+			$('#rankingLiveBlindTimeSatellite').val($('#rankingLiveBlindTime').val());
+			$('#rankingLiveStackChipsSatellite').val($('#rankingLiveStackChips').val());
+			$('#rankingLiveAllowedRebuysSatellite').val($('#rankingLiveAllowedRebuys').val());
+			$('#rankingLiveIsIlimitedRebuysSatellite').prop('checked', $('#rankingLiveIsIlimitedRebuys').prop('prop'));
+			$('#rankingLiveAllowedAddonsSatellite').val($('#rankingLiveAllowedAddons').val());
+			$('#rankingLiveTablesNumberSatellite').val($('#rankingLiveTablesNumber').val());
+			
+			$('#rankingLiveBuyinSatellite').prop('disabled', $('#rankingLiveBuyin').prop('disabled'));
+			$('#rankingLiveAllowedAddonsSatellite').prop('disabled', $('#rankingLiveAllowedAddons').prop('disabled'));
+		}
+		
+		$.uniform.update();
 		
 		hideDiv('eventListDiv');
 		showDiv('quickAddEventFormDiv');
@@ -246,9 +283,11 @@ function addTemplate(){
 	
 	var html = '<div class="clear mt6"></div>'+
 			   '<div id="rankingLiveTemplateRow-'+index+'">'+
-			   '	<span class="multi"><input name="stepDay[]" id="rankingLiveTemplateStepDay" value="" size="5" maxlength="10" autocomplete="off" type="text"></span>'+
-			   '	<span class="multi"><input name="daysAfter[]" id="rankingLiveTemplateDaysAfter" value="'+index+'" size="3" maxlength="3" autocomplete="off" '+(index==0?'readonly':'')+' type="text"></span>'+
-			   '	<span class="multi"><input name="templateStartTime[]" value="'+$('#rankingLiveStartTime').val()+'" size="5" maxlength="5" onkeyup="maskTime(event)" autocomplete="off" type="text"></span>'+
+			   '	<span class="multi"><input name="stepDay[]" id="rankingLiveTemplateStepDay" value="" size="5" maxlength="10" autocomplete="off" type="text" /></span>'+
+			   '	<span class="multi"><input name="daysAfter[]" id="rankingLiveTemplateDaysAfter" value="'+index+'" size="3" maxlength="3" autocomplete="off" '+(index==0?'readonly':'')+' type="text" /></span>'+
+			   '	<span class="multi"><input name="templateStartTime[]" value="'+$('#rankingLiveStartTime').val()+'" size="5" maxlength="5" onkeyup="maskTime(event)" autocomplete="off" type="text" /></span>'+
+			   '	<span class="multi"><input name="isSatellite[]" value="true" type="checkbox" id="rankingLiveTemplateIsSatellite-'+index+'" /></span>'+
+			   '	<span class="multi"><label for="rankingLiveTemplateIsSatellite-'+index+'">Satélite</label></span>'+
 			   '	<span class="multi">'+actionButton+'</span>'+
 			   '	<div class="clear"></div>';
 			   '</div>';
@@ -258,6 +297,8 @@ function addTemplate(){
 
 	$('#rankingLiveTemplateListDiv').append( divElement );
 	$('#rankingLiveTemplateCurrentIndex').val(index);
+	
+	$('#rankingLiveTemplateRow-'+index+' input:checkbox').uniform();
 }
 
 function removeTemplate(index){
@@ -276,7 +317,12 @@ function toggleQuickEvent(eventDate, force){
 	
 	if( $('#rankingLiveQuickEvent-'+eventDate).html()=='' ){
 		
-		var fieldHtml = '<input type="text" maxlength="2" name="stepNumber-'+eventDate+'" autocomplete="off" onmouseover="setSuppressToggle(true)" onmouseout="setSuppressToggle(false)" id="stepNumber-'+eventDate+'" />';
+		var noRanking = $('#rankingLiveNoRanking').prop('checked');
+		
+		var fieldHtml = '<input type="'+(noRanking?'hidden':'text')+'" value="'+(noRanking?'0':'')+'" maxlength="2" name="stepNumber-'+eventDate+'" autocomplete="off" onmouseover="setSuppressToggle(true)" onmouseout="setSuppressToggle(false)" id="stepNumber-'+eventDate+'" />';
+		
+		if( noRanking )
+			fieldHtml += '<img src="'+_imageRoot+'/backend/icons/iconGreen.png" class="mt5" />';
 		
 		$('#rankingLiveQuickEvent-'+eventDate).html(fieldHtml);
 		$('#rankingLiveQuickEvent-'+eventDate).addClass('quickEventSelected');

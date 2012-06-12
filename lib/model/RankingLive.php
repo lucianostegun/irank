@@ -61,7 +61,7 @@ class RankingLive extends BaseRankingLive
 		$gameStyleId             = $request->getParameter('gameStyleId');
 		$startDate               = $request->getParameter('startDate');
 		$finishDate              = $request->getParameter('finishDate');
-		$isPrivate               = $request->getParameter('isPrivate');
+		$noRanking               = $request->getParameter('noRanking');
 		$scoreFormula            = $request->getParameter('scoreFormula');
 		$scoreFormulaCustom      = $request->getParameter('scoreFormulaCustom');
 		$scoreFormulaOption      = $request->getParameter('scoreFormulaOption');
@@ -83,6 +83,18 @@ class RankingLive extends BaseRankingLive
 		$rakePercent             = $request->getParameter('rakePercent');
 		$publishPrize            = $request->getParameter('publishPrize');
 		$emailTemplateId         = $request->getParameter('emailTemplateId');
+
+		$startTimeSatellite        = $request->getParameter('startTimeSatellite');
+		$isFreerollSatellite       = $request->getParameter('isFreerollSatellite');
+		$buyinSatellite            = $request->getParameter('buyinSatellite');
+		$entranceFeeSatellite      = $request->getParameter('entranceFeeSatellite');
+		$guaranteedPrizeSatellite  = $request->getParameter('guaranteedPrizeSatellite');
+		$blindTimeSatellite        = $request->getParameter('blindTimeSatellite');
+		$stackChipsSatellite       = $request->getParameter('stackChipsSatellite');
+		$allowedRebuysSatellite    = $request->getParameter('allowedRebuysSatellite');
+		$allowedAddonsSatellite    = $request->getParameter('allowedAddonsSatellite');
+		$tablesNumberSatellite     = $request->getParameter('tablesNumberSatellite');
+		$isIlimitedRebuysSatellite = $request->getParameter('isIlimitedRebuysSatellite');
 		
 		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $stackChips) )
 			$stackChips = Util::formatFloat($stackChips)*1000;
@@ -101,7 +113,7 @@ class RankingLive extends BaseRankingLive
 		$this->setGameStyleId($gameStyleId);
 		$this->setStartDate(Util::formatDate($startDate));
 		$this->setFinishDate(($finishDate?Util::formatDate($finishDate):null));
-		$this->setIsPrivate(($isPrivate?true:false));
+		$this->setNoRanking(($noRanking?true:false));
 		$this->setScoreFormula($scoreFormula);
 		$this->setScoreFormulaOption($scoreFormulaOption);
 		$this->setDescription($description);
@@ -123,6 +135,22 @@ class RankingLive extends BaseRankingLive
 		$this->setRakePercent(Util::formatFloat($rakePercent));
 		$this->setPublishPrize(($publishPrize?true:false));
 		$this->setEmailTemplateId($emailTemplateId);
+
+		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $stackChipsSatellite) )
+			$stackChipsSatellite = Util::formatFloat($stackChipsSatellite)*1000;
+		
+		// Informações da aba Eventos/Satélites
+		$this->setStartTimeSatellite(nvl($startTimeSatellite));
+		$this->setIsFreerollSatellite(($isFreerollSatellite?true:false));
+		$this->setBuyinSatellite(Util::formatFloat($buyinSatellite));
+		$this->setEntranceFeeSatellite(Util::formatFloat($entranceFeeSatellite));
+		$this->setGuaranteedPrizeSatellite(Util::formatFloat($guaranteedPrizeSatellite));
+		$this->setBlindTimeSatellite(nvl($blindTimeSatellite));
+		$this->setStackChipsSatellite($stackChipsSatellite);
+		$this->setAllowedRebuysSatellite($allowedRebuysSatellite);
+		$this->setAllowedAddonsSatellite($allowedAddonsSatellite);
+		$this->setTablesNumberSatellite($tablesNumberSatellite);
+		$this->setIsIlimitedRebuysSatellite(($isIlimitedRebuysSatellite?true:false));
 		
 		$this->setEnabled(true);
 		$this->setVisible(true);
@@ -173,22 +201,24 @@ class RankingLive extends BaseRankingLive
 		
 		$this->deleteTemplate($con);
 		
-		$stepDayList   = $request->getParameter('stepDay');
-		$daysAfterList = $request->getParameter('daysAfter');
-		$startTimeList = $request->getParameter('templateStartTime');
+		$stepDayList     = $request->getParameter('stepDay');
+		$daysAfterList   = $request->getParameter('daysAfter');
+		$startTimeList   = $request->getParameter('templateStartTime');
+		$isSatelliteList = $request->getParameter('isSatellite');
 		
 		$defaultStartTime = $this->getStartTime('H:i');
 		
 		foreach($stepDayList as $key=>$stepDay){
 			
-			$startTime = nvl($startTimeList[$key], $this->getStartTime('H:i'));
-			
+			$startTime   = nvl($startTimeList[$key], $this->getStartTime('H:i'));
+			$isSatellite = (array_key_exists($key, $isSatelliteList)?$isSatelliteList[$key]:false);
 			$stepDay = preg_replace('/dia ?/i', '', $stepDay);
 			
 			$eventLiveTemplateObj = new RankingLiveTemplate();
 			$eventLiveTemplateObj->setRankingLiveId($this->getId());
 			$eventLiveTemplateObj->setStepDay($stepDay);
 			$eventLiveTemplateObj->setDaysAfter($daysAfterList[$key]);
+			$eventLiveTemplateObj->setIsSatellite($isSatellite);
 			$eventLiveTemplateObj->setStartTime($startTime);
 			$eventLiveTemplateObj->save($con);
 		}
@@ -202,6 +232,10 @@ class RankingLive extends BaseRankingLive
 	public function saveQuickEvents($request){
 		
 		$quickEventEventDateList = $request->getParameter('quickEventEventDateList');
+		
+		if( empty($quickEventEventDateList) )
+			return true;
+		
 		$quickEventEventDateList = explode(',', $quickEventEventDateList);
 		
 		$eventName = $request->getParameter('eventName');
@@ -384,7 +418,7 @@ class RankingLive extends BaseRankingLive
 	
 	public function getEventCount(){
 		
-		return Util::executeOne('SELECT COUNT(1) FROM event_live WHERE visible AND enabled AND NOT deleted AND ranking_live_id = '.$this->getId());
+		return Util::executeOne('SELECT COUNT(1) FROM event_live WHERE ranking_live_id = '.$this->getId().' AND visible AND enabled AND NOT deleted AND NOT is_satellite');
 	}
 	
 	public function getEventLiveList($criteria=null, $con=null){
@@ -413,6 +447,16 @@ class RankingLive extends BaseRankingLive
 			$stackChips = ($stackChips/1000).'K';
 			
 		return $stackChips;
+	}
+
+	public function getStackChipsSatellite($displayShort=false){
+		
+		$stackChipsSatellite = parent::getStackChipsSatellite();
+		
+		if( $displayShort )
+			$stackChipsSatellite = ($stackChipsSatellite/1000).'K';
+			
+		return $stackChipsSatellite;
 	}
 	
 	public function getPlayerList($criteria=null){

@@ -37,6 +37,10 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 
 
 	
+	protected $is_satellite;
+
+
+	
 	protected $created_at;
 
 	
@@ -140,6 +144,13 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	{
 
 		return $this->step_day;
+	}
+
+	
+	public function getIsSatellite()
+	{
+
+		return $this->is_satellite;
 	}
 
 	
@@ -276,6 +287,16 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setIsSatellite($v)
+	{
+
+		if ($this->is_satellite !== $v) {
+			$this->is_satellite = $v;
+			$this->modifiedColumns[] = EventLiveSchedulePeer::IS_SATELLITE;
+		}
+
+	} 
+	
 	public function setCreatedAt($v)
 	{
 
@@ -311,13 +332,15 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 
 			$this->step_day = $rs->getString($startcol + 6);
 
-			$this->created_at = $rs->getTimestamp($startcol + 7, null);
+			$this->is_satellite = $rs->getBoolean($startcol + 7);
+
+			$this->created_at = $rs->getTimestamp($startcol + 8, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 8; 
+						return $startcol + 9; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLiveSchedule object", $e);
 		}
@@ -487,6 +510,9 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 				return $this->getStepDay();
 				break;
 			case 7:
+				return $this->getIsSatellite();
+				break;
+			case 8:
 				return $this->getCreatedAt();
 				break;
 			default:
@@ -506,7 +532,8 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 			$keys[4]=>$this->getEventDateTime(),
 			$keys[5]=>$this->getDaysAfter(),
 			$keys[6]=>$this->getStepDay(),
-			$keys[7]=>$this->getCreatedAt(),
+			$keys[7]=>$this->getIsSatellite(),
+			$keys[8]=>$this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -544,6 +571,9 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 				$this->setStepDay($value);
 				break;
 			case 7:
+				$this->setIsSatellite($value);
+				break;
+			case 8:
 				$this->setCreatedAt($value);
 				break;
 		} 	}
@@ -560,7 +590,8 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setEventDateTime($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setDaysAfter($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setStepDay($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[7], $arr)) $this->setIsSatellite($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setCreatedAt($arr[$keys[8]]);
 	}
 
 	
@@ -575,6 +606,7 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLiveSchedulePeer::EVENT_DATE_TIME)) $criteria->add(EventLiveSchedulePeer::EVENT_DATE_TIME, $this->event_date_time);
 		if ($this->isColumnModified(EventLiveSchedulePeer::DAYS_AFTER)) $criteria->add(EventLiveSchedulePeer::DAYS_AFTER, $this->days_after);
 		if ($this->isColumnModified(EventLiveSchedulePeer::STEP_DAY)) $criteria->add(EventLiveSchedulePeer::STEP_DAY, $this->step_day);
+		if ($this->isColumnModified(EventLiveSchedulePeer::IS_SATELLITE)) $criteria->add(EventLiveSchedulePeer::IS_SATELLITE, $this->is_satellite);
 		if ($this->isColumnModified(EventLiveSchedulePeer::CREATED_AT)) $criteria->add(EventLiveSchedulePeer::CREATED_AT, $this->created_at);
 
 		return $criteria;
@@ -629,6 +661,8 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 		$copyObj->setDaysAfter($this->days_after);
 
 		$copyObj->setStepDay($this->step_day);
+
+		$copyObj->setIsSatellite($this->is_satellite);
 
 		$copyObj->setCreatedAt($this->created_at);
 

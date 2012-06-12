@@ -538,6 +538,7 @@
 		<column name="start_date" type="DATE"/>
 		<column name="finish_date" type="DATE"/>
 		<column name="is_private" type="BOOLEAN" default="false"/>
+		<column name="no_ranking" type="BOOLEAN" default="false"/>
 		<column name="players" type="INTEGER" default="0"/>
 		<column name="events" type="INTEGER" default="0"/>
 		<column name="description" type="LONGVARCHAR"/>
@@ -566,6 +567,19 @@
 		<column name="visible" type="BOOLEAN" default="true"/>
 		<column name="locked" type="BOOLEAN" default="false"/>
 		<column name="deleted" type="BOOLEAN" default="false"/>
+		
+		<column name="buyin_satellite" type="NUMERIC" size="10" scale="2" default="0"/>
+		<column name="entrance_fee_satellite" type="NUMERIC" size="10" scale="2" default="0"/>
+		<column name="guaranteed_prize_satellite" type="NUMERIC" size="5" scale="2" />
+		<column name="start_time_satellite" type="TIME"/>
+		<column name="is_freeroll_satellite" type="BOOLEAN" />
+		<column name="blind_time_satellite" type="TIME"/>
+		<column name="stack_chips_satellite" type="DOUBLE"/>
+		<column name="allowed_rebuys_satellite" type="INTEGER" default="0" />
+		<column name="allowed_addons_satellite" type="INTEGER" default="0" />
+		<column name="tables_number_satellite" type="INTEGER" />
+		<column name="is_ilimited_rebuys_satellite" type="BOOLEAN"/>
+		
 		<column name="created_at" type="TIMESTAMP"/>
 		<column name="updated_at" type="TIMESTAMP"/>
 		<foreign-key foreignTable="virtual_table">
@@ -597,6 +611,7 @@
 		<column name="description" type="LONGVARCHAR"/>
 		<column name="is_freeroll" type="BOOLEAN" />
 		<column name="is_multiday" type="BOOLEAN" />
+		<column name="is_satellite" type="BOOLEAN" />
 		<column name="tables_number" type="INTEGER"/>
 		<column name="buyin" type="NUMERIC" size="10" scale="2" />
 		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />
@@ -1196,6 +1211,7 @@
 		<column name="event_date_time" type="TIMESTAMP" />
 		<column name="days_after" type="INTEGER" />
 		<column name="step_day" type="VARCHAR" />
+		<column name="is_satellite" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="event_live">
 			<reference local="event_live_id" foreign="id"/>
@@ -1207,6 +1223,7 @@
 		<column name="days_after" type="INTEGER" primaryKey="true" />
 		<column name="start_time" type="TIME" primaryKey="true" />
 		<column name="step_day" type="VARCHAR" />
+		<column name="is_satellite" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="ranking_live">
 			<reference local="ranking_live_id" foreign="id"/>
