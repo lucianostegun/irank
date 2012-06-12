@@ -40,6 +40,8 @@ class RankingLiveTemplateMapBuilder {
 
 		$tMap->addColumn('STEP_DAY', 'StepDay', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('IS_SATELLITE', 'IsSatellite', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 	} 

@@ -51,16 +51,6 @@
 	</div>
 
 	<div class="formRow">
-		<label>Ranking privado</label>
-		<div class="formRight">
-			<?php echo checkbox_tag('isPrivate', true, $rankingLiveObj->getIsPrivate(), array('id'=>'rankingLiveIsPrivate')) ?>
-			<label for="rankingLiveIsPrivate">Apenas jogadores convidados podem participar</label>
-			<div class="formNote error" id="rankingLiveFormErrorIsPrivate"></div>
-		</div>
-		<div class="clear"></div>
-	</div>
-
-	<div class="formRow">
 		<label>Classificação</label>
 		<div class="formRight">
 			<?php echo select_tag('rankingTypeId', VirtualTable::getOptionsForSelect('rankingType', $rankingLiveObj->getRankingTypeId()), array('id'=>'rankingLiveRankingTypeId')) ?>
@@ -120,6 +110,16 @@
 		<div class="formRight" style="width: 70%">
 			<?php echo textarea_tag('description', $rankingLiveObj->getDescription(), array('style'=>'height: 400px', 'id'=>'rankingLiveDescription')) ?>
 			<div class="formNote error" id="rankingLiveFormErrorDescription"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
+		<label>Torneio sem ranking</label>
+		<div class="formRight">
+			<?php echo checkbox_tag('noRanking', true, $rankingLiveObj->getNoRanking(), array('id'=>'rankingLiveNoRanking')) ?>
+			<label for="rankingLiveNoRanking">O torneio será apenas divulgado no site</label>
+			<div class="formNote error" id="rankingLiveFormErrorNoRanking"></div>
 		</div>
 		<div class="clear"></div>
 	</div>

@@ -65,6 +65,10 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 
 	
+	protected $is_satellite;
+
+
+	
 	protected $tables_number;
 
 
@@ -363,6 +367,13 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	{
 
 		return $this->is_multiday;
+	}
+
+	
+	public function getIsSatellite()
+	{
+
+		return $this->is_satellite;
 	}
 
 	
@@ -839,6 +850,16 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setIsSatellite($v)
+	{
+
+		if ($this->is_satellite !== $v) {
+			$this->is_satellite = $v;
+			$this->modifiedColumns[] = EventLivePeer::IS_SATELLITE;
+		}
+
+	} 
+	
 	public function setTablesNumber($v)
 	{
 
@@ -1204,65 +1225,67 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 			$this->is_multiday = $rs->getBoolean($startcol + 13);
 
-			$this->tables_number = $rs->getInt($startcol + 14);
+			$this->is_satellite = $rs->getBoolean($startcol + 14);
 
-			$this->buyin = $rs->getFloat($startcol + 15);
+			$this->tables_number = $rs->getInt($startcol + 15);
 
-			$this->entrance_fee = $rs->getFloat($startcol + 16);
+			$this->buyin = $rs->getFloat($startcol + 16);
 
-			$this->rake_percent = $rs->getFloat($startcol + 17);
+			$this->entrance_fee = $rs->getFloat($startcol + 17);
 
-			$this->guaranteed_prize = $rs->getFloat($startcol + 18);
+			$this->rake_percent = $rs->getFloat($startcol + 18);
 
-			$this->blind_time = $rs->getTime($startcol + 19, null);
+			$this->guaranteed_prize = $rs->getFloat($startcol + 19);
 
-			$this->stack_chips = $rs->getFloat($startcol + 20);
+			$this->blind_time = $rs->getTime($startcol + 20, null);
 
-			$this->players = $rs->getInt($startcol + 21);
+			$this->stack_chips = $rs->getFloat($startcol + 21);
 
-			$this->allowed_rebuys = $rs->getInt($startcol + 22);
+			$this->players = $rs->getInt($startcol + 22);
 
-			$this->allowed_addons = $rs->getInt($startcol + 23);
+			$this->allowed_rebuys = $rs->getInt($startcol + 23);
 
-			$this->is_ilimited_rebuys = $rs->getBoolean($startcol + 24);
+			$this->allowed_addons = $rs->getInt($startcol + 24);
 
-			$this->saved_result = $rs->getBoolean($startcol + 25);
+			$this->is_ilimited_rebuys = $rs->getBoolean($startcol + 25);
 
-			$this->total_rebuys = $rs->getFloat($startcol + 26);
+			$this->saved_result = $rs->getBoolean($startcol + 26);
 
-			$this->publish_prize = $rs->getBoolean($startcol + 27);
+			$this->total_rebuys = $rs->getFloat($startcol + 27);
 
-			$this->suppress_schedule = $rs->getBoolean($startcol + 28);
+			$this->publish_prize = $rs->getBoolean($startcol + 28);
 
-			$this->prize_split = $rs->getString($startcol + 29);
+			$this->suppress_schedule = $rs->getBoolean($startcol + 29);
 
-			$this->visit_count = $rs->getInt($startcol + 30);
+			$this->prize_split = $rs->getString($startcol + 30);
 
-			$this->schedule_start_date = $rs->getDate($startcol + 31, null);
+			$this->visit_count = $rs->getInt($startcol + 31);
 
-			$this->enrollment_start_date = $rs->getDate($startcol + 32, null);
+			$this->schedule_start_date = $rs->getDate($startcol + 32, null);
 
-			$this->enrollment_mode = $rs->getString($startcol + 33);
+			$this->enrollment_start_date = $rs->getDate($startcol + 33, null);
 
-			$this->suppress_ranking = $rs->getBoolean($startcol + 34);
+			$this->enrollment_mode = $rs->getString($startcol + 34);
 
-			$this->enabled = $rs->getBoolean($startcol + 35);
+			$this->suppress_ranking = $rs->getBoolean($startcol + 35);
 
-			$this->visible = $rs->getBoolean($startcol + 36);
+			$this->enabled = $rs->getBoolean($startcol + 36);
 
-			$this->deleted = $rs->getBoolean($startcol + 37);
+			$this->visible = $rs->getBoolean($startcol + 37);
 
-			$this->locked = $rs->getBoolean($startcol + 38);
+			$this->deleted = $rs->getBoolean($startcol + 38);
 
-			$this->created_at = $rs->getTimestamp($startcol + 39, null);
+			$this->locked = $rs->getBoolean($startcol + 39);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 40, null);
+			$this->created_at = $rs->getTimestamp($startcol + 40, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 41, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 41; 
+						return $startcol + 42; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventLive object", $e);
 		}
@@ -1581,84 +1604,87 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				return $this->getIsMultiday();
 				break;
 			case 14:
-				return $this->getTablesNumber();
+				return $this->getIsSatellite();
 				break;
 			case 15:
-				return $this->getBuyin();
+				return $this->getTablesNumber();
 				break;
 			case 16:
-				return $this->getEntranceFee();
+				return $this->getBuyin();
 				break;
 			case 17:
-				return $this->getRakePercent();
+				return $this->getEntranceFee();
 				break;
 			case 18:
-				return $this->getGuaranteedPrize();
+				return $this->getRakePercent();
 				break;
 			case 19:
-				return $this->getBlindTime();
+				return $this->getGuaranteedPrize();
 				break;
 			case 20:
-				return $this->getStackChips();
+				return $this->getBlindTime();
 				break;
 			case 21:
-				return $this->getPlayers();
+				return $this->getStackChips();
 				break;
 			case 22:
-				return $this->getAllowedRebuys();
+				return $this->getPlayers();
 				break;
 			case 23:
-				return $this->getAllowedAddons();
+				return $this->getAllowedRebuys();
 				break;
 			case 24:
-				return $this->getIsIlimitedRebuys();
+				return $this->getAllowedAddons();
 				break;
 			case 25:
-				return $this->getSavedResult();
+				return $this->getIsIlimitedRebuys();
 				break;
 			case 26:
-				return $this->getTotalRebuys();
+				return $this->getSavedResult();
 				break;
 			case 27:
-				return $this->getPublishPrize();
+				return $this->getTotalRebuys();
 				break;
 			case 28:
-				return $this->getSuppressSchedule();
+				return $this->getPublishPrize();
 				break;
 			case 29:
-				return $this->getPrizeSplit();
+				return $this->getSuppressSchedule();
 				break;
 			case 30:
-				return $this->getVisitCount();
+				return $this->getPrizeSplit();
 				break;
 			case 31:
-				return $this->getScheduleStartDate();
+				return $this->getVisitCount();
 				break;
 			case 32:
-				return $this->getEnrollmentStartDate();
+				return $this->getScheduleStartDate();
 				break;
 			case 33:
-				return $this->getEnrollmentMode();
+				return $this->getEnrollmentStartDate();
 				break;
 			case 34:
-				return $this->getSuppressRanking();
+				return $this->getEnrollmentMode();
 				break;
 			case 35:
-				return $this->getEnabled();
+				return $this->getSuppressRanking();
 				break;
 			case 36:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 37:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 38:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 39:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 40:
+				return $this->getCreatedAt();
+				break;
+			case 41:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1685,33 +1711,34 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$keys[11]=>$this->getDescription(),
 			$keys[12]=>$this->getIsFreeroll(),
 			$keys[13]=>$this->getIsMultiday(),
-			$keys[14]=>$this->getTablesNumber(),
-			$keys[15]=>$this->getBuyin(),
-			$keys[16]=>$this->getEntranceFee(),
-			$keys[17]=>$this->getRakePercent(),
-			$keys[18]=>$this->getGuaranteedPrize(),
-			$keys[19]=>$this->getBlindTime(),
-			$keys[20]=>$this->getStackChips(),
-			$keys[21]=>$this->getPlayers(),
-			$keys[22]=>$this->getAllowedRebuys(),
-			$keys[23]=>$this->getAllowedAddons(),
-			$keys[24]=>$this->getIsIlimitedRebuys(),
-			$keys[25]=>$this->getSavedResult(),
-			$keys[26]=>$this->getTotalRebuys(),
-			$keys[27]=>$this->getPublishPrize(),
-			$keys[28]=>$this->getSuppressSchedule(),
-			$keys[29]=>$this->getPrizeSplit(),
-			$keys[30]=>$this->getVisitCount(),
-			$keys[31]=>$this->getScheduleStartDate(),
-			$keys[32]=>$this->getEnrollmentStartDate(),
-			$keys[33]=>$this->getEnrollmentMode(),
-			$keys[34]=>$this->getSuppressRanking(),
-			$keys[35]=>$this->getEnabled(),
-			$keys[36]=>$this->getVisible(),
-			$keys[37]=>$this->getDeleted(),
-			$keys[38]=>$this->getLocked(),
-			$keys[39]=>$this->getCreatedAt(),
-			$keys[40]=>$this->getUpdatedAt(),
+			$keys[14]=>$this->getIsSatellite(),
+			$keys[15]=>$this->getTablesNumber(),
+			$keys[16]=>$this->getBuyin(),
+			$keys[17]=>$this->getEntranceFee(),
+			$keys[18]=>$this->getRakePercent(),
+			$keys[19]=>$this->getGuaranteedPrize(),
+			$keys[20]=>$this->getBlindTime(),
+			$keys[21]=>$this->getStackChips(),
+			$keys[22]=>$this->getPlayers(),
+			$keys[23]=>$this->getAllowedRebuys(),
+			$keys[24]=>$this->getAllowedAddons(),
+			$keys[25]=>$this->getIsIlimitedRebuys(),
+			$keys[26]=>$this->getSavedResult(),
+			$keys[27]=>$this->getTotalRebuys(),
+			$keys[28]=>$this->getPublishPrize(),
+			$keys[29]=>$this->getSuppressSchedule(),
+			$keys[30]=>$this->getPrizeSplit(),
+			$keys[31]=>$this->getVisitCount(),
+			$keys[32]=>$this->getScheduleStartDate(),
+			$keys[33]=>$this->getEnrollmentStartDate(),
+			$keys[34]=>$this->getEnrollmentMode(),
+			$keys[35]=>$this->getSuppressRanking(),
+			$keys[36]=>$this->getEnabled(),
+			$keys[37]=>$this->getVisible(),
+			$keys[38]=>$this->getDeleted(),
+			$keys[39]=>$this->getLocked(),
+			$keys[40]=>$this->getCreatedAt(),
+			$keys[41]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1770,84 +1797,87 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$this->setIsMultiday($value);
 				break;
 			case 14:
-				$this->setTablesNumber($value);
+				$this->setIsSatellite($value);
 				break;
 			case 15:
-				$this->setBuyin($value);
+				$this->setTablesNumber($value);
 				break;
 			case 16:
-				$this->setEntranceFee($value);
+				$this->setBuyin($value);
 				break;
 			case 17:
-				$this->setRakePercent($value);
+				$this->setEntranceFee($value);
 				break;
 			case 18:
-				$this->setGuaranteedPrize($value);
+				$this->setRakePercent($value);
 				break;
 			case 19:
-				$this->setBlindTime($value);
+				$this->setGuaranteedPrize($value);
 				break;
 			case 20:
-				$this->setStackChips($value);
+				$this->setBlindTime($value);
 				break;
 			case 21:
-				$this->setPlayers($value);
+				$this->setStackChips($value);
 				break;
 			case 22:
-				$this->setAllowedRebuys($value);
+				$this->setPlayers($value);
 				break;
 			case 23:
-				$this->setAllowedAddons($value);
+				$this->setAllowedRebuys($value);
 				break;
 			case 24:
-				$this->setIsIlimitedRebuys($value);
+				$this->setAllowedAddons($value);
 				break;
 			case 25:
-				$this->setSavedResult($value);
+				$this->setIsIlimitedRebuys($value);
 				break;
 			case 26:
-				$this->setTotalRebuys($value);
+				$this->setSavedResult($value);
 				break;
 			case 27:
-				$this->setPublishPrize($value);
+				$this->setTotalRebuys($value);
 				break;
 			case 28:
-				$this->setSuppressSchedule($value);
+				$this->setPublishPrize($value);
 				break;
 			case 29:
-				$this->setPrizeSplit($value);
+				$this->setSuppressSchedule($value);
 				break;
 			case 30:
-				$this->setVisitCount($value);
+				$this->setPrizeSplit($value);
 				break;
 			case 31:
-				$this->setScheduleStartDate($value);
+				$this->setVisitCount($value);
 				break;
 			case 32:
-				$this->setEnrollmentStartDate($value);
+				$this->setScheduleStartDate($value);
 				break;
 			case 33:
-				$this->setEnrollmentMode($value);
+				$this->setEnrollmentStartDate($value);
 				break;
 			case 34:
-				$this->setSuppressRanking($value);
+				$this->setEnrollmentMode($value);
 				break;
 			case 35:
-				$this->setEnabled($value);
+				$this->setSuppressRanking($value);
 				break;
 			case 36:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 37:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 38:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 39:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 40:
+				$this->setCreatedAt($value);
+				break;
+			case 41:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1871,33 +1901,34 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[11], $arr)) $this->setDescription($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setIsFreeroll($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setIsMultiday($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setTablesNumber($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setBuyin($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setEntranceFee($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setRakePercent($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setGuaranteedPrize($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setBlindTime($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setStackChips($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setPlayers($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setAllowedRebuys($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setAllowedAddons($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setIsIlimitedRebuys($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setSavedResult($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setTotalRebuys($arr[$keys[26]]);
-		if (array_key_exists($keys[27], $arr)) $this->setPublishPrize($arr[$keys[27]]);
-		if (array_key_exists($keys[28], $arr)) $this->setSuppressSchedule($arr[$keys[28]]);
-		if (array_key_exists($keys[29], $arr)) $this->setPrizeSplit($arr[$keys[29]]);
-		if (array_key_exists($keys[30], $arr)) $this->setVisitCount($arr[$keys[30]]);
-		if (array_key_exists($keys[31], $arr)) $this->setScheduleStartDate($arr[$keys[31]]);
-		if (array_key_exists($keys[32], $arr)) $this->setEnrollmentStartDate($arr[$keys[32]]);
-		if (array_key_exists($keys[33], $arr)) $this->setEnrollmentMode($arr[$keys[33]]);
-		if (array_key_exists($keys[34], $arr)) $this->setSuppressRanking($arr[$keys[34]]);
-		if (array_key_exists($keys[35], $arr)) $this->setEnabled($arr[$keys[35]]);
-		if (array_key_exists($keys[36], $arr)) $this->setVisible($arr[$keys[36]]);
-		if (array_key_exists($keys[37], $arr)) $this->setDeleted($arr[$keys[37]]);
-		if (array_key_exists($keys[38], $arr)) $this->setLocked($arr[$keys[38]]);
-		if (array_key_exists($keys[39], $arr)) $this->setCreatedAt($arr[$keys[39]]);
-		if (array_key_exists($keys[40], $arr)) $this->setUpdatedAt($arr[$keys[40]]);
+		if (array_key_exists($keys[14], $arr)) $this->setIsSatellite($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setTablesNumber($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setBuyin($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setEntranceFee($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setRakePercent($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setGuaranteedPrize($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setBlindTime($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setStackChips($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setPlayers($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setAllowedRebuys($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setAllowedAddons($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setIsIlimitedRebuys($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setSavedResult($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setTotalRebuys($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setPublishPrize($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setSuppressSchedule($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setPrizeSplit($arr[$keys[30]]);
+		if (array_key_exists($keys[31], $arr)) $this->setVisitCount($arr[$keys[31]]);
+		if (array_key_exists($keys[32], $arr)) $this->setScheduleStartDate($arr[$keys[32]]);
+		if (array_key_exists($keys[33], $arr)) $this->setEnrollmentStartDate($arr[$keys[33]]);
+		if (array_key_exists($keys[34], $arr)) $this->setEnrollmentMode($arr[$keys[34]]);
+		if (array_key_exists($keys[35], $arr)) $this->setSuppressRanking($arr[$keys[35]]);
+		if (array_key_exists($keys[36], $arr)) $this->setEnabled($arr[$keys[36]]);
+		if (array_key_exists($keys[37], $arr)) $this->setVisible($arr[$keys[37]]);
+		if (array_key_exists($keys[38], $arr)) $this->setDeleted($arr[$keys[38]]);
+		if (array_key_exists($keys[39], $arr)) $this->setLocked($arr[$keys[39]]);
+		if (array_key_exists($keys[40], $arr)) $this->setCreatedAt($arr[$keys[40]]);
+		if (array_key_exists($keys[41], $arr)) $this->setUpdatedAt($arr[$keys[41]]);
 	}
 
 	
@@ -1919,6 +1950,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePeer::DESCRIPTION)) $criteria->add(EventLivePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(EventLivePeer::IS_FREEROLL)) $criteria->add(EventLivePeer::IS_FREEROLL, $this->is_freeroll);
 		if ($this->isColumnModified(EventLivePeer::IS_MULTIDAY)) $criteria->add(EventLivePeer::IS_MULTIDAY, $this->is_multiday);
+		if ($this->isColumnModified(EventLivePeer::IS_SATELLITE)) $criteria->add(EventLivePeer::IS_SATELLITE, $this->is_satellite);
 		if ($this->isColumnModified(EventLivePeer::TABLES_NUMBER)) $criteria->add(EventLivePeer::TABLES_NUMBER, $this->tables_number);
 		if ($this->isColumnModified(EventLivePeer::BUYIN)) $criteria->add(EventLivePeer::BUYIN, $this->buyin);
 		if ($this->isColumnModified(EventLivePeer::ENTRANCE_FEE)) $criteria->add(EventLivePeer::ENTRANCE_FEE, $this->entrance_fee);
@@ -2001,6 +2033,8 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		$copyObj->setIsFreeroll($this->is_freeroll);
 
 		$copyObj->setIsMultiday($this->is_multiday);
+
+		$copyObj->setIsSatellite($this->is_satellite);
 
 		$copyObj->setTablesNumber($this->tables_number);
 

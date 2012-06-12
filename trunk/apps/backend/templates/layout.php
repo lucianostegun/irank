@@ -81,7 +81,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         
         <li class="ranking">
         	<?php
-        		echo link_to('<span>Rankings'.($iRankAdmin?' ao vivo':'').'</span>', 'rankingLive/index', array('class'=>($moduleName=='rankingLive'?'active':'')));
+        		echo link_to('<span>'.($iRankAdmin?'Rankings ao vivo':'Torneios').'</span>', 'rankingLive/index', array('class'=>($moduleName=='rankingLive'?'active':'')));
        			echo link_to('<strong>+</strong>', 'rankingLive/new', array('class'=>'quickAdd'));
         	?>
         </li>

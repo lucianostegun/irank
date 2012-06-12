@@ -14,8 +14,6 @@
 	$nextYear      = ($month==12?$year+1:$year);
 	$previousYear  = ($month==1?$year-1:$year);
 ?>
-	<div style="margin-left: 22%; padding: 20px 0">Clique nas datas em que as etapas ocorrerão e informe o número de cada etapa.</div>
-	
     <table width="350" cellspacing="0" cellpadding="0" class="quickEventCalendar">
     	<tr>
     		<td colspan="7">

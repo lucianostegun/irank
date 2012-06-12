@@ -195,33 +195,77 @@ class EventLive extends BaseEventLive
 		
 		$this->deleteSchedule($con);
 		
-		$eventDate = null;
 		$startTime = null;
 		
-		$eventDate = $this->getEventDate(null);
+		$eventDate      = $this->getEventDate(null);
+		$rankingLiveObj = $this->getRankingLive();
 		
 		foreach($this->getRankingLive()->getTemplateList() as $key=>$rankingLiveTemplateObj){
 			
-			$stepEventDate = $eventDate+(86400*$rankingLiveTemplateObj->getDaysAfter());
+			$daysAfter     = $rankingLiveTemplateObj->getDaysAfter();
+			$stepEventDate = $eventDate+(86400*$daysAfter);
+			$isSatellite   = $rankingLiveTemplateObj->getIsSatellite();
 			
-			if( $key==0 ){
+			if( !$isSatellite ){
 				
-				$eventDate = $stepEventDate;
-				$startTime = $rankingLiveTemplateObj->getStartTime();
+				if( $daysAfter==0 ){
+					
+					$eventDate = $stepEventDate;
+					$startTime = $rankingLiveTemplateObj->getStartTime();
+				}
+				
+				$eventLiveScheduleObj = new EventLiveSchedule();
+				$eventLiveScheduleObj->setEventLiveId($this->getId());
+				$eventLiveScheduleObj->setEventDate($stepEventDate);
+				$eventLiveScheduleObj->setStartTime($rankingLiveTemplateObj->getStartTime());
+				$eventLiveScheduleObj->setStepDay($rankingLiveTemplateObj->getStepDay());
+				$eventLiveScheduleObj->setDaysAfter($rankingLiveTemplateObj->getDaysAfter());
+				$eventLiveScheduleObj->setIsSatellite($isSatellite);
+				$eventLiveScheduleObj->save($con);
+			}else{
+			
+				$eventLiveObj = $this->getClone();
+				
+				$eventLiveObj->setEventName('Satélite '.$this->getEventName());
+				$eventLiveObj->buildShortName();
+				$eventLiveObj->setEventDate($stepEventDate);
+				$eventLiveObj->setStartTime($rankingLiveObj->getStartTimeSatellite());
+				$eventLiveObj->setIsFreeroll($rankingLiveObj->getIsFreerollSatellite());
+				$eventLiveObj->setBuyin($rankingLiveObj->getBuyinSatellite());
+				$eventLiveObj->setEntranceFee($rankingLiveObj->getEntranceFeeSatellite());
+				$eventLiveObj->setGuaranteedPrize($rankingLiveObj->getGuaranteedPrizeSatellite());
+				$eventLiveObj->setBlindTime($rankingLiveObj->getBlindTimeSatellite());
+				$eventLiveObj->setStackChips($rankingLiveObj->getStackChipsSatellite());
+				$eventLiveObj->setAllowedRebuys($rankingLiveObj->getAllowedRebuysSatellite());
+				$eventLiveObj->setAllowedAddons($rankingLiveObj->getAllowedAddonsSatellite());
+				$eventLiveObj->setTablesNumber($rankingLiveObj->getTablesNumberSatellite());
+				$eventLiveObj->setIsIlimitedRebuys($rankingLiveObj->getIsIlimitedRebuysSatellite());
+				$eventLiveObj->setIsSatellite(true);
+				$eventLiveObj->setSuppressRanking(true);
+				$eventLiveObj->setIsMultiday(false);
+				$eventLiveObj->save($con);
 			}
-
-			$eventLiveScheduleObj = new EventLiveSchedule();
-			$eventLiveScheduleObj->setEventLiveId($this->getId());
-			$eventLiveScheduleObj->setEventDate($stepEventDate);
-			$eventLiveScheduleObj->setStartTime($rankingLiveTemplateObj->getStartTime());
-			$eventLiveScheduleObj->setStepDay($rankingLiveTemplateObj->getStepDay());
-			$eventLiveScheduleObj->setDaysAfter($rankingLiveTemplateObj->getDaysAfter());
-			$eventLiveScheduleObj->save($con);
 		}
 		
 		$this->setEventDate($eventDate);
 		$this->setStartTime($startTime);
 		$this->save($con);
+	}
+	
+	public function getClone(){
+		
+		$eventLiveObj = new EventLive();
+		
+		foreach(EventLivePeer::getFieldNames() as $attribute){
+			
+			$getFunction = 'get'.$attribute;
+			$setFunction = 'set'.$attribute;
+			$eventLiveObj->$setFunction($this->$getFunction());
+		}
+		
+		$eventLiveObj->setDescription($this->getDescription(false));
+		
+		return $eventLiveObj;
 	}
 	
 	public function deleteSchedule($con){
@@ -1129,16 +1173,17 @@ class EventLive extends BaseEventLive
 	
 		$stepNumber      = $this->getStepNumber();
 		$guaranteedPrize = $this->getGuaranteedPrize();
+		$isSatellite     = $this->getIsSatellite();
 		
 		if( $stepNumber )
 			$stepNumber = $stepNumber.'ª Etapa ';
 		
 		if( $guaranteedPrize ){
 			
-			if( $guaranteedPrize >=1000 )
+			if( $guaranteedPrize >=1000 && !$isSatellite )
 				$guaranteedPrize = ($guaranteedPrize/1000).'K';
-				
-			$guaranteedPrize = " - $guaranteedPrize GTD";
+			
+			$guaranteedPrize = " - $guaranteedPrize ".($isSatellite?'VGS ':'')."GTD";
 		}else
 			$guaranteedPrize = '';
 		

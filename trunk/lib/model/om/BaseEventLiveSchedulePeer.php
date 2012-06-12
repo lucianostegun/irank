@@ -13,7 +13,7 @@ abstract class BaseEventLiveSchedulePeer {
 	const CLASS_DEFAULT = 'lib.model.EventLiveSchedule';
 
 	
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 9;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -41,6 +41,9 @@ abstract class BaseEventLiveSchedulePeer {
 	const STEP_DAY = 'event_live_schedule.STEP_DAY';
 
 	
+	const IS_SATELLITE = 'event_live_schedule.IS_SATELLITE';
+
+	
 	const CREATED_AT = 'event_live_schedule.CREATED_AT';
 
 	
@@ -49,19 +52,19 @@ abstract class BaseEventLiveSchedulePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventLiveId', 'EventDate', 'StartTime', 'EventDateTime', 'DaysAfter', 'StepDay', 'CreatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventLiveSchedulePeer::ID, EventLiveSchedulePeer::EVENT_LIVE_ID, EventLiveSchedulePeer::EVENT_DATE, EventLiveSchedulePeer::START_TIME, EventLiveSchedulePeer::EVENT_DATE_TIME, EventLiveSchedulePeer::DAYS_AFTER, EventLiveSchedulePeer::STEP_DAY, EventLiveSchedulePeer::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_live_id', 'event_date', 'start_time', 'event_date_time', 'days_after', 'step_day', 'created_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_LIVE_ID'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'DAYS_AFTER'=>'', 'STEP_DAY'=>'', 'CREATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'EventLiveId', 'EventDate', 'StartTime', 'EventDateTime', 'DaysAfter', 'StepDay', 'IsSatellite', 'CreatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventLiveSchedulePeer::ID, EventLiveSchedulePeer::EVENT_LIVE_ID, EventLiveSchedulePeer::EVENT_DATE, EventLiveSchedulePeer::START_TIME, EventLiveSchedulePeer::EVENT_DATE_TIME, EventLiveSchedulePeer::DAYS_AFTER, EventLiveSchedulePeer::STEP_DAY, EventLiveSchedulePeer::IS_SATELLITE, EventLiveSchedulePeer::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'event_live_id', 'event_date', 'start_time', 'event_date_time', 'days_after', 'step_day', 'is_satellite', 'created_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'EVENT_LIVE_ID'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'DAYS_AFTER'=>'', 'STEP_DAY'=>'', 'IS_SATELLITE'=>'', 'CREATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventLiveId'=>1, 'EventDate'=>2, 'StartTime'=>3, 'EventDateTime'=>4, 'DaysAfter'=>5, 'StepDay'=>6, 'CreatedAt'=>7, ),
-		BasePeer::TYPE_COLNAME=>array (EventLiveSchedulePeer::ID=>0, EventLiveSchedulePeer::EVENT_LIVE_ID=>1, EventLiveSchedulePeer::EVENT_DATE=>2, EventLiveSchedulePeer::START_TIME=>3, EventLiveSchedulePeer::EVENT_DATE_TIME=>4, EventLiveSchedulePeer::DAYS_AFTER=>5, EventLiveSchedulePeer::STEP_DAY=>6, EventLiveSchedulePeer::CREATED_AT=>7, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_live_id'=>1, 'event_date'=>2, 'start_time'=>3, 'event_date_time'=>4, 'days_after'=>5, 'step_day'=>6, 'created_at'=>7, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'EventLiveId'=>1, 'EventDate'=>2, 'StartTime'=>3, 'EventDateTime'=>4, 'DaysAfter'=>5, 'StepDay'=>6, 'IsSatellite'=>7, 'CreatedAt'=>8, ),
+		BasePeer::TYPE_COLNAME=>array (EventLiveSchedulePeer::ID=>0, EventLiveSchedulePeer::EVENT_LIVE_ID=>1, EventLiveSchedulePeer::EVENT_DATE=>2, EventLiveSchedulePeer::START_TIME=>3, EventLiveSchedulePeer::EVENT_DATE_TIME=>4, EventLiveSchedulePeer::DAYS_AFTER=>5, EventLiveSchedulePeer::STEP_DAY=>6, EventLiveSchedulePeer::IS_SATELLITE=>7, EventLiveSchedulePeer::CREATED_AT=>8, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'event_live_id'=>1, 'event_date'=>2, 'start_time'=>3, 'event_date_time'=>4, 'days_after'=>5, 'step_day'=>6, 'is_satellite'=>7, 'created_at'=>8, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
@@ -128,6 +131,8 @@ abstract class BaseEventLiveSchedulePeer {
 		$criteria->addSelectColumn(EventLiveSchedulePeer::DAYS_AFTER);
 
 		$criteria->addSelectColumn(EventLiveSchedulePeer::STEP_DAY);
+
+		$criteria->addSelectColumn(EventLiveSchedulePeer::IS_SATELLITE);
 
 		$criteria->addSelectColumn(EventLiveSchedulePeer::CREATED_AT);
 
