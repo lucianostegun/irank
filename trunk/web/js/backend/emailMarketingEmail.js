@@ -45,21 +45,22 @@ function sendEmailItem( peopleIdList, index ){
 		url:		_webRoot+'/emailMarketing/sendEmail',
 		data: 		'peopleId='+peopleId+'&emailMarketingId='+emailMarketingId+'&randomCode='+randomCode,
 		dataType: 	'text',
-		success: function (request) {
+		success: function(content) {
 			
 			$('#emailPeopleListStatusTd-'+peopleId).html('<img src="'+_imageRoot+'/backend/icons/notifications/successGreen.png" title="Enviado com sucesso"/>');
 			$('#emailPeopleListReadTd-'+peopleId).html('<img src="'+_imageRoot+'/backend/icons/unreadMail.png" title="Sem confirmação de leitura"/>');
-			$('#emailPeopleListCreatedAtTd-'+peopleId).html(request);
+			$('#emailPeopleListCreatedAtTd-'+peopleId).html(content);
 			$('#randomCodeTd-'+peopleId).html(randomCode);
 	    	
 			sendEmailItem( peopleIdList, ++index );
 		},
-		error: function(request,error){
+		error: function(request, error){
 
 	    	$('#emailPeopleListStatusTd-'+peopleId).html('<img src="'+_imageRoot+'/backend/icons/notifications/exclamation.png"/>');
-//	    	alert('E1'+request.responseText);
-//	    	alert('E2'+error);
 	    	sendEmailItem( peopleIdList, ++index );
+	    	
+//	    	if( isDebug() )
+//				debug(request.responseText);
 		}
 	});	
 }

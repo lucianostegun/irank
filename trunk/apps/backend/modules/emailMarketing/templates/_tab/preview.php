@@ -7,6 +7,6 @@
 	
 <div class="emailMarketingPreview">
 <?php
-	echo $emailMarketingObj->getContentPreview(false);
+	echo $emailMarketingObj->getContentPreview(true);
 ?>
 </div>

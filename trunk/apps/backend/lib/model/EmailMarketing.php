@@ -158,13 +158,14 @@ class EmailMarketing extends BaseEmailMarketing
 				$infoList = array_merge($infoList, $userSiteObj->getInfo(false, false));
 		}
 		
-		$emailContent = Report::defaultReplace($emailContent, $infoList, $emailLogId);
 		
 		if( $includeTemplate ){
 			
 			$emailTemplate = $this->getEmailTemplate()->getContent();
 			$emailContent  = str_replace('[emailContent]', $emailContent, $emailTemplate);
 		}
+
+		$emailContent = Report::defaultReplace($emailContent, $infoList, $emailLogId);
 		
 		return $emailContent;
 	}
@@ -259,7 +260,7 @@ class EmailMarketing extends BaseEmailMarketing
   		
   		$randomCode = ($randomCode?$randomCode:$emailMarketingPeopleObj->getRandomCode());
   		
-  		$emailContent = $this->getContent($peopleObj, $randomCode, false, $emailLogId);
+  		$emailContent = $this->getContent($peopleObj, $randomCode, true, $emailLogId);
   		$emailSubject = $this->getEmailSubject();
   		
   		$options = array('emailTemplate'=>null);
