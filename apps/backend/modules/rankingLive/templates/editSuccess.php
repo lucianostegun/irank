@@ -35,9 +35,9 @@
 			if( !$iRankAdmin && $clubId )
 				echo input_hidden_tag('clubId', $clubId);
 		?>
-			<div id="tab3" class="tab_content"><?php include_partial('rankingLive/tab/event', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
 			<div id="tab1" class="tab_content"><?php include_partial('rankingLive/tab/main', array('rankingLiveObj'=>$rankingLiveObj, 'iRankAdmin'=>$iRankAdmin, 'userAdminId'=>$userAdminId)) ?></div>
 			<div id="tab2" class="tab_content"><?php include_partial('rankingLive/tab/default', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
+			<div id="tab3" class="tab_content"><?php include_partial('rankingLive/tab/event', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
 			<?php if( $iRankAdmin ): ?>
 			<div id="tab5" class="tab_content"><?php include_partial('rankingLive/tab/club', array('rankingLiveObj'=>$rankingLiveObj)) ?></div>
 			<?php endif; ?>
