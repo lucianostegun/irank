@@ -143,7 +143,7 @@ class emailMarketingActions extends sfActions
 	
 	$emailAddress = Settings::getValue('emailDebug');
 	$emailSubject = 'Preview: '.$emailMarketingObj->getEmailSubject();
-	$emailContent = $emailMarketingObj->getContentPreview(false);
+	$emailContent = $emailMarketingObj->getContentPreview(true);
 	$emailContent = Report::defaultReplace($emailContent);
 	
 	$options = array('emailTemplate'=>null);
