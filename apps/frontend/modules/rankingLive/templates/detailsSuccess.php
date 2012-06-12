@@ -79,6 +79,7 @@
 	<table cellspacing="0" cellpadding="0" class="channel">
 		<tr>
 			<td id="rankingLiveInfo" class="rankingLiveTab first active" onclick="showRankingLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Informações</td>
+			<td id="rankingLiveCalendar" class="rankingLiveTab" onclick="loadRankingLiveTab(this, <?php echo $rankingLiveId ?>); showRankingLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Calendário</td>
 			<td id="rankingLiveEvents" class="rankingLiveTab" onclick="loadRankingLiveTab(this, <?php echo $rankingLiveId ?>); showRankingLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Etapas</td>
 			<?php if( !$noRanking ): ?>
 			<td id="rankingLiveClassify" class="rankingLiveTab" onclick="loadRankingLiveTab(this, <?php echo $rankingLiveId ?>); showRankingLiveTab(this)" class="last" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Classificação</td>
@@ -90,6 +91,9 @@
 	
 	<div id="rankingLiveInfoContent" class="rankingLiveTabContent active">
 		<?php echo $description ?>
+	</div>
+	<div id="rankingLiveCalendarContent" class="rankingLiveTabContent">
+		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
 	<div id="rankingLiveEventsContent" class="rankingLiveTabContent">
 		<?php include_partial('home/include/tabLoading', array()) ?>

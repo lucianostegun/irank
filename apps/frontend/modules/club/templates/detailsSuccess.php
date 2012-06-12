@@ -58,6 +58,7 @@
 	<table cellspacing="0" cellpadding="0" class="channel">
 		<tr>
 			<td id="clubInfo" class="clubTab first active" onclick="showClubTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Informações</td>
+			<td id="clubCalendar" class="clubTab" onclick="loadClubTab(this, <?php echo $clubId ?>); showClubTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Calendário</td>
 			<td id="clubEvents" class="clubTab" onclick="loadClubTab(this, <?php echo $clubId ?>); showClubTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Etapas</td>
 			<td id="clubPhotos" class="clubTab" onclick="loadClubTab(this, <?php echo $clubId ?>); showClubTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Fotos</td>
 			<td id="clubLocation" class="clubTab location" onclick="loadClubTab(this, <?php echo $clubId ?>); showClubTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Localização</td>
@@ -67,6 +68,9 @@
 	
 	<div id="clubInfoContent" class="clubTabContent active">
 		<?php echo $description ?>
+	</div>
+	<div id="clubCalendarContent" class="clubTabContent">
+		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
 	<div id="clubEventsContent" class="clubTabContent">
 		<?php include_partial('home/include/tabLoading', array()) ?>

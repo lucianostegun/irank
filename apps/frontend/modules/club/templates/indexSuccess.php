@@ -43,7 +43,7 @@
 				</div>
 			</div>
 			<div class="links">
-				<div class="link" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="goToPage('<?php echo $tagName ?>', '', '', '')">Detalhes</div>
+				<div class="link" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="goToPage('club', 'details', 'id', <?php echo $clubId ?>)">Detalhes</div>
 				<div class="link" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="goToPage('eventLive', 'index', 'clubId', <?php echo $clubId ?>)">Eventos</div>
 			</div>
 		</div>
