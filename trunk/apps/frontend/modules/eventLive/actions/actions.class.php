@@ -101,6 +101,12 @@ class eventLiveActions extends sfActions
   	exit;
   }
 
+  public function executeGetCalendar($request){
+  	
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
+	return $this->renderText(get_partial('eventLive/include/list/calendar', array('clubId'=>null)));
+  }
+
   public function executeGetTabContent($request){
   	
   	$tabId = $request->getParameter('tabId');
