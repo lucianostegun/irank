@@ -11,7 +11,6 @@ function selectPollResponse(pollId, pollAnswerId){
 
 		var content = parseInfo(t.responseText);
 		$('pollAnswer-'+pollAnswerId).addClassName('strong');
-		alert(content)
 		pollAnswered = true;
 		hideIndicator();
 	};
@@ -19,7 +18,6 @@ function selectPollResponse(pollId, pollAnswerId){
 	var failureFunc = function(t){
 
 		var content = t.responseText;
-		alert(content);
 		hideIndicator();
 	};
 	
