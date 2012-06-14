@@ -361,5 +361,5 @@ function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow, evt)
 	urlLocation = urlLocation.replace(/\/\//g, '/');
 	urlLocation = urlLocation.replace(/\/$/g, '');
 
-//	location.href = urlLocation;
+	location.href = urlLocation;
 }

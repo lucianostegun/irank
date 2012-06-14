@@ -45,9 +45,8 @@
 .eventLiveCalendar td h3 { font-size: 18px; padding: 0px; margin: 0px; color: #606060; text-shadow: #FAFAFA 1px 1px  }
 
 .eventLiveCalendar .currentMonth .calendarDay,
-.eventLiveCalendar .otherMonth .calendarDay { display: block; font-size: 30px; color: #DADADA; position: relative; top: -50px; left: 3px }
+.eventLiveCalendar .otherMonth .calendarDay { display: block; font-size: 20px; color: #DADADA; position: relative; top: -50px; left: 3px }
 
-.eventLiveCalendar .eventList { display: block; font-size: 30px; color: #DADADA; position: absolute; margin-top: -40px; margin-left: 2px; height: 95px; overflow: hidden; }
-.eventLiveCalendar .eventList .eventLive { width: 95px; font-size: 10px; color: #505050; border-top: 1px solid #D0D0D0 }
-.eventLiveCalendar .eventList .eventLive a { color: #505050; text-decoration: none }
-.eventLiveCalendar .eventList .eventLive a:hover { color: #C91E1E }
+.eventLiveCalendar .eventList { display: block; font-size: 30px; position: absolute; margin-top: -46px; margin-left: 0px; height: 95px; overflow: hidden; cursor: pointer }
+.eventLiveCalendar .eventList .eventLive { width: 94px; color: #303030; position: relative; left: 0px; font-size: 10px; background: #E5E5E5; margin-bottom: 1px; padding: 1px 3px; border: 1px solid #D0D0d0 }
+.eventLiveCalendar .eventList .eventLive:hover { color: #C91E1E }
