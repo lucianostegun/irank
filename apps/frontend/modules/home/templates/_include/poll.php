@@ -1,3 +1,4 @@
+<h2>Enquete de mãos</h2>
 <?php
 	$pollObj = PollPeer::getRandonPoll();
 	
