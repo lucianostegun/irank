@@ -80,14 +80,9 @@ var _ModuleName = '<?php echo $moduleName ?>';
 						    		<?php include_partial('home/resume/calendar', array()) ?>
 						    	</div>
     							<div class="leftContentBottom">
-	    							
 						    		<?php echo link_to(image_tag('appstore'), 'http://itunes.apple.com/us/app/irank/id481129223', array('id'=>'appstore')) ?>
-						    		
-	    							<div class="social">
-							    		
-						    		</div>
 						    	</div>
-						    	<h2>Enquete de mãos</h2>
+					    		<?php include_partial('home/include/partners', array()) ?>
 					    		<?php include_partial('home/include/poll', array()) ?>
     						</div>
 				    		

@@ -276,7 +276,7 @@ a:hover {
 
 #contentArea #mainContent #innerContent .leftContent .leftContentBottom {
 
-	padding-bottom: 	80px;
+	padding-bottom: 	5px;
 }
 
 #contentArea #mainContent #innerContent .leftContent #facebookFrame {
@@ -301,7 +301,8 @@ a:hover {
 	margin-bottom: 	5px;
 	border-bottom: 	1px solid #CCC;
 	width: 			170px;
-	color: 			#6A6A6A;
+	color: 			#234c62;
+	font-size: 		12px;
 }
 
 #contentArea #mainContent #innerContent .leftContent h2 {
@@ -317,15 +318,17 @@ a:hover {
 
 #contentArea #mainContent #innerContent .leftContent .partner {
 
-	position: 	relative;
-	left: 		11px;
-	height: 	67px;
+	position: 		relative;
+	left: 			11px;
+	width: 			180px;
+	text-align: 	center;
+	height: 		67px;
 }
 
 #contentArea #innerContent #appstore {
 
 	position: 		relative;
-	top: 			35px;
+	top: 			5px;
 	left: 			6px;
 }
 
