@@ -113,7 +113,7 @@
 						
 						foreach($eventLiveList[$eventDateKey] as $eventLive){
 							
-							echo '<div class="eventLive">'.link_to($eventLive['eventName'], '#goToPage("eventLive", "details", "id", '.$eventLive['id'].', event)').'</div>';
+							echo '<div class="eventLive" onclick="goToPage(\'eventLive\', \'details\', \'id\', '.$eventLive['id'].', event)">'.$eventLive['eventName'].'</div>';
 						}
 					}
 				?>
