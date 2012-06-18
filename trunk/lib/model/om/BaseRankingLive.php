@@ -246,6 +246,12 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	protected $lastRankingLiveTemplateCriteria = null;
 
 	
+	protected $collEventLiveViewList;
+
+	
+	protected $lastEventLiveViewCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -1611,6 +1617,14 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEventLiveViewList !== null) {
+				foreach($this->collEventLiveViewList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -1712,6 +1726,14 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 				if ($this->collRankingLiveTemplateList !== null) {
 					foreach($this->collRankingLiveTemplateList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEventLiveViewList !== null) {
+					foreach($this->collEventLiveViewList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -2364,6 +2386,10 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 
 			foreach($this->getRankingLiveTemplateList() as $relObj) {
 				$copyObj->addRankingLiveTemplate($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEventLiveViewList() as $relObj) {
+				$copyObj->addEventLiveView($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -3030,6 +3056,111 @@ abstract class BaseRankingLive extends BaseObject  implements Persistent {
 	{
 		$this->collRankingLiveTemplateList[] = $l;
 		$l->setRankingLive($this);
+	}
+
+	
+	public function initEventLiveViewList()
+	{
+		if ($this->collEventLiveViewList === null) {
+			$this->collEventLiveViewList = array();
+		}
+	}
+
+	
+	public function getEventLiveViewList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLiveViewPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLiveViewList === null) {
+			if ($this->isNew()) {
+			   $this->collEventLiveViewList = array();
+			} else {
+
+				$criteria->add(EventLiveViewPeer::RANKING_LIVE_ID, $this->getId());
+
+				EventLiveViewPeer::addSelectColumns($criteria);
+				$this->collEventLiveViewList = EventLiveViewPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventLiveViewPeer::RANKING_LIVE_ID, $this->getId());
+
+				EventLiveViewPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventLiveViewCriteria) || !$this->lastEventLiveViewCriteria->equals($criteria)) {
+					$this->collEventLiveViewList = EventLiveViewPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventLiveViewCriteria = $criteria;
+		return $this->collEventLiveViewList;
+	}
+
+	
+	public function countEventLiveViewList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLiveViewPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventLiveViewPeer::RANKING_LIVE_ID, $this->getId());
+
+		return EventLiveViewPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventLiveView(EventLiveView $l)
+	{
+		$this->collEventLiveViewList[] = $l;
+		$l->setRankingLive($this);
+	}
+
+
+	
+	public function getEventLiveViewListJoinClub($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLiveViewPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLiveViewList === null) {
+			if ($this->isNew()) {
+				$this->collEventLiveViewList = array();
+			} else {
+
+				$criteria->add(EventLiveViewPeer::RANKING_LIVE_ID, $this->getId());
+
+				$this->collEventLiveViewList = EventLiveViewPeer::doSelectJoinClub($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLiveViewPeer::RANKING_LIVE_ID, $this->getId());
+
+			if (!isset($this->lastEventLiveViewCriteria) || !$this->lastEventLiveViewCriteria->equals($criteria)) {
+				$this->collEventLiveViewList = EventLiveViewPeer::doSelectJoinClub($criteria, $con);
+			}
+		}
+		$this->lastEventLiveViewCriteria = $criteria;
+
+		return $this->collEventLiveViewList;
 	}
 
 } 

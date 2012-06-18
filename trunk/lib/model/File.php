@@ -457,6 +457,30 @@ class File extends BaseFile
 		$srcW = imagesx($newImg);
 		$srcH = imagesy($newImg);
 	
+//	
+//		$exif = exif_read_data($filePath);
+////		echo '<pre>';print_r($exif);exit;
+//		$ort  = 0;
+//		$ort  = (isset($exif['Orientation'])?$exif['Orientation']:0);
+//		
+//	    switch($ort){
+//	        case 3: // 180 rotate left
+//	            $newImg = imagerotate($newImg, 180, 0);
+//	        break;
+//	                   
+//	        case 1: // 90 rotate right
+//	        
+//				$newImg = imagerotate($newImg, -90, 0);
+//				$tmpWidth = $srcW; 
+//				$srcW = $srcH;
+//				$srcH = $srcW;
+//	        break;
+//	               
+//	        case 8:    // 90 rotate left
+//	            $newImg = imagerotate($newImg, 90, 0);
+//	        break;
+//	    }
+//	
 	
 		$new = imagecreatetruecolor($newWidth, $newHeight);
 		imagecopyresampled($new, $newImg, 0, 0, 0, 0, $newWidth, $newHeight, $srcW, $srcH);

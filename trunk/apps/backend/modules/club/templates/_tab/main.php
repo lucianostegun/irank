@@ -88,7 +88,10 @@
 	<div class="formRow">
 		<label>Link GoogleMaps</label>
 		<div class="formRight">
-			<?php echo input_tag('mapsLink', $clubObj->getMapsLink(), array('size'=>50, 'maxlength'=>500, 'id'=>'clubMapsLink')) ?>
+			<span class="multiple"><?php echo input_tag('mapsLink', $clubObj->getMapsLink(), array('size'=>50, 'maxlength'=>500, 'id'=>'clubMapsLink')) ?></span>
+			<span class="multiple"><?php echo input_tag('latitude', $clubObj->getLatitude(), array('size'=>15, 'maxlength'=>20, 'id'=>'clubLatitude')) ?></span>
+			<span class="multiple"><?php echo input_tag('longitude', $clubObj->getLongitude(), array('size'=>15, 'maxlength'=>20, 'id'=>'clubLongitude')) ?></span>
+			<div class="clear"></div>
 			<div class="formNote error" id="clubFormErrorMapsLink"></div>
 		</div>
 		<div class="clear"></div>

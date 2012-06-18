@@ -1,7 +1,7 @@
 <?php
 	echo input_hidden_tag('eventPhotoId', null, array('id'=>'eventCommentEventPhotoId'));
 ?>
-<div class="tabbarIntro">
+<div class="tabbarIntro" id="commentTitleDiv">
 	<?php echo __('event.commentsTab.intro') ?>
 </div>
 <table cellspacing="0" cellpadding="0" style="margin-top: 5px;">

@@ -55,6 +55,8 @@ class Club extends BaseClub
 		$addressQuarter = $request->getParameter('addressQuarter');
 		$clubSite       = $request->getParameter('clubSite');
 		$mapsLink       = $request->getParameter('mapsLink');
+		$latitude       = $request->getParameter('latitude');
+		$longitude       = $request->getParameter('longitude');
 		$phoneNumber1   = $request->getParameter('phoneNumber1');
 		$phoneNumber2   = $request->getParameter('phoneNumber2');
 		$phoneNumber3   = $request->getParameter('phoneNumber3');
@@ -71,6 +73,8 @@ class Club extends BaseClub
 		$this->setAddressQuarter($addressQuarter);
 		$this->setClubSite(nvl($clubSite));
 		$this->setMapsLink(nvl($mapsLink));
+		$this->setLatitude(nvl($latitude));
+		$this->setLongitude(nvl($longitude));
 		$this->setPhoneNumber1($phoneNumber1);
 		$this->setPhoneNumber2(nvl($phoneNumber2));
 		$this->setPhoneNumber3(nvl($phoneNumber3));
@@ -98,6 +102,7 @@ class Club extends BaseClub
 		$criteria->add( ClubPeer::ENABLED, true );
 		$criteria->add( ClubPeer::VISIBLE, true );
 		$criteria->add( ClubPeer::DELETED, false );
+		$criteria->addDescendingOrderByColumn( ClubPeer::ID );
 		
 		return ClubPeer::doSelect($criteria);
 	}
@@ -276,6 +281,17 @@ class Club extends BaseClub
 		return EventLivePeer::doSelect($criteria);
 	}
 	
+	public function getSchedule($criteria=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
+		$criteria->add( EventLiveViewPeer::CLUB_ID, $this->getId() );
+		$criteria->addAscendingOrderByColumn( EventLiveViewPeer::EVENT_DATE_TIME );
+		
+		return EventLiveViewPeer::doSelect($criteria);
+	}
+	
 	public function getCity($con=null){
 		
 		$cityObj = parent::getCity($con);
@@ -352,5 +368,10 @@ class Club extends BaseClub
 	public function getSettings($tagName){
 		
 		return ClubSettingsPeer::retrieveByPK($this->getId(), $tagName)->getSettingsValue();
+	}
+	
+	public static function getXml($clubList){
+		
+		return Util::buildXml($clubList, 'clubs', 'club');
 	}
 }

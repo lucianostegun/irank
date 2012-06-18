@@ -1169,6 +1169,11 @@ class EventLive extends BaseEventLive
 		return $this->getEventLiveScheduleList($criteria);
 	}
 	
+	public static function getXml($eventList){
+		
+		return Util::buildXml($eventList, 'eventLives', 'eventLive');
+	}
+	
 	public function toString(){
 	
 		$stepNumber      = $this->getStepNumber();
