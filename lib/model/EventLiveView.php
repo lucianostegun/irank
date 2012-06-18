@@ -13,6 +13,7 @@ class EventLiveView extends BaseEventLiveView
 	public function toString(){
 	
 		$stepNumber      = $this->getStepNumber();
+		$stepDay         = $this->getStepDay();
 		$guaranteedPrize = $this->getGuaranteedPrize();
 		$isSatellite     = $this->getIsSatellite();
 		
@@ -28,7 +29,7 @@ class EventLiveView extends BaseEventLiveView
 		}else
 			$guaranteedPrize = '';
 		
-		return $stepNumber.$this->getEventName().$guaranteedPrize;
+		return $stepNumber.$this->getEventName().$guaranteedPrize.($stepDay?"- Dia $stepDay":'');
 	}
 	
 	public function isPastDate(){
