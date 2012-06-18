@@ -45,6 +45,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 
 	
+	protected $latitude;
+
+
+	
+	protected $longitude;
+
+
+	
 	protected $club_site;
 
 
@@ -165,6 +173,12 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	protected $lastClubCheckCriteria = null;
 
 	
+	protected $collEventLiveViewList;
+
+	
+	protected $lastEventLiveViewCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -231,6 +245,20 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	{
 
 		return $this->maps_link;
+	}
+
+	
+	public function getLatitude()
+	{
+
+		return $this->latitude;
+	}
+
+	
+	public function getLongitude()
+	{
+
+		return $this->longitude;
 	}
 
 	
@@ -485,6 +513,26 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setLatitude($v)
+	{
+
+		if ($this->latitude !== $v) {
+			$this->latitude = $v;
+			$this->modifiedColumns[] = ClubPeer::LATITUDE;
+		}
+
+	} 
+	
+	public function setLongitude($v)
+	{
+
+		if ($this->longitude !== $v) {
+			$this->longitude = $v;
+			$this->modifiedColumns[] = ClubPeer::LONGITUDE;
+		}
+
+	} 
+	
 	public function setClubSite($v)
 	{
 
@@ -679,37 +727,41 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			$this->maps_link = $rs->getString($startcol + 8);
 
-			$this->club_site = $rs->getString($startcol + 9);
+			$this->latitude = $rs->getFloat($startcol + 9);
 
-			$this->description = $rs->getString($startcol + 10);
+			$this->longitude = $rs->getFloat($startcol + 10);
 
-			$this->phone_number_1 = $rs->getString($startcol + 11);
+			$this->club_site = $rs->getString($startcol + 11);
 
-			$this->phone_number_2 = $rs->getString($startcol + 12);
+			$this->description = $rs->getString($startcol + 12);
 
-			$this->phone_number_3 = $rs->getString($startcol + 13);
+			$this->phone_number_1 = $rs->getString($startcol + 13);
 
-			$this->visit_count = $rs->getInt($startcol + 14);
+			$this->phone_number_2 = $rs->getString($startcol + 14);
 
-			$this->sms_credit = $rs->getInt($startcol + 15);
+			$this->phone_number_3 = $rs->getString($startcol + 15);
 
-			$this->enabled = $rs->getBoolean($startcol + 16);
+			$this->visit_count = $rs->getInt($startcol + 16);
 
-			$this->visible = $rs->getBoolean($startcol + 17);
+			$this->sms_credit = $rs->getInt($startcol + 17);
 
-			$this->deleted = $rs->getBoolean($startcol + 18);
+			$this->enabled = $rs->getBoolean($startcol + 18);
 
-			$this->locked = $rs->getBoolean($startcol + 19);
+			$this->visible = $rs->getBoolean($startcol + 19);
 
-			$this->created_at = $rs->getTimestamp($startcol + 20, null);
+			$this->deleted = $rs->getBoolean($startcol + 20);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 21, null);
+			$this->locked = $rs->getBoolean($startcol + 21);
+
+			$this->created_at = $rs->getTimestamp($startcol + 22, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 23, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 22; 
+						return $startcol + 24; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Club object", $e);
 		}
@@ -884,6 +936,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEventLiveViewList !== null) {
+				foreach($this->collEventLiveViewList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -1021,6 +1081,14 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collEventLiveViewList !== null) {
+					foreach($this->collEventLiveViewList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 
 			$this->alreadyInValidation = false;
 		}
@@ -1067,42 +1135,48 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				return $this->getMapsLink();
 				break;
 			case 9:
-				return $this->getClubSite();
+				return $this->getLatitude();
 				break;
 			case 10:
-				return $this->getDescription();
+				return $this->getLongitude();
 				break;
 			case 11:
-				return $this->getPhoneNumber1();
+				return $this->getClubSite();
 				break;
 			case 12:
-				return $this->getPhoneNumber2();
+				return $this->getDescription();
 				break;
 			case 13:
-				return $this->getPhoneNumber3();
+				return $this->getPhoneNumber1();
 				break;
 			case 14:
-				return $this->getVisitCount();
+				return $this->getPhoneNumber2();
 				break;
 			case 15:
-				return $this->getSmsCredit();
+				return $this->getPhoneNumber3();
 				break;
 			case 16:
-				return $this->getEnabled();
+				return $this->getVisitCount();
 				break;
 			case 17:
-				return $this->getVisible();
+				return $this->getSmsCredit();
 				break;
 			case 18:
-				return $this->getDeleted();
+				return $this->getEnabled();
 				break;
 			case 19:
-				return $this->getLocked();
+				return $this->getVisible();
 				break;
 			case 20:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 21:
+				return $this->getLocked();
+				break;
+			case 22:
+				return $this->getCreatedAt();
+				break;
+			case 23:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1124,19 +1198,21 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 			$keys[6]=>$this->getAddressQuarter(),
 			$keys[7]=>$this->getCityId(),
 			$keys[8]=>$this->getMapsLink(),
-			$keys[9]=>$this->getClubSite(),
-			$keys[10]=>$this->getDescription(),
-			$keys[11]=>$this->getPhoneNumber1(),
-			$keys[12]=>$this->getPhoneNumber2(),
-			$keys[13]=>$this->getPhoneNumber3(),
-			$keys[14]=>$this->getVisitCount(),
-			$keys[15]=>$this->getSmsCredit(),
-			$keys[16]=>$this->getEnabled(),
-			$keys[17]=>$this->getVisible(),
-			$keys[18]=>$this->getDeleted(),
-			$keys[19]=>$this->getLocked(),
-			$keys[20]=>$this->getCreatedAt(),
-			$keys[21]=>$this->getUpdatedAt(),
+			$keys[9]=>$this->getLatitude(),
+			$keys[10]=>$this->getLongitude(),
+			$keys[11]=>$this->getClubSite(),
+			$keys[12]=>$this->getDescription(),
+			$keys[13]=>$this->getPhoneNumber1(),
+			$keys[14]=>$this->getPhoneNumber2(),
+			$keys[15]=>$this->getPhoneNumber3(),
+			$keys[16]=>$this->getVisitCount(),
+			$keys[17]=>$this->getSmsCredit(),
+			$keys[18]=>$this->getEnabled(),
+			$keys[19]=>$this->getVisible(),
+			$keys[20]=>$this->getDeleted(),
+			$keys[21]=>$this->getLocked(),
+			$keys[22]=>$this->getCreatedAt(),
+			$keys[23]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1180,42 +1256,48 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 				$this->setMapsLink($value);
 				break;
 			case 9:
-				$this->setClubSite($value);
+				$this->setLatitude($value);
 				break;
 			case 10:
-				$this->setDescription($value);
+				$this->setLongitude($value);
 				break;
 			case 11:
-				$this->setPhoneNumber1($value);
+				$this->setClubSite($value);
 				break;
 			case 12:
-				$this->setPhoneNumber2($value);
+				$this->setDescription($value);
 				break;
 			case 13:
-				$this->setPhoneNumber3($value);
+				$this->setPhoneNumber1($value);
 				break;
 			case 14:
-				$this->setVisitCount($value);
+				$this->setPhoneNumber2($value);
 				break;
 			case 15:
-				$this->setSmsCredit($value);
+				$this->setPhoneNumber3($value);
 				break;
 			case 16:
-				$this->setEnabled($value);
+				$this->setVisitCount($value);
 				break;
 			case 17:
-				$this->setVisible($value);
+				$this->setSmsCredit($value);
 				break;
 			case 18:
-				$this->setDeleted($value);
+				$this->setEnabled($value);
 				break;
 			case 19:
-				$this->setLocked($value);
+				$this->setVisible($value);
 				break;
 			case 20:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 21:
+				$this->setLocked($value);
+				break;
+			case 22:
+				$this->setCreatedAt($value);
+				break;
+			case 23:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1234,19 +1316,21 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setAddressQuarter($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setCityId($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setMapsLink($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setClubSite($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setDescription($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setPhoneNumber1($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setPhoneNumber2($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setPhoneNumber3($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setVisitCount($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setSmsCredit($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setEnabled($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setVisible($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setDeleted($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setLocked($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setCreatedAt($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setUpdatedAt($arr[$keys[21]]);
+		if (array_key_exists($keys[9], $arr)) $this->setLatitude($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setLongitude($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setClubSite($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setDescription($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setPhoneNumber1($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setPhoneNumber2($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setPhoneNumber3($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setVisitCount($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setSmsCredit($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setEnabled($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setVisible($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setDeleted($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setLocked($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setCreatedAt($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setUpdatedAt($arr[$keys[23]]);
 	}
 
 	
@@ -1263,6 +1347,8 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ClubPeer::ADDRESS_QUARTER)) $criteria->add(ClubPeer::ADDRESS_QUARTER, $this->address_quarter);
 		if ($this->isColumnModified(ClubPeer::CITY_ID)) $criteria->add(ClubPeer::CITY_ID, $this->city_id);
 		if ($this->isColumnModified(ClubPeer::MAPS_LINK)) $criteria->add(ClubPeer::MAPS_LINK, $this->maps_link);
+		if ($this->isColumnModified(ClubPeer::LATITUDE)) $criteria->add(ClubPeer::LATITUDE, $this->latitude);
+		if ($this->isColumnModified(ClubPeer::LONGITUDE)) $criteria->add(ClubPeer::LONGITUDE, $this->longitude);
 		if ($this->isColumnModified(ClubPeer::CLUB_SITE)) $criteria->add(ClubPeer::CLUB_SITE, $this->club_site);
 		if ($this->isColumnModified(ClubPeer::DESCRIPTION)) $criteria->add(ClubPeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(ClubPeer::PHONE_NUMBER_1)) $criteria->add(ClubPeer::PHONE_NUMBER_1, $this->phone_number_1);
@@ -1321,6 +1407,10 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$copyObj->setCityId($this->city_id);
 
 		$copyObj->setMapsLink($this->maps_link);
+
+		$copyObj->setLatitude($this->latitude);
+
+		$copyObj->setLongitude($this->longitude);
 
 		$copyObj->setClubSite($this->club_site);
 
@@ -1394,6 +1484,10 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			foreach($this->getClubCheckList() as $relObj) {
 				$copyObj->addClubCheck($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEventLiveViewList() as $relObj) {
+				$copyObj->addEventLiveView($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -2883,6 +2977,111 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$this->lastClubCheckCriteria = $criteria;
 
 		return $this->collClubCheckList;
+	}
+
+	
+	public function initEventLiveViewList()
+	{
+		if ($this->collEventLiveViewList === null) {
+			$this->collEventLiveViewList = array();
+		}
+	}
+
+	
+	public function getEventLiveViewList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLiveViewPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLiveViewList === null) {
+			if ($this->isNew()) {
+			   $this->collEventLiveViewList = array();
+			} else {
+
+				$criteria->add(EventLiveViewPeer::CLUB_ID, $this->getId());
+
+				EventLiveViewPeer::addSelectColumns($criteria);
+				$this->collEventLiveViewList = EventLiveViewPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EventLiveViewPeer::CLUB_ID, $this->getId());
+
+				EventLiveViewPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEventLiveViewCriteria) || !$this->lastEventLiveViewCriteria->equals($criteria)) {
+					$this->collEventLiveViewList = EventLiveViewPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEventLiveViewCriteria = $criteria;
+		return $this->collEventLiveViewList;
+	}
+
+	
+	public function countEventLiveViewList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLiveViewPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EventLiveViewPeer::CLUB_ID, $this->getId());
+
+		return EventLiveViewPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEventLiveView(EventLiveView $l)
+	{
+		$this->collEventLiveViewList[] = $l;
+		$l->setClub($this);
+	}
+
+
+	
+	public function getEventLiveViewListJoinRankingLive($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEventLiveViewPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEventLiveViewList === null) {
+			if ($this->isNew()) {
+				$this->collEventLiveViewList = array();
+			} else {
+
+				$criteria->add(EventLiveViewPeer::CLUB_ID, $this->getId());
+
+				$this->collEventLiveViewList = EventLiveViewPeer::doSelectJoinRankingLive($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EventLiveViewPeer::CLUB_ID, $this->getId());
+
+			if (!isset($this->lastEventLiveViewCriteria) || !$this->lastEventLiveViewCriteria->equals($criteria)) {
+				$this->collEventLiveViewList = EventLiveViewPeer::doSelectJoinRankingLive($criteria, $con);
+			}
+		}
+		$this->lastEventLiveViewCriteria = $criteria;
+
+		return $this->collEventLiveViewList;
 	}
 
 } 

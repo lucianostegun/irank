@@ -87,6 +87,14 @@ class eventActions extends sfActions
 	echo 'uploadSuccess';
   	exit;
   }
+
+  public function executeThumbnail($request){
+  	
+  	$fileObj = FilePeer::retrieveByPK(185);
+	$fileObj->resizeMax(800,600);
+
+  	exit;
+  }
   
   public function executeComments($request){
   	
@@ -153,7 +161,7 @@ class eventActions extends sfActions
   
   public function executeTogglePresence($request){
 
-	Util::getHelper('I18N');
+	Util::getHelper('i18n');
 	
 	$eventId  = $request->getParameter('eventId');
 	$peopleId = $request->getParameter('peopleId');
@@ -395,8 +403,12 @@ class eventActions extends sfActions
 				$imageUrl = 'http://'.$host.'/'.$fileObj->getFilePath();
 				$fileName = Util::getFileName($imageUrl);
 				
+				$width  = $eventPhotoObj->getWidth();
+				$height = $eventPhotoObj->getHeight();
+				$orientation = ($width > $height?'landscape':'portrait');
+				
 				$eventPhotoNode = array();
-				$eventPhotoNode['@attributes'] = array('eventPhotoId'=>$eventPhotoObj->getId(), 'fileId'=>$eventPhotoObj->getFileId());
+				$eventPhotoNode['@attributes'] = array('eventPhotoId'=>$eventPhotoObj->getId(), 'fileId'=>$eventPhotoObj->getFileId(), 'width'=>$width, 'height'=>$height, 'orientation'=>$orientation);
 				$eventPhotoNode['imageUrl']    = 'http://'.$host.'/ios.php/event/imageThumb/eventPhotoId/'.$eventPhotoObj->getId().'/thumb/1';
 				$eventPhotoNode['thumbUrl']    = str_replace($fileName, 'thumb/'.$fileName, $imageUrl);
 				

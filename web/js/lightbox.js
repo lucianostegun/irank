@@ -363,7 +363,7 @@ Lightbox.prototype = {
 	start: function(imageLink) {	
 
 		function getImageTitle(anchor){ //DynamicDrive.com added function that allows the caption("title") to be linked ("rev").
-			var ddimageTitle=anchor.getAttribute('title')
+			var ddimageTitle=anchor.getAttribute('alt')
 			var ddimageTitleURL=(ddimageTitle!=null && ddimageTitle!="")? anchor.getAttribute('rev') : null
 			return ddimageTitleFinal=(ddimageTitleURL!=null && ddimageTitleURL!="")? '<a href="'+ddimageTitleURL+'" class="ddcaptionurl">'+ddimageTitle+'</a>' : ddimageTitle
 		};

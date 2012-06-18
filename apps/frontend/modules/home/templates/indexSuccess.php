@@ -33,7 +33,7 @@
 					<li id="contentItemText2"><h1><?php echo link_to('iRank no Facebook', 'http://www.facebook.com/irankpoker', array('target'=>'_blank')) ?></h1><p>Agora o <b>iRank</b> também está no Facebook.<br/>Acesse e curta nossa página para concorrer a prêmios.</p></li>
 					<li id="contentItemText3"><h1><?php echo link_to('Sincronize sua agenda', 'schedule/index') ?></h1><p>Assinando o calendário de eventos <b>iRank</b> em seu smartphone ou tablet você será sempre informado sobre os eventos que irão ocorrer próximo a você.</p></li>
 					<li id="contentItemText4"><h1>Pontuação personalizada</h1><p>Defina o modelo de pontuação mais adequado ao seu grupo com a nova opção no cadastro de rankings permite a você criar sua própria fórmula para cálculo dos pontos.</p></li>
-					<li id="contentItemText5"><h1><?php echo link_to_image('Foto do mês', '/uploads/eventPhoto/event-57/0036499001297851037.jpg', array('rel'=>'lightbox', 'title'=>$photoCaption)) ?></h1><p><?php echo $photoCaption ?></p></li>
+					<li id="contentItemText5"><h1><?php echo link_to_image('Foto do mês', '/uploads/eventPhoto/event-57/0036499001297851037.jpg', array('rel'=>'lightbox', 'alt'=>$photoCaption)) ?></h1><p><?php echo $photoCaption ?></p></li>
 				</ul>
 			</div>
 		</div>

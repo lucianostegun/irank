@@ -7,10 +7,6 @@
 	<tbody>
 	<?php
 		$criteria = new Criteria();
-		$criteria->add( EventLivePeer::CLUB_ID, $clubObj->getId() );
-		$criteria->add( EventLivePeer::ENABLED, true );
-		$criteria->add( EventLivePeer::VISIBLE, true );
-		$criteria->add( EventLivePeer::DELETED, false );
 		$criteria->addDescendingOrderByColumn( EventLivePeer::EVENT_DATE );
 
 		$recordCount = 0;

@@ -32,7 +32,7 @@
 				$link = utf8_decode($link);
 				$link = htmlentities($link);
 			?>
-			<a href="<?php echo $imagePath ?>" title="<?php echo $link ?>" rel="lightbox"><?php echo image_tag($imageThumbPath, array('width'=>80, 'height'=>60)) ?></a>
+			<a href="<?php echo $imagePath ?>" alt="<?php echo $link ?>" rel="lightbox"><?php echo image_tag($imageThumbPath, array('width'=>80, 'height'=>60)) ?></a>
 		</td>
 		<?php endforeach ?>
 	</tr>

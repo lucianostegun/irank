@@ -2,12 +2,10 @@
 <html lang="pt-BR">
 <head>
 
-<?php include_http_metas() ?>
-<?php include_metas() ?>
-
-<?php include_title() ?>
-
-<link rel="shortcut icon" href="/favicon.ico" />
+<?php
+	include_http_metas();
+	include_metas();
+?>
 
 </head>
 <body>
