@@ -1241,6 +1241,7 @@
 		<column name="start_time" type="TIME"/>
 		<column name="event_date_time" type="TIMESTAMP" />
 		<column name="step_number" type="VARCHAR" />
+		<column name="step_day" type="VARCHAR" />
 		<column name="comments" type="VARCHAR" />
 		<column name="description" type="LONGVARCHAR"/>
 		<column name="is_freeroll" type="BOOLEAN" />

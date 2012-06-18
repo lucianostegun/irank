@@ -48,6 +48,8 @@ class EventLiveViewMapBuilder {
 
 		$tMap->addColumn('STEP_NUMBER', 'StepNumber', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('STEP_DAY', 'StepDay', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('COMMENTS', 'Comments', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('DESCRIPTION', 'Description', 'string', CreoleTypes::LONGVARCHAR, false, null);
