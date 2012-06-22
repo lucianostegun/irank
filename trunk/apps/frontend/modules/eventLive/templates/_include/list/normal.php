@@ -3,6 +3,13 @@
 		<?php
 			$peopleId = $sf_user->getAttribute('peopleId');
 			
+//			$criteria = new Criteria();
+//			$criteria->add( EventLiveViewPeer::EVENT_DATE, Util::getDate('-2d'), Criteria::GREATER_THAN);
+//			$criteria->addAscendingOrderByColumn( EventLiveViewPeer::EVENT_DATE_TIME );
+//			$eventLiveIdList = EventLiveViewPeer::search($criteria, true);
+//			
+//			$eventLiveObjList = EventLivePeer::retrieveByIds($eventLiveIdList);
+
 			$criteria = new Criteria();
 			$criteria->add( EventLivePeer::EVENT_DATE, Util::getDate('-2d'), Criteria::GREATER_THAN);
 			$criteria->addAscendingOrderByColumn( EventLivePeer::EVENT_DATE_TIME );

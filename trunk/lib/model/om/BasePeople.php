@@ -4176,7 +4176,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	
 	public function getClubPlayerList($criteria = null, $con = null)
 	{
-				include_once 'apps/backend/lib/model/om/BaseClubPlayerPeer.php';
+				include_once 'lib/model/om/BaseClubPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -4214,7 +4214,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	
 	public function countClubPlayerList($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'apps/backend/lib/model/om/BaseClubPlayerPeer.php';
+				include_once 'lib/model/om/BaseClubPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -4239,7 +4239,7 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	
 	public function getClubPlayerListJoinClub($criteria = null, $con = null)
 	{
-				include_once 'apps/backend/lib/model/om/BaseClubPlayerPeer.php';
+				include_once 'lib/model/om/BaseClubPlayerPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}

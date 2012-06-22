@@ -10,6 +10,13 @@
 class EventLivePeer extends BaseEventLivePeer
 {
 	
+	public static function retrieveByIds($eventLiveIdList){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventLivePeer::ID, $eventLiveIdList, Criteria::IN );
+		return EventLivePeer::doSelect($criteria);
+	}
+	
 	public static function search($criteria=null){
 		
 		$request = MyTools::getRequest();

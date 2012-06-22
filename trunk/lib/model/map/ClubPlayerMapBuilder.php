@@ -5,7 +5,7 @@
 class ClubPlayerMapBuilder {
 
 	
-	const CLASS_NAME = '...apps.backend.lib.model.map.ClubPlayerMapBuilder';
+	const CLASS_NAME = 'lib.model.map.ClubPlayerMapBuilder';
 
 	
 	private $dbMap;

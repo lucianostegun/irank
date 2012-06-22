@@ -3,8 +3,6 @@ all:
   metas:
     og|title:        iRank - Poker Ranking
     og|description:  iRank - O primeiro site de gerenciamento de rankings de poker para você e seus amigos
-    og|image*1:      http://<?php echo $host=MyTools::getRequest()->getHost() ?>/images/layout/chipsFooter.png
-    og|image:        http://<?php echo $host ?>/images/layout/mediaLogoFull.png
     
   stylesheets:    [home, lightbox, quickResume, eventResume, eventLiveResume]
   javascripts:    [home, highlight, /sf/prototype/js/scriptaculous, lightbox]

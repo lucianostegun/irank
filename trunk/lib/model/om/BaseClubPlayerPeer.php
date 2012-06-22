@@ -10,7 +10,7 @@ abstract class BaseClubPlayerPeer {
 	const TABLE_NAME = 'club_player';
 
 	
-	const CLASS_DEFAULT = '...apps.backend.lib.model.ClubPlayer';
+	const CLASS_DEFAULT = 'lib.model.ClubPlayer';
 
 	
 	const NUM_COLUMNS = 3;
@@ -52,8 +52,8 @@ abstract class BaseClubPlayerPeer {
 	
 	public static function getMapBuilder()
 	{
-		include_once 'apps/backend/lib/model/map/ClubPlayerMapBuilder.php';
-		return BasePeer::getMapBuilder('...apps.backend.lib.model.map.ClubPlayerMapBuilder');
+		include_once 'lib/model/map/ClubPlayerMapBuilder.php';
+		return BasePeer::getMapBuilder('lib.model.map.ClubPlayerMapBuilder');
 	}
 	
 	public static function getPhpNameMap()
@@ -797,6 +797,6 @@ if (Propel::isInit()) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
-			require_once 'apps/backend/lib/model/map/ClubPlayerMapBuilder.php';
-	Propel::registerMapBuilder('...apps.backend.lib.model.map.ClubPlayerMapBuilder');
+			require_once 'lib/model/map/ClubPlayerMapBuilder.php';
+	Propel::registerMapBuilder('lib.model.map.ClubPlayerMapBuilder');
 }

@@ -13,19 +13,59 @@ class eventLiveActions extends sfActions
 	
   public function preExecute(){
   	
-	$userSiteId = $this->getRequestParameter('userSiteId');
-  	$language   = $this->getRequestParameter('language');
+	$this->userSiteId  = $this->getRequestParameter('userSiteId');
+	$this->eventLiveId = $this->getRequestParameter('id');
+	$this->eventLiveId = $this->getRequestParameter('eventLiveId', $this->eventLiveId);
 	
-	$this->userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+	$this->peopleId = null;
 	
-  	$culture = Util::getConvertCulture($language);
-  	
-  	MyTools::setCulture($culture);
-	
-	if( is_object($this->userSiteObj) )
-		$this->getUser()->setAttribute('peopleId', $this->userSiteObj->getPeopleId());
+	if( $this->userSiteId )
+		$this->peopleId = Util::executeOne("SELECT people_id FROM user_site WHERE id = $this->userSiteId");
 		
-	$this->getUser()->setAttribute('userSiteId', $userSiteId);
+	if( $this->peopleId )
+		$this->getUser()->setAttribute('peopleId', $this->peopleId);
+		
+	$this->getUser()->setAttribute('userSiteId', $this->userSiteId);
+  }
+
+  public function executeTogglePresence($request){
+  	
+  	$inviteStatus  = $request->getParameter('inviteStatus');
+  	$errorMessage  = null;
+  	
+  	$eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+  	$players      = $eventLiveObj->getPlayers(false, false);
+  	
+  	if( is_object($eventLiveObj) ){
+
+	  	if( $eventLiveObj->isPastDate() ){
+	  		
+	  		$errorMessage = 'Este evento já foi realizado.';
+	  	}elseif( !$eventLiveObj->isEnrollmentOpen() ){
+	  		
+	  		$errorMessage = 'As inscrições deste evento iniciam apenas em '.$eventLiveObj->getEnrollmentStartDate('d/m/Y').'.';
+	  	}else{
+	  		
+	  		$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPK($this->eventLiveId, $this->peopleId);
+	  		
+	  		if( $inviteStatus )
+	  			$eventLivePlayerObj->confirmPresence();
+	  		else
+	  			$eventLivePlayerObj->declinePresence();
+	  			
+	  		$players = Util::executeOne("SELECT players FROM event_live WHERE id = {$this->eventLiveId}");
+	  	}
+  	}else{
+
+  		$errorMessage = 'Evento não encontrado.';
+  	}
+  	
+  	if( $errorMessage )
+  		Util::forceError($errorMessage);
+  	else
+  		echo $players;
+  		
+  	exit;
   }
   
   /**
@@ -34,15 +74,13 @@ class eventLiveActions extends sfActions
    */
   public function executeGetXml($request){
   	
-  	$userSiteId  = $request->getParameter('userSiteId');
   	$clubId      = $request->getParameter('clubId');
-  	$eventId     = $request->getParameter('eventId');
   	$model       = $request->getParameter('model');
   	$limit       = $request->getParameter('limit', null);
   	$userSiteObj = $this->userSiteObj;
   	
   	$host = $request->getHost();
-	
+  	
 	switch( $model ){
 		case 'nextEvents':
   			$clubObj = ClubPeer::retrieveByPK($clubId);
@@ -59,7 +97,7 @@ class eventLiveActions extends sfActions
 				$description = $eventLiveObj->getDescription();
 				$description = strip_tags($description);
 				
-				$eventNode['@attributes']   = array('id'=>$eventLiveObj->getId());
+				$eventNode['@attributes']   = array('id'=>$eventLiveObj->getId(), 'inviteStatus'=>$eventLiveObj->getPlayerStatus($this->peopleId, true));
 				$eventNode['eventName']     = $eventLiveObj->toString();
 				$eventNode['eventDate']     = $eventLiveObj->getEventDate('d/m/Y');
 				$eventNode['weekDay']       = $eventLiveObj->getWeekDay();
@@ -84,32 +122,6 @@ class eventLiveActions extends sfActions
 			}
 			
 			echo EventLive::getXml($eventList);
-			break;
-		case 'eventPhoto':
-
-			$eventObj = EventPeer::retrieveByPK($eventId);
-			$host = $request->getHost();
-
-			$eventPhotoList = array();
-			foreach($eventObj->getPhotoList() as $eventPhotoObj){
-				
-				$fileObj  = $eventPhotoObj->getFile();
-				$imageUrl = 'http://'.$host.'/'.$fileObj->getFilePath();
-				$fileName = Util::getFileName($imageUrl);
-				
-				$width  = $eventPhotoObj->getWidth();
-				$height = $eventPhotoObj->getHeight();
-				$orientation = ($width > $height?'landscape':'portrait');
-				
-				$eventPhotoNode = array();
-				$eventPhotoNode['@attributes'] = array('eventPhotoId'=>$eventPhotoObj->getId(), 'fileId'=>$eventPhotoObj->getFileId(), 'width'=>$width, 'height'=>$height, 'orientation'=>$orientation);
-				$eventPhotoNode['imageUrl']    = 'http://'.$host.'/ios.php/event/imageThumb/eventPhotoId/'.$eventPhotoObj->getId().'/thumb/1';
-				$eventPhotoNode['thumbUrl']    = str_replace($fileName, 'thumb/'.$fileName, $imageUrl);
-				
-				$eventPhotoList[] = $eventPhotoNode;
-			}
-			
-			echo EventPhoto::getXml($eventPhotoList);
 			break;
 	}
 	exit;
