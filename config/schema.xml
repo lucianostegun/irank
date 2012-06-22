@@ -1167,7 +1167,7 @@
 		</foreign-key>
 	</table>
 
-	<table name="club_player" phpName="ClubPlayer" package="...apps.backend.lib.model">
+	<table name="club_player" phpName="ClubPlayer">
 		<column name="club_id" type="INTEGER" primaryKey="true" />
 		<column name="people_id" type="INTEGER" primaryKey="true" />
 		<column name="created_at" type="TIMESTAMP" />

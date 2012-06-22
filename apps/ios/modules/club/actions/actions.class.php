@@ -23,8 +23,10 @@ class clubActions extends sfActions
    */
   public function executeGetXml($request){
   	
-  	$userSiteId  = $request->getParameter('userSiteId');
-  	$model       = $request->getParameter('model');
+  	$userSiteId = $request->getParameter('userSiteId');
+  	$model      = $request->getParameter('model');
+  	$latitude   = $request->getParameter('latitude')*1;
+  	$longitude  = $request->getParameter('longitude')*1;
 	
 	switch( $model ){
 		case 'club':
@@ -39,8 +41,12 @@ class clubActions extends sfActions
 				$fileNameLogo = $clubObj->getFileNameLogo();
 				$description  = $clubObj->getDescription();
 				$description  = strip_tags($description);
+				$distance     = null;
 				
-				$clubNode['@attributes']    = array('id'=>$clubObj->getId(), 'latitude'=>$clubObj->getLatitude(), 'longitude'=>$clubObj->getLongitude());
+				if( $latitude && $longitude)
+					$distance = $clubObj->getDistance($latitude, $longitude);
+				
+				$clubNode['@attributes']    = array('id'=>$clubObj->getId(), 'distance'=>$distance, 'latitude'=>$clubObj->getLatitude(), 'longitude'=>$clubObj->getLongitude());
 				$clubNode['clubName']       = $clubObj->toString();
 				$clubNode['addressName']    = $clubObj->getAddressName();
 				$clubNode['addressNumber']  = $clubObj->getAddressNumber();

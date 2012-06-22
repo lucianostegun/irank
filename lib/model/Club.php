@@ -374,4 +374,54 @@ class Club extends BaseClub
 		
 		return Util::buildXml($clubList, 'clubs', 'club');
 	}
+	
+	public function getDistance($latitude, $longitude, $unit='K') {
+  
+		$clubLatitude  = $this->getLatitude();
+		$clubLongitude = $this->getLongitude();
+
+		$theta = $longitude - $clubLongitude;
+		$dist  = sin(deg2rad($latitude)) * sin(deg2rad($clubLatitude)) + cos(deg2rad($latitude)) * cos(deg2rad($clubLatitude)) * cos(deg2rad($theta));
+		$dist  = acos($dist);
+		$dist  = rad2deg($dist);
+		$miles = $dist * 60 * 1.1515;
+		$unit  = strtoupper($unit);
+		
+		if($unit=='K')
+			return ($miles * 1.609344);
+		elseif($unit=='N')
+			return ($miles * 0.8684);
+		else
+			return $miles;
+
+		// HAVERSINE
+//		$earth_radius = 3960.00; # in miles
+//		$delta_lat = $clubLatitude-$latitude;
+//		$delta_lon = $clubLongitude-$longitude;
+//		
+//		$alpha    = $delta_lat/2;
+//		$beta     = $delta_lon/2;
+//		$a        = sin(deg2rad($alpha)) * sin(deg2rad($alpha)) + cos(deg2rad($latitude)) * cos(deg2rad($longitude)) * sin(deg2rad($beta)) * sin(deg2rad($beta));
+//		$c        = asin(min(1, sqrt($a)));
+//		$distance = 2*$earth_radius * $c;
+//		$distance = round($distance, 4);
+// 
+//		return $distance * 1.609344;
+		
+		
+		
+		
+		
+		// SPHERICAL
+//		$deltaLat = $clubLatitude-$latitude;
+//		$deltaLon = $clubLongitude-$longitude;
+//	  
+//		$distance = sin(deg2rad($latitude)) * sin(deg2rad($clubLatitude)) + cos(deg2rad($latitude)) * cos(deg2rad($clubLatitude)) * cos(deg2rad($deltaLon));
+//		$distance = acos($distance);
+//		$distance = rad2deg($distance);
+//		$distance = $distance * 60 * 1.1515;
+//		$distance = round($distance, 4);
+//	 
+//		return $distance* 1.609344;
+	}
 }

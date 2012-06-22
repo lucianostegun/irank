@@ -113,4 +113,19 @@ class EventLiveView extends BaseEventLiveView
 		
 		return $fileNameLogo;
 	}
+	
+	public function getPlayerStatus($peopleId, $boolean=false){
+		
+		if( !$peopleId )
+			return 'no';
+		
+		$enrollmentStatus = Util::executeOne('SELECT enrollment_status FROM event_live_player WHERE event_live_id = '.$this->getId().' AND people_id = '.$peopleId, 'string');
+		
+		$enrolled = in_array($enrollmentStatus, array('enrolled', 'confirmed'));
+		
+		if( $boolean )
+			return $enrolled;
+		else
+			return ($enrolled?'yes':'no');
+	}
 }

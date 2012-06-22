@@ -70,14 +70,11 @@ class eventLiveActions extends sfActions
 	  		$eventLivePlayerObj->togglePresence();
 	  		$currentStatus = $eventLivePlayerObj->getCurrentStatus();
 	  		
-	  		
 	  		if( $currentStatus=='yes' )
 	  			$players++;
 	  		else
 	  			$players--;
 	  	}
-	  	
-  		
   	}else{
 
   		$result       = 'error';

@@ -5,7 +5,7 @@
  *
  * 
  *
- * @package ...apps.backend.lib.model
+ * @package lib.model
  */ 
 class ClubPlayerPeer extends BaseClubPlayerPeer
 {
