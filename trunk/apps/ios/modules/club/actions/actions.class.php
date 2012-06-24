@@ -25,10 +25,14 @@ class clubActions extends sfActions
   	$width        = $request->getParameter('width', 300);
   	$clubPhotoObj = ClubPhotoPeer::retrieveByPK($clubPhotoId);
   	
-  	$filePath = $clubPhotoObj->getFile()->getFilePath(true);
+  	$filePath  = $clubPhotoObj->getFile()->getFilePath(true);
+  	$extension = $clubPhotoObj->getFile()->getExtension();
   	
-	$newImg = @imagecreatefromjpeg( $filePath );
-	
+  	if( strtoupper($extension)=='png' )
+		$newImg = @imagecreatefrompng( $filePath );
+	else
+		$newImg = @imagecreatefromjpeg( $filePath );
+		
 	header('Content-type: image/jpeg');
 	
 	$srcW = imagesx($newImg);
