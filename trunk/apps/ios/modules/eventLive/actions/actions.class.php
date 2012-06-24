@@ -90,7 +90,7 @@ class eventLiveActions extends sfActions
 			$criteria->setLimit($limit);
 		
 			$eventList = array();
-			foreach($clubObj->getSchedule($criteria) as $eventLiveObj){
+			foreach($clubObj->getSchedule($criteria) as $key=>$eventLiveObj){
 				
 				$eventNode = array();
 				

@@ -4,14 +4,8 @@
 			<?php
 				$clubId = $clubObj->getId();
 				
-				$criteria = new Criteria();
-				$criteria->add( ClubPhotoPeer::CLUB_ID, $clubId );
-				$criteria->add( ClubPhotoPeer::DELETED, false );
-				$criteria->addDescendingOrderByColumn( ClubPhotoPeer::CREATED_AT );
-				$clubPhotoObjList = ClubPhotoPeer::doSelect($criteria);
-				
 				$recordCount = 0;
-				foreach($clubPhotoObjList as $clubPhotoObj):
+				foreach($clubObj->getClubPhotoList() as $clubPhotoObj):
 								
 					$clubPhotoId = $clubPhotoObj->getId();
 					$fileName     = Util::getFileName($clubPhotoObj->getFile()->getFilePath());

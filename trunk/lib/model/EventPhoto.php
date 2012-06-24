@@ -96,9 +96,9 @@ class EventPhoto extends BaseEventPhoto
        	HomeWall::doLog('publicou uma foto do evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPhoto', true);
 	}
 	
-	public static function getXml($eventList){
+	public static function getXml($photoList, $tagName='photoPhoto'){
 		
-		return Util::buildXml($eventList, 'eventPhotos', 'eventPhoto');
+		return Util::buildXml($photoList, "{$tagName}s", $tagName);
 	}
 	
 	public function getInfo(){
