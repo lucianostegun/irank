@@ -392,11 +392,15 @@ class eventActions extends sfActions
 			echo EventPlayer::getXml($eventPlayerList);
 			break;
 		case 'eventPhoto':
+		case 'photo':
 
-			$eventObj = EventPeer::retrieveByPK($eventId);
-			$host = $request->getHost();
+			$appVersion = $request->getParameter('appVersion');
+			$eventObj   = EventPeer::retrieveByPK($eventId);
+			$host       = $request->getHost();
+			
+			$tagName = ($appVersion?'photo':'eventPhoto');
 
-			$eventPhotoList = array();
+			$photoList = array();
 			foreach($eventObj->getPhotoList() as $eventPhotoObj){
 				
 				$fileObj  = $eventPhotoObj->getFile();
@@ -408,14 +412,14 @@ class eventActions extends sfActions
 				$orientation = ($width > $height?'landscape':'portrait');
 				
 				$eventPhotoNode = array();
-				$eventPhotoNode['@attributes'] = array('eventPhotoId'=>$eventPhotoObj->getId(), 'fileId'=>$eventPhotoObj->getFileId(), 'width'=>$width, 'height'=>$height, 'orientation'=>$orientation);
+				$eventPhotoNode['@attributes'] = array($tagName.'Id'=>$eventPhotoObj->getId(), 'fileId'=>$eventPhotoObj->getFileId(), 'width'=>$width, 'height'=>$height, 'orientation'=>$orientation);
 				$eventPhotoNode['imageUrl']    = 'http://'.$host.'/ios.php/event/imageThumb/eventPhotoId/'.$eventPhotoObj->getId().'/thumb/1';
 				$eventPhotoNode['thumbUrl']    = str_replace($fileName, 'thumb/'.$fileName, $imageUrl);
 				
-				$eventPhotoList[] = $eventPhotoNode;
+				$photoList[] = $eventPhotoNode;
 			}
 			
-			echo EventPhoto::getXml($eventPhotoList);
+			echo EventPhoto::getXml($photoList, $tagName);
 			break;
 	}
 	exit;

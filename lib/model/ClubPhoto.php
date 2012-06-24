@@ -31,4 +31,9 @@ class ClubPhoto extends BaseClubPhoto
 		$this->setDeleted(true);
 		$this->save();
 	}
+	
+	public static function getXml($photoList){
+		
+		return Util::buildXml($photoList, 'photos', 'photo');
+	}
 }

@@ -247,9 +247,13 @@ class Club extends BaseClub
 		$fileObj->createThumbnail($thumbPath, 80, 60);
 		$fileObj->resizeMax(800,600);
 		
+		$sizes = getimagesize($fileObj->getFilePath());
+		
 		$clubPhotoObj = new ClubPhoto();
 		$clubPhotoObj->setClubId($clubId);
 		$clubPhotoObj->setFileId($fileObj->getId());
+		$clubPhotoObj->setWidth($sizes[0]);
+		$clubPhotoObj->setHeight($sizes[1]);
 		$clubPhotoObj->save();
 		
 		return $clubPhotoObj;
@@ -373,6 +377,16 @@ class Club extends BaseClub
 	public static function getXml($clubList){
 		
 		return Util::buildXml($clubList, 'clubs', 'club');
+	}
+	
+	public function getClubPhotoList($criteria=null, $con=null){
+		
+		$criteria = new Criteria();
+		$criteria->add( ClubPhotoPeer::CLUB_ID, $this->getId() );
+		$criteria->add( ClubPhotoPeer::DELETED, false );
+		$criteria->addDescendingOrderByColumn( ClubPhotoPeer::CREATED_AT );
+
+		return parent::getClubPhotoList($criteria, $con);
 	}
 	
 	public function getDistance($latitude, $longitude, $unit='K') {
