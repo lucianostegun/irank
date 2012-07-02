@@ -1,5 +1,5 @@
 <?php
-	include_partial('home/component/commonBar', array('pathList'=>array('Loja'=>'store/index')));
+	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index')));
 	include_partial('store/include/cart');
 ?>
 	<div class="product">
