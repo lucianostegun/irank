@@ -15,27 +15,22 @@
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr class="header">
-		<th class="first"><?php echo __('Event') ?></th>
-		<th><?php echo __('Date') ?></th>
-		<th><?php echo __('Place') ?></th>
-		<th><?php echo __('Players') ?></th>
-		<th><?php echo __('Position') ?></th>
-		<th>B+R+A</th>
-		<th><?php echo __('Prize') ?></th>
+		<th colspan="2" class="first">Produto</th>
+		<th>Quantidade</th>
+		<th>Vl. unitário</th>
+		<th>Vl. total</th>
 	</tr>
-	<tr class="filter" style="display: none">
-		<th><?php echo input_tag('eventName', $sf_request->getParameter('eventName'), array('size'=>15)) ?></th>
-		<th><?php echo input_date_tag('eventDate', Util::formatDate($sf_request->getParameter('eventDate')), array('size'=>10, 'maxlength'=>10)) ?></th>
-		<th><?php echo input_tag('eventPlace', $sf_request->getParameter('eventPlace'), array('size'=>15)) ?></th>
-		<th></th>
-		<th></th>
-		<th></th>
-		<th width="100"><?php echo button_tag('eventFilterSubmit', __('button.search'), array('onclick'=>'doEventPersonalSearch()')) ?></th>
-	</tr>
-	<tbody id="eventPersonalListContent">
 	<?php
-			include_partial('eventPersonal/include/search', array('criteria'=>$criteria));
+		$className = 'odd';
 	?>
+	<tbody id="eventPersonalListContent">
+		<tr class="<?php echo $className ?>">
+			<th><?php echo image_tag('temp/thumb/tshirt1') ?></th>
+			<th>Camiseta: I'm bluffing / I'm All In</th>
+			<th><?php echo input_tag('amount', 1, array('size'=>2)) ?></th>
+			<th>R$ 39,90</th>
+			<th>R$ 39,90</th>
+		</tr>
 	</tbody>
 </table>
 </form>

@@ -1,0 +1,395 @@
+.product {
+
+	position: relative;
+	float: left;
+	margin-left: 30px;
+	margin-right: 20px;
+	margin-top: 20px;
+	width: 202px;
+	height: 220px;
+	background: #F0F0F0;
+	border: 1px solid #D5D5D5;
+}
+
+.product img.productImage {
+
+	position: absolute;
+	padding: 5px;
+	background: #FFFFFF;
+	border: 1px solid #D5D5D5;
+	top: 5px;
+	left: 5px 
+}
+
+.product img.productImage:hover {
+
+	border: 1px solid #C91E1E;
+}
+
+.product .distinct.new {
+
+	position: absolute;
+	top: -10px;
+	left: -10px;
+	z-index: 1
+}
+
+
+
+
+
+
+
+/* CAMISETAS */
+
+.product .tshirt {
+
+	position: absolute;
+	bottom: 5px; 
+}
+
+.product .tshirt.name,
+.product .tshirt.name a {
+
+	left: 	8px;
+	bottom: 30px;
+	font-weight: bold;
+	font-size: 12px;
+	color: #425d95 
+}
+
+.product .tshirt.size {
+
+	left: 	8px;
+	bottom: 5px;
+	font-size: 10px;
+}
+
+.product .tshirt.prize {
+
+	right: 	8px;
+	bottom: 8px;
+	font-size: 15px;
+	font-weight: bold;
+	color: #C91E1E;
+	text-align: right; 
+}
+
+
+
+
+
+
+
+
+
+/* DETALHES */
+.productDetail {
+	
+	position: relative;
+	margin: 15px;
+	height: 270px;
+	margin-top: 35px;
+}
+
+.productDetail .extraImageList {
+
+	position: absolute;
+	padding-top: 8px;
+	border-top: 1px solid #DADADA;
+	top: 220px;
+	left: 0px;
+	padding-right: 2px
+}
+
+.productDetail .productImage.extra {
+	
+	position: relative;
+	width: 42px;
+	left: 1px;
+	background: #FFFFFF;
+	border: 1px solid #D0D0D0;
+	padding: 2px
+}
+
+.productDetail .distinct.new {
+
+	position: absolute;
+	top: -10px;
+	left: -10px;
+	z-index: 1
+}
+
+.productDetail .tshirt {
+
+	position: absolute;
+	left: 285px;
+}
+
+.productDetail .tshirt.name {
+
+	color: #425d95;
+	font-size: 22px;
+	font-weight: bold;
+	top: -5px;
+	left: 285px;
+}
+
+.productDetail .tshirt.size {
+
+	top: 25px;
+	font-size: 12px;
+}
+
+.productDetail .tshirt.color {
+
+	top: 25px;
+	left: 285px;
+	font-size: 12px;
+	margin-left: 140px
+}
+
+.productDetail .tshirt.description {
+
+	top: 55px;
+	left: 300px;
+	width: 400px;
+	font-size: 12px;
+	font-weight: normal;
+	color: #101010;
+}
+
+.productDetail .tshirt.prizeLabel {
+
+	bottom: 100px;
+	font-size: 13px;
+	left: 300px;
+	font-weight: normal;
+	color: #000000;
+}
+
+.productDetail .tshirt.prize {
+
+	bottom: 75px;
+	font-size: 25px;
+	left: 300px;
+	font-weight: bold;
+	color: #C91E1E;
+}
+
+.productDetail .buyButton {
+
+	position: absolute;
+	bottom: 15px;
+	left: 300px
+}
+
+
+
+
+
+
+.paymethods {
+
+	border-top: 4px solid #EAEAEA;
+	border-bottom: 4px solid #EAEAEA;
+	text-align: right;
+	padding-top: 10px
+}
+
+.paymethods img {
+
+	margin-right: 20px
+}
+
+h3 {
+
+	margin-top: 10px;
+	margin-left: 10px;
+	color: #425d95;
+	border-bottom: 1px solid #425d95;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	width: 90%;
+}
+
+
+
+
+
+
+
+
+/* BARRA DO CARRINHO DE COMPRAS */
+div.cartBar {
+	
+	position: 				relative;
+	background: 			#E5E5E5;
+    background-image: 		-o-linear-gradient(#FAFAFA, #E5E5E5);
+    background: 			-moz-linear-gradient(top, #FAFAFA, #E5E5E5);;
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#FAFAFA), to(#E5E5E5));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FAFAFA', EndColorStr='#E5E5E5', GradientType=0);
+	border: 				1px solid #CACACA;
+	padding: 				10px 10px;
+	margin-top: 			-5px;
+}
+
+div.cartIcon {
+
+	position: 	absolute;
+	top: 		6px;
+	left: 		5px;
+}
+
+div.cartInfo {
+	
+	position: 		absolute;
+	background: 	url('/.png') right top no-repeat;
+	height: 		32px;
+	right: 			15px;
+	top: 			3px;
+	padding-top: 	0px;
+	text-align: 	right;
+	line-height: 	18px;
+}
+
+div.cartInfo a {
+	
+	color: 	#000000;
+}
+
+div.cartInfo a:hover {
+	
+	text-decoration: 	none;
+	color: 				#C91E1E
+}
+
+.finishOrderButton,
+.goToCartButton {
+	
+	float: right;
+	margin-right: -12px
+}
+
+.gridTable.store.cart td {
+
+	font-size: 	13px;
+}
+
+.gridTable.store.cart .productImage {
+
+	padding: 	5px;
+}
+
+.gridTable.store.cart .productName {
+
+	font-size: 	13px;
+}
+
+.gridTable.store.cart .quantity input {
+
+	border: 		1px solid #909090;
+	width: 			20px;
+	height: 		20px;
+	font-weight: 	normal;
+	font-size: 		12px;
+	padding: 		1px 6px;
+	text-align: 	center;
+}
+
+.gridTable.store.cart .productPrice,
+.gridTable.store.cart .totalValue {
+
+	font-weight: 	normal;
+	font-size: 		13px;
+}
+
+.gridTable.store.cart .totalValue {
+
+	font-weight: 	bold;
+}
+
+
+.gridTable.store.cart .shipping .shippingValue,
+.gridTable.store.cart .shipping .shippingTotalValue {
+
+	font-weight: 	bold;
+	font-size: 		13px;
+	padding-right: 	3px;
+}
+
+.gridTable.store.cart .shipping .shippingTotalValue {
+
+	font-size: 		16px;
+	white-space: 	nowrap
+}
+
+
+
+
+
+
+
+
+
+
+/* Formulário de cadastro de endereço */
+
+.storeCartResume .formTable {
+
+	background: 			none;
+	border: 				none;
+	-moz-border-radius: 	7px;
+	-webkit-border-radius: 	7px;
+	border-radius: 			7px;
+	margin-bottom: 			0px;
+	margin-top: 			0px;
+	margin-left: 			12px;
+	width: 					760px
+}
+
+.storeCartResume .formTable .defaultForm {
+
+	margin-top: 8px
+}
+
+.storeCartResume .formTable .defaultForm .row {
+
+	margin-left: 		10px;
+	width: 				97%;
+	border-top: 		1px solid #DADADA;
+	padding-top: 		8px;
+	padding-bottom: 	3px;
+}
+
+.storeCartResume .formTable .defaultForm .row .label {
+
+	width: 	100px
+}
+
+.storeCartResume .formTable .defaultForm .row:first-child {
+
+	border-top: 		none;
+}
+
+.storeCartResume .finishOrderButton {
+
+	margin-left: 30px;
+	margin-top: 30px;
+	clear: both;
+	float: left;
+	margin-right: -12px
+}
+
+
+
+
+
+
+
+
+
+.storeCartOrder .formTable {
+
+	background: 			#F7F7F7 url('/images/tableLightBg.png') repeat-x;
+}

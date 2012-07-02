@@ -48,7 +48,7 @@
 </div>
 
 <script>
-setupHomeHighlight(5);
+	setupHomeHighlight(5);
 </script>
 
 <div class="channels">

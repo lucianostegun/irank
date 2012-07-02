@@ -1,0 +1,9 @@
+all:
+  
+  stylesheets:    [table, store]
+  javascripts:    [store]
+  
+paymentSuccess:
+  
+  stylesheets:    [form]
+  javascripts:    [form]

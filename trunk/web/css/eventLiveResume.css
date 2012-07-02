@@ -31,18 +31,10 @@
 	font-size: 							15px;
 	text-align: 						center;
 	color: 								#337495;
-	border: 							1px solid #337495;
-	border-bottom: 						none;
 	
-	-moz-border-top-left-radius: 		10px;
-	-webkit-border-top-left-radius: 	10px;
-	border-top-left-radius: 			10px;
-	-moz-border-top-right-radius: 		10px;
-	-webkit-border-top-right-radius: 	10px;
-	border-top-right-radius: 			10px;
 	padding: 							4px 5px 3px 5px;
 	margin: 							0 auto;
-	margin-bottom: 						-1px;
+	margin-bottom: 						1px;
 	background: 						#FFFFFF;
 	z-index: 							1;
 	position: 							relative;
@@ -84,6 +76,9 @@
 	left: 			93px;
 	color: 			#344F7C;
 	text-shadow: 	#FFFFFF 1px 1px;
+	white-space: 	nowrap;
+	overflow: 		hidden;
+	width: 			280px;
 }
 
 .eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .image {
