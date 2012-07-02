@@ -28,7 +28,7 @@ class clubActions extends sfActions
   	$filePath  = $clubPhotoObj->getFile()->getFilePath(true);
   	$extension = $clubPhotoObj->getFile()->getExtension();
   	
-  	if( strtoupper($extension)=='png' )
+  	if( strtoupper($extension)=='PNG' )
 		$newImg = @imagecreatefrompng( $filePath );
 	else
 		$newImg = @imagecreatefromjpeg( $filePath );
