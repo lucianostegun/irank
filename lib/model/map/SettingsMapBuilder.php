@@ -5,7 +5,7 @@
 class SettingsMapBuilder {
 
 	
-	const CLASS_NAME = '...apps.backend.lib.model.map.SettingsMapBuilder';
+	const CLASS_NAME = 'lib.model.map.SettingsMapBuilder';
 
 	
 	private $dbMap;

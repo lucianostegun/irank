@@ -67,7 +67,8 @@
         	<span><?php echo radiobutton_tag('scoreFormulaOption', 'multiple', ('multiple'==$scoreFormulaOption), array('onclick'=>'handleScoreFormulaOption(this.value)', 'id'=>'rankingLiveScoreFormulaOptionMultiple')) ?></span><label for="rankingLiveScoreFormulaOptionMultiple">Múltipla</label>
 			<div class="clear mb10"></div>
 			<div id="rankingLiveScoreFormulaSimpleDiv" class="clear" style="display: <?php echo ($scoreFormulaOption=='simple'?'block':'none') ?>">
-				<?php echo input_tag('scoreFormula', ('simple'==$scoreFormulaOption?$scoreFormula:'1'), array('size'=>75, 'maxlength'=>150, 'id'=>'rankingLiveScoreFormula')) ?>
+				<span class="multi"><?php echo input_tag('scoreFormula', ('simple'==$scoreFormulaOption?$scoreFormula:'1'), array('size'=>75, 'maxlength'=>150, 'id'=>'rankingLiveScoreFormula')) ?></span>
+				<span class="multi"><label class="text"><?php echo link_to('Fórmula padrão', '#resetDefaultFormula()') ?></label></span>
 			</div>
 			<div id="rankingLiveScoreFormulaMultipleDiv" class="clear" style="display: <?php echo ($scoreFormulaOption=='multiple'?'block':'none') ?>">
 			    <?php echo input_tag('scoreFormulaCustom', ('multiple'==$scoreFormulaOption?$scoreFormula:''), array('class'=>'tags', 'style'=>'display: none', 'id'=>'rankingLiveScoreFormulaCustom')) ?>
@@ -117,7 +118,7 @@
 	<div class="formRow">
 		<label>Torneio sem ranking</label>
 		<div class="formRight">
-			<?php echo checkbox_tag('noRanking', true, $rankingLiveObj->getNoRanking(), array('id'=>'rankingLiveNoRanking')) ?>
+			<?php echo checkbox_tag('noRanking', true, $rankingLiveObj->getNoRanking(), array('onclick'=>'handleNoRankingClick(this.checked)', 'id'=>'rankingLiveNoRanking')) ?>
 			<label for="rankingLiveNoRanking">O torneio será apenas divulgado no site</label>
 			<div class="formNote error" id="rankingLiveFormErrorNoRanking"></div>
 		</div>

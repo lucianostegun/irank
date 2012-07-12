@@ -6,6 +6,8 @@ $(function() {
 		width: '100%', 
 		delimiter: '|',
 		defaultText: 'Fórmula'});
+	
+	$('#satelliteDetailsDiv').hide();
 });
 
 function createEventListTable(){
@@ -20,7 +22,7 @@ function createEventListTable(){
 		              null,
 		              null,
 		              null],
-  		"aaSorting": [[2, "desc"]],
+  		"aaSorting": [[0, "desc"]],
 	});
 	
 	$('#eventLiveTable').css('width', '100%')
@@ -134,6 +136,9 @@ function showAddEventForm( showForm ){
 			$('#rankingLiveBuyinSatellite').prop('disabled', $('#rankingLiveBuyin').prop('disabled'));
 			$('#rankingLiveAllowedAddonsSatellite').prop('disabled', $('#rankingLiveAllowedAddons').prop('disabled'));
 		}
+		
+		if( $('#rankingLiveQuickEventLiveEventName').val()=='' )
+			$('#rankingLiveQuickEventLiveEventName').val($('#rankingLiveRankingName').val());
 		
 		$.uniform.update();
 		
@@ -401,4 +406,35 @@ function loadRankingLiveHistory(rankingDate){
 	
 	var urlAjax = _webRoot+'/rankingLive/getClassifyList?rankingLiveId='+rankingLiveId+'&rankingDate='+rankingDate;
 	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}
+
+function toggleSatelliteDetails(){
+	
+	if( $('#satelliteDetailsDiv').is(':visible') ){
+		
+		$('#satelliteDetailsDiv').hide();
+		$('#satelliteDetailsLink').html('Exibir');
+	}else{
+		
+		$('#satelliteDetailsDiv').show();
+		$('#satelliteDetailsLink').html('Ocultar');
+	}
+}
+
+function handleNoRankingClick(checked){
+	
+	if( checked ){
+		
+		$('#quickEventSatelliteHeader').hide();
+		$('#tabClassify').hide();
+	}else{
+		
+		$('#quickEventSatelliteHeader').show();
+		$('#tabClassify').show();
+	}
+}
+
+function resetDefaultFormula(){
+	
+	$('#rankingLiveScoreFormula').val('JOGADORES-(POSICAO-1)');
 }

@@ -14,7 +14,12 @@
 		  </tr>
 		  <tr>
 		    <td width="50" class="productImage"><?php echo image_tag('temp/tshirt1Thumb.jpg') ?></td>
-		    <td class="textL productName">Camiseta I'm bluffing / I'm All In</td>
+		    <td class="textL productName">
+		    	<span>Camiseta I'm bluffing / I'm All In</span>
+		    	<div class="clear mt5"></div>
+		    	<span class="productDetail"><b>Tamanho:</b> G</span>
+		    	<span class="productDetail"><b>Cor:</b> Preta</span>
+		    </td>
 		    <td class="textC quantity"><?php echo input_tag('quantity', 1, array('size'=>3)) ?></td>
 		    <td class="textR productPrice">R$ 39,90</td>
 		    <td class="textR totalValue">R$ 39,90</td>
@@ -22,7 +27,11 @@
 		  </tr>
 		  <tr class="odd">
 		    <td width="50" class="productImage"><?php echo image_tag('temp/tshirt2Thumb.jpg') ?></td>
-		    <td class="textL productName">Four of a kind: Aces</td>
+		    <td class="textL productName">
+		    	<span>Four of a kind: Aces</span>
+		    	<div class="clear mt5"></div>
+		    	<span class="productDetail"><b>Tamanho:</b> G</span>
+		    	<span class="productDetail"><b>Cor:</b> Preta</span></td>
 		    <td class="textC quantity"><?php echo input_tag('quantity', 1, array('size'=>3)) ?></td>
 		    <td class="textR productPrice">R$ 39,90</td>
 		    <td class="textR totalValue">R$ 39,90</td>
@@ -30,7 +39,12 @@
 		  </tr>
 		  <tr>
 		    <td width="50" class="productImage"><?php echo image_tag('temp/tshirt2Thumb.jpg') ?></td>
-		    <td class="textL productName">iRank red suit #1</td>
+		    <td class="textL productName">
+		    	<span>iRank red suit #1</span>
+		    	<div class="clear mt5"></div>
+		    	<span class="productDetail"><b>Tamanho:</b> G</span>
+		    	<span class="productDetail"><b>Cor:</b> Preta</span>
+		    </td>
 		    <td class="textC quantity"><?php echo input_tag('quantity', 1, array('size'=>3)) ?></td>
 		    <td class="textR productPrice">R$ 39,90</td>
 		    <td class="textR totalValue">R$ 39,90</td>

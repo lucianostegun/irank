@@ -135,7 +135,7 @@
 	</div>
 	
 	<?php
-		$fileNameLogo = $clubObj->getFileNameLogo(true);
+		$fileNameLogo = $clubObj->getFileNameLogo();
 	?>
 	<div class="formRow">
 		<label>Logo</label>

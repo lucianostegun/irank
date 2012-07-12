@@ -59,6 +59,7 @@ var _ModuleName = '<?php echo $moduleName ?>';
 						</div>
     					<div id="innerContent">
     						<div class="leftContent">
+    							<?php if( $moduleName!='login' ): ?>
     							<div class="leftContentTop">
     								<div id="loginResumeDiv">
 	    							<?php
@@ -73,9 +74,9 @@ var _ModuleName = '<?php echo $moduleName ?>';
 	    									include_partial('login/include/login', array());
 	    							?>
 	    							</div>
-	    							
 	    							<?php include_partial('home/include/facebook', array()); ?>
     							</div>
+	    							<?php endif; ?>
     							<div>
 						    		<?php include_partial('home/resume/calendar', array()) ?>
 						    	</div>
@@ -117,6 +118,7 @@ var _ModuleName = '<?php echo $moduleName ?>';
 			<?php echo link_to('convidar amigos', '/friendInvite/index') ?> | 
 			<?php echo link_to('feedback', '/feedback/index') ?> | 
 			<?php echo link_to('contato', '/contact/index') ?>
+			<?php echo link_to('loja virtual', '/store/index') ?>
 		</div>
 		<div class="credit">desenvolvido por: <?php echo link_to('Newai software', 'http://www.newai.com.br', array('target'=>'_blank')) ?></div>
 	</div>

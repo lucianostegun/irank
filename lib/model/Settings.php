@@ -70,14 +70,17 @@ class Settings extends BaseSettings
 		MyTools::setAttribute('iRankAdminSettings-'.$tagName, $settingsValue, 'iRankSettings');
 	}
 	
-	public static function getValue($tagName){
+	public static function getValue($tagName, $clubId=null){
 		
 		$settingsValue = MyTools::getAttribute('iRankAdminSettings-'.$tagName, null, 'iRankSettings');
 		
 		if( $settingsValue )
 			return $settingsValue;
 		
-  		if( $clubId = MyTools::getAttribute('clubId') )
+		if( !$clubId )
+			$clubId = MyTools::getAttribute('clubId');
+		
+  		if( $clubId )
 			$genericSettingsObj = ClubSettingsPeer::retrieveByPK($clubId, $tagName);
 		elseif( $userAdminId = MyTools::getAttribute('userAdminId') )
 			$genericSettingsObj = UserAdminSettingsPeer::retrieveByPK($userAdminId, $tagName);

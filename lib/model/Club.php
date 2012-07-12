@@ -130,7 +130,7 @@ class Club extends BaseClub
 		$criteria->setDistinct( PeoplePeer::ID );
 		
 		if($clubId)
-			$criteria->add( ClubPeer::CLUB_ID, $clubId );
+			$criteria->add( ClubPlayerPeer::CLUB_ID, $clubId );
 			
 		$criteria->addJoin( PeoplePeer::ID, ClubPlayerPeer::PEOPLE_ID, Criteria::INNER_JOIN );
 		$criteria->addAscendingOrderByColumn( PeoplePeer::FULL_NAME );

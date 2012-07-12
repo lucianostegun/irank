@@ -24,8 +24,13 @@
 					$eventLiveIdList[] = $eventLiveId;
 					
 					$onclick       = 'goToPage(\'eventLive\', \'edit\', \'eventLiveId\', '.$eventLiveId.')"';
-					$pendingResult = $eventLiveObj->isPendingResult();
-					$className     = ($eventLiveObj->isPastDate()?'dimmed':'');
+					
+					if( !$eventLiveObj->getRankingLive()->getNoRanking() )
+						$pendingResult = $eventLiveObj->isPendingResult();
+					else
+						$pendingResult = false;
+					
+					$className = ($eventLiveObj->isPastDate()?'dimmed':'');
 			?>
 			<tr class="<?php echo ($pendingResult?'gradeAlert':'gradeA') ?> <?php echo $className ?>" title="<?php echo ($pendingResult?__('eventLive.pendingResultAlert'):'') ?>" id="eventLiveIdRow-<?php echo $eventLiveId ?>">
 				<td><?php echo checkbox_tag('eventLiveId[]', $eventLiveId) ?></td> 

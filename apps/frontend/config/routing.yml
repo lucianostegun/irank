@@ -22,6 +22,18 @@ club_irank:
   url:    /irank
   param:  { module: club, action: details, clubId: 5 }
 
+club_h2club:
+  url:    /h2club
+  param:  { module: club, action: details, clubId: 3 }
+
+club_espaco:
+  url:    /espaco
+  param:  { module: club, action: details, clubId: 2 }
+
+club_blackriver:
+  url:    /blackriver
+  param:  { module: club, action: details, clubId: 1 }
+
 #CLUB ROUTING END
 
 event_details:

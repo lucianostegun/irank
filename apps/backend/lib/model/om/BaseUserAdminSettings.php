@@ -578,7 +578,7 @@ abstract class BaseUserAdminSettings extends BaseObject  implements Persistent {
 	public function getSettings($con = null)
 	{
 		if ($this->aSettings === null && ($this->settings_id !== null)) {
-						include_once 'apps/backend/lib/model/om/BaseSettingsPeer.php';
+						include_once 'lib/model/om/BaseSettingsPeer.php';
 
 			$this->aSettings = SettingsPeer::retrieveByPK($this->settings_id, $con);
 

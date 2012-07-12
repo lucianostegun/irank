@@ -1,12 +1,12 @@
 <?php
-	sfContext::getInstance()->getResponse()->addStylesheet('login');
-	sfContext::getInstance()->getResponse()->addJavascript('login');
+	sfContext::getInstance()->getResponse()->addStylesheet('quickLogin');
+	sfContext::getInstance()->getResponse()->addJavascript('quickLogin');
 	sfContext::getInstance()->getResponse()->addStylesheet('quickResume');
 	
 	echo form_remote_tag(array(
 		'url'=>'login/login',
-		'success'=>'handleSuccessLogin(request.responseText)',
-		'failure'=>'handleFailureLogin(request.responseText)',
+		'success'=>'handleSuccessQuickLogin(request.responseText)',
+		'failure'=>'handleFailureQuickLogin(request.responseText)',
 		'encoding'=>'UTF8',
 		), array('id'=>'loginForm'));
 ?>
@@ -18,7 +18,7 @@
 		<div class="field"><?php echo input_tag('username', null, array('id'=>'loginUsername', 'placeholder'=>'Usuário/E-mail')) ?></div>
 	</div>
 	<div class="row">
-		<div class="field"><?php echo input_password_tag('password', null, array('id'=>'loginPassword', 'placeholder'=>'Senha')) ?></div>
+		<div class="field"><?php echo input_password_tag('password', null, array('id'=>'loginPassword', 'placeholder'=>'Senha', 'maxlength'=>15)) ?></div>
 	</div>
 	<div class="row">
 		<div class="fieldCheckbox"><?php echo checkbox_tag('keepLogin', true, false, array('id'=>'loginKeepLogin')) ?></div>

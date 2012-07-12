@@ -104,7 +104,7 @@ class EventLiveMapBuilder {
 
 		$tMap->addColumn('ENROLLMENT_MODE', 'EnrollmentMode', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('SUPPRESS_RANKING', 'SuppressRanking', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('TWITTER_TEMPLATE', 'TwitterTemplate', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

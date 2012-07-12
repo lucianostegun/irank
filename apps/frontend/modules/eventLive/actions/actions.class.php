@@ -5,7 +5,8 @@ class eventLiveActions extends sfActions
 
   public function preExecute(){
   	
-  	$eventCode = $this->getRequestParameter('eventCode');
+  	$shareId   = $this->getRequestParameter('shareId');
+  	$eventCode = $this->getRequestParameter('eventCode', $shareId);
   	$eventCode = ($eventCode?base64_decode($eventCode):null);
   	
   	$this->eventLiveId   = $this->getRequestParameter('id', $eventCode);
@@ -24,9 +25,11 @@ class eventLiveActions extends sfActions
   		$this->eventLiveId = Util::getDirectUrlId('eventLive/details');
   	
   	$this->eventLiveObj = EventLivePeer::retrieveByPK($this->eventLiveId);
+  	$host = $request->getHost();
   	
   	$this->facebookMetaList = array('title'=>$this->eventLiveObj->getEventName(),
-  									'description'=>$this->eventLiveObj->getFacebookDescription());
+  									'description'=>$this->eventLiveObj->getFacebookDescription(),
+  									'image'=>"http://$host/images/".$this->eventLiveObj->getFileNameLogo(true));
   	
   	if( !is_object($this->eventLiveObj) )
   		return $this->redirect('eventLive/index');

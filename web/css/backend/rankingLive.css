@@ -55,3 +55,9 @@ table.quickEventCalendar tr.days td .stepNumber input {
 	padding: 		0px;
 	text-align: 	center;	
 }
+
+#satelliteDetailsLink {
+
+	font-size: 	12px;
+	float: 	right;
+}

@@ -8,7 +8,7 @@
             <li><a href="#tab1">Principal</a></li>
             <li><a href="#tab2">Padrão</a></li>
             <li><a href="#tab3">Etapas</a></li>
-            <li><a href="#tab4">Classificação</a></li>
+            <li id="tabClassify" class="<?php echo ($rankingLiveObj->getNoRanking()?'hidden':'') ?>"><a href="#tab4">Classificação</a></li>
 			<?php if( $iRankAdmin ): ?>
             <li><a href="#tab5">Clubes</a></li>
 			<?php endif; ?>

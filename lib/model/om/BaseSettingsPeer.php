@@ -10,7 +10,7 @@ abstract class BaseSettingsPeer {
 	const TABLE_NAME = 'settings';
 
 	
-	const CLASS_DEFAULT = '...apps.backend.lib.model.Settings';
+	const CLASS_DEFAULT = 'lib.model.Settings';
 
 	
 	const NUM_COLUMNS = 7;
@@ -64,8 +64,8 @@ abstract class BaseSettingsPeer {
 	
 	public static function getMapBuilder()
 	{
-		include_once 'apps/backend/lib/model/map/SettingsMapBuilder.php';
-		return BasePeer::getMapBuilder('...apps.backend.lib.model.map.SettingsMapBuilder');
+		include_once 'lib/model/map/SettingsMapBuilder.php';
+		return BasePeer::getMapBuilder('lib.model.map.SettingsMapBuilder');
 	}
 	
 	public static function getPhpNameMap()
@@ -390,6 +390,6 @@ if (Propel::isInit()) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
-			require_once 'apps/backend/lib/model/map/SettingsMapBuilder.php';
-	Propel::registerMapBuilder('...apps.backend.lib.model.map.SettingsMapBuilder');
+			require_once 'lib/model/map/SettingsMapBuilder.php';
+	Propel::registerMapBuilder('lib.model.map.SettingsMapBuilder');
 }

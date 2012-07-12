@@ -17,6 +17,7 @@
 	$publishPrize         = $eventLiveObj->getPublishPrize();
 	$isPastDate           = $eventLiveObj->isPastDate();
 	$isEnrollmentOpen     = $eventLiveObj->isEnrollmentOpen();
+	$savedResult          = $eventLiveObj->getSavedResult();
 	$noRanking            = $rankingLiveObj->getNoRanking();
 	
 	if( is_object($eventLiveScheduleObj) ){
@@ -112,7 +113,7 @@
 			<?php if( !is_null($rankingLiveId) ): ?>
 			<td id="eventLiveEvents" class="eventLiveTab" onclick="loadEventLiveTab(this, <?php echo $eventLiveId ?>); showEventLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Etapas</td>
 			<?php endif; ?>
-			<?php if( $isPastDate ): ?>
+			<?php if( $isPastDate && $savedResult ): ?>
 			<td id="eventLiveResult" class="eventLiveTab" onclick="loadEventLiveTab(this, <?php echo $eventLiveId ?>); showEventLiveTab(this)" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">Resultado</td>
 			<?php endif; ?>
 			<?php if( $publishPrize ): ?>
@@ -137,7 +138,7 @@
 		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
 	<?php endif; ?>
-	<?php if( $isPastDate ): ?>
+	<?php if( $isPastDate && $savedResult): ?>
 	<div id="eventLiveResultContent" class="eventLiveTabContent">
 		<?php include_partial('home/include/tabLoading', array()) ?>
 	</div>
