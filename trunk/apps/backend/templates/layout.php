@@ -66,6 +66,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         	?>
         </li>
         <?php endif; ?>
+        <?php if( $iRankAdmin ): // Temporariamente desabilitado para clubes ?>
         <li class="cash">
         	<a href="javascript:void(0)" title="" class="<?php echo (in_array($moduleName, array('cashTable'))?'active':'exp') ?>"><span>Cash game</span><strong>3</strong></a>
             <ul class="sub">
@@ -74,6 +75,7 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
                 <li class="last"><?php echo link_to('Relatórios', 'cashTable/report') ?></li>
             </ul>
         </li>
+        <?php endif; ?>
         
         <?php if( !$iRankAdmin && $iRankClub ): ?>
         <li class="club"><a href="<?php echo url_for('club/edit') ?>"><span>Informações do clube</span></a></li>

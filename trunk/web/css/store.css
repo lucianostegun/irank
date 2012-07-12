@@ -9,6 +9,9 @@
 	height: 220px;
 	background: #F0F0F0;
 	border: 1px solid #D5D5D5;
+	-moz-border-radius: 	9px;
+	-webkit-border-radius: 	9px;
+	border-radius: 			9px;
 }
 
 .product img.productImage {
@@ -17,6 +20,10 @@
 	padding: 5px;
 	background: #FFFFFF;
 	border: 1px solid #D5D5D5;
+	-moz-border-radius: 	9px;
+	-webkit-border-radius: 	9px;
+	border-radius: 			9px;
+	width: 					180px;
 	top: 5px;
 	left: 5px 
 }
@@ -29,8 +36,8 @@
 .product .distinct.new {
 
 	position: absolute;
-	top: -10px;
-	left: -10px;
+	top: 0px;
+	left: 0px;
 	z-index: 1
 }
 
@@ -284,6 +291,18 @@ div.cartInfo a:hover {
 .gridTable.store.cart .productName {
 
 	font-size: 	13px;
+}
+
+.gridTable.store.cart .productDetail {
+
+	margin: 	0px;
+	padding: 	0px;
+	position: 	relative;
+	left: 		0px;
+	font-size: 	12px;
+	text-align: left;
+	color: 		#707070;
+	margin-right: 	20px
 }
 
 .gridTable.store.cart .quantity input {

@@ -6,7 +6,7 @@
 		<div class="clear"></div>
 	</div>
 	
-	<div class="formRow">
+	<div class="formRow hidden">
 		<div id="resultDisclosureMenuShareDiv">
 			<br/>
 			<?php echo link_to(image_tag('backend/icons/light/pdfDoc', array('class'=>'icon')).'<span>Gerar PDF do resultado</span>', '#buildEventLiveResultPdf()', array('class'=>'button greyishB', 'style'=>'margin-left: 10px')) ?>

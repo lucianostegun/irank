@@ -1,113 +1,23 @@
-#login {
-	
-	position: 				relative;
-	top: 					5px;
-	left: 					5px;
-	width: 					187px;
-	padding-bottom: 		6px;
-	background: 			#D8D8D8 url('/images/loginBg.png') repeat-x;
-	border: 				1px solid #C0C0C0;
-	-moz-border-radius: 	7px;
-	-webkit-border-radius: 	7px;
-	border-radius: 			7px;
+.login #loginErrorMessage {
+
+	position: 		relative;
+	left: 			30px;
+	top: 			-2px;
+	font-size: 		12px;
+	color: 			#C91E1E;
+	text-shadow: 	#FFFFFF 1px 1px;
+	display: 		none;
 }
 
-#login h1 {
+.recoveryPassword .formStatusDiv,
+.login .formStatusDiv {
 
-	font-size: 		13px;
-	font-weight: 	bold;
-	margin: 		0px;
-	padding: 		0px;
-	margin: 		5px 0px 0px 11px
+	position: relative;
+	left: -70px;
 }
 
-#login .row {
+.recoveryPassword .formStatusDiv.errorStatus,
+.login .formStatusDiv.errorStatus {
 
-	clear: 		both;
-	height: 	25px;
-}
-
-#login .row .label {
-
-	float: 			left;
-	width: 			90px;
-	margin-top: 	3px;
-	text-align: 	left;
-	font-size: 		10px;
-	font-weight: 	normal;
-}
-
-#login .row .field,
-#login .row .fieldCheckbox {
-
-	float: 			left;
-	margin-left: 	13px;
-}
-
-#login .row .fieldCheckbox {
-
-	width: 			22px;
-	margin-left: 	10px;
-}
-
-#login .row .button {
-
-	float: 	left
-}
-
-#login input {
-
-	font-size: 				10px;
-	height: 				13px;
-	width: 					155px;
-	border: 				1px solid #BABABA;
-	-moz-border-radius: 	4px;
-	-webkit-border-radius: 	4px;
-	border-radius: 			4px;
-	padding: 				3px 2px 2px 2px;
-	color: 					#606060;
-}
-
-#login input.checkbox {
-
-	width: 	15px;
-}
-
-#login .links {
-
-	text-align: 	center;
-}
-
-#login .links a {
-
-	color: 				#333333;
-	text-decoration: 	none;
-	margin-right: 		15px;
-}
-
-#login .links a.last {
-
-	margin-right: 	0px;
-}
-
-#login .links a:hover {
-
-	color: 	#E82314;
-}
-
-#login .separator {
-
-	clear: 			both;
-	width: 			100%;
-	border-top: 	1px solid #CACACA;
-	border-bottom: 	1px solid #EEEEEE;
-	margin-top: 	6px;
-	margin-bottom: 	7px;
-}
-
-#login #loginErrorMessage {
-
-	display: 	none;
-	margin: 	-3px 0px 6px 15px;
-	color: 		#AC1B1B
+	background-position: 	17px 2px;
 }

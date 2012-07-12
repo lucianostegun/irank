@@ -1085,31 +1085,42 @@ class EventLive extends BaseEventLive
 	
 	public function getTwitterStatus(){
 		
-  		$twitterStatus = Settings::getValue('twitterTemplate');
+  		$twitterTemplate = Settings::getValue('twitterTemplate');
+		$twitterTemplate = $this->replaceTemplate($twitterTemplate);
 		
-		$twitterStatus = str_replace('[eventName]',     $this->getEventName(), 					$twitterStatus);
-		$twitterStatus = str_replace('[eventDateTime]', $this->getEventDateTime('d/m/Y H:i'), 	$twitterStatus);
-		$twitterStatus = str_replace('[weekDay]',       $this->getWeekDay(), $twitterStatus);
-		$twitterStatus = str_replace('[clubName]',      $this->getClub()->toString(), 			$twitterStatus);
-		$twitterStatus = str_replace('[clubLocation]',  $this->getClub()->getLocation(), 		$twitterStatus);
-		$twitterStatus = str_replace('[allowedRebuys]', $this->getAllowedRebuys(), 				$twitterStatus);
-		$twitterStatus = str_replace('[allowedAddons]', $this->getAllowedAddons(), 				$twitterStatus);
-		$twitterStatus = str_replace('[isFreeroll]',    $this->getIsFreeroll(), 				$twitterStatus);
-		$twitterStatus = str_replace('[rakePercent]',   $this->getRakePercent(), 				$twitterStatus);
-		$twitterStatus = str_replace('[entranceFee]',   $this->getEntranceFee(), 				$twitterStatus);
-		$twitterStatus = str_replace('[buyin]',         $this->getBuyin(), 						$twitterStatus);
-		$twitterStatus = str_replace('[blindTime]',     $this->getBlindTime('H:i'), 			$twitterStatus);
-		$twitterStatus = str_replace('[stackChips]',    $this->getStackChips(), 				$twitterStatus);
-		$twitterStatus = str_replace('[players]',       $this->getPlayers(), 					$twitterStatus);
-		$twitterStatus = str_replace('[savedResult]',   $this->getSavedResult(), 				$twitterStatus);
-		$twitterStatus = str_replace('[eventUrl]',   	'Em http://'.MyTools::getRequest()->getHost().'/index.php/eventLive/details/eventLiveId/'.$this->getId(), $twitterStatus);
-		
-		return $twitterStatus;
+		return $twitterTemplate;
 	}
 	
 	public function getFacebookDescription(){
 		
-		return $this->getEventName();
+		$facebookDescription = "[eventName]\n@[clubName] [eventDateTime]";
+		$facebookDescription = $this->replaceTemplate($facebookDescription);
+		
+		return $facebookDescription;
+	}
+
+	public function replaceTemplate($template){
+		
+		$shareId = base64_encode($this->getId());
+		
+		$template = str_replace('[eventName]',     $this->toString(), 						$template);
+		$template = str_replace('[eventDateTime]', $this->getEventDateTime('d/m/Y H:i'), 	$template);
+		$template = str_replace('[weekDay]',       $this->getWeekDay(), 					$template);
+		$template = str_replace('[clubName]',      $this->getClub()->toString(), 			$template);
+		$template = str_replace('[clubLocation]',  $this->getClub()->getLocation(), 		$template);
+		$template = str_replace('[allowedRebuys]', $this->getAllowedRebuys(), 				$template);
+		$template = str_replace('[allowedAddons]', $this->getAllowedAddons(), 				$template);
+		$template = str_replace('[isFreeroll]',    $this->getIsFreeroll(), 					$template);
+		$template = str_replace('[rakePercent]',   $this->getRakePercent(), 				$template);
+		$template = str_replace('[entranceFee]',   $this->getEntranceFee(), 				$template);
+		$template = str_replace('[buyin]',         $this->getBuyin(), 						$template);
+		$template = str_replace('[blindTime]',     $this->getBlindTime('H:i'), 				$template);
+		$template = str_replace('[stackChips]',    $this->getStackChips(), 					$template);
+		$template = str_replace('[players]',       $this->getPlayers(), 					$template);
+		$template = str_replace('[savedResult]',   $this->getSavedResult(), 				$template);
+		$template = str_replace('[eventUrl]',      'http://'.MyTools::getRequest()->getHost().'/index.php/eventLive/details/shareId/'.$shareId, $template);
+		
+		return $template;
 	}
 	
 	public function getEventDateWrite(){

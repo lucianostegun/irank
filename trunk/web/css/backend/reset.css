@@ -77,8 +77,11 @@ a { text-decoration: none; color: #2b6893; }
 .mb30 { margin-bottom: 30px; }
 .mb40 { margin-bottom: 40px; }
 
+.mt-3 { margin-top: -3px !important; }
 
 .mt0 { margin-top: 0!important; }
+.mt2 { margin-top: 2px!important; }
+.mt3 { margin-top: 3px!important; }
 .mt5 { margin-top: 5px; }
 .mt6 { margin-top: 6px; }
 .mt7 { margin-top: 7px; }

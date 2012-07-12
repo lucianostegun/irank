@@ -231,9 +231,11 @@ class eventLiveActions extends sfActions
   	$eventLiveId = $request->getParameter('eventLiveId');
   	
   	if(!$eventLiveId)
-  		Util::forceError('Parametros inv&aacute;lidos');
+  		Util::forceError('Parametros inválidos');
+  		
+  	$eventLiveId = base64_encode($eventLiveId);
   	
-  	$this->redirect('http://www.facebook.com/sharer.php?u='.urlencode('http://'.$request->getHost().'/index.php/eventLive/details/eventLiveId/'.$eventLiveId));
+  	$this->redirect('http://www.facebook.com/sharer.php?u='.urlencode('http://'.$request->getHost().'/index.php/eventLive/details/shareId/'.$eventLiveId));
   	
   	exit;	
   }
@@ -321,13 +323,16 @@ class eventLiveActions extends sfActions
 		
 //		switch($enrollmentMode){
 //			case 'enrollment':
+//			default:
+				$condition .= "AND event_live_player.ENABLED $nl";
 				$condition .= "AND (event_live_player.EVENT_POSITION IS NULL OR event_live_player.EVENT_POSITION=0) $nl";
+				$suggestNew = false;
 //				break;
 //			case 'confirmation':
 //				$condition .= "";
 //				break;
 //			case 'elimination':
-//				$condition .= "AND event_live_player.EVENT_POSITION IS NOT NULL $nl";
+//				$condition .= "AND (event_live_player.PEOPLE_ID IS NOT NULL AND event_live_player.ENABLED) $nl";
 //				$suggestNew = false;
 //				break;
 //		}

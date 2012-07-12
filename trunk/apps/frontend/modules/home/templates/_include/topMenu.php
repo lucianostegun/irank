@@ -7,5 +7,5 @@
 	echo link_to('Agenda', '/eventLive', array('class'=>(in_array($moduleName, array('eventLive', 'schedule'))?'active':'')));
 	echo link_to('Ranking', '/rankingLive', array('class'=>($moduleName=='rankingLive')?'active':''));
 	echo link_to(__('topMenu.contact'), '/contact', array('class'=>($moduleName=='contact'?'active':'')));
-	echo link_to('Loja virtual', '/store', array('class'=>'store last'.($moduleName=='contact'?' active':'')));
+	echo link_to('Loja virtual', '/store', array('class'=>'store last'.($moduleName=='store'?' active':'')));
 ?>

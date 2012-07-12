@@ -32,8 +32,9 @@
 	<div class="formRow">
 		<label>Garantido</label>
 		<div class="formRight">
-			<?php echo input_tag('guaranteedPrize', Util::formatFloat($rankingLiveObj->getGuaranteedPrize(), true), array('size'=>10, 'maxlength'=>10, 'class'=>'textR', 'id'=>'rankingLiveGuaranteedPrize')) ?>
+			<?php echo input_tag('guaranteedPrize', $rankingLiveObj->getGuaranteedPrize(true), array('size'=>10, 'maxlength'=>10, 'class'=>'textR', 'id'=>'rankingLiveGuaranteedPrize')) ?>
 			<div class="formNote error" id="rankingLiveFormErrorGuaranteedPrize"></div>
+			<span class="formNote">Formato: 00000 ou 0K</span>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -124,7 +125,7 @@
 		<label>Divisão do prêmio</label>
 		<div class="formRight">
 			<span class="multi"><?php echo input_tag('prizeSplit', $rankingLiveObj->getPrizeSplit(), array('size'=>60, 'onkeyup'=>'updatePrizeSplitLabel()', 'id'=>'rankingLivePrizeSplit')) ?></span>
-			<span class="multi"><label id="prizeSplitTotalLabel"><?php echo Util::formatFloat($rankingLiveObj->getTotalPercentPrizeSplit()) ?>%</label></span>
+			<span class="multi"><label class="text mt2" id="prizeSplitTotalLabel"><?php echo Util::formatFloat($rankingLiveObj->getTotalPercentPrizeSplit()) ?>%</label></span>
 			<div class="clear"></div>
 			<div class="formNote error" id="rankingLiveFormErrorPrizeSplit"></div>
 			<div class="formNote">Formato: 25%; 15%; 7,5%, ...</div>

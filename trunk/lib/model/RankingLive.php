@@ -99,6 +99,9 @@ class RankingLive extends BaseRankingLive
 		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $stackChips) )
 			$stackChips = Util::formatFloat($stackChips)*1000;
 		
+		if( preg_match('/^[0-9]*[,\.]?[0-9]*[kK]$/', $guaranteedPrize) )
+			$guaranteedPrize = Util::formatFloat($guaranteedPrize)*1000;
+		
 		$blindTime = RankingLive::convertBlindTime($blindTime);
 
 		if( $isFreeroll )
@@ -208,6 +211,9 @@ class RankingLive extends BaseRankingLive
 		
 		$defaultStartTime = $this->getStartTime('H:i');
 		
+		if( !is_array($stepDayList) )
+			return;
+		
 		foreach($stepDayList as $key=>$stepDay){
 			
 			$startTime   = nvl($startTimeList[$key], $this->getStartTime('H:i'));
@@ -242,7 +248,7 @@ class RankingLive extends BaseRankingLive
 		$clubId    = $request->getParameter('quickEventLiveClubId');
 		$startTime = $this->getStartTime();
 		
-		if( !$eventName || !$startTime )
+		if( !$eventName || !$startTime || !$clubId )
 			return false;
 		
 		try{
@@ -449,6 +455,16 @@ class RankingLive extends BaseRankingLive
 		return $stackChips;
 	}
 
+	public function getGuaranteedPrize($displayShort=false){
+		
+		$guaranteedPrize = parent::getGuaranteedPrize();
+		
+		if( $displayShort )
+			$guaranteedPrize = ($guaranteedPrize/1000).'K';
+			
+		return $guaranteedPrize;
+	}
+
 	public function getStackChipsSatellite($displayShort=false){
 		
 		$stackChipsSatellite = parent::getStackChipsSatellite();
@@ -609,11 +625,9 @@ class RankingLive extends BaseRankingLive
 		$criteria->addDescendingOrderByColumn( RankingLiveHistoryPeer::TOTAL_SCORE );
 		$rankingLiveHistoryObjList = RankingLiveHistoryPeer::doSelect($criteria);
 		
-		if( count($rankingLiveHistoryObjList)==0 ){
-		
-			Util::getHelper('i18n');
-			throw new Exception(__('ranking.noRankingLog', array('%date%'=>$rankingDate)));
-		}else
+		if( count($rankingLiveHistoryObjList)==0 )
+			return array();
+		else
 			return $rankingLiveHistoryObjList;
 	}
 	

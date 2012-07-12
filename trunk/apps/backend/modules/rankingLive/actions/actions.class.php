@@ -228,6 +228,7 @@ class rankingLiveActions extends sfActions
   	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	
 	return $this->renderText(get_partial('rankingLive/include/classify', array('rankingLiveObj'=>$rankingLiveObj, 'rankingDate'=>$rankingDate)));
   }
 

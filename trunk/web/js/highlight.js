@@ -1,15 +1,18 @@
-var _currentContentItemIdActive = 1;
 var _homeHighlightAmount        = 1;
-var _homeHighlightInterval      = 7;
+var _homeHighlightInterval      = 9;
 
-function setupHomeHighlight(amount){
+function setupHomeHighlight(amount, activeItemIndex){
 
-	for(var i=2; i <= amount; i++){
+	for(var i=1; i <= amount; i++){
+		
+		if( i==activeItemIndex )
+			continue;
 		
 		$('homeHighlight'+i).hide();
 		$('contentItemText'+i).hide();
 	}
 	
+	_currentContentItemIdActive = activeItemIndex;
 	_homeHighlightAmount = amount;
 	window.setTimeout('decraseHomeHighlightCountDown()', 1000);
 }
@@ -33,13 +36,13 @@ function showNextHighlight(){
 	
 	toggleContentItem(contentItemId);
 	
-	_homeHighlightInterval = 5;
+	_homeHighlightInterval = 9;
 	window.setTimeout('decraseHomeHighlightCountDown()', 1000);
 }
 
 function changeContentItem(contentItemId){
 	
-	_homeHighlightInterval = 5;
+	_homeHighlightInterval = 9;
 	toggleContentItem(contentItemId);
 }
 

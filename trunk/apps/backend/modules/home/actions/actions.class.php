@@ -45,6 +45,8 @@ class homeActions extends sfActions
 		$scriptName = '/backend_dev.php';
 	else
 		$scriptName = '/backend.php';
+		
+	$scriptNameFrontend = ($isDebug?'/frontend_dev.php':'/index.php');
 
 	$isDebug    = ($isDebug?'true':'false');
 	
@@ -52,11 +54,12 @@ class homeActions extends sfActions
 	
 	echo 'var _CurrentPeopleId = "'.$peopleId.'";'.$nl.$nl;
 	
-	echo "var _webRoot     = '$scriptName';".$nl;
-	echo "var _imageRoot   = 'http://$hostname/images';".$nl;
-	echo "var _isDebug     = $isDebug;".$nl;
-	echo "var _isMobile    = false;".$nl;
-	echo "var i18n_culture = 'pt_BR';".$nl.$nl;
+	echo "var _webRoot         = '$scriptName';".$nl;
+	echo "var _webRootFrontend = '$scriptName';".$nl;
+	echo "var _imageRoot       = 'http://$hostname/images';".$nl;
+	echo "var _isDebug         = $isDebug;".$nl;
+	echo "var _isMobile        = false;".$nl;
+	echo "var i18n_culture     = 'pt_BR';".$nl.$nl;
 	
 	if( $isAuthenticated ){
 		

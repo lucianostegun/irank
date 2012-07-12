@@ -1063,9 +1063,9 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .wizButtons { border-top: 1px solid #fff; }
 .formRow .inputImg { position: absolute; top: 29px; right: 25px; }
 .formRow .labelImg { float: left; margin: 2px 10px 0 0; }
-.formRow > label { padding: 4px 15px 4px 0; display: block; float: left; width: 20%; text-align: right; font-weight: bold; color: #303030 }
+.formRow > label { padding: 3px 15px 4px 0; display: block; float: left; width: 20%; text-align: right; font-weight: bold; color: #303030 }
 .formRight label { float: left; margin-right: 24px; padding: 2px 0; cursor: pointer; padding-top: 4px }
-.formRow .text { padding: 4px 0; display: block; float: left; }
+.formRow .text { padding: 0px 0; display: block; float: left; }
 .formNote { display: block; text-align: left; font-size: 11px; padding-top: 5px; color: #939393; }
 .formNote.error { color: #a93f31; }
 
@@ -1080,7 +1080,7 @@ table thead td.headerSortDown span { background: url(/images/backend/icons/sortD
 .formRow .formRight { display: block; float: left; margin-right: 18px; }
 .formRow .multi .checker { margin-top: 8px }
 
-.form input[type=text], .form input[type=password], .form textarea { font-size: 13px; padding: 7px 6px; background: white; border: 1px solid #AAAAAA; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #F0F0F0; -webkit-box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; color: #656565; } 
+.form input[type=text], .form input[type=password], .form textarea { font-size: 13px; padding: 4px 6px; background: white; border: 1px solid #AAAAAA; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 0 0 2px #F0F0F0; -webkit-box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; color: #656565; } 
 .form textarea { width: 100% } 
 .form input[type=text]:hover, .form input[type=password]:hover, .form textarea:hover { border-color: #909090; background: #fdfdfd; }
 .form input[type=text]:focus, .form input[type=password]:focus, .form textarea:focus { border-color: #707070; background: #F5F5F5; color: #303030; -webkit-box-shadow: 0 0 0 2px #f4f4f4; box-shadow: 0 0 0 2px #f4f4f4; -moz-box-shadow: 0 0 0 2px #f4f4f4; }

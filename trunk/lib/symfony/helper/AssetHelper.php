@@ -369,6 +369,8 @@ function include_facebook_metas($facbookMetaList)
 	
 	if( !array_key_exists('image', $facbookMetaList) )
 		$facbookMetaList['image'] = 'http://'.MyTools::getRequest()->getHost().'/images/layout/mediaLogo.png';
+	else
+		$facbookMetaList['image2'] = 'http://'.MyTools::getRequest()->getHost().'/images/layout/mediaLogo.png';
 
 	foreach($facbookMetaList as $property=>$content)
 		echo "<meta property=\"og:$property\" content=\"$content\" />\n";

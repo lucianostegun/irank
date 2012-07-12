@@ -1,7 +1,7 @@
 <table border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr class="header">
-		<th class="first">Etapa</th>
 		<th><?php echo __('DateTime') ?></th>
+		<th class="first">Etapa</th>
 		<th><?php echo __('Place') ?></th>
 		<th colspan="3">Jogadores</th>
 	</tr>
@@ -40,8 +40,8 @@
 			$recordCount++;
 	?>
 	<tr onclick="<?php echo $onclick ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" class="<?php echo $className ?>">
-		<td class="textL"><?php echo $eventLiveObj->toString().$stepDay ?></td>
 		<td class="textC"><?php echo $eventLiveObj->getEventDate('d/m/Y').' '.$eventLiveObj->getStartTime('H:i') ?></td>
+		<td class="textL"><?php echo $eventLiveObj->toString().$stepDay ?></td>
 		<td class="textL"><?php echo $eventLiveObj->getEventPlace() ?></td>
 		<td class="textC"><?php echo $eventLiveObj->getPlayers() ?></td>
 	</tr>

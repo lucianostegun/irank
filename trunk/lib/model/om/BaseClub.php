@@ -2010,7 +2010,7 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	
 	public function getClubSettingsList($criteria = null, $con = null)
 	{
-				include_once 'apps/backend/lib/model/om/BaseClubSettingsPeer.php';
+				include_once 'lib/model/om/BaseClubSettingsPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -2048,7 +2048,7 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	
 	public function countClubSettingsList($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'apps/backend/lib/model/om/BaseClubSettingsPeer.php';
+				include_once 'lib/model/om/BaseClubSettingsPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -2073,7 +2073,7 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	
 	public function getClubSettingsListJoinSettings($criteria = null, $con = null)
 	{
-				include_once 'apps/backend/lib/model/om/BaseClubSettingsPeer.php';
+				include_once 'lib/model/om/BaseClubSettingsPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}

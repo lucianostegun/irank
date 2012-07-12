@@ -149,7 +149,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 
 	
-	protected $suppress_ranking;
+	protected $twitter_template;
 
 
 	
@@ -562,10 +562,10 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getSuppressRanking()
+	public function getTwitterTemplate()
 	{
 
-		return $this->suppress_ranking;
+		return $this->twitter_template;
 	}
 
 	
@@ -1109,12 +1109,16 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setSuppressRanking($v)
+	public function setTwitterTemplate($v)
 	{
 
-		if ($this->suppress_ranking !== $v) {
-			$this->suppress_ranking = $v;
-			$this->modifiedColumns[] = EventLivePeer::SUPPRESS_RANKING;
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->twitter_template !== $v) {
+			$this->twitter_template = $v;
+			$this->modifiedColumns[] = EventLivePeer::TWITTER_TEMPLATE;
 		}
 
 	} 
@@ -1267,7 +1271,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 			$this->enrollment_mode = $rs->getString($startcol + 34);
 
-			$this->suppress_ranking = $rs->getBoolean($startcol + 35);
+			$this->twitter_template = $rs->getString($startcol + 35);
 
 			$this->enabled = $rs->getBoolean($startcol + 36);
 
@@ -1667,7 +1671,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				return $this->getEnrollmentMode();
 				break;
 			case 35:
-				return $this->getSuppressRanking();
+				return $this->getTwitterTemplate();
 				break;
 			case 36:
 				return $this->getEnabled();
@@ -1732,7 +1736,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 			$keys[32]=>$this->getScheduleStartDate(),
 			$keys[33]=>$this->getEnrollmentStartDate(),
 			$keys[34]=>$this->getEnrollmentMode(),
-			$keys[35]=>$this->getSuppressRanking(),
+			$keys[35]=>$this->getTwitterTemplate(),
 			$keys[36]=>$this->getEnabled(),
 			$keys[37]=>$this->getVisible(),
 			$keys[38]=>$this->getDeleted(),
@@ -1860,7 +1864,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 				$this->setEnrollmentMode($value);
 				break;
 			case 35:
-				$this->setSuppressRanking($value);
+				$this->setTwitterTemplate($value);
 				break;
 			case 36:
 				$this->setEnabled($value);
@@ -1922,7 +1926,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[32], $arr)) $this->setScheduleStartDate($arr[$keys[32]]);
 		if (array_key_exists($keys[33], $arr)) $this->setEnrollmentStartDate($arr[$keys[33]]);
 		if (array_key_exists($keys[34], $arr)) $this->setEnrollmentMode($arr[$keys[34]]);
-		if (array_key_exists($keys[35], $arr)) $this->setSuppressRanking($arr[$keys[35]]);
+		if (array_key_exists($keys[35], $arr)) $this->setTwitterTemplate($arr[$keys[35]]);
 		if (array_key_exists($keys[36], $arr)) $this->setEnabled($arr[$keys[36]]);
 		if (array_key_exists($keys[37], $arr)) $this->setVisible($arr[$keys[37]]);
 		if (array_key_exists($keys[38], $arr)) $this->setDeleted($arr[$keys[38]]);
@@ -1971,7 +1975,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventLivePeer::SCHEDULE_START_DATE)) $criteria->add(EventLivePeer::SCHEDULE_START_DATE, $this->schedule_start_date);
 		if ($this->isColumnModified(EventLivePeer::ENROLLMENT_START_DATE)) $criteria->add(EventLivePeer::ENROLLMENT_START_DATE, $this->enrollment_start_date);
 		if ($this->isColumnModified(EventLivePeer::ENROLLMENT_MODE)) $criteria->add(EventLivePeer::ENROLLMENT_MODE, $this->enrollment_mode);
-		if ($this->isColumnModified(EventLivePeer::SUPPRESS_RANKING)) $criteria->add(EventLivePeer::SUPPRESS_RANKING, $this->suppress_ranking);
+		if ($this->isColumnModified(EventLivePeer::TWITTER_TEMPLATE)) $criteria->add(EventLivePeer::TWITTER_TEMPLATE, $this->twitter_template);
 		if ($this->isColumnModified(EventLivePeer::ENABLED)) $criteria->add(EventLivePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventLivePeer::VISIBLE)) $criteria->add(EventLivePeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(EventLivePeer::DELETED)) $criteria->add(EventLivePeer::DELETED, $this->deleted);
@@ -2076,7 +2080,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 
 		$copyObj->setEnrollmentMode($this->enrollment_mode);
 
-		$copyObj->setSuppressRanking($this->suppress_ranking);
+		$copyObj->setTwitterTemplate($this->twitter_template);
 
 		$copyObj->setEnabled($this->enabled);
 

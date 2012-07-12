@@ -8,9 +8,9 @@
 	<table cellpadding="0" cellspacing="0" width="100%" class="display dTableCustom" id="eventLiveTable">
 		<thead>
 		    <tr>
+				<th><div>Data/Hora<span></span></div></th>
 				<th><div>Etapa<span></span></div></th>
 				<th><div>Clube<span></span></div></th>
-				<th><div>Data/Hora<span></span></div></th>
 				<th><div>Buyin<span></span></div></th>
 				<th><div>Blind<span></span></div></th>
 				<th><div>Stack<span></span></div></th>
@@ -22,7 +22,7 @@
 	</table>
 </div>
 <div id="quickAddEventFormDiv" class="form" style="display: none">
-	<h3>Inclusão rápida de etapas </h3>
+	<h3>Inclusão rápida de etapas</h3>
 	<hr/><br/>
 	<?php include_partial('rankingLive/include/quickEvent', array('rankingLiveObj'=>$rankingLiveObj)); ?>
 </div>
