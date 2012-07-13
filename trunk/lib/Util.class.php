@@ -991,5 +991,12 @@ class Util {
 		
 		return $days;
 	}
+	
+	public static function lightbox(){
+
+		sfContext::getInstance()->getResponse()->addStylesheet('lightbox');
+		sfContext::getInstance()->getResponse()->addJavascript('/sf/prototype/js/scriptaculous');
+		sfContext::getInstance()->getResponse()->addJavascript('lightbox');
+	}
 }
 ?>

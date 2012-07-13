@@ -80,12 +80,6 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 	protected $lastEmailMarketingCriteria = null;
 
 	
-	protected $collProductFileList;
-
-	
-	protected $lastProductFileCriteria = null;
-
-	
 	protected $alreadyInSave = false;
 
 	
@@ -461,14 +455,6 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collProductFileList !== null) {
-				foreach($this->collProductFileList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -552,14 +538,6 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 				if ($this->collEmailMarketingList !== null) {
 					foreach($this->collEmailMarketingList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collProductFileList !== null) {
-					foreach($this->collProductFileList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -776,10 +754,6 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 			foreach($this->getEmailMarketingList() as $relObj) {
 				$copyObj->addEmailMarketing($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getProductFileList() as $relObj) {
-				$copyObj->addProductFile($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1505,111 +1479,6 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 		$this->lastEmailMarketingCriteria = $criteria;
 
 		return $this->collEmailMarketingList;
-	}
-
-	
-	public function initProductFileList()
-	{
-		if ($this->collProductFileList === null) {
-			$this->collProductFileList = array();
-		}
-	}
-
-	
-	public function getProductFileList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseProductFilePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collProductFileList === null) {
-			if ($this->isNew()) {
-			   $this->collProductFileList = array();
-			} else {
-
-				$criteria->add(ProductFilePeer::FILE_ID, $this->getId());
-
-				ProductFilePeer::addSelectColumns($criteria);
-				$this->collProductFileList = ProductFilePeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(ProductFilePeer::FILE_ID, $this->getId());
-
-				ProductFilePeer::addSelectColumns($criteria);
-				if (!isset($this->lastProductFileCriteria) || !$this->lastProductFileCriteria->equals($criteria)) {
-					$this->collProductFileList = ProductFilePeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastProductFileCriteria = $criteria;
-		return $this->collProductFileList;
-	}
-
-	
-	public function countProductFileList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseProductFilePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(ProductFilePeer::FILE_ID, $this->getId());
-
-		return ProductFilePeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addProductFile(ProductFile $l)
-	{
-		$this->collProductFileList[] = $l;
-		$l->setFile($this);
-	}
-
-
-	
-	public function getProductFileListJoinProduct($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseProductFilePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collProductFileList === null) {
-			if ($this->isNew()) {
-				$this->collProductFileList = array();
-			} else {
-
-				$criteria->add(ProductFilePeer::FILE_ID, $this->getId());
-
-				$this->collProductFileList = ProductFilePeer::doSelectJoinProduct($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(ProductFilePeer::FILE_ID, $this->getId());
-
-			if (!isset($this->lastProductFileCriteria) || !$this->lastProductFileCriteria->equals($criteria)) {
-				$this->collProductFileList = ProductFilePeer::doSelectJoinProduct($criteria, $con);
-			}
-		}
-		$this->lastProductFileCriteria = $criteria;
-
-		return $this->collProductFileList;
 	}
 
 } 

@@ -13,7 +13,7 @@ abstract class BaseProductPeer {
 	const CLASS_DEFAULT = 'lib.model.Product';
 
 	
-	const NUM_COLUMNS = 11;
+	const NUM_COLUMNS = 20;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -23,16 +23,43 @@ abstract class BaseProductPeer {
 	const ID = 'product.ID';
 
 	
+	const PRODUCT_CODE = 'product.PRODUCT_CODE';
+
+	
+	const PRODUCT_CATEGORY_ID = 'product.PRODUCT_CATEGORY_ID';
+
+	
 	const PRODUCT_NAME = 'product.PRODUCT_NAME';
 
 	
-	const PRODUCT_TYPE_ID = 'product.PRODUCT_TYPE_ID';
+	const SHORT_NAME = 'product.SHORT_NAME';
+
+	
+	const DESCRIPTION = 'product.DESCRIPTION';
+
+	
+	const DEFAULT_PRICE = 'product.DEFAULT_PRICE';
+
+	
+	const DEFAULT_WEIGHT = 'product.DEFAULT_WEIGHT';
 
 	
 	const IS_NEW = 'product.IS_NEW';
 
 	
-	const DEFAULT_PRICE = 'product.DEFAULT_PRICE';
+	const IMAGE_1 = 'product.IMAGE_1';
+
+	
+	const IMAGE_2 = 'product.IMAGE_2';
+
+	
+	const IMAGE_3 = 'product.IMAGE_3';
+
+	
+	const IMAGE_4 = 'product.IMAGE_4';
+
+	
+	const IMAGE_5 = 'product.IMAGE_5';
 
 	
 	const ENABLED = 'product.ENABLED';
@@ -58,19 +85,19 @@ abstract class BaseProductPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'ProductName', 'ProductTypeId', 'IsNew', 'DefaultPrice', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (ProductPeer::ID, ProductPeer::PRODUCT_NAME, ProductPeer::PRODUCT_TYPE_ID, ProductPeer::IS_NEW, ProductPeer::DEFAULT_PRICE, ProductPeer::ENABLED, ProductPeer::VISIBLE, ProductPeer::DELETED, ProductPeer::LOCKED, ProductPeer::CREATED_AT, ProductPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'product_name', 'product_type_id', 'is_new', 'default_price', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PRODUCT_NAME'=>'', 'PRODUCT_TYPE_ID'=>'', 'IS_NEW'=>'', 'DEFAULT_PRICE'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'ProductCode', 'ProductCategoryId', 'ProductName', 'ShortName', 'Description', 'DefaultPrice', 'DefaultWeight', 'IsNew', 'Image1', 'Image2', 'Image3', 'Image4', 'Image5', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (ProductPeer::ID, ProductPeer::PRODUCT_CODE, ProductPeer::PRODUCT_CATEGORY_ID, ProductPeer::PRODUCT_NAME, ProductPeer::SHORT_NAME, ProductPeer::DESCRIPTION, ProductPeer::DEFAULT_PRICE, ProductPeer::DEFAULT_WEIGHT, ProductPeer::IS_NEW, ProductPeer::IMAGE_1, ProductPeer::IMAGE_2, ProductPeer::IMAGE_3, ProductPeer::IMAGE_4, ProductPeer::IMAGE_5, ProductPeer::ENABLED, ProductPeer::VISIBLE, ProductPeer::DELETED, ProductPeer::LOCKED, ProductPeer::CREATED_AT, ProductPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'product_code', 'product_category_id', 'product_name', 'short_name', 'description', 'default_price', 'default_weight', 'is_new', 'image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PRODUCT_CODE'=>'', 'PRODUCT_CATEGORY_ID'=>'', 'PRODUCT_NAME'=>'', 'SHORT_NAME'=>'', 'DESCRIPTION'=>'', 'DEFAULT_PRICE'=>'', 'DEFAULT_WEIGHT'=>'', 'IS_NEW'=>'', 'IMAGE_1'=>'', 'IMAGE_2'=>'', 'IMAGE_3'=>'', 'IMAGE_4'=>'', 'IMAGE_5'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ProductName'=>1, 'ProductTypeId'=>2, 'IsNew'=>3, 'DefaultPrice'=>4, 'Enabled'=>5, 'Visible'=>6, 'Deleted'=>7, 'Locked'=>8, 'CreatedAt'=>9, 'UpdatedAt'=>10, ),
-		BasePeer::TYPE_COLNAME=>array (ProductPeer::ID=>0, ProductPeer::PRODUCT_NAME=>1, ProductPeer::PRODUCT_TYPE_ID=>2, ProductPeer::IS_NEW=>3, ProductPeer::DEFAULT_PRICE=>4, ProductPeer::ENABLED=>5, ProductPeer::VISIBLE=>6, ProductPeer::DELETED=>7, ProductPeer::LOCKED=>8, ProductPeer::CREATED_AT=>9, ProductPeer::UPDATED_AT=>10, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'product_name'=>1, 'product_type_id'=>2, 'is_new'=>3, 'default_price'=>4, 'enabled'=>5, 'visible'=>6, 'deleted'=>7, 'locked'=>8, 'created_at'=>9, 'updated_at'=>10, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ProductCode'=>1, 'ProductCategoryId'=>2, 'ProductName'=>3, 'ShortName'=>4, 'Description'=>5, 'DefaultPrice'=>6, 'DefaultWeight'=>7, 'IsNew'=>8, 'Image1'=>9, 'Image2'=>10, 'Image3'=>11, 'Image4'=>12, 'Image5'=>13, 'Enabled'=>14, 'Visible'=>15, 'Deleted'=>16, 'Locked'=>17, 'CreatedAt'=>18, 'UpdatedAt'=>19, ),
+		BasePeer::TYPE_COLNAME=>array (ProductPeer::ID=>0, ProductPeer::PRODUCT_CODE=>1, ProductPeer::PRODUCT_CATEGORY_ID=>2, ProductPeer::PRODUCT_NAME=>3, ProductPeer::SHORT_NAME=>4, ProductPeer::DESCRIPTION=>5, ProductPeer::DEFAULT_PRICE=>6, ProductPeer::DEFAULT_WEIGHT=>7, ProductPeer::IS_NEW=>8, ProductPeer::IMAGE_1=>9, ProductPeer::IMAGE_2=>10, ProductPeer::IMAGE_3=>11, ProductPeer::IMAGE_4=>12, ProductPeer::IMAGE_5=>13, ProductPeer::ENABLED=>14, ProductPeer::VISIBLE=>15, ProductPeer::DELETED=>16, ProductPeer::LOCKED=>17, ProductPeer::CREATED_AT=>18, ProductPeer::UPDATED_AT=>19, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'product_code'=>1, 'product_category_id'=>2, 'product_name'=>3, 'short_name'=>4, 'description'=>5, 'default_price'=>6, 'default_weight'=>7, 'is_new'=>8, 'image_1'=>9, 'image_2'=>10, 'image_3'=>11, 'image_4'=>12, 'image_5'=>13, 'enabled'=>14, 'visible'=>15, 'deleted'=>16, 'locked'=>17, 'created_at'=>18, 'updated_at'=>19, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
@@ -126,13 +153,31 @@ abstract class BaseProductPeer {
 
 		$criteria->addSelectColumn(ProductPeer::ID);
 
+		$criteria->addSelectColumn(ProductPeer::PRODUCT_CODE);
+
+		$criteria->addSelectColumn(ProductPeer::PRODUCT_CATEGORY_ID);
+
 		$criteria->addSelectColumn(ProductPeer::PRODUCT_NAME);
 
-		$criteria->addSelectColumn(ProductPeer::PRODUCT_TYPE_ID);
+		$criteria->addSelectColumn(ProductPeer::SHORT_NAME);
+
+		$criteria->addSelectColumn(ProductPeer::DESCRIPTION);
+
+		$criteria->addSelectColumn(ProductPeer::DEFAULT_PRICE);
+
+		$criteria->addSelectColumn(ProductPeer::DEFAULT_WEIGHT);
 
 		$criteria->addSelectColumn(ProductPeer::IS_NEW);
 
-		$criteria->addSelectColumn(ProductPeer::DEFAULT_PRICE);
+		$criteria->addSelectColumn(ProductPeer::IMAGE_1);
+
+		$criteria->addSelectColumn(ProductPeer::IMAGE_2);
+
+		$criteria->addSelectColumn(ProductPeer::IMAGE_3);
+
+		$criteria->addSelectColumn(ProductPeer::IMAGE_4);
+
+		$criteria->addSelectColumn(ProductPeer::IMAGE_5);
 
 		$criteria->addSelectColumn(ProductPeer::ENABLED);
 
@@ -225,7 +270,7 @@ abstract class BaseProductPeer {
 	}
 
 	
-	public static function doCountJoinVirtualTable(Criteria $criteria, $distinct = false, $con = null)
+	public static function doCountJoinProductCategory(Criteria $criteria, $distinct = false, $con = null)
 	{
 				$criteria = clone $criteria;
 
@@ -241,7 +286,7 @@ abstract class BaseProductPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(ProductPeer::PRODUCT_TYPE_ID, VirtualTablePeer::ID);
+		$criteria->addJoin(ProductPeer::PRODUCT_CATEGORY_ID, ProductCategoryPeer::ID);
 
 		$rs = ProductPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -253,7 +298,7 @@ abstract class BaseProductPeer {
 
 
 	
-	public static function doSelectJoinVirtualTable(Criteria $c, $con = null)
+	public static function doSelectJoinProductCategory(Criteria $c, $con = null)
 	{
 		$c = clone $c;
 
@@ -263,9 +308,9 @@ abstract class BaseProductPeer {
 
 		ProductPeer::addSelectColumns($c);
 		$startcol = (ProductPeer::NUM_COLUMNS - ProductPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-		VirtualTablePeer::addSelectColumns($c);
+		ProductCategoryPeer::addSelectColumns($c);
 
-		$c->addJoin(ProductPeer::PRODUCT_TYPE_ID, VirtualTablePeer::ID);
+		$c->addJoin(ProductPeer::PRODUCT_CATEGORY_ID, ProductCategoryPeer::ID);
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
 
@@ -277,7 +322,7 @@ abstract class BaseProductPeer {
 			$obj1 = new $cls();
 			$obj1->hydrate($rs);
 
-			$omClass = VirtualTablePeer::getOMClass();
+			$omClass = ProductCategoryPeer::getOMClass();
 
 			$cls = Propel::import($omClass);
 			$obj2 = new $cls();
@@ -285,7 +330,7 @@ abstract class BaseProductPeer {
 
 			$newObject = true;
 			foreach($results as $temp_obj1) {
-				$temp_obj2 = $temp_obj1->getVirtualTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+				$temp_obj2 = $temp_obj1->getProductCategory(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
 										$temp_obj2->addProduct($obj1); 					break;
 				}
@@ -316,7 +361,7 @@ abstract class BaseProductPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(ProductPeer::PRODUCT_TYPE_ID, VirtualTablePeer::ID);
+		$criteria->addJoin(ProductPeer::PRODUCT_CATEGORY_ID, ProductCategoryPeer::ID);
 
 		$rs = ProductPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -339,10 +384,10 @@ abstract class BaseProductPeer {
 		ProductPeer::addSelectColumns($c);
 		$startcol2 = (ProductPeer::NUM_COLUMNS - ProductPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 
-		VirtualTablePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + VirtualTablePeer::NUM_COLUMNS;
+		ProductCategoryPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + ProductCategoryPeer::NUM_COLUMNS;
 
-		$c->addJoin(ProductPeer::PRODUCT_TYPE_ID, VirtualTablePeer::ID);
+		$c->addJoin(ProductPeer::PRODUCT_CATEGORY_ID, ProductCategoryPeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -358,7 +403,7 @@ abstract class BaseProductPeer {
 
 
 					
-			$omClass = VirtualTablePeer::getOMClass();
+			$omClass = ProductCategoryPeer::getOMClass();
 
 
 			$cls = Propel::import($omClass);
@@ -368,7 +413,7 @@ abstract class BaseProductPeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getVirtualTable(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+				$temp_obj2 = $temp_obj1->getProductCategory(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
 					$temp_obj2->addProduct($obj1); 					break;
 				}
