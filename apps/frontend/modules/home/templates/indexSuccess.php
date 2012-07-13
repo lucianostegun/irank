@@ -5,6 +5,8 @@
 		include_partial('home/resume/events');
 		include_partial('home/resume/quickResume');
 	}
+	
+	Util::lightbox();
 ?>
 <div class="clear"></div>
 </div>

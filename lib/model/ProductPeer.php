@@ -9,4 +9,11 @@
  */ 
 class ProductPeer extends BaseProductPeer
 {
+	
+	public static function retrieveByCode($productCode){
+		
+		$criteria = new Criteria();
+		$criteria->add( ProductPeer::PRODUCT_CODE, $productCode, Criteria::ILIKE );
+		return ProductPeer::doSelectOne($criteria);
+	}
 }

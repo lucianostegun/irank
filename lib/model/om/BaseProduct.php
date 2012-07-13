@@ -13,11 +13,31 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 
 
 	
+	protected $product_code;
+
+
+	
+	protected $product_category_id;
+
+
+	
 	protected $product_name;
 
 
 	
-	protected $product_type_id;
+	protected $short_name;
+
+
+	
+	protected $description;
+
+
+	
+	protected $default_price;
+
+
+	
+	protected $default_weight;
 
 
 	
@@ -25,7 +45,23 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 
 
 	
-	protected $default_price;
+	protected $image_1;
+
+
+	
+	protected $image_2;
+
+
+	
+	protected $image_3;
+
+
+	
+	protected $image_4;
+
+
+	
+	protected $image_5;
 
 
 	
@@ -52,13 +88,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
-	protected $aVirtualTable;
-
-	
-	protected $collProductFileList;
-
-	
-	protected $lastProductFileCriteria = null;
+	protected $aProductCategory;
 
 	
 	protected $alreadyInSave = false;
@@ -74,6 +104,20 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getProductCode()
+	{
+
+		return $this->product_code;
+	}
+
+	
+	public function getProductCategoryId()
+	{
+
+		return $this->product_category_id;
+	}
+
+	
 	public function getProductName()
 	{
 
@@ -81,10 +125,31 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getProductTypeId()
+	public function getShortName()
 	{
 
-		return $this->product_type_id;
+		return $this->short_name;
+	}
+
+	
+	public function getDescription()
+	{
+
+		return $this->description;
+	}
+
+	
+	public function getDefaultPrice()
+	{
+
+		return $this->default_price;
+	}
+
+	
+	public function getDefaultWeight()
+	{
+
+		return $this->default_weight;
 	}
 
 	
@@ -95,10 +160,38 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getDefaultPrice()
+	public function getImage1()
 	{
 
-		return $this->default_price;
+		return $this->image_1;
+	}
+
+	
+	public function getImage2()
+	{
+
+		return $this->image_2;
+	}
+
+	
+	public function getImage3()
+	{
+
+		return $this->image_3;
+	}
+
+	
+	public function getImage4()
+	{
+
+		return $this->image_4;
+	}
+
+	
+	public function getImage5()
+	{
+
+		return $this->image_5;
 	}
 
 	
@@ -188,6 +281,38 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setProductCode($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->product_code !== $v) {
+			$this->product_code = $v;
+			$this->modifiedColumns[] = ProductPeer::PRODUCT_CODE;
+		}
+
+	} 
+	
+	public function setProductCategoryId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->product_category_id !== $v) {
+			$this->product_category_id = $v;
+			$this->modifiedColumns[] = ProductPeer::PRODUCT_CATEGORY_ID;
+		}
+
+		if ($this->aProductCategory !== null && $this->aProductCategory->getId() !== $v) {
+			$this->aProductCategory = null;
+		}
+
+	} 
+	
 	public function setProductName($v)
 	{
 
@@ -202,20 +327,50 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setProductTypeId($v)
+	public function setShortName($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
 		}
 
-		if ($this->product_type_id !== $v) {
-			$this->product_type_id = $v;
-			$this->modifiedColumns[] = ProductPeer::PRODUCT_TYPE_ID;
+		if ($this->short_name !== $v) {
+			$this->short_name = $v;
+			$this->modifiedColumns[] = ProductPeer::SHORT_NAME;
 		}
 
-		if ($this->aVirtualTable !== null && $this->aVirtualTable->getId() !== $v) {
-			$this->aVirtualTable = null;
+	} 
+	
+	public function setDescription($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->description !== $v) {
+			$this->description = $v;
+			$this->modifiedColumns[] = ProductPeer::DESCRIPTION;
+		}
+
+	} 
+	
+	public function setDefaultPrice($v)
+	{
+
+		if ($this->default_price !== $v) {
+			$this->default_price = $v;
+			$this->modifiedColumns[] = ProductPeer::DEFAULT_PRICE;
+		}
+
+	} 
+	
+	public function setDefaultWeight($v)
+	{
+
+		if ($this->default_weight !== $v) {
+			$this->default_weight = $v;
+			$this->modifiedColumns[] = ProductPeer::DEFAULT_WEIGHT;
 		}
 
 	} 
@@ -230,12 +385,72 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setDefaultPrice($v)
+	public function setImage1($v)
 	{
 
-		if ($this->default_price !== $v) {
-			$this->default_price = $v;
-			$this->modifiedColumns[] = ProductPeer::DEFAULT_PRICE;
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->image_1 !== $v) {
+			$this->image_1 = $v;
+			$this->modifiedColumns[] = ProductPeer::IMAGE_1;
+		}
+
+	} 
+	
+	public function setImage2($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->image_2 !== $v) {
+			$this->image_2 = $v;
+			$this->modifiedColumns[] = ProductPeer::IMAGE_2;
+		}
+
+	} 
+	
+	public function setImage3($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->image_3 !== $v) {
+			$this->image_3 = $v;
+			$this->modifiedColumns[] = ProductPeer::IMAGE_3;
+		}
+
+	} 
+	
+	public function setImage4($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->image_4 !== $v) {
+			$this->image_4 = $v;
+			$this->modifiedColumns[] = ProductPeer::IMAGE_4;
+		}
+
+	} 
+	
+	public function setImage5($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->image_5 !== $v) {
+			$this->image_5 = $v;
+			$this->modifiedColumns[] = ProductPeer::IMAGE_5;
 		}
 
 	} 
@@ -320,31 +535,49 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 
 			$this->id = $rs->getInt($startcol + 0);
 
-			$this->product_name = $rs->getString($startcol + 1);
+			$this->product_code = $rs->getString($startcol + 1);
 
-			$this->product_type_id = $rs->getInt($startcol + 2);
+			$this->product_category_id = $rs->getInt($startcol + 2);
 
-			$this->is_new = $rs->getBoolean($startcol + 3);
+			$this->product_name = $rs->getString($startcol + 3);
 
-			$this->default_price = $rs->getFloat($startcol + 4);
+			$this->short_name = $rs->getString($startcol + 4);
 
-			$this->enabled = $rs->getBoolean($startcol + 5);
+			$this->description = $rs->getString($startcol + 5);
 
-			$this->visible = $rs->getBoolean($startcol + 6);
+			$this->default_price = $rs->getFloat($startcol + 6);
 
-			$this->deleted = $rs->getBoolean($startcol + 7);
+			$this->default_weight = $rs->getFloat($startcol + 7);
 
-			$this->locked = $rs->getBoolean($startcol + 8);
+			$this->is_new = $rs->getBoolean($startcol + 8);
 
-			$this->created_at = $rs->getTimestamp($startcol + 9, null);
+			$this->image_1 = $rs->getString($startcol + 9);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 10, null);
+			$this->image_2 = $rs->getString($startcol + 10);
+
+			$this->image_3 = $rs->getString($startcol + 11);
+
+			$this->image_4 = $rs->getString($startcol + 12);
+
+			$this->image_5 = $rs->getString($startcol + 13);
+
+			$this->enabled = $rs->getBoolean($startcol + 14);
+
+			$this->visible = $rs->getBoolean($startcol + 15);
+
+			$this->deleted = $rs->getBoolean($startcol + 16);
+
+			$this->locked = $rs->getBoolean($startcol + 17);
+
+			$this->created_at = $rs->getTimestamp($startcol + 18, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 19, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 11; 
+						return $startcol + 20; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Product object", $e);
 		}
@@ -412,11 +645,11 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 
 
 												
-			if ($this->aVirtualTable !== null) {
-				if ($this->aVirtualTable->isModified() || $this->aVirtualTable->getCurrentVirtualTableI18n()->isModified()) {
-					$affectedRows += $this->aVirtualTable->save($con);
+			if ($this->aProductCategory !== null) {
+				if ($this->aProductCategory->isModified()) {
+					$affectedRows += $this->aProductCategory->save($con);
 				}
-				$this->setVirtualTable($this->aVirtualTable);
+				$this->setProductCategory($this->aProductCategory);
 			}
 
 
@@ -430,14 +663,6 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 					$affectedRows += ProductPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); 			}
-
-			if ($this->collProductFileList !== null) {
-				foreach($this->collProductFileList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
 
 			$this->alreadyInSave = false;
 		}
@@ -476,9 +701,9 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 
 
 												
-			if ($this->aVirtualTable !== null) {
-				if (!$this->aVirtualTable->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aVirtualTable->getValidationFailures());
+			if ($this->aProductCategory !== null) {
+				if (!$this->aProductCategory->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aProductCategory->getValidationFailures());
 				}
 			}
 
@@ -487,14 +712,6 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
-
-				if ($this->collProductFileList !== null) {
-					foreach($this->collProductFileList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
 
 
 			$this->alreadyInValidation = false;
@@ -518,33 +735,60 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getProductName();
+				return $this->getProductCode();
 				break;
 			case 2:
-				return $this->getProductTypeId();
+				return $this->getProductCategoryId();
 				break;
 			case 3:
-				return $this->getIsNew();
+				return $this->getProductName();
 				break;
 			case 4:
-				return $this->getDefaultPrice();
+				return $this->getShortName();
 				break;
 			case 5:
-				return $this->getEnabled();
+				return $this->getDescription();
 				break;
 			case 6:
-				return $this->getVisible();
+				return $this->getDefaultPrice();
 				break;
 			case 7:
-				return $this->getDeleted();
+				return $this->getDefaultWeight();
 				break;
 			case 8:
-				return $this->getLocked();
+				return $this->getIsNew();
 				break;
 			case 9:
-				return $this->getCreatedAt();
+				return $this->getImage1();
 				break;
 			case 10:
+				return $this->getImage2();
+				break;
+			case 11:
+				return $this->getImage3();
+				break;
+			case 12:
+				return $this->getImage4();
+				break;
+			case 13:
+				return $this->getImage5();
+				break;
+			case 14:
+				return $this->getEnabled();
+				break;
+			case 15:
+				return $this->getVisible();
+				break;
+			case 16:
+				return $this->getDeleted();
+				break;
+			case 17:
+				return $this->getLocked();
+				break;
+			case 18:
+				return $this->getCreatedAt();
+				break;
+			case 19:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -558,16 +802,25 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 		$keys = ProductPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0]=>$this->getId(),
-			$keys[1]=>$this->getProductName(),
-			$keys[2]=>$this->getProductTypeId(),
-			$keys[3]=>$this->getIsNew(),
-			$keys[4]=>$this->getDefaultPrice(),
-			$keys[5]=>$this->getEnabled(),
-			$keys[6]=>$this->getVisible(),
-			$keys[7]=>$this->getDeleted(),
-			$keys[8]=>$this->getLocked(),
-			$keys[9]=>$this->getCreatedAt(),
-			$keys[10]=>$this->getUpdatedAt(),
+			$keys[1]=>$this->getProductCode(),
+			$keys[2]=>$this->getProductCategoryId(),
+			$keys[3]=>$this->getProductName(),
+			$keys[4]=>$this->getShortName(),
+			$keys[5]=>$this->getDescription(),
+			$keys[6]=>$this->getDefaultPrice(),
+			$keys[7]=>$this->getDefaultWeight(),
+			$keys[8]=>$this->getIsNew(),
+			$keys[9]=>$this->getImage1(),
+			$keys[10]=>$this->getImage2(),
+			$keys[11]=>$this->getImage3(),
+			$keys[12]=>$this->getImage4(),
+			$keys[13]=>$this->getImage5(),
+			$keys[14]=>$this->getEnabled(),
+			$keys[15]=>$this->getVisible(),
+			$keys[16]=>$this->getDeleted(),
+			$keys[17]=>$this->getLocked(),
+			$keys[18]=>$this->getCreatedAt(),
+			$keys[19]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -587,33 +840,60 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setProductName($value);
+				$this->setProductCode($value);
 				break;
 			case 2:
-				$this->setProductTypeId($value);
+				$this->setProductCategoryId($value);
 				break;
 			case 3:
-				$this->setIsNew($value);
+				$this->setProductName($value);
 				break;
 			case 4:
-				$this->setDefaultPrice($value);
+				$this->setShortName($value);
 				break;
 			case 5:
-				$this->setEnabled($value);
+				$this->setDescription($value);
 				break;
 			case 6:
-				$this->setVisible($value);
+				$this->setDefaultPrice($value);
 				break;
 			case 7:
-				$this->setDeleted($value);
+				$this->setDefaultWeight($value);
 				break;
 			case 8:
-				$this->setLocked($value);
+				$this->setIsNew($value);
 				break;
 			case 9:
-				$this->setCreatedAt($value);
+				$this->setImage1($value);
 				break;
 			case 10:
+				$this->setImage2($value);
+				break;
+			case 11:
+				$this->setImage3($value);
+				break;
+			case 12:
+				$this->setImage4($value);
+				break;
+			case 13:
+				$this->setImage5($value);
+				break;
+			case 14:
+				$this->setEnabled($value);
+				break;
+			case 15:
+				$this->setVisible($value);
+				break;
+			case 16:
+				$this->setDeleted($value);
+				break;
+			case 17:
+				$this->setLocked($value);
+				break;
+			case 18:
+				$this->setCreatedAt($value);
+				break;
+			case 19:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -624,16 +904,25 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 		$keys = ProductPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setProductName($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setProductTypeId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setIsNew($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setDefaultPrice($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setEnabled($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setVisible($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setDeleted($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setLocked($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[1], $arr)) $this->setProductCode($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setProductCategoryId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setProductName($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setShortName($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setDescription($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setDefaultPrice($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setDefaultWeight($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setIsNew($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setImage1($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setImage2($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setImage3($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setImage4($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setImage5($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setEnabled($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setVisible($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setDeleted($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setLocked($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setCreatedAt($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setUpdatedAt($arr[$keys[19]]);
 	}
 
 	
@@ -642,10 +931,19 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 		$criteria = new Criteria(ProductPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(ProductPeer::ID)) $criteria->add(ProductPeer::ID, $this->id);
+		if ($this->isColumnModified(ProductPeer::PRODUCT_CODE)) $criteria->add(ProductPeer::PRODUCT_CODE, $this->product_code);
+		if ($this->isColumnModified(ProductPeer::PRODUCT_CATEGORY_ID)) $criteria->add(ProductPeer::PRODUCT_CATEGORY_ID, $this->product_category_id);
 		if ($this->isColumnModified(ProductPeer::PRODUCT_NAME)) $criteria->add(ProductPeer::PRODUCT_NAME, $this->product_name);
-		if ($this->isColumnModified(ProductPeer::PRODUCT_TYPE_ID)) $criteria->add(ProductPeer::PRODUCT_TYPE_ID, $this->product_type_id);
-		if ($this->isColumnModified(ProductPeer::IS_NEW)) $criteria->add(ProductPeer::IS_NEW, $this->is_new);
+		if ($this->isColumnModified(ProductPeer::SHORT_NAME)) $criteria->add(ProductPeer::SHORT_NAME, $this->short_name);
+		if ($this->isColumnModified(ProductPeer::DESCRIPTION)) $criteria->add(ProductPeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(ProductPeer::DEFAULT_PRICE)) $criteria->add(ProductPeer::DEFAULT_PRICE, $this->default_price);
+		if ($this->isColumnModified(ProductPeer::DEFAULT_WEIGHT)) $criteria->add(ProductPeer::DEFAULT_WEIGHT, $this->default_weight);
+		if ($this->isColumnModified(ProductPeer::IS_NEW)) $criteria->add(ProductPeer::IS_NEW, $this->is_new);
+		if ($this->isColumnModified(ProductPeer::IMAGE_1)) $criteria->add(ProductPeer::IMAGE_1, $this->image_1);
+		if ($this->isColumnModified(ProductPeer::IMAGE_2)) $criteria->add(ProductPeer::IMAGE_2, $this->image_2);
+		if ($this->isColumnModified(ProductPeer::IMAGE_3)) $criteria->add(ProductPeer::IMAGE_3, $this->image_3);
+		if ($this->isColumnModified(ProductPeer::IMAGE_4)) $criteria->add(ProductPeer::IMAGE_4, $this->image_4);
+		if ($this->isColumnModified(ProductPeer::IMAGE_5)) $criteria->add(ProductPeer::IMAGE_5, $this->image_5);
 		if ($this->isColumnModified(ProductPeer::ENABLED)) $criteria->add(ProductPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(ProductPeer::VISIBLE)) $criteria->add(ProductPeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(ProductPeer::DELETED)) $criteria->add(ProductPeer::DELETED, $this->deleted);
@@ -682,13 +980,31 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
+		$copyObj->setProductCode($this->product_code);
+
+		$copyObj->setProductCategoryId($this->product_category_id);
+
 		$copyObj->setProductName($this->product_name);
 
-		$copyObj->setProductTypeId($this->product_type_id);
+		$copyObj->setShortName($this->short_name);
+
+		$copyObj->setDescription($this->description);
+
+		$copyObj->setDefaultPrice($this->default_price);
+
+		$copyObj->setDefaultWeight($this->default_weight);
 
 		$copyObj->setIsNew($this->is_new);
 
-		$copyObj->setDefaultPrice($this->default_price);
+		$copyObj->setImage1($this->image_1);
+
+		$copyObj->setImage2($this->image_2);
+
+		$copyObj->setImage3($this->image_3);
+
+		$copyObj->setImage4($this->image_4);
+
+		$copyObj->setImage5($this->image_5);
 
 		$copyObj->setEnabled($this->enabled);
 
@@ -702,15 +1018,6 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 
 		$copyObj->setUpdatedAt($this->updated_at);
 
-
-		if ($deepCopy) {
-									$copyObj->setNew(false);
-
-			foreach($this->getProductFileList() as $relObj) {
-				$copyObj->addProductFile($relObj->copy($deepCopy));
-			}
-
-		} 
 
 		$copyObj->setNew(true);
 
@@ -736,137 +1043,32 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	}
 
 	
-	public function setVirtualTable($v)
+	public function setProductCategory($v)
 	{
 
 
 		if ($v === null) {
-			$this->setProductTypeId(NULL);
+			$this->setProductCategoryId(NULL);
 		} else {
-			$this->setProductTypeId($v->getId());
+			$this->setProductCategoryId($v->getId());
 		}
 
 
-		$this->aVirtualTable = $v;
+		$this->aProductCategory = $v;
 	}
 
 
 	
-	public function getVirtualTable($con = null)
+	public function getProductCategory($con = null)
 	{
-		if ($this->aVirtualTable === null && ($this->product_type_id !== null)) {
-						include_once 'lib/model/om/BaseVirtualTablePeer.php';
+		if ($this->aProductCategory === null && ($this->product_category_id !== null)) {
+						include_once 'lib/model/om/BaseProductCategoryPeer.php';
 
-			$this->aVirtualTable = VirtualTablePeer::retrieveByPK($this->product_type_id, $con);
+			$this->aProductCategory = ProductCategoryPeer::retrieveByPK($this->product_category_id, $con);
 
 			
 		}
-		return $this->aVirtualTable;
-	}
-
-	
-	public function initProductFileList()
-	{
-		if ($this->collProductFileList === null) {
-			$this->collProductFileList = array();
-		}
-	}
-
-	
-	public function getProductFileList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseProductFilePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collProductFileList === null) {
-			if ($this->isNew()) {
-			   $this->collProductFileList = array();
-			} else {
-
-				$criteria->add(ProductFilePeer::PRODUCT_ID, $this->getId());
-
-				ProductFilePeer::addSelectColumns($criteria);
-				$this->collProductFileList = ProductFilePeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(ProductFilePeer::PRODUCT_ID, $this->getId());
-
-				ProductFilePeer::addSelectColumns($criteria);
-				if (!isset($this->lastProductFileCriteria) || !$this->lastProductFileCriteria->equals($criteria)) {
-					$this->collProductFileList = ProductFilePeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastProductFileCriteria = $criteria;
-		return $this->collProductFileList;
-	}
-
-	
-	public function countProductFileList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseProductFilePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(ProductFilePeer::PRODUCT_ID, $this->getId());
-
-		return ProductFilePeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addProductFile(ProductFile $l)
-	{
-		$this->collProductFileList[] = $l;
-		$l->setProduct($this);
-	}
-
-
-	
-	public function getProductFileListJoinFile($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseProductFilePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collProductFileList === null) {
-			if ($this->isNew()) {
-				$this->collProductFileList = array();
-			} else {
-
-				$criteria->add(ProductFilePeer::PRODUCT_ID, $this->getId());
-
-				$this->collProductFileList = ProductFilePeer::doSelectJoinFile($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(ProductFilePeer::PRODUCT_ID, $this->getId());
-
-			if (!isset($this->lastProductFileCriteria) || !$this->lastProductFileCriteria->equals($criteria)) {
-				$this->collProductFileList = ProductFilePeer::doSelectJoinFile($criteria, $con);
-			}
-		}
-		$this->lastProductFileCriteria = $criteria;
-
-		return $this->collProductFileList;
+		return $this->aProductCategory;
 	}
 
 } 

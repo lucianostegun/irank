@@ -120,12 +120,6 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	protected $lastCashTablePlayerBuyinCriteria = null;
 
 	
-	protected $collProductList;
-
-	
-	protected $lastProductCriteria = null;
-
-	
 	protected $alreadyInSave = false;
 
 	
@@ -567,14 +561,6 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collProductList !== null) {
-				foreach($this->collProductList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -706,14 +692,6 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 				if ($this->collCashTablePlayerBuyinList !== null) {
 					foreach($this->collCashTablePlayerBuyinList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collProductList !== null) {
-					foreach($this->collProductList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -965,10 +943,6 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 			foreach($this->getCashTablePlayerBuyinList() as $relObj) {
 				$copyObj->addCashTablePlayerBuyin($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getProductList() as $relObj) {
-				$copyObj->addProduct($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -2464,76 +2438,6 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 		$this->lastCashTablePlayerBuyinCriteria = $criteria;
 
 		return $this->collCashTablePlayerBuyinList;
-	}
-
-	
-	public function initProductList()
-	{
-		if ($this->collProductList === null) {
-			$this->collProductList = array();
-		}
-	}
-
-	
-	public function getProductList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseProductPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collProductList === null) {
-			if ($this->isNew()) {
-			   $this->collProductList = array();
-			} else {
-
-				$criteria->add(ProductPeer::PRODUCT_TYPE_ID, $this->getId());
-
-				ProductPeer::addSelectColumns($criteria);
-				$this->collProductList = ProductPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(ProductPeer::PRODUCT_TYPE_ID, $this->getId());
-
-				ProductPeer::addSelectColumns($criteria);
-				if (!isset($this->lastProductCriteria) || !$this->lastProductCriteria->equals($criteria)) {
-					$this->collProductList = ProductPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastProductCriteria = $criteria;
-		return $this->collProductList;
-	}
-
-	
-	public function countProductList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseProductPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(ProductPeer::PRODUCT_TYPE_ID, $this->getId());
-
-		return ProductPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addProduct(Product $l)
-	{
-		$this->collProductList[] = $l;
-		$l->setVirtualTable($this);
 	}
 
   public function getCulture()

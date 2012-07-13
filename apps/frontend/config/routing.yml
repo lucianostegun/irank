@@ -40,6 +40,19 @@ event_details:
   url:    /eventLive/details/:eventCode
   param:  { module: eventLive, action: details }
 
+
+#STORE ROUTING START
+  
+store_details:
+  url:    /store/details/:productCode
+  param:  { module: store, action: details }
+
+store_add_item:
+  url:    /store/addItem/:productCode
+  param:  { module: store, action: addItem }
+
+#STORE ROUTING END
+
 homepage:
   url:   /
   param: { module: home, action: index }
