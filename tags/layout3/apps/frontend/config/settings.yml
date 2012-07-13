@@ -1,6 +1,6 @@
 prod:
   .settings:
-    no_script_name:           off
+    no_script_name:           on
     cache:                    off
     standard_helpers:         [Partial, Cache, Form, Javascript, I18N, Text]
     timeout:                  3600
@@ -71,3 +71,4 @@ all:
 #    # Validation settings, used for error generation by the Validation helper
 #    validation_error_prefix:    ' &darr;&nbsp;'
 #    validation_error_suffix:    ' &nbsp;&darr;
+

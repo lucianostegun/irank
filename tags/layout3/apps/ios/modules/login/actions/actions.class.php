@@ -27,7 +27,7 @@ class loginActions extends sfActions
 	$password   = $request->getParameter('password');
 	$deviceUDID = $request->getParameter('deviceUDID');
 	
-	if( $username && $password && $deviceUDID ){
+	if( $username && $password ){
 		
 		$criteria = new Criteria();
 		$criteria->add( UserSitePeer::ACTIVE, true );
@@ -43,7 +43,9 @@ class loginActions extends sfActions
 			
 		$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
-		$userSiteObj->buildMobileToken($deviceUDID);
+		
+		if( $deviceUDID )
+			$userSiteObj->buildMobileToken($deviceUDID);
 		
 		if( is_object($userSiteObj) ){
 			

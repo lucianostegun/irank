@@ -7,12 +7,14 @@ include_http_metas();
 include_metas();
 include_title();
 
-$title   = (isset($title)?$title:false);
-$culture = $sf_user->getCulture();
+$title      = (isset($title)?$title:false);
+$culture    = $sf_user->getCulture();
+$scriptName = $sf_request->getScriptName();
+$scriptName = str_replace('/index.php', '', $scriptName);
 ?>
 <link rel="shortcut icon" href="/favicon.ico" />
 <script type="text/javascript">
-	var _webRoot    = '<?php echo $sf_request->getScriptName() ?>';
+	var _webRoot    = '<?php echo $scriptName ?>';
 	var _imageRoot  = '<?php echo 'http://'.$sf_request->getHost() .'/images'; ?>';
 	var _isReadOnly = <?php echo (isset($readOnly)?$readOnly:'false') ?>;
 	var _isDebug    = <?php echo Util::isDebug()?'true':'false'; ?>;
@@ -27,12 +29,10 @@ $culture = $sf_user->getCulture();
 			<?php
 				if( $title )
 					echo link_to(image_tag('mobile/layout/'.$culture.'/backTop'), '#history.back()');
-				else
-					echo image_tag('mobile/layout/spades');
 			?>
 		</td>
 		<td class="header" align="center"><?php echo link_to(image_tag('mobile/layout/logo'), '/home/index') ?></td>
-		<td class="header" width="55" align="center"><?php echo image_tag('mobile/layout/diamond') ?></td>
+		<td class="header" width="55" align="center"></td>
 	</tr>
 </table>
 

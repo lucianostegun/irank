@@ -17,11 +17,7 @@ class homeActions extends sfActions
 
   public function executeClassic($request){
   	
-  	$this->getUser()->setAttribute('forceClassic', '1');
-
-  	$response = sfContext::getResponse();
-  	
-    echo '<html><head><meta http-equiv="refresh" content="0;url=/index.php"/></head></html>';
+    	echo '<html><head><meta http-equiv="refresh" content="0;url=http://www.irank.com.br?fc=1"/></head></html>';
     
   	exit;
   }

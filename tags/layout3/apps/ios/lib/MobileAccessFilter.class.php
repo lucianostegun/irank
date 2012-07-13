@@ -4,11 +4,15 @@ class MobileAccessFilter extends sfFilter {
 
 	public function execute($filterChain) {
 
+		$request     = MyTools::getRequest();
 		$moduleName  = MyTools::getContext()->getModuleName();
 		$actionName  = MyTools::getContext()->getActionName();
-		$userSiteId  = MyTools::getRequestParameter('userSiteId');
-		$deviceUDID  = MyTools::getRequestParameter('deviceUDID');
-		$mobileToken = MyTools::getRequestParameter('mobileToken');
+		$userSiteId  = $request->getParameter('userSiteId');
+		$deviceUDID  = $request->getParameter('deviceUDID');
+		$mobileToken = $request->getParameter('mobileToken');
+		
+		if( !$request->hasParameter('deviceUDID') )
+			return $filterChain->execute();
 		
 		if( $moduleName=='login' && in_array($actionName, array('doLogin', 'save', 'recoveryPassword')) ||
 			$moduleName=='event' && in_array($actionName, array('imageThumb')) ||

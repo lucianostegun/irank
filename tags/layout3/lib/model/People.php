@@ -237,6 +237,7 @@ class People extends BasePeople
 		
 		switch($quickResume){
 			case 'balance':
+			default:
 				$sql = 'SELECT get_player_balance('.$peopleId.')';
 				break;
 			case 'profit':
