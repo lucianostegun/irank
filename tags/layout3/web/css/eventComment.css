@@ -1,0 +1,90 @@
+.commentList .commentArea .comment {
+	
+	margin-bottom: 	4px;
+}
+
+.commentList .comment {
+	
+	background: 	#FFFFFF;
+	padding: 		0px 0px 5px 0px;
+	border:			1px solid #AAAAAA;
+	width: 			420px;
+	overflow-x: 	hidden;
+}
+
+.commentList .commentArea .comment .header {
+
+	background: 	#F5F5F5;
+	overflow-x: 	hidden;
+}
+
+.commentList .commentArea .comment .header .senderInfo {
+
+	float: 		left;
+	padding: 	2px 5px 2px 5px;
+}
+
+.commentList .commentArea .comment .header .reply {
+
+	float: 		right;
+	padding: 	1px 5px 2px 5px;
+}
+
+.commentList .commentArea .comment .header .reply a {
+	
+	color: 	#98090C
+}
+
+.commentList .commentArea .comment .header .reply a:hover {
+	
+	color: 	#000000
+}
+
+.commentList .commentArea .comment .header .delete {
+
+	float: 		right;
+	padding: 	5px 7px 0px 7px;
+	width: 		12px;
+}
+
+.commentList .commentArea .comment .message {
+	
+	clear: 	both;
+	margin: 5px 10px 0px 15px;
+}
+
+.commentFormArea {
+
+	padding: 	0px;
+}
+
+textarea.eventComment {
+	
+	color: 			#444444;
+	width: 			411px;
+	width: 			410px !ie;
+	height: 		47px;
+	font-family: 	Arial, Verdana, Sans serif;
+	margin: 		1px;
+	font-size: 		12px;
+}
+
+textarea.eventCommentError {
+
+	background: 	#FB8F7E;
+	color: 			#444444;
+	width: 			411px;
+	width: 			410px !ie;
+	height: 		47px;
+	font-family: 	Arial, Verdana, Sans serif;
+	font-size: 		12px;
+	margin: 		1px;
+	border: 		1px solid #973C2E;
+}
+
+.replyFormDiv {
+
+	width: 			420px;
+	margin-top: 	-10px;
+	margin-bottom: 	4px;
+}

@@ -1,0 +1,85 @@
+fields:
+       
+  rankingName:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [RankingPeer, uniqueRankingName]
+      invalid_error: form.error.takenRankingName
+    sfStringValidator:
+      max:       25
+      max_error: form.error.max25
+    sfRegexValidator:
+      match:        Yes
+      match_error:  form.error.invalidRankingName
+      pattern:      /^[a-zA-Z]+[)(a-zA-Z 0-9_-]*$/si
+       
+  rankingTag:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [RankingPeer, uniqueRankingTag]
+      invalid_error: form.error.takenRankingTag
+    sfStringValidator:
+      max:       20
+      max_error: form.error.max20
+    sfRegexValidator:
+      match:        Yes
+      match_error:  form.error.invalidRankingTag
+      pattern:      /^[a-z]+[a-z0-9_]*$/si
+       
+  gameStyleId:
+    required:
+      msg:       form.error.requiredField
+       
+  startDate:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [Validate, validateDate]
+      invalid_error: form.error.invalidDate
+       
+  finishDate:
+    sfCallbackValidator:
+      callback:      [Validate, validateDate]
+      invalid_error: form.error.invalidDate
+       
+  startTime:
+    sfCallbackValidator:
+      callback:      [Validate, validateTime]
+      invalid_error: form.error.invalidDate
+       
+  rankingTypeId:
+    required:
+      msg:       form.error.requiredField
+       
+  entranceFee:
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.invalidNumber
+       
+  buyin:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.invalidNumber
+       
+  options:
+    sfCallbackValidator:
+      callback:      [RankingPrizeSplitPeer, validatePrizeSplit]
+      invalid_error: nullError
+      
+  scoreSchema:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [RankingPeer, validateScoreSchema]
+      invalid_error: nullError
+      
+  scoreFormula:
+    sfCallbackValidator:
+      callback:      [RankingPeer, validateScoreFormula]
+      invalid_error: nullError

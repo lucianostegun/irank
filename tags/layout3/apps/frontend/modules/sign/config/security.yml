@@ -1,0 +1,9 @@
+all:
+  is_secure: on
+  credentials: iRankSite
+
+index:
+  is_secure: off
+  
+save:
+  is_secure: off

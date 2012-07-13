@@ -1,0 +1,130 @@
+.formStatusTopMessage {
+
+	position: 				absolute;
+	width: 					400px;
+	left: 					-400px;
+	top: 					-3px;
+	margin-left: 			50%;
+	background: 			none;
+	padding: 				4px 9px 3px 9px;
+	color: 					#FFFFFF;
+	text-indent: 			30px;
+	-webkit-border-radius: 	5px;
+	-moz-border-radius: 	5px;
+	border-radius: 			5px;
+	border: 				1px solid transparent;
+	border-top: 			none;
+	font-weight: 			normal;
+	cursor: 				pointer;
+	
+	-webkit-border-top-left-radius: 	0px;
+	-moz-border-top-left-radius: 		0px;
+	border-top-left-radius: 			0px;
+}
+
+.formStatusTopMessage span {
+
+	display: none;
+}
+
+.formStatusTopMessage .indicator {
+
+	position: 			relative;
+	border-color: 		none;
+	color: 				#FFFFFF;
+	background: 		url(/images/backend/loaders/loader13.gif) no-repeat 7px center;
+	display: 			block;
+	text-indent: 		33px;
+	top: 				2px;
+	margin-left: 		50%;
+	left: 				-50px
+}
+
+.formStatusTopMessage.success {
+
+	background: 		#cfe2f7 url(/images/backend/icons/notifications/success.png) no-repeat 7px center;
+	border-color: 		#9fc2ee;
+	color: 				#1e487a;
+	font-weight: 		bold;
+}
+
+.formStatusTopMessage.warning {
+
+	background: 	#ffe9ad url(/images/backend/icons/notifications/error.png) no-repeat 7px center;
+	border: 		1px solid #eac572;
+	color: 			#826200;
+	font-weight: 	bold;
+}
+
+.formStatusTopMessage.error {
+
+	background: 	#fccac1 url(/images/backend/icons/notifications/exclamation.png) no-repeat 7px center;
+	border-color: 	#e18b7c;
+	color: 			#AC260F;
+	font-weight: 	bold;
+}
+
+.formStatusTopMessage.success .errorMessage {
+
+	display: 	none
+}
+
+.formStatusTopMessage.success .successMessage {
+
+	display: 	block
+}
+
+.formStatusTopMessage.error .errorMessage {
+
+	display: 	block
+}
+
+.formStatusTopMessage.error .successMessage {
+
+	display: 	none
+}
+
+.formStatusTopMessage.success .indicator,
+.formStatusTopMessage.error .indicator {
+
+	display: 	none;
+}
+
+.upload {
+	float: 			left;
+	margin-right: 	15px;
+	margin-top: 	-2px
+}
+
+.form input.fieldError, .form input.fieldError:hover{ 
+
+	background: #e4c5c4;
+	border-color: #bc9190;
+	color: #656565;
+}
+
+.form input.fieldError:hover{ 
+
+	border-color: #a25d5b;
+	color: #000000
+}
+
+.form input.fieldError:focus{ 
+
+	border-color: #a25d5b;
+	background: #d6b6b5;
+}
+
+
+.internalTable table.display tr.gradeA td .checker {
+	position: 	relative;
+	margin-left: 50%;
+	top: 0px;
+	left: -8px;
+}
+
+.internalTable .title .titleIcon .checker {
+	position: 	relative;
+	top: 0px;
+	left: 0px;
+}

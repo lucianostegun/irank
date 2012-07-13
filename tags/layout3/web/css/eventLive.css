@@ -1,0 +1,297 @@
+.eventDetailsArea {
+
+    background: 	#FFFFFF;
+    background-image: 	-o-linear-gradient(#FFFFFF, #DFDFDF);
+    background: 	-moz-linear-gradient(top, #FFFFFF, #DFDFDF);;
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#DFDFDF));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#DFDFDF', GradientType=0);
+    min-height: 	400px;
+    border-bottom: 	1px solid #C0C0C0;
+}
+
+.eventDetailsArea.index {
+
+    background: 	#FFFFFF;
+    background-image: 	-o-linear-gradient(#FFFFFF, #f9f9f9);
+    background: 	-moz-linear-gradient(top, #FFFFFF, #f9f9f9);;
+    background: 	-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#f9f9f9));
+    filter: 		progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#f9f9f9', GradientType=0);
+    min-height: 	50px;
+    border-bottom: 	1px solid #C0C0C0;
+    border-bottom: 	none;
+}
+
+.eventDetailsArea .separator,
+.eventDetailsList .separator {
+
+	clear: 			both;
+	width: 			100%;
+	border-top: 	1px solid #DDDDDD;
+	border-bottom: 	1px solid #FFFFFF;
+	margin-top: 	10px;
+	margin-bottom: 	7px;
+}
+
+.eventDetails {
+	
+	margin: 	10px 10px 0px 10px;
+}
+
+.eventDetails .logo {
+
+	width: 			110px;
+	height: 		90px;
+	text-align: 	center;	
+}
+
+.eventDetails h1 {
+
+	margin: 		0px;
+	padding: 		0px;
+	line-height: 	20px;
+	font-size: 		18px;
+	font-weight: 	bold;
+	font-family: 	Verdana, Sans serif;
+	text-align: 	left;
+	text-shadow: 	silver 1px 1px;	
+}
+
+.eventDetails .info td {
+
+	font-size: 		13px;
+	padding-left: 	15px;	
+}
+
+.eventDetails .payInfo {
+
+	text-align: 		center;
+	vertical-align: 	top;
+	width: 				250px;
+}
+
+.eventDetails .payInfo table {
+	
+	width: 	200px;
+}
+
+.eventDetails .payInfo table tr th {
+	
+}
+
+.eventDetails .payInfo table tr td {
+	
+	white-space: 	nowrap;
+	padding-top: 	8px;
+	text-align: 	center;
+	font-weight: 	bold;
+}
+
+.eventDetails .payInfo table tr td.presence {
+	
+	padding: 	15px 0px 0px 35px;	
+}
+
+
+.eventDetailsArea .channel td,
+.eventDetailsList .channel td {
+
+	clear: 				both;
+	border-left: 		1px solid #D0D0D0;
+	border-right: 		1px solid #FFFFFF;
+	margin-top: 		10px;
+	margin-bottom: 		7px;
+	height: 			40px;
+	text-align: 		center;
+	font-size: 			18px;
+	font-family: 		Arial;
+	font-weight: 		bold;
+	text-shadow: 		white 1px 1px;
+	color: 				#A0A0A0;
+	padding: 			0px 15px 0px 15px;
+	cursor: 			pointer;
+}
+
+.eventDetailsArea .channel td.hover,
+.eventDetailsList .channel td.hover {
+
+	color: 	#C91E1E;
+}
+
+.eventDetailsArea .channel .eventLiveTab.first,
+.eventDetailsList .channel .eventLiveTab.first {
+
+	border-left: 	none;	
+}
+
+.eventDetailsArea .channel .eventLiveTab.last,
+.eventDetailsList .channel .eventLiveTab.last {
+
+	border-right: 	none;	
+}
+
+.eventDetailsArea .channel .eventLiveTab.active,
+.eventDetailsList .channel .eventLiveTab.active {
+
+	color: 		#303030;	
+}
+
+.eventDetailsArea .eventLiveTabContent,
+.eventDetailsList .eventLiveTabContent {
+	
+	display: 		none;
+	font-size: 		12px;
+	text-align: 	left;
+	text-shadow: 	white 1px 1px;	
+}
+
+.eventDetailsArea .eventLiveTabContent.active,
+.eventLiveTabContent.active {
+	
+	display: 		block;	
+}
+
+.eventDetailsArea #eventLiveInfoContent,
+.eventDetailsList #eventLiveInfoContent {
+	
+	margin: 		25px;
+}
+
+.eventDetailsArea #eventLiveEventsContent,
+.eventDetailsList #eventLiveEventsContent {
+	
+	margin: 		0px;
+}
+
+.eventDetailsArea a.rankingLive {
+
+	color: 	#303030;
+}
+
+
+#eventLiveList {
+
+	padding-top: 	30px;
+}
+
+.eventDetailsList #eventLiveList {
+
+	padding-top: 	10px;
+}
+
+#eventLiveList .event {
+
+	clear: 					both;
+	margin-bottom: 			25px;
+	height: 				140px;
+	
+
+}
+
+#eventLiveList .event .logo {
+
+	float: 			left;
+	text-align: 	center;
+}
+
+#eventLiveList .event .logo img {
+
+	border: 				1px solid #DADADA;
+	padding: 				10px;
+	border-radius: 			4px;
+	-moz-border-radius: 	4px;
+	-webkit-border-radius: 	4px;
+	margin-bottom: 			4px;
+}
+
+#eventLiveList .event .info {
+
+	float: 			left;
+	width: 			550px;
+	height: 		140px;	
+    margin-left: 	6px;
+    
+	border-radius: 			4px;
+	-moz-border-radius: 	4px;
+	-webkit-border-radius: 	4px;
+	border: 				1px solid #DADADA;
+	
+    background: 			#FFFFFF;
+    background-image: 			-o-linear-gradient(#F0F0F0, #FFFFFF);
+    background: 			-moz-linear-gradient(top, #F0F0F0, #FFFFFF);;
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#F0F0F0', EndColorStr='#FFFFFF', GradientType=0);
+}
+
+#eventLiveList .event .info h1 {
+
+	font-size: 		13px;
+	margin: 		4px 0px 0px 10px;
+	padding: 		0px;
+	height: 		24px;
+	line-height: 	24px;
+	font-weight: 	normal
+}
+
+#eventLiveList .event .info h2 {
+
+	font-size: 		15px;
+	height: 		25px;
+	line-height: 	25px;
+	padding: 		0px;
+	margin: 		0px 0px 0px 6px;
+	text-indent: 	10px;
+}
+
+#eventLiveList .event .info h2 a {
+
+	color: 				#2C6986;
+	text-decoration: 	none;
+}
+
+#eventLiveList .event .info h2 a:hover {
+
+	color: 	#C91E1E
+}
+
+#eventLiveList .event .info h3 {
+
+	font-size: 		12px;
+	padding: 		0px;
+	margin: 		0px 0px 0px 6px;
+	text-indent: 	10px;
+}
+
+table.presenceTable {
+	
+	width: 			200px;
+	float: 			left;
+	position: 		relative;
+	top: 			20px;
+	left: 			20px;
+}
+
+table.presenceTable tr th {
+	
+	text-align: 	center;
+}
+
+table.presenceTable tr td {
+	
+	white-space: 	nowrap;
+	padding-top: 	2px;
+	text-align: 	center;
+	font-weight: 	bold;
+}
+
+.profile .enrollmentInfo {
+	
+	position: 		relative;
+	left: 			150px;
+	top: 			37px;
+	font-style: 	italic
+}
+
+.button.confirmedButton .buttonMiddle .buttonLabel {
+
+	color: #909090;
+}

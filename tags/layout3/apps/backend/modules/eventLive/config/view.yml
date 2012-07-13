@@ -1,0 +1,7 @@
+all:
+  stylesheets:    [backend/photos, backend/eventLive]
+  javascripts:    [mask, backend/plugins/uploader/plupload, backend/plugins/uploader/plupload.html5.js, backend/plugins/uploader/plupload.html4.js, backend/plugins/uploader/jquery.plupload.queue.js, backend/eventLive, backend/eventLiveDisclosureEmail, backend/eventLiveDisclosureSms]
+
+editSuccess:
+  stylesheets:    [backend/tableReorder/eventLive, backend/plugins/jquery.lightbox-0.5.css]
+  javascripts:    [tableReorder/header, tableReorder/redips-drag-min, backend/people, backend/tableReorder/eventLive, backend/plugins/jquery.lightbox-0.5.js, backend/plugins/ui/jquery.progress.js]

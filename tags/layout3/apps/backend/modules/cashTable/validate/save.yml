@@ -1,0 +1,46 @@
+fields:
+       
+  clubId:
+    required:
+      msg:       form.error.requiredField
+      
+  cashTableName:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      max:       32
+      max_error: form.error.max32
+      
+  gameTypeId:
+    required:
+      msg:       form.error.requiredField
+      
+  gameLimitId:
+    required:
+      msg:       form.error.requiredField
+      
+  buyin:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
+
+  entranceFee:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.greaterEqual0
+
+  seats:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       2
+      max:       10
+      min_error: form.error.greaterEqual2
+      max_error: form.error.lessEqual10
+      nan_error: form.error.greaterEqual0

@@ -1,0 +1,69 @@
+# default rules
+
+#CLUB ROUTING START
+
+club_vegas:
+  url:    /vegas
+  param:  { module: club, action: details, clubId: 5 }
+
+club_irank:
+  url:    /irank
+  param:  { module: club, action: details, clubId: 6 }
+
+club_irank:
+  url:    /irank
+  param:  { module: club, action: details, clubId: 5 }
+
+club_irank:
+  url:    /irank
+  param:  { module: club, action: details, clubId: 6 }
+
+club_irank:
+  url:    /irank
+  param:  { module: club, action: details, clubId: 5 }
+
+club_h2club:
+  url:    /h2club
+  param:  { module: club, action: details, clubId: 3 }
+
+club_espaco:
+  url:    /espaco
+  param:  { module: club, action: details, clubId: 2 }
+
+club_blackriver:
+  url:    /blackriver
+  param:  { module: club, action: details, clubId: 1 }
+
+#CLUB ROUTING END
+
+event_details:
+  url:    /eventLive/details/:eventCode
+  param:  { module: eventLive, action: details }
+
+
+#STORE ROUTING START
+  
+store_details:
+  url:    /store/details/:productCode
+  param:  { module: store, action: details }
+
+store_add_item:
+  url:    /store/addItem/:productCode
+  param:  { module: store, action: addItem }
+
+#STORE ROUTING END
+
+homepage:
+  url:   /
+  param: { module: home, action: index }
+
+default_symfony:
+  url:   /symfony/:action/*
+  param: { module: default }
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

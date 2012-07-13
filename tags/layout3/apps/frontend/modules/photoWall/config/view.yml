@@ -1,0 +1,4 @@
+all:
+  
+  stylesheets:    [photoWall, lightbox]
+  javascripts:    [/sf/prototype/js/scriptaculous, lightbox]

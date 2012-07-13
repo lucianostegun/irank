@@ -1,0 +1,14 @@
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        iRank - Administração
+    viewport:     width=device-width; initial-scale=1; maximum-scale=1; user-scalable=no
+    language:     pt_BR
+
+  stylesheets:    [backend/reset, backend/ui_custom, backend/datatable, backend/main, backend/form]
+  javascripts:    [/backend.php/home/javascript/debug/<?php echo Util::isDebug(true) ?>/js, backend/plugins/jquery, backend/plugins/jquery-ui, backend/plugins/ui/jquery.collapsible.min.js, backend/plugins/tables/datatable, backend/plugins/tables/tablesort.min.js, backend/plugins/tables/resizable.min.js, backend/plugins/forms/jquery.maskedinput.min.js, backend/plugins/forms/uniform, backend/notifications, util, backend/util, record, backend/record, backend/main, backend/form, phpEquivalents]
+
+  has_layout:     on
+  layout:         layout

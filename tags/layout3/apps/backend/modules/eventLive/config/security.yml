@@ -1,0 +1,6 @@
+default:
+  is_secure: on
+  credentials: [[iRankAdmin, iRankClub]]
+
+uploadPhotos:
+  is_secure: off

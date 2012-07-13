@@ -1,0 +1,73 @@
+prod:
+  .settings:
+    no_script_name:           off
+    cache:                    off
+    standard_helpers:         [Partial, Cache, Form, Javascript, I18N, Text]
+    timeout:                  3600
+    i18n:                     on
+
+dev:
+  .settings:
+    error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
+    web_debug:              on
+    cache:                  off
+    no_script_name:         off
+    etag:                   off
+    standard_helpers:       [Partial, Cache, Form, Javascript, I18N, Text]
+    timeout:                3600
+    i18n:                   on
+
+test:
+  .settings:
+    error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
+    web_debug:              off
+    cache:                  off
+    no_script_name:         off
+    etag:                   off
+
+all:
+  .actions:
+#    default_module:         default   # Default module and action to be called when
+#    default_action:         index     # A routing rule doesn't set it
+#
+    error_404_module:       home   # To be called when a 404 error is raised
+    error_404_action:       error404  # Or when the requested URL doesn't match any route
+
+    login_module:           login   # To be called when a non-authenticated user
+    login_action:           index     # Tries to access a secure page
+#
+    secure_module:          login   # To be called when a user doesn't have
+    secure_action:          index    # The credentials required for an action
+#
+#    module_disabled_module: default   # To be called when a user requests 
+#    module_disabled_action: disabled  # A module disabled in the module.yml
+#
+    unavailable_module:     maintenance   # To be called when a user requests a page
+    unavailable_action:     index  # From an application disabled via the available setting below
+
+  .settings:
+    available:              on        # Enable the whole application. Switch to off to redirect all requests to the unavailable module and action.
+    standard_helpers:       [Partial, Cache, Form, Javascript, Text]
+#
+#    # Optional features. Deactivating unused features boots performance a bit.
+    use_database:           on        # Enable database manager. Set to off if you don't use a database.
+    use_security:           on        # Enable security features (login and credentials). Set to off for public applications.
+    use_flash:              on        # Enable flash parameter feature. Set to off if you never use the set_flash() method in actions.
+    i18n:                   on       # Enable interface translation. Set to off if your application should not be translated.
+    check_symfony_version:  off       # Enable check of symfony version for every request. Set to on to have symfony clear the cache automatically when the framework is upgraded. Set to off if you always clear the cache after an upgrade.
+    use_process_cache:      on        # Enable symfony optimizations based on PHP accelerators. Set to off for tests or when you have enabled a PHP accelerator in your server but don't want symfony to use it internally.
+    compressed:             off       # Enable PHP response compression. Set to on to compress the outgoing HTML via the PHP handler.
+    check_lock:             off       # Enable the application lock system triggered by the clear-cache task. Set to on to have all requests redirected to the $sf_symfony_data_dir/web/arrors/unavailable.php page during the clear-cache process.
+#
+#    # Output escaping settings
+#    escaping_strategy:      bc        # Determines how variables are made available to templates. Accepted values: bc, both, on, off. The value off deactivates escaping completely and gives a slight boost.
+#    escaping_method:   ESC_ENTITIES   # Function or helper used for escaping. Accepted values: ESC_RAW, ESC_ENTITIES, ESC_JS, ESC_JS_NO_ENTITIES.
+#
+#    # Routing settings
+#    relative_url_root:                # Default URL prefix. Use this when your symfony project is installed in a sub directory of the apache document root.
+    suffix:                 .         # Default suffix for generated URLs. If set to a single dot (.), no suffix is added. Possible values: .html, .php, and so on.
+    no_script_name:         on       # Enable the front controller name in generated URLs
+#
+#    # Validation settings, used for error generation by the Validation helper
+#    validation_error_prefix:    ' &darr;&nbsp;'
+#    validation_error_suffix:    ' &nbsp;&darr;

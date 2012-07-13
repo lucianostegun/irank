@@ -1,0 +1,214 @@
+#leftMenu {
+
+    margin-top: 	10px;
+    margin-bottom: 	10px;	
+}
+
+#leftMenu .item {
+	
+    background: 		#E6E6E6;
+    background-image: 	url(/images/layout/leftMenuBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
+    background-image: 	url(/images/layout/leftMenuBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E6E6E6', EndColorStr='#D6D6D6', GradientType=0);
+    background-repeat: 	repeat-y;
+    height: 			30px;
+    overflow: 			hidden;
+    border-top: 		1px solid #EAEAEA;
+    border-bottom: 		1px solid #CDCDCD;
+    cursor: 			pointer;
+}
+
+#leftMenu .item.hover,
+#leftMenu .item.active,
+#leftMenu .item.stats {
+
+    background-image: 	url(/images/layout/leftMenuDistinctBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
+    background-image: 	url(/images/layout/leftMenuDistinctBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
+}
+
+#leftMenu .item .label {
+
+	float: 			left;
+	margin-left: 	15px;
+	font-weight: 	normal;
+	color: 			#303030;
+	height: 		24px;
+	font-size: 		11px;
+	padding-top: 	6px;
+	width: 			185px;
+}
+
+#leftMenu .item .label.flex {
+
+	width: 			156px;
+}
+
+#leftMenu .item.active .label {
+
+	font-weight: 	bold;
+	color: 			#A42200;
+}
+
+#leftMenu .item .label.icon {
+
+	padding-left: 			24px;
+}
+
+#leftMenu .item .iconRight {
+
+	float: 		right;
+	display: 	none;
+	padding: 	7px 7px 7px 6px;
+}
+
+#leftMenu .item.hover .iconRight,
+#leftMenu .item .iconRight.active {
+
+	display: 	block
+}
+
+#leftMenu .item .label.stats { background: url(/images/layout/leftMenu/stats.png) center left no-repeat }
+#leftMenu .item .label.invites { background: url(/images/layout/leftMenu/invite.png) center left no-repeat }
+#leftMenu .item .label.config { background: url(/images/layout/leftMenu/config.png) center left no-repeat }
+#leftMenu .item .label.logout { background: url(/images/layout/leftMenu/logout.png) center left no-repeat }
+
+
+
+.numberTop, .numberMiddle, .numberRight, .groupNum { text-align: center; background: url(/images/backgrounds/numberBg.png) repeat-x; display: inline-block; padding: 1px 5px; color: #fff; -moz-border-radius: 2px; -webkit-border-radius: 2px; -khtml-border-radius: 2px; border-radius: 2px; font-size: 11px; line-height: 13px; width: auto; height: auto!important; }
+.numberTop { margin: 0px 4px 0px -24px; padding: 1px 5px 1px 6px!important; position: relative; top: 1px }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#leftMenu .subitem {
+	
+    background: 		#E6E6E6;
+    background-image: 	url(/images/layout/leftMenuHoverBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
+    background-image: 	url(/images/layout/leftMenuHoverBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E6E6E6', EndColorStr='#D6D6D6', GradientType=0);
+    background-repeat: 	repeat-y;
+    height: 			25px;
+    border-top: 		1px solid #BBB;
+    border-bottom: 	1px solid #BBB;cursor: 			pointer;
+    margin-left: 		10px;
+    margin-bottom: 		1px;
+}
+
+#leftMenu .subitem.hover {
+
+    background-image: 	url(/images/layout/leftMenuDistinctBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
+    background-image: 	url(/images/layout/leftMenuDistinctBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
+}
+
+#leftMenu .subitem .label {
+
+	margin-left: 	15px;
+	margin-top: 	3px;
+	font-weight: 	normal;
+	color: 			#303030;
+	height: 		18px;
+}
+
+#leftMenu .subitem.active .label {
+
+	font-weight: 	bold;
+	color: 			#A42200;
+}
+
+#leftMenu .subitem .label.icon {
+
+	padding-left: 24px;
+}
+
+
+#leftMenu .subitem .label.add {
+
+	background: 	url(/images/layout/leftMenu/add.png) center left no-repeat;
+}
+
+#leftMenu .subitem .label.import {
+
+	background: 	url(/images/layout/leftMenu/import.png) center left no-repeat;
+}
+
+#leftMenu .subitem .label.delete {
+
+	background: 	url(/images/layout/leftMenu/delete.png) center left no-repeat;
+}
+
+#leftMenu .separator {
+
+	margin-top: 	5px;
+}
+
+#leftMenu .separator.double {
+
+	margin-top: 	15px;
+}
+
+#leftMenu .innerMenu {
+
+	margin-bottom: 	35px;
+}
+
+
+
+
+
+
+
+
+.innerFilter {
+
+    margin-bottom: 		35px;
+	margin-left: 		15px;
+    background: 		#E6E6E6;
+    background-image: 	url(/images/layout/leftMenuHoverBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
+    background-image: 	url(/images/layout/leftMenuHoverBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));
+    filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E6E6E6', EndColorStr='#D6D6D6', GradientType=0);
+    background-repeat: 	repeat-y;
+    padding: 			5px 11px 5px 11px;
+}
+
+.innerFilter table {
+
+	width: 	100%
+}
+
+.innerFilter table tr td {
+
+	padding: 	3px 3px 3px 0px;
+}
+
+.innerFilter input {
+
+	width: 		74px;
+	border: 	1px solid #909090;
+	font-size: 	10px;
+	padding: 	1px 3px 1px 3px;
+}
+
+.innerFilter input.double {
+
+	width: 		159px;
+}
+
+.innerFilter select {
+
+	max-width: 		159px;
+	max-width: 		159px !important;
+}

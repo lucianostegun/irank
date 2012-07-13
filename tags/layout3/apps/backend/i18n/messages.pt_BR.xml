@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+	<file orginal="global" source-language="pt_BR" datatype="plaintext" date="">
+		<body>
+		
+			<trans-unit>
+				<source>form.error.requiredField</source>
+				<target>Este campo é obrigatório e não foi preenchido</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidEmail</source>
+				<target>O e-mail informado não é um e-mail válido</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenEmail</source>
+				<target>Este e-mail já está em uso por outro usuário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenUsername</source>
+				<target>Este username já está em uso por outro usuário</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidUsername</source>
+				<target>O username informado não é válido.\nO username deve iniciar com uma letra, e pode conter apenas letras, números e hífen</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max15</source>
+				<target>Informe um valor de até 15 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max20</source>
+				<target>Informe um valor de até 20 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max25</source>
+				<target>Informe um valor de até 25 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max30</source>
+				<target>Informe um valor de até 30 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max32</source>
+				<target>Informe um valor de até 32 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max35</source>
+				<target>Informe um valor de até 35 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max50</source>
+				<target>Informe um valor de até 50 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max100</source>
+				<target>Informe um valor de até 100 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max150</source>
+				<target>Informe um valor de até 150 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max25</source>
+				<target>Informe um valor de até 25 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.between6and15</source>
+				<target>Informe um valor entre 6 e 15 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.passwordConfirm</source>
+				<target>A confirmação deve ser igual a senha</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidDate</source>
+				<target>A data informada não é válida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidRankingName</source>
+				<target>O nome informado não é válido.\nO nome deve iniciar com uma letra, e pode conter apenas letras, números e os caracteres ()-_</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidRankingTag</source>
+				<target>O grupo informado não é válido.\nO grupo deve iniciar com uma letra, e pode conter apenas letras e números</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenRankingName</source>
+				<target>Já existe um ranking cadastrado com este nome</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenRankingTag</source>
+				<target>Já existe outro ranking utilizando este endereço</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidNumber</source>
+				<target>O valor informado não é um número válido</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual0</source>
+				<target>Informe um valor maior ou igual a 0</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual1</source>
+				<target>Informe um valor maior ou igual a 1</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterEqual2</source>
+				<target>Informe um valor maior ou igual a 2</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.lessEqual10</source>
+				<target>Informe um valor menor ou igual a 10</target>
+			</trans-unit>
+			
+			<trans-unit>
+				<source>form.error.expiredDate</source>
+				<target>A data informada não pode mais ser utilizada para eventos</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.takenEventName</source>
+				<target>Já existe um evento cadastrado com este nome para esta mesma data</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.invalidTime</source>
+				<target>A valor informado não é uma hora válida</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.greaterThan0</source>
+				<target>Informe um número maior que 0</target>
+			</trans-unit>
+			<trans-unit>
+				<source>form.error.max140</source>
+				<target>Informe um valor de até 140 caracteres</target>
+			</trans-unit>
+			<trans-unit>
+				<source>zero.zeroZero</source>
+				<target>0,00</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>form.error.invalidPhoneNumber</source>
+				<target>Númer de telefone inválido</target>
+			</trans-unit>
+
+
+			<trans-unit>
+				<source>select</source>
+				<target>Selecione</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>eventLive.pendingResultAlert</source>
+				<target>O resultado deste evento está pendente de publicação</target>
+			</trans-unit>
+
+			<trans-unit>
+				<source>eventLive.previousPendingResultAlert</source>
+				<target>Existem resultados de eventos anteriores que ainda não foram lançados.&lt;br/&gt;
+    	O resultado desde evento só poderá ser salvo quando os resultadores anteriores forem lançados.</target>
+			</trans-unit>
+			
+		</body>
+	</file>
+</xliff>

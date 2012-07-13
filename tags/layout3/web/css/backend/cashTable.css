@@ -1,0 +1,244 @@
+.cashTable {
+	position: relative;
+	left: -369px;
+	margin-left: 50%;
+	margin-top: 30px;
+}
+
+.cashTable.large {
+
+	width: 737px;
+	height: 438px;
+	background: url('/images/backend/cashTable/tableLarge.png') no-repeat;
+}
+
+.cashTable.small {
+
+	width: 619px;
+	height: 379px;
+	background: url('/images/backend/cashTable/table.png') no-repeat;
+}
+
+.cashTable .seat {
+	
+	position: 	absolute;
+	width: 		150px;
+	height: 	42px;
+	cursor: 	pointer;
+}
+
+.cashTable .seat label {
+	
+	display: 			table-cell;
+	position: 			absolute;
+	top: 				3px;
+	left: 				10px;
+	color: 				#FBFBFB;
+	width: 				130px;
+	height: 			42px;
+	text-align: 		center;
+	cursor: 			pointer;
+	font-weight: 		bold;
+	text-transform: 	uppercase;
+	overflow: 			hidden;
+	white-space: 		nowrap;
+	z-index: 			3;
+	text-shadow: 		#000000 1px 1px;
+}
+
+.cashTable .seat.empty label {
+	
+	top: 				10px;
+	text-transform: 	uppercase;
+	color: 				#FFBA00;
+	text-shadow: 		#000000 1px 1px
+}
+
+.cashTable .seat.dealer label { color: #FF7E00; top: 6px; left: 14px }
+.cashTable .seat.dealer.empty label { top: 6px; color: #FFBA00 }
+
+.cashTable .seat span.bankroll {
+	
+	display: 		table-cell;
+	position: 		absolute;
+	top: 			23px;
+	color: 			#B0B0B0;
+	width: 			150px;
+	height: 		42px;
+	text-align: 	center;
+	font-size: 		12px;
+	cursor: 		pointer;
+	z-index: 		2;
+}
+
+.cashTable .seat.empty span.bankroll {
+	
+	display: 		none;
+}
+
+.cashTable .seat span.tablePosition {
+	
+	position: 		absolute;
+	color: 			#FBFBFB;
+	text-align: 	left;
+	font-size: 		13px;
+	line-height: 	14px;
+	padding: 		1px 4px 1px 5px;
+	border-radius: 	10px;
+	background: 	#101010;
+	border: 		1px solid #606060;
+	font-weight: 	bold;
+	z-index: 		1;
+}
+
+.cashTable.large #seat-1 {left: 486px; top: 53px}
+.cashTable.large #seat-2 {left: 553px; top: 123px}
+.cashTable.large #seat-3 {left: 583px; top: 195px}
+.cashTable.large #seat-4 {left: 533px; top: 275px}
+.cashTable.large #seat-5 {left: 395px; top: 334px}
+.cashTable.large #seat-6 {left: 200px; top: 334px}
+.cashTable.large #seat-7 {left: 62px; top: 275px}
+.cashTable.large #seat-8 {left: 4px; top: 195px}
+.cashTable.large #seat-9 {left: 42px; top: 123px}
+.cashTable.large #seat-10 {left: 101px; top: 53px}
+
+.cashTable.large #seat-1 span.tablePosition,
+.cashTable.large #seat-2 span.tablePosition,
+.cashTable.large #seat-3 span.tablePosition,
+.cashTable.large #seat-4 span.tablePosition,
+.cashTable.large #seat-5 span.tablePosition {bottom: -5px; left: 0px}
+
+.cashTable.large #seat-6 span.tablePosition,
+.cashTable.large #seat-7 span.tablePosition,
+.cashTable.large #seat-8 span.tablePosition,
+.cashTable.large #seat-9 span.tablePosition,
+.cashTable.large #seat-10 span.tablePosition {bottom: -5px; right: 0px}
+
+
+.cashTable.small #seat-1 {left: 435px; top: 55px}
+.cashTable.small #seat-2 {left: 465px; top: 154px}
+.cashTable.small #seat-3 {left: 356px; top: 253px}
+.cashTable.small #seat-4 {left: 113px; top: 253px}
+.cashTable.small #seat-5 {left: 5px;   top: 154px}
+.cashTable.small #seat-6 {left: 34px;  top: 55px}
+
+
+.cashTable.small #seat-1 span.tablePosition,
+.cashTable.small #seat-2 span.tablePosition,
+.cashTable.small #seat-3 span.tablePosition {bottom: -5px; left: 0px}
+
+.cashTable.small #seat-4 span.tablePosition,
+.cashTable.small #seat-5 span.tablePosition,
+.cashTable.small #seat-6 span.tablePosition {bottom: -5px; right: 0px}
+
+
+
+
+
+
+
+
+.cashTable.large #seat-dealer {left: 293px;  top: 17px}
+.cashTable.large #seat-dealer span.tablePosition {bottom: -7px; left: 51px; font-size: 9px; text-transform: uppercase}
+
+.cashTable.small #seat-dealer {left: 235px;  top: 3px}
+.cashTable.small #seat-dealer span.tablePosition {bottom: -7px; left: 51px; font-size: 9px; text-transform: uppercase}
+
+
+
+
+
+#dealerButton { position: absolute; display: none }
+.cashTable.large #dealerButton.position-1 { top: 100px; left: 450px; display: block }
+.cashTable.large #dealerButton.position-2 { top: 155px; left: 510px; display: block }
+.cashTable.large #dealerButton.position-3 { top: 198px; left: 535px; display: block }
+.cashTable.large #dealerButton.position-4 { top: 243px; left: 498px; display: block }
+.cashTable.large #dealerButton.position-5 { top: 288px; left: 388px; display: block }
+.cashTable.large #dealerButton.position-6 { top: 288px; left: 323px; display: block }
+.cashTable.large #dealerButton.position-7 { top: 243px; left: 214px; display: block }
+.cashTable.large #dealerButton.position-8 { top: 198px; left: 171px; display: block }
+.cashTable.large #dealerButton.position-9 { top: 155px; left: 199px; display: block }
+.cashTable.large #dealerButton.position-10 { top: 100px; left: 250px; display: block }
+
+.cashTable.small #dealerButton.position-1 { top: 95px; left: 395px; display: block }
+.cashTable.small #dealerButton.position-2 { top: 156px; left: 418px; display: block }
+.cashTable.small #dealerButton.position-3 { top: 213px; left: 338px; display: block }
+.cashTable.small #dealerButton.position-4 { top: 213px; left: 258px; display: block }
+.cashTable.small #dealerButton.position-5 { top: 156px; left: 166px; display: block }
+.cashTable.small #dealerButton.position-6 { top: 95px; left: 190px; display: block }
+
+#cashTablePeoplePicture {
+	
+	width: 			135px;
+	height: 		180px;
+	border: 		1px solid #909090;
+	margin-top: 	10px;
+	background: 	url('/images/backend/cashTable/unavailable.png') no-repeat;
+}
+
+
+table .formRow label {
+	
+	font-weight: bold;
+	width: 35%;
+}
+
+table .formRow .formRight label {
+	
+	position: relative;
+	top: 0px;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+table .formRow .formRight input {
+	
+	width: auto;
+	text-align: left;
+	margin: 0px
+}
+
+#dialog-message a {
+	
+	color: 	#325F9B;
+	font-size: 11px
+}
+
+#dialog-message a img {
+	
+	position: relative; top: 3px
+}
+
+#peopleSelectDialog .form .formRow .button {
+	
+	margin-top: 	4px;
+	margin-bottom: 	3px;
+}
+
+#peopleSelectDialog .form .formRow .button span {
+	
+	color: #FFFFFF
+}
+
+#cashTablePeoplePeopleNameLabel {
+	
+	text-align: 	left;
+	padding: 		8px;
+}
+
+#cashTablePeoplePeopleName {
+	
+	font-size: 16px;
+	font-weight: bold;
+	width: 95%;
+}
+
+#peopleSelectDialog .form .formRow label {
+	
+	white-space: nowrap
+}
+
+.formNote { position: relative; left: 0px }
+.formRow .formRight .formNote { left: -10px }
+
+.ui-menu .ui-menu-item a { font-size: 16px; color: #404040 }

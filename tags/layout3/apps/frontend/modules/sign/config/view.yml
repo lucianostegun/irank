@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [form, table]
+  javascripts:    [sign]
