@@ -12,6 +12,9 @@
 	
 	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', $categoryName=>"store?category=$tagName", $shortName=>null)));
 	include_partial('store/include/cart');
+	
+	echo form_tag('store/addItem', array('id'=>'storeProductForm'));
+	echo input_hidden_tag('productCode', $productCode);
 ?>
 	<div class="productDetail">
 		<a href="/images/<?php echo $productObj->getImageCover('full') ?>" rel="lightbox" id="productImageZoom"><?php echo image_tag($productObj->getImageCover(true), array('id'=>'productImagePreview', 'class'=>'productImage')) ?></a>
@@ -28,16 +31,66 @@
 				}
 			?>
 		</div>
-		
-		<span class="tshirt name"><?php echo "$categoryShortName: $productName" ?></span>
-		<span class="tshirt size"><b>Tamanhos:</b> M/G/GG</span>
-		<span class="tshirt color"><b>Cores:</b> Preta/Branca</span>
-		<span class="tshirt description"><?php echo $productObj->getDescription() ?></span>
-		<span class="tshirt prizeLabel">Vl. unit.</span>
-		<span class="tshirt prize">R$ <?php echo Util::formatFloat($defaultPrice, true) ?></span>
-		<?php echo link_to(image_tag('store/buy', array('class'=>'buyButton')), "store/addItem?$productCode="); ?>
-	</div>
+		<div class="productInfo">
+			<h1 class="tshirt name"><?php echo "$categoryShortName: $productName" ?></h1>
+			<span class="tshirt size"><b>Tamanhos:</b> M/G/GG</span>
+			<span class="tshirt color"><b>Cores:</b> Preta/Branca</span>
+			<span class="tshirt description"><?php echo $productObj->getDescription() ?></span>
+			
+			<span class="tshirt prizeLabel">Vl. unit.</span>
+			<span class="tshirt prize">R$ <?php echo Util::formatFloat($defaultPrice, true) ?></span>
+			
+			<div class="productOptions">
+				<div class="productOption">
+					<label>Quantidade:</label> <?php echo input_tag('quantity', 1, array('size'=>2, 'maxlength'=>2)) ?> 
+				</div>
+				<div class="productOption color" id="productOptionColors">
+					<label>Cor:</label>
+					<?php
+						$productOptionIdColor = null;
+						foreach(ProductOption::getList('color', $productObj->getId()) as $productOptionObj){
+							
+							$productOptionId = $productOptionObj->getId();
+							$isDefault       = $productOptionObj->getIsDefault();
+							
+							if( !$productOptionIdColor || $isDefault )
+								$productOptionIdColor = $productOptionObj->getId();
+							
+							echo '<div class="productOptionOption color '.($isDefault?'selected':'').'" onclick="selectProductOption(\'color\', '.$productOptionId.')" id="productOptionColor-'.$productOptionId.'">';
+							echo '	<div class="color" style="background: '.$productOptionObj->getDescription().'"></div>';
+							echo '</div>';
+						}
+						
+						echo input_hidden_tag('productOptionIdColor', $productOptionIdColor); 
+					?>
+				</div>
 
+				<div class="productOption" id="productOptionSizes">
+					<label>Tamanho:</label>
+					<?php
+						$productOptionIdSize = null;
+						foreach(ProductOption::getList('size', $productObj->getId()) as $productOptionObj){
+							
+							$productOptionId = $productOptionObj->getId();
+							$isDefault       = $productOptionObj->getIsDefault();
+							
+							if( $isDefault )
+								$productOptionIdSize = $productOptionObj->getId();
+							
+							echo '<div class="productOptionOption size '.($isDefault?'selected':'').'" onclick="selectProductOption(\'size\', '.$productOptionId.')" id="productOptionSize-'.$productOptionId.'">';
+							echo $productOptionObj->getOptionName();
+							echo '</div>';
+						}
+						
+						echo input_hidden_tag('productOptionIdSize', $productOptionIdSize); 
+					?>
+				</div>
+			</div>
+			
+			<?php echo link_to(image_tag('store/buy', array('class'=>'buyButton')), "#addProductToCart()"); ?>
+		</div>
+	</div>
+</form>
 <div class="clear"></div>
 
 <?php

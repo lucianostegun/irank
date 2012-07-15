@@ -335,7 +335,7 @@ class RankingLive extends BaseRankingLive
 		if( $returnArray )
 			return $optionList;
 
-		return options_for_select( $optionList, $defaultValue );
+		return options_for_select($optionList, $defaultValue);
 	}
 	
 	public function cleanRecord(){

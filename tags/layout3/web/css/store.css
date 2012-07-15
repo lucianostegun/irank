@@ -6,7 +6,7 @@
 	margin-right: 20px;
 	margin-top: 20px;
 	width: 202px;
-	height: 250px;
+	height: 255px;
 	background: #F0F0F0;
 	border: 1px solid #D5D5D5;
 	-moz-border-radius: 	9px;
@@ -59,7 +59,7 @@
 .product .tshirt.name a {
 
 	left: 	8px;
-	bottom: 30px;
+	top: 	198px;
 	font-weight: bold;
 	font-size: 12px;
 	color: #425d95 
@@ -94,9 +94,9 @@
 .productDetail {
 	
 	position: relative;
-	margin: 15px;
-	height: 300px;
-	margin-top: 35px;
+	margin: 0px 15px;
+	height: 360px;
+	margin-top: 15px;
 }
 
 .productDetail .extraImageList {
@@ -146,68 +146,160 @@
 	z-index: 1
 }
 
-.productDetail .tshirt {
+.productDetail .productInfo {
 
 	position: absolute;
 	left: 285px;
+	top: 0px;
+	padding: 0px
+}
+
+.productDetail .tshirt {
+
+	position: relative;
 }
 
 .productDetail .tshirt.name {
 
 	color: #425d95;
-	font-size: 22px;
+	font-size: 20px;
+	line-height: 23px;
 	font-weight: bold;
-	top: -5px;
-	left: 285px;
+	top: 0px;
+	margin-bottom: 9px;
+	height: 40px;
 }
 
 .productDetail .tshirt.size {
 
-	top: 25px;
 	font-size: 12px;
+	margin-left: 20px
 }
 
 .productDetail .tshirt.color {
 
-	top: 25px;
-	left: 285px;
 	font-size: 12px;
-	margin-left: 140px
+	margin-left: 80px
 }
 
 .productDetail .tshirt.description {
 
-	top: 55px;
-	left: 300px;
-	width: 400px;
+	display: block;
+	height: 80px;
 	font-size: 12px;
 	font-weight: normal;
 	color: #101010;
+	top: 15px;
+	left: 20px;
+	margin-right: 20px
 }
 
 .productDetail .tshirt.prizeLabel {
 
-	bottom: 100px;
 	font-size: 13px;
-	left: 300px;
+	left: 20px;
 	font-weight: normal;
 	color: #000000;
 }
 
 .productDetail .tshirt.prize {
 
-	bottom: 75px;
+	display: block;
 	font-size: 25px;
-	left: 300px;
+	top: 5px;
+	left: 20px;
 	font-weight: bold;
 	color: #C91E1E;
 }
 
+.productDetail .productOptions {
+
+	top: 25px;
+	left: 20px;
+	position: relative;
+	height: 70px;
+}
+
+.productDetail .productOptions .productOption {
+
+	margin-top: 3px;
+	width: 250px;
+	height: 20px;
+	background: #E0E0E0;
+	padding: 2px 4px;
+	border: 1px solid #C0C0C0;
+	border-radius: 5px;
+}
+
+.productDetail .productOptions .productOption input {
+
+	height: 	10px;
+	padding: 	2px;
+}
+
+.productDetail .productOptions .productOption select {
+
+	margin-top: 1px
+}
+
+.productDetail .productOptions .productOption label {
+
+	clear: both;
+	display: block;
+	float: left;
+	width: 90px;
+	height: 20px;
+	padding-right: 5px;
+	text-align: right;
+	font-weight: bold;
+}
+
+.productDetail .productOptions .productOption .productOptionOption {
+
+	float: left;
+	margin-left: 3px;
+	width: 18px;
+	height: 18px;
+	border: 1px solid #C0C0C0;
+}
+
+.productDetail .productOptions .productOption .productOptionOption.size {
+
+	background: #F0F0F0;
+	text-align: center;
+	font-weight: bold;
+	color: #303030;
+	width: auto;
+	min-width: 15px;
+	padding: 0px 3px
+}
+
+.productDetail .productOptions .productOption .productOptionOption:hover {
+
+	border: 1px solid #505050;
+	cursor: pointer;
+}
+
+.productDetail .productOptions .productOption .productOptionOption.selected,
+.productDetail .productOptions .productOption .productOptionOption.selected:hover {
+
+	border: 1px solid #000000;
+}
+
+.productDetail .productOptions .productOption .productOptionOption .color {
+
+	width: 16px;
+	height: 16px;
+	margin-left: 1px;
+	margin-top: 1px;
+}
+
 .productDetail .buyButton {
 
-	position: absolute;
-	bottom: 15px;
-	left: 300px
+	position: relative;
+	display: block;
+	margin-top: 50px;
+	left: 20px
 }
 
 

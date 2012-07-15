@@ -22,4 +22,9 @@ class Product extends BaseProduct
 		
 		return $fileName;
 	}
+	
+	public static function getIdByCode($productCode){
+		
+		return Util::executeOne("SELECT id FROM product WHERE product_code = '$productCode'");
+	}
 }

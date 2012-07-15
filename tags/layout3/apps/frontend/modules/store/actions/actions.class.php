@@ -38,26 +38,75 @@ class storeActions extends sfActions
 
   public function executeAddItem($request){
   	
-  	$productCode = $request->getParameter('productCode');
-  	$quantity    = $request->getParameter('quantity', 1);
-  	$color       = $request->getParameter('color', 'white');
-  	$size        = $request->getParameter('size', 'M');
+  	$productCode          = $request->getParameter('productCode');
+  	$quantity             = $request->getParameter('quantity', 1);
+  	$productOptionIdColor = $request->getParameter('productOptionIdColor');
+  	$productOptionIdSize  = $request->getParameter('productOptionIdSize');
   	
-	$this->addItemToCart($productCode, $quantity, $color, $size);
+	$this->addItemToCart($productCode, $quantity, $productOptionIdColor, $productOptionIdSize);
   	
   	return $this->redirect('store/cart');
   }
 
   public function executeRemoveItem($request){
   	
-  	$productItemId = $request->getParameter('productItemId');
-  	list($productCode, $size, $color) = explode(':', $productItemId);
-  	$this->removeItemFromCart($productCode, $color, $size);
-  	
-  	$cartSessionObj = base64_decode($this->cartSession);
-  	$cartSessionObj = unserialize($cartSessionObj);
+  	$productItemId  = $request->getParameter('productItemId');
+  	$cartSessionObj = $this->removeItemFromCart($productItemId);
   	
   	echo Util::parseInfo($cartSessionObj);
+  	exit;
+  }
+
+  public function executeUpdateItemQuantity($request){
+  	
+  	$cartSessionObj = $this->getCartSession();
+  	$productItemId  = $request->getParameter('productItemId');
+  	$quantity       = (int)$request->getParameter('quantity');
+  	
+  	if( $quantity > 0 && $quantity <= 99 ){
+  		
+	  	$cartSessionObj->productItemList[$productItemId]->quantity = $quantity;
+	  	$this->getUpdateSession($cartSessionObj);
+  	}
+  	
+  	echo Util::parseInfo($cartSessionObj);
+  	exit;
+  }
+
+  public function executeUpdateCartQuantity($request){
+  	
+  	$cartSessionObj = $this->getCartSession();
+  	
+  	foreach($cartSessionObj->productItemList as $productItemId=>$productItem){
+  		
+	  	$quantity = (int)$request->getParameter('quantity-'.$productItemId);
+	  	
+	  	if( $quantity <= 0 || $quantity > 99 )
+	  		continue;
+	  	
+  		$productItem->quantity = $quantity;
+  	}
+  	
+  	$this->getUpdateSession($cartSessionObj);
+  	echo Util::parseInfo($cartSessionObj);
+  	exit;
+  }
+
+  public function executeCalculateShipping($request){
+  	
+  	$cartSessionObj = $this->getCartSession();
+  	$totalWeight    = 0;
+  	
+  	foreach($cartSessionObj->productItemList as $productItemId=>$productItem){
+  		
+  		$totalWeight += ProductItem::getWeightById($productItemId);
+  	}
+  	
+  	echo $totalWeight;
+//  	echo '<Pre>';
+//  	print_r($cartSessionObj);
+//  	$this->getUpdateSession($cartSessionObj);
+//  	echo Util::parseInfo($cartSessionObj);
   	exit;
   }
 
@@ -75,20 +124,51 @@ class storeActions extends sfActions
   	$sessionId = $ipAddress.'-'.microtime();
   	
   	$cartSessionObj = new stdClass();
-  	$cartSessionObj->id            = $sessionId;
-  	$cartSessionObj->products      = 0;
-  	$cartSessionObj->itens         = 0;
-  	$cartSessionObj->totalValue    = 0;
-  	$cartSessionObj->zipcode       = null;
-  	$cartSessionObj->shippingValue = 0;
-  	$cartSessionObj->productList   = array();
-  	$cartSessionObj->createdAt     = time();
+  	$cartSessionObj->id              = $sessionId;
+  	$cartSessionObj->products        = 0;
+  	$cartSessionObj->itens           = 0;
+  	$cartSessionObj->totalValue      = 0;
+  	$cartSessionObj->zipcode         = null;
+  	$cartSessionObj->shippingValue   = 0;
+  	$cartSessionObj->productItemList = array();
+  	$cartSessionObj->createdAt       = time();
   	
   	return $this->getUpdateSession($cartSessionObj);
   }
 
+  private function getCartSession(){
+  	
+	$cartSessionObj = $this->getUser()->getAttribute('iRankStoreCartSession');
+	$cartSessionObj = base64_decode($cartSessionObj);
+	$cartSessionObj = unserialize($cartSessionObj);
+	
+	return $cartSessionObj;
+  }
+  
   private function getUpdateSession($cartSessionObj){
   	
+  	$products        = 0;
+  	$productItens    = 0;
+  	$totalOrderValue = 0;
+  	
+  	foreach($cartSessionObj->productItemList as $productItem){
+		  	
+  		$price    = $productItem->price;
+  		$quantity = $productItem->quantity;
+  		
+  		$products     += 1;
+  		$productItens += $quantity;
+		
+		$totalValue       = $price*$quantity;
+		$totalOrderValue += $totalValue;
+		
+		$productItem->totalValue = $totalValue;
+  	}
+  	
+  	$cartSessionObj->products   = $products; // Produtos únicos
+ 	$cartSessionObj->itens      = $productItens;
+ 	$cartSessionObj->totalValue = $totalOrderValue;
+	 	
   	$cartSessionObj = serialize($cartSessionObj);
   	$cartSessionObj = base64_encode($cartSessionObj);
   	
@@ -98,65 +178,73 @@ class storeActions extends sfActions
   	return $this->cartSession;
   }
   
-  private function addItemToCart($productCode, $quantity, $color, $size){
+  private function addItemToCart($productCode, $quantity, $productOptionIdColor, $productOptionIdSize){
 
 	$cartSessionObj = base64_decode($this->cartSession);
   	$cartSessionObj = unserialize($cartSessionObj);
+  	$productId      = Product::getIdByCode($productCode);
   	
-  	$productObj   = ProductPeer::retrieveByCode($productCode);
+  	$productItemObj = ProductItemPeer::retrieveByOptions($productId, $productOptionIdColor, $productOptionIdSize);
   	
-  	if( !is_object($productObj) || !$quantity )
+  	$quantity = (int)$quantity;
+  	
+  	if( !is_object($productItemObj) || $quantity <= 0 || $quantity > 99 )
   		return;
   	
-	$defaultPrice = $productObj->getDefaultPrice();
+  	$productItemId = $productItemObj->getId();
+	$price         = $productItemObj->getPrice();
   	
-  	if( !isset($cartSessionObj->productList[$productCode]) )
-	 	$product = new stdClass();
-  	else
-  		$product = $cartSessionObj->productList[$productCode];
+  	if( !isset($cartSessionObj->productItemList[$productItemId]) ){
+  		
+	 	$productItem = new stdClass();
+	 	$productItem->code       = $productCode;
+	 	$productItem->price      = $price;
+	 	$productItem->quantity   = 0;
+	 	$productItem->totalValue = $totalValue = ($price*$quantity);
+	 	$productItem->color      = ProductOptionPeer::retrieveByPK($productOptionIdColor)->getOptionName();
+	 	$productItem->size       = ProductOptionPeer::retrieveByPK($productOptionIdSize)->getOptionName();
+  	}else{
+  		
+  		$productItem = $cartSessionObj->productItemList[$productItemId];
+  	}
 
-	if( !isset($product->size[$size]['color'][$color]) ){
-		
-		$idTemp = "$productCode:$size:$color";
-		$product->size[$size]['color'][$color] = array('id'=>$idTemp, 'quantity'=>0, 'price'=>$defaultPrice);
-		
-	 	$cartSessionObj->products   += 1; // Produtos únicos
-	 	$cartSessionObj->itens      += $quantity;
-	 	$cartSessionObj->totalValue += ($defaultPrice*$quantity);
-	}
-	
-	$product->size[$size]['color'][$color]['quantity'] = $quantity;
+ 	$productItem->quantity += $quantity;
   	
-  	$cartSessionObj->productList[$productCode] = $product;
+  	$cartSessionObj->productItemList[$productItemId] = $productItem;
   	$this->getUpdateSession($cartSessionObj);
-  	
-//  	echo '<pre>';
-//  	print_r($cartSessionObj);
-//  	exit;
   }
 
-  private function removeItemFromCart($productCode, $color, $size){
+  private function removeItemFromCart($productItemId){
 
 	$cartSessionObj = base64_decode($this->cartSession);
   	$cartSessionObj = unserialize($cartSessionObj);
   	
-  	$productList = $cartSessionObj->productList;
+  	$productItemList = $cartSessionObj->productItemList;
   	
-  	if( isset($productList[$productCode]->size[$size]['color'][$color]) ){
+  	if( isset($productItemList[$productItemId]) ){
 		
-		$productItem = $productList[$productCode]->size[$size]['color'][$color];
+		$productItem = $productItemList[$productItemId];
 		
-		$price       = $productItem['price'];
-		$quantity    = $productItem['quantity'];
+		$price       = $productItem->price;
+		$quantity    = $productItem->quantity;
 		
 		$cartSessionObj->products   -= 1; // Produtos únicos
 		$cartSessionObj->itens      -= $quantity;
 	 	$cartSessionObj->totalValue -= ($price*$quantity);
 	 	
-	 	unset($productList[$productCode]->size[$size]['color'][$color]);
+	 	if( $cartSessionObj->products < 0 || $cartSessionObj->itens < 0 || $cartSessionObj->totalValue < 0 ){
+	 		
+			$cartSessionObj->products   = 0; // Produtos únicos
+			$cartSessionObj->itens      = 0;
+		 	$cartSessionObj->totalValue = 0;
+	 	}
+	 	
+	 	unset($productItemList[$productItemId]);
 	}
   	
-  	$cartSessionObj->productList = $productList;
+  	$cartSessionObj->productItemList = $productItemList;
   	$this->getUpdateSession($cartSessionObj);
+  	
+  	return $cartSessionObj;
   }
 }

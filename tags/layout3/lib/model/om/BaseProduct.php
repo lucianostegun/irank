@@ -91,6 +91,12 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	protected $aProductCategory;
 
 	
+	protected $collProductItemList;
+
+	
+	protected $lastProductItemCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -664,6 +670,14 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collProductItemList !== null) {
+				foreach($this->collProductItemList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -712,6 +726,14 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collProductItemList !== null) {
+					foreach($this->collProductItemList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -1019,6 +1041,15 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 		$copyObj->setUpdatedAt($this->updated_at);
 
 
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach($this->getProductItemList() as $relObj) {
+				$copyObj->addProductItem($relObj->copy($deepCopy));
+			}
+
+		} 
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); 
@@ -1069,6 +1100,146 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aProductCategory;
+	}
+
+	
+	public function initProductItemList()
+	{
+		if ($this->collProductItemList === null) {
+			$this->collProductItemList = array();
+		}
+	}
+
+	
+	public function getProductItemList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseProductItemPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProductItemList === null) {
+			if ($this->isNew()) {
+			   $this->collProductItemList = array();
+			} else {
+
+				$criteria->add(ProductItemPeer::PRODUCT_ID, $this->getId());
+
+				ProductItemPeer::addSelectColumns($criteria);
+				$this->collProductItemList = ProductItemPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ProductItemPeer::PRODUCT_ID, $this->getId());
+
+				ProductItemPeer::addSelectColumns($criteria);
+				if (!isset($this->lastProductItemCriteria) || !$this->lastProductItemCriteria->equals($criteria)) {
+					$this->collProductItemList = ProductItemPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastProductItemCriteria = $criteria;
+		return $this->collProductItemList;
+	}
+
+	
+	public function countProductItemList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseProductItemPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ProductItemPeer::PRODUCT_ID, $this->getId());
+
+		return ProductItemPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addProductItem(ProductItem $l)
+	{
+		$this->collProductItemList[] = $l;
+		$l->setProduct($this);
+	}
+
+
+	
+	public function getProductItemListJoinProductOptionRelatedByProductOptionIdColor($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseProductItemPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProductItemList === null) {
+			if ($this->isNew()) {
+				$this->collProductItemList = array();
+			} else {
+
+				$criteria->add(ProductItemPeer::PRODUCT_ID, $this->getId());
+
+				$this->collProductItemList = ProductItemPeer::doSelectJoinProductOptionRelatedByProductOptionIdColor($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ProductItemPeer::PRODUCT_ID, $this->getId());
+
+			if (!isset($this->lastProductItemCriteria) || !$this->lastProductItemCriteria->equals($criteria)) {
+				$this->collProductItemList = ProductItemPeer::doSelectJoinProductOptionRelatedByProductOptionIdColor($criteria, $con);
+			}
+		}
+		$this->lastProductItemCriteria = $criteria;
+
+		return $this->collProductItemList;
+	}
+
+
+	
+	public function getProductItemListJoinProductOptionRelatedByProductOptionIdSize($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseProductItemPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProductItemList === null) {
+			if ($this->isNew()) {
+				$this->collProductItemList = array();
+			} else {
+
+				$criteria->add(ProductItemPeer::PRODUCT_ID, $this->getId());
+
+				$this->collProductItemList = ProductItemPeer::doSelectJoinProductOptionRelatedByProductOptionIdSize($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ProductItemPeer::PRODUCT_ID, $this->getId());
+
+			if (!isset($this->lastProductItemCriteria) || !$this->lastProductItemCriteria->equals($criteria)) {
+				$this->collProductItemList = ProductItemPeer::doSelectJoinProductOptionRelatedByProductOptionIdSize($criteria, $con);
+			}
+		}
+		$this->lastProductItemCriteria = $criteria;
+
+		return $this->collProductItemList;
 	}
 
 } 

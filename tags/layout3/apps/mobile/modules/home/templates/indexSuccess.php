@@ -36,7 +36,7 @@
 <?php
 	if( $isAuthenticated ){
 	
-		$resumeList       = People::getResumeBalance();
+		$resumeList       = People::getFullResume();
 		$eventObjListNext = Event::getNextList(null, 3);
 		$eventObjListPrev = Event::getPreviousList(null, 5);
 		
