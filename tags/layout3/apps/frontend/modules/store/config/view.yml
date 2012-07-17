@@ -3,7 +3,12 @@ all:
   stylesheets:    [table, store]
   javascripts:    [store]
   
+cartSuccess:
+  
+  stylesheets:    []
+  javascripts:    [mask]
+  
 paymentSuccess:
   
-  stylesheets:    [form]
+  stylesheets:    [-store, form, store]
   javascripts:    [form]

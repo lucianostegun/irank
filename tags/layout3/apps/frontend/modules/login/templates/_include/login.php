@@ -8,7 +8,7 @@
 		'success'=>'handleSuccessQuickLogin(request.responseText)',
 		'failure'=>'handleFailureQuickLogin(request.responseText)',
 		'encoding'=>'UTF8',
-		), array('id'=>'loginForm'));
+		), array('id'=>'quickLoginForm'));
 ?>
 <div id="login">
 	<h1>Login</h1>

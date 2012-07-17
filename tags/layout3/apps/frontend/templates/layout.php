@@ -13,7 +13,8 @@ include_title();
 $culture = 'pt_BR';
 
 $isAuthenticated = UserSite::isAuthenticated();
-$innerObj = (isset($innerObj)?$innerObj:null);
+$innerObj      = (isset($innerObj)?$innerObj:null);
+$suppressLogin = (isset($suppressLogin)?$suppressLogin:false);
 
 $moduleName = $sf_context->getModuleName();
 ?>
@@ -59,7 +60,7 @@ var _ModuleName = '<?php echo $moduleName ?>';
 						</div>
     					<div id="innerContent">
     						<div class="leftContent">
-    							<?php if( $moduleName!='login' ): ?>
+    							<?php if( $moduleName!='login' && !$suppressLogin): ?>
     							<div class="leftContentTop">
     								<div id="loginResumeDiv">
 	    							<?php

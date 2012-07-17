@@ -54,7 +54,7 @@
 		  <tr class="productItemRow" id="cartProductItem-<?php echo $productItemId ?>">
 		    <td width="40" class="productImage"><?php echo image_tag($productItemObj->getImageCover('thumb')) ?></td>
 		    <td class="textL productName">
-		    	<span><?php echo "$categoryShortName: $productName" ?></span>
+		    	<span><?php echo link_to("$categoryShortName: $productName", 'store/details?'.$productCode.'=') ?></span>
 		    	<div class="clear mt5"></div>
 		    	<span class="productDetail"><b>Tamanho:</b> <?php echo $size ?></span>
 		    	<span class="productDetail"><b>Cor:</b> <?php echo $color ?></span>
@@ -80,9 +80,9 @@
 		  <tr class="footer shipping">
 		    <th class="textR"></th>
 		    <th class="textR pr10">Informe seu cep para calcular o valor do frete</th>
-		    <th class="textC"><?php echo input_tag('zipcode', $zipcode, array('size'=>9, 'maxlength'=>9, 'class'=>'textC', 'id'=>'storeCartZipcode')) ?></th>
+		    <th class="textC"><?php echo input_tag('zipcode', $zipcode, array('size'=>9, 'maxlength'=>9, 'class'=>'textC', 'onkeyup'=>'maskZipcode(event)', 'id'=>'storeCartZipcode')) ?></th>
 		    <th class="textC"><?php echo link_to('Calcular frete', '#doCalculateShipping()') ?></th>
-		    <th class="textR" id="shippingValue">R$ <?php echo Util::formatFloat($shippingValue, true) ?></th>
+		    <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($shippingValue, true) ?></th>
 		    <th></th>
 		  </tr>
 		  <?php endif; ?>

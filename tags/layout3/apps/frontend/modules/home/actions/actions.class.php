@@ -41,6 +41,23 @@ class homeActions extends sfActions
 	return $this->renderText(get_partial('home/resume/events').get_partial('home/resume/quickResume'));
   }
 
+  public function executeGetMenu($request){
+
+    sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+
+	$userSiteObj = UserSite::getCurrentUser();
+	
+	$options                    = array();
+    $options['username']        = $userSiteObj->getUsername();
+    $options['firstName']       = $userSiteObj->getPeople()->getFirstName();
+    $options['isAuthenticated'] = true;
+    $options['innerMenu']       = false;
+    $options['innerObj']        = false;
+	        
+	return $this->renderText(get_partial('home/include/leftMenu').get_partial('home/include/quickResume', $options));
+  }
+
   public function executeGetResumeChart($request){
 
     $this->peopleId = $this->getUser()->getAttribute('peopleId');

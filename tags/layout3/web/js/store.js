@@ -60,7 +60,8 @@ function updateCartItem(cartSessionObj, productItemId){
 	$('storeCartProductItemQuantity-'+productItemId).value       = cartSessionObj.productItemList[productItemId].quantity;
 	$('storeCartProductItemTotalValue-'+productItemId).innerHTML = 'R$ '+toCurrency(cartSessionObj.productItemList[productItemId].totalValue);
 	
-	$('storeCartTotalValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.totalValue);
+	$('storeCartShippingValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.shippingValue);
+	$('storeCartTotalValue').innerHTML    = 'R$ '+toCurrency(cartSessionObj.totalValue);
 }
 
 function removeProductFromCart(productItemId){
@@ -72,8 +73,8 @@ function removeProductFromCart(productItemId){
 		var content        = t.responseText;
 		var cartSessionObj = parseInfo(content);
 		
-		$('shippingValue').innerHTML       = 'R$ '+toCurrency(cartSessionObj.shippingValue);
-		$('storeCartTotalValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.totalValue);
+		$('storeCartShippingValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.shippingValue);
+		$('storeCartTotalValue').innerHTML    = 'R$ '+toCurrency(cartSessionObj.totalValue);
 		
 		row = $('cartProductItem-'+productItemId);
 		row.parentNode.removeChild(row);
@@ -122,6 +123,12 @@ function doCalculateShipping(){
 		var content        = t.responseText;
 		var cartSessionObj = parseInfo(content);
 		
+		var totalValue    = cartSessionObj.totalValue*1;
+		var shippingValue = cartSessionObj.shippingValue*1;
+		
+		$('storeCartShippingValue').innerHTML = 'R$ '+toCurrency(shippingValue);
+		$('storeCartTotalValue').innerHTML    = 'R$ '+toCurrency(totalValue);
+		
 		hideIndicator();
 	};
 		
@@ -136,6 +143,121 @@ function doCalculateShipping(){
 	var zipcode = $('storeCartZipcode').value;
 	
 	var urlAjax = _webRoot+'/store/calculateShipping/zipcode/'+zipcode;
-	debug(urlAjax)
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
+}
+
+function handleSuccessQuickLogin(content){
+	
+	$('loginResumeDiv').innerHTML = content;
+	handleSuccessLoginStore(content, false)
+}
+
+function handleSuccessLoginStore(content, loadMenu){
+	
+	hideIndicator();
+	loadUserCredit();
+	
+	if( loadMenu )
+		loadUserMenu();
+	
+	$('signLoginTable').remove();
+	showDiv('storeAddressResume');
+}
+
+function handleFailureLoginStore(content){
+	
+	showDiv('storeLoginErrorMessage');
+	hideIndicator();
+}
+
+function handleSuccessSignStore(content){
+	
+	loadUserMenu();
+	loadUserCredit();
+	
+	$('storeSignDiv').remove();
+	showDiv('storeAddressResume');
+	hideIndicator();
+}
+
+function handleFailureSignStore(content){
+	
+	enableButton('mainSubmit');
+	setButtonBarStatus('signMain', 'error');
+	
+	handleFormFieldError(content, 'signForm', 'sign', false, 'sign', false, true)
+}
+
+function loadSignForm(){
+	
+	showIndicator();
+	
+	var successFunc = function(t){
+
+		var content = t.responseText;
+		$('storeSignDiv').innerHTML = content;
+		
+		showDiv('storeSignDiv');
+		$('signLoginTable').remove();
+		
+		hideIndicator();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+		hideIndicator();
+		
+		alert('ATENÇÃO!\n\nOcorreu um erro ao carregar o formulário de cadastro!\nPor favor, tente novamente.');
+	};
+	
+	var urlAjax = _webRoot+'/store/getSignForm';
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function finishOrder(){
+	
+	$('storePaymentForm').onsubmit();
+}
+
+function confirmOrder(){
+	
+	showIndicator();
+	
+	var successFunc = function(t){
+
+		var orderNumber = t.responseText;
+		hideIndicator();
+		
+		if( orderNumber.test(/^[0-9]*$/) )
+			window.location = _webRoot+'/store/order/'+orderNumber;
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+		hideIndicator();
+		
+		alert('ATENÇÃO!\n\nOcorreu um erro ao finalizar sua compra!\nPor favor, tente novamente.');
+	};
+	
+	var urlAjax = _webRoot+'/store/saveOrder';
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function handleSuccessStorePayment(content){
+	
+	if( content=='success' )
+		window.location = _webRoot+'/store/confirmOrder';
+	else
+		handleFailureStorePayment(content);
+}
+
+function handleFailureStorePayment(content){
+	
+	showDiv('storeFormErrorDiv');
+	handleFormFieldError(content, 'storePaymentForm', 'store', false, 'store', false, true);
+	
+	$('topSystemMessage').innerHTML = '<div class="message error">Por favor, corrija os campos em destaque para concluir sua compra.</div>';
+	scroll(0, 0);
 }

@@ -331,7 +331,16 @@
 
 .defaultForm input.required, .windowForm input.required {
 
-	background: 	#FFFFFF url('/images/form/formRequired.png') right top no-repeat;
+	padding-left: 	5px;
+	background: 	#FFFFFF url('/images/form/formRequired.png') left top repeat-y;
+}
+
+.defaultForm input.required:focus, .windowForm input.required:focus {
+
+	padding-left: 			5px;
+	background-image: 		url('/images/form/formRequired.png');
+	background-position: 	left top;
+	background-repeat: 		repeat-y;
 }
 
 .defaultForm input:focus, .windowForm input:focus {
@@ -492,12 +501,14 @@ input:-ms-placeholder { color:#808080; }
 
 .defaultForm .rowTextArea .field textarea.required {
 
-	background: 	#333333 url('/images/form/formRequired.png') right top no-repeat;
+	padding-left: 	5px;
+	background: 	#333333 url('/images/form/formRequired.png') left top repeat-y;
 }
 
 .defaultForm .rowTextArea .field textarea.required:focus {
 
-	background: 	#666666 url('/images/form/formRequired.png') right top no-repeat;
+	padding-left: 	5px;
+	background: 	#666666 url('/images/form/formRequired.png') left top repeat-y;
 }
 
 .defaultForm .row .error {

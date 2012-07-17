@@ -53,7 +53,7 @@
 					<div class="buttonBarForm" id="signMainButtonBar">
 						<?php echo button_tag('mainSubmit', __('sign.form.send'), array('onclick'=>'doSubmitSign()')) ?>
 						<?php echo getFormLoading('sign') ?>
-						<?php echo getFormStatus(null, false, 'Erro ao salvar o cadastro!', 'Cadastro salvo com sucesso!'); ?>
+						<?php echo getFormStatus(null, false, 'Erro ao salvar as informações!', 'Cadastro salvo com sucesso!'); ?>
 					</div>
 				</div>
 			</td>

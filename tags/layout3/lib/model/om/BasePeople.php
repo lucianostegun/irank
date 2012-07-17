@@ -45,6 +45,34 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 
 	
+	protected $address_name;
+
+
+	
+	protected $address_number;
+
+
+	
+	protected $address_quarter;
+
+
+	
+	protected $address_complement;
+
+
+	
+	protected $address_city;
+
+
+	
+	protected $address_state;
+
+
+	
+	protected $address_zipcode;
+
+
+	
 	protected $enabled;
 
 
@@ -299,6 +327,55 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getAddressName()
+	{
+
+		return $this->address_name;
+	}
+
+	
+	public function getAddressNumber()
+	{
+
+		return $this->address_number;
+	}
+
+	
+	public function getAddressQuarter()
+	{
+
+		return $this->address_quarter;
+	}
+
+	
+	public function getAddressComplement()
+	{
+
+		return $this->address_complement;
+	}
+
+	
+	public function getAddressCity()
+	{
+
+		return $this->address_city;
+	}
+
+	
+	public function getAddressState()
+	{
+
+		return $this->address_state;
+	}
+
+	
+	public function getAddressZipcode()
+	{
+
+		return $this->address_zipcode;
+	}
+
+	
 	public function getEnabled()
 	{
 
@@ -504,6 +581,104 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setAddressName($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_name !== $v) {
+			$this->address_name = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_NAME;
+		}
+
+	} 
+	
+	public function setAddressNumber($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_number !== $v) {
+			$this->address_number = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_NUMBER;
+		}
+
+	} 
+	
+	public function setAddressQuarter($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_quarter !== $v) {
+			$this->address_quarter = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_QUARTER;
+		}
+
+	} 
+	
+	public function setAddressComplement($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_complement !== $v) {
+			$this->address_complement = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_COMPLEMENT;
+		}
+
+	} 
+	
+	public function setAddressCity($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_city !== $v) {
+			$this->address_city = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_CITY;
+		}
+
+	} 
+	
+	public function setAddressState($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_state !== $v) {
+			$this->address_state = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_STATE;
+		}
+
+	} 
+	
+	public function setAddressZipcode($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_zipcode !== $v) {
+			$this->address_zipcode = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_ZIPCODE;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -600,23 +775,37 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			$this->default_language = $rs->getString($startcol + 8);
 
-			$this->enabled = $rs->getBoolean($startcol + 9);
+			$this->address_name = $rs->getString($startcol + 9);
 
-			$this->visible = $rs->getBoolean($startcol + 10);
+			$this->address_number = $rs->getString($startcol + 10);
 
-			$this->deleted = $rs->getBoolean($startcol + 11);
+			$this->address_quarter = $rs->getString($startcol + 11);
 
-			$this->locked = $rs->getBoolean($startcol + 12);
+			$this->address_complement = $rs->getString($startcol + 12);
 
-			$this->created_at = $rs->getTimestamp($startcol + 13, null);
+			$this->address_city = $rs->getString($startcol + 13);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 14, null);
+			$this->address_state = $rs->getString($startcol + 14);
+
+			$this->address_zipcode = $rs->getString($startcol + 15);
+
+			$this->enabled = $rs->getBoolean($startcol + 16);
+
+			$this->visible = $rs->getBoolean($startcol + 17);
+
+			$this->deleted = $rs->getBoolean($startcol + 18);
+
+			$this->locked = $rs->getBoolean($startcol + 19);
+
+			$this->created_at = $rs->getTimestamp($startcol + 20, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 21, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 15; 
+						return $startcol + 22; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating People object", $e);
 		}
@@ -1182,21 +1371,42 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				return $this->getDefaultLanguage();
 				break;
 			case 9:
-				return $this->getEnabled();
+				return $this->getAddressName();
 				break;
 			case 10:
-				return $this->getVisible();
+				return $this->getAddressNumber();
 				break;
 			case 11:
-				return $this->getDeleted();
+				return $this->getAddressQuarter();
 				break;
 			case 12:
-				return $this->getLocked();
+				return $this->getAddressComplement();
 				break;
 			case 13:
-				return $this->getCreatedAt();
+				return $this->getAddressCity();
 				break;
 			case 14:
+				return $this->getAddressState();
+				break;
+			case 15:
+				return $this->getAddressZipcode();
+				break;
+			case 16:
+				return $this->getEnabled();
+				break;
+			case 17:
+				return $this->getVisible();
+				break;
+			case 18:
+				return $this->getDeleted();
+				break;
+			case 19:
+				return $this->getLocked();
+				break;
+			case 20:
+				return $this->getCreatedAt();
+				break;
+			case 21:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1218,12 +1428,19 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$keys[6]=>$this->getPhoneNumber(),
 			$keys[7]=>$this->getBirthday(),
 			$keys[8]=>$this->getDefaultLanguage(),
-			$keys[9]=>$this->getEnabled(),
-			$keys[10]=>$this->getVisible(),
-			$keys[11]=>$this->getDeleted(),
-			$keys[12]=>$this->getLocked(),
-			$keys[13]=>$this->getCreatedAt(),
-			$keys[14]=>$this->getUpdatedAt(),
+			$keys[9]=>$this->getAddressName(),
+			$keys[10]=>$this->getAddressNumber(),
+			$keys[11]=>$this->getAddressQuarter(),
+			$keys[12]=>$this->getAddressComplement(),
+			$keys[13]=>$this->getAddressCity(),
+			$keys[14]=>$this->getAddressState(),
+			$keys[15]=>$this->getAddressZipcode(),
+			$keys[16]=>$this->getEnabled(),
+			$keys[17]=>$this->getVisible(),
+			$keys[18]=>$this->getDeleted(),
+			$keys[19]=>$this->getLocked(),
+			$keys[20]=>$this->getCreatedAt(),
+			$keys[21]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1267,21 +1484,42 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				$this->setDefaultLanguage($value);
 				break;
 			case 9:
-				$this->setEnabled($value);
+				$this->setAddressName($value);
 				break;
 			case 10:
-				$this->setVisible($value);
+				$this->setAddressNumber($value);
 				break;
 			case 11:
-				$this->setDeleted($value);
+				$this->setAddressQuarter($value);
 				break;
 			case 12:
-				$this->setLocked($value);
+				$this->setAddressComplement($value);
 				break;
 			case 13:
-				$this->setCreatedAt($value);
+				$this->setAddressCity($value);
 				break;
 			case 14:
+				$this->setAddressState($value);
+				break;
+			case 15:
+				$this->setAddressZipcode($value);
+				break;
+			case 16:
+				$this->setEnabled($value);
+				break;
+			case 17:
+				$this->setVisible($value);
+				break;
+			case 18:
+				$this->setDeleted($value);
+				break;
+			case 19:
+				$this->setLocked($value);
+				break;
+			case 20:
+				$this->setCreatedAt($value);
+				break;
+			case 21:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1300,12 +1538,19 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setPhoneNumber($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setBirthday($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setDefaultLanguage($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setEnabled($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setVisible($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setLocked($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
+		if (array_key_exists($keys[9], $arr)) $this->setAddressName($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setAddressNumber($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setAddressQuarter($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setAddressComplement($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setAddressCity($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setAddressState($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setAddressZipcode($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setEnabled($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setVisible($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setDeleted($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setLocked($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setCreatedAt($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setUpdatedAt($arr[$keys[21]]);
 	}
 
 	
@@ -1322,6 +1567,13 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PeoplePeer::PHONE_NUMBER)) $criteria->add(PeoplePeer::PHONE_NUMBER, $this->phone_number);
 		if ($this->isColumnModified(PeoplePeer::BIRTHDAY)) $criteria->add(PeoplePeer::BIRTHDAY, $this->birthday);
 		if ($this->isColumnModified(PeoplePeer::DEFAULT_LANGUAGE)) $criteria->add(PeoplePeer::DEFAULT_LANGUAGE, $this->default_language);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_NAME)) $criteria->add(PeoplePeer::ADDRESS_NAME, $this->address_name);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_NUMBER)) $criteria->add(PeoplePeer::ADDRESS_NUMBER, $this->address_number);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_QUARTER)) $criteria->add(PeoplePeer::ADDRESS_QUARTER, $this->address_quarter);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_COMPLEMENT)) $criteria->add(PeoplePeer::ADDRESS_COMPLEMENT, $this->address_complement);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_CITY)) $criteria->add(PeoplePeer::ADDRESS_CITY, $this->address_city);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_STATE)) $criteria->add(PeoplePeer::ADDRESS_STATE, $this->address_state);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_ZIPCODE)) $criteria->add(PeoplePeer::ADDRESS_ZIPCODE, $this->address_zipcode);
 		if ($this->isColumnModified(PeoplePeer::ENABLED)) $criteria->add(PeoplePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(PeoplePeer::VISIBLE)) $criteria->add(PeoplePeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(PeoplePeer::DELETED)) $criteria->add(PeoplePeer::DELETED, $this->deleted);
@@ -1373,6 +1625,20 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$copyObj->setBirthday($this->birthday);
 
 		$copyObj->setDefaultLanguage($this->default_language);
+
+		$copyObj->setAddressName($this->address_name);
+
+		$copyObj->setAddressNumber($this->address_number);
+
+		$copyObj->setAddressQuarter($this->address_quarter);
+
+		$copyObj->setAddressComplement($this->address_complement);
+
+		$copyObj->setAddressCity($this->address_city);
+
+		$copyObj->setAddressState($this->address_state);
+
+		$copyObj->setAddressZipcode($this->address_zipcode);
 
 		$copyObj->setEnabled($this->enabled);
 

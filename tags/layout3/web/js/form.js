@@ -8,7 +8,7 @@ function showFormErrorDetails(form, field){
 //	$('formErrorDetails'+ucfirst(form)).innerHTML = '<h1 class="formDetailsTitle">Detalhes do erro</h1><b>'+errorMessage;
 }
 
-function handleFormFieldError( content, formId, prefix, alertMessage, indicatorId, handleFunc ){
+function handleFormFieldError( content, formId, prefix, alertMessage, indicatorId, handleFunc, showErrors ){
 
 	clearFormFieldErrors( formId );
 
@@ -62,6 +62,9 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 				
 				isDiv = true;
 				objectForm = $(formFieldId+'Div');
+				
+				if( showErrors && $(formFieldId+'Error')!=null )
+					$(formFieldId+'Error').innerHTML = errorMessage
 			}
 			
 			if( objectForm!=null ){
@@ -79,6 +82,9 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 				objectForm.title     = errorMessage;
 				
 				showDiv(formFieldId+'Error');
+				
+				if( showErrors )
+					$(formFieldId+'Error').innerHTML = errorMessage
 			}
 		}
 

@@ -52,6 +52,20 @@ class PeopleMapBuilder {
 
 		$tMap->addColumn('DEFAULT_LANGUAGE', 'DefaultLanguage', 'string', CreoleTypes::CHAR, false, null);
 
+		$tMap->addColumn('ADDRESS_NAME', 'AddressName', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('ADDRESS_NUMBER', 'AddressNumber', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('ADDRESS_QUARTER', 'AddressQuarter', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('ADDRESS_COMPLEMENT', 'AddressComplement', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('ADDRESS_CITY', 'AddressCity', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('ADDRESS_STATE', 'AddressState', 'string', CreoleTypes::CHAR, false, null);
+
+		$tMap->addColumn('ADDRESS_ZIPCODE', 'AddressZipcode', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

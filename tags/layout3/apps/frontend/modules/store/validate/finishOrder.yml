@@ -1,0 +1,29 @@
+fields:
+       
+  paymethod:
+    required:
+      msg:       form.error.requiredField
+       
+  addressZipcode:
+    required:
+      msg:       form.error.requiredField
+       
+  addressName:
+    required:
+      msg:       form.error.requiredField
+       
+  addressNumber:
+    required:
+      msg:       form.error.requiredField
+       
+  addressQuarter:
+    required:
+      msg:       form.error.requiredField
+       
+  addressCity:
+    required:
+      msg:       form.error.requiredField
+       
+  addressState:
+    required:
+      msg:       form.error.requiredField

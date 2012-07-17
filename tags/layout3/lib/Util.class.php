@@ -998,5 +998,15 @@ class Util {
 		sfContext::getInstance()->getResponse()->addJavascript('/sf/prototype/js/scriptaculous');
 		sfContext::getInstance()->getResponse()->addJavascript('lightbox');
 	}
+
+	public static function addJavascript($javascript){
+
+		sfContext::getInstance()->getResponse()->addJavascript($javascript);
+	}
+
+	public static function addStylesheet($stylesheet){
+
+		sfContext::getInstance()->getResponse()->addStylesheet($stylesheet);
+	}
 }
 ?>

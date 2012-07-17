@@ -1,6 +1,7 @@
 function doQuickLogin(){
 	
-	$('loginForm').onsubmit();
+	showIndicator();
+	$('quickLoginForm').onsubmit();
 }
 
 function handleSuccessLogin(content){
@@ -12,6 +13,24 @@ function handleSuccessLogin(content){
 
 	loadHomeResume();
 	loadUserCredit();
+	hideIndicator();
+}
+
+function handleFailureQuickLogin(content){
+
+	enableButton('loginSubmitButton');
+	
+	if( content.length < 100 )
+		$('loginErrorMessage').innerHTML = content;
+
+	showDiv('loginErrorMessage');
+	hideIndicator();
+}
+
+function loadUserMenu(){
+	
+	var urlAjax = _webRoot+'/home/getMenu';
+	new Ajax.Updater('loginResumeDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }
 
 function loadUserCredit(){
@@ -26,14 +45,4 @@ function loadHomeResume(){
 	
 	var urlAjax = _webRoot+'/home/getResume';
 	new Ajax.Updater('userResume', urlAjax, {asynchronous:true, evalScripts:false});
-}
-
-function handleFailureQuickLogin(content){
-
-	enableButton('loginSubmitButton');
-	
-	if( content.length < 100 )
-		$('loginErrorMessage').innerHTML = content;
-
-	showDiv('loginErrorMessage');
 }
