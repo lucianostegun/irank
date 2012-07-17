@@ -371,6 +371,8 @@ function include_facebook_metas($facbookMetaList)
 		$facbookMetaList['image'] = 'http://'.MyTools::getRequest()->getHost().'/images/layout/mediaLogo.png';
 	else
 		$facbookMetaList['image2'] = 'http://'.MyTools::getRequest()->getHost().'/images/layout/mediaLogo.png';
+	
+	$facbookMetaList['url'] = 'http://www.irank.com.br';
 
 	foreach($facbookMetaList as $property=>$content)
 		echo "<meta property=\"og:$property\" content=\"$content\" />\n";

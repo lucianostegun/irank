@@ -4,7 +4,7 @@ function doQuickLogin(){
 	$('quickLoginForm').onsubmit();
 }
 
-function handleSuccessLogin(content){
+function handleSuccessQuickLogin(content){
 
 	$('loginResumeDiv').innerHTML = content;
 	
