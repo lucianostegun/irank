@@ -312,12 +312,24 @@
 	border-top: 4px solid #EAEAEA;
 	border-bottom: 4px solid #EAEAEA;
 	text-align: right;
-	padding-top: 10px
+	position: relative;
+	padding: 5px;
+	height: 42px;
 }
 
 .paymethods img {
 
-	margin-right: 20px
+	margin: 0px;
+	position: relative;
+	margin-right: 20px;
+	top: 8px;
+}
+
+.paymethods img.sslStamp {
+
+	position: absolute;
+	left: 10px;
+	top: 5px;
 }
 
 h3 {
@@ -389,81 +401,141 @@ div.cartInfo a:hover {
 	margin-right: -12px
 }
 
-.gridTable.store.cart td {
 
-	font-size: 	13px;
+
+
+
+
+
+
+
+
+
+
+
+table.store.cart {
+
+	margin: 5px;
+	background: #F0F0F0;
+	width: 775px;
+	
+	width: 100%;
+	margin: 0px;
+	border-left: 1px solid #DADADA;
+	border-right: 1px solid #DADADA;
 }
 
-.gridTable.store.cart .productImage {
+table.store.cart.resume {
+
+	margin: 5px;
+	background: #F0F0F0;
+	width: 775px;
+	border: none;
+}
+
+table.store.cart,
+table.store.cart th,
+table.store.cart td {
+
+	font-family: Calibri;
+	font-size: 13px;
+}
+
+table.store.cart tr.header th {
+
+	background: #DADADA;
+	padding: 	5px 5px 8px 5px;
+	border-bottom: 1px solid #CACACA;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+table.store.cart td {
+
+	border-bottom: 1px solid #FDFDFD;
+	padding: 3px 5px;
+}
+
+table.store.cart td.emptyCart {
+
+	background: #FAFAFA;
+	padding: 20px 0px;
+	text-align: center;
+	font-size: 14px;
+}
+
+table.store.cart tr.odd td {
+
+	background: #F8F8F8
+}
+
+table.store.cart td.productInfo {
+
+	position: relative;
+}
+
+table.store.cart td.productImage {
+
+	padding: 5px 10px
+}
+
+table.store.cart td .productName {
+
+	font-weight: bold
+}
+
+table.store.cart td .productName a {
+
+	color: #1e62c9
+}
+
+table.store.cart td .productOption {
+
+	padding: 0px;
+	margin: 0px 15px 0px 0px;
+	color: #5F5F5F;
+}
+
+table.store.cart td span.removeLink {
+
+	position: absolute;
+	left: 400px;
+}
+
+table.store.cart input {
+
+	border: 1px solid #C0C0C0;
+	padding: 2px;
+	width: 30px;
+	height: 14px;
+	text-align: center;
+	color: #5F5F5F
+}
+
+table.store.cart .footer th {
+
+	padding: 	5px 0px;
+}
+
+table.store.cart .footer th {
 
 	padding: 	5px;
 }
 
-.gridTable.store.cart .productName {
+table.store.cart .footer.shipping th {
 
-	font-size: 	13px;
+	border-top: 1px solid #FBFBFB;
 }
 
-.gridTable.store.cart .emptyCart {
+table.store.cart .footer th input {
 
-	font-size: 	11px;
-	text-align: center;
-	padding: 	10px 0px;
+	width: 65px
 }
 
-.gridTable.store.cart .productDetail {
+table.store.cart .footer.total th {
 
-	margin: 	0px;
-	padding: 	0px;
-	position: 	relative;
-	left: 		0px;
-	font-size: 	12px;
-	text-align: left;
-	color: 		#707070;
-	margin-right: 	20px
-}
-
-.gridTable.store.cart .productDetail.resume {
-
-	font-size: 10px;
-}
-
-.gridTable.store.cart .quantity input {
-
-	border: 		1px solid #909090;
-	width: 			20px;
-	height: 		20px;
-	font-weight: 	normal;
-	font-size: 		12px;
-	padding: 		1px 6px;
-	text-align: 	center;
-}
-
-.gridTable.store.cart .productPrice,
-.gridTable.store.cart .totalValue {
-
-	font-weight: 	normal;
-	font-size: 		13px;
-}
-
-.gridTable.store.cart .totalValue {
-
-	font-weight: 	bold;
-}
-
-
-.gridTable.store.cart .shipping #storeCartShippingValue,
-.gridTable.store.cart .shipping #storeCartTotalValue {
-
-	font-weight: 	bold;
-	font-size: 		13px;
-	padding-right: 	3px;
-}
-
-.gridTable.store.cart .shipping #storeCartTotalValue {
-
-	font-size: 		16px;
-	white-space: 	nowrap
+	padding: 20px 5px;
+	font-size: 20px
 }
 
 
@@ -474,6 +546,20 @@ div.cartInfo a:hover {
 
 
 
+
+
+
+
+
+
+
+
+
+
+.storeCartResume {
+
+	position: relative;
+}
 
 /* Formulário de cadastro de endereço */
 

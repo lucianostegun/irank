@@ -71,6 +71,7 @@ function removeProductFromCart(productItemId){
 	var successFunc = function(t){
 
 		var content        = t.responseText;
+		debug(content);
 		var cartSessionObj = parseInfo(content);
 		
 		$('storeCartShippingValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.shippingValue);
@@ -80,8 +81,12 @@ function removeProductFromCart(productItemId){
 		row.parentNode.removeChild(row);
 		
 		var rows = document.getElementsByClassName('productItemRow');
-		if( rows.length==0 )
+		if( rows.length==0 ){
+			
 			showDiv('cartEmptyRow', 'table-row');
+			$('storeCartQuantityUpdateRow').remove();
+			$('storeCartShippingRow').remove();
+		}
 		
 		hideIndicator();
 	};

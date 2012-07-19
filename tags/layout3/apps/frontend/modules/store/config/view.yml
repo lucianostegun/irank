@@ -11,4 +11,4 @@ cartSuccess:
 paymentSuccess:
   
   stylesheets:    [-store, form, store]
-  javascripts:    [form]
+  javascripts:    [form, mask]

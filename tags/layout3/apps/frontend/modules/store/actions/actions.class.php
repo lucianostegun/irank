@@ -92,75 +92,17 @@ class storeActions extends sfActions
   	
   	if( $cartSessionObj->zipcode )
   		return $this->forward('store', 'calculateShipping');
-  	
+  		
+  	$this->updateShippingValue($request);
   	$this->getUpdateSession($cartSessionObj);
+  	
   	echo Util::parseInfo($cartSessionObj);
   	exit;
   }
 
   public function executeCalculateShipping($request){
   	
-  	$cartSessionObj = $this->getCartSession();
-  	$totalWeight    = 0;
-  	$zipcode        = $request->getParameter('zipcode', $cartSessionObj->zipcode);
-  	
-  	if( !$zipcode )
-  		throw new Exception('CEP inválido');
-  	
-  	
-  	$productWeightList = array();
-  	$index = 0;
-  	foreach($cartSessionObj->productItemList as $productItemId=>$productItem){
-  		
-  		$quantity      = $productItem->quantity;
-  		$productWeight = ProductItem::getWeightById($productItemId);
-  		
-  		if( !isset($productWeightList[$index]) )
-  			$productWeightList[$index] = 0;
-  			
-  		for($i=0; $i < $quantity; $i++){
-	  		
-	  		if( $productWeightList[$index]+$productWeight > 30000 )
-	  			$productWeightList[++$index] = 0;
-  			
-  			$productWeightList[$index] += $productWeight;
-  		}
-  	}
-  	
-	$webserviceUrl = 'http://webservice.uni5.net/web_frete.php';
-	$shippingValue = 0;
-  	foreach($productWeightList as $productWeight){
-  		
-		$webserviceQuery = array(
-		    'auth'=>'d2444763f5fd6f8f616b4b4dce37752e',		//Chave de autenticação do WebService - Consultar seu painel de controle
-		    'formato'=>'query_string',						//Valores possíveis: xml, query_string ou javascript
-		    'tipo'=>'sedex',								//Tipo de pesquisa: sedex, carta, pac,
-		    'cep_origem'=>'04547-003',						//CEP de Origem - CEP que irá postar a encomenda
-		    'cep_destino'=>$zipcode,						//CEP de Destino - CEP que irá receber a encomenda
-		    'mao_propria'=>'0',								//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
-		    'aviso_de_recebimento'=>'0',					//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
-		    'peso'=> $productWeight,						//em gr
-		    'cep'=>$zipcode,								//CEP que será pesquisado
-		);
-		
-		//Forma URL
-		$webserviceUrl .= '?';
-		foreach($webserviceQuery as $key=>$value)
-		    $webserviceUrl .= $key.'='.urlencode($value).'&';
-		
-		$result = null;
-		parse_str(file_get_contents($webserviceUrl), $result);
-		
-		if( !isset($result['resultado']) || $result['resultado']!='1' )
-			Util::forceError('Erro ao calcular o valor do frete!'.chr(10).$result['resultado_txt']);
-			
-		$shippingValue += $result['valor'];
-  	}
-  	
-  	$cartSessionObj->shippingValue = $shippingValue;
-  	$cartSessionObj->zipcode       = $zipcode;
-  	
-  	$this->getUpdateSession($cartSessionObj);
+  	$cartSessionObj = $this->updateShippingValue($request);
   	echo Util::parseInfo($cartSessionObj);
   	exit;
   }
@@ -168,9 +110,6 @@ class storeActions extends sfActions
   public function executePayment($request){
   	
   	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
-  	
-//  	if( !$this->userSiteId )
-//  		$this->suppressLogin = true;
   	
   	$cartSessionObj = base64_decode($this->cartSession);
   	$cartSessionObj = unserialize($cartSessionObj);
@@ -190,6 +129,7 @@ class storeActions extends sfActions
 	$result = file_get_contents($webserviceUrl);
 	$result = json_decode($result);
 	
+	$this->zipcode           = $cartSessionObj->zipcode;
 	$this->state             = null;
     $this->city              = null;
     $this->quarter           = null;
@@ -206,6 +146,9 @@ class storeActions extends sfActions
 	    $this->addressName       = $peopleObj->getAddressName();
 	    $this->addressNumber     = $peopleObj->getAddressNumber();
 	    $this->addressComplement = $peopleObj->getAddressComplement();
+	    
+	    if( !$this->zipcode )
+	    	$this->zipcode = $peopleObj->getAddressZipcode();
     }
 
 	if( is_object($result) ){
@@ -256,6 +199,17 @@ class storeActions extends sfActions
 	$peopleObj->save();
 	
 	$cartSessionObj = $this->getCartSession();
+	
+	if( $addressZipcode!=$cartSessionObj->zipcode ){
+		
+		if( $addressZipcode ){
+			
+			$cartSessionObj->zipcode = $addressZipcode;
+		  	$this->getUpdateSession($cartSessionObj);
+		}
+		
+		$cartSessionObj = $this->updateShippingValue($request);
+	}
   	
   	$cartSessionObj->paymethod = $paymethod;
   	
@@ -324,6 +278,11 @@ class storeActions extends sfActions
   	$cartSessionObj->productItemList = array();
   	$cartSessionObj->createdAt       = time();
   	
+  	$peopleObj = People::getCurrentPeople();
+    
+    if( is_object($peopleObj) )
+  		$cartSessionObj->zipcode = $peopleObj->getAddressZipcode();
+  	
   	return $this->getUpdateSession($cartSessionObj);
   }
 
@@ -371,8 +330,9 @@ class storeActions extends sfActions
   
   private function addItemToCart($productCode, $quantity, $productOptionIdColor, $productOptionIdSize){
 
-	$cartSessionObj = base64_decode($this->cartSession);
-  	$cartSessionObj = unserialize($cartSessionObj);
+	$request = $this->getRequest();
+
+	$cartSessionObj = $this->getCartSession();
   	$productId      = Product::getIdByCode($productCode);
   	
   	$productItemObj = ProductItemPeer::retrieveByOptions($productId, $productOptionIdColor, $productOptionIdSize);
@@ -393,20 +353,24 @@ class storeActions extends sfActions
 	 	$productItem->quantity   = 0;
 	 	$productItem->totalValue = $totalValue = ($price*$quantity);
 	 	$productItem->color      = ProductOptionPeer::retrieveByPK($productOptionIdColor)->getOptionName();
-	 	$productItem->size       = ProductOptionPeer::retrieveByPK($productOptionIdSize)->getOptionName();
+	 	$productItem->size       = ProductOptionPeer::retrieveByPK($productOptionIdSize)->getDescription();
   	}else{
   		
   		$productItem = $cartSessionObj->productItemList[$productItemId];
   	}
 
  	$productItem->quantity += $quantity;
+ 	
   	
   	$cartSessionObj->productItemList[$productItemId] = $productItem;
   	$this->getUpdateSession($cartSessionObj);
+ 	
+ 	$this->updateShippingValue($request);
   }
 
   private function removeItemFromCart($productItemId){
 
+	$request = $this->getRequest();
 	$cartSessionObj = base64_decode($this->cartSession);
   	$cartSessionObj = unserialize($cartSessionObj);
   	
@@ -432,8 +396,85 @@ class storeActions extends sfActions
 	 	
 	 	unset($productItemList[$productItemId]);
 	}
+	
   	
   	$cartSessionObj->productItemList = $productItemList;
+  	$this->getUpdateSession($cartSessionObj);
+  	
+	$cartSessionObj = $this->updateShippingValue($request);
+  	
+  	return $cartSessionObj;
+  }
+  
+  private function updateShippingValue($request){
+  	
+  	$cartSessionObj = $this->getCartSession();
+  	
+	$totalWeight = 0;
+  	$zipcode     = $request->getParameter('zipcode', $cartSessionObj->zipcode);
+  	
+  	if( !$zipcode )
+  		return $cartSessionObj;
+  	
+  	if( $cartSessionObj->itens > 0 ){
+  		
+	  	$productWeightList = array();
+	  	$index = 0;
+	  	foreach($cartSessionObj->productItemList as $productItemId=>$productItem){
+	  		
+	  		$quantity      = $productItem->quantity;
+	  		$productWeight = ProductItem::getWeightById($productItemId);
+	  		
+	  		if( !isset($productWeightList[$index]) )
+	  			$productWeightList[$index] = 0;
+	  			
+	  		for($i=0; $i < $quantity; $i++){
+		  		
+		  		if( $productWeightList[$index]+$productWeight > 30000 )
+		  			$productWeightList[++$index] = 0;
+	  			
+	  			$productWeightList[$index] += $productWeight;
+	  		}
+	  	}
+	  	
+		$webserviceUrl = 'http://webservice.uni5.net/web_frete.php';
+		$shippingValue = 0;
+	  	foreach($productWeightList as $productWeight){
+	  		
+			$webserviceQuery = array(
+			    'auth'=>'d2444763f5fd6f8f616b4b4dce37752e',		//Chave de autenticação do WebService - Consultar seu painel de controle
+			    'formato'=>'query_string',						//Valores possíveis: xml, query_string ou javascript
+			    'tipo'=>'sedex',								//Tipo de pesquisa: sedex, carta, pac,
+			    'cep_origem'=>'04547-003',						//CEP de Origem - CEP que irá postar a encomenda
+			    'cep_destino'=>$zipcode,						//CEP de Destino - CEP que irá receber a encomenda
+			    'mao_propria'=>'0',								//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
+			    'aviso_de_recebimento'=>'0',					//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
+			    'peso'=> $productWeight,						//em gr
+			    'cep'=>$zipcode,								//CEP que será pesquisado
+			);
+			
+			//Forma URL
+			$webserviceUrl .= '?';
+			foreach($webserviceQuery as $key=>$value)
+			    $webserviceUrl .= $key.'='.urlencode($value).'&';
+			
+			$result = null;
+			parse_str(file_get_contents($webserviceUrl), $result);
+			
+			if( !isset($result['resultado']) || $result['resultado']!='1' )
+				Util::forceError('Erro ao calcular o valor do frete!'.chr(10).$result['resultado_txt']);
+				
+			$shippingValue += $result['valor'];
+	  	}
+  	}else{
+  		
+  		
+	  	$shippingValue = 0;
+  	}
+  	
+  	$cartSessionObj->shippingValue = $shippingValue;
+  	$cartSessionObj->zipcode       = $zipcode;
+  	
   	$this->getUpdateSession($cartSessionObj);
   	
   	return $cartSessionObj;

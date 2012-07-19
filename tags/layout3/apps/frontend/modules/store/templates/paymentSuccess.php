@@ -40,7 +40,7 @@
 					<div class="defaultForm">
 						<div class="row">
 							<div class="label" id="storeZipcodeLabel">CEP</div>
-							<div class="field"><?php echo input_tag('addressZipcode', $cartSessionObj->zipcode, array('size'=>9, 'maxlength'=>9, 'class'=>'required', 'id'=>'storeAddressZipcode')) ?></div>
+							<div class="field"><?php echo input_tag('addressZipcode', $zipcode, array('size'=>9, 'maxlength'=>9, 'class'=>'required', 'onkeyup'=>'maskZipcode(event)', 'id'=>'storeAddressZipcode')) ?></div>
 							<div class="error" id="storeAddressZipcodeError"></div>
 						</div>
 						<div class="row">
@@ -77,7 +77,7 @@
 	
 		<h3>Forma de pagamento</h3>
 		
-		<table cellspacing="0" cellpadding="0" class="paymethod mt10 ml10">
+		<table cellspacing="0" cellpadding="0" class="paymethod mt10 ml10 mb20">
 			<tr>
 				<td class="textC p3"><?php echo radiobutton_tag('paymethod', 'billet', ($cartSessionObj->paymethod=='billet'), array('id'=>'paymethodBillet')) ?></td>
 				<td class="textL p3 pr30"><label for="paymethodBillet"><?php echo image_tag('store/boleto') ?></label></td>
@@ -89,12 +89,15 @@
 			</tr>
 		</table>
 		
-		<?php echo link_to(image_tag('store/nextButton', array('class'=>'finishOrderButton')), '#finishOrder()') ?>
+		<?php echo link_to(image_tag('store/back', array('class'=>'ml20')), 'store/cart') ?>
+		<?php echo link_to(image_tag('store/nextButton', array('class'=>'ml10')), '#finishOrder()') ?>
 		
 		<?php if( !$userSiteId ): ?>
 		</div>
 		<?php endif; ?>
 		</form>
+		
 	</div>
+	<?php echo link_to(image_tag('store/rapidssl.gif', array('style'=>'position: absolute; right: 10px; bottom: 10px'), 'https://www.webyssl.com', array('target'=>'_blank', 'class'=>'rapidSslStamp'))) ?>
 
 <div class="clear mt5"></div>

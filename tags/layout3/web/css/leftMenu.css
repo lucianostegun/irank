@@ -68,7 +68,6 @@
 }
 
 #leftMenu .item .label.stats { background: url(/images/layout/leftMenu/stats.png) center left no-repeat }
-#leftMenu .item .label.invites { background: url(/images/layout/leftMenu/invite.png) center left no-repeat }
 #leftMenu .item .label.config { background: url(/images/layout/leftMenu/config.png) center left no-repeat }
 #leftMenu .item .label.logout { background: url(/images/layout/leftMenu/logout.png) center left no-repeat }
 

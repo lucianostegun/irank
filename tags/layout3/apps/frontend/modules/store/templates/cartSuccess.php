@@ -11,7 +11,7 @@
 ?>
 	<div class="storeCart">
 	
-		<table border="0" cellspacing="0" cellpadding="0" class="gridTable store cart">
+		<table border="0" cellspacing="0" cellpadding="0" class="store cart">
 		  <tr class="header">
 		    <th colspan="2" class="first">Produto</th>
 		    <th width="70">Qtd</th>
@@ -27,6 +27,7 @@
 		  	$zipcode         = $cartSessionObj->zipcode;
 		  	$totalOrderValue = $shippingValue;
 		  	
+		  	$class = ((count($productItemList)%2==0)?'odd':'even');
 		  	foreach($productItemList as $productItemId=>$productItem):
 		  	
 		  		$productCode    = $productItem->code;
@@ -50,14 +51,15 @@
 				
 				$totalValue       = $price*$quantity;
 				$totalOrderValue += $totalValue;
+				
+				$class = ($class=='even'?'odd':'even');
 		  ?>
-		  <tr class="productItemRow" id="cartProductItem-<?php echo $productItemId ?>">
+		  <tr class="productItemRow <?php echo $class ?>" id="cartProductItem-<?php echo $productItemId ?>">
 		    <td width="40" class="productImage"><?php echo image_tag($productItemObj->getImageCover('thumb')) ?></td>
-		    <td class="textL productName">
-		    	<span><?php echo link_to("$categoryShortName: $productName", 'store/details?'.$productCode.'=') ?></span>
-		    	<div class="clear mt5"></div>
-		    	<span class="productDetail"><b>Tamanho:</b> <?php echo $size ?></span>
-		    	<span class="productDetail"><b>Cor:</b> <?php echo $color ?></span>
+		    <td class="textL productInfo">
+		    	<span class="productName"><?php echo link_to("$categoryShortName: $productName", 'store/details?'.$productCode.'=') ?></span>
+		    	<div class="clear"></div>
+		    	<span class="productOption"><?php echo $color ?> | <?php echo $size ?></span>
 		    </td>
 		    <td class="textC quantity"><?php echo input_tag('quantity-'.$productItemId, $quantity, array('size'=>3, 'maxlength'=>2, 'onblur'=>'updateItemQuantity('.$productItemId.', this.value)', 'id'=>'storeCartProductItemQuantity-'.$productItemId)) ?></td>
 		    <td class="textR productPrice">R$ <?php echo Util::formatFloat($price, true) ?></td>
@@ -69,16 +71,16 @@
 		  	
 		  	if( !$emptyCart ):
 		  ?>
-		  <tr class="footer">
-		    <th class="textR"></th>
-		    <th class="textR pr10"></th>
+		  <tr class="footer" id="storeCartQuantityUpdateRow">
+		    <th></th>
+		    <th></th>
 		    <th class="textC"><?php echo link_to('Atualizar', '#updateCartQuantity()', array('title'=>'Atualizar quantidade dos itens do carrinho')) ?></th>
-		    <th class="textC"></th>
-		    <th class="textR"></th>
+		    <th></th>
+		    <th></th>
 		    <th></th>
 		  </tr>
-		  <tr class="footer shipping">
-		    <th class="textR"></th>
+		  <tr class="footer shipping" id="storeCartShippingRow">
+		    <th></th>
 		    <th class="textR pr10">Informe seu cep para calcular o valor do frete</th>
 		    <th class="textC"><?php echo input_tag('zipcode', $zipcode, array('size'=>9, 'maxlength'=>9, 'class'=>'textC', 'onkeyup'=>'maskZipcode(event)', 'id'=>'storeCartZipcode')) ?></th>
 		    <th class="textC"><?php echo link_to('Calcular frete', '#doCalculateShipping()') ?></th>
@@ -86,7 +88,7 @@
 		    <th></th>
 		  </tr>
 		  <?php endif; ?>
-		  <tr class="footer shipping">
+		  <tr class="footer total">
 		    <th class="textR"></th>
 		    <th class="textC"></th>
 		    <th class="textR pr10" colspan="2">TOTAL DO PEDIDO</th>
@@ -96,7 +98,7 @@
 		</table>
 	</div>
 </form>
-<div class="clear mt5 pt5" style="border-bottom: 10px solid #F0F0F0">
+<div class="clear pt5" style="border-bottom: 10px solid #F0F0F0">
 	<?php include_partial('store/include/cartbar', array('emptyCart'=>$emptyCart)); ?>
 </div>
 
