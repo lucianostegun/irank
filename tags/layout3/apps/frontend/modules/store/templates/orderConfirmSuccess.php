@@ -1,5 +1,7 @@
 <?php
-	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', 'Carrinho'=>'store/cart', 'Pagamento'=>'store/payment', 'Pedido concluído'=>null)));
+	$orderNumber = $purchaseObj->getOrderNumber();
+	
+	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', 'Carrinho'=>'store/cart', 'Pagamento'=>'store/payment', 'Confirmação'=>'store/confirmOrder', 'Pedido confirmado'=>null)));
 ?>
 	<div class="storeCartOrder" align="center">
 		
@@ -13,11 +15,11 @@
 				</td>
 				<td align="left" valign="top" class="message">
 					Por favor, anote o número de seu pedido:<br/>
-					<h1>Pedido #0239483</h1>
+					<h1>Pedido #<?php echo $orderNumber ?></h1>
 					Clique no link abaixo para gerar o boleto para pagamento<br/><br/>
 					<?php
 						echo image_tag('store/boleto', array('align'=>'absmiddle', 'style'=>'margin-right: 10px'));
-						echo link_to('http://www.irank.com.br/store/boleto/0239483');
+						echo link_to('http://www.irank.com.br/store/billet/'.$orderNumber, "store/billet?$orderNumber=", array('target'=>'_blank'));
 					?>
 					<br/><br/>
 					Uma mensagem foi enviada para seu e-mail contendo todas as informações do pedido.<br/>

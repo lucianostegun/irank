@@ -51,6 +51,14 @@ store_add_item:
   url:    /store/addItem/:productCode
   param:  { module: store, action: addItem }
 
+store_order_confirm:
+  url:    /store/orderConfirm/:orderNumber
+  param:  { module: store, action: orderConfirm }
+
+store_billet:
+  url:    /store/billet/:orderNumber
+  param:  { module: store, action: billet }
+
 #STORE ROUTING END
 
 homepage:

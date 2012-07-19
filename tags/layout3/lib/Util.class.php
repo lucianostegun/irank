@@ -1008,5 +1008,27 @@ class Util {
 
 		sfContext::getInstance()->getResponse()->addStylesheet($stylesheet);
 	}
+	
+	public static function getAddressByZipcode($zipcode, $jsonDecode=true){
+		
+		$webserviceUrl   = 'http://webservice.uni5.net/web_cep.php';
+		$webserviceQuery = array(
+		    'auth'=>'d2444763f5fd6f8f616b4b4dce37752e', //Chave de autenticação do WebService - Consultar seu painel de controle
+		    'formato'=>'json', //Valores possíveis: xml, query_string ou javascript
+		    'cep'=>$zipcode //CEP que será pesquisado
+		);
+		
+		//Forma URL
+		$webserviceUrl .= '?';
+		foreach($webserviceQuery as $key => $value)
+		    $webserviceUrl .= $key.'='.urlencode($value).'&';
+		
+		$result = file_get_contents($webserviceUrl);
+		
+		if( $jsonDecode )
+			$result = json_decode($result);
+		
+		return $result;
+	}
 }
 ?>

@@ -12,3 +12,11 @@ paymentSuccess:
   
   stylesheets:    [-store, form, store]
   javascripts:    [form, mask]
+  
+billetSuccess:
+  
+  stylesheets:    [-*, store]
+  javascripts:    [-*]
+  
+  has_layout:     on
+  layout:         clean

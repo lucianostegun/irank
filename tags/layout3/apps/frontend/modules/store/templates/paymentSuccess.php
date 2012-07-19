@@ -41,6 +41,7 @@
 						<div class="row">
 							<div class="label" id="storeZipcodeLabel">CEP</div>
 							<div class="field"><?php echo input_tag('addressZipcode', $zipcode, array('size'=>9, 'maxlength'=>9, 'class'=>'required', 'onkeyup'=>'maskZipcode(event)', 'id'=>'storeAddressZipcode')) ?></div>
+							<div class="text"><?php echo link_to('Pesquisar CEP', '#getAddressByZipcode()') ?></div>
 							<div class="error" id="storeAddressZipcodeError"></div>
 						</div>
 						<div class="row">

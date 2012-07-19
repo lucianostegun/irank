@@ -1364,4 +1364,54 @@
 		</foreign-key>
 	</table>
 	
+	<table name="purchase" phpName="Purchase">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="order_number" type="VARCHAR" />
+		<column name="order_status" type="VARCHAR" />
+		<column name="order_value" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="products" type="INTEGER" default="0" />
+		<column name="itens" type="INTEGER" default="0" />
+		<column name="shipping_value" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="total_value" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="paymethod" type="VARCHAR" size="20" />
+		<column name="ip_address" type="VARCHAR" />
+		<column name="duration" type="TIME" />
+		<column name="approval_date" type="TIMESTAMP" />
+		<column name="refusal_date" type="TIMESTAMP" />
+		<column name="refusal_reason" type="VARCHAR" />
+		<column name="shipping_date" type="TIMESTAMP" />
+		<column name="tracing_code" type="VARCHAR" />
+		<column name="customer_name" type="VARCHAR" />
+		<column name="address_name" type="VARCHAR" />
+		<column name="address_number" type="VARCHAR" />
+		<column name="address_quarter" type="VARCHAR" />
+		<column name="address_complement" type="VARCHAR" />
+		<column name="address_city" type="VARCHAR" />
+		<column name="address_state" type="CHAR" />
+		<column name="address_zipcode" type="CHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="user_site">
+			<reference local="user_site_id" foreign="id"/>
+		</foreign-key>
+	</table>
+
+	<table name="purchase_product_item" phpName="PurchaseProductItem">
+		<column name="purchase_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="product_item_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="price" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="weight" type="FLOAT" />
+		<column name="quantity" type="INTEGER" />
+		<column name="total_value" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="purchase">
+			<reference local="purchase_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="product_item">
+			<reference local="product_item_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
 </database>

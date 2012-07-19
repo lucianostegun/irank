@@ -111,23 +111,12 @@ class storeActions extends sfActions
   	
   	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
   	
-  	$cartSessionObj = base64_decode($this->cartSession);
-  	$cartSessionObj = unserialize($cartSessionObj);
+  	$cartSessionObj = $this->getCartSession();
   	
-	$webserviceUrl   = 'http://webservice.uni5.net/web_cep.php';
-	$webserviceQuery = array(
-	    'auth'=>'d2444763f5fd6f8f616b4b4dce37752e', //Chave de autenticação do WebService - Consultar seu painel de controle
-	    'formato'=>'json', //Valores possíveis: xml, query_string ou javascript
-	    'cep'=>$cartSessionObj->zipcode //CEP que será pesquisado
-	);
-	
-	//Forma URL
-	$webserviceUrl .= '?';
-	foreach($webserviceQuery as $key => $value)
-	    $webserviceUrl .= $key.'='.urlencode($value).'&';
-	
-	$result = file_get_contents($webserviceUrl);
-	$result = json_decode($result);
+  	if( $cartSessionObj->products==0 )
+  		return $this->redirect('store/cart');
+  	
+	$result = Util::getAddressByZipcode($cartSessionObj->zipcode);
 	
 	$this->zipcode           = $cartSessionObj->zipcode;
 	$this->state             = null;
@@ -154,11 +143,13 @@ class storeActions extends sfActions
 	if( is_object($result) ){
 		
 		switch($result->resultado){  
-		    case '1':  
+		    case '1':
+		    	$addressType = $result->tipo_logradouro;
+		    	
 		        $this->state       = $result->uf;
 		        $this->city        = $result->cidade;
 		        $this->quarter     = $result->bairro;
-		        $this->addressName = $result->logradouro;
+		        $this->addressName = ($addressType?$addressType.' ':'').$result->logradouro;
 		    	break;  
 		    case '2':  
 		        $this->state = $result->uf;
@@ -189,14 +180,17 @@ class storeActions extends sfActions
     
   	$peopleObj = People::getCurrentPeople();
   	
-    $peopleObj->setAddressName($addressName);
-    $peopleObj->setAddressNumber($addressNumber);
-    $peopleObj->setAddressQuarter($addressQuarter);
-    $peopleObj->setAddressComplement($addressComplement);
-    $peopleObj->setAddressCity($addressCity);
-	$peopleObj->setAddressState($addressState);
-	$peopleObj->setAddressZipcode($addressZipcode);
-	$peopleObj->save();
+  	if( !$peopleObj->getAddressName() && !$peopleObj->getAddressZipcode() ){
+  		
+	    $peopleObj->setAddressName($addressName);
+	    $peopleObj->setAddressNumber($addressNumber);
+	    $peopleObj->setAddressQuarter($addressQuarter);
+	    $peopleObj->setAddressComplement($addressComplement);
+	    $peopleObj->setAddressCity($addressCity);
+		$peopleObj->setAddressState($addressState);
+		$peopleObj->setAddressZipcode($addressZipcode);
+		$peopleObj->save();
+  	}
 	
 	$cartSessionObj = $this->getCartSession();
 	
@@ -210,6 +204,14 @@ class storeActions extends sfActions
 		
 		$cartSessionObj = $this->updateShippingValue($request);
 	}
+	
+    $cartSessionObj->addressName       = $addressName;
+    $cartSessionObj->addressNumber     = $addressNumber;
+    $cartSessionObj->addressQuarter    = $addressQuarter;
+    $cartSessionObj->addressComplement = $addressComplement;
+    $cartSessionObj->addressCity       = $addressCity;
+	$cartSessionObj->addressState      = $addressState;
+	$cartSessionObj->status            = 'ready';
   	
   	$cartSessionObj->paymethod = $paymethod;
   	
@@ -222,17 +224,100 @@ class storeActions extends sfActions
   public function executeConfirmOrder($request){
   	
   	$this->cartSessionObj = $this->getCartSession();
+  	
+  	if( $this->cartSessionObj->status!='ready' )
+  		return $this->redirect('store/cart');
   }
 
   public function executeSaveOrder($request){
   	
-  	$this->cartSessionObj = $this->getCartSession();
+  	$cartSessionObj = $this->getCartSession();
+  	$userSiteId     = $this->getUser()->getAttribute('userSiteId');
+  	
+  	$orderValue    = $cartSessionObj->totalValue;
+  	$shippingValue = $cartSessionObj->shippingValue;
+  	$totalValue    = $orderValue+$shippingValue;
+  	$ipAddress     = $_SERVER['REMOTE_ADDR'];
+  	$duration      = time()-$cartSessionObj->createdAt;
+  	
+  	$peopleObj = People::getCurrentPeople();
+  	
+  	$purchaseObj = new Purchase();
+	$purchaseObj->setUserSiteId($userSiteId);
+	$purchaseObj->buildOrderNumber();
+	$purchaseObj->setOrderStatus('new');
+	$purchaseObj->setOrderValue($orderValue);
+	$purchaseObj->setProducts($cartSessionObj->products);
+	$purchaseObj->setItens($cartSessionObj->itens);
+	$purchaseObj->setShippingValue($shippingValue);
+	$purchaseObj->setTotalValue($totalValue);
+	$purchaseObj->setPaymethod($cartSessionObj->paymethod);
+	$purchaseObj->setIpAddress($ipAddress);
+	$purchaseObj->setDuration($duration);
+  	
+    $purchaseObj->setCustomerName($peopleObj->getName());
+    $purchaseObj->setAddressName($cartSessionObj->addressName);
+    $purchaseObj->setAddressNumber($cartSessionObj->addressNumber);
+    $purchaseObj->setAddressQuarter($cartSessionObj->addressQuarter);
+    $purchaseObj->setAddressComplement($cartSessionObj->addressComplement);
+    $purchaseObj->setAddressCity($cartSessionObj->addressCity);
+	$purchaseObj->setAddressState($cartSessionObj->addressState);
+	$purchaseObj->setAddressZipcode($cartSessionObj->zipcode);
+	$purchaseObj->setCreatedAt($cartSessionObj->createdAt);
+  	
+  	foreach($cartSessionObj->productItemList as $productItemId=>$productItem){
+  		
+  		$price    = $productItem->price;
+  		$quantity = $productItem->quantity;
+  		$weight   = ProductItem::getWeightById($productItemId);
+  		
+  		$purchaseProductItemObj = new PurchaseProductItem();
+  		$purchaseProductItemObj->setProductItemId($productItemId);
+  		$purchaseProductItemObj->setPrice($price);
+  		$purchaseProductItemObj->setQuantity($quantity);
+  		$purchaseProductItemObj->setWeight($weight);
+  		$purchaseProductItemObj->setTotalValue($price*$quantity);
+  		$purchaseObj->addPurchaseProductItem($purchaseProductItemObj);
+  	}
+  	
+  	try{
+  		$purchaseObj->validateOrder();
+  		
+  		$purchaseObj->save();
+  		$this->getNewSession();
+  		echo $purchaseObj->getOrderNumber();
+  	}catch(PurchaseException $e){
+  		
+  		Util::forceError($e->getMessage());
+  	}catch(Exception $e){
+  		
+  		Util::forceError('error');
+  	}
   	
   	exit;
   }
 
-  public function executeOrder($request){
+  public function executeOrderConfirm($request){
   	
+  	$userSiteId  = $this->getUser()->getAttribute('userSiteId');
+  	$orderNumber = $request->getParameter('orderNumber');
+  	$this->purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, $userSiteId);
+  	
+  	if( !is_object($this->purchaseObj) )
+  		return $this->redirect('store/index');
+  }
+
+  public function executeBillet($request){
+  	
+  	$userSiteId  = $this->getUser()->getAttribute('userSiteId');
+  	$orderNumber = $request->getParameter('orderNumber');
+  	
+  	$this->purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, $userSiteId);
+  	
+  	if( !is_object($this->purchaseObj) )
+  		return $this->redirect('store/index');
+  		
+  		sfConfig::set('sf_web_debug', false);
   }
 
   public function executeGetSignForm($request){
@@ -269,6 +354,7 @@ class storeActions extends sfActions
   	
   	$cartSessionObj = new stdClass();
   	$cartSessionObj->id              = $sessionId;
+  	$cartSessionObj->status          = 'new';
   	$cartSessionObj->products        = 0;
   	$cartSessionObj->itens           = 0;
   	$cartSessionObj->totalValue      = 0;

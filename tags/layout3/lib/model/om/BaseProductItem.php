@@ -85,6 +85,12 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	protected $aProductOptionRelatedByProductOptionIdSize;
 
 	
+	protected $collPurchaseProductItemList;
+
+	
+	protected $lastPurchaseProductItemCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -615,6 +621,14 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collPurchaseProductItemList !== null) {
+				foreach($this->collPurchaseProductItemList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -675,6 +689,14 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collPurchaseProductItemList !== null) {
+					foreach($this->collPurchaseProductItemList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -949,6 +971,15 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 		$copyObj->setUpdatedAt($this->updated_at);
 
 
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach($this->getPurchaseProductItemList() as $relObj) {
+				$copyObj->addPurchaseProductItem($relObj->copy($deepCopy));
+			}
+
+		} 
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); 
@@ -1057,6 +1088,111 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aProductOptionRelatedByProductOptionIdSize;
+	}
+
+	
+	public function initPurchaseProductItemList()
+	{
+		if ($this->collPurchaseProductItemList === null) {
+			$this->collPurchaseProductItemList = array();
+		}
+	}
+
+	
+	public function getPurchaseProductItemList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchaseProductItemPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPurchaseProductItemList === null) {
+			if ($this->isNew()) {
+			   $this->collPurchaseProductItemList = array();
+			} else {
+
+				$criteria->add(PurchaseProductItemPeer::PRODUCT_ITEM_ID, $this->getId());
+
+				PurchaseProductItemPeer::addSelectColumns($criteria);
+				$this->collPurchaseProductItemList = PurchaseProductItemPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(PurchaseProductItemPeer::PRODUCT_ITEM_ID, $this->getId());
+
+				PurchaseProductItemPeer::addSelectColumns($criteria);
+				if (!isset($this->lastPurchaseProductItemCriteria) || !$this->lastPurchaseProductItemCriteria->equals($criteria)) {
+					$this->collPurchaseProductItemList = PurchaseProductItemPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastPurchaseProductItemCriteria = $criteria;
+		return $this->collPurchaseProductItemList;
+	}
+
+	
+	public function countPurchaseProductItemList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchaseProductItemPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(PurchaseProductItemPeer::PRODUCT_ITEM_ID, $this->getId());
+
+		return PurchaseProductItemPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addPurchaseProductItem(PurchaseProductItem $l)
+	{
+		$this->collPurchaseProductItemList[] = $l;
+		$l->setProductItem($this);
+	}
+
+
+	
+	public function getPurchaseProductItemListJoinPurchase($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchaseProductItemPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPurchaseProductItemList === null) {
+			if ($this->isNew()) {
+				$this->collPurchaseProductItemList = array();
+			} else {
+
+				$criteria->add(PurchaseProductItemPeer::PRODUCT_ITEM_ID, $this->getId());
+
+				$this->collPurchaseProductItemList = PurchaseProductItemPeer::doSelectJoinPurchase($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(PurchaseProductItemPeer::PRODUCT_ITEM_ID, $this->getId());
+
+			if (!isset($this->lastPurchaseProductItemCriteria) || !$this->lastPurchaseProductItemCriteria->equals($criteria)) {
+				$this->collPurchaseProductItemList = PurchaseProductItemPeer::doSelectJoinPurchase($criteria, $con);
+			}
+		}
+		$this->lastPurchaseProductItemCriteria = $criteria;
+
+		return $this->collPurchaseProductItemList;
 	}
 
 } 

@@ -540,6 +540,13 @@ table.store.cart .footer.total th {
 
 
 
+table.store.cart.resume td.totalValue,
+table.store.cart.resume .footer.shipping th,
+table.store.cart.resume .footer.total th {
+
+	padding-right: 8px;
+}
+
 
 
 
@@ -737,3 +744,15 @@ table.store.cart .footer.total th {
 	text-shadow: 	#FFFFFF 1px 1px;
 	display: 		none;
 }
+
+
+
+
+body.billet { color: #000000; background: #ffffff; margin: 10px; font-family: Arial, Sans Serif, Verdana }
+body.billet .cp { font: bold 10px Arial; color: black}
+body.billet .ti { font: 9px Arial, Helvetica, sans-serif}
+body.billet .ld { font: bold 15px Arial; color: #000000}
+body.billet .ct { FONT: 9px "Arial Narrow"; COLOR: #000033}
+body.billet .cn { FONT: 9px Arial; COLOR: black }
+body.billet .bc { font: bold 20px Arial; color: #000000 }
+body.billet .ld2 { font: bold 12px Arial; color: #000000 }

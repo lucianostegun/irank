@@ -4,13 +4,13 @@
 	$productItemList = $cartSessionObj->productItemList;
 	
 	$peopleObj         = People::getCurrentPeople();
-	$addressState      = $peopleObj->getAddressState();
-    $addressCity       = $peopleObj->getAddressCity();
-    $addressQuarter    = $peopleObj->getAddressQuarter();
-    $addressName       = $peopleObj->getAddressName();
-    $addressNumber     = $peopleObj->getAddressNumber();
-    $addressComplement = $peopleObj->getAddressComplement();
-    $addressZipcode    = $peopleObj->getAddressZipcode();
+	$addressState      = $cartSessionObj->addressState;
+    $addressCity       = $cartSessionObj->addressCity;
+    $addressQuarter    = $cartSessionObj->addressQuarter;
+    $addressName       = $cartSessionObj->addressName;
+    $addressNumber     = $cartSessionObj->addressNumber;
+    $addressComplement = $cartSessionObj->addressComplement;
+    $addressZipcode    = $cartSessionObj->zipcode;
 ?>
 	<div class="storeCartResume">
 	
@@ -73,15 +73,17 @@
 		    </td>
 		    <td class="textC quantity"><?php echo $quantity ?></td>
 		    <td class="textR productPrice">R$ <?php echo Util::formatFloat($price, true) ?></td>
-		    <td class="textR totalValue" id="storeCartProductItemTotalValue-<?php echo $productItemId ?>">R$ <?php echo Util::formatFloat($price*$quantity, true) ?></td>
+		    <td class="textR totalValue">R$ <?php echo Util::formatFloat($price*$quantity, true) ?></td>
 		  </tr>
 		  <?php
 		  	endforeach;
 		  ?>
 		  <tr class="footer shipping">
 		    <th class="textC"></th>
-		    <th class="textR pr10" colspan="2">FRETE</th>
-		    <th class="textR" colspan="2" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($shippingValue, true) ?></th>
+		    <th class="textC"></th>
+		    <th class="textC"></th>
+		    <th class="textR pr10">FRETE</th>
+		    <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($shippingValue, true) ?></th>
 		  </tr>
 		  <tr class="footer total">
 		    <th class="textC"></th>

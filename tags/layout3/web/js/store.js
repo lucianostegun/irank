@@ -232,10 +232,11 @@ function confirmOrder(){
 	var successFunc = function(t){
 
 		var orderNumber = t.responseText;
+		
 		hideIndicator();
 		
-		if( orderNumber.test(/^[0-9]*$/) )
-			window.location = _webRoot+'/store/order/'+orderNumber;
+		if( (/^[0-9]*$/).test(orderNumber) )
+			window.location = _webRoot+'/store/orderConfirm/'+orderNumber;
 	};
 		
 	var failureFunc = function(t){
@@ -265,4 +266,61 @@ function handleFailureStorePayment(content){
 	
 	$('topSystemMessage').innerHTML = '<div class="message error">Por favor, corrija os campos em destaque para concluir sua compra.</div>';
 	scroll(0, 0);
+}
+
+function getAddressByZipcode(){
+	
+	showIndicator();
+	
+	var lockAddressFields = function(){
+		
+		$('storeAddressName').disabled       = true;
+	    $('storeAddressNumber').disabled     = true;
+	    $('storeAddressQuarter').disabled    = true;
+	    $('storeAddressComplement').disabled = true;
+	    $('storeAddressCity').disabled       = true;
+		$('storeAddressState').disabled      = true;
+	}
+
+	var unlockAddressFields = function(){
+		
+		$('storeAddressName').disabled       = false;
+		$('storeAddressNumber').disabled     = false;
+		$('storeAddressQuarter').disabled    = false;
+		$('storeAddressComplement').disabled = false;
+		$('storeAddressCity').disabled       = false;
+		$('storeAddressState').disabled      = false;
+	}
+	
+	var successFunc = function(t){
+
+		var content     = t.responseText;
+		var addressObj  = parseInfo(content);
+		var addressType = addressObj.tipo_logradouro;
+		
+		$('storeAddressName').value        = (addressType?addressType+' ':'')+addressObj.logradouro;
+		$('storeAddressNumber').value      = '';
+		$('storeAddressQuarter').value     = addressObj.bairro;
+		$('storeAddressComplement').value  = '';
+		$('storeAddressCity').value        = addressObj.cidade;
+		$('storeAddressState').value       = addressObj.uf;
+		unlockAddressFields();
+		
+		hideIndicator();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+		unlockAddressFields();
+		hideIndicator();
+		
+		alert('Ocorreu um erro ao pesquisar as informação do CEP!\nPor favor, verifique o CEP informado e tente novamente.');
+	};
+	
+	var zipcode = $('storeAddressZipcode').value;
+	lockAddressFields();
+	
+	var urlAjax = _webRoot+'/util/getAddressByZipcode/zipcode/'+zipcode;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
