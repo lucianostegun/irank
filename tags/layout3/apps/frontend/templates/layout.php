@@ -100,7 +100,7 @@ var _ModuleName = '<?php echo $moduleName ?>';
     			<tr>
     				<td><?php echo image_tag('layout/borderBottomLeft') ?></td>
     				<td class="bottom">
-    					<?php include_partial('home/include/addthis', array()) ?>
+    					<?php #include_partial('home/include/addthis', array()) ?>
     				</td>
     				<td><?php echo image_tag('layout/borderBottomRight') ?></td>
     			</tr>

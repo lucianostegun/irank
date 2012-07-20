@@ -1,7 +1,7 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array(__('statistic.title')=>null))); ?>
 
 <div class="moduleIntro">
-		<?php echo __('statistic.intro') ?>
+	<?php echo __('statistic.intro') ?>
 </div>
 <div align="center">
 	<table border="0" cellspacing="0" cellpadding="0" class="formTable" style="width: 600px">

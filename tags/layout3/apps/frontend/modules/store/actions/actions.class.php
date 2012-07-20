@@ -234,8 +234,8 @@ class storeActions extends sfActions
   	$cartSessionObj = $this->getCartSession();
   	$userSiteId     = $this->getUser()->getAttribute('userSiteId');
   	
-  	$orderValue    = $cartSessionObj->totalValue;
   	$shippingValue = $cartSessionObj->shippingValue;
+  	$orderValue    = $cartSessionObj->totalValue-$shippingValue;
   	$totalValue    = $orderValue+$shippingValue;
   	$ipAddress     = $_SERVER['REMOTE_ADDR'];
   	$duration      = time()-$cartSessionObj->createdAt;
@@ -283,7 +283,14 @@ class storeActions extends sfActions
   	try{
   		$purchaseObj->validateOrder();
   		
+//		$con = Propel::getConnection();
+//		$con->begin();
+  		
   		$purchaseObj->save();
+  		$purchaseObj->notify();
+  		
+//		$con->rollback();
+  		
   		$this->getNewSession();
   		echo $purchaseObj->getOrderNumber();
   	}catch(PurchaseException $e){
@@ -317,13 +324,28 @@ class storeActions extends sfActions
   	if( !is_object($this->purchaseObj) )
   		return $this->redirect('store/index');
   		
-  		sfConfig::set('sf_web_debug', false);
+	sfConfig::set('sf_web_debug', false);
   }
 
   public function executeGetSignForm($request){
 
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
 	return $this->renderText(get_partial('store/include/sign', array()));
+  }
+
+  public function executeMyOrders($request){
+
+  }
+
+  public function executeOrderDetails($request){
+  	
+  	$userSiteId  = $this->getUser()->getAttribute('userSiteId');
+  	$orderNumber = $request->getParameter('orderNumber');
+  	
+  	$this->purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, $userSiteId);
+  	
+  	if( !is_object($this->purchaseObj) )
+  		return $this->redirect('store/index');
   }
   
   

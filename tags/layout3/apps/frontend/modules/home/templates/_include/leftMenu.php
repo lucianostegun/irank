@@ -28,6 +28,7 @@
 	<?php if($moduleName=='eventPersonal' && $actionName!='index') include_partial('eventPersonal/include/leftMenu', array('eventPersonalObj'=>$innerObj, 'actionName'=>$actionName)) ?>
 	
 	<div class="separator"></div>
+	<div class="item<?php echo ($moduleName=='store'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon store" onclick="goToPage('store', 'myOrders')">Minhas compras</div></div>
 	<div class="item<?php echo ($moduleName=='statistic'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon stats" onclick="goToPage('statistic', 'index')">Estatísticas</div></div>
 	<div class="item<?php echo ($moduleName=='myAccount' && $actionName=='index'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon config" onclick="goToPage('myAccount', 'index')">Configurações</div></div>
 	<div class="separator"></div>

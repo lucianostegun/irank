@@ -33,8 +33,6 @@
 		</div>
 		<div class="productInfo">
 			<h1 class="tshirt name"><?php echo "$categoryShortName: $productName" ?></h1>
-			<span class="tshirt size"><b>Tamanhos:</b> M/G/GG</span>
-			<span class="tshirt color"><b>Cores:</b> Preta/Branca</span>
 			<span class="tshirt description"><?php echo $productObj->getDescription() ?></span>
 			
 			<span class="tshirt prizeLabel">Vl. unit.</span>

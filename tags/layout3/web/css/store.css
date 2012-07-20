@@ -166,8 +166,8 @@
 	line-height: 23px;
 	font-weight: bold;
 	top: 0px;
-	margin-bottom: 9px;
-	height: 40px;
+	margin-bottom: 0px;
+	white-space: normal
 }
 
 .productDetail .tshirt.size {
@@ -185,7 +185,7 @@
 .productDetail .tshirt.description {
 
 	display: block;
-	height: 80px;
+	height: 115px;
 	font-size: 12px;
 	font-weight: normal;
 	color: #101010;
@@ -756,3 +756,159 @@ body.billet .ct { FONT: 9px "Arial Narrow"; COLOR: #000033}
 body.billet .cn { FONT: 9px Arial; COLOR: black }
 body.billet .bc { font: bold 20px Arial; color: #000000 }
 body.billet .ld2 { font: bold 12px Arial; color: #000000 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.storeOrderHeader {
+	
+	width: 765px;
+	height: 60px;
+	position: relative;
+	border-bottom: 1px solid #C0C0C0;
+	margin: 0px 10px;
+	font-family: Calibri;
+}
+
+.storeOrderHeader .orderNumber,
+.storeOrderHeader .orderStatus {
+	
+	position: relative;
+	float: left;
+	font-size: 14px;
+	margin-left: 10px;
+	font-weight: bold;
+	height: 20px
+}
+
+.storeOrderHeader .shippingDate,
+.storeOrderHeader .tracingCode {
+	
+	float: right;
+	left: -10px
+}
+
+.storeOrderHeader .orderNumber,
+.storeOrderHeader .orderStatus {
+	
+	font-size: 22px;
+	font-weight: bold;
+	position: relative;
+	top: 10px;
+	left: 10px;
+	height: 40px;
+	margin-left: 0px
+}
+
+.storeOrderHeader .orderStatus {
+	
+	float: right;
+	left: -10px
+}
+
+.storeOrderHeader .orderNumber span,
+.storeOrderHeader .orderStatus span {
+	
+	color: #3B5998;
+	font-weight: bold;
+}
+
+.storeOrderHeader .productsLabel {
+	
+	clear: both;
+	font-size: 18px;
+	font-weight: bold;
+	position: absolute;
+	width: 120px;
+	left: 0px;
+	bottom: -10px;
+	padding: 5px 5px 5px 10px;
+	background: #FFFFFF;
+}
+
+.purchaseInfo,
+.shippingInfo {
+	
+	float: right;
+	font-family: Calibri, Verdana, Tahoma;
+	font-size: 12px;
+	margin-left: 20px;
+	margin-top: 20px;
+	padding-left: 80px;
+	background: url('/images/store/mail.png') left 35px no-repeat
+}
+
+.shippingInfo {
+
+	position: relative;
+	left: -20px;
+	width: 250px	
+}
+
+.purchaseInfo {
+	
+	float: left;
+	margin-left: 20px;
+	margin-top: 20px;
+	padding-left: 0px;
+	background: none;
+}
+
+.purchaseInfo div {
+
+	clear: both;
+	font-size: 14px;
+	height: 22px;	
+}
+
+.purchaseInfo div a.payTicketUpload {
+
+	color: #3B5998;
+	font-weight: bold;
+}
+
+.purchaseInfo label {
+
+	display: block;
+	float: left;
+	font-weight: bold;
+	padding-right: 5px;
+	text-align: left;
+	width: 120px;
+}
+
+.purchaseInfo .orderNumber span,
+.purchaseInfo .orderStatus span,
+.purchaseInfo .purchaseDate span,
+.purchaseInfo .paymethod span,
+.purchaseInfo .shippingDate span,
+.purchaseInfo .tracingCode span {
+	
+	font-weight: normal
+}
+
+.purchaseInfo b,
+.shippingInfo b {
+
+	font-size: 14px;	
+}
+
+.purchaseInfo h1,
+.shippingInfo h1 {
+
+	font-size: 	20px;	
+}

@@ -27,4 +27,14 @@ class ProductItem extends BaseProductItem
 		
 		return Util::executeOne("SELECT getProductItemWeight($productItemId)", 'float');
 	}
+	
+	public function getProductOptionColor(){
+		
+		return $this->getProductOptionRelatedByProductOptionIdColor();
+	}
+	
+	public function getProductOptionSize(){
+		
+		return $this->getProductOptionRelatedByProductOptionIdSize();
+	}
 }
