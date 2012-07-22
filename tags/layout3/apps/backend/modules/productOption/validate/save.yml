@@ -1,0 +1,26 @@
+fields:
+      
+  optionName:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [ProductOptionPeer, uniqueOptionName]
+      invalid_error: Este nome já está sendo usado por outro registro
+       
+  description:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [ProductOptionPeer, uniqueDescription]
+      invalid_error: Esta descrição já está sendo usada por outro registro
+       
+  optionType:
+    required:
+      msg:       form.error.requiredField
+       
+  tagName:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [ProductOptionPeer, uniqueTagName]
+      invalid_error: Esta Tag já está sendo usada por outro registro

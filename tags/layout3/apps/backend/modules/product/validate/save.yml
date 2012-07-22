@@ -1,0 +1,44 @@
+fields:
+       
+  productCode:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [ProductPeer, uniqueProductCode]
+      invalid_error: O código informado já está em uso por outro produto
+      
+  productName:
+    required:
+      msg:       form.error.requiredField
+       
+  shortName:
+    required:
+      msg:       form.error.requiredField
+       
+  productCategoryId:
+    required:
+      msg:       form.error.requiredField
+       
+  defaultPrice:
+    required:
+      msg:       form.error.requiredField
+       
+  defaultWeight:
+    required:
+      msg:       form.error.requiredField
+       
+  stock:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      min_error: Informe um valor maior ou igual a 0
+      nan_error: Informe um valor numérico
+      
+  description:
+    required:
+      msg:       form.error.requiredField
+      
+  image1:
+    required:
+      msg:       A primeira imagem do produto é obrigatória

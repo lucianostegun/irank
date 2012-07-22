@@ -52,6 +52,8 @@ class ProductMapBuilder {
 
 		$tMap->addColumn('IS_NEW', 'IsNew', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
+		$tMap->addColumn('STOCK', 'Stock', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('IMAGE_1', 'Image1', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('IMAGE_2', 'Image2', 'string', CreoleTypes::VARCHAR, false, null);

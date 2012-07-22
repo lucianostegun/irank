@@ -327,7 +327,7 @@ class Util {
 	 * @param      Boolean: Define se a conversão será feita para exibição de dados 
 	 * @return     String/Float: Valor formatado no formato desejado
 	 */	
-	public static function formatFloat( $value, $display=false, $decimalPlaces=2 ){
+	public static function formatFloat( $value, $display=false, $decimalPlaces=2, $cleanRightZeros=false ){
 	
 		$culture = MyTools::getCulture();
 		
@@ -339,11 +339,13 @@ class Util {
 				$value = number_format($value, $decimalPlaces, ',', '.');
 			else
 				$value = number_format($value, $decimalPlaces, '.', ',');
+			
+			if( $cleanRightZeros )
+				$value = preg_replace('/,0*$/', '', $value);
 		}else{
 			
 			if( ereg('^[0-9]+\.[0-9]{1,2}$', $value) )		
 				$value = str_replace( '.', ',', $value );
-		
 		
 			if( !is_float($value) ){
 				

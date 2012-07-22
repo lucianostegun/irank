@@ -1,3 +1,5 @@
+var _FileNameSiteLimit = 30;
+
 function loadProductPreview(fileName){
 	
 	$('productImagePreview').src = _imageRoot+'/store/product/'+fileName;
@@ -323,4 +325,44 @@ function getAddressByZipcode(){
 	
 	var urlAjax = _webRoot+'/util/getAddressByZipcode/zipcode/'+zipcode;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function updateFileNameLabel(fileName){
+
+	if( fileName.length > _FileNameSiteLimit ){
+		
+		var extension = fileName.match(/\.([a-zA-Z0-9]*)$/);
+		extension = extension[1];
+		fileName = fileName.substring(0, _FileNameSiteLimit-3-(extension.length))+'...'+extension;
+	}
+	
+	$('fileNameLabel').innerHTML = fileName;
+}
+
+function handleUploadFileSuccess(fileId, fileName){
+	
+	var fileNameOriginal = fileName;
+	
+	if( fileName.length > _FileNameSiteLimit ){
+		
+		var extension = fileName.match(/\.([a-zA-Z0-9]*)$/);
+		extension = extension[1];
+		fileName = fileName.substring(0, _FileNameSiteLimit-3-(extension.length))+'...'+extension;
+	}
+	
+	$('payTicketDownloadLink').style.display = 'inline';
+	$('payTicketDownloadLink').innerHTML     = fileName;
+	$('payTicketDownloadLink').title         = fileNameOriginal;
+	$('payTicketUploadLink').innerHTML       = 'Reenviar';
+	hideDiv('storePurchaseFileUploadDiv');
+}
+
+function uploadPayTicket(){
+	
+	showDiv('storePurchaseFileUploadDiv');
+}
+
+function downloadPayTicket(orderNumber){
+	
+	window.location = _webRoot+'/store/downloadFile/orderNumber/'+orderNumber;
 }

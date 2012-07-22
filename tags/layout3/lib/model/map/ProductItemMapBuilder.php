@@ -46,6 +46,8 @@ class ProductItemMapBuilder {
 
 		$tMap->addColumn('WEIGHT', 'Weight', 'double', CreoleTypes::FLOAT, false, null);
 
+		$tMap->addColumn('STOCK', 'Stock', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('IMAGE_1', 'Image1', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('IMAGE_2', 'Image2', 'string', CreoleTypes::VARCHAR, false, null);

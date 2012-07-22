@@ -217,6 +217,7 @@ ul.userDropdown li a:hover { border-right: none; border-left: none; }
 
 .nav li.dash a span { background-image: url(/images/backend/icons/light/home.png); }
 .nav li.charts span { background-image: url(/images/backend/icons/light/stats.png); }
+.nav li.store span { background-image: url(/images/backend/icons/light/shoppingBag.png); }
 .nav li.ranking span { background-image: url(/images/backend/icons/light/signal.png); }
 .nav li.cash span { background-image: url(/images/backend/icons/light/money.png); }
 .nav li.event span { background-image: url(/images/backend/icons/light/globe.png); }

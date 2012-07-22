@@ -33,6 +33,10 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 
 
 	
+	protected $stock;
+
+
+	
 	protected $image_1;
 
 
@@ -136,6 +140,13 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	{
 
 		return $this->weight;
+	}
+
+	
+	public function getStock()
+	{
+
+		return $this->stock;
 	}
 
 	
@@ -334,6 +345,20 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setStock($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->stock !== $v) {
+			$this->stock = $v;
+			$this->modifiedColumns[] = ProductItemPeer::STOCK;
+		}
+
+	} 
+	
 	public function setImage1($v)
 	{
 
@@ -494,33 +519,35 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 
 			$this->weight = $rs->getFloat($startcol + 5);
 
-			$this->image_1 = $rs->getString($startcol + 6);
+			$this->stock = $rs->getInt($startcol + 6);
 
-			$this->image_2 = $rs->getString($startcol + 7);
+			$this->image_1 = $rs->getString($startcol + 7);
 
-			$this->image_3 = $rs->getString($startcol + 8);
+			$this->image_2 = $rs->getString($startcol + 8);
 
-			$this->image_4 = $rs->getString($startcol + 9);
+			$this->image_3 = $rs->getString($startcol + 9);
 
-			$this->image_5 = $rs->getString($startcol + 10);
+			$this->image_4 = $rs->getString($startcol + 10);
 
-			$this->enabled = $rs->getBoolean($startcol + 11);
+			$this->image_5 = $rs->getString($startcol + 11);
 
-			$this->visible = $rs->getBoolean($startcol + 12);
+			$this->enabled = $rs->getBoolean($startcol + 12);
 
-			$this->deleted = $rs->getBoolean($startcol + 13);
+			$this->visible = $rs->getBoolean($startcol + 13);
 
-			$this->locked = $rs->getBoolean($startcol + 14);
+			$this->deleted = $rs->getBoolean($startcol + 14);
 
-			$this->created_at = $rs->getTimestamp($startcol + 15, null);
+			$this->locked = $rs->getBoolean($startcol + 15);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 16, null);
+			$this->created_at = $rs->getTimestamp($startcol + 16, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 17, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 17; 
+						return $startcol + 18; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProductItem object", $e);
 		}
@@ -735,36 +762,39 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 				return $this->getWeight();
 				break;
 			case 6:
-				return $this->getImage1();
+				return $this->getStock();
 				break;
 			case 7:
-				return $this->getImage2();
+				return $this->getImage1();
 				break;
 			case 8:
-				return $this->getImage3();
+				return $this->getImage2();
 				break;
 			case 9:
-				return $this->getImage4();
+				return $this->getImage3();
 				break;
 			case 10:
-				return $this->getImage5();
+				return $this->getImage4();
 				break;
 			case 11:
-				return $this->getEnabled();
+				return $this->getImage5();
 				break;
 			case 12:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 13:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 14:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 15:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 16:
+				return $this->getCreatedAt();
+				break;
+			case 17:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -783,17 +813,18 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 			$keys[3]=>$this->getProductOptionIdSize(),
 			$keys[4]=>$this->getPrice(),
 			$keys[5]=>$this->getWeight(),
-			$keys[6]=>$this->getImage1(),
-			$keys[7]=>$this->getImage2(),
-			$keys[8]=>$this->getImage3(),
-			$keys[9]=>$this->getImage4(),
-			$keys[10]=>$this->getImage5(),
-			$keys[11]=>$this->getEnabled(),
-			$keys[12]=>$this->getVisible(),
-			$keys[13]=>$this->getDeleted(),
-			$keys[14]=>$this->getLocked(),
-			$keys[15]=>$this->getCreatedAt(),
-			$keys[16]=>$this->getUpdatedAt(),
+			$keys[6]=>$this->getStock(),
+			$keys[7]=>$this->getImage1(),
+			$keys[8]=>$this->getImage2(),
+			$keys[9]=>$this->getImage3(),
+			$keys[10]=>$this->getImage4(),
+			$keys[11]=>$this->getImage5(),
+			$keys[12]=>$this->getEnabled(),
+			$keys[13]=>$this->getVisible(),
+			$keys[14]=>$this->getDeleted(),
+			$keys[15]=>$this->getLocked(),
+			$keys[16]=>$this->getCreatedAt(),
+			$keys[17]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -828,36 +859,39 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 				$this->setWeight($value);
 				break;
 			case 6:
-				$this->setImage1($value);
+				$this->setStock($value);
 				break;
 			case 7:
-				$this->setImage2($value);
+				$this->setImage1($value);
 				break;
 			case 8:
-				$this->setImage3($value);
+				$this->setImage2($value);
 				break;
 			case 9:
-				$this->setImage4($value);
+				$this->setImage3($value);
 				break;
 			case 10:
-				$this->setImage5($value);
+				$this->setImage4($value);
 				break;
 			case 11:
-				$this->setEnabled($value);
+				$this->setImage5($value);
 				break;
 			case 12:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 13:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 14:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 15:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 16:
+				$this->setCreatedAt($value);
+				break;
+			case 17:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -873,17 +907,18 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setProductOptionIdSize($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setPrice($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setWeight($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setImage1($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setImage2($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setImage3($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setImage4($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setImage5($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setEnabled($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setVisible($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setDeleted($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setLocked($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setCreatedAt($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setUpdatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[6], $arr)) $this->setStock($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setImage1($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setImage2($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setImage3($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setImage4($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setImage5($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setEnabled($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setVisible($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setDeleted($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setLocked($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setCreatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setUpdatedAt($arr[$keys[17]]);
 	}
 
 	
@@ -897,6 +932,7 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProductItemPeer::PRODUCT_OPTION_ID_SIZE)) $criteria->add(ProductItemPeer::PRODUCT_OPTION_ID_SIZE, $this->product_option_id_size);
 		if ($this->isColumnModified(ProductItemPeer::PRICE)) $criteria->add(ProductItemPeer::PRICE, $this->price);
 		if ($this->isColumnModified(ProductItemPeer::WEIGHT)) $criteria->add(ProductItemPeer::WEIGHT, $this->weight);
+		if ($this->isColumnModified(ProductItemPeer::STOCK)) $criteria->add(ProductItemPeer::STOCK, $this->stock);
 		if ($this->isColumnModified(ProductItemPeer::IMAGE_1)) $criteria->add(ProductItemPeer::IMAGE_1, $this->image_1);
 		if ($this->isColumnModified(ProductItemPeer::IMAGE_2)) $criteria->add(ProductItemPeer::IMAGE_2, $this->image_2);
 		if ($this->isColumnModified(ProductItemPeer::IMAGE_3)) $criteria->add(ProductItemPeer::IMAGE_3, $this->image_3);
@@ -947,6 +983,8 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 		$copyObj->setPrice($this->price);
 
 		$copyObj->setWeight($this->weight);
+
+		$copyObj->setStock($this->stock);
 
 		$copyObj->setImage1($this->image_1);
 

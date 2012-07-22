@@ -1,0 +1,9 @@
+fields:
+       
+  categoryName:
+    required:
+      msg:       form.error.requiredField
+       
+  shortName:
+    required:
+      msg:       form.error.requiredField

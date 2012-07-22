@@ -46,7 +46,7 @@
 					<label>Cor:</label>
 					<?php
 						$productOptionIdColor = null;
-						foreach(ProductOption::getList('color', $productObj->getId()) as $productOptionObj){
+						foreach(ProductOption::getList(null, 'color', $productObj->getId()) as $productOptionObj){
 							
 							$productOptionId = $productOptionObj->getId();
 							$isDefault       = $productOptionObj->getIsDefault();
@@ -67,7 +67,7 @@
 					<label>Tamanho:</label>
 					<?php
 						$productOptionIdSize = null;
-						foreach(ProductOption::getList('size', $productObj->getId()) as $productOptionObj){
+						foreach(ProductOption::getList(null, 'size', $productObj->getId()) as $productOptionObj){
 							
 							$productOptionId = $productOptionObj->getId();
 							$isDefault       = $productOptionObj->getIsDefault();

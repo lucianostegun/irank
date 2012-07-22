@@ -13,7 +13,7 @@ abstract class BaseProductItemPeer {
 	const CLASS_DEFAULT = 'lib.model.ProductItem';
 
 	
-	const NUM_COLUMNS = 17;
+	const NUM_COLUMNS = 18;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -36,6 +36,9 @@ abstract class BaseProductItemPeer {
 
 	
 	const WEIGHT = 'product_item.WEIGHT';
+
+	
+	const STOCK = 'product_item.STOCK';
 
 	
 	const IMAGE_1 = 'product_item.IMAGE_1';
@@ -76,19 +79,19 @@ abstract class BaseProductItemPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'ProductId', 'ProductOptionIdColor', 'ProductOptionIdSize', 'Price', 'Weight', 'Image1', 'Image2', 'Image3', 'Image4', 'Image5', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (ProductItemPeer::ID, ProductItemPeer::PRODUCT_ID, ProductItemPeer::PRODUCT_OPTION_ID_COLOR, ProductItemPeer::PRODUCT_OPTION_ID_SIZE, ProductItemPeer::PRICE, ProductItemPeer::WEIGHT, ProductItemPeer::IMAGE_1, ProductItemPeer::IMAGE_2, ProductItemPeer::IMAGE_3, ProductItemPeer::IMAGE_4, ProductItemPeer::IMAGE_5, ProductItemPeer::ENABLED, ProductItemPeer::VISIBLE, ProductItemPeer::DELETED, ProductItemPeer::LOCKED, ProductItemPeer::CREATED_AT, ProductItemPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'product_id', 'product_option_id_color', 'product_option_id_size', 'price', 'weight', 'image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PRODUCT_ID'=>'', 'PRODUCT_OPTION_ID_COLOR'=>'', 'PRODUCT_OPTION_ID_SIZE'=>'', 'PRICE'=>'', 'WEIGHT'=>'', 'IMAGE_1'=>'', 'IMAGE_2'=>'', 'IMAGE_3'=>'', 'IMAGE_4'=>'', 'IMAGE_5'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'ProductId', 'ProductOptionIdColor', 'ProductOptionIdSize', 'Price', 'Weight', 'Stock', 'Image1', 'Image2', 'Image3', 'Image4', 'Image5', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (ProductItemPeer::ID, ProductItemPeer::PRODUCT_ID, ProductItemPeer::PRODUCT_OPTION_ID_COLOR, ProductItemPeer::PRODUCT_OPTION_ID_SIZE, ProductItemPeer::PRICE, ProductItemPeer::WEIGHT, ProductItemPeer::STOCK, ProductItemPeer::IMAGE_1, ProductItemPeer::IMAGE_2, ProductItemPeer::IMAGE_3, ProductItemPeer::IMAGE_4, ProductItemPeer::IMAGE_5, ProductItemPeer::ENABLED, ProductItemPeer::VISIBLE, ProductItemPeer::DELETED, ProductItemPeer::LOCKED, ProductItemPeer::CREATED_AT, ProductItemPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'product_id', 'product_option_id_color', 'product_option_id_size', 'price', 'weight', 'stock', 'image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PRODUCT_ID'=>'', 'PRODUCT_OPTION_ID_COLOR'=>'', 'PRODUCT_OPTION_ID_SIZE'=>'', 'PRICE'=>'', 'WEIGHT'=>'', 'STOCK'=>'', 'IMAGE_1'=>'', 'IMAGE_2'=>'', 'IMAGE_3'=>'', 'IMAGE_4'=>'', 'IMAGE_5'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ProductId'=>1, 'ProductOptionIdColor'=>2, 'ProductOptionIdSize'=>3, 'Price'=>4, 'Weight'=>5, 'Image1'=>6, 'Image2'=>7, 'Image3'=>8, 'Image4'=>9, 'Image5'=>10, 'Enabled'=>11, 'Visible'=>12, 'Deleted'=>13, 'Locked'=>14, 'CreatedAt'=>15, 'UpdatedAt'=>16, ),
-		BasePeer::TYPE_COLNAME=>array (ProductItemPeer::ID=>0, ProductItemPeer::PRODUCT_ID=>1, ProductItemPeer::PRODUCT_OPTION_ID_COLOR=>2, ProductItemPeer::PRODUCT_OPTION_ID_SIZE=>3, ProductItemPeer::PRICE=>4, ProductItemPeer::WEIGHT=>5, ProductItemPeer::IMAGE_1=>6, ProductItemPeer::IMAGE_2=>7, ProductItemPeer::IMAGE_3=>8, ProductItemPeer::IMAGE_4=>9, ProductItemPeer::IMAGE_5=>10, ProductItemPeer::ENABLED=>11, ProductItemPeer::VISIBLE=>12, ProductItemPeer::DELETED=>13, ProductItemPeer::LOCKED=>14, ProductItemPeer::CREATED_AT=>15, ProductItemPeer::UPDATED_AT=>16, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'product_id'=>1, 'product_option_id_color'=>2, 'product_option_id_size'=>3, 'price'=>4, 'weight'=>5, 'image_1'=>6, 'image_2'=>7, 'image_3'=>8, 'image_4'=>9, 'image_5'=>10, 'enabled'=>11, 'visible'=>12, 'deleted'=>13, 'locked'=>14, 'created_at'=>15, 'updated_at'=>16, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ProductId'=>1, 'ProductOptionIdColor'=>2, 'ProductOptionIdSize'=>3, 'Price'=>4, 'Weight'=>5, 'Stock'=>6, 'Image1'=>7, 'Image2'=>8, 'Image3'=>9, 'Image4'=>10, 'Image5'=>11, 'Enabled'=>12, 'Visible'=>13, 'Deleted'=>14, 'Locked'=>15, 'CreatedAt'=>16, 'UpdatedAt'=>17, ),
+		BasePeer::TYPE_COLNAME=>array (ProductItemPeer::ID=>0, ProductItemPeer::PRODUCT_ID=>1, ProductItemPeer::PRODUCT_OPTION_ID_COLOR=>2, ProductItemPeer::PRODUCT_OPTION_ID_SIZE=>3, ProductItemPeer::PRICE=>4, ProductItemPeer::WEIGHT=>5, ProductItemPeer::STOCK=>6, ProductItemPeer::IMAGE_1=>7, ProductItemPeer::IMAGE_2=>8, ProductItemPeer::IMAGE_3=>9, ProductItemPeer::IMAGE_4=>10, ProductItemPeer::IMAGE_5=>11, ProductItemPeer::ENABLED=>12, ProductItemPeer::VISIBLE=>13, ProductItemPeer::DELETED=>14, ProductItemPeer::LOCKED=>15, ProductItemPeer::CREATED_AT=>16, ProductItemPeer::UPDATED_AT=>17, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'product_id'=>1, 'product_option_id_color'=>2, 'product_option_id_size'=>3, 'price'=>4, 'weight'=>5, 'stock'=>6, 'image_1'=>7, 'image_2'=>8, 'image_3'=>9, 'image_4'=>10, 'image_5'=>11, 'enabled'=>12, 'visible'=>13, 'deleted'=>14, 'locked'=>15, 'created_at'=>16, 'updated_at'=>17, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
 	);
 
 	
@@ -153,6 +156,8 @@ abstract class BaseProductItemPeer {
 		$criteria->addSelectColumn(ProductItemPeer::PRICE);
 
 		$criteria->addSelectColumn(ProductItemPeer::WEIGHT);
+
+		$criteria->addSelectColumn(ProductItemPeer::STOCK);
 
 		$criteria->addSelectColumn(ProductItemPeer::IMAGE_1);
 

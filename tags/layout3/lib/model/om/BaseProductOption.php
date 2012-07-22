@@ -41,6 +41,22 @@ abstract class BaseProductOption extends BaseObject  implements Persistent {
 
 
 	
+	protected $enabled;
+
+
+	
+	protected $visible;
+
+
+	
+	protected $deleted;
+
+
+	
+	protected $locked;
+
+
+	
 	protected $created_at;
 
 
@@ -122,6 +138,34 @@ abstract class BaseProductOption extends BaseObject  implements Persistent {
 	{
 
 		return $this->order_seq;
+	}
+
+	
+	public function getEnabled()
+	{
+
+		return $this->enabled;
+	}
+
+	
+	public function getVisible()
+	{
+
+		return $this->visible;
+	}
+
+	
+	public function getDeleted()
+	{
+
+		return $this->deleted;
+	}
+
+	
+	public function getLocked()
+	{
+
+		return $this->locked;
 	}
 
 	
@@ -281,6 +325,46 @@ abstract class BaseProductOption extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setEnabled($v)
+	{
+
+		if ($this->enabled !== $v) {
+			$this->enabled = $v;
+			$this->modifiedColumns[] = ProductOptionPeer::ENABLED;
+		}
+
+	} 
+	
+	public function setVisible($v)
+	{
+
+		if ($this->visible !== $v) {
+			$this->visible = $v;
+			$this->modifiedColumns[] = ProductOptionPeer::VISIBLE;
+		}
+
+	} 
+	
+	public function setDeleted($v)
+	{
+
+		if ($this->deleted !== $v) {
+			$this->deleted = $v;
+			$this->modifiedColumns[] = ProductOptionPeer::DELETED;
+		}
+
+	} 
+	
+	public function setLocked($v)
+	{
+
+		if ($this->locked !== $v) {
+			$this->locked = $v;
+			$this->modifiedColumns[] = ProductOptionPeer::LOCKED;
+		}
+
+	} 
+	
 	public function setCreatedAt($v)
 	{
 
@@ -335,15 +419,23 @@ abstract class BaseProductOption extends BaseObject  implements Persistent {
 
 			$this->order_seq = $rs->getInt($startcol + 7);
 
-			$this->created_at = $rs->getTimestamp($startcol + 8, null);
+			$this->enabled = $rs->getBoolean($startcol + 8);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 9, null);
+			$this->visible = $rs->getBoolean($startcol + 9);
+
+			$this->deleted = $rs->getBoolean($startcol + 10);
+
+			$this->locked = $rs->getBoolean($startcol + 11);
+
+			$this->created_at = $rs->getTimestamp($startcol + 12, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 13, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 10; 
+						return $startcol + 14; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProductOption object", $e);
 		}
@@ -554,9 +646,21 @@ abstract class BaseProductOption extends BaseObject  implements Persistent {
 				return $this->getOrderSeq();
 				break;
 			case 8:
-				return $this->getCreatedAt();
+				return $this->getEnabled();
 				break;
 			case 9:
+				return $this->getVisible();
+				break;
+			case 10:
+				return $this->getDeleted();
+				break;
+			case 11:
+				return $this->getLocked();
+				break;
+			case 12:
+				return $this->getCreatedAt();
+				break;
+			case 13:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -577,8 +681,12 @@ abstract class BaseProductOption extends BaseObject  implements Persistent {
 			$keys[5]=>$this->getTagName(),
 			$keys[6]=>$this->getIsDefault(),
 			$keys[7]=>$this->getOrderSeq(),
-			$keys[8]=>$this->getCreatedAt(),
-			$keys[9]=>$this->getUpdatedAt(),
+			$keys[8]=>$this->getEnabled(),
+			$keys[9]=>$this->getVisible(),
+			$keys[10]=>$this->getDeleted(),
+			$keys[11]=>$this->getLocked(),
+			$keys[12]=>$this->getCreatedAt(),
+			$keys[13]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -619,9 +727,21 @@ abstract class BaseProductOption extends BaseObject  implements Persistent {
 				$this->setOrderSeq($value);
 				break;
 			case 8:
-				$this->setCreatedAt($value);
+				$this->setEnabled($value);
 				break;
 			case 9:
+				$this->setVisible($value);
+				break;
+			case 10:
+				$this->setDeleted($value);
+				break;
+			case 11:
+				$this->setLocked($value);
+				break;
+			case 12:
+				$this->setCreatedAt($value);
+				break;
+			case 13:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -639,8 +759,12 @@ abstract class BaseProductOption extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setTagName($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setIsDefault($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setOrderSeq($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setCreatedAt($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setUpdatedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[8], $arr)) $this->setEnabled($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setVisible($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setDeleted($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setLocked($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setCreatedAt($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setUpdatedAt($arr[$keys[13]]);
 	}
 
 	
@@ -656,6 +780,10 @@ abstract class BaseProductOption extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProductOptionPeer::TAG_NAME)) $criteria->add(ProductOptionPeer::TAG_NAME, $this->tag_name);
 		if ($this->isColumnModified(ProductOptionPeer::IS_DEFAULT)) $criteria->add(ProductOptionPeer::IS_DEFAULT, $this->is_default);
 		if ($this->isColumnModified(ProductOptionPeer::ORDER_SEQ)) $criteria->add(ProductOptionPeer::ORDER_SEQ, $this->order_seq);
+		if ($this->isColumnModified(ProductOptionPeer::ENABLED)) $criteria->add(ProductOptionPeer::ENABLED, $this->enabled);
+		if ($this->isColumnModified(ProductOptionPeer::VISIBLE)) $criteria->add(ProductOptionPeer::VISIBLE, $this->visible);
+		if ($this->isColumnModified(ProductOptionPeer::DELETED)) $criteria->add(ProductOptionPeer::DELETED, $this->deleted);
+		if ($this->isColumnModified(ProductOptionPeer::LOCKED)) $criteria->add(ProductOptionPeer::LOCKED, $this->locked);
 		if ($this->isColumnModified(ProductOptionPeer::CREATED_AT)) $criteria->add(ProductOptionPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(ProductOptionPeer::UPDATED_AT)) $criteria->add(ProductOptionPeer::UPDATED_AT, $this->updated_at);
 
@@ -701,6 +829,14 @@ abstract class BaseProductOption extends BaseObject  implements Persistent {
 		$copyObj->setIsDefault($this->is_default);
 
 		$copyObj->setOrderSeq($this->order_seq);
+
+		$copyObj->setEnabled($this->enabled);
+
+		$copyObj->setVisible($this->visible);
+
+		$copyObj->setDeleted($this->deleted);
+
+		$copyObj->setLocked($this->locked);
 
 		$copyObj->setCreatedAt($this->created_at);
 

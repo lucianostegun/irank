@@ -17,6 +17,10 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 
 	
+	protected $file_id;
+
+
+	
 	protected $order_number;
 
 
@@ -119,6 +123,9 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 	protected $aUserSite;
 
 	
+	protected $aFile;
+
+	
 	protected $collPurchaseProductItemList;
 
 	
@@ -142,6 +149,13 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 	{
 
 		return $this->user_site_id;
+	}
+
+	
+	public function getFileId()
+	{
+
+		return $this->file_id;
 	}
 
 	
@@ -438,6 +452,24 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 		if ($this->aUserSite !== null && $this->aUserSite->getId() !== $v) {
 			$this->aUserSite = null;
+		}
+
+	} 
+	
+	public function setFileId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->file_id !== $v) {
+			$this->file_id = $v;
+			$this->modifiedColumns[] = PurchasePeer::FILE_ID;
+		}
+
+		if ($this->aFile !== null && $this->aFile->getId() !== $v) {
+			$this->aFile = null;
 		}
 
 	} 
@@ -806,61 +838,63 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 			$this->user_site_id = $rs->getInt($startcol + 1);
 
-			$this->order_number = $rs->getString($startcol + 2);
+			$this->file_id = $rs->getInt($startcol + 2);
 
-			$this->order_status = $rs->getString($startcol + 3);
+			$this->order_number = $rs->getString($startcol + 3);
 
-			$this->order_value = $rs->getFloat($startcol + 4);
+			$this->order_status = $rs->getString($startcol + 4);
 
-			$this->products = $rs->getInt($startcol + 5);
+			$this->order_value = $rs->getFloat($startcol + 5);
 
-			$this->itens = $rs->getInt($startcol + 6);
+			$this->products = $rs->getInt($startcol + 6);
 
-			$this->shipping_value = $rs->getFloat($startcol + 7);
+			$this->itens = $rs->getInt($startcol + 7);
 
-			$this->total_value = $rs->getFloat($startcol + 8);
+			$this->shipping_value = $rs->getFloat($startcol + 8);
 
-			$this->paymethod = $rs->getString($startcol + 9);
+			$this->total_value = $rs->getFloat($startcol + 9);
 
-			$this->ip_address = $rs->getString($startcol + 10);
+			$this->paymethod = $rs->getString($startcol + 10);
 
-			$this->duration = $rs->getTime($startcol + 11, null);
+			$this->ip_address = $rs->getString($startcol + 11);
 
-			$this->approval_date = $rs->getTimestamp($startcol + 12, null);
+			$this->duration = $rs->getTime($startcol + 12, null);
 
-			$this->refusal_date = $rs->getTimestamp($startcol + 13, null);
+			$this->approval_date = $rs->getTimestamp($startcol + 13, null);
 
-			$this->refusal_reason = $rs->getString($startcol + 14);
+			$this->refusal_date = $rs->getTimestamp($startcol + 14, null);
 
-			$this->shipping_date = $rs->getTimestamp($startcol + 15, null);
+			$this->refusal_reason = $rs->getString($startcol + 15);
 
-			$this->tracing_code = $rs->getString($startcol + 16);
+			$this->shipping_date = $rs->getTimestamp($startcol + 16, null);
 
-			$this->customer_name = $rs->getString($startcol + 17);
+			$this->tracing_code = $rs->getString($startcol + 17);
 
-			$this->address_name = $rs->getString($startcol + 18);
+			$this->customer_name = $rs->getString($startcol + 18);
 
-			$this->address_number = $rs->getString($startcol + 19);
+			$this->address_name = $rs->getString($startcol + 19);
 
-			$this->address_quarter = $rs->getString($startcol + 20);
+			$this->address_number = $rs->getString($startcol + 20);
 
-			$this->address_complement = $rs->getString($startcol + 21);
+			$this->address_quarter = $rs->getString($startcol + 21);
 
-			$this->address_city = $rs->getString($startcol + 22);
+			$this->address_complement = $rs->getString($startcol + 22);
 
-			$this->address_state = $rs->getString($startcol + 23);
+			$this->address_city = $rs->getString($startcol + 23);
 
-			$this->address_zipcode = $rs->getString($startcol + 24);
+			$this->address_state = $rs->getString($startcol + 24);
 
-			$this->created_at = $rs->getTimestamp($startcol + 25, null);
+			$this->address_zipcode = $rs->getString($startcol + 25);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 26, null);
+			$this->created_at = $rs->getTimestamp($startcol + 26, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 27, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 27; 
+						return $startcol + 28; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Purchase object", $e);
 		}
@@ -935,6 +969,13 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				$this->setUserSite($this->aUserSite);
 			}
 
+			if ($this->aFile !== null) {
+				if ($this->aFile->isModified()) {
+					$affectedRows += $this->aFile->save($con);
+				}
+				$this->setFile($this->aFile);
+			}
+
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
@@ -998,6 +1039,12 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aFile !== null) {
+				if (!$this->aFile->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aFile->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = PurchasePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -1037,78 +1084,81 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				return $this->getUserSiteId();
 				break;
 			case 2:
-				return $this->getOrderNumber();
+				return $this->getFileId();
 				break;
 			case 3:
-				return $this->getOrderStatus();
+				return $this->getOrderNumber();
 				break;
 			case 4:
-				return $this->getOrderValue();
+				return $this->getOrderStatus();
 				break;
 			case 5:
-				return $this->getProducts();
+				return $this->getOrderValue();
 				break;
 			case 6:
-				return $this->getItens();
+				return $this->getProducts();
 				break;
 			case 7:
-				return $this->getShippingValue();
+				return $this->getItens();
 				break;
 			case 8:
-				return $this->getTotalValue();
+				return $this->getShippingValue();
 				break;
 			case 9:
-				return $this->getPaymethod();
+				return $this->getTotalValue();
 				break;
 			case 10:
-				return $this->getIpAddress();
+				return $this->getPaymethod();
 				break;
 			case 11:
-				return $this->getDuration();
+				return $this->getIpAddress();
 				break;
 			case 12:
-				return $this->getApprovalDate();
+				return $this->getDuration();
 				break;
 			case 13:
-				return $this->getRefusalDate();
+				return $this->getApprovalDate();
 				break;
 			case 14:
-				return $this->getRefusalReason();
+				return $this->getRefusalDate();
 				break;
 			case 15:
-				return $this->getShippingDate();
+				return $this->getRefusalReason();
 				break;
 			case 16:
-				return $this->getTracingCode();
+				return $this->getShippingDate();
 				break;
 			case 17:
-				return $this->getCustomerName();
+				return $this->getTracingCode();
 				break;
 			case 18:
-				return $this->getAddressName();
+				return $this->getCustomerName();
 				break;
 			case 19:
-				return $this->getAddressNumber();
+				return $this->getAddressName();
 				break;
 			case 20:
-				return $this->getAddressQuarter();
+				return $this->getAddressNumber();
 				break;
 			case 21:
-				return $this->getAddressComplement();
+				return $this->getAddressQuarter();
 				break;
 			case 22:
-				return $this->getAddressCity();
+				return $this->getAddressComplement();
 				break;
 			case 23:
-				return $this->getAddressState();
+				return $this->getAddressCity();
 				break;
 			case 24:
-				return $this->getAddressZipcode();
+				return $this->getAddressState();
 				break;
 			case 25:
-				return $this->getCreatedAt();
+				return $this->getAddressZipcode();
 				break;
 			case 26:
+				return $this->getCreatedAt();
+				break;
+			case 27:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1123,31 +1173,32 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getUserSiteId(),
-			$keys[2]=>$this->getOrderNumber(),
-			$keys[3]=>$this->getOrderStatus(),
-			$keys[4]=>$this->getOrderValue(),
-			$keys[5]=>$this->getProducts(),
-			$keys[6]=>$this->getItens(),
-			$keys[7]=>$this->getShippingValue(),
-			$keys[8]=>$this->getTotalValue(),
-			$keys[9]=>$this->getPaymethod(),
-			$keys[10]=>$this->getIpAddress(),
-			$keys[11]=>$this->getDuration(),
-			$keys[12]=>$this->getApprovalDate(),
-			$keys[13]=>$this->getRefusalDate(),
-			$keys[14]=>$this->getRefusalReason(),
-			$keys[15]=>$this->getShippingDate(),
-			$keys[16]=>$this->getTracingCode(),
-			$keys[17]=>$this->getCustomerName(),
-			$keys[18]=>$this->getAddressName(),
-			$keys[19]=>$this->getAddressNumber(),
-			$keys[20]=>$this->getAddressQuarter(),
-			$keys[21]=>$this->getAddressComplement(),
-			$keys[22]=>$this->getAddressCity(),
-			$keys[23]=>$this->getAddressState(),
-			$keys[24]=>$this->getAddressZipcode(),
-			$keys[25]=>$this->getCreatedAt(),
-			$keys[26]=>$this->getUpdatedAt(),
+			$keys[2]=>$this->getFileId(),
+			$keys[3]=>$this->getOrderNumber(),
+			$keys[4]=>$this->getOrderStatus(),
+			$keys[5]=>$this->getOrderValue(),
+			$keys[6]=>$this->getProducts(),
+			$keys[7]=>$this->getItens(),
+			$keys[8]=>$this->getShippingValue(),
+			$keys[9]=>$this->getTotalValue(),
+			$keys[10]=>$this->getPaymethod(),
+			$keys[11]=>$this->getIpAddress(),
+			$keys[12]=>$this->getDuration(),
+			$keys[13]=>$this->getApprovalDate(),
+			$keys[14]=>$this->getRefusalDate(),
+			$keys[15]=>$this->getRefusalReason(),
+			$keys[16]=>$this->getShippingDate(),
+			$keys[17]=>$this->getTracingCode(),
+			$keys[18]=>$this->getCustomerName(),
+			$keys[19]=>$this->getAddressName(),
+			$keys[20]=>$this->getAddressNumber(),
+			$keys[21]=>$this->getAddressQuarter(),
+			$keys[22]=>$this->getAddressComplement(),
+			$keys[23]=>$this->getAddressCity(),
+			$keys[24]=>$this->getAddressState(),
+			$keys[25]=>$this->getAddressZipcode(),
+			$keys[26]=>$this->getCreatedAt(),
+			$keys[27]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1170,78 +1221,81 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				$this->setUserSiteId($value);
 				break;
 			case 2:
-				$this->setOrderNumber($value);
+				$this->setFileId($value);
 				break;
 			case 3:
-				$this->setOrderStatus($value);
+				$this->setOrderNumber($value);
 				break;
 			case 4:
-				$this->setOrderValue($value);
+				$this->setOrderStatus($value);
 				break;
 			case 5:
-				$this->setProducts($value);
+				$this->setOrderValue($value);
 				break;
 			case 6:
-				$this->setItens($value);
+				$this->setProducts($value);
 				break;
 			case 7:
-				$this->setShippingValue($value);
+				$this->setItens($value);
 				break;
 			case 8:
-				$this->setTotalValue($value);
+				$this->setShippingValue($value);
 				break;
 			case 9:
-				$this->setPaymethod($value);
+				$this->setTotalValue($value);
 				break;
 			case 10:
-				$this->setIpAddress($value);
+				$this->setPaymethod($value);
 				break;
 			case 11:
-				$this->setDuration($value);
+				$this->setIpAddress($value);
 				break;
 			case 12:
-				$this->setApprovalDate($value);
+				$this->setDuration($value);
 				break;
 			case 13:
-				$this->setRefusalDate($value);
+				$this->setApprovalDate($value);
 				break;
 			case 14:
-				$this->setRefusalReason($value);
+				$this->setRefusalDate($value);
 				break;
 			case 15:
-				$this->setShippingDate($value);
+				$this->setRefusalReason($value);
 				break;
 			case 16:
-				$this->setTracingCode($value);
+				$this->setShippingDate($value);
 				break;
 			case 17:
-				$this->setCustomerName($value);
+				$this->setTracingCode($value);
 				break;
 			case 18:
-				$this->setAddressName($value);
+				$this->setCustomerName($value);
 				break;
 			case 19:
-				$this->setAddressNumber($value);
+				$this->setAddressName($value);
 				break;
 			case 20:
-				$this->setAddressQuarter($value);
+				$this->setAddressNumber($value);
 				break;
 			case 21:
-				$this->setAddressComplement($value);
+				$this->setAddressQuarter($value);
 				break;
 			case 22:
-				$this->setAddressCity($value);
+				$this->setAddressComplement($value);
 				break;
 			case 23:
-				$this->setAddressState($value);
+				$this->setAddressCity($value);
 				break;
 			case 24:
-				$this->setAddressZipcode($value);
+				$this->setAddressState($value);
 				break;
 			case 25:
-				$this->setCreatedAt($value);
+				$this->setAddressZipcode($value);
 				break;
 			case 26:
+				$this->setCreatedAt($value);
+				break;
+			case 27:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1253,31 +1307,32 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setUserSiteId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setOrderNumber($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setOrderStatus($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setOrderValue($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setProducts($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setItens($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setShippingValue($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setTotalValue($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setPaymethod($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setIpAddress($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDuration($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setApprovalDate($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setRefusalDate($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setRefusalReason($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setShippingDate($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setTracingCode($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setCustomerName($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setAddressName($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setAddressNumber($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setAddressQuarter($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setAddressComplement($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setAddressCity($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setAddressState($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setAddressZipcode($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setCreatedAt($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setUpdatedAt($arr[$keys[26]]);
+		if (array_key_exists($keys[2], $arr)) $this->setFileId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setOrderNumber($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setOrderStatus($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setOrderValue($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setProducts($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setItens($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setShippingValue($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setTotalValue($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setPaymethod($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setIpAddress($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setDuration($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setApprovalDate($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setRefusalDate($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setRefusalReason($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setShippingDate($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setTracingCode($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setCustomerName($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setAddressName($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setAddressNumber($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setAddressQuarter($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setAddressComplement($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setAddressCity($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setAddressState($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setAddressZipcode($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setCreatedAt($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setUpdatedAt($arr[$keys[27]]);
 	}
 
 	
@@ -1287,6 +1342,7 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(PurchasePeer::ID)) $criteria->add(PurchasePeer::ID, $this->id);
 		if ($this->isColumnModified(PurchasePeer::USER_SITE_ID)) $criteria->add(PurchasePeer::USER_SITE_ID, $this->user_site_id);
+		if ($this->isColumnModified(PurchasePeer::FILE_ID)) $criteria->add(PurchasePeer::FILE_ID, $this->file_id);
 		if ($this->isColumnModified(PurchasePeer::ORDER_NUMBER)) $criteria->add(PurchasePeer::ORDER_NUMBER, $this->order_number);
 		if ($this->isColumnModified(PurchasePeer::ORDER_STATUS)) $criteria->add(PurchasePeer::ORDER_STATUS, $this->order_status);
 		if ($this->isColumnModified(PurchasePeer::ORDER_VALUE)) $criteria->add(PurchasePeer::ORDER_VALUE, $this->order_value);
@@ -1343,6 +1399,8 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setUserSiteId($this->user_site_id);
+
+		$copyObj->setFileId($this->file_id);
 
 		$copyObj->setOrderNumber($this->order_number);
 
@@ -1454,6 +1512,35 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aUserSite;
+	}
+
+	
+	public function setFile($v)
+	{
+
+
+		if ($v === null) {
+			$this->setFileId(NULL);
+		} else {
+			$this->setFileId($v->getId());
+		}
+
+
+		$this->aFile = $v;
+	}
+
+
+	
+	public function getFile($con = null)
+	{
+		if ($this->aFile === null && ($this->file_id !== null)) {
+						include_once 'lib/model/om/BaseFilePeer.php';
+
+			$this->aFile = FilePeer::retrieveByPK($this->file_id, $con);
+
+			
+		}
+		return $this->aFile;
 	}
 
 	

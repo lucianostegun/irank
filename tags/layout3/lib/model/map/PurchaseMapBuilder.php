@@ -38,6 +38,8 @@ class PurchaseMapBuilder {
 
 		$tMap->addForeignKey('USER_SITE_ID', 'UserSiteId', 'int', CreoleTypes::INTEGER, 'user_site', 'ID', false, null);
 
+		$tMap->addForeignKey('FILE_ID', 'FileId', 'int', CreoleTypes::INTEGER, 'file', 'ID', false, null);
+
 		$tMap->addColumn('ORDER_NUMBER', 'OrderNumber', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ORDER_STATUS', 'OrderStatus', 'string', CreoleTypes::VARCHAR, false, null);

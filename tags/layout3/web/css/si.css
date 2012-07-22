@@ -1,0 +1,57 @@
+.SI-FILES-STYLIZED .cabinet
+{
+    width: 96px;
+    height: 22px;
+    background: url('/images/button/selectFile.png') 0 0 no-repeat;
+
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    float: left;
+}
+
+.SI-FILES-STYLIZED .cabinet:hover
+{
+    background-position: 0px -22px
+}
+
+.sendFileButton
+{
+    float: left;
+    display: block;
+    width: 100px;
+    background: #F00
+}
+
+.SI-FILES-STYLIZED .cabinet input[type=file],
+.SI-FILES-STYLIZED .cabinet .file
+{
+    position: relative;
+    z-index: 1000;
+    height: 100%;
+    width: auto;
+    opacity: 0;
+    -moz-opacity: 0;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+    cursor: pointer;
+}
+
+
+.SI-FILES-STYLIZED .fileName
+{
+	float: left;
+    position: relative;
+    top: 0px;
+    overflow: hidden;
+    font-size: 12px;
+    padding: 2px 15px 2px 8px;
+    width: 165px;
+    overflow-x: hidden;
+    background: #F9F9F9;
+    border: 1px solid #DADADA;
+    margin-right: 5px;
+    
+	-moz-border-radius: 	5px;
+	-webkit-border-radius: 	5px;
+	border-radius: 			5px;
+}

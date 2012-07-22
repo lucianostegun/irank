@@ -827,6 +827,12 @@ body.billet .ld2 { font: bold 12px Arial; color: #000000 }
 	font-weight: bold;
 }
 
+.storeOrderHeader .orderStatus span {
+	
+	color: #70983B;
+	font-weight: bold;
+}
+
 .storeOrderHeader .productsLabel {
 	
 	clear: both;
@@ -868,17 +874,25 @@ body.billet .ld2 { font: bold 12px Arial; color: #000000 }
 	background: none;
 }
 
-.purchaseInfo div {
+.purchaseInfo div.info {
 
 	clear: both;
-	font-size: 14px;
-	height: 22px;	
+	font-size: 13px;
+	height: 22px;
+	font-family: Calibri
 }
 
-.purchaseInfo div a.payTicketUpload {
+.purchaseInfo div.info label{
+
+	font-size: 13px;
+}
+
+.purchaseInfo div a#payTicketUploadLink {
 
 	color: #3B5998;
 	font-weight: bold;
+	font-size: 12px;
+	font-family: Calibri
 }
 
 .purchaseInfo label {
@@ -889,6 +903,7 @@ body.billet .ld2 { font: bold 12px Arial; color: #000000 }
 	padding-right: 5px;
 	text-align: left;
 	width: 120px;
+	font-family: Calibri
 }
 
 .purchaseInfo .orderNumber span,
@@ -911,4 +926,15 @@ body.billet .ld2 { font: bold 12px Arial; color: #000000 }
 .shippingInfo h1 {
 
 	font-size: 	20px;	
+}
+
+
+
+#storePurchaseFileUploadDiv {
+
+	display: none;
+	border: 1px solid #C0C0C0;
+	width: 350px;
+	padding: 10px;
+	background: #F0F0F0
 }

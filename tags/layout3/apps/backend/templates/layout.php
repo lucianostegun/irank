@@ -57,6 +57,19 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
     <ul id="menu" class="nav">
         <li class="dash"><?php echo link_to('<span>Resumo geral</span>', 'home/index', array('class'=>($moduleName=='home'?'active':''))) ?></li>
         
+
+		<?php if( $iRankAdmin ): ?>
+        <li class="store"><a href="javascript:void(0)" title="" class="<?php echo (in_array($moduleName, array('store', 'productCategory', 'product', 'productOption', 'purchase'))?'active':'exp') ?>"><span>Loja virtual</span><strong>4</strong></a>
+            <ul class="sub">
+                <li><?php echo link_to('Categorias', 'productCategory/index') ?></li>
+                <li><?php echo link_to('Produtos', 'product/index') ?></li>
+                <li><?php echo link_to('Parâmetros', 'productOption/index') ?></li>
+                <li><?php echo link_to('Pedidos', 'purchase/index') ?></li>
+                <li class="last"><?php echo link_to('Configurações', 'store/index') ?></li>
+            </ul>
+        </li>
+        <?php endif; ?>
+        
         <?php if( $iRankAdmin ): ?>
         <li class="club">
         	<?php

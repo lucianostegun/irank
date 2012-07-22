@@ -347,6 +347,59 @@ class storeActions extends sfActions
   	if( !is_object($this->purchaseObj) )
   		return $this->redirect('store/index');
   }
+
+  public function executeUploadFile($request){
+  	
+  	$userSiteId  = $this->getUser()->getAttribute('userSiteId');
+	$purchaseId  = $request->getParameter('purchaseId');
+	$maxFileSize = (1024*1024*2);
+	
+	$purchaseObj = PurchasePeer::retrieveByPK($purchaseId);
+	
+	if( !is_object($purchaseObj) || $purchaseObj->getUserSiteId()!=$userSiteId )
+		throw new Exception('Pedido não encontrado');
+	
+	try {
+		
+		$options = array('fileId'=>$purchaseObj->getFileId(),
+						 'fileName'=>'payticket-'.date('YmdHis'),
+						 'maxFileSize'=>$maxFileSize,
+						 'forceNewFile'=>true);
+		
+		$fileObj = File::upload($request, 'filePath', 'store/purchase/'.$purchaseObj->getOrderNumber(), $options);
+	}catch( FileException $e ){
+	
+		echo '<script>';
+		echo 'window.parent.handleUploadFileFailure("'.$e->getMessage().'");';
+		echo '</script>';
+		exit;
+	}catch( Exception $e ){
+	
+		exit;
+	}
+	
+	$purchaseObj->setFileId($fileObj->getId());
+	$purchaseObj->save();
+	
+	$fileId   = $fileObj->getId();
+	$fileName = $fileObj->getFileName();
+	
+	echo '<script>';
+	echo 'window.parent.handleUploadFileSuccess('.$fileId.', "'.$fileName.'");';
+	echo '</script>';
+	
+	exit;
+  }
+
+  public function executeDownloadFile($request){
+  	
+	$orderNumber = $request->getParameter('orderNumber');
+	$purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber);
+	
+	$purchaseObj->getFile()->download();
+
+	exit;
+  }
   
   
   

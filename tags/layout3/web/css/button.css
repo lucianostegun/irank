@@ -4,6 +4,7 @@
 	cursor: 			pointer;
 	-moz-user-select: 	none;
 	line-height:		16px;
+	white-space: 		nowrap
 }
 
 .button .buttonLeft {

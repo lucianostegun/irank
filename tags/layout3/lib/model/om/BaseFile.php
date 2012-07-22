@@ -80,6 +80,12 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 	protected $lastEmailMarketingCriteria = null;
 
 	
+	protected $collPurchaseList;
+
+	
+	protected $lastPurchaseCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -455,6 +461,14 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collPurchaseList !== null) {
+				foreach($this->collPurchaseList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -538,6 +552,14 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 				if ($this->collEmailMarketingList !== null) {
 					foreach($this->collEmailMarketingList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collPurchaseList !== null) {
+					foreach($this->collPurchaseList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -754,6 +776,10 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 			foreach($this->getEmailMarketingList() as $relObj) {
 				$copyObj->addEmailMarketing($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getPurchaseList() as $relObj) {
+				$copyObj->addPurchase($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1479,6 +1505,111 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 		$this->lastEmailMarketingCriteria = $criteria;
 
 		return $this->collEmailMarketingList;
+	}
+
+	
+	public function initPurchaseList()
+	{
+		if ($this->collPurchaseList === null) {
+			$this->collPurchaseList = array();
+		}
+	}
+
+	
+	public function getPurchaseList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchasePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPurchaseList === null) {
+			if ($this->isNew()) {
+			   $this->collPurchaseList = array();
+			} else {
+
+				$criteria->add(PurchasePeer::FILE_ID, $this->getId());
+
+				PurchasePeer::addSelectColumns($criteria);
+				$this->collPurchaseList = PurchasePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(PurchasePeer::FILE_ID, $this->getId());
+
+				PurchasePeer::addSelectColumns($criteria);
+				if (!isset($this->lastPurchaseCriteria) || !$this->lastPurchaseCriteria->equals($criteria)) {
+					$this->collPurchaseList = PurchasePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastPurchaseCriteria = $criteria;
+		return $this->collPurchaseList;
+	}
+
+	
+	public function countPurchaseList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchasePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(PurchasePeer::FILE_ID, $this->getId());
+
+		return PurchasePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addPurchase(Purchase $l)
+	{
+		$this->collPurchaseList[] = $l;
+		$l->setFile($this);
+	}
+
+
+	
+	public function getPurchaseListJoinUserSite($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchasePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPurchaseList === null) {
+			if ($this->isNew()) {
+				$this->collPurchaseList = array();
+			} else {
+
+				$criteria->add(PurchasePeer::FILE_ID, $this->getId());
+
+				$this->collPurchaseList = PurchasePeer::doSelectJoinUserSite($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(PurchasePeer::FILE_ID, $this->getId());
+
+			if (!isset($this->lastPurchaseCriteria) || !$this->lastPurchaseCriteria->equals($criteria)) {
+				$this->collPurchaseList = PurchasePeer::doSelectJoinUserSite($criteria, $con);
+			}
+		}
+		$this->lastPurchaseCriteria = $criteria;
+
+		return $this->collPurchaseList;
 	}
 
 } 

@@ -52,7 +52,7 @@ $(function() {
 
 	//===== Form elements styling =====//
 	
-	$("select, input:checkbox, input:radio, input:file").uniform({
+	$("select, input:checkbox, input:radio").uniform({
 		maxSelectChars: 3
 	});
 	

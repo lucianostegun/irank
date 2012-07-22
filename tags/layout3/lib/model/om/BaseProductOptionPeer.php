@@ -13,7 +13,7 @@ abstract class BaseProductOptionPeer {
 	const CLASS_DEFAULT = 'lib.model.ProductOption';
 
 	
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 14;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,6 +44,18 @@ abstract class BaseProductOptionPeer {
 	const ORDER_SEQ = 'product_option.ORDER_SEQ';
 
 	
+	const ENABLED = 'product_option.ENABLED';
+
+	
+	const VISIBLE = 'product_option.VISIBLE';
+
+	
+	const DELETED = 'product_option.DELETED';
+
+	
+	const LOCKED = 'product_option.LOCKED';
+
+	
 	const CREATED_AT = 'product_option.CREATED_AT';
 
 	
@@ -55,19 +67,19 @@ abstract class BaseProductOptionPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'ProductCategoryId', 'OptionType', 'OptionName', 'Description', 'TagName', 'IsDefault', 'OrderSeq', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (ProductOptionPeer::ID, ProductOptionPeer::PRODUCT_CATEGORY_ID, ProductOptionPeer::OPTION_TYPE, ProductOptionPeer::OPTION_NAME, ProductOptionPeer::DESCRIPTION, ProductOptionPeer::TAG_NAME, ProductOptionPeer::IS_DEFAULT, ProductOptionPeer::ORDER_SEQ, ProductOptionPeer::CREATED_AT, ProductOptionPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'product_category_id', 'option_type', 'option_name', 'description', 'tag_name', 'is_default', 'order_seq', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PRODUCT_CATEGORY_ID'=>'', 'OPTION_TYPE'=>'', 'OPTION_NAME'=>'', 'DESCRIPTION'=>'', 'TAG_NAME'=>'', 'IS_DEFAULT'=>'', 'ORDER_SEQ'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'ProductCategoryId', 'OptionType', 'OptionName', 'Description', 'TagName', 'IsDefault', 'OrderSeq', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (ProductOptionPeer::ID, ProductOptionPeer::PRODUCT_CATEGORY_ID, ProductOptionPeer::OPTION_TYPE, ProductOptionPeer::OPTION_NAME, ProductOptionPeer::DESCRIPTION, ProductOptionPeer::TAG_NAME, ProductOptionPeer::IS_DEFAULT, ProductOptionPeer::ORDER_SEQ, ProductOptionPeer::ENABLED, ProductOptionPeer::VISIBLE, ProductOptionPeer::DELETED, ProductOptionPeer::LOCKED, ProductOptionPeer::CREATED_AT, ProductOptionPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'product_category_id', 'option_type', 'option_name', 'description', 'tag_name', 'is_default', 'order_seq', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PRODUCT_CATEGORY_ID'=>'', 'OPTION_TYPE'=>'', 'OPTION_NAME'=>'', 'DESCRIPTION'=>'', 'TAG_NAME'=>'', 'IS_DEFAULT'=>'', 'ORDER_SEQ'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ProductCategoryId'=>1, 'OptionType'=>2, 'OptionName'=>3, 'Description'=>4, 'TagName'=>5, 'IsDefault'=>6, 'OrderSeq'=>7, 'CreatedAt'=>8, 'UpdatedAt'=>9, ),
-		BasePeer::TYPE_COLNAME=>array (ProductOptionPeer::ID=>0, ProductOptionPeer::PRODUCT_CATEGORY_ID=>1, ProductOptionPeer::OPTION_TYPE=>2, ProductOptionPeer::OPTION_NAME=>3, ProductOptionPeer::DESCRIPTION=>4, ProductOptionPeer::TAG_NAME=>5, ProductOptionPeer::IS_DEFAULT=>6, ProductOptionPeer::ORDER_SEQ=>7, ProductOptionPeer::CREATED_AT=>8, ProductOptionPeer::UPDATED_AT=>9, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'product_category_id'=>1, 'option_type'=>2, 'option_name'=>3, 'description'=>4, 'tag_name'=>5, 'is_default'=>6, 'order_seq'=>7, 'created_at'=>8, 'updated_at'=>9, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ProductCategoryId'=>1, 'OptionType'=>2, 'OptionName'=>3, 'Description'=>4, 'TagName'=>5, 'IsDefault'=>6, 'OrderSeq'=>7, 'Enabled'=>8, 'Visible'=>9, 'Deleted'=>10, 'Locked'=>11, 'CreatedAt'=>12, 'UpdatedAt'=>13, ),
+		BasePeer::TYPE_COLNAME=>array (ProductOptionPeer::ID=>0, ProductOptionPeer::PRODUCT_CATEGORY_ID=>1, ProductOptionPeer::OPTION_TYPE=>2, ProductOptionPeer::OPTION_NAME=>3, ProductOptionPeer::DESCRIPTION=>4, ProductOptionPeer::TAG_NAME=>5, ProductOptionPeer::IS_DEFAULT=>6, ProductOptionPeer::ORDER_SEQ=>7, ProductOptionPeer::ENABLED=>8, ProductOptionPeer::VISIBLE=>9, ProductOptionPeer::DELETED=>10, ProductOptionPeer::LOCKED=>11, ProductOptionPeer::CREATED_AT=>12, ProductOptionPeer::UPDATED_AT=>13, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'product_category_id'=>1, 'option_type'=>2, 'option_name'=>3, 'description'=>4, 'tag_name'=>5, 'is_default'=>6, 'order_seq'=>7, 'enabled'=>8, 'visible'=>9, 'deleted'=>10, 'locked'=>11, 'created_at'=>12, 'updated_at'=>13, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	
@@ -136,6 +148,14 @@ abstract class BaseProductOptionPeer {
 		$criteria->addSelectColumn(ProductOptionPeer::IS_DEFAULT);
 
 		$criteria->addSelectColumn(ProductOptionPeer::ORDER_SEQ);
+
+		$criteria->addSelectColumn(ProductOptionPeer::ENABLED);
+
+		$criteria->addSelectColumn(ProductOptionPeer::VISIBLE);
+
+		$criteria->addSelectColumn(ProductOptionPeer::DELETED);
+
+		$criteria->addSelectColumn(ProductOptionPeer::LOCKED);
 
 		$criteria->addSelectColumn(ProductOptionPeer::CREATED_AT);
 
