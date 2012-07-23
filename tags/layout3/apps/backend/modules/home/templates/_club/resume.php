@@ -15,7 +15,7 @@
                 <table cellpadding="0" cellspacing="0" width="100%" class="display sTable">
                     <thead>
                         <tr>
-							<td widtd="16"></td> 
+							<td width="16"></td> 
 							<td>Nome</td> 
 							<td>Ranking</td> 
 							<?php if($iRankAdmin || !$clubId): ?>

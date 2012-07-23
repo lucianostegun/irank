@@ -10,6 +10,54 @@
 class Purchase extends BasePurchase
 {
 	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+       		Log::quickLog('purchase', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('purchase', $this->getPrimaryKey(), $e);
+        }
+    }
+	
+	public function delete($con=null){
+		
+		$this->setVisible(false);
+		$this->setDeleted(true);
+		$this->save();
+		
+		Log::quickLogDelete('purchase', $this->getPrimaryKey());
+	}
+	
+	public function quickSave($request){
+		
+		$orderStatus  = $request->getParameter('orderStatus');
+		$shippingDate = $request->getParameter('shippingDate');
+		$tracingCode  = $request->getParameter('tracingCode');
+		
+		$this->setOrderStatus( $orderStatus );
+		$this->setShippingDate( Util::formatDate($shippingDate) );
+		$this->setTracingCode( $tracingCode );
+		$this->save();
+	}
+	
+	public static function getList(Criteria $criteria=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+			
+		$criteria->addDescendingOrderByColumn( PurchasePeer::UPDATED_AT );
+		$criteria->addDescendingOrderByColumn( PurchasePeer::CREATED_AT );
+		
+		return PurchasePeer::doSelect($criteria);
+	}
+	
 	public function buildOrderNumber(){
 		
 		$userSiteId  = $this->getUserSiteId();
@@ -106,11 +154,12 @@ class Purchase extends BasePurchase
 		
 		if( $description ){
 			
-			switch($orderStatus){
-				case 'new':
-					$orderStatus = 'Pedido confirmado';
-					break;
-			}
+			$orderStatusList = Purchase::getOrderStatusList();
+			
+			if( !isset($orderStatusList[$orderStatus]) )
+				$orderStatus = 'Pedido pendente';
+			else
+				$orderStatus = $orderStatusList[$orderStatus];
 		}
 		
 		return $orderStatus;
@@ -133,6 +182,17 @@ class Purchase extends BasePurchase
 		}
 		
 		return $paymethod;
+	}
+	
+	public static function getOrderStatusList(){
+		
+		return array('new'=>'Pedido confirmado',
+					'complete'=>'Pedido concluído',
+					'pending'=>'Pagamento pendente',
+					'checking'=>'Verificação financeira',
+					'shipped'=>'Produto enviado',
+					'refused'=>'Pedido recusado',
+					'canceled'=>'Pedido cancelado');
 	}
 }
 

@@ -10,6 +10,31 @@
 class Product extends BaseProduct
 {
 	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+       		Log::quickLog('product', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('product', $this->getPrimaryKey(), $e);
+        }
+    }
+	
+	public function delete($con=null){
+		
+		$this->setVisible(false);
+		$this->setDeleted(true);
+		$this->save();
+		
+		Log::quickLogDelete('product', $this->getPrimaryKey());
+	}
+	
 	public function quickSave($request){
 		
 		$productCode       = $request->getParameter('productCode');
@@ -18,7 +43,6 @@ class Product extends BaseProduct
 		$productCategoryId = $request->getParameter('productCategoryId');
 		$defaultPrice      = $request->getParameter('defaultPrice');
 		$defaultWeight     = $request->getParameter('defaultWeight');
-		$stock             = $request->getParameter('stock');
 		$isNew             = $request->getParameter('isNew');
 		$description       = $request->getParameter('description');
 		
@@ -28,7 +52,6 @@ class Product extends BaseProduct
 		$this->setProductCategoryId( $productCategoryId );
 		$this->setDefaultPrice( Util::formatFloat($defaultPrice) );
 		$this->setDefaultWeight( Util::formatFloat($defaultWeight) );
-		$this->setStock( $stock );
 		$this->setIsNew( ($isNew?true:false) );
 		$this->setDescription( $description );
 		$this->setVisible( true );
@@ -84,5 +107,12 @@ class Product extends BaseProduct
 		if( $this->getImage5() ) $images++;
 		
 		return $images;
+	}
+	
+	public function updateStock(){
+		
+		$stock = Util::executeOne('SELECT SUM(stock) FROM product_item WHERE enabled AND visible AND NOT deleted AND product_id = '.$this->getId());
+		$this->setStock($stock);
+		$this->save();
 	}
 }

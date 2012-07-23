@@ -72,8 +72,7 @@
 	<div class="formRow">
 		<label>Estoque atual</label>
 		<div class="formRight">
-			<?php echo input_tag('stock', $productObj->getStock(), array('size'=>5, 'maxlength'=>5, 'class'=>'textR', 'id'=>'productStock')) ?>
-			<div class="formNote error" id="productFormErrorStock"></div>
+			<label id="productStock"><?php echo $productObj->getStock() ?></label>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -119,7 +118,7 @@
 						$fileName = $productObj->getImage($i, 'preview');
 						echo image_tag($fileName, array('id'=>'productImage-'.$i));
 						
-						echo input_file_tag('filePath-'.$i, array('onchange'=>'submitProductImage('.$i.')', 'class'=>'fileUpload', 'id'=>'productFilePathImage-'.$i));
+						echo input_file_tag('filePath-'.$i, array('onchange'=>'submitProductImage('.$i.', false)', 'class'=>'fileUpload', 'id'=>'productFilePathImage-'.$i));
 					?>
 				</div>
 			</span>
@@ -133,6 +132,3 @@
 	<iframe border="0" id="uploadFileFrame" name="uploadFileFrame" class="hidden" src="" width="0" height="0" style="" scrolling="no" frameborder="0"></iframe>
 
 </form>
-<script type="text/javascript" language="javascript">
-	SI.Files.stylizeAll();
-</script>

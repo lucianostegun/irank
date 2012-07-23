@@ -166,6 +166,11 @@ table.display tr.gradeA img {
 	top: 0px;
 }
 
+table.display tr.gradeA .icon img {
+
+	margin-bottom: -4px
+}
+
 table.display tr.gradeB img {
 
 	position: relative;

@@ -10,9 +10,81 @@
 class ProductItem extends BaseProductItem
 {
 	
-	public function getImageCover($path=null){
+	private $reloadTable = false;
+	
+	public function getIsNew(){
 		
-		$fileName = $this->getImage1();
+		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
+	}
+	
+    public function save($con=null){
+    	
+    	try{
+			
+			$isNew              = $this->isNew();
+			$columnModifiedList = Log::getModifiedColumnList($this);
+
+			parent::save();
+			
+       		Log::quickLog('product_item', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+        } catch ( Exception $e ) {
+        	
+            Log::quickLogError('product_item', $this->getPrimaryKey(), $e);
+        }
+    }
+	
+	public function delete($con=null){
+		
+		$this->setVisible(false);
+		$this->setDeleted(true);
+		$this->save();
+		
+		$this->getProduct()->updateStock();
+		
+		Log::quickLogDelete('product_item', $this->getPrimaryKey());
+	}
+	
+	public function quickSave($request){
+		
+		$productId            = $request->getParameter('productId');
+		$productOptionIdColor = $request->getParameter('productOptionIdColor');
+		$productOptionIdSize  = $request->getParameter('productOptionIdSize');
+		$price                = $request->getParameter('price');
+		$weight               = $request->getParameter('weight');
+		$stock                = $request->getParameter('stock');
+		
+		$this->reloadTable = $this->getIsNew();
+		
+		$this->setProductId( $productId );
+		$this->setProductOptionIdColor( $productOptionIdColor );
+		$this->setProductOptionIdSize( $productOptionIdSize );
+		$this->setPrice( Util::formatFloat($price) );
+		$this->setWeight( Util::formatFloat($weight) );
+		$this->setStock( $stock );
+		$this->setVisible( true );
+		$this->setEnabled( true );
+		$this->save();
+		
+		$this->getProduct()->updateStock();
+	}
+	
+	public static function getList(Criteria $criteria=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+			
+		$criteria->add( ProductItemPeer::ENABLED, true );
+		$criteria->add( ProductItemPeer::VISIBLE, true );
+		$criteria->add( ProductItemPeer::DELETED, false );
+		$criteria->addAscendingOrderByColumn( ProductItemPeer::CREATED_AT );
+		
+		return ProductItemPeer::doSelect( $criteria );
+	}
+	
+	public function getImage($imageIndex, $path=null){
+		
+		$function = "getImage$imageIndex";
+		$fileName = $this->$function();
 		
 		if( !is_null($path) ){
 			
@@ -21,6 +93,24 @@ class ProductItem extends BaseProductItem
 		}
 		
 		return $fileName;
+	}
+	
+	public function getImageCover($path=null){
+		
+		return $this->getImage(1, $path);
+	}
+	
+	public function getImages(){
+		
+		$images = 0;
+		
+		if( $this->getImage1() ) $images++;
+		if( $this->getImage2() ) $images++;
+		if( $this->getImage3() ) $images++;
+		if( $this->getImage4() ) $images++;
+		if( $this->getImage5() ) $images++;
+		
+		return $images;
 	}
 	
 	public static function getWeightById($productItemId){
@@ -36,5 +126,27 @@ class ProductItem extends BaseProductItem
 	public function getProductOptionSize(){
 		
 		return $this->getProductOptionRelatedByProductOptionIdSize();
+	}
+	
+	public function getInfo(){
+		
+		$infoList = array();
+		
+		$infoList['id']                   = $this->getId();
+		$infoList['productId']            = $this->getProductId();
+		$infoList['productOptionIdColor'] = $this->getProductOptionIdColor();
+		$infoList['productOptionIdSize']  = $this->getProductOptionIdSize();
+		$infoList['price']                = $this->getPrice();
+		$infoList['weight']               = $this->getWeight();
+		$infoList['image1']               = $this->getImage1();
+		$infoList['image2']               = $this->getImage2();
+		$infoList['image3']               = $this->getImage3();
+		$infoList['image4']               = $this->getImage4();
+		$infoList['image5']               = $this->getImage5();
+		$infoList['stock']                = $this->getStock();
+		$infoList['productStock']         = $this->getProduct()->getStock();
+		$infoList['reloadTable']          = $this->reloadTable;
+		
+		return $infoList;
 	}
 }

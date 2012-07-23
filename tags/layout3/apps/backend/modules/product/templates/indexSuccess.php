@@ -14,7 +14,7 @@
 					<th>Estoque</th>
 				</tr> 
 			</thead> 
-			<tbody id="productCategoryTbody"> 
+			<tbody id="productTbody"> 
 				<?php
 					$criteria = new Criteria();
 					foreach(Product::getList($criteria) as $productObj):

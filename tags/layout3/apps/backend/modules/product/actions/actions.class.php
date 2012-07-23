@@ -60,7 +60,6 @@ class productActions extends sfActions
 
   public function executeSave($request){
     
-    $productId  = $this->getUser()->getAttribute('productId');
     $productObj = ProductPeer::retrieveByPK($this->productId);
     
     $productObj->quickSave($request);
@@ -97,12 +96,75 @@ class productActions extends sfActions
     
     exit;
   }
+
+  public function executeGetNewProductItem($request){
+  	
+    $productItemObj = Util::getNewObject('productItem', array('productId'=>$this->productId));
+    
+    echo Util::parseInfo($productItemObj->getInfo());
+    exit;
+  }
+  
+  public function executeGetProductItem($request){
+  	
+  	$productItemId  = $request->getParameter('productItemId');
+    $productItemObj = ProductItemPeer::retrieveByPK($productItemId);
+    
+    echo Util::parseInfo($productItemObj->getInfo());
+    exit;
+  }
+
+  public function handleErrorSaveItem(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
+
+  public function executeSaveItem($request){
+    
+    $productItemId  = $request->getParameter('productItemId');
+    $productItemObj = ProductItemPeer::retrieveByPK($productItemId);
+    
+    $productItemObj->quickSave($request);
+    
+    echo Util::parseInfo($productItemObj->getInfo());
+    
+    exit;
+  }
+  
+  public function executeDeleteProductItem($request){
+  	
+  	$productItemId  = $request->getParameter('productItemId');
+    $productItemObj = ProductItemPeer::retrieveByPK($productItemId);
+    
+    $productItemObj->delete();
+    
+    echo $productItemObj->getProduct()->getStock();
+    
+    exit;
+  }
+  
+  public function executeGetProductItemList($request){
+  	
+    $productObj = ProductPeer::retrieveByPK($this->productId);
+    
+    sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	return $this->renderText(get_partial('product/include/itens', array('productObj'=>$productObj)));
+    exit;
+  }
   
   public function executeUploadImage($request){
 	
-	$imageIndex  = $request->getParameter('imageIndex');
-	$productCode = $request->getParameter('productCode');
-	$productObj  = ProductPeer::retrieveByPK($this->productId);
+	$imageIndex    = $request->getParameter('imageIndex');
+	$productCode   = $request->getParameter('productCode');
+	$productItemId = $request->getParameter('productItemId');
+	$isProductItem = !empty($productItemId);
+	
+	if( $productItemId )
+		$genericObj = ProductItemPeer::retrieveByPK($productItemId);
+	else
+		$genericObj = ProductPeer::retrieveByPK($this->productId);
+	
 	$maxFileSize = (1024*1024*1);
 	
 	$fileName = sprintf('%s-%02d', strtolower($productCode), $imageIndex);
@@ -116,7 +178,7 @@ class productActions extends sfActions
 	}catch( FileException $e ){
 	
 		echo '<script>';
-		echo 'window.parent.handleUploadFileFailure("'.$e->getMessage().'");';
+		echo 'window.parent.handleUploadFileFailure("'.$e->getMessage().'", '.($isProductItem?'true':'false').');';
 		echo '</script>';
 		exit;
 	}catch( Exception $e ){
@@ -130,14 +192,14 @@ class productActions extends sfActions
 	
 	$function = 'setImage'.$imageIndex;
 	
-	$productObj->$function($fileObj->getFileName());
-	$productObj->save();
+	$genericObj->$function($fileObj->getFileName());
+	$genericObj->save();
 	
 	$fileId   = $fileObj->getId();
 	$fileName = $fileObj->getFileName();
 	
 	echo '<script>';
-	echo 'window.parent.handleUploadFileSuccessProductImage("'.$fileName.'", '.$imageIndex.');';
+	echo 'window.parent.handleUploadFileSuccessProductImage("'.$fileName.'", '.$imageIndex.', '.($isProductItem?'true':'false').');';
 	echo '</script>';
 	
   	exit;

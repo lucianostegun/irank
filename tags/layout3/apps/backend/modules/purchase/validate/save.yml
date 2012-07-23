@@ -1,0 +1,11 @@
+fields:
+       
+  orderStatus:
+    required:
+      msg:       form.error.requiredField
+       
+  shippingDate:
+    sfCallbackValidator:
+      callback:      [Validate, validateDate]
+      invalid_error: form.error.invalidDate
+      

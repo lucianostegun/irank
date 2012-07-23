@@ -8,6 +8,11 @@
 		</ul>
 		<div class="tab_container">
 			<div id="tab1" class="tab_content"><?php include_partial('product/tab/main', array('productObj'=>$productObj)) ?></div>
+			<div id="tab2" class="tab_content"><?php include_partial('product/tab/itens', array('productObj'=>$productObj)) ?></div>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript" language="javascript">
+	SI.Files.stylizeAll();
+</script>

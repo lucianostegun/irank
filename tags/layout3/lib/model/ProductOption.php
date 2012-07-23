@@ -37,13 +37,16 @@ class ProductOption extends BaseProductOption
 			Util::executeQuery("UPDATE product_option SET is_default = FALSE WHERE product_category_id = $productCategoryId AND option_type = '$optionType' AND id <> $productOptionId");
 	}
 	
-	public static function getList(Criteria $criteria=null, $optionType=null, $productId=null){
+	public static function getList(Criteria $criteria=null, $optionType=null, $productId=null, $productCategoryId=null){
 		
 		$criteria = new Criteria();
 		if( $optionType )
-		$criteria->add( ProductOptionPeer::OPTION_TYPE, $optionType );
+			$criteria->add( ProductOptionPeer::OPTION_TYPE, $optionType );
+
+		if( $productCategoryId )
+			$criteria->add( ProductOptionPeer::PRODUCT_CATEGORY_ID, $productCategoryId );
 		
-		if( $optionType ){
+		if( $productId ){
 			
 			$criteria->addJoin( ProductOptionPeer::ID, "product_item.PRODUCT_OPTION_ID_$optionType", Criteria::INNER_JOIN );
 			$criteria->add( ProductItemPeer::VISIBLE, true );
@@ -58,9 +61,11 @@ class ProductOption extends BaseProductOption
 		return ProductOptionPeer::doSelect($criteria);
 	}
 	
-	public static function getOptionsForSelect($optionType, $productId, $defaultValue=null, $returnArray=false){
+	public static function getOptionsForSelect($optionType, $productId, $defaultValue=null, $returnArray=false, $column='description', $productCategoryId=null){
 		
-		$productOptionObjList = self::getList(null, $optionType, $productId);
+		$productOptionObjList = self::getList(null, $optionType, $productId, $productCategoryId);
+
+		$function = 'get'.ucfirst($column);
 
 		$optionList = array();
 		foreach($productOptionObjList as $productOptionObj){
@@ -68,7 +73,7 @@ class ProductOption extends BaseProductOption
 			if( is_null($defaultValue) && $productOptionObj->getIsDefault() )
 				$defaultValue = $productOptionObj->getIsDefault();
 			
-			$optionList[$productOptionObj->getId()] = $productOptionObj->getDescription();
+			$optionList[$productOptionObj->getId()] = $productOptionObj->$function();
 		}
 			
 		if( $returnArray )

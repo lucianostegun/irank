@@ -73,7 +73,6 @@ function removeProductFromCart(productItemId){
 	var successFunc = function(t){
 
 		var content        = t.responseText;
-		debug(content);
 		var cartSessionObj = parseInfo(content);
 		
 		$('storeCartShippingValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.shippingValue);

@@ -3,7 +3,7 @@
 	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', 'Minhas compras'=>'store/myOrders', 'Pedido #'.$orderNumber=>null)));
 	
 	$tracingCode   = $purchaseObj->getTracingCode();
-	$shippingDate  = $purchaseObj->getShippingDate('d/m/Y H:i');
+	$shippingDate  = $purchaseObj->getShippingDate('d/m/Y');
 	$billetLink    = null;
 	$fileId        = $purchaseObj->getFileId();
 	
@@ -97,7 +97,7 @@
 	<?php endif; ?>
 	<div class="info"><label>Forma pagamento:</label><?php echo $purchaseObj->getPaymethod(true).$billetLink ?></div>
 	<div class="info"><label>Transporte:</label>E-Sedex</div>
-	<?php if( $tracingCode ): ?><div class="tracingCode"><label>Cód rastreamento:</label><?php echo link_to($tracingCode, "http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI=$tracingCode", array('target'=>'_blank')) ?></div><?php endif; ?>
+	<?php if( $tracingCode ): ?><div class="info"><label>Cód rastreamento:</label><?php echo link_to($tracingCode, "http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI=$tracingCode", array('target'=>'_blank')) ?></div><?php endif; ?>
 	<div class="info"><label>Comprovante:</label>
 	<?php
 		$fileName = null;
@@ -125,7 +125,7 @@
 	?>
 	<div id="storePurchaseFileUploadDiv">
 		<span class="fileName" id="fileNameLabel">&nbsp;</span>
-		<span class="cabinet"><?php echo input_file_tag('filePath', array('onchange'=>'updateFileNameLabel(this.value)', 'class'=>'file')); ?></span>
+		<span class="cabinet"><?php echo input_file_tag('filePath', array('onchange'=>'updateFileNameLabel(this.value); submitUploadFileForm()', 'class'=>'file')); ?></span>
 		<?php echo button_tag('submitForm', 'ENVIAR', array('onclick'=>'submitUploadFileForm()', 'style'=>'position: relative; left: 10px')) ?>
 		<div class="clear"></div>
 		<div class="pt10">

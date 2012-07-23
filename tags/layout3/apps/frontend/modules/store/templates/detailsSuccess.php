@@ -46,13 +46,17 @@
 					<label>Cor:</label>
 					<?php
 						$productOptionIdColor = null;
-						foreach(ProductOption::getList(null, 'color', $productObj->getId()) as $productOptionObj){
+						$productOptionList    = ProductOption::getList(null, 'color', $productObj->getId());
+						foreach($productOptionList as $key=>$productOptionObj){
 							
 							$productOptionId = $productOptionObj->getId();
 							$isDefault       = $productOptionObj->getIsDefault();
 							
-							if( !$productOptionIdColor || $isDefault )
+							if( $isDefault || (!$productOptionIdColor && $key==count($productOptionList)-1)){
+								
 								$productOptionIdColor = $productOptionObj->getId();
+								$isDefault            = true;
+							}
 							
 							echo '<div class="productOptionOption color '.($isDefault?'selected':'').'" onclick="selectProductOption(\'color\', '.$productOptionId.')" id="productOptionColor-'.$productOptionId.'">';
 							echo '	<div class="color" style="background: '.$productOptionObj->getDescription().'"></div>';

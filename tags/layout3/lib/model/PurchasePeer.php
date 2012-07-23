@@ -12,10 +12,12 @@ class PurchasePeer extends BasePurchasePeer
 	
 	public static function retrieveByPK($purchaseId, $con=null){
 		
+		$app = Util::getApp();
+
 		$purchaseObj = parent::retrieveByPK($purchaseId, $con);
 		$userSiteId  = MyTools::getAttribute('userSiteId');
 		
-		if( is_object($purchaseObj) && $purchaseObj->getUserSiteId()!=$userSiteId )
+		if( $app!='backend' && is_object($purchaseObj) && $purchaseObj->getUserSiteId()!=$userSiteId )
 			throw new Exception('Pedido não encontrado para este usuário');
 			
 		return $purchaseObj;

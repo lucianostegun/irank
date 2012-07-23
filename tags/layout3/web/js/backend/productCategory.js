@@ -1,9 +1,3 @@
-$(function() {
-	
-	var productCategoryId  = $('#productCategoryId').val();
-	var urlAjax = _webRoot+'/productCategory/uploadPhotos?productCategoryId='+productCategoryId;
-});
-
 function handleSuccessProductCategory(content){
 
 	clearFormFieldErrors();

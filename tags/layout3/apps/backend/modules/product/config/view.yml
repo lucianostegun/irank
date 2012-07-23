@@ -1,4 +1,4 @@
 all:
 
   stylesheets:    [backend/product]
-  javascripts:    [backend/product, si]
+  javascripts:    [backend/product, backend/productItem, si]
