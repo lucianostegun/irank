@@ -40,6 +40,8 @@ class PurchaseMapBuilder {
 
 		$tMap->addForeignKey('FILE_ID', 'FileId', 'int', CreoleTypes::INTEGER, 'file', 'ID', false, null);
 
+		$tMap->addColumn('PAGSEGURO_URL', 'PagseguroUrl', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('ORDER_NUMBER', 'OrderNumber', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('ORDER_STATUS', 'OrderStatus', 'string', CreoleTypes::VARCHAR, false, null);

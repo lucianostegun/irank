@@ -141,7 +141,9 @@ abstract class BasePurchaseProductItem extends BaseObject  implements Persistent
 	public function setPurchaseId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -159,7 +161,9 @@ abstract class BasePurchaseProductItem extends BaseObject  implements Persistent
 	public function setProductItemId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -197,7 +201,9 @@ abstract class BasePurchaseProductItem extends BaseObject  implements Persistent
 	public function setQuantity($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

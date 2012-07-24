@@ -260,7 +260,9 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -274,7 +276,9 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	public function setProductId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -292,7 +296,9 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	public function setProductOptionIdColor($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -310,7 +316,9 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	public function setProductOptionIdSize($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -348,7 +356,9 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	public function setStock($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -362,7 +372,9 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	public function setImage1($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -376,7 +388,9 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	public function setImage2($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -390,7 +404,9 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	public function setImage3($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -404,7 +420,9 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	public function setImage4($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -418,7 +436,9 @@ abstract class BaseProductItem extends BaseObject  implements Persistent {
 	public function setImage5($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

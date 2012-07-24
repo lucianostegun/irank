@@ -612,8 +612,8 @@ class EventLive extends BaseEventLive
 		if( $peopleId ){
 			
 			$orderSeq = 0;
-			foreach($scoreList as $label=>$score)
-				EventLivePlayerScore::quickSave($eventLiveId, $peopleId, $score, $label, ++$orderSeq);
+			//foreach($scoreList as $label=>$score)
+			//	EventLivePlayerScore::quickSave($eventLiveId, $peopleId, $score, $label, ++$orderSeq);
 			
 			return $scoreList;
 		}

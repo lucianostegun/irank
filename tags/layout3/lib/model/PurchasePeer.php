@@ -23,11 +23,12 @@ class PurchasePeer extends BasePurchasePeer
 		return $purchaseObj;
 	}
 	
-	public static function retrieveByOrderNumber($orderNumber, $userSiteId=null){
+	public static function retrieveByOrderNumber($orderNumber, $userSiteId=null, $force=false){
 		
 		$criteria = new Criteria();
 		$criteria->add( PurchasePeer::ORDER_NUMBER, $orderNumber );
-		if( $userSiteId )
+		
+		if( $userSiteId && !$force )
 			$criteria->add( PurchasePeer::USER_SITE_ID, $userSiteId );
 			
 		$purchaseObj = PurchasePeer::doSelectOne($criteria);

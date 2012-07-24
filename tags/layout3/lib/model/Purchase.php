@@ -115,6 +115,21 @@ class Purchase extends BasePurchase
 		$emailContent = str_replace('[addressState]', $this->getAddressState(), $emailContent);
 		$emailContent = str_replace('[addressZipcode]', $this->getAddressZipcode(), $emailContent);
 		
+		$paymethod = $this->getPaymethod();
+		switch($paymethod){
+			case 'billet':
+				$paymentLabel = 'Imprimir boleto';
+				$paymentUrl   = 'http://[host]/store/billet/'.$this->getOrderNumber();
+				break;
+			case 'pagseguro':
+				$paymentLabel = 'URL para pagamento';
+				$paymentUrl    = $this->getPagseguroUrl();
+				break;
+		}
+
+		$emailContent = str_replace('[paymentUrl]', $paymentUrl, $emailContent);
+		$emailContent = str_replace('[paymentLabel]', $paymentLabel, $emailContent);
+		
 		preg_match('/<productItemList>(.*)<\/productItemList>/msU', $emailContent, $matches);
 		$productItemRow  = $matches[1];
 		$productItemList = '';
@@ -193,6 +208,47 @@ class Purchase extends BasePurchase
 					'shipped'=>'Produto enviado',
 					'refused'=>'Pedido recusado',
 					'canceled'=>'Pedido cancelado');
+	}
+	
+	public function addTransaction($xmlObj){
+		
+//		echo '<Pre> ';print_r($xmlObj);exit;
+	    $transactionCode   = (string)$xmlObj->code;
+	    $transactionType   = (int)$xmlObj->type;
+	    $transactionStatus = (int)$xmlObj->status;
+	    $paymethodType     = (int)$xmlObj->paymentMethod->type;
+	    $paymethodCode     = (int)$xmlObj->paymentMethod->code;
+	    $grossAmount       = (float)$xmlObj->grossAmount;
+	    $feeAmount         = (float)$xmlObj->feeAmount;
+	    $netAmount         = (float)$xmlObj->netAmount;
+	    $escrowEndDate     = (string)$xmlObj->escrowEndDate;
+	    $extraAmount       = (float)$xmlObj->extraAmount;
+	    $installmentCount  = (int)$xmlObj->installmentCount;
+	    $createdAt         = (string)$xmlObj->date;
+	    $updatedAt         = (string)$xmlObj->lastEventDate;
+
+		$purchaseTransactionObj = PurchaseTransactionPeer::retrieveByCode($transactionCode);
+		
+		if( !is_object($purchaseTransactionObj) )
+			$purchaseTransactionObj = new PurchaseTransaction();
+		
+		$purchaseTransactionObj->setPurchaseId($this->getId());
+		$purchaseTransactionObj->settransactionCode($transactionCode);   
+		$purchaseTransactionObj->settransactionType($transactionType);
+		$purchaseTransactionObj->settransactionStatus($transactionStatus);
+		$purchaseTransactionObj->setpaymethodType($paymethodType);
+		$purchaseTransactionObj->setpaymethodCode($paymethodCode);
+		$purchaseTransactionObj->setgrossAmount($grossAmount);
+		$purchaseTransactionObj->setfeeAmount($feeAmount);
+		$purchaseTransactionObj->setnetAmount($netAmount);
+		$purchaseTransactionObj->setescrowEndDate($escrowEndDate);
+		$purchaseTransactionObj->setextraAmount($extraAmount);
+		$purchaseTransactionObj->setinstallmentCount($installmentCount);
+		$purchaseTransactionObj->setcreatedAt($createdAt);
+		$purchaseTransactionObj->setupdatedAt($updatedAt);
+		$purchaseTransactionObj->save();
+		
+//		echo '<Pre>';print_r($purchaseTransactionObj);exit;
 	}
 }
 

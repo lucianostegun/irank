@@ -1,2 +1,40 @@
 {2012/07/23 21:43:26} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013012,     SenderEmail=lstegun@irank.com.br)) - begin 
 {2012/07/23 21:45:59} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013013,     SenderEmail=lstegun@irank.com.br)) - begin 
+{2012/07/23 22:06:23} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013005,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 22:06:23} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013005,     SenderEmail=lucianostegun@gmail.com)) - end {1}45370B1E5E5E0BD1146CFFB700668C54 
+{2012/07/23 22:15:27} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013008,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 22:15:27} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013008,     SenderEmail=lucianostegun@gmail.com)) - end {1}92C3261778784B6664562FBC2AD0D648 
+{2012/07/23 22:49:46} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013009,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 22:49:47} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013009,     SenderEmail=lucianostegun@gmail.com)) - end {1}FDD38BDD2B2B01D8847CAF99FA7309E3 
+{2012/07/23 23:03:39} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013011,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:03:39} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013011,     SenderEmail=lucianostegun@gmail.com)) - end {1}B34AC9DEA7A7C09CC499BFB12802F395 
+{2012/07/23 23:05:09} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013012,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:05:09} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013012,     SenderEmail=lucianostegun@gmail.com)) - end {1}122B56E48686FE122482FF920707E85F 
+{2012/07/23 23:05:11} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013013,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:05:12} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013013,     SenderEmail=lucianostegun@gmail.com)) - end {1}1C614582DEDEE61FF49CCFA2224C766D 
+{2012/07/23 23:05:13} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013014,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:05:13} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013014,     SenderEmail=lucianostegun@gmail.com)) - end {1}209087FEA8A89A2114E89F9C15251B1F 
+{2012/07/23 23:05:13} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013015,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:05:14} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013015,     SenderEmail=lucianostegun@gmail.com)) - end {1}2420ACC24848403554AA3F954E83E921 
+{2012/07/23 23:05:14} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013016,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:05:15} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013016,     SenderEmail=lucianostegun@gmail.com)) - end {1}273FE5D16C6C22F2241F5FA582BF75E0 
+{2012/07/23 23:05:15} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013017,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:05:15} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013017,     SenderEmail=lucianostegun@gmail.com)) - end {1}2AE2D222E6E65A7444406FB00A287A9D 
+{2012/07/23 23:07:25} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013018,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:07:25} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013018,     SenderEmail=lucianostegun@gmail.com)) - end {1}25DD34EF6464F1A1147F1F863B7A6564 
+{2012/07/23 23:07:41} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013019,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:07:41} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013019,     SenderEmail=lucianostegun@gmail.com)) - end {1}62D42668C2C2E97BB4556F90619A090B 
+{2012/07/23 23:07:48} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013020,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:07:49} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013020,     SenderEmail=lucianostegun@gmail.com)) - end {1}80E8949104041AD44460AFB2F8FB3BE7 
+{2012/07/23 23:08:05} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013021,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:08:05} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013021,     SenderEmail=lucianostegun@gmail.com)) - end {1}C2DFD07C18187B5334C66F86F740DDBC 
+{2012/07/23 23:08:19} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013022,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/23 23:08:19} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013022,     SenderEmail=lucianostegun@gmail.com)) - end {1}F94BC8B1AEAE0E7EE484BFB2F089FC75 
+{2012/07/24 00:18:21} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013023,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/24 00:18:22} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013023,     SenderEmail=lucianostegun@gmail.com)) - end {1}1998204BB3B3A96AA4AB6F8BE183A3A2 
+{2012/07/24 00:45:34} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013026,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/24 00:45:34} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013026,     SenderEmail=lucianostegun@gmail.com)) - end {1}015BA4798D8D96700416FFAEC193C6FD 
+{2012/07/24 00:48:07} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013029,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/24 00:48:08} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013029,     SenderEmail=lucianostegun@gmail.com)) - end {1}5958929508087C2CC457AFAE1A0CADCF 
+{2012/07/24 00:48:47} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013030,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/07/24 00:48:48} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013030,     SenderEmail=lucianostegun@gmail.com)) - end {1}F57F2613C8C811EFF4431FBBC0698FE6 
