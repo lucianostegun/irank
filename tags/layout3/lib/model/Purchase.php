@@ -205,6 +205,7 @@ class Purchase extends BasePurchase
 					'complete'=>'Pedido concluído',
 					'pending'=>'Pagamento pendente',
 					'checking'=>'Verificação financeira',
+					'approved'=>'Pagamento aprovado',
 					'shipped'=>'Produto enviado',
 					'refused'=>'Pedido recusado',
 					'canceled'=>'Pedido cancelado');
@@ -248,7 +249,37 @@ class Purchase extends BasePurchase
 		$purchaseTransactionObj->setupdatedAt($updatedAt);
 		$purchaseTransactionObj->save();
 		
+		$this->updateOrderStatusFromPagSeguro($transactionStatus);
+		
 //		echo '<Pre>';print_r($purchaseTransactionObj);exit;
+	}
+	
+	private function updateOrderStatusFromPagSeguro($transactionStatus){
+		
+		switch($transactionStatus){
+			case PurchaseTransaction::STATUS_1:
+				$this->updateOrderStatus('pending');
+				break;
+			case PurchaseTransaction::STATUS_2:
+				$this->updateOrderStatus('checking');
+				break;
+			case PurchaseTransaction::STATUS_3 = 'Paga':
+				$this->updateOrderStatus('approved');
+				break;
+			case PurchaseTransaction::STATUS_4: // 'Disponível'
+			case PurchaseTransaction::STATUS_5: // 'Em disputa'
+			case PurchaseTransaction::STATUS_6: // 'Devolvida'
+				break;
+			case PurchaseTransaction::STATUS_7:
+				$this->updateOrderStatus('canceled');
+				break;
+		}
+	}
+	
+	public function updateOrderStatus($orderStatus){
+		
+		$this->setOrderStatus($orderStatus);
+		$this->save();
 	}
 }
 

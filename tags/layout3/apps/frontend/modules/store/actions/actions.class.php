@@ -383,7 +383,7 @@ class storeActions extends sfActions
   	$notificationType = $request->getParameter('notificationType');
   	$notificationCode = $request->getParameter('notificationCode');
   	
-  	Log::doLog('TransactionStatus: Atualizou o status de pagamento do pedido: notificationCode = '.$notificationCode);
+  	Log::doLog('TransactionStatus: Atualizou o status de pagamento do pedido. notificationCode = '.$notificationCode);
   	
   	$credentials = PagSeguroConfig::getAccountCredentials();
   	$email       = $credentials->getEmail();
@@ -433,19 +433,23 @@ class storeActions extends sfActions
 		
 		$transactionId = $request->getParameter('transactionId');
 		
+		Log::doLog('Salvou o transactionId '.$transactionId.' para o pedido '.$orderNumber);
+		
 		if( $result=='VERIFICADO' ){
 			
 			//O post foi validado pelo PagSeguro.
+			Log::doLog('Post PagSeguro validado para o pedido '.$orderNumber);
 		}elseif( $result=='FALSO' ){
 			
 			//O post não foi validado pelo PagSeguro.
+			Log::doLog('Post PagSeguro NÃO validado para o pedido '.$orderNumber);
 		}else{
 			
 			//Erro na integração com o PagSeguro.
+			Log::doLog('Falha ao validar o Post PagSeguro para o pedido '.$orderNumber);
 		}
-		
-		exit;
 	}
+	
   	exit;
   }
   
