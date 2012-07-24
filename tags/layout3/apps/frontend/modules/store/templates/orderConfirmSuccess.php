@@ -22,7 +22,7 @@
 						switch($paymethod){
 							case 'billet':
 								$paymethodIcon = 'boleto';
-								$paymentUrl    = url_for("store/billet?$orderNumber=");
+								$paymentUrl    = url_for("store/billet?$orderNumber=", true);
 								break;
 							case 'pagseguro':
 								$paymethodIcon = 'pagseguro';
