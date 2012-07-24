@@ -77,6 +77,9 @@ class Product extends BaseProduct
 		$function = "getImage$imageIndex";
 		$fileName = $this->$function();
 		
+		if( !$fileName )
+			return null;
+		
 		if( !is_null($path) ){
 			
 			$path     = ($path===true?'':'/'.$path);

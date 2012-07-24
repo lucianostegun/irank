@@ -264,6 +264,14 @@ class storeActions extends sfActions
 	$purchaseObj->setAddressState($cartSessionObj->addressState);
 	$purchaseObj->setAddressZipcode($cartSessionObj->zipcode);
 	$purchaseObj->setCreatedAt($cartSessionObj->createdAt);
+	
+	$libDir = sfConfig::get('sf_lib_dir');
+	require_once "$libDir/pagseguro/PagSeguroLibrary.php";
+  		
+	$paymentRequest = new PagSeguroPaymentRequest();
+	$paymentRequest->setCurrency('BRL');
+	
+	$shippingValue /= $cartSessionObj->itens;
   	
   	foreach($cartSessionObj->productItemList as $productItemId=>$productItem){
   		
@@ -278,27 +286,71 @@ class storeActions extends sfActions
   		$purchaseProductItemObj->setWeight($weight);
   		$purchaseProductItemObj->setTotalValue($price*$quantity);
   		$purchaseObj->addPurchaseProductItem($purchaseProductItemObj);
+  		
+  		$productItemObj     = ProductItemPeer::retrieveByPK($productItemId);
+  		$productObj         = $productItemObj->getProduct();
+  		$productCategoryObj = $productObj->getProductCategory();
+		$categoryShortName  = $productCategoryObj->getShortName();
+		$tagName            = $productCategoryObj->getTagName();
+		$productName        = $productObj->getProductName();
+		$productCode        = $productObj->getProductCode();
+		$shortName          = $productObj->getShortName();
+		
+  		$price         = $productItem->price;
+  		$quantity      = $productItem->quantity;
+  		$paymentRequest->addItem($productObj->getProductCode(), "$categoryShortName: $productName", $quantity, $price, $weight, $shippingValue);
   	}
   	
   	try{
-  		$purchaseObj->validateOrder();
+//  		$purchaseObj->validateOrder();
+  
   		
-//		$con = Propel::getConnection();
+  				
+		$con = Propel::getConnection();
 //		$con->begin();
   		
   		$purchaseObj->save();
-  		$purchaseObj->notify();
-  		
 //		$con->rollback();
+		
+  		$purchaseObj->notify();
+
+		$orderNumber = $purchaseObj->getOrderNumber();
+		$paymentRequest->setReference($orderNumber);
+		
+		$CODIGO_SEDEX = PagSeguroShippingType::getCodeByType('SEDEX');
+		$paymentRequest->setShippingType($CODIGO_SEDEX);
+		$paymentRequest->setShippingAddress($purchaseObj->getAddressZipcode(),
+											$purchaseObj->getAddressName(),
+											$purchaseObj->getAddressNumber(),
+											$purchaseObj->getAddressComplement(),
+											$purchaseObj->getAddressQuarter(),
+											$purchaseObj->getAddressCity(),
+											$purchaseObj->getAddressState(),
+											'BRA');
+		
+		// Sets your customer information.
+		$paymentRequest->setSender($purchaseObj->getCustomerName(), $purchaseObj->getUserSite()->getPeople()->getEmailAddress());
+		
+		$host = $request->getHost();
+		$paymentRequest->setRedirectUrl("http://alpha.irank.com.br/store/orderConfirm/$orderNumber");
+  		
+		$credentials = PagSeguroConfig::getAccountCredentials();
+  		$url = $paymentRequest->register($credentials);
+  		
+  		echo '<Pre>';
+  		print_r($url);
+  		exit;
+  		
   		
   		$this->getNewSession();
-  		echo $purchaseObj->getOrderNumber();
+  		echo $orderNumber;
   	}catch(PurchaseException $e){
   		
   		Util::forceError($e->getMessage());
   	}catch(Exception $e){
   		
-  		Util::forceError('error');
+  		echo $e->getMessage();
+//  		Util::forceError('error');
   	}
   	
   	exit;

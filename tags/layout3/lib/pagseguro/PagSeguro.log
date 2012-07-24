@@ -1,0 +1,2 @@
+{2012/07/23 21:43:26} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013012,     SenderEmail=lstegun@irank.com.br)) - begin 
+{2012/07/23 21:45:59} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013013,     SenderEmail=lstegun@irank.com.br)) - begin 

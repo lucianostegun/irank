@@ -102,15 +102,19 @@
 		<div class="formRight">
 			<?php
 				for($i=1; $i <= 5; $i++):
+					$fileName = $productObj->getImage($i, 'preview');
 			?>
 			<span class="multiple">
-				<div class="cabinet productImage">
-					<span>Imagem <?php echo $i ?></span>
-					<?php
-						echo image_tag('blank', array('id'=>'productItemImage-'.$i));
-						
-						echo input_file_tag('filePath-'.$i, array('onchange'=>'submitProductImage('.$i.', true)', 'class'=>'fileUpload', 'id'=>'productItemFilePathImage-'.$i));
-					?>
+				<div class="productImageArea <?php echo (!$fileName?'empty':'') ?>" id="productItemImageArea-<?php echo $i ?>">
+					<div class="cabinet productImage">
+						<span>Imagem <?php echo $i ?></span>
+						<?php
+							echo image_tag(($fileName?$fileName:'blank'), array('id'=>'productItemImage-'.$i));
+							
+							echo input_file_tag('filePath-'.$i, array('onchange'=>'submitProductImage('.$i.', true)', 'class'=>'fileUpload', 'id'=>'productItemFilePathImage-'.$i));
+						?>
+					</div>
+					<?php echo link_to('remover', '#deleteProductImage('.$i.', true)', array('class'=>'deleteImageLink')) ?>
 				</div>
 			</span>
 			<?php endfor; ?>

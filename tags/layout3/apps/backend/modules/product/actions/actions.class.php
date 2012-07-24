@@ -204,4 +204,23 @@ class productActions extends sfActions
 	
   	exit;
   }
+  
+  public function executeDeleteImage($request){
+	
+	$imageIndex    = $request->getParameter('imageIndex');
+	$productId     = $request->getParameter('productItemId');
+	$isProductItem = !empty($productItemId);
+	
+	if( $productItemId )
+		$genericObj = ProductItemPeer::retrieveByPK($productItemId);
+	else
+		$genericObj = ProductPeer::retrieveByPK($this->productId);
+	
+	$function = 'setImage'.$imageIndex;
+	
+	$genericObj->$function(null);
+	$genericObj->save();
+	
+  	exit;
+  }
 }

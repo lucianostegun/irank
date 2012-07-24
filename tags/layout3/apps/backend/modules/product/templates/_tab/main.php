@@ -7,12 +7,12 @@
 		),
 		array('class'=>'form', 'id'=>'productForm'));
 
-		echo input_hidden_tag('image1', $productObj->getImage1(), array('id'=>'productImage1'));
 //	echo form_tag('product/save', array('class'=>'form', 'id'=>'productForm'));
 	
 	$productId = $productObj->getId();
 	
 	echo input_hidden_tag('productId', $productId);
+	echo input_hidden_tag('image1', $productObj->getImage1(), array('id'=>'productImage1'));
 ?>
 	<div class="formRow">
 		<label>Código</label>
@@ -110,16 +110,19 @@
 		<div class="formRight">
 			<?php
 				for($i=1; $i <= 5; $i++):
+					$fileName = $productObj->getImage($i, 'preview');
 			?>
 			<span class="multiple">
-				<div class="cabinet productImage">
-					<span>Imagem <?php echo $i ?></span>
-					<?php
-						$fileName = $productObj->getImage($i, 'preview');
-						echo image_tag($fileName, array('id'=>'productImage-'.$i));
-						
-						echo input_file_tag('filePath-'.$i, array('onchange'=>'submitProductImage('.$i.', false)', 'class'=>'fileUpload', 'id'=>'productFilePathImage-'.$i));
-					?>
+				<div class="productImageArea <?php echo (!$fileName?'empty':'') ?>" id="productImageArea-<?php echo $i ?>">
+					<div class="cabinet productImage">
+						<span>Imagem <?php echo $i ?></span>
+						<?php
+							echo image_tag(($fileName?$fileName:'blank'), array('id'=>'productImage-'.$i));
+							
+							echo input_file_tag('filePath-'.$i, array('onchange'=>'submitProductImage('.$i.', false)', 'class'=>'fileUpload', 'id'=>'productFilePathImage-'.$i));
+						?>
+					</div>
+					<?php echo link_to('remover', '#deleteProductImage('.$i.', false)', array('class'=>'deleteImageLink')) ?>
 				</div>
 			</span>
 			<?php endfor; ?>

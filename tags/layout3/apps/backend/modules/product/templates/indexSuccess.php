@@ -20,7 +20,7 @@
 					foreach(Product::getList($criteria) as $productObj):
 						
 						$productId  = $productObj->getId();
-						$onclick = 'goToPage(\'product\', \'edit\', \'productId\', '.$productId.', true)"';
+						$onclick = 'goToPage(\'product\', \'edit\', \'productId\', '.$productId.')"';
 				?>
 				<tr class="gradeA higher" id="productIdRow-<?php echo $productId ?>">
 					<td onclick="<?php echo $onclick ?>" class="textC" width="40"><?php echo image_tag($productObj->getImageCover('thumb')) ?></td> 

@@ -82,16 +82,16 @@ $dadosboleto['especie_doc'] = 'DM';
 
 
 // DADOS DA SUA CONTA - ITAÚ
-$dadosboleto['agencia'] = '1614'; // Num da agencia, sem digito
-$dadosboleto['conta'] = '88815';	// Num da conta, sem digito
-$dadosboleto['conta_dv'] = '2'; 	// Digito do Num da conta
+$dadosboleto['agencia'] = '3130'; // Num da agencia, sem digito
+$dadosboleto['conta'] = '25552';	// Num da conta, sem digito
+$dadosboleto['conta_dv'] = '8'; 	// Digito do Num da conta
 
 // DADOS PERSONALIZADOS - ITAÚ
 $dadosboleto['carteira'] = '109';  // Código da Carteira: pode ser 175, 174, 104, 109, 178, ou 157
 
 // SEUS DADOS
 $dadosboleto['identificacao'] = 'Newai Software';
-$dadosboleto['cpf_cnpj'] = '';
+$dadosboleto['cpf_cnpj'] = '09.636.816/0001-80';
 $dadosboleto['endereco'] = 'Coloque o endereço da sua empresa aqui';
 $dadosboleto['cidade_uf'] = 'Cidade / Estado';
 $dadosboleto['cedente'] = 'iRank - Poker Ranking';

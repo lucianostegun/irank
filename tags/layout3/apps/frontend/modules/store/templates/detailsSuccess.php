@@ -71,13 +71,18 @@
 					<label>Tamanho:</label>
 					<?php
 						$productOptionIdSize = null;
-						foreach(ProductOption::getList(null, 'size', $productObj->getId()) as $productOptionObj){
+						$productOptionList   = ProductOption::getList(null, 'size', $productObj->getId());
+						
+						foreach($productOptionList as $key=>$productOptionObj){
 							
 							$productOptionId = $productOptionObj->getId();
 							$isDefault       = $productOptionObj->getIsDefault();
 							
-							if( $isDefault )
+							if( $isDefault || (!$productOptionIdSize && $key==count($productOptionList)-1) ){
+								
 								$productOptionIdSize = $productOptionObj->getId();
+								$isDefault           = true;  
+							}
 							
 							echo '<div class="productOptionOption size '.($isDefault?'selected':'').'" onclick="selectProductOption(\'size\', '.$productOptionId.')" id="productOptionSize-'.$productOptionId.'">';
 							echo $productOptionObj->getOptionName();
