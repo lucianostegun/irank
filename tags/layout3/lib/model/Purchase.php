@@ -263,7 +263,7 @@ class Purchase extends BasePurchase
 			case PurchaseTransaction::STATUS_2:
 				$this->updateOrderStatus('checking');
 				break;
-			case PurchaseTransaction::STATUS_3 = 'Paga':
+			case PurchaseTransaction::STATUS_3:
 				$this->updateOrderStatus('approved');
 				break;
 			case PurchaseTransaction::STATUS_4: // 'Disponível'
