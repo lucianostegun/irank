@@ -116,7 +116,9 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 	public function setRankingLiveId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -134,7 +136,9 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 	public function setDaysAfter($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -165,7 +169,9 @@ abstract class BaseRankingLiveTemplate extends BaseObject  implements Persistent
 	public function setStepDay($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

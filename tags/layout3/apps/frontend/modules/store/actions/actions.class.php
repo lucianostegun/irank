@@ -16,6 +16,9 @@ class storeActions extends sfActions
     
     if( !$this->cartSession )
     	$this->cartSession = $this->getNewSession();
+    
+    $libDir = sfConfig::get('sf_lib_dir');
+	require_once "$libDir/pagseguro/PagSeguroLibrary.php";
   }
   
   public function executeIndex($request){
@@ -242,6 +245,8 @@ class storeActions extends sfActions
   	
   	$peopleObj = People::getCurrentPeople();
   	
+  	$paymethod = $cartSessionObj->paymethod;
+  	
   	$purchaseObj = new Purchase();
 	$purchaseObj->setUserSiteId($userSiteId);
 	$purchaseObj->buildOrderNumber();
@@ -251,7 +256,7 @@ class storeActions extends sfActions
 	$purchaseObj->setItens($cartSessionObj->itens);
 	$purchaseObj->setShippingValue($shippingValue);
 	$purchaseObj->setTotalValue($totalValue);
-	$purchaseObj->setPaymethod($cartSessionObj->paymethod);
+	$purchaseObj->setPaymethod($paymethod);
 	$purchaseObj->setIpAddress($ipAddress);
 	$purchaseObj->setDuration($duration);
   	
@@ -265,13 +270,13 @@ class storeActions extends sfActions
 	$purchaseObj->setAddressZipcode($cartSessionObj->zipcode);
 	$purchaseObj->setCreatedAt($cartSessionObj->createdAt);
 	
-	$libDir = sfConfig::get('sf_lib_dir');
-	require_once "$libDir/pagseguro/PagSeguroLibrary.php";
-  		
-	$paymentRequest = new PagSeguroPaymentRequest();
-	$paymentRequest->setCurrency('BRL');
+	if( $paymethod=='pagseguro' ){
+		
+		$paymentRequest = new PagSeguroPaymentRequest();
+		$paymentRequest->setCurrency('BRL');
+		$shippingValue /= $cartSessionObj->itens;
+	}
 	
-	$shippingValue /= $cartSessionObj->itens;
   	
   	foreach($cartSessionObj->productItemList as $productItemId=>$productItem){
   		
@@ -287,70 +292,74 @@ class storeActions extends sfActions
   		$purchaseProductItemObj->setTotalValue($price*$quantity);
   		$purchaseObj->addPurchaseProductItem($purchaseProductItemObj);
   		
-  		$productItemObj     = ProductItemPeer::retrieveByPK($productItemId);
-  		$productObj         = $productItemObj->getProduct();
-  		$productCategoryObj = $productObj->getProductCategory();
-		$categoryShortName  = $productCategoryObj->getShortName();
-		$tagName            = $productCategoryObj->getTagName();
-		$productName        = $productObj->getProductName();
-		$productCode        = $productObj->getProductCode();
-		$shortName          = $productObj->getShortName();
-		
-  		$price         = $productItem->price;
-  		$quantity      = $productItem->quantity;
-  		$paymentRequest->addItem($productObj->getProductCode(), "$categoryShortName: $productName", $quantity, $price, $weight, $shippingValue);
+  		if( $paymethod=='pagseguro' ){
+  			
+	  		$productItemObj     = ProductItemPeer::retrieveByPK($productItemId);
+	  		$productObj         = $productItemObj->getProduct();
+	  		$productCategoryObj = $productObj->getProductCategory();
+			$categoryShortName  = $productCategoryObj->getShortName();
+			$tagName            = $productCategoryObj->getTagName();
+			$productName        = $productObj->getProductName();
+			$productCode        = $productObj->getProductCode();
+			$shortName          = $productObj->getShortName();
+			
+	  		$paymentRequest->addItem($productObj->getProductCode(), "$categoryShortName: $productName", $quantity, $price, $weight, $shippingValue);
+  		}
   	}
   	
   	try{
 //  		$purchaseObj->validateOrder();
   
-  		
+//  		echo '<Pre>';
   				
-		$con = Propel::getConnection();
+//		$con = Propel::getConnection();
 //		$con->begin();
   		
   		$purchaseObj->save();
-//		$con->rollback();
-		
-  		$purchaseObj->notify();
-
 		$orderNumber = $purchaseObj->getOrderNumber();
-		$paymentRequest->setReference($orderNumber);
 		
-		$CODIGO_SEDEX = PagSeguroShippingType::getCodeByType('SEDEX');
-		$paymentRequest->setShippingType($CODIGO_SEDEX);
-		$paymentRequest->setShippingAddress($purchaseObj->getAddressZipcode(),
-											$purchaseObj->getAddressName(),
-											$purchaseObj->getAddressNumber(),
-											$purchaseObj->getAddressComplement(),
-											$purchaseObj->getAddressQuarter(),
-											$purchaseObj->getAddressCity(),
-											$purchaseObj->getAddressState(),
-											'BRA');
+//		$con->rollback();
+
+		$url = null;
+		if( $paymethod=='pagseguro' ){
+			
+			$paymentRequest->setReference($orderNumber);
+			
+			$CODIGO_SEDEX = PagSeguroShippingType::getCodeByType('SEDEX');
+			$paymentRequest->setShippingType($CODIGO_SEDEX);
+			$paymentRequest->setShippingAddress($purchaseObj->getAddressZipcode(),
+												$purchaseObj->getAddressName(),
+												$purchaseObj->getAddressNumber(),
+												$purchaseObj->getAddressComplement(),
+												$purchaseObj->getAddressQuarter(),
+												$purchaseObj->getAddressCity(),
+												$purchaseObj->getAddressState(),
+												'BRA');
+			
+			// Sets your customer information.
+			$paymentRequest->setSender($purchaseObj->getCustomerName(), $purchaseObj->getUserSite()->getPeople()->getEmailAddress());
+			
+			$host = $request->getHost();
+			$paymentRequest->setRedirectUrl("http://alpha.irank.com.br/store/orderConfirm/$orderNumber");
+
+	  		$credentials = PagSeguroConfig::getAccountCredentials();
+	  		$url = $paymentRequest->register($credentials);
+	  		
+	  		$purchaseObj->setPagseguroUrl($url);
+	  		$purchaseObj->save();
+		}
+
+  		$purchaseObj->notify();
 		
-		// Sets your customer information.
-		$paymentRequest->setSender($purchaseObj->getCustomerName(), $purchaseObj->getUserSite()->getPeople()->getEmailAddress());
-		
-		$host = $request->getHost();
-		$paymentRequest->setRedirectUrl("http://alpha.irank.com.br/store/orderConfirm/$orderNumber");
+//  		$this->getNewSession();
   		
-		$credentials = PagSeguroConfig::getAccountCredentials();
-  		$url = $paymentRequest->register($credentials);
-  		
-  		echo '<Pre>';
-  		print_r($url);
-  		exit;
-  		
-  		
-  		$this->getNewSession();
   		echo $orderNumber;
   	}catch(PurchaseException $e){
   		
   		Util::forceError($e->getMessage());
   	}catch(Exception $e){
   		
-  		echo $e->getMessage();
-//  		Util::forceError('error');
+  		Util::forceError('error');
   	}
   	
   	exit;
@@ -358,13 +367,91 @@ class storeActions extends sfActions
 
   public function executeOrderConfirm($request){
   	
-  	$userSiteId  = $this->getUser()->getAttribute('userSiteId');
+	if( count($_POST) > 0 )
+		return $this->forward('store', 'updateOrderStatusPagSeguro');
+  	
   	$orderNumber = $request->getParameter('orderNumber');
+  	$userSiteId  = $this->getUser()->getAttribute('userSiteId');
   	$this->purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, $userSiteId);
   	
   	if( !is_object($this->purchaseObj) )
   		return $this->redirect('store/index');
   }
+
+  public function executeUpdateTransactionStatusPagSeguro($request){
+  	
+  	$notificationType = $request->getParameter('notificationType');
+  	$notificationCode = $request->getParameter('notificationCode');
+  	
+  	Log::doLog('TransactionStatus: Atualizou o status de pagamento do pedido: notificationCode = '.$notificationCode);
+  	
+  	$credentials = PagSeguroConfig::getAccountCredentials();
+  	$email       = $credentials->getEmail();
+  	$token       = $credentials->getToken();
+  	
+  	$culrUrl = "https://ws.pagseguro.uol.com.br/v2/transactions/notifications/$notificationCode?email=$email&token=$token";
+  	
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_URL, $culrUrl);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_HEADER, false);
+	curl_setopt($curl, CURLOPT_TIMEOUT, 20);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	$xmlString = trim(curl_exec($curl));
+	curl_close($curl);
+  	
+  	$xmlObj = @simplexml_load_string($xmlString);
+  	$orderNumber = (string)$xmlObj->reference;
+  	
+  	$purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, null, true);
+  	$purchaseObj->addTransaction($xmlObj);
+  	
+  	unset($xmlObj);
+  	exit;
+  }
+
+  public function executeUpdateOrderStatusPagSeguro($request){
+  	
+  	$orderNumber = $request->getParameter('Referencia');
+  	$orderNumber = $request->getParameter('orderNumber', $orderNumber);
+  	
+  	Log::doLog('OrderStatus: Atualizou o status de pagamento do pedido: orderNumber = '.$orderNumber);
+  	
+  	$filePath = Util::getFilePath('/log.log');
+  	
+  	$fp = fopen($filePath, 'a');
+  	fwrite($fp, print_r($request, true));
+  	fclose($fp);
+  	
+	if( count($_POST) > 0 ){
+		
+		$purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, null, true);
+		
+		// POST recebido, indica que é a requisição do NPI.
+		$npi = new PagSeguroNpi();
+		$result = $npi->notificationPost();
+		
+		$transactionId = $request->getParameter('transactionId');
+		
+		if( $result=='VERIFICADO' ){
+			
+			//O post foi validado pelo PagSeguro.
+		}elseif( $result=='FALSO' ){
+			
+			//O post não foi validado pelo PagSeguro.
+		}else{
+			
+			//Erro na integração com o PagSeguro.
+		}
+		
+		exit;
+	}
+  	exit;
+  }
+  
+  
+  
+  
 
   public function executeBillet($request){
   	
@@ -685,7 +772,7 @@ class storeActions extends sfActions
 	  	$shippingValue = 0;
   	}
   	
-  	$cartSessionObj->shippingValue = $shippingValue;
+  	$cartSessionObj->shippingValue = 0;//$shippingValue;
   	$cartSessionObj->zipcode       = $zipcode;
   	
   	$this->getUpdateSession($cartSessionObj);

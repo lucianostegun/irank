@@ -18,8 +18,22 @@
 					<h1>Pedido #<?php echo $orderNumber ?></h1>
 					Clique no link abaixo para gerar o boleto para pagamento<br/><br/>
 					<?php
-						echo image_tag('store/boleto', array('align'=>'absmiddle', 'style'=>'margin-right: 10px'));
-						echo link_to('http://www.irank.com.br/store/billet/'.$orderNumber, "store/billet?$orderNumber=", array('target'=>'_blank'));
+						$paymethod = $purchaseObj->getPaymethod();
+						switch($paymethod){
+							case 'billet':
+								$paymethodIcon = 'boleto';
+								$paymentUrl    = url_for("store/billet?$orderNumber=");
+								break;
+							case 'pagseguro':
+								$paymethodIcon = 'pagseguro';
+								$paymentUrl    = $purchaseObj->getPagseguroUrl();
+								break;
+						}
+						echo image_tag('store/'.$paymethodIcon, array('align'=>'absmiddle', 'style'=>'margin-right: 10px'));
+						if( $paymethod=='pagseguro' )
+							echo 'Clique na URL abaixo para realizar o pagamento.<div class="clear"></div>';
+							
+						echo link_to($paymentUrl, $paymentUrl, array('target'=>'_blank'));
 					?>
 					<br/><br/>
 					Uma mensagem foi enviada para seu e-mail contendo todas as informações do pedido.<br/>
