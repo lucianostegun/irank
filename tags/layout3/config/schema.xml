@@ -1425,25 +1425,4 @@
 		</foreign-key>
 	</table>
 	
-	<table name="purchase_transaction" phpName="PurchaseTransaction">
-		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
-		<column name="purchase_id" type="INTEGER" />
-		<column name="transaction_code" type="CHAR" />
-		<column name="transaction_type" type="INTEGER" />
-		<column name="transaction_status" type="INTEGER" />
-		<column name="paymethod_type" type="INTEGER" />
-		<column name="paymethod_code" type="INTEGER" />
-		<column name="gross_amount" type="NUMERIC" size="10" scale="2" />
-		<column name="fee_amount" type="NUMERIC" size="10" scale="2" />
-		<column name="net_amount" type="NUMERIC" size="10" scale="2" />
-		<column name="escrow_end_date" type="DATE" />
-		<column name="extra_amount" type="NUMERIC" size="10" scale="2" />
-		<column name="installment_count" type="INTEGER" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
-		<foreign-key foreignTable="purchase">
-			<reference local="purchase_id" foreign="id"/>
-		</foreign-key>
-	</table>
-	
 </database>
