@@ -203,7 +203,7 @@ class Purchase extends BasePurchase
 		
 		return array('new'=>'Pedido confirmado',
 					'complete'=>'Pedido concluído',
-					'pending'=>'Pagamento pendente',
+					'pending'=>'Aguardando pagamento',
 					'checking'=>'Verificação financeira',
 					'approved'=>'Pagamento aprovado',
 					'shipped'=>'Produto enviado',
@@ -211,7 +211,7 @@ class Purchase extends BasePurchase
 					'canceled'=>'Pedido cancelado');
 	}
 	
-	public function addTransaction($xmlObj){
+	public function addTransactionLog($xmlObj){
 		
 //		echo '<Pre> ';print_r($xmlObj);exit;
 	    $transactionCode   = (string)$xmlObj->code;
@@ -228,49 +228,87 @@ class Purchase extends BasePurchase
 	    $createdAt         = (string)$xmlObj->date;
 	    $updatedAt         = (string)$xmlObj->lastEventDate;
 
-		$purchaseTransactionObj = PurchaseTransactionPeer::retrieveByCode($transactionCode);
+		$purchaseTransactionLogObj = PurchaseTransactionLogPeer::retrieveByCode($transactionCode);
 		
-		if( !is_object($purchaseTransactionObj) )
-			$purchaseTransactionObj = new PurchaseTransaction();
+		if( !is_object($purchaseTransactionLogObj) )
+			$purchaseTransactionLogObj = new PurchaseTransactionLog();
 		
-		$purchaseTransactionObj->setPurchaseId($this->getId());
-		$purchaseTransactionObj->settransactionCode($transactionCode);   
-		$purchaseTransactionObj->settransactionType($transactionType);
-		$purchaseTransactionObj->settransactionStatus($transactionStatus);
-		$purchaseTransactionObj->setpaymethodType($paymethodType);
-		$purchaseTransactionObj->setpaymethodCode($paymethodCode);
-		$purchaseTransactionObj->setgrossAmount($grossAmount);
-		$purchaseTransactionObj->setfeeAmount($feeAmount);
-		$purchaseTransactionObj->setnetAmount($netAmount);
-		$purchaseTransactionObj->setescrowEndDate($escrowEndDate);
-		$purchaseTransactionObj->setextraAmount($extraAmount);
-		$purchaseTransactionObj->setinstallmentCount($installmentCount);
-		$purchaseTransactionObj->setcreatedAt($createdAt);
-		$purchaseTransactionObj->setupdatedAt($updatedAt);
-		$purchaseTransactionObj->save();
+		$purchaseTransactionLogObj->setPurchaseId($this->getId());
+		$purchaseTransactionLogObj->setTransactionCode($transactionCode);   
+		$purchaseTransactionLogObj->setTransactionType($transactionType);
+		$purchaseTransactionLogObj->setTransactionStatus($transactionStatus);
+		$purchaseTransactionLogObj->setPaymethodType($paymethodType);
+		$purchaseTransactionLogObj->setPaymethodCode($paymethodCode);
+		$purchaseTransactionLogObj->setGrossAmount($grossAmount);
+		$purchaseTransactionLogObj->setFeeAmount($feeAmount);
+		$purchaseTransactionLogObj->setNetAmount($netAmount);
+		$purchaseTransactionLogObj->setEscrowEndDate($escrowEndDate);
+		$purchaseTransactionLogObj->setExtraAmount($extraAmount);
+		$purchaseTransactionLogObj->setInstallmentCount($installmentCount);
+		$purchaseTransactionLogObj->setCreatedAt($createdAt);
+		$purchaseTransactionLogObj->setUpdatedAt($updatedAt);
+		$purchaseTransactionLogObj->save();
 		
 		$this->updateOrderStatusFromPagSeguro($transactionStatus);
 		
 //		echo '<Pre>';print_r($purchaseTransactionObj);exit;
 	}
 	
+	public function addStatusLog($transactionDate, $transactionCode, $transactionStatus, $paymethodType, $extraAmount, $installmentCount, $changeSource){
+
+		$purchaseStatusLogObj = PurchaseTransactionPeer::retrieveByCode($transactionCode);
+		
+		if( !is_object($purchaseStatusLogObj) )
+			$purchaseStatusLogObj = new PurchaseStatusLog();
+		
+		$purchaseStatusLogObj->setPurchaseId($this->getId());
+		$purchaseStatusLogObj->setTransactionCode(nvl($transactionCode));   
+		$purchaseStatusLogObj->setTransactionDate(Util::formatDateTime($transactionDate));
+		$purchaseStatusLogObj->setTransactionStatus($transactionStatus);
+		$purchaseStatusLogObj->setPaymethodType($paymethodType);
+		$purchaseStatusLogObj->setExtraAmount($extraAmount);
+		$purchaseStatusLogObj->setInstallmentCount($installmentCount);
+		$purchaseStatusLogObj->setChangeSource($changeSource);
+		$purchaseStatusLogObj->save();
+		
+		switch($transactionStatus){
+			case 'Completo':
+			case 'Aprovado':
+			case 'approved':
+				$purchaseObj->updateOrderStatus('approved');
+				break;
+			case 'Aguardando Pagto':
+			case 'pending':
+				$purchaseObj->updateOrderStatus('pending');
+				break;
+			case 'Em Análise':
+			case 'checking':
+				$purchaseObj->updateOrderStatus('checking');
+				break;
+			case 'Cancelado':
+			case 'canceled':
+				$purchaseObj->updateOrderStatus('canceled');
+				break;
+		}
+	}
+	
 	private function updateOrderStatusFromPagSeguro($transactionStatus){
 		
 		switch($transactionStatus){
-			case PurchaseTransaction::STATUS_1:
+			case 1:
 				$this->updateOrderStatus('pending');
 				break;
-			case PurchaseTransaction::STATUS_2:
+			case 2:
 				$this->updateOrderStatus('checking');
 				break;
-			case PurchaseTransaction::STATUS_3:
+			case 3:
 				$this->updateOrderStatus('approved');
 				break;
-			case PurchaseTransaction::STATUS_4: // 'Disponível'
-			case PurchaseTransaction::STATUS_5: // 'Em disputa'
-			case PurchaseTransaction::STATUS_6: // 'Devolvida'
+			case 4: // 'Disponível'
+			case 5: // 'Em disputa'
+			case 6: // 'Devolvida'
 				break;
-			case PurchaseTransaction::STATUS_7:
+			case 7:
 				$this->updateOrderStatus('canceled');
 				break;
 		}

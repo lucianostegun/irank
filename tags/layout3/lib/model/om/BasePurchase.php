@@ -136,12 +136,6 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 	protected $lastPurchaseProductItemCriteria = null;
 
 	
-	protected $collPurchaseTransactionList;
-
-	
-	protected $lastPurchaseTransactionCriteria = null;
-
-	
 	protected $alreadyInSave = false;
 
 	
@@ -1069,14 +1063,6 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collPurchaseTransactionList !== null) {
-				foreach($this->collPurchaseTransactionList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -1134,14 +1120,6 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 				if ($this->collPurchaseProductItemList !== null) {
 					foreach($this->collPurchaseProductItemList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collPurchaseTransactionList !== null) {
-					foreach($this->collPurchaseTransactionList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1560,10 +1538,6 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				$copyObj->addPurchaseProductItem($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getPurchaseTransactionList() as $relObj) {
-				$copyObj->addPurchaseTransaction($relObj->copy($deepCopy));
-			}
-
 		} 
 
 		$copyObj->setNew(true);
@@ -1750,76 +1724,6 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 		$this->lastPurchaseProductItemCriteria = $criteria;
 
 		return $this->collPurchaseProductItemList;
-	}
-
-	
-	public function initPurchaseTransactionList()
-	{
-		if ($this->collPurchaseTransactionList === null) {
-			$this->collPurchaseTransactionList = array();
-		}
-	}
-
-	
-	public function getPurchaseTransactionList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BasePurchaseTransactionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collPurchaseTransactionList === null) {
-			if ($this->isNew()) {
-			   $this->collPurchaseTransactionList = array();
-			} else {
-
-				$criteria->add(PurchaseTransactionPeer::PURCHASE_ID, $this->getId());
-
-				PurchaseTransactionPeer::addSelectColumns($criteria);
-				$this->collPurchaseTransactionList = PurchaseTransactionPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(PurchaseTransactionPeer::PURCHASE_ID, $this->getId());
-
-				PurchaseTransactionPeer::addSelectColumns($criteria);
-				if (!isset($this->lastPurchaseTransactionCriteria) || !$this->lastPurchaseTransactionCriteria->equals($criteria)) {
-					$this->collPurchaseTransactionList = PurchaseTransactionPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastPurchaseTransactionCriteria = $criteria;
-		return $this->collPurchaseTransactionList;
-	}
-
-	
-	public function countPurchaseTransactionList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BasePurchaseTransactionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(PurchaseTransactionPeer::PURCHASE_ID, $this->getId());
-
-		return PurchaseTransactionPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addPurchaseTransaction(PurchaseTransaction $l)
-	{
-		$this->collPurchaseTransactionList[] = $l;
-		$l->setPurchase($this);
 	}
 
 } 

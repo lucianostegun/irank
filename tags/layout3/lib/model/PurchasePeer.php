@@ -35,7 +35,7 @@ class PurchasePeer extends BasePurchasePeer
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		
-		if( is_object($purchaseObj) && $purchaseObj->getUserSiteId()!=$userSiteId )
+		if( is_object($purchaseObj) && $purchaseObj->getUserSiteId()!=$userSiteId && !$force )
 			throw new Exception('Pedido não encontrado para este usuário');
 			
 		return $purchaseObj;
