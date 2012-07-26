@@ -1,13 +1,13 @@
 <?php
-//	echo form_remote_tag(array(
-//		'url'=>'purchase/save',
-//		'success'=>'handleSuccessPurchase(response)',
-//		'failure'=>'handleFailurePurchase(response.responseText)',
-//		'loading'=>'showIndicator()',
-//		),
-//		array('class'=>'form', 'id'=>'purchaseForm'));
+	echo form_remote_tag(array(
+		'url'=>'purchase/save',
+		'success'=>'handleSuccessPurchase(response)',
+		'failure'=>'handleFailurePurchase(response.responseText)',
+		'loading'=>'showIndicator()',
+		),
+		array('class'=>'form', 'id'=>'purchaseForm'));
 
-	echo form_tag('purchase/save', array('class'=>'form', 'id'=>'purchaseForm'));
+//	echo form_tag('purchase/save', array('class'=>'form', 'id'=>'purchaseForm'));
 	
 	$purchaseId = $purchaseObj->getId();
 	echo input_hidden_tag('purchaseId', $purchaseId);

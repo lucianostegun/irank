@@ -308,7 +308,7 @@ class storeActions extends sfActions
   	}
   	
   	try{
-//  		$purchaseObj->validateOrder();
+  		$purchaseObj->validateOrder();
   
 //  		echo '<Pre>';
   				
@@ -351,7 +351,7 @@ class storeActions extends sfActions
 
   		$purchaseObj->notify();
 		
-//  		$this->getNewSession();
+  		$this->getNewSession();
   		
   		echo $orderNumber;
   	}catch(PurchaseException $e){
@@ -383,7 +383,7 @@ class storeActions extends sfActions
   	$notificationType = $request->getParameter('notificationType');
   	$notificationCode = $request->getParameter('notificationCode');
   	
-  	Log::doLog('TransactionStatus: Atualizou o status de pagamento do pedido. notificationCode = '.$notificationCode);
+  	Log::doLog('TransactionStatus: Atualizou o status de pagamento do pedido. notificationCode = '.$notificationCode, 'PagSeguro');
   	
   	$credentials = PagSeguroConfig::getAccountCredentials();
   	$email       = $credentials->getEmail();
@@ -399,12 +399,21 @@ class storeActions extends sfActions
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 	$xmlString = trim(curl_exec($curl));
 	curl_close($curl);
-  	
+	
   	$xmlObj = @simplexml_load_string($xmlString);
   	$orderNumber = (string)$xmlObj->reference;
   	
-  	$purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, null, true);
-  	$purchaseObj->addTransaction($xmlObj);
+  	try{
+  		
+  		$purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, null, true);
+  	
+	  	if( is_object($purchaseObj) )
+	  		$purchaseObj->addTransactionLog($xmlObj);
+	  	else
+	  		Log::doLog('TransactionStatus: Não encontrou o pedido '.$orderNumber.'. notificationCode = '.$notificationCode, 'PagSeguro');
+  	}catch(Exception $e){
+  		
+  	}
   	
   	unset($xmlObj);
   	exit;
@@ -415,15 +424,9 @@ class storeActions extends sfActions
   	$orderNumber = $request->getParameter('Referencia');
   	$orderNumber = $request->getParameter('orderNumber', $orderNumber);
   	
-  	Log::doLog('OrderStatus: Atualizou o status de pagamento do pedido: orderNumber = '.$orderNumber);
+  	Log::doLog('OrderStatus: Atualizou o status de pagamento do pedido: orderNumber = '.$orderNumber, 'PagSeguro');
   	
-  	$filePath = Util::getFilePath('/log.log');
-  	
-  	$fp = fopen($filePath, 'a');
-  	fwrite($fp, print_r($request, true));
-  	fclose($fp);
-  	
-	if( count($_POST) > 0 ){
+	if( count($_GET) > 0 ){
 		
 		$purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, null, true);
 		
@@ -431,22 +434,31 @@ class storeActions extends sfActions
 		$npi = new PagSeguroNpi();
 		$result = $npi->notificationPost();
 		
-		$transactionId = $request->getParameter('transactionId');
+		$transactionId = $request->getParameter('TransacaoID');
 		
-		Log::doLog('Salvou o transactionId '.$transactionId.' para o pedido '.$orderNumber);
+		Log::doLog('Salvou o transactionId '.$transactionId.' para o pedido '.$orderNumber, 'PagSeguro');
 		
 		if( $result=='VERIFICADO' ){
 			
+			$transactionDate   = $request->getParameter('DataTransacao');
+			$transactionCode   = $request->getParameter('TransacaoID');
+			$transactionStatus = $request->getParameter('StatusTransacao');
+			$paymethodType     = $request->getParameter('TipoPagamento');
+			$extraAmount       = $request->getParameter('Extras');
+			$installmentCount  = $request->getParameter('Parcelas');
+			
+			$purchaseObj->addStatusLog($transactionDate, $transactionCode, $transactionStatus, $paymethodType, $extraAmount, $installmentCount, 'PagSeguro');			
+  
 			//O post foi validado pelo PagSeguro.
-			Log::doLog('Post PagSeguro validado para o pedido '.$orderNumber);
+			Log::doLog('Post PagSeguro validado para o pedido '.$orderNumber, 'PagSeguro');
 		}elseif( $result=='FALSO' ){
 			
 			//O post não foi validado pelo PagSeguro.
-			Log::doLog('Post PagSeguro NÃO validado para o pedido '.$orderNumber);
+			Log::doLog('Post PagSeguro NÃO validado para o pedido '.$orderNumber, 'PagSeguro');
 		}else{
 			
 			//Erro na integração com o PagSeguro.
-			Log::doLog('Falha ao validar o Post PagSeguro para o pedido '.$orderNumber);
+			Log::doLog('Falha ao validar o Post PagSeguro para o pedido '.$orderNumber, 'PagSeguro');
 		}
 	}
 	
@@ -776,7 +788,8 @@ class storeActions extends sfActions
 	  	$shippingValue = 0;
   	}
   	
-  	$cartSessionObj->shippingValue = 0;//$shippingValue;
+//	$cartSessionObj->shippingValue = 0; // Debug
+  	$cartSessionObj->shippingValue = $shippingValue; // Producao
   	$cartSessionObj->zipcode       = $zipcode;
   	
   	$this->getUpdateSession($cartSessionObj);

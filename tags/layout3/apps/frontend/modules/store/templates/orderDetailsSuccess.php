@@ -7,8 +7,16 @@
 	$billetLink    = null;
 	$fileId        = $purchaseObj->getFileId();
 	
-	if( $purchaseObj->getPaymethod()=='billet' )
-		$billetLink = link_to('Imprimir boleto', "store/billet?$orderNumber=", array('class'=>'ml15', 'target'=>'_blank'));
+	$paymethod = $purchaseObj->getPaymethod();
+	
+	switch($paymethod){
+		case 'billet':
+			$billetLink = link_to('Imprimir boleto', "store/billet?$orderNumber=", array('class'=>'ml15', 'target'=>'_blank'));
+			break;
+		case 'pagseguro':
+			$billetLink = link_to('Link para pagamento', $purchaseObj->getPagseguroUrl(), array('class'=>'ml15', 'target'=>'_blank'));
+			break;
+	}
 ?>
 	<div class="storeOrderHeader">
 		<div class="orderNumber">Pedido: <span>#<?php echo $orderNumber ?></span></div>
