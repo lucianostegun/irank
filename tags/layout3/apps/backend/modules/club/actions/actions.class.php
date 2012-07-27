@@ -150,11 +150,11 @@ class clubActions extends sfActions
 
 		$fileObj = File::upload($request, 'Filedata', '/images/club', $options);
 
-		Club::customizeLogo($fileName);
-
 		$clubObj = ClubPeer::retrieveByPK($this->clubId);
 		$clubObj->setFileNameLogo($fileName);
 		$clubObj->save();
+		
+		$clubObj->customizeLogo();
 	}catch( Exception $e ){
 
 		Util::forceError($e);	
@@ -166,8 +166,7 @@ class clubActions extends sfActions
   public function executeCustomizeLogo($request){
   	
     $clubObj = ClubPeer::retrieveByPK($this->clubId);
-
-    Club::customizeLogo($clubObj->getFileNameLogo());
+	$clubObj->customizeLogo();
 		
 	exit;
   }
