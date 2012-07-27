@@ -177,10 +177,12 @@ class Club extends BaseClub
 		return $fileNameLogo;
 	}
 	
-	public static function customizeLogo($fileName){
+	public function customizeLogo(){
 		
-		$fileExtension = File::getFileExtension($fileName);
-		$filePath      = Util::getFilePath('/images/club/'.$fileName);
+		$fileName         = $this->getFileNameLogo();
+		$fileExtension    = File::getFileExtension($fileName);
+//		$filePathOriginal = Util::getFilePath('/images/club/original/'.$fileName);
+		$filePath         = Util::getFilePath('/images/club/'.$fileName);
 		
 		copy($filePath, str_replace('images/club', 'images/club/original', $filePath));
 	

@@ -1031,7 +1031,7 @@ function button_tag( $buttonId, $text, $options=array() ){
 	}catch(Exception $e){}
 	
 	$app     = Util::getApp();
-	$appPath = ($app!='frontend'?$app.'/':'');
+	$appPath = (!in_array($app, array('debug', 'frontend'))?$app.'/':'');
 	
 	$imagePath = $appPath.'button/'.$image;
 	
