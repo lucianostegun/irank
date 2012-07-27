@@ -22,9 +22,9 @@
 	
 		<label>Status</label>
 		<div class="formRight">
-			<?php
-				echo select_tag('orderStatus', options_for_select(Purchase::getOrderStatusList(), $purchaseObj->getOrderStatus()), array('id'=>'purchaseOrderStatus'));
-			?>
+			<span class="multiple"><?php echo select_tag('orderStatus', options_for_select(Purchase::getOrderStatusList(), $purchaseObj->getOrderStatus()), array('id'=>'purchaseOrderStatus')); ?></span>
+			<span class="multiple"><?php echo link_to(image_tag('backend/icons/light/mail', array('class'=>'icon')).'<span>Enviar e-mail</span>', '#sendPurchaseNotify()', array('class'=>'button greyishB', 'id'=>'cancelAddProductItemLink')) ?></span>
+			<div class="clear"></div>
 			<div class="formNote error" id="purchaseFormErrorOrderStatus"></div>
 		</div>
 		<div class="clear"></div>
@@ -34,6 +34,7 @@
 		<label>Data de envio</label>
 		<div class="formRight" style="width: 15%">
 			<?php echo input_tag('shippingDate', $purchaseObj->getShippingDate('d/m/Y'), array('maxlength'=>10, 'class'=>'maskDate', 'id'=>'purchaseShippingDate')) ?>
+			<div class="formNote error" id="purchaseFormErrorShippingDate"></div>
 		</div>
 	
 		<label>Cód. rastreamento</label>

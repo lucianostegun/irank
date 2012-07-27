@@ -71,9 +71,7 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 	public function setClubId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -91,9 +89,7 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 	public function setPeopleId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

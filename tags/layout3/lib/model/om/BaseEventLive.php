@@ -644,9 +644,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -660,9 +658,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setRankingLiveId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -680,9 +676,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setClubId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -700,9 +694,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setEmailTemplateId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -720,9 +712,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setEventName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -736,9 +726,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setEventShortName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -803,9 +791,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setStepNumber($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -819,9 +805,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setComments($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -835,9 +819,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setDescription($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -881,9 +863,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setTablesNumber($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -964,9 +944,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setPlayers($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -980,9 +958,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setAllowedRebuys($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -996,9 +972,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setAllowedAddons($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -1062,9 +1036,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setPrizeSplit($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -1078,9 +1050,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setVisitCount($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -1128,9 +1098,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setEnrollmentMode($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -1144,9 +1112,7 @@ abstract class BaseEventLive extends BaseObject  implements Persistent {
 	public function setTwitterTemplate($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

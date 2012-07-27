@@ -228,7 +228,7 @@ class Util {
 		
 		if( $destination=='database' ){
 			
-			if( ereg('^[0-9]{2}-[0-9]{2}-[0-9]{4}$', $date) )
+			if( preg_match('/^[0-9]{2}-[0-9]{2}-[0-9]{4}$/', $date) )
 				return $date;
 				
 			$dateArray = explode( '/', $date );
@@ -272,8 +272,8 @@ class Util {
 	 */	
 	public static function formatDateTime( $dateTime, $format='database', $dateFormat='Y-m-d' ){
 
-		if( !ereg('^[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}(:[0-9]{2})?$', $dateTime) )
-			if( !ereg('^[0-9]{2}/[0-9]{2}/[0-9]{4} ?$', $dateTime) )
+		if( !preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{2}:[0-9]{2}(:[0-9]{2})?$/', $dateTime) )
+			if( !preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4} ?$/', $dateTime) )
 				return null;
 			else
 				$dateTime = trim($dateTime).' 00:00:00';
@@ -344,7 +344,7 @@ class Util {
 				$value = preg_replace('/,0*$/', '', $value);
 		}else{
 			
-			if( ereg('^[0-9]+\.[0-9]{1,2}$', $value) )		
+			if( preg_match('/^[0-9]+\.[0-9]{1,2}$/', $value) )		
 				$value = str_replace( '.', ',', $value );
 		
 			if( !is_float($value) ){
@@ -675,7 +675,7 @@ class Util {
 	
 	public static function getSeconds($dateTime){
 		
-		if( ereg('^[0-9]{1,2}:[0-9]{1,2}$', $dateTime) ){
+		if( preg_match('/^[0-9]{1,2}:[0-9]{1,2}$/', $dateTime) ){
 			
 			list($hours, $minutes) = explode(':', $dateTime);
 			
@@ -706,7 +706,7 @@ class Util {
 	 */
 	public static function getFileName( $filePath ){
 		
-		$filePath = split('[\\\\/]', $filePath);
+		$filePath = split('[\\\\\/]', $filePath);
 		return end($filePath);
 	}
 	
@@ -717,8 +717,8 @@ class Util {
 	 */
 	public static function getFilePath($subPath, $rootDir=null){
 		
-		$subPath = ereg_replace('[\\\\/]', DIRECTORY_SEPARATOR, $subPath);
-		$subPath = ereg_replace('^[\\\\/]?', '', $subPath);
+		$subPath = preg_replace('/[\\\\\/]/', DIRECTORY_SEPARATOR, $subPath);
+		$subPath = preg_replace('/^[\\\\\/]?/', '', $subPath);
 		
 		if( !$rootDir )
 			$rootDir = sfConfig::get('sf_web_dir');
@@ -750,7 +750,7 @@ class Util {
 	 
 	 public static function convertTimeToSeconds( $time ){
 	 	
-	 	if( !ereg('^[0-9]{1,2}:[0-9]{1,2}(:[0-9]{1,2})?$', $time) )
+	 	if( !ereg('/^[0-9]{1,2}:[0-9]{1,2}(:[0-9]{1,2})?$/', $time) )
 	 		return 0;
 	 		
 	 	list($hours, $minutes, $seconds) = explode(':', $time);
@@ -825,9 +825,9 @@ class Util {
 			return 'º';
 		
 		if( $culture=='en_US' ){
-			if( ereg('1$', $place) ) $sufix = 'st';
-			elseif( ereg('2$', $place) ) $sufix = 'nd';
-			elseif( ereg('3$', $place) ) $sufix = 'rd';
+			if( preg_match('/1$/', $place) ) $sufix = 'st';
+			elseif( preg_match('/2$/', $place) ) $sufix = 'nd';
+			elseif( preg_match('/3$/', $place) ) $sufix = 'rd';
 			else $sufix = 'th';
 			
 			return $sufix;
@@ -854,8 +854,8 @@ class Util {
 	public static function getApp(){
 		
 		$scriptName = MyTools::getRequest()->getScriptName();
-		$scriptName = ereg_replace('[^a-zA-Z]', '', $scriptName);
-		$scriptName = ereg_replace('(dev)?php$', '', $scriptName);
+		$scriptName = preg_replace('/[^a-zA-Z]/', '', $scriptName);
+		$scriptName = preg_replace('/(dev)?php$/', '', $scriptName);
 		
 		$scriptName = ($scriptName=='index'?'frontend':$scriptName);
 		return $scriptName;

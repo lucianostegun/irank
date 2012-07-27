@@ -40,4 +40,21 @@ class PurchasePeer extends BasePurchasePeer
 			
 		return $purchaseObj;
 	}
+	
+	public static function validateOrderStatus($orderStatus){
+		
+		$shippingDate = MyTools::getRequestParameter('shippingDate');
+		$tracingCode  = MyTools::getRequestParameter('tracingCode');
+		
+		if( $orderStatus=='shipped' ){
+			
+			if( !$shippingDate )
+				MyTools::setError('shippingDate', 'form.error.requiredField');
+
+			if( !$tracingCode )
+				MyTools::setError('tracingCode', 'form.error.requiredField');
+		}
+		
+		return !MyTools::getRequest()->hasErrors();;
+	}
 }

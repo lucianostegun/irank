@@ -27,6 +27,12 @@ function addProductItem(){
 		
 		var productItemObj = parseInfo(content);
 		
+		$('#productItemImage-1').attr('src', _imageRoot+'/blank.png');
+		$('#productItemImage-2').attr('src', _imageRoot+'/blank.png');
+		$('#productItemImage-3').attr('src', _imageRoot+'/blank.png');
+		$('#productItemImage-4').attr('src', _imageRoot+'/blank.png');
+		$('#productItemImage-5').attr('src', _imageRoot+'/blank.png');
+		
 		resetForm($('#productItemForm'));
 		
 		$('#productItemId').val(productItemObj.id);
@@ -35,11 +41,6 @@ function addProductItem(){
 		$('#productItemPrice').val($('#productDefaultPrice').val());
 		$('#productItemWeight').val($('#productDefaultWeight').val());
 		
-		$('#productItemImage-1').attr('src', _imageRoot+'/blank.png');
-		$('#productItemImage-2').attr('src', _imageRoot+'/blank.png');
-		$('#productItemImage-3').attr('src', _imageRoot+'/blank.png');
-		$('#productItemImage-4').attr('src', _imageRoot+'/blank.png');
-		$('#productItemImage-5').attr('src', _imageRoot+'/blank.png');
 		
 		showProductItemForm(true);
 		
@@ -69,9 +70,16 @@ function loadProductItem(productItemId){
 	
 	showIndicator();
 	
+	
 	var successFunc = function(content){
 		
 		var productItemObj = parseInfo(content);
+		
+		$('#productItemImage-1').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image1+'?time='+time());
+		$('#productItemImage-2').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image2+'?time='+time());
+		$('#productItemImage-3').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image3+'?time='+time());
+		$('#productItemImage-4').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image4+'?time='+time());
+		$('#productItemImage-5').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image5+'?time='+time());
 		
 		$('#productItemId').val(productItemObj.id);
 		$('#productItemImageProductItemId').val(productItemObj.id);
@@ -81,12 +89,6 @@ function loadProductItem(productItemId){
 		$('#productItemPrice').val(toCurrency(productItemObj.price));
 		$('#productItemWeight').val(toCurrency(productItemObj.weight));
 		$('#productItemStock').val(productItemObj.stock);
-		
-		$('#productItemImage-1').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image1+'?time='+time());
-		$('#productItemImage-2').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image2+'?time='+time());
-		$('#productItemImage-3').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image3+'?time='+time());
-		$('#productItemImage-4').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image4+'?time='+time());
-		$('#productItemImage-5').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image5+'?time='+time());
 		
 		$('#productItemImage1').val(productItemObj.image1);
 		

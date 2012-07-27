@@ -5,7 +5,7 @@
 <div class="homeHighlight">
 	<div class="content">
 
-		<div class="contentItem <?php echo ($highlight==1?'active':'') ?>" id="homeHighlight1" style="background: url('/images/home/welcomeChips.png') right 140px no-repeat">
+		<div class="contentItem <?php echo ($highlight==1?'active':'') ?>" id="homeHighlight1" style="background: url('/images/home/welcomeChips.png') right top no-repeat">
 			<h1>Seja bem-vindo</h1>
 			<p>O iRank é um site gratuito para criação<br/>e organização de rankings online para jogos de Poker.</p>
 			<p>Aqui você poderá criar seus próprios rankings,<br/>definir as configurações de jogo e organizar os eventos,<br/>

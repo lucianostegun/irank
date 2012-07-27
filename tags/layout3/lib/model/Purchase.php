@@ -41,10 +41,12 @@ class Purchase extends BasePurchase
 		$shippingDate = $request->getParameter('shippingDate');
 		$tracingCode  = $request->getParameter('tracingCode');
 		
-		$this->setOrderStatus( $orderStatus );
 		$this->setShippingDate( Util::formatDate($shippingDate) );
-		$this->setTracingCode( $tracingCode );
+		$this->setTracingCode( strtoupper($tracingCode) );
 		$this->save();
+		
+		if( $this->getOrderStatus()!=$orderStatus )
+			$this->addStatusLog(date('d/m/Y H:i:s'), strtoupper(md5($this->getId().$orderStatus.microtime())), $this->getOrderStatusList($orderStatus), 'Não informado', 0, 1, 'iRank Admin');
 	}
 	
 	public static function getList(Criteria $criteria=null){
@@ -88,23 +90,31 @@ class Purchase extends BasePurchase
 			throw new PurchaseException('Ocorreu um erro ao gerar o número do pedido');
 	}
 	
-	public function notify(){
+	public function notify($purchaseStatusLogId=null){
 		
 		$peopleObj = $this->getUserSite()->getPeople();
 		
+		$orderStatus  = $this->getOrderStatus();
 		$emailAddress = $peopleObj->getEmailAddress();
-		$emailContent = EmailTemplate::getContentByTagName('storePurchaseConfirm');
+		
+		$emailContent = EmailTemplate::getContentByTagName('storePurchase'.ucfirst($orderStatus));
 		
 		$addressComplement = $this->getAddressComplement();
 		$addressComplement = ($addressComplement?" $addressComplement":'');
 		
+		$orderNumber = $this->getOrderNumber();
+		
 		$emailContent = str_replace('[peopleName]', $peopleObj->getFirstName(), $emailContent);
-		$emailContent = str_replace('[orderNumber]', $this->getOrderNumber(), $emailContent);
+		$emailContent = str_replace('[orderNumber]', $orderNumber, $emailContent);
 		$emailContent = str_replace('[orderStatus]', $this->getOrderStatus(true), $emailContent);
 		$emailContent = str_replace('[orderValue]', Util::formatFloat($this->getOrderValue(), true), $emailContent);
 		$emailContent = str_replace('[shippingValue]', Util::formatFloat($this->getShippingValue(), true), $emailContent);
 		$emailContent = str_replace('[totalValue]', Util::formatFloat($this->getTotalValue(), true), $emailContent);
 		$emailContent = str_replace('[paymethod]', $this->getPaymethod(true), $emailContent);
+		$emailContent = str_replace('[shippingDueDate]', $this->getShippingDueDate(), $emailContent);
+		$emailContent = str_replace('[shippingDate]', $this->getShippingDate('d/m/y'), $emailContent);
+		$emailContent = str_replace('[approvalDate]', $this->getApprovalDate('d/m/Y H:i'), $emailContent);
+		$emailContent = str_replace('[tracingCode]', $this->getTracingCode(), $emailContent);
 		
 		$emailContent = str_replace('[customerName]', $this->getCustomerName(), $emailContent);
 		$emailContent = str_replace('[addressName]', $this->getAddressName(), $emailContent);
@@ -119,7 +129,7 @@ class Purchase extends BasePurchase
 		switch($paymethod){
 			case 'billet':
 				$paymentLabel = 'Imprimir boleto';
-				$paymentUrl   = 'http://[host]/store/billet/'.$this->getOrderNumber();
+				$paymentUrl   = 'http://[host]/store/billet/'.$orderNumber;
 				break;
 			case 'pagseguro':
 				$paymentLabel = 'URL para pagamento';
@@ -156,11 +166,51 @@ class Purchase extends BasePurchase
 		
 		$emailContent = preg_replace('/<productItemList>(.*)<\/productItemList>/msU', $productItemList, $emailContent);
 		
+		switch($orderStatus){
+			case 'new':
+				$emailSubject = "Confirmação de pedido #$orderNumber";
+				break;
+			case 'approved':
+				$emailSubject = "Pagamento aprovado #$orderNumber";
+				break;
+			case 'shipped':
+				$emailSubject = "Pedido enviado #$orderNumber";
+				break;
+			case 'refused':
+				$emailSubject = "Pagamento recusado #$orderNumber";
+				break;
+			case 'canceled':
+				$emailSubject = "Pedido cancelado #$orderNumber";
+				break;
+		}
+		
+		$emailLogObj = new EmailLog();
+		$emailLogObj->setEmailSubject($emailSubject);
+		$emailLogObj->setEmailAddress($emailAddress);
+		
+		if( $purchaseStatusLogId ){
+			
+			$emailLogObj->setClassName('PurchaseStatusLog');
+			$emailLogObj->setObjectId($purchaseStatusLogId);
+		}else{
+			
+			$emailLogObj->setClassName('Purchase');
+			$emailLogObj->setObjectId($this->getId());
+		}
+		
+		$emailLogObj->save();
+		
+		$emailLogId = $emailLogObj->getId();
+		
 		$optionList = array('emailTemplate'=>'emailTemplateStore',
 							'senderName'=>'iRank Store',
-							'replyTo'=>'store@irank.com.br');
+							'replyTo'=>'store@irank.com.br',
+							'emailLogId'=>$emailLogId);
 		
-		Report::sendMail('Confirmação de pedido #'.$this->getOrderNumber(), $emailAddress, $emailContent, $optionList);
+//		echo $emailSubject;
+//		echo '<hr/>';
+//		echo $emailContent;exit;
+		Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 	}
 	
 	public function getOrderStatus($description=false){
@@ -199,21 +249,42 @@ class Purchase extends BasePurchase
 		return $paymethod;
 	}
 	
-	public static function getOrderStatusList(){
+	public function getShippingDueDate(){
 		
-		return array('new'=>'Pedido confirmado',
-					'complete'=>'Pedido concluído',
-					'pending'=>'Aguardando pagamento',
-					'checking'=>'Verificação financeira',
-					'approved'=>'Pagamento aprovado',
-					'shipped'=>'Produto enviado',
-					'refused'=>'Pedido recusado',
-					'canceled'=>'Pedido cancelado');
+		$approvalDate = $this->getApprovalDate(null);
+		
+		if( !$approvalDate )
+			return null;
+		
+		return date('d/m/Y', ($approvalDate+(3*86400)));
+	}
+	
+	public static function getOrderStatusList($key=null){
+		
+		$orderStatusList = array('PRÉ VENDA'=>array(),
+								 'new'=>'Pedido confirmado',
+								 'pending'=>'Aguardando pagamento',
+								 'checking'=>'Verificação financeira',
+								 'PÓS VENDA'=>array(),
+								 'approved'=>'Pagamento aprovado',
+								 'shipped'=>'Produto enviado',
+								 'complete'=>'Pedido finalizado',
+								 'ERRO'=>array(),
+								 'refused'=>'Pedido recusado',
+								 'canceled'=>'Pedido cancelado');
+		
+		if( $key )
+			return $orderStatusList[$key];
+		else
+			return $orderStatusList;
 	}
 	
 	public function addTransactionLog($xmlObj){
 		
-//		echo '<Pre> ';print_r($xmlObj);exit;
+//		echo '<pre>';
+//		print_r($xmlObj);
+//		exit;
+		
 	    $transactionCode   = (string)$xmlObj->code;
 	    $transactionType   = (int)$xmlObj->type;
 	    $transactionStatus = (int)$xmlObj->status;
@@ -242,21 +313,20 @@ class Purchase extends BasePurchase
 		$purchaseTransactionLogObj->setGrossAmount($grossAmount);
 		$purchaseTransactionLogObj->setFeeAmount($feeAmount);
 		$purchaseTransactionLogObj->setNetAmount($netAmount);
-		$purchaseTransactionLogObj->setEscrowEndDate($escrowEndDate);
+		$purchaseTransactionLogObj->setEscrowEndDate(nvl($escrowEndDate));
 		$purchaseTransactionLogObj->setExtraAmount($extraAmount);
 		$purchaseTransactionLogObj->setInstallmentCount($installmentCount);
 		$purchaseTransactionLogObj->setCreatedAt($createdAt);
 		$purchaseTransactionLogObj->setUpdatedAt($updatedAt);
+		
 		$purchaseTransactionLogObj->save();
 		
-		$this->updateOrderStatusFromPagSeguro($transactionStatus);
-		
-//		echo '<Pre>';print_r($purchaseTransactionObj);exit;
+		$this->updateOrderStatusFromPagSeguro($purchaseTransactionLogObj);
 	}
 	
 	public function addStatusLog($transactionDate, $transactionCode, $transactionStatus, $paymethodType, $extraAmount, $installmentCount, $changeSource){
 
-		$purchaseStatusLogObj = PurchaseTransactionPeer::retrieveByCode($transactionCode);
+		$purchaseStatusLogObj = PurchaseStatusLogPeer::retrieveByCode($transactionCode);
 		
 		if( !is_object($purchaseStatusLogObj) )
 			$purchaseStatusLogObj = new PurchaseStatusLog();
@@ -271,53 +341,71 @@ class Purchase extends BasePurchase
 		$purchaseStatusLogObj->setChangeSource($changeSource);
 		$purchaseStatusLogObj->save();
 		
-		switch($transactionStatus){
-			case 'Completo':
-			case 'Aprovado':
-			case 'approved':
-				$purchaseObj->updateOrderStatus('approved');
-				break;
-			case 'Aguardando Pagto':
-			case 'pending':
-				$purchaseObj->updateOrderStatus('pending');
-				break;
-			case 'Em Análise':
-			case 'checking':
-				$purchaseObj->updateOrderStatus('checking');
-				break;
-			case 'Cancelado':
-			case 'canceled':
-				$purchaseObj->updateOrderStatus('canceled');
-				break;
-		}
-	}
-	
-	private function updateOrderStatusFromPagSeguro($transactionStatus){
+		$transactionStatus = strtolower($transactionStatus);
+		$transactionStatus = String::removeAccents($transactionStatus);
 		
 		switch($transactionStatus){
-			case 1:
-				$this->updateOrderStatus('pending');
+			case 'new':
+			default:
+				$orderStatus = 'new';
 				break;
-			case 2:
-				$this->updateOrderStatus('checking');
+			case 'completo':
+			case 'aprovado':
+			case 'paga':
+			case 'approved':
+				$orderStatus = 'approved';
+			case 'complete':
+			case 'pedido finalizado':
+				$orderStatus = 'complete';
 				break;
-			case 3:
-				$this->updateOrderStatus('approved');
+			case 'aguardando pagto':
+			case 'pending':
+				$orderStatus = 'pending';
 				break;
-			case 4: // 'Disponível'
-			case 5: // 'Em disputa'
-			case 6: // 'Devolvida'
+			case 'em analise':
+			case 'checking':
+				$orderStatus = 'checking';
 				break;
-			case 7:
-				$this->updateOrderStatus('canceled');
+			case 'cancelado':
+			case 'canceled':
+				$orderStatus = 'canceled';
 				break;
 		}
+		
+		$this->updateOrderStatus($orderStatus, $purchaseStatusLogObj->getId());
 	}
 	
-	public function updateOrderStatus($orderStatus){
+	private function updateOrderStatusFromPagSeguro($purchaseTransactionLogObj){
+		
+		$transactionStatus = $purchaseTransactionLogObj->getTransactionStatus();
+		
+		$paymethodType = $purchaseTransactionLogObj->getPaymethodType();
+		$paymethodType = constant("PurchaseTransactionLog::PAYMENT_TYPE_$paymethodType");
+		
+		$transactionStatus = constant("PurchaseTransactionLog::STATUS_$transactionStatus");
+		
+		$this->addStatusLog($purchaseTransactionLogObj->getUpdatedAt('d/m/Y H:i:s'), $purchaseTransactionLogObj->getTransactionCode(), $transactionStatus, $paymethodType, $purchaseTransactionLogObj->getExtraAmount(), $purchaseTransactionLogObj->getInstallmentCount(), 'PagSeguro');
+	}
+	
+	public function updateOrderStatus($orderStatus, $purchaseStatusLogId){
+		
+		if( $this->getOrderStatus()==$orderStatus )
+			return null;
+		
+		if( $orderStatus=='approved' )
+			$this->setApprovalDate(time());
+		
+		if( $orderStatus=='canceled' ){
+			
+			$this->setRefusalDate(time());
+			$this->setRefusalReason('Compra cancelada');
+		}
 		
 		$this->setOrderStatus($orderStatus);
 		$this->save();
+		
+		if( in_array($orderStatus, array('new', 'approved', 'shipped', 'refused', 'canceled')) )
+			$this->notify($purchaseStatusLogId);
 	}
 }
 

@@ -356,7 +356,7 @@ function include_metas()
   	
   	if( count($nameList)==2 ){
   		
-  		$nameList[1] = ereg_replace('\*[0-9]*$', '', $nameList[1]);
+  		$nameList[1] = preg_replace('/\*[0-9]*$/', '', $nameList[1]);
   		$attribute   = 'property';
   	}
   		

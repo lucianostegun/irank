@@ -3,6 +3,9 @@ fields:
   orderStatus:
     required:
       msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [PurchasePeer, validateOrderStatus]
+      invalid_error: nullError
        
   shippingDate:
     sfCallbackValidator:

@@ -36,7 +36,7 @@ class Log extends BaseLog
         
         $message = str_replace('\\', '/', $message);
         
-        $logObj = new Log;
+        $logObj = new Log();
         $logObj->setUserSiteId(nvl($userSiteId)); // Logs sem usuários são logs do sistema
         $logObj->setUserAdminId(nvl($userAdminId)); // Logs sem usuários são logs do sistema
         $logObj->setApp( $app );
@@ -231,7 +231,7 @@ class Log extends BaseLog
 //					 
 //				}
 				
-				$fieldName                      = ereg_replace('^[a-zA-Z_]*\.', '', $fieldName);
+				$fieldName                      = preg_replace('/^[a-zA-Z_]*\./', '', $fieldName);
 				$fieldDescription               = $fieldName;
 				$modifiedColumnList[$fieldName] = $value;
 			}

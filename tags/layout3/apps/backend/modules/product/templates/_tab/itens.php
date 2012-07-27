@@ -1,5 +1,5 @@
 <div style="position: relative">
-	<?php echo link_to(image_tag('backend/icons/light/cancelar', array('class'=>'icon')).'<span>Cancelar</span>', '#hideProductItemForm()', array('class'=>'button greyishB hidden', 'id'=>'cancelAddProductItemLink')) ?>
+	<?php echo link_to('<span>Cancelar</span>', '#hideProductItemForm()', array('class'=>'button greyishB hidden', 'id'=>'cancelAddProductItemLink')) ?>
 	<?php echo link_to(image_tag('backend/icons/light/add', array('class'=>'icon')).'<span>Adicionar item</span>', '#addProductItem()', array('class'=>'button greyishB', 'id'=>'addProductItemLink')) ?>
 	<?php echo link_to(image_tag('backend/icons/light/archive', array('class'=>'icon')).'<span>Salvar item</span>', '#$("#productItemForm").submit()', array('class'=>'button blueB hidden', 'id'=>'saveProductItemLink')) ?>
 	<?php echo link_to(image_tag('backend/icons/light/close', array('class'=>'icon')).'<span>Excluir item</span>', '#deleteProductItem()', array('class'=>'button redB hidden', 'style'=>'float: right', 'id'=>'deleteProductItemLink')) ?>

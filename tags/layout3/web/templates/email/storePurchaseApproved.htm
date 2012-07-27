@@ -1,0 +1,54 @@
+Olá [peopleName],<br/><br/>
+O pagamento de compra na <b>iRank Store</b> foi aprovada!<br/>
+Seguem abaixo as informações de seu pedido e o endereço de entrega.
+<br/>
+<h1 style="border-bottom: 1px solid #C0C0C0; font-size: 12px; font-weight: bold; color: #303030; margin: 20px 0px 25px 0px; padding: 0px 0px 5px 0px; line-height: 14px">Informações do pedido</h1>
+
+<table cellspacing="2" cellpadding="2" style="color: #000000; font-size: 12px">
+	<tr><td align="right" nowrap width="150"><b>Nº pedido:</b></td><td>#[orderNumber]</td></tr>
+	<tr><td align="right" nowrap><b>Status:</b></td><td>[orderStatus]</td></tr>
+	<tr><td align="right" nowrap><b>Forma de pagamento:</b></td><td>[paymethod]</td></tr>
+	<tr><td align="right" nowrap><b>Data de aprovação:</b></td><td>[approvalDate]</td></tr>
+	<tr><td align="right" nowrap><b>Prazo de envio:</b></td><td>[shippingDueDate]</td></tr>
+	<tr><td align="right" nowrap><b>Itens do pedido:</b></td><td></td></tr>
+</table>		
+
+<table border="0" cellspacing="0" cellpadding="5" style="position: relative; margin-left: -5px; background: #FCFCFC; border: 1px solid #DADADA; margin-top: 10px; width: 650px; color: #000000; font-size: 12px">
+  <tr>
+    <th style="background: #C0C0C0">PRODUTO</th>
+    <th style="background: #C0C0C0; text-align: center">QTD</th>
+    <th style="background: #C0C0C0; text-align: left">VL. UNIT.</th>
+    <th style="background: #C0C0C0; text-align: left">VL. TOTAL</th>
+  </tr>
+  <productItemList>
+  <tr>
+    <td style="border-bottom: 1px solid #EAEAEA">
+    	<b style="padding-left: 5px">[productName]</b>
+    	<div></div>
+    	<span style="color: #909090; padding-left: 5px">[productColor] | [productSize]</span>
+    </td>
+    <td style="border-bottom: 1px solid #EAEAEA" align="center">[quantity]</td>
+    <td style="border-bottom: 1px solid #EAEAEA" align="right">R$ [price]</td>
+    <td style="border-bottom: 1px solid #EAEAEA" align="right">R$ [productItemTotalValue]</td>
+  </tr>
+  </productItemList>
+  <tr>
+    <th></th>
+    <th></th>
+    <th style="text-align: right; padding-right: 10px">FRETE</th>
+    <th style="text-align: right; padding-right: 10px">R$ [shippingValue]</th>
+  </tr>
+  <tr>
+    <th></th>
+    <th></th>
+    <th style="text-align: right; padding-right: 10px">TOTAL DO PEDIDO</th>
+    <th style="text-align: right; padding-right: 10px">R$ [totalValue]</th>
+  </tr>
+</table>
+
+<h1 style="border-bottom: 1px solid #C0C0C0; font-size: 12px; font-weight: bold; color: #303030; margin: 20px 0px 25px 0px; padding: 0px 0px 5px 0px; line-height: 14px">Endereço de entrega</h1>
+<div style="padding-left: 60px; height: 50px; background: url('http://[host]/images/email/storeMail.png') no-repeat">
+	<b>[customerName]</b><div style="margin-top: 5px"></div>
+	[addressName], [addressNumber][addressComplement], [addressQuarter]<br/>
+	[addressCity], [addressState] - [addressZipcode]
+</div>

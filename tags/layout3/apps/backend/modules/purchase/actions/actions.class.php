@@ -45,10 +45,18 @@ class purchaseActions extends sfActions
 
   public function executeSave($request){
     
-    $purchaseId  = $this->getUser()->getAttribute('purchaseId');
     $purchaseObj = PurchasePeer::retrieveByPK($this->purchaseId);
     
     $purchaseObj->quickSave($request);
+    
+    exit;
+  }
+
+  public function executeSendNotify($request){
+    
+    $purchaseObj = PurchasePeer::retrieveByPK($this->purchaseId);
+    
+    $purchaseObj->notify();
     
     exit;
   }

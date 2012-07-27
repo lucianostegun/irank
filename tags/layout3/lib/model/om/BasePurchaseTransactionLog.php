@@ -227,9 +227,7 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -243,9 +241,7 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 	public function setPurchaseId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -259,9 +255,7 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 	public function setTransactionCode($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -275,9 +269,7 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 	public function setTransactionType($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -291,9 +283,7 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 	public function setTransactionStatus($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -307,9 +297,7 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 	public function setPaymethodType($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -323,9 +311,7 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 	public function setPaymethodCode($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -396,9 +382,7 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 	public function setInstallmentCount($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 

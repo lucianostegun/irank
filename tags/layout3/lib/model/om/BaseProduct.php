@@ -287,9 +287,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -303,9 +301,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setProductCode($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -319,9 +315,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setProductCategoryId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -339,9 +333,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setProductName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -355,9 +347,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setShortName($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -371,9 +361,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setDescription($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -417,9 +405,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setStock($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -433,9 +419,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setImage1($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -449,9 +433,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setImage2($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -465,9 +447,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setImage3($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -481,9 +461,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setImage4($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -497,9 +475,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	public function setImage5($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

@@ -16,6 +16,9 @@ class storeActions extends sfActions
     
     if( !$this->cartSession )
     	$this->cartSession = $this->getNewSession();
+ 
+ 	$host = $this->getRequest()->getHost();   	
+    $this->pagseguroDebug = in_array($host, array('irank', 'beta.irank.com.br'));
     
     $libDir = sfConfig::get('sf_lib_dir');
 	require_once "$libDir/pagseguro/PagSeguroLibrary.php";
@@ -270,7 +273,7 @@ class storeActions extends sfActions
 	$purchaseObj->setAddressZipcode($cartSessionObj->zipcode);
 	$purchaseObj->setCreatedAt($cartSessionObj->createdAt);
 	
-	if( $paymethod=='pagseguro' ){
+	if( $paymethod=='pagseguro' && !$this->pagseguroDebug ){
 		
 		$paymentRequest = new PagSeguroPaymentRequest();
 		$paymentRequest->setCurrency('BRL');
@@ -292,7 +295,7 @@ class storeActions extends sfActions
   		$purchaseProductItemObj->setTotalValue($price*$quantity);
   		$purchaseObj->addPurchaseProductItem($purchaseProductItemObj);
   		
-  		if( $paymethod=='pagseguro' ){
+  		if( $paymethod=='pagseguro' && !$this->pagseguroDebug ){
   			
 	  		$productItemObj     = ProductItemPeer::retrieveByPK($productItemId);
 	  		$productObj         = $productItemObj->getProduct();
@@ -308,20 +311,16 @@ class storeActions extends sfActions
   	}
   	
   	try{
+		$con = Propel::getConnection();
+		$con->begin();
+		
   		$purchaseObj->validateOrder();
-  
-//  		echo '<Pre>';
-  				
-//		$con = Propel::getConnection();
-//		$con->begin();
   		
-  		$purchaseObj->save();
+  		$purchaseObj->save($con);
 		$orderNumber = $purchaseObj->getOrderNumber();
 		
-//		$con->rollback();
-
 		$url = null;
-		if( $paymethod=='pagseguro' ){
+		if( $paymethod=='pagseguro' && !$this->pagseguroDebug ){
 			
 			$paymentRequest->setReference($orderNumber);
 			
@@ -339,30 +338,38 @@ class storeActions extends sfActions
 			// Sets your customer information.
 			$paymentRequest->setSender($purchaseObj->getCustomerName(), $purchaseObj->getUserSite()->getPeople()->getEmailAddress());
 			
-			$host = $request->getHost();
 			$paymentRequest->setRedirectUrl("http://alpha.irank.com.br/store/orderConfirm/$orderNumber");
 
 	  		$credentials = PagSeguroConfig::getAccountCredentials();
 	  		$url = $paymentRequest->register($credentials);
 	  		
 	  		$purchaseObj->setPagseguroUrl($url);
-	  		$purchaseObj->save();
+	  		$purchaseObj->save($con);
 		}
-
-  		$purchaseObj->notify();
+  		
+		$con->commit();
 		
-  		$this->getNewSession();
+  		$purchaseObj->addStatusLog(date('d/m/Y H:i:s'), md5($orderNumber), $purchaseObj->getOrderStatus(true), $purchaseObj->getPaymethod(true), 0, 1, 'iRank Store');
+		
+//  		$this->getNewSession();
   		
   		echo $orderNumber;
   	}catch(PurchaseException $e){
   		
+  		$con->rollback();
   		Util::forceError($e->getMessage());
   	}catch(Exception $e){
   		
+  		echo $e->getMessage();
+  		$con->rollback();
   		Util::forceError('error');
   	}
   	
   	exit;
+  }
+
+  public function executePagseguroDebug($request){
+  	
   }
 
   public function executeOrderConfirm($request){
@@ -383,22 +390,25 @@ class storeActions extends sfActions
   	$notificationType = $request->getParameter('notificationType');
   	$notificationCode = $request->getParameter('notificationCode');
   	
-  	Log::doLog('TransactionStatus: Atualizou o status de pagamento do pedido. notificationCode = '.$notificationCode, 'PagSeguro');
-  	
-  	$credentials = PagSeguroConfig::getAccountCredentials();
-  	$email       = $credentials->getEmail();
-  	$token       = $credentials->getToken();
-  	
-  	$culrUrl = "https://ws.pagseguro.uol.com.br/v2/transactions/notifications/$notificationCode?email=$email&token=$token";
-  	
-	$curl = curl_init();
-	curl_setopt($curl, CURLOPT_URL, $culrUrl);
-	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($curl, CURLOPT_HEADER, false);
-	curl_setopt($curl, CURLOPT_TIMEOUT, 20);
-	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-	$xmlString = trim(curl_exec($curl));
-	curl_close($curl);
+	if( $this->pagseguroDebug ){
+		
+		$xmlString = file_get_contents(Util::getFilePath('/temp/pagseguro/'.$notificationCode.'.xml'));
+	}else{
+		
+	  	$credentials = PagSeguroConfig::getAccountCredentials();
+	  	$email       = $credentials->getEmail();
+	  	$token       = $credentials->getToken();
+	  	
+	  	$culrUrl = "https://ws.pagseguro.uol.com.br/v2/transactions/notifications/$notificationCode?email=$email&token=$token";
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $culrUrl);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 20);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		$xmlString = trim(curl_exec($curl));
+		curl_close($curl);
+	}
 	
   	$xmlObj = @simplexml_load_string($xmlString);
   	$orderNumber = (string)$xmlObj->reference;
@@ -406,13 +416,16 @@ class storeActions extends sfActions
   	try{
   		
   		$purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, null, true);
-  	
-	  	if( is_object($purchaseObj) )
-	  		$purchaseObj->addTransactionLog($xmlObj);
-	  	else
-	  		Log::doLog('TransactionStatus: Não encontrou o pedido '.$orderNumber.'. notificationCode = '.$notificationCode, 'PagSeguro');
+  		
+	  	if( !is_object($purchaseObj) )
+	  		throw new Exception();
+	  	
+  		$purchaseObj->addTransactionLog($xmlObj);
+	  	Log::doLog('Atualizou o status de pagamento do pedido '.$orderNumber.', notificationCode '.$notificationCode, 'PagSeguro');
   	}catch(Exception $e){
   		
+  		echo $e->getMessage();
+  		Log::doLog('Não encontrou o pedido. notificationCode '.$notificationCode, 'PagSeguro');
   	}
   	
   	unset($xmlObj);
@@ -424,19 +437,21 @@ class storeActions extends sfActions
   	$orderNumber = $request->getParameter('Referencia');
   	$orderNumber = $request->getParameter('orderNumber', $orderNumber);
   	
-  	Log::doLog('OrderStatus: Atualizou o status de pagamento do pedido: orderNumber = '.$orderNumber, 'PagSeguro');
-  	
-	if( count($_GET) > 0 ){
+	if( count($_POST) > 0 ){
 		
 		$purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, null, true);
 		
-		// POST recebido, indica que é a requisição do NPI.
-		$npi = new PagSeguroNpi();
-		$result = $npi->notificationPost();
+		if( $this->pagseguroDebug ){
+			
+			$result = 'VERIFICADO';
+		}else{
+			
+			// POST recebido, indica que é a requisição do NPI.
+			$npi = new PagSeguroNpi();
+			$result = $npi->notificationPost();
+		}
 		
 		$transactionId = $request->getParameter('TransacaoID');
-		
-		Log::doLog('Salvou o transactionId '.$transactionId.' para o pedido '.$orderNumber, 'PagSeguro');
 		
 		if( $result=='VERIFICADO' ){
 			
@@ -450,15 +465,15 @@ class storeActions extends sfActions
 			$purchaseObj->addStatusLog($transactionDate, $transactionCode, $transactionStatus, $paymethodType, $extraAmount, $installmentCount, 'PagSeguro');			
   
 			//O post foi validado pelo PagSeguro.
-			Log::doLog('Post PagSeguro validado para o pedido '.$orderNumber, 'PagSeguro');
+			Log::doLog("Post PagSeguro validado para o pedido $orderNumber, transação $transactionId", 'PagSeguro');
 		}elseif( $result=='FALSO' ){
 			
 			//O post não foi validado pelo PagSeguro.
-			Log::doLog('Post PagSeguro NÃO validado para o pedido '.$orderNumber, 'PagSeguro');
+			Log::doLog("Post PagSeguro NÃO validado para o pedido $orderNumber, transação $transactionId", 'PagSeguro');
 		}else{
 			
 			//Erro na integração com o PagSeguro.
-			Log::doLog('Falha ao validar o Post PagSeguro para o pedido '.$orderNumber, 'PagSeguro');
+			Log::doLog("Falha ao validar o Post PagSeguro para o pedido $orderNumber, transação $transactionId", 'PagSeguro');
 		}
 	}
 	
@@ -788,8 +803,8 @@ class storeActions extends sfActions
 	  	$shippingValue = 0;
   	}
   	
-//	$cartSessionObj->shippingValue = 0; // Debug
   	$cartSessionObj->shippingValue = $shippingValue; // Producao
+//	$cartSessionObj->shippingValue = 0; // Debug
   	$cartSessionObj->zipcode       = $zipcode;
   	
   	$this->getUpdateSession($cartSessionObj);

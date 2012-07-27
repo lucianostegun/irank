@@ -123,10 +123,10 @@ function link_to($name = '', $internal_uri = '', $options = array())
     }
   }
   
-  if( ereg('^#', $internal_uri) ){
+  if( preg_match('/^#/', $internal_uri) ){
   	
   	$html_options['href']    = 'javascript:void(0)';
-  	$html_options['onclick'] = ereg_replace('^#', '', $internal_uri);
+  	$html_options['onclick'] = preg_replace('/^#/', '', $internal_uri);
   }
 
   if (!strlen($name))
@@ -178,10 +178,10 @@ function link_to_image($name = '', $internal_uri = '', $options = array())
     }
   }
   
-  if( ereg('^#', $internal_uri) ){
+  if( preg_match('/^#/', $internal_uri) ){
   	
   	$html_options['href']    = 'javascript:void(0)';
-  	$html_options['onclick'] = ereg_replace('^#', '', $internal_uri);
+  	$html_options['onclick'] = preg_replace('/^#/', '', $internal_uri);
   }
 
   if (!strlen($name))

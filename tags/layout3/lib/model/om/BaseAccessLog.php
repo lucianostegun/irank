@@ -68,9 +68,7 @@ abstract class BaseAccessLog extends BaseObject  implements Persistent {
 	public function setUserSiteId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -105,9 +103,7 @@ abstract class BaseAccessLog extends BaseObject  implements Persistent {
 	public function setIpAddress($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

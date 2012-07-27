@@ -11,8 +11,8 @@ class PagSeguroNpi {
 		
 		$postdata = 'Comando=validar&Token='.TOKEN;
 		
-		foreach($_GET as $key=>$value){
-			$value = utf8_decode($value);
+		foreach($_POST as $key=>$value){
+			
 			$valued    = $this->clearStr($value);
 			$postdata .= "&$key=$valued";
 		}

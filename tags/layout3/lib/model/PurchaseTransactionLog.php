@@ -64,4 +64,15 @@ class PurchaseTransactionLog extends BasePurchaseTransactionLog
             Log::quickLogError('purchase_transaction_log', $this->getPrimaryKey(), $e);
         }
     }
+	
+	public static function getList(Criteria $criteria=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+			
+		$criteria->addDescendingOrderByColumn( PurchaseTransactionLogPeer::CREATED_AT );
+		$criteria->addDescendingOrderByColumn( PurchaseTransactionLogPeer::ID );
+		
+		return PurchaseTransactionLogPeer::doSelect($criteria);
+	}
 }

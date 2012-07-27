@@ -38,7 +38,7 @@ class Report {
 		$senderName       = array_key_exists('senderName', $options)?$options['senderName']:$senderName;
 		
 //		$emailAddressList = array('lucianostegun@gmail.com');
-		
+
 		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
 		$encodeEmail = Config::getConfigByName('encodeEmailToUTF8', true);
 		
@@ -86,7 +86,7 @@ class Report {
 			
 		$emailContent = str_replace('&gt;', '>', $emailContent);
 		$emailContent = str_replace('&lt;', '<', $emailContent);
-		
+
 //		echo $emailContent;exit;
 //		Util::forceError($emailContent);exit;
 			
@@ -148,17 +148,23 @@ class Report {
     	$host = str_replace('backend', 'www', $host);
     	
 		if( $emailLogId ){
-			$headerLogoUrl = 'http://[host]/home/images/email/logoHeader.png?elid='.Util::encodeId($emailLogId);
-			$footerLogoUrl = 'http://[host]/home/images/email/logoFooter.png?elid='.Util::encodeId($emailLogId);
+			
+			$emailLogId = Util::encodeId($emailLogId);
+			
+			$headerStoreLogoUrl = "http://[host]/home/$emailLogId/logo/logoStoreHeader.png";
+			$headerLogoUrl      = "http://[host]/home/$emailLogId/logo/logoHeader.png";
+			$footerLogoUrl      = "http://[host]/home/$emailLogId/logo/logoFooter.png";
 		}else{
 			
-			$headerLogoUrl = 'http://[host]/images/email/logoHeader.png';
-			$footerLogoUrl = 'http://[host]/images/email/logoFooter.png';
+			$headerStoreLogoUrl = 'http://[host]/images/email/logoStoreHeader.png';
+			$headerLogoUrl      = 'http://[host]/images/email/logoHeader.png';
+			$footerLogoUrl      = 'http://[host]/images/email/logoFooter.png';
 		}
-			
-    	$infoList['headerLogoUrl'] = $headerLogoUrl;
-    	$infoList['footerLogoUrl'] = $footerLogoUrl;
-		$infoList['host']          = $host;
+		
+    	$infoList['headerStoreLogoUrl'] = $headerStoreLogoUrl;
+    	$infoList['headerLogoUrl']      = $headerLogoUrl;
+    	$infoList['footerLogoUrl']      = $footerLogoUrl;
+		$infoList['host']               = $host;
 		$content = str_replace('<hr/>', '<div style="border-top: 1px solid #C0C0C0"></div>', $content);
 		$content = str_replace('[separator]', '<div style="margin: 10px 0px 10px 0px; height: 1px; background: #E0E0E0; border-bottom: 1px solid #FEFEFE"></div>', $content);
 		

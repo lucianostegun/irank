@@ -29,6 +29,14 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 
 
 	
+	protected $class_name;
+
+
+	
+	protected $object_id;
+
+
+	
 	protected $created_at;
 
 
@@ -74,6 +82,20 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	{
 
 		return $this->sending_status;
+	}
+
+	
+	public function getClassName()
+	{
+
+		return $this->class_name;
+	}
+
+	
+	public function getObjectId()
+	{
+
+		return $this->object_id;
 	}
 
 	
@@ -124,9 +146,7 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -140,9 +160,7 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setEmailAddress($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -156,9 +174,7 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setErrorMessage($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -172,9 +188,7 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setEmailSubject($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -188,15 +202,41 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	public function setSendingStatus($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
 		if ($this->sending_status !== $v) {
 			$this->sending_status = $v;
 			$this->modifiedColumns[] = EmailLogPeer::SENDING_STATUS;
+		}
+
+	} 
+	
+	public function setClassName($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->class_name !== $v) {
+			$this->class_name = $v;
+			$this->modifiedColumns[] = EmailLogPeer::CLASS_NAME;
+		}
+
+	} 
+	
+	public function setObjectId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->object_id !== $v) {
+			$this->object_id = $v;
+			$this->modifiedColumns[] = EmailLogPeer::OBJECT_ID;
 		}
 
 	} 
@@ -249,15 +289,19 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 
 			$this->sending_status = $rs->getString($startcol + 4);
 
-			$this->created_at = $rs->getTimestamp($startcol + 5, null);
+			$this->class_name = $rs->getString($startcol + 5);
 
-			$this->read_at = $rs->getTimestamp($startcol + 6, null);
+			$this->object_id = $rs->getInt($startcol + 6);
+
+			$this->created_at = $rs->getTimestamp($startcol + 7, null);
+
+			$this->read_at = $rs->getTimestamp($startcol + 8, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 7; 
+						return $startcol + 9; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EmailLog object", $e);
 		}
@@ -405,9 +449,15 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 				return $this->getSendingStatus();
 				break;
 			case 5:
-				return $this->getCreatedAt();
+				return $this->getClassName();
 				break;
 			case 6:
+				return $this->getObjectId();
+				break;
+			case 7:
+				return $this->getCreatedAt();
+				break;
+			case 8:
 				return $this->getReadAt();
 				break;
 			default:
@@ -425,8 +475,10 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 			$keys[2]=>$this->getErrorMessage(),
 			$keys[3]=>$this->getEmailSubject(),
 			$keys[4]=>$this->getSendingStatus(),
-			$keys[5]=>$this->getCreatedAt(),
-			$keys[6]=>$this->getReadAt(),
+			$keys[5]=>$this->getClassName(),
+			$keys[6]=>$this->getObjectId(),
+			$keys[7]=>$this->getCreatedAt(),
+			$keys[8]=>$this->getReadAt(),
 		);
 		return $result;
 	}
@@ -458,9 +510,15 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 				$this->setSendingStatus($value);
 				break;
 			case 5:
-				$this->setCreatedAt($value);
+				$this->setClassName($value);
 				break;
 			case 6:
+				$this->setObjectId($value);
+				break;
+			case 7:
+				$this->setCreatedAt($value);
+				break;
+			case 8:
 				$this->setReadAt($value);
 				break;
 		} 	}
@@ -475,8 +533,10 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setErrorMessage($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setEmailSubject($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setSendingStatus($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setReadAt($arr[$keys[6]]);
+		if (array_key_exists($keys[5], $arr)) $this->setClassName($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setObjectId($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setReadAt($arr[$keys[8]]);
 	}
 
 	
@@ -489,6 +549,8 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EmailLogPeer::ERROR_MESSAGE)) $criteria->add(EmailLogPeer::ERROR_MESSAGE, $this->error_message);
 		if ($this->isColumnModified(EmailLogPeer::EMAIL_SUBJECT)) $criteria->add(EmailLogPeer::EMAIL_SUBJECT, $this->email_subject);
 		if ($this->isColumnModified(EmailLogPeer::SENDING_STATUS)) $criteria->add(EmailLogPeer::SENDING_STATUS, $this->sending_status);
+		if ($this->isColumnModified(EmailLogPeer::CLASS_NAME)) $criteria->add(EmailLogPeer::CLASS_NAME, $this->class_name);
+		if ($this->isColumnModified(EmailLogPeer::OBJECT_ID)) $criteria->add(EmailLogPeer::OBJECT_ID, $this->object_id);
 		if ($this->isColumnModified(EmailLogPeer::CREATED_AT)) $criteria->add(EmailLogPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EmailLogPeer::READ_AT)) $criteria->add(EmailLogPeer::READ_AT, $this->read_at);
 
@@ -528,6 +590,10 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 		$copyObj->setEmailSubject($this->email_subject);
 
 		$copyObj->setSendingStatus($this->sending_status);
+
+		$copyObj->setClassName($this->class_name);
+
+		$copyObj->setObjectId($this->object_id);
 
 		$copyObj->setCreatedAt($this->created_at);
 

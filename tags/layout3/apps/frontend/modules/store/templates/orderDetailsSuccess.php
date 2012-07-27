@@ -7,15 +7,19 @@
 	$billetLink    = null;
 	$fileId        = $purchaseObj->getFileId();
 	
-	$paymethod = $purchaseObj->getPaymethod();
+	$paymethod   = $purchaseObj->getPaymethod();
+	$orderStatus = $purchaseObj->getOrderStatus();
 	
-	switch($paymethod){
-		case 'billet':
-			$billetLink = link_to('Imprimir boleto', "store/billet?$orderNumber=", array('class'=>'ml15', 'target'=>'_blank'));
-			break;
-		case 'pagseguro':
-			$billetLink = link_to('Link para pagamento', $purchaseObj->getPagseguroUrl(), array('class'=>'ml15', 'target'=>'_blank'));
-			break;
+	if( in_array($orderStatus, array('new', 'pending')) ){
+		
+		switch($paymethod){
+			case 'billet':
+				$billetLink = link_to('Imprimir boleto', "store/billet?$orderNumber=", array('class'=>'ml15', 'target'=>'_blank'));
+				break;
+			case 'pagseguro':
+				$billetLink = link_to('Link para pagamento', $purchaseObj->getPagseguroUrl(), array('class'=>'ml15', 'target'=>'_blank'));
+				break;
+		}
 	}
 ?>
 	<div class="storeOrderHeader">
@@ -94,10 +98,10 @@
 	<?php else: ?>
 		<div class="info"><label>Prazo de envio:</label>
 		<?php
-			$approvalDate = $purchaseObj->getApprovalDate(null);
+			$shippingDueDate = $purchaseObj->getShippingDueDate();
 			
-			if( $approvalDate )
-				echo date('d/m/Y', ($approvalDate+(3*86400)));
+			if( $shippingDueDate )
+				echo $shippingDueDate;
 			else
 				echo '3 dias úteis após pagamento'
 		?>

@@ -61,6 +61,12 @@ store_billet:
 
 #STORE ROUTING END
 
+
+email_log:
+  url:   /home/:emailLogId/logo/:fileName
+  param: { module: home, action: images }
+
+  
 homepage:
   url:   /
   param: { module: home, action: index }

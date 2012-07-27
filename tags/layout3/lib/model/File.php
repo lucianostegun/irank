@@ -158,7 +158,7 @@ class File extends BaseFile
 		$fileName = ereg_replace('[^0-9]', '', microtime()).'.'.$extension;
 		$fileName = ($destFileName?$destFileName:$fileName);
 		
-		if( !preg_match('/\.[a-z]*%/i', $fileName) )
+		if( !preg_match('/\.[a-z]*$/i', $fileName) )
 			$fileName = "$fileName.$extension";
 
 		$extensionImageList = array('jpg', 'png', 'jpeg', 'bmp', 'gif');

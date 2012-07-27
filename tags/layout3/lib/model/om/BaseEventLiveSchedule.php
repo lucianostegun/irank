@@ -179,9 +179,7 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -195,9 +193,7 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	public function setEventLiveId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -266,9 +262,7 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	public function setDaysAfter($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -282,9 +276,7 @@ abstract class BaseEventLiveSchedule extends BaseObject  implements Persistent {
 	public function setStepDay($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 

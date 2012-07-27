@@ -176,6 +176,10 @@ class EmailTemplate extends BaseEmailTemplate
 	public static function getContentByTagName($tagName, $encodeUTF8=false, $culture=false){
 		
 		$filePath = Util::getFilePath('/templates/email/'.$tagName.'.htm');
+		
+		if( !file_exists($filePath) )
+			throw new Exception('Template de e-mail não encontrado');
+		
 		$content = file_get_contents($filePath);
 		
 		if( $encodeUTF8 )

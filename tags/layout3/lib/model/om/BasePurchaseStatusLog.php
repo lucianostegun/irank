@@ -183,9 +183,7 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -199,9 +197,7 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 	public function setPurchaseId($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -232,9 +228,7 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 	public function setTransactionCode($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -248,9 +242,7 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 	public function setTransactionStatus($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -264,9 +256,7 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 	public function setPaymethodType($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -290,9 +280,7 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 	public function setInstallmentCount($v)
 	{
 
-		
-		
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -306,9 +294,7 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 	public function setChangeSource($v)
 	{
 
-		
-		
-		if ($v !== null && !is_string($v)) {
+						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
