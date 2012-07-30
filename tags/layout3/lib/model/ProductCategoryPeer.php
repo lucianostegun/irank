@@ -9,4 +9,11 @@
  */ 
 class ProductCategoryPeer extends BaseProductCategoryPeer
 {
+	
+	public static function retrieveByTagName($tagName){
+		
+		$criteria = new Criteria();
+		$criteria->add( ProductCategoryPeer::TAG_NAME, $tagName );
+		return ProductCategoryPeer::doSelectOne( $criteria );
+	}
 }

@@ -118,4 +118,19 @@ class Product extends BaseProduct
 		$this->setStock($stock);
 		$this->save();
 	}
+	
+	public static function getPageTitle(){
+		
+		$productCode = MyTools::getRequestParameter('productCode');
+		
+		$sql = "SELECT
+					product_category.SHORT_NAME||' '||product_name
+				FROM
+					product
+					INNER JOIN product_category ON product.PRODUCT_CATEGORY_ID=product_category.ID
+				WHERE
+					product_code = '$productCode'";
+		
+		return Util::executeOne($sql, 'string');
+	}
 }

@@ -65,14 +65,22 @@ var _ModuleName = '<?php echo $moduleName ?>';
     								<div id="loginResumeDiv">
 	    							<?php
 	    								if( $isAuthenticated ){
+	    									
+	    									if( $moduleName=='store' )
+		    									include_partial('store/include/cart', array());
 
 	    									include_partial('home/include/leftMenu', array('innerObj'=>$innerObj));
 	    									
 	    									if( $moduleName!='home' )
 	    										include_partial('home/include/quickResume', array());
 	    								}
-	    								else
-	    									include_partial('login/include/login', array());
+	    								else{
+	    									
+	    									if( $moduleName=='store' )
+		    									include_partial('store/include/cart', array());
+		    								else
+		    									include_partial('login/include/login', array());
+	    								}
 	    							?>
 	    							</div>
 	    							<?php include_partial('home/include/facebook', array()); ?>

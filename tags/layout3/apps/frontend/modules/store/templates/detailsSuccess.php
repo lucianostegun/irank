@@ -11,7 +11,6 @@
 	$defaultPrice       = $productObj->getDefaultPrice();
 	
 	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', $categoryName=>"store?category=$tagName", $shortName=>null)));
-	include_partial('store/include/cart');
 	
 	echo form_tag('store/addItem', array('id'=>'storeProductForm'));
 	echo input_hidden_tag('productCode', $productCode);
@@ -35,7 +34,7 @@
 			<h1 class="tshirt name"><?php echo "$categoryShortName: $productName" ?></h1>
 			<span class="tshirt description"><?php echo $productObj->getDescription() ?></span>
 			
-			<span class="tshirt prizeLabel">Vl. unit.</span>
+			<span class="tshirt prizeLabel">Valor unit.</span>
 			<span class="tshirt prize">R$ <?php echo Util::formatFloat($defaultPrice, true) ?></span>
 			
 			<div class="productOptions">
@@ -89,12 +88,17 @@
 							echo '</div>';
 						}
 						
-						echo input_hidden_tag('productOptionIdSize', $productOptionIdSize); 
-					?>
+						echo input_hidden_tag('productOptionIdSize', $productOptionIdSize);
+
+						if( $tagName=='tshirt' )
+							echo link_to(image_tag('icon/help'), '#showTshirtSizeHelp()', array('class'=>'sizeHelpButton', 'title'=>'Consulte a tabela de medidas de cada tamanho')); ?>
 				</div>
 			</div>
 			
-			<?php echo link_to(image_tag('store/buy', array('class'=>'buyButton')), "#addProductToCart()"); ?>
+			<?php
+				echo link_to(image_tag('store/buy', array('class'=>'buyButton')), '#addProductToCart()');
+				echo link_to(image_tag('store/favorite').'Adicionar aos favoritos', '#addProductToBookmarks()', array('class'=>'favoriteButton'));
+			?>
 		</div>
 	</div>
 </form>

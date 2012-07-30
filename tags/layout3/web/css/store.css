@@ -231,6 +231,14 @@
 	border-radius: 5px;
 }
 
+.productDetail .sizeHelpButton {
+
+	position: relative;
+	float: left;
+	top: 3px;
+	left: 85px;
+}
+
 .productDetail .productOptions .productOption input {
 
 	height: 	10px;
@@ -302,6 +310,25 @@
 	left: 20px
 }
 
+.productDetail .favoriteButton {
+
+	position: relative;
+	float: right;
+	display: block;
+	left: 0px;
+	top: -37px;
+}
+
+.productDetail .favoriteButton img {
+
+	position: relative;
+	top: 6px;
+	left: -7px;
+}
+
+
+
+
 
 
 
@@ -361,26 +388,56 @@ div.cartBar {
     filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FAFAFA', EndColorStr='#E5E5E5', GradientType=0);
 	border: 				1px solid #CACACA;
 	padding: 				10px 10px;
-	margin-top: 			-5px;
+	margin: 				0px 0px -5px 0px;
+	top: 					-5px;
+	height: 				22px;
+}
+
+div.cartResume {
+	
+	position: 				relative;
+	background: 			#E5E5E5;
+    background-image: 		-o-linear-gradient(#FAFAFA, #E5E5E5);
+    background: 			-moz-linear-gradient(top, #FAFAFA, #E5E5E5);;
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#FAFAFA), to(#E5E5E5));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FAFAFA', EndColorStr='#E5E5E5', GradientType=0);
+	border: 				1px solid #CACACA;
+	padding: 				10px 10px;
+	margin: 				0px;
+	height: 				20px;
 }
 
 div.cartIcon {
 
 	position: 	absolute;
-	top: 		6px;
-	left: 		5px;
+	top: 		-5px;
+	left: 		-1px;
 }
 
 div.cartInfo {
 	
-	position: 		absolute;
-	background: 	url('/.png') right top no-repeat;
-	height: 		32px;
-	right: 			15px;
-	top: 			3px;
-	padding-top: 	0px;
-	text-align: 	right;
+	clear: 			both;
+	position: 		relative;
+	margin: 		7px 7px -20px 7px;
+	text-align: 	left;
 	line-height: 	18px;
+}
+
+div.cartInfo label {
+	
+	display: block;
+	float: left;
+	width: 110px;
+	padding-right: 5px;
+	font-weight: normal;
+}
+
+div.cartInfo span {
+	
+	font-weight: bold;
+	text-align: right;
+	display: block;
+	float: right;
 }
 
 div.cartInfo a {
@@ -415,7 +472,6 @@ div.cartInfo a:hover {
 
 table.store.cart {
 
-	margin: 5px;
 	background: #F0F0F0;
 	width: 775px;
 	
@@ -937,4 +993,20 @@ body.billet .ld2 { font: bold 12px Arial; color: #000000 }
 	width: 350px;
 	padding: 10px;
 	background: #F0F0F0
+}
+
+.sizeBoard {
+
+	margin: 0px 5px 30px 5px;
+}
+ 
+.sizeBoard th {
+
+	text-align: center;
+	text-transform: uppercase
+}
+
+.sizeBoard td {
+
+	padding: 0px 10px
 }

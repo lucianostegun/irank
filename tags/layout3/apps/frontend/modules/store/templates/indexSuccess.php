@@ -1,10 +1,20 @@
 <?php
-	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index')));
-	include_partial('store/include/cart');
+	$pathList = array('Loja virtual'=>'store/index');
+	
+	if( $category ){
+		
+		$productCategoryObj = ProductCategoryPeer::retrieveByTagName($category);
+		if( is_object($productCategoryObj) )
+			$pathList[$productCategoryObj->getCategoryName()] = 'store?category='.$category;
+	}
+	
+	include_partial('home/component/commonBar', array('pathList'=>$pathList));
 ?>
 <?php
 	$criteria = new Criteria();
-	$productObjList = ProductPeer::doSelect($criteria);
+	if( $category ) $criteria->add( ProductCategoryPeer::TAG_NAME, $category );
+	
+	$productObjList = ProductPeer::search($criteria);
 	
 	foreach($productObjList as $productObj):
 		

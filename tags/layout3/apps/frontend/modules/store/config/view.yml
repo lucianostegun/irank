@@ -1,7 +1,15 @@
 all:
+
+  metas:
+    title:        iRank Store - Poker Ranking
   
-  stylesheets:    [table, store]
+  stylesheets:    [quickResume, table, store]
   javascripts:    [store]
+
+detailsSuccess:
+
+  metas:
+    title:        iRank Store - <?php echo Product::getPageTitle() ?>
   
 cartSuccess:
   

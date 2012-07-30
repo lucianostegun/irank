@@ -346,6 +346,7 @@ class Purchase extends BasePurchase
 		
 		switch($transactionStatus){
 			case 'new':
+			case 'pedido confirmado':
 			default:
 				$orderStatus = 'new';
 				break;

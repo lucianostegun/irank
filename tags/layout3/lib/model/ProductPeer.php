@@ -10,6 +10,22 @@
 class ProductPeer extends BaseProductPeer
 {
 	
+	public static function search(Criteria $criteria=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
+		$criteria->addJoin( ProductPeer::PRODUCT_CATEGORY_ID, ProductCategoryPeer::ID, Criteria::INNER_JOIN );
+		
+		$criteria->add( ProductPeer::ENABLED, true );
+		$criteria->add( ProductPeer::DELETED, false );
+		$criteria->add( ProductPeer::VISIBLE, true );
+		
+		$criteria->addAscendingOrderByColumn( 'RANDOM()' );
+		
+		return ProductPeer::doSelect($criteria);
+	}
+	
 	public static function retrieveByCode($productCode){
 		
 		$criteria = new Criteria();

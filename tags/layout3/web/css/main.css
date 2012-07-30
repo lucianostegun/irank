@@ -375,6 +375,16 @@ a:hover {
 	font-size: 		12px;
 }
 
+#contentArea #mainContent #innerContent .rightContent .moduleFooter {
+
+	position: 		relative;
+	top: 			10px;
+	left: 			20px;
+	width: 			700px;
+	margin-bottom: 	20px;
+	font-size: 		10px;
+}
+
 #footer {
 
 	position: 		relative;

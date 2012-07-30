@@ -64,6 +64,10 @@ function updateCartItem(cartSessionObj, productItemId){
 	
 	$('storeCartShippingValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.shippingValue);
 	$('storeCartTotalValue').innerHTML    = 'R$ '+toCurrency(cartSessionObj.totalValue);
+
+	$('storeCartSideBarOrderValue').innerHTML    = toCurrency(cartSessionObj.totalValue-cartSessionObj.shippingValue);
+	$('storeCartSideBarShippingValue').innerHTML = toCurrency(cartSessionObj.shippingValue);
+	$('storeCartSideBarTotalValue').innerHTML    = toCurrency(cartSessionObj.totalValue);
 }
 
 function removeProductFromCart(productItemId){
@@ -276,10 +280,10 @@ function getAddressByZipcode(){
 	var lockAddressFields = function(){
 		
 		$('storeAddressName').disabled       = true;
-	    $('storeAddressNumber').disabled     = true;
-	    $('storeAddressQuarter').disabled    = true;
-	    $('storeAddressComplement').disabled = true;
-	    $('storeAddressCity').disabled       = true;
+		$('storeAddressNumber').disabled     = true;
+		$('storeAddressQuarter').disabled    = true;
+		$('storeAddressComplement').disabled = true;
+		$('storeAddressCity').disabled       = true;
 		$('storeAddressState').disabled      = true;
 	}
 
@@ -364,4 +368,24 @@ function uploadPayTicket(){
 function downloadPayTicket(orderNumber){
 	
 	window.location = _webRoot+'/store/downloadFile/orderNumber/'+orderNumber;
+}
+
+function addProductToBookmarks(){
+	
+	if( window.sidebar ) // Mozilla Firefox Bookmark
+		window.sidebar.addPanel(document.title, location.href, '');
+	
+	else if( window.external ) // IE Favorite
+		window.external.AddFavorite(location.href,document.title);
+	
+	else if( window.opera && window.print ) { // Opera Hotlist
+		
+		this.title=document.title;
+		return true;
+	}
+}
+
+function showTshirtSizeHelp(){
+
+	window.open(_webRoot+'/store/tshirtSizes');
 }

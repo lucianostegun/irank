@@ -26,12 +26,17 @@ class storeActions extends sfActions
   
   public function executeIndex($request){
   	
+  	$this->category = $request->getParameter('category');
   }
   
   public function executeDetails($request){
   	
   	$productCode      = $request->getParameter('productCode');
   	$this->productObj = ProductPeer::retrieveByCode($productCode);
+  }
+
+  public function executeTshirtSizes($request){
+  	
   }
 
   public function executeCart($request){
@@ -253,7 +258,6 @@ class storeActions extends sfActions
   	$purchaseObj = new Purchase();
 	$purchaseObj->setUserSiteId($userSiteId);
 	$purchaseObj->buildOrderNumber();
-	$purchaseObj->setOrderStatus('new');
 	$purchaseObj->setOrderValue($orderValue);
 	$purchaseObj->setProducts($cartSessionObj->products);
 	$purchaseObj->setItens($cartSessionObj->itens);
@@ -351,7 +355,7 @@ class storeActions extends sfActions
 		
   		$purchaseObj->addStatusLog(date('d/m/Y H:i:s'), md5($orderNumber), $purchaseObj->getOrderStatus(true), $purchaseObj->getPaymethod(true), 0, 1, 'iRank Store');
 		
-//  		$this->getNewSession();
+  		$this->getNewSession();
   		
   		echo $orderNumber;
   	}catch(PurchaseException $e){
