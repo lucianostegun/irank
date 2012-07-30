@@ -150,8 +150,9 @@
 
 	position: absolute;
 	left: 285px;
+	width: 480px;
 	top: 0px;
-	padding: 0px
+	padding: 0px;
 }
 
 .productDetail .tshirt {
@@ -310,16 +311,14 @@
 	left: 20px
 }
 
-.productDetail .favoriteButton {
+.productDetail .productInfo .favoriteButton {
 
-	position: relative;
-	float: right;
-	display: block;
-	left: 0px;
-	top: -37px;
+	position: absolute;
+	right: 		20px;
+	bottom: 	10px;
 }
 
-.productDetail .favoriteButton img {
+.productDetail .productInfo .favoriteButton img {
 
 	position: relative;
 	top: 6px;

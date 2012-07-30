@@ -1,7 +1,6 @@
 <h3>Compre também</h3>
 <?php
-	$criteria = new Criteria();
-	$productObjList = ProductPeer::doSelect($criteria);
+	$productObjList = ProductPeer::search();
 	
 	foreach($productObjList as $productObj):
 		
@@ -13,8 +12,9 @@
 		$distinct     = ($isNew?'new':'');
 ?>
 	<div class="product">
-		<?php echo link_to(image_tag($productObj->getImageCover('preview'), array('class'=>'productImage')), "store/details?$productCode=") ?>
 		<?php
+			echo link_to(image_tag($productObj->getImageCover('preview'), array('class'=>'productImage')), "store/details?$productCode=");
+			
 			if( $distinct )
 				echo image_tag('store/'.$distinct, array('class'=>'distinct '.$distinct));
 		?>
