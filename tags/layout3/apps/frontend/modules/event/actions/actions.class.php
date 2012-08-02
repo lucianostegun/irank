@@ -672,6 +672,7 @@ class eventActions extends sfActions
 	$this->metaDescription = 'Fiquei em '.$eventPlayerObj->getEventPosition().'º lugar no evento '.$eventObj->getEventName().' realizado em '.$eventObj->getEventDate('d/m/Y').' valendo pelo ranking '.$eventObj->getRanking()->getRankingName();
 	$this->metaImage       = 'event/facebookResultImage/shareId/'.base64_encode($shareId);
 	$this->shareLink       = 'event/facebookResultImage/shareId/'.base64_encode($shareId);
+	$this->url             = 'share/'.base64_encode($shareId);
 	
 	sfConfig::set('sf_web_debug', false);
 
