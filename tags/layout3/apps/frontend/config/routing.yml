@@ -8,7 +8,7 @@ event_details:
 
 event_share:
   url:    /share/:shareId
-  param:  { module: event, action: facebookResultImage }
+  param:  { module: event, action: facebookResult }
 
 
 # REGRAS PARA O MÓDULO LOJA VIRTUAL
