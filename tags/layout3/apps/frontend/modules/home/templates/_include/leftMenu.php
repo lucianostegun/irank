@@ -7,12 +7,13 @@
 	$moduleName = MyTools::getContext()->getModuleName();
 	$actionName = MyTools::getContext()->getActionName();
 	
-	$invites = People::getPendingInvites();
+	$invites   = People::getPendingInvites();
+	$purchases = UserSite::getPendingPurchases();
 ?>
 <div class="userInfo">Olá <b><?php echo $firstName ?></b></div>
 <div id="leftMenu">
 
-	<div class="item<?php echo ($moduleName=='myAccount' && $actionName=='invites'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon invites" onclick="goToPage('myAccount', 'invites')"><span class="numberTop" id="pendingInvitesCount"><?php echo $invites ?></span> Meus convites</div></div>
+	<div class="item<?php echo ($moduleName=='myAccount' && $actionName=='invites'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label flex" onclick="goToPage('myAccount', 'invites')">Meus convites</div><span class="numberTop" id="pendingInvitesCount"><?php echo $invites ?></span></div>
 	
 	<div class="separator"></div>
 	
@@ -28,7 +29,7 @@
 	<?php if($moduleName=='eventPersonal' && $actionName!='index') include_partial('eventPersonal/include/leftMenu', array('eventPersonalObj'=>$innerObj, 'actionName'=>$actionName)) ?>
 	
 	<div class="separator"></div>
-	<div class="item<?php echo ($moduleName=='store'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon store" onclick="goToPage('store', 'myOrders')">Minhas compras</div></div>
+	<div class="item<?php echo ($moduleName=='store'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon store" onclick="goToPage('store', 'myOrders')">Minhas compras</div><span class="numberTop" id="pendingInvitesCount"><?php echo $purchases ?></span></div>
 	<div class="item<?php echo ($moduleName=='statistic'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon stats" onclick="goToPage('statistic', 'index')">Estatísticas</div></div>
 	<div class="item<?php echo ($moduleName=='myAccount' && $actionName=='index'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon config" onclick="goToPage('myAccount', 'index')">Configurações</div></div>
 	<div class="separator"></div>

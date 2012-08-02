@@ -16,6 +16,7 @@
     border-top: 		1px solid #EAEAEA;
     border-bottom: 		1px solid #CDCDCD;
     cursor: 			pointer;
+    position: 			relative;
 }
 
 #leftMenu .item.hover,
@@ -75,7 +76,7 @@
 
 
 .numberTop, .numberMiddle, .numberRight, .groupNum { text-align: center; background: url(/images/backgrounds/numberBg.png) repeat-x; display: inline-block; padding: 1px 5px; color: #fff; -moz-border-radius: 2px; -webkit-border-radius: 2px; -khtml-border-radius: 2px; border-radius: 2px; font-size: 11px; line-height: 13px; width: auto; height: auto!important; }
-.numberTop { margin: 0px 4px 0px -24px; padding: 1px 5px 1px 6px!important; position: relative; top: 1px }
+.numberTop { margin: 0px 4px 0px -44px; padding: 1px 5px 1px 6px!important; position: absolute; top: 8px; right: 5px }
 
 
 

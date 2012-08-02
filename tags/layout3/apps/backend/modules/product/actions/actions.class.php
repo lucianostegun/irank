@@ -152,6 +152,27 @@ class productActions extends sfActions
 	return $this->renderText(get_partial('product/include/itens', array('productObj'=>$productObj)));
     exit;
   }
+
+  public function handleErrorSaveStockLog(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
+
+  public function executeSaveStockLog($request){
+    
+    $productItemId  = $request->getParameter('productItemId');
+    $productItemObj = ProductItemPeer::retrieveByPK($productItemId);
+    
+    $stock       = $request->getParameter('stock');
+    $stockAction = $request->getParameter('stockAction');
+    $comments    = $request->getParameter('comments');
+    
+    $productItemObj->addStockLog($stock*($stockAction=='incrase'?1:-1), $comments);
+    
+    echo Util::parseInfo($productItemObj->getInfo());
+    
+    exit;
+  }
   
   public function executeUploadImage($request){
 	
@@ -167,11 +188,11 @@ class productActions extends sfActions
 	
 	$maxFileSize = (1024*1024*1);
 	
-	$fileName = sprintf('%s-%02d', strtolower($productCode), $imageIndex);
+	$fileName = sprintf('%s-%03d-%02d', strtolower($productCode), (int)$productItemId, $imageIndex);
 	
 	try {
 		$options = array('noFile'=>true,
-						 'fileName'=>$fileName,
+						 'fileName'=>$fileName.($isProductItem?'-item':''),
 						 'maxFileSize'=>$maxFileSize);
 		
 		$fileObj = File::upload($request, 'filePath-'.$imageIndex, '/images/store/product/full', $options);

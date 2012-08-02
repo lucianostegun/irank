@@ -49,11 +49,18 @@ class ProductItem extends BaseProductItem
 		$productId            = $request->getParameter('productId');
 		$productOptionIdColor = $request->getParameter('productOptionIdColor');
 		$productOptionIdSize  = $request->getParameter('productOptionIdSize');
+		$productOptionIdList  = $request->getParameter('productOptionIdList');
 		$price                = $request->getParameter('price');
 		$weight               = $request->getParameter('weight');
 		$stock                = $request->getParameter('stock');
-		
+		$lockedStock          = $request->getParameter('lockedStock');
+
 		$this->reloadTable = $this->getIsNew();
+		
+		$addStockLog = !$this->getLockedStock() && $lockedStock;
+		
+		$con = Propel::getConnection();
+		$con->begin();
 		
 		$this->setProductId( $productId );
 		$this->setProductOptionIdColor( $productOptionIdColor );
@@ -61,11 +68,54 @@ class ProductItem extends BaseProductItem
 		$this->setPrice( Util::formatFloat($price) );
 		$this->setWeight( Util::formatFloat($weight) );
 		$this->setStock( $stock );
+		$this->setLockedStock( ($lockedStock?true:false) );
 		$this->setVisible( true );
 		$this->setEnabled( true );
-		$this->save();
+		$this->save($con);
 		
-		$this->getProduct()->updateStock();
+		if( !empty($productOptionIdList) ){
+			
+			foreach($productOptionIdList as $productOptionId){
+				
+				list($productOptionIdColorTmp, $productOptionIdSizeTmp) = explode('-', $productOptionId);
+				if( $productOptionIdColorTmp==$productOptionIdColor && $productOptionIdSizeTmp==$productOptionIdSize )
+					continue;
+				
+				$productItemObj = ProductItemPeer::retrieveByOptions($productId, $productOptionIdColorTmp, $productOptionIdSizeTmp);
+				
+				if( is_object($productItemObj) && $productItemObj->getVisible() && !$productItemObj->getDeleted() )
+					continue;
+				
+				$productItemObj = new ProductItem();
+				$productItemObj->setProductId( $productId );
+				$productItemObj->setProductOptionIdColor( $productOptionIdColorTmp );
+				$productItemObj->setProductOptionIdSize( $productOptionIdSizeTmp );
+				$productItemObj->setPrice( Util::formatFloat($price) );
+				$productItemObj->setWeight( Util::formatFloat($weight) );
+				$productItemObj->setStock( $stock );
+				$productItemObj->setVisible( true );
+				$productItemObj->setEnabled( false );
+				
+				if( $productOptionIdColorTmp==$productOptionIdColor ){
+					
+					$productItemObj->setImage1( $this->getImage1() );
+					$productItemObj->setImage2( $this->getImage2() );
+					$productItemObj->setImage3( $this->getImage3() );
+					$productItemObj->setImage4( $this->getImage4() );
+					$productItemObj->setImage5( $this->getImage5() );
+					$productItemObj->setEnabled( true );
+				}
+				
+				$productItemObj->save($con);
+			}
+		}
+		
+		if( $addStockLog )
+			$this->addStockLog($this->getStock(), 'Estoque inicial', true);
+		else
+			$this->getProduct()->updateStock($con);
+		
+		$con->commit();
 	}
 	
 	public static function getList(Criteria $criteria=null){
@@ -73,7 +123,6 @@ class ProductItem extends BaseProductItem
 		if( is_null($criteria) )
 			$criteria = new Criteria();
 			
-		$criteria->add( ProductItemPeer::ENABLED, true );
 		$criteria->add( ProductItemPeer::VISIBLE, true );
 		$criteria->add( ProductItemPeer::DELETED, false );
 		$criteria->addAscendingOrderByColumn( ProductItemPeer::CREATED_AT );
@@ -128,6 +177,38 @@ class ProductItem extends BaseProductItem
 		return $this->getProductOptionRelatedByProductOptionIdSize();
 	}
 	
+	public function decraseStock($decraseAmount, $con){
+		
+		$this->setStock($this->getStock()-$decraseAmount);
+		$this->save($con);
+		
+		$this->getProduct()->updateStock($con);
+	}
+	
+	public function incraseStock($incraseAmount, $con){
+		
+		$this->setStock($this->getStock()+$incraseAmount);
+		$this->save($con);
+		
+		$this->getProduct()->updateStock($con);
+	}
+	
+	public function addStockLog($stock, $comments=null, $first=false){
+		
+		$productItemStockLogObj = new ProductItemStockLog();
+		$productItemStockLogObj->setProductItemId($this->getId());
+		$productItemStockLogObj->setStock($stock);
+		$productItemStockLogObj->setComments($comments);
+		$productItemStockLogObj->save();
+		
+		$currentStock = ($first?0:$this->getStock());
+		
+		$this->setStock($currentStock+$stock);
+		$this->save();
+		
+		$this->getProduct()->updateStock();
+	}
+	
 	public function getInfo(){
 		
 		$infoList = array();
@@ -144,6 +225,7 @@ class ProductItem extends BaseProductItem
 		$infoList['image4']               = $this->getImage4();
 		$infoList['image5']               = $this->getImage5();
 		$infoList['stock']                = $this->getStock();
+		$infoList['lockedStock']          = $this->getLockedStock();
 		$infoList['productStock']         = $this->getProduct()->getStock();
 		$infoList['reloadTable']          = $this->reloadTable;
 		

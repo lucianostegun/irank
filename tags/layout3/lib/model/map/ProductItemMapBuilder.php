@@ -48,6 +48,8 @@ class ProductItemMapBuilder {
 
 		$tMap->addColumn('STOCK', 'Stock', 'int', CreoleTypes::INTEGER, false, null);
 
+		$tMap->addColumn('LOCKED_STOCK', 'LockedStock', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('IMAGE_1', 'Image1', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('IMAGE_2', 'Image2', 'string', CreoleTypes::VARCHAR, false, null);
@@ -57,6 +59,8 @@ class ProductItemMapBuilder {
 		$tMap->addColumn('IMAGE_4', 'Image4', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('IMAGE_5', 'Image5', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('UNAVAILABLE', 'Unavailable', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

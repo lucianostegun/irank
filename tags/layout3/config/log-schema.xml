@@ -12,7 +12,6 @@
 		<column name="severity" type="INTEGER"/>
 		<column name="message" type="VARCHAR"/>
 		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
 	</table>
 
 	<table name="log_field" phpName="LogField"> 
@@ -20,7 +19,6 @@
 		<column name="field_name" type="VARCHAR"/>
 		<column name="field_value" type="VARCHAR"/>
 		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="log">
 			<reference local="log_id" foreign="id" />
 		</foreign-key>
@@ -62,7 +60,6 @@
 		<column name="extra_amount" type="NUMERIC" size="10" scale="2" />
 		<column name="installment_count" type="INTEGER" />
 		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
 	</table>
 	
 	<table name="purchase_status_log" phpName="PurchaseStatusLog">
@@ -71,12 +68,20 @@
 		<column name="transaction_date" type="TIMESTAMP" />
 		<column name="transaction_code" type="CHAR" />
 		<column name="transaction_status" type="VARCHAR" />
+		<column name="order_status" type="VARCHAR" />
 		<column name="paymethod_type" type="VARCHAR" />
 		<column name="extra_amount" type="NUMERIC" size="10" scale="2" />
 		<column name="installment_count" type="INTEGER" />
 		<column name="change_source" type="VARCHAR" />
 		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+
+	<table name="product_item_stock_log" phpName="ProductItemStockLog">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="product_item_id" type="INTEGER" />
+		<column name="stock" type="INTEGER" />
+		<column name="comments" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
 	</table>
 	
 </database>

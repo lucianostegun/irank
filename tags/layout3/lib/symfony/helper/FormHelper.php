@@ -999,24 +999,59 @@ function _convert_include_custom_for_select($options, &$select_options)
   }
 }
 
-function button_tag( $buttonId, $text, $options=array() ){
+function button_tag($buttonId, $text, $options=array() ){
+
+	$nl = chr(10);
+	
+	$app = Util::getApp();
+	if( $app=='mobile' )
+		return button_tag_mobile($buttonId, $text, $options);
+	
+	$onclick  = isset($options['onclick'])?$options['onclick']:null;
+	$image    = isset($options['image'])?$options['image']:'';
+	$visible  = isset($options['visible'])?$options['visible']:true;
+	$disabled = isset($options['disabled'])?$options['disabled']:false;
+	$class    = isset($options['class'])?$options['class']:'';
+	$noCheck  = isset($options['noCheck'])?$options['noCheck']:false;
+	$style    = isset($options['style'])?$options['style']:false;
+	
+			
+	MyTools::addStylesheet('button');
+	MyTools::addJavascript('button');
+	
+	$onclick = str_replace('"', '\'', $onclick);
+	
+	if( !$noCheck )
+		$onclick = "if(checkButton('$buttonId')){ $onclick }";
+
+	$html  = '<div class="actionButton'.($image?' image':'').($visible?'':' hidden').($class?" $class":'').'" onclick="'.$onclick.'" style="'.$style.'" id="'.$buttonId.'Button">';
+	$html .= '	<span id="'.$buttonId.'Label" style="background-image: url(\'/images/button/'.$image.'\')">'.$text.'</span>';
+	$html .= '</div>'.$nl;
+	
+	if( $text!='Cancelar' && $text!='Fechar' )
+		$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; top: -1000px; left: -1000px; border: none; background: none', 'onclick'=>$onclick.'; return false')) ;
+	
+	return $html;
+}
+
+function button_tag_mobile( $buttonId, $text, $options=array() ){
 
 	$buttonId = ucfirst($buttonId);
 	$nl       = chr(10);
-	$visible  = array_key_exists('visible', $options)?$options['visible']:true;
-	$disabled = array_key_exists('disabled', $options)?$options['disabled']:false;
-	$noCkeck  = array_key_exists('noCkeck', $options)?$options['noCkeck']:false;
-	$image    = array_key_exists('image', $options)?$options['image']:false;
-	$onclick  = array_key_exists('onclick', $options)?$options['onclick']:false;
-	$style    = array_key_exists('style', $options)?$options['style']:'';
-	$class    = array_key_exists('class', $options)?$options['class']:'';
+	
+	$onclick  = isset($options['onclick'])?$options['onclick']:null;
+	$image    = isset($options['image'])?$options['image']:'';
+	$visible  = isset($options['visible'])?$options['visible']:true;
+	$disabled = isset($options['disabled'])?$options['disabled']:false;
+	$class    = isset($options['class'])?$options['class']:'';
+	$noCheck  = isset($options['noCheck'])?$options['noCheck']:false;
+	$style    = isset($options['style'])?$options['style']:false;
 
-	if( array_key_exists('onclick', $options) && !$noCkeck ){
+	if( array_key_exists('onclick', $options) && !$noCheck ){
 		
 		$onclick = 'if( checkButton(\''.$buttonId.'\') ){ '.$onclick.'; }';
 		$options['onclick'] = $onclick;
 	}
-
 
 	unset($options['disabled']);
 	unset($options['style']);
@@ -1027,7 +1062,7 @@ function button_tag( $buttonId, $text, $options=array() ){
 
 	try{
 		
-		unset($options['noCkeck']);
+		unset($options['noCheck']);
 	}catch(Exception $e){}
 	
 	$app     = Util::getApp();
@@ -1049,25 +1084,12 @@ function button_tag( $buttonId, $text, $options=array() ){
 		
 	$submit = link_to(image_tag('blank.gif', array('class'=>'submit')), '#'.$onclick);
 	
-	if( $app=='backend' )
-		$style .= '; float: left';
-
 	$html = $nl;
-	if( $app=='mobile' ){
-		
 		$html .= '<div style="'.$style.'" class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).'>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 		$html .= '</div>';
-	}else{
-		
-		$html .= '<div style="'.$style.'" class="button'.($disabled?' disabled':'').($class?' '.$class:'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="this.addClassName(\'hover\')" onmouseout="this.removeClassName(\'hover\')">'.$nl;
-		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
-		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
-		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
-		$html .= '</div>';
-	}
 	
 	if( $text!='Cancelar' && $text!='Fechar' )
 		$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; top: -1000px; left: -1000px; border: none; background: none', 'onclick'=>$onclick.'; return false')) ;
@@ -1087,11 +1109,11 @@ function button_mobile_tag( $buttonId, $text, $options=array() ){
 	$nl       = chr(10);
 	$visible  = array_key_exists('visible', $options)?$options['visible']:true;
 	$disabled = array_key_exists('disabled', $options)?$options['disabled']:false;
-	$noCkeck  = array_key_exists('noCkeck', $options)?$options['noCkeck']:false;
+	$noCheck  = array_key_exists('noCheck', $options)?$options['noCheck']:false;
 	$image    = array_key_exists('image', $options)?$options['image']:false;
 	$onclick  = array_key_exists('onclick', $options)?$options['onclick']:false;
 
-	if( array_key_exists('onclick', $options) && !$noCkeck ){
+	if( array_key_exists('onclick', $options) && !$noCheck ){
 		
 		$onclick = 'if( checkButton(\''.$buttonId.'\') ){ '.$onclick.'; }';
 		$options['onclick'] = $onclick;
@@ -1107,7 +1129,7 @@ function button_mobile_tag( $buttonId, $text, $options=array() ){
 
 	try{
 		
-		unset($options['noCkeck']);
+		unset($options['noCheck']);
 	}catch(Exception $e){}
 	
 	$imagePath = 'button/'.$image;

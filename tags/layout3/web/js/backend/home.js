@@ -22,4 +22,13 @@ $(function() {
 			updateEventDate(eventLive, allDay)
 		},
 	});
+	
+	$('.orderDetails').hide();
 });
+
+function showPurchaseDetails(purchaseId){
+	
+	$('.orderDetails').hide();
+	
+	$('#purchaseDetails-'+purchaseId).show();
+}

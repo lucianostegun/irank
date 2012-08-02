@@ -46,6 +46,8 @@ class PurchaseMapBuilder {
 
 		$tMap->addColumn('ORDER_STATUS', 'OrderStatus', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('HAS_NEW_STATUS', 'HasNewStatus', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('ORDER_VALUE', 'OrderValue', 'double', CreoleTypes::NUMERIC, false, 10);
 
 		$tMap->addColumn('PRODUCTS', 'Products', 'int', CreoleTypes::INTEGER, false, null);

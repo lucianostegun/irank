@@ -13,7 +13,7 @@ abstract class BasePurchasePeer {
 	const CLASS_DEFAULT = 'lib.model.Purchase';
 
 	
-	const NUM_COLUMNS = 29;
+	const NUM_COLUMNS = 30;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -36,6 +36,9 @@ abstract class BasePurchasePeer {
 
 	
 	const ORDER_STATUS = 'purchase.ORDER_STATUS';
+
+	
+	const HAS_NEW_STATUS = 'purchase.HAS_NEW_STATUS';
 
 	
 	const ORDER_VALUE = 'purchase.ORDER_VALUE';
@@ -112,19 +115,19 @@ abstract class BasePurchasePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'UserSiteId', 'FileId', 'PagseguroUrl', 'OrderNumber', 'OrderStatus', 'OrderValue', 'Products', 'Itens', 'ShippingValue', 'TotalValue', 'Paymethod', 'IpAddress', 'Duration', 'ApprovalDate', 'RefusalDate', 'RefusalReason', 'ShippingDate', 'TracingCode', 'CustomerName', 'AddressName', 'AddressNumber', 'AddressQuarter', 'AddressComplement', 'AddressCity', 'AddressState', 'AddressZipcode', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (PurchasePeer::ID, PurchasePeer::USER_SITE_ID, PurchasePeer::FILE_ID, PurchasePeer::PAGSEGURO_URL, PurchasePeer::ORDER_NUMBER, PurchasePeer::ORDER_STATUS, PurchasePeer::ORDER_VALUE, PurchasePeer::PRODUCTS, PurchasePeer::ITENS, PurchasePeer::SHIPPING_VALUE, PurchasePeer::TOTAL_VALUE, PurchasePeer::PAYMETHOD, PurchasePeer::IP_ADDRESS, PurchasePeer::DURATION, PurchasePeer::APPROVAL_DATE, PurchasePeer::REFUSAL_DATE, PurchasePeer::REFUSAL_REASON, PurchasePeer::SHIPPING_DATE, PurchasePeer::TRACING_CODE, PurchasePeer::CUSTOMER_NAME, PurchasePeer::ADDRESS_NAME, PurchasePeer::ADDRESS_NUMBER, PurchasePeer::ADDRESS_QUARTER, PurchasePeer::ADDRESS_COMPLEMENT, PurchasePeer::ADDRESS_CITY, PurchasePeer::ADDRESS_STATE, PurchasePeer::ADDRESS_ZIPCODE, PurchasePeer::CREATED_AT, PurchasePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'user_site_id', 'file_id', 'pagseguro_url', 'order_number', 'order_status', 'order_value', 'products', 'itens', 'shipping_value', 'total_value', 'paymethod', 'ip_address', 'duration', 'approval_date', 'refusal_date', 'refusal_reason', 'shipping_date', 'tracing_code', 'customer_name', 'address_name', 'address_number', 'address_quarter', 'address_complement', 'address_city', 'address_state', 'address_zipcode', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'USER_SITE_ID'=>'', 'FILE_ID'=>'', 'PAGSEGURO_URL'=>'', 'ORDER_NUMBER'=>'', 'ORDER_STATUS'=>'', 'ORDER_VALUE'=>'', 'PRODUCTS'=>'', 'ITENS'=>'', 'SHIPPING_VALUE'=>'', 'TOTAL_VALUE'=>'', 'PAYMETHOD'=>'', 'IP_ADDRESS'=>'', 'DURATION'=>'', 'APPROVAL_DATE'=>'', 'REFUSAL_DATE'=>'', 'REFUSAL_REASON'=>'', 'SHIPPING_DATE'=>'', 'TRACING_CODE'=>'', 'CUSTOMER_NAME'=>'', 'ADDRESS_NAME'=>'', 'ADDRESS_NUMBER'=>'', 'ADDRESS_QUARTER'=>'', 'ADDRESS_COMPLEMENT'=>'', 'ADDRESS_CITY'=>'', 'ADDRESS_STATE'=>'', 'ADDRESS_ZIPCODE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'UserSiteId', 'FileId', 'PagseguroUrl', 'OrderNumber', 'OrderStatus', 'HasNewStatus', 'OrderValue', 'Products', 'Itens', 'ShippingValue', 'TotalValue', 'Paymethod', 'IpAddress', 'Duration', 'ApprovalDate', 'RefusalDate', 'RefusalReason', 'ShippingDate', 'TracingCode', 'CustomerName', 'AddressName', 'AddressNumber', 'AddressQuarter', 'AddressComplement', 'AddressCity', 'AddressState', 'AddressZipcode', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (PurchasePeer::ID, PurchasePeer::USER_SITE_ID, PurchasePeer::FILE_ID, PurchasePeer::PAGSEGURO_URL, PurchasePeer::ORDER_NUMBER, PurchasePeer::ORDER_STATUS, PurchasePeer::HAS_NEW_STATUS, PurchasePeer::ORDER_VALUE, PurchasePeer::PRODUCTS, PurchasePeer::ITENS, PurchasePeer::SHIPPING_VALUE, PurchasePeer::TOTAL_VALUE, PurchasePeer::PAYMETHOD, PurchasePeer::IP_ADDRESS, PurchasePeer::DURATION, PurchasePeer::APPROVAL_DATE, PurchasePeer::REFUSAL_DATE, PurchasePeer::REFUSAL_REASON, PurchasePeer::SHIPPING_DATE, PurchasePeer::TRACING_CODE, PurchasePeer::CUSTOMER_NAME, PurchasePeer::ADDRESS_NAME, PurchasePeer::ADDRESS_NUMBER, PurchasePeer::ADDRESS_QUARTER, PurchasePeer::ADDRESS_COMPLEMENT, PurchasePeer::ADDRESS_CITY, PurchasePeer::ADDRESS_STATE, PurchasePeer::ADDRESS_ZIPCODE, PurchasePeer::CREATED_AT, PurchasePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'user_site_id', 'file_id', 'pagseguro_url', 'order_number', 'order_status', 'has_new_status', 'order_value', 'products', 'itens', 'shipping_value', 'total_value', 'paymethod', 'ip_address', 'duration', 'approval_date', 'refusal_date', 'refusal_reason', 'shipping_date', 'tracing_code', 'customer_name', 'address_name', 'address_number', 'address_quarter', 'address_complement', 'address_city', 'address_state', 'address_zipcode', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'USER_SITE_ID'=>'', 'FILE_ID'=>'', 'PAGSEGURO_URL'=>'', 'ORDER_NUMBER'=>'', 'ORDER_STATUS'=>'', 'HAS_NEW_STATUS'=>'', 'ORDER_VALUE'=>'', 'PRODUCTS'=>'', 'ITENS'=>'', 'SHIPPING_VALUE'=>'', 'TOTAL_VALUE'=>'', 'PAYMETHOD'=>'', 'IP_ADDRESS'=>'', 'DURATION'=>'', 'APPROVAL_DATE'=>'', 'REFUSAL_DATE'=>'', 'REFUSAL_REASON'=>'', 'SHIPPING_DATE'=>'', 'TRACING_CODE'=>'', 'CUSTOMER_NAME'=>'', 'ADDRESS_NAME'=>'', 'ADDRESS_NUMBER'=>'', 'ADDRESS_QUARTER'=>'', 'ADDRESS_COMPLEMENT'=>'', 'ADDRESS_CITY'=>'', 'ADDRESS_STATE'=>'', 'ADDRESS_ZIPCODE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'UserSiteId'=>1, 'FileId'=>2, 'PagseguroUrl'=>3, 'OrderNumber'=>4, 'OrderStatus'=>5, 'OrderValue'=>6, 'Products'=>7, 'Itens'=>8, 'ShippingValue'=>9, 'TotalValue'=>10, 'Paymethod'=>11, 'IpAddress'=>12, 'Duration'=>13, 'ApprovalDate'=>14, 'RefusalDate'=>15, 'RefusalReason'=>16, 'ShippingDate'=>17, 'TracingCode'=>18, 'CustomerName'=>19, 'AddressName'=>20, 'AddressNumber'=>21, 'AddressQuarter'=>22, 'AddressComplement'=>23, 'AddressCity'=>24, 'AddressState'=>25, 'AddressZipcode'=>26, 'CreatedAt'=>27, 'UpdatedAt'=>28, ),
-		BasePeer::TYPE_COLNAME=>array (PurchasePeer::ID=>0, PurchasePeer::USER_SITE_ID=>1, PurchasePeer::FILE_ID=>2, PurchasePeer::PAGSEGURO_URL=>3, PurchasePeer::ORDER_NUMBER=>4, PurchasePeer::ORDER_STATUS=>5, PurchasePeer::ORDER_VALUE=>6, PurchasePeer::PRODUCTS=>7, PurchasePeer::ITENS=>8, PurchasePeer::SHIPPING_VALUE=>9, PurchasePeer::TOTAL_VALUE=>10, PurchasePeer::PAYMETHOD=>11, PurchasePeer::IP_ADDRESS=>12, PurchasePeer::DURATION=>13, PurchasePeer::APPROVAL_DATE=>14, PurchasePeer::REFUSAL_DATE=>15, PurchasePeer::REFUSAL_REASON=>16, PurchasePeer::SHIPPING_DATE=>17, PurchasePeer::TRACING_CODE=>18, PurchasePeer::CUSTOMER_NAME=>19, PurchasePeer::ADDRESS_NAME=>20, PurchasePeer::ADDRESS_NUMBER=>21, PurchasePeer::ADDRESS_QUARTER=>22, PurchasePeer::ADDRESS_COMPLEMENT=>23, PurchasePeer::ADDRESS_CITY=>24, PurchasePeer::ADDRESS_STATE=>25, PurchasePeer::ADDRESS_ZIPCODE=>26, PurchasePeer::CREATED_AT=>27, PurchasePeer::UPDATED_AT=>28, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'user_site_id'=>1, 'file_id'=>2, 'pagseguro_url'=>3, 'order_number'=>4, 'order_status'=>5, 'order_value'=>6, 'products'=>7, 'itens'=>8, 'shipping_value'=>9, 'total_value'=>10, 'paymethod'=>11, 'ip_address'=>12, 'duration'=>13, 'approval_date'=>14, 'refusal_date'=>15, 'refusal_reason'=>16, 'shipping_date'=>17, 'tracing_code'=>18, 'customer_name'=>19, 'address_name'=>20, 'address_number'=>21, 'address_quarter'=>22, 'address_complement'=>23, 'address_city'=>24, 'address_state'=>25, 'address_zipcode'=>26, 'created_at'=>27, 'updated_at'=>28, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'UserSiteId'=>1, 'FileId'=>2, 'PagseguroUrl'=>3, 'OrderNumber'=>4, 'OrderStatus'=>5, 'HasNewStatus'=>6, 'OrderValue'=>7, 'Products'=>8, 'Itens'=>9, 'ShippingValue'=>10, 'TotalValue'=>11, 'Paymethod'=>12, 'IpAddress'=>13, 'Duration'=>14, 'ApprovalDate'=>15, 'RefusalDate'=>16, 'RefusalReason'=>17, 'ShippingDate'=>18, 'TracingCode'=>19, 'CustomerName'=>20, 'AddressName'=>21, 'AddressNumber'=>22, 'AddressQuarter'=>23, 'AddressComplement'=>24, 'AddressCity'=>25, 'AddressState'=>26, 'AddressZipcode'=>27, 'CreatedAt'=>28, 'UpdatedAt'=>29, ),
+		BasePeer::TYPE_COLNAME=>array (PurchasePeer::ID=>0, PurchasePeer::USER_SITE_ID=>1, PurchasePeer::FILE_ID=>2, PurchasePeer::PAGSEGURO_URL=>3, PurchasePeer::ORDER_NUMBER=>4, PurchasePeer::ORDER_STATUS=>5, PurchasePeer::HAS_NEW_STATUS=>6, PurchasePeer::ORDER_VALUE=>7, PurchasePeer::PRODUCTS=>8, PurchasePeer::ITENS=>9, PurchasePeer::SHIPPING_VALUE=>10, PurchasePeer::TOTAL_VALUE=>11, PurchasePeer::PAYMETHOD=>12, PurchasePeer::IP_ADDRESS=>13, PurchasePeer::DURATION=>14, PurchasePeer::APPROVAL_DATE=>15, PurchasePeer::REFUSAL_DATE=>16, PurchasePeer::REFUSAL_REASON=>17, PurchasePeer::SHIPPING_DATE=>18, PurchasePeer::TRACING_CODE=>19, PurchasePeer::CUSTOMER_NAME=>20, PurchasePeer::ADDRESS_NAME=>21, PurchasePeer::ADDRESS_NUMBER=>22, PurchasePeer::ADDRESS_QUARTER=>23, PurchasePeer::ADDRESS_COMPLEMENT=>24, PurchasePeer::ADDRESS_CITY=>25, PurchasePeer::ADDRESS_STATE=>26, PurchasePeer::ADDRESS_ZIPCODE=>27, PurchasePeer::CREATED_AT=>28, PurchasePeer::UPDATED_AT=>29, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'user_site_id'=>1, 'file_id'=>2, 'pagseguro_url'=>3, 'order_number'=>4, 'order_status'=>5, 'has_new_status'=>6, 'order_value'=>7, 'products'=>8, 'itens'=>9, 'shipping_value'=>10, 'total_value'=>11, 'paymethod'=>12, 'ip_address'=>13, 'duration'=>14, 'approval_date'=>15, 'refusal_date'=>16, 'refusal_reason'=>17, 'shipping_date'=>18, 'tracing_code'=>19, 'customer_name'=>20, 'address_name'=>21, 'address_number'=>22, 'address_quarter'=>23, 'address_complement'=>24, 'address_city'=>25, 'address_state'=>26, 'address_zipcode'=>27, 'created_at'=>28, 'updated_at'=>29, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, )
 	);
 
 	
@@ -189,6 +192,8 @@ abstract class BasePurchasePeer {
 		$criteria->addSelectColumn(PurchasePeer::ORDER_NUMBER);
 
 		$criteria->addSelectColumn(PurchasePeer::ORDER_STATUS);
+
+		$criteria->addSelectColumn(PurchasePeer::HAS_NEW_STATUS);
 
 		$criteria->addSelectColumn(PurchasePeer::ORDER_VALUE);
 

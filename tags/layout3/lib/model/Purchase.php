@@ -249,6 +249,12 @@ class Purchase extends BasePurchase
 		return $paymethod;
 	}
 	
+	public function markAsRead(){
+		
+		$this->setHasNewStatus(false);
+		$this->save();
+	}
+	
 	public function getShippingDueDate(){
 		
 		$approvalDate = $this->getApprovalDate(null);
@@ -268,7 +274,7 @@ class Purchase extends BasePurchase
 								 'PÓS VENDA'=>array(),
 								 'approved'=>'Pagamento aprovado',
 								 'shipped'=>'Produto enviado',
-								 'complete'=>'Pedido finalizado',
+								 'complete'=>'Produto entregue',
 								 'ERRO'=>array(),
 								 'refused'=>'Pedido recusado',
 								 'canceled'=>'Pedido cancelado');
@@ -277,6 +283,27 @@ class Purchase extends BasePurchase
 			return $orderStatusList[$key];
 		else
 			return $orderStatusList;
+	}
+	
+	public function updateProductStock($updateType, $con){
+		
+		foreach($this->getPurchaseProductItemList() as $purchaseProductItemObj){
+			
+			$productItemObj = $purchaseProductItemObj->getProductItem();
+			
+			if( $updateType=='decrase' )
+				$productItemObj->decraseStock($purchaseProductItemObj->getQuantity(), $con);
+			else
+				$productItemObj->incraseStock($purchaseProductItemObj->getQuantity(), $con);
+		}
+	}
+	
+	public function getPurchaseStatusLogList(){
+		
+		$criteria = new Criteria();
+		$criteria->add( PurchaseStatusLogPeer::PURCHASE_ID, $this->getId() );
+		$criteria->addDescendingOrderByColumn( PurchaseStatusLogPeer::ID );
+		return PurchaseStatusLogPeer::doSelect($criteria);
 	}
 	
 	public function addTransactionLog($xmlObj){
@@ -326,25 +353,10 @@ class Purchase extends BasePurchase
 	
 	public function addStatusLog($transactionDate, $transactionCode, $transactionStatus, $paymethodType, $extraAmount, $installmentCount, $changeSource){
 
-		$purchaseStatusLogObj = PurchaseStatusLogPeer::retrieveByCode($transactionCode);
+		$orderStatus = strtolower($transactionStatus);
+		$orderStatus = String::removeAccents($orderStatus);
 		
-		if( !is_object($purchaseStatusLogObj) )
-			$purchaseStatusLogObj = new PurchaseStatusLog();
-		
-		$purchaseStatusLogObj->setPurchaseId($this->getId());
-		$purchaseStatusLogObj->setTransactionCode(nvl($transactionCode));   
-		$purchaseStatusLogObj->setTransactionDate(Util::formatDateTime($transactionDate));
-		$purchaseStatusLogObj->setTransactionStatus($transactionStatus);
-		$purchaseStatusLogObj->setPaymethodType($paymethodType);
-		$purchaseStatusLogObj->setExtraAmount($extraAmount);
-		$purchaseStatusLogObj->setInstallmentCount($installmentCount);
-		$purchaseStatusLogObj->setChangeSource($changeSource);
-		$purchaseStatusLogObj->save();
-		
-		$transactionStatus = strtolower($transactionStatus);
-		$transactionStatus = String::removeAccents($transactionStatus);
-		
-		switch($transactionStatus){
+		switch($orderStatus){
 			case 'new':
 			case 'pedido confirmado':
 			default:
@@ -352,11 +364,13 @@ class Purchase extends BasePurchase
 				break;
 			case 'completo':
 			case 'aprovado':
+			case 'pagamento aprovado':
 			case 'paga':
 			case 'approved':
 				$orderStatus = 'approved';
+				break;
 			case 'complete':
-			case 'pedido finalizado':
+			case 'produto entregue':
 				$orderStatus = 'complete';
 				break;
 			case 'aguardando pagto':
@@ -367,11 +381,33 @@ class Purchase extends BasePurchase
 			case 'checking':
 				$orderStatus = 'checking';
 				break;
+			case 'produto enviado':
+			case 'shipped':
+				$orderStatus = 'shipped';
+				break;
 			case 'cancelado':
 			case 'canceled':
 				$orderStatus = 'canceled';
 				break;
 		}
+		
+		$transactionStatus = Purchase::getOrderStatusList($orderStatus);
+		
+		$purchaseStatusLogObj = PurchaseStatusLogPeer::retrieveByCode($transactionCode);
+		
+		if( !is_object($purchaseStatusLogObj) )
+			$purchaseStatusLogObj = new PurchaseStatusLog();
+		
+		$purchaseStatusLogObj->setPurchaseId($this->getId());
+		$purchaseStatusLogObj->setTransactionCode(nvl($transactionCode));   
+		$purchaseStatusLogObj->setTransactionDate(Util::formatDateTime($transactionDate));
+		$purchaseStatusLogObj->setTransactionStatus($transactionStatus);
+		$purchaseStatusLogObj->setOrderStatus($orderStatus);
+		$purchaseStatusLogObj->setPaymethodType($paymethodType);
+		$purchaseStatusLogObj->setExtraAmount($extraAmount);
+		$purchaseStatusLogObj->setInstallmentCount($installmentCount);
+		$purchaseStatusLogObj->setChangeSource($changeSource);
+		$purchaseStatusLogObj->save();
 		
 		$this->updateOrderStatus($orderStatus, $purchaseStatusLogObj->getId());
 	}
@@ -390,7 +426,9 @@ class Purchase extends BasePurchase
 	
 	public function updateOrderStatus($orderStatus, $purchaseStatusLogId){
 		
-		if( $this->getOrderStatus()==$orderStatus )
+		$currentOrderStatus = $this->getOrderStatus();
+		
+		if( $currentOrderStatus==$orderStatus )
 			return null;
 		
 		if( $orderStatus=='approved' )
@@ -402,11 +440,33 @@ class Purchase extends BasePurchase
 			$this->setRefusalReason('Compra cancelada');
 		}
 		
-		$this->setOrderStatus($orderStatus);
-		$this->save();
+		$con = Propel::getConnection();
+		$con->begin();
 		
-		if( in_array($orderStatus, array('new', 'approved', 'shipped', 'refused', 'canceled')) )
-			$this->notify($purchaseStatusLogId);
+		try{
+			
+			$this->setOrderStatus($orderStatus);
+			$this->setHasNewStatus(($orderStatus!='new'));
+			$this->save($con);
+			
+			if( in_array($orderStatus, array('new', 'approved', 'shipped', 'refused', 'canceled')) )
+				$this->notify($purchaseStatusLogId);
+				
+			// Se o status atual não for ENTREGUE ou ENVIADO, decrementa o estoque atual
+			if( $orderStatus=='shipped' && !in_array($currentOrderStatus, array('complete')) ||
+				$orderStatus=='complete' && !in_array($currentOrderStatus, array('shipped')) )
+				$this->updateProductStock('decrase', $con);
+			
+			// Se por acaso o status voltar de ENTREGUE ou ENVIADO para qualquer outro status, incrementa o estoque atual
+			if( !in_array($orderStatus, array('shipped', 'complete')) && in_array($currentOrderStatus, array('shipped', 'complete')) )
+				$this->updateProductStock('incrase', $con);
+			
+			$con->commit();
+		}catch(Exception $e){
+			
+			$con->rollback();
+		}
+		
 	}
 }
 

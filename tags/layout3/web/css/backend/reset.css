@@ -83,6 +83,7 @@ a { text-decoration: none; color: #2b6893; }
 .mt0 { margin-top: 0!important; }
 .mt2 { margin-top: 2px!important; }
 .mt3 { margin-top: 3px!important; }
+.mt4 { margin-top: 4px; }
 .mt5 { margin-top: 5px; }
 .mt6 { margin-top: 6px; }
 .mt7 { margin-top: 7px; }
@@ -131,6 +132,10 @@ a { text-decoration: none; color: #2b6893; }
 .pt20 { padding-top: 20px; }
 .pt25 { padding-top: 25px; }
 .pt30 { padding-top: 30px; }
+
+.pl10 { padding-left: 10px; }
+
+.pr10 { padding-right: 10px; }
 
 
 input::-moz-focus-inner /*Remove button padding in FF*/

@@ -71,13 +71,13 @@
 					
 					<?php
 						if( $eventLiveObj->isPastDate() && $isEnrollmentOpen )
-								echo button_tag('resultButton'.$eventLiveId, 'VER RESULTADO', array('image'=>'result.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'goToPage("eventLive", "details", "id", '.$eventLiveId.', false, event, "eventLiveScheduleId", '.$eventLiveScheduleId.')'));
+								echo button_tag('resultButton'.$eventLiveId, 'VER RESULTADO', array('image'=>'result.png', 'style'=>'margin-top: 37px; margin-right: 8px; float: right', 'onclick'=>'goToPage("eventLive", "details", "id", '.$eventLiveId.', false, event, "eventLiveScheduleId", '.$eventLiveScheduleId.')'));
 						elseif( $isEnrollmentOpen ){
 							
 							if( $peopleId && $eventLiveObj->getPlayerStatus($peopleId, true) )
-								echo button_tag('presenceConfirm'.$eventLiveId, 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'style'=>'margin-top: 37px; float: right', 'class'=>'confirmedButton', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
+								echo button_tag('presenceConfirm'.$eventLiveId, 'PRESENÇA CONFIRMADA', array('image'=>'reload.png', 'style'=>'margin-top: 37px; margin-right: 8px; float: right', 'class'=>'confirmedButton', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
 							else
-								echo button_tag('presenceConfirm'.$eventLiveId, 'CONFIRMAR PRESENÇA', array('image'=>'ok.png', 'style'=>'margin-top: 37px; float: right', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
+								echo button_tag('presenceConfirm'.$eventLiveId, 'CONFIRMAR PRESENÇA', array('image'=>'ok.png', 'style'=>'margin-top: 37px; margin-right: 8px; float: right', 'onclick'=>'confirmEventLivePresence('.$eventLiveId.')'));
 						}elseif( !$isEnrollmentOpen ){
 							
 							echo '<span class="enrollmentInfo">Inscrições a partir de '.$eventLiveObj->getEnrollmentStartDate('d/m/Y').'</span>';

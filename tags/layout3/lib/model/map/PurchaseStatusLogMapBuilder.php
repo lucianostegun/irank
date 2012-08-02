@@ -44,6 +44,8 @@ class PurchaseStatusLogMapBuilder {
 
 		$tMap->addColumn('TRANSACTION_STATUS', 'TransactionStatus', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('ORDER_STATUS', 'OrderStatus', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('PAYMETHOD_TYPE', 'PaymethodType', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('EXTRA_AMOUNT', 'ExtraAmount', 'double', CreoleTypes::NUMERIC, false, 10);
@@ -53,8 +55,6 @@ class PurchaseStatusLogMapBuilder {
 		$tMap->addColumn('CHANGE_SOURCE', 'ChangeSource', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
-
-		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 	} 
 } 

@@ -1,11 +1,12 @@
 <?php
 	$orderNumber = $purchaseObj->getOrderNumber();
+	$purchaseObj->markAsRead();
+	
 	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', 'Minhas compras'=>'store/myOrders', 'Pedido #'.$orderNumber=>null)));
 	
 	$tracingCode   = $purchaseObj->getTracingCode();
 	$shippingDate  = $purchaseObj->getShippingDate('d/m/Y');
 	$billetLink    = null;
-	$fileId        = $purchaseObj->getFileId();
 	
 	$paymethod   = $purchaseObj->getPaymethod();
 	$orderStatus = $purchaseObj->getOrderStatus();
@@ -110,42 +111,13 @@
 	<div class="info"><label>Forma pagamento:</label><?php echo $purchaseObj->getPaymethod(true).$billetLink ?></div>
 	<div class="info"><label>Transporte:</label>E-Sedex</div>
 	<?php if( $tracingCode ): ?><div class="info"><label>Cód rastreamento:</label><?php echo link_to($tracingCode, "http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI=$tracingCode", array('target'=>'_blank')) ?></div><?php endif; ?>
-	<div class="info"><label>Comprovante:</label>
-	<?php
-		$fileName = null;
-		if( $fileId )
-			$fileName = $purchaseObj->getFile()->getFileName();
-		
-		echo link_to(truncate_text($fileName, 30, '...', false, true), "#downloadPayTicket($orderNumber)", array('class'=>'pr20 '.($fileId?'':'hidden'), 'title'=>$fileName, 'id'=>'payTicketDownloadLink'));
-		echo link_to(($fileId?'Reenviar':'Enviar'), "#uploadPayTicket()", array('id'=>'payTicketUploadLink'));
-	?>
-	</div>
-	<script>
-		function submitUploadFileForm(){
-			
-			$('uploadFileForm').target = 'uploadFileFrame';
-			$('uploadFileForm').submit()
-		}
-	</script>
-	<?php
-		echo form_remote_tag(array(
-			'url'=>'store/uploadFile',
-			'encoding'=>'utf8',
-			), array('id'=>'uploadFileForm', 'enctype'=>'multipart/form-data'));
-			
-		echo input_hidden_tag('purchaseId', $purchaseObj->getId());
-	?>
-	<div id="storePurchaseFileUploadDiv">
-		<span class="fileName" id="fileNameLabel">&nbsp;</span>
-		<span class="cabinet"><?php echo input_file_tag('filePath', array('onchange'=>'updateFileNameLabel(this.value); submitUploadFileForm()', 'class'=>'file')); ?></span>
-		<?php echo button_tag('submitForm', 'ENVIAR', array('onclick'=>'submitUploadFileForm()', 'style'=>'position: relative; left: 10px')) ?>
-		<div class="clear"></div>
-		<div class="pt10">
-			Selecione um arquivo do tipo JPG, PNG ou PDF com até 2Mb
-		</div>
-	</div>
 	
-	<iframe border="0" id="uploadFileFrame" name="uploadFileFrame" class="hidden" src="" width="00" height="0" scrolling="no" frameborder="0"></iframe>
+	<?php
+		$fileId = $purchaseObj->getFileId();
+		
+		if( in_array($orderStatus, array('new', 'pending', 'checking', 'canceled')) || $fileId )
+			include_partial('store/include/payTicketForm', array('purchaseObj'=>$purchaseObj));
+	?>
 </div>
 
 <div class="shippingInfo">

@@ -63,10 +63,6 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 	
 	protected $created_at;
 
-
-	
-	protected $updated_at;
-
 	
 	protected $alreadyInSave = false;
 
@@ -191,28 +187,6 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 			}
 		} else {
 			$ts = $this->created_at;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
-	}
-
-	
-	public function getUpdatedAt($format = 'Y-m-d H:i:s')
-	{
-
-		if ($this->updated_at === null || $this->updated_at === '') {
-			return null;
-		} elseif (!is_int($this->updated_at)) {
-						$ts = strtotime($this->updated_at);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [updated_at] as date/time value: " . var_export($this->updated_at, true));
-			}
-		} else {
-			$ts = $this->updated_at;
 		}
 		if ($format === null) {
 			return $ts;
@@ -410,23 +384,6 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 
 	} 
 	
-	public function setUpdatedAt($v)
-	{
-
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [updated_at] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->updated_at !== $ts) {
-			$this->updated_at = $ts;
-			$this->modifiedColumns[] = PurchaseTransactionLogPeer::UPDATED_AT;
-		}
-
-	} 
-	
 	public function hydrate(ResultSet $rs, $startcol = 1)
 	{
 		try {
@@ -459,13 +416,11 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 
 			$this->created_at = $rs->getTimestamp($startcol + 13, null);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 14, null);
-
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 15; 
+						return $startcol + 14; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating PurchaseTransactionLog object", $e);
 		}
@@ -499,11 +454,6 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
     if ($this->isNew() && !$this->isColumnModified(PurchaseTransactionLogPeer::CREATED_AT))
     {
       $this->setCreatedAt(time());
-    }
-
-    if ($this->isModified() && !$this->isColumnModified(PurchaseTransactionLogPeer::UPDATED_AT))
-    {
-      $this->setUpdatedAt(time());
     }
 
 		if ($this->isDeleted()) {
@@ -644,9 +594,6 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 			case 13:
 				return $this->getCreatedAt();
 				break;
-			case 14:
-				return $this->getUpdatedAt();
-				break;
 			default:
 				return null;
 				break;
@@ -671,7 +618,6 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 			$keys[11]=>$this->getExtraAmount(),
 			$keys[12]=>$this->getInstallmentCount(),
 			$keys[13]=>$this->getCreatedAt(),
-			$keys[14]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -729,9 +675,6 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 			case 13:
 				$this->setCreatedAt($value);
 				break;
-			case 14:
-				$this->setUpdatedAt($value);
-				break;
 		} 	}
 
 	
@@ -753,7 +696,6 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 		if (array_key_exists($keys[11], $arr)) $this->setExtraAmount($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setInstallmentCount($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
 	}
 
 	
@@ -775,7 +717,6 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 		if ($this->isColumnModified(PurchaseTransactionLogPeer::EXTRA_AMOUNT)) $criteria->add(PurchaseTransactionLogPeer::EXTRA_AMOUNT, $this->extra_amount);
 		if ($this->isColumnModified(PurchaseTransactionLogPeer::INSTALLMENT_COUNT)) $criteria->add(PurchaseTransactionLogPeer::INSTALLMENT_COUNT, $this->installment_count);
 		if ($this->isColumnModified(PurchaseTransactionLogPeer::CREATED_AT)) $criteria->add(PurchaseTransactionLogPeer::CREATED_AT, $this->created_at);
-		if ($this->isColumnModified(PurchaseTransactionLogPeer::UPDATED_AT)) $criteria->add(PurchaseTransactionLogPeer::UPDATED_AT, $this->updated_at);
 
 		return $criteria;
 	}
@@ -831,8 +772,6 @@ abstract class BasePurchaseTransactionLog extends BaseObject  implements Persist
 		$copyObj->setInstallmentCount($this->installment_count);
 
 		$copyObj->setCreatedAt($this->created_at);
-
-		$copyObj->setUpdatedAt($this->updated_at);
 
 
 		$copyObj->setNew(true);

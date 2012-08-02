@@ -37,8 +37,8 @@
 				<td onclick="<?php echo $onclick ?>" class="textR" width="80">R$ <?php echo Util::formatFloat($productItemObj->getPrice(), true) ?></td> 
 				<td onclick="<?php echo $onclick ?>" class="textR" width="50"><?php echo $productItemObj->getWeight() ?> gr</td> 
 				<td onclick="<?php echo $onclick ?>" class="textR" width="40"><?php echo $productItemObj->getImages() ?></td> 
-					<td onclick="<?php echo $onclick ?>" class="textR" width="40"><?php echo $productItemObj->getStock() ?></td> 
-				</tr> 
+				<td onclick="<?php echo $onclick ?>" class="textR" width="40"><?php echo $productItemObj->getStock() ?></td> 
+			</tr> 
 			<?php
 				endforeach;
 			?>

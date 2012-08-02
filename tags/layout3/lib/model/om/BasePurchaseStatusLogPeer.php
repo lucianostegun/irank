@@ -35,6 +35,9 @@ abstract class BasePurchaseStatusLogPeer {
 	const TRANSACTION_STATUS = 'purchase_status_log.TRANSACTION_STATUS';
 
 	
+	const ORDER_STATUS = 'purchase_status_log.ORDER_STATUS';
+
+	
 	const PAYMETHOD_TYPE = 'purchase_status_log.PAYMETHOD_TYPE';
 
 	
@@ -50,26 +53,23 @@ abstract class BasePurchaseStatusLogPeer {
 	const CREATED_AT = 'purchase_status_log.CREATED_AT';
 
 	
-	const UPDATED_AT = 'purchase_status_log.UPDATED_AT';
-
-	
 	private static $phpNameMap = null;
 
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'PurchaseId', 'TransactionDate', 'TransactionCode', 'TransactionStatus', 'PaymethodType', 'ExtraAmount', 'InstallmentCount', 'ChangeSource', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (PurchaseStatusLogPeer::ID, PurchaseStatusLogPeer::PURCHASE_ID, PurchaseStatusLogPeer::TRANSACTION_DATE, PurchaseStatusLogPeer::TRANSACTION_CODE, PurchaseStatusLogPeer::TRANSACTION_STATUS, PurchaseStatusLogPeer::PAYMETHOD_TYPE, PurchaseStatusLogPeer::EXTRA_AMOUNT, PurchaseStatusLogPeer::INSTALLMENT_COUNT, PurchaseStatusLogPeer::CHANGE_SOURCE, PurchaseStatusLogPeer::CREATED_AT, PurchaseStatusLogPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'purchase_id', 'transaction_date', 'transaction_code', 'transaction_status', 'paymethod_type', 'extra_amount', 'installment_count', 'change_source', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PURCHASE_ID'=>'', 'TRANSACTION_DATE'=>'', 'TRANSACTION_CODE'=>'', 'TRANSACTION_STATUS'=>'', 'PAYMETHOD_TYPE'=>'', 'EXTRA_AMOUNT'=>'', 'INSTALLMENT_COUNT'=>'', 'CHANGE_SOURCE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PurchaseId', 'TransactionDate', 'TransactionCode', 'TransactionStatus', 'OrderStatus', 'PaymethodType', 'ExtraAmount', 'InstallmentCount', 'ChangeSource', 'CreatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (PurchaseStatusLogPeer::ID, PurchaseStatusLogPeer::PURCHASE_ID, PurchaseStatusLogPeer::TRANSACTION_DATE, PurchaseStatusLogPeer::TRANSACTION_CODE, PurchaseStatusLogPeer::TRANSACTION_STATUS, PurchaseStatusLogPeer::ORDER_STATUS, PurchaseStatusLogPeer::PAYMETHOD_TYPE, PurchaseStatusLogPeer::EXTRA_AMOUNT, PurchaseStatusLogPeer::INSTALLMENT_COUNT, PurchaseStatusLogPeer::CHANGE_SOURCE, PurchaseStatusLogPeer::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'purchase_id', 'transaction_date', 'transaction_code', 'transaction_status', 'order_status', 'paymethod_type', 'extra_amount', 'installment_count', 'change_source', 'created_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PURCHASE_ID'=>'', 'TRANSACTION_DATE'=>'', 'TRANSACTION_CODE'=>'', 'TRANSACTION_STATUS'=>'', 'ORDER_STATUS'=>'', 'PAYMETHOD_TYPE'=>'', 'EXTRA_AMOUNT'=>'', 'INSTALLMENT_COUNT'=>'', 'CHANGE_SOURCE'=>'', 'CREATED_AT'=>'', ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PurchaseId'=>1, 'TransactionDate'=>2, 'TransactionCode'=>3, 'TransactionStatus'=>4, 'PaymethodType'=>5, 'ExtraAmount'=>6, 'InstallmentCount'=>7, 'ChangeSource'=>8, 'CreatedAt'=>9, 'UpdatedAt'=>10, ),
-		BasePeer::TYPE_COLNAME=>array (PurchaseStatusLogPeer::ID=>0, PurchaseStatusLogPeer::PURCHASE_ID=>1, PurchaseStatusLogPeer::TRANSACTION_DATE=>2, PurchaseStatusLogPeer::TRANSACTION_CODE=>3, PurchaseStatusLogPeer::TRANSACTION_STATUS=>4, PurchaseStatusLogPeer::PAYMETHOD_TYPE=>5, PurchaseStatusLogPeer::EXTRA_AMOUNT=>6, PurchaseStatusLogPeer::INSTALLMENT_COUNT=>7, PurchaseStatusLogPeer::CHANGE_SOURCE=>8, PurchaseStatusLogPeer::CREATED_AT=>9, PurchaseStatusLogPeer::UPDATED_AT=>10, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'purchase_id'=>1, 'transaction_date'=>2, 'transaction_code'=>3, 'transaction_status'=>4, 'paymethod_type'=>5, 'extra_amount'=>6, 'installment_count'=>7, 'change_source'=>8, 'created_at'=>9, 'updated_at'=>10, ),
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PurchaseId'=>1, 'TransactionDate'=>2, 'TransactionCode'=>3, 'TransactionStatus'=>4, 'OrderStatus'=>5, 'PaymethodType'=>6, 'ExtraAmount'=>7, 'InstallmentCount'=>8, 'ChangeSource'=>9, 'CreatedAt'=>10, ),
+		BasePeer::TYPE_COLNAME=>array (PurchaseStatusLogPeer::ID=>0, PurchaseStatusLogPeer::PURCHASE_ID=>1, PurchaseStatusLogPeer::TRANSACTION_DATE=>2, PurchaseStatusLogPeer::TRANSACTION_CODE=>3, PurchaseStatusLogPeer::TRANSACTION_STATUS=>4, PurchaseStatusLogPeer::ORDER_STATUS=>5, PurchaseStatusLogPeer::PAYMETHOD_TYPE=>6, PurchaseStatusLogPeer::EXTRA_AMOUNT=>7, PurchaseStatusLogPeer::INSTALLMENT_COUNT=>8, PurchaseStatusLogPeer::CHANGE_SOURCE=>9, PurchaseStatusLogPeer::CREATED_AT=>10, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'purchase_id'=>1, 'transaction_date'=>2, 'transaction_code'=>3, 'transaction_status'=>4, 'order_status'=>5, 'paymethod_type'=>6, 'extra_amount'=>7, 'installment_count'=>8, 'change_source'=>9, 'created_at'=>10, ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
@@ -134,6 +134,8 @@ abstract class BasePurchaseStatusLogPeer {
 
 		$criteria->addSelectColumn(PurchaseStatusLogPeer::TRANSACTION_STATUS);
 
+		$criteria->addSelectColumn(PurchaseStatusLogPeer::ORDER_STATUS);
+
 		$criteria->addSelectColumn(PurchaseStatusLogPeer::PAYMETHOD_TYPE);
 
 		$criteria->addSelectColumn(PurchaseStatusLogPeer::EXTRA_AMOUNT);
@@ -143,8 +145,6 @@ abstract class BasePurchaseStatusLogPeer {
 		$criteria->addSelectColumn(PurchaseStatusLogPeer::CHANGE_SOURCE);
 
 		$criteria->addSelectColumn(PurchaseStatusLogPeer::CREATED_AT);
-
-		$criteria->addSelectColumn(PurchaseStatusLogPeer::UPDATED_AT);
 
 	}
 

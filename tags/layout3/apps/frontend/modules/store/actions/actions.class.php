@@ -353,9 +353,9 @@ class storeActions extends sfActions
   		
 		$con->commit();
 		
-  		$purchaseObj->addStatusLog(date('d/m/Y H:i:s'), md5($orderNumber), $purchaseObj->getOrderStatus(true), $purchaseObj->getPaymethod(true), 0, 1, 'iRank Store');
+  		$purchaseObj->addStatusLog(date('d/m/Y H:i:s'), md5($orderNumber), 'new', $purchaseObj->getPaymethod(true), 0, 1, 'iRank Store');
 		
-  		$this->getNewSession();
+//  		$this->getNewSession();
   		
   		echo $orderNumber;
   	}catch(PurchaseException $e){
@@ -772,6 +772,8 @@ class storeActions extends sfActions
 	  		}
 	  	}
 	  	
+	  	$storeShippingZipcode = Config::getConfigByName('storeShippingZipcode', true);
+	  	
 		$webserviceUrl = 'http://webservice.uni5.net/web_frete.php';
 		$shippingValue = 0;
 	  	foreach($productWeightList as $productWeight){
@@ -780,7 +782,7 @@ class storeActions extends sfActions
 			    'auth'=>'d2444763f5fd6f8f616b4b4dce37752e',		//Chave de autenticação do WebService - Consultar seu painel de controle
 			    'formato'=>'query_string',						//Valores possíveis: xml, query_string ou javascript
 			    'tipo'=>'sedex',								//Tipo de pesquisa: sedex, carta, pac,
-			    'cep_origem'=>'04547-003',						//CEP de Origem - CEP que irá postar a encomenda
+			    'cep_origem'=>$storeShippingZipcode,			//CEP de Origem - CEP que irá postar a encomenda
 			    'cep_destino'=>$zipcode,						//CEP de Destino - CEP que irá receber a encomenda
 			    'mao_propria'=>'0',								//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
 			    'aviso_de_recebimento'=>'0',					//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"

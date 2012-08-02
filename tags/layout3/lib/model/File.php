@@ -152,14 +152,15 @@ class File extends BaseFile
 
 		$fileObj = ($fileId?FilePeer::retrieveByPK($fileId):new File());
 		
-		$fileObj->setFileName($fileName);
-		$isNew   = $fileObj->isNew();		
+		$isNew = $fileObj->isNew();		
 		
 		$fileName = ereg_replace('[^0-9]', '', microtime()).'.'.$extension;
 		$fileName = ($destFileName?$destFileName:$fileName);
 		
 		if( !preg_match('/\.[a-z]*$/i', $fileName) )
 			$fileName = "$fileName.$extension";
+			
+		$fileObj->setFileName($fileName);
 
 		$extensionImageList = array('jpg', 'png', 'jpeg', 'bmp', 'gif');
 		

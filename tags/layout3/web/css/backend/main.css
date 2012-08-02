@@ -863,17 +863,20 @@ ul.tabs li.error a:hover { color: #c33210; }
 .orderIcons { margin-top: 4px; }
 .orderIcons span { background: url(/images/backend/icons/orderStatus.png) no-repeat; display: block; float: right; margin-left: 8px; }
 
-.orderIcons .oPaid, .orderIcons .oUnpaid { width: 7px; height: 12px; }
-.orderIcons .oPaid { background-position: 0 0; }
-.orderIcons .oUnpaid { background-position: 0 -13px; }
+.orderIcons .oNew, .orderIcons .oUnnew { width: 12px; height: 12px; }
+.orderIcons .oNew { background-position: 0 -77px; }
+
+.orderIcons .oApproved, .orderIcons .oUnapproved { width: 7px; height: 12px; }
+.orderIcons .oApproved { background-position: 0 0; }
+.orderIcons .oUnapproved { background-position: 0 -13px; }
 
 .orderIcons .oShipped, .orderIcons .oUnshipped { width: 21px; height: 12px; }
 .orderIcons .oShipped { background-position: 0 -26px; }
 .orderIcons .oUnshipped { background-position: 0 -39px; }
 
-.orderIcons .oFinished, .orderIcons .oUnfinished { width: 12px; height: 12px; }
-.orderIcons .oFinished { background-position: 0 -52px; }
-.orderIcons .oUnfinished { background-position: 0 -65px; }
+.orderIcons .oComplete, .orderIcons .oUncomplete { width: 12px; height: 12px; }
+.orderIcons .oComplete { background-position: 0 -52px; }
+.orderIcons .oUncomplete { background-position: 0 -65px; }
 
 
 /* Partners list widget */

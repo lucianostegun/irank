@@ -460,6 +460,13 @@ class UserSite extends BaseUserSite
 		$this->setMobileToken($mobileToken);
 		$this->save();
 	}
+
+	public static function getPendingPurchases(){
+		
+		$userSiteId = MyTools::getAttribute('userSiteId');
+		
+		return Util::executeOne("SELECT get_pending_purchases($userSiteId)"); 
+	}
 	
 	public function getInfo($replaceNull=false, $withBalance=true){
 		

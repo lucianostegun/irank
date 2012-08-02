@@ -1,5 +1,72 @@
 # default rules
 
+
+# REGRAS PARA O MÓDULO EVENTOS
+event_details:
+  url:    /eventLive/details/:eventCode
+  param:  { module: eventLive, action: details }
+
+event_share:
+  url:    /share/:shareId
+  param:  { module: event, action: facebookResultImage }
+
+
+# REGRAS PARA O MÓDULO LOJA VIRTUAL
+store_details:
+  url:    /store/details/:productCode
+  param:  { module: store, action: details }
+
+store_add_item:
+  url:    /store/addItem/:productCode
+  param:  { module: store, action: addItem }
+
+store_order_confirm:
+  url:    /store/orderConfirm/:orderNumber
+  param:  { module: store, action: orderConfirm }
+
+store_billet:
+  url:    /store/billet/:orderNumber
+  param:  { module: store, action: billet }
+
+
+# REGRAS PARA EMAILS
+email_log:
+  url:   /home/:emailLogId/logo/:fileName
+  param: { module: home, action: images }
+
+  
+  
+  
+  
+  
+  
+  
+  
+homepage:
+  url:   /
+  param: { module: home, action: index }
+
+default_symfony:
+  url:   /symfony/:action/*
+  param: { module: default }
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*
+
+  
+  
+  
+  
+  
+  
+  
+  
+
+
 #CLUB ROUTING START
 
 club_vegas:
@@ -35,49 +102,3 @@ club_blackriver:
   param:  { module: club, action: details, clubId: 1 }
 
 #CLUB ROUTING END
-
-event_details:
-  url:    /eventLive/details/:eventCode
-  param:  { module: eventLive, action: details }
-
-
-#STORE ROUTING START
-  
-store_details:
-  url:    /store/details/:productCode
-  param:  { module: store, action: details }
-
-store_add_item:
-  url:    /store/addItem/:productCode
-  param:  { module: store, action: addItem }
-
-store_order_confirm:
-  url:    /store/orderConfirm/:orderNumber
-  param:  { module: store, action: orderConfirm }
-
-store_billet:
-  url:    /store/billet/:orderNumber
-  param:  { module: store, action: billet }
-
-#STORE ROUTING END
-
-
-email_log:
-  url:   /home/:emailLogId/logo/:fileName
-  param: { module: home, action: images }
-
-  
-homepage:
-  url:   /
-  param: { module: home, action: index }
-
-default_symfony:
-  url:   /symfony/:action/*
-  param: { module: default }
-
-default_index:
-  url:   /:module
-  param: { action: index }
-
-default:
-  url:   /:module/:action/*

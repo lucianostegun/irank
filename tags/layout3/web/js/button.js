@@ -1,96 +1,65 @@
-function toggleButton(buttonId, type){
-
-	buttonId = ucfirst(buttonId);
-	
-	if( !checkButton(buttonId) )
-		return false;
-	
-	if( type=='over' ){
-
-		$('button'+buttonId+'Left').style.backgroundPosition   = '0px -22px';
-		$('button'+buttonId+'Middle').style.backgroundPosition = '0px -22px';
-		$('button'+buttonId+'Right').style.backgroundPosition  = '0px -22px';
-	}else{
-		
-		$('button'+buttonId+'Left').style.backgroundPosition   = '0px 0px';
-		$('button'+buttonId+'Middle').style.backgroundPosition = '0px 0px';
-		$('button'+buttonId+'Right').style.backgroundPosition  = '0px 0px';
-	}
-}
-
 function checkButton( buttonId ){
 
-	buttonId = ucfirst(buttonId);
-	
-	if( $('button'+buttonId)==null )
+	if( $(buttonId+'Button')==null )
 		return false;
 	
-	var disabled = $('button'+buttonId).hasClassName('buttonDisabled');
+	var disabled = $(buttonId+'Button').hasClassName('disabled');
 
 	return !disabled;
 }
 
 function enableButton( buttonId ){
 
-	buttonId = ucfirst(buttonId);
+	buttonId = buttonId.replace(/Button$/, '');
 	
-	if( $('button'+buttonId)!=null ){
-		
-		$('button'+buttonId).removeClassName('disabled');
-		$('button'+buttonId).disabled  = false;
-	}
+	if( $(buttonId+'Button')==null )
+		return false;
 	
-	image = $(buttonId+'Image');
-	if( image!=null )
-		image.src = image.src.replace('/disabled', '');
+	$(buttonId+'Button').removeClassName('disabled');
+	
+	var backgroundImage = $(buttonId+'Label').style.backgroundImage;
+	$(buttonId+'Label').style.backgroundImage = backgroundImage.replace('/disabled', '');
 }
 
 function disableButton( buttonId ){
 	
-	buttonId = ucfirst(buttonId);
+	buttonId = buttonId.replace(/Button$/, '');
 	
-	if( $('button'+buttonId)!=null ){
-		
-		$('button'+buttonId).addClassName('disabled');
-		$('button'+buttonId).disabled  = false;
-	}
+	if( $(buttonId+'Button')==null )
+		return false;
+	
+		$(buttonId+'Button').addClassName('disabled');
+	
+	var backgroundImage = $(buttonId+'Label').style.backgroundImage;
 
-	image = $(buttonId+'Image');
-	if( image!=null ){
-
-		var imagePath = image.src.replace(/\/disabled/g, '');
-
-		var lastPath = imagePath.match(/\/[a-zA-Z0-9-_\.]+$/);
-		imagePath = imagePath.replace(lastPath, '/disabled'+lastPath);
-		image.src = imagePath;
-	}
+	backgroundImage = backgroundImage.replace(/\/disabled/g, '');
+	backgroundImage = backgroundImage.replace(/\/button\//g, '/button/disabled/');
+	$(buttonId+'Label').style.backgroundImage = backgroundImage;
+	
+	return backgroundImage;
 }
 
 function showButton( buttonId ){
 
-	buttonId = ucfirst(buttonId);
-	showDiv('button'+buttonId);
+	showDiv(buttonId+'Button');
 }
 
 function hideButton( buttonId ){
 	
-	buttonId = ucfirst(buttonId);
-	hideDiv('button'+buttonId);
+	hideDiv(buttonId+'Button');
 }
 
 
 
 function setButtonLabel( buttonId, label, icon ){
 
-	buttonId = ucfirst(buttonId);
-	
-	if( $('button'+buttonId)!=null ){
+	if( $(buttonId+'Button')!=null ){
 		
 		var button = '';
 		if( icon )
 			button = '<img id="EventFilterSubmitImage" align="absmiddle" style="margin-top: -2px; margin-right: 5px" src="/images/button/'+icon+'" alt="AjaxLoader" />';
 		
-		$('button'+buttonId+'Label').innerHTML = button+label;
+		$(buttonId+'Button'+'Label').innerHTML = button+label;
 	}
 	
 	

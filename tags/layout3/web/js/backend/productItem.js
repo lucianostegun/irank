@@ -1,3 +1,22 @@
+$(function() {
+	
+	$('#productItemStockLogDialog').dialog({
+		autoOpen: false,
+		modal: true,
+		resizable: false,
+		width: 400,
+		height: 300,
+		buttons: {
+			Ok: function() {
+				saveProductItemStockLog();
+			},
+			Cancelar: function() {
+				$('#productItemStockLogDialog').dialog('close');
+			}
+		}
+	});
+});
+
 function handleSuccessProductItem(content){
 
 	var productItemObj = parseInfo(content);
@@ -6,10 +25,12 @@ function handleSuccessProductItem(content){
 	clearFormFieldErrors('productItem');
 	showFormStatusSuccess();
 	
-	if( productItemObj.reloadTable )
-		updateProductItemTable();
-	
 	$('#deleteProductItemLink').removeClass('hidden');
+	
+	updateProductItemTable();
+	
+	if( productItemObj.reloadTable )
+		hideProductItemForm();
 }
 
 function handleFailureProductItem(content){
@@ -22,6 +43,7 @@ function addProductItem(){
 	showIndicator();
 	
 	var productId = $('#productId').val();
+	clearFormFieldErrors('productItem');
 
 	var successFunc = function(content){
 		
@@ -33,6 +55,10 @@ function addProductItem(){
 		$('#productItemImage-4').attr('src', _imageRoot+'/blank.png');
 		$('#productItemImage-5').attr('src', _imageRoot+'/blank.png');
 		
+		$('#productItemImageListDiv .productImageArea').each(function(){
+			$(this).addClass('empty');
+		})
+		
 		resetForm($('#productItemForm'));
 		
 		$('#productItemId').val(productItemObj.id);
@@ -41,6 +67,13 @@ function addProductItem(){
 		$('#productItemPrice').val($('#productDefaultPrice').val());
 		$('#productItemWeight').val($('#productDefaultWeight').val());
 		
+		$('#productItemProductOptionIdColorDiv').hide();
+		$('#productItemProductOptionIdSizeDiv').hide();
+		$('#productItemStock').val('0');
+		$('#productItemStockDiv').hide();
+		$('#productItemProductOptionIdDiv').show();
+		
+		unlockProductItemStock()
 		
 		showProductItemForm(true);
 		
@@ -70,7 +103,6 @@ function loadProductItem(productItemId){
 	
 	showIndicator();
 	
-	
 	var successFunc = function(content){
 		
 		var productItemObj = parseInfo(content);
@@ -81,6 +113,14 @@ function loadProductItem(productItemId){
 		$('#productItemImage-4').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image4+'?time='+time());
 		$('#productItemImage-5').attr('src', _imageRoot+'/store/product/preview/'+productItemObj.image5+'?time='+time());
 		
+		for(var i=1; i <=5; i++){
+			
+			if( productItemObj['image'+i] )
+				$('#productItemImageArea-'+i).removeClass('empty');
+			else
+				$('#productItemImageArea-'+i).addClass('empty');
+		}
+		
 		$('#productItemId').val(productItemObj.id);
 		$('#productItemImageProductItemId').val(productItemObj.id);
 		
@@ -89,8 +129,20 @@ function loadProductItem(productItemId){
 		$('#productItemPrice').val(toCurrency(productItemObj.price));
 		$('#productItemWeight').val(toCurrency(productItemObj.weight));
 		$('#productItemStock').val(productItemObj.stock);
+		$('#productItemLockedStock').val(productItemObj.lockedStock?'1':'');
+		$('#productItemLockedStockLabel').html(productItemObj.stock);
 		
 		$('#productItemImage1').val(productItemObj.image1);
+		
+		$('#productItemProductOptionIdColorDiv').show();
+		$('#productItemProductOptionIdSizeDiv').show();
+		$('#productItemStockDiv').show();
+		$('#productItemProductOptionIdDiv').hide();
+		
+		if(productItemObj.lockedStock)
+			lockProductItemStock();
+		else
+			unlockProductItemStock();
 		
 		showProductItemForm(false);
 		
@@ -210,4 +262,76 @@ function submitProductItemImage(imageIndex){
 	$('#productItemImageProductCode').val(productCode);
 	$('#productItemImageIndex').val(imageIndex);
 	$('#productItemImageForm').submit();
+}
+
+function handleFirstProductOption(colorSize){
+	
+	colorSize = colorSize.split('-');
+	
+	var productOptionIdColor = colorSize[0];
+	var productOptionIdSize  = colorSize[1];
+	
+	if( !$('#productItemProductOptionIdColor').val() )
+		$('#productItemProductOptionIdColor').val(productOptionIdColor);
+
+	if( !$('#productItemProductOptionIdSize').val() )
+		$('#productItemProductOptionIdSize').val(productOptionIdSize);
+
+	$.uniform.update();
+}
+
+function lockProductItemStock(){
+	
+	$('#productItemStock').hide();
+	$('#productItemLockedStockLabel').show();
+	$('#productItemLockedStockLabel').html($('#productItemStock').val());
+	$('#productItemLockedStock').val('1');
+	$('#productItemLockStockLink').hide();
+	$('#productItemUnlockStockLink').hide();
+	$('#productItemAddStockLogLink').show();
+}
+
+function unlockProductItemStock(){
+	
+	$('#productItemStock').show();
+	$('#productItemLockedStockLabel').hide();
+	$('#productItemLockedStock').val('');
+	$('#productItemLockedStockLink').html('Bloquear estoque');
+	$('#productItemLockStockLink').show();
+	$('#productItemUnlockStockLink').hide();
+	$('#productItemAddStockLogLink').hide();
+}
+
+function addStockLog(){
+	
+	resetForm($('#productItemStockLogForm'));
+	
+	var productItemId = $('#productItemId').val();
+	$('#productItemStockLogProductItemId').val(productItemId)
+	$('#productItemStockLogStockActionIncrase').attr('checked', 'checked');
+
+	$.uniform.update();
+	$('#productItemStockLogDialog').dialog('open');
+}
+
+function saveProductItemStockLog(){
+	
+	$('#productItemStockLogForm').submit();
+}
+
+function handleSuccessProductItemStockLog(content){
+
+	var productItemObj = parseInfo(content);
+
+	$('#productItemLockedStockLabel').html( productItemObj.stock );
+	$('#productItemStock').html( productItemObj.productStock );
+	$('#productItemStockLogDialog').dialog('close');
+	updateProductItemTable();
+	
+	hideIndicator();
+}
+
+function handleFailureProductItemStockLog(content){
+	
+	handleFormFieldError(content, 'productItemStockLog');
 }

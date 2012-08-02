@@ -649,7 +649,7 @@ class eventActions extends sfActions
   	$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
   	$shareId        = base64_encode($eventPlayerObj->getShareId());
   	
-  	$url = 'http://'.$request->getHost().'/index.php/event/facebookResult/shareId/'.$shareId;
+  	$url = 'http://'.$request->getHost().'/share/'.$shareId;
   	$url = 'http://www.facebook.com/sharer/sharer.php?u='.urlencode($url);
 
   	header('location: '.$url);
@@ -671,7 +671,7 @@ class eventActions extends sfActions
 	$this->metaTitle       = 'Resultados iRank';
 	$this->metaDescription = 'Fiquei em '.$eventPlayerObj->getEventPosition().'º lugar no evento '.$eventObj->getEventName().' realizado em '.$eventObj->getEventDate('d/m/Y').' valendo pelo ranking '.$eventObj->getRanking()->getRankingName();
 	$this->metaImage       = $uri.'/thumb/1';
-	$this->shareLink       = 'event/facebookResultImage/shareId/'.base64_encode($shareId);
+	$this->shareLink       = 'share/'.base64_encode($shareId);
 	
 	sfConfig::set('sf_web_debug', false);
 

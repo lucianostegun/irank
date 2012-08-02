@@ -31,8 +31,8 @@
 					<td><?php echo input_password_tag('password', null, array('id'=>'loginPassword', 'size'=>20, 'maxlength'=>15)) ?></td>
 				</tr>
 				<tr>
-					<th></th>
 					<td><?php echo button_tag('loginSubmitButton', 'Entrar', array('onclick'=>'doLogin()')) ?></td>
+					<th><?php echo link_to('Recuperar senha', 'login/index', array('target'=>'_blank')) ?></th>
 				</tr>
 			</table>
 			</form>

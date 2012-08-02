@@ -1303,7 +1303,7 @@
 		<column name="default_price" type="NUMERIC" size="10" scale="2" />
 		<column name="default_weight" type="FLOAT" />
 		<column name="is_new" type="BOOLEAN" />
-		<column name="stock" type="INTEGER" />
+		<column name="stock" type="INTEGER" default="0" />
 		<column name="image_1" type="VARCHAR" />
 		<column name="image_2" type="VARCHAR" />
 		<column name="image_3" type="VARCHAR" />
@@ -1348,11 +1348,13 @@
 		<column name="price" type="NUMERIC" size="10" scale="2" />
 		<column name="weight" type="FLOAT" />
 		<column name="stock" type="INTEGER" />
+		<column name="locked_stock" type="BOOLEAN" />
 		<column name="image_1" type="VARCHAR" />
 		<column name="image_2" type="VARCHAR" />
 		<column name="image_3" type="VARCHAR" />
 		<column name="image_4" type="VARCHAR" />
 		<column name="image_5" type="VARCHAR" />
+		<column name="unavailable" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -1377,6 +1379,7 @@
 		<column name="pagseguro_url" type="VARCHAR" />
 		<column name="order_number" type="VARCHAR" />
 		<column name="order_status" type="VARCHAR" />
+		<column name="has_new_status" type="BOOLEAN" />
 		<column name="order_value" type="NUMERIC" size="10" scale="2" default="0" />
 		<column name="products" type="INTEGER" default="0" />
 		<column name="itens" type="INTEGER" default="0" />

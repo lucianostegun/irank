@@ -62,8 +62,6 @@
 		<td valign="top">
 			<div class="defaultForm">
 				<div class="row">
-					<div class="labelHalf">Username</div>
-					<div class="field"><?php echo input_tag('username', null, array('id'=>'passwordRecoveryUsername', 'size'=>20, 'maxlength'=>15)) ?></div>
 				</div>
 				<div class="row">
 					<div class="labelHalf">E-mail</div>

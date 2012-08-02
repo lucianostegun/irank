@@ -43,9 +43,9 @@
 				</div>
 			</div>
 			<div class="links">
-				<?php echo button_tag('details', 'DETALHES', array('style'=>'position: relative; top: 60px; left: 30px', 'image'=>'details.png', 'onclick'=>'goToPage("club", "details", "id", '.$clubId.')')) ?>
+				<?php echo button_tag('details', 'DETALHES', array('style'=>'position: relative; top: 60px; left: 20px', 'image'=>'details.png', 'onclick'=>'goToPage("club", "details", "id", '.$clubId.')')) ?>
 				<div class="clear"></div>
-				<?php echo button_tag('events', 'EVENTOS', array('style'=>'position: relative; top: 70px; left: 30px;', 'image'=>'calendar.png', 'onclick'=>'goToPage("eventLive", "index", "clubId", '.$clubId.')')) ?>
+				<?php echo button_tag('events', 'EVENTOS', array('style'=>'position: relative; top: 70px; left: 20px;', 'image'=>'calendar.png', 'onclick'=>'goToPage("eventLive", "index", "clubId", '.$clubId.')')) ?>
 			</div>
 		</div>
 	</div>

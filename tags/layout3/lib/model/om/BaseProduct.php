@@ -45,7 +45,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 
 
 	
-	protected $stock;
+	protected $stock = 0;
 
 
 	
@@ -409,7 +409,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->stock !== $v) {
+		if ($this->stock !== $v || $v === 0) {
 			$this->stock = $v;
 			$this->modifiedColumns[] = ProductPeer::STOCK;
 		}

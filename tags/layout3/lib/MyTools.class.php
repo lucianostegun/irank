@@ -240,5 +240,15 @@ class MyTools
         MyTools::getResponse()->setCookie($name, $value, $expire, $path, $domain, $secure, $httpOnly);
     }
 
+	public static function addJavascript($javascript){
+
+		sfContext::getInstance()->getResponse()->addJavascript($javascript);
+	}
+
+	public static function addStylesheet($stylesheet){
+
+		sfContext::getInstance()->getResponse()->addStylesheet($stylesheet);
+	}
+
 }
 ?>

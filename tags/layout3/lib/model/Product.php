@@ -112,11 +112,16 @@ class Product extends BaseProduct
 		return $images;
 	}
 	
-	public function updateStock(){
+	public function updateStock($con=null){
 		
 		$stock = Util::executeOne('SELECT SUM(stock) FROM product_item WHERE enabled AND visible AND NOT deleted AND product_id = '.$this->getId());
 		$this->setStock($stock);
-		$this->save();
+		$this->save($con);
+	}
+	
+	public function getSizeList(){
+		
+		return Util::executeOne('SELECT get_product_sizes('.$this->getId().')', 'string');
 	}
 	
 	public static function getPageTitle(){

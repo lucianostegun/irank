@@ -68,7 +68,7 @@ class Log extends BaseLog
 			foreach($columnModifiedList as $fieldName=>$fieldValue){
 			
 				$fieldValue = substr($fieldValue,0,255);
-				$sqlList[]  = "($logId, '$fieldName', '".str_replace("'", "''", $fieldValue)."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";	    	
+				$sqlList[]  = "($logId, '$fieldName', '".str_replace("'", "''", $fieldValue)."', CURRENT_TIMESTAMP)";	    	
 			}
 			
 		    $sql .= chr(10).chr(9).implode(','.chr(10).chr(9), $sqlList);

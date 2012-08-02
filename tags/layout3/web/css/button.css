@@ -1,151 +1,96 @@
-.button {
+.actionButton {
 
-	z-index: 			500;
-	cursor: 			pointer;
-	-moz-user-select: 	none;
-	line-height:		16px;
-	white-space: 		nowrap
+	position: 				relative;
+	top: 					-1px;
+	float: 					left;
+	margin: 				0px 2px;
+	padding: 				0px 10px;
+	border-top: 			1px solid #BFBFBF;
+	border-left: 			1px solid #BFBFBF;
+	border-right: 			1px solid #A0A0A0;
+	border-bottom: 			1px solid #A0A0A0;
+	-moz-border-radius: 	3px;
+	-webkit-border-radius: 	3px;
+	border-radius: 			3px;
+	background: 			url('/images/button/buttonBg.png') repeat-x;
+	background-position: 	left top;
+	color: 					#505050;
+	font-weight: 			bold;
+	font-family: 			Verdana;
+	font-size: 				10px;
+	display: 				inline-block;
+	height: 				22px;
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
-.button .buttonLeft {
+.actionButton.hidden {
+
+	display: none
+}
+
+.windowButtonBar .actionButton {
+
+	float: right;
+}
+
+.windowButtonBar .actionButton.left {
+
+	float: left;
+}
+
+.actionButton:hover {
+
+	border-top: 			1px solid #AFAFAF;
+	border-left: 			1px solid #AFAFAF;
+	border-right: 			1px solid #909090;
+	border-bottom: 			1px solid #909090;
+	background-position: 	left -22px;
+	cursor: 				pointer;
+	color: 					#303030
+}
+
+.actionButton span {
+
+	position: 				relative;
+	top: 					2px;
+	height: 				16px;
+	padding-top: 			1px;
+	display: 				block;
 	
-	float: 			left;
-	height: 		22px;
-	width: 			7px;
-	background: 	url('/images/button/bgLeft.png') 0px 0px repeat-x;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
-.button .buttonMiddle {
+.actionButton.image {
 
-	float: 			left;
-	font-size: 		8pt;
-	height: 		22px;
-	font-weight: 	bold;
-	text-align: 	center;
-	color: 			#000000;
-	background: 	url('/images/button/bgMiddle.png') 0px 0px repeat-x;
+	padding-left: 	7px;
 }
 
-.button .buttonRight {
+.actionButton.image span {
 
-	margin-right: 	10px;
-	float: 			left;
-	height: 		22px;
-	width: 			7px;
-	background: 	url('/images/button/bgRight.png') 0px 0px repeat-x;
-}
-
-.button.hover .buttonLeft,
-.button.hover .buttonMiddle,
-.button.hover .buttonRight {
-
-	background-position: 	0px -22px;
+	padding-left: 			22px;
+	background-position: 	left 1px;
+	background-repeat: 		no-repeat;
 }
 
 
+.actionButton.disabled,
+.actionButton.disabled:hover {
 
-
-.button .buttonMiddle .buttonLabel {
-
-	margin-top: 	3px;
-	margin-top: 	3px !ie;
-	color: 			#000000;
-	text-align: 	center;
-	padding: 		0px; 				
-}
-
-.button .buttonMiddle .buttonLabel img {
-
-	margin-top: 	-2px;
-	margin-top: 	0px !ie;
-	margin-right: 	5px
-}
-
-.button .buttonMiddle .buttonLabel a {
-
-	position: 			absolute;
-	left: 				-1px;
-	top: 				-1px;
-	border: 			0px transparent;
-	z-index: 			-100;
-	background: 		none;
-	color: 				#333333;
-	padding-top: 		3px;
-	padding-bottom: 	5px;
-}
-
-.button .buttonMiddle .buttonLabel .submit {
-
-	position: 		absolute;
-	left: 			-1px;
-	top: 			-1px;
-	border: 		0px transparent;
-	background: 	transparent;
-	width: 			0px;
-	height: 		0px;
-	z-index: 		-100;
-}
-
-.button .buttonMiddle .buttonLabel a:hover {
-
-	text-decoration: 	none;
-	color: 				#333333;
-}
-
-
-
-
-
-
-
-
-
-
-
-.button.disabled .buttonLeft {
-	
-	background: 	url('/images/button/bgLeftDisabled.png') 0px 0px repeat-x;
-}
-
-.button.disabled .buttonMiddle {
-
-	background: 	url('/images/button/bgMiddleDisabled.png') 0px 0px repeat-x;
-}
-
-.button.disabled .buttonMiddle .buttonLabel {
-
-	color: 			#AAAAAA;
-}
-
-.button.disabled .buttonMiddle .buttonLabel a {
-
-	color: 			#999999;
-	position: 		absolute;
-	left: 			-1px;
-	top: 			-1px;
-	border: 		0px transparent;
-	z-index: 		-100;
-}
-
-.button.disabled .buttonMiddle .buttonLabel a:hover {
-
-	color: 	#999999;
-}
-
-.button.disabled .buttonRight {
-
-	background: 	url('/images/button/bgRightDisabled.png') 0px 0px repeat-x;
-}
-
-/* -------------- CLASSES PERSONALIZADAS  -------------- */
-.buttonPresenceYes,
-.buttonPresenceNo {
-
-	position: relative;
-	left: 47px;
-}
-
-.buttonPresenceNo .buttonMiddle .buttonLabel {
-
-	color: 	#4A4A4A
+	border-top: 			1px solid #DFDFDF;
+	border-left: 			1px solid #DFDFDF;
+	border-right: 			1px solid #C0C0C0;
+	border-bottom: 			1px solid #C0C0C0;
+	background-position: 	left top;
+	color: 					#909090;
 }

@@ -1,7 +1,7 @@
 .SI-FILES-STYLIZED .cabinet
 {
-    width: 96px;
-    height: 22px;
+    width: 80px;
+    height: 24px;
     background: url('/images/button/selectFile.png') 0 0 no-repeat;
 
     display: block;
@@ -12,7 +12,7 @@
 
 .SI-FILES-STYLIZED .cabinet:hover
 {
-    background-position: 0px -22px
+    background-position: 0px -24px
 }
 
 .sendFileButton
@@ -41,15 +41,16 @@
 {
 	float: left;
     position: relative;
-    top: 0px;
+    top: 2px;
     overflow: hidden;
     font-size: 12px;
     padding: 2px 15px 2px 8px;
-    width: 165px;
+    width: 155px;
     overflow-x: hidden;
     background: #F9F9F9;
-    border: 1px solid #DADADA;
+    border: 1px solid #BABABA;
     margin-right: 5px;
+    height: 15px;
     
 	-moz-border-radius: 	5px;
 	-webkit-border-radius: 	5px;

@@ -16,9 +16,10 @@
 		$className = 'odd';
 		foreach($userSiteObj->getPurchaseList() as $purchaseObj):
 		
-			$link = 'goModule(\'store\', \'orderDetails\', \'orderNumber\', '.$purchaseObj->getOrderNumber().')';
+			$link         = 'goModule(\'store\', \'orderDetails\', \'orderNumber\', '.$purchaseObj->getOrderNumber().')';
+			$hasNewStatus = $purchaseObj->getHasNewStatus();
 	?>
-	<tr onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="<?php echo $link ?>">
+	<tr onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="<?php echo $link ?>" class="<?php echo ($hasNewStatus?'textB':'') ?>">
 		<td>#<?php echo $purchaseObj->getOrderNumber() ?></td>
 		<td class="textC"><?php echo $purchaseObj->getCreatedAt('d/m/Y H:i') ?></td>
 		<td><?php echo $purchaseObj->getPaymethod(true) ?></td>

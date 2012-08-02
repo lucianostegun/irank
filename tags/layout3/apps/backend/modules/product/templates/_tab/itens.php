@@ -28,14 +28,14 @@
 		echo input_hidden_tag('productId', $productId, array('id'=>'productItemProductId'));
 		echo input_hidden_tag('image1', null, array('id'=>'productItemImage1'));
 	?>
-		<div class="formRow">
+		<div class="formRow" id="productItemProductOptionIdColorDiv">
 			<label>Cor</label>
 			<div class="formRight">
 				<?php
-					$optionList = ProductOption::getOptionsForSelect('color', null, false, true, 'optionName');
-					$optionList[''] = 'Selecione';
-					ksort($optionList);
-					echo select_tag('productOptionIdColor', options_for_select($optionList), array('id'=>'productItemProductOptionIdColor'));
+					$optionListColor = ProductOption::getOptionsForSelect('color', null, false, true, 'optionName');
+					$optionListColor[''] = 'Selecione';
+					ksort($optionListColor);
+					echo select_tag('productOptionIdColor', options_for_select($optionListColor), array('id'=>'productItemProductOptionIdColor'));
 				?>
 				<div class="clear"></div>
 				<div class="formNote error" id="productItemFormErrorProductOptionIdColor"></div>
@@ -43,17 +43,54 @@
 			<div class="clear"></div>
 		</div>
 
-		<div class="formRow">
+		<div class="formRow" id="productItemProductOptionIdSizeDiv">
 			<label>Tamanho</label>
 			<div class="formRight">
 				<?php
-					$optionList = ProductOption::getOptionsForSelect('size', null, false, true, 'description', $productObj->getProductCategoryId());
-					$optionList[''] = 'Selecione';
-					ksort($optionList);
-					echo select_tag('productOptionIdSize', options_for_select($optionList), array('id'=>'productItemProductOptionIdSize'));
+					$optionListSize = ProductOption::getOptionsForSelect('size', null, false, true, 'description', $productObj->getProductCategoryId());
+					$optionListSize[''] = 'Selecione';
+					ksort($optionListSize);
+					echo select_tag('productOptionIdSize', options_for_select($optionListSize), array('id'=>'productItemProductOptionIdSize'));
 				?>
 				<div class="clear"></div>
 				<div class="formNote error" id="productItemFormErrorProductOptionIdSize"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="formRow" id="productItemProductOptionIdDiv">
+			<label>Cores/Tamanhos</label>
+			<div class="formRight">
+				<table width="0%" cellspacing="0" cellpadding="0">
+					<tr>
+						<th></th>
+						<?php
+							$optionListSize = ProductOption::getOptionsForSelect('size', null, false, true, 'optionName', $productObj->getProductCategoryId());
+							
+							foreach($optionListSize as $key=>$optionSize):
+								if( !$key )
+									continue;
+						?>
+						<th class="textC pb5"><?php echo $optionSize ?></th>
+						<?php endforeach; ?>
+					</tr>
+					
+					<?php
+						foreach($optionListColor as $productOptionIdColor=>$optionColor):
+							if( !$productOptionIdColor )
+								continue;
+					?>
+					<tr>
+						<td class="pr10"><?php echo $optionColor ?></td>
+						<?php
+							foreach($optionListSize as $productOptionIdSize=>$optionSize):
+						?>
+							<th class="textL pl10 pr10 pb3" style="vertical-align: middle"><?php echo checkbox_tag("productOptionIdList[]", "$productOptionIdColor-$productOptionIdSize", false, array('onclick'=>'handleFirstProductOption(this.value)')) ?></th>
+						<?php endforeach; ?>
+					</tr>
+					<?php endforeach; ?>
+				</table>
+				<div class="formNote error" id="productItemFormErrorPrice"></div>
 			</div>
 			<div class="clear"></div>
 		</div>
@@ -77,10 +114,17 @@
 			<div class="clear"></div>
 		</div>
 	
-		<div class="formRow">
+		<div class="formRow" id="productItemStockDiv">
 			<label>Estoque atual</label>
 			<div class="formRight">
-				<?php echo input_tag('stock', null, array('size'=>5, 'maxlength'=>5, 'class'=>'textR', 'id'=>'productItemStock')) ?>
+				<?php
+					echo input_tag('stock', null, array('size'=>5, 'maxlength'=>5, 'class'=>'textR', 'id'=>'productItemStock'));
+					echo input_hidden_tag('lockedStock', null, array('id'=>'productItemLockedStock'));
+				?>
+				<label id="productItemLockedStockLabel"></label>
+				<span class="ml10"><?php echo link_to('Bloquear estoque', '#lockProductItemStock()', array('id'=>'productItemLockStockLink')) ?></span>
+				<span class="text mt4"><?php echo link_to('Desbloquear estoque', '#unlockProductItemStock()', array('id'=>'productItemUnlockStockLink')) ?></span>
+				<span class="text mt4 ml10"><?php echo link_to('Atualizar estoque', '#addStockLog()', array('id'=>'productItemAddStockLogLink')) ?></span>
 				<div class="formNote error" id="productItemFormErrorStock"></div>
 			</div>
 			<div class="clear"></div>
@@ -98,7 +142,7 @@
 		echo input_hidden_tag('imageIndex', null, array('id'=>'productItemImageIndex'));
 		echo input_hidden_tag('productCode', $productObj->getProductCode(), array('id'=>'productItemImageProductCode'));
 	?>
-	<div class="formRow">
+	<div class="formRow" id="productItemImageListDiv">
 		<div class="formRight">
 			<?php
 				for($i=1; $i <= 5; $i++):
@@ -124,6 +168,9 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+	
 	</form>
 
 </div>
+
+<?php include_partial('product/dialog/stockLog') ?>

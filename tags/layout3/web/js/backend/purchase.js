@@ -1,7 +1,7 @@
 $(function() {
 	
 	$('#purchaseShippingDate').datepicker({ 
-		defaultDate: +3,
+		defaultDate: +0,
 		autoSize: true,
 		dateFormat: 'dd/mm/yy',
 		onSelect: function(dateText){

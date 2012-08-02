@@ -41,6 +41,17 @@ class PurchasePeer extends BasePurchasePeer
 		return $purchaseObj;
 	}
 	
+	public static function search(Criteria $criteria=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+			
+		$criteria->addDescendingOrderByColumn( PurchasePeer::UPDATED_AT );
+		$criteria->addDescendingOrderByColumn( PurchasePeer::CREATED_AT );
+		
+		return PurchasePeer::doSelect($criteria);
+	}
+	
 	public static function validateOrderStatus($orderStatus){
 		
 		$shippingDate = MyTools::getRequestParameter('shippingDate');

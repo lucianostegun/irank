@@ -13,7 +13,7 @@
 ?>
 <div class="cartResume">
 	<div class="cartIcon"><?php echo image_tag('store/basket') ?></div>
-	<?php echo button_tag('storeCart', 'Meu carrinho', array('onclick'=>'goToPage("store", "cart")', 'style'=>'position: absolute; right: 0px')) ?>
+	<?php echo button_tag('storeCart', 'Meu carrinho', array('onclick'=>'goToPage("store", "cart")', 'style'=>'float: right; top: -2px; right: -4px')) ?>
 	<div class="clear"></div>
 </div>
 <div class="cartInfo">

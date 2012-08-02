@@ -29,6 +29,10 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 
 
 	
+	protected $order_status;
+
+
+	
 	protected $paymethod_type;
 
 
@@ -46,10 +50,6 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 
 	
 	protected $created_at;
-
-
-	
-	protected $updated_at;
 
 	
 	protected $alreadyInSave = false;
@@ -108,6 +108,13 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getOrderStatus()
+	{
+
+		return $this->order_status;
+	}
+
+	
 	public function getPaymethodType()
 	{
 
@@ -147,28 +154,6 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 			}
 		} else {
 			$ts = $this->created_at;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
-	}
-
-	
-	public function getUpdatedAt($format = 'Y-m-d H:i:s')
-	{
-
-		if ($this->updated_at === null || $this->updated_at === '') {
-			return null;
-		} elseif (!is_int($this->updated_at)) {
-						$ts = strtotime($this->updated_at);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [updated_at] as date/time value: " . var_export($this->updated_at, true));
-			}
-		} else {
-			$ts = $this->updated_at;
 		}
 		if ($format === null) {
 			return $ts;
@@ -253,6 +238,20 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setOrderStatus($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->order_status !== $v) {
+			$this->order_status = $v;
+			$this->modifiedColumns[] = PurchaseStatusLogPeer::ORDER_STATUS;
+		}
+
+	} 
+	
 	public function setPaymethodType($v)
 	{
 
@@ -322,23 +321,6 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setUpdatedAt($v)
-	{
-
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [updated_at] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->updated_at !== $ts) {
-			$this->updated_at = $ts;
-			$this->modifiedColumns[] = PurchaseStatusLogPeer::UPDATED_AT;
-		}
-
-	} 
-	
 	public function hydrate(ResultSet $rs, $startcol = 1)
 	{
 		try {
@@ -353,17 +335,17 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 
 			$this->transaction_status = $rs->getString($startcol + 4);
 
-			$this->paymethod_type = $rs->getString($startcol + 5);
+			$this->order_status = $rs->getString($startcol + 5);
 
-			$this->extra_amount = $rs->getFloat($startcol + 6);
+			$this->paymethod_type = $rs->getString($startcol + 6);
 
-			$this->installment_count = $rs->getInt($startcol + 7);
+			$this->extra_amount = $rs->getFloat($startcol + 7);
 
-			$this->change_source = $rs->getString($startcol + 8);
+			$this->installment_count = $rs->getInt($startcol + 8);
 
-			$this->created_at = $rs->getTimestamp($startcol + 9, null);
+			$this->change_source = $rs->getString($startcol + 9);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 10, null);
+			$this->created_at = $rs->getTimestamp($startcol + 10, null);
 
 			$this->resetModified();
 
@@ -403,11 +385,6 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
     if ($this->isNew() && !$this->isColumnModified(PurchaseStatusLogPeer::CREATED_AT))
     {
       $this->setCreatedAt(time());
-    }
-
-    if ($this->isModified() && !$this->isColumnModified(PurchaseStatusLogPeer::UPDATED_AT))
-    {
-      $this->setUpdatedAt(time());
     }
 
 		if ($this->isDeleted()) {
@@ -522,22 +499,22 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 				return $this->getTransactionStatus();
 				break;
 			case 5:
-				return $this->getPaymethodType();
+				return $this->getOrderStatus();
 				break;
 			case 6:
-				return $this->getExtraAmount();
+				return $this->getPaymethodType();
 				break;
 			case 7:
-				return $this->getInstallmentCount();
+				return $this->getExtraAmount();
 				break;
 			case 8:
-				return $this->getChangeSource();
+				return $this->getInstallmentCount();
 				break;
 			case 9:
-				return $this->getCreatedAt();
+				return $this->getChangeSource();
 				break;
 			case 10:
-				return $this->getUpdatedAt();
+				return $this->getCreatedAt();
 				break;
 			default:
 				return null;
@@ -554,12 +531,12 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 			$keys[2]=>$this->getTransactionDate(),
 			$keys[3]=>$this->getTransactionCode(),
 			$keys[4]=>$this->getTransactionStatus(),
-			$keys[5]=>$this->getPaymethodType(),
-			$keys[6]=>$this->getExtraAmount(),
-			$keys[7]=>$this->getInstallmentCount(),
-			$keys[8]=>$this->getChangeSource(),
-			$keys[9]=>$this->getCreatedAt(),
-			$keys[10]=>$this->getUpdatedAt(),
+			$keys[5]=>$this->getOrderStatus(),
+			$keys[6]=>$this->getPaymethodType(),
+			$keys[7]=>$this->getExtraAmount(),
+			$keys[8]=>$this->getInstallmentCount(),
+			$keys[9]=>$this->getChangeSource(),
+			$keys[10]=>$this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -591,22 +568,22 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 				$this->setTransactionStatus($value);
 				break;
 			case 5:
-				$this->setPaymethodType($value);
+				$this->setOrderStatus($value);
 				break;
 			case 6:
-				$this->setExtraAmount($value);
+				$this->setPaymethodType($value);
 				break;
 			case 7:
-				$this->setInstallmentCount($value);
+				$this->setExtraAmount($value);
 				break;
 			case 8:
-				$this->setChangeSource($value);
+				$this->setInstallmentCount($value);
 				break;
 			case 9:
-				$this->setCreatedAt($value);
+				$this->setChangeSource($value);
 				break;
 			case 10:
-				$this->setUpdatedAt($value);
+				$this->setCreatedAt($value);
 				break;
 		} 	}
 
@@ -620,12 +597,12 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setTransactionDate($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setTransactionCode($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setTransactionStatus($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setPaymethodType($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setExtraAmount($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setInstallmentCount($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setChangeSource($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[5], $arr)) $this->setOrderStatus($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setPaymethodType($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setExtraAmount($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setInstallmentCount($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setChangeSource($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
 	}
 
 	
@@ -638,12 +615,12 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PurchaseStatusLogPeer::TRANSACTION_DATE)) $criteria->add(PurchaseStatusLogPeer::TRANSACTION_DATE, $this->transaction_date);
 		if ($this->isColumnModified(PurchaseStatusLogPeer::TRANSACTION_CODE)) $criteria->add(PurchaseStatusLogPeer::TRANSACTION_CODE, $this->transaction_code);
 		if ($this->isColumnModified(PurchaseStatusLogPeer::TRANSACTION_STATUS)) $criteria->add(PurchaseStatusLogPeer::TRANSACTION_STATUS, $this->transaction_status);
+		if ($this->isColumnModified(PurchaseStatusLogPeer::ORDER_STATUS)) $criteria->add(PurchaseStatusLogPeer::ORDER_STATUS, $this->order_status);
 		if ($this->isColumnModified(PurchaseStatusLogPeer::PAYMETHOD_TYPE)) $criteria->add(PurchaseStatusLogPeer::PAYMETHOD_TYPE, $this->paymethod_type);
 		if ($this->isColumnModified(PurchaseStatusLogPeer::EXTRA_AMOUNT)) $criteria->add(PurchaseStatusLogPeer::EXTRA_AMOUNT, $this->extra_amount);
 		if ($this->isColumnModified(PurchaseStatusLogPeer::INSTALLMENT_COUNT)) $criteria->add(PurchaseStatusLogPeer::INSTALLMENT_COUNT, $this->installment_count);
 		if ($this->isColumnModified(PurchaseStatusLogPeer::CHANGE_SOURCE)) $criteria->add(PurchaseStatusLogPeer::CHANGE_SOURCE, $this->change_source);
 		if ($this->isColumnModified(PurchaseStatusLogPeer::CREATED_AT)) $criteria->add(PurchaseStatusLogPeer::CREATED_AT, $this->created_at);
-		if ($this->isColumnModified(PurchaseStatusLogPeer::UPDATED_AT)) $criteria->add(PurchaseStatusLogPeer::UPDATED_AT, $this->updated_at);
 
 		return $criteria;
 	}
@@ -682,6 +659,8 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 
 		$copyObj->setTransactionStatus($this->transaction_status);
 
+		$copyObj->setOrderStatus($this->order_status);
+
 		$copyObj->setPaymethodType($this->paymethod_type);
 
 		$copyObj->setExtraAmount($this->extra_amount);
@@ -691,8 +670,6 @@ abstract class BasePurchaseStatusLog extends BaseObject  implements Persistent {
 		$copyObj->setChangeSource($this->change_source);
 
 		$copyObj->setCreatedAt($this->created_at);
-
-		$copyObj->setUpdatedAt($this->updated_at);
 
 
 		$copyObj->setNew(true);

@@ -13,7 +13,7 @@ abstract class BaseLogFieldPeer {
 	const CLASS_DEFAULT = 'lib.model.LogField';
 
 	
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 4;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -32,27 +32,24 @@ abstract class BaseLogFieldPeer {
 	const CREATED_AT = 'log_field.CREATED_AT';
 
 	
-	const UPDATED_AT = 'log_field.UPDATED_AT';
-
-	
 	private static $phpNameMap = null;
 
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('LogId', 'FieldName', 'FieldValue', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (LogFieldPeer::LOG_ID, LogFieldPeer::FIELD_NAME, LogFieldPeer::FIELD_VALUE, LogFieldPeer::CREATED_AT, LogFieldPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('log_id', 'field_name', 'field_value', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('LOG_ID'=>'', 'FIELD_NAME'=>'', 'FIELD_VALUE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME=>array ('LogId', 'FieldName', 'FieldValue', 'CreatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (LogFieldPeer::LOG_ID, LogFieldPeer::FIELD_NAME, LogFieldPeer::FIELD_VALUE, LogFieldPeer::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('log_id', 'field_name', 'field_value', 'created_at', ),
+		BasePeer::TYPE_ALIAS=>array ('LOG_ID'=>'', 'FIELD_NAME'=>'', 'FIELD_VALUE'=>'', 'CREATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('LogId'=>0, 'FieldName'=>1, 'FieldValue'=>2, 'CreatedAt'=>3, 'UpdatedAt'=>4, ),
-		BasePeer::TYPE_COLNAME=>array (LogFieldPeer::LOG_ID=>0, LogFieldPeer::FIELD_NAME=>1, LogFieldPeer::FIELD_VALUE=>2, LogFieldPeer::CREATED_AT=>3, LogFieldPeer::UPDATED_AT=>4, ),
-		BasePeer::TYPE_FIELDNAME=>array ('log_id'=>0, 'field_name'=>1, 'field_value'=>2, 'created_at'=>3, 'updated_at'=>4, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME=>array ('LogId'=>0, 'FieldName'=>1, 'FieldValue'=>2, 'CreatedAt'=>3, ),
+		BasePeer::TYPE_COLNAME=>array (LogFieldPeer::LOG_ID=>0, LogFieldPeer::FIELD_NAME=>1, LogFieldPeer::FIELD_VALUE=>2, LogFieldPeer::CREATED_AT=>3, ),
+		BasePeer::TYPE_FIELDNAME=>array ('log_id'=>0, 'field_name'=>1, 'field_value'=>2, 'created_at'=>3, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, )
 	);
 
 	
@@ -113,8 +110,6 @@ abstract class BaseLogFieldPeer {
 		$criteria->addSelectColumn(LogFieldPeer::FIELD_VALUE);
 
 		$criteria->addSelectColumn(LogFieldPeer::CREATED_AT);
-
-		$criteria->addSelectColumn(LogFieldPeer::UPDATED_AT);
 
 	}
 

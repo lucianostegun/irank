@@ -27,9 +27,9 @@
 		<?php
 			echo button_tag('eventResultCancel', __('button.cancel'), array('onclick'=>'windowEventResultHide()'));
 			echo button_tag('eventResultSubmit', __('button.saveResult'), array('onclick'=>'doSubmitEventResult()', 'visible'=>$savedResult));
-			echo button_tag('toggleResultButtonResult', __('button.launchResult'), array('onclick'=>'toggleEventResultView(true)', 'visible'=>(!$savedResult), 'style'=>'float: left'));
-			echo button_tag('toggleResultButtonPlayer', __('button.playerList'), array('onclick'=>'toggleEventResultView(false)', 'visible'=>$savedResult, 'style'=>'float: left'));
-			echo button_tag('calculatePrize', __('button.calculatePrize'), array('onclick'=>'doCalculatePrize()', 'visible'=>$savedResult, 'style'=>'float: left'));
+			echo button_tag('toggleResultButtonResult', __('button.launchResult'), array('onclick'=>'toggleEventResultView(true)', 'visible'=>(!$savedResult), 'class'=>'left'));
+			echo button_tag('toggleResultButtonPlayer', __('button.playerList'), array('onclick'=>'toggleEventResultView(false)', 'visible'=>$savedResult, 'class'=>'left'));
+			echo button_tag('calculatePrize', __('button.calculatePrize'), array('onclick'=>'doCalculatePrize()', 'visible'=>$savedResult, 'class'=>'left'));
 			echo getFormWindowLoading('eventResult');
 			echo getFormStatus('eventResult');
 		?>

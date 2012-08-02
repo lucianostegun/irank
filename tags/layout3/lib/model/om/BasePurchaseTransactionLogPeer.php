@@ -13,7 +13,7 @@ abstract class BasePurchaseTransactionLogPeer {
 	const CLASS_DEFAULT = 'lib.model.PurchaseTransactionLog';
 
 	
-	const NUM_COLUMNS = 15;
+	const NUM_COLUMNS = 14;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -62,27 +62,24 @@ abstract class BasePurchaseTransactionLogPeer {
 	const CREATED_AT = 'purchase_transaction_log.CREATED_AT';
 
 	
-	const UPDATED_AT = 'purchase_transaction_log.UPDATED_AT';
-
-	
 	private static $phpNameMap = null;
 
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'PurchaseId', 'TransactionCode', 'TransactionType', 'TransactionStatus', 'PaymethodType', 'PaymethodCode', 'GrossAmount', 'FeeAmount', 'NetAmount', 'EscrowEndDate', 'ExtraAmount', 'InstallmentCount', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (PurchaseTransactionLogPeer::ID, PurchaseTransactionLogPeer::PURCHASE_ID, PurchaseTransactionLogPeer::TRANSACTION_CODE, PurchaseTransactionLogPeer::TRANSACTION_TYPE, PurchaseTransactionLogPeer::TRANSACTION_STATUS, PurchaseTransactionLogPeer::PAYMETHOD_TYPE, PurchaseTransactionLogPeer::PAYMETHOD_CODE, PurchaseTransactionLogPeer::GROSS_AMOUNT, PurchaseTransactionLogPeer::FEE_AMOUNT, PurchaseTransactionLogPeer::NET_AMOUNT, PurchaseTransactionLogPeer::ESCROW_END_DATE, PurchaseTransactionLogPeer::EXTRA_AMOUNT, PurchaseTransactionLogPeer::INSTALLMENT_COUNT, PurchaseTransactionLogPeer::CREATED_AT, PurchaseTransactionLogPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'purchase_id', 'transaction_code', 'transaction_type', 'transaction_status', 'paymethod_type', 'paymethod_code', 'gross_amount', 'fee_amount', 'net_amount', 'escrow_end_date', 'extra_amount', 'installment_count', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PURCHASE_ID'=>'', 'TRANSACTION_CODE'=>'', 'TRANSACTION_TYPE'=>'', 'TRANSACTION_STATUS'=>'', 'PAYMETHOD_TYPE'=>'', 'PAYMETHOD_CODE'=>'', 'GROSS_AMOUNT'=>'', 'FEE_AMOUNT'=>'', 'NET_AMOUNT'=>'', 'ESCROW_END_DATE'=>'', 'EXTRA_AMOUNT'=>'', 'INSTALLMENT_COUNT'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PurchaseId', 'TransactionCode', 'TransactionType', 'TransactionStatus', 'PaymethodType', 'PaymethodCode', 'GrossAmount', 'FeeAmount', 'NetAmount', 'EscrowEndDate', 'ExtraAmount', 'InstallmentCount', 'CreatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (PurchaseTransactionLogPeer::ID, PurchaseTransactionLogPeer::PURCHASE_ID, PurchaseTransactionLogPeer::TRANSACTION_CODE, PurchaseTransactionLogPeer::TRANSACTION_TYPE, PurchaseTransactionLogPeer::TRANSACTION_STATUS, PurchaseTransactionLogPeer::PAYMETHOD_TYPE, PurchaseTransactionLogPeer::PAYMETHOD_CODE, PurchaseTransactionLogPeer::GROSS_AMOUNT, PurchaseTransactionLogPeer::FEE_AMOUNT, PurchaseTransactionLogPeer::NET_AMOUNT, PurchaseTransactionLogPeer::ESCROW_END_DATE, PurchaseTransactionLogPeer::EXTRA_AMOUNT, PurchaseTransactionLogPeer::INSTALLMENT_COUNT, PurchaseTransactionLogPeer::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'purchase_id', 'transaction_code', 'transaction_type', 'transaction_status', 'paymethod_type', 'paymethod_code', 'gross_amount', 'fee_amount', 'net_amount', 'escrow_end_date', 'extra_amount', 'installment_count', 'created_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PURCHASE_ID'=>'', 'TRANSACTION_CODE'=>'', 'TRANSACTION_TYPE'=>'', 'TRANSACTION_STATUS'=>'', 'PAYMETHOD_TYPE'=>'', 'PAYMETHOD_CODE'=>'', 'GROSS_AMOUNT'=>'', 'FEE_AMOUNT'=>'', 'NET_AMOUNT'=>'', 'ESCROW_END_DATE'=>'', 'EXTRA_AMOUNT'=>'', 'INSTALLMENT_COUNT'=>'', 'CREATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PurchaseId'=>1, 'TransactionCode'=>2, 'TransactionType'=>3, 'TransactionStatus'=>4, 'PaymethodType'=>5, 'PaymethodCode'=>6, 'GrossAmount'=>7, 'FeeAmount'=>8, 'NetAmount'=>9, 'EscrowEndDate'=>10, 'ExtraAmount'=>11, 'InstallmentCount'=>12, 'CreatedAt'=>13, 'UpdatedAt'=>14, ),
-		BasePeer::TYPE_COLNAME=>array (PurchaseTransactionLogPeer::ID=>0, PurchaseTransactionLogPeer::PURCHASE_ID=>1, PurchaseTransactionLogPeer::TRANSACTION_CODE=>2, PurchaseTransactionLogPeer::TRANSACTION_TYPE=>3, PurchaseTransactionLogPeer::TRANSACTION_STATUS=>4, PurchaseTransactionLogPeer::PAYMETHOD_TYPE=>5, PurchaseTransactionLogPeer::PAYMETHOD_CODE=>6, PurchaseTransactionLogPeer::GROSS_AMOUNT=>7, PurchaseTransactionLogPeer::FEE_AMOUNT=>8, PurchaseTransactionLogPeer::NET_AMOUNT=>9, PurchaseTransactionLogPeer::ESCROW_END_DATE=>10, PurchaseTransactionLogPeer::EXTRA_AMOUNT=>11, PurchaseTransactionLogPeer::INSTALLMENT_COUNT=>12, PurchaseTransactionLogPeer::CREATED_AT=>13, PurchaseTransactionLogPeer::UPDATED_AT=>14, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'purchase_id'=>1, 'transaction_code'=>2, 'transaction_type'=>3, 'transaction_status'=>4, 'paymethod_type'=>5, 'paymethod_code'=>6, 'gross_amount'=>7, 'fee_amount'=>8, 'net_amount'=>9, 'escrow_end_date'=>10, 'extra_amount'=>11, 'installment_count'=>12, 'created_at'=>13, 'updated_at'=>14, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PurchaseId'=>1, 'TransactionCode'=>2, 'TransactionType'=>3, 'TransactionStatus'=>4, 'PaymethodType'=>5, 'PaymethodCode'=>6, 'GrossAmount'=>7, 'FeeAmount'=>8, 'NetAmount'=>9, 'EscrowEndDate'=>10, 'ExtraAmount'=>11, 'InstallmentCount'=>12, 'CreatedAt'=>13, ),
+		BasePeer::TYPE_COLNAME=>array (PurchaseTransactionLogPeer::ID=>0, PurchaseTransactionLogPeer::PURCHASE_ID=>1, PurchaseTransactionLogPeer::TRANSACTION_CODE=>2, PurchaseTransactionLogPeer::TRANSACTION_TYPE=>3, PurchaseTransactionLogPeer::TRANSACTION_STATUS=>4, PurchaseTransactionLogPeer::PAYMETHOD_TYPE=>5, PurchaseTransactionLogPeer::PAYMETHOD_CODE=>6, PurchaseTransactionLogPeer::GROSS_AMOUNT=>7, PurchaseTransactionLogPeer::FEE_AMOUNT=>8, PurchaseTransactionLogPeer::NET_AMOUNT=>9, PurchaseTransactionLogPeer::ESCROW_END_DATE=>10, PurchaseTransactionLogPeer::EXTRA_AMOUNT=>11, PurchaseTransactionLogPeer::INSTALLMENT_COUNT=>12, PurchaseTransactionLogPeer::CREATED_AT=>13, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'purchase_id'=>1, 'transaction_code'=>2, 'transaction_type'=>3, 'transaction_status'=>4, 'paymethod_type'=>5, 'paymethod_code'=>6, 'gross_amount'=>7, 'fee_amount'=>8, 'net_amount'=>9, 'escrow_end_date'=>10, 'extra_amount'=>11, 'installment_count'=>12, 'created_at'=>13, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	
@@ -163,8 +160,6 @@ abstract class BasePurchaseTransactionLogPeer {
 		$criteria->addSelectColumn(PurchaseTransactionLogPeer::INSTALLMENT_COUNT);
 
 		$criteria->addSelectColumn(PurchaseTransactionLogPeer::CREATED_AT);
-
-		$criteria->addSelectColumn(PurchaseTransactionLogPeer::UPDATED_AT);
 
 	}
 
