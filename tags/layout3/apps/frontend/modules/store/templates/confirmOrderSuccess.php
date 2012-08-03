@@ -15,8 +15,8 @@
 	<div class="storeCartResume">
 	
 		<h3>Nome/Endereço</h3>
-		<div class="ml30 textB"><?php echo $peopleObj->getName() ?></div>
-		<div class="ml30">
+		<div class="ml30 mt15 textB customerAddress"><?php echo $peopleObj->getName() ?></div>
+		<div class="ml30 mt5 customerAddress">
 			<?php
 				$addressComplement = ($addressComplement?' '.$addressComplement:'');
 				echo "$addressName, $addressNumber{$addressComplement}<br/>$addressQuarter<br>$addressCity, $addressState<br/>$addressZipcode";
@@ -27,7 +27,7 @@
 		
 		<h3 class="mt30">Resumo do pedido</h3>
 		
-		<table border="0" cellspacing="0" cellpadding="0" class="store cart resume" style="">
+		<table border="0" cellspacing="0" cellpadding="0" class="store cart resume">
 		  <tr class="header">
 		    <th colspan="2" class="first">Produto</th>
 		    <th width="70">Qtd</th>
@@ -97,13 +97,14 @@
 		
 	
 		<h3 class="mt30">Forma de pagamento</h3>
-		<div class="ml30 mb20">
+		<div class="pl30 mb10 mt20">
 			<?php if( $cartSessionObj->paymethod=='billet' ): ?><label for="paymethodBillet"><?php echo image_tag('store/boleto', array('class'=>'mr10', 'align'=>'absmiddle')) ?> Boleto bancário</label><?php endif; ?>
 			<?php if( $cartSessionObj->paymethod=='pagseguro' ): ?><label for="paymethodPagseguro"><?php echo image_tag('store/pagseguro', array('class'=>'mr10', 'align'=>'absmiddle')) ?> Pagseguro</label><?php endif; ?>
 		</div>
+		<div class="separator mb15"></div>
 		
 		<?php echo link_to(image_tag('store/back', array('class'=>'ml20')), 'store/payment') ?>
 		<?php echo link_to(image_tag('store/finish', array('class'=>'ml10')), '#confirmOrder()') ?>
 	</div>
 
-<div class="clear mt5"></div>
+<div class="clear mt200"></div>

@@ -48,4 +48,5 @@
 
 <?php
 	include_partial('store/include/offer');
+	include_partial('store/include/paymethods');
 ?>

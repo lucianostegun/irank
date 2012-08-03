@@ -116,4 +116,7 @@
 
 <div class="clear mt5"></div>
 
-<?php include_partial('store/include/offer'); ?>
+<?php
+	include_partial('store/include/offer');
+	include_partial('store/include/paymethods');
+?>
