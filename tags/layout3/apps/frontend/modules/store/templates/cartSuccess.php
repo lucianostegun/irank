@@ -11,6 +11,8 @@
 ?>
 	<div class="storeCart">
 	
+		<div id="cartMessage" class="success" style="display: <?php echo ($successMessage?'block':'none') ?>">Item adicionado com sucesso ao seu carrinho de compras</div>
+	
 		<table border="0" cellspacing="0" cellpadding="0" class="store cart">
 		  <tr class="header">
 		    <th colspan="2" class="first">Produto</th>
@@ -25,7 +27,9 @@
 		  <?php
 		  	$shippingValue   = $cartSessionObj->shippingValue;
 		  	$zipcode         = $cartSessionObj->zipcode;
-		  	$totalOrderValue = $shippingValue;
+		  	$discountCoupon  = $cartSessionObj->discountCoupon;
+		  	$discountValue   = $cartSessionObj->discountValue*-1;
+		  	$totalOrderValue = $shippingValue-$discountValue;
 		  	
 		  	$class = ((count($productItemList)%2==0)?'odd':'even');
 		  	foreach($productItemList as $productItemId=>$productItem):
@@ -82,9 +86,17 @@
 		  <tr class="footer shipping" id="storeCartShippingRow">
 		    <th></th>
 		    <th class="textR pr10">Informe seu cep para calcular o valor do frete</th>
-		    <th class="textC"><?php echo input_tag('zipcode', $zipcode, array('size'=>9, 'maxlength'=>9, 'class'=>'textC', 'onkeyup'=>'maskZipcode(event)', 'id'=>'storeCartZipcode')) ?></th>
-		    <th class="textC"><?php echo link_to('Calcular frete', '#doCalculateShipping()') ?></th>
+		    <th class="textL"><?php echo input_tag('zipcode', $zipcode, array('size'=>9, 'maxlength'=>9, 'class'=>'textC', 'onkeyup'=>'maskZipcode(event)', 'id'=>'storeCartZipcode')) ?></th>
+		    <th class="textL"><?php echo link_to('Calcular frete', '#doCalculateShipping()') ?></th>
 		    <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($shippingValue, true) ?></th>
+		    <th></th>
+		  </tr>
+		  <tr class="footer discount" id="storeCartDiscountRow">
+		    <th></th>
+		    <th class="textR pr10">Cupom de desconto</th>
+		    <th class="textL"><?php echo input_tag('discountCoupon', $discountCoupon, array('size'=>10, 'maxlength'=>10, 'class'=>'textC', 'id'=>'storeCartDiscountCoupon')) ?></th>
+		    <th class="textL"><?php echo link_to('Calcular desconto', '#doCalculateDiscount()') ?></th>
+		    <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($discountValue, true) ?></th>
 		    <th></th>
 		  </tr>
 		  <?php endif; ?>

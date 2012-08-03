@@ -10,6 +10,19 @@
 class Product extends BaseProduct
 {
 	
+	public function toString(){
+		
+		$productCategoryObj = $this->getProductCategory();
+		$categoryName       = $productCategoryObj->getCategoryName();
+		$categoryShortName  = $productCategoryObj->getShortName();
+		$tagName            = $productCategoryObj->getTagName();
+		$productName        = $this->getProductName();
+		
+		$productName = str_replace($categoryShortName.' ', '', $productName);
+		
+		return "$categoryShortName $productName";
+	}
+	
     public function save($con=null){
     	
     	try{
@@ -129,7 +142,7 @@ class Product extends BaseProduct
 		$productCode = MyTools::getRequestParameter('productCode');
 		
 		$sql = "SELECT
-					product_category.SHORT_NAME||' '||product_name
+					product_category.SHORT_NAME||' '||product.PRODUCT_NAME
 				FROM
 					product
 					INNER JOIN product_category ON product.PRODUCT_CATEGORY_ID=product_category.ID

@@ -6,11 +6,6 @@ all:
   stylesheets:    [quickResume, table, store]
   javascripts:    [store]
 
-detailsSuccess:
-
-  metas:
-    title:        iRank Store - <?php echo Product::getPageTitle() ?>
-  
 cartSuccess:
   
   stylesheets:    []

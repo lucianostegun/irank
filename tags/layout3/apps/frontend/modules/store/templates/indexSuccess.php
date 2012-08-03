@@ -10,6 +10,12 @@
 	
 	include_partial('home/component/commonBar', array('pathList'=>$pathList));
 ?>
+<div class="moduleIntro">
+	<?php echo image_tag('store/logo', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
+	Seja bem-vindo à <b>iRank Store</b>, a nova loja virtual que traz a você<br/>uma nova linha de produtos originais de alta qualidade voltados ao mundo do Poker.<br/>
+	Clique, conheça nossos produtos e acompanhe os lançamentos dos novos modelos de camisetas e acessórios.
+</div>
+<div class="clear"></div>
 <?php
 	$criteria = new Criteria();
 	if( $category ) $criteria->add( ProductCategoryPeer::TAG_NAME, $category );
@@ -38,4 +44,8 @@
 	</div>
 <?php endforeach; ?>
 
-<div class="clear"></div>
+<div class="clear mt50">&nbsp;</div>
+
+<?php
+	include_partial('store/include/paymethods');
+?>

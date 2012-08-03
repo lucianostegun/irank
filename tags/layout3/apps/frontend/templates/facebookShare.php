@@ -11,7 +11,7 @@
 <meta property="og:site_name" content="iRank - Poker Ranking" />
 <meta property="og:url" content="http://<?php echo $host .'/'. $url ?>" />
 <meta property="og:image" content="http://<?php echo $host .'/'. $metaImage ?>?thumb=1" />
-<meta property="og:image" content="http://<?php echo $host ?>/images/layout/mediaShare.png" />
+<meta property="og:image" content="http://<?php echo $host ?>/images/layout/mediaLogo.png" />
 <meta property="fb:admins" content="1424201846" />
 <meta property="fb:app_id" content="173327886080667" />
 <script type="text/javascript">

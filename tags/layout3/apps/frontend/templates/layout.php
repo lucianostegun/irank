@@ -97,7 +97,12 @@ var _ModuleName = '<?php echo $moduleName ?>';
     						</div>
 				    		
     						<div class="rightContent">
-    							<?php echo $sf_content ?>
+    							<?php
+    								echo $sf_content;
+    							
+    								if( $module='store' )
+    									include_partial('store/include/footer');
+    							?>
     						</div>
     						
     						<div class="clear"></div>

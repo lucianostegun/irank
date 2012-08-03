@@ -91,22 +91,28 @@
 
 
 /* DETALHES */
+
 .productDetail {
 	
 	position: relative;
-	margin: 0px 15px;
-	height: 360px;
-	margin-top: 15px;
+	margin: 15px;
+}
+
+.productDetail .productImages {
+
+	float: 	left;
+	width: 250px;
 }
 
 .productDetail .extraImageList {
 
-	position: absolute;
-	padding-top: 8px;
+	position: relative;
+	padding-top: 4px;
 	border-top: 1px solid #DADADA;
-	top: 250px;
-	left: 0px;
-	padding-right: 2px
+	width: 240px;
+	margin-top: 4px;
+	left: 5px;
+	padding-right: 2px;
 }
 
 .productDetail .productImage.extra {
@@ -138,132 +144,164 @@
 	margin-left: 0px;
 }
 
-.productDetail .distinct.new {
+.productDetail .share {
 
-	position: absolute;
-	top: -10px;
-	left: -10px;
-	z-index: 1
+	clear: both;
+	width: 280px;
+	margin-top: 10px;
+	position: relative;
+	left: -5px
 }
 
 .productDetail .productInfo {
 
-	position: absolute;
-	left: 285px;
-	width: 480px;
-	top: 0px;
+	float: left;
+	width: 490px;
 	padding: 0px;
-}
-
-.productDetail .tshirt {
-
 	position: relative;
+	left: 25px;
 }
 
-.productDetail .tshirt.name {
+.productDetail .productInfo h1.name {
 
 	color: #425d95;
 	font-size: 20px;
 	line-height: 23px;
 	font-weight: bold;
-	top: 0px;
 	margin-bottom: 0px;
-	white-space: normal
+	white-space: normal;
+	padding: 0px;
+	position: relative;
+	top: -15px
 }
 
-.productDetail .tshirt.size {
+.productDetail .productInfo span.label {
 
-	font-size: 12px;
-	margin-left: 20px
-}
-
-.productDetail .tshirt.color {
-
-	font-size: 12px;
-	margin-left: 80px
-}
-
-.productDetail .tshirt.description {
-
+	position: relative;
+	clear: both;
 	display: block;
-	height: 115px;
+	float: left;
 	font-size: 12px;
-	font-weight: normal;
-	color: #101010;
-	top: 15px;
-	left: 20px;
-	margin-right: 20px
+	font-weight: bold;
+	margin-top: 5px;
+	margin-right: 5px;
+	width: 100px;
+	text-align: right;
+	color: #505050;
 }
 
-.productDetail .tshirt.prizeLabel {
+.productDetail .productInfo span.value {
 
-	font-size: 13px;
-	left: 20px;
-	font-weight: normal;
-	color: #000000;
-}
-
-.productDetail .tshirt.prize {
-
+	position: relative;
 	display: block;
+	float: left;
+	font-size: 12px;
+	margin-top: 5px;
+	color: #505050;
+}
+
+.productDetail .productInfo span.availability {
+
+	position: relative;
+	top: -5px;
+	left: 17px;
+}
+
+.productDetail .productInfo span.value.availability.available {
+
+	color: #299700
+}
+
+.productDetail .productInfo span.value.availability.unavailable {
+
+	color: #C91A1A
+}
+
+.productDetail .productInfo span.label.price {
+
+	clear: both;
+	font-weight: normal;
+	text-align: left;
+	left: 20px;
+	margin-top: 12px;
+}
+
+.productDetail .productInfo span.value.price {
+
+	clear: both;
+	font-weight: normal;
 	font-size: 25px;
-	top: 5px;
 	left: 20px;
 	font-weight: bold;
 	color: #C91E1E;
 }
 
-.productDetail .productOptions {
 
-	top: 25px;
+
+
+
+
+
+
+
+
+.productDetail .productInfo .productOptions {
+
+	float: left;
+	margin-top: 25px;
 	left: 20px;
 	position: relative;
 	height: 70px;
+	width: 250px;
 }
 
-.productDetail .productOptions .productOption {
+.productDetail .productInfo .productOptions .productOption {
 
 	margin-top: 3px;
-	width: 250px;
+	width: 200px;
 	height: 20px;
-	background: #E0E0E0;
-	padding: 2px 4px;
-	border: 1px solid #C0C0C0;
-	border-radius: 5px;
-}
-
-.productDetail .sizeHelpButton {
-
+	background: #F0F0F0;
+	padding: 4px 4px;
+	border: 1px solid #DCDCDC;
+	border-radius: 3px;
 	position: relative;
-	float: left;
-	top: 3px;
-	left: 85px;
 }
 
-.productDetail .productOptions .productOption input {
+.productDetail .productInfo .productOptions .productOption .sizeHelpButton {
 
+	position: absolute;
+	float: left;
+	top: 6px;
+	right: 7px;
+}
+
+.productDetail .productInfo .productOptions .productOption input {
+
+	position: 	relative;
 	height: 	10px;
 	padding: 	2px;
+	left: 		3px;
 }
 
-.productDetail .productOptions .productOption select {
+.productDetail .productInfo .productOptions .productOption select {
 
 	margin-top: 1px
 }
 
-.productDetail .productOptions .productOption label {
+.productDetail .productInfo .productOptions .productOption label {
 
 	clear: both;
 	display: block;
 	float: left;
-	width: 90px;
+	width: 50px;
 	height: 20px;
+	margin-top: 1px;
 	padding-right: 5px;
 	text-align: right;
 	font-weight: bold;
 }
 
-.productDetail .productOptions .productOption .productOptionOption {
+.productDetail .productInfo .productOptions .productOption .productOptionOption {
 
 	float: left;
 	margin-left: 3px;
@@ -272,7 +310,7 @@
 	border: 1px solid #C0C0C0;
 }
 
-.productDetail .productOptions .productOption .productOptionOption.size {
+.productDetail .productInfo .productOptions .productOption .productOptionOption.size {
 
 	background: #F0F0F0;
 	text-align: center;
@@ -283,19 +321,19 @@
 	padding: 0px 3px
 }
 
-.productDetail .productOptions .productOption .productOptionOption:hover {
+.productDetail .productInfo .productOptions .productOption .productOptionOption:hover {
 
 	border: 1px solid #505050;
 	cursor: pointer;
 }
 
-.productDetail .productOptions .productOption .productOptionOption.selected,
-.productDetail .productOptions .productOption .productOptionOption.selected:hover {
+.productDetail .productInfo .productOptions .productOption .productOptionOption.selected,
+.productDetail .productInfo .productOptions .productOption .productOptionOption.selected:hover {
 
 	border: 1px solid #000000;
 }
 
-.productDetail .productOptions .productOption .productOptionOption .color {
+.productDetail .productInfo .productOptions .productOption .productOptionOption .color {
 
 	width: 16px;
 	height: 16px;
@@ -303,28 +341,92 @@
 	margin-top: 1px;
 }
 
-.productDetail .buyButton {
+.productDetail .productInfo .buttons {
 
+	float: left;
 	position: relative;
-	display: block;
-	margin-top: 50px;
-	left: 20px
+	top: 28px;
 }
 
-.productDetail .productInfo .favoriteButton {
+.productDetail .productInfo .bookmarkButton {
 
-	position: absolute;
-	right: 		20px;
-	bottom: 	10px;
+	position: 	relative;
+	left: 		7px;
+	top:		33px;
 }
 
-.productDetail .productInfo .favoriteButton img {
+.productDetail .productInfo .bookmarkButton img {
 
 	position: relative;
-	top: 6px;
+	top: 3px;
 	left: -7px;
 }
 
+.productDetail .productInfo span.description {
+
+	display: block;
+	margin: 50px 15px 15px 20px;
+	width: 450px;
+	font-size: 12px;
+	text-indent: 10px;
+	line-height: 20px;
+	color: 	#5F5F5F
+}
+
+
+
+
+
+
+
+table.storeFooter {
+
+	background: #FFFFFF;
+	width: 700px;
+	bottom: 0px;
+	right: 0px;
+}
+
+
+table.storeFooter th {
+
+	color: 	#505050;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-family: Calibri, Arial, Verdana;
+	padding: 	4px 10px 4px 5px;
+}
+
+table.storeFooter tr td.wrapper {
+
+	border-left: 1px solid #EAEAEA;
+	width: 130px;
+	padding-left: 10px;
+	vertical-align: top
+}
+
+table.storeFooter tr td.wrapper:first-child {
+
+	border-left: none
+}
+
+table.storeFooter tr td.wrapper table tr td {
+
+	padding-top: 5px;
+	padding-left: 5px;
+	color: #707070
+}
+
+table.storeFooter tr td.wrapper table tr td a {
+
+	color: #707070
+}
+
+table.storeFooter tr td.wrapper table tr td a:hover {
+
+	color: #303030;
+	text-decoration: none
+}
 
 
 
@@ -341,6 +443,7 @@
 	position: relative;
 	padding: 5px;
 	height: 42px;
+	margin-top: 100px;
 }
 
 .paymethods img {
@@ -358,15 +461,17 @@
 	top: 5px;
 }
 
+
 h3 {
 
-	margin-top: 10px;
-	margin-left: 10px;
-	color: #425d95;
-	border-bottom: 1px solid #425d95;
-	padding-bottom: 3px;
-	padding-left: 10px;
-	width: 90%;
+	color: #505050;
+	text-shadow: #FAFAFA 1px 1px;
+	border-bottom: 1px solid #BABABA;
+	border-top: 1px solid #BABABA;
+	background: #DADADA;
+	margin: 0px;
+	padding: 5px 0px 5px 10px;
+	font-size: 15px;
 }
 
 
@@ -584,7 +689,12 @@ table.store.cart .footer.shipping th {
 
 table.store.cart .footer th input {
 
-	width: 65px
+	width: 75px
+}
+
+table.store.cart .footer#storeCartDiscountRow th input {
+
+	text-transform: uppercase
 }
 
 table.store.cart .footer.total th {
@@ -615,7 +725,14 @@ table.store.cart.resume .footer.total th {
 
 
 
+.storeCart #cartMessage.success {
 
+	margin: 1px 0px;
+	color: #49721b;
+	border: 1px solid #626d23;
+	background: #d2dfc6 url('/images/icon/ok.png') 8px center no-repeat;
+	padding: 8px 5px 8px 35px
+}
 
 
 .storeCartResume {

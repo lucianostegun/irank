@@ -23,3 +23,4 @@
 		<span class="tshirt prize">R$ <?php echo Util::formatFloat($defaultPrice, true) ?></span>
 	</div>
 <?php endforeach; ?>
+<div class="clear"></div>
