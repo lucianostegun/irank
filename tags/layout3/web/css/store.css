@@ -587,10 +587,10 @@ table.store.cart {
 
 table.store.cart.resume {
 
-	margin: 5px;
 	background: #F0F0F0;
-	width: 775px;
+	width: 785px;
 	border: none;
+	border-top: 1px solid #EAEAEA
 }
 
 table.store.cart,
@@ -804,6 +804,16 @@ table.store.cart.resume .footer.total th {
 .storeCartResume .gridTable.store.cart td {
 
 	padding: 	5px 10px;
+}
+
+.storeCartResume .customerAddress {
+
+	font-size: 12px
+}
+
+.storeCartResume .separator {
+
+	border-bottom: 5px solid #F0F0F0;
 }
 
 .buttonBarForm {
