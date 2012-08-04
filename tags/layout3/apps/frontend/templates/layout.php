@@ -100,7 +100,7 @@ var _ModuleName = '<?php echo $moduleName ?>';
     							<?php
     								echo $sf_content;
     							
-    								if( $module='store' )
+    								if( $moduleName=='store' )
     									include_partial('store/include/footer');
     							?>
     						</div>

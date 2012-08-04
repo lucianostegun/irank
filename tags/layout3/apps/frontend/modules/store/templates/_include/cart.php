@@ -6,7 +6,12 @@
   	$cartSessionObj = base64_decode($cartSession);
   	$cartSessionObj = unserialize($cartSessionObj);
   	
-  	$products      = $cartSessionObj->products;
+  	$products = $cartSessionObj->products;
+  	
+  	if( $products==0 )
+  		if( !UserSite::isAuthenticated() )
+  			return include_partial('login/include/login', array());
+  		
   	$totalValue    = $cartSessionObj->totalValue;
   	$shippingValue = $cartSessionObj->shippingValue;
   	$orderValue    = $totalValue-$shippingValue;
