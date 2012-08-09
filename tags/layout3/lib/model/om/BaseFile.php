@@ -1612,4 +1612,39 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 		return $this->collPurchaseList;
 	}
 
+
+	
+	public function getPurchaseListJoinDiscountCoupon($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchasePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPurchaseList === null) {
+			if ($this->isNew()) {
+				$this->collPurchaseList = array();
+			} else {
+
+				$criteria->add(PurchasePeer::FILE_ID, $this->getId());
+
+				$this->collPurchaseList = PurchasePeer::doSelectJoinDiscountCoupon($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(PurchasePeer::FILE_ID, $this->getId());
+
+			if (!isset($this->lastPurchaseCriteria) || !$this->lastPurchaseCriteria->equals($criteria)) {
+				$this->collPurchaseList = PurchasePeer::doSelectJoinDiscountCoupon($criteria, $con);
+			}
+		}
+		$this->lastPurchaseCriteria = $criteria;
+
+		return $this->collPurchaseList;
+	}
+
 } 

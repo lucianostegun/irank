@@ -2,7 +2,8 @@
 	<table cellpadding="0" cellspacing="0" width="100%" class="display dTable">
 	    <thead>
 			<tr>
-				<th colspan="2">Cód</th>
+				<th width="40"></th>
+				<th width="40">Cód</th>
 				<th>Nome</th> 
 				<th>Valor</th> 
 				<th>Peso</th> 

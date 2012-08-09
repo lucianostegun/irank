@@ -49,7 +49,15 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 
 	
+	protected $discount_coupon_id;
+
+
+	
 	protected $shipping_value = 0;
+
+
+	
+	protected $discount_value = 0;
 
 
 	
@@ -134,6 +142,9 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 	protected $aFile;
 
 	
+	protected $aDiscountCoupon;
+
+	
 	protected $collPurchaseProductItemList;
 
 	
@@ -216,10 +227,24 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getDiscountCouponId()
+	{
+
+		return $this->discount_coupon_id;
+	}
+
+	
 	public function getShippingValue()
 	{
 
 		return $this->shipping_value;
+	}
+
+	
+	public function getDiscountValue()
+	{
+
+		return $this->discount_value;
 	}
 
 	
@@ -586,12 +611,40 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setDiscountCouponId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->discount_coupon_id !== $v) {
+			$this->discount_coupon_id = $v;
+			$this->modifiedColumns[] = PurchasePeer::DISCOUNT_COUPON_ID;
+		}
+
+		if ($this->aDiscountCoupon !== null && $this->aDiscountCoupon->getId() !== $v) {
+			$this->aDiscountCoupon = null;
+		}
+
+	} 
+	
 	public function setShippingValue($v)
 	{
 
 		if ($this->shipping_value !== $v || $v === 0) {
 			$this->shipping_value = $v;
 			$this->modifiedColumns[] = PurchasePeer::SHIPPING_VALUE;
+		}
+
+	} 
+	
+	public function setDiscountValue($v)
+	{
+
+		if ($this->discount_value !== $v || $v === 0) {
+			$this->discount_value = $v;
+			$this->modifiedColumns[] = PurchasePeer::DISCOUNT_VALUE;
 		}
 
 	} 
@@ -900,51 +953,55 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 			$this->itens = $rs->getInt($startcol + 9);
 
-			$this->shipping_value = $rs->getFloat($startcol + 10);
+			$this->discount_coupon_id = $rs->getInt($startcol + 10);
 
-			$this->total_value = $rs->getFloat($startcol + 11);
+			$this->shipping_value = $rs->getFloat($startcol + 11);
 
-			$this->paymethod = $rs->getString($startcol + 12);
+			$this->discount_value = $rs->getFloat($startcol + 12);
 
-			$this->ip_address = $rs->getString($startcol + 13);
+			$this->total_value = $rs->getFloat($startcol + 13);
 
-			$this->duration = $rs->getTime($startcol + 14, null);
+			$this->paymethod = $rs->getString($startcol + 14);
 
-			$this->approval_date = $rs->getTimestamp($startcol + 15, null);
+			$this->ip_address = $rs->getString($startcol + 15);
 
-			$this->refusal_date = $rs->getTimestamp($startcol + 16, null);
+			$this->duration = $rs->getTime($startcol + 16, null);
 
-			$this->refusal_reason = $rs->getString($startcol + 17);
+			$this->approval_date = $rs->getTimestamp($startcol + 17, null);
 
-			$this->shipping_date = $rs->getTimestamp($startcol + 18, null);
+			$this->refusal_date = $rs->getTimestamp($startcol + 18, null);
 
-			$this->tracing_code = $rs->getString($startcol + 19);
+			$this->refusal_reason = $rs->getString($startcol + 19);
 
-			$this->customer_name = $rs->getString($startcol + 20);
+			$this->shipping_date = $rs->getTimestamp($startcol + 20, null);
 
-			$this->address_name = $rs->getString($startcol + 21);
+			$this->tracing_code = $rs->getString($startcol + 21);
 
-			$this->address_number = $rs->getString($startcol + 22);
+			$this->customer_name = $rs->getString($startcol + 22);
 
-			$this->address_quarter = $rs->getString($startcol + 23);
+			$this->address_name = $rs->getString($startcol + 23);
 
-			$this->address_complement = $rs->getString($startcol + 24);
+			$this->address_number = $rs->getString($startcol + 24);
 
-			$this->address_city = $rs->getString($startcol + 25);
+			$this->address_quarter = $rs->getString($startcol + 25);
 
-			$this->address_state = $rs->getString($startcol + 26);
+			$this->address_complement = $rs->getString($startcol + 26);
 
-			$this->address_zipcode = $rs->getString($startcol + 27);
+			$this->address_city = $rs->getString($startcol + 27);
 
-			$this->created_at = $rs->getTimestamp($startcol + 28, null);
+			$this->address_state = $rs->getString($startcol + 28);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 29, null);
+			$this->address_zipcode = $rs->getString($startcol + 29);
+
+			$this->created_at = $rs->getTimestamp($startcol + 30, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 31, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 30; 
+						return $startcol + 32; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Purchase object", $e);
 		}
@@ -1026,6 +1083,13 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				$this->setFile($this->aFile);
 			}
 
+			if ($this->aDiscountCoupon !== null) {
+				if ($this->aDiscountCoupon->isModified()) {
+					$affectedRows += $this->aDiscountCoupon->save($con);
+				}
+				$this->setDiscountCoupon($this->aDiscountCoupon);
+			}
+
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
@@ -1095,6 +1159,12 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aDiscountCoupon !== null) {
+				if (!$this->aDiscountCoupon->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aDiscountCoupon->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = PurchasePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -1158,63 +1228,69 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				return $this->getItens();
 				break;
 			case 10:
-				return $this->getShippingValue();
+				return $this->getDiscountCouponId();
 				break;
 			case 11:
-				return $this->getTotalValue();
+				return $this->getShippingValue();
 				break;
 			case 12:
-				return $this->getPaymethod();
+				return $this->getDiscountValue();
 				break;
 			case 13:
-				return $this->getIpAddress();
+				return $this->getTotalValue();
 				break;
 			case 14:
-				return $this->getDuration();
+				return $this->getPaymethod();
 				break;
 			case 15:
-				return $this->getApprovalDate();
+				return $this->getIpAddress();
 				break;
 			case 16:
-				return $this->getRefusalDate();
+				return $this->getDuration();
 				break;
 			case 17:
-				return $this->getRefusalReason();
+				return $this->getApprovalDate();
 				break;
 			case 18:
-				return $this->getShippingDate();
+				return $this->getRefusalDate();
 				break;
 			case 19:
-				return $this->getTracingCode();
+				return $this->getRefusalReason();
 				break;
 			case 20:
-				return $this->getCustomerName();
+				return $this->getShippingDate();
 				break;
 			case 21:
-				return $this->getAddressName();
+				return $this->getTracingCode();
 				break;
 			case 22:
-				return $this->getAddressNumber();
+				return $this->getCustomerName();
 				break;
 			case 23:
-				return $this->getAddressQuarter();
+				return $this->getAddressName();
 				break;
 			case 24:
-				return $this->getAddressComplement();
+				return $this->getAddressNumber();
 				break;
 			case 25:
-				return $this->getAddressCity();
+				return $this->getAddressQuarter();
 				break;
 			case 26:
-				return $this->getAddressState();
+				return $this->getAddressComplement();
 				break;
 			case 27:
-				return $this->getAddressZipcode();
+				return $this->getAddressCity();
 				break;
 			case 28:
-				return $this->getCreatedAt();
+				return $this->getAddressState();
 				break;
 			case 29:
+				return $this->getAddressZipcode();
+				break;
+			case 30:
+				return $this->getCreatedAt();
+				break;
+			case 31:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1237,26 +1313,28 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 			$keys[7]=>$this->getOrderValue(),
 			$keys[8]=>$this->getProducts(),
 			$keys[9]=>$this->getItens(),
-			$keys[10]=>$this->getShippingValue(),
-			$keys[11]=>$this->getTotalValue(),
-			$keys[12]=>$this->getPaymethod(),
-			$keys[13]=>$this->getIpAddress(),
-			$keys[14]=>$this->getDuration(),
-			$keys[15]=>$this->getApprovalDate(),
-			$keys[16]=>$this->getRefusalDate(),
-			$keys[17]=>$this->getRefusalReason(),
-			$keys[18]=>$this->getShippingDate(),
-			$keys[19]=>$this->getTracingCode(),
-			$keys[20]=>$this->getCustomerName(),
-			$keys[21]=>$this->getAddressName(),
-			$keys[22]=>$this->getAddressNumber(),
-			$keys[23]=>$this->getAddressQuarter(),
-			$keys[24]=>$this->getAddressComplement(),
-			$keys[25]=>$this->getAddressCity(),
-			$keys[26]=>$this->getAddressState(),
-			$keys[27]=>$this->getAddressZipcode(),
-			$keys[28]=>$this->getCreatedAt(),
-			$keys[29]=>$this->getUpdatedAt(),
+			$keys[10]=>$this->getDiscountCouponId(),
+			$keys[11]=>$this->getShippingValue(),
+			$keys[12]=>$this->getDiscountValue(),
+			$keys[13]=>$this->getTotalValue(),
+			$keys[14]=>$this->getPaymethod(),
+			$keys[15]=>$this->getIpAddress(),
+			$keys[16]=>$this->getDuration(),
+			$keys[17]=>$this->getApprovalDate(),
+			$keys[18]=>$this->getRefusalDate(),
+			$keys[19]=>$this->getRefusalReason(),
+			$keys[20]=>$this->getShippingDate(),
+			$keys[21]=>$this->getTracingCode(),
+			$keys[22]=>$this->getCustomerName(),
+			$keys[23]=>$this->getAddressName(),
+			$keys[24]=>$this->getAddressNumber(),
+			$keys[25]=>$this->getAddressQuarter(),
+			$keys[26]=>$this->getAddressComplement(),
+			$keys[27]=>$this->getAddressCity(),
+			$keys[28]=>$this->getAddressState(),
+			$keys[29]=>$this->getAddressZipcode(),
+			$keys[30]=>$this->getCreatedAt(),
+			$keys[31]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1303,63 +1381,69 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				$this->setItens($value);
 				break;
 			case 10:
-				$this->setShippingValue($value);
+				$this->setDiscountCouponId($value);
 				break;
 			case 11:
-				$this->setTotalValue($value);
+				$this->setShippingValue($value);
 				break;
 			case 12:
-				$this->setPaymethod($value);
+				$this->setDiscountValue($value);
 				break;
 			case 13:
-				$this->setIpAddress($value);
+				$this->setTotalValue($value);
 				break;
 			case 14:
-				$this->setDuration($value);
+				$this->setPaymethod($value);
 				break;
 			case 15:
-				$this->setApprovalDate($value);
+				$this->setIpAddress($value);
 				break;
 			case 16:
-				$this->setRefusalDate($value);
+				$this->setDuration($value);
 				break;
 			case 17:
-				$this->setRefusalReason($value);
+				$this->setApprovalDate($value);
 				break;
 			case 18:
-				$this->setShippingDate($value);
+				$this->setRefusalDate($value);
 				break;
 			case 19:
-				$this->setTracingCode($value);
+				$this->setRefusalReason($value);
 				break;
 			case 20:
-				$this->setCustomerName($value);
+				$this->setShippingDate($value);
 				break;
 			case 21:
-				$this->setAddressName($value);
+				$this->setTracingCode($value);
 				break;
 			case 22:
-				$this->setAddressNumber($value);
+				$this->setCustomerName($value);
 				break;
 			case 23:
-				$this->setAddressQuarter($value);
+				$this->setAddressName($value);
 				break;
 			case 24:
-				$this->setAddressComplement($value);
+				$this->setAddressNumber($value);
 				break;
 			case 25:
-				$this->setAddressCity($value);
+				$this->setAddressQuarter($value);
 				break;
 			case 26:
-				$this->setAddressState($value);
+				$this->setAddressComplement($value);
 				break;
 			case 27:
-				$this->setAddressZipcode($value);
+				$this->setAddressCity($value);
 				break;
 			case 28:
-				$this->setCreatedAt($value);
+				$this->setAddressState($value);
 				break;
 			case 29:
+				$this->setAddressZipcode($value);
+				break;
+			case 30:
+				$this->setCreatedAt($value);
+				break;
+			case 31:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1379,26 +1463,28 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[7], $arr)) $this->setOrderValue($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setProducts($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setItens($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setShippingValue($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setTotalValue($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setPaymethod($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setIpAddress($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setDuration($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setApprovalDate($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setRefusalDate($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setRefusalReason($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setShippingDate($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setTracingCode($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setCustomerName($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setAddressName($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setAddressNumber($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setAddressQuarter($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setAddressComplement($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setAddressCity($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setAddressState($arr[$keys[26]]);
-		if (array_key_exists($keys[27], $arr)) $this->setAddressZipcode($arr[$keys[27]]);
-		if (array_key_exists($keys[28], $arr)) $this->setCreatedAt($arr[$keys[28]]);
-		if (array_key_exists($keys[29], $arr)) $this->setUpdatedAt($arr[$keys[29]]);
+		if (array_key_exists($keys[10], $arr)) $this->setDiscountCouponId($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setShippingValue($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setDiscountValue($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setTotalValue($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setPaymethod($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setIpAddress($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setDuration($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setApprovalDate($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setRefusalDate($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setRefusalReason($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setShippingDate($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setTracingCode($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setCustomerName($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setAddressName($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setAddressNumber($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setAddressQuarter($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setAddressComplement($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setAddressCity($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setAddressState($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setAddressZipcode($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setCreatedAt($arr[$keys[30]]);
+		if (array_key_exists($keys[31], $arr)) $this->setUpdatedAt($arr[$keys[31]]);
 	}
 
 	
@@ -1416,7 +1502,9 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PurchasePeer::ORDER_VALUE)) $criteria->add(PurchasePeer::ORDER_VALUE, $this->order_value);
 		if ($this->isColumnModified(PurchasePeer::PRODUCTS)) $criteria->add(PurchasePeer::PRODUCTS, $this->products);
 		if ($this->isColumnModified(PurchasePeer::ITENS)) $criteria->add(PurchasePeer::ITENS, $this->itens);
+		if ($this->isColumnModified(PurchasePeer::DISCOUNT_COUPON_ID)) $criteria->add(PurchasePeer::DISCOUNT_COUPON_ID, $this->discount_coupon_id);
 		if ($this->isColumnModified(PurchasePeer::SHIPPING_VALUE)) $criteria->add(PurchasePeer::SHIPPING_VALUE, $this->shipping_value);
+		if ($this->isColumnModified(PurchasePeer::DISCOUNT_VALUE)) $criteria->add(PurchasePeer::DISCOUNT_VALUE, $this->discount_value);
 		if ($this->isColumnModified(PurchasePeer::TOTAL_VALUE)) $criteria->add(PurchasePeer::TOTAL_VALUE, $this->total_value);
 		if ($this->isColumnModified(PurchasePeer::PAYMETHOD)) $criteria->add(PurchasePeer::PAYMETHOD, $this->paymethod);
 		if ($this->isColumnModified(PurchasePeer::IP_ADDRESS)) $criteria->add(PurchasePeer::IP_ADDRESS, $this->ip_address);
@@ -1484,7 +1572,11 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 		$copyObj->setItens($this->itens);
 
+		$copyObj->setDiscountCouponId($this->discount_coupon_id);
+
 		$copyObj->setShippingValue($this->shipping_value);
+
+		$copyObj->setDiscountValue($this->discount_value);
 
 		$copyObj->setTotalValue($this->total_value);
 
@@ -1613,6 +1705,35 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aFile;
+	}
+
+	
+	public function setDiscountCoupon($v)
+	{
+
+
+		if ($v === null) {
+			$this->setDiscountCouponId(NULL);
+		} else {
+			$this->setDiscountCouponId($v->getId());
+		}
+
+
+		$this->aDiscountCoupon = $v;
+	}
+
+
+	
+	public function getDiscountCoupon($con = null)
+	{
+		if ($this->aDiscountCoupon === null && ($this->discount_coupon_id !== null)) {
+						include_once 'lib/model/om/BaseDiscountCouponPeer.php';
+
+			$this->aDiscountCoupon = DiscountCouponPeer::retrieveByPK($this->discount_coupon_id, $con);
+
+			
+		}
+		return $this->aDiscountCoupon;
 	}
 
 	

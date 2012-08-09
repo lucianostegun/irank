@@ -36,6 +36,15 @@
 	</div>
 
 	<div class="formRow">
+		<label>Tag name</label>
+		<div class="formRight">
+			<?php echo input_tag('tagName', $productCategoryObj->getTagName(), array('size'=>20, 'maxlength'=>20, 'id'=>'productCategoryTagName')) ?>
+			<div class="formNote error" id="productCategoryFormErrorTagName"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
 		<label>Produtos cadastrados</label>
 		<div class="formRight">
 			<label><?php echo $productCategoryObj->getProducts() ?></label>

@@ -99,7 +99,6 @@
 		</form>
 		
 	</div>
-	<?php echo link_to(image_tag('store/rapidssl.gif', array('style'=>'position: absolute; right: 10px; bottom: 10px'), 'https://www.webyssl.com', array('target'=>'_blank', 'class'=>'rapidSslStamp'))) ?>
 
 <div class="clear mt5"></div>
 <?php

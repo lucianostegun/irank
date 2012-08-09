@@ -49,7 +49,7 @@
 					<td onclick="<?php echo $onclick ?>"><?php echo $purchaseObj->getUserSite()->getPeople()->getName() ?></td> 
 					<td onclick="<?php echo $onclick ?>" width="120"><?php echo $purchaseObj->getPaymethod(true) ?></td> 
 					<td onclick="<?php echo $onclick ?>" width="50" class="textR"><?php echo $purchaseObj->getProducts() ?></td> 
-					<td onclick="<?php echo $onclick ?>" width="90" class="textR">R$ <?php echo Util::formatFloat($purchaseObj->getOrderValue(), true) ?></td> 
+					<td onclick="<?php echo $onclick ?>" width="90" class="textR">R$ <?php echo Util::formatFloat($purchaseObj->getTotalValue(), true) ?></td> 
 				</tr> 
 				<?php
 					endforeach;

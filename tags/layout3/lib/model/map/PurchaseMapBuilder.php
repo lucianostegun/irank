@@ -54,7 +54,11 @@ class PurchaseMapBuilder {
 
 		$tMap->addColumn('ITENS', 'Itens', 'int', CreoleTypes::INTEGER, false, null);
 
+		$tMap->addForeignKey('DISCOUNT_COUPON_ID', 'DiscountCouponId', 'int', CreoleTypes::INTEGER, 'discount_coupon', 'ID', false, null);
+
 		$tMap->addColumn('SHIPPING_VALUE', 'ShippingValue', 'double', CreoleTypes::NUMERIC, false, 10);
+
+		$tMap->addColumn('DISCOUNT_VALUE', 'DiscountValue', 'double', CreoleTypes::NUMERIC, false, 10);
 
 		$tMap->addColumn('TOTAL_VALUE', 'TotalValue', 'double', CreoleTypes::NUMERIC, false, 10);
 

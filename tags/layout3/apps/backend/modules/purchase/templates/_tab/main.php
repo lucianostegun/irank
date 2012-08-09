@@ -13,6 +13,16 @@
 	echo input_hidden_tag('purchaseId', $purchaseId);
 	
 	$fileObj = $purchaseObj->getFile();
+	
+	$discountCouponObj  = $purchaseObj->getDiscountCoupon();
+	$discountCouponLink = null;
+	
+	if( is_object($discountCouponObj) ){
+		
+		$discountCouponId   = $discountCouponObj->getId();
+		$discountCouponCode = $discountCouponObj->getCouponCode();
+		$discountCouponLink = link_to($discountCouponCode, 'discountCoupon/view?discountCouponId='.$discountCouponId, array('target'=>'_blank')).' - ';
+	}
 ?>
 	<div class="formRow">
 		<label>Nº pedido</label>
@@ -148,11 +158,13 @@
                 <li>Data do pedido:</li>
                 <li>Subtotal:</li>
                 <li>Frete:</li>
+                <li>Desconto:</li>
             </ul>
             <ul class="rightList">
                 <li><strong><?php echo $purchaseObj->getCreatedAt('d/m/Y') ?></strong> |  <?php echo $purchaseObj->getCreatedAt('H:i:s') ?></li>
                 <li><strong class="blue">R$ <?php echo Util::formatFloat($purchaseObj->getOrderValue(), true) ?></strong></li>
                 <li><strong class="green">R$ <?php echo Util::formatFloat($purchaseObj->getShippingValue(), true) ?></strong></li>
+                <li><?php echo $discountCouponLink ?><strong class="red">R$ <?php echo Util::formatFloat($purchaseObj->getDiscountValue()*-1, true) ?></strong></li>
             </ul>
             <div class="clear"></div>
         </div>

@@ -682,7 +682,8 @@ table.store.cart .footer th {
 	padding: 	5px;
 }
 
-table.store.cart .footer.shipping th {
+table.store.cart .footer.shipping th,
+table.store.cart .footer.discount th {
 
 	border-top: 1px solid #FBFBFB;
 }
@@ -707,6 +708,7 @@ table.store.cart .footer.total th {
 
 table.store.cart.resume td.totalValue,
 table.store.cart.resume .footer.shipping th,
+table.store.cart.resume .footer.discount th,
 table.store.cart.resume .footer.total th {
 
 	padding-right: 8px;
@@ -779,6 +781,11 @@ table.store.cart.resume .footer.total th {
 	border-top: 		none;
 }
 
+.storeCartResume .addressInfo {
+
+	font-size: 12px
+}
+
 .storeCartResume .finishOrderButton {
 
 	margin-left: 30px;
@@ -804,11 +811,6 @@ table.store.cart.resume .footer.total th {
 .storeCartResume .gridTable.store.cart td {
 
 	padding: 	5px 10px;
-}
-
-.storeCartResume .customerAddress {
-
-	font-size: 12px
 }
 
 .storeCartResume .separator {

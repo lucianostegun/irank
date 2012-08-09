@@ -141,25 +141,46 @@ class storeActions extends sfActions
   	
   	$discountCoupon    = $request->getParameter('discountCoupon');
   	$discountCoupon    = strtoupper($discountCoupon);
-  	$discountCouponObj = DiscountCouponPeer::retrieveByCode($discountCoupon);
 
-//  	$a = new stdClass();
-//  	$a->cheaperPercent = 30;
-//  	echo serialize($a);
-//  	exit;
-  	
-  	if( !is_object($discountCouponObj) )
-  		Util::forceError('Cupom inválido');
+//	$discountCoupon    = 'ABC123';
+//	$discountRuleObj = new stdClass();
+//	$discountRuleObj->mostExpensiveItemPercent = 100;
+//	$discountRuleObj = serialize($discountRuleObj);
+//	$discountCouponObj = new DiscountCoupon();
+//	$discountCouponObj->setDiscountRule($discountRuleObj);
   	
   	$cartSessionObj = $this->getCartSession();
   	
-  	$discountValue = $discountCouponObj->getDiscount($cartSessionObj);
-
-	$cartSessionObj->discountCoupon = $discountCoupon;
-	$cartSessionObj->discountValue  = $discountValue;
+	if( !$discountCoupon ){
+		
+		$cartSessionObj->discountCouponId = null;
+		$cartSessionObj->discountCoupon   = null;
+		$cartSessionObj->discountValue    = 0;
+	}else{
+		
+	  	$discountCouponObj = DiscountCouponPeer::retrieveByCode($discountCoupon);
+	  	
+	  	if( $cartSessionObj->discountAttempts > 5 )
+	  		Util::forceError('Desconto desabilitado');
+	  	
+	  	if( !is_object($discountCouponObj) ){
+	  		
+	  		$cartSessionObj->discountAttempts++;
+		  	$this->getUpdateSession($cartSessionObj);
+	  		Util::forceError('Cupom inválido');
+	  	}
+	  	
+	  	$discountValue = $discountCouponObj->getDiscount($cartSessionObj);
+	
+		$cartSessionObj->discountCouponId = $discountCouponObj->getId();
+		$cartSessionObj->discountCoupon   = $discountCoupon;
+		$cartSessionObj->discountValue    = $discountValue;
+	  	$cartSessionObj->discountAttempts = 0;
+	}
   	
-  	echo '<pre>';
-  	print_r($cartSessionObj);
+  	$this->getUpdateSession($cartSessionObj);
+  	
+  	echo Util::parseInfo($cartSessionObj);
   	exit;
   }
 
@@ -172,7 +193,13 @@ class storeActions extends sfActions
   	if( $cartSessionObj->products==0 )
   		return $this->redirect('store/cart');
   	
-	$result = Util::getAddressByZipcode($cartSessionObj->zipcode);
+  	try{
+  		
+		$result = Util::getAddressByZipcode($cartSessionObj->zipcode);
+  	}catch(Exception $error){
+  		
+  		$result = null;
+  	}
 	
 	$this->zipcode           = $cartSessionObj->zipcode;
 	$this->state             = null;
@@ -291,8 +318,8 @@ class storeActions extends sfActions
   	$userSiteId     = $this->getUser()->getAttribute('userSiteId');
   	
   	$shippingValue = $cartSessionObj->shippingValue;
-  	$orderValue    = $cartSessionObj->totalValue-$shippingValue;
-  	$totalValue    = $orderValue+$shippingValue;
+  	$orderValue    = $cartSessionObj->orderValue;
+  	$totalValue    = $cartSessionObj->totalValue;
   	$ipAddress     = $_SERVER['REMOTE_ADDR'];
   	$duration      = time()-$cartSessionObj->createdAt;
   	
@@ -308,6 +335,8 @@ class storeActions extends sfActions
 	$purchaseObj->setItens($cartSessionObj->itens);
 	$purchaseObj->setShippingValue($shippingValue);
 	$purchaseObj->setTotalValue($totalValue);
+	$purchaseObj->setDiscountCouponId($cartSessionObj->discountCouponId);
+	$purchaseObj->setDiscountValue($cartSessionObj->discountValue);
 	$purchaseObj->setPaymethod($paymethod);
 	$purchaseObj->setIpAddress($ipAddress);
 	$purchaseObj->setDuration($duration);
@@ -364,6 +393,11 @@ class storeActions extends sfActions
 		$con->begin();
 		
   		$purchaseObj->validateOrder();
+  		
+  		$discountCouponObj = $purchaseObj->getDiscountCoupon();
+  		
+  		if( is_object($discountCouponObj) )
+  			$discountCouponObj->maskAsUsed($con);
   		
   		$purchaseObj->save($con);
 		$orderNumber = $purchaseObj->getOrderNumber();
@@ -647,19 +681,21 @@ class storeActions extends sfActions
   	$sessionId = $ipAddress.'-'.microtime();
   	
   	$cartSessionObj = new stdClass();
-  	$cartSessionObj->id              = $sessionId;
-  	$cartSessionObj->status          = 'new';
-  	$cartSessionObj->products        = 0;
-  	$cartSessionObj->itens           = 0;
-  	$cartSessionObj->orderValue      = 0;
-  	$cartSessionObj->totalValue      = 0;
-  	$cartSessionObj->zipcode         = null;
-  	$cartSessionObj->shippingValue   = 0;
-  	$cartSessionObj->discountCoupon  = null;
-  	$cartSessionObj->discountValue   = 0;
-  	$cartSessionObj->paymethod       = null;
-  	$cartSessionObj->productItemList = array();
-  	$cartSessionObj->createdAt       = time();
+  	$cartSessionObj->id               = $sessionId;
+  	$cartSessionObj->status           = 'new';
+  	$cartSessionObj->products         = 0;
+  	$cartSessionObj->itens            = 0;
+  	$cartSessionObj->orderValue       = 0;
+  	$cartSessionObj->totalValue       = 0;
+  	$cartSessionObj->zipcode          = null;
+  	$cartSessionObj->shippingValue    = 0;
+  	$cartSessionObj->discountCouponId = null;
+  	$cartSessionObj->discountCoupon   = null;
+  	$cartSessionObj->discountValue    = 0;
+  	$cartSessionObj->discountAttempts = 0;
+  	$cartSessionObj->paymethod        = null;
+  	$cartSessionObj->productItemList  = array();
+  	$cartSessionObj->createdAt        = time();
   	
   	$peopleObj = People::getCurrentPeople();
     
@@ -701,7 +737,7 @@ class storeActions extends sfActions
   	$cartSessionObj->products   = $products; // Produtos únicos
  	$cartSessionObj->itens      = $productItens;
  	$cartSessionObj->orderValue = $totalOrderValue;
- 	$cartSessionObj->totalValue = $totalOrderValue+$cartSessionObj->shippingValue;
+ 	$cartSessionObj->totalValue = $totalOrderValue+$cartSessionObj->shippingValue-$cartSessionObj->discountValue;
 	 	
   	$cartSessionObj = serialize($cartSessionObj);
   	$cartSessionObj = base64_encode($cartSessionObj);

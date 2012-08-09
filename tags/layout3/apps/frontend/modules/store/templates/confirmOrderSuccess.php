@@ -15,8 +15,8 @@
 	<div class="storeCartResume">
 	
 		<h3>Nome/Endereço</h3>
-		<div class="ml30 mt15 textB customerAddress"><?php echo $peopleObj->getName() ?></div>
-		<div class="ml30 mt5 customerAddress">
+		<div class="ml30 mt20 textB addressInfo"><?php echo $peopleObj->getName() ?></div>
+		<div class="ml30 mt5 addressInfo">
 			<?php
 				$addressComplement = ($addressComplement?' '.$addressComplement:'');
 				echo "$addressName, $addressNumber{$addressComplement}<br/>$addressQuarter<br>$addressCity, $addressState<br/>$addressZipcode";
@@ -37,7 +37,8 @@
 		  <?php
 		  	$shippingValue   = $cartSessionObj->shippingValue;
 		  	$zipcode         = $cartSessionObj->zipcode;
-		  	$totalOrderValue = $shippingValue;
+		  	$discountValue   = $cartSessionObj->discountValue;
+		  	$totalOrderValue = $shippingValue-$discountValue;
 		  	
 		  	$class = ((count($productItemList)%2==0)?'odd':'even');
 		  	foreach($productItemList as $productItemId=>$productItem):
@@ -85,6 +86,13 @@
 		    <th class="textR pr10">FRETE</th>
 		    <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($shippingValue, true) ?></th>
 		  </tr>
+		  <tr class="footer discount">
+		    <th class="textC"></th>
+		    <th class="textC"></th>
+		    <th class="textC"></th>
+		    <th class="textR pr10">Desconto</th>
+		    <th class="textR" id="storeCartDiscountValue">R$ <?php echo Util::formatFloat($discountValue, true) ?></th>
+		  </tr>
 		  <tr class="footer total">
 		    <th class="textC"></th>
 		    <th class="textR pr10" colspan="2">TOTAL DO PEDIDO</th>
@@ -97,7 +105,11 @@
 		
 	
 		<h3 class="mt30">Forma de pagamento</h3>
+<<<<<<< .mine
+		<div class="ml30 mt20 mb30">
+=======
 		<div class="pl30 mb10 mt20">
+>>>>>>> .r508
 			<?php if( $cartSessionObj->paymethod=='billet' ): ?><label for="paymethodBillet"><?php echo image_tag('store/boleto', array('class'=>'mr10', 'align'=>'absmiddle')) ?> Boleto bancário</label><?php endif; ?>
 			<?php if( $cartSessionObj->paymethod=='pagseguro' ): ?><label for="paymethodPagseguro"><?php echo image_tag('store/pagseguro', array('class'=>'mr10', 'align'=>'absmiddle')) ?> Pagseguro</label><?php endif; ?>
 		</div>
@@ -107,4 +119,6 @@
 		<?php echo link_to(image_tag('store/finish', array('class'=>'ml10')), '#confirmOrder()') ?>
 	</div>
 
-<div class="clear mt200"></div>
+<<<<<<< .mine
+<div class="clear mt50"></div>=======
+<div class="clear mt200"></div>>>>>>>> .r508

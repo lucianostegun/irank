@@ -1025,7 +1025,10 @@ class Util {
 		foreach($webserviceQuery as $key => $value)
 		    $webserviceUrl .= $key.'='.urlencode($value).'&';
 		
-		$result = file_get_contents($webserviceUrl);
+		$result = @file_get_contents($webserviceUrl);
+		
+		if( !$result )
+			throw new Exception('addressConnectionError');
 		
 		if( $jsonDecode )
 			$result = json_decode($result);

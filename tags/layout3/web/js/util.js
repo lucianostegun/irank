@@ -208,7 +208,7 @@ function toFloat(value, display, decimalPlaces){
 	
 	var separator = (i18n_culture=='pt_BR'?',':'.');
 	
-	if( (/^[0-9]+\.[0-9]{1,2} $/).test(value) )		
+	if( (/^-?[0-9]+\.[0-9]{1,2} $/).test(value) )		
 		value = value.replace('.', ',');
 	
 	if( (/^[0-9]+[,\.][0-9]{3,} $/).test(value) ){

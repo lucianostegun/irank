@@ -1383,7 +1383,9 @@
 		<column name="order_value" type="NUMERIC" size="10" scale="2" default="0" />
 		<column name="products" type="INTEGER" default="0" />
 		<column name="itens" type="INTEGER" default="0" />
+		<column name="discount_coupon_id" type="INTEGER" />
 		<column name="shipping_value" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="discount_value" type="NUMERIC" size="10" scale="2" default="0" />
 		<column name="total_value" type="NUMERIC" size="10" scale="2" default="0" />
 		<column name="paymethod" type="VARCHAR" size="20" />
 		<column name="ip_address" type="VARCHAR" />
@@ -1408,6 +1410,9 @@
 		</foreign-key>
 		<foreign-key foreignTable="file">
 			<reference local="file_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="discount_coupon">
+			<reference local="discount_coupon_id" foreign="id"/>
 		</foreign-key>
 	</table>
 

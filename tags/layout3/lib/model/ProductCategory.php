@@ -19,9 +19,11 @@ class ProductCategory extends BaseProductCategory
 		
 		$categoryName = $request->getParameter('categoryName');
 		$shortName    = $request->getParameter('shortName');
+		$tagName      = $request->getParameter('tagName');
 		
 		$this->setCategoryName( $categoryName );
 		$this->setShortName( $shortName );
+		$this->setTagName( $tagName );
 		$this->setVisible( true );
 		$this->setEnabled( true );
 		$this->save();

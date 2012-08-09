@@ -1,32 +1,3 @@
-CREATE OR REPLACE FUNCTION get_product_sizes(productId INTEGER) RETURNS VARCHAR AS '
-DECLARE
-    sizeList VARCHAR;
-BEGIN
-    
-    SELECT
-        string_agg(option_name, '', '') INTO sizeList
-    FROM
-        (SELECT
-            option_name
-        FROM
-            product_option
-            INNER JOIN product_item ON product_item.PRODUCT_OPTION_ID_SIZE = product_option.ID
-        WHERE
-            option_type = ''size''
-            AND product_item.PRODUCT_ID = productId
-        GROUP BY
-            product_option.OPTION_NAME,
-            product_option.ORDER_SEQ,
-            product_option.ID
-        ORDER BY
-            product_option.ORDER_SEQ,
-            product_option.ID) AS t1;
-    
-    RETURN sizeList;
-END'
-LANGUAGE 'plpgsql';
-
-
 CREATE OR REPLACE FUNCTION get_pending_purchases(userSiteId INTEGER) RETURNS INTEGER AS '
 DECLARE
     pendingPurchases INTEGER;

@@ -14,7 +14,10 @@
   		
   	$totalValue    = $cartSessionObj->totalValue;
   	$shippingValue = $cartSessionObj->shippingValue;
-  	$orderValue    = $totalValue-$shippingValue;
+  	$discountValue = $cartSessionObj->discountValue;
+  	$orderValue    = $cartSessionObj->orderValue;
+  	
+  	$discountValue *= -1;
 ?>
 <div class="cartResume">
 	<div class="cartIcon"><?php echo image_tag('store/basket') ?></div>
@@ -26,6 +29,7 @@
 	<div class="clear mt5"></div>
 	<label>Subtotal:</label>R$ <span id="storeCartSideBarOrderValue"><?php echo Util::formatFloat($orderValue, true) ?></span><br/>
 	<label>Frete:</label>R$ <span id="storeCartSideBarShippingValue"><?php echo Util::formatFloat($shippingValue, true) ?></span><br/>
+	<label>Desconto:</label>R$ <span id="storeCartSideBarDiscountValue"><?php echo Util::formatFloat($discountValue, true) ?></span><br/>
 	<label>Total:</label>R$ <span id="storeCartSideBarTotalValue"><?php echo Util::formatFloat($totalValue, true) ?></span>
 </div>
 <div class="clear"></div>

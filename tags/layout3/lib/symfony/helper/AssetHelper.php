@@ -367,15 +367,21 @@ function include_metas()
 function include_facebook_metas($facbookMetaList)
 {
 	
-	if( !array_key_exists('image', $facbookMetaList) )
-		$facbookMetaList['image'] = 'http://'.MyTools::getRequest()->getHost().'/images/layout/mediaLogo.png';
-	else
-		$facbookMetaList['image2'] = 'http://'.MyTools::getRequest()->getHost().'/images/layout/mediaLogo.png';
+	$host = MyTools::getRequest()->getHost();
 	
-	$facbookMetaList['url'] = 'http://www.irank.com.br';
+	if( !isset($facbookMetaList['image']) )
+		$facbookMetaList['image'] = "http://$host/images/layout/mediaLogo.png";
+	else
+		$facbookMetaList['image2'] = "http://$host/images/layout/mediaLogo.png";
+	
+	if( !isset($facbookMetaList['url']) )
+		$facbookMetaList['url'] = 'http://www.irank.com.br';
 
-	foreach($facbookMetaList as $property=>$content)
+	foreach($facbookMetaList as $property=>$content){
+		
+		$content = str_replace('[host]', $host, $content);
 		echo "<meta property=\"og:$property\" content=\"$content\" />\n";
+	}
 }
 
 /**

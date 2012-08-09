@@ -13,7 +13,7 @@ abstract class BasePurchasePeer {
 	const CLASS_DEFAULT = 'lib.model.Purchase';
 
 	
-	const NUM_COLUMNS = 30;
+	const NUM_COLUMNS = 32;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -50,7 +50,13 @@ abstract class BasePurchasePeer {
 	const ITENS = 'purchase.ITENS';
 
 	
+	const DISCOUNT_COUPON_ID = 'purchase.DISCOUNT_COUPON_ID';
+
+	
 	const SHIPPING_VALUE = 'purchase.SHIPPING_VALUE';
+
+	
+	const DISCOUNT_VALUE = 'purchase.DISCOUNT_VALUE';
 
 	
 	const TOTAL_VALUE = 'purchase.TOTAL_VALUE';
@@ -115,19 +121,19 @@ abstract class BasePurchasePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'UserSiteId', 'FileId', 'PagseguroUrl', 'OrderNumber', 'OrderStatus', 'HasNewStatus', 'OrderValue', 'Products', 'Itens', 'ShippingValue', 'TotalValue', 'Paymethod', 'IpAddress', 'Duration', 'ApprovalDate', 'RefusalDate', 'RefusalReason', 'ShippingDate', 'TracingCode', 'CustomerName', 'AddressName', 'AddressNumber', 'AddressQuarter', 'AddressComplement', 'AddressCity', 'AddressState', 'AddressZipcode', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (PurchasePeer::ID, PurchasePeer::USER_SITE_ID, PurchasePeer::FILE_ID, PurchasePeer::PAGSEGURO_URL, PurchasePeer::ORDER_NUMBER, PurchasePeer::ORDER_STATUS, PurchasePeer::HAS_NEW_STATUS, PurchasePeer::ORDER_VALUE, PurchasePeer::PRODUCTS, PurchasePeer::ITENS, PurchasePeer::SHIPPING_VALUE, PurchasePeer::TOTAL_VALUE, PurchasePeer::PAYMETHOD, PurchasePeer::IP_ADDRESS, PurchasePeer::DURATION, PurchasePeer::APPROVAL_DATE, PurchasePeer::REFUSAL_DATE, PurchasePeer::REFUSAL_REASON, PurchasePeer::SHIPPING_DATE, PurchasePeer::TRACING_CODE, PurchasePeer::CUSTOMER_NAME, PurchasePeer::ADDRESS_NAME, PurchasePeer::ADDRESS_NUMBER, PurchasePeer::ADDRESS_QUARTER, PurchasePeer::ADDRESS_COMPLEMENT, PurchasePeer::ADDRESS_CITY, PurchasePeer::ADDRESS_STATE, PurchasePeer::ADDRESS_ZIPCODE, PurchasePeer::CREATED_AT, PurchasePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'user_site_id', 'file_id', 'pagseguro_url', 'order_number', 'order_status', 'has_new_status', 'order_value', 'products', 'itens', 'shipping_value', 'total_value', 'paymethod', 'ip_address', 'duration', 'approval_date', 'refusal_date', 'refusal_reason', 'shipping_date', 'tracing_code', 'customer_name', 'address_name', 'address_number', 'address_quarter', 'address_complement', 'address_city', 'address_state', 'address_zipcode', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'USER_SITE_ID'=>'', 'FILE_ID'=>'', 'PAGSEGURO_URL'=>'', 'ORDER_NUMBER'=>'', 'ORDER_STATUS'=>'', 'HAS_NEW_STATUS'=>'', 'ORDER_VALUE'=>'', 'PRODUCTS'=>'', 'ITENS'=>'', 'SHIPPING_VALUE'=>'', 'TOTAL_VALUE'=>'', 'PAYMETHOD'=>'', 'IP_ADDRESS'=>'', 'DURATION'=>'', 'APPROVAL_DATE'=>'', 'REFUSAL_DATE'=>'', 'REFUSAL_REASON'=>'', 'SHIPPING_DATE'=>'', 'TRACING_CODE'=>'', 'CUSTOMER_NAME'=>'', 'ADDRESS_NAME'=>'', 'ADDRESS_NUMBER'=>'', 'ADDRESS_QUARTER'=>'', 'ADDRESS_COMPLEMENT'=>'', 'ADDRESS_CITY'=>'', 'ADDRESS_STATE'=>'', 'ADDRESS_ZIPCODE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'UserSiteId', 'FileId', 'PagseguroUrl', 'OrderNumber', 'OrderStatus', 'HasNewStatus', 'OrderValue', 'Products', 'Itens', 'DiscountCouponId', 'ShippingValue', 'DiscountValue', 'TotalValue', 'Paymethod', 'IpAddress', 'Duration', 'ApprovalDate', 'RefusalDate', 'RefusalReason', 'ShippingDate', 'TracingCode', 'CustomerName', 'AddressName', 'AddressNumber', 'AddressQuarter', 'AddressComplement', 'AddressCity', 'AddressState', 'AddressZipcode', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (PurchasePeer::ID, PurchasePeer::USER_SITE_ID, PurchasePeer::FILE_ID, PurchasePeer::PAGSEGURO_URL, PurchasePeer::ORDER_NUMBER, PurchasePeer::ORDER_STATUS, PurchasePeer::HAS_NEW_STATUS, PurchasePeer::ORDER_VALUE, PurchasePeer::PRODUCTS, PurchasePeer::ITENS, PurchasePeer::DISCOUNT_COUPON_ID, PurchasePeer::SHIPPING_VALUE, PurchasePeer::DISCOUNT_VALUE, PurchasePeer::TOTAL_VALUE, PurchasePeer::PAYMETHOD, PurchasePeer::IP_ADDRESS, PurchasePeer::DURATION, PurchasePeer::APPROVAL_DATE, PurchasePeer::REFUSAL_DATE, PurchasePeer::REFUSAL_REASON, PurchasePeer::SHIPPING_DATE, PurchasePeer::TRACING_CODE, PurchasePeer::CUSTOMER_NAME, PurchasePeer::ADDRESS_NAME, PurchasePeer::ADDRESS_NUMBER, PurchasePeer::ADDRESS_QUARTER, PurchasePeer::ADDRESS_COMPLEMENT, PurchasePeer::ADDRESS_CITY, PurchasePeer::ADDRESS_STATE, PurchasePeer::ADDRESS_ZIPCODE, PurchasePeer::CREATED_AT, PurchasePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'user_site_id', 'file_id', 'pagseguro_url', 'order_number', 'order_status', 'has_new_status', 'order_value', 'products', 'itens', 'discount_coupon_id', 'shipping_value', 'discount_value', 'total_value', 'paymethod', 'ip_address', 'duration', 'approval_date', 'refusal_date', 'refusal_reason', 'shipping_date', 'tracing_code', 'customer_name', 'address_name', 'address_number', 'address_quarter', 'address_complement', 'address_city', 'address_state', 'address_zipcode', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'USER_SITE_ID'=>'', 'FILE_ID'=>'', 'PAGSEGURO_URL'=>'', 'ORDER_NUMBER'=>'', 'ORDER_STATUS'=>'', 'HAS_NEW_STATUS'=>'', 'ORDER_VALUE'=>'', 'PRODUCTS'=>'', 'ITENS'=>'', 'DISCOUNT_COUPON_ID'=>'', 'SHIPPING_VALUE'=>'', 'DISCOUNT_VALUE'=>'', 'TOTAL_VALUE'=>'', 'PAYMETHOD'=>'', 'IP_ADDRESS'=>'', 'DURATION'=>'', 'APPROVAL_DATE'=>'', 'REFUSAL_DATE'=>'', 'REFUSAL_REASON'=>'', 'SHIPPING_DATE'=>'', 'TRACING_CODE'=>'', 'CUSTOMER_NAME'=>'', 'ADDRESS_NAME'=>'', 'ADDRESS_NUMBER'=>'', 'ADDRESS_QUARTER'=>'', 'ADDRESS_COMPLEMENT'=>'', 'ADDRESS_CITY'=>'', 'ADDRESS_STATE'=>'', 'ADDRESS_ZIPCODE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'UserSiteId'=>1, 'FileId'=>2, 'PagseguroUrl'=>3, 'OrderNumber'=>4, 'OrderStatus'=>5, 'HasNewStatus'=>6, 'OrderValue'=>7, 'Products'=>8, 'Itens'=>9, 'ShippingValue'=>10, 'TotalValue'=>11, 'Paymethod'=>12, 'IpAddress'=>13, 'Duration'=>14, 'ApprovalDate'=>15, 'RefusalDate'=>16, 'RefusalReason'=>17, 'ShippingDate'=>18, 'TracingCode'=>19, 'CustomerName'=>20, 'AddressName'=>21, 'AddressNumber'=>22, 'AddressQuarter'=>23, 'AddressComplement'=>24, 'AddressCity'=>25, 'AddressState'=>26, 'AddressZipcode'=>27, 'CreatedAt'=>28, 'UpdatedAt'=>29, ),
-		BasePeer::TYPE_COLNAME=>array (PurchasePeer::ID=>0, PurchasePeer::USER_SITE_ID=>1, PurchasePeer::FILE_ID=>2, PurchasePeer::PAGSEGURO_URL=>3, PurchasePeer::ORDER_NUMBER=>4, PurchasePeer::ORDER_STATUS=>5, PurchasePeer::HAS_NEW_STATUS=>6, PurchasePeer::ORDER_VALUE=>7, PurchasePeer::PRODUCTS=>8, PurchasePeer::ITENS=>9, PurchasePeer::SHIPPING_VALUE=>10, PurchasePeer::TOTAL_VALUE=>11, PurchasePeer::PAYMETHOD=>12, PurchasePeer::IP_ADDRESS=>13, PurchasePeer::DURATION=>14, PurchasePeer::APPROVAL_DATE=>15, PurchasePeer::REFUSAL_DATE=>16, PurchasePeer::REFUSAL_REASON=>17, PurchasePeer::SHIPPING_DATE=>18, PurchasePeer::TRACING_CODE=>19, PurchasePeer::CUSTOMER_NAME=>20, PurchasePeer::ADDRESS_NAME=>21, PurchasePeer::ADDRESS_NUMBER=>22, PurchasePeer::ADDRESS_QUARTER=>23, PurchasePeer::ADDRESS_COMPLEMENT=>24, PurchasePeer::ADDRESS_CITY=>25, PurchasePeer::ADDRESS_STATE=>26, PurchasePeer::ADDRESS_ZIPCODE=>27, PurchasePeer::CREATED_AT=>28, PurchasePeer::UPDATED_AT=>29, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'user_site_id'=>1, 'file_id'=>2, 'pagseguro_url'=>3, 'order_number'=>4, 'order_status'=>5, 'has_new_status'=>6, 'order_value'=>7, 'products'=>8, 'itens'=>9, 'shipping_value'=>10, 'total_value'=>11, 'paymethod'=>12, 'ip_address'=>13, 'duration'=>14, 'approval_date'=>15, 'refusal_date'=>16, 'refusal_reason'=>17, 'shipping_date'=>18, 'tracing_code'=>19, 'customer_name'=>20, 'address_name'=>21, 'address_number'=>22, 'address_quarter'=>23, 'address_complement'=>24, 'address_city'=>25, 'address_state'=>26, 'address_zipcode'=>27, 'created_at'=>28, 'updated_at'=>29, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'UserSiteId'=>1, 'FileId'=>2, 'PagseguroUrl'=>3, 'OrderNumber'=>4, 'OrderStatus'=>5, 'HasNewStatus'=>6, 'OrderValue'=>7, 'Products'=>8, 'Itens'=>9, 'DiscountCouponId'=>10, 'ShippingValue'=>11, 'DiscountValue'=>12, 'TotalValue'=>13, 'Paymethod'=>14, 'IpAddress'=>15, 'Duration'=>16, 'ApprovalDate'=>17, 'RefusalDate'=>18, 'RefusalReason'=>19, 'ShippingDate'=>20, 'TracingCode'=>21, 'CustomerName'=>22, 'AddressName'=>23, 'AddressNumber'=>24, 'AddressQuarter'=>25, 'AddressComplement'=>26, 'AddressCity'=>27, 'AddressState'=>28, 'AddressZipcode'=>29, 'CreatedAt'=>30, 'UpdatedAt'=>31, ),
+		BasePeer::TYPE_COLNAME=>array (PurchasePeer::ID=>0, PurchasePeer::USER_SITE_ID=>1, PurchasePeer::FILE_ID=>2, PurchasePeer::PAGSEGURO_URL=>3, PurchasePeer::ORDER_NUMBER=>4, PurchasePeer::ORDER_STATUS=>5, PurchasePeer::HAS_NEW_STATUS=>6, PurchasePeer::ORDER_VALUE=>7, PurchasePeer::PRODUCTS=>8, PurchasePeer::ITENS=>9, PurchasePeer::DISCOUNT_COUPON_ID=>10, PurchasePeer::SHIPPING_VALUE=>11, PurchasePeer::DISCOUNT_VALUE=>12, PurchasePeer::TOTAL_VALUE=>13, PurchasePeer::PAYMETHOD=>14, PurchasePeer::IP_ADDRESS=>15, PurchasePeer::DURATION=>16, PurchasePeer::APPROVAL_DATE=>17, PurchasePeer::REFUSAL_DATE=>18, PurchasePeer::REFUSAL_REASON=>19, PurchasePeer::SHIPPING_DATE=>20, PurchasePeer::TRACING_CODE=>21, PurchasePeer::CUSTOMER_NAME=>22, PurchasePeer::ADDRESS_NAME=>23, PurchasePeer::ADDRESS_NUMBER=>24, PurchasePeer::ADDRESS_QUARTER=>25, PurchasePeer::ADDRESS_COMPLEMENT=>26, PurchasePeer::ADDRESS_CITY=>27, PurchasePeer::ADDRESS_STATE=>28, PurchasePeer::ADDRESS_ZIPCODE=>29, PurchasePeer::CREATED_AT=>30, PurchasePeer::UPDATED_AT=>31, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'user_site_id'=>1, 'file_id'=>2, 'pagseguro_url'=>3, 'order_number'=>4, 'order_status'=>5, 'has_new_status'=>6, 'order_value'=>7, 'products'=>8, 'itens'=>9, 'discount_coupon_id'=>10, 'shipping_value'=>11, 'discount_value'=>12, 'total_value'=>13, 'paymethod'=>14, 'ip_address'=>15, 'duration'=>16, 'approval_date'=>17, 'refusal_date'=>18, 'refusal_reason'=>19, 'shipping_date'=>20, 'tracing_code'=>21, 'customer_name'=>22, 'address_name'=>23, 'address_number'=>24, 'address_quarter'=>25, 'address_complement'=>26, 'address_city'=>27, 'address_state'=>28, 'address_zipcode'=>29, 'created_at'=>30, 'updated_at'=>31, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, )
 	);
 
 	
@@ -201,7 +207,11 @@ abstract class BasePurchasePeer {
 
 		$criteria->addSelectColumn(PurchasePeer::ITENS);
 
+		$criteria->addSelectColumn(PurchasePeer::DISCOUNT_COUPON_ID);
+
 		$criteria->addSelectColumn(PurchasePeer::SHIPPING_VALUE);
+
+		$criteria->addSelectColumn(PurchasePeer::DISCOUNT_VALUE);
 
 		$criteria->addSelectColumn(PurchasePeer::TOTAL_VALUE);
 
@@ -376,6 +386,34 @@ abstract class BasePurchasePeer {
 
 
 	
+	public static function doCountJoinDiscountCoupon(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(PurchasePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(PurchasePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(PurchasePeer::DISCOUNT_COUPON_ID, DiscountCouponPeer::ID);
+
+		$rs = PurchasePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
 	public static function doSelectJoinUserSite(Criteria $c, $con = null)
 	{
 		$c = clone $c;
@@ -470,6 +508,53 @@ abstract class BasePurchasePeer {
 
 
 	
+	public static function doSelectJoinDiscountCoupon(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		PurchasePeer::addSelectColumns($c);
+		$startcol = (PurchasePeer::NUM_COLUMNS - PurchasePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		DiscountCouponPeer::addSelectColumns($c);
+
+		$c->addJoin(PurchasePeer::DISCOUNT_COUPON_ID, DiscountCouponPeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = PurchasePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = DiscountCouponPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getDiscountCoupon(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addPurchase($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initPurchaseList();
+				$obj2->addPurchase($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
 	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
 	{
 		$criteria = clone $criteria;
@@ -489,6 +574,8 @@ abstract class BasePurchasePeer {
 		$criteria->addJoin(PurchasePeer::USER_SITE_ID, UserSitePeer::ID);
 
 		$criteria->addJoin(PurchasePeer::FILE_ID, FilePeer::ID);
+
+		$criteria->addJoin(PurchasePeer::DISCOUNT_COUPON_ID, DiscountCouponPeer::ID);
 
 		$rs = PurchasePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -517,9 +604,14 @@ abstract class BasePurchasePeer {
 		FilePeer::addSelectColumns($c);
 		$startcol4 = $startcol3 + FilePeer::NUM_COLUMNS;
 
+		DiscountCouponPeer::addSelectColumns($c);
+		$startcol5 = $startcol4 + DiscountCouponPeer::NUM_COLUMNS;
+
 		$c->addJoin(PurchasePeer::USER_SITE_ID, UserSitePeer::ID);
 
 		$c->addJoin(PurchasePeer::FILE_ID, FilePeer::ID);
+
+		$c->addJoin(PurchasePeer::DISCOUNT_COUPON_ID, DiscountCouponPeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -579,6 +671,29 @@ abstract class BasePurchasePeer {
 				$obj3->addPurchase($obj1);
 			}
 
+
+					
+			$omClass = DiscountCouponPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj4 = new $cls();
+			$obj4->hydrate($rs, $startcol4);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj4 = $temp_obj1->getDiscountCoupon(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj4->addPurchase($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj4->initPurchaseList();
+				$obj4->addPurchase($obj1);
+			}
+
 			$results[] = $obj1;
 		}
 		return $results;
@@ -603,6 +718,8 @@ abstract class BasePurchasePeer {
 		}
 
 		$criteria->addJoin(PurchasePeer::FILE_ID, FilePeer::ID);
+
+		$criteria->addJoin(PurchasePeer::DISCOUNT_COUPON_ID, DiscountCouponPeer::ID);
 
 		$rs = PurchasePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -632,6 +749,38 @@ abstract class BasePurchasePeer {
 
 		$criteria->addJoin(PurchasePeer::USER_SITE_ID, UserSitePeer::ID);
 
+		$criteria->addJoin(PurchasePeer::DISCOUNT_COUPON_ID, DiscountCouponPeer::ID);
+
+		$rs = PurchasePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doCountJoinAllExceptDiscountCoupon(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(PurchasePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(PurchasePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(PurchasePeer::USER_SITE_ID, UserSitePeer::ID);
+
+		$criteria->addJoin(PurchasePeer::FILE_ID, FilePeer::ID);
+
 		$rs = PurchasePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
@@ -656,7 +805,12 @@ abstract class BasePurchasePeer {
 		FilePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + FilePeer::NUM_COLUMNS;
 
+		DiscountCouponPeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + DiscountCouponPeer::NUM_COLUMNS;
+
 		$c->addJoin(PurchasePeer::FILE_ID, FilePeer::ID);
+
+		$c->addJoin(PurchasePeer::DISCOUNT_COUPON_ID, DiscountCouponPeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -692,6 +846,28 @@ abstract class BasePurchasePeer {
 				$obj2->addPurchase($obj1);
 			}
 
+			$omClass = DiscountCouponPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getDiscountCoupon(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addPurchase($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initPurchaseList();
+				$obj3->addPurchase($obj1);
+			}
+
 			$results[] = $obj1;
 		}
 		return $results;
@@ -713,7 +889,12 @@ abstract class BasePurchasePeer {
 		UserSitePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + UserSitePeer::NUM_COLUMNS;
 
+		DiscountCouponPeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + DiscountCouponPeer::NUM_COLUMNS;
+
 		$c->addJoin(PurchasePeer::USER_SITE_ID, UserSitePeer::ID);
+
+		$c->addJoin(PurchasePeer::DISCOUNT_COUPON_ID, DiscountCouponPeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -747,6 +928,112 @@ abstract class BasePurchasePeer {
 			if ($newObject) {
 				$obj2->initPurchaseList();
 				$obj2->addPurchase($obj1);
+			}
+
+			$omClass = DiscountCouponPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getDiscountCoupon(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addPurchase($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initPurchaseList();
+				$obj3->addPurchase($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptDiscountCoupon(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		PurchasePeer::addSelectColumns($c);
+		$startcol2 = (PurchasePeer::NUM_COLUMNS - PurchasePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		UserSitePeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + UserSitePeer::NUM_COLUMNS;
+
+		FilePeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + FilePeer::NUM_COLUMNS;
+
+		$c->addJoin(PurchasePeer::USER_SITE_ID, UserSitePeer::ID);
+
+		$c->addJoin(PurchasePeer::FILE_ID, FilePeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = PurchasePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = UserSitePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getUserSite(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addPurchase($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initPurchaseList();
+				$obj2->addPurchase($obj1);
+			}
+
+			$omClass = FilePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getFile(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addPurchase($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initPurchaseList();
+				$obj3->addPurchase($obj1);
 			}
 
 			$results[] = $obj1;

@@ -70,11 +70,13 @@
 					<li>Data/Hora:</li>
 					<li>Total dos pedidos:</li>
 					<li>Frete</li>
+					<li>Desconto</li>
 				</ul>
 				<ul class="rightList">
 					<li><strong><?php echo Util::getWeekDay($purchaseObj->getCreatedAt('w')).', '.$purchaseObj->getCreatedAt('d/m/Y') ?></strong> |  <?php echo $purchaseObj->getCreatedAt('H:i') ?></li>
 					<li><strong class="green">R$ <?php echo Util::formatFloat($purchaseObj->getOrderValue(), true) ?></strong></li>
 					<li><strong class="orange">R$ <?php echo Util::formatFloat($purchaseObj->getShippingValue(), true) ?></strong></li>
+					<li><strong class="orange">R$ <?php echo Util::formatFloat($purchaseObj->getDiscountValue()*-1, true) ?></strong></li>
 				</ul>
 				<div class="clear"></div>
 			</div>

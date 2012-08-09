@@ -88,6 +88,9 @@ class Purchase extends BasePurchase
 
 		if( !$this->getOrderNumber() )
 			throw new PurchaseException('Ocorreu um erro ao gerar o número do pedido');
+		
+		if( !$this->getDiscountCoupon()->validateCoupon() )
+			throw new PurchaseException('O cupom de desconto não é mais válido');
 	}
 	
 	public function notify($purchaseStatusLogId=null){
@@ -466,7 +469,6 @@ class Purchase extends BasePurchase
 			
 			$con->rollback();
 		}
-		
 	}
 }
 

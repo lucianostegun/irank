@@ -28,8 +28,10 @@
 		  	$shippingValue   = $cartSessionObj->shippingValue;
 		  	$zipcode         = $cartSessionObj->zipcode;
 		  	$discountCoupon  = $cartSessionObj->discountCoupon;
-		  	$discountValue   = $cartSessionObj->discountValue*-1;
+		  	$discountValue   = $cartSessionObj->discountValue;
 		  	$totalOrderValue = $shippingValue-$discountValue;
+		  	
+		  	$discountValue *= -1;
 		  	
 		  	$class = ((count($productItemList)%2==0)?'odd':'even');
 		  	foreach($productItemList as $productItemId=>$productItem):
@@ -96,7 +98,7 @@
 		    <th class="textR pr10">Cupom de desconto</th>
 		    <th class="textL"><?php echo input_tag('discountCoupon', $discountCoupon, array('size'=>10, 'maxlength'=>10, 'class'=>'textC', 'id'=>'storeCartDiscountCoupon')) ?></th>
 		    <th class="textL"><?php echo link_to('Calcular desconto', '#doCalculateDiscount()') ?></th>
-		    <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($discountValue, true) ?></th>
+		    <th class="textR" id="storeCartDiscountValue">R$ <?php echo Util::formatFloat($discountValue, true) ?></th>
 		    <th></th>
 		  </tr>
 		  <?php endif; ?>

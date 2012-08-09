@@ -67,6 +67,7 @@ function updateCartItem(cartSessionObj, productItemId){
 
 	$('storeCartSideBarOrderValue').innerHTML    = toCurrency(cartSessionObj.totalValue-cartSessionObj.shippingValue);
 	$('storeCartSideBarShippingValue').innerHTML = toCurrency(cartSessionObj.shippingValue);
+	$('storeCartSideBarDiscountValue').innerHTML = toCurrency(cartSessionObj.discountValue);
 	$('storeCartSideBarTotalValue').innerHTML    = toCurrency(cartSessionObj.totalValue);
 }
 
@@ -153,6 +154,41 @@ function doCalculateShipping(){
 	var zipcode = $('storeCartZipcode').value;
 	
 	var urlAjax = _webRoot+'/store/calculateShipping/zipcode/'+zipcode;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
+}
+
+function doCalculateDiscount(){
+	
+	showIndicator();
+	
+	var successFunc = function(t){
+		
+		var content        = t.responseText;
+		var cartSessionObj = parseInfo(content);
+		
+		var discountValue = cartSessionObj.discountValue*-1;
+		var totalValue    = cartSessionObj.totalValue*1;
+		
+		$('storeCartDiscountValue').innerHTML = 'R$ '+toCurrency(discountValue);
+		$('storeCartTotalValue').innerHTML    = 'R$ '+toCurrency(totalValue);
+		
+		$('storeCartSideBarDiscountValue').innerHTML = toCurrency(discountValue);
+		$('storeCartSideBarTotalValue').innerHTML    = toCurrency(totalValue);
+		
+		hideIndicator();
+	};
+	
+	var failureFunc = function(t){
+		
+		var content = t.responseText;
+		hideIndicator();
+		
+		alert('ATENÇÃO!\n\nOcorreu um erro ao calcular o valor do desconto!');
+	};
+	
+	var discountCoupon = $('storeCartDiscountCoupon').value;
+	
+	var urlAjax = _webRoot+'/store/calculateDiscount/discountCoupon/'+discountCoupon;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
 }
 

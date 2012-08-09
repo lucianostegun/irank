@@ -7,3 +7,10 @@ fields:
   shortName:
     required:
       msg:       form.error.requiredField
+
+  tagName:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [ProductCategoryPeer, uniqueTagName]
+      invalid_error: Esta Tag já está sendo usada por outro registro

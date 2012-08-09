@@ -52,6 +52,12 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
+	protected $collPurchaseList;
+
+	
+	protected $lastPurchaseCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -409,6 +415,14 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collPurchaseList !== null) {
+				foreach($this->collPurchaseList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -449,6 +463,14 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collPurchaseList !== null) {
+					foreach($this->collPurchaseList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -657,6 +679,15 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 		$copyObj->setUpdatedAt($this->updated_at);
 
 
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach($this->getPurchaseList() as $relObj) {
+				$copyObj->addPurchase($relObj->copy($deepCopy));
+			}
+
+		} 
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); 
@@ -678,6 +709,146 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 			self::$peer = new DiscountCouponPeer();
 		}
 		return self::$peer;
+	}
+
+	
+	public function initPurchaseList()
+	{
+		if ($this->collPurchaseList === null) {
+			$this->collPurchaseList = array();
+		}
+	}
+
+	
+	public function getPurchaseList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchasePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPurchaseList === null) {
+			if ($this->isNew()) {
+			   $this->collPurchaseList = array();
+			} else {
+
+				$criteria->add(PurchasePeer::DISCOUNT_COUPON_ID, $this->getId());
+
+				PurchasePeer::addSelectColumns($criteria);
+				$this->collPurchaseList = PurchasePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(PurchasePeer::DISCOUNT_COUPON_ID, $this->getId());
+
+				PurchasePeer::addSelectColumns($criteria);
+				if (!isset($this->lastPurchaseCriteria) || !$this->lastPurchaseCriteria->equals($criteria)) {
+					$this->collPurchaseList = PurchasePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastPurchaseCriteria = $criteria;
+		return $this->collPurchaseList;
+	}
+
+	
+	public function countPurchaseList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchasePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(PurchasePeer::DISCOUNT_COUPON_ID, $this->getId());
+
+		return PurchasePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addPurchase(Purchase $l)
+	{
+		$this->collPurchaseList[] = $l;
+		$l->setDiscountCoupon($this);
+	}
+
+
+	
+	public function getPurchaseListJoinUserSite($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchasePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPurchaseList === null) {
+			if ($this->isNew()) {
+				$this->collPurchaseList = array();
+			} else {
+
+				$criteria->add(PurchasePeer::DISCOUNT_COUPON_ID, $this->getId());
+
+				$this->collPurchaseList = PurchasePeer::doSelectJoinUserSite($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(PurchasePeer::DISCOUNT_COUPON_ID, $this->getId());
+
+			if (!isset($this->lastPurchaseCriteria) || !$this->lastPurchaseCriteria->equals($criteria)) {
+				$this->collPurchaseList = PurchasePeer::doSelectJoinUserSite($criteria, $con);
+			}
+		}
+		$this->lastPurchaseCriteria = $criteria;
+
+		return $this->collPurchaseList;
+	}
+
+
+	
+	public function getPurchaseListJoinFile($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchasePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPurchaseList === null) {
+			if ($this->isNew()) {
+				$this->collPurchaseList = array();
+			} else {
+
+				$criteria->add(PurchasePeer::DISCOUNT_COUPON_ID, $this->getId());
+
+				$this->collPurchaseList = PurchasePeer::doSelectJoinFile($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(PurchasePeer::DISCOUNT_COUPON_ID, $this->getId());
+
+			if (!isset($this->lastPurchaseCriteria) || !$this->lastPurchaseCriteria->equals($criteria)) {
+				$this->collPurchaseList = PurchasePeer::doSelectJoinFile($criteria, $con);
+			}
+		}
+		$this->lastPurchaseCriteria = $criteria;
+
+		return $this->collPurchaseList;
 	}
 
 } 
