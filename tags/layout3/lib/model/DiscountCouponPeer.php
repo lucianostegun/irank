@@ -24,4 +24,19 @@ class DiscountCouponPeer extends BaseDiscountCouponPeer
 		
 		return DiscountCouponPeer::doSelectOne($criteria);
 	}
+	
+	public static function uniqueCode($couponCode){
+		
+		$discountCouponId = MyTools::getRequestParameter('discountCouponId');
+		
+		$criteria = new Criteria();
+		$criteria->add( DiscountCouponPeer::COUPON_CODE, $couponCode, Criteria::ILIKE );
+		$criteria->add( DiscountCouponPeer::ID, $discountCouponId, Criteria::NOT_EQUAL );
+		$criteria->add( DiscountCouponPeer::ENABLED, true );
+		$criteria->add( DiscountCouponPeer::VISIBLE, true );
+		$criteria->add( DiscountCouponPeer::DELETED, false );
+		$discountCouponObj = DiscountCouponPeer::doSelectOne($criteria);
+		
+		return !is_object($discountCouponObj);		
+	}
 }

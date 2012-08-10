@@ -13,7 +13,7 @@ abstract class BaseDiscountCouponPeer {
 	const CLASS_DEFAULT = 'lib.model.DiscountCoupon';
 
 	
-	const NUM_COLUMNS = 11;
+	const NUM_COLUMNS = 12;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -27,6 +27,9 @@ abstract class BaseDiscountCouponPeer {
 
 	
 	const DISCOUNT_RULE = 'discount_coupon.DISCOUNT_RULE';
+
+	
+	const PURCHASE_ID = 'discount_coupon.PURCHASE_ID';
 
 	
 	const IS_ACTIVE = 'discount_coupon.IS_ACTIVE';
@@ -58,19 +61,19 @@ abstract class BaseDiscountCouponPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'CouponCode', 'DiscountRule', 'IsActive', 'HasUsed', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (DiscountCouponPeer::ID, DiscountCouponPeer::COUPON_CODE, DiscountCouponPeer::DISCOUNT_RULE, DiscountCouponPeer::IS_ACTIVE, DiscountCouponPeer::HAS_USED, DiscountCouponPeer::ENABLED, DiscountCouponPeer::VISIBLE, DiscountCouponPeer::DELETED, DiscountCouponPeer::LOCKED, DiscountCouponPeer::CREATED_AT, DiscountCouponPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'coupon_code', 'discount_rule', 'is_active', 'has_used', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'COUPON_CODE'=>'', 'DISCOUNT_RULE'=>'', 'IS_ACTIVE'=>'', 'HAS_USED'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'CouponCode', 'DiscountRule', 'PurchaseId', 'IsActive', 'HasUsed', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (DiscountCouponPeer::ID, DiscountCouponPeer::COUPON_CODE, DiscountCouponPeer::DISCOUNT_RULE, DiscountCouponPeer::PURCHASE_ID, DiscountCouponPeer::IS_ACTIVE, DiscountCouponPeer::HAS_USED, DiscountCouponPeer::ENABLED, DiscountCouponPeer::VISIBLE, DiscountCouponPeer::DELETED, DiscountCouponPeer::LOCKED, DiscountCouponPeer::CREATED_AT, DiscountCouponPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'coupon_code', 'discount_rule', 'purchase_id', 'is_active', 'has_used', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'COUPON_CODE'=>'', 'DISCOUNT_RULE'=>'', 'PURCHASE_ID'=>'', 'IS_ACTIVE'=>'', 'HAS_USED'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'CouponCode'=>1, 'DiscountRule'=>2, 'IsActive'=>3, 'HasUsed'=>4, 'Enabled'=>5, 'Visible'=>6, 'Deleted'=>7, 'Locked'=>8, 'CreatedAt'=>9, 'UpdatedAt'=>10, ),
-		BasePeer::TYPE_COLNAME=>array (DiscountCouponPeer::ID=>0, DiscountCouponPeer::COUPON_CODE=>1, DiscountCouponPeer::DISCOUNT_RULE=>2, DiscountCouponPeer::IS_ACTIVE=>3, DiscountCouponPeer::HAS_USED=>4, DiscountCouponPeer::ENABLED=>5, DiscountCouponPeer::VISIBLE=>6, DiscountCouponPeer::DELETED=>7, DiscountCouponPeer::LOCKED=>8, DiscountCouponPeer::CREATED_AT=>9, DiscountCouponPeer::UPDATED_AT=>10, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'coupon_code'=>1, 'discount_rule'=>2, 'is_active'=>3, 'has_used'=>4, 'enabled'=>5, 'visible'=>6, 'deleted'=>7, 'locked'=>8, 'created_at'=>9, 'updated_at'=>10, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'CouponCode'=>1, 'DiscountRule'=>2, 'PurchaseId'=>3, 'IsActive'=>4, 'HasUsed'=>5, 'Enabled'=>6, 'Visible'=>7, 'Deleted'=>8, 'Locked'=>9, 'CreatedAt'=>10, 'UpdatedAt'=>11, ),
+		BasePeer::TYPE_COLNAME=>array (DiscountCouponPeer::ID=>0, DiscountCouponPeer::COUPON_CODE=>1, DiscountCouponPeer::DISCOUNT_RULE=>2, DiscountCouponPeer::PURCHASE_ID=>3, DiscountCouponPeer::IS_ACTIVE=>4, DiscountCouponPeer::HAS_USED=>5, DiscountCouponPeer::ENABLED=>6, DiscountCouponPeer::VISIBLE=>7, DiscountCouponPeer::DELETED=>8, DiscountCouponPeer::LOCKED=>9, DiscountCouponPeer::CREATED_AT=>10, DiscountCouponPeer::UPDATED_AT=>11, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'coupon_code'=>1, 'discount_rule'=>2, 'purchase_id'=>3, 'is_active'=>4, 'has_used'=>5, 'enabled'=>6, 'visible'=>7, 'deleted'=>8, 'locked'=>9, 'created_at'=>10, 'updated_at'=>11, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	
@@ -129,6 +132,8 @@ abstract class BaseDiscountCouponPeer {
 		$criteria->addSelectColumn(DiscountCouponPeer::COUPON_CODE);
 
 		$criteria->addSelectColumn(DiscountCouponPeer::DISCOUNT_RULE);
+
+		$criteria->addSelectColumn(DiscountCouponPeer::PURCHASE_ID);
 
 		$criteria->addSelectColumn(DiscountCouponPeer::IS_ACTIVE);
 
@@ -223,6 +228,167 @@ abstract class BaseDiscountCouponPeer {
 		}
 		return $results;
 	}
+
+	
+	public static function doCountJoinPurchase(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(DiscountCouponPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(DiscountCouponPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(DiscountCouponPeer::PURCHASE_ID, PurchasePeer::ID);
+
+		$rs = DiscountCouponPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doSelectJoinPurchase(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		DiscountCouponPeer::addSelectColumns($c);
+		$startcol = (DiscountCouponPeer::NUM_COLUMNS - DiscountCouponPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		PurchasePeer::addSelectColumns($c);
+
+		$c->addJoin(DiscountCouponPeer::PURCHASE_ID, PurchasePeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = DiscountCouponPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = PurchasePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getPurchase(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addDiscountCoupon($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initDiscountCouponList();
+				$obj2->addDiscountCoupon($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
+	{
+		$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(DiscountCouponPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(DiscountCouponPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(DiscountCouponPeer::PURCHASE_ID, PurchasePeer::ID);
+
+		$rs = DiscountCouponPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doSelectJoinAll(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		DiscountCouponPeer::addSelectColumns($c);
+		$startcol2 = (DiscountCouponPeer::NUM_COLUMNS - DiscountCouponPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		PurchasePeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + PurchasePeer::NUM_COLUMNS;
+
+		$c->addJoin(DiscountCouponPeer::PURCHASE_ID, PurchasePeer::ID);
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = DiscountCouponPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+
+					
+			$omClass = PurchasePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getPurchase(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addDiscountCoupon($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initDiscountCouponList();
+				$obj2->addDiscountCoupon($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
 	
 	public static function getTableMap()
 	{

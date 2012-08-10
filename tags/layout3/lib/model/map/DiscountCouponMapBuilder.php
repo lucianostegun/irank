@@ -40,6 +40,8 @@ class DiscountCouponMapBuilder {
 
 		$tMap->addColumn('DISCOUNT_RULE', 'DiscountRule', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addForeignKey('PURCHASE_ID', 'PurchaseId', 'int', CreoleTypes::INTEGER, 'purchase', 'ID', false, null);
+
 		$tMap->addColumn('IS_ACTIVE', 'IsActive', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('HAS_USED', 'HasUsed', 'boolean', CreoleTypes::BOOLEAN, false, null);

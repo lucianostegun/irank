@@ -35,6 +35,16 @@ class Purchase extends BasePurchase
 		Log::quickLogDelete('purchase', $this->getPrimaryKey());
 	}
 	
+	public function getCode(){
+		
+		$orderNumber = $this->getOrderNumber();
+		
+		if( $orderNumber )
+			$orderNumber = '#'.$orderNumber;
+		
+		return $orderNumber;
+	}
+	
 	public function quickSave($request){
 		
 		$orderStatus  = $request->getParameter('orderStatus');

@@ -17,7 +17,11 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 
 
 	
-	protected $discount_rule;
+	protected $discount_rule = '{}';
+
+
+	
+	protected $purchase_id;
 
 
 	
@@ -52,6 +56,9 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
+	protected $aPurchase;
+
+	
 	protected $collPurchaseList;
 
 	
@@ -82,6 +89,13 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 	{
 
 		return $this->discount_rule;
+	}
+
+	
+	public function getPurchaseId()
+	{
+
+		return $this->purchase_id;
 	}
 
 	
@@ -206,9 +220,27 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->discount_rule !== $v) {
+		if ($this->discount_rule !== $v || $v === '{}') {
 			$this->discount_rule = $v;
 			$this->modifiedColumns[] = DiscountCouponPeer::DISCOUNT_RULE;
+		}
+
+	} 
+	
+	public function setPurchaseId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->purchase_id !== $v) {
+			$this->purchase_id = $v;
+			$this->modifiedColumns[] = DiscountCouponPeer::PURCHASE_ID;
+		}
+
+		if ($this->aPurchase !== null && $this->aPurchase->getId() !== $v) {
+			$this->aPurchase = null;
 		}
 
 	} 
@@ -317,27 +349,29 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 
 			$this->discount_rule = $rs->getString($startcol + 2);
 
-			$this->is_active = $rs->getBoolean($startcol + 3);
+			$this->purchase_id = $rs->getInt($startcol + 3);
 
-			$this->has_used = $rs->getBoolean($startcol + 4);
+			$this->is_active = $rs->getBoolean($startcol + 4);
 
-			$this->enabled = $rs->getBoolean($startcol + 5);
+			$this->has_used = $rs->getBoolean($startcol + 5);
 
-			$this->visible = $rs->getBoolean($startcol + 6);
+			$this->enabled = $rs->getBoolean($startcol + 6);
 
-			$this->deleted = $rs->getBoolean($startcol + 7);
+			$this->visible = $rs->getBoolean($startcol + 7);
 
-			$this->locked = $rs->getBoolean($startcol + 8);
+			$this->deleted = $rs->getBoolean($startcol + 8);
 
-			$this->created_at = $rs->getTimestamp($startcol + 9, null);
+			$this->locked = $rs->getBoolean($startcol + 9);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 10, null);
+			$this->created_at = $rs->getTimestamp($startcol + 10, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 11, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 11; 
+						return $startcol + 12; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating DiscountCoupon object", $e);
 		}
@@ -404,6 +438,15 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 			$this->alreadyInSave = true;
 
 
+												
+			if ($this->aPurchase !== null) {
+				if ($this->aPurchase->isModified()) {
+					$affectedRows += $this->aPurchase->save($con);
+				}
+				$this->setPurchase($this->aPurchase);
+			}
+
+
 						if ($this->isModified()) {
 				if ($this->isNew()) {
 					$pk = DiscountCouponPeer::doInsert($this, $con);
@@ -459,6 +502,14 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
+												
+			if ($this->aPurchase !== null) {
+				if (!$this->aPurchase->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aPurchase->getValidationFailures());
+				}
+			}
+
+
 			if (($retval = DiscountCouponPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
@@ -500,27 +551,30 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 				return $this->getDiscountRule();
 				break;
 			case 3:
-				return $this->getIsActive();
+				return $this->getPurchaseId();
 				break;
 			case 4:
-				return $this->getHasUsed();
+				return $this->getIsActive();
 				break;
 			case 5:
-				return $this->getEnabled();
+				return $this->getHasUsed();
 				break;
 			case 6:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 7:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 8:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 9:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 10:
+				return $this->getCreatedAt();
+				break;
+			case 11:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -536,14 +590,15 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getCouponCode(),
 			$keys[2]=>$this->getDiscountRule(),
-			$keys[3]=>$this->getIsActive(),
-			$keys[4]=>$this->getHasUsed(),
-			$keys[5]=>$this->getEnabled(),
-			$keys[6]=>$this->getVisible(),
-			$keys[7]=>$this->getDeleted(),
-			$keys[8]=>$this->getLocked(),
-			$keys[9]=>$this->getCreatedAt(),
-			$keys[10]=>$this->getUpdatedAt(),
+			$keys[3]=>$this->getPurchaseId(),
+			$keys[4]=>$this->getIsActive(),
+			$keys[5]=>$this->getHasUsed(),
+			$keys[6]=>$this->getEnabled(),
+			$keys[7]=>$this->getVisible(),
+			$keys[8]=>$this->getDeleted(),
+			$keys[9]=>$this->getLocked(),
+			$keys[10]=>$this->getCreatedAt(),
+			$keys[11]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -569,27 +624,30 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 				$this->setDiscountRule($value);
 				break;
 			case 3:
-				$this->setIsActive($value);
+				$this->setPurchaseId($value);
 				break;
 			case 4:
-				$this->setHasUsed($value);
+				$this->setIsActive($value);
 				break;
 			case 5:
-				$this->setEnabled($value);
+				$this->setHasUsed($value);
 				break;
 			case 6:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 7:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 8:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 9:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 10:
+				$this->setCreatedAt($value);
+				break;
+			case 11:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -602,14 +660,15 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setCouponCode($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setDiscountRule($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setIsActive($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setHasUsed($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setEnabled($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setVisible($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setDeleted($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setLocked($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[3], $arr)) $this->setPurchaseId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setIsActive($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setHasUsed($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEnabled($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setVisible($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setDeleted($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setLocked($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setUpdatedAt($arr[$keys[11]]);
 	}
 
 	
@@ -620,6 +679,7 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(DiscountCouponPeer::ID)) $criteria->add(DiscountCouponPeer::ID, $this->id);
 		if ($this->isColumnModified(DiscountCouponPeer::COUPON_CODE)) $criteria->add(DiscountCouponPeer::COUPON_CODE, $this->coupon_code);
 		if ($this->isColumnModified(DiscountCouponPeer::DISCOUNT_RULE)) $criteria->add(DiscountCouponPeer::DISCOUNT_RULE, $this->discount_rule);
+		if ($this->isColumnModified(DiscountCouponPeer::PURCHASE_ID)) $criteria->add(DiscountCouponPeer::PURCHASE_ID, $this->purchase_id);
 		if ($this->isColumnModified(DiscountCouponPeer::IS_ACTIVE)) $criteria->add(DiscountCouponPeer::IS_ACTIVE, $this->is_active);
 		if ($this->isColumnModified(DiscountCouponPeer::HAS_USED)) $criteria->add(DiscountCouponPeer::HAS_USED, $this->has_used);
 		if ($this->isColumnModified(DiscountCouponPeer::ENABLED)) $criteria->add(DiscountCouponPeer::ENABLED, $this->enabled);
@@ -661,6 +721,8 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 		$copyObj->setCouponCode($this->coupon_code);
 
 		$copyObj->setDiscountRule($this->discount_rule);
+
+		$copyObj->setPurchaseId($this->purchase_id);
 
 		$copyObj->setIsActive($this->is_active);
 
@@ -709,6 +771,35 @@ abstract class BaseDiscountCoupon extends BaseObject  implements Persistent {
 			self::$peer = new DiscountCouponPeer();
 		}
 		return self::$peer;
+	}
+
+	
+	public function setPurchase($v)
+	{
+
+
+		if ($v === null) {
+			$this->setPurchaseId(NULL);
+		} else {
+			$this->setPurchaseId($v->getId());
+		}
+
+
+		$this->aPurchase = $v;
+	}
+
+
+	
+	public function getPurchase($con = null)
+	{
+		if ($this->aPurchase === null && ($this->purchase_id !== null)) {
+						include_once 'lib/model/om/BasePurchasePeer.php';
+
+			$this->aPurchase = PurchasePeer::retrieveByPK($this->purchase_id, $con);
+
+			
+		}
+		return $this->aPurchase;
 	}
 
 	

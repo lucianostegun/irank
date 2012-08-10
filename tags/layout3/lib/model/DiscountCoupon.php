@@ -10,6 +10,90 @@
 class DiscountCoupon extends BaseDiscountCoupon
 {
 	
+	public function quickSave($request){
+		
+		$couponCode                  = $request->getParameter('couponCode');
+		$isActive                    = $request->getParameter('isActive');
+		$shippingPercent             = $request->getParameter('shippingPercent');
+		$shippingValue               = $request->getParameter('shippingValue');
+		$orderPercent                = $request->getParameter('orderPercent');
+		$orderValue                  = $request->getParameter('orderValue');
+		$totalPercent                = $request->getParameter('totalPercent');
+		$totalValue                  = $request->getParameter('totalValue');
+		$cheaperItemPercent          = $request->getParameter('cheaperItemPercent');
+		$cheaperItemValue            = $request->getParameter('cheaperItemValue');
+		$cheaperProductPercent       = $request->getParameter('cheaperProductPercent');
+		$cheaperProductValue         = $request->getParameter('cheaperProductValue');
+		$mostExpensiveItemPercent    = $request->getParameter('mostExpensiveItemPercent');
+		$mostExpensiveItemValue      = $request->getParameter('mostExpensiveItemValue');
+		$mostExpensiveProductPercent = $request->getParameter('mostExpensiveProductPercent');
+		$mostExpensiveProductValue   = $request->getParameter('mostExpensiveProductValue');
+		
+		$discountRuleObj = new stdClass();
+		
+		if( $shippingPercent > 0 )
+			$discountRuleObj->shippingPercent = $shippingPercent;
+
+		if( $shippingValue > 0 )
+			$discountRuleObj->shippingValue = $shippingValue;
+
+		if( $orderPercent > 0 )
+			$discountRuleObj->orderPercent = $orderPercent;
+
+		if( $orderValue > 0 )
+			$discountRuleObj->orderValue = $orderValue;
+
+		if( $totalPercent > 0 )
+			$discountRuleObj->totalPercent = $totalPercent;
+
+		if( $totalValue > 0 )
+			$discountRuleObj->totalValue = $totalValue;
+
+		if( $cheaperItemPercent > 0 )
+			$discountRuleObj->cheaperItemPercent = $cheaperItemPercent;
+
+		if( $cheaperItemValue > 0 )
+			$discountRuleObj->cheaperItemValue = $cheaperItemValue;
+
+		if( $cheaperProductPercent > 0 )
+			$discountRuleObj->cheaperProductPercent = $cheaperProductPercent;
+
+		if( $cheaperProductValue > 0 )
+			$discountRuleObj->cheaperProductValue = $cheaperProductValue;
+
+		if( $mostExpensiveItemPercent > 0 )
+			$discountRuleObj->mostExpensiveItemPercent = $mostExpensiveItemPercent;
+
+		if( $mostExpensiveItemValue > 0 )
+			$discountRuleObj->mostExpensiveItemValue = $mostExpensiveItemValue;
+
+		if( $mostExpensiveProductPercent > 0 )
+			$discountRuleObj->mostExpensiveProductPercent = $mostExpensiveProductPercent;
+
+		if( $mostExpensiveProductValue > 0 )
+			$discountRuleObj->mostExpensiveProductValue = $mostExpensiveProductValue;
+
+		$this->setCouponCode( $couponCode );
+		$this->setDiscountRule( serialize($discountRuleObj) );
+		$this->setIsActive( ($isActive?true:false) );
+		$this->setVisible( true );
+		$this->setEnabled( true );
+		$this->save();
+	}
+	
+	public static function getList(Criteria $criteria=null){
+		
+		if( !$criteria )
+			$criteria = new Criteria();
+			
+		$criteria->add( DiscountCouponPeer::ENABLED, true );
+		$criteria->add( DiscountCouponPeer::VISIBLE, true );
+		$criteria->add( DiscountCouponPeer::DELETED, false );
+		$criteria->addDescendingOrderByColumn( DiscountCouponPeer::ID );
+		
+		return DiscountCouponPeer::doSelect($criteria);
+	}
+	
 	public function getDiscount($cartSessionObj){
 		
 		$discountRuleObj = unserialize($this->getDiscountRule());
@@ -171,5 +255,15 @@ class DiscountCoupon extends BaseDiscountCoupon
 		$this->setHasUsed(true);
 		$this->setIsActive(false);
 		$this->save($con);
+	}
+	
+	public function getPurchase($con=null){
+	
+		$purchaseObj = parent::getPurchase($con);
+
+		if( !is_object($purchaseObj) )
+			$purchaseObj = new Purchase();
+		
+		return $purchaseObj;
 	}
 }

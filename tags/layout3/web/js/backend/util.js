@@ -80,3 +80,15 @@ function AjaxRequest(urlAjax, options){
 	
 	$.ajax({type:'POST', url: urlAjax, data:options.parameters, error: options.onFailure, success: options.onSuccess});
 }
+
+function getRandomString(length, possible){
+	
+    var text = '';
+    if( !possible )
+    	possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for(var i=0; i < length; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}

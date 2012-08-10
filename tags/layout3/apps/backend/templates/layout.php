@@ -59,12 +59,13 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
         
 
 		<?php if( $iRankAdmin ): ?>
-        <li class="store"><a href="javascript:void(0)" title="" class="<?php echo (in_array($moduleName, array('store', 'productCategory', 'product', 'productOption', 'purchase'))?'active':'exp') ?>"><span>Loja virtual</span><strong>4</strong></a>
+        <li class="store"><a href="javascript:void(0)" title="" class="<?php echo (in_array($moduleName, array('store', 'productCategory', 'product', 'productOption', 'purchase', 'discountCoupon'))?'active':'exp') ?>"><span>Loja virtual</span><strong>4</strong></a>
             <ul class="sub">
                 <li><?php echo link_to('Categorias', 'productCategory/index') ?></li>
                 <li><?php echo link_to('Produtos', 'product/index') ?></li>
                 <li><?php echo link_to('Parâmetros', 'productOption/index') ?></li>
                 <li><?php echo link_to('Pedidos', 'purchase/index') ?></li>
+                <li><?php echo link_to('Cupons de desconto', 'discountCoupon/index') ?></li>
                 <li class="last"><?php echo link_to('Configurações', 'store/index') ?></li>
             </ul>
         </li>
