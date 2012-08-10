@@ -28,7 +28,6 @@ class DiscountCoupon extends BaseDiscountCoupon
 	
 	  	if( property_exists($discountRuleObj, 'shippingValue') )
 	  		$discountValueShipping += $discountRuleObj->shippingValue;
-	  	
 	  	/**
 	  	 * Se o valor do desconto do envio for maior que o valor do envio
 	  	 * o valor do desconto passa a ser o valor do envio
@@ -36,8 +35,7 @@ class DiscountCoupon extends BaseDiscountCoupon
 	  	if( $discountValueShipping > $cartSessionObj->shippingValue )
 	  		$discountValueShipping = $cartSessionObj->shippingValue;
 	  	
-	
-	
+
 		// DESCONTO NO VALOR DO PEDIDO (SEM O ENVIO)
 	  	if( property_exists($discountRuleObj, 'orderPercent') )
 	  		$discountValueOrder += $cartSessionObj->orderValue*$discountRuleObj->orderPercent/100;

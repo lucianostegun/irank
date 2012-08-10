@@ -63,12 +63,22 @@ function updateCartItem(cartSessionObj, productItemId){
 	$('storeCartProductItemTotalValue-'+productItemId).innerHTML = 'R$ '+toCurrency(cartSessionObj.productItemList[productItemId].totalValue);
 	
 	$('storeCartShippingValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.shippingValue);
+	$('storeCartDiscountValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.discountValue*-1);
 	$('storeCartTotalValue').innerHTML    = 'R$ '+toCurrency(cartSessionObj.totalValue);
 
-	$('storeCartSideBarOrderValue').innerHTML    = toCurrency(cartSessionObj.totalValue-cartSessionObj.shippingValue);
+	updateCartSideBar(cartSessionObj);
+	hideIndicator();
+}
+
+function updateCartSideBar(cartSessionObj){
+	
+	$('storeCartSideBarOrderValue').innerHTML    = toCurrency(cartSessionObj.orderValue);
 	$('storeCartSideBarShippingValue').innerHTML = toCurrency(cartSessionObj.shippingValue);
-	$('storeCartSideBarDiscountValue').innerHTML = toCurrency(cartSessionObj.discountValue);
+	$('storeCartSideBarDiscountValue').innerHTML = toCurrency(cartSessionObj.discountValue*-1);
 	$('storeCartSideBarTotalValue').innerHTML    = toCurrency(cartSessionObj.totalValue);
+	
+	$('storeCartSideBarProducts').innerHTML     = cartSessionObj.products;
+	$('storeCartSideBarProductLabel').innerHTML = 'ite'+(cartSessionObj.products==1?'m':'ns');
 }
 
 function removeProductFromCart(productItemId){
@@ -81,6 +91,7 @@ function removeProductFromCart(productItemId){
 		var cartSessionObj = parseInfo(content);
 		
 		$('storeCartShippingValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.shippingValue);
+		$('storeCartDiscountValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.discountValue*-1);
 		$('storeCartTotalValue').innerHTML    = 'R$ '+toCurrency(cartSessionObj.totalValue);
 		
 		row = $('cartProductItem-'+productItemId);
@@ -92,7 +103,10 @@ function removeProductFromCart(productItemId){
 			showDiv('cartEmptyRow', 'table-row');
 			$('storeCartQuantityUpdateRow').remove();
 			$('storeCartShippingRow').remove();
+			$('storeCartDiscountRow').remove();
 		}
+		
+		updateCartSideBar(cartSessionObj);
 		
 		hideIndicator();
 	};
@@ -134,13 +148,13 @@ function doCalculateShipping(){
 		var content        = t.responseText;
 		var cartSessionObj = parseInfo(content);
 		
-		var totalValue    = cartSessionObj.totalValue*1;
-		var shippingValue = cartSessionObj.shippingValue*1;
-		
-		$('storeCartShippingValue').innerHTML = 'R$ '+toCurrency(shippingValue);
-		$('storeCartTotalValue').innerHTML    = 'R$ '+toCurrency(totalValue);
+		$('storeCartShippingValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.shippingValue);
+		$('storeCartDiscountValue').innerHTML = 'R$ '+toCurrency(cartSessionObj.discountValue*-1);
+		$('storeCartTotalValue').innerHTML    = 'R$ '+toCurrency(cartSessionObj.totalValue);
 		
 		hideIndicator();
+		
+		updateCartSideBar(cartSessionObj);
 	};
 		
 	var failureFunc = function(t){
@@ -172,9 +186,8 @@ function doCalculateDiscount(){
 		$('storeCartDiscountValue').innerHTML = 'R$ '+toCurrency(discountValue);
 		$('storeCartTotalValue').innerHTML    = 'R$ '+toCurrency(totalValue);
 		
-		$('storeCartSideBarDiscountValue').innerHTML = toCurrency(discountValue);
-		$('storeCartSideBarTotalValue').innerHTML    = toCurrency(totalValue);
-		
+		updateCartSideBar(cartSessionObj);
+		clearCommonBarMessage();
 		hideIndicator();
 	};
 	
@@ -183,7 +196,9 @@ function doCalculateDiscount(){
 		var content = t.responseText;
 		hideIndicator();
 		
-		alert('ATENÇÃO!\n\nOcorreu um erro ao calcular o valor do desconto!');
+		var errorMessage = parseMessage(content, 'Ocorreu um erro ao calcular o valor do desconto');
+		setCommonBarMessage('<b>ATENÇÃO!</b> '+errorMessage, 'error');
+		location.hash = '#topAlert';
 	};
 	
 	var discountCoupon = $('storeCartDiscountCoupon').value;
@@ -259,6 +274,11 @@ function loadSignForm(){
 	
 	var urlAjax = _webRoot+'/store/getSignForm';
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function checkoutPurchase(){
+	
+	$('storeCartForm').submit();
 }
 
 function finishOrder(){

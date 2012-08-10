@@ -132,59 +132,22 @@ class storeActions extends sfActions
 
   public function executeCalculateShipping($request){
   	
-  	$cartSessionObj = $this->updateShippingValue($request);
+  	$this->updateShippingValue($request);
+  	$cartSessionObj = $this->updateDiscountValue($request);
   	echo Util::parseInfo($cartSessionObj);
   	exit;
   }
 
   public function executeCalculateDiscount($request){
   	
-  	$discountCoupon    = $request->getParameter('discountCoupon');
-  	$discountCoupon    = strtoupper($discountCoupon);
-
-//	$discountCoupon    = 'ABC123';
-//	$discountRuleObj = new stdClass();
-//	$discountRuleObj->mostExpensiveItemPercent = 100;
-//	$discountRuleObj = serialize($discountRuleObj);
-//	$discountCouponObj = new DiscountCoupon();
-//	$discountCouponObj->setDiscountRule($discountRuleObj);
-  	
-  	$cartSessionObj = $this->getCartSession();
-  	
-	if( !$discountCoupon ){
-		
-		$cartSessionObj->discountCouponId = null;
-		$cartSessionObj->discountCoupon   = null;
-		$cartSessionObj->discountValue    = 0;
-	}else{
-		
-	  	$discountCouponObj = DiscountCouponPeer::retrieveByCode($discountCoupon);
-	  	
-	  	if( $cartSessionObj->discountAttempts > 5 )
-	  		Util::forceError('Desconto desabilitado');
-	  	
-	  	if( !is_object($discountCouponObj) ){
-	  		
-	  		$cartSessionObj->discountAttempts++;
-		  	$this->getUpdateSession($cartSessionObj);
-	  		Util::forceError('Cupom inválido');
-	  	}
-	  	
-	  	$discountValue = $discountCouponObj->getDiscount($cartSessionObj);
-	
-		$cartSessionObj->discountCouponId = $discountCouponObj->getId();
-		$cartSessionObj->discountCoupon   = $discountCoupon;
-		$cartSessionObj->discountValue    = $discountValue;
-	  	$cartSessionObj->discountAttempts = 0;
-	}
-  	
-  	$this->getUpdateSession($cartSessionObj);
+  	$cartSessionObj = $this->updateDiscountValue($request);
   	
   	echo Util::parseInfo($cartSessionObj);
+  	unset($cartSessionObj);
   	exit;
   }
 
-  public function executePayment($request){
+  public function executeCheckout($request){
   	
   	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
   	
@@ -200,8 +163,11 @@ class storeActions extends sfActions
   		
   		$result = null;
   	}
+  	
+  	$discountCoupon = $request->getParameter('discountCoupon', $cartSessionObj->discountCoupon);
 	
 	$this->zipcode           = $cartSessionObj->zipcode;
+	$this->zipcode           = $request->getParameter('zipcode', $cartSessionObj->zipcode);
 	$this->state             = null;
     $this->city              = null;
     $this->quarter           = null;
@@ -241,6 +207,11 @@ class storeActions extends sfActions
 		    break;  
 		}
 	}
+	
+	$cartSessionObj->zipcode        = $this->zipcode;
+	$cartSessionObj->discountCoupon = $discountCoupon;
+	
+	$this->getUpdateSession($cartSessionObj);
 	
 	$this->cartSessionObj = $cartSessionObj;
   }
@@ -286,6 +257,7 @@ class storeActions extends sfActions
 		}
 		
 		$cartSessionObj = $this->updateShippingValue($request);
+		$cartSessionObj = $this->updateDiscountValue($request);
 	}
 	
     $cartSessionObj->addressName       = $addressName;
@@ -305,6 +277,9 @@ class storeActions extends sfActions
   }
 
   public function executeConfirmOrder($request){
+  	
+  	$this->updateShippingValue($request);
+  	$this->updateDiscountValue($request, true);
   	
   	$this->cartSessionObj = $this->getCartSession();
   	
@@ -434,7 +409,7 @@ class storeActions extends sfActions
 		
   		$purchaseObj->addStatusLog(date('d/m/Y H:i:s'), md5($orderNumber), 'new', $purchaseObj->getPaymethod(true), 0, 1, 'iRank Store');
 		
-//  		$this->getNewSession();
+  		$this->getNewSession();
   		
   		echo $orderNumber;
   	}catch(PurchaseException $e){
@@ -734,11 +709,17 @@ class storeActions extends sfActions
 		$productItem->totalValue = $totalValue;
   	}
   	
+  	if( $cartSessionObj->shippingValue < 0 )
+	  	$cartSessionObj->shippingValue = 0;
+
   	$cartSessionObj->products   = $products; // Produtos únicos
  	$cartSessionObj->itens      = $productItens;
  	$cartSessionObj->orderValue = $totalOrderValue;
  	$cartSessionObj->totalValue = $totalOrderValue+$cartSessionObj->shippingValue-$cartSessionObj->discountValue;
-	 	
+  	
+  	if( $cartSessionObj->totalValue < 0 )
+	  	$cartSessionObj->totalValue = 0;
+  	
   	$cartSessionObj = serialize($cartSessionObj);
   	$cartSessionObj = base64_encode($cartSessionObj);
   	
@@ -786,6 +767,7 @@ class storeActions extends sfActions
   	$this->getUpdateSession($cartSessionObj);
  	
  	$this->updateShippingValue($request);
+ 	$this->updateDiscountValue($request);
   }
 
   private function removeItemFromCart($productItemId){
@@ -817,11 +799,11 @@ class storeActions extends sfActions
 	 	unset($productItemList[$productItemId]);
 	}
 	
-  	
   	$cartSessionObj->productItemList = $productItemList;
   	$this->getUpdateSession($cartSessionObj);
   	
-	$cartSessionObj = $this->updateShippingValue($request);
+	$this->updateShippingValue($request);
+	$cartSessionObj = $this->updateDiscountValue($request);
   	
   	return $cartSessionObj;
   }
@@ -833,66 +815,71 @@ class storeActions extends sfActions
 	$totalWeight = 0;
   	$zipcode     = $request->getParameter('zipcode', $cartSessionObj->zipcode);
   	
-  	if( !$zipcode )
-  		return $cartSessionObj;
-  	
-  	if( $cartSessionObj->itens > 0 ){
+  	if( !$zipcode ){
   		
-	  	$productWeightList = array();
-	  	$index = 0;
-	  	foreach($cartSessionObj->productItemList as $productItemId=>$productItem){
-	  		
-	  		$quantity      = $productItem->quantity;
-	  		$productWeight = ProductItem::getWeightById($productItemId);
-	  		
-	  		if( !isset($productWeightList[$index]) )
-	  			$productWeightList[$index] = 0;
-	  			
-	  		for($i=0; $i < $quantity; $i++){
-		  		
-		  		if( $productWeightList[$index]+$productWeight > 30000 )
-		  			$productWeightList[++$index] = 0;
-	  			
-	  			$productWeightList[$index] += $productWeight;
-	  		}
-	  	}
-	  	
-	  	$storeShippingZipcode = Config::getConfigByName('storeShippingZipcode', true);
-	  	
-		$webserviceUrl = 'http://webservice.uni5.net/web_frete.php';
-		$shippingValue = 0;
-	  	foreach($productWeightList as $productWeight){
-	  		
-			$webserviceQuery = array(
-			    'auth'=>'d2444763f5fd6f8f616b4b4dce37752e',		//Chave de autenticação do WebService - Consultar seu painel de controle
-			    'formato'=>'query_string',						//Valores possíveis: xml, query_string ou javascript
-			    'tipo'=>'sedex',								//Tipo de pesquisa: sedex, carta, pac,
-			    'cep_origem'=>$storeShippingZipcode,			//CEP de Origem - CEP que irá postar a encomenda
-			    'cep_destino'=>$zipcode,						//CEP de Destino - CEP que irá receber a encomenda
-			    'mao_propria'=>'0',								//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
-			    'aviso_de_recebimento'=>'0',					//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
-			    'peso'=> $productWeight,						//em gr
-			    'cep'=>$zipcode,								//CEP que será pesquisado
-			);
-			
-			//Forma URL
-			$webserviceUrl .= '?';
-			foreach($webserviceQuery as $key=>$value)
-			    $webserviceUrl .= $key.'='.urlencode($value).'&';
-			
-			$result = null;
-			parse_str(file_get_contents($webserviceUrl), $result);
-			
-			if( !isset($result['resultado']) || $result['resultado']!='1' )
-				Util::forceError('Erro ao calcular o valor do frete!'.chr(10).$result['resultado_txt']);
-				
-			$shippingValue += $result['valor'];
-	  	}
+  		$shippingValue = 0;
+	  	$zipcode       = null;
   	}else{
   		
-  		
-	  	$shippingValue = 0;
+	  	if( $cartSessionObj->itens > 0 ){
+	  		
+		  	$productWeightList = array();
+		  	$index = 0;
+		  	foreach($cartSessionObj->productItemList as $productItemId=>$productItem){
+		  		
+		  		$quantity      = $productItem->quantity;
+		  		$productWeight = ProductItem::getWeightById($productItemId);
+		  		
+		  		if( !isset($productWeightList[$index]) )
+		  			$productWeightList[$index] = 0;
+		  			
+		  		for($i=0; $i < $quantity; $i++){
+			  		
+			  		if( $productWeightList[$index]+$productWeight > 30000 )
+			  			$productWeightList[++$index] = 0;
+		  			
+		  			$productWeightList[$index] += $productWeight;
+		  		}
+		  	}
+		  	
+		  	$storeShippingZipcode = Config::getConfigByName('storeShippingZipcode', true);
+		  	
+			$webserviceUrl = 'http://webservice.uni5.net/web_frete.php';
+			$shippingValue = 0;
+		  	foreach($productWeightList as $productWeight){
+		  		
+				$webserviceQuery = array(
+				    'auth'=>'d2444763f5fd6f8f616b4b4dce37752e',		//Chave de autenticação do WebService - Consultar seu painel de controle
+				    'formato'=>'query_string',						//Valores possíveis: xml, query_string ou javascript
+				    'tipo'=>'sedex',								//Tipo de pesquisa: sedex, carta, pac,
+				    'cep_origem'=>$storeShippingZipcode,			//CEP de Origem - CEP que irá postar a encomenda
+				    'cep_destino'=>$zipcode,						//CEP de Destino - CEP que irá receber a encomenda
+				    'mao_propria'=>'0',								//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
+				    'aviso_de_recebimento'=>'0',					//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
+				    'peso'=> $productWeight,						//em gr
+				    'cep'=>$zipcode,								//CEP que será pesquisado
+				);
+				
+				//Forma URL
+				$webserviceUrl .= '?';
+				foreach($webserviceQuery as $key=>$value)
+				    $webserviceUrl .= $key.'='.urlencode($value).'&';
+				
+				$result = null;
+				parse_str(file_get_contents($webserviceUrl), $result);
+				
+				if( !isset($result['resultado']) || $result['resultado']!='1' )
+					Util::forceError('Erro ao calcular o valor do frete!'.chr(10).$result['resultado_txt']);
+					
+				$shippingValue += $result['valor'];
+		  	}
+	  	}else{
+	  		
+	  		
+		  	$shippingValue = 0;
+	  	}
   	}
+  	
   	
   	$cartSessionObj->shippingValue = $shippingValue; // Producao
 //	$cartSessionObj->shippingValue = 0; // Debug
@@ -901,5 +888,69 @@ class storeActions extends sfActions
   	$this->getUpdateSession($cartSessionObj);
   	
   	return $cartSessionObj;
+  }
+  
+  function updateDiscountValue($request, $suppressError=false){
+
+  	$cartSessionObj = $this->getCartSession();
+  	
+  	$discountCoupon = $request->getParameter('discountCoupon', $cartSessionObj->discountCoupon);
+  	$discountCoupon = strtoupper($discountCoupon);
+
+//	$discountCoupon    = 'ABC123';
+//	$discountRuleObj = new stdClass();
+//	$discountRuleObj->mostExpensiveItemPercent = 100;
+//	$discountRuleObj = serialize($discountRuleObj);
+//	$discountCouponObj = new DiscountCoupon();
+//	$discountCouponObj->setDiscountRule($discountRuleObj);
+  	
+	if( !$discountCoupon ){
+		
+		$cartSessionObj->discountCouponId = null;
+		$cartSessionObj->discountCoupon   = null;
+		$cartSessionObj->discountValue    = 0;
+	}else{
+		
+	  	$discountCouponObj = DiscountCouponPeer::retrieveByCode($discountCoupon);
+	  	
+  		$errorMessage = false;
+	  	if( $cartSessionObj->discountAttempts > 5 )
+	  		$errorMessage = 'A utilização de cupons de desconto está temporariamente desabilitada';
+	  	
+	  	if( !is_object($discountCouponObj) ){
+	  		
+	  		$cartSessionObj->discountAttempts++;
+		  	$this->getUpdateSession($cartSessionObj);
+	  		$errorMessage = 'O cupom de desconto informado não é um cupom válido';
+	  	}
+	  	
+	  	if( $errorMessage ){
+	  		
+	  		if( $suppressError ){
+	  			
+				$discountCouponId = null;
+				$discountCoupon   = null;
+				$discountValue    = 0;
+	  		}else{
+	  			
+			  	Util::forceError("!$errorMessage");
+	  		}
+	  	}else{
+	  		
+			$discountCouponId = $discountCouponObj->getId();
+		  	$discountValue    = $discountCouponObj->getDiscount($cartSessionObj);
+	  	}
+	  	
+	  	
+	  	
+		$cartSessionObj->discountCouponId = $discountCouponId;
+		$cartSessionObj->discountCoupon   = $discountCoupon;
+		$cartSessionObj->discountValue    = $discountValue;
+	  	$cartSessionObj->discountAttempts = 0;
+	}
+
+  	$this->getUpdateSession($cartSessionObj);
+  	
+  	return $cartSessionObj;  	
   }
 }

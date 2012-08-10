@@ -10,7 +10,7 @@ default:
     language:        pt
     viewport:        width=device-width; initial-scale=0.7; maximum-scale=1; user-scalable=yes
     
-  stylesheets:    [main, loading, leftMenu]
+  stylesheets:    [main, loading, leftMenu, reset]
   javascripts:    [phpEquivalents, util, form, /sf/prototype/js/prototype, record, /index.php/home/javascript/debug/<?php echo Util::isDebug(true) ?>/js, main]
 
   has_layout:     on

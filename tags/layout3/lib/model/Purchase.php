@@ -89,7 +89,9 @@ class Purchase extends BasePurchase
 		if( !$this->getOrderNumber() )
 			throw new PurchaseException('Ocorreu um erro ao gerar o número do pedido');
 		
-		if( !$this->getDiscountCoupon()->validateCoupon() )
+		$discountCouponObj = $this->getDiscountCoupon();
+		
+		if( is_object($discountCouponObj) && !$discountCouponObj->validateCoupon() )
 			throw new PurchaseException('O cupom de desconto não é mais válido');
 	}
 	
@@ -112,6 +114,7 @@ class Purchase extends BasePurchase
 		$emailContent = str_replace('[orderStatus]', $this->getOrderStatus(true), $emailContent);
 		$emailContent = str_replace('[orderValue]', Util::formatFloat($this->getOrderValue(), true), $emailContent);
 		$emailContent = str_replace('[shippingValue]', Util::formatFloat($this->getShippingValue(), true), $emailContent);
+		$emailContent = str_replace('[discountValue]', Util::formatFloat($this->getDiscountValue()*-1, true), $emailContent);
 		$emailContent = str_replace('[totalValue]', Util::formatFloat($this->getTotalValue(), true), $emailContent);
 		$emailContent = str_replace('[paymethod]', $this->getPaymethod(true), $emailContent);
 		$emailContent = str_replace('[shippingDueDate]', $this->getShippingDueDate(), $emailContent);

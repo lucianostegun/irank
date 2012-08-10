@@ -382,11 +382,24 @@
 table.storeFooter {
 
 	background: #FFFFFF;
-	width: 700px;
+	width: 780px;
 	bottom: 0px;
 	right: 0px;
 }
 
+
+table.storeFooter tr:first-child td {
+
+	text-align: center;
+}
+
+table.storeFooter td hr {
+
+	width: 90%;
+	height: 0px;
+	border: none;
+	border-top: 1px solid #DADADA
+}
 
 table.storeFooter th {
 
@@ -544,6 +557,21 @@ div.cartInfo span {
 	float: right;
 }
 
+div.cartInfo #storeCartSideBarProducts,
+div.cartInfo #storeCartSideBarProductLabel {
+	
+	font-weight: normal;
+	clear: both;
+	text-align: left;
+	display: inline;
+	float: none;
+}
+
+div.cartInfo #storeCartSideBarProducts {
+	
+	font-weight: bold;
+}
+
 div.cartInfo a {
 	
 	color: 	#000000;
@@ -555,11 +583,10 @@ div.cartInfo a:hover {
 	color: 				#C91E1E
 }
 
-.finishOrderButton,
+.actionButton.finishOrderButton,
 .goToCartButton {
 	
 	float: right;
-	margin-right: -12px
 }
 
 
@@ -683,9 +710,15 @@ table.store.cart .footer th {
 }
 
 table.store.cart .footer.shipping th,
-table.store.cart .footer.discount th {
+table.store.cart .footer.discount th,
+table.store.cart .footer.subtotal th {
 
 	border-top: 1px solid #FBFBFB;
+}
+
+table.store.cart .footer.subtotal th {
+
+	border-bottom: 1px solid #DADADA;
 }
 
 table.store.cart .footer th input {
@@ -709,6 +742,7 @@ table.store.cart .footer.total th {
 table.store.cart.resume td.totalValue,
 table.store.cart.resume .footer.shipping th,
 table.store.cart.resume .footer.discount th,
+table.store.cart.resume .footer.subtotal th,
 table.store.cart.resume .footer.total th {
 
 	padding-right: 8px;

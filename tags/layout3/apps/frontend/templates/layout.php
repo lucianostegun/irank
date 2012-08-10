@@ -66,7 +66,7 @@ var _ModuleName = '<?php echo $moduleName ?>';
 	    							<?php
 	    								if( $isAuthenticated ){
 	    									
-	    									if( $moduleName=='store' )
+	    									if( $moduleName=='store' && $actionName!='orderConfirm' )
 		    									include_partial('store/include/cart', array());
 
 	    									include_partial('home/include/leftMenu', array('innerObj'=>$innerObj));

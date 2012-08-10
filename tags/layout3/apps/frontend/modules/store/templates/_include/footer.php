@@ -1,5 +1,8 @@
 <table class="storeFooter" cellspacing="10" cellpadding="0">
 	<tr>
+		<td colspan="4"><hr/></td>
+	</td>
+	<tr>
 		<td class="wrapper">
 			<table width="100%" cellspacing="0" cellpadding="0">
 				<tr>

@@ -1,5 +1,5 @@
 <?php
-	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', 'Carrinho'=>'store/cart', 'Pagamento'=>'store/payment', 'Confirmação'=>null)));
+	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', 'Carrinho'=>'store/cart', 'Pagamento'=>'store/checkout', 'Confirmação'=>null)));
 	
 	$productItemList = $cartSessionObj->productItemList;
 	
@@ -38,6 +38,7 @@
 		  	$shippingValue   = $cartSessionObj->shippingValue;
 		  	$zipcode         = $cartSessionObj->zipcode;
 		  	$discountValue   = $cartSessionObj->discountValue;
+		  	$orderValue      = $cartSessionObj->orderValue;
 		  	$totalOrderValue = $shippingValue-$discountValue;
 		  	
 		  	$class = ((count($productItemList)%2==0)?'odd':'even');
@@ -79,11 +80,18 @@
 		  <?php
 		  	endforeach;
 		  ?>
+		  <tr class="footer subtotal">
+		    <th class="textC"></th>
+		    <th class="textC"></th>
+		    <th class="textC"></th>
+		    <th class="textR pr10">SUBTOTAL</th>
+		    <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($orderValue, true) ?></th>
+		  </tr>
 		  <tr class="footer shipping">
 		    <th class="textC"></th>
 		    <th class="textC"></th>
 		    <th class="textC"></th>
-		    <th class="textR pr10">FRETE</th>
+		    <th class="textR pr10">Frete</th>
 		    <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($shippingValue, true) ?></th>
 		  </tr>
 		  <tr class="footer discount">
@@ -91,7 +99,7 @@
 		    <th class="textC"></th>
 		    <th class="textC"></th>
 		    <th class="textR pr10">Desconto</th>
-		    <th class="textR" id="storeCartDiscountValue">R$ <?php echo Util::formatFloat($discountValue, true) ?></th>
+		    <th class="textR" id="storeCartDiscountValue">R$ <?php echo Util::formatFloat($discountValue*-1, true) ?></th>
 		  </tr>
 		  <tr class="footer total">
 		    <th class="textC"></th>
@@ -105,20 +113,14 @@
 		
 	
 		<h3 class="mt30">Forma de pagamento</h3>
-<<<<<<< .mine
 		<div class="ml30 mt20 mb30">
-=======
-		<div class="pl30 mb10 mt20">
->>>>>>> .r508
 			<?php if( $cartSessionObj->paymethod=='billet' ): ?><label for="paymethodBillet"><?php echo image_tag('store/boleto', array('class'=>'mr10', 'align'=>'absmiddle')) ?> Boleto bancário</label><?php endif; ?>
 			<?php if( $cartSessionObj->paymethod=='pagseguro' ): ?><label for="paymethodPagseguro"><?php echo image_tag('store/pagseguro', array('class'=>'mr10', 'align'=>'absmiddle')) ?> Pagseguro</label><?php endif; ?>
 		</div>
 		<div class="separator mb15"></div>
 		
-		<?php echo link_to(image_tag('store/back', array('class'=>'ml20')), 'store/payment') ?>
+		<?php echo link_to(image_tag('store/back', array('class'=>'ml20')), 'store/checkout') ?>
 		<?php echo link_to(image_tag('store/finish', array('class'=>'ml10')), '#confirmOrder()') ?>
 	</div>
 
-<<<<<<< .mine
-<div class="clear mt50"></div>=======
-<div class="clear mt200"></div>>>>>>>> .r508
+<div class="clear mt200"></div>

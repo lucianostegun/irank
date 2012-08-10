@@ -7,7 +7,7 @@
 	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', 'Carrinho'=>null)));
 	include_partial('store/include/cartbar', array('emptyCart'=>$emptyCart));
 	
-	echo form_tag('store/updateCartQuantity', array('id'=>'storeCartForm'));
+	echo form_tag('store/checkout', array('id'=>'storeCartForm'));
 ?>
 	<div class="storeCart">
 	

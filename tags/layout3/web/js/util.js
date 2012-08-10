@@ -240,12 +240,14 @@ function parseInfo(infoList){
 	}
 }
 
-function parseMessage(errorMessage){
+function parseMessage(errorMessage, defaultMessage){
 
+	defaultMessage = (defaultMessage?defaultMessage:null)
+	
 	if( (errorMessage).match(/^!/) ){
 		return errorMessage.replace(/^!/, '\n\n');
 	}else
-		return null;
+		return defaultMessage;
 }
 
 function getScreenWidth(){

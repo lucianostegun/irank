@@ -14,7 +14,8 @@
 	</tr>
 	<?php
 		$className = 'odd';
-		foreach($userSiteObj->getPurchaseList() as $purchaseObj):
+		$key       = 0;
+		foreach($userSiteObj->getPurchaseList() as $key=>$purchaseObj):
 		
 			$link         = 'goModule(\'store\', \'orderDetails\', \'orderNumber\', '.$purchaseObj->getOrderNumber().')';
 			$hasNewStatus = $purchaseObj->getHasNewStatus();
@@ -26,6 +27,20 @@
 		<td><?php echo $purchaseObj->getOrderStatus(true) ?></td>
 		<td class="textR">R$ <?php echo Util::formatFloat($purchaseObj->getTotalValue(), true) ?></td>
 	</tr>
-	<?php endforeach; ?>
+	<?php
+		endforeach;
+		
+		if( !$key ):
+	?>
+	<tr>
+		<td class="textL" colspan="5">
+			<div class="p20">
+				Você ainda não possui nenhum pedido em seu histórico!<br/>
+				<?php echo link_to('Clique aqui', 'store/index') ?> para navegar entre os produtos da <b>iRank Store</b>.
+			</div>
+		</td>
+	</tr>
+	<?php endif; ?>
 </table>
 </form>
+<div class="mt200"></div>

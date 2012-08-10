@@ -334,14 +334,6 @@ function closeToEditCheckbox(){
     	checkboxFieldList[i].style.display = 'none';
 }
 
-function parseError( message ){
-	
-	if( /^!/.test(message) )
-		return '\n'+message.replace('!', '');
-	
-	return '';
-}
-
 function handleSubmitEnter(evt, executeFunction){
 	
 	var obj;

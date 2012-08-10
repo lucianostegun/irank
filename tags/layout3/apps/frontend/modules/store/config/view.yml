@@ -11,7 +11,7 @@ cartSuccess:
   stylesheets:    []
   javascripts:    [mask]
   
-paymentSuccess:
+checkoutSuccess:
   
   stylesheets:    [-store, form, store]
   javascripts:    [form, mask]

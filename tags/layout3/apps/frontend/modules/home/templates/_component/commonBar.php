@@ -1,6 +1,7 @@
 <?php
 	sfContext::getInstance()->getResponse()->addStylesheet('commonBar');
 ?>
+<a id="breadcrumb"></a>
 <div class="commonBar">
 	<div class="home" onclick="goToPage('home', 'index')"></div>
 	<?php
@@ -44,6 +45,7 @@
 		Processando, aguarde... <?php echo image_tag('ajaxLoader.gif', array('align'=>'absmiddle')) ?>
 	</div>
 </div>
+<a id="topAlert"></a>
 <div id="topSystemMessage">
 	<?php
 		$messageList = (isset($messageList)?$messageList:array());

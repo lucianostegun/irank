@@ -1,7 +1,7 @@
 <?php
 	$orderNumber = $purchaseObj->getOrderNumber();
 	
-	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', 'Carrinho'=>'store/cart', 'Pagamento'=>'store/payment', 'Confirmação'=>'store/confirmOrder', 'Pedido confirmado'=>null)));
+	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', 'Carrinho'=>'store/cart', 'Pagamento'=>'store/checkout', 'Confirmação'=>'store/confirmOrder', 'Pedido confirmado'=>null)));
 ?>
 	<div class="storeCartOrder" align="center">
 		
@@ -15,7 +15,7 @@
 				</td>
 				<td align="left" valign="top" class="message">
 					Por favor, anote o número de seu pedido:<br/>
-					<h1>Pedido #<?php echo $orderNumber ?></h1>
+					<h1>Pedido <?php echo link_to("#$orderNumber", "store/orderDetails?orderNumber=$orderNumber") ?></h1>
 					Clique no link abaixo para gerar o boleto para pagamento<br/><br/>
 					<?php
 						$paymethod = $purchaseObj->getPaymethod();
@@ -37,7 +37,7 @@
 					?>
 					<br/><br/>
 					Uma mensagem foi enviada para seu e-mail contendo todas as informações do pedido.<br/>
-					O prazo de envio é de até 3 dias úteis após a confirmação do pagamento.<br/>
+					O prazo de envio é de até 5 dias úteis após a confirmação do pagamento.<br/>
 				</td>
 			</tr>
 		</table>

@@ -40,7 +40,9 @@
     <th width="80">Vl. total</th>
   </tr>
   <?php
+  	$orderValue      = $purchaseObj->getOrderValue();
   	$shippingValue   = $purchaseObj->getShippingValue();
+  	$discountValue   = $purchaseObj->getDiscountValue();
   	$totalOrderValue = $purchaseObj->getTotalValue();
   	
   	$class = ($purchaseObj->getProducts()%2==0?'odd':'even');
@@ -77,12 +79,26 @@
   <?php
   	endforeach;
   ?>
+  <tr class="footer subtotal">
+    <th class="textC"></th>
+    <th class="textC"></th>
+    <th class="textC"></th>
+    <th class="textR pr10">SUBTOTAL</th>
+    <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($orderValue, true) ?></th>
+  </tr>
   <tr class="footer shipping">
     <th class="textC"></th>
     <th class="textC"></th>
     <th class="textC"></th>
-    <th class="textR pr10">FRETE</th>
+    <th class="textR pr10">Frete</th>
     <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($shippingValue, true) ?></th>
+  </tr>
+  <tr class="footer discount">
+    <th class="textC"></th>
+    <th class="textC"></th>
+    <th class="textC"></th>
+    <th class="textR pr10">Desconto</th>
+    <th class="textR" id="storeCartShippingValue">R$ <?php echo Util::formatFloat($discountValue*-1, true) ?></th>
   </tr>
   <tr class="footer total">
     <th class="textC"></th>
@@ -104,7 +120,7 @@
 			if( $shippingDueDate )
 				echo $shippingDueDate;
 			else
-				echo '3 dias úteis após pagamento'
+				echo '5 dias úteis após pagamento'
 		?>
 		</div>
 	<?php endif; ?>
@@ -137,6 +153,7 @@
 	?>
 </div>
 <div class="clear"></div>
+<div class="mt200">&nbsp;</div>
 <script type="text/javascript" language="javascript">
 	SI.Files.stylizeAll();
 </script>
