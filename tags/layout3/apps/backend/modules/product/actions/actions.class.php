@@ -23,7 +23,8 @@ class productActions extends sfActions
   }
 
   public function executeIndex($request){
-    
+   
+	$this->toolbarList = array('new', 'report'=>array('image'=>'attibutes', 'label'=>'Relatório', 'url'=>'product/stockReport')); 
   }
 
   public function executeNew($request){
@@ -243,5 +244,12 @@ class productActions extends sfActions
 	$genericObj->save();
 	
   	exit;
+  }
+  
+  public function executeStockReport($request){
+
+//	$this->setLayout('clean');
+	$this->setLayout('pdf');
+    $this->setTemplate('_pdf/stockReport');	
   }
 }

@@ -43,7 +43,7 @@
 					<h4 class="events"><b><?php echo $events ?></b> etapa<?php echo ($events==1?'':'s') ?></h4>
 					<h4 class="players"><b><?php echo $rankingLiveObj->getPlayers() ?></b> jogadores</h4>
 					<h4 class="prize"><b><?php echo Util::formatFloat($rankingLiveObj->getTotalPrize(), true) ?></b> em prêmios</h4>
-					<?php echo button_tag('detailsButton'.$rankingLiveId, 'DETALHES', array('image'=>'result.png', 'class'=>'detailsButton', 'onclick'=>'goToPage("rankingLive", "details", "id", '.$rankingLiveId.')')); ?>
+					<?php echo button_tag('detailsButton'.$rankingLiveId, 'DETALHES', array('image'=>'result.png', 'class'=>'detailsButton', 'onclick'=>'goToPage("rankingLive", "details", "id", '.$rankingLiveId.')', 'style'=>'position: absolute; top: 78px; right: 18px')); ?>
 				</div>
 			</div>
 		</div>

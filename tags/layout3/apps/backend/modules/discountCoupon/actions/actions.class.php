@@ -15,7 +15,7 @@ class discountCouponActions extends sfActions
     $this->discountCouponId = $this->getRequestParameter('id');
     $this->discountCouponId = $this->getRequestParameter('discountCouponId', $this->discountCouponId);
     
-    $this->pathList = array('Cupons de desconto'=>'discountCoupon/index');
+    $this->pathList    = array('Cupons de desconto'=>'discountCoupon/index');
     $this->toolbarList = array('new');
   }
 

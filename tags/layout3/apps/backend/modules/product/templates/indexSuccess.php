@@ -5,8 +5,8 @@
 		    <thead>
 				<tr>
 					<th colspan="2">Cód</th>
-					<th>Nome</th>
 					<th>Categoria</th>
+					<th>Nome</th>
 					<th>Valor</th>
 					<th>Peso</th>
 					<th>Novo</th>
@@ -25,7 +25,7 @@
 				<tr class="gradeA higher" id="productIdRow-<?php echo $productId ?>">
 					<td onclick="<?php echo $onclick ?>" class="textC" width="40"><?php echo image_tag($productObj->getImageCover('thumb')) ?></td> 
 					<td onclick="<?php echo $onclick ?>" class="textR" width="40"><?php echo $productObj->getProductCode() ?></td> 
-					<td onclick="<?php echo $onclick ?>" width="100"><?php echo $productObj->getProductCategory()->getCategoryName() ?></td> 
+					<td onclick="<?php echo $onclick ?>" width="150"><?php echo $productObj->getProductCategory()->getCategoryName() ?></td> 
 					<td onclick="<?php echo $onclick ?>"><?php echo $productObj->getProductName() ?></td> 
 					<td onclick="<?php echo $onclick ?>" class="textR" width="60">R$ <?php echo Util::formatFloat($productObj->getDefaultPrice(), true) ?></td> 
 					<td onclick="<?php echo $onclick ?>" class="textR" width="50"><?php echo $productObj->getDefaultWeight() ?> gr</td> 

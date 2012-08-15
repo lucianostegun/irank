@@ -25,3 +25,11 @@ function buildRandomCouponCode(){
 	
 	$('#discountCouponCouponCode').val(couponCode);
 }
+
+function openDiscountField(discountType){
+	
+	$('#'+discountType+'FieldDiv').show();
+	$('#'+discountType+'Label').hide();
+	$('#discountCoupon'+ucfirst(discountType)).focus();
+	$('#discountCoupon'+ucfirst(discountType)).select();
+}

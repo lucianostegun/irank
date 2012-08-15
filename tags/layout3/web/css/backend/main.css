@@ -445,11 +445,11 @@ ul.sub li ul li { padding-left: 10px; }
 
 /* === Title area with middle navigation === */
 
-.titleArea { padding-top: 36px; }
+.titleArea { padding-top: 20px; }
 
 .pageTitle { float: left; padding: 35px 0 32px 0; }
 
-.middleNav { float: right; border: 1px solid #cdcdcd; margin: 29px 0; }
+.middleNav { float: right; border: 1px solid #cdcdcd; margin: 0px 0px 5px 0px; }
 .middleNav ul { }
 .middleNav ul li { display: block; float: left; border-left: 1px solid #cdcdcd; position: relative; }
 .middleNav ul li:first-child { border-left: none; }
@@ -529,7 +529,7 @@ ul.sub li ul li { padding-left: 10px; }
 
 /* ===== Horizontal control buttons ===== */
 
-.horControlB { text-align: center; padding: 11px 0 22px 0; }
+.horControlB { text-align: right; padding: 5px 0 2px 0; }
 .horControlB ul li { display: inline-block; margin: 11px 5px 0 5px; background: url(/images/backend/backgrounds/horControlB.png) repeat-x; border: 1px solid #d5d5d5; text-align: center; box-shadow: inset 0 0 0 1px #fff; -webkit-box-shadow: inset 0 0 0 1px #fff; -moz-box-shadow: inset 0 0 0 1px #fff; }
 .horControlB ul li:hover { background-position: 0 -43px; }
 .horControlB ul li:active { background-position: 0 -86px; }
@@ -537,8 +537,8 @@ ul.sub li ul li { padding-left: 10px; }
 .horControlB ul li img { float: left; margin: 12px 12px 10px 12px; }
 .horControlB ul li a span { display: block; margin: 0px 0 0 40px; padding: 10px 16px 8px 16px; border-left: 1px solid #d5d5d5; } 
 
-.horControlT { text-align: right; padding: 3px 3px 3px 0; }
-.horControlT ul li { display: inline-block; margin: 6px 0px 0 5px; background: url(/images/backend/backgrounds/horControlT.png) repeat-x; border: 1px solid #d5d5d5; text-align: center; box-shadow: inset 0 0 0 1px #fff; -webkit-box-shadow: inset 0 0 0 1px #fff; -moz-box-shadow: inset 0 0 0 1px #fff; }
+.horControlT { text-align: right; padding: 3px 3px 3px 0; background: url(/images/backend/backgrounds/titleRowBg.png) }
+.horControlT ul li { display: inline-block; margin: 6px 0px 0 5px; background: url(/images/backend/backgrounds/horControlB.png) repeat-x; border: 1px solid #d5d5d5; text-align: center; box-shadow: inset 0 0 0 1px #fff; -webkit-box-shadow: inset 0 0 0 1px #fff; -moz-box-shadow: inset 0 0 0 1px #fff; }
 .horControlT ul li:hover { background-position: 0 -43px; }
 .horControlT ul li:active { background-position: 0 -86px; }
 .horControlT ul li a {  display: block; font-weight: bold; white-space: nowrap; color: #626262; }
@@ -1863,12 +1863,19 @@ color: #656565;
 /* Breadcrumbs */
 
 section#secondary_bar .breadcrumbs_container {
-float: left; 
-background: #FFF url(/images/backend/secondary_bar_shadow.png) no-repeat left top;
-height: 36px;
-padding-left: 15px;
-z-index: 5000
 
+	float: left; 
+	background: #FFF url(/images/backend/secondary_bar_shadow.png) no-repeat left top;
+	height: 36px;
+	padding-left: 15px;
+	z-index: 5000
+}
+
+.statsRow .breadcrumbs_container {
+
+	position: relative;
+	top: 10px;
+	left: 5px
 }
 
 article.breadcrumbs2 {

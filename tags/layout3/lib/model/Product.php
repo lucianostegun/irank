@@ -151,4 +151,14 @@ class Product extends BaseProduct
 		
 		return Util::executeOne($sql, 'string');
 	}
+	
+	public function getDescription($convertTags=true){
+		
+		$description = parent::getDescription();
+		
+		if( $convertTags )
+			$description = str_replace(chr(10), '<br/>', $description);
+		
+		return $description;
+	}
 }
