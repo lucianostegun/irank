@@ -35,7 +35,10 @@ email_log:
   param: { module: home, action: images }
 
   
-  
+# REGRAS PARA O BLOG
+blog_by_title:
+  url:    blog/:title.html
+  param:  { module: blog, action: index }
   
   
   
