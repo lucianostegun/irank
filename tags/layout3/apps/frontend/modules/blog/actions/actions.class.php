@@ -17,4 +17,9 @@ class blogActions extends sfActions
   public function executeIndex($request){
     
   }
+  
+  public function executeTag($request){
+    
+    return $this->forward('blog', 'index');
+  }
 }
