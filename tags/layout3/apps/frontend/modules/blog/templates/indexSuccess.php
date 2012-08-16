@@ -46,7 +46,7 @@
 	o evento atingir a quantidade desejada de jogadores para o início do jogo.</p>
 	
 	<h4>2 - Data e Hora</h4>
-	<p>A melhor forma de garantir a presença dos jogadores é manter um dia e hora para a realização dos jogadores. Dessa forma todos
+	<p>A melhor forma de garantir a presença dos jogadores é manter um dia e hora para a realização dos jogos. Dessa forma todos
 	terão reservado um dia na semana para as famosas noites de poker com os amigos.</p>
 	<p>Defina um horário para chegada, um horário para o início. Incentive a pontualidade combinando uma quantidade diferenciada em fichas 
 	para aqueles que chegarem no horário.</p>
@@ -56,7 +56,7 @@
 	quantas fichas o jogador tem direito a cada recompra.</p>
 	<p>Torneios com rebuys ilimitados acabam gerando desigualdade pois nem todos estarão dispostos a gastar tanto em uma mesma noite, tendo que controlar
 	o estilo de jogo para se manter vivo na mesa.</p>
-	<p>Geralmente o período de Addon dá direito a uma quantidade de maior de fichas em relação ao Buyin. Isso aumentará o pode deixando o jogo mais interessante
+	<p>Geralmente o período de Addon dá direito a uma quantidade de maior de fichas em relação ao Buyin. Isso aumentará o pote deixando o jogo mais interessante
 	e competitivo.</p> 
 	
 	<h4>4 - Rake</h4>
