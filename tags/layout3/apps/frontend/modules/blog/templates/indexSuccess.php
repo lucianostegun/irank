@@ -6,9 +6,9 @@
 	<h2>7 Dicas para organizar seu próprio torneio de Poker</h2>
 	<h3>Publicado por <b>iRank</b> em <b>15/08/2012 22h40</b> nas categorias&nbsp;</h3>
 	<h3 class="tags">
-		<?php echo link_to('dicas', 'blog/tag/dicas') ?>, 
-		<?php echo link_to('poker', 'blog/tag/poker') ?>, 
-		<?php echo link_to('torneios', 'blog/tag/torneios') ?>
+		<?php echo link_to('dicas', 'blog?tag=dicas') ?>, 
+		<?php echo link_to('poker', 'blog?tag=poker') ?>, 
+		<?php echo link_to('torneios', 'blog?tag=torneios') ?>
 	</h3>
 	<div class="clear"></div>
 	<!-- AddThis Button BEGIN -->
