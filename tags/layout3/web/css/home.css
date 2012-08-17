@@ -191,6 +191,88 @@
 	color: 	#344F7C;
 }
 
+.channels .storeOfferHome {
+
+	position: relative;
+	top: 5px;
+	height: 300px
+}
+
+.channels .storeOfferHome img {
+
+	margin-left: 15px;
+	float: left;
+}
+
+.channels .storeOfferHome h1 {
+
+	float: left;
+	position: relative;
+	left: 15px;
+	top: 3px;
+	border-bottom: 2px solid #EAEAEA;
+	padding-bottom: 7px;
+}
+
+.channels .storeOfferHome .product {
+
+	width: 190px;
+	padding: 3px;
+	border: 1px solid #EAEAEA;
+	-moz-border-radius: 	5px;
+	-webkit-border-radius: 	5px;
+	border-radius: 			5px;
+	position: relative;
+	top: 3px;
+	left: 15px;
+	margin: 0;
+	height: auto;
+	background: #FFFFFF
+}
+
+.channels .storeOfferHome .product img {
+
+	position: relative;
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	-moz-border-radius: 	5px;
+	-webkit-border-radius: 	5px;
+	border-radius: 			5px;
+}
+
+.channels .storeOfferHome .product div.name {
+
+	position: relative;
+	width: 180px;
+	font-weight: bold;
+	font-size: 12px;
+	color: #425D95;
+	left: 10px;
+	top: 2px;
+	border-bottom: 1px solid #c0c0c0;
+	padding-bottom: 3px;
+}
+
+.channels .storeOfferHome .product div.prize {
+
+	float: right;
+	font-size: 12px;
+	font-weight: bold;
+	margin-right: 10px;
+	margin-top: 5px;
+	color: rgb(84, 134, 180);
+}
+
+.channels .storeOfferHome .product div.size {
+
+	float: left;
+	font-size: 10px;
+	font-weight: normal;
+	margin-left: 10px;
+	margin-top: 5px;
+	color: #303030;
+}
 
 
 

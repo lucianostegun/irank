@@ -21,8 +21,13 @@ class blogActions extends sfActions
 
 	if( $permalink )
     	$this->blogObj = BlogPeer::retrieveByPermalink($permalink);
-    else
-    	$this->blogObj = Blog::getLastArticle();
+    else{
+    	
+    	$blogObj   = Blog::getLastArticle();
+    	$permalink = $blogObj->getPermalink();
+    	$host    = $request->getHost();
+    	return $this->redirect("http://$host/blog/$permalink.html");
+    }
   }
   
   public function executeTag($request){

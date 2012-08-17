@@ -15,6 +15,13 @@
 
 <div class="channels">
 	<div class="channel">
+		<div class="image"><?php echo link_to(image_tag('home/blog'), 'blog/index') ?></div>
+		<div class="description">
+			<h1><?php echo link_to('Blog iRank', 'blog/index') ?></h1>
+			Artigos com dicas, informações, análises e novidades sobre o mundo do Poker.  
+		</div>
+	</div>
+	<div class="channel">
 		<div class="image"><?php echo link_to(image_tag('home/schedule'), 'schedule/index') ?></div>
 		<div class="description">
 			<h1><?php echo link_to('Calendário assinado', 'schedule/index') ?></h1>
@@ -42,6 +49,7 @@
 			Histórico de posições, total gastos, prêmios e tudo sobre os rankings nas datas que houveram eventos.
 		</div>
 	</div>
+	<?php include_partial('store/include/offerHome') ?>
 </div>
 
 <div class="clear"></div>
@@ -55,14 +63,8 @@ $zoomLeft  = 'home/eventPhoto?id='.$eventPhotoIdLeft.'&zoom=1';
 $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 ?>
 
-<div style="position: relative">
 <div class="eventLiveResumeArea">
-	<?php include_partial('home/resume/eventLive', array('limit'=>3, 'offset'=>0, 'includeTitle'=>true)); ?>
-</div>
-
-<div class="eventLiveResumeArea" style="position: absolute; top: 3px; left: 393px">
-	<?php include_partial('home/resume/eventLive', array('limit'=>3, 'offset'=>3, 'includeTitle'=>false)); ?>
-</div>
+	<?php include_partial('home/resume/eventLive', array('limit'=>5, 'offset'=>0, 'includeTitle'=>true)); ?>
 </div>
 
 <div id="photoVote">

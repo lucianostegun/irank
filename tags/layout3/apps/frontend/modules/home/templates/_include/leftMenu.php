@@ -31,7 +31,7 @@
 	<div class="separator"></div>
 	<div class="item<?php echo ($moduleName=='store'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon store" onclick="goToPage('store', 'myOrders')">Minhas compras</div><span class="numberTop" id="pendingInvitesCount"><?php echo $purchases ?></span></div>
 	<div class="item<?php echo ($moduleName=='statistic'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon stats" onclick="goToPage('statistic', 'index')">Estatísticas</div></div>
-	<div class="item<?php echo ($moduleName=='myAccount' && $actionName=='index'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon config" onclick="goToPage('myAccount', 'index')">Configurações</div></div>
+	<div class="item<?php echo ($moduleName=='myAccount' && $actionName=='index'?' active':'') ?>" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon config" onclick="goToPage('myAccount', 'index')">Minha conta</div></div>
 	<div class="separator"></div>
 	<div class="item" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon logout" onclick="goToPage('login', 'logout')">Desconectar</div></div>
 </div>

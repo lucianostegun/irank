@@ -1,6 +1,8 @@
 function doQuickLogin(){
 	
 	showIndicator();
+	hideDiv('loginErrorMessage');
+	showDiv('loginIndicator');
 	$('quickLoginForm').onsubmit();
 }
 
@@ -24,6 +26,7 @@ function handleFailureQuickLogin(content){
 		$('loginErrorMessage').innerHTML = content;
 
 	showDiv('loginErrorMessage');
+	hideDiv('loginIndicator');
 	hideIndicator();
 }
 

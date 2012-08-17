@@ -105,7 +105,7 @@
 	margin-bottom: 	7px;
 }
 
-#login #loginErrorMessage {
+#login #loginErrorMessage  {
 
 	display: 	none;
 	margin: 	-3px 0px 6px 15px;
@@ -121,4 +121,18 @@
 	color: 			#C91E1E;
 	text-shadow: 	#FFFFFF 1px 1px;
 	display: 		none;
+}
+
+
+
+
+
+
+#login #loginIndicator {
+
+	margin: 	-3px 0px 6px 15px;
+	color: 		#AC1B1B;
+	background: 	url('/images/ajaxLoaderForm.gif') no-repeat;
+	padding-left: 	24px;
+	display: none
 }
