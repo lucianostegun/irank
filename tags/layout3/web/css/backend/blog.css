@@ -1,4 +1,4 @@
-h1 {
+.widget.blogEditor .cleditorGroup #blogContent h1 {
 
 	margin: 0px 0px 0px 1px;
 	font-size: 14px;
@@ -7,7 +7,7 @@ h1 {
 	text-transform: uppercase;
 }
 
-h1.imageFooter {
+#blogContent h1.imageFooter {
 
 	margin: 4px 5px 0px 5px;
 	font-size: 12px;
@@ -15,17 +15,18 @@ h1.imageFooter {
 	padding: 0px;
 	text-transform: none;
 	width: 600px;
-	font-weight: normal
+	font-weight: normal;
+	color: #F00
 }
 
-h2 {
+.widget.blogEditor .cleditorGroup #blogContent h2 {
 
 	margin: 3px 0px;
 	padding: 0px;
 	font-size: 20px;
 }
 
-h3 {
+.widget.blogEditor .cleditorGroup #blogContent h3 {
 
 	float: left;
 	font-size: 12px;
@@ -35,12 +36,7 @@ h3 {
 	font-family: Calibri, Arial
 }
 
-h3.tags {
-
-	margin-left: 3px
-}
-
-h4 {
+.widget.blogEditor .cleditorGroup #blogContent h4 {
 
 	margin: 20px 0px -8px 0px;
 	padding: 0px;
@@ -48,14 +44,14 @@ h4 {
 	color: #4040404
 }
 
-p {
+.widget.blogEditor .cleditorGroup #blogContent p {
 
 	font-family: Verdana, Arial, Sans Serif, "Microsoft Sans serif", "Ms Sans serif";
 	margin-bottom: 10px;
 	width: 650px
 }
 
-div.distinctText {
+.widget.blogEditor .cleditorGroup #blogContent div.distinctText {
 
 	padding: 10px 20px;
 	background: #EAEAEA;
@@ -63,18 +59,18 @@ div.distinctText {
 	margin: 20px;
 }
 
-div.distinctText ul {
+.widget.blogEditor .cleditorGroup #blogContent div.distinctText ul {
 
 	margin: 0px;
 	padding: 0px
 }
 
-li {
+.widget.blogEditor .cleditorGroup #blogContent li {
 
 	line-height: 25px;
 }
 
-div.distinctText li {
+.widget.blogEditor .cleditorGroup #blogContent div.distinctText li {
 
 	list-style-type: none
 }

@@ -1,0 +1,85 @@
+.storeOfferBar {
+
+	margin-top: 15px;
+	width: 200px;
+}
+
+.storeOfferBar h1 {
+
+	font-size: 18px;
+	text-transform: none;
+	margin-bottom: 0px;
+	padding-left: 30px;
+	padding: 2px 6px 7px 36px;
+	background: url('/images/store/icon.png') 3px -2px no-repeat;
+	color: #303030
+}
+
+.storeOfferBar h1 a {
+
+	color: #303030;
+	text-decoration: none
+}
+
+.storeOfferBar hr {
+
+	margin: 5px 0px
+}
+
+.storeOfferBar div.product {
+
+	position: relative;
+	width: 198px;
+	text-align: left;
+	border: 1px solid #DADADA;
+	margin: 10px 0px;
+	padding: 10px 0px
+}
+
+.storeOfferBar div.product img {
+
+	position: relative;
+	left: 10px;
+	z-index: 0;
+}
+
+.storeOfferBar div.product .distinct.new {
+
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	z-index: 1
+}
+
+.storeOfferBar div.product div.name {
+
+	position: relative;
+	width: 180px;
+	font-weight: bold;
+	font-size: 12px;
+	color: #425D95;
+	left: 10px;
+	top: 2px;
+	border-bottom: 1px solid #c0c0c0;
+	padding-bottom: 3px;
+}
+
+.storeOfferBar div.product div.prize {
+
+	float: right;
+	font-size: 12px;
+	font-weight: bold;
+	margin-right: 10px;
+	margin-top: 5px;
+	color: rgb(84, 134, 180);
+}
+
+.storeOfferBar div.product div.size {
+
+	float: left;
+	font-size: 10px;
+	font-weight: normal;
+	margin-left: 10px;
+	margin-top: 5px;
+	color: #303030;
+}

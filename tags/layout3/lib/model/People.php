@@ -95,6 +95,7 @@ class People extends BasePeople
 		
 	  	$firstName    = $request->getParameter('firstName');
 	  	$lastName     = $request->getParameter('lastName');
+	  	$nickname     = $request->getParameter('nickname');
 	  	$peopleName   = $request->getParameter('peopleName');
 	  	$birthday     = $request->getParameter('birthday');
 	  	$emailAddress = $request->getParameter('emailAddress');
@@ -108,6 +109,7 @@ class People extends BasePeople
 		  	$this->setLastName( $lastName );
 	  	}
 	  	
+	  	$this->setNickname( nvl($nickname) );
 	  	$this->setEmailAddress( nvl($emailAddress) );
 	  	$this->setBirthday( Util::formatDate($birthday) );
 	  	$this->setPhoneNumber( nvl($phoneNumber) );

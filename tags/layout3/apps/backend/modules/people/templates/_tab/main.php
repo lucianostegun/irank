@@ -17,6 +17,15 @@
 	</div>
 
 	<div class="formRow">
+		<label>Apelido</label>
+		<div class="formRight">
+			<?php echo input_tag('nickname', $peopleObj->getNickname(), array('size'=>20, 'maxlength'=>16, 'id'=>'peopleNickname')) ?>
+			<div class="formNote error" id="peopleFormErrorNickname"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
 		<label>E-mail</label>
 		<div class="formRight">
 			<?php echo input_tag('emailAddress', $peopleObj->getEmailAddress(), array('size'=>50, 'maxlength'=>100, 'id'=>'peopleEmailAddress')) ?>

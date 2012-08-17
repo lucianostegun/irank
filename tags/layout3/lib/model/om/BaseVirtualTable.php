@@ -120,6 +120,12 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	protected $lastCashTablePlayerBuyinCriteria = null;
 
 	
+	protected $collBlogList;
+
+	
+	protected $lastBlogCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -561,6 +567,14 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collBlogList !== null) {
+				foreach($this->collBlogList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -692,6 +706,14 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 				if ($this->collCashTablePlayerBuyinList !== null) {
 					foreach($this->collCashTablePlayerBuyinList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collBlogList !== null) {
+					foreach($this->collBlogList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -943,6 +965,10 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 			foreach($this->getCashTablePlayerBuyinList() as $relObj) {
 				$copyObj->addCashTablePlayerBuyin($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getBlogList() as $relObj) {
+				$copyObj->addBlog($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -2438,6 +2464,111 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 		$this->lastCashTablePlayerBuyinCriteria = $criteria;
 
 		return $this->collCashTablePlayerBuyinList;
+	}
+
+	
+	public function initBlogList()
+	{
+		if ($this->collBlogList === null) {
+			$this->collBlogList = array();
+		}
+	}
+
+	
+	public function getBlogList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseBlogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collBlogList === null) {
+			if ($this->isNew()) {
+			   $this->collBlogList = array();
+			} else {
+
+				$criteria->add(BlogPeer::BLOG_CATEGORY_ID, $this->getId());
+
+				BlogPeer::addSelectColumns($criteria);
+				$this->collBlogList = BlogPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(BlogPeer::BLOG_CATEGORY_ID, $this->getId());
+
+				BlogPeer::addSelectColumns($criteria);
+				if (!isset($this->lastBlogCriteria) || !$this->lastBlogCriteria->equals($criteria)) {
+					$this->collBlogList = BlogPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastBlogCriteria = $criteria;
+		return $this->collBlogList;
+	}
+
+	
+	public function countBlogList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseBlogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(BlogPeer::BLOG_CATEGORY_ID, $this->getId());
+
+		return BlogPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addBlog(Blog $l)
+	{
+		$this->collBlogList[] = $l;
+		$l->setVirtualTable($this);
+	}
+
+
+	
+	public function getBlogListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseBlogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collBlogList === null) {
+			if ($this->isNew()) {
+				$this->collBlogList = array();
+			} else {
+
+				$criteria->add(BlogPeer::BLOG_CATEGORY_ID, $this->getId());
+
+				$this->collBlogList = BlogPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(BlogPeer::BLOG_CATEGORY_ID, $this->getId());
+
+			if (!isset($this->lastBlogCriteria) || !$this->lastBlogCriteria->equals($criteria)) {
+				$this->collBlogList = BlogPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastBlogCriteria = $criteria;
+
+		return $this->collBlogList;
 	}
 
   public function getCulture()

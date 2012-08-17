@@ -1,0 +1,36 @@
+fields:
+       
+  title:
+    required:
+      msg:       form.error.requiredField
+       
+  shortTitle:
+    required:
+      msg:       form.error.requiredField
+
+  blogCategoryId:
+    required:
+      msg:       form.error.requiredField
+
+  permalink:
+    required:
+      msg:       form.error.requiredField
+    sfRegexValidator:
+      match:        Yes
+      match_error:  Permalink inválido. Utilize apenas letras, números e traços
+      pattern:      /^[a-z0-9\-]*$/s
+    sfCallbackValidator:
+      callback:      [BlogPeer, uniquePermalink]
+      invalid_error: Este nome não pode ser utilizado pois já está em uso por outro clube
+
+  tags:
+    required:
+      msg:       [tags_tagsinput]form.error.requiredField
+
+  content:
+    required:
+      msg:       form.error.requiredField
+      
+  content:
+    required:
+      msg:       form.error.requiredField

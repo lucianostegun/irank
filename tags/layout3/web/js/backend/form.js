@@ -34,12 +34,12 @@ function handleFormFieldError( content, instanceName ){
 
 		    var fieldName    = fieldNameList[i];
 		    var errorMessage = formErrorObj[fieldName];
-					    
-		    if( (/^\[([a-zA-Z0-9]*)\]/).test(errorMessage) ){
+		    
+		    if( (/^\[([a-zA-Z0-9_]*)\]/).test(errorMessage) ){
 							 	   
-		    	var matches = errorMessage.match(/^\[([a-zA-Z0-9]*)\]/)
+		    	var matches = errorMessage.match(/^\[([a-zA-Z0-9_]*)\]/)
 		    	fieldName   = matches[1];
-									 	   
+							 	   
 		    	errorMessage = errorMessage.replace(matches[0], '');
 		    	errorMessage = errorMessage.replace('form.error.requiredField', 'Este campo é obrigatório e não foi preenchido');
 		    	errorMessage = Trim(errorMessage);

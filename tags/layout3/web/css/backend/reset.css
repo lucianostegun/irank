@@ -137,7 +137,6 @@ a { text-decoration: none; color: #2b6893; }
 
 .pr10 { padding-right: 10px; }
 
-
 input::-moz-focus-inner /*Remove button padding in FF*/
 { 
     border: 0;

@@ -9,7 +9,7 @@
  */ 
 class Product extends BaseProduct
 {
-	
+
 	public function toString(){
 		
 		$productCategoryObj = $this->getProductCategory();
