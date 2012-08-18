@@ -37,7 +37,11 @@ email_log:
   
 # REGRAS PARA O BLOG
 blog_by_title:
-  url:    blog/:permalink.html
+  url:    blog/:permalink
+  param:  { module: blog, action: article }
+
+article_by_title:
+  url:    blog/article/:permalink
   param:  { module: blog, action: article }
   
   
@@ -48,6 +52,7 @@ blog_by_title:
 homepage:
   url:   /
   param: { module: home, action: index }
+#  param: { module: maintenance, action: index }
 
 default_symfony:
   url:   /symfony/:action/*
@@ -55,10 +60,12 @@ default_symfony:
 
 default_index:
   url:   /:module
+#  url:   /maintenance
   param: { action: index }
 
 default:
   url:   /:module/:action/*
+#  url:   /maintenance/index/*
 
   
   

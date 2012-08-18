@@ -85,7 +85,7 @@ class Schedule {
 	    $resultSet = Util::executeQuery(sprintf($sql, $this->peopleId, $this->startDate));
 	    
 	    $nl   = Schedule::NEW_LINE;
-	    $host = MyTools::getRequest()->getHost();
+	    $host = 'www.irank.com.br';
 	    
 	    while( $resultSet->next() ){
 	    	
@@ -144,7 +144,7 @@ class Schedule {
 			$event .= "LOCATION:$eventPlace".$nl;
 			if( $comments )
 				$event .= "DESCRIPTION:$comments".$nl;
-			$event .= "URL;VALUE=URI:http://$host/eventLive/details/$eventIdBase64".$nl;
+			$event .= "URL;VALUE=URI:http://$host/event/show/id/$eventIdBase64".$nl;
 			$event .= "STATUS:CONFIRMED".$nl;
 			$event .= "SEQUENCE:{$this->sequence}".$nl;
 			$event .= "SUMMARY:$rankingName\\n$eventName".$nl;
@@ -188,7 +188,7 @@ class Schedule {
 	    $resultSet = Util::executeQuery(sprintf($sql, $this->startDate));
 	    
 	    $nl   = Schedule::NEW_LINE;
-	    $host = MyTools::getRequest()->getHost();
+	    $host = 'www.irank.com.br';
 	    
 	    while( $resultSet->next() ){
     
