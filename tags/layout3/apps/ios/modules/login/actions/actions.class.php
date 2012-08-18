@@ -16,7 +16,6 @@ class loginActions extends sfActions
   	
   	$language = $this->getRequestParameter('language');
   	$culture  = Util::getConvertCulture($language);
-  	
   	MyTools::setCulture($culture);
   }
 
@@ -44,10 +43,10 @@ class loginActions extends sfActions
 		$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
 		
-		if( $deviceUDID )
-			$userSiteObj->buildMobileToken($deviceUDID);
-		
 		if( is_object($userSiteObj) ){
+			
+			if( $deviceUDID )
+				$userSiteObj->buildMobileToken($deviceUDID);
 			
 			$infoList = $userSiteObj->getInfo(true);
 			$infoList['mobileToken']  = $userSiteObj->getMobileToken();

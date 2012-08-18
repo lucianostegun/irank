@@ -11,7 +11,7 @@
 	<div class="where">@ <?php echo $eventObj->getRankingPlace()->getPlaceName() ?></div>
 	<div class="ranking">[<?php echo $eventObj->getRanking()->getRankingName() ?>]</div>
 	<div class="presence result">
-		<?php echo link_to('Ver resultado', 'goToPage("event", "show", "id", '.$eventObj->getId().')', array('class'=>'no')); ?>
+		<?php echo link_to('Ver resultado', '#goToPage("event", "show", "id", '.$eventObj->getId().')', array('class'=>'no')); ?>
 	</div>
 	<div class="clear"></div>
 </div>

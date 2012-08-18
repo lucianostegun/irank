@@ -3,6 +3,8 @@ prod:
     no_script_name:         off
     cache:                  off
     i18n:                   on
+    logging_enabled:        off
+    charset                 utf-8
 
 dev:
   .settings:
@@ -12,6 +14,8 @@ dev:
     no_script_name:         off
     etag:                   off
     i18n:                   on
+    logging_enabled:        off
+    charset                 utf-8
 
 test:
   .settings:
@@ -20,6 +24,7 @@ test:
     web_debug:              off
     no_script_name:         off
     etag:                   off
+    log:                    off
 
 all:
   .settings:

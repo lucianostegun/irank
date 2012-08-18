@@ -11,6 +11,18 @@ class storeActions extends sfActions
 {
 
   public function preExecute(){
+  	
+  	if( !isset($_SERVER['HTTPS']) || $_SERVER['HTTPS']!='on' ){
+  		
+  		if( isset($_SERVER['REDIRECT_SCRIPT_URI']) )
+  			$redirectUrl = $_SERVER['REDIRECT_SCRIPT_URI'];
+  		else
+  			$redirectUrl = $_SERVER['SCRIPT_URI'];
+  		
+  		$redirectUrl = str_replace('http://', 'https://', $redirectUrl);
+  		
+  		return $this->redirect($redirectUrl);
+  	}
     
     $this->cartSession = $this->getUser()->getAttribute('iRankStoreCartSession');
     
@@ -22,6 +34,10 @@ class storeActions extends sfActions
     
     $libDir = sfConfig::get('sf_lib_dir');
 	require_once "$libDir/pagseguro/PagSeguroLibrary.php";
+  	
+  	$this->facebookMetaList = array();
+  	$this->facebookMetaList['image'] = 'http://[host]/images/store/storeLogo.png';
+  	$this->facebookMetaList['url']   = 'https://[host]/store';
   }
   
   public function executeIndex($request){
@@ -34,10 +50,8 @@ class storeActions extends sfActions
   	$productCode      = $request->getParameter('productCode');
   	$this->productObj = ProductPeer::retrieveByCode($productCode);
   	
-  	$this->facebookMetaList = array();
   	$this->facebookMetaList['title']       = 'iRank Store :: '.$this->productObj->toString(true);
   	$this->facebookMetaList['description'] = $this->productObj->getDescription();
-  	$this->facebookMetaList['type']        = 'website';
   	$this->facebookMetaList['url']         = 'http://[host]/store/details/'.$this->productObj->getProductCode();
   	
   	$this->facebookMetaList['image'] = array();
