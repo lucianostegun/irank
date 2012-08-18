@@ -367,18 +367,21 @@ function include_metas()
 function include_facebook_metas($facebookMetaList)
 {
 	
-	$host = MyTools::getRequest()->getHost();
+	$host  = MyTools::getRequest()->getHost();
+	$metas = sfContext::getInstance()->getResponse()->getMetas();
 	
 	if( !isset($facebookMetaList['image']) )
 		$facebookMetaList['image'] = array();
-	elseif( !is_array($facebookMetaList) )
+	elseif( !is_array($facebookMetaList['image']) )
 		$facebookMetaList['image'] = array($facebookMetaList['image']);
 	
 	$facebookMetaList['image'][] = 'http://[host]/images/layout/mediaLogo.png';
 	$facebookMetaList['image']   = array_unique($facebookMetaList['image']);
 	
-	if( !isset($facebookMetaList['url']) )
-		$facebookMetaList['url'] = 'http://[host]';
+	if( !isset($facebookMetaList['url']) )  $facebookMetaList['url'] = 'http://[host]';
+	if( !isset($facebookMetaList['type']) ) $facebookMetaList['type'] = 'website';
+	if( !isset($facebookMetaList['title']) ) $facebookMetaList['title'] = $metas['title'];
+	if( !isset($facebookMetaList['description']) ) $facebookMetaList['description'] = $metas['description'];
 	
 	foreach($facebookMetaList as $property=>$content){
 		
@@ -387,9 +390,10 @@ function include_facebook_metas($facebookMetaList)
 			$imageList = $content;
 			foreach($imageList as $image){
 
-				$image = str_replace('[host]', $host, $image);
+				$image    = str_replace('[host]', $host, $image);
 				echo "<meta property=\"og:image\" content=\"$image\" />\n";
 			}
+			
 			continue;
 		}
 		

@@ -241,7 +241,6 @@ class EventLive extends BaseEventLive
 				$eventLiveObj->setTablesNumber($rankingLiveObj->getTablesNumberSatellite());
 				$eventLiveObj->setIsIlimitedRebuys($rankingLiveObj->getIsIlimitedRebuysSatellite());
 				$eventLiveObj->setIsSatellite(true);
-				$eventLiveObj->setSuppressRanking(true);
 				$eventLiveObj->setIsMultiday(false);
 				$eventLiveObj->save($con);
 			}

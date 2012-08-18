@@ -853,12 +853,18 @@ class Util {
 	
 	public static function getApp(){
 		
-		$scriptName = MyTools::getRequest()->getScriptName();
-		$scriptName = preg_replace('/[^a-zA-Z]/', '', $scriptName);
-		$scriptName = preg_replace('/(dev)?php$/', '', $scriptName);
+		$httpHost = $_SERVER['HTTP_HOST'];
+		$httpHost = preg_replace('/\..*$/', '', $httpHost);
 		
-		$scriptName = ($scriptName=='index'?'frontend':$scriptName);
-		return $scriptName;
+		switch($httpHost){
+			case 'www':
+				$httpHost = 'frontend';
+				break;
+			default:
+				break;
+		}
+		
+		return $httpHost;
 	}
 	
 	public static function isApp($app){
