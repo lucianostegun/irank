@@ -364,24 +364,45 @@ function include_metas()
   }
 }
 
-function include_facebook_metas($facbookMetaList)
+function include_facebook_metas($facebookMetaList)
 {
 	
 	$host = MyTools::getRequest()->getHost();
 	
-	if( !isset($facbookMetaList['image']) )
-		$facbookMetaList['image'] = "http://$host/images/layout/mediaLogo.png";
-	else
-		$facbookMetaList['image2'] = "http://$host/images/layout/mediaLogo.png";
+	if( !isset($facebookMetaList['image']) )
+		$facebookMetaList['image'] = array();
+	elseif( !is_array($facebookMetaList) )
+		$facebookMetaList['image'] = array($facebookMetaList['image']);
 	
-	if( !isset($facbookMetaList['url']) )
-		$facbookMetaList['url'] = 'http://www.irank.com.br';
+	$facebookMetaList['image'][] = 'http://[host]/images/layout/mediaLogo.png';
+	$facebookMetaList['image']   = array_unique($facebookMetaList['image']);
+	
+	if( !isset($facebookMetaList['url']) )
+		$facebookMetaList['url'] = 'http://[host]';
+	
+	foreach($facebookMetaList as $property=>$content){
+		
+		if( $property=='image' && is_array($content) ){
+			
+			$imageList = $content;
+			foreach($imageList as $image){
 
-	foreach($facbookMetaList as $property=>$content){
+				$image = str_replace('[host]', $host, $image);
+				echo "<meta property=\"og:image\" content=\"$image\" />\n";
+			}
+			continue;
+		}
+		
+		$content = str_replace('[host]', $host, $content);
+		$content = str_replace('"', '&quot;', $content);
+		$content = strip_tags($content);
 		
 		$content = str_replace('[host]', $host, $content);
 		echo "<meta property=\"og:$property\" content=\"$content\" />\n";
 	}
+	
+	echo "<meta property=\"fb:admins\" content=\"1424201846\" />\n";
+	echo "<meta property=\"fb:app_id\" content=\"173327886080667\" />\n";	
 }
 
 /**

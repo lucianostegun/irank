@@ -10,13 +10,13 @@
 class Product extends BaseProduct
 {
 
-	public function toString(){
+	public function toString($useShortName=false){
 		
 		$productCategoryObj = $this->getProductCategory();
 		$categoryName       = $productCategoryObj->getCategoryName();
 		$categoryShortName  = $productCategoryObj->getShortName();
 		$tagName            = $productCategoryObj->getTagName();
-		$productName        = $this->getProductName();
+		$productName        = ($useShortName?$this->getShortName():$this->getProductName());
 		
 		$productName = str_replace($categoryShortName.' ', '', $productName);
 		
