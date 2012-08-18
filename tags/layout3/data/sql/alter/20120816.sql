@@ -32,5 +32,3 @@ WHERE
     virtual_table_name = 'blogCategory';
 
 ALTER TABLE people ADD COLUMN nickname VARCHAR(16);
-
-UPDATE blog SET created_at = '2012-08-15 22:15'

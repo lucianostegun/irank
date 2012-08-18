@@ -38,7 +38,7 @@ email_log:
 # REGRAS PARA O BLOG
 blog_by_title:
   url:    blog/:permalink.html
-  param:  { module: blog, action: index }
+  param:  { module: blog, action: article }
   
   
   
