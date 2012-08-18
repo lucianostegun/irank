@@ -198,6 +198,15 @@
 	height: 300px
 }
 
+.channels .storeOfferHome .header {
+
+	position: relative;
+	height: 52px;
+	border-top: 1px solid #EAEAEA;
+	border-bottom: 1px solid #EAEAEA;
+	background: #FAFAFA
+}
+
 .channels .storeOfferHome img {
 
 	margin-left: 15px;
@@ -210,21 +219,21 @@
 	position: relative;
 	left: 15px;
 	top: 3px;
-	border-bottom: 2px solid #EAEAEA;
 	padding-bottom: 7px;
+}
+
+.channels .storeOfferHome a h1 {
+
+	color: #505050
 }
 
 .channels .storeOfferHome .product {
 
-	width: 190px;
+	width: 213px;
 	padding: 3px;
-	border: 1px solid #EAEAEA;
-	-moz-border-radius: 	5px;
-	-webkit-border-radius: 	5px;
-	border-radius: 			5px;
 	position: relative;
-	top: 3px;
-	left: 15px;
+	top: 0px;
+	left: 5px;
 	margin: 0;
 	height: auto;
 	background: #FFFFFF
@@ -233,25 +242,25 @@
 .channels .storeOfferHome .product img {
 
 	position: relative;
-	margin-top: 5px;
-	margin-left: 5px;
+	margin-top: 0px;
+	margin-left: 17px;
 	margin-bottom: 5px;
-	-moz-border-radius: 	5px;
-	-webkit-border-radius: 	5px;
-	border-radius: 			5px;
+	padding: 5px;
+	background: #F0F0F0
 }
 
 .channels .storeOfferHome .product div.name {
 
 	position: relative;
-	width: 180px;
+	width: 200px;
 	font-weight: bold;
 	font-size: 12px;
 	color: #425D95;
-	left: 10px;
+	left: 5px;
 	top: 2px;
-	border-bottom: 1px solid #c0c0c0;
+	border-bottom: 1px solid #DADADA;
 	padding-bottom: 3px;
+	padding-left: 5px;
 }
 
 .channels .storeOfferHome .product div.prize {

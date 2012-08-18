@@ -1,5 +1,7 @@
 <?php
 	include_partial('home/component/commonBar', array('pathList'=>array('Artigos'=>'blog/index', $blogObj->getShortTitle()=>null)));
+	
+	sfContext::getInstance()->getResponse()->setTitle('iRank Blog :: '.$blogObj->getTitle());
 ?>
 <div class="moduleIntro">
 	<h1><?php echo $blogObj->getBlogCategory()->getDescription() ?></h1>

@@ -1,7 +1,12 @@
 all:
 
   metas:
-    title:        iRank Store - Poker Ranking
+    title:           iRank Store - Poker Ranking
+    robots:          index, follow
+    description:     A loja virtual iRank oferece camisetas, acessórios e artigos exclusivos voltados ao mundo do poker. 
+    keywords:        irank, store, camisetas, artigos, acessórios, poker, botão delaer
+    language:        pt
+    viewport:        width=device-width; initial-scale=0.7; maximum-scale=1; user-scalable=yes
   
   stylesheets:    [quickResume, table, store]
   javascripts:    [store]

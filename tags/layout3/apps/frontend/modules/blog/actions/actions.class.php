@@ -13,15 +13,24 @@ class blogActions extends sfActions
   public function preExecute(){
     
     $this->showStoreBar = true;
+    $this->facebookMetaList = array();
+	$this->facebookMetaList['image'] = 'http://[host]/images/blog/logo.png';
   }
   
   public function executeIndex($request){
+  	
+	return $this->forward('blog', 'article');
+  }
+  
+  public function executeArticle($request){
     
     $permalink = $request->getParameter('permalink');
 
-	if( $permalink )
+	if( $permalink ){
+    	
     	$this->blogObj = BlogPeer::retrieveByPermalink($permalink);
-    else{
+		$this->facebookMetaList['description'] = $this->blogObj->getCaption();
+	}else{
     	
     	$blogObj   = Blog::getLastArticle();
     	$permalink = $blogObj->getPermalink();

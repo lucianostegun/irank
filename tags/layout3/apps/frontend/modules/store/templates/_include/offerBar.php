@@ -2,8 +2,12 @@
 	MyTools::addStylesheet('storeBar');
 ?>
 <div class="storeOfferBar">
-	<h1><?php echo link_to('iRank Store', 'store/index') ?></h1>
-	<hr/>
+	<div class="header">
+		<a href="<?php echo url_for('store/index') ?>">
+			<div class="image"><?php echo image_tag('store/icon') ?></div>
+			<h1>iRank Store</h1>
+		</a>
+	</div>
 	<?php
 		$criteria = new Criteria();
 		$criteria->addAscendingOrderByColumn('RANDOM()');
