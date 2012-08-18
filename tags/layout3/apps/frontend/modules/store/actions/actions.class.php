@@ -33,6 +33,24 @@ class storeActions extends sfActions
   	
   	$productCode      = $request->getParameter('productCode');
   	$this->productObj = ProductPeer::retrieveByCode($productCode);
+  	
+  	$this->facebookMetaList = array();
+  	$this->facebookMetaList['title']       = 'iRank Store :: '.$this->productObj->toString(true);
+  	$this->facebookMetaList['description'] = $this->productObj->getDescription();
+  	$this->facebookMetaList['type']        = 'website';
+  	$this->facebookMetaList['url']         = 'http://[host]/store/details/'.$this->productObj->getProductCode();
+  	
+  	$this->facebookMetaList['image'] = array();
+  	
+  	for($imageIndex=1; $imageIndex <= 5; $imageIndex++){
+						
+		$function = "getImage$imageIndex";
+		$fileName = $this->productObj->$function();
+		if( is_null($fileName) )
+			continue;
+	
+		$this->facebookMetaList['image'][] = "http://[host]/images/store/product/full/$fileName";	
+	}
   }
 
   public function executeTshirtSizes($request){
