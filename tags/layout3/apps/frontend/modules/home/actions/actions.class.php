@@ -206,11 +206,27 @@ class homeActions extends sfActions
   		$pollAnswerObj->setUserResponse(($userResponse+1));
   		$pollAnswerObj->save();
   		
+  		$pollObj = $pollAnswerObj->getPoll();
+  		
   		$pollIdList   = MyTools::getAttribute('answeredPollIdList');
   		$pollIdList   = explode(',', $pollIdList);
   		$pollIdList[] = $pollId;
   		
   		MyTools::setAttribute('answeredPollIdList', implode(',', $pollIdList) );
+  		
+  		$totalAnswers = $pollObj->getTotalAnswers();
+  		foreach($pollObj->getPollAnswerList() as $pollAnswerObj){
+  			
+  			$percentAnswer = (100*$pollAnswerObj->getUserResponse())/$totalAnswers;
+  			$percentAnswer = Util::formatFloat($percentAnswer, true);
+  			
+  			$position = ($percentAnswer*145)/100;
+  			$position = $position-145;
+  			
+ 			echo '<div class="optionReport">'.$pollAnswerObj->getAnswer().' '.$percentAnswer.'%';
+ 			echo '	<div class="optionReportBar" style="background-position: '.$position.'px"></div>';
+ 			echo '</div>';
+	  	}
   	}
   	
   	exit;

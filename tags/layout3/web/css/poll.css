@@ -58,3 +58,21 @@
 	color: 				#505050;
 	text-decoration: 	none;
 }
+
+#handPoll .options .optionReport {
+
+	margin-top: 	2px;
+	margin-left: 	3px;
+	padding: 		2px 4px 2px 8px;
+	width: 			145px;
+	font-size: 		12px;
+	font-family:	Arial;
+}
+
+#handPoll .options .optionReportBar {
+
+	background:		url('/images/optionReportBar.png') no-repeat;
+	border:			1px solid #C0C0C0;
+	width: 			145px;
+	height:			5px;
+}

@@ -63,4 +63,9 @@ class Poll extends BasePoll
 		
 		return PollPeer::doSelect( $criteria );
 	}
+	
+	public function getTotalAnswers(){
+		
+		return Util::executeOne('SELECT SUM(user_response) FROM poll_answer WHERE poll_id='.$this->getId().' AND user_response IS NOT NULL');
+	}
 }
