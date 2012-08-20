@@ -17,7 +17,7 @@ function doLogin(){
 			$(this).show();
 			$('#indicator').hide();
 		});
-		
+		alert(t.responseText)
 		if( isDebug() )
 			debugAdd(t.responseText);
 	}

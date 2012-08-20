@@ -31,7 +31,7 @@ class blogActions extends sfActions
 	$host      = $request->getHost();
 	$permalink = $blogObj->getPermalink();
 	
-	return $this->redirect("blog/article/$permalink.html");
+	return $this->redirect("blog/article?$permalink=");
   }
   
   public function executeArticle($request){

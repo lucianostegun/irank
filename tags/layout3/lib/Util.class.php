@@ -861,6 +861,12 @@ class Util {
 				$httpHost = 'frontend';
 				break;
 			default:
+				$scriptName = MyTools::getRequest()->getScriptName();
+				$scriptName = preg_replace('/[^a-zA-Z]/', '', $scriptName);
+				$scriptName = preg_replace('/(dev)?php$/', '', $scriptName);
+				
+				$scriptName = ($scriptName=='index'?'frontend':$scriptName);
+				return $scriptName;
 				break;
 		}
 		

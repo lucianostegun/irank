@@ -51,12 +51,23 @@ class Purchase extends BasePurchase
 		$shippingDate = $request->getParameter('shippingDate');
 		$tracingCode  = $request->getParameter('tracingCode');
 		
-		$this->setShippingDate( Util::formatDate($shippingDate) );
-		$this->setTracingCode( strtoupper($tracingCode) );
-		$this->save();
+		$con = Propel::getConnection();
+		$con->begin();
 		
-		if( $this->getOrderStatus()!=$orderStatus )
-			$this->addStatusLog(date('d/m/Y H:i:s'), strtoupper(md5($this->getId().$orderStatus.microtime())), $this->getOrderStatusList($orderStatus), 'Não informado', 0, 1, 'iRank Admin');
+		try{
+			
+			$this->setShippingDate( Util::formatDate($shippingDate) );
+			$this->setTracingCode( strtoupper($tracingCode) );
+			$this->save($con);
+			
+			if( $this->getOrderStatus()!=$orderStatus )
+				$this->addStatusLog(date('d/m/Y H:i:s'), strtoupper(md5($this->getId().$orderStatus.microtime())), $this->getOrderStatusList($orderStatus), 'Não informado', 0, 1, 'iRank Admin', $con);
+			
+			$con->commit();
+		}catch(Exception $e){
+			
+			$con->rollback();
+		}
 	}
 	
 	public static function getList(Criteria $criteria=null){
@@ -145,7 +156,7 @@ class Purchase extends BasePurchase
 		switch($paymethod){
 			case 'billet':
 				$paymentLabel = 'Imprimir boleto';
-				$paymentUrl   = 'http://[host]/store/billet/'.$orderNumber;
+				$paymentUrl   = 'https://[host]/store/billet/'.$orderNumber;
 				break;
 			case 'pagseguro':
 				$paymentLabel = 'URL para pagamento';
@@ -219,13 +230,12 @@ class Purchase extends BasePurchase
 		$emailLogId = $emailLogObj->getId();
 		
 		$optionList = array('emailTemplate'=>'emailTemplateStore',
+							'smtpUsername'=>'store@irank.com.br',
+							'smtpPassword'=>'L0ja#5t0riR4nk',
 							'senderName'=>'iRank Store',
 							'replyTo'=>'store@irank.com.br',
 							'emailLogId'=>$emailLogId);
 		
-//		echo $emailSubject;
-//		echo '<hr/>';
-//		echo $emailContent;exit;
 		Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 	}
 	
@@ -367,7 +377,7 @@ class Purchase extends BasePurchase
 		$this->updateOrderStatusFromPagSeguro($purchaseTransactionLogObj);
 	}
 	
-	public function addStatusLog($transactionDate, $transactionCode, $transactionStatus, $paymethodType, $extraAmount, $installmentCount, $changeSource){
+	public function addStatusLog($transactionDate, $transactionCode, $transactionStatus, $paymethodType, $extraAmount, $installmentCount, $changeSource, $con=null){
 
 		$orderStatus = strtolower($transactionStatus);
 		$orderStatus = String::removeAccents($orderStatus);
@@ -425,7 +435,7 @@ class Purchase extends BasePurchase
 		$purchaseStatusLogObj->setChangeSource($changeSource);
 		$purchaseStatusLogObj->save();
 		
-		$this->updateOrderStatus($orderStatus, $purchaseStatusLogObj->getId());
+		$this->updateOrderStatus($orderStatus, $purchaseStatusLogObj->getId(), $con);
 	}
 	
 	private function updateOrderStatusFromPagSeguro($purchaseTransactionLogObj){
@@ -440,7 +450,7 @@ class Purchase extends BasePurchase
 		$this->addStatusLog($purchaseTransactionLogObj->getUpdatedAt('d/m/Y H:i:s'), $purchaseTransactionLogObj->getTransactionCode(), $transactionStatus, $paymethodType, $purchaseTransactionLogObj->getExtraAmount(), $purchaseTransactionLogObj->getInstallmentCount(), 'PagSeguro');
 	}
 	
-	public function updateOrderStatus($orderStatus, $purchaseStatusLogId){
+	public function updateOrderStatus($orderStatus, $purchaseStatusLogId, $con){
 		
 		$currentOrderStatus = $this->getOrderStatus();
 		
@@ -456,32 +466,21 @@ class Purchase extends BasePurchase
 			$this->setRefusalReason('Compra cancelada');
 		}
 		
-		$con = Propel::getConnection();
-		$con->begin();
+		$this->setOrderStatus($orderStatus);
+		$this->setHasNewStatus(($orderStatus!='new'));
+		$this->save($con);
 		
-		try{
+		if( in_array($orderStatus, array('new', 'approved', 'shipped', 'refused', 'canceled')) )
+			$this->notify($purchaseStatusLogId);
 			
-			$this->setOrderStatus($orderStatus);
-			$this->setHasNewStatus(($orderStatus!='new'));
-			$this->save($con);
-			
-			if( in_array($orderStatus, array('new', 'approved', 'shipped', 'refused', 'canceled')) )
-				$this->notify($purchaseStatusLogId);
-				
-			// Se o status atual não for ENTREGUE ou ENVIADO, decrementa o estoque atual
-			if( $orderStatus=='shipped' && !in_array($currentOrderStatus, array('complete')) ||
-				$orderStatus=='complete' && !in_array($currentOrderStatus, array('shipped')) )
-				$this->updateProductStock('decrase', $con);
-			
-			// Se por acaso o status voltar de ENTREGUE ou ENVIADO para qualquer outro status, incrementa o estoque atual
-			if( !in_array($orderStatus, array('shipped', 'complete')) && in_array($currentOrderStatus, array('shipped', 'complete')) )
+		// Se o status atual não for ENTREGUE ou ENVIADO, decrementa o estoque atual
+		if( $orderStatus=='shipped' && !in_array($currentOrderStatus, array('complete')) ||
+			$orderStatus=='complete' && !in_array($currentOrderStatus, array('shipped')) )
+			$this->updateProductStock('decrase', $con);
+		
+		// Se por acaso o status voltar de ENTREGUE ou ENVIADO para qualquer outro status, incrementa o estoque atual
+		if( !in_array($orderStatus, array('shipped', 'complete')) && in_array($currentOrderStatus, array('shipped', 'complete')) )
 				$this->updateProductStock('incrase', $con);
-			
-			$con->commit();
-		}catch(Exception $e){
-			
-			$con->rollback();
-		}
 	}
 }
 

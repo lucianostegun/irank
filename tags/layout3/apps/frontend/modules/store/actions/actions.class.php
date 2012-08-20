@@ -437,9 +437,8 @@ class storeActions extends sfActions
 	  		$purchaseObj->save($con);
 		}
   		
+  		$purchaseObj->addStatusLog(date('d/m/Y H:i:s'), md5($orderNumber), 'new', $purchaseObj->getPaymethod(true), 0, 1, 'iRank Store', $con);
 		$con->commit();
-		
-  		$purchaseObj->addStatusLog(date('d/m/Y H:i:s'), md5($orderNumber), 'new', $purchaseObj->getPaymethod(true), 0, 1, 'iRank Store');
 		
   		$this->getNewSession();
   		
@@ -552,7 +551,7 @@ class storeActions extends sfActions
 			$extraAmount       = $request->getParameter('Extras');
 			$installmentCount  = $request->getParameter('Parcelas');
 			
-			$purchaseObj->addStatusLog($transactionDate, $transactionCode, $transactionStatus, $paymethodType, $extraAmount, $installmentCount, 'PagSeguro');			
+			$purchaseObj->addStatusLog($transactionDate, $transactionCode, $transactionStatus, $paymethodType, $extraAmount, $installmentCount, 'PagSeguro');
   
 			//O post foi validado pelo PagSeguro.
 			Log::doLog("Post PagSeguro validado para o pedido $orderNumber, transação $transactionId", 'PagSeguro');

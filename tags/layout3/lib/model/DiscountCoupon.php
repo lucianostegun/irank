@@ -133,8 +133,13 @@ class DiscountCoupon extends BaseDiscountCoupon
 	  		
 	  		
 	  	// DESCONTO NO VALOR TOTAL DO PEDIDO
-	  	if( property_exists($discountRuleObj, 'totalPercent') )
-	  		$discountValueTotal += $cartSessionObj->totalValue*$discountRuleObj->totalPercent/100;
+	  	if( property_exists($discountRuleObj, 'totalPercent') ){
+	  		
+	  		// ATENÇÃO! Essa variável não pode mudar para $cartSessionObj->totalValue senão bagunça o desconto por valor total
+	  		$totalValue = $cartSessionObj->orderValue + $cartSessionObj->shippingValue;
+	  		
+	  		$discountValueTotal += $totalValue*$discountRuleObj->totalPercent/100;
+	  	}
 	
 	  	if( property_exists($discountRuleObj, 'totalValue') )
 	  		$discountValueTotal += $discountRuleObj->totalValue;

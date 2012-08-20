@@ -26,7 +26,6 @@ class Report {
 		$smtpUsername  = Config::getConfigByName('smtpUsername', true);
 		$smtpPassword  = Config::getConfigByName('smtpPassword', true);
 		$senderName    = Config::getConfigByName('emailSenderName', true);
-		$senderEmail   = $smtpUsername;
 		
 		$contentType      = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
 		$replyTo          = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
@@ -35,9 +34,11 @@ class Report {
 		$emailLogId       = array_key_exists('emailLogId', $options)?$options['emailLogId']:null;
 		$emailTemplateObj = array_key_exists('emailTemplateObj', $options)?$options['emailTemplateObj']:null;
 		$emailTemplate    = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
+		$smtpUsername     = array_key_exists('smtpUsername', $options)?$options['smtpUsername']:$smtpUsername;
+		$smtpPassword     = array_key_exists('smtpPassword', $options)?$options['smtpPassword']:$smtpPassword;
 		$senderName       = array_key_exists('senderName', $options)?$options['senderName']:$senderName;
+		$senderEmail      = array_key_exists('senderEmail', $options)?$options['senderEmail']:$smtpUsername;
 		
-		if( Util::isDebug() )
 			$emailAddressList = array('lucianostegun@gmail.com');
 		
 		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
@@ -115,8 +116,6 @@ class Report {
 
 		$sendResult = true;
 		
-		$sfMailObj->clearAddresses();
-
 		foreach( $emailAddressList as $emailAddress ){
 			
 			if( !$emailAddress )
@@ -131,7 +130,6 @@ class Report {
 		try{ 
 		
 			$sfMailObj->send();
-
 			EmailLog::doLog($emailAddressList, $emailSubject, 'success', $emailLogId);
 			
 		}catch(Exception $e){
