@@ -1,0 +1,2 @@
+INSERT INTO virtual_table(virtual_table_name, description, tag_name, enabled, visible, locked, deleted, created_at, updated_at)
+    VALUES('blogCategory', 'Glossário', 'dictionary', true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
