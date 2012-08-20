@@ -17,7 +17,7 @@ class blogActions extends sfActions
     
     $this->showStoreBar = true;
     $this->facebookMetaList = array();
-	$this->facebookMetaList['image'] = 'http://[host]/images/blog/logo.png';
+	$this->facebookMetaList['image'] = 'http://[host]/images/blog/logoBlog.png';
   }
   
   public function executeIndex($request){
@@ -27,9 +27,16 @@ class blogActions extends sfActions
 	if( $permalink )
 		return $this->forward('blog', 'article');
 	
-	$blogObj   = Blog::getLastArticle();
-	$host      = $request->getHost();
-	$permalink = $blogObj->getPermalink();
+	$this->blogObj = Blog::getLastArticle();
+	$host          = $request->getHost();
+//	$permalink     = $blogObj->getPermalink();
+	
+//	$this->facebookMetaList['description'] = $this->blogObj->getCaption();
+//	$this->facebookMetaList['title']       = 'iRank Blog :: '.$this->blogObj->toString();
+	$this->facebookMetaList['url']         = "http://www.irank.com.br/blog";
+	
+	$this->setTemplate('article');
+	return sfView::SUCCESS;
 	
 	return $this->redirect("blog/article?$permalink=");
   }

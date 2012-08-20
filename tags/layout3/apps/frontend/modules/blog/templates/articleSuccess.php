@@ -36,7 +36,7 @@
 	<br/>
 	<?php
 //		$dictionaryList = array('Ring game', 'Buyin', 'Rebuy', 'Add-on', 'Sit & Go');
-//		$content = $blogObj->getContent();
+		$content = $blogObj->getContent();
 //		foreach($dictionaryList as $dictionary)
 //			$content = preg_replace('/('.$dictionary.')/i', '<a class="dictionary" title="Clique para saber a definição de &quot;\1&quot;">\1</a>', $content);
 		
