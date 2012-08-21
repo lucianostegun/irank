@@ -252,12 +252,12 @@ function parseMessage(errorMessage, defaultMessage){
 
 function getScreenWidth(){
 
-	return document.body.offsetWidth;
+	return window.innerWidth;
 }
 
 function getScreenHeight(){
 	
-	return document.body.offsetHeight;
+	return window.innerHeight;
 }
 
 function isIE(){

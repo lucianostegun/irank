@@ -1,4 +1,9 @@
 all:
 
-  stylesheets:    [backend/plugins/elfinder/elfinder.min.css, backend/blog]
+  stylesheets:    [backend/blog]
+  javascripts:    [backend/blog]
+
+editSuccess:
+
+  stylesheets:    [backend/plugins/elfinder/elfinder.min.css]
   javascripts:    [backend/plugins/forms/jquery.cleditor.js, backend/plugins/forms/jquery.tagsinput.min.js, backend/plugins/elfinder.min.js, backend/plugins/elfinder.pt_BR.js, backend/blog]

@@ -52,6 +52,8 @@ class BlogMapBuilder {
 
 		$tMap->addColumn('CONTENT', 'Content', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('GLOSSARY', 'Glossary', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('IS_DRAFT', 'IsDraft', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);

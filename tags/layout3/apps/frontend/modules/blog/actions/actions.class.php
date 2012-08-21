@@ -57,4 +57,17 @@ class blogActions extends sfActions
     
     return $this->forward('blog', 'index');
   }
+  
+  public function executeGetDictionary($request){
+    
+    $term = $request->getParameter('term');
+    $term = html_entity_decode($term);
+    $glossaryObj = GlossaryPeer::retrieveByTerm($term);
+    
+    if( !is_object($glossaryObj) )
+    	die('Termo não encontrado!');
+    
+    echo $glossaryObj->getDescription(true);
+    exit;
+  }
 }

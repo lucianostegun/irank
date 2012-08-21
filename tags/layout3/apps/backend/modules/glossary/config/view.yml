@@ -1,0 +1,9 @@
+all:
+
+  stylesheets:    []
+  javascripts:    [backend/glossary]
+
+editSuccess:
+
+  stylesheets:    [backend/plugins/elfinder/elfinder.min.css]
+  javascripts:    [backend/plugins/forms/jquery.cleditor.js, backend/plugins/forms/jquery.tagsinput.min.js, backend/glossary]

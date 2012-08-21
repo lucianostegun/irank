@@ -25,6 +25,7 @@ class Blog extends BaseBlog
 		$permalink      = $request->getParameter('permalink');
 		$isDraft        = $request->getParameter('isDraft');
 		$content        = $request->getParameter('content');
+		$glossary       = $request->getParameter('glossary');
 		$peopleId       = MyTools::getAttribute('peopleId');
 		
 		$this->setTitle( $title );
@@ -34,6 +35,7 @@ class Blog extends BaseBlog
 		$this->setTags( $tags );
 		$this->setPermalink( $permalink );
 		$this->setContent( $content );
+		$this->setGlossary( nvl($glossary) );
 		$this->setIsDraft( ($isDraft?true:false) );
 		$this->setVisible( true );
 		$this->setEnabled( true );

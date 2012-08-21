@@ -1462,6 +1462,7 @@
 		<column name="tags" type="VARCHAR" />
 		<column name="people_id" type="INTEGER" />
 		<column name="content" type="VARCHAR" />
+		<column name="glossary" type="VARCHAR" />
 		<column name="is_draft" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
@@ -1475,6 +1476,19 @@
 		<foreign-key foreignTable="people">
 			<reference local="people_id" foreign="id"/>
 		</foreign-key>
+	</table>
+	
+	<table name="glossary" phpName="Glossary">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="term" type="VARCHAR" />
+		<column name="description" type="VARCHAR" />
+		<column name="tags" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
 	</table>
 	
 </database>

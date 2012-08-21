@@ -5,6 +5,11 @@ $(function() {
 		delimiter: ',',
 		defaultText: 'Tags'});
 
+	$('#blogGlossary').tagsInput({
+		width: '100%', 
+		delimiter: ',',
+		defaultText: 'Glossário'});
+
 	$('#blogContent').cleditor({
 		width:'100%', 
 		height:'500px',

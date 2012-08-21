@@ -84,6 +84,15 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+
+	<div class="formRow">
+		<label>Glossário</label>
+		<div class="formRight">
+			<?php echo input_tag('glossary', $blogObj->getGlossary(), array('size'=>40, 'maxlength'=>40, 'class'=>'tags', 'id'=>'blogGlossary')) ?>
+			<div class="formNote error" id="blogFormErrorGlossary"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
 	
 	<!-- WYSIWYG editor -->
 	<div class="widget blogEditor">

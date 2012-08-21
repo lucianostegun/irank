@@ -13,7 +13,7 @@ abstract class BaseBlogPeer {
 	const CLASS_DEFAULT = 'lib.model.Blog';
 
 	
-	const NUM_COLUMNS = 16;
+	const NUM_COLUMNS = 17;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -47,6 +47,9 @@ abstract class BaseBlogPeer {
 	const CONTENT = 'blog.CONTENT';
 
 	
+	const GLOSSARY = 'blog.GLOSSARY';
+
+	
 	const IS_DRAFT = 'blog.IS_DRAFT';
 
 	
@@ -73,19 +76,19 @@ abstract class BaseBlogPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'Title', 'ShortTitle', 'Caption', 'BlogCategoryId', 'Permalink', 'Tags', 'PeopleId', 'Content', 'IsDraft', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (BlogPeer::ID, BlogPeer::TITLE, BlogPeer::SHORT_TITLE, BlogPeer::CAPTION, BlogPeer::BLOG_CATEGORY_ID, BlogPeer::PERMALINK, BlogPeer::TAGS, BlogPeer::PEOPLE_ID, BlogPeer::CONTENT, BlogPeer::IS_DRAFT, BlogPeer::ENABLED, BlogPeer::VISIBLE, BlogPeer::DELETED, BlogPeer::LOCKED, BlogPeer::CREATED_AT, BlogPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'title', 'short_title', 'caption', 'blog_category_id', 'permalink', 'tags', 'people_id', 'content', 'is_draft', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'TITLE'=>'', 'SHORT_TITLE'=>'', 'CAPTION'=>'', 'BLOG_CATEGORY_ID'=>'', 'PERMALINK'=>'', 'TAGS'=>'', 'PEOPLE_ID'=>'', 'CONTENT'=>'', 'IS_DRAFT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'Title', 'ShortTitle', 'Caption', 'BlogCategoryId', 'Permalink', 'Tags', 'PeopleId', 'Content', 'Glossary', 'IsDraft', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (BlogPeer::ID, BlogPeer::TITLE, BlogPeer::SHORT_TITLE, BlogPeer::CAPTION, BlogPeer::BLOG_CATEGORY_ID, BlogPeer::PERMALINK, BlogPeer::TAGS, BlogPeer::PEOPLE_ID, BlogPeer::CONTENT, BlogPeer::GLOSSARY, BlogPeer::IS_DRAFT, BlogPeer::ENABLED, BlogPeer::VISIBLE, BlogPeer::DELETED, BlogPeer::LOCKED, BlogPeer::CREATED_AT, BlogPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'title', 'short_title', 'caption', 'blog_category_id', 'permalink', 'tags', 'people_id', 'content', 'glossary', 'is_draft', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'TITLE'=>'', 'SHORT_TITLE'=>'', 'CAPTION'=>'', 'BLOG_CATEGORY_ID'=>'', 'PERMALINK'=>'', 'TAGS'=>'', 'PEOPLE_ID'=>'', 'CONTENT'=>'', 'GLOSSARY'=>'', 'IS_DRAFT'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'Title'=>1, 'ShortTitle'=>2, 'Caption'=>3, 'BlogCategoryId'=>4, 'Permalink'=>5, 'Tags'=>6, 'PeopleId'=>7, 'Content'=>8, 'IsDraft'=>9, 'Enabled'=>10, 'Visible'=>11, 'Deleted'=>12, 'Locked'=>13, 'CreatedAt'=>14, 'UpdatedAt'=>15, ),
-		BasePeer::TYPE_COLNAME=>array (BlogPeer::ID=>0, BlogPeer::TITLE=>1, BlogPeer::SHORT_TITLE=>2, BlogPeer::CAPTION=>3, BlogPeer::BLOG_CATEGORY_ID=>4, BlogPeer::PERMALINK=>5, BlogPeer::TAGS=>6, BlogPeer::PEOPLE_ID=>7, BlogPeer::CONTENT=>8, BlogPeer::IS_DRAFT=>9, BlogPeer::ENABLED=>10, BlogPeer::VISIBLE=>11, BlogPeer::DELETED=>12, BlogPeer::LOCKED=>13, BlogPeer::CREATED_AT=>14, BlogPeer::UPDATED_AT=>15, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'title'=>1, 'short_title'=>2, 'caption'=>3, 'blog_category_id'=>4, 'permalink'=>5, 'tags'=>6, 'people_id'=>7, 'content'=>8, 'is_draft'=>9, 'enabled'=>10, 'visible'=>11, 'deleted'=>12, 'locked'=>13, 'created_at'=>14, 'updated_at'=>15, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'Title'=>1, 'ShortTitle'=>2, 'Caption'=>3, 'BlogCategoryId'=>4, 'Permalink'=>5, 'Tags'=>6, 'PeopleId'=>7, 'Content'=>8, 'Glossary'=>9, 'IsDraft'=>10, 'Enabled'=>11, 'Visible'=>12, 'Deleted'=>13, 'Locked'=>14, 'CreatedAt'=>15, 'UpdatedAt'=>16, ),
+		BasePeer::TYPE_COLNAME=>array (BlogPeer::ID=>0, BlogPeer::TITLE=>1, BlogPeer::SHORT_TITLE=>2, BlogPeer::CAPTION=>3, BlogPeer::BLOG_CATEGORY_ID=>4, BlogPeer::PERMALINK=>5, BlogPeer::TAGS=>6, BlogPeer::PEOPLE_ID=>7, BlogPeer::CONTENT=>8, BlogPeer::GLOSSARY=>9, BlogPeer::IS_DRAFT=>10, BlogPeer::ENABLED=>11, BlogPeer::VISIBLE=>12, BlogPeer::DELETED=>13, BlogPeer::LOCKED=>14, BlogPeer::CREATED_AT=>15, BlogPeer::UPDATED_AT=>16, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'title'=>1, 'short_title'=>2, 'caption'=>3, 'blog_category_id'=>4, 'permalink'=>5, 'tags'=>6, 'people_id'=>7, 'content'=>8, 'glossary'=>9, 'is_draft'=>10, 'enabled'=>11, 'visible'=>12, 'deleted'=>13, 'locked'=>14, 'created_at'=>15, 'updated_at'=>16, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
 	);
 
 	
@@ -156,6 +159,8 @@ abstract class BaseBlogPeer {
 		$criteria->addSelectColumn(BlogPeer::PEOPLE_ID);
 
 		$criteria->addSelectColumn(BlogPeer::CONTENT);
+
+		$criteria->addSelectColumn(BlogPeer::GLOSSARY);
 
 		$criteria->addSelectColumn(BlogPeer::IS_DRAFT);
 

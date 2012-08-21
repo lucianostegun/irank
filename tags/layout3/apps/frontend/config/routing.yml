@@ -48,6 +48,10 @@ article_by_title:
   url:    blog/article/:permalink
   param:  { module: blog, action: article }
   
+glossary:
+  url:    blog/getDictionary/:term
+  param:  { module: blog, action: getDictionary }
+  
   
   
   

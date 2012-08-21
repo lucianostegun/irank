@@ -69,10 +69,11 @@ $toolbarList = isset($toolbarList)?$toolbarList:array();
                 <li class="last"><?php echo link_to('Configurações', 'store/index') ?></li>
             </ul>
         </li>
-        <li class="blog"><a href="javascript:void(0)" title="" class="<?php echo (in_array($moduleName, array('blog'))?'active':'exp') ?>"><span>Blog</span><strong>2</strong></a>
+        <li class="blog"><a href="javascript:void(0)" title="" class="<?php echo (in_array($moduleName, array('blog', 'blogCategory', 'glossary'))?'active':'exp') ?>"><span>Blog</span><strong>2</strong></a>
             <ul class="sub">
                 <li><?php echo link_to('Categorias', 'blogCategory/index') ?></li>
-                <li class="last"><?php echo link_to('Artigos', 'blog/index') ?></li>
+                <li><?php echo link_to('Artigos', 'blog/index') ?></li>
+                <li class="last"><?php echo link_to('Glossário de termos', 'glossary/index') ?></li>
             </ul>
         </li>
         <?php endif; ?>

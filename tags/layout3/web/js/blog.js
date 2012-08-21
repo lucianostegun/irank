@@ -1,17 +1,70 @@
+function loadDictionary(dictionary){
+	
+	var successFunc = function(t){
+		
+		$('speechContent').innerHTML = t.responseText;
+	}
+
+	var failureFunc = function(t){
+		
+		$('speechContent').innerHTML = 'Não foi possível carregar a definição de "'+dictionary+'".<br/>Clique sobre o termo para carregar a definição novamente.';
+	}
+	
+	var urlAjax = _webRoot+'/blog/getDictionary/'+dictionary;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}
+
 function showDictionary(evt){
 	
-	var clientX = evt.clientX;
-	var clientY = evt.clientY;
+	var clientX      = evt.clientX;
+	var clientY      = evt.clientY;
+	var scroll       = window.scrollY;
+	var dictionary   = ucwords(this.innerHTML);
+	var screenHeight = getScreenHeight();
+	var screenWidth  = getScreenWidth();
+	
+	var top  = (clientY+scroll+15);
+	var left = (clientX-20);
+	
+	if( top > (screenHeight-20+scroll ) )
+		top -= 195;
+
+	if( left > (screenWidth-520 ) )
+			left -= 200;
+
+	html  = '<span class="header">';
+	html += '	<span id="speechHeader">'+dictionary+'</span>';
+	html += '	<div class="closeButton" onclick="hideDiv(\'speechDialog\')"></div>';
+	html += '</span>';
+	html += '<div class="content" id="speechContent">';
+	html += '	<div class="loading">Carregando definição, aguarde...</div>';
+	html += '</div>';
+	
+	if( $('speechDialog')!=null ){
+		
+		if( dictionary==$('speechHeader').innerHTML )
+			return;
+		
+//		showDiv('speechDialog');
+		$('speechDialog').style.left = left+'px';
+		$('speechDialog').style.top  = top+'px';
+		$('speechDialog').innerHTML = html;
+		
+		showDiv('speechDialog');
+		return loadDictionary(dictionary);
+	}
 	
 	var speechDiv = document.createElement('div');
 	speechDiv.className = 'speech';
+	speechDiv.id        = 'speechDialog';
 	
-	speechDiv.innerHTML  = '<span class="header">'+this.innerHTML+'</span>';
-	speechDiv.innerHTML += '<span class="content">'+this.innerHTML+'</span>';
-	speechDiv.style.left = clientX+'px';
-	speechDiv.style.top  = clientY+'px';
+	speechDiv.innerHTML  = html;
+	speechDiv.style.left = left+'px';
+	speechDiv.style.top  = top+'px';
 	
 	document.body.appendChild(speechDiv);
+	
+	loadDictionary(dictionary);
 }
 
 function loadDictionaryObservers(){

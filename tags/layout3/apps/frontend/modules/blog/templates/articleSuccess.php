@@ -35,10 +35,11 @@
 	<br/>
 	<br/>
 	<?php
-//		$dictionaryList = array('Ring game', 'Buyin', 'Rebuy', 'Add-on', 'Sit & Go');
+		$glossary     = $blogObj->getGlossary();
+		$glossaryList = explode(',', $glossary);
 		$content = $blogObj->getContent();
-//		foreach($dictionaryList as $dictionary)
-//			$content = preg_replace('/('.$dictionary.')/i', '<a class="dictionary" title="Clique para saber a definição de &quot;\1&quot;">\1</a>', $content);
+		foreach($glossaryList as $glossary)
+			$content = preg_replace('/('.$glossary.')/i', '<a class="dictionary" title="Clique para saber a definição de &quot;\1&quot;">\1</a>', $content);
 		
 		echo $content;
 	?>
