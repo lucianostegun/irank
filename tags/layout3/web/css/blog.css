@@ -217,6 +217,11 @@ div.speech div.content div.loading {
 	top: 1px
 }
 
+.blog.suggest a:hover h1 {
+
+	color: #808080;
+}
+
 .blog.suggest h2 {
 
 	float: left;
@@ -231,7 +236,13 @@ div.speech div.content div.loading {
 	text-transform: none;
 }
 
+.blog.suggest a:hover h2 {
+
+	color: #C91E1E;
+}
+
 .blog.suggest h3 {
 
 	clear: both;
+	color: #707070;
 }
