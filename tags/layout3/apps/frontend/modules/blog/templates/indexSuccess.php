@@ -27,7 +27,7 @@
 	else:	
 		foreach($blogObjList as $blogObj):
 ?>	
-	<h1><?php echo $blogObj->getTitle() ?></h1>
+	<h1><?php echo link_to($blogObj->getTitle(), 'blog/article?'.$blogObj->getPermalink().'=') ?></h1>
 	<h2>
 		<?php echo sprintf('Publicado em %s por <b>%s</b> - %s', $blogObj->getCreatedAt('d/m/Y H\hm'), $blogObj->getPeople()->getNickname(), $blogObj->getBlogCategory()->getDescription()) ?>
 		<span>

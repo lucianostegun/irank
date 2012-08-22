@@ -162,6 +162,17 @@ div.speech div.content div.loading {
 	color: #202020
 }
 
+.moduleIntro.index h1 a {
+
+	color: #202020;
+}
+
+.moduleIntro.index h1 a:hover {
+
+	color: #C91E1E;
+	text-decoration: none
+}
+
 .moduleIntro.index h2 {
 
 	font-weight: normal;
