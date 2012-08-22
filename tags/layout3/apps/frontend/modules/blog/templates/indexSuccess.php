@@ -3,13 +3,29 @@
 ?>
 <div class="moduleIntro index">
 <?php
+	$tag      = $sf_request->getParameter('tag');
+	$category = $sf_request->getParameter('category');
+	
 	$criteria = new Criteria();
+	
+	$criteria->addJoin( BlogPeer::BLOG_CATEGORY_ID, VirtualTablePeer::ID, Criteria::INNER_JOIN );
+	
 	$criteria->add( BlogPeer::IS_DRAFT, false );
+	if( $tag )
+		$criteria->add( BlogPeer::TAGS, "%$tag%", Criteria::ILIKE );
+
+	if( $category )
+		$criteria->add( VirtualTablePeer::DESCRIPTION, "%$category%", Criteria::ILIKE );
+	
 	$criteria->setLimit(10);
 	$criteria->setOffset(0);
 	$blogObjList = Blog::getList($criteria);
 	
-	foreach($blogObjList as $blogObj):
+	if( empty($blogObjList) ):
+		include_partial('blog/include/empty');
+		include_partial('blog/include/suggest', array('blogId'=>null));
+	else:	
+		foreach($blogObjList as $blogObj):
 ?>	
 	<h1><?php echo $blogObj->getTitle() ?></h1>
 	<h2>
@@ -46,6 +62,9 @@
 	<?php echo link_to('Ler o artigo completo', 'blog/article?'.$blogObj->getPermalink().'=') ?>
 	<hr/>
 
-<?php endforeach; ?>
+<?php
+		endforeach;
+	endif;
+?>
 </div>
 <div class="clear"></div>

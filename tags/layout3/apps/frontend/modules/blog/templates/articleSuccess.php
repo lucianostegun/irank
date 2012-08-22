@@ -50,3 +50,4 @@
 	?>
 </div>
 <div class="clear"></div>
+<?php include_partial('blog/include/suggest', array('blogId'=>$blogObj->getId())); ?>
