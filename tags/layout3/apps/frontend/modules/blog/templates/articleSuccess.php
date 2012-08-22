@@ -36,11 +36,14 @@
 	<br/>
 	<br/>
 	<?php
-		$glossary     = $blogObj->getGlossary();
-		$glossaryList = explode(',', $glossary);
-		$content = $blogObj->getContent();
-		foreach($glossaryList as $glossary)
-			$content = preg_replace('/('.$glossary.')/i', '<a class="dictionary" title="Clique para saber a definição de &quot;\1&quot;">\1</a>', $content);
+		$content  = $blogObj->getContent();
+		$glossary = $blogObj->getGlossary();
+		if( $glossary ){
+			
+			$glossaryList = explode(',', $glossary);
+			foreach($glossaryList as $glossary)
+				$content = preg_replace('/('.$glossary.')/i', '<a class="dictionary" title="Clique para saber a definição de &quot;\1&quot;">\1</a>', $content);
+		}
 		
 		$content = preg_replace('/<hr class="intro"\/?>/', '', $content);
 		echo $content;
