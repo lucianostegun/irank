@@ -1,11 +1,12 @@
 <?php
-	include_partial('home/component/commonBar', array('pathList'=>array('Artigos'=>'blog/index', $blogObj->getShortTitle()=>null)));
+	$blogCategory = $blogObj->getBlogCategory()->getDescription();
+	include_partial('home/component/commonBar', array('pathList'=>array('Blog'=>'blog/index', $blogCategory=>'blog/index?category='.$blogCategory, $blogObj->getShortTitle()=>null)));
 	
 	sfContext::getInstance()->getResponse()->setTitle('iRank Blog :: '.$blogObj->getTitle());
 ?>
 <div class="moduleIntro">
 	
-	<h1><?php echo $blogObj->getBlogCategory()->getDescription() ?></h1>
+	<h1><?php echo $blogCategory ?></h1>
 	<h2><?php echo $blogObj->getTitle() ?></h2>
 	<h3>Publicado por <b><?php echo $blogObj->getPeople()->getNickname() ?></b> em <b><?php echo $blogObj->getCreatedAt('d/m/Y H\hm') ?></b> nas categorias&nbsp;</h3>
 	<h3 class="tags">
@@ -41,6 +42,7 @@
 		foreach($glossaryList as $glossary)
 			$content = preg_replace('/('.$glossary.')/i', '<a class="dictionary" title="Clique para saber a definição de &quot;\1&quot;">\1</a>', $content);
 		
+		$content = preg_replace('/<hr class="intro"\/?>/', '', $content);
 		echo $content;
 	?>
 </div>

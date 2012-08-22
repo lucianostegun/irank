@@ -1006,16 +1006,15 @@ function button_tag($buttonId, $text, $options=array() ){
 	$app = Util::getApp();
 	if( $app=='mobile' )
 		return button_tag_mobile($buttonId, $text, $options);
+
+	$onclick  = (array_key_exists('onclick', $options)?$options['onclick']:null);
+	$image    = (array_key_exists('image', $options)?$options['image']:'');
+	$visible  = (array_key_exists('visible', $options)?$options['visible']:true);
+	$disabled = (array_key_exists('disabled', $options)?$options['disabled']:false);
+	$class    = (array_key_exists('class', $options)?$options['class']:'');
+	$noCheck  = (array_key_exists('noCheck', $options)?$options['noCheck']:false);
+	$style    = (array_key_exists('style', $options)?$options['style']:false);
 	
-	$onclick  = isset($options['onclick'])?$options['onclick']:null;
-	$image    = isset($options['image'])?$options['image']:'';
-	$visible  = isset($options['visible'])?$options['visible']:true;
-	$disabled = isset($options['disabled'])?$options['disabled']:false;
-	$class    = isset($options['class'])?$options['class']:'';
-	$noCheck  = isset($options['noCheck'])?$options['noCheck']:false;
-	$style    = isset($options['style'])?$options['style']:false;
-	
-			
 	MyTools::addStylesheet('button');
 	MyTools::addJavascript('button');
 	
@@ -1024,12 +1023,12 @@ function button_tag($buttonId, $text, $options=array() ){
 	if( !$noCheck )
 		$onclick = "if(checkButton('$buttonId')){ $onclick }";
 
-	$html  = '<div class="actionButton'.($image?' image':'').($visible?'':' hidden').($class?" $class":'').'" onclick="'.$onclick.'" style="'.$style.'" id="'.$buttonId.'Button">';
-	$html .= '	<span id="'.$buttonId.'Label" style="background-image: url(\'/images/button/'.$image.'\')">'.$text.'</span>';
-	$html .= '</div>'.$nl;
+	$html  = '<div class="actionButton'.($image?' image':'').($visible?'':' hidden').($class?" $class":'').'" onclick="'.$onclick.'" style="'.$style.'" id="'.$buttonId.'Button">'.$nl;
+	$html .= '	<span id="'.$buttonId.'Label" style="background-image: url(\'/images/button/'.$image.'\')">'.$text.'</span>'.$nl;
+	$html .= '</div>'.$nl.$nl;
 	
 	if( $text!='Cancelar' && $text!='Fechar' )
-		$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; top: -1000px; left: -1000px; border: none; background: none', 'onclick'=>$onclick.'; return false')) ;
+		$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; top: -1000px; left: -1000px; border: none; background: none', 'onclick'=>$onclick.'; return false')).$nl ;
 	
 	return $html;
 }

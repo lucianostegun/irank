@@ -26,19 +26,6 @@ class blogActions extends sfActions
 	
 	if( $permalink )
 		return $this->forward('blog', 'article');
-	
-	$this->blogObj = Blog::getLastArticle();
-	$host          = $request->getHost();
-//	$permalink     = $blogObj->getPermalink();
-	
-//	$this->facebookMetaList['description'] = $this->blogObj->getCaption();
-//	$this->facebookMetaList['title']       = 'iRank Blog :: '.$this->blogObj->toString();
-	$this->facebookMetaList['url']         = "http://www.irank.com.br/blog";
-	
-	$this->setTemplate('article');
-	return sfView::SUCCESS;
-	
-	return $this->redirect("blog/article?$permalink=");
   }
   
   public function executeArticle($request){

@@ -54,7 +54,7 @@ class Blog extends BaseBlog
 		$criteria->add( BlogPeer::ENABLED, true );
 		$criteria->add( BlogPeer::VISIBLE, true );
 		$criteria->add( BlogPeer::DELETED, false );
-		$criteria->addAscendingOrderByColumn( BlogPeer::CREATED_AT );
+		$criteria->addDescendingOrderByColumn( BlogPeer::CREATED_AT );
 		
 		return BlogPeer::doSelect( $criteria );
 	}
