@@ -25,7 +25,7 @@ class blogActions extends sfActions
 	$permalink = $request->getParameter('permalink');
 	
 	if( $permalink )
-		return $this->forward('blog', 'article');
+		return $this->redirect("blog/article?$permalink=");
   }
   
   public function executeArticle($request){
