@@ -191,6 +191,7 @@ div.speech div.content div.loading {
 .blog.suggest {
 
 	margin-top: 30px;
+	margin-left: 30px
 }
 
 .blog.suggest h3.header {
@@ -227,6 +228,7 @@ div.speech div.content div.loading {
 	font-weight: bold;
 	top: 0px;
 	font-size: 16px;
+	text-transform: none;
 }
 
 .blog.suggest h3 {
