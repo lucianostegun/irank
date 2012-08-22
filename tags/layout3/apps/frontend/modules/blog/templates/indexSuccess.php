@@ -37,6 +37,8 @@
 		$content = strip_tags($content, '<p><b><span><br><br/>');
 		$content = trim($content);
 		$content = preg_replace('/^<br\/?>/', '', $content);
+		$content = preg_replace('/^<p><br\/?><\/p>/', '', $content);
+		$content = preg_replace('/<br\/?>$/', '', $content);
 		echo $content;
 	?>
 	<br/>
