@@ -14,9 +14,6 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="loadEvents">
-				<?php echo link_to('carregar mais eventos', 'event/index') ?>
-			</div>
 		</div>
 		<div class="clear"></div>
 	</div>
