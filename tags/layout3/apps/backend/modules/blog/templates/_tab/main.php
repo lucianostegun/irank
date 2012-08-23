@@ -34,7 +34,7 @@
 	<div class="formRow">
 		<label>Subtítulo</label>
 		<div class="formRight">
-			<?php echo input_tag('caption', $blogObj->getCaption(), array('size'=>45, 'maxlength'=>250, 'id'=>'blogCaption')) ?>
+			<?php echo textarea_tag('caption', $blogObj->getCaption(), array('cols'=>45, 'rows'=>3, 'maxlength'=>250, 'id'=>'blogCaption')) ?>
 			<div class="formNote error" id="blogFormErrorCaption"></div>
 		</div>
 		<div class="clear"></div>

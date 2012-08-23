@@ -49,7 +49,7 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 
 
 	
-	protected $is_draft;
+	protected $is_draft = true;
 
 
 	
@@ -388,7 +388,7 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 	public function setIsDraft($v)
 	{
 
-		if ($this->is_draft !== $v) {
+		if ($this->is_draft !== $v || $v === true) {
 			$this->is_draft = $v;
 			$this->modifiedColumns[] = BlogPeer::IS_DRAFT;
 		}

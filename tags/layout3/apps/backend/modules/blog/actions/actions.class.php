@@ -18,7 +18,7 @@ class blogActions extends sfActions
     
     $this->blogIdAttribute = $this->getUser()->getAttribute('blogId');
     
-    $this->pathList = array('BLog'=>'blog/index');
+    $this->pathList = array('Blog'=>'blog/index');
     $this->toolbarList = array('new');
   }
 
