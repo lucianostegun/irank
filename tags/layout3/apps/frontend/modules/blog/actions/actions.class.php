@@ -40,6 +40,45 @@ class blogActions extends sfActions
 	$this->facebookMetaList['url']         = "http://www.irank.com.br/blog/article/$permalink";
   }
   
+  public function executeRss($request){
+    
+  	$metas = sfContext::getInstance()->getResponse()->getMetas();
+  	$headerDescription = $metas['description'];
+  	
+    // Intanciamos/chamamos a classe
+	$rss = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss></rss>');
+	$rss->addAttribute('version', '2.0');
+	 
+	// Cria o elemento <channel> dentro de <rss>
+	$canal = $rss->addChild('channel');
+	// Adiciona sub-elementos ao elemento <channel>
+	$canal->addChild('title', 'Blog iRank');
+	$canal->addChild('link', 'http://www.irank.com.br/');
+	$canal->addChild('description', $headerDescription);
+	
+	$criteria = new Criteria();
+	$criteria->setLimit(10);
+	
+	foreach( Blog::getList($criteria) as $blogObj){
+	
+		// Criar elemento <item> dentro de <channel>
+		$item = $canal->addChild('item');
+		// Adiciona sub-elementos ao elemento <item>
+		$item->addChild('title', $blogObj->getTitle());
+		$item->addChild('link', 'http://www.irank.com.br/blog/'.$blogObj->getPermalink());
+		$item->addChild('description', $blogObj->getCaption());
+		$item->addChild('pubDate', $blogObj->getCreatedAt('r'));
+	}
+	
+	// Define o tipo de conteúdo e o charset
+	//header("content-type: application/rss+xml; charset=utf-8");
+
+	// Entrega o conteúdo do RSS completo:
+	echo $rss->asXML();
+	
+	exit;
+  }
+  
   public function executeTag($request){
     
     return $this->forward('blog', 'index');
@@ -52,7 +91,7 @@ class blogActions extends sfActions
     $glossaryObj = GlossaryPeer::retrieveByTerm($term);
     
     if( !is_object($glossaryObj) )
-    	die('Termo não encontrado!');
+    	die('Termo nÃ£o encontrado!');
     
     echo $glossaryObj->getDescription(true);
     exit;

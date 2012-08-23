@@ -36,6 +36,11 @@ email_log:
 
   
 # REGRAS PARA O BLOG
+
+rss:
+  url:    blog/rss
+  param:  { module: blog, action: rss }
+  
 blog_by_title:
   url:    blog/:permalink
   param:  { module: blog, action: article }
