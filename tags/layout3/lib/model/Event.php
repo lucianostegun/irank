@@ -813,6 +813,8 @@ class Event extends BaseEvent
 				$formula = preg_replace('/buyin/', '$buyin', $formula);
 				$formula = preg_replace('/itm/', '$itm', $formula);
 				
+				$formula = preg_replace('/raiz\(/', 'sqrt(', $formula);
+				
 				$score = null;
 				
 				@eval('$score = '.$formula.';');

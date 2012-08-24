@@ -24,6 +24,13 @@
 					<b>ITM</b> - Posições pagas<br/>
 				</div>
 			</div>
+
+			<div class="rowTextArea" style="height: 30px">
+				<div class="label">Funções</div>
+				<div class="text" style="height: 30px; background: #FFFFFF">
+					<b>RAIZ(x)</b> - Raíz quadrada<br/>
+				</div>
+			</div>
 		</td>
 	</tr>
 </table>

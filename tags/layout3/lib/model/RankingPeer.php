@@ -132,6 +132,8 @@ class RankingPeer extends BaseRankingPeer
 		$formula = preg_replace('/buyin/', '$buyin', $formula);
 		$formula = preg_replace('/itm/', '$itm', $formula);
 		
+		$formula = preg_replace('/raiz\(/', 'sqrt(', $formula);
+		
 		$formulaResult = null;
 		
 		@eval('$formulaResult = '.$formula.';');

@@ -529,6 +529,8 @@ function checkRankingScoreFormula(){
 	formula = formula.replace(/buyin/gi, 'buyin');
 	formula = formula.replace(/itm/gi, 'itm');
 	
+	formula = formula.replace(/raiz\(/gi, 'Math.sqrt(');
+	
 	var formulaResult = null;
 	
 	try{
@@ -546,7 +548,7 @@ function checkRankingScoreFormula(){
 function setInvalidFormula(){
 	
 	$('rankingScoreFormulaFormula').className = 'formFieldError';
-	$('rankingScoreFormulaFormula').title     = 'Invalid formula';
+	$('rankingScoreFormulaFormula').title     = 'A fórmula digitada não é válida';
 	disableButton('rankingScoreFormulaSave');
 	hideDiv('rankingFormulaSuccessDiv')
 }

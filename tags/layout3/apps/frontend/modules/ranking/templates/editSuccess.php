@@ -61,5 +61,5 @@
 </form>
 <?php
 	DhtmlxWindows::createWindow('rankingPlayerAdd', __('ranking.playerRegister'), 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$rankingId));
-	DhtmlxWindows::createWindow('rankingScoreFormula', __('ranking.scoreFormula'), 580, 280, 'ranking/dialog/scoreFormula', array('rankingId'=>$rankingId, 'scoreFormula'=>$scoreFormula));
+	DhtmlxWindows::createWindow('rankingScoreFormula', __('ranking.scoreFormula'), 580, 350, 'ranking/dialog/scoreFormula', array('rankingId'=>$rankingId, 'scoreFormula'=>$scoreFormula));
 ?>
