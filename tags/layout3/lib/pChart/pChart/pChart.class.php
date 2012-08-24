@@ -1028,7 +1028,7 @@
       }
     }
     
-    function drawCredits(){
+    function drawCredits($alpha=70){
     	
     	
 		$filePath = Util::getFilePath('/images/backgrounds/chart.png');
@@ -1037,7 +1037,7 @@
 		imagealphablending($newImg, true);
 		imagesavealpha($newImg, true);
 		
-		imagecopymerge_alpha($this->Picture, $newImg, $this->XSize-146, $this->YSize-199, 0, 0, 140, 190, 70); //cordenas
+		imagecopymerge_alpha($this->Picture, $newImg, $this->XSize-146, $this->YSize-199, 0, 0, 140, 190, $alpha); //cordenas
     }
 
    /* Draw the data legends */

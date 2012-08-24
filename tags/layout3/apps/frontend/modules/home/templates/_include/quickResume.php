@@ -4,7 +4,7 @@
 	$resumeInfo = People::getFullResume();
 ?>
 <div id="quickResume">
-	<h1>Bankroll</h1>
+	<h1>Bankroll <span><?php echo link_to('detalhes', 'myAccount/bankroll#now') ?></span></h1>
 	<div style="margin-top: 17px"></div>
 	<div class="row">
 		<div class="label">Buy-ins</div>

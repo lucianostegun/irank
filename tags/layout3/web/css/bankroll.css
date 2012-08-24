@@ -1,0 +1,114 @@
+table.bankroll {
+	
+	margin: 10px 20px;
+	width: 745px;
+}
+
+table.bankroll th {
+	
+	padding: 0px 4px 2px 4px;
+	border-bottom: 1px solid #909090
+}
+
+table.bankroll th.value {
+	
+	width: 50px
+}
+
+table.bankroll td {
+	
+	padding: 2px 4px;
+	background: #FFFFFF;
+}
+
+table.bankroll tr.year td {
+	
+	border: none;
+	font-size: 26px;
+	line-height: 26px;
+	font-weight: bold;
+	text-align: left;
+	padding: 30px 0px 15px 10px;
+	text-shadow: 2px 2px #BABABA;
+}
+
+table.bankroll tr.year td.expand {
+
+	text-align: right
+}
+
+table.bankroll tr.year td.expand a {
+	
+	border: none;
+	font-size: 12px;
+	line-height: 12px;
+	font-weight: normal;
+	text-align: right;
+	text-shadow: none;
+	padding: 0px 20px 0px 0px;
+}
+
+table.bankroll tr.year td.expand a.expand {
+	
+	background: url('/images/icon/plus.png') right center no-repeat;
+}
+
+table.bankroll tr.year td.expand a.collapse {
+	
+	background: url('/images/icon/less.png') right center no-repeat;
+}
+
+table.bankroll tr.year:first-child td {
+	
+	padding-top: 0px;
+}
+
+table.bankroll tr.odd td {
+	
+	background: #F0F0F0;
+}
+
+table.bankroll td.positive {
+	
+	color: #5A5ADD;
+}
+
+table.bankroll td.negative {
+	
+	color: #DD5A5A;
+}
+
+table.bankroll tr.final {
+	
+	font-weight: bold;
+	font-size: 12px;
+}
+
+table.bankroll tr.final td {
+	
+	border-top: 1px solid #909090;
+	padding: 4px 4px 4px 6px;
+}
+
+table.bankroll tr.final td:first-child {
+	
+	padding-left: 14px;
+}
+
+table.bankroll tr.final.last td {
+	
+	border-top: 4px solid #FFFFFF;
+	font-size: 14px;
+}
+
+table.bankroll tr.final.collapsed td {
+	
+	cursor: pointer;
+	border-right: 1px solid #909090;
+}
+
+table.bankroll tr.final.collapsed td:first-child {
+	
+	border-left: 1px solid #909090;
+	border-right: none;
+}

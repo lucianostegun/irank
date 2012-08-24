@@ -12,22 +12,22 @@ class storeActions extends sfActions
 
   public function preExecute(){
   	
-  	if( !isset($_SERVER['HTTPS']) || $_SERVER['HTTPS']!='on' ){
-  		
-  		$redirectUrl = null;
-  		
-  		if( isset($_SERVER['REDIRECT_SCRIPT_URI']) )
-  			$redirectUrl = $_SERVER['REDIRECT_SCRIPT_URI'];
-  		
-  		elseif( isset($_SERVER['SCRIPT_URI']) )
-  			$redirectUrl = $_SERVER['SCRIPT_URI'];
-  		
-  		if( $redirectUrl ){
-  			
-  			$redirectUrl = str_replace('http://', 'https://', $redirectUrl);
-	  		return $this->redirect($redirectUrl);
-  		}
-  	}
+//  	if( !isset($_SERVER['HTTPS']) || $_SERVER['HTTPS']!='on' ){
+//  		
+//  		$redirectUrl = null;
+//  		
+//  		if( isset($_SERVER['REDIRECT_SCRIPT_URI']) )
+//  			$redirectUrl = $_SERVER['REDIRECT_SCRIPT_URI'];
+//  		
+//  		elseif( isset($_SERVER['SCRIPT_URI']) )
+//  			$redirectUrl = $_SERVER['SCRIPT_URI'];
+//  		
+//  		if( $redirectUrl ){
+//  			
+//  			$redirectUrl = str_replace('http://', 'https://', $redirectUrl);
+//	  		return $this->redirect($redirectUrl);
+//  		}
+//  	}
     
     $this->cartSession = $this->getUser()->getAttribute('iRankStoreCartSession');
     

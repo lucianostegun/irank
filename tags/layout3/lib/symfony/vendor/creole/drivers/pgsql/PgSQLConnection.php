@@ -139,7 +139,7 @@ class PgSQLConnection extends ConnectionCommon implements Connection {
     {
         $result = @pg_query($this->dblink, $sql);
         if (!$result) {
-            throw new SQLException('Could not execute query', pg_last_error($this->dblink), $sql);
+            throw new SQLException('Could not execute query', pg_last_error($this->dblink), "<pre>$sql<?pre>");
         }
 	$this->result_affected_rows = (int) @pg_affected_rows($result);
 

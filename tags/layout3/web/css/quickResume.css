@@ -55,10 +55,23 @@
 
 #quickResume h1,
 #quickResume h2 {
+	position: 		relative;
 	font-size: 		13px;
 	font-weight: 	bold;
 	padding: 		0px;
 	margin: 		5px 0px 0px 11px
+}
+
+#quickResume h1 span {
+	
+	position: absolute;
+	right: 5px;
+}
+
+#quickResume h1 span a {
+	
+	font-weight: normal;
+	font-size: 12px;
 }
 
 #quickResume h2 {
@@ -155,10 +168,26 @@
 
 #contentArea #mainContent #topMenu .distinct .generalCredit .credit.positive {
 
-	color: 			#4444DD;
+	color: #4444DD;
 }
 
 #contentArea #mainContent #topMenu .distinct .generalCredit .credit.negative {
 
-	color: 			#DD4444;
+	color: #DD4444;
+}
+
+
+#contentArea #mainContent #topMenu .distinct a:hover {
+
+	text-decoration: none;
+}
+
+#contentArea #mainContent #topMenu .distinct a:hover .generalCredit .credit.positive {
+
+	color: #6464FD;
+}
+
+#contentArea #mainContent #topMenu .distinct a:hover .generalCredit .credit.negative {
+
+	color: #FD6464;
 }

@@ -6,7 +6,7 @@
 	else
 		$messageList = array();
 	
-	include_partial('home/component/commonBar', array('pathList'=>array(__('myAccount.title')=>'myAccount/index'), 'messageList'=>$messageList));
+	include_partial('home/component/commonBar', array('pathList'=>array('Minha conta'=>'myAccount/index', 'Edição'=>null), 'messageList'=>$messageList));
 		
 	echo form_remote_tag(array(
 		'url'=>'myAccount/save',

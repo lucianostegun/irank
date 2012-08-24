@@ -249,6 +249,14 @@ class myAccountActions extends sfActions
   	$eventLivePlayerObj->save();
   	exit;
   }
+
+  public function executeBankroll($request){
+
+  }
+
+  public function executeBankrollChart($request){
+
+  }
   
   public function executeJavascript($request){
 
