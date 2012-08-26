@@ -78,7 +78,7 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 				if( errorMessage=='nullError' )
 					continue;
 
-				objectForm.className = className;
+				objectForm.toggleClassName(className, '');
 				objectForm.title     = errorMessage;
 				
 				showDiv(formFieldId+'Error');
@@ -159,30 +159,17 @@ function clearFormFieldErrors( formId ){
 	if( !formId || $(formId)==null )
 		return;
 	
-	var form = $( formId );
+	var formObj = $( formId );
 	
-	for(i=0; i < form.length; i++){
-		
-		if( form[i].className=='formFieldError' ){
-			
-			form[i].className = '';
-			form[i].title = '';
-			
-			hideDiv(form[i].id+'Error');
-		}
-	}
-	
-	var classNameList = ['fieldErrorDiv', 'textError', 'textFlexError', 'tableListError'];
+	var classNameList = ['formFieldError', 'fieldErrorDiv', 'textError', 'textFlexError', 'tableListError'];
 	
 	for(var i=0; i < classNameList.length; i++){
 		
-		var divList = document.getElementsByClassName(classNameList[i]);
+		var className   = classNameList[i];
+		var elementList = formObj.getElementsByClassName(className);
 	
-		for(var i2=0; i2 < divList.length; i2++){
-		
-			var objectId  = divList[i2].id;
-			$(objectId).className = $(objectId).className.replace(/Error/g, '');
-		}
+		for(var i2=0; i2 < elementList.length; i2++)
+			elementList[i].removeClassName(className);
 	}
 	
 	hideFormStatusError(formId)

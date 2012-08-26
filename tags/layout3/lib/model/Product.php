@@ -134,7 +134,8 @@ class Product extends BaseProduct
 	
 	public function getSizeList(){
 		
-		return Util::executeOne('SELECT get_product_sizes('.$this->getId().')', 'string');
+		$sizeList = Util::executeOne('SELECT get_product_sizes('.$this->getId().')', 'string');
+		return str_replace(',', ' / ', $sizeList);
 	}
 	
 	public static function getPageTitle(){

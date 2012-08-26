@@ -92,12 +92,12 @@ class eventPersonalActions extends sfActions
 		$eventPersonalObj->setUserSiteId( $this->userSiteId );
 		
 	$eventPersonalObj->setEventName( $eventName );
-	$eventPersonalObj->setGameStyleId( $gameStyleId );
 	$eventPersonalObj->setEventPlace( $eventPlace );
 	$eventPersonalObj->setEventDate( Util::formatDate($eventDate) );
-	$eventPersonalObj->setEventPosition( $eventPosition );
-	$eventPersonalObj->setPaidPlaces( ($paidPlaces?$paidPlaces:0) );
-	$eventPersonalObj->setPlayers( ($players?$players:0) );
+	$eventPersonalObj->setEventPosition( nvl($eventPosition) );
+	$eventPersonalObj->setGameStyleId( nvl($gameStyleId) );
+	$eventPersonalObj->setPaidPlaces( nvl($paidPlaces, 0) );
+	$eventPersonalObj->setPlayers( nvl($players, 0) );
 	$eventPersonalObj->setBuyin( Util::formatFloat($buyin) );
 	$eventPersonalObj->setRebuy( Util::formatFloat($rebuy) );
 	$eventPersonalObj->setAddon( Util::formatFloat($addon) );

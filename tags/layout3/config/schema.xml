@@ -61,6 +61,7 @@
 		<column name="image_path" type="VARCHAR" />
 		<column name="signed_schedule" type="BOOLEAN" />
 		<column name="schedule_start_date" type="DATE" />
+		<column name="start_bankroll" type="NUMERIC" size="10" scale="2" />
 		<column name="deviceUDID" type="VARCHAR" />
 		<column name="mobile_token" type="VARCHAR" />
 		<column name="active" type="BOOLEAN" />

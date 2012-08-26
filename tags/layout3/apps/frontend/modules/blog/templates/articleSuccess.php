@@ -4,7 +4,7 @@
 	
 	sfContext::getInstance()->getResponse()->setTitle('iRank Blog :: '.$blogObj->getTitle());
 ?>
-<div class="moduleIntro">
+<div class="moduleIntro article">
 	
 	<h1><?php echo $blogCategory ?></h1>
 	<h2><?php echo $blogObj->getTitle() ?></h2>

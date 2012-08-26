@@ -28,6 +28,11 @@
 	overflow: 	hidden;
 }
 
+#quickResume h1 {
+	
+	text-shadow: #FFF 1px 1px
+}
+
 #quickResume.home .pendingInviteList {
 	
 	text-align: 	center;

@@ -38,3 +38,9 @@ fields:
     sfCompareValidator:
       check:    password
       compare_error: form.error.passwordConfirm
+      
+  startBankroll:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      nan_error: form.error.invalidNumber

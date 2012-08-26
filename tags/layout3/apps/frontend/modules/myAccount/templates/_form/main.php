@@ -39,9 +39,15 @@
 	<hr style="margin-bottom:0px"/>
 	<br/>
 
+
 	<div class="row">
 		<div class="label"><?php echo __('myAccount.defaultLanguage') ?></div>
 		<div class="field"><?php echo select_tag('defaultLanguage', options_for_select(array('en_US'=>'English', 'pt_BR'=>'Português'), $defaultLanguage)) ?></div>
+	</div>
+	
+	<div class="row">
+		<div class="label">Bankroll inicial</label></div>
+		<div class="field"><?php echo input_tag('startBankroll', Util::formatFloat($userSiteObj->getStartBankroll(), true), array('size'=>8, 'maxlength'=>8, 'class'=>'textR', 'id'=>'myAccountStartBankroll')) ?></div>
 	</div>
 	
 	<div class="row">

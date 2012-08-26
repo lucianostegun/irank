@@ -37,6 +37,7 @@ class UserSite extends BaseUserSite
 	  	$lastName        = $request->getParameter('lastName');
 	  	$password        = $request->getParameter('password');
 	  	$defaultLanguage = $request->getParameter('defaultLanguage');
+	  	$startBankroll   = $request->getParameter('startBankroll');
 	  	
   		$peopleObj = People::getQuickPeople($firstName, $lastName, 'userSite', $this->getPeopleId(), $defaultLanguage);
   		
@@ -56,6 +57,7 @@ class UserSite extends BaseUserSite
 	  	$peopleObj->setEmailAddress( $emailAddress );
 	  	$this->setPassword( (strlen($password)==32?$password:md5($password)) );
 	  	$this->setActive(true);
+	  	$this->setStartBankroll(nvl($startBankroll));
 	  	$this->save();
 	  	
 	  	$peopleObj->save();
@@ -468,18 +470,18 @@ class UserSite extends BaseUserSite
 		return Util::executeOne("SELECT get_pending_purchases($userSiteId)"); 
 	}
 	
-	public function getInfo($replaceNull=false, $withBalance=true){
+	public function getInfo($replaceNull=false, $withBalance=true, $formatFloat=true){
 		
 		$infoList = array();
-		$infoList['id']           = $this->getId();
-		$infoList['firstName']    = $this->getPeople()->getFirstName();
-		$infoList['lastName']     = $this->getPeople()->getLastName();
-		$infoList['username']     = $this->getUsername();
-		$infoList['emailAddress'] = $this->getPeople()->getEmailAddress();
+		$infoList['id']            = $this->getId();
+		$infoList['firstName']     = $this->getPeople()->getFirstName();
+		$infoList['lastName']      = $this->getPeople()->getLastName();
+		$infoList['username']      = $this->getUsername();
+		$infoList['emailAddress']  = $this->getPeople()->getEmailAddress();
 		
 		if( $withBalance ){
 			
-			$resumeList = People::getFullResume($this->getPeopleId(), $this->getId(), true);
+			$resumeList = People::getFullResume($this->getPeopleId(), $this->getId(), $formatFloat);
 			$infoList = array_merge($infoList, $resumeList);
 		}
 		

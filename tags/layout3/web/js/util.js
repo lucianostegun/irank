@@ -365,3 +365,8 @@ function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow, evt)
 
 	location.href = urlLocation;
 }
+
+function hideMessage(messageId){
+	
+	hideDiv('message-'+messageId);
+}

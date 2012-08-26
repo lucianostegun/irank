@@ -27,7 +27,8 @@ class eventActions extends sfActions
   	$viewComment = $request->getParameter('viewComment');
   	$viewComment = base64_decode(strrev($viewComment));
   	
-  	$eventId       = $request->getParameter('eventId', $viewComment);
+  	$eventId       = $request->getParameter('id', $viewComment);
+  	$eventId       = $request->getParameter('eventId', $eventId);
   	$this->isClone = $request->getParameter('isClone');
   	
   	if( $eventId ){

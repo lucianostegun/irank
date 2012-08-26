@@ -1,7 +1,7 @@
 <?php
 	include_partial('home/component/commonBar', array('pathList'=>array('Blog'=>'blog/index')));
 ?>
-<div class="moduleIntro index">
+<div class="moduleIntro article index">
 <?php
 	$tag      = $sf_request->getParameter('tag');
 	$category = $sf_request->getParameter('category');

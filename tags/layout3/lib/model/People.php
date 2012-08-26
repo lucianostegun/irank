@@ -271,6 +271,8 @@ class People extends BasePeople
 		
 		$resumeList = array();
 		
+		$resumeList['startBankroll'] = Util::executeOne('SELECT COALESCE(start_bankroll, 0) FROM user_site WHERE id = \''.$userSiteId.'\' OR people_id = \''.$peopleId.'\'', 'float');
+		
 		$resumeList['fee']   = Util::executeOne('SELECT SUM(event.ENTRANCE_FEE) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event_player.ENABLED=TRUE AND event.VISIBLE=TRUE AND event.ENABLED=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE=TRUE AND ranking.DELETED=FALSE AND event.EVENT_DATE >= get_resume_start_date('.$peopleId.')', 'float');
 		$resumeList['buyin'] = Util::executeOne('SELECT SUM(event_player.BUYIN) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event_player.ENABLED=TRUE AND event.VISIBLE=TRUE AND event.ENABLED=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE=TRUE AND ranking.DELETED=FALSE AND event.EVENT_DATE >= get_resume_start_date('.$peopleId.')', 'float');
 		$resumeList['addon'] = Util::executeOne('SELECT SUM(event_player.ADDON) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event_player.ENABLED=TRUE AND event.VISIBLE=TRUE AND event.ENABLED=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE=TRUE AND ranking.DELETED=FALSE AND event.EVENT_DATE >= get_resume_start_date('.$peopleId.')', 'float');
@@ -286,18 +288,19 @@ class People extends BasePeople
 		
 		$bra = $resumeList['buyin']+$resumeList['rebuy']+$resumeList['addon'];
 		
-		$resumeList['balance'] = $resumeList['prize']-$resumeList['buyin']-$resumeList['rebuy']-$resumeList['addon']-$resumeList['fee'];
+		$resumeList['balance'] = $resumeList['startBankroll']+$resumeList['prize']-$resumeList['buyin']-$resumeList['rebuy']-$resumeList['addon']-$resumeList['fee'];
 		$resumeList['average'] = ($bra?$resumeList['prize']/$bra:0);
 		
 		if($formatDecimal)
 			foreach($resumeList as &$resume)
 				$resume = Util::formatFloat($resume, true);
 		
-		$resumeList['rankings']  = Util::executeOne('SELECT COUNT(1) FROM ranking_player, ranking WHERE ranking_player.PEOPLE_ID = \''.$peopleId.'\' AND ranking.VISIBLE=TRUE AND ranking.DELETED=FALSE AND ranking_player.RANKING_ID=ranking.ID', 'float');
-		$resumeList['events']    = Util::executeOne('SELECT COUNT(1) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE=TRUE AND ranking.DELETED=FALSE', 'float');
-		$resumeList['events']   += Util::executeOne('SELECT COUNT(1) FROM event_personal WHERE event_personal.USER_SITE_ID = \''.$userSiteId.'\' AND event_personal.VISIBLE=TRUE AND event_personal.DELETED=FALSE', 'float');
-		$resumeList['comments']  = Util::executeOne('SELECT COUNT(1) FROM event_comment, event WHERE event_comment.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_comment.EVENT_ID=event.ID', 'float');
-		$resumeList['photos']    = Util::executeOne('SELECT COUNT(1) FROM event_photo, event WHERE event_photo.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_photo.EVENT_ID=event.ID', 'float');
+		$resumeList['rankings']       = Util::executeOne('SELECT COUNT(1) FROM ranking_player, ranking WHERE ranking_player.PEOPLE_ID = \''.$peopleId.'\' AND ranking.VISIBLE=TRUE AND ranking.DELETED=FALSE AND ranking_player.RANKING_ID=ranking.ID', 'float');
+		$resumeList['events']         = Util::executeOne('SELECT COUNT(1) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE=TRUE AND ranking.DELETED=FALSE', 'float');
+		$resumeList['eventsPersonal'] = Util::executeOne('SELECT COUNT(1) FROM event_personal WHERE event_personal.USER_SITE_ID = \''.$userSiteId.'\' AND event_personal.VISIBLE=TRUE AND event_personal.DELETED=FALSE', 'float');
+		$resumeList['eventsLive']     = Util::executeOne('SELECT COUNT(1) FROM event_live_player, event_live, ranking_live WHERE event_live_player.PEOPLE_ID = \''.$peopleId.'\' AND event_live.VISIBLE=TRUE AND event_live.DELETED=FALSE AND event_live.SAVED_RESULT=TRUE AND event_live_player.EVENT_LIVE_ID=event_live.ID AND event_live.RANKING_LIVE_ID=ranking_live.ID AND ranking_live.VISIBLE=TRUE AND ranking_live.DELETED=FALSE', 'float');
+		$resumeList['comments']       = Util::executeOne('SELECT COUNT(1) FROM event_comment, event WHERE event_comment.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_comment.EVENT_ID=event.ID', 'float');
+		$resumeList['photos']         = Util::executeOne('SELECT COUNT(1) FROM event_photo, event WHERE event_photo.PEOPLE_ID = \''.$peopleId.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_photo.EVENT_ID=event.ID', 'float');
 		
 		return $resumeList;
 	}

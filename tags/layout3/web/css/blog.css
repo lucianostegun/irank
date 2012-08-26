@@ -1,4 +1,4 @@
-h1 {
+.article h1 {
 
 	margin: 0px 0px 0px 1px;
 	font-size: 14px;
@@ -7,7 +7,7 @@ h1 {
 	text-transform: uppercase;
 }
 
-h1.imageFooter {
+.article h1.imageFooter {
 
 	margin: 4px 5px 0px 5px;
 	font-size: 12px;
@@ -18,14 +18,14 @@ h1.imageFooter {
 	font-weight: normal
 }
 
-h2 {
+.article h2 {
 
 	margin: 3px 0px;
 	padding: 0px;
 	font-size: 20px;
 }
 
-h3 {
+.article h3 {
 
 	float: left;
 	font-size: 12px;
@@ -35,12 +35,12 @@ h3 {
 	font-family: Calibri, Arial
 }
 
-h3.tags {
+.article h3.tags {
 
 	margin-left: 3px
 }
 
-h4 {
+.article h4 {
 
 	margin: 20px 0px -8px 0px;
 	padding: 0px;
@@ -48,14 +48,14 @@ h4 {
 	color: #4040404
 }
 
-p {
+.article p {
 
 	font-family: Verdana, Arial, Sans Serif, "Microsoft Sans serif", "Ms Sans serif";
 	margin-bottom: 10px;
 	width: 650px
 }
 
-div.distinctText {
+.article div.distinctText {
 
 	padding: 10px 20px;
 	background: #EAEAEA;
@@ -63,13 +63,13 @@ div.distinctText {
 	margin: 20px;
 }
 
-div.distinctText ul {
+.article div.distinctText ul {
 
 	margin: 0px;
 	padding: 0px
 }
 
-li {
+.article li {
 
 	line-height: 25px;
 }

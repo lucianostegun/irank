@@ -39,7 +39,7 @@
 				echo image_tag('store/new', array('class'=>'distinct '.$distinct))
 		?>
 		<span class="tshirt name"><?php echo link_to($productName, "store/details?$productCode=") ?></span>
-		<span class="tshirt size"><b>Tam:</b> <?php #echo $productObj->getSizeList() ?></span>
+		<span class="tshirt size"><b>Tam:</b> <?php echo $productObj->getSizeList() ?></span>
 		<span class="tshirt prize">R$ <?php echo Util::formatFloat($defaultPrice, true) ?></span>
 	</div>
 <?php endforeach; ?>

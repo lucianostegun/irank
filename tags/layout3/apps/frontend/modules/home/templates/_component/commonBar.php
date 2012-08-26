@@ -50,12 +50,12 @@
 	<?php
 		$messageList = (isset($messageList)?$messageList:array());
 		
-		foreach($messageList as $message){
+		foreach($messageList as $messageId=>$message){
 			
 			$class = (preg_match('/^\?/', $message)?'help':(preg_match('/^\@/', $message)?'error':'info'));
 			
 			$message = preg_replace('/^[\?\!@]/', '', $message);
-			echo '<div class="message '.$class.'">'.$message.'</div>';
+			echo '<div class="message '.$class.'" id="message-'.$messageId.'">'.$message.'</div>';
 		}
 	?>
 </div>

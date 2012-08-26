@@ -41,6 +41,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 
 	
+	protected $start_bankroll;
+
+
+	
 	protected $deviceudid;
 
 
@@ -187,6 +191,13 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		} else {
 			return date($format, $ts);
 		}
+	}
+
+	
+	public function getStartBankroll()
+	{
+
+		return $this->start_bankroll;
 	}
 
 	
@@ -420,6 +431,16 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setStartBankroll($v)
+	{
+
+		if ($this->start_bankroll !== $v) {
+			$this->start_bankroll = $v;
+			$this->modifiedColumns[] = UserSitePeer::START_BANKROLL;
+		}
+
+	} 
+	
 	public function setDeviceudid($v)
 	{
 
@@ -569,31 +590,33 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			$this->schedule_start_date = $rs->getDate($startcol + 7, null);
 
-			$this->deviceudid = $rs->getString($startcol + 8);
+			$this->start_bankroll = $rs->getFloat($startcol + 8);
 
-			$this->mobile_token = $rs->getString($startcol + 9);
+			$this->deviceudid = $rs->getString($startcol + 9);
 
-			$this->active = $rs->getBoolean($startcol + 10);
+			$this->mobile_token = $rs->getString($startcol + 10);
 
-			$this->enabled = $rs->getBoolean($startcol + 11);
+			$this->active = $rs->getBoolean($startcol + 11);
 
-			$this->visible = $rs->getBoolean($startcol + 12);
+			$this->enabled = $rs->getBoolean($startcol + 12);
 
-			$this->deleted = $rs->getBoolean($startcol + 13);
+			$this->visible = $rs->getBoolean($startcol + 13);
 
-			$this->locked = $rs->getBoolean($startcol + 14);
+			$this->deleted = $rs->getBoolean($startcol + 14);
 
-			$this->last_access_date = $rs->getTimestamp($startcol + 15, null);
+			$this->locked = $rs->getBoolean($startcol + 15);
 
-			$this->created_at = $rs->getTimestamp($startcol + 16, null);
+			$this->last_access_date = $rs->getTimestamp($startcol + 16, null);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 17, null);
+			$this->created_at = $rs->getTimestamp($startcol + 17, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 18, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 18; 
+						return $startcol + 19; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserSite object", $e);
 		}
@@ -852,33 +875,36 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				return $this->getScheduleStartDate();
 				break;
 			case 8:
-				return $this->getDeviceudid();
+				return $this->getStartBankroll();
 				break;
 			case 9:
-				return $this->getMobileToken();
+				return $this->getDeviceudid();
 				break;
 			case 10:
-				return $this->getActive();
+				return $this->getMobileToken();
 				break;
 			case 11:
-				return $this->getEnabled();
+				return $this->getActive();
 				break;
 			case 12:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 13:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 14:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 15:
-				return $this->getLastAccessDate();
+				return $this->getLocked();
 				break;
 			case 16:
-				return $this->getCreatedAt();
+				return $this->getLastAccessDate();
 				break;
 			case 17:
+				return $this->getCreatedAt();
+				break;
+			case 18:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -899,16 +925,17 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$keys[5]=>$this->getImagePath(),
 			$keys[6]=>$this->getSignedSchedule(),
 			$keys[7]=>$this->getScheduleStartDate(),
-			$keys[8]=>$this->getDeviceudid(),
-			$keys[9]=>$this->getMobileToken(),
-			$keys[10]=>$this->getActive(),
-			$keys[11]=>$this->getEnabled(),
-			$keys[12]=>$this->getVisible(),
-			$keys[13]=>$this->getDeleted(),
-			$keys[14]=>$this->getLocked(),
-			$keys[15]=>$this->getLastAccessDate(),
-			$keys[16]=>$this->getCreatedAt(),
-			$keys[17]=>$this->getUpdatedAt(),
+			$keys[8]=>$this->getStartBankroll(),
+			$keys[9]=>$this->getDeviceudid(),
+			$keys[10]=>$this->getMobileToken(),
+			$keys[11]=>$this->getActive(),
+			$keys[12]=>$this->getEnabled(),
+			$keys[13]=>$this->getVisible(),
+			$keys[14]=>$this->getDeleted(),
+			$keys[15]=>$this->getLocked(),
+			$keys[16]=>$this->getLastAccessDate(),
+			$keys[17]=>$this->getCreatedAt(),
+			$keys[18]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -949,33 +976,36 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$this->setScheduleStartDate($value);
 				break;
 			case 8:
-				$this->setDeviceudid($value);
+				$this->setStartBankroll($value);
 				break;
 			case 9:
-				$this->setMobileToken($value);
+				$this->setDeviceudid($value);
 				break;
 			case 10:
-				$this->setActive($value);
+				$this->setMobileToken($value);
 				break;
 			case 11:
-				$this->setEnabled($value);
+				$this->setActive($value);
 				break;
 			case 12:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 13:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 14:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 15:
-				$this->setLastAccessDate($value);
+				$this->setLocked($value);
 				break;
 			case 16:
-				$this->setCreatedAt($value);
+				$this->setLastAccessDate($value);
 				break;
 			case 17:
+				$this->setCreatedAt($value);
+				break;
+			case 18:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -993,16 +1023,17 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setImagePath($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setSignedSchedule($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setScheduleStartDate($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setDeviceudid($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setMobileToken($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setActive($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setEnabled($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setVisible($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setDeleted($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setLocked($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setLastAccessDate($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setCreatedAt($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setUpdatedAt($arr[$keys[17]]);
+		if (array_key_exists($keys[8], $arr)) $this->setStartBankroll($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setDeviceudid($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setMobileToken($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setActive($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setEnabled($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setVisible($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setDeleted($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setLocked($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setLastAccessDate($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setCreatedAt($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setUpdatedAt($arr[$keys[18]]);
 	}
 
 	
@@ -1018,6 +1049,7 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserSitePeer::IMAGE_PATH)) $criteria->add(UserSitePeer::IMAGE_PATH, $this->image_path);
 		if ($this->isColumnModified(UserSitePeer::SIGNED_SCHEDULE)) $criteria->add(UserSitePeer::SIGNED_SCHEDULE, $this->signed_schedule);
 		if ($this->isColumnModified(UserSitePeer::SCHEDULE_START_DATE)) $criteria->add(UserSitePeer::SCHEDULE_START_DATE, $this->schedule_start_date);
+		if ($this->isColumnModified(UserSitePeer::START_BANKROLL)) $criteria->add(UserSitePeer::START_BANKROLL, $this->start_bankroll);
 		if ($this->isColumnModified(UserSitePeer::DEVICEUDID)) $criteria->add(UserSitePeer::DEVICEUDID, $this->deviceudid);
 		if ($this->isColumnModified(UserSitePeer::MOBILE_TOKEN)) $criteria->add(UserSitePeer::MOBILE_TOKEN, $this->mobile_token);
 		if ($this->isColumnModified(UserSitePeer::ACTIVE)) $criteria->add(UserSitePeer::ACTIVE, $this->active);
@@ -1071,6 +1103,8 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		$copyObj->setSignedSchedule($this->signed_schedule);
 
 		$copyObj->setScheduleStartDate($this->schedule_start_date);
+
+		$copyObj->setStartBankroll($this->start_bankroll);
 
 		$copyObj->setDeviceudid($this->deviceudid);
 

@@ -109,3 +109,8 @@
 	-ms-user-select: none;
 	user-select: none;
 }
+
+.nowrap {
+
+	white-space: nowrap
+}

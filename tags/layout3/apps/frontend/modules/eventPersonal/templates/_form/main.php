@@ -12,6 +12,11 @@
 				<div class="error" id="eventPersonalEventDateError" onclick="showFormErrorDetails('eventPersonal', 'eventDate')"></div>
 			</div>
 			<div class="row">
+				<div class="label" id="eventPersonalEventPlaceLabel"><?php echo __('event.eventPlace') ?></div>
+				<div class="field"><?php echo input_tag('eventPlace', $eventPersonalObj->getEventPlace(), array('size'=>25, 'maxlength'=>25, 'class'=>'required', 'id'=>'eventPersonalEventPlace')) ?></div>
+				<div class="error" id="eventPersonalEventPlaceError" onclick="showFormErrorDetails('eventPersonal', 'eventPlace')"></div>
+			</div>
+			<div class="row">
 				<div class="label" id="eventPersonalBuyinLabel">Buy-in</div>
 				<div class="field"><?php echo input_tag('buyin', Util::formatFloat($eventPersonalObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalBuyin')) ?></div>
 				<div class="error" id="eventPersonalBuyinError" onclick="showFormErrorDetails('eventPersonal', 'buyin')"></div>
@@ -33,30 +38,25 @@
 				<div class="error" id="eventPersonalPrizeError" onclick="showFormErrorDetails('eventPersonal', 'prize')"></div>
 			</div>
 			
-			<h1><?php echo __('event.eventDetails') ?></h1>
-			<div class="row">
-				<div class="label" id="eventPersonalEventPlaceLabel"><?php echo __('event.eventPlace') ?></div>
-				<div class="field"><?php echo input_tag('eventPlace', $eventPersonalObj->getEventPlace(), array('size'=>25, 'maxlength'=>25, 'class'=>'required', 'id'=>'eventPersonalEventPlace')) ?></div>
-				<div class="error" id="eventPersonalEventPlaceError" onclick="showFormErrorDetails('eventPersonal', 'eventPlace')"></div>
-			</div>
+			<h1>Informações opcionais</h1>
 			<div class="row">
 				<div class="label" id="eventPersonalGameStyleIdLabel"><?php echo __('ranking.style') ?></div>
-				<div class="field"><?php echo select_tag('gameStyleId', VirtualTable::getOptionsForSelect('gameStyle', $eventPersonalObj->getGameStyleId()), array('class'=>'required', 'id'=>'eventPersonalGameStyleId')) ?></div>
+				<div class="field"><?php echo select_tag('gameStyleId', VirtualTable::getOptionsForSelect('gameStyle', $eventPersonalObj->getGameStyleId()), array('id'=>'eventPersonalGameStyleId')) ?></div>
 				<div class="error" id="eventPersonalGameStyleIdError" onclick="showFormErrorDetails('eventPersonal', 'gameStyleId')"></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalPaidPlacesLabel"><?php echo __('event.paidPlaces') ?></div>
-				<div class="field"><?php echo input_tag('paidPlaces', $eventPersonalObj->getPaidPlaces(), array('size'=>2, 'maxlength'=>3, 'class'=>'required', 'id'=>'eventPersonalPaidPlaces')) ?></div>
+				<div class="field"><?php echo input_tag('paidPlaces', $eventPersonalObj->getPaidPlaces(), array('size'=>2, 'maxlength'=>3, 'id'=>'eventPersonalPaidPlaces')) ?></div>
 				<div class="error" id="eventPersonalPaidPlacesError" onclick="showFormErrorDetails('eventPersonal', 'paidPlaces')"></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalEventPositionLabel"><?php echo __('Position') ?></div>
-				<div class="field"><?php echo input_tag('eventPosition', $eventPersonalObj->getEventPosition(), array('size'=>2, 'maxlength'=>3, 'class'=>'required', 'id'=>'eventPersonalEventPosition')) ?></div>
+				<div class="field"><?php echo input_tag('eventPosition', $eventPersonalObj->getEventPosition(), array('size'=>2, 'maxlength'=>3, 'id'=>'eventPersonalEventPosition')) ?></div>
 				<div class="error" id="eventPersonalEventPositionError" onclick="showFormErrorDetails('eventPersonal', 'eventPosition')"></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalPlayersLabel"><?php echo __('Players') ?></div>
-				<div class="field"><?php echo input_tag('players', $eventPersonalObj->getPlayers(), array('size'=>3, 'maxlength'=>3, 'class'=>'required', 'id'=>'eventPersonalPlayers')) ?></div>
+				<div class="field"><?php echo input_tag('players', $eventPersonalObj->getPlayers(), array('size'=>3, 'maxlength'=>3, 'id'=>'eventPersonalPlayers')) ?></div>
 				<div class="error" id="eventPersonalPlayersError" onclick="showFormErrorDetails('eventPersonal', 'players')"></div>
 			</div>
 			<div class="rowTextArea">

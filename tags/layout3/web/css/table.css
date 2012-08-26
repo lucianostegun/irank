@@ -15,8 +15,8 @@
 	font-weight: 	bold;
 	border-left: 	1px solid #C3C6CE;
 	padding-left: 	6px;
+	padding-right: 	6px;
 	height: 		30px;
-	text-align: 	left;
 	text-shadow: 	white -1px 1px;
 }
 
@@ -92,6 +92,14 @@
 .gridTable .hover td {
 	
 	background: 	#f6b957;
+	cursor: 		pointer;
+	color: 			#000000;
+	text-shadow: 	none;
+}
+
+.gridTable tr.hoverable:hover td {
+	
+	background: 	#F6B957;
 	cursor: 		pointer;
 	color: 			#000000;
 	text-shadow: 	none;

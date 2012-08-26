@@ -50,6 +50,8 @@ class myAccountActions extends sfActions
   	$userSiteObj->saveEmailOptions($request);
   	$userSiteObj->saveScheduleOptions($request);
   	$userSiteObj->updateEmailGroups();
+  	
+  	echo Util::parseInfo($userSiteObj->getInfo(false, true, false));
   	exit;
   }
 
@@ -256,6 +258,12 @@ class myAccountActions extends sfActions
 
   public function executeBankrollChart($request){
 
+	$this->setTemplate('chart/bankroll');
+  }
+
+  public function executeResumeChart($request){
+
+	$this->setTemplate('chart/resume');
   }
   
   public function executeJavascript($request){

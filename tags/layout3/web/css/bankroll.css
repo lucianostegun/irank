@@ -1,3 +1,125 @@
+.positive,
+h1.startBankroll span.positive,
+table.dashboard td.positive {
+	
+	color: #5A5ADD;
+}
+
+table.bankroll td.negative,
+h1.startBankroll span.negative,
+table.dashboard td.negative {
+	
+	color: #DD5A5A;
+}
+
+h1.startBankroll {
+
+	padding: 7px 15px;
+	margin: -5px 0px 0px 0px;
+	font-size: 14px;
+	background: #E5E5E5;
+	border-top: 1px solid #BABABA;
+	border-bottom: 1px solid #BABABA;
+}
+
+h1.startBankroll span {
+
+	position: relative;
+	left: 10px;
+	font-size: 18px;
+	display: inline-block;
+	width: 100px;
+	text-align: right;
+}
+
+h1.startBankroll span.a {
+
+	position: relative;
+	left: 20px;
+	top: -3px;
+	font-size: 10px;
+	font-weight: normal;
+	width: auto
+}
+
+table.dashboard {
+
+	padding: 5px;
+	margin-left: 10px;
+	margin-right: 30px;
+	width: 765px;
+}
+
+table.dashboard tr th {
+
+	text-align: right;
+	padding: 5px 0px 5px 5px;
+	border-bottom: 1px solid #C0C0C0;
+	font-weight: normal;
+	color: #505050;
+	white-space: nowrap
+}
+
+table.dashboard tr td {
+
+	padding-left: 10px;
+	padding-right: 50px;
+	border-bottom: 1px solid #C0C0C0;
+	font-weight: bold;
+	color: #505050
+}
+
+table.dashboard tr.bigger th,
+table.dashboard tr.bigger td {
+
+	font-size: 15px;
+	padding-top: 10px;
+	padding-bottom: 10px
+}
+
+table.dashboard.chart tr th,
+table.dashboard.chart tr td {
+
+	border: none;
+	text-align: left;
+	padding: 0px;
+	white-space: normal
+}
+
+table.dashboard.chart tr th h1 {
+
+	font-size: 12px;
+	font-weight; bold;
+	padding: 3px 20px 1px 0px;
+	margin: 0px 0px 2px 0px;
+	border-bottom: 1px solid #C0C0C0
+}
+
+table.dashboard.chart tr th h1.up {
+
+	background: url('/images/icon/thumbUp.png') right top no-repeat;
+}
+
+table.dashboard.chart tr th h1.down {
+
+	background: url('/images/icon/thumbDown.png') right top no-repeat;
+}
+
+table.dashboard.chart tr th hr {
+
+	border: none;
+	height: 1px;
+	border-bottom: 1px solid #C0C0C0;
+}
+
+table.dashboard.chart tr span {
+
+	display: inline-block;
+	width: 70px;
+	padding-right: 5px;
+	text-align: right
+}
+
 table.bankroll {
 	
 	margin: 10px 20px;
@@ -68,14 +190,10 @@ table.bankroll tr.odd td {
 	background: #F0F0F0;
 }
 
-table.bankroll td.positive {
+table.bankroll tr.hoverable:hover td {
 	
-	color: #5A5ADD;
-}
-
-table.bankroll td.negative {
-	
-	color: #DD5A5A;
+	background-color: #D0D0D0;
+	cursor: pointer;
 }
 
 table.bankroll tr.final {

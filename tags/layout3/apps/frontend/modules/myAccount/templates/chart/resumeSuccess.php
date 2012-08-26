@@ -1,10 +1,7 @@
 <?php
-Util::getHelper('I18N');
-
 $libDir = sfConfig::get('sf_lib_dir');
 
-$monthList  = array('jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez');
-$bankrollByMonth = array(432,432,745,254,676,925,347,248,239,150,476,623);
+$monthList = array('jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez');
 
 $peopleId   = $sf_user->getAttribute('peopleId');
 $userSiteId = $sf_user->getAttribute('userSiteId');
@@ -19,6 +16,8 @@ $sql = "SELECT
 			event_date";
 			
 $resultSet = Util::executeQuery($sql);
+$braByMonth      = array();
+$prizeByMonth    = array();
 $bankrollByMonth = array();
 $bankrollSum     = array();
 $lastMonth       = null;
@@ -44,6 +43,12 @@ while($resultSet->next()){
     
     $balance = $prize-$buyin-$rebuy-$addon-$entranceFee;
     
+    if( !isset($braByMonth[$year]) )
+    	$braByMonth[$year] = array('1'=>0, '2'=>0, '3'=>0, '4'=>0, '5'=>0, '6'=>0, '7'=>0, '8'=>0, '9'=>0, '10'=>0, '11'=>0, '12'=>0);
+
+    if( !isset($prizeByMonth[$year]) )
+    	$prizeByMonth[$year] = array('1'=>0, '2'=>0, '3'=>0, '4'=>0, '5'=>0, '6'=>0, '7'=>0, '8'=>0, '9'=>0, '10'=>0, '11'=>0, '12'=>0);
+
     if( !isset($bankrollByMonth[$year]) )
     	$bankrollByMonth[$year] = array('1'=>0, '2'=>0, '3'=>0, '4'=>0, '5'=>0, '6'=>0, '7'=>0, '8'=>0, '9'=>0, '10'=>0, '11'=>0, '12'=>0);
     
@@ -54,7 +59,9 @@ while($resultSet->next()){
     	$bankrollSum[$year][$month] = $balanceSum;
 
     $bankrollByMonth[$year][$month] += $balance;
-    $bankrollSum[$year][$month] += $balance;
+    $braByMonth[$year][$month]      += $buyin+$rebuy+$addon+$entranceFee;
+    $prizeByMonth[$year][$month]    += $prize;
+    $bankrollSum[$year][$month]     += $balance;
     
     $balanceSum += $balance;
 }
@@ -63,6 +70,12 @@ $year = $sf_request->getParameter('year');
 
 $bankrollByMonth = $bankrollByMonth[$year];
 $bankrollByMonth = array_values($bankrollByMonth);
+
+$braByMonth  = $braByMonth[$year];
+$braByMonth = array_values($braByMonth);
+
+$prizeByMonth = $prizeByMonth[$year];
+$prizeByMonth = array_values($prizeByMonth);
 
 $bankrollSum = $bankrollSum[$year];
 //$bankrollSum = array_values($bankrollSum);
@@ -82,25 +95,29 @@ ksort($bankrollSum);
 // Dataset definition
 $DataSet = new pData;
 
-foreach($bankrollByMonth as &$value)
-	if( $value===0 )
-		$value = null;
+$bankrollByMonth = removeNull($bankrollByMonth);
+$braByMonth      = removeNull($braByMonth);
+$prizeByMonth    = removeNull($prizeByMonth);
 
 $DataSet->AddPoint($bankrollByMonth, 'bankrollByMonth');
+$DataSet->AddPoint($braByMonth, 'braByMonth');
 $DataSet->AddPoint($bankrollSum, 'bankrollSum');
+$DataSet->AddPoint($prizeByMonth, 'prizeByMonth');
 
 $DataSet->AddPoint($monthList,'monthList');
 $DataSet->SetAbsciseLabelSerie('monthList');
 
-$DataSet->SetSerieName('Mensal','bankrollByMonth');
-$DataSet->SetSerieName('Acumulado','bankrollSum');
+$DataSet->SetSerieName('Saldo mensal','bankrollByMonth');
+$DataSet->SetSerieName('Saldo acumulado','bankrollSum');
+$DataSet->SetSerieName('BRA mensal','braByMonth');
+$DataSet->SetSerieName('Lucro mensal','prizeByMonth');
 
 $DataSet->SetYAxisFormat('float');
 
-$width  = 750;
-$height = 200;
+$width  = 560;
+$height = 270;
 
-$allPositions = array_merge($bankrollByMonth, $bankrollSum);
+$allPositions = array_merge($bankrollByMonth, $bankrollSum, $braByMonth, $prizeByMonth);
 foreach($allPositions as $key=>$allPosition)
 	if( is_null($allPosition) )
 		unset($allPositions[$key]);
@@ -132,10 +149,20 @@ $DataSet->AddSerie('bankrollByMonth');
 $Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
 $Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255);
 
-
-////$Test->setLineStyle(1);
 $DataSet->AddSerie('bankrollSum');
 $DataSet->RemoveSerie('bankrollByMonth');
+
+$Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
+$Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255);
+
+$DataSet->AddSerie('braByMonth');
+$DataSet->RemoveSerie('bankrollSum');
+
+$Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
+$Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255);
+
+$DataSet->AddSerie('prizeByMonth');
+$DataSet->RemoveSerie('braByMonth');
 
 $Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
 $Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255);
@@ -147,11 +174,19 @@ header('Pragma: no-cache');
 
 // Finish the graph
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
-$Test->drawLegend($width-120, 35, $DataSet->GetDataDescription(), 255, 255, 255);
+$Test->drawLegend($width-130, 25, $DataSet->GetDataDescription(), 255, 255, 255);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahomabd.ttf',11);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawCredits(75);
 $Test->Stroke();
-   	
+
+function removeNull($array){
+	
+	foreach($array as &$value)
+	if( $value===0 )
+		$value = null;
+	
+	return $array;
+} 	
 exit;
 ?>

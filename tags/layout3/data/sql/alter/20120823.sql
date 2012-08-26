@@ -1,5 +1,4 @@
-
-CREATE VIEW bankroll AS 
+CREATE OR REPLACE VIEW bankroll AS 
     (SELECT
         event.ID,
         event.EVENT_DATE,
@@ -12,10 +11,13 @@ CREATE VIEW bankroll AS
         event_player.ADDON,
         event_player.PRIZE,
         event_player.PEOPLE_ID,
-        null AS user_site_id
+        null AS user_site_id,
+        ranking_place.PLACE_NAME,
+        'event' AS event_type
     FROM
         event_player
         INNER JOIN event ON event_player.EVENT_ID = event.ID
+        INNER JOIN ranking_place ON ranking_place.ID = event.RANKING_PLACE_ID
     WHERE
         event_player.ENABLED
         AND event_player.EVENT_POSITION > 0
@@ -40,6 +42,12 @@ CREATE VIEW bankroll AS
         event_personal.ADDON,
         event_personal.PRIZE,
         null AS people_id,
-        event_personal.USER_SITE_ID
+        event_personal.USER_SITE_ID,
+        event_personal.EVENT_PLACE,
+        'eventPersonal' AS event_type
     FROM
-        event_personal);
+        event_personal
+    WHERE
+        enabled
+        AND visible
+        AND NOT deleted);

@@ -1,8 +1,13 @@
 <?php
-	include_partial('home/component/commonBar', array('pathList'=>array('Minha conta'=>'myAccount/index', 'Bankroll'=>null)));
-?>
+	$userSiteObj   = UserSite::getCurrentUser();
+	$startBankroll = $userSiteObj->getStartBankroll();
+	$messageList = array();
+	
+	if( is_null($startBankroll) )
+		$messageList['startBankroll'] = '!Você ainda não definiu seu bankroll inicial. <b>'.link_to('Atualize sua conta', 'myAccount/index', array('class'=>'red')).'</b> para atualizar seu bankroll.';
+	
+	include_partial('home/component/commonBar', array('pathList'=>array('Minha conta'=>'myAccount/index', 'Bankroll'=>null), 'messageList'=>$messageList));
 
-<?php
 	$peopleId   = $sf_user->getAttribute('peopleId');
 	$userSiteId = $sf_user->getAttribute('userSiteId');
 
@@ -31,6 +36,8 @@
 	    $rebuy         = $resultSet->getFloat(8);
 	    $addon         = $resultSet->getFloat(9);
 	    $prize         = $resultSet->getFloat(10);
+	    $eventPlace    = $resultSet->getString(13);
+	    $eventType     = $resultSet->getString(14);
 	    
 	    $year  = date('Y', strtotime($eventDate));
 	    $month = date('m', strtotime($eventDate));
@@ -52,6 +59,7 @@
 	    $balanceTotal += $balance;
 	    
 	    $eventList[] = array('id'=>$eventId,
+		    				 'eventType'=>$eventType,
 		    				 'eventName'=>$eventName,
 		    				 'eventDate'=>$eventDate,
 		    				 'eventPosition'=>$eventPosition,
@@ -76,14 +84,18 @@
 		echo '<br/><h2 class="textC">Você ainda não possui eventos para gerar seu bankroll</h2>';
 		return;
 	}
+	
+	
+	include_partial('myAccount/bankroll/topResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId));
+	include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId));
 
 	$buyinFinal       = 0;
     $rebuyFinal       = 0;
     $addonFinal       = 0;
     $prizeFinal       = 0;
     $entranceFeeFinal = 0;
-	$balanceFinal     = 0;
-
+	$balanceFinal     = $startBankroll;
+	
 	foreach($bankrollList as $year=>$bankroll):
 ?>
 <div id="<?php echo $year==$currentYear?'now':$year ?>" class="pt10"></div>
@@ -107,7 +119,7 @@
 			<td class="textR expand" colspan="9">
 				<?php
 					if( $year!=$currentYear )
-						echo link_to('expandir', '#toggleBankroll('.$year.')', array('class'=>'expand', 'id'=>'togglerLink-'.$year));
+						echo link_to('detalhes', '#toggleBankroll('.$year.')', array('class'=>'expand', 'id'=>'togglerLink-'.$year));
 				?>
 			</td>
 		</tr>
@@ -136,6 +148,7 @@
 		    $rebuy         = $event['rebuy'];
 		    $addon         = $event['addon'];
 		    $prize         = $event['prize'];
+		    $eventType     = $event['eventType'];
 		    
 		    $balance = $prize-$buyin-$rebuy-$addon-$entranceFee;
 		    
@@ -151,15 +164,16 @@
 		    $prizeFinal       += $prize;
 		    $entranceFeeFinal += $entranceFee;
 		    
-		    
 		    $balanceFinal += $balance;
 		    $balanceYear  += $balance;
 		    
 		    $hidden = ($year!=$currentYear);
 		    
 		    $className = ($className=='even'?'odd':'even');
+		    
+		    $link = "goModule('$eventType', 'edit', 'id', $eventId, true)";
 	?>
-	<tr class="<?php echo $className.' year-'.$year.' '.($hidden?'hidden':'') ?>">
+	<tr class="hoverable <?php echo $className.' year-'.$year.' '.($hidden?'hidden':'') ?>" onclick="<?php echo $link ?>">
 		<td class="textC"><?php echo date('d/m/Y', strtotime($eventDate)) ?></td>
 		<td><?php echo $eventName ?></td>
 		<td class="textC"><?php echo "$eventPosition/$players" ?></td>
@@ -205,19 +219,3 @@
 <br/>
 <br/>
 <?php endforeach; ?>
-
-<script>
-function toggleBankroll(year){
-	
-	var rowList = document.getElementsByClassName('year-'+year);
-	var action  = $('togglerLink-'+year).className;
-	
-	for(var i=0; i < rowList.length; i++)
-		rowList[i].toggleClassName('hidden', 'visible');
-	
-	$('togglerLink-'+year).className = (action=='expand'?'collapse':'expand');
-	$('togglerLink-'+year).innerHTML = (action=='expand'?'ocultar':'expandir');
-	
-	location.hash = year;
-}
-</script>

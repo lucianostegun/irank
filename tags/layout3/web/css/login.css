@@ -21,3 +21,81 @@
 
 	background-position: 	17px 2px;
 }
+
+#signLoginTable {
+	
+	margin-top: 50px;
+	width: 500px;
+	position: relative;
+	margin-left: 50%;
+	left: -300px;
+}
+
+#signLoginTable thead th {
+	
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 16px;
+	color: #4978a4
+}
+
+#signLoginTable th.border,
+#signLoginTable td.border {
+	
+	border-right: 1px solid #E0E0E0
+}
+
+#signLoginTable td {
+	
+	width: 250px;
+}
+
+#signLoginTable td .quickForm {
+
+	margin: 0px 10px;	
+}
+
+#signLoginTable td .quickForm th {
+	
+	text-align: right;
+	padding-right: 7px;	
+}
+
+#signLoginTable td .quickForm input {
+	
+	border: 1px solid #C0C0C0;
+	width: 150px;
+	height: 16px;
+	padding: 1px 3px;	
+}
+
+#signLoginTable td#loginArea,
+#signLoginTable td#passwordRecoveryArea {
+
+	min-width: 290px;
+}
+
+td.recoverySuccess {
+
+	padding-top: 20px;
+	background: url('/images/success50.png') left 30px no-repeat
+}
+
+td.recoverySuccess > span {
+
+	margin-left: 60px;
+	display: block
+}
+
+#loginErrorMessage,
+#resetPasswordErrorMessage {
+
+	position: 		relative;
+	left: 			0px;
+	top: 			10px;
+	margin-bottom: 	5px;
+	font-size: 		12px;
+	color: 			#C91E1E;
+	text-shadow: 	#FFFFFF 1px 1px;
+	display: 		none;
+}

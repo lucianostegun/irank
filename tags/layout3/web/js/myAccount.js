@@ -8,6 +8,12 @@ function handleSuccessMyAccount(content, isNew){
 	showFormStatusSuccess();
 	hideIndicator('myAccount');
 	enableButton('mainSubmit');
+	
+	var userSiteObj   = parseInfo(content);
+	var startBankroll = userSiteObj.startBankroll+1;
+	
+	if( startBankroll!=0 )
+		hideMessage('startBankroll')
 }
 
 function handleFailureMyAccount(content){
@@ -246,4 +252,18 @@ function removePendingInvite(eventLiveId){
 	
 	var urlAjax = _webRoot+'/myAccount/deletePendingInvite/eventLiveId/'+eventLiveId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function toggleBankroll(year){
+	
+	var rowList = document.getElementsByClassName('year-'+year);
+	var action  = $('togglerLink-'+year).className;
+	
+	for(var i=0; i < rowList.length; i++)
+		rowList[i].toggleClassName('hidden', 'visible');
+	
+	$('togglerLink-'+year).className = (action=='expand'?'collapse':'expand');
+	$('togglerLink-'+year).innerHTML = (action=='expand'?'ocultar':'detalhes');
+	
+	location.hash = year;
 }

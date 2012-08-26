@@ -2,9 +2,10 @@
 	$messageList = array();
 	
 	if( $userSiteObj->getRankingCount()==0 )
-		$messageList = array('!Você ainda não está participando de nenhum ranking. <b>'.link_to('Clique aqui', 'ranking/new', array('class'=>'red')).'</b> para criar e compartilhar seu primeiro ranking.');
-	else
-		$messageList = array();
+		$messageList['firstRanking'] = '!Você ainda não está participando de nenhum ranking. <b>'.link_to('Clique aqui', 'ranking/new', array('class'=>'red')).'</b> para criar e compartilhar seu primeiro ranking.';
+	
+	if( $userSiteObj->getStartBankroll()==0 )
+		$messageList['startBankroll'] = '!Você ainda não definiu seu bankroll inicial. Mantenha seu bankroll sempre atualizado.';
 	
 	include_partial('home/component/commonBar', array('pathList'=>array('Minha conta'=>'myAccount/index', 'Edição'=>null), 'messageList'=>$messageList));
 		

@@ -7,7 +7,9 @@
 	include_partial('home/component/commonBar', array('pathList'=>array(__('eventPersonal.title')=>'eventPersonal/index'), 'messageList'=>$messageList));
 ?>
 <div class="moduleIntro">
-	<?php echo __('eventPersonal.intro') ?>
+	Para manter seu bankroll atualizado, utilize nossa ferramenta de controle de bankroll<br/>
+	cadastrando separadamente todos os eventos que participou durante o ano e controlando tudo o que gastou<br/>
+	seus prêmios e mantendo um histórico completo de seu desempenho.
 </div>
 <?php
 	echo form_tag('eventPersonal/search', array('id'=>'eventPersonalSearchForm', 'onsubmit'=>'doEventPersonalSearch(); return false'));
@@ -16,21 +18,12 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridTable">
 	<tr class="header">
 		<th class="first"><?php echo __('Event') ?></th>
-		<th><?php echo __('Date') ?></th>
-		<th><?php echo __('Place') ?></th>
-		<th><?php echo __('Players') ?></th>
-		<th><?php echo __('Position') ?></th>
-		<th>B+R+A</th>
-		<th><?php echo __('Prize') ?></th>
-	</tr>
-	<tr class="filter" style="display: none">
-		<th><?php echo input_tag('eventName', $sf_request->getParameter('eventName'), array('size'=>15)) ?></th>
-		<th><?php echo input_date_tag('eventDate', Util::formatDate($sf_request->getParameter('eventDate')), array('size'=>10, 'maxlength'=>10)) ?></th>
-		<th><?php echo input_tag('eventPlace', $sf_request->getParameter('eventPlace'), array('size'=>15)) ?></th>
-		<th></th>
-		<th></th>
-		<th></th>
-		<th width="100"><?php echo button_tag('eventFilterSubmit', __('button.search'), array('onclick'=>'doEventPersonalSearch()')) ?></th>
+		<th class="textC"><?php echo __('Date') ?></th>
+		<th class="textL"><?php echo __('Place') ?></th>
+		<th class="textC"><?php echo __('Players') ?></th>
+		<th class="textC"><?php echo __('Position') ?></th>
+		<th class="textR">B+R+A</th>
+		<th class="textR"><?php echo __('Prize') ?></th>
 	</tr>
 	<tbody id="eventPersonalListContent">
 	<?php
