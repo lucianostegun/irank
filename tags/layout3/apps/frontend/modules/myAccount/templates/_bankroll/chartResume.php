@@ -1,9 +1,17 @@
+<?php
+	$width = ($pdf?'140mm':'600px');
+	$width2 = ($pdf?'50mm':'250px');
+?>
 <table cellspacing="0" cellpadding="0" class="dashboard chart">
 <tr>
-	<td style="width: 600px">
+	<td style="width: <?php echo $width ?>">
 	<?php
-		$urlChart = url_for('myAccount/resumeChart?year='.date('Y').'&type=png', true);
-		echo link_to(image_tag($urlChart), $urlChart);
+		$urlChart = url_for('myAccount/resumeChart?year='.date('Y').'.png', true);
+//		$urlChart = str_replace('/frontend_dev.php', '', $urlChart);
+		if( $pdf )
+			echo image_tag($urlChart);
+		else
+			echo link_to(image_tag($urlChart), $urlChart);
 	?>
 	</td>
 	<td valign="top">
@@ -12,7 +20,7 @@
 				<th><h1 class="up">Melhor vitória</h1></th>
 			</tr>
 			<tr>
-				<th class="textL" style="width: 250px">
+				<th class="textL" style="width: <?php echo $width2 ?>">
 					<?php
 						$resultSet = Util::executeQuery("SELECT * FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) AND prize > 0 ORDER BY (prize-buyin-rebuy-addon-entrance_fee) DESC LIMIT 1");
 						$eventId   = 0;

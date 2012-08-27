@@ -85,9 +85,11 @@
 		return;
 	}
 	
+	if( !is_null($startBankroll) )
+		include_partial('myAccount/bankroll/startBankroll', array('edit'=>true, 'startBankroll'=>$startBankroll));
 	
 	include_partial('myAccount/bankroll/topResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId));
-	include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId));
+	include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'pdf'=>false));
 
 	$buyinFinal       = 0;
     $rebuyFinal       = 0;

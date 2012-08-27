@@ -67,6 +67,7 @@ while($resultSet->next()){
 }
 
 $year = $sf_request->getParameter('year');
+$year = preg_replace('/[^0-9]/', '', $year);
 
 $bankrollByMonth = $bankrollByMonth[$year];
 $bankrollByMonth = array_values($bankrollByMonth);

@@ -256,6 +256,11 @@ class myAccountActions extends sfActions
 
   }
 
+  public function executeExportBankroll($request){
+
+	$this->setLayout('pdf');
+  }
+
   public function executeBankrollChart($request){
 
 	$this->setTemplate('chart/bankroll');

@@ -1,14 +1,6 @@
 <?php
 	$resumeInfo = People::getFullResume();
 	
-	if( !is_null($startBankroll) ):
-	
-		$className = ($startBankroll<0?'negative':'positive');
-?>
-	<h1 class="startBankroll">Bankroll inicial: <span class="<?php echo $className ?>"><?php echo Util::formatFloat($startBankroll, true) ?></span><span class="a"><?php echo link_to('[editar]', 'myAccount/index') ?></span></h1>
-<?php
-	endif;
-	
 	$eventsTotal    = $resumeInfo['events']+$resumeInfo['eventsPersonal']+$resumeInfo['eventsLive'];
 	$eventsTotalDiv = ($eventsTotal>0?$eventsTotal:1);
 	

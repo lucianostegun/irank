@@ -57,6 +57,7 @@ while($resultSet->next()){
 }
 
 $year = $sf_request->getParameter('year');
+$year = preg_replace('/[^0-9]/', '', $year);
 
 $bankrollByMonth = $bankrollByMonth[$year];
 $bankrollByMonth = array_values($bankrollByMonth);
@@ -136,10 +137,10 @@ $DataSet->RemoveSerie('bankrollByMonth');
 $Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
 $Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255);
 
-//header('Content-Type: image/png');
-//header('Content-Disposition: attachment; filename=bankroll_'.$year.'.png');
-//header('Expires: 0');
-//header('Pragma: no-cache');
+header('Content-Type: image/png');
+header('Content-Disposition: attachment; filename=bankroll_'.$year.'.png');
+header('Expires: 0');
+header('Pragma: no-cache');
 
 // Finish the graph
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
