@@ -125,13 +125,51 @@ function removeProductFromCart(productItemId){
 
 function selectProductOption(optionType, productOptionId){
 	
+	if(optionType=='color')
+		reloadSizeOptions(productOptionId);
+	
+	var element = $('productOption'+ucfirst(optionType)+'-'+productOptionId);
+	
+	if( optionType=='size' && element.hasClassName('disabled') ){
+		
+		if(document.getElementsByClassName('productOptionOption color selected').length>0)
+			return alert('Desculpe, mas não temos esse tamanho nessa cor.');
+		
+		return alert('Por favor, selecione a cor do produto desejado');
+	}
+	
 	var elementList = document.getElementsByClassName('productOptionOption '+optionType+' selected');
 	
 	if( elementList.length > 0 )
-		elementList[0].removeClassName('selected')
+		elementList[0].removeClassName('selected');
 
 	$('productOption'+ucfirst(optionType)+'-'+productOptionId).addClassName('selected');
 	$('productOptionId'+ucfirst(optionType)+'').value = productOptionId;
+}
+
+function reloadSizeOptions(colorId){
+	
+	var productCode = $('productCode').value;
+	
+	var elementList = document.getElementsByClassName('productOptionOption size');
+	for(var i=0; i<elementList.length; i++)
+		elementList[i].addClassName('disabled');
+		
+	var successFunc = function(t){
+
+		var productOptionIdSizeList = t.responseText;
+		productOptionIdSizeList     = productOptionIdSizeList?productOptionIdSizeList.split(','):[];
+		
+		for(var i=0; i<productOptionIdSizeList.length; i++)
+			$('productOptionSize-'+productOptionIdSizeList[i]).removeClassName('disabled');
+	};
+		
+	var failureFunc = function(t){
+		
+	};
+	
+	var urlAjax = _webRoot+'/store/getSizeOptions?colorId='+colorId+'&productCode='+productCode;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
 }
 
 function addProductToCart(){

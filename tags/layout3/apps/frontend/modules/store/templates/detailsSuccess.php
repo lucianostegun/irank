@@ -67,15 +67,11 @@
 						foreach($productOptionList as $key=>$productOptionObj){
 							
 							$productOptionId = $productOptionObj->getId();
-							$isDefault       = $productOptionObj->getIsDefault();
 							
-							if( $isDefault || (!$productOptionIdColor && $key==count($productOptionList)-1)){
-								
+							if( (!$productOptionIdColor && $key==count($productOptionList)-1))
 								$productOptionIdColor = $productOptionObj->getId();
-								$isDefault            = true;
-							}
 							
-							echo '<div class="productOptionOption color '.($isDefault?'selected':'').'" onclick="selectProductOption(\'color\', '.$productOptionId.')" id="productOptionColor-'.$productOptionId.'">';
+							echo '<div class="productOptionOption color" onclick="selectProductOption(\'color\', '.$productOptionId.')" id="productOptionColor-'.$productOptionId.'">';
 							echo '	<div class="color" style="background: '.$productOptionObj->getDescription().'"></div>';
 							echo '</div>';
 						}
@@ -93,15 +89,11 @@
 						foreach($productOptionList as $key=>$productOptionObj){
 							
 							$productOptionId = $productOptionObj->getId();
-							$isDefault       = $productOptionObj->getIsDefault();
 							
-							if( $isDefault || (!$productOptionIdSize && $key==count($productOptionList)-1) ){
-								
+							if( (!$productOptionIdSize && $key==count($productOptionList)-1) )
 								$productOptionIdSize = $productOptionObj->getId();
-								$isDefault           = true;  
-							}
 							
-							echo '<div class="productOptionOption size '.($isDefault?'selected':'').'" onclick="selectProductOption(\'size\', '.$productOptionId.')" id="productOptionSize-'.$productOptionId.'">';
+							echo '<div class="productOptionOption size disabled" onclick="selectProductOption(\'size\', '.$productOptionId.')" id="productOptionSize-'.$productOptionId.'">';
 							echo $productOptionObj->getOptionName();
 							echo '</div>';
 						}

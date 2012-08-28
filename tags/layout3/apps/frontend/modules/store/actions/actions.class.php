@@ -96,6 +96,30 @@ class storeActions extends sfActions
   	
   }
 
+  public function executeGetSizeOptions($request){
+  	
+  	$colorId     = $request->getParameter('colorId');
+  	$productCode = $request->getParameter('productCode');
+  	
+  	$resultSet = Util::executeQuery("SELECT 
+  										DISTINCT product_item.PRODUCT_OPTION_ID_SIZE 
+  									FROM 
+  										product_item 
+  										INNER JOIN product ON product_item.PRODUCT_ID=product.ID
+  									WHERE 
+  										product_item.PRODUCT_OPTION_ID_COLOR=$colorId
+  										AND product.PRODUCT_CODE='$productCode'");
+  	
+  	$productOptionIdSizeList = array();
+  	
+  	while($resultSet->next())
+		$productOptionIdSizeList[] = $resultSet->getInt(1);
+  	
+  	echo implode(',', $productOptionIdSizeList);
+  	
+  	exit;
+  }
+
   public function executeCart($request){
   	
   	$this->cartSessionObj = $this->getCartSession();
