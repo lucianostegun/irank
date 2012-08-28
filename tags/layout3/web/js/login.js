@@ -7,7 +7,12 @@ function doLogin(){
 
 function handleSuccessLogin(content){
 
-	goToPage('myAccount', 'index');
+	var redirectUri = $('redirectUri').value;
+	
+	if( !redirectUri.match(/\/login/) )
+		window.location = redirectUri;
+	else
+		goToPage('myAccount', 'index');
 }
 
 function handleFailureLogin(content){

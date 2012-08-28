@@ -23,6 +23,8 @@
 						'failure'=>'handleFailureLogin(request.responseText)',
 						'encoding'=>'UTF8',
 						), array('id'=>'loginForm'));
+					
+					echo input_hidden_tag('redirectUri', $_SERVER['REQUEST_URI']);
 				?>
 				<table class="quickForm" cellspacing="0" cellpadding="3">
 					<tr>
