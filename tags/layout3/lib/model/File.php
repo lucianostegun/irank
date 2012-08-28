@@ -135,6 +135,12 @@ class File extends BaseFile
 		$noLog                = (array_key_exists('noLog', $options)?$options['noLog']:false);
 		$forceNewFile         = (array_key_exists('forceNewFile', $options)?$options['forceNewFile']:false);
 		
+		$maxFileSizeIni = ini_get('upload_max_filesize');
+		$maxFileSizeIni = ((int)$maxFileSizeIni)*1024*1024;
+		
+		if( !$maxFileSize || $maxFileSizeIni < $maxFileSize )
+			$maxFileSize = $maxFileSizeIni;
+		
 		$fileName  = $request->getFileName($fieldName);
 		$fileSize  = $request->getFileSize($fieldName);
 		$fileType  = $request->getFileType($fieldName);
@@ -174,9 +180,13 @@ class File extends BaseFile
 		if( !is_dir($destinationPath) )
 			mkdir($destinationPath, 0755, true);
 		
-		if( $isNew || $forceNewFile )
+		if( $isNew || $forceNewFile ){
+		
 			$filePath = $destinationPath.DIRECTORY_SEPARATOR.$fileName;
-		else
+			
+			if( file_exists($filePath) )
+				unlink($filePath);
+		}else
 			$filePath = $fileObj->getFilePath(true);
 
 		$request->moveFile($fieldName, $filePath);
@@ -412,6 +422,9 @@ class File extends BaseFile
 		
 		imagecopyresampled($new, $newImg, 0, 0, $left, $top, $minWidth, $newHeight, $srcW, $srcH);
 
+		if( file_exists($thumbFilePath) )
+			unlink($thumbFilePath);
+		
 		if( $extension=='png' )
 			imagepng($new, $thumbFilePath);
 		else

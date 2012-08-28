@@ -187,14 +187,15 @@ class productActions extends sfActions
 	else
 		$genericObj = ProductPeer::retrieveByPK($this->productId);
 	
-	$maxFileSize = (1024*1024*1);
+	$maxFileSize = (1024*1024*5);
 	
 	$fileName = sprintf('%s-%03d-%02d', strtolower($productCode), (int)$productItemId, $imageIndex);
 	
 	try {
 		$options = array('noFile'=>true,
 						 'fileName'=>$fileName.($isProductItem?'-item':''),
-						 'maxFileSize'=>$maxFileSize);
+						 'maxFileSize'=>$maxFileSize,
+						 'replace'=>true);
 		
 		$fileObj = File::upload($request, 'filePath-'.$imageIndex, '/images/store/product/full', $options);
 	}catch( FileException $e ){
@@ -208,9 +209,9 @@ class productActions extends sfActions
 		exit;
 	}
 	
-	$fileObj->createThumbnail('/images/store/product', 250, 250, 75);
-	$fileObj->createThumbnail('/images/store/product/preview', 180, 180, 65);
-	$fileObj->createThumbnail('/images/store/product/thumb', 40, 40, 50);
+	$fileObj->createThumbnail('/images/store/product', 250, 250, 100);
+	$fileObj->createThumbnail('/images/store/product/preview', 180, 180, 100);
+	$fileObj->createThumbnail('/images/store/product/thumb', 40, 40, 100);
 	
 	$function = 'setImage'.$imageIndex;
 	
@@ -230,7 +231,8 @@ class productActions extends sfActions
   public function executeDeleteImage($request){
 	
 	$imageIndex    = $request->getParameter('imageIndex');
-	$productId     = $request->getParameter('productItemId');
+	$productId     = $request->getParameter('productId');
+	$productItemId = $request->getParameter('productItemId');
 	$isProductItem = !empty($productItemId);
 	
 	if( $productItemId )
@@ -238,9 +240,11 @@ class productActions extends sfActions
 	else
 		$genericObj = ProductPeer::retrieveByPK($this->productId);
 	
-	$function = 'setImage'.$imageIndex;
+	$setFunction = 'setImage'.$imageIndex;
 	
-	$genericObj->$function(null);
+	$genericObj->deleteImage($imageIndex);
+	
+	$genericObj->$setFunction(null);
 	$genericObj->save();
 	
   	exit;

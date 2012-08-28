@@ -76,5 +76,3 @@ BEGIN
 END
 '
 LANGUAGE 'plpgsql';
-
-SELECT get_player_balance(1);

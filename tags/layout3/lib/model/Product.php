@@ -162,4 +162,17 @@ class Product extends BaseProduct
 		
 		return $description;
 	}
+	
+	public function deleteImage($imageIndex){
+		
+		$imagePath        = $this->getImage($imageIndex, null);
+		$imagePathPreview = $this->getImage($imageIndex, 'preview');
+		$imagePathFull    = $this->getImage($imageIndex, 'full');
+		$imagePathThumb   = $this->getImage($imageIndex, 'thumb');
+		
+		@unlink(Util::getFilePAth($imagePath));
+		@unlink(Util::getFilePAth($imagePathPreview));
+		@unlink(Util::getFilePAth($imagePathFull));
+		@unlink(Util::getFilePAth($imagePathThumb));
+	}
 }

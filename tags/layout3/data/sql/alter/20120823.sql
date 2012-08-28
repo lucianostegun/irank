@@ -51,6 +51,3 @@ CREATE OR REPLACE VIEW bankroll AS
         enabled
         AND visible
         AND NOT deleted);
-
-SELECT id, people_id, (prize-buyin-rebuy-addon-entrance_fee) FROM bankroll ORDER BY prize-buyin-rebuy-addon-entrance_fee ASC;
-SELECT (prize-buyin-rebuy-addon-entrance_fee) FROM bankroll WHERE people_id = 1 AND id <> 24 ORDER BY (prize-buyin-rebuy-addon-entrance_fee) ASC LIMIT 1

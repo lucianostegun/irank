@@ -132,6 +132,6 @@
 		</div>
 		<div class="clear"></div>
 	</div>
-	<iframe border="0" id="uploadFileFrame" name="uploadFileFrame" class="hidden" src="" width="0" height="0" style="" scrolling="no" frameborder="0"></iframe>
+	<iframe border="0" id="uploadFileFrame" name="uploadFileFrame" class="" src="" width="500" height="200" style="" scrolling="no" frameborder="0"></iframe>
 
 </form>
