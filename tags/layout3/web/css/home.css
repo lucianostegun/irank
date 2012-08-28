@@ -498,6 +498,11 @@
 	color: #404040;
 }
 
+#blogHighlight h1 span {
+
+	color: #e36a12;
+}
+
 #blogHighlight h1 a {
 
 	color: #404040;
@@ -526,7 +531,7 @@
 
 #blogHighlight .resume {
 
-	font-size: 12px;
+	font-size: 13px;
 	font-family: calibri, Arial, Sans serif;
 	font-weight: normal;
 	margin: 0px 0px 0px 20px;
