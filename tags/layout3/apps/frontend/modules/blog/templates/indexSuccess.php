@@ -46,17 +46,7 @@
 		</span>
 	</h2>
 	<?php
-		$content = $blogObj->getContent();
-		preg_match('/(.*)<hr class="intro"\/?>/ims', $content, $matches);
-		$content = $matches[1];
-		$content = preg_replace('/<h1 class="imageFooter">.*<\/h1>/i', '', $content);
-		$content = strip_tags($content, '<p><b><span><br><br/>');
-		$content = trim($content);
-		$content = preg_replace('/^<br\/?>/', '', $content);
-		$content = str_replace('<p><br></p>', '', $content);
-		$content = preg_replace('/<br\/?> *?\n?$/', '', $content);
-		$content = trim($content);
-		echo $content;
+		echo $blogObj->getResume();
 	?>
 	<br/>
 	<?php echo link_to('Ler o artigo completo', 'blog/article?'.$blogObj->getPermalink().'=') ?>

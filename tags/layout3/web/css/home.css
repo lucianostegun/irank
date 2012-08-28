@@ -480,3 +480,57 @@
 	left: 					5px;
 	background: 			url('/images/home/zoom.png') no-repeat;
 }
+
+
+
+#blogHighlight img {
+
+	margin: 13px 10px 0px 10px;
+	float: left;
+}
+
+#blogHighlight h1 {
+
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0px;
+	padding: 16px 0px 0px 0px;
+	color: #404040;
+}
+
+#blogHighlight h1 a {
+
+	color: #404040;
+}
+
+#blogHighlight h1 a:hover {
+
+	color: #C91E1E;
+	text-decoration: none
+}
+
+#blogHighlight h2 {
+
+	font-weight: normal;
+	font-size: 13px;
+	font-family: calibri, Arial, Sans serif;
+	text-transform: none;
+	color: #707070;
+	border-top: 1px solid #E5E5E5;
+	border-bottom: 1px solid #E5E5E5;
+	margin: 5px 0px 0px 65px;
+	padding: 2px 5px 2px 25px;
+	background: #FFFFFF url('/images/blog/info.gif') 4px center no-repeat;
+	width: 450px;
+}
+
+#blogHighlight .resume {
+
+	font-size: 12px;
+	font-family: calibri, Arial, Sans serif;
+	font-weight: normal;
+	margin: 0px 0px 0px 20px;
+	padding: 0px 0px 0px 0px;
+	color: #202020;
+	width: 520px;
+}

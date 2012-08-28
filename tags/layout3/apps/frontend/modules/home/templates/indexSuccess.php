@@ -15,13 +15,6 @@
 
 <div class="channels">
 	<div class="channel">
-		<div class="image"><?php echo link_to(image_tag('home/blog'), 'blog/index') ?></div>
-		<div class="description">
-			<h1><?php echo link_to('Blog iRank', 'blog/index') ?></h1>
-			Artigos com dicas, informações, análises e novidades sobre o mundo do Poker.  
-		</div>
-	</div>
-	<div class="channel">
 		<div class="image"><?php echo link_to(image_tag('home/schedule'), 'schedule/index') ?></div>
 		<div class="description">
 			<h1><?php echo link_to('Calendário assinado', 'schedule/index') ?></h1>
@@ -63,9 +56,9 @@ $zoomLeft  = 'home/eventPhoto?id='.$eventPhotoIdLeft.'&zoom=1';
 $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
 ?>
 
-<div class="eventLiveResumeArea">
-	<?php include_partial('home/resume/eventLive', array('limit'=>5, 'offset'=>0, 'includeTitle'=>true)); ?>
-</div>
+<?php
+	include_partial('blog/include/highlight');
+?>
 
 <div id="photoVote">
 	<h1>Concurso de fotos</h1>
