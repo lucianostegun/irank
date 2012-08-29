@@ -62,43 +62,35 @@
 				<div class="productOption color" id="productOptionColors">
 					<label>Cor:</label>
 					<?php
-						$productOptionIdColor = null;
-						$productOptionList    = ProductOption::getList(null, 'color', $productObj->getId());
+						$productOptionList = ProductOption::getList(null, 'color', $productObj->getId());
 						foreach($productOptionList as $key=>$productOptionObj){
 							
 							$productOptionId = $productOptionObj->getId();
-							
-							if( (!$productOptionIdColor && $key==count($productOptionList)-1))
-								$productOptionIdColor = $productOptionObj->getId();
 							
 							echo '<div class="productOptionOption color" onclick="selectProductOption(\'color\', '.$productOptionId.')" id="productOptionColor-'.$productOptionId.'">';
 							echo '	<div class="color" style="background: '.$productOptionObj->getDescription().'"></div>';
 							echo '</div>';
 						}
 						
-						echo input_hidden_tag('productOptionIdColor', $productOptionIdColor); 
+						echo input_hidden_tag('productOptionIdColor', null); 
 					?>
 				</div>
 
 				<div class="productOption" id="productOptionSizes">
 					<label>Tam.:</label>
 					<?php
-						$productOptionIdSize = null;
-						$productOptionList   = ProductOption::getList(null, 'size', $productObj->getId());
+						$productOptionList = ProductOption::getList(null, 'size', $productObj->getId());
 						
 						foreach($productOptionList as $key=>$productOptionObj){
 							
 							$productOptionId = $productOptionObj->getId();
-							
-							if( (!$productOptionIdSize && $key==count($productOptionList)-1) )
-								$productOptionIdSize = $productOptionObj->getId();
 							
 							echo '<div class="productOptionOption size disabled" onclick="selectProductOption(\'size\', '.$productOptionId.')" id="productOptionSize-'.$productOptionId.'">';
 							echo $productOptionObj->getOptionName();
 							echo '</div>';
 						}
 						
-						echo input_hidden_tag('productOptionIdSize', $productOptionIdSize);
+						echo input_hidden_tag('productOptionIdSize', null);
 
 						if( $tagName=='tshirt' )
 							echo link_to(image_tag('icon/help'), '#showTshirtSizeHelp()', array('class'=>'sizeHelpButton', 'title'=>'Consulte a tabela de medidas de cada tamanho')); ?>

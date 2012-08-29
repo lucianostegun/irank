@@ -267,3 +267,8 @@ function toggleBankroll(year){
 	
 	location.hash = year;
 }
+
+function exportBankroll(exportType){
+	
+	window.location = _webRoot+'/myAccount/exportBankroll/exportType/'+exportType;
+}

@@ -163,7 +163,7 @@ class homeActions extends sfActions
 	$isDebug    = $request->getParameter('debug');
 	
 	if( $isDebug )
-		$scriptName = '/debug.php';
+		$scriptName = '/frontend_dev.php';
 
 	if( sfConfig::get('sf_no_script_name') && !$isDebug )
 		$scriptName = '';

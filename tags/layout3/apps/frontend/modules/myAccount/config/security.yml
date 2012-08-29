@@ -7,3 +7,9 @@ uploadPhoto:
   
 getAppUpdatedData:
   is_secure: off
+  
+resumeChart:
+  is_secure: off  
+
+bankrollChart:
+  is_secure: off

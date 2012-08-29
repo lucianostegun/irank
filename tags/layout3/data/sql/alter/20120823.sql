@@ -17,6 +17,7 @@ CREATE OR REPLACE VIEW bankroll AS
     FROM
         event_player
         INNER JOIN event ON event_player.EVENT_ID = event.ID
+        INNER JOIN ranking ON ranking.ID = event.RANKING_ID
         INNER JOIN ranking_place ON ranking_place.ID = event.RANKING_PLACE_ID
     WHERE
         event_player.ENABLED
@@ -25,6 +26,9 @@ CREATE OR REPLACE VIEW bankroll AS
         AND event.VISIBLE
         AND event.SAVED_RESULT
         AND NOT event.DELETED
+        AND ranking.ENABLED
+        AND ranking.VISIBLE
+        AND NOT ranking.DELETED
     ORDER BY
         event.EVENT_DATE)
 

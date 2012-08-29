@@ -1,15 +1,18 @@
 <?php
 	$width = ($pdf?'140mm':'600px');
 	$width2 = ($pdf?'50mm':'250px');
+	
+	$peopleId   = $sf_user->getAttribute('peopleId');
+	$userSiteId = $sf_user->getAttribute('userSiteId');
 ?>
 <table cellspacing="0" cellpadding="0" class="dashboard chart">
 <tr>
-	<td style="width: <?php echo $width ?>">
+	<td style="width: <?php echo $width ?>" class="chart">
 	<?php
 		$urlChart = url_for('myAccount/resumeChart?year='.date('Y').'.png', true);
 //		$urlChart = str_replace('/frontend_dev.php', '', $urlChart);
 		if( $pdf )
-			echo image_tag($urlChart);
+			echo image_tag($urlChart.'&peopleId='.$peopleId.'&userSiteId='.$userSiteId);
 		else
 			echo link_to(image_tag($urlChart), $urlChart);
 	?>

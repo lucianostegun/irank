@@ -29,10 +29,8 @@ class eventPersonalActions extends sfActions
   
   public function executeEdit($request){
   	
-  	$viewComment   = $request->getParameter('viewComment');
-  	$viewComment   = base64_decode(strrev($viewComment));
-  	
-  	$eventPersonalId = $request->getParameter('eventPersonalId', $viewComment);
+  	$eventPersonalId = $request->getParameter('id');
+  	$eventPersonalId = $request->getParameter('eventPersonalId', $eventPersonalId);
   	$this->isClone   = $request->getParameter('isClone');
   	
   	if( $eventPersonalId ){
@@ -43,7 +41,7 @@ class eventPersonalActions extends sfActions
 			return $this->redirect('eventPersonal/index');
 		
 		if( !$this->eventPersonalObj->isMyEvent() )
-			$this->setTemplate('show');
+			return $this->redirect('eventPersonal/index');
   	}else{
 		
 		$this->eventPersonalObj = new EventPersonal();

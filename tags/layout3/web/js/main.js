@@ -77,7 +77,7 @@ function clearCommonBarMessage(){
 	$('topSystemMessage').innerHTML = '';
 }
 
-function setCommonBarMessage(message, className){
+function setCommonBarMessage(message, className, scroll){
 	
 	className = (className?className:'info');
 	
@@ -87,4 +87,7 @@ function setCommonBarMessage(message, className){
 	
 	clearCommonBarMessage();
 	$('topSystemMessage').appendChild(div);
+	
+	if( scroll )
+		location.hash = '#topAlert';
 }

@@ -132,8 +132,11 @@ function selectProductOption(optionType, productOptionId){
 	
 	if( optionType=='size' && element.hasClassName('disabled') ){
 		
-		if(document.getElementsByClassName('productOptionOption color selected').length>0)
-			return alert('Desculpe, mas não temos esse tamanho nessa cor.');
+		if(document.getElementsByClassName('productOptionOption color selected').length > 0){
+			
+			var size = $('productOptionSize-'+productOptionId).innerHTML;
+			return alert('Desculpe, este produto não está disponível no tamanho "'+size+'" para a cor selecionada');
+		}
 		
 		return alert('Por favor, selecione a cor do produto desejado');
 	}
@@ -172,9 +175,27 @@ function reloadSizeOptions(colorId){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
 }
 
+function validateCartItem(){
+	
+	if( !$('productOptionIdColor').value ){
+		
+		alert('Por favor, selecione a cor do produto desejado');
+		return false;
+	}
+	
+	if( !$('productOptionIdSize').value ){
+		
+		alert('Por favor, selecione o tamanho do produto desejado');
+		return false;
+	}
+	
+	return true;
+}
+
 function addProductToCart(){
 	
-	$('storeProductForm').submit();
+	if( validateCartItem() )
+		$('storeProductForm').submit();
 }
 
 function doCalculateShipping(){
@@ -235,8 +256,7 @@ function doCalculateDiscount(){
 		hideIndicator();
 		
 		var errorMessage = parseMessage(content, 'Ocorreu um erro ao calcular o valor do desconto');
-		setCommonBarMessage('<b>ATENÇÃO!</b> '+errorMessage, 'error');
-		location.hash = '#topAlert';
+		setCommonBarMessage('<b>ATENÇÃO!</b> '+errorMessage, 'error', true);
 	};
 	
 	var discountCoupon = $('storeCartDiscountCoupon').value;

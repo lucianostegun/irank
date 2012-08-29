@@ -8,16 +8,57 @@
 		font-size: 12px;
 	}
 	
+	.page {
+		page-break-after: always;
+	}
+	
 	<?php
 		$content = file_get_contents(Util::getFilePath('/css/bankroll.css'));
 		echo $content;
+		
+		$content = file_get_contents(Util::getFilePath('/css/reset.css'));
+		echo $content;
 	?>
+	
+h1.startBankroll {
+
+	width: 100%;
+	padding: 3mm 5mm 3mm 5mm;
+}
+
+h1.startBankroll span {
+
+	position: relative;
+	margin-left: 3mm;
+	font-size: 18px;
+	display: inline-block;
+	text-align: left;
+}
+
+h1.startBankroll img {
+
+	position: absolute;
+	right: 35mm;
+	top: 1mm
+}
 	
 table.dashboard {
 
 	padding: 5mm;
 	margin-left: 10mm;
 	width: 220mm;
+}
+
+table.dashboard.chart {
+
+	margin-left: 10mm;
+	padding-left: 0mm;
+	height: 90mm;
+}
+
+table.dashboard.chart tr td.chart {
+
+	padding-right: 5mm
 }
 
 table.dashboard.chart tr * {
@@ -32,8 +73,59 @@ table.dashboard.chart hr {
 
 table.bankroll {
 
-	width: auto
+	width: auto;
+	margin-left: 17mm;
+	margin-top: 5mm;
 }
+
+
+
+
+
+div.footer {
+	
+	position: absolute;
+	bottom: 0mm;
+	left: 0mm;
+	width: 100%;
+	height: 15mm;
+	border-top: thin solid #909090;
+	background: #F0F0F0
+}
+
+div.footer img {
+	
+	position: absolute;
+	left: 5mm;
+	top: 3mm;
+}
+
+div.footer h1 {
+	
+	text-align: left;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	font-size: 4mm;
+	font-weight: bold;
+	position: absolute;
+	left: 45mm;
+	top: 3mm;
+}
+
+div.footer h2 {
+	
+	width: auto;
+	margin: 0;
+	padding: 0;
+	font-size: 3mm;
+	font-weight: normal;
+	position: absolute;
+	left: 45mm;
+	top: 8mm;
+}
+
+.mt5 { margin-top: 5mm }
 </style>
 </head>
 <body>
@@ -127,8 +219,11 @@ table.bankroll {
     $prizeFinal       = 0;
     $entranceFeeFinal = 0;
 	$balanceFinal     = $startBankroll;
-	
+
 	foreach($bankrollList as $year=>$bankroll):
+		
+		$currentHeight = 22;	
+		echo getNewPage();
 ?>
 <div id="<?php echo $year==$currentYear?'now':$year ?>" class="pt10"></div>
 <table class="bankroll" border="0" cellpadding="0" cellspacing="0">
@@ -147,17 +242,12 @@ table.bankroll {
 		
 		?>
 		<tr class="year">
-			<td class="textL" colspan="7"><?php echo $year ?></td>
-			<td class="textR expand" colspan="9">
-				<?php
-					if( $year!=$currentYear )
-						echo link_to('detalhes', '#toggleBankroll('.$year.')', array('class'=>'expand', 'id'=>'togglerLink-'.$year));
-				?>
-			</td>
+			<td class="textL" colspan="7">Lista de eventos de <?php echo $year ?></td>
+			<td class="textR expand" colspan="9"></td>
 		</tr>
 		<tr>
 			<th class="textC">Data</th>
-			<th class="textL">Evento</th>
+			<th class="textL" width="100">Evento</th>
 			<th class="textC">Posição</th>
 			<th class="textR value">Buy-in</th>
 			<th class="textR value">Rebuy</th>
@@ -166,8 +256,10 @@ table.bankroll {
 			<th class="textR value">Prêmio</th>
 			<th class="textR value">Saldo</th>
 		</tr>
-		<?php
+	<?php
 		
+		$currentHeight += 5;
+			
 		foreach($bankroll['events'] as $event):
 		
 			$eventId       = $event['id'];
@@ -199,13 +291,11 @@ table.bankroll {
 		    $balanceFinal += $balance;
 		    $balanceYear  += $balance;
 		    
-		    $hidden = ($year!=$currentYear);
-		    
 		    $className = ($className=='even'?'odd':'even');
 		    
 		    $link = "goModule('$eventType', 'edit', 'id', $eventId, true)";
 	?>
-	<tr class="hoverable <?php echo $className.' year-'.$year.' '.($hidden?'hidden':'') ?>" onclick="<?php echo $link ?>">
+	<tr class="hoverable <?php echo $className.' year-'.$year ?>" onclick="<?php echo $link ?>">
 		<td class="textC"><?php echo date('d/m/Y', strtotime($eventDate)) ?></td>
 		<td><?php echo $eventName ?></td>
 		<td class="textC"><?php echo "$eventPosition/$players" ?></td>
@@ -216,7 +306,36 @@ table.bankroll {
 		<td class="textR"><?php echo Util::formatFloat($prize, true) ?></td>
 		<td class="textR <?php echo ($balance>0?'positive':'negative') ?>"><?php echo Util::formatFloat($balance, true) ?></td>
 	</tr>
-<?php endforeach; ?>
+<?php
+		$currentHeight += 5;
+		if( $currentHeight >= 280 ):
+			$currentHeight = 0;
+?>
+	<tr>
+		<td colspan="9" style="padding: 0px">
+			<img src="[webDir]/images/blank.gif" style="width: 200mm; height: 1mm"/>
+		</td>
+	</tr>
+</tbody>
+</table>
+<?php echo getNewPage(); ?>
+<table class="bankroll mt5" border="0" cellpadding="0" cellspacing="0">
+<tbody id="bankrollEventBody">
+		<tr>
+			<th class="textC">Data</th>
+			<th class="textL" width="100">Evento</th>
+			<th class="textC">Posição</th>
+			<th class="textR value">Buy-in</th>
+			<th class="textR value">Rebuy</th>
+			<th class="textR value">Add-on</th>
+			<th class="textR value">Taxa</th>
+			<th class="textR value">Prêmio</th>
+			<th class="textR value">Saldo</th>
+		</tr>
+<?php
+		endif;
+	endforeach;
+?>
 	<tr class="final odd">
 		<td class="textL" colspan="3">SALDO <?php echo $year ?></td>
 		<td class="textR"><?php echo Util::formatFloat($buyinSum, true) ?></td>
@@ -236,18 +355,37 @@ table.bankroll {
 		<td class="textR <?php echo ($balanceFinal>0?'positive':'negative') ?>"><?php echo Util::formatFloat($balanceFinal, true) ?></td>
 	</tr>
 	<tr>
-		<td class="textL <?php echo 'year-'.$year.' '.($hidden?'hidden':'') ?>" colspan="9" style="padding: 0px">
+		<td class="textL <?php echo 'year-'.$year ?>" colspan="9" style="padding: 0px">
 			<?php
-				$urlChart = url_for('myAccount/bankrollChart?year='.$year.'&type=png', true);
+				$urlChart = url_for("myAccount/bankrollChart?year=$year&peopleId=$peopleId&userSiteId=$userSiteId&type=png", true);
 				echo link_to(image_tag($urlChart), $urlChart);
 			?>
 		</td>
 	</tr>
 <?php
+	$currentHeight += 75;
     $className = ($className=='even'?'odd':'even');
 ?>
 </tbody>
 </table>
 <br/>
 <br/>
-<?php endforeach; ?>
+<?php
+	endforeach;
+?>
+
+<?php
+
+function checkHeight($currentHeight){
+	
+	if( $currentHeight > 260 )
+		return false;
+	
+	return true;
+}
+
+function getNewPage(){
+	
+	return '<div class="footer"><img src="[webDir]/images/logo/pdf.png"><h1>iRank - Poker Ranking</h1><h2>www.irank.com.br</h2></div> </div><div class="page">';
+}
+?>

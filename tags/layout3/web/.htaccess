@@ -19,8 +19,8 @@ Options +FollowSymLinks +ExecCGI
   RewriteCond %{REQUEST_URI} !\.[0-9]*$
   
   # Hack para que as urls de imagem com código de e-mail funcionem
-  RewriteCond %{REQUEST_URI} !\.png$
-  RewriteRule .* - [L]
+  #RewriteCond %{REQUEST_URI} !\.png$
+  #RewriteRule .* - [L]
 
   # we check if the .html version is here (caching)
   RewriteRule ^$ index.html [QSA]

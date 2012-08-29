@@ -14,7 +14,7 @@ table.dashboard td.negative {
 
 h1.startBankroll {
 
-	padding: 7px 15px;
+	padding: 7px 15px 9px 15px;
 	margin: -5px 0px 0px 0px;
 	font-size: 14px;
 	background: #E5E5E5;
@@ -22,7 +22,7 @@ h1.startBankroll {
 	border-bottom: 1px solid #BABABA;
 }
 
-h1.startBankroll span {
+h1.startBankroll > span {
 
 	position: relative;
 	left: 10px;

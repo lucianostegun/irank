@@ -3,8 +3,11 @@ $libDir = sfConfig::get('sf_lib_dir');
 
 $monthList = array('jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez');
 
-$peopleId   = $sf_user->getAttribute('peopleId');
+$peopleId = $sf_user->getAttribute('peopleId');
+$peopleId = $sf_request->getParameter('peopleId', $peopleId);
+
 $userSiteId = $sf_user->getAttribute('userSiteId');
+$userSiteId = $sf_request->getParameter('userSiteId', $userSiteId);
 
 $sql = "SELECT
 			*
