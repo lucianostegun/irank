@@ -15,7 +15,7 @@ function hideOptionBar(side){
 
 function loadEvent(eventId){
 	
-	window.location = _webRoot+'/event/edit/eventId/'+eventId;
+	goToPage('event', 'edit', 'id', eventId);
 }
 
 function loadEventLive(eventLiveId){
