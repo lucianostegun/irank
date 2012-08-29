@@ -43,7 +43,7 @@ rss:
   
 blog_by_title:
   url:    blog/:permalink
-  param:  { module: blog, action: article }
+  param:  { module: blog, action: index }
 
 blog_by_title_html:
   url:    blog/:permalink.html

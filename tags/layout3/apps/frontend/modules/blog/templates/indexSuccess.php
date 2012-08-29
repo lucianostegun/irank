@@ -57,4 +57,19 @@
 	endif;
 ?>
 </div>
+<div class="clear ml30 pt10" style="width: 728px">
+	
+	<script type="text/javascript"><!--
+	google_ad_client = "ca-pub-0504466650636760";
+	/* iRank Blog */
+	google_ad_slot = "1066169165";
+	google_ad_width = 728;
+	google_ad_height = 90;
+	//-->
+	</script>
+	<script type="text/javascript"
+	src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+	</script>
+</div>
+
 <div class="clear"></div>

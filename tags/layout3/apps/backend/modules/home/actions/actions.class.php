@@ -44,7 +44,7 @@ class homeActions extends sfActions
 	if( $isDebug )
 		$scriptName = '/backend_dev.php';
 	else
-		$scriptName = '/backend.php';
+		$scriptName = '/index.php';
 		
 	$scriptNameFrontend = ($isDebug?'/frontend_dev.php':'/index.php');
 

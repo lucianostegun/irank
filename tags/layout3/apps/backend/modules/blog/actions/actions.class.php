@@ -104,10 +104,10 @@ class blogActions extends sfActions
   
   public function executeConnector($request){
     
-	error_reporting(0); // Set E_ALL for debuging
+//	error_reporting(0); // Set E_ALL for debuging
 	
-	if (function_exists('date_default_timezone_set'))
-		date_default_timezone_set('America/Sao_Paulo');
+//	if (function_exists('date_default_timezone_set'))
+//		date_default_timezone_set('America/Sao_Paulo');
 	
 	$rootDir = Util::getFilePath('/images/blog');
 	if( !file_exists($rootDir) )

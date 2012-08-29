@@ -14,11 +14,22 @@ $scriptName = str_replace('/index.php', '', $scriptName);
 ?>
 <link rel="shortcut icon" href="/favicon.ico" />
 <script type="text/javascript">
-	var _webRoot    = '<?php echo $scriptName ?>';
-	var _imageRoot  = '<?php echo 'http://'.$sf_request->getHost() .'/images'; ?>';
-	var _isReadOnly = <?php echo (isset($readOnly)?$readOnly:'false') ?>;
-	var _isDebug    = <?php echo Util::isDebug()?'true':'false'; ?>;
-	var _isMobile  = false;
+  var _webRoot    = '<?php echo $scriptName ?>';
+  var _imageRoot  = '<?php echo 'http://'.$sf_request->getHost() .'/images'; ?>';
+  var _isReadOnly = <?php echo (isset($readOnly)?$readOnly:'false') ?>;
+  var _isDebug    = <?php echo Util::isDebug()?'true':'false'; ?>;
+  var _isMobile  = false;
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34289493-1']);
+  _gaq.push(['_setDomainName', 'irank.com.br']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
 </script>
 </head>
 <body onload="autoScrool()">
