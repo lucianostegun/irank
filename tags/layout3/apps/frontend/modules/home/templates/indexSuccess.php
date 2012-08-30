@@ -15,6 +15,13 @@
 
 <div class="channels">
 	<div class="channel">
+		<div class="image"><?php echo link_to(image_tag('home/money'), 'myAccount/bankroll') ?></div>
+		<div class="description">
+			<h1><?php echo link_to('Controle de bankroll', 'myAccount/bankroll') ?></h1>
+			Ferramenta completa para controle e estatísticas de seu bankroll. 
+		</div>
+	</div>
+	<div class="channel">
 		<div class="image"><?php echo link_to(image_tag('home/schedule'), 'schedule/index') ?></div>
 		<div class="description">
 			<h1><?php echo link_to('Calendário assinado', 'schedule/index') ?></h1>
