@@ -227,7 +227,7 @@ div.speech div.content div.loading {
 	position: relative;
 	padding: 0px;
 	margin: 0px;
-	top: 0px
+	top: 1px
 }
 
 .blog.suggest a:hover h1 {
@@ -257,9 +257,12 @@ div.speech div.content div.loading {
 .blog.suggest h3 {
 
 	clear: both;
-	color: #707070;
+	color: #404040;
 	font-weight: normal;
-	width: 650px
+	width: 650px;
+	padding-top: 3px;
+	font-family: calibri, Arial, Sans serif;
+	font-size: 13px;
 }
 
 .blog.suggest a:hover {
