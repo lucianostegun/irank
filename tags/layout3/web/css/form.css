@@ -528,43 +528,27 @@ input:-ms-placeholder { color:#808080; }
 
 
 
-.defaultForm .formFieldError, .windowForm .formFieldError {
+.defaultForm .formFieldError, .defaultForm input.formFieldError, .windowForm .formFieldError {
 
-	font-size: 		11px;
-	height: 		16px;
-	padding: 		1px 4px 2px 4px;
-	background: 	#F1AFA4;
+	background-color: 	#F1AFA4;
 	color: 			#000000;
 }
 
 .defaultForm .formFieldError:focus, .windowForm .formFieldError:focus {
 
-	font-size: 		11px;
-	height: 		16px;
-	padding: 		1px 4px 2px 4px;
-	background: 	#D88D82;
+	background-color: 	#D88D82;
 	color: 			#000000;
 }
 
 .defaultForm select.formFieldError, .windowForm select.formFieldError {
 
-	font-size: 		11px;
-	height: 		21px;
-	padding: 		2px 1px 1px 1px;
-	padding-left: 	0px;
-	text-align: 	left;
-	background: 	#F1AFA4;
+	background-color: 	#F1AFA4;
 	color: 			#000000;
 }
 
 .defaultForm select.formFieldError:focus, .windowForm select.formFieldError:focus {
 
-	font-size: 		11px;
-	height: 		21px;
-	padding: 		2px 1px 1px 1px;
-	padding-left: 	0px;
-	text-align: 	left;
-	background: 	#D88D82;
+	background-color: 	#D88D82;
 	color: 			#000000;
 }
 

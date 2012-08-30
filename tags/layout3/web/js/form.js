@@ -78,8 +78,8 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 				if( errorMessage=='nullError' )
 					continue;
 
-				objectForm.toggleClassName(className, '');
-				objectForm.title     = errorMessage;
+				objectForm.addClassName(className);
+				objectForm.title = errorMessage;
 				
 				showDiv(formFieldId+'Error');
 				
