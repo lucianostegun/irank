@@ -208,10 +208,14 @@ div.footer h2 {
 		$bankrollList[$year]['events']     = $eventList;
 	}
 	
+	$lastYear = Util::executeOne("SELECT COALESCE(MAX(EXTRACT(YEAR FROM event_date)), EXTRACT(YEAR FROM current_date)) FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) LIMIT 1");
+	
 	include_partial('myAccount/bankroll/startBankroll', array('edit'=>false, 'startBankroll'=>$startBankroll));
 	
 	include_partial('myAccount/bankroll/topResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'year'=>null));
-	include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'year'=>null, 'pdf'=>true));
+	
+	if( $lastYear )
+		include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'year'=>$lastYear, 'pdf'=>true));
 
 	$buyinFinal       = 0;
     $rebuyFinal       = 0;

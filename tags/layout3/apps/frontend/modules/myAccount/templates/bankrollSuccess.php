@@ -85,13 +85,16 @@
 		return;
 	}
 	
+	$lastYear = Util::executeOne("SELECT COALESCE(MAX(EXTRACT(YEAR FROM event_date)), EXTRACT(YEAR FROM current_date)) FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) LIMIT 1");
 	$year = date('Y');
 	
 	if( !is_null($startBankroll) )
 		include_partial('myAccount/bankroll/startBankroll', array('edit'=>true, 'peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId));
 ?>
 <div id="bankrollTopResume"><?php include_partial('myAccount/bankroll/topResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'year'=>null)); ?></div>
-<div id="bankrollChartResume"><?php include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'year'=>null, 'pdf'=>false)); ?></div>
+<?php if( $lastYear ): ?>
+<div id="bankrollChartResume"><?php include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'year'=>$lastYear, 'pdf'=>false)); ?></div>
+<?php endif; ?>
 <?php
 	$buyinFinal       = 0;
     $rebuyFinal       = 0;
