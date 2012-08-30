@@ -47,10 +47,14 @@ BEGIN
         get_player_profit(peopleId)-
         get_player_bra(peopleId) INTO result;
 
-   optionValue := (SELECT get_user_option(peopleId, ''quickResumePeriod'', ''aways''));
+    optionValue := (SELECT get_user_option(peopleId, ''quickResumePeriod'', ''always''));
         
     IF result IS NULL THEN
         result := 0;
+    END IF;
+
+    IF optionValue=''always'' THEN
+        result := result + get_player_start_bankroll(peopleId);
     END IF;
 
 
