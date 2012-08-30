@@ -6,7 +6,7 @@
 	
 	<?php if( $edit ): ?>
 		<span class="a"><?php echo link_to('[editar]', 'myAccount/index') ?></span>
-		<?php echo button_tag('exportBankroll', 'Exportar em PDF', array('image'=>'pdf', 'style'=>'float: right', 'onclick'=>'exportBankroll("pdf")')) ?>
+		<?php echo button_tag('exportBankroll', 'Exportar em PDF', array('image'=>'pdf.png', 'style'=>'float: right', 'onclick'=>'exportBankroll("pdf")')) ?>
 	<?php else: ?>
 	<img src="[webDir]/images/logo/pdf.png">
 	<?php endif; ?>
@@ -26,7 +26,7 @@
 		
 		echo select_tag('year', options_for_select($optionList), array('id'=>'bankrollYear'));
 		
-		echo button_tag('updateBankroll', 'Atualizar', array('image'=>'refresh', 'style'=>'position: absolute; left: 130px; top: 3px;', 'onclick'=>'updateBankroll()'))
+		echo button_tag('updateBankroll', 'Atualizar', array('image'=>'refresh.png', 'style'=>'position: absolute; left: 145px; top: 3px;', 'onclick'=>'updateBankroll()'))
 	?>
 </h1>
 <?php endif; ?>
