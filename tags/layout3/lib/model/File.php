@@ -46,7 +46,8 @@ class File extends BaseFile
 		if( $full )
 			$filePath = Util::getFilePath($filePath);
 			
-		$filePath = ereg_replace('[\\/]', DIRECTORY_SEPARATOR, $filePath);
+		$filePath = str_replace('/', DIRECTORY_SEPARATOR, $filePath);
+		$filePath = str_replace('\\', DIRECTORY_SEPARATOR, $filePath);
 		
 	    if( !file_exists($filePath) )
 	    	$filePath = str_replace('TaskManager', 'TaskManagerOld', $filePath);
@@ -131,6 +132,7 @@ class File extends BaseFile
 		$minHeight            = (array_key_exists('minHeight', $options)?$options['minHeight']:null);
 		$maxHeight            = (array_key_exists('maxHeight', $options)?$options['maxHeight']:null);
 		$destFileName         = (array_key_exists('fileName', $options)?$options['fileName']:null);
+		$filePathName         = (array_key_exists('filePathName', $options)?$options['filePathName']:null);
 		$noFile               = (array_key_exists('noFile', $options)?$options['noFile']:false);
 		$noLog                = (array_key_exists('noLog', $options)?$options['noLog']:false);
 		$forceNewFile         = (array_key_exists('forceNewFile', $options)?$options['forceNewFile']:false);
@@ -160,8 +162,12 @@ class File extends BaseFile
 		
 		$isNew = $fileObj->isNew();		
 		
-		$fileName = ereg_replace('[^0-9]', '', microtime()).'.'.$extension;
-		$fileName = ($destFileName?$destFileName:$fileName);
+		if( $filePathName=='temp' )
+			$filePathName = preg_replace('/[^0-9]/', '', microtime()).'.'.$extension;
+		else
+			$filePathName = $fileName;
+		
+		$fileName = ($destFileName?$destFileName:$filePathName);
 		
 		if( !preg_match('/\.[a-z]*$/i', $fileName) )
 			$fileName = "$fileName.$extension";
@@ -182,7 +188,7 @@ class File extends BaseFile
 		
 		if( $isNew || $forceNewFile ){
 		
-			$filePath = $destinationPath.DIRECTORY_SEPARATOR.$fileName;
+			$filePath = $destinationPath.DIRECTORY_SEPARATOR.$filePathName;
 			
 			if( file_exists($filePath) )
 				unlink($filePath);

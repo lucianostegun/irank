@@ -26,6 +26,7 @@ h1.startBankroll > span {
 
 	position: relative;
 	left: 10px;
+	top: 2px;
 	font-size: 18px;
 	display: inline-block;
 	width: 100px;
@@ -36,10 +37,64 @@ h1.startBankroll span.a {
 
 	position: relative;
 	left: 20px;
-	top: -3px;
+	top: -1px;
 	font-size: 10px;
 	font-weight: normal;
 	width: auto
+}
+
+h1.startBankroll.filter {
+
+	position: relative;
+	margin-top: 1px;
+	font-size: 12px;
+	font-weight: normal;
+	text-shadow: #FAFAFA 1px 1px;
+	height: 22px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+h1.startBankroll.filter label {
+
+	position: relative;
+	top: 2px;
+	display: inline-block;
+	padding-right: 5px;
+}
+
+h1.startBankroll.filter input[type=text] {
+
+	border: 1px solid #C0C0C0;
+	width: 70px;
+	height: 14px;
+	position: relative;
+	top: 2px
+}
+
+h1.startBankroll.filter select {
+
+	position: relative;
+	top: 2px
+}
+
+h1.startBankroll.filter img {
+
+	position: relative;
+	top: 4px;
+}
+
+h1.startBankroll.filter span.fieldSeparator {
+
+	display: inline-block;
+	width: 20px;
+	text-align: center;
+	padding: 0px;
+	margin: 0px;
+	font-size: 12px;
+	position: relative;
+	top: 3px;
+	left: 0px
 }
 
 table.dashboard {

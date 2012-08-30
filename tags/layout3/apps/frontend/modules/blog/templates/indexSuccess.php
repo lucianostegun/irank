@@ -49,7 +49,7 @@
 		echo $blogObj->getResume();
 	?>
 	<br/>
-	<?php echo link_to('Ler o artigo completo', 'blog/article?'.$blogObj->getPermalink().'=') ?>
+	<?php echo link_to('Ler artigo completo', 'blog/article?'.$blogObj->getPermalink().'=') ?>
 	<hr/>
 
 <?php

@@ -43,6 +43,7 @@ class EmailMarketing extends BaseEmailMarketing
 		$description     = $request->getParameter('description');
 		$emailTemplateId = $request->getParameter('emailTemplateId');
 		$emailSubject    = $request->getParameter('emailSubject');
+		$className       = $request->getParameter('className');
 		$content         = $request->getParameter('content');
 		
 		$isNew = $this->getIsNew();
@@ -50,6 +51,7 @@ class EmailMarketing extends BaseEmailMarketing
 		$this->setEmailTemplateId($emailTemplateId);
 		$this->setDescription($description);
 		$this->setEmailSubject($emailSubject);
+		$this->setClassName($className);
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);
@@ -258,13 +260,27 @@ class EmailMarketing extends BaseEmailMarketing
   		$emailMarketingPeopleObj->setEmailLogId($emailLogId);
   		$emailMarketingPeopleObj->save();
   		
+  		$attachmentList = array();
+  		if( $className=$this->getClassName() ){
+  			
+  			$filePath = null;
+  			eval("\$filePath = $className::getAttachment($peopleId);");
+  			if( !$filePath )
+  				throw new Exception('Erro ao gerar o arquivo anexo');
+  			
+  			$attachmentList['bankroll.pdf'] = $filePath;
+  		}
+  		
   		$randomCode = ($randomCode?$randomCode:$emailMarketingPeopleObj->getRandomCode());
   		
   		$emailContent = $this->getContent($peopleObj, $randomCode, true, $emailLogId);
   		$emailSubject = $this->getEmailSubject();
   		
-  		$options = array('emailTemplate'=>null);
+  		$options = array('emailTemplate'=>null, 'attachmentList'=>$attachmentList);
 	  	Report::sendMail($emailSubject, $emailAddress, $emailContent, $options);
+	  	
+	  	foreach($attachmentList as $filePath)
+	  		@unlink($filePath);
 	  	
 	  	echo $emailLogObj->getCreatedAt('d/m/Y H:i');
 	}

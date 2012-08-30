@@ -1,0 +1,1 @@
+ALTER TABLE email_marketing ADD COLUMN class_name VARCHAR(32);

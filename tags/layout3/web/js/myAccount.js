@@ -272,3 +272,23 @@ function exportBankroll(exportType){
 	
 	window.location = _webRoot+'/myAccount/exportBankroll/exportType/'+exportType;
 }
+
+function updateBankroll(){
+	
+	var year = $('bankrollYear').value;
+	
+	updateTopResume(year);
+	updateChartResume(year);
+}
+
+function updateTopResume(year){
+	
+	var urlAjax = _webRoot+'/myAccount/getTopResume?year='+year;
+	new Ajax.Updater('bankrollTopResume', urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function updateChartResume(year){
+	
+	var urlAjax = _webRoot+'/myAccount/getChartResume?year='+year;
+	new Ajax.Updater('bankrollChartResume', urlAjax, {asynchronous:true, evalScripts:false});
+}

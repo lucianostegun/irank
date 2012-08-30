@@ -481,7 +481,10 @@
 	background: 			url('/images/home/zoom.png') no-repeat;
 }
 
+#blogHighlight {
 
+	margin-top: 15px
+}
 
 #blogHighlight img {
 
@@ -494,7 +497,7 @@
 	font-size: 14px;
 	font-weight: bold;
 	margin: 0px;
-	padding: 16px 0px 0px 0px;
+	padding: 16px 0px 5px 0px;
 	color: #404040;
 }
 

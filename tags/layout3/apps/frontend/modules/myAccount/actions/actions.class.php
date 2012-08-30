@@ -5,7 +5,10 @@ class myAccountActions extends sfActions
 
   public function preExecute(){
 
+	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
+	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
   }
+
   public function executeUploadTest(){
 
   }
@@ -258,16 +261,66 @@ class myAccountActions extends sfActions
 
   public function executeExportBankroll($request){
 
+	$this->peopleId    = $this->getUser()->getAttribute('peopleId');
+	$this->userSiteId  = $this->getUser()->getAttribute('userSiteId');
+	$this->fileName    = 'bankroll.pdf';
+	
+	$this->userSiteObj = UserSite::getCurrentUser();
+	
 	$this->setLayout('pdf');
   }
 
+  public function executeExportBankrollBatch($request){
+
+	$peopleId = $request->getParameter('peopleId');
+	$peopleId = Util::decodeId($peopleId);
+	
+	$peopleObj         = PeoplePeer::retrieveByPK($peopleId);
+	$this->userSiteObj = $peopleObj->getUserSite();
+	$this->peopleId    = $peopleId;
+	$this->userSiteId  = $this->userSiteObj->getId();
+	
+	$this->setLayout('pdf');
+	$this->setTemplate('exportBankroll');
+  }
+
+  public function executeGetTopResume($request){
+
+	$year = $request->getParameter('year');
+	
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
+	return $this->renderText(get_partial('myAccount/bankroll/topResume', array('peopleId'=>$this->peopleId, 'userSiteId'=>$this->userSiteId, 'year'=>$year)));
+  }
+
+  public function executeGetChartResume($request){
+
+	$year = $request->getParameter('year');
+	
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
+	return $this->renderText(get_partial('myAccount/bankroll/chartResume', array('peopleId'=>$this->peopleId, 'userSiteId'=>$this->userSiteId, 'year'=>$year, 'pdf'=>false)));
+  }
+
+
+
+
   public function executeBankrollChart($request){
 
+	$this->peopleId = $request->getParameter('peopleId');
+	$this->peopleId = $this->getUser()->getAttribute('peopleId', $this->peopleId);
+	
+	$this->userSiteId = $request->getParameter('userSiteId');
+	$this->userSiteId = $this->getUser()->getAttribute('userSiteId', $this->userSiteId);
 	$this->setTemplate('chart/bankroll');
   }
 
   public function executeResumeChart($request){
 
+	$this->peopleId = $request->getParameter('peopleId');
+	$this->peopleId = $this->getUser()->getAttribute('peopleId', $this->peopleId);
+	
+	$this->userSiteId = $request->getParameter('userSiteId');
+	$this->userSiteId = $this->getUser()->getAttribute('userSiteId', $this->userSiteId);
+	
 	$this->setTemplate('chart/resume');
   }
   

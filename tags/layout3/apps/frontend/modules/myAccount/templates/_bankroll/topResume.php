@@ -1,5 +1,6 @@
 <?php
-	$resumeInfo = People::getFullResume();
+	$resumeInfo    = People::getFullResume($peopleId, $userSiteId, false, array('year'=>$year));
+	$startBankroll = (isset($startBankroll)?$startBankroll:$resumeInfo['startBankroll']);
 	
 	$eventsTotal    = $resumeInfo['events']+$resumeInfo['eventsPersonal']+$resumeInfo['eventsLive'];
 	$eventsTotalDiv = ($eventsTotal>0?$eventsTotal:1);
@@ -12,14 +13,16 @@
     $average      = $resumeInfo['average'];
 	$balance      = $prize-$buyin-$rebuy-$addon-$entranceFee;
 	$balanceFinal = $startBankroll+$balance;
+	
+	$whereYear = ($year?" AND event_date BETWEEN '$year-01-01' AND '$year-12-31'":"");
     
-    $itm = Util::executeOne("SELECT SUM(1) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = $peopleId AND event_player.ENABLED AND event_player.PRIZE > 0 AND event.VISIBLE AND event.ENABLED AND NOT event.DELETED AND event.SAVED_RESULT AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE AND NOT ranking.DELETED", 'float');
+    $itm = Util::executeOne("SELECT SUM(1) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = $peopleId AND event_player.ENABLED AND event_player.PRIZE > 0 AND event.VISIBLE AND event.ENABLED AND NOT event.DELETED AND event.SAVED_RESULT AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE AND NOT ranking.DELETED $whereYear", 'float');
 	
-	$firstEventDate = Util::executeOne("SELECT MIN(event_date) FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) LIMIT 1", 'timestamp');
-	$lastEventDate  = Util::executeOne("SELECT MAX(event_date) FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) LIMIT 1", 'timestamp');
+	$firstEventDate = Util::executeOne("SELECT MIN(event_date) FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) $whereYear LIMIT 1", 'timestamp');
+	$lastEventDate  = Util::executeOne("SELECT MAX(event_date) FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) $whereYear LIMIT 1", 'timestamp');
 	
-	$eventPosition = Util::executeOne("SELECT SUM(event_player.EVENT_POSITION) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = $peopleId AND event_player.ENABLED AND event.VISIBLE AND event.ENABLED AND NOT event.DELETED AND event.SAVED_RESULT AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE AND NOT ranking.DELETED");
-	$eventPlayers  = Util::executeOne("SELECT SUM(event.PLAYERS) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = $peopleId AND event_player.ENABLED AND event.VISIBLE AND event.ENABLED AND NOT event.DELETED AND event.SAVED_RESULT AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE AND NOT ranking.DELETED");
+	$eventPosition = Util::executeOne("SELECT SUM(event_player.EVENT_POSITION) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = $peopleId AND event_player.ENABLED AND event.VISIBLE AND event.ENABLED AND NOT event.DELETED AND event.SAVED_RESULT AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE AND NOT ranking.DELETED $whereYear");
+	$eventPlayers  = Util::executeOne("SELECT SUM(event.PLAYERS) FROM event_player, event, ranking WHERE event_player.PEOPLE_ID = $peopleId AND event_player.ENABLED AND event.VISIBLE AND event.ENABLED AND NOT event.DELETED AND event.SAVED_RESULT AND event_player.EVENT_ID=event.ID AND event.RANKING_ID=ranking.ID AND ranking.VISIBLE AND NOT ranking.DELETED $whereYear");
 	
 	$averagePosition = round($eventPosition/$eventsTotalDiv);
 	$averagePlayers  = round($eventPlayers/$eventsTotalDiv);
@@ -49,7 +52,7 @@
 <tr>
 	<th>Primeiro jogo:</th><td><?php echo ($firstEventDate?date('d/m/Y', strtotime($firstEventDate)):'-') ?></td>
 	<th>Último jogo:</th><td><?php echo ($lastEventDate?date('d/m/Y', strtotime($lastEventDate)):'-') ?></td>
-	<th>ITMs:</th><td><?php echo nvl($itm, 0) ?></td>
+	<th>ITMs:</th><td><?php echo nvl($itm, 0).'/'.nvl($eventsTotal, 0) ?></td>
 </tr>
 <tr class="bigger">
 	<th>Aproveitamento:</th><td class="textL"><?php echo Util::formatFloat(($itm*100/$eventsTotalDiv), true, 1) ?>%</td>

@@ -100,6 +100,7 @@ class emailMarketingActions extends sfActions
     
     $allowedExtensionList = array('htm', 'html');
 	$maxFileSize          = (1024*300);
+	$fileName             = $fileName  = $request->getFileName('Filedata');
 	
 	try {
 
@@ -107,7 +108,9 @@ class emailMarketingActions extends sfActions
 		
 		$options = array('allowedExtensionList'=>$allowedExtensionList,
 						 'maxFileSize'=>$maxFileSize,
-						 'fileId'=>$emailMarketingObj->getFileId());
+						 'fileId'=>$emailMarketingObj->getFileId(),
+						 'fileName'=>$fileName,
+						 'filePathName'=>'temp');
 		
 		$uploadDir = '/temp/emailMarketing';
 		

@@ -78,6 +78,11 @@ table.bankroll {
 	margin-top: 5mm;
 }
 
+h1.startBankroll.yearHeader {
+
+	font-size: 16pt;
+}
+
 
 
 
@@ -131,11 +136,7 @@ div.footer h2 {
 <body>
 <div class="page">
 <?php
-	$userSiteObj   = UserSite::getCurrentUser();
 	$startBankroll = $userSiteObj->getStartBankroll();
-
-	$peopleId   = $sf_user->getAttribute('peopleId');
-	$userSiteId = $sf_user->getAttribute('userSiteId');
 
 	$currentYear = date('Y');
 	
@@ -207,11 +208,10 @@ div.footer h2 {
 		$bankrollList[$year]['events']     = $eventList;
 	}
 	
-	if( !is_null($startBankroll) )
-		include_partial('myAccount/bankroll/startBankroll', array('edit'=>false, 'startBankroll'=>$startBankroll));
+	include_partial('myAccount/bankroll/startBankroll', array('edit'=>false, 'startBankroll'=>$startBankroll));
 	
-	include_partial('myAccount/bankroll/topResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId));
-	include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'pdf'=>true));
+	include_partial('myAccount/bankroll/topResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'year'=>null));
+	include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'year'=>null, 'pdf'=>true));
 
 	$buyinFinal       = 0;
     $rebuyFinal       = 0;
@@ -226,6 +226,7 @@ div.footer h2 {
 		echo getNewPage();
 ?>
 <div id="<?php echo $year==$currentYear?'now':$year ?>" class="pt10"></div>
+<h1 class="startBankroll yearHeader">Lista de eventos de <?php echo $year ?></h1>
 <table class="bankroll" border="0" cellpadding="0" cellspacing="0">
 <tbody id="bankrollEventBody">
 	<?php
@@ -241,13 +242,9 @@ div.footer h2 {
 	    $entranceFeeSum = 0;
 		
 		?>
-		<tr class="year">
-			<td class="textL" colspan="7">Lista de eventos de <?php echo $year ?></td>
-			<td class="textR expand" colspan="9"></td>
-		</tr>
 		<tr>
 			<th class="textC">Data</th>
-			<th class="textL" width="100">Evento</th>
+			<th class="textL" width="130">Evento</th>
 			<th class="textC">Posição</th>
 			<th class="textR value">Buy-in</th>
 			<th class="textR value">Rebuy</th>
@@ -292,12 +289,10 @@ div.footer h2 {
 		    $balanceYear  += $balance;
 		    
 		    $className = ($className=='even'?'odd':'even');
-		    
-		    $link = "goModule('$eventType', 'edit', 'id', $eventId, true)";
 	?>
-	<tr class="hoverable <?php echo $className.' year-'.$year ?>" onclick="<?php echo $link ?>">
+	<tr class="<?php echo $className.' year-'.$year ?>">
 		<td class="textC"><?php echo date('d/m/Y', strtotime($eventDate)) ?></td>
-		<td><?php echo $eventName ?></td>
+		<td><?php echo truncate_text($eventName, 32) ?></td>
 		<td class="textC"><?php echo "$eventPosition/$players" ?></td>
 		<td class="textR"><?php echo Util::formatFloat($buyin, true) ?></td>
 		<td class="textR"><?php echo Util::formatFloat($rebuy, true) ?></td>
@@ -323,7 +318,7 @@ div.footer h2 {
 <tbody id="bankrollEventBody">
 		<tr>
 			<th class="textC">Data</th>
-			<th class="textL" width="100">Evento</th>
+			<th class="textL" width="130">Evento</th>
 			<th class="textC">Posição</th>
 			<th class="textR value">Buy-in</th>
 			<th class="textR value">Rebuy</th>
@@ -357,8 +352,8 @@ div.footer h2 {
 	<tr>
 		<td class="textL <?php echo 'year-'.$year ?>" colspan="9" style="padding: 0px">
 			<?php
-				$urlChart = url_for("myAccount/bankrollChart?year=$year&peopleId=$peopleId&userSiteId=$userSiteId&type=png", true);
-				echo link_to(image_tag($urlChart), $urlChart);
+				$urlChart = url_for("myAccount/bankrollChart?year=$year&peopleId=$peopleId&userSiteId=$userSiteId&type=file.png", true);
+				echo image_tag($urlChart);
 			?>
 		</td>
 	</tr>
@@ -368,24 +363,18 @@ div.footer h2 {
 ?>
 </tbody>
 </table>
-<br/>
-<br/>
 <?php
 	endforeach;
-?>
 
-<?php
-
-function checkHeight($currentHeight){
-	
-	if( $currentHeight > 260 )
-		return false;
-	
-	return true;
-}
+	echo getFooter();
 
 function getNewPage(){
 	
-	return '<div class="footer"><img src="[webDir]/images/logo/pdf.png"><h1>iRank - Poker Ranking</h1><h2>www.irank.com.br</h2></div> </div><div class="page">';
+	return getFooter().'</div><div class="page">';
+}
+
+function getFooter(){
+	
+	return '<div class="footer"><img src="[webDir]/images/logo/pdf.png"><h1>iRank - Poker Ranking</h1><h2>www.irank.com.br</h2></div>';
 }
 ?>

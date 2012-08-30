@@ -1,20 +1,21 @@
 <?php
-	$width = ($pdf?'140mm':'600px');
+	$width  = ($pdf?'140mm':'600px');
 	$width2 = ($pdf?'50mm':'250px');
 	
-	$peopleId   = $sf_user->getAttribute('peopleId');
-	$userSiteId = $sf_user->getAttribute('userSiteId');
+	$whereYear = ($year?" AND event_date BETWEEN '$year-01-01' AND '$year-12-31'":"");
+	
+	$year = ($year?$year:date('Y'));
 ?>
 <table cellspacing="0" cellpadding="0" class="dashboard chart">
 <tr>
 	<td style="width: <?php echo $width ?>" class="chart">
 	<?php
-		$urlChart = url_for('myAccount/resumeChart?year='.date('Y').'.png', true);
+		$urlChart = url_for('myAccount/resumeChart?year='.$year.'.png', true);
 //		$urlChart = str_replace('/frontend_dev.php', '', $urlChart);
 		if( $pdf )
 			echo image_tag($urlChart.'&peopleId='.$peopleId.'&userSiteId='.$userSiteId);
 		else
-			echo link_to(image_tag($urlChart), $urlChart);
+			echo link_to(image_tag($urlChart, array('id'=>'bankrollTopChartResumeImage')), $urlChart, array('id'=>'bankrollTopChartResumeLink'));
 	?>
 	</td>
 	<td valign="top">
@@ -25,7 +26,7 @@
 			<tr>
 				<th class="textL" style="width: <?php echo $width2 ?>">
 					<?php
-						$resultSet = Util::executeQuery("SELECT * FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) AND prize > 0 ORDER BY (prize-buyin-rebuy-addon-entrance_fee) DESC LIMIT 1");
+						$resultSet = Util::executeQuery("SELECT * FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) AND prize > 0 $whereYear ORDER BY (prize-buyin-rebuy-addon-entrance_fee) DESC LIMIT 1");
 						$eventId   = 0;
 						
 						if( $resultSet->getRecordCount() > 0 ){
@@ -51,8 +52,8 @@
 							    $prize     = Util::formatFloat($prize, true);
 							    
 							    $eventDate     = date('d/m/Y', strtotime($eventDate));
-							    $players       = ($players?$players:'Não informado');
-							    $eventPosition = ($eventPosition?'#'.$eventPosition:'Não informado');
+							    $players       = ($players?$players:'N/D');
+							    $eventPosition = ($eventPosition?'#'.$eventPosition:'N/D');
 							    
 							    echo "<b>$eventDate - $eventName</b> @$eventPlace<hr/>
 										<span>Jogadores:</span> <b>$players</b><br/>
@@ -74,7 +75,7 @@
 			<tr>
 				<th class="textL">
 					<?php
-						$resultSet = Util::executeQuery("SELECT * FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) AND id <> $eventId ORDER BY (prize-buyin-rebuy-addon-entrance_fee) ASC LIMIT 1");
+						$resultSet = Util::executeQuery("SELECT * FROM bankroll WHERE (people_id = $peopleId OR user_site_id = $userSiteId) AND id <> $eventId $whereYear ORDER BY (prize-buyin-rebuy-addon-entrance_fee) ASC LIMIT 1");
 						if( $resultSet->getRecordCount() > 0 ){
 							
 							while($resultSet->next()){
@@ -98,8 +99,8 @@
 							    $prize     = Util::formatFloat($prize, true);
 							    
 							    $eventDate     = date('d/m/Y', strtotime($eventDate));
-							    $players       = ($players?$players:'Não informado');
-							    $eventPosition = ($eventPosition?'#'.$eventPosition:'Não informado');
+							    $players       = ($players?$players:'N/D');
+							    $eventPosition = ($eventPosition?'#'.$eventPosition:'N/D');
 							    
 							    echo "<b>$eventDate - $eventName</b> @$eventPlace<hr/>
 										<span>Jogadores:</span> <b>$players</b><br/>

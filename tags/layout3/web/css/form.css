@@ -310,7 +310,7 @@
 
 
 
-.defaultForm input, .windowForm input {
+.defaultForm input, .windowForm input, input {
 
 	color: 			#1A1A1A;
 	font-size: 		11px;

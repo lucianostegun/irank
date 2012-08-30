@@ -8,6 +8,9 @@ uploadPhoto:
 getAppUpdatedData:
   is_secure: off
   
+exportBankrollBatch:
+  is_secure: off
+  
 resumeChart:
   is_secure: off  
 

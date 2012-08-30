@@ -85,12 +85,14 @@
 		return;
 	}
 	
-	if( !is_null($startBankroll) )
-		include_partial('myAccount/bankroll/startBankroll', array('edit'=>true, 'startBankroll'=>$startBankroll));
+	$year = date('Y');
 	
-	include_partial('myAccount/bankroll/topResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId));
-	include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'pdf'=>false));
-
+	if( !is_null($startBankroll) )
+		include_partial('myAccount/bankroll/startBankroll', array('edit'=>true, 'peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId));
+?>
+<div id="bankrollTopResume"><?php include_partial('myAccount/bankroll/topResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'year'=>null)); ?></div>
+<div id="bankrollChartResume"><?php include_partial('myAccount/bankroll/chartResume', array('peopleId'=>$peopleId, 'startBankroll'=>$startBankroll, 'userSiteId'=>$userSiteId, 'year'=>null, 'pdf'=>false)); ?></div>
+<?php
 	$buyinFinal       = 0;
     $rebuyFinal       = 0;
     $addonFinal       = 0;
