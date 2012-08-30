@@ -5,6 +5,7 @@ class Bankroll {
   public static function getAttachment($peopleId){
     
     $host = MyTools::getRequest()->getHost();
+    $host = str_replace('backend', 'www', $host);
     $fileContent = file_get_contents('http://'.$host.'/index.php/myAccount/exportBankrollBatch/peopleId/'.Util::encodeId($peopleId));
     
     if( !$fileContent || $fileContent=='error' )
