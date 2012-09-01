@@ -168,8 +168,8 @@ function clearFormFieldErrors( formId ){
 		var className   = classNameList[i];
 		var elementList = formObj.getElementsByClassName(className);
 	
-		for(var i2=0; i2 < elementList.length; i2++)
-			elementList[i].removeClassName(className);
+		for(var i2=(elementList.length-1); i2 >= 0; i2--)
+			elementList[i2].removeClassName(className);
 	}
 	
 	hideFormStatusError(formId)
