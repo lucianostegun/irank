@@ -1060,9 +1060,15 @@ function lockEvent(eventId){
 	new Ajax.Updater('mainMainObjDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }
 
-function shareFacebook(eventId){
-
+function shareEventFacebook(eventId){
+	
 	var urlShare = _webRoot+'/event/facebookShareUrl/eventId/'+eventId;
+	window.open(urlShare,'irankFacebookShare', 'toolbar=0, status=0, width=650, height=450');
+}
+
+function shareResultFacebook(eventId){
+
+	var urlShare = _webRoot+'/event/facebookResultShareUrl/eventId/'+eventId;
 	window.open(urlShare,'irankFacebookShare', 'toolbar=0, status=0, width=650, height=450');
 }
 

@@ -10,6 +10,11 @@
 class Event extends BaseEvent
 {
 	
+	public function getIsNew(){
+		
+		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
+	}
+	
 	public function getName(){
 		
 		return $this->getEventName();
