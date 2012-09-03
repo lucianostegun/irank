@@ -1,7 +1,6 @@
 <?php
 	$highlights      = 6;
 	$activeHighlight = rand(1,6);
-	$activeHighlight = 1;
 ?>
 <div class="homeHighlight">
 	<div class="content">
