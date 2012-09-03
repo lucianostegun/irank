@@ -155,8 +155,13 @@ function reloadSizeOptions(colorId){
 	var productCode = $('productCode').value;
 	
 	var elementList = document.getElementsByClassName('productOptionOption size');
-	for(var i=0; i<elementList.length; i++)
+	for(var i=0; i < elementList.length; i++){
+		
 		elementList[i].addClassName('disabled');
+		elementList[i].removeClassName('selected');
+	}
+	
+	$('productOptionIdSize').value = '';
 		
 	var successFunc = function(t){
 
