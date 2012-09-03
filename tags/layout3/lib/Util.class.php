@@ -717,8 +717,8 @@ class Util {
 	 */
 	public static function getFilePath($subPath, $rootDir=null){
 		
-		$subPath = preg_replace('/[\\\\\/]/', DIRECTORY_SEPARATOR, $subPath);
-		$subPath = preg_replace('/^[\\\\\/]?/', '', $subPath);
+		$subPath = str_replace('\\\\', DIRECTORY_SEPARATOR, $subPath);
+		$subPath = str_replace('//', DIRECTORY_SEPARATOR, $subPath);
 		
 		if( !$rootDir )
 			$rootDir = sfConfig::get('sf_web_dir');

@@ -165,14 +165,14 @@ class Product extends BaseProduct
 	
 	public function deleteImage($imageIndex){
 		
-		$imagePath        = $this->getImage($imageIndex, null);
+		$imagePath        = $this->getImage($imageIndex, '');
 		$imagePathPreview = $this->getImage($imageIndex, 'preview');
 		$imagePathFull    = $this->getImage($imageIndex, 'full');
 		$imagePathThumb   = $this->getImage($imageIndex, 'thumb');
 		
-		@unlink(Util::getFilePAth($imagePath));
-		@unlink(Util::getFilePAth($imagePathPreview));
-		@unlink(Util::getFilePAth($imagePathFull));
-		@unlink(Util::getFilePAth($imagePathThumb));
+		unlink(Util::getFilePath('images/'.$imagePath));
+		unlink(Util::getFilePath('images/'.$imagePathPreview));
+		unlink(Util::getFilePath('images/'.$imagePathFull));
+		unlink(Util::getFilePath('images/'.$imagePathThumb));
 	}
 }
