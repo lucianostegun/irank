@@ -117,6 +117,18 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	protected $lastPurchaseCriteria = null;
 
 	
+	protected $collRankingSubscribeRequestListRelatedByUserSiteId;
+
+	
+	protected $lastRankingSubscribeRequestRelatedByUserSiteIdCriteria = null;
+
+	
+	protected $collRankingSubscribeRequestListRelatedByUserSiteIdOwner;
+
+	
+	protected $lastRankingSubscribeRequestRelatedByUserSiteIdOwnerCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -743,6 +755,22 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collRankingSubscribeRequestListRelatedByUserSiteId !== null) {
+				foreach($this->collRankingSubscribeRequestListRelatedByUserSiteId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner !== null) {
+				foreach($this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -826,6 +854,22 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 				if ($this->collPurchaseList !== null) {
 					foreach($this->collPurchaseList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingSubscribeRequestListRelatedByUserSiteId !== null) {
+					foreach($this->collRankingSubscribeRequestListRelatedByUserSiteId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner !== null) {
+					foreach($this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1148,6 +1192,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			foreach($this->getPurchaseList() as $relObj) {
 				$copyObj->addPurchase($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingSubscribeRequestListRelatedByUserSiteId() as $relObj) {
+				$copyObj->addRankingSubscribeRequestRelatedByUserSiteId($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingSubscribeRequestListRelatedByUserSiteIdOwner() as $relObj) {
+				$copyObj->addRankingSubscribeRequestRelatedByUserSiteIdOwner($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1727,6 +1779,216 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		$this->lastPurchaseCriteria = $criteria;
 
 		return $this->collPurchaseList;
+	}
+
+	
+	public function initRankingSubscribeRequestListRelatedByUserSiteId()
+	{
+		if ($this->collRankingSubscribeRequestListRelatedByUserSiteId === null) {
+			$this->collRankingSubscribeRequestListRelatedByUserSiteId = array();
+		}
+	}
+
+	
+	public function getRankingSubscribeRequestListRelatedByUserSiteId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscribeRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscribeRequestListRelatedByUserSiteId === null) {
+			if ($this->isNew()) {
+			   $this->collRankingSubscribeRequestListRelatedByUserSiteId = array();
+			} else {
+
+				$criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID, $this->getId());
+
+				RankingSubscribeRequestPeer::addSelectColumns($criteria);
+				$this->collRankingSubscribeRequestListRelatedByUserSiteId = RankingSubscribeRequestPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID, $this->getId());
+
+				RankingSubscribeRequestPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingSubscribeRequestRelatedByUserSiteIdCriteria) || !$this->lastRankingSubscribeRequestRelatedByUserSiteIdCriteria->equals($criteria)) {
+					$this->collRankingSubscribeRequestListRelatedByUserSiteId = RankingSubscribeRequestPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingSubscribeRequestRelatedByUserSiteIdCriteria = $criteria;
+		return $this->collRankingSubscribeRequestListRelatedByUserSiteId;
+	}
+
+	
+	public function countRankingSubscribeRequestListRelatedByUserSiteId($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscribeRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID, $this->getId());
+
+		return RankingSubscribeRequestPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingSubscribeRequestRelatedByUserSiteId(RankingSubscribeRequest $l)
+	{
+		$this->collRankingSubscribeRequestListRelatedByUserSiteId[] = $l;
+		$l->setUserSiteRelatedByUserSiteId($this);
+	}
+
+
+	
+	public function getRankingSubscribeRequestListRelatedByUserSiteIdJoinRanking($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscribeRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscribeRequestListRelatedByUserSiteId === null) {
+			if ($this->isNew()) {
+				$this->collRankingSubscribeRequestListRelatedByUserSiteId = array();
+			} else {
+
+				$criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID, $this->getId());
+
+				$this->collRankingSubscribeRequestListRelatedByUserSiteId = RankingSubscribeRequestPeer::doSelectJoinRanking($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID, $this->getId());
+
+			if (!isset($this->lastRankingSubscribeRequestRelatedByUserSiteIdCriteria) || !$this->lastRankingSubscribeRequestRelatedByUserSiteIdCriteria->equals($criteria)) {
+				$this->collRankingSubscribeRequestListRelatedByUserSiteId = RankingSubscribeRequestPeer::doSelectJoinRanking($criteria, $con);
+			}
+		}
+		$this->lastRankingSubscribeRequestRelatedByUserSiteIdCriteria = $criteria;
+
+		return $this->collRankingSubscribeRequestListRelatedByUserSiteId;
+	}
+
+	
+	public function initRankingSubscribeRequestListRelatedByUserSiteIdOwner()
+	{
+		if ($this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner === null) {
+			$this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner = array();
+		}
+	}
+
+	
+	public function getRankingSubscribeRequestListRelatedByUserSiteIdOwner($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscribeRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner === null) {
+			if ($this->isNew()) {
+			   $this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner = array();
+			} else {
+
+				$criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID_OWNER, $this->getId());
+
+				RankingSubscribeRequestPeer::addSelectColumns($criteria);
+				$this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner = RankingSubscribeRequestPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID_OWNER, $this->getId());
+
+				RankingSubscribeRequestPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingSubscribeRequestRelatedByUserSiteIdOwnerCriteria) || !$this->lastRankingSubscribeRequestRelatedByUserSiteIdOwnerCriteria->equals($criteria)) {
+					$this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner = RankingSubscribeRequestPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingSubscribeRequestRelatedByUserSiteIdOwnerCriteria = $criteria;
+		return $this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner;
+	}
+
+	
+	public function countRankingSubscribeRequestListRelatedByUserSiteIdOwner($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscribeRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID_OWNER, $this->getId());
+
+		return RankingSubscribeRequestPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingSubscribeRequestRelatedByUserSiteIdOwner(RankingSubscribeRequest $l)
+	{
+		$this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner[] = $l;
+		$l->setUserSiteRelatedByUserSiteIdOwner($this);
+	}
+
+
+	
+	public function getRankingSubscribeRequestListRelatedByUserSiteIdOwnerJoinRanking($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscribeRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner === null) {
+			if ($this->isNew()) {
+				$this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner = array();
+			} else {
+
+				$criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID_OWNER, $this->getId());
+
+				$this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner = RankingSubscribeRequestPeer::doSelectJoinRanking($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID_OWNER, $this->getId());
+
+			if (!isset($this->lastRankingSubscribeRequestRelatedByUserSiteIdOwnerCriteria) || !$this->lastRankingSubscribeRequestRelatedByUserSiteIdOwnerCriteria->equals($criteria)) {
+				$this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner = RankingSubscribeRequestPeer::doSelectJoinRanking($criteria, $con);
+			}
+		}
+		$this->lastRankingSubscribeRequestRelatedByUserSiteIdOwnerCriteria = $criteria;
+
+		return $this->collRankingSubscribeRequestListRelatedByUserSiteIdOwner;
 	}
 
 } 

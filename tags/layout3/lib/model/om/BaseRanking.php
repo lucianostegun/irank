@@ -147,6 +147,12 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	protected $lastRankingPrizeSplitCriteria = null;
 
 	
+	protected $collRankingSubscribeRequestList;
+
+	
+	protected $lastRankingSubscribeRequestCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -898,6 +904,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collRankingSubscribeRequestList !== null) {
+				foreach($this->collRankingSubscribeRequestList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -1009,6 +1023,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 				if ($this->collRankingPrizeSplitList !== null) {
 					foreach($this->collRankingPrizeSplitList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingSubscribeRequestList !== null) {
+					foreach($this->collRankingSubscribeRequestList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1372,6 +1394,10 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 			foreach($this->getRankingPrizeSplitList() as $relObj) {
 				$copyObj->addRankingPrizeSplit($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingSubscribeRequestList() as $relObj) {
+				$copyObj->addRankingSubscribeRequest($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -2079,6 +2105,146 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	{
 		$this->collRankingPrizeSplitList[] = $l;
 		$l->setRanking($this);
+	}
+
+	
+	public function initRankingSubscribeRequestList()
+	{
+		if ($this->collRankingSubscribeRequestList === null) {
+			$this->collRankingSubscribeRequestList = array();
+		}
+	}
+
+	
+	public function getRankingSubscribeRequestList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscribeRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscribeRequestList === null) {
+			if ($this->isNew()) {
+			   $this->collRankingSubscribeRequestList = array();
+			} else {
+
+				$criteria->add(RankingSubscribeRequestPeer::RANKING_ID, $this->getId());
+
+				RankingSubscribeRequestPeer::addSelectColumns($criteria);
+				$this->collRankingSubscribeRequestList = RankingSubscribeRequestPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingSubscribeRequestPeer::RANKING_ID, $this->getId());
+
+				RankingSubscribeRequestPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingSubscribeRequestCriteria) || !$this->lastRankingSubscribeRequestCriteria->equals($criteria)) {
+					$this->collRankingSubscribeRequestList = RankingSubscribeRequestPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingSubscribeRequestCriteria = $criteria;
+		return $this->collRankingSubscribeRequestList;
+	}
+
+	
+	public function countRankingSubscribeRequestList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscribeRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingSubscribeRequestPeer::RANKING_ID, $this->getId());
+
+		return RankingSubscribeRequestPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingSubscribeRequest(RankingSubscribeRequest $l)
+	{
+		$this->collRankingSubscribeRequestList[] = $l;
+		$l->setRanking($this);
+	}
+
+
+	
+	public function getRankingSubscribeRequestListJoinUserSiteRelatedByUserSiteId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscribeRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscribeRequestList === null) {
+			if ($this->isNew()) {
+				$this->collRankingSubscribeRequestList = array();
+			} else {
+
+				$criteria->add(RankingSubscribeRequestPeer::RANKING_ID, $this->getId());
+
+				$this->collRankingSubscribeRequestList = RankingSubscribeRequestPeer::doSelectJoinUserSiteRelatedByUserSiteId($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingSubscribeRequestPeer::RANKING_ID, $this->getId());
+
+			if (!isset($this->lastRankingSubscribeRequestCriteria) || !$this->lastRankingSubscribeRequestCriteria->equals($criteria)) {
+				$this->collRankingSubscribeRequestList = RankingSubscribeRequestPeer::doSelectJoinUserSiteRelatedByUserSiteId($criteria, $con);
+			}
+		}
+		$this->lastRankingSubscribeRequestCriteria = $criteria;
+
+		return $this->collRankingSubscribeRequestList;
+	}
+
+
+	
+	public function getRankingSubscribeRequestListJoinUserSiteRelatedByUserSiteIdOwner($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscribeRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscribeRequestList === null) {
+			if ($this->isNew()) {
+				$this->collRankingSubscribeRequestList = array();
+			} else {
+
+				$criteria->add(RankingSubscribeRequestPeer::RANKING_ID, $this->getId());
+
+				$this->collRankingSubscribeRequestList = RankingSubscribeRequestPeer::doSelectJoinUserSiteRelatedByUserSiteIdOwner($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingSubscribeRequestPeer::RANKING_ID, $this->getId());
+
+			if (!isset($this->lastRankingSubscribeRequestCriteria) || !$this->lastRankingSubscribeRequestCriteria->equals($criteria)) {
+				$this->collRankingSubscribeRequestList = RankingSubscribeRequestPeer::doSelectJoinUserSiteRelatedByUserSiteIdOwner($criteria, $con);
+			}
+		}
+		$this->lastRankingSubscribeRequestCriteria = $criteria;
+
+		return $this->collRankingSubscribeRequestList;
 	}
 
 } 

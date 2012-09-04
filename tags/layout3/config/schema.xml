@@ -1493,4 +1493,23 @@
 		<column name="updated_at" type="TIMESTAMP" />
 	</table>
 	
+	<table name="ranking_subscribe_request" phpName="RankingSubscribeRequest">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="user_site_id_owner" type="INTEGER" />
+		<column name="ranking_id" type="INTEGER" />
+		<column name="request_status" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="user_site">
+			<reference local="user_site_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="user_site">
+			<reference local="user_site_id_owner" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="ranking">
+			<reference local="ranking_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
 </database>

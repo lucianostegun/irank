@@ -115,7 +115,7 @@ function handleSuccessEventResult(content){
 
 	enableButton('eventResultSubmit');
 	enableButton('calculatePrize');
-	showButton('facebookResultResult');
+	showButton('facebookShareResult');
 	hideIndicator('eventResult');
 }
 

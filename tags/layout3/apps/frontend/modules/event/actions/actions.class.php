@@ -5,8 +5,9 @@ class eventActions extends sfActions
 
   public function preExecute(){
 
-	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
-	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
+	$this->userSiteId      = $this->getUser()->getAttribute('userSiteId');
+	$this->peopleId        = $this->getUser()->getAttribute('peopleId');
+	$this->isAuthenticated = $this->getUser()->isAuthenticated();
   }
 
   public function executeIndex($request){
@@ -50,7 +51,8 @@ class eventActions extends sfActions
   
   public function executeShow($request){
   	
-  	$eventId = $request->getParameter('eventId');
+  	$eventId = $request->getParameter('id');
+  	$eventId = $request->getParameter('eventId', $eventId);
   	
 	$this->eventObj = $this->innerObj = EventPeer::retrieveByPK( $eventId );
 
@@ -394,8 +396,10 @@ class eventActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text', 'I18n');
 	
 	$eventCommentObj->notify();
+	
+	$readOnly = (!$this->isAuthenticated || !$eventCommentObj->getEvent()->isMyEvent());
 
-	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false)));
+	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false, 'readOnly'=>$readOnly)));
   }
   
   public function executeDeleteComment($request){
@@ -424,8 +428,10 @@ class eventActions extends sfActions
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	
+	$readOnly = (!$this->isAuthenticated || !$eventObj->isMyEvent());
+	
 	foreach($eventCommentObjList as $eventCommentObj)
-		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false)));
+		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false, 'readOnly'=>$readOnly)));
 		
 	exit;
   }
@@ -472,9 +478,11 @@ class eventActions extends sfActions
 	
 	$eventPhotoCommentObj->notify();
 	
+	$readOnly = (!$this->isAuthenticated || !$eventPhotoCommentObj->getEvent()->isMyEvent());
+	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj, 'isPhoto'=>true)));
+	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj, 'isPhoto'=>true, 'readOnly'=>$readOnly)));
 	exit;
   }
   
@@ -496,16 +504,23 @@ class eventActions extends sfActions
   public function executeGetPhotoCommentList($request){
 
 	$eventPhotoId = $request->getParameter('eventPhotoId');
-
+	
 	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
+	$rankingObj    = $eventPhotoObj->getEvent()->getRanking();
+	
+	if( !$this->isAuthenticated && $rankingObj->getIsPrivate() )
+		throw new Exception('Os comentários deste evento não disponíveis para visualização');
+		
 	$eventPhotoCommentObjList = $eventPhotoObj->getCommentList();
 	$eventPhotoCommentObjList = array_reverse($eventPhotoCommentObjList);
 	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	
+	$readOnly = (!$this->isAuthenticated || !$eventPhotoObj->getEvent()->isMyEvent());
+	
 	foreach($eventPhotoCommentObjList as $eventPhotoCommentObj)
-		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj, 'isPhoto'=>true)));
+		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj, 'isPhoto'=>true, 'readOnly'=>$readOnly)));
 		
 	exit;
   }
@@ -674,22 +689,24 @@ class eventActions extends sfActions
 
   	$shareId = $request->getParameter('shareId');
   	$eventId = Util::decodeId($shareId);
+  	$eventId = $request->getParameter('id', $eventId);
+  	$eventId = $request->getParameter('eventId', $eventId);
 
 	$this->eventObj = EventPeer::retrieveByPK($eventId);
 	
 	if( !is_object($this->eventObj) )
 		return $this->redirect('home/index');
+
+	$rankingObj = $this->eventObj->getRanking();
+	
+	if( $this->eventObj->isMyEvent() && $rankingObj->getIsPrivate() )
+		return $this->redirect('home/index');
+	
 	
 	$uri = $request->getUri();
 	$uri = eregi_replace('facebookResult', 'facebookResultImage', $uri);
 	
 	$host = $request->getHost();
-	
-	
-//	$this->metaDescription = 'Fiquei em '.$eventPlayerObj->getEventPosition().'º lugar no evento '.$eventObj->getEventName().' realizado em '.$eventObj->getEventDate('d/m/Y').' valendo pelo ranking '.$eventObj->getRanking()->getRankingName();
-//	$this->metaImage       = 'event/facebookResultImage/shareId/'.base64_encode($shareId);
-//	$this->shareLink       = 'event/facebookResultImage/shareId/'.base64_encode($shareId);
-//	$this->url             = 'share/'.base64_encode($shareId);
 	
 	$eventName     = $this->eventObj->getEventName();
 	$eventPlace    = $this->eventObj->getRankingPlace()->getPlaceName();
@@ -701,11 +718,13 @@ class eventActions extends sfActions
 
 	$description  = "Evento valendo pelo ranking $rankingName\nData/hora: $eventDateTime\nBuy-in: $buyinInfo";
 	$description .= ($allowRebuy || $allowAddon)?"\n".(($allowRebuy && $allowAddon)?'Rebuy/Add-on':($allowRebuy?'Rebuy':'Add-on')):"";
-//	echo $description;exit;
+
 	$this->facebookMetaList = array('title'=>$eventName.' @'.$eventPlace,
 									'description'=>$description,
-									'url'=>'http://'.$host.'/event/share/'.$shareId,
-									);
+									'url'=>'http://'.$host.'/event/share/'.$shareId);
+	
+	if( $this->isAuthenticated && $this->eventObj->isMyEvent() )
+		$this->forward('event', 'edit');
   }
   
   public function executeFacebookResultShare($request){

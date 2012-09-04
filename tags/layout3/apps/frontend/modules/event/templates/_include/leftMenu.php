@@ -1,5 +1,5 @@
 <?php
-	if( in_array($actionName, array('facebookShare')) )
+	if( in_array($actionName, array('share')) )
 		return;
 		
 	$isNew      = $eventObj->isNew();

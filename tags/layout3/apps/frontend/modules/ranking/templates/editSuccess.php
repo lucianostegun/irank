@@ -41,6 +41,10 @@
 	$dhtmlxTabBarObj->addTab('classify', __('ranking.classify'), 'ranking/form/classify', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
 	$dhtmlxTabBarObj->addTab('options', __('ranking.options'), 'ranking/form/options', array('rankingObj'=>$rankingObj, 'hidden'=>$isNew));
 	$dhtmlxTabBarObj->addTab('import', __('ranking.import'), 'ranking/form/import', array('rankingObj'=>$rankingObj, 'hidden'=>true));
+	
+	if( $rankingObj->hasPendingSubscriptionRequest() )
+		$dhtmlxTabBarObj->addTab('subscriptionRequest', 'Solicitações', 'ranking/form/request', array('rankingObj'=>$rankingObj));
+	
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabRanking');
 	$dhtmlxTabBarObj->build();

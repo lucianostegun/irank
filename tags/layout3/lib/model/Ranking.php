@@ -581,6 +581,10 @@ class Ranking extends BaseRanking
 		
 		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK( $this->getId(), $peopleId );
 		
+		// Não retornará um objeto caso o usuário esteja logado, não seja do ranking e esteja na página /share de eventos ou rankings
+		if( !is_object($rankingPlayerObj) )
+			return false;
+		
 		return $rankingPlayerObj->getAllowEdit();
 	}
 	
@@ -959,7 +963,7 @@ class Ranking extends BaseRanking
 		return Util::buildXml($rankingList, 'rankings', 'ranking');
 	}
 	
-	public static function getOptionsForSelectScoreSchema($defaultValue=null, $suppressSelect=true){
+	public static function getOptionsForSelectScoreSchema($defaultValue=null, $suppressSelect=true, $returnArray=false){
 		
 		$optionList = array();
 		
@@ -969,6 +973,9 @@ class Ranking extends BaseRanking
 		$optionList['irank1']  = 'Buy-ins / Posição / Valor Buy-in';
 		$optionList['vegas']   = 'Padrão Vegas';
 		$optionList['custom']  = 'Fórmula personalizada';
+		
+		if( $returnArray )
+			return $optionList;
 		
 		return options_for_select($optionList, $defaultValue);
 	}
@@ -981,6 +988,56 @@ class Ranking extends BaseRanking
 			$scoreFormula = 'Fórmula não definida';
 		
 		return $scoreFormula;
+	}
+	
+	public function getScoreSchema($description=false){
+		
+		$scoreSchema = parent::getScoreSchema();
+		
+		if( $description ){
+			
+			$scoreSchemaList = Ranking::getOptionsForSelectScoreSchema(false, true, true);
+			$scoreSchema     = $scoreSchemaList[$scoreSchema];
+		}
+		
+		return $scoreSchema;
+	}
+	
+	public function hasPendingSubscriptionRequest($userSiteId=null, $returnObject=false){
+		
+		$criteria = new Criteria();
+		$criteria->add( RankingSubscribeRequestPeer::RANKING_ID, $this->getId() );
+		$criteria->add( RankingSubscribeRequestPeer::REQUEST_STATUS, 'pending' );
+		
+		if( $userSiteId )
+			$criteria->add( RankingSubscribeRequestPeer::USER_SITE_ID, $userSiteId );
+		
+		if( $returnObject )
+			return RankingSubscribeRequestPeer::doSelectOne($criteria);
+		else
+			return RankingSubscribeRequestPeer::doCount($criteria) > 0;
+	}
+	
+	public function cancelSubscriptionRequest($userSiteId){
+		
+		$rankingSubscribeRequestObj = $this->hasPendingSubscriptionRequest($userSiteId, true);
+		$rankingSubscribeRequestObj->setRequestStatus('canceled');
+		$rankingSubscribeRequestObj->save();
+	}
+	
+	public function addSubscriptionRequest($userSiteId){
+		
+		$hasPendingRequest = $this->hasPendingSubscriptionRequest($userSiteId);
+		if( $hasPendingRequest )
+			return true;
+		
+		$rankingSubscribeRequestObj = new RankingSubscribeRequest();
+		$rankingSubscribeRequestObj->setRankingId($this->getId());
+		$rankingSubscribeRequestObj->setUserSiteId($userSiteId);
+		$rankingSubscribeRequestObj->setRequestStatus('pending');
+		$rankingSubscribeRequestObj->save();
+		
+		$rankingSubscribeRequestObj->notify();
 	}
 	
 	public function getInfo(){

@@ -140,9 +140,12 @@ function loadEventPhotoComments(eventPhotoId){
 	
 	var eventId = $('eventId').value;
 	
-	$('eventPhotoPreviewDiv').innerHTML = '<img width="280" src="'+_webRoot+'/event/getPhoto/eventId/'+eventId+'/eventPhotoId/'+eventPhotoId+'/maxWidth/280"/>';
+	$('eventPhotoPreviewDiv').innerHTML = '<img width="280" style="height: 210px" src="'+_webRoot+'/event/getPhoto/eventId/'+eventId+'/eventPhotoId/'+eventPhotoId+'/maxWidth/280"/>';
 	
+	showIndicator();
 	putLoading('commentPhotoListDiv');
+	
+	adjustContentTab();
 	
 	var successFunc = function(t){
 
@@ -162,17 +165,18 @@ function loadEventPhotoComments(eventPhotoId){
 		
 		$('commentTitleDiv').innerHTML = i18n_event_commentsTab_photoIntro;
 		
-		adjustContentTab();
-		
 		hideIndicator();
+		
+		adjustContentTab();
 	};
 	
 	var failureFunc = function(t){
 
 		hideIndicator();
+		alert('Não foi possível carregar os comentários da foto!\nPor favor, tente novamente.');
+		$('commentPhotoListDiv').innerHTML = '';
 	};
 
-	showIndicator();
 	
 	var urlAjax = _webRoot+'/event/getPhotoCommentList/eventId/'+eventId+'/eventPhotoId/'+eventPhotoId;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});

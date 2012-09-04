@@ -8,7 +8,7 @@ class rankingActions extends sfActions
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
 	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
 	
-	$freeActionList = array('edit', 'getBuyin', 'getRankingHistory', 'validateUnsubscribe', 'unsubscribe', 'saveMobile');
+	$freeActionList = array('edit', 'getBuyin', 'getRankingHistory', 'validateUnsubscribe', 'unsubscribe', 'saveMobile', 'share', 'requestSubscription');
 	$actionName     = sfContext::getInstance()->getActionName();
 		
 	$rankingId = $this->getRequestParameter('rankingId');
@@ -62,6 +62,19 @@ class rankingActions extends sfActions
   	}
 	  
   	$this->innerObj  = $this->rankingObj;
+  }
+  
+  public function executeShare($request){
+  	
+  	$shareId   = $request->getParameter('share');
+  	$rankingId = Util::decodeId($shareId);
+  	$rankingId = $request->getParameter('id');
+  	$rankingId = $request->getParameter('rankingId', $rankingId);
+  	
+	$this->rankingObj = RankingPeer::retrieveByPK( $rankingId );
+
+	if( !is_object($this->rankingObj) )
+		return $this->redirect('ranking/index');
   }
 
   public function handleErrorSave(){
@@ -227,7 +240,7 @@ class rankingActions extends sfActions
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
+	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj, 'readOnly'=>false)));
   }
   
   public function executeDeletePlayer($request){
@@ -253,7 +266,7 @@ class rankingActions extends sfActions
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
+	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj, 'readOnly'=>false)));
   }
 
   public function executeGetClassifyList($request){
@@ -455,6 +468,30 @@ class rankingActions extends sfActions
 		sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 		return $this->renderText(get_partial('ranking/include/search', array('criteria'=>$criteria, 'userSiteObj'=>$userSiteObj)));
 	}  	
+  }
+  
+  public function executeRequestSubscription($request){
+  	
+  	if( !$this->getUser()->isAuthenticated() )
+  		Util::forceError('!É necessário estar logado para enviar seu pedido de inscrição.');
+  	
+  	$rankingId  = $request->getParameter('rankingId');
+  	$cancel     = $request->getParameter('cancel');
+  	$userSiteId = $this->getUser()->getAttribute('userSiteId');
+  	
+  	$rankingObj = RankingPeer::retrieveByPK($rankingId);
+  	
+  	if( $rankingObj->getIsPrivate() )
+  		Util::forceError('!Este ranking não aceita pedidos de inscrição.');
+  	
+  	if( $cancel )
+  		$rankingObj->cancelSubscriptionRequest($userSiteId);
+  	else
+  		$rankingObj->addSubscriptionRequest($userSiteId);
+  	
+  	echo 'success';
+  	
+  	exit;
   }
   
   public function executeJavascript($request){

@@ -98,3 +98,13 @@
 	background-position: 	left top;
 	color: 					#909090;
 }
+
+.actionButton.right {
+
+	float: right
+}
+
+.actionButton.white {
+
+	background: #FFFFFF
+}

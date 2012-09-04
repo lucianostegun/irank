@@ -1022,9 +1022,13 @@ function button_tag($buttonId, $text, $options=array() ){
 	
 	if( !$noCheck )
 		$onclick = "if(checkButton('$buttonId')){ $onclick }";
+		
+	$imageTag = null;
+	if( $image )
+		$imageTag = "background-image: url('/images/button".($disabled?'/disabled':'')."/$image')";
 
-	$html  = '<div class="actionButton'.($image?' image':'').($visible?'':' hidden').($class?" $class":'').'" onclick="'.$onclick.'" style="'.$style.'" id="'.$buttonId.'Button">'.$nl;
-	$html .= '	<span id="'.$buttonId.'Label" style="background-image: url(\'/images/button/'.$image.'\')">'.$text.'</span>'.$nl;
+	$html  = '<div class="actionButton'.($image?' image':'').($visible?'':' hidden').($disabled?' disabled':'').($class?" $class":'').'" onclick="'.$onclick.'" style="'.$style.'" id="'.$buttonId.'Button">'.$nl;
+	$html .= '	<span id="'.$buttonId.'Label" style="'.$imageTag.'">'.$text.'</span>'.$nl;
 	$html .= '</div>'.$nl.$nl;
 	
 	if( $text!='Cancelar' && $text!='Fechar' )

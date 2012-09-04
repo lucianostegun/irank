@@ -22,3 +22,9 @@ getPhoto:
   
 getiPhoneAppXml:
   is_secure: off
+  
+javascript:
+  is_secure: off
+  
+getPhotoCommentList:
+  is_secure: off

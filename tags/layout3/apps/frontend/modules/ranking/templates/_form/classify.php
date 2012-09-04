@@ -23,5 +23,5 @@
 	<div class="clear"></div>
 </div>
 <div id="rankingClassifyDiv">
-	<?php include_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$firstDate)); ?>
+	<?php include_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$firstDate, 'readOnly'=>false)); ?>
 </div>

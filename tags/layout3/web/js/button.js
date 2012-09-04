@@ -53,13 +53,26 @@ function hideButton( buttonId ){
 
 function setButtonLabel( buttonId, label, icon ){
 
-	if( $(buttonId+'Button')!=null ){
+	if( $(buttonId+'Label')!=null ){
 		
 		var button = '';
-		if( icon )
-			button = '<img id="EventFilterSubmitImage" align="absmiddle" style="margin-top: -2px; margin-right: 5px" src="/images/button/'+icon+'" alt="AjaxLoader" />';
+		if( icon ){
+			
+			if( !(/.[a-z]{3}$/).test(icon) )
+				icon += '.png';
+			
+			icon = 'url(/images/button/'+icon+')';
+			
+			if( !checkButton(buttonId) ){
+				
+				icon = icon.replace('button/', 'button/disabled/');
+				icon = icon.replace('disabled/disabled/', 'disabled/');
+			}
+			
+			$(buttonId+'Label').style.backgroundImage = icon;
+		}
 		
-		$(buttonId+'Button'+'Label').innerHTML = button+label;
+		$(buttonId+'Label').innerHTML = label;
 	}
 	
 	

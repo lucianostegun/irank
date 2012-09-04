@@ -1,4 +1,7 @@
 <?php
+	if( in_array($actionName, array('share')) )
+		return;
+	
 	$isNew       = $rankingObj->isNew();
 	$isMyRanking = ($isNew || $rankingObj->isMyRanking());
 ?>	

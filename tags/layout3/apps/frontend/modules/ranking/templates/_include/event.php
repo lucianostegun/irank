@@ -6,10 +6,13 @@
 		<th><?php echo __('Guests') ?></th>
 	</tr>
 	<?php
-		$eventObjList = $rankingObj->getEventList();
+		$criteria = new Criteria();
+		$criteria->setNoFilter($readOnly);
+		
+		$eventObjList = $rankingObj->getEventList($criteria);
 		foreach($eventObjList as $eventObj): ?>
 	<tr>
-		<td><?php echo link_to($eventObj->getEventName(), '#goModule(\'event\', \'edit\', \'eventId\', '.$eventObj->getId().')') ?></td>
+		<td><?php echo link_to($eventObj->getEventName(), '#goModule("event", "'.($readOnly?'share':'edit').'", "eventId", '.$eventObj->getId().')') ?></td>
 		<td align="center"><?php echo $eventObj->getEventDate('d/m/Y').' '.$eventObj->getStartTime('H:i') ?></td>
 		<td><?php echo $eventObj->getEventPlace() ?></td>
 		<td align="center"><?php echo sprintf('%02d', $eventObj->getInvites()).' ('.sprintf('%02d', $eventObj->getPlayers()).')' ?></td>
@@ -17,7 +20,7 @@
 	<?php
 		endforeach;
 		
-		if( !count($eventObjList) ):
+		if( !count($eventObjList) && !$readOnly ):
 	?>
 	<tr>
 		<td colspan="4">

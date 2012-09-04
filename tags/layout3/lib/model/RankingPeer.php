@@ -21,7 +21,8 @@ class RankingPeer extends BaseRankingPeer
 		$app        = Util::getApp();
 
 		$allowSearch     = false;
-		$allowedPageList = array('event'=>array('facebookResultImage', 'share', 'facebookResult'));
+		$allowedPageList = array('event'=>array('facebookResultImage', 'share', 'facebookResult', 'getPhotoCommentList'),
+								 'ranking'=>array('share', 'requestSubscription'));
 		
 		if( array_key_exists($moduleName, $allowedPageList) && in_array($actionName, $allowedPageList[$moduleName]))
 			$allowSearch = true;
@@ -47,7 +48,8 @@ class RankingPeer extends BaseRankingPeer
 			
 //			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
 		}
-			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
+		
+		$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
 		
 		return parent::doSelectRS($criteria, $con);
 	}

@@ -171,9 +171,11 @@ class Event extends BaseEvent
 		return array_merge($eventObjListNext, $eventObjListPrevious);
 	}
 	
-	public function getPeopleList($returnPeople=false, $orderByList=null){
+	public function getPeopleList($returnPeople=false, $orderByList=null, Criteria $criteria=null){
 		
-		$criteria = new Criteria();
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
 		$criteria->add( EventPlayerPeer::EVENT_ID, $this->getId() );
 		$criteria->addAnd( EventPlayerPeer::DELETED, false );
 		$criteria->addJoin( EventPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
@@ -222,13 +224,13 @@ class Event extends BaseEvent
 		return EventCommentPeer::doCount($criteria);
 	}
 	
-	public function getPlayerList($orderByList=null){
+	public function getPlayerList($orderByList=null, Criteria $criteria=null){
 		
 		if( $orderByList=='result' )
 		  	$orderByList = array(EventPlayerPeer::ENABLED=>'desc',
 					 			 EventPlayerPeer::EVENT_POSITION=>'asc');
 
-		return $this->getPeopleList(false, $orderByList);
+		return $this->getPeopleList(false, $orderByList, $criteria);
 	}
 	
 	public function addPlayer($peopleId, $confirm=false, $sendNotify=true){

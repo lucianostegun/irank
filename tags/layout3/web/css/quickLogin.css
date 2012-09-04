@@ -52,7 +52,9 @@
 
 #login .row .button {
 
-	float: 	left
+	float: 	right;
+	position: relative;
+	right: 11px
 }
 
 #login input {

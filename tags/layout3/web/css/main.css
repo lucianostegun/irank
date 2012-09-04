@@ -147,7 +147,7 @@ a:hover {
 	background: 	url('/images/layout/borderBottom.png') repeat-x
 }
 
-#contentArea #borderTable .right {
+#contentArea #borderTable td.right {
 
 	background: 	url('/images/layout/borderRight.png') repeat-y
 }

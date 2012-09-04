@@ -247,7 +247,7 @@ function parseMessage(errorMessage, defaultMessage){
 	if( (errorMessage).match(/^!/) ){
 		return errorMessage.replace(/^!/, '\n\n');
 	}else
-		return defaultMessage;
+		return (defaultMessage?'\n\n'+defaultMessage:null);
 }
 
 function getScreenWidth(){

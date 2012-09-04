@@ -4,6 +4,7 @@
 			$eventId = $eventObj->getId();
 			$col     = 0;
 			
+			$count = 0;
 			foreach($eventObj->getPhotoList() as $eventPhotoObj):
 				
 				$eventPhotoId = $eventPhotoObj->getId();
@@ -14,11 +15,12 @@
 					echo '</tr><tr>';
 					
 				$col++;
+				$count++;
 		?>
 		<td onmouseover="this.addClassName('over')" onmouseout="this.removeClassName('hover')">
 			
 			<?php
-				if( $eventObj->isMyEvent() )
+				if( $eventObj->isMyEvent() && !$readOnly )
 					echo image_tag('icon/delete12', array('onclick'=>'deleteEventPhoto('.$eventPhotoId.')', 'class'=>'deleteImage', 'title'=>__('event.commentsTab.deletePhoto')));
 				
 				echo image_tag('misc/comments', array('onclick'=>'loadEventPhotoComments('.$eventPhotoId.')', 'class'=>'commentImage', 'title'=>__('event.commentsTab.showPhotoComments')));
@@ -34,7 +36,13 @@
 			?>
 			<a href="<?php echo $imagePath ?>" alt="<?php echo $link ?>" rel="lightbox"><?php echo image_tag($imageThumbPath, array('width'=>80, 'height'=>60)) ?></a>
 		</td>
-		<?php endforeach ?>
+		<?php
+			endforeach;
+			
+			if( $count==0 && $readOnly ):
+		?>
+		<td>Nenhuma foto foi postada para este evento</td>
+		<?php endif; ?>
 	</tr>
 </table>
 

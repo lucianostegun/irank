@@ -590,3 +590,49 @@ function doRankingSearch(){
 	var urlAjax = _webRoot+'/ranking/search';
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize(form)});
 }
+
+function sendSubscribeRequest(rankingId, cancel){
+	
+	if( cancel && !confirm('Deseja realmente cancelar o pedido de inscrição para este ranking?') )
+		return false;
+	
+	showIndicator();
+	
+	disableButton('subscribeRequest');
+
+	var successFunc = function(t){
+
+		var content = t.responseText;
+		
+		if( content!='success' )
+			return failureFunc(t);
+		
+
+		if( cancel )
+			setButtonLabel('subscribeRequest', 'Enviar pedido', 'arrowRight.png');
+		else
+			setButtonLabel('subscribeRequest', 'Pedido já enviado', 'ok.png');
+		
+		$('subscribeRequestButton').onclick = function(){ sendSubscribeRequest(rankingId, !cancel) };
+			
+		enableButton('subscribeRequest');
+		
+		hideIndicator();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		enableButton('subscribeRequest');
+		hideIndicator();
+		
+		var errorMessage = parseMessage(content, 'Por favor, tente novamente.');
+		alert('Não foi possível enviar sua requisição de inscrição ao ranking!'+errorMessage);
+		
+		console.log(content);
+	};
+	
+	var urlAjax = _webRoot+'/ranking/requestSubscription/rankingId/'+rankingId+'/cancel/'+(cancel?'1':'0');
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}

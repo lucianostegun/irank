@@ -37,7 +37,8 @@
 	left: 		3px;
 }
 
-.gridTable .header th.first {
+.gridTable .header th.first,
+.gridTable .header th:first-child {
 
 	border-left: 	none
 }
