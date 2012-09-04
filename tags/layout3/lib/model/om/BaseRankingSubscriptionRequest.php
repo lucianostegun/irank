@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persistent {
+abstract class BaseRankingSubscriptionRequest extends BaseObject  implements Persistent {
 
 
 	
@@ -139,7 +139,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = RankingSubscribeRequestPeer::ID;
+			$this->modifiedColumns[] = RankingSubscriptionRequestPeer::ID;
 		}
 
 	} 
@@ -153,7 +153,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 
 		if ($this->user_site_id !== $v) {
 			$this->user_site_id = $v;
-			$this->modifiedColumns[] = RankingSubscribeRequestPeer::USER_SITE_ID;
+			$this->modifiedColumns[] = RankingSubscriptionRequestPeer::USER_SITE_ID;
 		}
 
 		if ($this->aUserSiteRelatedByUserSiteId !== null && $this->aUserSiteRelatedByUserSiteId->getId() !== $v) {
@@ -171,7 +171,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 
 		if ($this->user_site_id_owner !== $v) {
 			$this->user_site_id_owner = $v;
-			$this->modifiedColumns[] = RankingSubscribeRequestPeer::USER_SITE_ID_OWNER;
+			$this->modifiedColumns[] = RankingSubscriptionRequestPeer::USER_SITE_ID_OWNER;
 		}
 
 		if ($this->aUserSiteRelatedByUserSiteIdOwner !== null && $this->aUserSiteRelatedByUserSiteIdOwner->getId() !== $v) {
@@ -189,7 +189,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 
 		if ($this->ranking_id !== $v) {
 			$this->ranking_id = $v;
-			$this->modifiedColumns[] = RankingSubscribeRequestPeer::RANKING_ID;
+			$this->modifiedColumns[] = RankingSubscriptionRequestPeer::RANKING_ID;
 		}
 
 		if ($this->aRanking !== null && $this->aRanking->getId() !== $v) {
@@ -207,7 +207,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 
 		if ($this->request_status !== $v) {
 			$this->request_status = $v;
-			$this->modifiedColumns[] = RankingSubscribeRequestPeer::REQUEST_STATUS;
+			$this->modifiedColumns[] = RankingSubscriptionRequestPeer::REQUEST_STATUS;
 		}
 
 	} 
@@ -224,7 +224,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 		}
 		if ($this->created_at !== $ts) {
 			$this->created_at = $ts;
-			$this->modifiedColumns[] = RankingSubscribeRequestPeer::CREATED_AT;
+			$this->modifiedColumns[] = RankingSubscriptionRequestPeer::CREATED_AT;
 		}
 
 	} 
@@ -241,7 +241,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 		}
 		if ($this->updated_at !== $ts) {
 			$this->updated_at = $ts;
-			$this->modifiedColumns[] = RankingSubscribeRequestPeer::UPDATED_AT;
+			$this->modifiedColumns[] = RankingSubscriptionRequestPeer::UPDATED_AT;
 		}
 
 	} 
@@ -270,7 +270,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 
 						return $startcol + 7; 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating RankingSubscribeRequest object", $e);
+			throw new PropelException("Error populating RankingSubscriptionRequest object", $e);
 		}
 	}
 
@@ -282,12 +282,12 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(RankingSubscribeRequestPeer::DATABASE_NAME);
+			$con = Propel::getConnection(RankingSubscriptionRequestPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->begin();
-			RankingSubscribeRequestPeer::doDelete($this, $con);
+			RankingSubscriptionRequestPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -299,12 +299,12 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 	
 	public function save($con = null)
 	{
-    if ($this->isNew() && !$this->isColumnModified(RankingSubscribeRequestPeer::CREATED_AT))
+    if ($this->isNew() && !$this->isColumnModified(RankingSubscriptionRequestPeer::CREATED_AT))
     {
       $this->setCreatedAt(time());
     }
 
-    if ($this->isModified() && !$this->isColumnModified(RankingSubscribeRequestPeer::UPDATED_AT))
+    if ($this->isModified() && !$this->isColumnModified(RankingSubscriptionRequestPeer::UPDATED_AT))
     {
       $this->setUpdatedAt(time());
     }
@@ -314,7 +314,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(RankingSubscribeRequestPeer::DATABASE_NAME);
+			$con = Propel::getConnection(RankingSubscriptionRequestPeer::DATABASE_NAME);
 		}
 
 		try {
@@ -360,12 +360,12 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = RankingSubscribeRequestPeer::doInsert($this, $con);
+					$pk = RankingSubscriptionRequestPeer::doInsert($this, $con);
 					$affectedRows += 1; 										 										 
 					$this->setId($pk);  
 					$this->setNew(false);
 				} else {
-					$affectedRows += RankingSubscribeRequestPeer::doUpdate($this, $con);
+					$affectedRows += RankingSubscriptionRequestPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); 			}
 
@@ -425,7 +425,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 			}
 
 
-			if (($retval = RankingSubscribeRequestPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = RankingSubscriptionRequestPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -440,7 +440,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 	
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = RankingSubscribeRequestPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = RankingSubscriptionRequestPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->getByPosition($pos);
 	}
 
@@ -477,7 +477,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 	
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = RankingSubscribeRequestPeer::getFieldNames($keyType);
+		$keys = RankingSubscriptionRequestPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getUserSiteId(),
@@ -493,7 +493,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 	
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = RankingSubscribeRequestPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = RankingSubscriptionRequestPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -527,7 +527,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 	
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = RankingSubscribeRequestPeer::getFieldNames($keyType);
+		$keys = RankingSubscriptionRequestPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setUserSiteId($arr[$keys[1]]);
@@ -541,15 +541,15 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 	
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(RankingSubscribeRequestPeer::DATABASE_NAME);
+		$criteria = new Criteria(RankingSubscriptionRequestPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(RankingSubscribeRequestPeer::ID)) $criteria->add(RankingSubscribeRequestPeer::ID, $this->id);
-		if ($this->isColumnModified(RankingSubscribeRequestPeer::USER_SITE_ID)) $criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID, $this->user_site_id);
-		if ($this->isColumnModified(RankingSubscribeRequestPeer::USER_SITE_ID_OWNER)) $criteria->add(RankingSubscribeRequestPeer::USER_SITE_ID_OWNER, $this->user_site_id_owner);
-		if ($this->isColumnModified(RankingSubscribeRequestPeer::RANKING_ID)) $criteria->add(RankingSubscribeRequestPeer::RANKING_ID, $this->ranking_id);
-		if ($this->isColumnModified(RankingSubscribeRequestPeer::REQUEST_STATUS)) $criteria->add(RankingSubscribeRequestPeer::REQUEST_STATUS, $this->request_status);
-		if ($this->isColumnModified(RankingSubscribeRequestPeer::CREATED_AT)) $criteria->add(RankingSubscribeRequestPeer::CREATED_AT, $this->created_at);
-		if ($this->isColumnModified(RankingSubscribeRequestPeer::UPDATED_AT)) $criteria->add(RankingSubscribeRequestPeer::UPDATED_AT, $this->updated_at);
+		if ($this->isColumnModified(RankingSubscriptionRequestPeer::ID)) $criteria->add(RankingSubscriptionRequestPeer::ID, $this->id);
+		if ($this->isColumnModified(RankingSubscriptionRequestPeer::USER_SITE_ID)) $criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID, $this->user_site_id);
+		if ($this->isColumnModified(RankingSubscriptionRequestPeer::USER_SITE_ID_OWNER)) $criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID_OWNER, $this->user_site_id_owner);
+		if ($this->isColumnModified(RankingSubscriptionRequestPeer::RANKING_ID)) $criteria->add(RankingSubscriptionRequestPeer::RANKING_ID, $this->ranking_id);
+		if ($this->isColumnModified(RankingSubscriptionRequestPeer::REQUEST_STATUS)) $criteria->add(RankingSubscriptionRequestPeer::REQUEST_STATUS, $this->request_status);
+		if ($this->isColumnModified(RankingSubscriptionRequestPeer::CREATED_AT)) $criteria->add(RankingSubscriptionRequestPeer::CREATED_AT, $this->created_at);
+		if ($this->isColumnModified(RankingSubscriptionRequestPeer::UPDATED_AT)) $criteria->add(RankingSubscriptionRequestPeer::UPDATED_AT, $this->updated_at);
 
 		return $criteria;
 	}
@@ -557,9 +557,9 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 	
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(RankingSubscribeRequestPeer::DATABASE_NAME);
+		$criteria = new Criteria(RankingSubscriptionRequestPeer::DATABASE_NAME);
 
-		$criteria->add(RankingSubscribeRequestPeer::ID, $this->id);
+		$criteria->add(RankingSubscriptionRequestPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -611,7 +611,7 @@ abstract class BaseRankingSubscribeRequest extends BaseObject  implements Persis
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new RankingSubscribeRequestPeer();
+			self::$peer = new RankingSubscriptionRequestPeer();
 		}
 		return self::$peer;
 	}

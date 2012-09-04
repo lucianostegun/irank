@@ -2,10 +2,10 @@
 
 
 
-class RankingSubscribeRequestMapBuilder {
+class RankingSubscriptionRequestMapBuilder {
 
 	
-	const CLASS_NAME = 'lib.model.map.RankingSubscribeRequestMapBuilder';
+	const CLASS_NAME = 'lib.model.map.RankingSubscriptionRequestMapBuilder';
 
 	
 	private $dbMap;
@@ -27,12 +27,12 @@ class RankingSubscribeRequestMapBuilder {
 	{
 		$this->dbMap = Propel::getDatabaseMap('propel');
 
-		$tMap = $this->dbMap->addTable('ranking_subscribe_request');
-		$tMap->setPhpName('RankingSubscribeRequest');
+		$tMap = $this->dbMap->addTable('ranking_subscription_request');
+		$tMap->setPhpName('RankingSubscriptionRequest');
 
 		$tMap->setUseIdGenerator(true);
 
-		$tMap->setPrimaryKeyMethodInfo('ranking_subscribe_request_SEQ');
+		$tMap->setPrimaryKeyMethodInfo('ranking_subscription_request_SEQ');
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 

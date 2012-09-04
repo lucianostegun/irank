@@ -330,6 +330,7 @@ class TabBar {
 		
 		$description = $this->getDescription();
 		$description = String::removeAccents( $description );
+		$description = strip_tags($description);
 		
 		$map = array(	'a'=>8, 'b'=>8, 'c'=>8, 'd'=>8, 'e'=>8, 'f'=>8, 'g'=>8, 'h'=>8, 'i'=>8, 'j'=>8, 'k'=>8, 'l'=>8, 'm'=>8, 'n'=>8, 'o'=>8, 'p'=>8, 'q'=>8, 'r'=>8, 's'=>8, 't'=>8, 'u'=>8, 'v'=>8, 'w'=>8, 'x'=>8, 'y'=>8, 'z'=>8, 
 						'A'=>11, 'B'=>11, 'C'=>11, 'D'=>11, 'E'=>11, 'F'=>11, 'G'=>11, 'H'=>11, 'I'=>11, 'J'=>11, 'K'=>11, 'L'=>11, 'M'=>11, 'N'=>11, 'O'=>11, 'P'=>11, 'Q'=>11, 'R'=>11, 'S'=>11, 'T'=>11, 'U'=>11, 'V'=>11, 'W'=>11, 'X'=>11, 'Y'=>11, 'Z'=>11, 

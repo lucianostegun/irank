@@ -636,3 +636,55 @@ function sendSubscribeRequest(rankingId, cancel){
 	var urlAjax = _webRoot+'/ranking/requestSubscription/rankingId/'+rankingId+'/cancel/'+(cancel?'1':'0');
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
+
+function toggleSubscriptionRequest(userSiteId, toggleAction){
+	
+	showIndicator();
+	
+	disableButton('subscriptionRequestAgree-'+userSiteId);
+	disableButton('subscriptionRequestDecline-'+userSiteId);
+	
+	var rankingId = $('rankingId').value;
+	
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		
+		if( content!='success' )
+			return failureFunc(t);
+		
+		if( toggleAction=='agree' )
+			reloadPlayerTab();
+		
+		var tabLabel        = tabBarMainObj.getLabel('subscriptionRequest');
+		var matches         = tabLabel.match(/^.* \(([0-9])\)$/);
+		var pendingRequests = (matches[1]*1)-1;
+		
+		tabBarMainObj.setLabel('subscriptionRequest', 'Solicitações'+(pendingRequests > 0?' ('+pendingRequests+')':''));
+		
+		$('rankingSubscriptionRequestDecline-'+userSiteId).remove()
+		$('rankingSubscriptionRequestAgree-'+userSiteId).innerHTML = 'Pedido '+(toggleAction=='agree'?'aceito':'recusado');
+		$('rankingSubscriptionRequestAgree-'+userSiteId).addClassName(toggleAction+'d');
+		$('rankingSubscriptionRequestAgree-'+userSiteId).colspan   = '2';
+		
+		hideIndicator();
+	};
+	
+	var failureFunc = function(t){
+		
+		var content = t.responseText;
+		
+		enableButton('subscriptionRequestAgree-'+userSiteId);
+		enableButton('subscriptionRequestDecline-'+userSiteId);
+		
+		hideIndicator();
+		
+		var errorMessage = parseMessage(content, 'Por favor, tente novamente.');
+		alert('Não foi possível aceitar/recusar o pedido de inscrição ao ranking!'+errorMessage);
+		
+		console.log(content);
+	};
+	
+	var urlAjax = _webRoot+'/ranking/toggleSubscriptionRequest/rankingId/'+rankingId+'/userSiteId/'+userSiteId+'/toggleAction/'+toggleAction;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}

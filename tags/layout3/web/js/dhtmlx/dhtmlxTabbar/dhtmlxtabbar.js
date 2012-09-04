@@ -981,7 +981,7 @@ dhtmlXTabBar.prototype = {
 		this._tabs[id].firstChild.innerHTML = text
 	},
 
-	getLabel : function(tab) {
+	getLabel : function(id) {
 		return this._tabs[id].firstChild.innerHTML
 	},
 

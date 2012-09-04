@@ -20,3 +20,13 @@
 	margin: 				0px 0px -5px 0px;
 	top: 					-5px;
 }
+
+#rankingSubscriptionRequestDiv table.gridTable.gridTabTable tr.boxcontent td.agreed {
+
+	color: #7B933A
+}
+
+#rankingSubscriptionRequestDiv table.gridTable.gridTabTable tr.boxcontent td.declined {
+
+	color: #935A3A
+}

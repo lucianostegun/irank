@@ -62,8 +62,8 @@
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 	
-	$facebookShareButton  = button_tag('facebookShareResult', 'Divulgar evento', array('image'=>'facebook.png', 'onclick'=>'shareResultFacebook('.$eventId.')', 'visible'=>($eventObj->getSavedResult()?true:false)));
-	$facebookResultButton = button_tag('facebookShare', 'Compartilhar resultado', array('image'=>'facebook.png', 'onclick'=>'shareEventFacebook('.$eventId.')', 'visible'=>($eventObj->getIsNew()?false:true)));
+	$facebookShareButton  = button_tag('facebookShare', 'Divulgar evento', array('image'=>'facebook.png', 'onclick'=>'shareEventFacebook('.$eventId.')', 'visible'=>($eventObj->getIsNew()?false:true)));
+	$facebookResultButton = button_tag('facebookShareResult', 'Compartilhar resultado', array('image'=>'facebook.png', 'onclick'=>'shareResultFacebook('.$eventId.')', 'visible'=>($eventObj->getSavedResult()?true:false)));
 	
 	if( $isEditable ):
 ?>

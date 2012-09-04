@@ -1493,7 +1493,7 @@
 		<column name="updated_at" type="TIMESTAMP" />
 	</table>
 	
-	<table name="ranking_subscribe_request" phpName="RankingSubscribeRequest">
+	<table name="ranking_subscription_request" phpName="RankingSubscriptionRequest">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
 		<column name="user_site_id" type="INTEGER" />
 		<column name="user_site_id_owner" type="INTEGER" />

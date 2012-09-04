@@ -28,8 +28,12 @@ function handleSuccessEvent(content){
 
 	updatePlayerContent(eventObj.eventId);
 	
-	if( pastDate )
+	if( pastDate ){
+		
 		updateResultContent(eventObj.eventId);
+		hideButton('facebookShare');
+	}else
+		showButton('facebookShare');
 	
 	setRecordSaved(true);
 	setButtonBarStatus('eventMain', 'success');
@@ -116,6 +120,7 @@ function handleSuccessEventResult(content){
 	enableButton('eventResultSubmit');
 	enableButton('calculatePrize');
 	showButton('facebookShareResult');
+	hideButton('facebookShare');
 	hideIndicator('eventResult');
 }
 

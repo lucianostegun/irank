@@ -494,6 +494,20 @@ class rankingActions extends sfActions
   	exit;
   }
   
+  public function executeToggleSubscriptionRequest($request){
+  	
+  	$userSiteId      = $request->getParameter('userSiteId');
+  	$toggleAction    = $request->getParameter('toggleAction');
+  	$userSiteIdOwner = $this->getUser()->getAttribute('userSiteId');
+  	
+  	$rankingSubscriptionRequestObj = $this->rankingObj->hasPendingSubscriptionRequest($userSiteId, true);
+  	$rankingSubscriptionRequestObj->$toggleAction($userSiteIdOwner);
+  	
+  	echo 'success';
+  	
+  	exit;
+  }
+  
   public function executeJavascript($request){
   	
   	Util::getHelper('i18n');

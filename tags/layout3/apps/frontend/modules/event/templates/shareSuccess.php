@@ -11,13 +11,17 @@
 		
 	include_partial('home/component/commonBar', array('pathList'=>$pathList));
 	
-	$hasPendingRequest = $eventObj->getRanking()->hasPendingSubscriptionRequest($userSiteId);
+	$rankingObj        = $eventObj->getRanking();
+	$hasPendingRequest = $rankingObj->hasPendingSubscriptionRequest($userSiteId);
+	
+	if( !$rankingObj->isPlayer() ):
 ?>
 <div class="subscribeBar">
 	<span><b>Quer participar dos eventos desse ranking?</b> Cadastre-se e envie seu pedido de inscrição aos organizadores.</span>
 	<?php echo button_tag('subscribeRequest', ($hasPendingRequest?'Pedido já enviado':'Enviar pedido'), array('onclick'=>'sendSubscribeRequest('.$eventObj->getRankingId().', '.($hasPendingRequest?'true':'false').')', 'image'=>($hasPendingRequest?'ok.png':'arrowRight.png'), 'style'=>'top: -3px; left: 5px', 'class'=>'right')) ?>
 </div>
 <?php
+	endif;
 	
 	$pastDate          = $eventObj->isPastDate();
 	$inviteStatus      = $eventObj->getInviteStatus($peopleId);
@@ -39,4 +43,8 @@
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabEvent');
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
+	
+	unset($rankingObj);
+	unset($eventObj);
+	unset($dhtmlxTabBarObj);
 ?>

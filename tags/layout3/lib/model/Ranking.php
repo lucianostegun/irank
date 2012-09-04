@@ -138,6 +138,13 @@ class Ranking extends BaseRanking
 		
 		return $this->getPeopleList(false, $orderByList, $criteria);
 	}
+
+	public function getOwnerList(){
+		
+		$criteria = new Criteria();
+		$criteria->add( RankingPlayerPeer::ALLOW_EDIT, true );
+		return $this->getPeopleList(true, null, $criteria);
+	}
 	
 	public function addPlayer($peopleId, $allowEdit=false){
 		
@@ -575,6 +582,17 @@ class Ranking extends BaseRanking
 		return ($userSiteId && ($this->getUserSiteId()==$userSiteId || $this->isAllowEdit()));
 	}
 	
+	public function isPlayer(){
+		
+		$peopleId         = MyTools::getAttribute('peopleId');
+		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK( $this->getId(), $peopleId );
+		
+		if( !is_object($rankingPlayerObj) || !$rankingPlayerObj->getEnabled() )
+			return false;
+		
+		return true;
+	}
+	
 	public function isAllowEdit(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
@@ -583,6 +601,9 @@ class Ranking extends BaseRanking
 		
 		// Não retornará um objeto caso o usuário esteja logado, não seja do ranking e esteja na página /share de eventos ou rankings
 		if( !is_object($rankingPlayerObj) )
+			return false;
+			
+		if( !$rankingPlayerObj->getEnabled() )
 			return false;
 		
 		return $rankingPlayerObj->getAllowEdit();
@@ -1003,26 +1024,28 @@ class Ranking extends BaseRanking
 		return $scoreSchema;
 	}
 	
-	public function hasPendingSubscriptionRequest($userSiteId=null, $returnObject=false){
+	public function hasPendingSubscriptionRequest($userSiteId=null, $returnObject=false, $count=false){
 		
 		$criteria = new Criteria();
-		$criteria->add( RankingSubscribeRequestPeer::RANKING_ID, $this->getId() );
-		$criteria->add( RankingSubscribeRequestPeer::REQUEST_STATUS, 'pending' );
+		$criteria->add( RankingSubscriptionRequestPeer::RANKING_ID, $this->getId() );
+		$criteria->add( RankingSubscriptionRequestPeer::REQUEST_STATUS, 'pending' );
 		
 		if( $userSiteId )
-			$criteria->add( RankingSubscribeRequestPeer::USER_SITE_ID, $userSiteId );
+			$criteria->add( RankingSubscriptionRequestPeer::USER_SITE_ID, $userSiteId );
 		
 		if( $returnObject )
-			return RankingSubscribeRequestPeer::doSelectOne($criteria);
+			return RankingSubscriptionRequestPeer::doSelectOne($criteria);
+		elseif( $count )
+			return RankingSubscriptionRequestPeer::doCount($criteria);
 		else
-			return RankingSubscribeRequestPeer::doCount($criteria) > 0;
+			return RankingSubscriptionRequestPeer::doCount($criteria) > 0;
 	}
 	
 	public function cancelSubscriptionRequest($userSiteId){
 		
-		$rankingSubscribeRequestObj = $this->hasPendingSubscriptionRequest($userSiteId, true);
-		$rankingSubscribeRequestObj->setRequestStatus('canceled');
-		$rankingSubscribeRequestObj->save();
+		$rankingSubscriptionRequestObj = $this->hasPendingSubscriptionRequest($userSiteId, true);
+		$rankingSubscriptionRequestObj->setRequestStatus('canceled');
+		$rankingSubscriptionRequestObj->save();
 	}
 	
 	public function addSubscriptionRequest($userSiteId){
@@ -1031,13 +1054,13 @@ class Ranking extends BaseRanking
 		if( $hasPendingRequest )
 			return true;
 		
-		$rankingSubscribeRequestObj = new RankingSubscribeRequest();
-		$rankingSubscribeRequestObj->setRankingId($this->getId());
-		$rankingSubscribeRequestObj->setUserSiteId($userSiteId);
-		$rankingSubscribeRequestObj->setRequestStatus('pending');
-		$rankingSubscribeRequestObj->save();
+		$rankingSubscriptionRequestObj = new RankingSubscriptionRequest();
+		$rankingSubscriptionRequestObj->setRankingId($this->getId());
+		$rankingSubscriptionRequestObj->setUserSiteId($userSiteId);
+		$rankingSubscriptionRequestObj->setRequestStatus('pending');
+		$rankingSubscriptionRequestObj->save();
 		
-		$rankingSubscribeRequestObj->notify();
+		$rankingSubscriptionRequestObj->notify();
 	}
 	
 	public function getInfo(){
