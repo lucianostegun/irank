@@ -11,6 +11,9 @@ uploadPhoto:
 facebookResult:
   is_secure: off
 
+share:
+  is_secure: off
+
 facebookResultImage:
   is_secure: off
 

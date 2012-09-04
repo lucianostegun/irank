@@ -49,7 +49,6 @@
 			Histórico de posições, total gastos, prêmios e tudo sobre os rankings nas datas que houveram eventos.
 		</div>
 	</div>
-	<?php include_partial('store/include/offerHome') ?>
 </div>
 
 <div class="clear"></div>

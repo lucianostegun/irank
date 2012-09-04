@@ -1,10 +1,13 @@
 <?php
+	if( in_array($actionName, array('facebookShare')) )
+		return;
+		
 	$isNew      = $eventObj->isNew();
 	$isEditable = $eventObj->isEditable();
 	$pastDate   = $eventObj->isPastDate();
 	$isMyEvent  = $eventObj->isMyEvent();
 	
-	$hidden = ($isNew && $actionName!='index' || $actionName=='confirmPresence');
+	$hidden = ($isNew && $actionName!='index' || in_array($actionName, array('confirmPresence')));
 ?>
 <div class="innerMenu" style="display: <?php echo ($hidden?'none':'block') ?>" id="mainMenuEvent">
 	<?php if( $isNew && $actionName=='index' ): ?>

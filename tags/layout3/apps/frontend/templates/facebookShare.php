@@ -1,18 +1,16 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-BR" lang="pt-BR">
 <head>
+<meta name="title" content="iRank Blog - Poker Ranking" />
+<meta name="robots" content="index, follow" />
+<meta name="description" content="Dicas, notícias e novidades sobre o mundo do poker. Saiba tudo o que você precisa para ter sucesso nesse esporte." />
+<meta name="keywords" content="blog, poker, artigos, novidades, notícias, dicas, home game" />
+<meta name="language" content="pt" />
+<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 <?php
-	$host = $sf_request->getHost();
+	include_facebook_metas(isset($facebookMetaList)?$facebookMetaList:array());
 ?>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta property="og:title" content="<?php echo $metaTitle ?>" />
-<meta property="og:type" content="website" />
-<meta property="og:description" content="<?php echo $metaDescription ?>" />
-<meta property="og:site_name" content="iRank - Poker Ranking" />
-<meta property="og:url" content="http://<?php echo $host .'/'. $url ?>" />
-<meta property="og:image" content="http://<?php echo $host .'/'. $metaImage ?>" />
-<meta property="og:image" content="http://<?php echo $host ?>/images/layout/mediaLogo.png" />
-<meta property="fb:admins" content="1424201846" />
-<meta property="fb:app_id" content="173327886080667" />
+</head>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -27,7 +25,7 @@
   })();
 
   function init() { window.location = 'http://<?php echo $sf_request->getHost() ?>/<?php echo $shareLink ?>'; }
-  window.onload = init;
+//  window.onload = init;
 </script>
 </head>
 </html>
