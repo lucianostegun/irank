@@ -1350,6 +1350,27 @@ class Event extends BaseEvent
 		return $eventPosition;
 	}
 	
+	public function getBuyinInfo(){
+		
+		if( $this->getIsFreeroll() )
+			return 'Freeroll';
+			
+		$buyin       = $this->getBuyin();
+		$entranceFee = $this->getEntranceFee();
+		
+		$entranceFee = Util::formatFloat($entranceFee, true);
+//		$entranceFee = str_replace(',00', '', $entranceFee);
+
+		$buyin = Util::formatFloat($buyin, true);
+//		$buyin = str_replace(',00', '', $buyin);
+		
+		$buyinInfo = '';
+		$buyinInfo = ($buyin?$buyin.($entranceFee?'+':''):'');
+		$buyinInfo = $buyinInfo.($entranceFee?$entranceFee:'');
+		
+		return $buyinInfo;
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
