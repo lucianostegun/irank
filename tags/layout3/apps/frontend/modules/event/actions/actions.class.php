@@ -114,6 +114,7 @@ class eventActions extends sfActions
 	$eventObj->setAllowAddon(($allowAddon?true:false));
 	$eventObj->setVisible(true);
 	$eventObj->setEnabled(true);
+	$eventObj->buildPermalink();
 	$eventObj->save();
 	
 	if( $isFreeroll )
@@ -685,6 +686,28 @@ class eventActions extends sfActions
   	exit;
   }
 
+  public function executePermalink($request){
+
+  	$rankingTag = $request->getParameter('rankingTag');
+  	$eventDate  = $request->getParameter('eventDate');
+  	$eventName  = $request->getParameter('eventName');
+  	$permalink  = sprintf('%s/%s/%s', $rankingTag, $eventDate, $eventName);
+
+  	$this->eventObj = EventPeer::retrieveByPermalink($permalink);
+  	
+  	if( !is_object($this->eventObj) )
+  		return $this->redirect('event/index');
+  	
+  	$eventId = $this->eventObj->getId();
+  	
+  	$request->setParameter('eventId', $eventId);
+
+  	if( $this->isAuthenticated && $this->eventObj->isMyEvent() )
+		$this->forward('event', 'edit');
+	else
+		$this->forward('event', 'share');
+  }
+
   public function executeShare($request){
 
   	$shareId = $request->getParameter('shareId');
@@ -704,7 +727,7 @@ class eventActions extends sfActions
 	
 	
 	$uri = $request->getUri();
-	$uri = eregi_replace('facebookResult', 'facebookResultImage', $uri);
+	$uri = str_replace('facebookResult', 'facebookResultImage', $uri);
 	
 	$host = $request->getHost();
 	
@@ -721,7 +744,7 @@ class eventActions extends sfActions
 
 	$this->facebookMetaList = array('title'=>$eventName.' @'.$eventPlace,
 									'description'=>$description,
-									'url'=>'http://'.$host.'/event/share/'.$shareId);
+									'url'=>$this->eventObj->getPermalink(true));
 	
 	if( $this->isAuthenticated && $this->eventObj->isMyEvent() )
 		$this->forward('event', 'edit');

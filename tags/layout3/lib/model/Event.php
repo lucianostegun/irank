@@ -59,6 +59,7 @@ class Event extends BaseEvent
 		$deleted = $this->getDeleted();
 		
 		$this->setDeleted(true);
+		$this->setPermalink(null);
 		$this->save();
 		
 		Log::quickLogDelete('event', $this->getPrimaryKey());
@@ -408,6 +409,7 @@ class Event extends BaseEvent
 		$infoList['comments']    = $this->getComments();
 		$infoList['invites']     = $this->getInvites();
 		$infoList['players']     = $this->getPlayers();
+		$infoList['permalink']   = $this->getPermalink(true);
 		
 		$iCalFile = $this->getICal('update');
 		$attachmentList  = array('invite.ics'=>$iCalFile);
@@ -618,7 +620,7 @@ class Event extends BaseEvent
 		
 		$eventObj = new Event();
 		$eventObj->setRankingId($this->getRankingId());
-		$eventObj->setEventName($this->getEventName());
+		$eventObj->setEventName($this->getEventName(false));
 		$eventObj->setRankingPlaceId($this->getRankingPlaceId());
 		$eventObj->setEventDate($this->getEventDate());
 		$eventObj->setStartTime($this->getStartTime());
@@ -1373,6 +1375,45 @@ class Event extends BaseEvent
 		return $buyinInfo;
 	}
 	
+	public function buildPermalink(){
+		
+		$rankingTag = $this->getRanking()->getRankingTag();
+		$eventDate  = $this->getEventDate('Y-m-d');
+		$eventName  = $this->getEventName();
+		$eventName  = String::removeAccents($eventName);
+		$eventName  = strtolower($eventName);
+		$eventName  = trim($eventName);
+		$eventName  = preg_replace('/[^a-z0-9\-\._]/', '-', $eventName);
+		$eventName  = preg_replace('/-{2,}/', '-', $eventName);
+		$eventName  = preg_replace('/-{2,}/', '-', $eventName);
+		
+		$eventName  = preg_replace('/\/[^a-z0-9]*/', '/', $eventName);
+		$eventName  = preg_replace('/[^a-z0-9]*\//', '/', $eventName);
+		$eventName  = preg_replace('/^[^a-z]*/', '', $eventName);
+		$eventName  = preg_replace('/[^a-z0-9]*$/', '', $eventName);
+		
+		$permalink = sprintf('%s/%s/%s', $rankingTag, $eventDate, $eventName);
+		$this->setPermalink($permalink);
+	}
+	
+	public function getPermalink($full=false){
+		
+		$permalink = parent::getPermalink();
+		
+		if( is_null($permalink) )
+			return null;
+		
+		$permalink = 'event/'.$permalink;
+		
+		if( $full ){
+		
+			$host      = MyTools::getRequest()->getHost();
+			$permalink = sprintf('http://%s/%s', $host, $permalink);	
+		}
+		
+		return $permalink;
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
@@ -1404,6 +1445,7 @@ class Event extends BaseEvent
 		$infoList['comments']    = $this->getComments();
 		$infoList['invites']     = $this->getInvites();
 		$infoList['players']     = $this->getPlayers();
+		$infoList['permalink']   = $this->getPermalink(true);
 		$infoList['rankingType'] = $rankingType;
 		
 		return $infoList;

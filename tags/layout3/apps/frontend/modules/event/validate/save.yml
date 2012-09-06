@@ -11,10 +11,12 @@ validators:
       invalid_error: form.error.expiredDate
       
 fields:
-       
   rankingId:
     required:
       msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [RankingPeer, checkRankingTag]
+      invalid_error: Atualize o ranking e define uma Tag para a criação dos permalinks
        
   eventName:
     required:

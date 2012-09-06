@@ -51,6 +51,11 @@ function handleSuccessRanking(rankingId){
 		
 		reloadClassifyTab();
 	}
+
+	if( typeof(window.opener)!='undefined' && typeof(window.opener.checkRankingTag)=='function' )
+		window.opener.checkRankingTag();
+		
+	lockRankingTag();
 	
 	setLastBarPath($('rankingRankingName').value);
 	
@@ -687,4 +692,16 @@ function toggleSubscriptionRequest(userSiteId, toggleAction){
 	
 	var urlAjax = _webRoot+'/ranking/toggleSubscriptionRequest/rankingId/'+rankingId+'/userSiteId/'+userSiteId+'/toggleAction/'+toggleAction;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function lockRankingTag(){
+	
+	if( $('rankingRankingTagField')==null )
+		return;
+	
+	$('rankingRankingTagField').className = 'textFlex';
+	$('rankingRankingTagField').innerHTML = $('rankingRankingTag').value+'@irank.com.br';
+	
+	$('rankingBuildEmailGroupHelp').remove();
+	$('rankingRankingTagError').remove();
 }

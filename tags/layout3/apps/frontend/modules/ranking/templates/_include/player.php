@@ -4,10 +4,7 @@
 		<?php if( !$readOnly ): ?>
 		<th>E-mail</th>
 		<?php endif; ?>
-		<th style="width: 80px"><?php echo __('Events') ?></th>
-		<?php if( !$readOnly ): ?>
-		<th class="noBorder" colspan="2">&nbsp;</th>
-		<?php endif; ?>
+		<th style="width: 60px" colspan="3"><?php echo __('Events') ?></th>
 	</tr>
 	<?php
 		$peopleIdMe    = MyTools::getAttribute('peopleId');

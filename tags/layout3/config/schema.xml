@@ -165,6 +165,7 @@
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
 		<column name="ranking_id" type="INTEGER" />
 		<column name="event_name" type="VARCHAR" />
+		<column name="permalink" type="VARCHAR" />
 		<column name="ranking_place_id" type="INTEGER" />
 		<column name="buyin" type="NUMERIC" size="10" scale="2" />
 		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />

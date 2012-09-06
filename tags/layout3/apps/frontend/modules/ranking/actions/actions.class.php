@@ -8,6 +8,9 @@ class rankingActions extends sfActions
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
 	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
 	
+	$this->rankingId = $this->getRequestParameter('id');
+	$this->rankingId = $this->getRequestParameter('rankingId', $this->rankingId);
+	
 	$freeActionList = array('edit', 'getBuyin', 'getRankingHistory', 'validateUnsubscribe', 'unsubscribe', 'saveMobile', 'share', 'requestSubscription');
 	$actionName     = sfContext::getInstance()->getActionName();
 		
@@ -41,7 +44,8 @@ class rankingActions extends sfActions
   
   public function executeEdit($request){
   	
-  	$rankingId = $request->getParameter('rankingId');
+  	$rankingId = $request->getParameter('id');
+  	$rankingId = $request->getParameter('rankingId', $rankingId);
   	
   	if( $rankingId ){
   		
@@ -128,16 +132,18 @@ class rankingActions extends sfActions
 	$rankingObj->setVisible(true);
 	$rankingObj->setEnabled(true);
 	
-	if( !$buildEmailGroup || !$rankingTag || $rankingObj->getRankingTag()!==null )
-		$buildEmailGroup = false;
+	$buildEmailGroup = false;
+	
+	if( is_null($rankingObj->getRankingTag()) ){
+		
+		$rankingObj->setRankingTag($rankingTag);
+		$buildEmailGroup = true;
+	}
 		
 	$rankingObj->save();
 	
-	if( $buildEmailGroup ){
-		
-		$rankingObj->setRankingTag($rankingTag);
+	if( $buildEmailGroup )
 		$rankingObj->createEmailGroup();
-	}
 	
 	$rankingObj->addPlayer( $this->peopleId, true );
 	
@@ -504,6 +510,16 @@ class rankingActions extends sfActions
   	$rankingSubscriptionRequestObj->$toggleAction($userSiteIdOwner);
   	
   	echo 'success';
+  	
+  	exit;
+  }
+  
+  public function executeCheckRankingTag($request){
+  	
+  	$rankingTag = RankingPeer::checkRankingTag($this->rankingId);
+  	
+  	if( !$rankingTag )
+  		Util::forceError('noRankingTag');
   	
   	exit;
   }

@@ -5,8 +5,8 @@
 	?>
 	<table cellspacing="0" cellpadding="0">
 		<tr>
-			<td><?php echo input_tag('dateStart', $sf_request->getParameter('dateStart'), array('onkeyup'=>'maskDate(event)', 'placeholder'=>'Data inicial')); new Calendar('dateStart') ?></td>
-			<td><?php echo input_tag('dateEnd', $sf_request->getParameter('dateEnd'), array('onkeyup'=>'maskDate(event)', 'placeholder'=>'Data final')); new Calendar('dateEnd') ?></td>
+			<td><?php echo input_tag('dateStart', $sf_request->getParameter('dateStart'), array('onkeyup'=>'maskDate(event)', 'placeholder'=>'Data inicial', 'maxlength'=>10)); new Calendar('dateStart') ?></td>
+			<td><?php echo input_tag('dateEnd', $sf_request->getParameter('dateEnd'), array('onkeyup'=>'maskDate(event)', 'placeholder'=>'Data final', 'maxlength'=>10)); new Calendar('dateEnd') ?></td>
 		<tr>
 		<tr>
 			<td colspan="2"><?php echo input_tag('eventName', $sf_request->getParameter('eventName'), array('placeholder'=>'Nome do evento', 'class'=>'double')) ?></td>

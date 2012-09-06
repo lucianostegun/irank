@@ -52,6 +52,15 @@ class EventPeer extends BaseEventPeer
 		return EventPeer::doSelectOne($criteria);
 	}
 	
+	public static function retrieveByPermalink($permalink){
+		
+		$criteria = new Criteria();
+		$criteria->setNoFilter(true);
+		$criteria->add( EventPeer::PERMALINK, $permalink);
+		
+		return EventPeer::doSelectOne($criteria);
+	}
+	
 	public static function uniqueEventName($eventName){
 
 		$rankingId = MyTools::getRequestParameter('rankingId');

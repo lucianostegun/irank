@@ -23,7 +23,7 @@ class Kinghost
 	* @var	string
 	* @access private
 	*/
-	private $password = 'iR4nk2011API';
+	private $password = 'iR4nk2011API DEBUG';
 
 	// internal constant to enable/disable debugging
 	const DEBUG = false;

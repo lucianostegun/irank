@@ -50,6 +50,7 @@
 	
 	$isEditable = $eventObj->isEditable();
 	$isMyEvent  = $eventObj->isMyEvent();
+	$isPastDate = $eventObj->isPastDate();
 	$mode       = ($pastDate && !$isClone?'show':'form');
 	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
@@ -62,7 +63,7 @@
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 	
-	$facebookShareButton  = button_tag('facebookShare', 'Divulgar evento', array('image'=>'facebook.png', 'onclick'=>'shareEventFacebook('.$eventId.')', 'visible'=>($eventObj->getIsNew()?false:true)));
+	$facebookShareButton  = button_tag('facebookShare', 'Divulgar evento', array('image'=>'facebook.png', 'onclick'=>'shareEventFacebook('.$eventId.')', 'visible'=>($eventObj->getIsNew() || $isPastDate?false:true)));
 	$facebookResultButton = button_tag('facebookShareResult', 'Compartilhar resultado', array('image'=>'facebook.png', 'onclick'=>'shareResultFacebook('.$eventId.')', 'visible'=>($eventObj->getSavedResult()?true:false)));
 	
 	if( $isEditable ):

@@ -14,6 +14,9 @@ facebookResult:
 share:
   is_secure: off
 
+permalink:
+  is_secure: off
+
 facebookResultImage:
   is_secure: off
 

@@ -92,6 +92,9 @@ function handleSuccessEvent(content){
 	if( pastDate )
 		tabBarMainObj.showTab('result');
 	
+	showDiv('rankingPermalinkRowDiv');
+	$('rankingPermalinkDiv').innerHTML = eventObj.permalink;
+	
 	adjustContentTab();
 	
 	enableButton('mainSubmit');
@@ -1137,4 +1140,27 @@ function configurePrize(){
 function getSelectedResultPlayers(){
 	
 	return document.getElementsByClassName('selectedPlayer').length;
+}
+
+function checkRankingTag(){
+	
+	var rankingId = $('eventRankingId').value;
+	
+	if( !rankingId )
+		return clearCommonBarMessage();
+	
+	var successFunc = function(t){
+
+		clearCommonBarMessage();
+	}
+	
+	var failureFunc = function(t){
+
+		var rankingName = getSelectText('eventRankingId');
+		var link        = '<b><a href="javascript:void(0)" onclick="goToPage(\'ranking\', \'edit\', \'id\', '+rankingId+', true)">Clique aqui</a></b>';
+		setCommonBarMessage('O ranking <b>'+rankingName+'</b> ainda não possui uma tag de e-mail. '+link+' para editar o ranking antes de salvar o evento')
+	}
+	
+	var urlAjax = _webRoot+'/ranking/checkRankingTag/rankingId/'+rankingId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }

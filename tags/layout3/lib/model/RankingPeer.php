@@ -155,4 +155,10 @@ class RankingPeer extends BaseRankingPeer
 		
 		return $eventCount > 0;
 	}
+	
+	public static function checkRankingTag($rankingId){
+		
+		$rankingObj = RankingPeer::retrieveByPK($rankingId);
+		return !is_null($rankingObj->getRankingTag());
+	}
 }

@@ -13,7 +13,7 @@ abstract class BaseEventPeer {
 	const CLASS_DEFAULT = 'lib.model.Event';
 
 	
-	const NUM_COLUMNS = 25;
+	const NUM_COLUMNS = 26;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -27,6 +27,9 @@ abstract class BaseEventPeer {
 
 	
 	const EVENT_NAME = 'event.EVENT_NAME';
+
+	
+	const PERMALINK = 'event.PERMALINK';
 
 	
 	const RANKING_PLACE_ID = 'event.RANKING_PLACE_ID';
@@ -100,19 +103,19 @@ abstract class BaseEventPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'EventName', 'RankingPlaceId', 'Buyin', 'EntranceFee', 'PaidPlaces', 'EventDate', 'StartTime', 'EventDateTime', 'Comments', 'SentEmail', 'Invites', 'Players', 'SavedResult', 'IsFreeroll', 'PrizePot', 'AllowRebuy', 'AllowAddon', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EventPeer::ID, EventPeer::RANKING_ID, EventPeer::EVENT_NAME, EventPeer::RANKING_PLACE_ID, EventPeer::BUYIN, EventPeer::ENTRANCE_FEE, EventPeer::PAID_PLACES, EventPeer::EVENT_DATE, EventPeer::START_TIME, EventPeer::EVENT_DATE_TIME, EventPeer::COMMENTS, EventPeer::SENT_EMAIL, EventPeer::INVITES, EventPeer::PLAYERS, EventPeer::SAVED_RESULT, EventPeer::IS_FREEROLL, EventPeer::PRIZE_POT, EventPeer::ALLOW_REBUY, EventPeer::ALLOW_ADDON, EventPeer::ENABLED, EventPeer::VISIBLE, EventPeer::DELETED, EventPeer::LOCKED, EventPeer::CREATED_AT, EventPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'event_name', 'ranking_place_id', 'buyin', 'entrance_fee', 'paid_places', 'event_date', 'start_time', 'event_date_time', 'comments', 'sent_email', 'invites', 'players', 'saved_result', 'is_freeroll', 'prize_pot', 'allow_rebuy', 'allow_addon', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'EVENT_NAME'=>'', 'RANKING_PLACE_ID'=>'', 'BUYIN'=>'', 'ENTRANCE_FEE'=>'', 'PAID_PLACES'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'COMMENTS'=>'', 'SENT_EMAIL'=>'', 'INVITES'=>'', 'PLAYERS'=>'', 'SAVED_RESULT'=>'', 'IS_FREEROLL'=>'', 'PRIZE_POT'=>'', 'ALLOW_REBUY'=>'', 'ALLOW_ADDON'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'EventName', 'Permalink', 'RankingPlaceId', 'Buyin', 'EntranceFee', 'PaidPlaces', 'EventDate', 'StartTime', 'EventDateTime', 'Comments', 'SentEmail', 'Invites', 'Players', 'SavedResult', 'IsFreeroll', 'PrizePot', 'AllowRebuy', 'AllowAddon', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EventPeer::ID, EventPeer::RANKING_ID, EventPeer::EVENT_NAME, EventPeer::PERMALINK, EventPeer::RANKING_PLACE_ID, EventPeer::BUYIN, EventPeer::ENTRANCE_FEE, EventPeer::PAID_PLACES, EventPeer::EVENT_DATE, EventPeer::START_TIME, EventPeer::EVENT_DATE_TIME, EventPeer::COMMENTS, EventPeer::SENT_EMAIL, EventPeer::INVITES, EventPeer::PLAYERS, EventPeer::SAVED_RESULT, EventPeer::IS_FREEROLL, EventPeer::PRIZE_POT, EventPeer::ALLOW_REBUY, EventPeer::ALLOW_ADDON, EventPeer::ENABLED, EventPeer::VISIBLE, EventPeer::DELETED, EventPeer::LOCKED, EventPeer::CREATED_AT, EventPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'event_name', 'permalink', 'ranking_place_id', 'buyin', 'entrance_fee', 'paid_places', 'event_date', 'start_time', 'event_date_time', 'comments', 'sent_email', 'invites', 'players', 'saved_result', 'is_freeroll', 'prize_pot', 'allow_rebuy', 'allow_addon', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'EVENT_NAME'=>'', 'PERMALINK'=>'', 'RANKING_PLACE_ID'=>'', 'BUYIN'=>'', 'ENTRANCE_FEE'=>'', 'PAID_PLACES'=>'', 'EVENT_DATE'=>'', 'START_TIME'=>'', 'EVENT_DATE_TIME'=>'', 'COMMENTS'=>'', 'SENT_EMAIL'=>'', 'INVITES'=>'', 'PLAYERS'=>'', 'SAVED_RESULT'=>'', 'IS_FREEROLL'=>'', 'PRIZE_POT'=>'', 'ALLOW_REBUY'=>'', 'ALLOW_ADDON'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'EventName'=>2, 'RankingPlaceId'=>3, 'Buyin'=>4, 'EntranceFee'=>5, 'PaidPlaces'=>6, 'EventDate'=>7, 'StartTime'=>8, 'EventDateTime'=>9, 'Comments'=>10, 'SentEmail'=>11, 'Invites'=>12, 'Players'=>13, 'SavedResult'=>14, 'IsFreeroll'=>15, 'PrizePot'=>16, 'AllowRebuy'=>17, 'AllowAddon'=>18, 'Enabled'=>19, 'Visible'=>20, 'Deleted'=>21, 'Locked'=>22, 'CreatedAt'=>23, 'UpdatedAt'=>24, ),
-		BasePeer::TYPE_COLNAME=>array (EventPeer::ID=>0, EventPeer::RANKING_ID=>1, EventPeer::EVENT_NAME=>2, EventPeer::RANKING_PLACE_ID=>3, EventPeer::BUYIN=>4, EventPeer::ENTRANCE_FEE=>5, EventPeer::PAID_PLACES=>6, EventPeer::EVENT_DATE=>7, EventPeer::START_TIME=>8, EventPeer::EVENT_DATE_TIME=>9, EventPeer::COMMENTS=>10, EventPeer::SENT_EMAIL=>11, EventPeer::INVITES=>12, EventPeer::PLAYERS=>13, EventPeer::SAVED_RESULT=>14, EventPeer::IS_FREEROLL=>15, EventPeer::PRIZE_POT=>16, EventPeer::ALLOW_REBUY=>17, EventPeer::ALLOW_ADDON=>18, EventPeer::ENABLED=>19, EventPeer::VISIBLE=>20, EventPeer::DELETED=>21, EventPeer::LOCKED=>22, EventPeer::CREATED_AT=>23, EventPeer::UPDATED_AT=>24, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'event_name'=>2, 'ranking_place_id'=>3, 'buyin'=>4, 'entrance_fee'=>5, 'paid_places'=>6, 'event_date'=>7, 'start_time'=>8, 'event_date_time'=>9, 'comments'=>10, 'sent_email'=>11, 'invites'=>12, 'players'=>13, 'saved_result'=>14, 'is_freeroll'=>15, 'prize_pot'=>16, 'allow_rebuy'=>17, 'allow_addon'=>18, 'enabled'=>19, 'visible'=>20, 'deleted'=>21, 'locked'=>22, 'created_at'=>23, 'updated_at'=>24, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'EventName'=>2, 'Permalink'=>3, 'RankingPlaceId'=>4, 'Buyin'=>5, 'EntranceFee'=>6, 'PaidPlaces'=>7, 'EventDate'=>8, 'StartTime'=>9, 'EventDateTime'=>10, 'Comments'=>11, 'SentEmail'=>12, 'Invites'=>13, 'Players'=>14, 'SavedResult'=>15, 'IsFreeroll'=>16, 'PrizePot'=>17, 'AllowRebuy'=>18, 'AllowAddon'=>19, 'Enabled'=>20, 'Visible'=>21, 'Deleted'=>22, 'Locked'=>23, 'CreatedAt'=>24, 'UpdatedAt'=>25, ),
+		BasePeer::TYPE_COLNAME=>array (EventPeer::ID=>0, EventPeer::RANKING_ID=>1, EventPeer::EVENT_NAME=>2, EventPeer::PERMALINK=>3, EventPeer::RANKING_PLACE_ID=>4, EventPeer::BUYIN=>5, EventPeer::ENTRANCE_FEE=>6, EventPeer::PAID_PLACES=>7, EventPeer::EVENT_DATE=>8, EventPeer::START_TIME=>9, EventPeer::EVENT_DATE_TIME=>10, EventPeer::COMMENTS=>11, EventPeer::SENT_EMAIL=>12, EventPeer::INVITES=>13, EventPeer::PLAYERS=>14, EventPeer::SAVED_RESULT=>15, EventPeer::IS_FREEROLL=>16, EventPeer::PRIZE_POT=>17, EventPeer::ALLOW_REBUY=>18, EventPeer::ALLOW_ADDON=>19, EventPeer::ENABLED=>20, EventPeer::VISIBLE=>21, EventPeer::DELETED=>22, EventPeer::LOCKED=>23, EventPeer::CREATED_AT=>24, EventPeer::UPDATED_AT=>25, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'event_name'=>2, 'permalink'=>3, 'ranking_place_id'=>4, 'buyin'=>5, 'entrance_fee'=>6, 'paid_places'=>7, 'event_date'=>8, 'start_time'=>9, 'event_date_time'=>10, 'comments'=>11, 'sent_email'=>12, 'invites'=>13, 'players'=>14, 'saved_result'=>15, 'is_freeroll'=>16, 'prize_pot'=>17, 'allow_rebuy'=>18, 'allow_addon'=>19, 'enabled'=>20, 'visible'=>21, 'deleted'=>22, 'locked'=>23, 'created_at'=>24, 'updated_at'=>25, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, )
 	);
 
 	
@@ -171,6 +174,8 @@ abstract class BaseEventPeer {
 		$criteria->addSelectColumn(EventPeer::RANKING_ID);
 
 		$criteria->addSelectColumn(EventPeer::EVENT_NAME);
+
+		$criteria->addSelectColumn(EventPeer::PERMALINK);
 
 		$criteria->addSelectColumn(EventPeer::RANKING_PLACE_ID);
 
