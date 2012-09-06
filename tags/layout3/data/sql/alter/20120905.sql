@@ -9,7 +9,9 @@ SET
 
 UPDATE event SET permalink = LOWER(permalink);
 UPDATE event SET permalink = TRIM(permalink);
-UPDATE event SET permalink = REGEXP_REPLACE(permalink, '[^a-z0-9\-\._/]', '-', 'g');
+UPDATE event SET permalink = no_accent(permalink);
+UPDATE event SET permalink = REGEXP_REPLACE(permalink, '&', 'n', 'g');
+UPDATE event SET permalink = REGEXP_REPLACE(permalink, '[^a-z0-9/]', '-', 'g');
 UPDATE event SET permalink = REGEXP_REPLACE(permalink, '-{2,}', '-', 'g');
 UPDATE event SET permalink = REGEXP_REPLACE(permalink, '^[^a-z]', '', 'g');
 UPDATE event SET permalink = REGEXP_REPLACE(permalink, '/[^a-z0-9]*', '/', 'g');

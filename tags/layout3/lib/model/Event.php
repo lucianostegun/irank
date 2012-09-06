@@ -1383,6 +1383,7 @@ class Event extends BaseEvent
 		$eventName  = String::removeAccents($eventName);
 		$eventName  = strtolower($eventName);
 		$eventName  = trim($eventName);
+		$eventName  = str_replace('&', 'n', $eventName);
 		$eventName  = preg_replace('/[^a-z0-9\-\._]/', '-', $eventName);
 		$eventName  = preg_replace('/-{2,}/', '-', $eventName);
 		$eventName  = preg_replace('/-{2,}/', '-', $eventName);
