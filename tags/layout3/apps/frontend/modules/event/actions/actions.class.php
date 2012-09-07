@@ -729,16 +729,28 @@ class eventActions extends sfActions
 	
 	$host = $request->getHost();
 	
+	$rankingPlaceObj = $this->eventObj->getRankingPlace();
+	
 	$eventName     = $this->eventObj->getEventName();
-	$eventPlace    = $this->eventObj->getRankingPlace()->getPlaceName();
+	$eventPlace    = $rankingPlaceObj->getPlaceName();
 	$rankingName   = $this->eventObj->getRanking()->getRankingName();
 	$eventDateTime = $this->eventObj->getEventDateTime('d/m/Y H:i');
 	$buyinInfo     = $this->eventObj->getBuyinInfo();
 	$allowRebuy    = $this->eventObj->getAllowRebuy();
 	$allowAddon    = $this->eventObj->getAllowAddon();
+	
+	$cityName = $rankingPlaceObj->updatePlaceInfo();
+	$cityName = $rankingPlaceObj->getCityName();
+	$quarter  = $rankingPlaceObj->getQuarter();
+	$state    = $rankingPlaceObj->getState()->getInitial();
+	$cityName = ($cityName?", $cityName":'');
+	$state    = ($state?", $state":'');
 
-	$description  = "Evento valendo pelo ranking $rankingName\nData/hora: $eventDateTime\nBuy-in: $buyinInfo";
-	$description .= ($allowRebuy || $allowAddon)?"\n".(($allowRebuy && $allowAddon)?'Rebuy/Add-on':($allowRebuy?'Rebuy':'Add-on')):"";
+	$description  = "Evento valendo pelo ranking $rankingName";
+	$description .= "\nData/hora: $eventDateTime";
+	$description .= "\n{$quarter}{$cityName}{$state}";
+	$description .= "\nBuy-in: $buyinInfo";
+	$description .= ($allowRebuy || $allowAddon)?"\n".(($allowRebuy && $allowAddon)?'(Rebuy/Add-on)':($allowRebuy?'(Rebuy)':'(Add-on)')):"";
 
 	$this->facebookMetaList = array('title'=>$eventName.' @'.$eventPlace,
 									'description'=>$description,

@@ -20,4 +20,4 @@ function array_split($array, $arraySize=2){
 $sf_symfony_lib_dir  = dirname(__FILE__).'/../lib/symfony';
 $sf_symfony_data_dir = dirname(__FILE__).'/../data/symfony';
 
-ini_set('session.save_path','/home/irank/sessions');
+//ini_set('session.save_path','/home/irank/sessions');

@@ -304,22 +304,13 @@ class rankingActions extends sfActions
   public function executeSavePlace($request){
 
   	$rankingPlaceId = $request->getParameter('rankingPlaceId');
-  	$rankingId      = $request->getParameter('rankingId');
-  	$placeName      = $request->getParameter('placeName');
-  	$mapsLink       = $request->getParameter('mapsLink');
 	
-	if( $rankingPlaceId ){
-		
+	if( $rankingPlaceId )
 		$rankingPlaceObj = RankingPlacePeer::retrieveByPK($rankingPlaceId);
-	}else{
-		
+	else
 		$rankingPlaceObj = new RankingPlace();
-		$rankingPlaceObj->setRankingId( $rankingId );
-	}
-		
-	$rankingPlaceObj->setPlaceName( $placeName );
-	$rankingPlaceObj->setMapsLink( $mapsLink );
-	$rankingPlaceObj->save();
+	
+	$rankingPlaceObj->quickSave($request);
 	
 	echo $rankingPlaceObj->getId();
 	exit;	
@@ -520,6 +511,44 @@ class rankingActions extends sfActions
   	
   	if( !$rankingTag )
   		Util::forceError('noRankingTag');
+  	
+  	exit;
+  }
+
+  public function executeGetRankingPlace($request){
+  	
+  	$rankingPlaceId  = $request->getParameter('rankingPlaceId');
+  	$rankingPlaceObj = RankingPlacePeer::retrieveByPK($rankingPlaceId);
+  	
+  	echo Util::parseInfo($rankingPlaceObj->getInfo());
+  	
+  	exit;
+  }
+
+  public function executeCheckRankingPlace($request){
+  	
+  	$rankingPlaceId  = $request->getParameter('rankingPlaceId');
+  	$rankingPlaceObj = RankingPlacePeer::retrieveByPK($rankingPlaceId);
+  	
+  	if( $rankingPlaceObj->getStateId() && $rankingPlaceObj->getCityName() && $rankingPlaceObj->getQuarter() )
+  		exit('complete');
+  	else
+  		exit('incomplete');
+  	
+  	exit;
+  }
+
+  public function executeParseMapsInfo($request){
+  	
+  	$mapsLink = $request->getParameter('mapsLink');
+  	
+  	try{
+  		
+  		echo Util::parseInfo( RankingPlace::parseMapsLink($mapsLink) );
+  	}catch(Exception $e){
+  		
+  		Util::forceError($e->getMessage());
+  	}
   	
   	exit;
   }

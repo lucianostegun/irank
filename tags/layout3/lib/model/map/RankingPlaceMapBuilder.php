@@ -42,6 +42,12 @@ class RankingPlaceMapBuilder {
 
 		$tMap->addColumn('MAPS_LINK', 'MapsLink', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addForeignKey('STATE_ID', 'StateId', 'int', CreoleTypes::INTEGER, 'state', 'ID', false, null);
+
+		$tMap->addColumn('CITY_NAME', 'CityName', 'string', CreoleTypes::VARCHAR, false, null);
+
+		$tMap->addColumn('QUARTER', 'Quarter', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

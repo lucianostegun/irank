@@ -37,6 +37,7 @@
 	<div class="row">
 		<div class="label" id="eventRankingPlaceIdLabel"><?php echo __('event.eventPlace') ?></div>
 		<div class="field" id="eventRankingPlaceIdDiv"><?php echo select_tag('rankingPlaceId', RankingPlace::getOptionsForSelect($eventObj->getRankingId(), $eventObj->getRankingPlaceId()), array('class'=>'required', 'onchange'=>'checkRankingPlace(this.value)', 'id'=>'eventRankingPlaceId')) ?></div>
+		<div class="textFlex <?php echo $eventObj->isNew()?'hidden':'block' ?>" id="eventRankingPlaceIdEditDiv"><?php echo link_to('Editar', '#editRankingPlace($(\'eventRankingPlaceId\').value, $(\'eventRankingId\').value)') ?></div>
 		<div class="error" id="eventRankingPlaceIdError" onclick="showFormErrorDetails('event', 'rankingPlaceId')"></div>
 	</div>
 	<div class="row">

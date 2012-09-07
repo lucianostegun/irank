@@ -341,11 +341,17 @@
 		<column name="ranking_id" type="INTEGER" />
 		<column name="place_name" type="VARCHAR" />
 		<column name="maps_link" type="VARCHAR" />
+		<column name="state_id" type="INTEGER" />
+		<column name="city_name" type="VARCHAR" />
+		<column name="quarter" type="VARCHAR" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="ranking">
 			<reference local="ranking_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="state">
+			<reference local="state_id" foreign="id" />
 		</foreign-key>
 	</table>
 

@@ -1897,6 +1897,41 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 		$l->setRanking($this);
 	}
 
+
+	
+	public function getRankingPlaceListJoinState($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingPlacePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingPlaceList === null) {
+			if ($this->isNew()) {
+				$this->collRankingPlaceList = array();
+			} else {
+
+				$criteria->add(RankingPlacePeer::RANKING_ID, $this->getId());
+
+				$this->collRankingPlaceList = RankingPlacePeer::doSelectJoinState($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingPlacePeer::RANKING_ID, $this->getId());
+
+			if (!isset($this->lastRankingPlaceCriteria) || !$this->lastRankingPlaceCriteria->equals($criteria)) {
+				$this->collRankingPlaceList = RankingPlacePeer::doSelectJoinState($criteria, $con);
+			}
+		}
+		$this->lastRankingPlaceCriteria = $criteria;
+
+		return $this->collRankingPlaceList;
+	}
+
 	
 	public function initRankingImportLogListRelatedByRankingId()
 	{

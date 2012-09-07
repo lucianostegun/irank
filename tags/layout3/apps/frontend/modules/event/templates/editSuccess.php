@@ -63,7 +63,7 @@
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 	
-	$facebookShareButton  = button_tag('facebookShare', 'Divulgar evento', array('image'=>'facebook.png', 'onclick'=>'shareEventFacebook('.$eventId.')', 'visible'=>($eventObj->getIsNew() || $isPastDate?false:true)));
+	$facebookShareButton  = button_tag('facebookShare', 'Divulgar evento', array('image'=>'facebook.png', 'onclick'=>'shareEventFacebook()', 'visible'=>($eventObj->getIsNew() || $isPastDate?false:true)));
 	$facebookResultButton = button_tag('facebookShareResult', 'Compartilhar resultado', array('image'=>'facebook.png', 'onclick'=>'shareResultFacebook('.$eventId.')', 'visible'=>($eventObj->getSavedResult()?true:false)));
 	
 	if( $isEditable ):
@@ -89,7 +89,7 @@
 <?php endif; ?>
 </form>
 <?php
-	DhtmlxWindows::createWindow('rankingPlaceAdd', __('event.gamePlaceRegister'), 550, 125, 'ranking/dialog/placeAdd', array());
+	DhtmlxWindows::createWindow('rankingPlaceAdd', __('event.gamePlaceRegister'), 550, 185, 'ranking/dialog/placeAdd', array());
 	DhtmlxWindows::createWindow('rankingPlayerAdd', __('ranking.playerRegister'), 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$eventObj->getRankingId()));
 	
 	if( ($isEditable || $isMyEvent) )

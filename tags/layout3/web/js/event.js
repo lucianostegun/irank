@@ -503,15 +503,53 @@ function loadRankingPlaceList(rankingId, rankingPlaceId){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
 }
 
-function checkRankingPlace(rankingPlaceId){
+function checkRankingPlace(rankingPlaceId, attemp){
 	
 	var rankingId = $('eventRankingId').value;
+	
+	if( !rankingPlaceId ){
+		
+		hideDiv('eventRankingPlaceIdEditDiv')
+		clearCommonBarMessage();
+		return;
+	}
 	
 	if( rankingPlaceId=='new' ){
 		
 		_RankingPlaceSuccessFunc = function(rankingPlaceId){ loadRankingPlaceList(rankingId, rankingPlaceId); }
-		addRankingPlace(rankingId);
+		return addRankingPlace(rankingId);
 	}
+	
+	
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		
+		showDiv('eventRankingPlaceIdEditDiv');
+		
+		_RankingPlaceSuccessFunc = function(rankingPlaceId){ checkRankingPlace(rankingPlaceId, 0); }
+		
+		if( content=='complete' )
+			return clearCommonBarMessage();
+		
+		if( content=='incomplete' )
+			setCommonBarMessage('As informações do local não estão completas para divulgação do evento. Clique em <b>Editar</b> para atualizar as informações.');
+	};
+	
+	var failureFunc = function(t){
+		
+		if( attemp < 7 )
+			return checkRankingPlace(rankingPlaceId, ++attemp);
+			
+		$('eventRankingPlaceId').value = '';
+		return alert('Não foi possível validar o local do evento selecionado!\nPor favor, selecione o local novamente.');
+	};
+	
+	if( attemp > 7 )
+		failureFunc();
+		
+	var urlAjax = _webRoot+'/ranking/checkRankingPlace/rankingPlaceId/'+rankingPlaceId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
 function cloneEvent(){
@@ -1068,7 +1106,9 @@ function lockEvent(eventId){
 	new Ajax.Updater('mainMainObjDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }
 
-function shareEventFacebook(eventId){
+function shareEventFacebook(){
+	
+	var eventId = $('eventId').value;
 	
 	var urlShare = _webRoot+'/event/facebookShareUrl/eventId/'+eventId;
 	window.open(urlShare,'irankFacebookShare', 'toolbar=0, status=0, width=650, height=450');
