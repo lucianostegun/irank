@@ -660,11 +660,10 @@ class eventActions extends sfActions
   
   public function executeFacebookShareUrl($request){
 
-  	$eventId = $request->getParameter('eventId');
+  	$eventId  = $request->getParameter('eventId');
+  	$eventObj = EventPeer::retrieveByPK($eventId);
   	
-  	$shareId = Util::encodeId($eventId);
-  	
-  	$url = 'http://'.$request->getHost().'/event/share/'.$shareId;
+  	$url = $eventObj->getPermalink(true);
   	$url = 'http://www.facebook.com/sharer/sharer.php?u='.urlencode($url);
 
   	header('location: '.$url);
@@ -722,9 +721,8 @@ class eventActions extends sfActions
 
 	$rankingObj = $this->eventObj->getRanking();
 	
-	if( $this->eventObj->isMyEvent() && $rankingObj->getIsPrivate() )
+	if( !$this->eventObj->isMyEvent() && $rankingObj->getIsPrivate() )
 		return $this->redirect('home/index');
-	
 	
 	$uri = $request->getUri();
 	$uri = str_replace('facebookResult', 'facebookResultImage', $uri);
@@ -747,7 +745,7 @@ class eventActions extends sfActions
 									'url'=>$this->eventObj->getPermalink(true));
 	
 	if( $this->isAuthenticated && $this->eventObj->isMyEvent() )
-		$this->forward('event', 'edit');
+		$this->setTemplate('edit');
   }
   
   public function executeFacebookResultShare($request){
@@ -758,19 +756,19 @@ class eventActions extends sfActions
 	$eventPlayerObj = EventPlayerPeer::retrieveByShareId($shareId);
 	$peopleId = $eventPlayerObj->getPeopleId();
 	$eventObj = $eventPlayerObj->getEvent();
+  	
+  	$shareId = base64_encode($shareId);
 	
-	$uri = $request->getUri();
-	$uri = eregi_replace('facebookResult', 'facebookResultImage', $uri);
-	
-	$host = $request->getHost();
-	
-	$this->facebookMetaList = array('url'=>'http://'.$host.'/event/facebookResultImage/shareId/'.base64_encode($shareId),
+	$host           = $request->getHost();
+	$url            = 'http://'.$host.'/event/resultShare/'.$shareId;
+	$this->imageUrl = 'http://'.$host.'/event/facebookResultImage/shareId/'.$shareId;
+
+	$this->facebookMetaList = array('url'=>$url,
 									'title'=>'Resultados iRank',
 									'description'=>'Fiquei em '.$eventPlayerObj->getEventPosition().'º lugar no evento '.$eventObj->getEventName().' realizado em '.$eventObj->getEventDate('d/m/Y').' valendo pelo ranking '.$eventObj->getRanking()->getRankingName(),
-									'image'=>'http://'.$host.'/event/facebookResultImage/shareId/'.base64_encode($shareId),
+									'image'=>$this->imageUrl,
 									);
-	
-//	'shareId'=>'http://'.$host.'/event/facebookResultImage/shareId/'.base64_encode($shareId),	
+
 	$this->setLayout('facebookShare');
 	$this->setTemplate('none');
 	return sfView::SUCCESS;

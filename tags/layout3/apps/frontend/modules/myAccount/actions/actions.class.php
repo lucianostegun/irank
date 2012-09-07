@@ -261,9 +261,10 @@ class myAccountActions extends sfActions
 
   public function executeExportBankroll($request){
 
-	$this->peopleId    = $this->getUser()->getAttribute('peopleId');
-	$this->userSiteId  = $this->getUser()->getAttribute('userSiteId');
-	$this->fileName    = 'bankroll.pdf';
+	$this->peopleId       = $this->getUser()->getAttribute('peopleId');
+	$this->userSiteId     = $this->getUser()->getAttribute('userSiteId');
+	$this->fileName       = 'bankroll.pdf';
+	$this->throwException = true;
 	
 	$this->userSiteObj = UserSite::getCurrentUser();
 	
@@ -275,11 +276,11 @@ class myAccountActions extends sfActions
 	$peopleId = $request->getParameter('peopleId');
 	$peopleId = Util::decodeId($peopleId);
 	
-	$peopleObj         = PeoplePeer::retrieveByPK($peopleId);
-	$this->userSiteObj = $peopleObj->getUserSite();
-	$this->peopleId    = $peopleId;
-	$this->userSiteId  = $this->userSiteObj->getId();
-	
+	$peopleObj            = PeoplePeer::retrieveByPK($peopleId);
+	$this->userSiteObj    = $peopleObj->getUserSite();
+	$this->peopleId       = $peopleId;
+	$this->userSiteId     = $this->userSiteObj->getId();
+	$this->throwException = true;
 	$this->setLayout('pdf');
 	$this->setTemplate('exportBankroll');
   }

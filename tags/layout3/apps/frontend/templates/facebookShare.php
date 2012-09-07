@@ -24,8 +24,8 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-  function init() { window.location = 'http://<?php echo $sf_request->getHost() ?>/<?php echo $shareLink ?>'; }
-//  window.onload = init;
+  function init() { window.location = '<?php echo $imageUrl ?>'; }
+  window.onload = init;
 </script>
 </head>
 </html>

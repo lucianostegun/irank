@@ -23,7 +23,7 @@
 		$dompdf->set_paper($paper, $orientation);
 		$dompdf->set_paper($paper, $orientation);
 		$dompdf->render();
-		$dompdf->stream($fileName, array('Attachment'=>true));
+		$dompdf->stream($fileName, array('Attachment'=>$forceDownload));
 	}catch(Exception $e){
 		
 		echo 'error';

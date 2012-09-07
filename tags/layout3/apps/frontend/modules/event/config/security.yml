@@ -11,6 +11,12 @@ uploadPhoto:
 facebookResult:
   is_secure: off
 
+resultShare:
+  is_secure: off
+
+facebookResultShare:
+  is_secure: off
+
 share:
   is_secure: off
 
@@ -22,7 +28,7 @@ facebookResultImage:
 
 getPhoto:
   is_secure: off
-  
+
 getiPhoneAppXml:
   is_secure: off
   
