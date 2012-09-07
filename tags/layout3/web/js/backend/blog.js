@@ -25,6 +25,12 @@ $(function() {
 		           ['mkdir', 'mkfile', 'upload']
 		          ],
 	});
+	
+	$('#blogPublishDate').datepicker({ 
+		defaultDate: +0,
+		autoSize: false,
+		dateFormat: 'dd/mm/yy',
+	});
 });
 
 function handleSuccessBlog(content){

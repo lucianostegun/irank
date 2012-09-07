@@ -26,6 +26,7 @@ class Blog extends BaseBlog
 		$isDraft        = $request->getParameter('isDraft');
 		$content        = $request->getParameter('content');
 		$glossary       = $request->getParameter('glossary');
+		$publishDate    = $request->getParameter('publishDate');
 		$peopleId       = MyTools::getAttribute('peopleId');
 		
 		$this->setTitle( $title );
@@ -37,6 +38,7 @@ class Blog extends BaseBlog
 		$this->setContent( $content );
 		$this->setGlossary( nvl($glossary) );
 		$this->setIsDraft( ($isDraft?true:false) );
+		$this->setPublishDate( Util::formatDate($publishDate) );
 		$this->setVisible( true );
 		$this->setEnabled( true );
 		
@@ -66,6 +68,7 @@ class Blog extends BaseBlog
 		$criteria->add( BlogPeer::VISIBLE, true );
 		$criteria->add( BlogPeer::DELETED, false );
 		$criteria->add( BlogPeer::IS_DRAFT, false );
+		$criteria->add( BlogPeer::PUBLISH_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
 		$criteria->addDescendingOrderByColumn( BlogPeer::CREATED_AT );
 		
 		return BlogPeer::doSelectOne( $criteria );

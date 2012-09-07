@@ -94,6 +94,20 @@
 		<div class="clear"></div>
 	</div>
 	
+	<div class="formRow">
+		<label class="">Data publicação</label>
+		<div class="formRight">
+			<div>
+				<span class="multi"><?php echo input_tag('publishDate', $blogObj->getPublishDate('d/m/Y'), array('maxlength'=>10, 'class'=>'maskDate', 'id'=>'blogPublishDate')) ?></span>
+				<span class="multi"><?php echo input_tag('publishTime', $blogObj->getPublishDate('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'blogPublishTime')) ?></span>
+			</div>
+			<div class="clear"></div>
+			<div class="formNote error" id="eventLiveFormErrorEventDate"></div>
+			<div class="formNote error" id="eventLiveFormErrorStartTime"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
 	<!-- WYSIWYG editor -->
 	<div class="widget blogEditor">
 		<div class="title"><?php echo image_tag('backend/icons/dark/pencil', array('class'=>'titleIcon')) ?><h6>Conteúdo</h6></div>

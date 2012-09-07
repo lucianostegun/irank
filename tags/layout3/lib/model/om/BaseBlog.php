@@ -53,6 +53,10 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 
 
 	
+	protected $publish_date;
+
+
+	
 	protected $enabled;
 
 
@@ -162,6 +166,28 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 	{
 
 		return $this->is_draft;
+	}
+
+	
+	public function getPublishDate($format = 'Y-m-d H:i:s')
+	{
+
+		if ($this->publish_date === null || $this->publish_date === '') {
+			return null;
+		} elseif (!is_int($this->publish_date)) {
+						$ts = strtotime($this->publish_date);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [publish_date] as date/time value: " . var_export($this->publish_date, true));
+			}
+		} else {
+			$ts = $this->publish_date;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
 	}
 
 	
@@ -395,6 +421,23 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setPublishDate($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [publish_date] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->publish_date !== $ts) {
+			$this->publish_date = $ts;
+			$this->modifiedColumns[] = BlogPeer::PUBLISH_DATE;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -495,23 +538,25 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 
 			$this->is_draft = $rs->getBoolean($startcol + 10);
 
-			$this->enabled = $rs->getBoolean($startcol + 11);
+			$this->publish_date = $rs->getTimestamp($startcol + 11, null);
 
-			$this->visible = $rs->getBoolean($startcol + 12);
+			$this->enabled = $rs->getBoolean($startcol + 12);
 
-			$this->deleted = $rs->getBoolean($startcol + 13);
+			$this->visible = $rs->getBoolean($startcol + 13);
 
-			$this->locked = $rs->getBoolean($startcol + 14);
+			$this->deleted = $rs->getBoolean($startcol + 14);
 
-			$this->created_at = $rs->getTimestamp($startcol + 15, null);
+			$this->locked = $rs->getBoolean($startcol + 15);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 16, null);
+			$this->created_at = $rs->getTimestamp($startcol + 16, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 17, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 17; 
+						return $startcol + 18; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Blog object", $e);
 		}
@@ -712,21 +757,24 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 				return $this->getIsDraft();
 				break;
 			case 11:
-				return $this->getEnabled();
+				return $this->getPublishDate();
 				break;
 			case 12:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 13:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 14:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 15:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 16:
+				return $this->getCreatedAt();
+				break;
+			case 17:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -750,12 +798,13 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 			$keys[8]=>$this->getContent(),
 			$keys[9]=>$this->getGlossary(),
 			$keys[10]=>$this->getIsDraft(),
-			$keys[11]=>$this->getEnabled(),
-			$keys[12]=>$this->getVisible(),
-			$keys[13]=>$this->getDeleted(),
-			$keys[14]=>$this->getLocked(),
-			$keys[15]=>$this->getCreatedAt(),
-			$keys[16]=>$this->getUpdatedAt(),
+			$keys[11]=>$this->getPublishDate(),
+			$keys[12]=>$this->getEnabled(),
+			$keys[13]=>$this->getVisible(),
+			$keys[14]=>$this->getDeleted(),
+			$keys[15]=>$this->getLocked(),
+			$keys[16]=>$this->getCreatedAt(),
+			$keys[17]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -805,21 +854,24 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 				$this->setIsDraft($value);
 				break;
 			case 11:
-				$this->setEnabled($value);
+				$this->setPublishDate($value);
 				break;
 			case 12:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 13:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 14:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 15:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 16:
+				$this->setCreatedAt($value);
+				break;
+			case 17:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -840,12 +892,13 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[8], $arr)) $this->setContent($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setGlossary($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setIsDraft($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setEnabled($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setVisible($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setDeleted($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setLocked($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setCreatedAt($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setUpdatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[11], $arr)) $this->setPublishDate($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setEnabled($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setVisible($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setDeleted($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setLocked($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setCreatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setUpdatedAt($arr[$keys[17]]);
 	}
 
 	
@@ -864,6 +917,7 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(BlogPeer::CONTENT)) $criteria->add(BlogPeer::CONTENT, $this->content);
 		if ($this->isColumnModified(BlogPeer::GLOSSARY)) $criteria->add(BlogPeer::GLOSSARY, $this->glossary);
 		if ($this->isColumnModified(BlogPeer::IS_DRAFT)) $criteria->add(BlogPeer::IS_DRAFT, $this->is_draft);
+		if ($this->isColumnModified(BlogPeer::PUBLISH_DATE)) $criteria->add(BlogPeer::PUBLISH_DATE, $this->publish_date);
 		if ($this->isColumnModified(BlogPeer::ENABLED)) $criteria->add(BlogPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(BlogPeer::VISIBLE)) $criteria->add(BlogPeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(BlogPeer::DELETED)) $criteria->add(BlogPeer::DELETED, $this->deleted);
@@ -919,6 +973,8 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 		$copyObj->setGlossary($this->glossary);
 
 		$copyObj->setIsDraft($this->is_draft);
+
+		$copyObj->setPublishDate($this->publish_date);
 
 		$copyObj->setEnabled($this->enabled);
 

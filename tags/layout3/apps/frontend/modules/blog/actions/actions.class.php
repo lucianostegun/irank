@@ -58,7 +58,7 @@ class blogActions extends sfActions
     exit;
   }
   
-  public function executeRss($request){
+  public function executeFeed($request){
     
   	$metas = sfContext::getInstance()->getResponse()->getMetas();
   	$headerDescription = $metas['description'];
@@ -75,6 +75,8 @@ class blogActions extends sfActions
 	$canal->addChild('description', $headerDescription);
 	
 	$criteria = new Criteria();
+	$criteria->add( BlogPeer::IS_DRAFT, false );
+	$criteria->add( BlogPeer::PUBLISH_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
 	$criteria->setLimit(10);
 	
 	foreach( Blog::getList($criteria) as $blogObj){

@@ -34,3 +34,6 @@ fields:
   content:
     required:
       msg:       form.error.requiredField
+      
+  publishDate:
+    validateDate:

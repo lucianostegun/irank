@@ -56,6 +56,8 @@ class BlogMapBuilder {
 
 		$tMap->addColumn('IS_DRAFT', 'IsDraft', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
+		$tMap->addColumn('PUBLISH_DATE', 'PublishDate', 'int', CreoleTypes::TIMESTAMP, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);
