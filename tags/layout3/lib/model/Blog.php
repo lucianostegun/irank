@@ -59,7 +59,7 @@ class Blog extends BaseBlog
 		$criteria->add( BlogPeer::IS_DRAFT, false );
 
 		$criterion = $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
-		$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, date('Y-m-d'), Criteria::LESS_EQUAL ) );
+		$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, null ) );
 		$criteria->add($criterion);
 		
 		$criteria->addDescendingOrderByColumn( BlogPeer::CREATED_AT );
@@ -76,7 +76,7 @@ class Blog extends BaseBlog
 		$criteria->add( BlogPeer::IS_DRAFT, false );
 		
 		$criterion = $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
-		$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, date('Y-m-d'), Criteria::LESS_EQUAL ) );
+		$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, null ) );
 		$criteria->add($criterion);
 		
 		$criteria->addDescendingOrderByColumn( BlogPeer::CREATED_AT );
