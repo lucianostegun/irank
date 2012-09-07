@@ -110,9 +110,13 @@
 	<div class="formRow <?php echo ($isMultiday?'hidden':'') ?>" id="eventLiveEventDateRowDiv">
 		<label class="">Data/Hora</label>
 		<div class="formRight">
-			<?php echo input_tag((!$savedResult?'eventDate':'eventDateOld'), $eventLiveObj->getEventDate('d/m/Y'), array('disabled'=>$savedResult, 'maxlength'=>10, 'class'=>'maskDate', 'id'=>'eventLiveEventDate')) ?>
+			<div>
+				<span class="multi"><?php echo input_tag((!$savedResult?'eventDate':'eventDateOld'), $eventLiveObj->getEventDate('d/m/Y'), array('disabled'=>$savedResult, 'maxlength'=>10, 'class'=>'maskDate', 'id'=>'eventLiveEventDate')) ?></span>
+				<span class="multi"><?php echo input_tag('startTime', $eventLiveObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'eventLiveStartTime')) ?></span>
+			</div>
 			<div class="clear"></div>
-			<div class="formNote error" id="blogFormErrorPublishDate"></div>
+			<div class="formNote error" id="eventLiveFormErrorEventDate"></div>
+			<div class="formNote error" id="eventLiveFormErrorStartTime"></div>
 		</div>
 		<div class="clear"></div>
 	</div>

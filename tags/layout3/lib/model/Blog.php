@@ -29,6 +29,9 @@ class Blog extends BaseBlog
 		$publishDate    = $request->getParameter('publishDate');
 		$peopleId       = MyTools::getAttribute('peopleId');
 		
+		if( !$publishDate )
+			$publishDate = date('d/m/Y');
+		
 		$this->setTitle( $title );
 		$this->setCaption( $caption );
 		$this->setShortTitle( $shortTitle );
