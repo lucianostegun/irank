@@ -154,7 +154,7 @@ class Product extends BaseProduct
 		return Util::executeOne($sql, 'string');
 	}
 	
-	public function getDescription($convertTags=true){
+	public function getDescription($convertTags=false){
 		
 		$description = parent::getDescription();
 		

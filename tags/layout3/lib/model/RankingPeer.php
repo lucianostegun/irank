@@ -21,7 +21,7 @@ class RankingPeer extends BaseRankingPeer
 		$app        = Util::getApp();
 
 		$allowSearch     = false;
-		$allowedPageList = array('event'=>array('facebookResultImage', 'share', 'facebookResult', 'getPhotoCommentList'),
+		$allowedPageList = array('event'=>array('facebookResultImage', 'share', 'facebookResult', 'getPhotoCommentList', 'resultShare', 'facebookResultShare'),
 								 'ranking'=>array('share', 'requestSubscription'));
 		
 		if( array_key_exists($moduleName, $allowedPageList) && in_array($actionName, $allowedPageList[$moduleName]))

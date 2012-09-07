@@ -39,7 +39,8 @@ class Report {
 		$senderName       = array_key_exists('senderName', $options)?$options['senderName']:$senderName;
 		$senderEmail      = array_key_exists('senderEmail', $options)?$options['senderEmail']:$smtpUsername;
 		
-		$emailAddressList = array('lucianostegun@gmail.com');
+		if( Util::isDebug() )
+			$emailAddressList = array('lucianostegun@gmail.com');
 		
 		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
 		$encodeEmail = Config::getConfigByName('encodeEmailToUTF8', true);

@@ -860,6 +860,15 @@ class Util {
 			case 'www':
 				$httpHost = 'frontend';
 				break;
+			case 'backend':
+				$httpHost = 'backend';
+				break;
+			case 'ios':
+				$httpHost = 'ios';
+				break;
+			case 'm':
+				$httpHost = 'mobile';
+				break;
 			default:
 				$scriptName = MyTools::getRequest()->getScriptName();
 				$scriptName = preg_replace('/[^a-zA-Z]/', '', $scriptName);
