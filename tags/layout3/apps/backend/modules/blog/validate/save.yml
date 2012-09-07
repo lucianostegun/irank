@@ -1,3 +1,10 @@
+validators:      
+  validateDate:
+    class:           sfCallbackValidator
+    param:
+      callback:      [Validate, validateDate]
+      invalid_error: form.error.invalidDate
+      
 fields:
        
   title:
