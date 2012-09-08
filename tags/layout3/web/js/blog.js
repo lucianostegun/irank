@@ -34,7 +34,7 @@ function showDictionary(evt){
 
 	html  = '<span class="header">';
 	html += '	<span id="speechHeader">'+dictionary+'</span>';
-	html += '	<div class="closeButton" onclick="hideDiv(\'speechDialog\')"></div>';
+	html += '	<div class="closeButton" onclick="hideDiv(\'speechDialog\'); $(\'speechHeader\').innerHTML = \'\'"></div>';
 	html += '</span>';
 	html += '<div class="content" id="speechContent">';
 	html += '	<div class="loading">Carregando definição, aguarde...</div>';

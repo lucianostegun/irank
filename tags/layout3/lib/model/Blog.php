@@ -59,11 +59,6 @@ class Blog extends BaseBlog
 		$criteria->add( BlogPeer::ENABLED, true );
 		$criteria->add( BlogPeer::VISIBLE, true );
 		$criteria->add( BlogPeer::DELETED, false );
-		$criteria->add( BlogPeer::IS_DRAFT, false );
-
-		$criterion = $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
-		$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, null ) );
-		$criteria->add($criterion);
 		
 		$criteria->addDescendingOrderByColumn( BlogPeer::PUBLISH_DATE );
 		

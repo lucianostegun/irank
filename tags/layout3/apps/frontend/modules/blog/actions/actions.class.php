@@ -75,6 +75,11 @@ class blogActions extends sfActions
 	$canal->addChild('description', $headerDescription);
 	
 	$criteria = new Criteria();
+	$criteria->add( BlogPeer::IS_DRAFT, false );
+
+	$criterion = $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
+	$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, null ) );
+	$criteria->add($criterion);
 	$criteria->setLimit(10);
 	
 	foreach( Blog::getList($criteria) as $blogObj){
