@@ -43,4 +43,13 @@ fields:
       msg:       form.error.requiredField
       
   publishDate:
+    required:
+      msg:       form.error.requiredField
     validateDate:
+      
+  publishTime:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [Validate, validateTime]
+      invalid_error: form.error.invalidTime

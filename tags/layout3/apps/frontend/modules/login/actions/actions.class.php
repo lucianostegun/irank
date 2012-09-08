@@ -5,6 +5,7 @@ class loginActions extends sfActions
 
   public function executeIndex($request){
   	
+  	$this->passwordRecovery = false;
   }
 
   public function executeLogin($request){
@@ -81,6 +82,8 @@ class loginActions extends sfActions
 
   public function executePasswordRecovery($request){
 	
+	$this->passwordRecovery = true;
+	$this->setTemplate('index');
   }
 
   public function handleErrorResetPassword(){

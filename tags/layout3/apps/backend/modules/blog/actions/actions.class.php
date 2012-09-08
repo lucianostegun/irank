@@ -33,6 +33,7 @@ class blogActions extends sfActions
   public function executeNew($request){
   	
     $this->blogObj = Util::getNewObject('blog');
+    $this->blogObj->setPublishDate(time());
     
     $this->pathList['Novo artigo'] = '#';
     $this->setTemplate('edit');

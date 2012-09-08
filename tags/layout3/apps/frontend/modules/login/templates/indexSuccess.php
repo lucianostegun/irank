@@ -10,12 +10,12 @@
 	<table cellpadding="5" cellspacing="0">
 		<thead>
 			<tr>
-				<th width="50%" class="border" id="loginTitle">Usuário existente</th>
+				<th width="50%" class="border" id="loginTitle"><?php echo ($passwordRecovery?'Recuperação de senha':'Usuário existente') ?></th>
 				<th width="50%">Novo usuário</th>
 			</tr>
 		</thead>
 		<tr>
-			<td class="border" valign="top" id="loginArea">
+			<td class="border <?php echo ($passwordRecovery?'hidden':'') ?>" valign="top" id="loginArea">
 				<?php
 					echo form_remote_tag(array(
 						'url'=>'login/login',
@@ -48,7 +48,7 @@
 				</table>
 				</form>
 			</td>
-			<td class="border hidden" valign="top" id="passwordRecoveryArea">
+			<td class="border <?php echo ($passwordRecovery?'':'hidden') ?>" valign="top" id="passwordRecoveryArea">
 				<?php
 					echo form_remote_tag(array(
 						'url'=>'login/resetPassword',

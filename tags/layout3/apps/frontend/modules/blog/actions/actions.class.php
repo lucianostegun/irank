@@ -90,7 +90,7 @@ class blogActions extends sfActions
 		$item->addChild('title', $blogObj->getTitle());
 		$item->addChild('link', 'http://www.irank.com.br/blog/'.$blogObj->getPermalink());
 		$item->addChild('description', $blogObj->getCaption());
-		$item->addChild('pubDate', $blogObj->getCreatedAt('r'));
+		$item->addChild('pubDate', $blogObj->getPublishDate('r'));
 	}
 	
 	// Define o tipo de conteúdo e o charset

@@ -5,7 +5,7 @@
 		$blogObj = Blog::getLastArticle();
 	?>
 	<h1><?php echo link_to('<span>iRank Blog</span> - '.$blogObj->getTitle(), 'blog/article?'.$blogObj->getPermalink().'=') ?></h1>
-	<h2><?php echo sprintf('Publicado em %s por <b>%s</b> - %s', $blogObj->getCreatedAt('d/m/Y H\hm'), $blogObj->getPeople()->getNickname(), $blogObj->getBlogCategory()->getDescription()) ?></h2>
+	<h2><?php echo sprintf('Publicado em %s por <b>%s</b> - %s', $blogObj->getPublishDate('d/m/Y H\hm'), $blogObj->getPeople()->getNickname(), $blogObj->getBlogCategory()->getDescription()) ?></h2>
 	<div class="clear"></div>
 	<div class="resume">
 		<?php echo $blogObj->getResume() ?>

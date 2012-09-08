@@ -15,7 +15,7 @@
 	foreach($blogObjList as $blogObj):
 ?>
 	<a href="<?php echo url_for('blog/article?'.$blogObj->getPermalink().'=') ?>">
-	<h1>[<?php echo $blogObj->getCreatedAt('d/m/Y H\hm') ?>]</h1><h2><?php echo $blogObj->getTitle() ?></h2>
+	<h1>[<?php echo $blogObj->getPublishDate('d/m/Y H\hm') ?>]</h1><h2><?php echo $blogObj->getTitle() ?></h2>
 	<h3><?php echo $blogObj->getCaption() ?></h3>
 	<div class="clear"></div>
 	</a>

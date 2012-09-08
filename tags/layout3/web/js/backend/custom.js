@@ -488,7 +488,7 @@ $(function() {
 		showSeconds: true, // Show seconds?
 		spinnerImage: 'images/forms/spinnerUpDown.png', // Arrows image
 		spinnerSize: [19, 30, 0], // Image size
-		spinnerIncDecOnly: true // Only up and down arrows
+		spinnerIncDecOnly: false // Only up and down arrows
 	});
 	
 	

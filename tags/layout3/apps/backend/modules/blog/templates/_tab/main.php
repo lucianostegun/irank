@@ -97,9 +97,13 @@
 	<div class="formRow">
 		<label class="">Data publicação</label>
 		<div class="formRight">
-			<?php echo input_tag('publishDate', $blogObj->getPublishDate('d/m/Y'), array('maxlength'=>10, 'class'=>'maskDate', 'id'=>'blogPublishDate')) ?>
+			<div>
+				<span class="multi"><?php echo input_tag('publishDate', $blogObj->getPublishDate('d/m/Y'), array('maxlength'=>10, 'class'=>'maskDate', 'id'=>'blogPublishDate')) ?></span>
+				<span class="multi"><?php echo input_tag('publishTime', $blogObj->getPublishDate('H:i'), array('maxlength'=>5, 'class'=>'timepicker', 'id'=>'blogPublishTime')) ?></span>
+			</div>
 			<div class="clear"></div>
 			<div class="formNote error" id="blogFormErrorPublishDate"></div>
+			<div class="formNote error" id="blogFormErrorPublishTime"></div>
 		</div>
 		<div class="clear"></div>
 	</div>

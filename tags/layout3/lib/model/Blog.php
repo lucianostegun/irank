@@ -27,10 +27,10 @@ class Blog extends BaseBlog
 		$content        = $request->getParameter('content');
 		$glossary       = $request->getParameter('glossary');
 		$publishDate    = $request->getParameter('publishDate');
+		$publishTime    = $request->getParameter('publishTime');
 		$peopleId       = MyTools::getAttribute('peopleId');
 		
-		if( !$publishDate )
-			$publishDate = date('d/m/Y');
+		$publishDate .= ' '.$publishTime;
 		
 		$this->setTitle( $title );
 		$this->setCaption( $caption );
@@ -41,7 +41,7 @@ class Blog extends BaseBlog
 		$this->setContent( $content );
 		$this->setGlossary( nvl($glossary) );
 		$this->setIsDraft( ($isDraft?true:false) );
-		$this->setPublishDate( Util::formatDate($publishDate) );
+		$this->setPublishDate( Util::formatDateTime($publishDate) );
 		$this->setVisible( true );
 		$this->setEnabled( true );
 		

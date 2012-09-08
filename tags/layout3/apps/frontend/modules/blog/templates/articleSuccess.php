@@ -8,7 +8,7 @@
 	
 	<h1><?php echo $blogCategory ?></h1>
 	<h2><?php echo $blogObj->getTitle() ?></h2>
-	<h3>Publicado por <b><?php echo $blogObj->getPeople()->getNickname() ?></b> em <b><?php echo $blogObj->getCreatedAt('d/m/Y H\hm') ?></b> nas categorias&nbsp;</h3>
+	<h3>Publicado por <b><?php echo $blogObj->getPeople()->getNickname() ?></b> em <b><?php echo $blogObj->getPublishDate('d/m/Y H\hm') ?></b> nas categorias&nbsp;</h3>
 	<h3 class="tags">
 		<?php
 			$tags = $blogObj->getTags();

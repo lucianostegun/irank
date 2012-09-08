@@ -6,4 +6,4 @@ all:
 editSuccess:
 
   stylesheets:    [backend/plugins/elfinder/elfinder.min.css]
-  javascripts:    [backend/plugins/forms/jquery.cleditor.js, backend/plugins/forms/jquery.tagsinput.min.js, backend/plugins/elfinder.min.js, backend/plugins/elfinder.pt_BR.js, mask, backend/blog]
+  javascripts:    [backend/plugins/ui/jquery.timeentry.min.js, backend/plugins/forms/jquery.cleditor.js, backend/plugins/forms/jquery.tagsinput.min.js, backend/plugins/elfinder.min.js, backend/plugins/elfinder.pt_BR.js, mask, backend/blog]
