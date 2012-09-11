@@ -45,6 +45,64 @@ class storeActions extends sfActions
   	$this->facebookMetaList['url']   = 'https://[host]/store';
   }
   
+  public function executeFace2($request){
+  	
+  	$AppID     = "173327886080667";
+	$AppSecret = "4fcfd42fe69f0c6dfd4d0f60b1ea50e0";
+  	
+	if(!empty($_GET['code']) && !empty($_GET['state']))
+	{
+		$response   = file_get_contents("https://graph.facebook.com/oauth/access_token?client_id=$AppID&client_secret=$AppSecret&redirect_uri=".urlencode('http://www.irank.com.br/')."&code=".$_GET['code']);
+		 
+		// now check state and parse access token
+		 echo '<pre>';
+		if($response){
+			
+			$a = file_get_contents("https://graph.facebook.com/me/likes?$response");
+			print_r(json_decode($a));		
+		}
+	}
+  }
+  
+  public function executeFace($request){
+  	
+  	$AppID     = "173327886080667";
+	$AppSecret = "4fcfd42fe69f0c6dfd4d0f60b1ea50e0";
+	 
+	$facebookObj = new Facebook( array( "appId"  => $AppID, "secret" => $AppSecret ) );
+	$userId      = $facebookObj->getUser();
+	 
+	if($userId){
+	 
+	    $likes = $facebookObj->api('/me/likes');
+	 
+	    foreach ($likes['data'] as $ilike)
+	        echo $ilike["name"] . " - " . $ilike["id"] . "<br>";
+	 
+	    echo "<br><hr><br>";
+	 
+	    $likes = $facebookObj->api('/me/likes/291885940841637');
+	 
+	    if( !empty($likes['data']) )
+	    	echo "Sim";
+	 	else
+	        echo "Não";
+	 
+	} else{
+	 
+	    $params     = array (
+	                          scope         => 'user_likes',
+	                          redirect_uri  => 'http://www.irank.com.br/fronend_dev.php/store/face2'
+	                        );
+	 
+	    $loginUrl   = $facebookObj->getLoginUrl($params);
+	 
+	    header("Location: " . $loginUrl);	 
+	}
+  	
+  	exit;
+  }
+  
   public function executeIndex($request){
   	
   	$this->category = $request->getParameter('category');
