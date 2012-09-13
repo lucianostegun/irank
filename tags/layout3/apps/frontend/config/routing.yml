@@ -20,6 +20,10 @@ event_permalink:
   requirements:
     rankingTag: "[a-z]+[a-z0-9_]*"
     eventDate: "[0-9]{4}-[0-9]{2}-[0-9]{2}"
+    
+email_option:
+  url:    /emailOption/:emailAddress/:emailToken
+  param:  { module: emailOption, action: index }
 
 
 # REGRAS PARA O MÓDULO LOJA VIRTUAL

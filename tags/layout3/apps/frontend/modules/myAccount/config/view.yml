@@ -1,4 +1,4 @@
 all:
   
   stylesheets:    [form, table, myAccount, bankroll]
-  javascripts:    [myAccount, /sf/prototype/js/scriptaculous, jsCutter/cropper, /index.php/myAccount/javascript/js]
+  javascripts:    [/sf/prototype/js/scriptaculous, jsCutter/cropper, /index.php/myAccount/javascript/js, emailOption, myAccount]

@@ -34,13 +34,13 @@ class Report {
 		$emailLogId       = array_key_exists('emailLogId', $options)?$options['emailLogId']:null;
 		$emailTemplateObj = array_key_exists('emailTemplateObj', $options)?$options['emailTemplateObj']:null;
 		$emailTemplate    = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
+		$templateName     = array_key_exists('templateName', $options)?$options['templateName']:null;
 		$smtpUsername     = array_key_exists('smtpUsername', $options)?$options['smtpUsername']:$smtpUsername;
 		$smtpPassword     = array_key_exists('smtpPassword', $options)?$options['smtpPassword']:$smtpPassword;
 		$senderName       = array_key_exists('senderName', $options)?$options['senderName']:$senderName;
 		$senderEmail      = array_key_exists('senderEmail', $options)?$options['senderEmail']:$smtpUsername;
 		
-		if( Util::isDebug() )
-			$emailAddressList = array('lucianostegun@gmail.com');
+		$emailAddressList = array('lucianostegun@gmail.com');
 		
 		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
 		$encodeEmail = Config::getConfigByName('encodeEmailToUTF8', true);
@@ -121,6 +121,9 @@ class Report {
 			
 			if( !$emailAddress )
 				continue;
+				
+			if( $templateName && self::checkLockSend($emailAddress, $templateName) )
+				continue;
 			
 			if( count($emailAddressList) > 1 )
 				$sfMailObj->addBcc( $emailAddress );
@@ -177,6 +180,11 @@ class Report {
     		$content = str_replace('['.$key.']', $info, $content);
     	
     	return $content;
+    }
+    
+    public static function checkLockSend($emailAddress, $templateName){
+    	
+    	return Util::executeOne("SELECT check_lock_send('$emailAddress', '$templateName')", 'boolean');
     }
 }
 ?>

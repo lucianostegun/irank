@@ -231,9 +231,6 @@ class DhtmlxTabBar30 {
 		if( !$selectedTabBarId )
 			return false;
 			
-		if( $this->selectedTabBarId )
-			return false;
-
 		$selectedTabBarId = str_replace('Obj', '', $selectedTabBarId);
 		
 		$this->selectedTabBarId = $selectedTabBarId;

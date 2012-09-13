@@ -30,9 +30,5 @@ CREATE TABLE purchase_transaction_log (
     extra_amount DECIMAL(10, 2),
     installment_count INTEGER,
     created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    CONSTRAINT purchase_transaction_FK_1 FOREIGN KEY (purchase_id) REFERENCES purchase (id)
+    updated_at TIMESTAMP
 );
-
-DROP TABLE purchase_transaction_log;
-DROP SEQUENCE purchase_transaction_log_seq;

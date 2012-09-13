@@ -1022,6 +1022,7 @@
 		<column name="is_available_for_sale" type="BOOLEAN" />
 		<column name="tag_name" type="VARCHAR" />
 		<column name="tag_name_parent" type="VARCHAR" />
+		<column name="is_option" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -1517,6 +1518,20 @@
 		</foreign-key>
 		<foreign-key foreignTable="ranking">
 			<reference local="ranking_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="email_option" phpName="EmailOption">
+		<column name="email_address" type="VARCHAR" primaryKey="true" />
+		<column name="email_template_id" type="INTEGER" primaryKey="true" />
+		<column name="lock_send" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="people">
+			<reference local="email_address" foreign="email_address"/>
+		</foreign-key>
+		<foreign-key foreignTable="email_template">
+			<reference local="email_template_id" foreign="id"/>
 		</foreign-key>
 	</table>
 	

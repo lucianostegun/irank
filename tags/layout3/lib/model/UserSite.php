@@ -57,7 +57,7 @@ class UserSite extends BaseUserSite
 	  	$peopleObj->setEmailAddress( $emailAddress );
 	  	$this->setPassword( (strlen($password)==32?$password:md5($password)) );
 	  	$this->setActive(true);
-	  	$this->setStartBankroll(nvl(Util::formatFloat($startBankroll)));
+	  	$this->setStartBankroll(nvl(Util::formatFloat($startBankroll), 0));
 	  	$this->save();
 	  	
 	  	$peopleObj->save();

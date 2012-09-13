@@ -289,3 +289,13 @@ div.dhxcont_sb_container div.dhxcont_statusbar {
 
 	float: 	left;
 }
+
+.tabbarFooter {
+
+	padding: 		10px;
+	margin-top: 	5px;
+	border-top: 	1px solid #CACACA;
+	background: 	#F5F5F5;
+	text-shadow: 	white -1px 1px;
+	margin-bottom: 	-20px
+}

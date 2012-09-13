@@ -92,6 +92,16 @@
 	border-top: 	none;
 }
 
+.buttonBar {
+
+	position: 		relative;
+	z-index: 		200;
+	height: 		22px;
+	padding: 		9px 5px 9px 7px;
+	background: 	#E0E0E0;
+	border-top: 	1px solid #C0C0C0
+}
+
 .buttonTabBar.success {
 
 	background: 	#CADDEC url('/images/tableSeparator.png') left top repeat-x;

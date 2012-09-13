@@ -87,7 +87,8 @@ class EventComment extends BaseEventComment
 		
 		$emailAddressInfoList = $eventObj->getEmailAddressList('receiveEventCommentNotify', false, true);
 
-		$emailTemplateObj = EmailTemplatePeer::retrieveByTagName('eventCommentNotify');
+		$templateName     = 'eventCommentNotify';
+		$emailTemplateObj = EmailTemplatePeer::retrieveByTagName($templateName);
 
 		$emailContent = $emailTemplateObj->getContent();
 		$emailContent = Report::replace($emailContent, $infoList);
@@ -96,6 +97,7 @@ class EventComment extends BaseEventComment
 		$optionList = array();
 		$optionList['emailTemplateObj'] = $emailTemplateObj;
 		$optionList['replyTo']          = 'event_comment@irank.com.br';
+		$optionList['templateName']     = $templateName;
 		
 		foreach($emailAddressInfoList as $emailAddressInfo){
 

@@ -344,15 +344,10 @@ class Event extends BaseEvent
 			if( $supressMe && $peopleId==$peopleObj->getId() )
 				continue;
 
-			if( $tagName )
-				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
-					continue;
-			
 			if( $returnCulture )
-				$emailAddressList[] = array('emailAddress'=>$peopleObj->getEmailAddress(),
-											'culture'=>$peopleObj->getDefaultLanguage());
+				$emailAddressList[] = array('emailAddress'=>$peopleObj->getEmailAddress(), 'culture'=>$peopleObj->getDefaultLanguage());
 			else
-			$emailAddressList[] = $peopleObj->getEmailAddress();
+				$emailAddressList[] = $peopleObj->getEmailAddress();
 		}
 		
 		return $emailAddressList;
@@ -413,7 +408,7 @@ class Event extends BaseEvent
 		
 		$iCalFile = $this->getICal('update');
 		$attachmentList  = array('invite.ics'=>$iCalFile);
-		$optionList      = array('attachmentList'=>$attachmentList);
+		$optionList      = array('templateName'=>$templateName, 'attachmentList'=>$attachmentList);
 
 		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
 		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
@@ -451,7 +446,10 @@ class Event extends BaseEvent
 		
 		$emailSubject = 'email.subject.eventResult';
 		
-		$emailContent = Report::replace(EmailTemplate::getContentByTagName('eventResult'), $infoList);
+		$templateName = 'eventResult';
+		$optionList   = array('templateName'=>$templateName);
+		
+		$emailContent = Report::replace(EmailTemplate::getContentByTagName($templateName), $infoList);
 		$emailSubject = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
 		
 		$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', 'receiveAllResults');
@@ -489,7 +487,7 @@ class Event extends BaseEvent
 
 			$emailContentTmp = str_replace('[congratsMessage]', $congratsMessage, $emailContentTmp);
 			
-			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp);
+			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp, $optionList);
 		}
 	}
 	
@@ -515,7 +513,7 @@ class Event extends BaseEvent
 		
 		$iCalFile = $this->getICal('delete');
 		$attachmentList  = array('invite.ics'=>$iCalFile);
-		$optionList      = array('attachmentList'=>$attachmentList);
+		$optionList      = array('templateName'=>$templateName, 'attachmentList'=>$attachmentList);
 		
 		foreach($emailAddressInfoList as $emailAddressInfo){
 			
@@ -545,6 +543,8 @@ class Event extends BaseEvent
 		
 		$infoList = $this->getInfo();
 		
+		$optionList = array('templateName'=>$templateName);
+		
 		$emailContentList['pt_BR']  = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), array_merge($infoList, array('eventSchedule'=>$eventScheduleList['pt_BR'])));
 		$emailContentList['en_US']  = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), array_merge($infoList, array('eventSchedule'=>$eventScheduleList['en_US'])));
 		$emailSubjectList['pt_BR']  = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
@@ -560,7 +560,7 @@ class Event extends BaseEvent
 			$emailSubject  = $emailSubjectList[$culture];
 			$eventSchedule = $eventScheduleList[$culture];
 			
-			Report::sendMail($emailSubject, $emailAddress, $emailContent);
+			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 		}
 	}
 	

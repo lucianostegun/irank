@@ -46,6 +46,7 @@ class EmailTemplate extends BaseEmailTemplate
 		$tagName            = $request->getParameter('tagName');
 		$isAvailableForUse  = $request->getParameter('isAvailableForUse');
 		$isAvailableForSale = $request->getParameter('isAvailableForSale');
+		$isOption           = $request->getParameter('isOption');
 		$description        = $request->getParameter('description');
 		$content            = $request->getParameter('content');
 		
@@ -59,6 +60,7 @@ class EmailTemplate extends BaseEmailTemplate
 		$this->setDescription(nvl($description));
 		$this->setIsAvailableForUse(($isAvailableForUse?true:false));
 		$this->setIsAvailableForSale(($isAvailableForSale?true:false));
+		$this->setIsOption(($isOption?true:false));
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);

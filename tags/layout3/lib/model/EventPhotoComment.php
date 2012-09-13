@@ -81,8 +81,9 @@ class EventPhotoComment extends BaseEventPhotoComment
 
 		Util::getHelper('I18N');
 
+		$templateName = 'eventPhotoCommentNotify';
 		$eventObj     = $this->getEventPhoto()->getEvent();
-		$emailContent = EmailTemplate::getContentByTagName('eventPhotoCommentNotify');
+		$emailContent = EmailTemplate::getContentByTagName($templateName);
 
 		$emailContent = str_replace('[eventName]', $eventObj->getEventName(), $emailContent);
 		$emailContent = str_replace('[rankingName]', $eventObj->getRanking()->getRankingName(), $emailContent);
@@ -102,6 +103,7 @@ class EventPhotoComment extends BaseEventPhotoComment
 		$options = array();
 		$options['emailTemplate']  = null;
 		$options['replyTo']        = 'event_photo_comment@irank.com.br';
+		$options['templateName']   = $templateName;
 		
 		Report::sendMail(__('email.subject.eventPhotoComment', array('%eventName%'=>$eventObj->getEventName(), '%eventPhotoCommentCode%'=>$this->getCode())), $emailAddressList, $emailContent, $options);
 	}

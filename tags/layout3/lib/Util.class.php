@@ -1056,5 +1056,20 @@ class Util {
 		
 		return $result;
 	}
+	
+	public static function getToken($string){
+		
+		$stringList = preg_split('//', trim($string));
+		unset($stringList[0]);
+		unset($stringList[count($stringList)]);
+		
+		sort($stringList);
+		
+		$token = implode('', $stringList);
+		$token = base64_encode($token);
+		$token = md5($token);
+		
+		return $token;
+	}
 }
 ?>

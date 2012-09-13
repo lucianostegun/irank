@@ -1621,7 +1621,7 @@ class iCal {
 		} // end if
 		$handle = opendir($this->download_dir);
 		while ($file = readdir($handle)) {
-			if (!eregi("^\.{1,2}$",$file) && !is_dir($this->download_dir . '/' . $file) && eregi("\.ics",$file) && ((time() - filemtime($this->download_dir . '/' . $file)) > $time)) {
+			if (!preg_match('/^\.{1,2}$/i',$file) && !is_dir($this->download_dir . '/' . $file) && preg_match('/\.ics/i',$file) && ((time() - filemtime($this->download_dir . '/' . $file)) > $time)) {
 				unlink($this->download_dir . '/' . $file);
 			} // end if
 		} // end while

@@ -642,18 +642,11 @@ class Ranking extends BaseRanking
 		
 		$emailAddressList = array();
 		
-		if( $tagName )
-			$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', $tagName);
-		
 		foreach( $this->getPeopleList(true) as $peopleObj ){
 			
 			if( $supressMe && $peopleId==$peopleObj->getId() )
 				continue;
 
-			if( $tagName )
-				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
-					continue;
-			
 			$emailAddress = $peopleObj->getEmailAddress();
 			
 			if( !$emailAddress )
@@ -669,7 +662,8 @@ class Ranking extends BaseRanking
 
 		Util::getHelper('i18n');
 
-		$emailContent = EmailTemplate::getContentByTagName('rankingDeleteNotify');
+		$templateName = 'rankingDeleteNotify';
+		$emailContent = EmailTemplate::getContentByTagName($templateName);
 
 		$peopleObj    = People::getCurrentPeople();
 	  	$classifyList = $this->getEmailClassifyList();
@@ -686,8 +680,9 @@ class Ranking extends BaseRanking
 		$emailContent = str_replace('[rankingOwner]', $rankingOwner, $emailContent);
 		
 		$emailAddressList = $this->getEmailAddressList();
+		$optionList = array('templateName'=>$templateName);
 		
-		Report::sendMail(__('email.subject.rankingDelete', array('%rankingName%'=>$this->getRankingName())), $emailAddressList, $emailContent);
+		Report::sendMail(__('email.subject.rankingDelete', array('%rankingName%'=>$this->getRankingName())), $emailAddressList, $emailContent, $optionList);
 	}
 	
 	public function getEmailClassifyList($rankingDate){

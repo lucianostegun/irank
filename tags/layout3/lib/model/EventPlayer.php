@@ -59,13 +59,16 @@ class EventPlayer extends BaseEventPlayer
 			$playerList .= '  </tr>'.$nl;
 	  	}
 	  	
+	  	$templateName = 'confirmPresenceNotify';
+	  	
+	  	$optionList = array('templateName'=>$templateName);
 	  	
 		$infoList = $eventObj->getInfo();
 		$infoList['playerList'] = $playerList;
 		$infoList['peopleName'] = $this->getPeople()->getFirstName();
 
-		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName('confirmPresenceNotify', false, 'pt_BR'), $infoList);
-		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName('confirmPresenceNotify', false, 'en_US'), $infoList);
+		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
 		$emailSubjectList['pt_BR'] = __('email.subject.presenceConfirm', null, 'messages', 'pt_BR');
 		$emailSubjectList['en_US'] = __('email.subject.presenceConfirm', null, 'messages', 'en_US');
 
@@ -83,7 +86,7 @@ class EventPlayer extends BaseEventPlayer
 			$emailContent    = $emailContentList[$defaultLanguage];
 			$emailSubject    = $emailSubjectList[$defaultLanguage];
 			
-			Report::sendMail($emailSubject, $emailAddress, $emailContent);
+			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 	  	}
 	}
 	

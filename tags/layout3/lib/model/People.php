@@ -179,7 +179,8 @@ class People extends BasePeople
 
 		$rankingOwner = $rankingObj->getUserSite()->getPeople()->getFullName();
 		
-		$emailContent = EmailTemplate::getContentByTagName('rankingPlayerAdd');
+		$templateName = 'rankingPlayerAdd';
+		$emailContent = EmailTemplate::getContentByTagName($templateName);
 		
 		if( !$this->isUserSite() )
 			$emailContent .= EmailTemplate::getContentByTagName('newUserInvite');
@@ -195,8 +196,10 @@ class People extends BasePeople
 		
 		$emailAddress = $this->getEmailAddress();
 		
+		$optionList = array('templateName'=>$templateName);
+		
 		if( $emailAddress )
-			Report::sendMail(__('email.subject.playerAdd'), $emailAddress, $emailContent);
+			Report::sendMail(__('email.subject.playerAdd'), $emailAddress, $emailContent, $optionList);
 	}
 	
 	public function isUserSite(){
@@ -399,6 +402,39 @@ class People extends BasePeople
 	public function toString(){
 		
 		return $this->getName();
+	}
+	
+	public static function saveEmailOption($request, $inverse=false){
+		
+		$emailAddress = $request->getParameter('emailAddress');
+		
+		$criteria = new Criteria();
+		$criteria->add( EmailTemplatePeer::IS_OPTION, true );
+		$emailTemplateObjList = EmailTemplate::getList($criteria);
+	
+		try{
+			
+			$con = Propel::getConnection();
+			$con->begin();
+			
+			foreach($emailTemplateObjList as $emailTemplateObj){
+				
+				$checked = $request->getParameter('emailOption-'.$emailTemplateObj->getId());
+				
+				if( $inverse )
+					$checked = !$checked;
+				
+				$emailOptionObj = EmailOptionPeer::retrieveByPK($emailAddress, $emailTemplateObj->getId());
+				$emailOptionObj->setLockSend(($checked?true:false));
+				$emailOptionObj->save($con);
+			}
+			
+			$con->commit();
+		}catch(Exception $e){
+			
+			$con->rollback();
+			throw $e;
+		}
 	}
 	
 	public function getInfo(){

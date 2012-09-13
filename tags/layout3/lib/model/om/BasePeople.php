@@ -253,6 +253,12 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastBlogCriteria = null;
 
 	
+	protected $collEmailOptionList;
+
+	
+	protected $lastEmailOptionCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -1125,6 +1131,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collEmailOptionList !== null) {
+				foreach($this->collEmailOptionList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -1368,6 +1382,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 				if ($this->collBlogList !== null) {
 					foreach($this->collBlogList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEmailOptionList !== null) {
+					foreach($this->collEmailOptionList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1814,6 +1836,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			foreach($this->getBlogList() as $relObj) {
 				$copyObj->addBlog($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEmailOptionList() as $relObj) {
+				$copyObj->addEmailOption($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -4878,6 +4904,111 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$this->lastBlogCriteria = $criteria;
 
 		return $this->collBlogList;
+	}
+
+	
+	public function initEmailOptionList()
+	{
+		if ($this->collEmailOptionList === null) {
+			$this->collEmailOptionList = array();
+		}
+	}
+
+	
+	public function getEmailOptionList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEmailOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEmailOptionList === null) {
+			if ($this->isNew()) {
+			   $this->collEmailOptionList = array();
+			} else {
+
+				$criteria->add(EmailOptionPeer::EMAIL_ADDRESS, $this->getEmailAddress());
+
+				EmailOptionPeer::addSelectColumns($criteria);
+				$this->collEmailOptionList = EmailOptionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EmailOptionPeer::EMAIL_ADDRESS, $this->getEmailAddress());
+
+				EmailOptionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEmailOptionCriteria) || !$this->lastEmailOptionCriteria->equals($criteria)) {
+					$this->collEmailOptionList = EmailOptionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEmailOptionCriteria = $criteria;
+		return $this->collEmailOptionList;
+	}
+
+	
+	public function countEmailOptionList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEmailOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EmailOptionPeer::EMAIL_ADDRESS, $this->getEmailAddress());
+
+		return EmailOptionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEmailOption(EmailOption $l)
+	{
+		$this->collEmailOptionList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getEmailOptionListJoinEmailTemplate($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEmailOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEmailOptionList === null) {
+			if ($this->isNew()) {
+				$this->collEmailOptionList = array();
+			} else {
+
+				$criteria->add(EmailOptionPeer::EMAIL_ADDRESS, $this->getEmailAddress());
+
+				$this->collEmailOptionList = EmailOptionPeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EmailOptionPeer::EMAIL_ADDRESS, $this->getEmailAddress());
+
+			if (!isset($this->lastEmailOptionCriteria) || !$this->lastEmailOptionCriteria->equals($criteria)) {
+				$this->collEmailOptionList = EmailOptionPeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		}
+		$this->lastEmailOptionCriteria = $criteria;
+
+		return $this->collEmailOptionList;
 	}
 
 } 

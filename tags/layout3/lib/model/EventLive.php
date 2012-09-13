@@ -967,8 +967,8 @@ class EventLive extends BaseEventLive
   		$emailContent = $this->getDisclosureEmailTemplate($peopleObj);
   		$emailSubject = $this->getDisclosureEmailSubject();
   		
-  		$options = array('emailLogId'=>$emailLogId);
-	  	Report::sendMail($emailSubject, $emailAddress, $emailContent, $options);
+  		$optionList = array('emailLogId'=>$emailLogId);
+	  	Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 	  	
 	  	echo $emailLogObj->getCreatedAt('d/m/Y H:i');
 	}
