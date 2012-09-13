@@ -58,6 +58,8 @@ class BlogMapBuilder {
 
 		$tMap->addColumn('PUBLISH_DATE', 'PublishDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
+		$tMap->addColumn('IMAGE_SHARE', 'ImageShare', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

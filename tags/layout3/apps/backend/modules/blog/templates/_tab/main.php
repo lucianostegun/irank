@@ -39,6 +39,20 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+	
+	<div class="formRow">
+		<label class="">Data publicação</label>
+		<div class="formRight">
+			<div>
+				<span class="multi"><?php echo input_tag('publishDate', $blogObj->getPublishDate('d/m/Y'), array('maxlength'=>10, 'class'=>'maskDate', 'id'=>'blogPublishDate')) ?></span>
+				<span class="multi"><?php echo input_tag('publishTime', $blogObj->getPublishDate('H:i'), array('maxlength'=>5, 'class'=>'timepicker', 'id'=>'blogPublishTime')) ?></span>
+			</div>
+			<div class="clear"></div>
+			<div class="formNote error" id="blogFormErrorPublishDate"></div>
+			<div class="formNote error" id="blogFormErrorPublishTime"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
 
 	<div class="formRow">
 		<label>Categoria</label>
@@ -95,15 +109,10 @@
 	</div>
 	
 	<div class="formRow">
-		<label class="">Data publicação</label>
+		<label>Imagem divulgação</label>
 		<div class="formRight">
-			<div>
-				<span class="multi"><?php echo input_tag('publishDate', $blogObj->getPublishDate('d/m/Y'), array('maxlength'=>10, 'class'=>'maskDate', 'id'=>'blogPublishDate')) ?></span>
-				<span class="multi"><?php echo input_tag('publishTime', $blogObj->getPublishDate('H:i'), array('maxlength'=>5, 'class'=>'timepicker', 'id'=>'blogPublishTime')) ?></span>
-			</div>
-			<div class="clear"></div>
-			<div class="formNote error" id="blogFormErrorPublishDate"></div>
-			<div class="formNote error" id="blogFormErrorPublishTime"></div>
+			<?php echo input_autocomplete_tag('imageShare', $blogObj->getImageShare(), 'blog/autoCompleteImageShare', 'doSelectBlogImageShare', array('size'=>35, 'maxlength'=>200, 'suggestNew'=>false, 'id'=>'blogImageShare')) ?>
+			<div class="formNote error" id="blogFormErrorImageShare"></div>
 		</div>
 		<div class="clear"></div>
 	</div>

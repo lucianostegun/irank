@@ -57,6 +57,10 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 
 
 	
+	protected $image_share;
+
+
+	
 	protected $enabled;
 
 
@@ -188,6 +192,13 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 		} else {
 			return date($format, $ts);
 		}
+	}
+
+	
+	public function getImageShare()
+	{
+
+		return $this->image_share;
 	}
 
 	
@@ -438,6 +449,20 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setImageShare($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->image_share !== $v) {
+			$this->image_share = $v;
+			$this->modifiedColumns[] = BlogPeer::IMAGE_SHARE;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -540,23 +565,25 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 
 			$this->publish_date = $rs->getTimestamp($startcol + 11, null);
 
-			$this->enabled = $rs->getBoolean($startcol + 12);
+			$this->image_share = $rs->getString($startcol + 12);
 
-			$this->visible = $rs->getBoolean($startcol + 13);
+			$this->enabled = $rs->getBoolean($startcol + 13);
 
-			$this->deleted = $rs->getBoolean($startcol + 14);
+			$this->visible = $rs->getBoolean($startcol + 14);
 
-			$this->locked = $rs->getBoolean($startcol + 15);
+			$this->deleted = $rs->getBoolean($startcol + 15);
 
-			$this->created_at = $rs->getTimestamp($startcol + 16, null);
+			$this->locked = $rs->getBoolean($startcol + 16);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 17, null);
+			$this->created_at = $rs->getTimestamp($startcol + 17, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 18, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 18; 
+						return $startcol + 19; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Blog object", $e);
 		}
@@ -760,21 +787,24 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 				return $this->getPublishDate();
 				break;
 			case 12:
-				return $this->getEnabled();
+				return $this->getImageShare();
 				break;
 			case 13:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 14:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 15:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 16:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 17:
+				return $this->getCreatedAt();
+				break;
+			case 18:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -799,12 +829,13 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 			$keys[9]=>$this->getGlossary(),
 			$keys[10]=>$this->getIsDraft(),
 			$keys[11]=>$this->getPublishDate(),
-			$keys[12]=>$this->getEnabled(),
-			$keys[13]=>$this->getVisible(),
-			$keys[14]=>$this->getDeleted(),
-			$keys[15]=>$this->getLocked(),
-			$keys[16]=>$this->getCreatedAt(),
-			$keys[17]=>$this->getUpdatedAt(),
+			$keys[12]=>$this->getImageShare(),
+			$keys[13]=>$this->getEnabled(),
+			$keys[14]=>$this->getVisible(),
+			$keys[15]=>$this->getDeleted(),
+			$keys[16]=>$this->getLocked(),
+			$keys[17]=>$this->getCreatedAt(),
+			$keys[18]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -857,21 +888,24 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 				$this->setPublishDate($value);
 				break;
 			case 12:
-				$this->setEnabled($value);
+				$this->setImageShare($value);
 				break;
 			case 13:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 14:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 15:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 16:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 17:
+				$this->setCreatedAt($value);
+				break;
+			case 18:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -893,12 +927,13 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[9], $arr)) $this->setGlossary($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setIsDraft($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setPublishDate($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setEnabled($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setVisible($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setDeleted($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setLocked($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setCreatedAt($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setUpdatedAt($arr[$keys[17]]);
+		if (array_key_exists($keys[12], $arr)) $this->setImageShare($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setEnabled($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setVisible($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setDeleted($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setLocked($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setCreatedAt($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setUpdatedAt($arr[$keys[18]]);
 	}
 
 	
@@ -918,6 +953,7 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(BlogPeer::GLOSSARY)) $criteria->add(BlogPeer::GLOSSARY, $this->glossary);
 		if ($this->isColumnModified(BlogPeer::IS_DRAFT)) $criteria->add(BlogPeer::IS_DRAFT, $this->is_draft);
 		if ($this->isColumnModified(BlogPeer::PUBLISH_DATE)) $criteria->add(BlogPeer::PUBLISH_DATE, $this->publish_date);
+		if ($this->isColumnModified(BlogPeer::IMAGE_SHARE)) $criteria->add(BlogPeer::IMAGE_SHARE, $this->image_share);
 		if ($this->isColumnModified(BlogPeer::ENABLED)) $criteria->add(BlogPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(BlogPeer::VISIBLE)) $criteria->add(BlogPeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(BlogPeer::DELETED)) $criteria->add(BlogPeer::DELETED, $this->deleted);
@@ -975,6 +1011,8 @@ abstract class BaseBlog extends BaseObject  implements Persistent {
 		$copyObj->setIsDraft($this->is_draft);
 
 		$copyObj->setPublishDate($this->publish_date);
+
+		$copyObj->setImageShare($this->image_share);
 
 		$copyObj->setEnabled($this->enabled);
 

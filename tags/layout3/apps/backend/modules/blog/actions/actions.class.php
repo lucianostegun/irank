@@ -103,6 +103,30 @@ class blogActions extends sfActions
     exit;
   }
   
+  public function executeAutoCompleteImageShare($request){
+    
+	header('content-type: application/json; charset=UTF-8');
+
+	$directory = Util::getFilePath('images/blog');   
+    $fileList  = array();
+
+    $handler = opendir($directory);
+
+    while( $fileName = readdir($handler) ){
+
+      if($fileName != '.' && $fileName != '..' && preg_match('/\.(jpg|png|gif|jpeg)$/i', $fileName))
+        $fileList[] = $fileName;
+    }
+
+    closedir($handler); 
+   
+	foreach($fileList as $fileName)
+		$resultList[] = '{"id":"'.$fileName.'", "label": "'.$fileName.'", "value": "'.$fileName.'"}';    	
+
+	echo '['.implode(', ', $resultList).']';
+	exit;
+  }
+  
   public function executeConnector($request){
     
 //	error_reporting(0); // Set E_ALL for debuging

@@ -1475,6 +1475,7 @@
 		<column name="glossary" type="VARCHAR" />
 		<column name="is_draft" type="BOOLEAN" default="TRUE" />
 		<column name="publish_date" type="TIMESTAMP" />
+		<column name="image_share" type="VARCHAR" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />

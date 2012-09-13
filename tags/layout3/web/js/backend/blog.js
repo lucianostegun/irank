@@ -64,3 +64,8 @@ function buildPermalink(permalink){
 	
 	$('#blogPermalink').val(permalink);
 }
+
+function doSelectBlogImageShare(imageName, value){
+	
+	$('#blogImageShare').val(value);
+}

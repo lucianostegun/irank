@@ -24,6 +24,7 @@ class Blog extends BaseBlog
 		$tags           = $request->getParameter('tags');
 		$permalink      = $request->getParameter('permalink');
 		$isDraft        = $request->getParameter('isDraft');
+		$imageShare     = $request->getParameter('imageShare');
 		$content        = $request->getParameter('content');
 		$glossary       = $request->getParameter('glossary');
 		$publishDate    = $request->getParameter('publishDate');
@@ -41,6 +42,7 @@ class Blog extends BaseBlog
 		$this->setContent( $content );
 		$this->setGlossary( nvl($glossary) );
 		$this->setIsDraft( ($isDraft?true:false) );
+		$this->setImageShare( nvl($imageShare) );
 		$this->setPublishDate( Util::formatDateTime($publishDate) );
 		$this->setVisible( true );
 		$this->setEnabled( true );

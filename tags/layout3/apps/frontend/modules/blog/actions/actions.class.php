@@ -17,7 +17,7 @@ class blogActions extends sfActions
     
     $this->showStoreBar = false;//true;
     $this->facebookMetaList = array();
-	$this->facebookMetaList['image'] = 'http://[host]/images/blog/logoBlog.png';
+	$this->facebookMetaList['image'] = array('http://[host]/images/blog/logoBlog.png');
   }
   
   public function executeIndex($request){
@@ -38,6 +38,11 @@ class blogActions extends sfActions
 	$this->facebookMetaList['description'] = $this->blogObj->getCaption();
 	$this->facebookMetaList['title']       = 'iRank Blog :: '.$this->blogObj->toString();
 	$this->facebookMetaList['url']         = "http://www.irank.com.br/blog/article/$permalink";
+	
+	$imageShare = $this->blogObj->getImageShare();
+	
+	if( $imageShare )
+		$this->facebookMetaList['image'][] = 'http://[host]/images/blog/'.$imageShare;
   }
   
   public function executeTag($request){
