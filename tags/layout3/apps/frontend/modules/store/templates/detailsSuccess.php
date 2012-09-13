@@ -19,9 +19,11 @@
 	echo input_hidden_tag('productCode', $productCode);
 ?>
 	<div class="productDetail">
+	<?php echo link_to(image_tag('store/discount'), 'home', array()); ?><br/><br/>
+				
 		<div class="productImages">
-			<a href="/images/<?php echo $productObj->getImageCover('full') ?>" rel="lightbox" id="productImageZoom"><?php echo image_tag($productObj->getImageCover(true), array('id'=>'productImagePreview', 'class'=>'productImage')) ?></a>
-			<div class="extraImageList">
+			<a href="/images/<?php echo $productObj->getImageCover('full') ?>" rel="lightbox-product" id="productImageZoom"><?php echo image_tag($productObj->getImageCover(true), array('id'=>'productImagePreview', 'class'=>'productImage')) ?></a>
+			<div id="gallery" class="extraImageList gallery">
 				<?php
 					for($imageIndex=1; $imageIndex <= 5; $imageIndex++){
 						
@@ -30,7 +32,7 @@
 						if( is_null($fileName) )
 							continue;
 						
-						echo link_to(image_tag("store/product/thumb/$fileName", array('class'=>'productImage extra')), '#loadProductPreview("'.$fileName.'")');
+						echo '<a href="/images/store/product/full/'.$fileName.'" rel="lightbox-product">'.image_tag("store/product/thumb/$fileName", array('class'=>'productImage extra')).'</a>';
 					}
 				?>
 			</div>
