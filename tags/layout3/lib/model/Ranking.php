@@ -857,7 +857,7 @@ class Ranking extends BaseRanking
 			
 			$emailObj = new Email();
 			$emailObj->addAlias($paramList);
-			
+
 			$this->save();
 		}catch(Exception $e){}
 	}

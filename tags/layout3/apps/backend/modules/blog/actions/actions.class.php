@@ -105,6 +105,8 @@ class blogActions extends sfActions
   
   public function executeAutoCompleteImageShare($request){
     
+    $term = $request->getParameter('term');
+    
 	header('content-type: application/json; charset=UTF-8');
 
 	$directory = Util::getFilePath('images/blog');   
@@ -114,7 +116,7 @@ class blogActions extends sfActions
 
     while( $fileName = readdir($handler) ){
 
-      if($fileName != '.' && $fileName != '..' && preg_match('/\.(jpg|png|gif|jpeg)$/i', $fileName))
+      if($fileName != '.' && $fileName != '..' && preg_match('/.*'.$term.'.*\.(jpg|png|gif|jpeg)$/i', $fileName))
         $fileList[] = $fileName;
     }
 

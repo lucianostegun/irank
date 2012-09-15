@@ -479,7 +479,7 @@ class eventActions extends sfActions
 	
 	$eventPhotoCommentObj->notify();
 	
-	$readOnly = (!$this->isAuthenticated || !$eventPhotoCommentObj->getEvent()->isMyEvent());
+	$readOnly = (!$this->isAuthenticated || !$eventPhotoCommentObj->getEventPhoto()->getEvent()->isMyEvent());
 	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');

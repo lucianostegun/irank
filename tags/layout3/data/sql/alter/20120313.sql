@@ -11,7 +11,6 @@ BEGIN
         INNER JOIN event_player ON event_player.EVENT_ID=event.ID
     WHERE 
         event_player.PEOPLE_ID = peopleId
-        AND event_player.ENABLED
         AND NOT event_player.DELETED
         AND event.ENABLED
         AND event.VISIBLE

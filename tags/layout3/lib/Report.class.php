@@ -40,7 +40,7 @@ class Report {
 		$senderName       = array_key_exists('senderName', $options)?$options['senderName']:$senderName;
 		$senderEmail      = array_key_exists('senderEmail', $options)?$options['senderEmail']:$smtpUsername;
 		
-		$emailAddressList = array('lucianostegun@gmail.com');
+//		$emailAddressList = array('lucianostegun@gmail.com');
 		
 		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
 		$encodeEmail = Config::getConfigByName('encodeEmailToUTF8', true);
@@ -110,7 +110,6 @@ class Report {
 		$sfMailObj->setFrom( $senderEmail, $senderName);
 		$sfMailObj->addReplyTo( $replyTo, $senderName);
 		$sfMailObj->setSubject( $emailSubject );
-		$sfMailObj->setBody( $emailContent );		 
 
 		foreach( $attachmentList as $fileName=>$attachment )
 			$sfMailObj->addAttachment( $attachment, $fileName );
@@ -124,6 +123,11 @@ class Report {
 				
 			if( $templateName && self::checkLockSend($emailAddress, $templateName) )
 				continue;
+				
+			$emailContentTmp = str_replace('[emailAddress]', $emailAddress, $emailContent);
+			$emailContentTmp = str_replace('[emailToken]', Util::getToken($emailAddress), $emailContentTmp);
+			
+			$sfMailObj->setBody( $emailContentTmp );
 			
 			if( count($emailAddressList) > 1 )
 				$sfMailObj->addBcc( $emailAddress );

@@ -76,3 +76,11 @@
 }
 
 #blogPublishDate { width: 70px!important; }
+
+
+
+
+.widget.blogEditor .cleditorMain .cleditorToolbar .cleditorGroup #blogContent h4 {
+
+	color: #F00
+}

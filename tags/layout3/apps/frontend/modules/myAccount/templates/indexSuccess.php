@@ -2,7 +2,7 @@
 	$messageList = array();
 	
 	if( $userSiteObj->getRankingCount()==0 )
-		$messageList['firstRanking'] = '!Você ainda não está participando de nenhum ranking. <b>'.link_to('Clique aqui', 'ranking/new', array('class'=>'red')).'</b> para criar e compartilhar seu primeiro ranking.';
+		$messageList['firstRanking'] = '!Você ainda não está participando de nenhum ranking. <b>'.link_to('Clique aqui', 'ranking/new', array('class'=>'red')).'</b> para criar e compartilhar seu primeiro torneio.';
 	
 	if( $userSiteObj->getStartBankroll()===null )
 		$messageList['startBankroll'] = '!Você ainda não definiu seu bankroll inicial. Mantenha seu bankroll sempre atualizado.';
