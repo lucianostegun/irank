@@ -10,22 +10,6 @@
 class File extends BaseFile
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-       		Log::quickLog('file', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('file', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function toString(){
 		
 		return $this->getFileName();
@@ -35,8 +19,6 @@ class File extends BaseFile
 
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('file', $this->getPrimaryKey());
 	}
     
 	public function getFilePath($full=false){

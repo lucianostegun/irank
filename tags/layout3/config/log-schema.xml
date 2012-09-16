@@ -83,5 +83,26 @@
 		<column name="comments" type="VARCHAR" />
 		<column name="created_at" type="TIMESTAMP" />
 	</table>
+
+	<table name="access_log" phpName="AccessLog">
+		<column name="user_site_id" type="INTEGER" primaryKey="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="ip_address" type="VARCHAR" />
+	</table>
+
+	<table name="access_admin_log" phpName="AccessAdminLog" package="...apps.backend.lib.model">
+		<column name="user_admin_id" type="INTEGER" primaryKey="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="ip_address" type="VARCHAR" />
+	</table>
+
+	<table name="ranking_import_log" phpName="RankingImportLog">
+		<column name="ranking_id" type="INTEGER" primaryKey="true" />
+		<column name="ranking_id_from" type="INTEGER" primaryKey="true" />
+		<column name="import_table" type="VARCHAR" primaryKey="true"  />
+		<column name="object_id" type="INTEGER" primaryKey="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
 	
 </database>

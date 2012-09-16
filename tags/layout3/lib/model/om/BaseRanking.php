@@ -129,18 +129,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	protected $lastRankingPlaceCriteria = null;
 
 	
-	protected $collRankingImportLogListRelatedByRankingId;
-
-	
-	protected $lastRankingImportLogRelatedByRankingIdCriteria = null;
-
-	
-	protected $collRankingImportLogListRelatedByRankingIdFrom;
-
-	
-	protected $lastRankingImportLogRelatedByRankingIdFromCriteria = null;
-
-	
 	protected $collRankingPrizeSplitList;
 
 	
@@ -796,13 +784,34 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 			$con = Propel::getConnection(RankingPeer::DATABASE_NAME);
 		}
 
+		$tableName = RankingPeer::TABLE_NAME;
+		
 		try {
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
 		} catch (PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -874,22 +883,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 			if ($this->collRankingPlaceList !== null) {
 				foreach($this->collRankingPlaceList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collRankingImportLogListRelatedByRankingId !== null) {
-				foreach($this->collRankingImportLogListRelatedByRankingId as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collRankingImportLogListRelatedByRankingIdFrom !== null) {
-				foreach($this->collRankingImportLogListRelatedByRankingIdFrom as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -999,22 +992,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 				if ($this->collRankingPlaceList !== null) {
 					foreach($this->collRankingPlaceList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collRankingImportLogListRelatedByRankingId !== null) {
-					foreach($this->collRankingImportLogListRelatedByRankingId as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collRankingImportLogListRelatedByRankingIdFrom !== null) {
-					foreach($this->collRankingImportLogListRelatedByRankingIdFrom as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1382,14 +1359,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 			foreach($this->getRankingPlaceList() as $relObj) {
 				$copyObj->addRankingPlace($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getRankingImportLogListRelatedByRankingId() as $relObj) {
-				$copyObj->addRankingImportLogRelatedByRankingId($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getRankingImportLogListRelatedByRankingIdFrom() as $relObj) {
-				$copyObj->addRankingImportLogRelatedByRankingIdFrom($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getRankingPrizeSplitList() as $relObj) {
@@ -1930,146 +1899,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 		$this->lastRankingPlaceCriteria = $criteria;
 
 		return $this->collRankingPlaceList;
-	}
-
-	
-	public function initRankingImportLogListRelatedByRankingId()
-	{
-		if ($this->collRankingImportLogListRelatedByRankingId === null) {
-			$this->collRankingImportLogListRelatedByRankingId = array();
-		}
-	}
-
-	
-	public function getRankingImportLogListRelatedByRankingId($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collRankingImportLogListRelatedByRankingId === null) {
-			if ($this->isNew()) {
-			   $this->collRankingImportLogListRelatedByRankingId = array();
-			} else {
-
-				$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				$this->collRankingImportLogListRelatedByRankingId = RankingImportLogPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRankingImportLogRelatedByRankingIdCriteria) || !$this->lastRankingImportLogRelatedByRankingIdCriteria->equals($criteria)) {
-					$this->collRankingImportLogListRelatedByRankingId = RankingImportLogPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastRankingImportLogRelatedByRankingIdCriteria = $criteria;
-		return $this->collRankingImportLogListRelatedByRankingId;
-	}
-
-	
-	public function countRankingImportLogListRelatedByRankingId($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
-
-		return RankingImportLogPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addRankingImportLogRelatedByRankingId(RankingImportLog $l)
-	{
-		$this->collRankingImportLogListRelatedByRankingId[] = $l;
-		$l->setRankingRelatedByRankingId($this);
-	}
-
-	
-	public function initRankingImportLogListRelatedByRankingIdFrom()
-	{
-		if ($this->collRankingImportLogListRelatedByRankingIdFrom === null) {
-			$this->collRankingImportLogListRelatedByRankingIdFrom = array();
-		}
-	}
-
-	
-	public function getRankingImportLogListRelatedByRankingIdFrom($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collRankingImportLogListRelatedByRankingIdFrom === null) {
-			if ($this->isNew()) {
-			   $this->collRankingImportLogListRelatedByRankingIdFrom = array();
-			} else {
-
-				$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				$this->collRankingImportLogListRelatedByRankingIdFrom = RankingImportLogPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRankingImportLogRelatedByRankingIdFromCriteria) || !$this->lastRankingImportLogRelatedByRankingIdFromCriteria->equals($criteria)) {
-					$this->collRankingImportLogListRelatedByRankingIdFrom = RankingImportLogPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastRankingImportLogRelatedByRankingIdFromCriteria = $criteria;
-		return $this->collRankingImportLogListRelatedByRankingIdFrom;
-	}
-
-	
-	public function countRankingImportLogListRelatedByRankingIdFrom($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
-
-		return RankingImportLogPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addRankingImportLogRelatedByRankingIdFrom(RankingImportLog $l)
-	{
-		$this->collRankingImportLogListRelatedByRankingIdFrom[] = $l;
-		$l->setRankingRelatedByRankingIdFrom($this);
 	}
 
 	

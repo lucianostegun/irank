@@ -25,14 +25,14 @@ class AccessLogMapBuilder {
 	
 	public function doBuild()
 	{
-		$this->dbMap = Propel::getDatabaseMap('propel');
+		$this->dbMap = Propel::getDatabaseMap('log');
 
 		$tMap = $this->dbMap->addTable('access_log');
 		$tMap->setPhpName('AccessLog');
 
 		$tMap->setUseIdGenerator(false);
 
-		$tMap->addForeignPrimaryKey('USER_SITE_ID', 'UserSiteId', 'int' , CreoleTypes::INTEGER, 'user_site', 'ID', true, null);
+		$tMap->addPrimaryKey('USER_SITE_ID', 'UserSiteId', 'int', CreoleTypes::INTEGER, true, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

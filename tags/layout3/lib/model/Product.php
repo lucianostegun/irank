@@ -23,29 +23,11 @@ class Product extends BaseProduct
 		return "$categoryShortName $productName";
 	}
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-       		Log::quickLog('product', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('product', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function delete($con=null){
 		
 		$this->setVisible(false);
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('product', $this->getPrimaryKey());
 	}
 	
 	public function quickSave($request){

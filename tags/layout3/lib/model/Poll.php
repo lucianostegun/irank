@@ -9,21 +9,6 @@
  */ 
 class Poll extends BasePoll
 {
-	public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-       		Log::quickLog('poll', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('poll', $this->getPrimaryKey(), $e);
-        }
-    }
 	
 	public function delete($con=null){
 		

@@ -14,22 +14,6 @@ class CashTable extends BaseCashTable
 	private $totalBuyin       = null;
 	private $totalCashout     = null;
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save($con);
-			
-        	Log::quickLog('cash_table', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('cash_table', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function delete($con=null){
 		
 		$this->setVisible(false);

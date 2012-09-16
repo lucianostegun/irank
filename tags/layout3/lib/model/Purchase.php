@@ -10,29 +10,11 @@
 class Purchase extends BasePurchase
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-       		Log::quickLog('purchase', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('purchase', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function delete($con=null){
 		
 		$this->setVisible(false);
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('purchase', $this->getPrimaryKey());
 	}
 	
 	public function getCode(){

@@ -20,9 +20,6 @@ abstract class BaseAccessAdminLog extends BaseObject  implements Persistent {
 	protected $ip_address;
 
 	
-	protected $aUserAdmin;
-
-	
 	protected $alreadyInSave = false;
 
 	
@@ -75,10 +72,6 @@ abstract class BaseAccessAdminLog extends BaseObject  implements Persistent {
 		if ($this->user_admin_id !== $v) {
 			$this->user_admin_id = $v;
 			$this->modifiedColumns[] = AccessAdminLogPeer::USER_ADMIN_ID;
-		}
-
-		if ($this->aUserAdmin !== null && $this->aUserAdmin->getId() !== $v) {
-			$this->aUserAdmin = null;
 		}
 
 	} 
@@ -172,13 +165,34 @@ abstract class BaseAccessAdminLog extends BaseObject  implements Persistent {
 			$con = Propel::getConnection(AccessAdminLogPeer::DATABASE_NAME);
 		}
 
+		$tableName = AccessAdminLogPeer::TABLE_NAME;
+		
 		try {
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
 		} catch (PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -188,15 +202,6 @@ abstract class BaseAccessAdminLog extends BaseObject  implements Persistent {
 	{
 		$affectedRows = 0; 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
-
-
-												
-			if ($this->aUserAdmin !== null) {
-				if ($this->aUserAdmin->isModified()) {
-					$affectedRows += $this->aUserAdmin->save($con);
-				}
-				$this->setUserAdmin($this->aUserAdmin);
-			}
 
 
 						if ($this->isModified()) {
@@ -243,14 +248,6 @@ abstract class BaseAccessAdminLog extends BaseObject  implements Persistent {
 			$retval = null;
 
 			$failureMap = array();
-
-
-												
-			if ($this->aUserAdmin !== null) {
-				if (!$this->aUserAdmin->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aUserAdmin->getValidationFailures());
-				}
-			}
 
 
 			if (($retval = AccessAdminLogPeer::doValidate($this, $columns)) !== true) {
@@ -398,35 +395,6 @@ abstract class BaseAccessAdminLog extends BaseObject  implements Persistent {
 			self::$peer = new AccessAdminLogPeer();
 		}
 		return self::$peer;
-	}
-
-	
-	public function setUserAdmin($v)
-	{
-
-
-		if ($v === null) {
-			$this->setUserAdminId(NULL);
-		} else {
-			$this->setUserAdminId($v->getId());
-		}
-
-
-		$this->aUserAdmin = $v;
-	}
-
-
-	
-	public function getUserAdmin($con = null)
-	{
-		if ($this->aUserAdmin === null && ($this->user_admin_id !== null)) {
-						include_once 'apps/backend/lib/model/om/BaseUserAdminPeer.php';
-
-			$this->aUserAdmin = UserAdminPeer::retrieveByPK($this->user_admin_id, $con);
-
-			
-		}
-		return $this->aUserAdmin;
 	}
 
 } 

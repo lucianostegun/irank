@@ -19,8 +19,6 @@
 	echo input_hidden_tag('productCode', $productCode);
 ?>
 	<div class="productDetail">
-	<?php echo link_to(image_tag('store/discount'), 'home', array()); ?><br/><br/>
-				
 		<div class="productImages">
 			<a href="/images/<?php echo $productObj->getImageCover('full') ?>" rel="lightbox-product" id="productImageZoom"><?php echo image_tag($productObj->getImageCover(true), array('id'=>'productImagePreview', 'class'=>'productImage')) ?></a>
 			<div id="gallery" class="extraImageList gallery">

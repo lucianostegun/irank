@@ -9,29 +9,11 @@
  */ 
 class RankingPlace extends BaseRankingPlace
 {
-	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
 
-			parent::save();
-			
-       		Log::quickLog('ranking_place', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('ranking_place', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function delete($con=null){
 		
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('ranking_place', $this->getPrimaryKey());
 	}
 	
 	public function quickSave($request){

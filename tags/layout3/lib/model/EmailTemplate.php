@@ -15,23 +15,7 @@ class EmailTemplate extends BaseEmailTemplate
 		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
 	}
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-        	Log::quickLog('email_template', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('email_template', $this->getPrimaryKey(), $e);
-        }
-    }
-	
-	public function delete($con=null){
+    public function delete($con=null){
 		
 		$this->setVisible(false);
 		$this->setDeleted(true);

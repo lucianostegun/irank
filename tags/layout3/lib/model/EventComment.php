@@ -14,28 +14,8 @@ class EventComment extends BaseEventComment
 		
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('event_comment', $this->getPrimaryKey());
 	}
 
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-    		$this->postOnWall();
-
-			parent::save();
-			
-       		Log::quickLog('event_comment', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_comment', $this->getPrimaryKey(), $e);
-        }
-    }
-    
     public function getComment($format=false){
     	
     	$comment = parent::getComment();
@@ -59,14 +39,6 @@ class EventComment extends BaseEventComment
 		$peopleId = MyTools::getAttribute('peopleId');
 			
 		return ($this->getPeopleId()==$peopleId);
-	}
-	
-	public function postOnWall(){
-		
-		if( !$this->isNew() )
-			return false;
-			
-       	HomeWall::doLog('postou um comentário no evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventComment', true);
 	}
 	
 	public function notify(){

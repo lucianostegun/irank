@@ -370,21 +370,6 @@
 		</foreign-key>
 	</table>
 
-	<table name="ranking_import_log" phpName="RankingImportLog">
-		<column name="ranking_id" type="INTEGER" primaryKey="true" />
-		<column name="ranking_id_from" type="INTEGER" primaryKey="true" />
-		<column name="import_table" type="VARCHAR" primaryKey="true"  />
-		<column name="object_id" type="INTEGER" primaryKey="true" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
-		<foreign-key foreignTable="ranking">
-			<reference local="ranking_id" foreign="id" />
-		</foreign-key>
-		<foreign-key foreignTable="ranking">
-			<reference local="ranking_id_from" foreign="id" />
-		</foreign-key>
-	</table>
-
 	<table name="ranking_prize_split" phpName="RankingPrizeSplit">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
 		<column name="ranking_id" type="INTEGER" />
@@ -838,24 +823,6 @@
 		</foreign-key>
 		<foreign-key foreignTable="event_live">
 			<reference local="event_live_id" foreign="id" />
-		</foreign-key>
-	</table>
-
-	<table name="access_log" phpName="AccessLog">
-		<column name="user_site_id" type="INTEGER" primaryKey="true" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="ip_address" type="VARCHAR" />
-		<foreign-key foreignTable="user_site">
-			<reference local="user_site_id" foreign="id" />
-		</foreign-key>
-	</table>
-
-	<table name="access_admin_log" phpName="AccessAdminLog" package="...apps.backend.lib.model">
-		<column name="user_admin_id" type="INTEGER" primaryKey="true" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="ip_address" type="VARCHAR" />
-		<foreign-key foreignTable="user_admin">
-			<reference local="user_admin_id" foreign="id" />
 		</foreign-key>
 	</table>
 

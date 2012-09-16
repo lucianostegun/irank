@@ -17,22 +17,6 @@ class ProductItem extends BaseProductItem
 		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
 	}
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-       		Log::quickLog('product_item', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('product_item', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function delete($con=null){
 		
 		$this->setVisible(false);
@@ -40,8 +24,6 @@ class ProductItem extends BaseProductItem
 		$this->save();
 		
 		$this->getProduct()->updateStock();
-		
-		Log::quickLogDelete('product_item', $this->getPrimaryKey());
 	}
 	
 	public function quickSave($request){

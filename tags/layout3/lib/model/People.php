@@ -10,23 +10,6 @@
 class People extends BasePeople
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isColumnModified( PeoplePeer::VISIBLE );
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-			if( $this->getVisible() )				
-        		Log::quickLog('people', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('people', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function cleanRecord(){
 		
 	}

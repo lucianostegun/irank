@@ -49,22 +49,6 @@ class PurchaseTransactionLog extends BasePurchaseTransactionLog
 	const PAYMENT_CODE_401 = 'Saldo PagSeguro';
 	const PAYMENT_CODE_501 = 'Oi Paggo';
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-       		Log::quickLog('purchase_transaction_log', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('purchase_transaction_log', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public static function getList(Criteria $criteria=null){
 		
 		if( is_null($criteria) )

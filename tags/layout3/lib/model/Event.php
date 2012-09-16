@@ -34,22 +34,9 @@ class Event extends BaseEvent
 	
     public function save($con=null){
     	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
+		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
 
-    		$this->postOnWall();
-    		
-    		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
-
-			parent::save();
-			
-        	Log::quickLog('event', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event', $this->getPrimaryKey(), $e);
-        }
+		parent::save();
     }
 	
 	public function delete($con=null){
@@ -61,8 +48,6 @@ class Event extends BaseEvent
 		$this->setDeleted(true);
 		$this->setPermalink(null);
 		$this->save();
-		
-		Log::quickLogDelete('event', $this->getPrimaryKey());
 		
 		$rankingObj->decraseEvents();
 		$rankingObj->updateScores();
@@ -918,21 +903,6 @@ class Event extends BaseEvent
 			return null;
 		
 		return $rankingPlaceObj->getPlaceName();
-	}
-	
-	public function postOnWall(){
-		
-		if( $this->getDeleted() || !$this->getVisible() )
-			return false;
-			
-		$isNew       = $this->isNew();
-		$savedResult = $this->isColumnModified( EventPeer::SAVED_RESULT );
-		
-		if( $isNew )
-        	HomeWall::doLog('criado novo evento <b>'.$this->getEventName().'</b>', 'event');
-		
-		if( $savedResult && $this->getSavedResult() )
-    		HomeWall::doLog('o resultado do evento <b>'.$this->getEventName().'</b> foi atualizado', 'event');
 	}
 	
 	public function isShared($peopleIdException){

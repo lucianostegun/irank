@@ -100,12 +100,12 @@ class Log extends BaseLog
     	throw new LogException('Erro ao salvar o registro '.$primaryKey.' na tabela '.$tableName.'. [' . $e->getMessage() . ']');
     }
     
-    public static function quickLogDelete($tableName, $primaryKey){
+    public static function quickLogDelete($tableName, $primaryKey, $className=null){
     	
     	if( is_array($primaryKey) )    		
     		$primaryKey = implode(' e ', $primaryKey);
     	
-    	self::doLog('Excluiu o registro '.$primaryKey.' na tabela '.$tableName);
+    	self::doLog('Excluiu o registro '.$primaryKey.' na tabela '.$tableName, $className);
     }
     
     public function getMessage( $handle=false ){

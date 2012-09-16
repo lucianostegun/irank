@@ -10,25 +10,6 @@
 class UserSite extends BaseUserSite
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-			if( $this->getVisible() )				
-        		Log::quickLog('userSite', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        		
-        	$this->postOnWall($isNew);
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('userSite', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function quickSave($request){
 		
 		$username        = $request->getParameter('username');
@@ -341,12 +322,6 @@ class UserSite extends BaseUserSite
 		
 		foreach($this->getRankingList() as $rankingObj)
 			$rankingObj->updateEmailGroup();
-	}
-	
-	public function postOnWall($isNew){
-		
-		if( $isNew )
-   			HomeWall::doLog('juntou-se aos jogadores do <b>iRank</b>. Seja bem vindo!', 'userSite', true, $this->getId());
 	}
 	
 	public function getEventListResume($limit, $offset=0, $eventDate=null){

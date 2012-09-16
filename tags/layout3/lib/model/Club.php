@@ -15,25 +15,7 @@ class Club extends BaseClub
 		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
 	}
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-//    		$this->postOnWall();
-    		
-			parent::save();
-			
-       		Log::quickLog('club', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('club', $this->getPrimaryKey(), $e);
-        }
-    }
-	
-	public function delete($con=null){
+    public function delete($con=null){
 		
 		$tagName = $this->getTagName();
 		

@@ -9,32 +9,12 @@
  */ 
 class EventPhotoComment extends BaseEventPhotoComment
 {
-	
+
 	public function delete($con=null){
 		
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('event_photo_comment', $this->getPrimaryKey());
 	}
-
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-    		$this->postOnWall();
-
-			parent::save();
-			
-       		Log::quickLog('event_photo_comment', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_photo_comment', $this->getPrimaryKey(), $e);
-        }
-    }
     
     public function getCode(){
     	
@@ -67,14 +47,6 @@ class EventPhotoComment extends BaseEventPhotoComment
 		$peopleId = MyTools::getAttribute('peopleId');
 
 		return ($this->getPeopleId()==$peopleId);
-	}
-	
-	public function postOnWall(){
-		
-		if( !$this->isNew() )
-			return false;
-			
-       	HomeWall::doLog('postou um comentário na foto do evento <b>'.$this->getEventPhoto()->getEvent()->getEventName().'</b>', 'eventPhotoComment', true);
 	}
 	
 	public function notify(){

@@ -20,23 +20,10 @@ class EventLive extends BaseEventLive
 	
     public function save($con=null){
     	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
+		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
+		$this->setEnrollmentStartDate(nvl($this->getEnrollmentStartDate(), '2012-01-01'));
 
-//    		$this->postOnWall();
-    		
-    		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
-    		$this->setEnrollmentStartDate(nvl($this->getEnrollmentStartDate(), '2012-01-01'));
-
-			parent::save($con);
-			
-        	Log::quickLog('event_live', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_live', $this->getPrimaryKey(), $e);
-        }
+		parent::save($con);
     }
 	
 	public function delete($con=null){

@@ -25,16 +25,16 @@ class RankingImportLogMapBuilder {
 	
 	public function doBuild()
 	{
-		$this->dbMap = Propel::getDatabaseMap('propel');
+		$this->dbMap = Propel::getDatabaseMap('log');
 
 		$tMap = $this->dbMap->addTable('ranking_import_log');
 		$tMap->setPhpName('RankingImportLog');
 
 		$tMap->setUseIdGenerator(false);
 
-		$tMap->addForeignPrimaryKey('RANKING_ID', 'RankingId', 'int' , CreoleTypes::INTEGER, 'ranking', 'ID', true, null);
+		$tMap->addPrimaryKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignPrimaryKey('RANKING_ID_FROM', 'RankingIdFrom', 'int' , CreoleTypes::INTEGER, 'ranking', 'ID', true, null);
+		$tMap->addPrimaryKey('RANKING_ID_FROM', 'RankingIdFrom', 'int', CreoleTypes::INTEGER, true, null);
 
 		$tMap->addPrimaryKey('IMPORT_TABLE', 'ImportTable', 'string', CreoleTypes::VARCHAR, true, null);
 

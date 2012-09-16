@@ -10,22 +10,6 @@
 class RankingHistory extends BaseRankingHistory
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-       		Log::quickLog('ranking_history', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('ranking_history', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function updateScore(){
 		
 		$rankingDate = $this->getRankingDate('Y-m-d');

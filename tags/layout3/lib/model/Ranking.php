@@ -22,30 +22,10 @@ class Ranking extends BaseRanking
 		Util::executeQuery('UPDATE ranking SET players=0, events=0 WHERE id = '.$this->getId());
 	}
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-    		$this->postOnWall();
-    		
-			parent::save();
-			
-       		Log::quickLog('ranking', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('ranking', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function delete($con=null){
 		
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('ranking', $this->getPrimaryKey());
 		
 		$this->notifyDelete();
 	}
@@ -901,25 +881,6 @@ class Ranking extends BaseRanking
 			$emailObj = new Email();
 			$emailObj->delRedir(Config::DOMAIN_ID, $paramList);
 		}catch(Exception $e){}
-	}
-	
-	public function postOnWall(){
-		
-		if( $this->getDeleted() || !$this->getVisible() )
-			return false;
-			
-		$isNew     = $this->isNew();
-		$classify  = $this->isColumnModified( RankingPeer::RANKING_TYPE_ID );
-		$gameStyle = $this->isColumnModified( RankingPeer::GAME_STYLE_ID );
-		
-		if( $isNew )
-    		HomeWall::doLog('criado novo ranking <b>'.$this->getRankingName().'</b>', 'ranking');
-		
-		if( !$isNew && $classify )
-    		HomeWall::doLog('classificação do ranking <b>'.$this->getRankingName().'</b> alterada para <b>'.$this->getRankingType()->getDescription().'</b>', 'ranking');
-		
-		if( !$isNew && $gameStyle )
-    		HomeWall::doLog('estilo do ranking <b>'.$this->getRankingName().'</b> alterado para <b>'.$this->getGameStyle()->getDescription().'</b>', 'ranking');
 	}
 	
 	public static function getPaidPlaces($eventId, $buyins){

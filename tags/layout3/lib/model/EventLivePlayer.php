@@ -10,25 +10,7 @@
 class EventLivePlayer extends BaseEventLivePlayer
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-//    		$this->postOnWall();
-    		
-			parent::save();
-			
-       		Log::quickLog('event_live_player', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_live_player', $this->getPrimaryKey(), $e);
-        }
-    }
-	
-	public function togglePresence($enrollmentStatus='enrolled'){
+    public function togglePresence($enrollmentStatus='enrolled'){
 
 		// Se estiver confirmado (enabled=true) marca como desconfirmado		
 		if( $this->isEnrollmentStatus(array('enrolled', 'confirmed')) ){

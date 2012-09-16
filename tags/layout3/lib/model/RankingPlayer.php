@@ -10,24 +10,6 @@
 class RankingPlayer extends BaseRankingPlayer
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			$this->postOnWall();
-
-			parent::save();
-			
-       		Log::quickLog('ranking_player', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('ranking_player', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function updateScore(){
 		
 		$totalScore = Util::executeOne('SELECT SUM(event_player.SCORE) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
@@ -107,14 +89,5 @@ class RankingPlayer extends BaseRankingPlayer
 	public static function getXml($rankingPlayerList){
 		
 		return Util::buildXml($rankingPlayerList, 'rankingPlayers', 'rankingPlayer');
-	}
-	
-	public function postOnWall(){
-		
-		$isNew    = $this->isNew();
-		$peopleId = MyTools::getAttribute('peopleId');
-		
-		if( $isNew && $peopleId!=$this->getPeopleId() )
-        	HomeWall::doLog('agora é jogador do ranking <b>'.$this->getRanking()->getRankingName().'</b>', 'rankingPlayer', true, false, $this->getPeople()->getFirstName());		
 	}
 }

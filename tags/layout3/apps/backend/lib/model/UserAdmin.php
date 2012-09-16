@@ -10,23 +10,7 @@
 class UserAdmin extends BaseUserAdmin
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-        	Log::quickLog('user_admin', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('user_admin', $this->getPrimaryKey(), $e);
-        }
-    }
-	
-	public function quickSave($request, $fromUser=false){
+    public function quickSave($request, $fromUser=false){
 		
 		$peopleId     = $request->getParameter('peopleId');
 		$emailAddress = $request->getParameter('emailAddress');

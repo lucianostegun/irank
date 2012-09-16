@@ -10,23 +10,7 @@
 class CashTableSession extends BaseCashTableSession
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-        	Log::quickLog('cash_table_session', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('cash_table_session', $this->getPrimaryKey(), $e);
-        }
-    }
-	
-	public function delete($con=null){
+    public function delete($con=null){
 		
 		$this->setVisible(false);
 		$this->setDeleted(true);
