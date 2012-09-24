@@ -146,7 +146,6 @@ $moduleName = $sf_context->getModuleName();
 			<?php echo link_to('minha conta', '/myAccount/index') ?> | 
 			<?php echo link_to('mural de fotos', '/photoWall/index') ?> | 
 			<?php echo link_to('onde jogar', '/club/index') ?><br/> 
-			<?php echo link_to('agenda', '/eventLive/index') ?> | 
 			<?php echo link_to('convidar amigos', '/friendInvite/index') ?> | 
 			<?php echo link_to('feedback', '/feedback/index') ?> | 
 			<?php echo link_to('contato', '/contact/index') ?>

@@ -47,7 +47,7 @@ function showClubTab(element){
 
 function loadClubTab(element, clubId){
 	
-	if((/ loaded/).test(element.className) )
+	if( element.hasClassName('loaded') )
 		return;
 	
 	var tabId = element.id.replace('club', '');
