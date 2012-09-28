@@ -238,14 +238,12 @@ class DiscountCoupon extends BaseDiscountCoupon
 			if( $discountValueMostExpensiveProduct > ($mostExpensiveItemValue*$mostExpensiveItemQuantity) )
 	  			$discountValueMostExpensiveProduct = ($mostExpensiveItemValue*$mostExpensiveItemQuantity);
 	  	}
-
-	  	
-	  	
 	  	
 	  	$discountValue = $discountValueShipping+$discountValueOrder+$discountValueTotal+$discountValueCheaperItem+$discountValueCheaperProduct+$discountValueMostExpensiveItem+$discountValueMostExpensiveProduct;
+	  	$totalValue    = $cartSessionObj->orderValue + $cartSessionObj->shippingValue;
 	  	
-	  	if( $discountValue > $cartSessionObj->totalValue )
-	  		$discountValue = $cartSessionObj->totalValue;
+	  	if( $discountValue > $totalValue )
+	  		$discountValue = $totalValue;
 	  	
 	  	return $discountValue;
 	}

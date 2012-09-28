@@ -1032,8 +1032,6 @@ class storeActions extends sfActions
 		  	$discountValue    = $discountCouponObj->getDiscount($cartSessionObj);
 	  	}
 	  	
-	  	
-	  	
 		$cartSessionObj->discountCouponId = $discountCouponId;
 		$cartSessionObj->discountCoupon   = $discountCoupon;
 		$cartSessionObj->discountValue    = $discountValue;

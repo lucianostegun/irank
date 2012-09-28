@@ -2,7 +2,7 @@ fields:
        
   paymethod:
     required:
-      msg:       form.error.requiredField
+      msg:       Selecione a forma de pagamento
        
   addressZipcode:
     required:
