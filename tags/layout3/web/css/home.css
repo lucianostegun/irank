@@ -483,7 +483,8 @@
 
 #blogHighlight {
 
-	margin-top: 15px
+	margin-top: 15px;
+	width: 550px;
 }
 
 #blogHighlight img {
@@ -541,4 +542,77 @@
 	padding: 0px 0px 0px 0px;
 	color: #202020;
 	width: 520px;
+}
+
+#blogHighlight hr {
+
+	width: 500px;
+	margin-left: 30px;
+	margin-top: 20px
+}
+
+
+
+
+
+
+
+.blog.suggest {
+
+	margin-top: 10px;
+	margin-left: 20px
+}
+
+.blog.suggest h1 {
+
+	clear: both;
+	float: left;
+	font-size: 10px;
+	color: #909090;
+	font-weight: normal;
+	position: relative;
+	padding: 0px;
+	margin: 0px;
+	top: 1px;
+	width: 90px;
+}
+
+.blog.suggest a:hover h1 {
+
+	color: #808080;
+}
+
+.blog.suggest h2 {
+
+	float: left;
+	border: none;
+	padding: 0px;
+	margin: 0px 0px 0px 10px;
+	background: none;
+	color: #101010;
+	font-weight: bold;
+	top: 0px;
+	font-size: 12px;
+	text-transform: none;
+}
+
+.blog.suggest a:hover h2 {
+
+	color: #C91E1E;
+}
+
+.blog.suggest h3 {
+
+	clear: both;
+	color: #404040;
+	font-weight: normal;
+	width: 500px;
+	padding-top: 3px;
+	font-family: calibri, Arial, Sans serif;
+	font-size: 13px;
+}
+
+.blog.suggest a:hover {
+
+	text-decoration: none;
 }

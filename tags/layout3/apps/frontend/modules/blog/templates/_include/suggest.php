@@ -8,6 +8,10 @@
 	$criteria->add( BlogPeer::ID, $blogId, Criteria::NOT_EQUAL );
 	$criteria->add( BlogPeer::IS_DRAFT, false );
 	
+	$criterion = $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
+	$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, null ) );
+	$criteria->add($criterion);
+	
 	$criteria->setLimit(7);
 	$criteria->setOffset(0);
 	$blogObjList = Blog::getList($criteria);

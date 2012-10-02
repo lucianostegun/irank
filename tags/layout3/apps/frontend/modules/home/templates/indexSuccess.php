@@ -10,10 +10,12 @@
 ?>
 <div class="clear"></div>
 </div>
-
+<div style="float: left">
 <?php include_partial('home/include/highlight') ?>
+<?php include_partial('blog/include/highlight'); ?>
+</div>
 
-<div class="channels">
+<div class="channels" style="height: 730px">
 	<div class="channel">
 		<div class="image"><?php echo link_to(image_tag('home/money'), 'myAccount/bankroll') ?></div>
 		<div class="description">
@@ -49,6 +51,12 @@
 			Histórico de posições, total gastos, prêmios e tudo sobre os rankings nas datas que houveram eventos.
 		</div>
 	</div>
+	<?php
+		if( rand(0, 100) > 30 )
+			include_partial('store/include/offerHome');
+		else
+			include_partial('home/include/googleAdSense');
+	?>
 </div>
 
 <div class="clear"></div>
@@ -60,10 +68,6 @@ $eventPhotoIdRight = $eventPhotoContestObj->getEventPhotoIdRight();
 
 $zoomLeft  = 'home/eventPhoto?id='.$eventPhotoIdLeft.'&zoom=1';
 $zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
-?>
-
-<?php
-	include_partial('blog/include/highlight');
 ?>
 
 <div id="photoVote">

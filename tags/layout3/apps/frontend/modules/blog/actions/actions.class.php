@@ -15,7 +15,7 @@ class blogActions extends sfActions
     $blogId       = $this->getRequestParameter('id');
     $this->blogId = $this->getRequestParameter('blogId', $blogId);
     
-    $this->showStoreBar = false;//true;
+    $this->showStoreBar = true;
     $this->facebookMetaList = array();
 	$this->facebookMetaList['image'] = array('http://[host]/images/blog/logoBlog.png');
   }
