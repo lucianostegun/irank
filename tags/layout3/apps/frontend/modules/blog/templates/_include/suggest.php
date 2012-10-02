@@ -12,7 +12,7 @@
 	$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, null ) );
 	$criteria->add($criterion);
 	
-	$criteria->setLimit(7);
+//	$criteria->setLimit(7);
 	$criteria->setOffset(0);
 	$blogObjList = Blog::getList($criteria);
 	
