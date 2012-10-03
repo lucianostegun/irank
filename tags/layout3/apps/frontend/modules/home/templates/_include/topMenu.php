@@ -5,6 +5,6 @@
 	echo link_to('Blog', '/blog', array('class'=>($moduleName=='blog'?'active':'')));
 	echo link_to('Minha conta', '/myAccount', array('class'=>($moduleName=='myAccount'?'active':'')));
 	echo link_to('Onde jogar', '/club', array('class'=>($moduleName=='club'?'active':'')));
-	echo link_to(__('topMenu.contact'), '/contact', array('class'=>($moduleName=='contact'?'active':'')));
+	echo link_to('Contato', '/contact', array('class'=>($moduleName=='contact'?'active':'')));
 	echo link_to('Loja virtual', '/store', array('class'=>'store last'.($moduleName=='store'?' active':'')));
 ?>

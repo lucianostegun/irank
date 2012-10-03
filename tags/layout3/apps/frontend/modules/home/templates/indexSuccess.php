@@ -52,10 +52,7 @@
 		</div>
 	</div>
 	<?php
-		if( rand(0, 100) > 30 )
-			include_partial('store/include/offerHome');
-		else
-			include_partial('home/include/googleAdSense');
+		include_partial('store/include/offerHome');
 	?>
 </div>
 
