@@ -18,7 +18,7 @@ event_permalink:
   url:    /event/:rankingTag/:eventDate/:eventName
   param:  { module: event, action: permalink }
   requirements:
-    rankingTag: "[a-z]+[a-z0-9_]*"
+    rankingTag: "[a-zA-Z0-9]+[a-z0-9_]*"
     eventDate: "[0-9]{4}-[0-9]{2}-[0-9]{2}"
     
 email_option:

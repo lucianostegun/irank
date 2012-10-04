@@ -1360,7 +1360,6 @@ class Event extends BaseEvent
 		
 		$eventName  = preg_replace('/\/[^a-z0-9]*/', '/', $eventName);
 		$eventName  = preg_replace('/[^a-z0-9]*\//', '/', $eventName);
-		$eventName  = preg_replace('/^[^a-z]*/', '', $eventName);
 		$eventName  = preg_replace('/[^a-z0-9]*$/', '', $eventName);
 		
 		$permalink = sprintf('%s/%s/%s', $rankingTag, $eventDate, $eventName);
