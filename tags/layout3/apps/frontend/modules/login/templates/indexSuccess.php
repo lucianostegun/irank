@@ -42,8 +42,8 @@
 						<td><?php echo input_password_tag('password', null, array('id'=>'loginPassword', 'size'=>20, 'maxlength'=>15)) ?></td>
 					</tr>
 					<tr>
-						<td class="pt20"><?php echo button_tag('loginSubmit', 'Entrar', array('onclick'=>'doLogin()')) ?></td>
-						<th class="pt20 nowrap"><?php echo link_to('Recuperar senha', '#togglePasswordRecovery()', array('id'=>'recoveryPasswordLink')) ?></th>
+						<th class="pt10 nowrap"><?php echo link_to('Recuperar senha', '#togglePasswordRecovery()', array('id'=>'recoveryPasswordLink')) ?></th>
+						<td class="pt10 textR"><?php echo submit_image_tag('loginEnter', array('style'=>'border: none; width: 115px; height: 40px')) ?></td>
 					</tr>
 				</table>
 				</form>
