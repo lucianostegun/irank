@@ -14,11 +14,13 @@
 	</tr>
 	<?php
 		$className = 'odd';
-		$key       = 0;
-		foreach($userSiteObj->getPurchaseList() as $key=>$purchaseObj):
+		$records   = 0;
+		foreach($userSiteObj->getPurchaseList() as $purchaseObj):
 		
 			$link         = 'goModule(\'store\', \'orderDetails\', \'orderNumber\', '.$purchaseObj->getOrderNumber().')';
 			$hasNewStatus = $purchaseObj->getHasNewStatus();
+			
+			$records++;
 	?>
 	<tr onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" onclick="<?php echo $link ?>" class="<?php echo ($hasNewStatus?'textB':'') ?>">
 		<td>#<?php echo $purchaseObj->getOrderNumber() ?></td>
@@ -30,7 +32,7 @@
 	<?php
 		endforeach;
 		
-		if( !$key ):
+		if( !$records ):
 	?>
 	<tr>
 		<td class="textL" colspan="5">

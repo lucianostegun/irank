@@ -116,7 +116,7 @@ function handleSuccessEventResult(content){
 	clearFormFieldErrors('eventResultForm');
 	showFormStatusSuccess();
 	
-	windowEventResultHide();
+	closeEventResult();
 	
 	updateResultContent(eventId);
 
@@ -1052,6 +1052,9 @@ function isFreeroll(){
 
 function openEventResult(){
 	
+	window.scrollTo(0,0)
+	disableScroll();
+	
 	enableButton('eventResultSubmit');
 
 	if( isFreeroll() )
@@ -1060,6 +1063,12 @@ function openEventResult(){
 		enableButton('calculatePrize');
 	
 	windowEventResultShow();
+}
+
+function closeEventResult(){
+	
+	windowEventResultHide();
+	enableScroll();
 }
 
 function toggleEventResultView(showResult){

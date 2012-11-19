@@ -146,9 +146,11 @@ class File extends BaseFile
 		
 		if( $filePathName=='temp' )
 			$filePathName = preg_replace('/[^0-9]/', '', microtime()).'.'.$extension;
-		else
+		elseif( $destFileName )
 			$filePathName = $destFileName.'.'.$extension;
-		
+		else
+			$filePathName = $fileName;
+			
 		$fileName = ($destFileName?$destFileName:$filePathName);
 		
 		if( !preg_match('/\.[a-z]*$/i', $fileName) )

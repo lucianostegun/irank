@@ -60,6 +60,7 @@
 .mb-50 { margin-bottom: -50px }
 
 .p3 { padding: 3px }
+.p10 { padding: 10px }
 .p20 { padding: 20px }
 
 .pt5 { padding-top: 5px }
@@ -90,6 +91,7 @@
 .pr50 { padding-right: 50px }
 
 .hidden { display: none }
+.invisible { visibility: hidden }
 .strong { font-weight: bold }
 
 .itsMe td,

@@ -1367,7 +1367,6 @@
 		<column name="total_value" type="NUMERIC" size="10" scale="2" default="0" />
 		<column name="paymethod" type="VARCHAR" size="20" />
 		<column name="ip_address" type="VARCHAR" />
-		<column name="duration" type="TIME" />
 		<column name="approval_date" type="TIMESTAMP" />
 		<column name="refusal_date" type="TIMESTAMP" />
 		<column name="refusal_reason" type="VARCHAR" />
@@ -1382,6 +1381,7 @@
 		<column name="address_state" type="CHAR" />
 		<column name="address_zipcode" type="CHAR" />
 		<column name="created_at" type="TIMESTAMP" />
+		<column name="finished_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="user_site">
 			<reference local="user_site_id" foreign="id"/>
@@ -1500,6 +1500,38 @@
 		</foreign-key>
 		<foreign-key foreignTable="email_template">
 			<reference local="email_template_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="timer" phpName="Timer">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="timer_name" type="VARCHAR" />
+		<column name="default_duration" type="INTEGER" />
+		<column name="levels" type="INTEGER" />
+		<column name="play_sound" type="BOOLEAN" />
+		<column name="minute_alert" type="BOOLEAN" />
+		<column name="confirm_level" type="BOOLEAN" />
+		<column name="has_ante" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="user_site">
+			<reference local="user_site_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="timer_level" phpName="TimerLevel">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="timer_id" type="INTEGER" />
+		<column name="small_blind" type="INTEGER" />
+		<column name="big_blind" type="INTEGER" />
+		<column name="ante" type="INTEGER" />
+		<column name="duration" type="INTEGER" />
+		<column name="is_pause" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="timer">
+			<reference local="timer_id" foreign="id"/>
 		</foreign-key>
 	</table>
 	

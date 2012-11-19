@@ -253,8 +253,9 @@ class DiscountCoupon extends BaseDiscountCoupon
 		return ($this->isNew() || ($this->getIsActive() && !$this->getHasUsed() && $this->getEnabled() && $this->getVisible()));
 	}
 	
-	public function maskAsUsed($con){
+	public function maskAsUsed($purchaseObj, $con){
 		
+		$this->setPurchase($purchaseObj);
 		$this->setHasUsed(true);
 		$this->setIsActive(false);
 		$this->save($con);

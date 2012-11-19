@@ -683,6 +683,12 @@ input:-ms-placeholder { color:#808080; }
 	margin-left: 		10px;
 	width: 				97%;
 	border-top: 		1px solid #DADADA;
+}
+
+.defaultForm .row,
+.defaultForm .rowTextArea {
+
+	border-top: 		1px solid #DADADA;
 	padding-top: 		8px;
 	padding-bottom: 	3px;
 }
@@ -692,7 +698,8 @@ input:-ms-placeholder { color:#808080; }
 	border-top: 	none
 }
 
-.defaultForm .row:first-child {
+.defaultForm .row:first-child,
+.defaultForm .clean .row {
 
 	border-top: 		none;
 }

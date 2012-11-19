@@ -2,13 +2,10 @@ function maskPhone( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
     
     var value = obj.value;
     value = replaceChar( value, '(', '' );
@@ -30,15 +27,11 @@ function maskPhone( evt ) {
     
     qtd = obj.value.length;
 
-    if( qtd == 2 ){
-    
+    if( qtd == 2 )
     	obj.value = "("+obj.value+") ";
-    }
     
-    if( qtd == 7 ){
-    
+    if( qtd == 7 )
     	obj.value = obj.value+"-";
-    }
     
     if( qtd == 13 && evt.keyCode == 8 ){
 
@@ -59,13 +52,10 @@ function maskPhoneNoDDD( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
     
     var value = obj.value;
     value = replaceChar( value, '(', '' );
@@ -81,10 +71,8 @@ function maskPhoneNoDDD( evt ) {
     
     qtd = obj.value.length;
 
-    if( qtd == 4 ){
-    
+    if( qtd == 4 )
     	obj.value = obj.value+"-";
-    }
     
     if( qtd == 9 && evt.keyCode == 8 ){
 
@@ -105,13 +93,10 @@ function maskFreePhone( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
 
 	if( evt.keyCode == 8 || evt.keyCode == 9 ){
 	
@@ -132,10 +117,8 @@ function maskFreePhone( evt ) {
     
     qtd = obj.value.length;
 
-    if( qtd == 4 || qtd == 8 ){
-    
+    if( qtd == 4 || qtd == 8 )
     	obj.value = obj.value+"-";
-    }
     
     obj.value = obj.value.replace( '--', '-' );
 }
@@ -144,13 +127,10 @@ function maskZipcode( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
 
 	if( evt.keyCode == 8 || evt.keyCode == 9 ){
 	
@@ -171,10 +151,8 @@ function maskZipcode( evt ) {
     
     qtd = obj.value.length;
 
-    if( qtd == 5 && obj.value.replace('-')==obj.value ){
-    
+    if( qtd == 5 && obj.value.replace('-')==obj.value )
     	obj.value = obj.value+"-";
-    }
     
     obj.value = obj.value.replace( '--', '-' );
 }
@@ -183,13 +161,10 @@ function maskCpf( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
     
     var value = obj.value;
     value = replaceChar( value, '.', '' );
@@ -209,15 +184,11 @@ function maskCpf( evt ) {
 
     qtd = obj.value.length;
 
-    if( qtd == 3 || qtd == 7 ){
-    
+    if( qtd == 3 || qtd == 7 )
     	obj.value = obj.value+".";
-    }
     
-    if( qtd == 11 ){
-    
+    if( qtd == 11 )
     	obj.value = obj.value+"-";
-    }
     
     obj.value = obj.value.replace( '..', '.' );
     obj.value = obj.value.replace( '--', '-' );
@@ -230,13 +201,10 @@ function maskCnpj( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
 	
 	if( obj.length==18 )
 		maskCnpj18( evt )
@@ -248,13 +216,10 @@ function maskCnpj17( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
     
     var value = obj.value;
     value = replaceChar( value, '.', '' );
@@ -275,20 +240,14 @@ function maskCnpj17( evt ) {
     
     qtd = obj.value.length;
 
-    if( qtd == 2 || qtd == 6 ){
-    
+    if( qtd == 2 || qtd == 6 )
     	obj.value = obj.value+".";
-    }
     
-    if( qtd == 10 ){
-    
+    if( qtd == 10 )
     	obj.value = obj.value+"/";
-    }
     
-    if( qtd == 15 ){
-    
+    if( qtd == 15 )
     	obj.value = obj.value+"-";
-    }
     
     obj.value = obj.value.replace( '..', '.' );
     obj.value = obj.value.replace( '//', '/' );
@@ -299,13 +258,10 @@ function maskCnpj18( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
     
     var value = obj.value;
     value = replaceChar( value, '.', '' );
@@ -326,20 +282,14 @@ function maskCnpj18( evt ) {
     
     qtd = obj.value.length;
 
-    if( qtd == 3 || qtd == 7 ){
-    
+    if( qtd == 3 || qtd == 7 )
     	obj.value = obj.value+".";
-    }
     
-    if( qtd == 11 ){
-    
+    if( qtd == 11 )
     	obj.value = obj.value+"/";
-    }
     
-    if( qtd == 16 ){
-    
+    if( qtd == 16 )
     	obj.value = obj.value+"-";
-    }
     
     obj.value = obj.value.replace( '..', '.' );
     obj.value = obj.value.replace( '//', '/' );
@@ -350,13 +300,10 @@ function maskDate( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
 
 	if( evt.keyCode == 8 || evt.keyCode == 9 ){
 
@@ -369,29 +316,29 @@ function maskDate( evt ) {
     
     qtd = obj.value.length;
 
-    if( (qtd == 2 || qtd == 5) && obj.value.replace('-')==obj.value ){
-    
+    if( (qtd == 2 || qtd == 5) && obj.value.replace('-')==obj.value )
     	obj.value = obj.value+"/";
-    }
     
     obj.value = obj.value.replace( '\\', '/' );
     obj.value = obj.value.replace( '//', '/' );
 }
 
+function maskTimeFull( evt  ) {
+	
+	maskTime( evt, false );
+}
+
 function maskTime( evt, withoutSecond ) {
 
-	if( !withoutSecond )
+	if( typeof(withoutSecond)=='undefined' )
 		withoutSecond = true;
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
 
 	if( evt.keyCode == 8 || evt.keyCode == 9 ){
 
@@ -404,10 +351,8 @@ function maskTime( evt, withoutSecond ) {
     
     qtd = obj.value.length;
 
-    if( (qtd == 2 || (qtd == 5 && !withoutSecond )) ){
-
+    if( (qtd == 2 || (qtd == 5 && !withoutSecond )) )
     	obj.value = obj.value+":";
-    }
     
     
     obj.value = obj.value.replace( '::', ':' );
@@ -417,13 +362,10 @@ function maskDateTime( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 ){
-    	
+    if( navigator.appName.indexOf("Netscape") != -1 )
     	obj = evt.target;
-    }else{
-    
+    else
     	obj = evt.srcElement;
-    }
 
 	if( evt.keyCode == 8 || evt.keyCode == 9 ){
 

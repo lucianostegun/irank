@@ -73,10 +73,6 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 
 	
-	protected $duration;
-
-
-	
 	protected $approval_date;
 
 
@@ -130,6 +126,10 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 	
 	protected $created_at;
+
+
+	
+	protected $finished_at;
 
 
 	
@@ -272,28 +272,6 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 	{
 
 		return $this->ip_address;
-	}
-
-	
-	public function getDuration($format = 'H:i:s')
-	{
-
-		if ($this->duration === null || $this->duration === '') {
-			return null;
-		} elseif (!is_int($this->duration)) {
-						$ts = strtotime($this->duration);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [duration] as date/time value: " . var_export($this->duration, true));
-			}
-		} else {
-			$ts = $this->duration;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
 	}
 
 	
@@ -444,6 +422,28 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 			}
 		} else {
 			$ts = $this->created_at;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
+	}
+
+	
+	public function getFinishedAt($format = 'Y-m-d H:i:s')
+	{
+
+		if ($this->finished_at === null || $this->finished_at === '') {
+			return null;
+		} elseif (!is_int($this->finished_at)) {
+						$ts = strtotime($this->finished_at);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [finished_at] as date/time value: " . var_export($this->finished_at, true));
+			}
+		} else {
+			$ts = $this->finished_at;
 		}
 		if ($format === null) {
 			return $ts;
@@ -693,23 +693,6 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setDuration($v)
-	{
-
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [duration] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->duration !== $ts) {
-			$this->duration = $ts;
-			$this->modifiedColumns[] = PurchasePeer::DURATION;
-		}
-
-	} 
-	
 	public function setApprovalDate($v)
 	{
 
@@ -918,6 +901,23 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setFinishedAt($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [finished_at] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->finished_at !== $ts) {
+			$this->finished_at = $ts;
+			$this->modifiedColumns[] = PurchasePeer::FINISHED_AT;
+		}
+
+	} 
+	
 	public function setUpdatedAt($v)
 	{
 
@@ -971,35 +971,35 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 			$this->ip_address = $rs->getString($startcol + 15);
 
-			$this->duration = $rs->getTime($startcol + 16, null);
+			$this->approval_date = $rs->getTimestamp($startcol + 16, null);
 
-			$this->approval_date = $rs->getTimestamp($startcol + 17, null);
+			$this->refusal_date = $rs->getTimestamp($startcol + 17, null);
 
-			$this->refusal_date = $rs->getTimestamp($startcol + 18, null);
+			$this->refusal_reason = $rs->getString($startcol + 18);
 
-			$this->refusal_reason = $rs->getString($startcol + 19);
+			$this->shipping_date = $rs->getTimestamp($startcol + 19, null);
 
-			$this->shipping_date = $rs->getTimestamp($startcol + 20, null);
+			$this->tracing_code = $rs->getString($startcol + 20);
 
-			$this->tracing_code = $rs->getString($startcol + 21);
+			$this->customer_name = $rs->getString($startcol + 21);
 
-			$this->customer_name = $rs->getString($startcol + 22);
+			$this->address_name = $rs->getString($startcol + 22);
 
-			$this->address_name = $rs->getString($startcol + 23);
+			$this->address_number = $rs->getString($startcol + 23);
 
-			$this->address_number = $rs->getString($startcol + 24);
+			$this->address_quarter = $rs->getString($startcol + 24);
 
-			$this->address_quarter = $rs->getString($startcol + 25);
+			$this->address_complement = $rs->getString($startcol + 25);
 
-			$this->address_complement = $rs->getString($startcol + 26);
+			$this->address_city = $rs->getString($startcol + 26);
 
-			$this->address_city = $rs->getString($startcol + 27);
+			$this->address_state = $rs->getString($startcol + 27);
 
-			$this->address_state = $rs->getString($startcol + 28);
+			$this->address_zipcode = $rs->getString($startcol + 28);
 
-			$this->address_zipcode = $rs->getString($startcol + 29);
+			$this->created_at = $rs->getTimestamp($startcol + 29, null);
 
-			$this->created_at = $rs->getTimestamp($startcol + 30, null);
+			$this->finished_at = $rs->getTimestamp($startcol + 30, null);
 
 			$this->updated_at = $rs->getTimestamp($startcol + 31, null);
 
@@ -1289,49 +1289,49 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				return $this->getIpAddress();
 				break;
 			case 16:
-				return $this->getDuration();
-				break;
-			case 17:
 				return $this->getApprovalDate();
 				break;
-			case 18:
+			case 17:
 				return $this->getRefusalDate();
 				break;
-			case 19:
+			case 18:
 				return $this->getRefusalReason();
 				break;
-			case 20:
+			case 19:
 				return $this->getShippingDate();
 				break;
-			case 21:
+			case 20:
 				return $this->getTracingCode();
 				break;
-			case 22:
+			case 21:
 				return $this->getCustomerName();
 				break;
-			case 23:
+			case 22:
 				return $this->getAddressName();
 				break;
-			case 24:
+			case 23:
 				return $this->getAddressNumber();
 				break;
-			case 25:
+			case 24:
 				return $this->getAddressQuarter();
 				break;
-			case 26:
+			case 25:
 				return $this->getAddressComplement();
 				break;
-			case 27:
+			case 26:
 				return $this->getAddressCity();
 				break;
-			case 28:
+			case 27:
 				return $this->getAddressState();
 				break;
-			case 29:
+			case 28:
 				return $this->getAddressZipcode();
 				break;
-			case 30:
+			case 29:
 				return $this->getCreatedAt();
+				break;
+			case 30:
+				return $this->getFinishedAt();
 				break;
 			case 31:
 				return $this->getUpdatedAt();
@@ -1362,21 +1362,21 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 			$keys[13]=>$this->getTotalValue(),
 			$keys[14]=>$this->getPaymethod(),
 			$keys[15]=>$this->getIpAddress(),
-			$keys[16]=>$this->getDuration(),
-			$keys[17]=>$this->getApprovalDate(),
-			$keys[18]=>$this->getRefusalDate(),
-			$keys[19]=>$this->getRefusalReason(),
-			$keys[20]=>$this->getShippingDate(),
-			$keys[21]=>$this->getTracingCode(),
-			$keys[22]=>$this->getCustomerName(),
-			$keys[23]=>$this->getAddressName(),
-			$keys[24]=>$this->getAddressNumber(),
-			$keys[25]=>$this->getAddressQuarter(),
-			$keys[26]=>$this->getAddressComplement(),
-			$keys[27]=>$this->getAddressCity(),
-			$keys[28]=>$this->getAddressState(),
-			$keys[29]=>$this->getAddressZipcode(),
-			$keys[30]=>$this->getCreatedAt(),
+			$keys[16]=>$this->getApprovalDate(),
+			$keys[17]=>$this->getRefusalDate(),
+			$keys[18]=>$this->getRefusalReason(),
+			$keys[19]=>$this->getShippingDate(),
+			$keys[20]=>$this->getTracingCode(),
+			$keys[21]=>$this->getCustomerName(),
+			$keys[22]=>$this->getAddressName(),
+			$keys[23]=>$this->getAddressNumber(),
+			$keys[24]=>$this->getAddressQuarter(),
+			$keys[25]=>$this->getAddressComplement(),
+			$keys[26]=>$this->getAddressCity(),
+			$keys[27]=>$this->getAddressState(),
+			$keys[28]=>$this->getAddressZipcode(),
+			$keys[29]=>$this->getCreatedAt(),
+			$keys[30]=>$this->getFinishedAt(),
 			$keys[31]=>$this->getUpdatedAt(),
 		);
 		return $result;
@@ -1442,49 +1442,49 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 				$this->setIpAddress($value);
 				break;
 			case 16:
-				$this->setDuration($value);
-				break;
-			case 17:
 				$this->setApprovalDate($value);
 				break;
-			case 18:
+			case 17:
 				$this->setRefusalDate($value);
 				break;
-			case 19:
+			case 18:
 				$this->setRefusalReason($value);
 				break;
-			case 20:
+			case 19:
 				$this->setShippingDate($value);
 				break;
-			case 21:
+			case 20:
 				$this->setTracingCode($value);
 				break;
-			case 22:
+			case 21:
 				$this->setCustomerName($value);
 				break;
-			case 23:
+			case 22:
 				$this->setAddressName($value);
 				break;
-			case 24:
+			case 23:
 				$this->setAddressNumber($value);
 				break;
-			case 25:
+			case 24:
 				$this->setAddressQuarter($value);
 				break;
-			case 26:
+			case 25:
 				$this->setAddressComplement($value);
 				break;
-			case 27:
+			case 26:
 				$this->setAddressCity($value);
 				break;
-			case 28:
+			case 27:
 				$this->setAddressState($value);
 				break;
-			case 29:
+			case 28:
 				$this->setAddressZipcode($value);
 				break;
-			case 30:
+			case 29:
 				$this->setCreatedAt($value);
+				break;
+			case 30:
+				$this->setFinishedAt($value);
 				break;
 			case 31:
 				$this->setUpdatedAt($value);
@@ -1512,21 +1512,21 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[13], $arr)) $this->setTotalValue($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setPaymethod($arr[$keys[14]]);
 		if (array_key_exists($keys[15], $arr)) $this->setIpAddress($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setDuration($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setApprovalDate($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setRefusalDate($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setRefusalReason($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setShippingDate($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setTracingCode($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setCustomerName($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setAddressName($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setAddressNumber($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setAddressQuarter($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setAddressComplement($arr[$keys[26]]);
-		if (array_key_exists($keys[27], $arr)) $this->setAddressCity($arr[$keys[27]]);
-		if (array_key_exists($keys[28], $arr)) $this->setAddressState($arr[$keys[28]]);
-		if (array_key_exists($keys[29], $arr)) $this->setAddressZipcode($arr[$keys[29]]);
-		if (array_key_exists($keys[30], $arr)) $this->setCreatedAt($arr[$keys[30]]);
+		if (array_key_exists($keys[16], $arr)) $this->setApprovalDate($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setRefusalDate($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setRefusalReason($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setShippingDate($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setTracingCode($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setCustomerName($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setAddressName($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setAddressNumber($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setAddressQuarter($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setAddressComplement($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setAddressCity($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setAddressState($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setAddressZipcode($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setCreatedAt($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setFinishedAt($arr[$keys[30]]);
 		if (array_key_exists($keys[31], $arr)) $this->setUpdatedAt($arr[$keys[31]]);
 	}
 
@@ -1551,7 +1551,6 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PurchasePeer::TOTAL_VALUE)) $criteria->add(PurchasePeer::TOTAL_VALUE, $this->total_value);
 		if ($this->isColumnModified(PurchasePeer::PAYMETHOD)) $criteria->add(PurchasePeer::PAYMETHOD, $this->paymethod);
 		if ($this->isColumnModified(PurchasePeer::IP_ADDRESS)) $criteria->add(PurchasePeer::IP_ADDRESS, $this->ip_address);
-		if ($this->isColumnModified(PurchasePeer::DURATION)) $criteria->add(PurchasePeer::DURATION, $this->duration);
 		if ($this->isColumnModified(PurchasePeer::APPROVAL_DATE)) $criteria->add(PurchasePeer::APPROVAL_DATE, $this->approval_date);
 		if ($this->isColumnModified(PurchasePeer::REFUSAL_DATE)) $criteria->add(PurchasePeer::REFUSAL_DATE, $this->refusal_date);
 		if ($this->isColumnModified(PurchasePeer::REFUSAL_REASON)) $criteria->add(PurchasePeer::REFUSAL_REASON, $this->refusal_reason);
@@ -1566,6 +1565,7 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PurchasePeer::ADDRESS_STATE)) $criteria->add(PurchasePeer::ADDRESS_STATE, $this->address_state);
 		if ($this->isColumnModified(PurchasePeer::ADDRESS_ZIPCODE)) $criteria->add(PurchasePeer::ADDRESS_ZIPCODE, $this->address_zipcode);
 		if ($this->isColumnModified(PurchasePeer::CREATED_AT)) $criteria->add(PurchasePeer::CREATED_AT, $this->created_at);
+		if ($this->isColumnModified(PurchasePeer::FINISHED_AT)) $criteria->add(PurchasePeer::FINISHED_AT, $this->finished_at);
 		if ($this->isColumnModified(PurchasePeer::UPDATED_AT)) $criteria->add(PurchasePeer::UPDATED_AT, $this->updated_at);
 
 		return $criteria;
@@ -1627,8 +1627,6 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 
 		$copyObj->setIpAddress($this->ip_address);
 
-		$copyObj->setDuration($this->duration);
-
 		$copyObj->setApprovalDate($this->approval_date);
 
 		$copyObj->setRefusalDate($this->refusal_date);
@@ -1656,6 +1654,8 @@ abstract class BasePurchase extends BaseObject  implements Persistent {
 		$copyObj->setAddressZipcode($this->address_zipcode);
 
 		$copyObj->setCreatedAt($this->created_at);
+
+		$copyObj->setFinishedAt($this->finished_at);
 
 		$copyObj->setUpdatedAt($this->updated_at);
 

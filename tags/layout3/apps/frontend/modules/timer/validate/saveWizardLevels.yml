@@ -1,0 +1,5 @@
+fields:
+  step:
+    sfCallbackValidator:
+      callback:      [TimerPeer, validateLevels]
+      invalid_error: error

@@ -10,8 +10,10 @@
 <div class="clear"></div>
 
 <div id="stepPaginator">
-	<?php echo button_tag('navigatorPrevious', 'Anterior', array('image'=>'previous.png', 'onclick'=>'showPrevious()', 'disabled'=>true)) ?>
-	<?php echo button_tag('navigatorNext', 'Próximo', array('image'=>'next.png', 'onclick'=>'showNext()')) ?>
+	<?php
+		echo button_tag('navigatorPrevious', 'Anterior', array('image'=>'previous.png', 'onclick'=>'showPrevious()', 'disabled'=>true));
+		echo button_tag('navigatorNext', 'Próximo', array('image'=>'next.png', 'onclick'=>'showNext()'));
+	?>
 </div>
 <div id="stepResetPaginator">
 	<?php echo button_tag('navigatorReset', 'Reiniciar', array('image'=>'reload.png', 'onclick'=>'resetSteps()')) ?>

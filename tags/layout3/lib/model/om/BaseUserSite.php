@@ -123,6 +123,12 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	protected $lastRankingSubscriptionRequestRelatedByUserSiteIdOwnerCriteria = null;
 
 	
+	protected $collTimerList;
+
+	
+	protected $lastTimerCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -778,6 +784,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collTimerList !== null) {
+				foreach($this->collTimerList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -869,6 +883,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 				if ($this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner !== null) {
 					foreach($this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collTimerList !== null) {
+					foreach($this->collTimerList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1195,6 +1217,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			foreach($this->getRankingSubscriptionRequestListRelatedByUserSiteIdOwner() as $relObj) {
 				$copyObj->addRankingSubscriptionRequestRelatedByUserSiteIdOwner($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getTimerList() as $relObj) {
+				$copyObj->addTimer($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1914,6 +1940,76 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		$this->lastRankingSubscriptionRequestRelatedByUserSiteIdOwnerCriteria = $criteria;
 
 		return $this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner;
+	}
+
+	
+	public function initTimerList()
+	{
+		if ($this->collTimerList === null) {
+			$this->collTimerList = array();
+		}
+	}
+
+	
+	public function getTimerList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseTimerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collTimerList === null) {
+			if ($this->isNew()) {
+			   $this->collTimerList = array();
+			} else {
+
+				$criteria->add(TimerPeer::USER_SITE_ID, $this->getId());
+
+				TimerPeer::addSelectColumns($criteria);
+				$this->collTimerList = TimerPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(TimerPeer::USER_SITE_ID, $this->getId());
+
+				TimerPeer::addSelectColumns($criteria);
+				if (!isset($this->lastTimerCriteria) || !$this->lastTimerCriteria->equals($criteria)) {
+					$this->collTimerList = TimerPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastTimerCriteria = $criteria;
+		return $this->collTimerList;
+	}
+
+	
+	public function countTimerList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseTimerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(TimerPeer::USER_SITE_ID, $this->getId());
+
+		return TimerPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addTimer(Timer $l)
+	{
+		$this->collTimerList[] = $l;
+		$l->setUserSite($this);
 	}
 
 } 

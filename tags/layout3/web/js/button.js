@@ -39,14 +39,30 @@ function disableButton( buttonId ){
 	return backgroundImage;
 }
 
-function showButton( buttonId ){
+function showButton( buttonId, effect ){
 
+	if( effect && !$(buttonId+'Button').visible() ){
+
+		$(buttonId+'Button').setStyle({opacity: 0.0});
+		$(buttonId+'Button').style.visibility = 'visible';
+		$(buttonId+'Button').show();
+		$(buttonId+'Button').fade({ duration: 0.3, from: 0, to: 1 });
+	}
+	
 	showDiv(buttonId+'Button');
 }
 
-function hideButton( buttonId ){
+function hideButton( buttonId, effect ){
 	
-	hideDiv(buttonId+'Button');
+	if( effect && $(buttonId+'Button').visible() ){
+		
+		$(buttonId+'Button').style.visibility = 'visible';
+		$(buttonId+'Button').show();
+		$(buttonId+'Button').fade({ duration: 0.3, from: 1, to: 0 });
+	}else{
+		
+		hideDiv(buttonId+'Button');
+	}
 }
 
 

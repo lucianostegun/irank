@@ -76,7 +76,7 @@
 
 		<label>Duração da sessão</label>
 		<div class="formRight">
-			<label><?php echo Util::formatTimeString($purchaseObj->getDuration()) ?></label>
+			<label><?php echo $purchaseObj->getDuration() ?></label>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -87,12 +87,14 @@
 			<label><?php echo $purchaseObj->getPaymethod(true) ?></label>
 		</div>
 
-		<?php if( is_object($fileObj) ): ?>
 		<label>Comprovante</label>
 		<div class="formRight">
-			<label><?php echo link_to($fileObj->getFileName(), 'file/download?fileId='.$fileObj->getId()) ?></label>
+			<?php if( is_object($fileObj) ): ?>
+			<label style="color: #59983B"><?php echo link_to($fileObj->getFileName(), 'file/download?fileId='.$fileObj->getId()) ?></label>
+			<?php else: ?>
+			<label style="color: #98593B">Não enviado</label>
+			<?php endif; ?>
 		</div>
-		<?php endif; ?>
 		<div class="clear"></div>
 	</div>
 

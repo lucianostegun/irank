@@ -25,7 +25,7 @@
 	</table>
 	<div class="windowButtonBar">
 		<?php
-			echo button_tag('eventResultCancel', __('button.cancel'), array('onclick'=>'windowEventResultHide()'));
+			echo button_tag('eventResultCancel', __('button.cancel'), array('onclick'=>'closeEventResult()'));
 			echo button_tag('eventResultSubmit', __('button.saveResult'), array('onclick'=>'doSubmitEventResult()', 'visible'=>$savedResult));
 			echo button_tag('toggleResultButtonResult', __('button.launchResult'), array('onclick'=>'toggleEventResultView(true)', 'visible'=>(!$savedResult), 'class'=>'left'));
 			echo button_tag('toggleResultButtonPlayer', __('button.playerList'), array('onclick'=>'toggleEventResultView(false)', 'visible'=>$savedResult, 'class'=>'left'));

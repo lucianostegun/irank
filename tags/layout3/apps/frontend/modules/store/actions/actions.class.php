@@ -388,7 +388,6 @@ class storeActions extends sfActions
   	$orderValue    = $cartSessionObj->orderValue;
   	$totalValue    = $cartSessionObj->totalValue;
   	$ipAddress     = $_SERVER['REMOTE_ADDR'];
-  	$duration      = time()-$cartSessionObj->createdAt;
   	
   	$peopleObj = People::getCurrentPeople();
   	
@@ -406,7 +405,8 @@ class storeActions extends sfActions
 	$purchaseObj->setDiscountValue($cartSessionObj->discountValue);
 	$purchaseObj->setPaymethod($paymethod);
 	$purchaseObj->setIpAddress($ipAddress);
-	$purchaseObj->setDuration($duration);
+	$purchaseObj->setCreatedAt($cartSessionObj->createdAt);
+	$purchaseObj->setFinishedAt(time());
   	
     $purchaseObj->setCustomerName($peopleObj->getName());
     $purchaseObj->setAddressName($cartSessionObj->addressName);
@@ -464,7 +464,7 @@ class storeActions extends sfActions
   		$discountCouponObj = $purchaseObj->getDiscountCoupon();
   		
   		if( is_object($discountCouponObj) )
-  			$discountCouponObj->maskAsUsed($con);
+  			$discountCouponObj->maskAsUsed($purchaseObj, $con);
   		
   		$purchaseObj->save($con);
 		$orderNumber = $purchaseObj->getOrderNumber();
@@ -488,7 +488,7 @@ class storeActions extends sfActions
 			// Sets your customer information.
 			$paymentRequest->setSender($purchaseObj->getCustomerName(), $purchaseObj->getUserSite()->getPeople()->getEmailAddress());
 			
-			$paymentRequest->setRedirectUrl("http://alpha.irank.com.br/store/orderConfirm/$orderNumber");
+			$paymentRequest->setRedirectUrl("https://www.irank.com.br/store/orderConfirm/$orderNumber");
 
 	  		$credentials = PagSeguroConfig::getAccountCredentials();
 	  		$url = $paymentRequest->register($credentials);
@@ -681,7 +681,7 @@ class storeActions extends sfActions
 	try {
 		
 		$options = array('fileId'=>$purchaseObj->getFileId(),
-						 'fileName'=>'payticket-'.date('YmdHis'),
+						 
 						 'maxFileSize'=>$maxFileSize,
 						 'forceNewFile'=>true);
 		

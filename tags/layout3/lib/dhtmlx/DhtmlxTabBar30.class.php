@@ -53,13 +53,13 @@ class DhtmlxTabBar30 {
 		$html .= '    '.$objectName.' = new dhtmlXTabBar("'.$objectName.'Div", "top");'.$nl;
 
     	$html .= '    '.$objectName.'.setHrefMode("ajax-html");'.$nl;
-    	$html .= '    '.$objectName.'.setSkin("silver");'.$nl;
+    	$html .= '    '.$objectName.'.setSkin("default");'.$nl;
 		$html .= '    '.$objectName.'.setImagePath("/js/dhtmlx/dhtmlxTabbar/imgs/");'.$nl;
 
 		$html .= $this->getTabBarListScript();
 		$html .= $this->getHandlerList();
 
-		$html .= '    '.$objectName.'.enableAutoSize(true, true);'.$nl;
+		$html .= '    '.$objectName.'.enableAutoSize(false, true);'.$nl;
 //		$html .= '    '.$objectName.'.attachEvent("onTabContentLoaded", onTabContentLoaded);'.$nl;
     
     	$html .= '    '.$objectName.'.setTabActive(\''.$this->getSelectedTabBarId().'\');'.$nl.$nl;

@@ -1,0 +1,11 @@
+fields:
+       
+  timerName:
+    required:
+      msg:       form.error.requiredField
+       
+  chipStack:
+    sfNumberValidator:
+      min:       0
+      min_error: form.error.greaterEqual0
+      nan_error: form.error.invalidNumber

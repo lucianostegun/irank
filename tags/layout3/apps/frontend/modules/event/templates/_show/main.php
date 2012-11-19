@@ -47,14 +47,14 @@
 	
 	
 	
-	<div id="prizeConfigDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>">
-		<h1><?php echo __('event.prizeConfig') ?></h1>
+	<div id="prizeConfigDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>" class="clean">
+		<h1 style="margin-top: 41px; text-align: right; border: none"><?php echo __('event.prizeConfig') ?></h1>
 		<div class="row">
 			<div class="label" id="eventPrizePotLabel"><?php echo __('event.prizePot') ?></div>
 			<div class="textFlex"><?php echo Util::formatFloat($eventObj->getPrizePot(), true) ?></div>
 		</div>
 		
-		<div style="margin-top: 10px" id="prizeShareListDiv">
+		<div id="prizeShareListDiv">
 			<?php
 				if( $eventObj->getIsFreeroll() ):
 					foreach($eventObj->getPrizeConfigList() as $eventPrizeConfigObj):

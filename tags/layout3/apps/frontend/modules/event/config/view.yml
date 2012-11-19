@@ -4,4 +4,4 @@ all:
   javascripts:    [event, eventComment, eventPhoto, rankingPlace, ranking, mask, /sf/prototype/js/scriptaculous, lightbox, /index.php/event/javascript/js]
   
 editSuccess:
-  javascripts:    [tableReorder/header, tableReorder/redips-drag-min, tableReorder]
+  javascripts:    [tableReorder/header, tableReorder/redips-drag-min, tableReorder/event]

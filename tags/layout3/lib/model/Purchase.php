@@ -464,6 +464,12 @@ class Purchase extends BasePurchase
 		if( !in_array($orderStatus, array('shipped', 'complete')) && in_array($currentOrderStatus, array('shipped', 'complete')) )
 				$this->updateProductStock('incrase', $con);
 	}
+	
+	public function getDuration(){
+		
+		$duration = $this->getFinishedAt(null)-$this->getCreatedAt(null);
+		return Util::formatTimeString($duration);
+	}
 }
 
 class PurchaseException extends Exception 

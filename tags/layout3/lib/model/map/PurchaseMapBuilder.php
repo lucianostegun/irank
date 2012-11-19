@@ -66,8 +66,6 @@ class PurchaseMapBuilder {
 
 		$tMap->addColumn('IP_ADDRESS', 'IpAddress', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('DURATION', 'Duration', 'int', CreoleTypes::TIME, false, null);
-
 		$tMap->addColumn('APPROVAL_DATE', 'ApprovalDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 		$tMap->addColumn('REFUSAL_DATE', 'RefusalDate', 'int', CreoleTypes::TIMESTAMP, false, null);
@@ -95,6 +93,8 @@ class PurchaseMapBuilder {
 		$tMap->addColumn('ADDRESS_ZIPCODE', 'AddressZipcode', 'string', CreoleTypes::CHAR, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
+
+		$tMap->addColumn('FINISHED_AT', 'FinishedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

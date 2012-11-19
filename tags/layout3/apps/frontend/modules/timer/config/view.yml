@@ -1,0 +1,11 @@
+all:
+  stylesheets:    [form, table, tableReorder, timer, timerWizard]
+  javascripts:    [timer, timerWizard, /sf/prototype/js/scriptaculous]
+
+indexSuccess:
+  javascripts:    [tableReorder/header, tableReorder/redips-drag-min, tableReorder/timer]
+  
+timerSuccess:
+  stylesheets:    [-*, timer]
+  javascripts:    [-*, mask, timer, /sf/prototype/js/prototype, phpEquivalents]
+  layout:         clean
