@@ -1,3 +1,11 @@
+	html, body {
+		padding: 0px;
+		margin: 0px;
+		height: 100%;
+		overflow: hidden;
+		-webkit-user-select: none;
+	}
+	
 #blindTimer {
 
 	margin: 30px
@@ -62,4 +70,24 @@ div.separator {
 
 #timerListTable tr {
 
+}
+
+.track {
+   background-color: #AAAAAA;
+   position: relative;
+   height: 5px;
+   width: 10em;
+   cursor: pointer;
+   z-index: 0;
+}
+
+.handle {
+   
+   background: url('/images/timer/handle.png');
+   position: absolute;
+   height: 17px;
+   width: 17px;
+   top: -6px;
+   cursor: move;
+   z-index: 2;
 }

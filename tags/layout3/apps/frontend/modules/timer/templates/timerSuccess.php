@@ -5,31 +5,73 @@
 		<label id="timerMinutes">00</label>
 		<span class="separator"></span>
 		<label id="timerSeconds">00</label>
+	</div>
+	
+	<div class="blindPanel">
+		<div class="currentLevel">
+			<label>Nível</label>
+			<span id="currentLevelValue">0</span>
+		</div>
 		
 		<div class="smallBlind">
-			<div>Small blind</div>
-			<div id="smallBlindValue">0</div>
+			<label>Small blind</label>
+			<span id="smallBlindValue">0</span>
 		</div>
 
 		<div class="bigBlind">
-			<div>Big blind</div>
-			<div id="bigBlindValue">0</div>
+			<label>Big blind</label>
+			<span id="bigBlindValue">0</span>
 		</div>
 
 		<div class="bigBlind">
-			<div>Ante</div>
-			<div id="anteValue">0</div>
+			<label>Ante</label>
+			<span id="anteValue">0</span>
+		</div>
+
+		<div class="elapsedTime">
+			<label>Tempo corrido</label>
+			<span id="elapsedTimeValue">0</span>
 		</div>
 	</div>
 
 	<div class="commandBar">
 		<?php echo button_tag('timerToggler', 'Iniciar', array('onclick'=>'toggleTimer()')) ?>
-		<?php echo button_tag('levelPrevious', 'Anterior', array('onclick'=>'previousLevel()', 'disabled'=>true)) ?>
-		<?php echo button_tag('levelNext', 'Próximo', array('onclick'=>'nextLevel()', 'disabled'=>true)) ?>
+		<?php echo button_tag('levelPrevious', 'Anterior', array('onclick'=>'previousLevel(true)', 'disabled'=>true)) ?>
+		<?php echo button_tag('levelNext', 'Próximo', array('onclick'=>'nextLevel(true)', 'disabled'=>true)) ?>
 		<?php echo button_tag('blindAdd', 'Novo blind', array('onclick'=>'addBlind()')) ?>
 	</div>
 	
 	<div class="clear"></div>
+	
+	<div id="track1" class="track" style="width: 600px; margin-top: 50px" >
+	   <div id="handle1" class="handle" style="width: 17px;"></div>
+	</div>
+	
+	<script type="text/javascript">
+		var timerSliderObj = new Control.Slider('handle1' , 'track1', {
+			sliderValue: 0,
+			values: [],
+			disabled: true,
+			onSlide: function(v) {
+				
+				$('sliding').innerHTML = (v);
+				sliderValue = Math.round(v);
+				
+				if( sliderValue < 0 )
+					return false;
+					
+				isRunning   = false;
+				secondsLeft = sliderValue;
+				elapsedSeconds = levelSeconds-secondsLeft;
+				updateTimerLabels();
+			}
+		});
+	</script>
+	
+	<p id="sliding"></p>
+
+	<div class="clear"></div>
+
 	<br/>
 	<br/>
 	<div class="timerLevels">

@@ -1,7 +1,10 @@
-var isRunning     = false;
-var secondsLeft   = 60*60*2;
-var timerInterval = 1000;
-var currentLevel  = 0;
+var isRunning      = false;
+var secondsLeft    = 0;
+var elapsedSeconds = 0;
+var elapsedTime    = 0;
+var levelSeconds   = 0;
+var timerInterval  = 1000;
+var currentLevel   = 0;
 
 const CELL_BLIND_ID = 0;
 const CELL_BLIND_MARK = 1;
@@ -12,9 +15,11 @@ const CELL_BLIND_ANTE = 5;
 const CELL_BLIND_DURATION = 6;
 const CELL_BLIND_PAUSE = 8;
 
-function nextLevel(){
+function nextLevel(pause){
 	
 	var rowsNum = gridboxBlindObj.getRowsNum();
+	
+	elapsedTime += secondsLeft+elapsedSeconds;
 	
 	if( rowsNum <= currentLevel ){
 		
@@ -25,16 +30,23 @@ function nextLevel(){
 	
 	if( rowsNum==(currentLevel+1) )
 		disableButton('levelNext');
+	else
+		enableButton('levelNext');
+	
+	currentLevel++;
 	
 	if( currentLevel > 1 )
 		enableButton('levelPrevious');
-	
-	currentLevel++;
 
 	setBlindLevel();
+	
+	if( pause )
+		stopTimer();
+	
+	return true;
 }
 
-function previousLevel(){
+function previousLevel(pause){
 	
 	var rowsNum = gridboxBlindObj.getRowsNum();
 	
@@ -45,34 +57,59 @@ function previousLevel(){
 		return false;
 	}
 	
+	// Tempo já corrido do level atual
+//	elapsedTime -= elapsedSeconds+secon;
+	
 	enableButton('levelNext');
 	currentLevel--;
 	
 	if( currentLevel==1 )
 		disableButton('levelPrevious');
 
-	setBlindLevel();
+	setBlindLevel(true);
+	
+	if( pause )
+		stopTimer();
 }
 
-function setBlindLevel(){
+function setBlindLevel(decraseElapsedTime){
 	
 	var rowId    = gridboxBlindObj.getRowId(currentLevel-1);
 	var duration = gridboxBlindObj.cells(rowId, CELL_BLIND_DURATION).getValue();
 	
-	secondsLeft = duration*60;
+	secondsLeft    = duration*60;
+	levelSeconds   = secondsLeft;
+	elapsedSeconds = 0;
+	
+	// Tempo já corrido do level que voltou (já que voltou pro começo)
+	if( decraseElapsedTime )
+		elapsedTime -= secondsLeft;
+	
+	var values = [];
+	for(var i=0; i <= secondsLeft; i++)
+		values.push(i);
+	
+	timerSliderObj.allowedValues = values;
+	
+	timerSliderObj.range = $R(0,secondsLeft);
+	timerSliderObj.setValue(secondsLeft);
+	timerSliderObj.setEnabled();
+	
+	$('currentLevelValue').innerHTML = currentLevel;
 	
 	updateTimerLabels();
 	
 	for(var rowIndex=0; rowIndex < gridboxBlindObj.getRowsNum(); rowIndex++){
 		
 		var rowIdTmp = gridboxBlindObj.getRowId(rowIndex);
-		gridboxBlindObj.cells(rowIdTmp, CELL_BLIND_MARK).setValue('');
+		gridboxBlindObj.cells(rowIdTmp, CELL_BLIND_MARK).setValue('/images/blank.gif');
 	}
 	
 	gridboxBlindObj.cells(rowId, CELL_BLIND_MARK).setValue('/images/icon/markRight24.png');
 	
 	var smallBlind = gridboxBlindObj.cells(rowId, CELL_BLIND_SMALL).getValue()*1;
 	var bigBlind   = gridboxBlindObj.cells(rowId, CELL_BLIND_BIG).getValue()*1;
+	var ante       = gridboxBlindObj.cells(rowId, CELL_BLIND_ANTE).getValue()*1;
 	var ante       = gridboxBlindObj.cells(rowId, CELL_BLIND_ANTE).getValue()*1;
 	
 	if( smallBlind >= 100000 )
@@ -125,6 +162,8 @@ function runTimer(){
 function decraseTimer(){
 	
 	secondsLeft--;
+//	elapsedTime++;
+	elapsedSeconds++;
 	
 	if( secondsLeft < 0 )
 		secondsLeft = 0;
@@ -132,12 +171,19 @@ function decraseTimer(){
 	if( secondsLeft==0 )
 		nextLevel();
 	
+	timerSliderObj.setValue(secondsLeft);
+	
 	updateTimerLabels();
 }
 
 function incraseTimer(){
 	
-	secondsLeft--;
+	secondsLeft++;
+//	elapsedTime--;
+	elapsedSeconds--;
+	
+	timerSliderObj.setValue(secondsLeft);
+	
 	updateTimerLabels();
 }
 
@@ -154,6 +200,8 @@ function updateTimerLabels(){
 	$('timerHours').innerHTML   = sprintf('%02d', hours);
 	$('timerMinutes').innerHTML = sprintf('%02d', minutes);
 	$('timerSeconds').innerHTML = sprintf('%02d', seconds);
+	
+	$('elapsedTimeValue').innerHTML = formatTimeString(elapsedTime+elapsedSeconds);
 }
 
 function addBlind(){
@@ -182,6 +230,12 @@ function addBlind(){
 
 function onCellEditBlind(state, rowId, colId){
 	
+	if( state==0 ){
+		
+		if( isRunning )
+			return false;
+	}
+	
 	if( state==2 ){
 		
 		var smallBlind = gridboxBlindObj.cells(rowId, CELL_BLIND_SMALL).getValue();
@@ -198,6 +252,9 @@ function onCellEditBlind(state, rowId, colId){
 }
 
 function onCheckBlind(rowId, colId, checked){
+	
+	if( isRunning )
+		return false;
 	
 	if( checked ){
 		

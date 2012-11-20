@@ -27,6 +27,8 @@ class timerActions extends sfActions
     $timerId = $request->getParameter('id');
     $timerId = $request->getParameter('timerId', $timerId);
     $this->timerId = base64_decode($timerId);
+    
+    sfConfig::set('sf_web_debug', false);
   }
   
   public function executeGetWizardStep($request){
