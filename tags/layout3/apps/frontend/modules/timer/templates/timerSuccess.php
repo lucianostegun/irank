@@ -1,4 +1,5 @@
 <div id="blindTimer">
+	
 	<div class="timerClock">
 		<label id="timerHours">00</label>
 		<span class="separator"></span>
@@ -7,11 +8,10 @@
 		<label id="timerSeconds">00</label>
 	</div>
 	
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+	
 	<div class="blindPanel">
-		<div class="currentLevel">
-			<label>Nível</label>
-			<span id="currentLevelValue">0</span>
-		</div>
+		<span class="roundPanel" id="currentLevel">Level 10</span>
 		
 		<div class="smallBlind">
 			<label>Small blind</label>
@@ -29,8 +29,8 @@
 		</div>
 
 		<div class="elapsedTime">
-			<label>Tempo corrido</label>
-			<span id="elapsedTimeValue">0</span>
+			<label>Tempo total</label>
+			<span id="elapsedTimeValue">00:00:00</span>
 		</div>
 	</div>
 
@@ -54,13 +54,12 @@
 			disabled: true,
 			onSlide: function(v) {
 				
-				$('sliding').innerHTML = (v);
 				sliderValue = Math.round(v);
 				
 				if( sliderValue < 0 )
 					return false;
 					
-				isRunning   = false;
+				stopTimer();
 				secondsLeft = sliderValue;
 				elapsedSeconds = levelSeconds-secondsLeft;
 				updateTimerLabels();
@@ -68,8 +67,6 @@
 		});
 	</script>
 	
-	<p id="sliding"></p>
-
 	<div class="clear"></div>
 
 	<br/>
@@ -87,11 +84,14 @@
 									  array('#cspan',	50,	'left',		'ro',	'str'),
 									  array('Pausa',	75,	'center',	'ch',	'int')
 									);
+									
+			echo input_hidden_tag('timerId', $timerId);
 			
 			$dhtmlxGridObj->enableDragAndDrop();
 			$dhtmlxGridObj->addHandler('onEditCell', 'onCellEditBlind');
 			$dhtmlxGridObj->addHandler('onCheck', 'onCheckBlind');
 			$dhtmlxGridObj->addHandler('onKeyPress', 'onKeyPressBlind');
+			$dhtmlxGridObj->setWidth(600);
 			$dhtmlxGridObj->setHeight(350);
 			$dhtmlxGridObj->setXmlUrl('/timer/getXml/model/level?timerId='.$timerId);
 			$dhtmlxGridObj->build();

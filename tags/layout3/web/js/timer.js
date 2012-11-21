@@ -8,7 +8,7 @@ var currentLevel   = 0;
 
 const CELL_BLIND_ID = 0;
 const CELL_BLIND_MARK = 1;
-const CELL_BLIND_NUMBER = 2;
+const CELL_BLIND_LEVEL = 2;
 const CELL_BLIND_SMALL = 3;
 const CELL_BLIND_BIG = 4;
 const CELL_BLIND_ANTE = 5;
@@ -95,7 +95,7 @@ function setBlindLevel(decraseElapsedTime){
 	timerSliderObj.setValue(secondsLeft);
 	timerSliderObj.setEnabled();
 	
-	$('currentLevelValue').innerHTML = currentLevel;
+	$('currentLevel').innerHTML = 'Nível '+currentLevel;
 	
 	updateTimerLabels();
 	
@@ -153,23 +153,23 @@ function runTimer(){
 	
 	if( !isRunning )
 		return false;
-		
+	
 	decraseTimer();
 	
 	window.setTimeout(runTimer, timerInterval);
 }
 
 function decraseTimer(){
-	
-	secondsLeft--;
-//	elapsedTime++;
-	elapsedSeconds++;
-	
+
 	if( secondsLeft < 0 )
 		secondsLeft = 0;
 	
 	if( secondsLeft==0 )
 		nextLevel();
+	
+	secondsLeft--;
+//	elapsedTime++;
+	elapsedSeconds++;
 	
 	timerSliderObj.setValue(secondsLeft);
 	
@@ -207,19 +207,33 @@ function updateTimerLabels(){
 function addBlind(){
 	
 	var rowId;
-	var rowsNum  = gridboxBlindObj.getRowsNum();
-	var duration = '10';
+	var rowsNum    = gridboxBlindObj.getRowsNum();
+	var duration   = '10';
+	var blindLevel = 0;
 	
 	if( rowsNum > 0 ){
 		
-		rowId    = gridboxBlindObj.getRowId(rowsNum-1);
-		duration = gridboxBlindObj.cells(rowId, CELL_BLIND_DURATION).getValue();
+		rowId      = gridboxBlindObj.getRowId(rowsNum-1);
+		duration   = gridboxBlindObj.cells(rowId, CELL_BLIND_DURATION).getValue();
+		
+		for(var rowIndex=gridboxBlindObj.getRowsNum()-1; rowIndex >=0 ; rowIndex--){
+			
+			var rowIdTmp = gridboxBlindObj.getRowId(rowIndex);
+			var isPause  = gridboxBlindObj.cells(rowIdTmp, CELL_BLIND_PAUSE).getValue()=='1';
+			
+			if( isPause )
+				continue;
+			
+			blindLevel = gridboxBlindObj.cells(rowIdTmp, CELL_BLIND_LEVEL).getValue();
+			blindLevel = blindLevel.replace(/[^0-9]/g, '')*1;
+			break;
+		}
 	}
 	
 	rowId = gridboxBlindObj.getUID();
-	gridboxBlindObj.addRow(rowId, ',,,0,0,0,0,0');
+	gridboxBlindObj.addRow(rowId, ',,,0,0,0,0,min,0');
 	
-	gridboxBlindObj.cells(rowId, CELL_BLIND_NUMBER).setValue(rowsNum+1);
+	gridboxBlindObj.cells(rowId, CELL_BLIND_LEVEL).setValue((blindLevel+1));
 	gridboxBlindObj.cells(rowId, CELL_BLIND_DURATION).setValue(duration);
 	
 	gridboxBlindObj.setSelectedRow(rowId);
@@ -246,9 +260,42 @@ function onCellEditBlind(state, rowId, colId){
 				if( gridboxBlindObj.cells(rowId, CELL_BLIND_BIG).getValue()=='0' )
 					gridboxBlindObj.cells(rowId, CELL_BLIND_BIG).setValue( smallBlind*2 );
 		}
+		
+		saveBlindLevel(rowId)
 	}
 	
 	return true;
+}
+
+function saveBlindLevel(rowId){
+	
+	var timerId      = $('timerId').value;
+	var timerLevelId = gridboxBlindObj.cells(rowId, CELL_BLIND_ID).getValue();
+	var smallBlind   = gridboxBlindObj.cells(rowId, CELL_BLIND_SMALL).getValue();
+	var bigBlind     = gridboxBlindObj.cells(rowId, CELL_BLIND_BIG).getValue();
+	var ante         = gridboxBlindObj.cells(rowId, CELL_BLIND_ANTE).getValue();
+	var duration     = gridboxBlindObj.cells(rowId, CELL_BLIND_DURATION).getValue();
+	var isPause      = gridboxBlindObj.cells(rowId, CELL_BLIND_PAUSE).getValue();
+	
+	if( !smallBlind || !bigBlind || !ante || !duration )
+		return false;
+	
+	var successFunc = function(t){
+		
+		var timerLevelId = t.responseText;
+		
+		gridboxBlindObj.cells(rowId, CELL_BLIND_ID).setValue(timerLevelId);
+	}
+	
+	var urlAjax = _webRoot+'/timer/saveLevel?timerId='+timerId;
+	urlAjax    += '&timerLevelId='+timerLevelId;
+	urlAjax    += '&smallBlind='+smallBlind;
+	urlAjax    += '&bigBlind='+bigBlind;
+	urlAjax    += '&ante='+ante;
+	urlAjax    += '&duration='+duration;
+	urlAjax    += '&isPause='+isPause;
+	
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
 }
 
 function onCheckBlind(rowId, colId, checked){
@@ -260,7 +307,7 @@ function onCheckBlind(rowId, colId, checked){
 		
 		if( colId==CELL_BLIND_PAUSE ){
 			
-			gridboxBlindObj.cells(rowId, CELL_BLIND_NUMBER).setValue('');
+			gridboxBlindObj.cells(rowId, CELL_BLIND_LEVEL).setValue('');
 			updateLevelNumbers();
 		}
 	}else{
@@ -272,12 +319,48 @@ function onCheckBlind(rowId, colId, checked){
 
 function onKeyPressBlind(keyCode, ctrlKey, shiftKey){
 	
+	var rowsNum = gridboxBlindObj.getRowsNum();
+	
 	if( keyCode==Event.KEY_DELETE ){
 		
-		gridboxBlindObj.deleteSelectedItem();
-		updateLevelNumbers();
-		stopTimer();
+		var rowId = gridboxBlindObj.getSelectedId();
+		
+		if( !rowId || rowsNum==1 )
+			return false;
+		
+		var timerLevelId = gridboxBlindObj.cells(rowId, CELL_BLIND_ID).getValue();
+		
+		var successFunc = function(t){
+			
+			var rowIndex = gridboxBlindObj.getRowIndex(rowId);
+			
+			gridboxBlindObj.deleteSelectedItem();
+			updateLevelNumbers();
+			stopTimer();
+
+			if( rowIndex > 0 )
+				rowIndex -= 1;
+			else if( rowsNum-1 > 0 )
+				rowIndex = 0
+			else
+				rowIndex = null;
+			
+			if( rowIndex!=null ){
+				rowId = gridboxBlindObj.getRowId(rowIndex);
+				gridboxBlindObj.setSelectedRow(rowId);
+			}
+		}
+		
+		if( timerLevelId ){
+			
+			var urlAjax = _webRoot+'/timer/deleteLevel?timerLevelId='+timerLevelId;
+			new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc});
+		}else
+			successFunc()
+		
 	}
+	
+	return true;
 }
 
 function updateLevelNumbers(){
@@ -290,12 +373,18 @@ function updateLevelNumbers(){
 		if( isPause )
 			continue;
 		
-		gridboxBlindObj.cells(rowId, CELL_BLIND_NUMBER).setValue(++level);
+		gridboxBlindObj.cells(rowId, CELL_BLIND_LEVEL).setValue(++level);
 	}
 }
 
 function openTimer(timerId){
 
 	var urlTimer = _webRoot+'/timer/timer/id/'+base64_encode(timerId);
-	window.open(urlTimer, 'irankTimer', 'width=650, height= 350, scrollbars=yes, location=no, locationbar=no, resizable=yes, toolbar=no');
+	window.open(urlTimer, 'irankTimer', 'width=650, height= 350, scrollbars=yes, location=no, locationbar=no, resizable=yes, toolbar=no, fullscreen=yes');
 }
+
+
+window.addEventListener('load',function() {
+	
+	$('blindTimer').style.height = window.innerHeight+'px';
+});

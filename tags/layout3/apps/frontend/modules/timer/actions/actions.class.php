@@ -224,6 +224,45 @@ class timerActions extends sfActions
 	$this->setTemplate('steps/success');    
   }
   
+  public function executeSaveLevel($request){
+  	
+  	$timerId      = $request->getParameter('timerId');
+  	$timerLevelId = $request->getParameter('timerLevelId');
+  	$smallBlind   = $request->getParameter('smallBlind');
+  	$bigBlind     = $request->getParameter('bigBlind');
+  	$ante         = $request->getParameter('ante');
+  	$duration     = $request->getParameter('duration');
+  	$isPause      = $request->getParameter('isPause');
+	
+	if( $timerLevelId )
+		$timerLevelObj = TimerLevelPeer::retrieveByPK($timerLevelId);
+	else
+		$timerLevelObj = new TimerLevel();
+
+	$timerLevelObj->setTimerId($timerId);
+	$timerLevelObj->setSmallBlind( $smallBlind );
+	$timerLevelObj->setBigBlind( $bigBlind );
+	$timerLevelObj->setAnte( $ante );
+	$timerLevelObj->setDuration( $duration );
+	$timerLevelObj->setIsPause( $isPause );
+	$timerLevelObj->save();
+	
+	echo $timerLevelObj->getId();
+	exit;
+  }
+  
+  public function executeDeleteLevel($request){
+  	
+  	$timerLevelId = $request->getParameter('timerLevelId');
+	
+	$timerLevelObj = TimerLevelPeer::retrieveByPK($timerLevelId);
+	
+	if( is_object($timerLevelObj) )
+		$timerLevelObj->delete();
+		
+	exit;
+  }
+  
   public function executeGetXml($request){
 
 	$timerId = $request->getParameter('timerId');
@@ -243,7 +282,7 @@ class timerActions extends sfActions
 		$result = array();
 		$result[] = $timerLevelObj->getId();
 		$result[] = '/images/blank.gif';
-		$result[] = '#'.$level;
+		$result[] = $level;
 		$result[] = $timerLevelObj->getSmallBlind();
 		$result[] = $timerLevelObj->getBigBlind();
 		$result[] = $timerLevelObj->getAnte();

@@ -12,8 +12,10 @@
 	-moz-border-radius: 	3px;
 	-webkit-border-radius: 	3px;
 	border-radius: 			3px;
+	
 	background: 			url('/images/button/buttonBg.png') repeat-x;
 	background-position: 	left top;
+	
 	color: 					#505050;
 	font-weight: 			bold;
 	font-family: 			Verdana;
