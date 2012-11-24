@@ -140,7 +140,7 @@
 
 
 
-.channels {
+.rightBar {
 	
 	float: 			left;
 	position: 		relative;
@@ -150,137 +150,213 @@
 	margin: 		3px;
 }
 
-.channels .channel {
-	
-	width: 				217px;
-	height: 			70px;
-	border-bottom: 		1px solid #EAEAEA;
-	padding: 			5px;
-	margin: 			1px;
-	background: 		#F5F5F5;
-}
-
-.channels .channel .image {
-	
-	width: 			48px;
-	float: 			left;
-	text-align: 	center;
-}
-
-.channels .channel .description {
-	
-	float: 			left;
-	position: 		relative;
-	left: 			8px;
-	width: 			162px;
-	text-align: 	left;
-}
-
-.channels .channel h1 {
-	
-	font-size: 		10pt;
-	font-weight: 	bold;
-	color: 			#344F7C;
-	text-align: 	left;
-	margin: 		0px;
-	padding: 		0px;
-}
-
-.channels .channel h1 a {
-
-	color: 	#344F7C;
-}
-
-.channels .storeOfferHome {
+.rightBar .storeOfferHome {
 
 	position: relative;
-	top: 5px;
-	height: 300px
+	top: 0px;
+	left: 0px;
+	height: 250px;
+	width: 225px;
+	overflow: hidden;
+	margin-bottom: 5px;
 }
 
-.channels .storeOfferHome .header {
+.rightBar .storeOfferHome .header {
 
-	position: relative;
 	height: 52px;
 	border-top: 1px solid #EAEAEA;
 	border-bottom: 1px solid #EAEAEA;
-	background: #FAFAFA
+	border: none;
+	position: absolute;
+	z-index: 1;
+	top: -4px;
+	left: -3px;
 }
 
-.channels .storeOfferHome img {
+.rightBar .storeOfferHome img {
 
-	margin-left: 15px;
+	position: relative;
 	float: left;
 }
 
-.channels .storeOfferHome h1 {
+.rightBar .storeOfferHome h1 {
 
-	float: left;
-	position: relative;
-	left: 15px;
-	top: 3px;
-	padding-bottom: 7px;
+	position: absolute;
+	width: 180px;
+	left: 55px;
+	top: -3px;
+	font-size: 16px;
 }
 
-.channels .storeOfferHome a h1 {
+.rightBar .storeOfferHome a h1 {
 
-	color: #505050
+	color: #e36a12
 }
 
-.channels .storeOfferHome .product {
+.rightBar .storeOfferHome .product {
 
-	width: 213px;
-	padding: 3px;
+	z-index: 0;
+	width: 225px;
+	height: 215px;
+	padding: 0px 0px 10px 0px;
 	position: relative;
-	top: 0px;
-	left: 5px;
-	margin: 0;
-	height: auto;
+	top: 4px;
+	left: 0px;
+	margin: 20px 0 0 0;
 	background: #FFFFFF
 }
 
-.channels .storeOfferHome .product img {
+.rightBar .storeOfferHome .product div.infoBar {
+
+	width: 225px;
+	height: 60px;
+	border-top: #FFFFFF;
+	background: #000000;
+	border-top: 1px solid #FFFFFF;
+	filter: 				alpha(opacity=60);
+	-moz-opacity: 			0.60;
+	-khtml-opacity: 		0.60;
+	opacity: 				0.60;
+	position: absolute;
+	left: 0px;
+	bottom: 5px
+}
+
+.rightBar .storeOfferHome .product img {
 
 	position: relative;
-	margin-top: 0px;
-	margin-left: 17px;
-	margin-bottom: 5px;
-	padding: 5px;
-	background: #F0F0F0
+	padding: 5px 5px 0px 5px;
+	background: #E0E0E0;
+	margin: 0px;
+	width: 215px;
 }
 
-.channels .storeOfferHome .product div.name {
+.rightBar .storeOfferHome .product div.name {
 
-	position: relative;
-	width: 200px;
+	position: absolute;
 	font-weight: bold;
-	font-size: 12px;
-	color: #425D95;
-	left: 5px;
-	top: 2px;
-	border-bottom: 1px solid #DADADA;
-	padding-bottom: 3px;
-	padding-left: 5px;
+	font-size: 14px;
+	color: #FFFFFF;
+	left: 10px;
+	top: 165px;
+	padding: 0px;
+	text-shadow: 1px 1px #000000;
 }
 
-.channels .storeOfferHome .product div.prize {
+.rightBar .storeOfferHome .product div.name a {
 
-	float: right;
-	font-size: 12px;
+	color: #FFFFFF;
+}
+
+.rightBar .storeOfferHome .product div.prize {
+
+	font-size: 16px;
 	font-weight: bold;
-	margin-right: 10px;
-	margin-top: 5px;
-	color: rgb(84, 134, 180);
+	margin: 0px;
+	color: rgb(232, 160, 20);
+	position: absolute;
+	right: 10px;
+	bottom: 12px;
+	text-shadow: 2px 2px #000000;
 }
 
-.channels .storeOfferHome .product div.size {
+.rightBar .storeOfferHome .product div.size {
 
-	float: left;
+	position: absolute;
 	font-size: 10px;
 	font-weight: normal;
-	margin-left: 10px;
-	margin-top: 5px;
-	color: #303030;
+	margin: 0px;
+	color: #FFFFFF;
+	left: 10px;
+	bottom: 8px;
+}
+
+.rightBar .storeOfferHome .product div.size b {
+
+	color: #C0C0C0;
+}
+
+.rightBar #publicRankings > h1 {
+
+	font-size: 16px;
+	margin-top: 15px;
+	height: 24px;
+	line-height: 24px;
+	padding-left: 34px;
+	position: relative;
+	left: 25px;
+	background: url('/images/home/home.png') no-repeat;
+	color: #3374aa
+}
+
+.rightBar #publicRankings .ranking {
+
+	overflow: hidden;
+	border: 1px solid #D5D5D5;
+	margin: 8px 2px;
+	padding: 0px 0px 5px 0px;
+	height: 60px;
+	width: 220px;
+	position: relative;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+
+	background: 			#E9F1F4;
+    background-image: 		-o-linear-gradient(#E9F1F4, #BDCDDD);
+    background: 			-moz-linear-gradient(top, #E9F1F4, #BDCDDD);;
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#E9F1F4), to(#BDCDDD));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E9F1F4', EndColorStr='#BDCDDD', GradientType=0);
+}
+
+.rightBar #publicRankings .ranking:hover,
+.rightBar #publicRankings .ranking *:hover {
+
+	cursor: pointer;
+}
+
+.rightBar #publicRankings .ranking h1 {
+
+	background: #FAFAFA;
+	width: 195px;
+	text-align: left;
+	color: rgb(52, 79, 124);
+	margin: 0px;
+	padding: 4px 0px 4px 7px;
+	font-size: 12px;
+	line-height: 14px;
+	margin-bottom: 2px;
+	border-bottom: 1px solid #D5D5D5
+}
+
+.rightBar #publicRankings .ranking label,
+.rightBar #publicRankings .ranking span {
+
+	position: relative;
+	text-align: center;
+	display: inline-block
+}
+
+.rightBar #publicRankings .ranking label {
+
+	font-weight: bold
+}
+
+.rightBar #publicRankings .ranking .disclosure {
+
+	width: 16px;
+	height: 100%;
+	background: #F7F7F7 url('/images/home/rightArrow.png') no-repeat center center;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	border-left: 1px solid #CFCFCF
+}
+
+.rightBar #publicRankings .ranking:hover .disclosure {
+
+	background-color: #FFFFFF;
+	border-left: 1px solid #D0D0D0
 }
 
 
@@ -291,15 +367,15 @@
 	position: 		relative;
 	top: 			4px;
 	left: 			4px;
-	height: 		191px;
 	width: 			778px;
+	margin-top: 	20px
 }
 
 .baseChannels .channel {
 	
 	float: 				left;
 	width: 				245px;
-	height: 			130px;
+	height: 			85px;
 	border: 			1px solid #E5E5E5;
 	padding: 			4px;
 	margin: 			2px;
@@ -308,9 +384,11 @@
 
 .baseChannels .channel .image {
 	
-	width: 			48px;
+	width: 			40px;
 	float: 			left;
 	position: 		relative;
+	left: 			5px;
+	top: 			5px;
 	text-align: 	center;
 }
 
@@ -338,6 +416,11 @@
 	padding: 		0px;
 }
 
+.baseChannels .channel h1 a {
+	
+	color: 			#344f7C;
+}
+
 
 
 
@@ -353,7 +436,7 @@
 	top: 			5px;
 	left: 			5px;
 	width: 			756px;
-	margin-top: 	15px;
+	margin-top: 	5px;
 }
 
 #photoVote h1 {

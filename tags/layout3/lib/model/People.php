@@ -42,7 +42,7 @@ class People extends BasePeople
 		return $firstName.($lastName?' '.$lastName.'.':'');
 	}
 	
-	public static function getQuickPeople($firstName, $lastName=null, $peopleType, $peopleId=null, $defaultLanguage=null){
+	public static function getQuickPeople($firstName, $lastName=null, $peopleType, $peopleId=null, $defaultLanguage=null, $con=null){
 
 		$peopleTypeId    = VirtualTable::getIdByTagName('peopleType', $peopleType);
 		$culture         = MyTools::getCulture();
@@ -60,7 +60,7 @@ class People extends BasePeople
 	  	$peopleObj->setDefaultLanguage( $defaultLanguage );
 		$peopleObj->setEnabled(true);
 		$peopleObj->setVisible(true);
-		$peopleObj->save();
+		$peopleObj->save($con);
 		
 		return $peopleObj;
 	}

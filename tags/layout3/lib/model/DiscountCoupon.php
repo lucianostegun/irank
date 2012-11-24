@@ -32,46 +32,46 @@ class DiscountCoupon extends BaseDiscountCoupon
 		$discountRuleObj = new stdClass();
 		
 		if( $shippingPercent > 0 )
-			$discountRuleObj->shippingPercent = $shippingPercent;
+			$discountRuleObj->shippingPercent = Util::formatFloat($shippingPercent);
 
 		if( $shippingValue > 0 )
-			$discountRuleObj->shippingValue = $shippingValue;
+			$discountRuleObj->shippingValue = Util::formatFloat($shippingValue);
 
 		if( $orderPercent > 0 )
-			$discountRuleObj->orderPercent = $orderPercent;
+			$discountRuleObj->orderPercent = Util::formatFloat($orderPercent);
 
 		if( $orderValue > 0 )
-			$discountRuleObj->orderValue = $orderValue;
+			$discountRuleObj->orderValue = Util::formatFloat($orderValue);
 
 		if( $totalPercent > 0 )
-			$discountRuleObj->totalPercent = $totalPercent;
+			$discountRuleObj->totalPercent = Util::formatFloat($totalPercent);
 
 		if( $totalValue > 0 )
-			$discountRuleObj->totalValue = $totalValue;
+			$discountRuleObj->totalValue = Util::formatFloat($totalValue);
 
 		if( $cheaperItemPercent > 0 )
-			$discountRuleObj->cheaperItemPercent = $cheaperItemPercent;
+			$discountRuleObj->cheaperItemPercent = Util::formatFloat($cheaperItemPercent);
 
 		if( $cheaperItemValue > 0 )
-			$discountRuleObj->cheaperItemValue = $cheaperItemValue;
+			$discountRuleObj->cheaperItemValue = Util::formatFloat($cheaperItemValue);
 
 		if( $cheaperProductPercent > 0 )
-			$discountRuleObj->cheaperProductPercent = $cheaperProductPercent;
+			$discountRuleObj->cheaperProductPercent = Util::formatFloat($cheaperProductPercent);
 
 		if( $cheaperProductValue > 0 )
-			$discountRuleObj->cheaperProductValue = $cheaperProductValue;
+			$discountRuleObj->cheaperProductValue = Util::formatFloat($cheaperProductValue);
 
 		if( $mostExpensiveItemPercent > 0 )
-			$discountRuleObj->mostExpensiveItemPercent = $mostExpensiveItemPercent;
+			$discountRuleObj->mostExpensiveItemPercent = Util::formatFloat($mostExpensiveItemPercent);
 
 		if( $mostExpensiveItemValue > 0 )
-			$discountRuleObj->mostExpensiveItemValue = $mostExpensiveItemValue;
+			$discountRuleObj->mostExpensiveItemValue = Util::formatFloat($mostExpensiveItemValue);
 
 		if( $mostExpensiveProductPercent > 0 )
-			$discountRuleObj->mostExpensiveProductPercent = $mostExpensiveProductPercent;
+			$discountRuleObj->mostExpensiveProductPercent = Util::formatFloat($mostExpensiveProductPercent);
 
 		if( $mostExpensiveProductValue > 0 )
-			$discountRuleObj->mostExpensiveProductValue = $mostExpensiveProductValue;
+			$discountRuleObj->mostExpensiveProductValue = Util::formatFloat($mostExpensiveProductValue);
 
 		$this->setCouponCode( $couponCode );
 		$this->setDiscountRule( serialize($discountRuleObj) );

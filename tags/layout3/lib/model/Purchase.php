@@ -185,6 +185,9 @@ class Purchase extends BasePurchase
 			case 'shipped':
 				$emailSubject = "Pedido enviado #$orderNumber";
 				break;
+			case 'complete':
+				$emailSubject = "Pedido entregue #$orderNumber";
+				break;
 			case 'refused':
 				$emailSubject = "Pagamento recusado #$orderNumber";
 				break;

@@ -143,6 +143,9 @@ div.footer h2 {
 	$sql = "SELECT * FROM bankroll WHERE user_site_id = $userSiteId OR people_id = $peopleId ORDER BY event_date";
 	$resultSet = Util::executeQuery($sql);
 	
+	if( $throwException && $resultSet->getRecordCount()==0 )
+		throw new Exception('zeroInfo');
+	
 	$bankrollList = array();
 	$lastYear      = null;
 	$lastYearMonth = null;
@@ -356,7 +359,7 @@ div.footer h2 {
 	<tr>
 		<td class="textL <?php echo 'year-'.$year ?>" colspan="9" style="padding: 0px">
 			<?php
-				$urlChart = url_for("myAccount/bankrollChart?year=$year&peopleId=$peopleId&userSiteId=$userSiteId&type=file.png", true);
+				$urlChart = url_for("myAccount/bankrollChart?year=$year&peopleId=$peopleId&userSiteId=$userSiteId", true);
 				echo image_tag($urlChart);
 			?>
 		</td>

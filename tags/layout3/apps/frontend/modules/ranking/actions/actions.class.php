@@ -72,7 +72,7 @@ class rankingActions extends sfActions
   	
   	$shareId   = $request->getParameter('share');
   	$rankingId = Util::decodeId($shareId);
-  	$rankingId = $request->getParameter('id');
+  	$rankingId = $request->getParameter('id', $rankingId);
   	$rankingId = $request->getParameter('rankingId', $rankingId);
   	
 	$this->rankingObj = RankingPeer::retrieveByPK( $rankingId );

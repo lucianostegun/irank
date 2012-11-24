@@ -12,7 +12,7 @@ $PagSeguroConfig['environment']['environment'] = 'production';
 
 $PagSeguroConfig['credentials'] = Array();
 $PagSeguroConfig['credentials']['email'] = 'lucianostegun@gmail.com';
-$PagSeguroConfig['credentials']['token'] = '985ED91D71AE42AFAC677FC30BA364AE';
+$PagSeguroConfig['credentials']['token'] = 'EE85B624730F4E17B157DB48B4032EA1';
 
 $PagSeguroConfig['application'] = Array();
 $PagSeguroConfig['application']['charset'] = "UTF-8"; // UTF-8, ISO-8859-1

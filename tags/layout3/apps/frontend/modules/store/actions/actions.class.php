@@ -12,23 +12,6 @@ class storeActions extends sfActions
 
   public function preExecute(){
   	
-//  	if( !isset($_SERVER['HTTPS']) || $_SERVER['HTTPS']!='on' ){
-//  		
-//  		$redirectUrl = null;
-//  		
-//  		if( isset($_SERVER['REDIRECT_SCRIPT_URI']) )
-//  			$redirectUrl = $_SERVER['REDIRECT_SCRIPT_URI'];
-//  		
-//  		elseif( isset($_SERVER['SCRIPT_URI']) )
-//  			$redirectUrl = $_SERVER['SCRIPT_URI'];
-//  		
-//  		if( $redirectUrl ){
-//  			
-//  			$redirectUrl = str_replace('http://', 'https://', $redirectUrl);
-//	  		return $this->redirect($redirectUrl);
-//  		}
-//  	}
-    
     $this->cartSession = $this->getUser()->getAttribute('iRankStoreCartSession');
     
     if( !$this->cartSession )
@@ -41,7 +24,7 @@ class storeActions extends sfActions
 	require_once "$libDir/pagseguro/PagSeguroLibrary.php";
   	
   	$this->facebookMetaList = array();
-  	$this->facebookMetaList['image'] = 'http://[host]/images/store/storeLogo.png';
+  	$this->facebookMetaList['image'] = 'http://[host]/images/store/logoStore.png';
   	$this->facebookMetaList['url']   = 'https://[host]/store';
   }
   
@@ -451,7 +434,7 @@ class storeActions extends sfActions
 			$productCode        = $productObj->getProductCode();
 			$shortName          = $productObj->getShortName();
 			
-	  		$paymentRequest->addItem($productObj->getProductCode(), "$categoryShortName: $productName", $quantity, $price, $weight, $shippingValue);
+	  		$paymentRequest->addItem($productObj->getProductCode(), "$categoryShortName: $productName", $quantity, $price, $weight, 0);
   		}
   	}
   	
@@ -474,16 +457,16 @@ class storeActions extends sfActions
 			
 			$paymentRequest->setReference($orderNumber);
 			
-			$CODIGO_SEDEX = PagSeguroShippingType::getCodeByType('SEDEX');
-			$paymentRequest->setShippingType($CODIGO_SEDEX);
-			$paymentRequest->setShippingAddress($purchaseObj->getAddressZipcode(),
-												$purchaseObj->getAddressName(),
-												$purchaseObj->getAddressNumber(),
-												$purchaseObj->getAddressComplement(),
-												$purchaseObj->getAddressQuarter(),
-												$purchaseObj->getAddressCity(),
-												$purchaseObj->getAddressState(),
-												'BRA');
+//			$CODIGO_SEDEX = PagSeguroShippingType::getCodeByType('SEDEX');
+//			$paymentRequest->setShippingType($CODIGO_SEDEX);
+//			$paymentRequest->setShippingAddress($purchaseObj->getAddressZipcode(),
+//												$purchaseObj->getAddressName(),
+//												$purchaseObj->getAddressNumber(),
+//												$purchaseObj->getAddressComplement(),
+//												$purchaseObj->getAddressQuarter(),
+//												$purchaseObj->getAddressCity(),
+//												$purchaseObj->getAddressState(),
+//												'BRA');
 			
 			// Sets your customer information.
 			$paymentRequest->setSender($purchaseObj->getCustomerName(), $purchaseObj->getUserSite()->getPeople()->getEmailAddress());
@@ -559,10 +542,9 @@ class storeActions extends sfActions
 		curl_close($curl);
 	}
 	
-  	$xmlObj = @simplexml_load_string($xmlString);
-  	$orderNumber = (string)$xmlObj->reference;
-  	
   	try{
+	  	$xmlObj = @simplexml_load_string($xmlString);
+	  	$orderNumber = (string)$xmlObj->reference;
   		
   		$purchaseObj = PurchasePeer::retrieveByOrderNumber($orderNumber, null, true);
   		
@@ -857,7 +839,7 @@ class storeActions extends sfActions
   	$cartSessionObj->productItemList[$productItemId] = $productItem;
   	$this->getUpdateSession($cartSessionObj);
  	
- 	$this->updateShippingValue($request);
+ 	$this->updateShippingValue($request, true);
  	$this->updateDiscountValue($request);
   }
 
@@ -899,7 +881,7 @@ class storeActions extends sfActions
   	return $cartSessionObj;
   }
   
-  private function updateShippingValue($request){
+  private function updateShippingValue($request, $suppressException=false){
   	
   	$cartSessionObj = $this->getCartSession();
   	
@@ -959,8 +941,11 @@ class storeActions extends sfActions
 				$result = null;
 				parse_str(file_get_contents($webserviceUrl), $result);
 				
-				if( !isset($result['resultado']) || $result['resultado']!='1' )
-					Util::forceError('Erro ao calcular o valor do frete!'.chr(10).$result['resultado_txt']);
+				if( !isset($result['resultado']) || $result['resultado']!='1' && !$suppressException ){
+					
+					Util::forceError('Erro ao calcular o valor do frete!'.chr(10).$result['resultado_txt'], false);
+					continue;
+				}
 					
 				$shippingValue += $result['valor'];
 		  	}

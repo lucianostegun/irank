@@ -5,7 +5,7 @@ prod:
   purge:   off
 
 all:
-  enabled: off
+  enabled: on
 #  level:   debug
 #  rotate:  off
 #  period:  7

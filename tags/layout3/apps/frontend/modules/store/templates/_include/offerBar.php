@@ -1,7 +1,7 @@
 <?php
 	MyTools::addStylesheet('storeBar');
 ?>
-<div class="storeOfferBar">
+<div id="storeOfferBar">
 	<div class="header">
 		<a href="<?php echo url_for('store/index') ?>">
 			<div class="image"><?php echo image_tag('store/icon') ?></div>
@@ -11,7 +11,7 @@
 	<?php
 		$criteria = new Criteria();
 		$criteria->addAscendingOrderByColumn('RANDOM()');
-		$criteria->setLimit(3);
+		$criteria->setLimit(2);
 		$productObjList = ProductPeer::search($criteria);
 		
 		foreach($productObjList as $productObj):
@@ -39,3 +39,25 @@
 	<?php endforeach; ?>
 	<div class="clear"></div>
 </div>
+<script>
+
+function fixStoreBar(){
+
+	if( window.scrollY >= 990 ){
+	
+		if( !$('storeOfferBar').hasClassName('fixed') ){
+			
+			$('storeOfferBar').style.position = 'fixed';
+			$('storeOfferBar').addClassName('fixed');	
+			$('storeOfferBar').style.top      = '0px';
+		}
+	}else{
+		
+		$('storeOfferBar').style.position = 'relative';
+		$('storeOfferBar').style.top      = '0px';
+		$('storeOfferBar').removeClassName('fixed');
+	}
+}
+
+window.addEventListener('scroll', fixStoreBar, false);
+</script>

@@ -11,7 +11,7 @@ class blogActions extends sfActions
 {
 
   public function preExecute(){
-    
+  	
     $blogId       = $this->getRequestParameter('id');
     $this->blogId = $this->getRequestParameter('blogId', $blogId);
     
@@ -42,7 +42,7 @@ class blogActions extends sfActions
 	$imageShare = $this->blogObj->getImageShare();
 	
 	if( $imageShare )
-		$this->facebookMetaList['image'][] = 'http://[host]/images/blog/'.$imageShare;
+		$this->facebookMetaList['image'] = array('http://[host]/images/blog/'.$imageShare, $this->facebookMetaList['image'][0]);
   }
   
   public function executeTag($request){

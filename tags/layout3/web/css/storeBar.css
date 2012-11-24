@@ -1,10 +1,10 @@
-.storeOfferBar {
+#storeOfferBar {
 
 	margin-top: 15px;
 	width: 200px;
 }
 
-.storeOfferBar .header {
+#storeOfferBar .header {
 
 	position: relative;
 	height: 32px;
@@ -13,14 +13,14 @@
 	background: #FAFAFA
 }
 
-.storeOfferBar .header img {
+#storeOfferBar .header img {
 
 	margin-left: 15px;
 	margin-top: 3px;
 	float: left;
 }
 
-.storeOfferBar h1 {
+#storeOfferBar h1 {
 
 	float: left;
 	position: relative;
@@ -30,12 +30,12 @@
 	font-size: 16px;
 }
 
-.storeOfferBar a h1 {
+#storeOfferBar a h1 {
 
 	color: #505050
 }
 
-.storeOfferBar div.product {
+#storeOfferBar div.product {
 
 	position: relative;
 	width: 198px;
@@ -46,14 +46,14 @@
 	background: #FAFAFA
 }
 
-.storeOfferBar div.product img {
+#storeOfferBar div.product img {
 
 	position: relative;
 	left: 9px;
 	z-index: 0;
 }
 
-.storeOfferBar div.product .distinct.new {
+#storeOfferBar div.product .distinct.new {
 
 	position: absolute;
 	top: 10px;
@@ -61,7 +61,7 @@
 	z-index: 1
 }
 
-.storeOfferBar div.product div.name {
+#storeOfferBar div.product div.name {
 
 	position: relative;
 	width: 180px;
@@ -74,7 +74,7 @@
 	padding-bottom: 3px;
 }
 
-.storeOfferBar div.product div.prize {
+#storeOfferBar div.product div.prize {
 
 	float: right;
 	font-size: 12px;
@@ -84,7 +84,7 @@
 	color: rgb(84, 134, 180);
 }
 
-.storeOfferBar div.product div.size {
+#storeOfferBar div.product div.size {
 
 	float: left;
 	font-size: 10px;

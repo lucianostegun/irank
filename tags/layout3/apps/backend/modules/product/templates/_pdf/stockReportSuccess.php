@@ -27,6 +27,7 @@
 	
 		margin: 	5mm 1mm;
 		border-bottom: 0.3pt solid #000000;
+		padding-bottom: 5mm;
 		width: 100%;
 	}
 
@@ -60,6 +61,15 @@
 		font-weight: bold
 	}
 	
+	table.product .description p {
+	
+		padding: 3mm 0;	
+	}
+
+	table.product .description hr {
+	
+		margin: 0mm 0 2mm 0;	
+	}
 	
 	
 	table.stock {
@@ -206,7 +216,7 @@
 			<td class="description">
 				<label>Categoria:</label> <?php echo $productObj->getProductCategory()->getCategoryName() ?>
 				<br/><br/> 
-				<?php echo $productObj->getDescription(true) ?>
+				<?php echo $productObj->getDescription() ?>
 			</td>
 		</tr>
 	</table>

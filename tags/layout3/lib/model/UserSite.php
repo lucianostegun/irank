@@ -20,7 +20,10 @@ class UserSite extends BaseUserSite
 	  	$defaultLanguage = $request->getParameter('defaultLanguage');
 	  	$startBankroll   = $request->getParameter('startBankroll');
 	  	
-  		$peopleObj = People::getQuickPeople($firstName, $lastName, 'userSite', $this->getPeopleId(), $defaultLanguage);
+	  	$con = Propel::getConnection();
+	  	$con->begin();
+	  	 
+  		$peopleObj = People::getQuickPeople($firstName, $lastName, 'userSite', $this->getPeopleId(), $defaultLanguage, $con);
   		
 	  	if( !$this->getActive() ){
 	  		
@@ -28,20 +31,18 @@ class UserSite extends BaseUserSite
 		  	$this->setUsername( $username );
 		}
 		
-//		if( strlen($password)!=32 || $this->isNew() ){
-//			if( !$this->getSignedSchedule() )
-//				$password = 'irank';
-//		  	
-//		  	$this->updateHtpasswd($password);
-//		}
+		if( $this->isNew() )
+		  	$this->updateHtpasswd('irank');
 		
 	  	$peopleObj->setEmailAddress( $emailAddress );
 	  	$this->setPassword( (strlen($password)==32?$password:md5($password)) );
 	  	$this->setActive(true);
 	  	$this->setStartBankroll(nvl(Util::formatFloat($startBankroll), 0));
-	  	$this->save();
+	  	$this->save($con);
 	  	
-	  	$peopleObj->save();
+	  	$peopleObj->save($con);
+	  	
+	  	$con->commit();
 	}
 	
 	public function saveEmailOptions($request){

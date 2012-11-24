@@ -111,6 +111,8 @@ $moduleName = $sf_context->getModuleName();
 					    			
 					    			if( $showStoreBar )
 					    				include_partial('store/include/offerBar');
+					    			else
+					    				include_partial('home/include/googleAdSenseBar');
 					    		?>
     						</div>
 				    		

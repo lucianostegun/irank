@@ -4,8 +4,8 @@ all:
     og|title:        iRank - Poker Ranking
     og|description:  iRank - O primeiro site de gerenciamento de rankings de poker para você e seus amigos
     
-  stylesheets:    [home, quickResume, eventResume, eventLiveResume]
-  javascripts:    [home, highlight]
+  stylesheets:    [highlight, quickResume, eventResume, eventLiveResume, home]
+  javascripts:    [highlight, home]
   
 indexSuccess:
   stylesheets:    [quickResume]

@@ -33,8 +33,12 @@ class RankingPeer extends BaseRankingPeer
 
 				$criterion1 = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
 				$criterion1->addAnd( $criteria->getNewCriterion( RankingPlayerPeer::ENABLED, true ) );
+				
 				$criterion2 = $criteria->getNewCriterion( self::USER_SITE_ID, $userSiteId );
 				
+				$criterion3 = $criteria->getNewCriterion( self::IS_PRIVATE, false );
+				
+				$criterion2->addOr($criterion3);
 				$criterion1->addOr($criterion2);
 				$criteria->add($criterion1);
 				

@@ -1,4 +1,4 @@
-<div class="tabbarIntro">Lista de jogadores já cadastrados no ranking</div>
+<div class="tabbarIntro">Lista de jogadores já inscritos no ranking</div>
 
 <div id="rankingPlayerDiv">
 	<?php

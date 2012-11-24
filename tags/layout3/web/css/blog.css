@@ -285,3 +285,14 @@ div.speech div.content div.loading {
 	margin: 0px 0px 20px 0px;
 	padding-top: 2px
 }
+
+ul.description li {
+	font-weight: bold
+}
+
+ul.description li p {
+	line-height: 16px;
+	margin-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal
+}

@@ -11,6 +11,11 @@ all:
   stylesheets:    [quickResume, table, store]
   javascripts:    [store]
 
+indexSuccess:
+  
+  stylesheets:    [-store, highlight, store]
+  javascripts:    [/sf/prototype/js/scriptaculous, highlight]
+  
 cartSuccess:
   
   stylesheets:    []

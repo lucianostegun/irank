@@ -27,7 +27,7 @@
 	$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, null ) );
 	$criteria->add($criterion);
 	
-	$criteria->setLimit(2);
+	$criteria->setLimit(5);
 	$criteria->setOffset(0);
 	$blogObjList = Blog::getList($criteria);
 	
@@ -35,8 +35,8 @@
 ?>
 	<a href="<?php echo url_for('blog/article?'.$blogObj->getPermalink().'=') ?>">
 	<h1>[<?php echo $blogObj->getPublishDate('d/m/Y H\hm') ?>]</h1><h2><?php echo $blogObj->getTitle() ?></h2>
-	<h3><?php echo $blogObj->getCaption() ?></h3>
 	<div class="clear"></div>
 	</a>
+	<div class="mb5"></div>
 <?php endforeach; ?>
 </div>

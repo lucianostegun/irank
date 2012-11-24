@@ -13,6 +13,10 @@
 	$criteria->add( BlogPeer::IS_DRAFT, false );
 	if( $tag )
 		$criteria->add( BlogPeer::TAGS, "%$tag%", Criteria::ILIKE );
+		
+	$criterion = $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, date('Y-m-d H:i:s'), Criteria::LESS_EQUAL );
+	$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, null ) );
+	$criteria->add($criterion);
 
 	if( $category )
 		$criteria->add( VirtualTablePeer::DESCRIPTION, "%$category%", Criteria::ILIKE );

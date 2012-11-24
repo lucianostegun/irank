@@ -130,8 +130,8 @@
 				<target>Informe um valor de até 25 caracteres</target>
 			</trans-unit>
 			<trans-unit>
-				<source>form.error.between5and15</source>
-				<target>Informe um valor entre 5 e 15 caracteres</target>
+				<source>form.error.between6and15</source>
+				<target>Informe um valor entre 6 e 15 caracteres</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.passwordConfirm</source>

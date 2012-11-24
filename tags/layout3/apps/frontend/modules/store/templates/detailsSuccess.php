@@ -36,7 +36,7 @@
 			</div>
 			<div class="clear"></div>
 			<!-- AddThis Button BEGIN -->
-			<div class="share addthis_default_style">
+			<div class="share addthis_default_style" style="height: 30px;">
 				<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
 				<a class="addthis_button_tweet" style="position: relative; left: -10px"></a>
 				<a class="addthis_counter addthis_pill_style" style="position: absolute; margin-left: 182px"></a>

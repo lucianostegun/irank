@@ -44,7 +44,7 @@
 							if( !array_key_exists($orderStatus, $orderStatusList) )
 								continue;
 							
-							$timestamp = $purchaseStatusLogObj->getCreatedAt(null);
+							$timestamp = $purchaseStatusLogObj->getTransactionDate(null);
 							$title = sprintf('%s: %s, %02d de %s de %d', $purchaseStatusLogObj->getTransactionStatus(),
 																			Util::getWeekDay(date('w', $timestamp)),
 																			date('d', $timestamp),

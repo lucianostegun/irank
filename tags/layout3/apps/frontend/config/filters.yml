@@ -7,6 +7,8 @@ security:  ~
 #    class: MobileFilter
 language:
     class: LanguageFilter
+store:
+    class: HttpsFilter
 
 cache:     ~
 common:    ~

@@ -836,10 +836,13 @@ class Ranking extends BaseRanking
 		try{
 			
 			$emailObj = new Email();
-			$emailObj->addAlias($paramList);
+			echo $emailObj->addAlias($paramList);
 
 			$this->save();
-		}catch(Exception $e){}
+		}catch(Exception $e){
+			
+			echo 'ok';
+		}
 	}
 	
 	public function updateEmailGroup(){
@@ -1017,6 +1020,32 @@ class Ranking extends BaseRanking
 		$rankingSubscriptionRequestObj->save();
 		
 		$rankingSubscriptionRequestObj->notify();
+	}
+	
+	public function getNextEvent(){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::DELETED, false );
+		$criteria->add( EventPeer::RANKING_ID, $this->getId() );
+		$criteria->add( EventPeer::EVENT_DATE, time(), Criteria::GREATER_THAN );
+		$criteria->addAscendingOrderByColumn( EventPeer::EVENT_DATE );
+		return EventPeer::doSelectOne($criteria);
+	}
+
+	public function getLastEvent(){
+		
+		$criteria = new Criteria();
+		$criteria->setNoFilter(true);
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::DELETED, false );
+		$criteria->add( EventPeer::RANKING_ID, $this->getId() );
+		$criteria->add( EventPeer::EVENT_DATE, time(), Criteria::LESS_THAN );
+		$criteria->addDescendingOrderByColumn( EventPeer::EVENT_DATE );
+		
+		return EventPeer::doSelectOne($criteria);
 	}
 	
 	public function getInfo(){

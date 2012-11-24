@@ -102,8 +102,10 @@ class rankingActions extends sfActions
 			
 			$rankingList = array();
 			
+			$criteria = new Criteria();
+			$criteria->addDescendingOrderByColumn( RankingPeer::START_DATE );
 			
-			foreach($userSiteObj->getRankingList() as $rankingObj){
+			foreach($userSiteObj->getRankingList($criteria) as $rankingObj){
 				
 				$rankingNode = array();
 				

@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=ISO-8859-1');
 
-define('TOKEN', '985ED91D71AE42AFAC677FC30BA364AE');
+define('TOKEN', 'EE85B624730F4E17B157DB48B4032EA1');
 
 class PagSeguroNpi {
 	

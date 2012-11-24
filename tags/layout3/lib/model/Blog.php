@@ -31,7 +31,7 @@ class Blog extends BaseBlog
 		$publishTime    = $request->getParameter('publishTime');
 		$peopleId       = MyTools::getAttribute('peopleId');
 		
-		$publishDate .= ' '.$publishTime;
+		$publishDate .= ($publishTime?' '.$publishTime:date('H:i:s'));
 		
 		$this->setTitle( $title );
 		$this->setCaption( $caption );
@@ -42,8 +42,8 @@ class Blog extends BaseBlog
 		$this->setContent( $content );
 		$this->setGlossary( nvl($glossary) );
 		$this->setIsDraft( ($isDraft?true:false) );
-		$this->setImageShare( nvl($imageShare) );
 		$this->setPublishDate( Util::formatDateTime($publishDate) );
+		$this->setImageShare( nvl($imageShare) );
 		$this->setVisible( true );
 		$this->setEnabled( true );
 		
@@ -75,7 +75,7 @@ class Blog extends BaseBlog
 		$criteria->add( BlogPeer::DELETED, false );
 		$criteria->add( BlogPeer::IS_DRAFT, false );
 		
-		$criterion = $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, date('Y-m-d'), Criteria::LESS_EQUAL );
+		$criterion = $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, date('Y-m-d H:i:s'), Criteria::LESS_EQUAL );
 		$criterion->addOr( $criteria->getNewCriterion( BlogPeer::PUBLISH_DATE, null ) );
 		$criteria->add($criterion);
 		

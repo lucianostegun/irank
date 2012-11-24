@@ -42,3 +42,21 @@
 {2012/07/24 01:43:55} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013001,     SenderEmail=lucianostegun@gmail.com)) - end {1}6DC0CB7EC4C4557884C19F85A1F39725 
 {2012/07/24 10:06:21} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2072003,     SenderEmail=mozuzek@hotmail.com)) - begin 
 {2012/07/24 10:06:21} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2072003,     SenderEmail=mozuzek@hotmail.com)) - end {1}6B2F97820606A8A5545FBF90E48849F0 
+{2012/09/27 21:54:34} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013001,     SenderEmail=lucianostegun@gmail.com)) - begin 
+{2012/09/27 21:54:35} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2013001,     SenderEmail=lucianostegun@gmail.com)) - end {1}2D98F24200002E6FF4885FAE61F59153 
+{2012/09/27 22:38:37} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089001,     SenderEmail=ivanaperia@gmail.com)) - begin 
+{2012/09/27 22:38:38} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089001,     SenderEmail=ivanaperia@gmail.com)) - end {1}812C5CDEFEFEEBC5549C6F97DBD19F0E 
+{2012/09/27 22:55:09} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089001,     SenderEmail=ivanaperia@gmail.com)) - begin 
+{2012/09/27 22:55:10} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089001,     SenderEmail=ivanaperia@gmail.com)) - end {1}A4B7517BD0D08ADFF4682FB3EC75D212 
+{2012/09/27 22:58:52} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089001,     SenderEmail=ivanaperia@gmail.com)) - begin 
+{2012/09/27 22:58:52} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089001,     SenderEmail=ivanaperia@gmail.com)) - end {1}09580CD509091196643B0FAE418E4238 
+{2012/09/27 23:39:32} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089002,     SenderEmail=ivanaperia@gmail.com)) - begin 
+{2012/09/27 23:39:32} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089002,     SenderEmail=ivanaperia@gmail.com)) - end {1}458B8440B8B842FBB4EC6FA17AF3BD59 
+{2012/09/27 23:45:54} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089003,     SenderEmail=ivanaperia@gmail.com)) - begin 
+{2012/09/27 23:45:54} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089003,     SenderEmail=ivanaperia@gmail.com)) - end {1}17FA6A7F9E9E93B664D67F91DB182B2F 
+{2012/09/27 23:54:56} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089004,     SenderEmail=ivanaperia@gmail.com)) - begin 
+{2012/09/27 23:54:56} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089004,     SenderEmail=ivanaperia@gmail.com)) - end {1}5EC61354CACA978BB4749FB37D870C22 
+{2012/09/28 00:31:55} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089005,     SenderEmail=ivanaperia@gmail.com)) - begin 
+{2012/09/28 00:31:55} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089005,     SenderEmail=ivanaperia@gmail.com)) - end {1}3B5E4D777373ED8884D32FB2C0070872 
+{2012/11/19 20:03:32} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089001,     SenderEmail=ivanaperia@gmail.com)) - begin 
+{2012/11/19 20:03:33} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089001,     SenderEmail=ivanaperia@gmail.com)) - end {1}A3BE4E3D555541C114F71F9D42C8B79F 
