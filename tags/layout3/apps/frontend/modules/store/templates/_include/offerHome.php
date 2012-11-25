@@ -9,6 +9,7 @@
 	
 	<?php
 		$criteria = new Criteria();
+		$criteria->add( ProductPeer::PRODUCT_CODE, array('IRKTS-005', 'IRKBL-005'), Criteria::IN );
 		$criteria->addAscendingOrderByColumn('RANDOM()');
 		$criteria->setLimit(1);
 		$productObjList = ProductPeer::search($criteria);
