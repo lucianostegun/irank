@@ -107,7 +107,7 @@ $moduleName = $sf_context->getModuleName();
 						    	</div>
 					    		<?php
 					    			include_partial('home/include/partners');
-					    			include_partial('home/include/poll');
+//					    			include_partial('home/include/poll');
 					    			
 					    			if( $showStoreBar )
 					    				include_partial('store/include/offerBar');
