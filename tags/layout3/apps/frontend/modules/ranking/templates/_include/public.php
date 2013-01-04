@@ -19,6 +19,7 @@
 	//	$criteria->addDescendingOrderByColumn( RankingPeer::EVENTS );
 		$criteria->addAscendingOrderByColumn( 'RANDOM()' );
 		$criteria->addGroupByColumn( RankingPeer::ID );
+		$criteria->addGroupByColumn( 'ranking.RANKING_NAME, ranking.RANKING_TAG, ranking.USER_SITE_ID, ranking.RANKING_TYPE_ID, ranking.GAME_STYLE_ID, ranking.START_DATE, ranking.START_TIME, ranking.FINISH_DATE, ranking.IS_PRIVATE, ranking.BUYIN, ranking.ENTRANCE_FEE, ranking.PLAYERS, ranking.EVENTS, ranking.SCORE_SCHEMA, ranking.SCORE_FORMULA, ranking.ENABLED, ranking.VISIBLE, ranking.DELETED, ranking.LOCKED, ranking.CREATED_AT, ranking.UPDATED_AT' );
 		$criteria->setLimit( 5 );
 		$rankingObjList = RankingPeer::doSelect($criteria);
 		

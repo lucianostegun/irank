@@ -84,9 +84,9 @@ class Product extends BaseProduct
 		return $fileName;
 	}
 	
-	public function getImageCover($path=null){
+	public function getImageCover($path=null, $imageNumber=1){
 		
-		return $this->getImage(1, $path);
+		return $this->getImage($imageNumber, $path);
 	}
 	
 	public static function getIdByCode($productCode){

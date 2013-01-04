@@ -9,12 +9,15 @@
 	
 	<?php
 		$criteria = new Criteria();
-		$criteria->add( ProductPeer::PRODUCT_CODE, array('IRKTS-005', 'IRKBL-005'), Criteria::IN );
+//		$criteria->add( ProductPeer::PRODUCT_CODE, array('IRKTS-005', 'IRKBL-005'), Criteria::IN );
+		$criteria->add( ProductPeer::ENABLED, true );
+		$criteria->add( ProductPeer::VISIBLE, true );
+		$criteria->add( ProductPeer::DELETED, false );
 		$criteria->addAscendingOrderByColumn('RANDOM()');
 		$criteria->setLimit(1);
 		$productObjList = ProductPeer::search($criteria);
 		
-		foreach($productObjList as $productObj):
+		foreach($productObjList as $key=>$productObj):
 			
 			$productId    = $productObj->getId();
 			$productCode  = $productObj->getProductCode();

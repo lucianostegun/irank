@@ -10,7 +10,7 @@ fields:
     sfRegexValidator:
       match:        Yes
       match_error:  Informe um nome começando com letra e contento apenas letras e números
-      pattern:      /^[a-zA-Z]+[a-zA-Z0-9_]*$/si
+      pattern:      /^[0-9a-zA-Z]+[a-zA-Z0-9_]*$/si
     sfCallbackValidator:
       callback:      [ClubPeer, validateTagName]
       invalid_error: Este nome não pode ser utilizado pois já está em uso por outro clube

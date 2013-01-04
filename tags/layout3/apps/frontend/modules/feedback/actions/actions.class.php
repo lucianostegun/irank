@@ -12,7 +12,7 @@ class feedbackActions extends sfActions
   	$this->handleFormFieldError( $this->getRequest()->getErrors() );
   }
 
-  public function executeSend($request){
+  public function executeSendFeedback($request){
 
 	$userSiteObj  = UserSite::getCurrentUser();
 	$fullName     = $request->getParameter('fullName');

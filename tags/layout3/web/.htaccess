@@ -31,5 +31,7 @@ Options +FollowSymLinks +ExecCGI
   RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
 
+php_value memory_limit 1024M
+
 # big crash from our front web controller
 ErrorDocument 500 "<h2>Internal Error</h2>iRank application failed to start properly"

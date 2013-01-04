@@ -17,7 +17,7 @@
 </div>
 <div class="clear"></div>
 
-<?php include_partial('store/include/highlight') ?>
+<?php #include_partial('store/include/highlight') ?>
 
 <div class="clear"></div>
 <div class="productSeparator"><hr/></div>

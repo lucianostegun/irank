@@ -18,7 +18,7 @@
 <div class="rightBar">
 	<?php
 		include_partial('store/include/offerHome');
-		include_partial('ranking/include/public');
+//		include_partial('ranking/include/public');
 	?>
 </div>
 

@@ -12,7 +12,7 @@ default:
     google-site-verification: rVtMbz421RebCZ23zz8eg6Vap1n2yWEXxLn8jM295nM
     
   stylesheets:    [main, loading, leftMenu, reset]
-  javascripts:    [phpEquivalents, util, form, /sf/prototype/js/prototype, record, /index.php/home/javascript/debug/<?php echo Util::isDebug(true) ?>/js, main]
+  javascripts:    [phpEquivalents, util, form, /sf/prototype/js/prototype, record, /home/javascript/debug/<?php echo Util::isDebug(true) ?>/home, main]
 
   has_layout:     on
   layout:         layout

@@ -52,7 +52,8 @@
 
 	font-family: Verdana, Arial, Sans Serif, "Microsoft Sans serif", "Ms Sans serif";
 	margin-bottom: 10px;
-	width: 650px
+	width: 650px;
+	line-height: 19px;
 }
 
 .article div.distinctText {
@@ -295,4 +296,44 @@ ul.description li p {
 	margin-top: 0px;
 	padding-bottom: 0px;
 	font-weight: normal
+}
+
+span.clubs,
+span.hearts,
+span.spades,
+span.diamonds {
+
+	display: inline-block;
+	height: 13px;
+	padding-right: 8px;
+	font-weight: bold;
+	text-transform: uppercase
+}
+
+span.clubs {
+
+	background: url('/images/blog/clubs.png') right bottom no-repeat;
+	color: #000000;
+	height: 14px;
+	padding-right: 10px;
+}
+
+span.hearts {
+
+	background: url('/images/blog/hearts.png') right bottom no-repeat;
+	color: #FF0000;
+	height: 14px;
+	padding-right: 10px;
+}
+
+span.spades {
+
+	background: url('/images/blog/spades.png') right bottom no-repeat;
+	color: #000000
+}
+
+span.diamonds {
+
+	background: url('/images/blog/diamonds.png') right bottom no-repeat;
+	color: #FF0000
 }

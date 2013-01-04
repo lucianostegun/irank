@@ -166,7 +166,10 @@ class Club extends BaseClub
 //		$filePathOriginal = Util::getFilePath('/images/club/original/'.$fileName);
 		$filePath         = Util::getFilePath('/images/club/'.$fileName);
 		
-		copy($filePath, str_replace('images/club', 'images/club/original', $filePath));
+		$filePathDestination = str_replace('images/club', 'images/club/original', $filePath);
+		$filePathDestination = Util::fixFilePath($filePathDestination);
+//		echo "copy($filePath, $filePathDestination);";exit;
+		copy($filePath, $filePathDestination);
 	
 		if( $fileExtension=='jpg' )
 			$originalImg = imagecreatefromjpeg( $filePath );

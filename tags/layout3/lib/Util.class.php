@@ -717,13 +717,18 @@ class Util {
 	 */
 	public static function getFilePath($subPath, $rootDir=null){
 		
-		$subPath = str_replace('\\\\', DIRECTORY_SEPARATOR, $subPath);
-		$subPath = str_replace('//', DIRECTORY_SEPARATOR, $subPath);
-		
 		if( !$rootDir )
 			$rootDir = sfConfig::get('sf_web_dir');
 		
 		$path = $rootDir . DIRECTORY_SEPARATOR . $subPath;
+		return self::fixFilePath($path);
+	}
+
+	public static function fixFilePath($path){
+		
+		$path = str_replace('\\\\', DIRECTORY_SEPARATOR, $path);
+		$path = str_replace('//', DIRECTORY_SEPARATOR, $path);
+		
 		return $path;
 	}
 	

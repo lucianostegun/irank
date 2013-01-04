@@ -71,6 +71,46 @@ article_by_title:
 glossary:
   url:    blog/getDictionary/:term
   param:  { module: blog, action: getDictionary }
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+#CLUB ROUTING START
+
+club_vegas:
+  url:    /vegas
+  param:  { module: club, action: details, clubId: 4 }
+
+club_h2club:
+  url:    /h2club
+  param:  { module: club, action: details, clubId: 3 }
+
+club_espaco:
+  url:    /zahle
+  param:  { module: club, action: details, clubId: 2 }
+
+club_blackriver:
+  url:    /blackriver
+  param:  { module: club, action: details, clubId: 1 }
+
+club_72off:
+  url:    /72off
+  param:  { module: club, action: details, clubId: 6 }
+
+club_ases:
+  url:    /ases
+  param:  { module: club, action: details, clubId: 7 }
+
+#CLUB ROUTING END
   
   
   
@@ -94,49 +134,3 @@ default_index:
 default:
   url:   /:module/:action/*
 #  url:   /maintenance/index/*
-
-  
-  
-  
-  
-  
-  
-  
-  
-
-
-#CLUB ROUTING START
-
-club_vegas:
-  url:    /vegas
-  param:  { module: club, action: details, clubId: 5 }
-
-club_irank:
-  url:    /irank
-  param:  { module: club, action: details, clubId: 6 }
-
-club_irank:
-  url:    /irank
-  param:  { module: club, action: details, clubId: 5 }
-
-club_irank:
-  url:    /irank
-  param:  { module: club, action: details, clubId: 6 }
-
-club_irank:
-  url:    /irank
-  param:  { module: club, action: details, clubId: 5 }
-
-club_h2club:
-  url:    /h2club
-  param:  { module: club, action: details, clubId: 3 }
-
-club_espaco:
-  url:    /espaco
-  param:  { module: club, action: details, clubId: 2 }
-
-club_blackriver:
-  url:    /blackriver
-  param:  { module: club, action: details, clubId: 1 }
-
-#CLUB ROUTING END

@@ -2,6 +2,7 @@
 .textC { text-align: center }
 .textR { text-align: right }
 .textB { font-weight: bold }
+.textI { font-style: italic }
 
 .ml0 { margin-left: 0px }
 .ml1 { margin-left: 1px }

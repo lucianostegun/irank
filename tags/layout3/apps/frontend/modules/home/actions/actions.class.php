@@ -153,6 +153,8 @@ class homeActions extends sfActions
   public function executeJavascript($request){
 	
 	Util::getHelper('i18n');
+
+    header('Content-type: text/x-javascript');
 	
     header('Content-type: text/x-javascript');
 		
@@ -163,7 +165,7 @@ class homeActions extends sfActions
 	$isDebug    = $request->getParameter('debug');
 	
 	if( $isDebug )
-		$scriptName = '/frontend_dev.php';
+		$scriptName = '/debug.php';
 
 	if( sfConfig::get('sf_no_script_name') && !$isDebug )
 		$scriptName = '';

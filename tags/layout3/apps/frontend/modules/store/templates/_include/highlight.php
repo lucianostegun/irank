@@ -13,7 +13,7 @@
 		<div class="descriptionArea"></div>
 		<div class="descriptionText">
 		 	<ul>
-				<li id="contentItemText1" class="<?php echo ($activeHighlight==1?'active':'') ?>"><h1><?php echo link_to('Camiseta da sorte', '/store/details?IRKTS-005=') ?></h1><p>Edição especial por <b>tempo limitado</b>!<br/></p></li>
+				<li id="contentItemText1" class="<?php echo ($activeHighlight==1?'active':'') ?>"><h1><?php echo link_to('EDIÇÃO PRORROGADA', '/store/details?IRKTS-005=') ?></h1><p>A edição especial foi prorrogada até o dia <b>21/12/2012</b>.<br/>Aproveite!<br/></p></li>
 				<li id="contentItemText2" class="<?php echo ($activeHighlight==2?'active':'') ?>"><h1><?php echo link_to('Baby Look', '/store/details?IRKBL-005=') ?></h1><p>Disponível também em camisetas <b>Baby Look</b> femininas.</p></li>
 				<li id="contentItemText3" class="<?php echo ($activeHighlight==3?'active':'') ?>"><h1><?php echo link_to('Feliz 2013', '/store/details?IRKTS-005=') ?></h1><p>Aproveite e adquire sua versão branca para começar 2013 com muita sorte!</p></li>
 				<li id="contentItemText4" class="<?php echo ($activeHighlight==4?'active':'') ?>"><h1><?php echo link_to('Todos os tamanhos', '/store/details?IRKTS-005=') ?></h1><p>Disponíveis nso tamanhos P, M, G e GG.<br/><i>Tamanhos diferenciados sob consulta</i></p></li>
@@ -28,8 +28,8 @@
 		</ul>
 	</div>
 	<div class="info">
-		<h1>Oferta iRank Store</h1>
-		<p>A camiseta <b>Lucky Tshirt</b> é uma edição especial e limitada que estará disponível apenas até o dia 15/12/2012.</p>
+		<h1>Oferta PRORROGADA</h1>
+		<p>A camiseta <b>Lucky Tshirt</b> é uma edição especial e limitada que estará disponível apenas até o dia 15/12/2012. <b>PRORROGADA ATÉ 21/12/2012!</b></p>
 		<p>Ela foi criada especialmente para ser a sua camiseta da sorte em 2013 e a versão branca é ideal para passar o a virada de ano com os amigos.</p>
 		<p>Produzida em 100% algodão e disponível também na cor preta, as estampas metálicas foscas te farão se sentir confortável e confiante em qualquer ocasião.</p>
 		<div class="clear priceInfo">
