@@ -154,7 +154,7 @@ class homeActions extends sfActions
 	
 	Util::getHelper('i18n');
 	
-//    header('Content-type: text/x-javascript');
+    header('Content-type: text/x-javascript');
 		
 	$nl = chr(10);
 	
