@@ -29,7 +29,8 @@
 
 <div class="clear"></div>
 
-
-
-
+<div class="eventLiveResumeArea">
+<?php include_partial('home/resume/eventLive', array('includeTitle'=>true, 'offset'=>0, 'limit'=>5)); ?>
+<?php #include_partial('home/resume/eventLive', array('includeTitle'=>true, 'limit'=>5)); ?>
+</div>
 <br/>

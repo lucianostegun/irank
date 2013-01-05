@@ -68,9 +68,17 @@ article_by_title:
   url:    blog/article/:permalink
   param:  { module: blog, action: article }
   
-glossary:
+glossaryBlog:
   url:    blog/getDictionary/:term
   param:  { module: blog, action: getDictionary }
+  
+glossaryTerm:
+  url:    glossary/term/:term
+  param:  { module: glossary, action: term }
+  
+glossaryLetter:
+  url:    glossary/letter/:letter
+  param:  { module: glossary, action: letter }
 
 
 

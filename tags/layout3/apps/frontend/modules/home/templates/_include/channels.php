@@ -1,4 +1,4 @@
-<div class="baseChannels">
+<div class="channels">
 	<div class="channel">
 		<div class="image"><?php echo link_to(image_tag('home/money'), 'myAccount/bankroll') ?></div>
 		<div class="description">
@@ -7,17 +7,31 @@
 		</div>
 	</div>
 	<div class="channel">
+		<div class="image"><?php echo link_to(image_tag('home/schedule'), 'schedule/index') ?></div>
+		<div class="description">
+			<h1><?php echo link_to('Calendário assinado', 'schedule/index') ?></h1>
+			Sincronize o calendário de seu tablet ou smartphone com nossa agenda de eventos. 
+		</div>
+	</div>
+	<div class="channel">
 		<div class="image"><?php echo image_tag('home/stats') ?></div>
 		<div class="description">
-			<h1><?php echo link_to('Estatísticas', 'statistic/index') ?></h1>
+			<h1>Estatísticas</h1>
 			Gere gráficos de gastos, lucros, balanço e desempenho dos jogadores.
 		</div>
 	</div>
 	<div class="channel">
+		<div class="image"><?php echo image_tag('home/eventReminder') ?></div>
+		<div class="description">
+			<h1>Notificação de eventos</h1>
+			Notificação instantânea da criação/edição dos eventos e lembrete dos jogos agendados.
+		</div>
+	</div>
+	<div class="channel" style="height: 88px">
 		<div class="image"><?php echo image_tag('home/rankingHistory') ?></div>
 		<div class="description">
-			<h1><?php echo link_to('Histórico', 'ranking/index') ?></h1>
-			Histórico de posições, total gastos, prêmios e resultados nas datas que houveram eventos.
+			<h1>Histórico</h1>
+			Histórico de posições, total gastos, prêmios e tudo sobre os rankings nas datas que houveram eventos.
 		</div>
 	</div>
 </div>

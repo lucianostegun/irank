@@ -26,6 +26,11 @@
 ?>
 	<div class="moduleIntro">
 		Exibindo resultado para "<b><?php echo $originalKeyWord ?></b>".<br/>
+		<?php if( !preg_match('/antigos?/', $keyWord) ): ?>
+		<script>
+			setCommonBarMessage('<b>DICA:</b> Para exibir resultados de eventos mais antigos, inclua a palavra "<b>antigos</b>" na pesquisa.');
+		</script> 
+		<?php endif; ?>
 	</div>
 <?php	
 	include_partial('search/include/eventLive', array('keyWordList'=>$keyWordList, 'originalKeyWord'=>$originalKeyWord));

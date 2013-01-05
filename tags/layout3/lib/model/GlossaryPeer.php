@@ -16,7 +16,7 @@ class GlossaryPeer extends BaseGlossaryPeer
 		$criteria->add( GlossaryPeer::VISIBLE, true );
 		$criteria->add( GlossaryPeer::ENABLED, true );
 		$criteria->add( GlossaryPeer::DELETED, false );
-		$criteria->add( GlossaryPeer::TERM, "%$term%", Criteria::ILIKE );
+		$criteria->add( GlossaryPeer::TERM, $term, Criteria::ILIKE );
 		$glossaryObj = GlossaryPeer::doSelectOne($criteria);
 		
 		if( is_object($glossaryObj) )
@@ -26,7 +26,8 @@ class GlossaryPeer extends BaseGlossaryPeer
 		$criteria->add( GlossaryPeer::VISIBLE, true );
 		$criteria->add( GlossaryPeer::ENABLED, true );
 		$criteria->add( GlossaryPeer::DELETED, false );
-		$criteria->add( GlossaryPeer::TAGS, "%$term%", Criteria::ILIKE );
+		$criteria->add( GlossaryPeer::TAGS, "','||glossary.TAGS||',' ILIKE '%,$term,%'", Criteria::CUSTOM );
+		
 		return GlossaryPeer::doSelectOne($criteria);
 	}
 }

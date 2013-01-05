@@ -706,7 +706,7 @@ class Util {
 	 */
 	public static function getFileName( $filePath ){
 		
-		$filePath = split('[\\\\\/]', $filePath);
+		$filePath = preg_split('/[\\\\\/]/', $filePath);
 		return end($filePath);
 	}
 	
