@@ -334,14 +334,14 @@ function importRankingData(){
 
 function doImportRankingData(){
 	
-	showIndicator('ranking');
+	showIndicator();
 	disableButton('importRankingData');
 	
 	var rankingPlayers = $('rankingImportRankingPlayers').checked;
 	
 	var successFunc = function(t){
 
-		hideIndicator('ranking');
+		hideIndicator();
 		enableButton('importRankingData');
 		
 		if( rankingPlayers ){
@@ -357,7 +357,7 @@ function doImportRankingData(){
 
 		var content = t.responseText;
 		
-		hideIndicator('ranking');
+		hideIndicator();
 		
 		enableButton('importRankingData');
 
