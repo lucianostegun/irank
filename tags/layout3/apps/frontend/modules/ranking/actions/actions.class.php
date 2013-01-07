@@ -34,7 +34,9 @@ class rankingActions extends sfActions
   	$this->innerObj    = new Ranking();
   	
 	$this->criteria = new Criteria();
-	$this->criteria->addAnd( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+	$criterion = $this->criteria->getNewCriterion( RankingPeer::FINISH_DATE, null );
+	$criterion->addOr( $this->criteria->getNewCriterion( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL ) );
+	$this->criteria->addAnd($criterion);
   }
   
   public function executeNew($request){

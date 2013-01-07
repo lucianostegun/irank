@@ -116,9 +116,9 @@ class Util {
 	 * @param      String: Comando SQL a ser executado na base de dados, deve ser um comando único
 	 * @return     Object: ResultSet
 	 */
-	public static function executeOne( $query, $returnType='int' ){
+	public static function executeOne( $query, $returnType='int', $con=null, $connectionName=null ){
 
-		$resultset  = self::executeQuery($query);
+		$resultset  = self::executeQuery($query, $con, $connectionName );
     	
     	$function = 'get'.ucfirst($returnType);
     	
