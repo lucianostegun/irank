@@ -741,9 +741,6 @@ class Ranking extends BaseRanking
 				
 				if( is_object(RankingPlayerPeer::retrieveByPK($this->getId(), $rankingPlayerObj->getPeopleId())) )
 					continue;
-					
-				if( $rankingPlayerObj->getTotalEvents()==0 )
-					continue;
 				
 				$this->addPlayer($rankingPlayerObj->getPeopleId());
 				
