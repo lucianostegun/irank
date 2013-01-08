@@ -1,0 +1,143 @@
+h1 {
+
+	font-size: 14px;
+	font-weight; bold;
+	padding: 3px 20px 1px 0px;
+	margin: 0px 20px 2px 20px;
+	border-bottom: 1px solid #C0C0C0;
+	color: #5486B4
+}
+
+.chipList {
+	
+	width: 500px;
+	position: relative;
+	top: 28px;
+	left: 100px;
+	height: 220px;
+}
+
+#stepPaginator {
+
+	margin: 0px 10px;
+	position: relative;
+	top: 15px;
+	right: 70px;
+	z-index: 300;
+}
+
+.chip {
+	
+	width: 75px;
+	height: 75px;
+	background-repeat: no-repeat;
+	margin-left: 20px;
+	margin-bottom: 20px;
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+}
+
+.chip.result {
+
+	margin: 20px 0px 0px 50px;
+	width: 300px;
+	cursor: default;
+}
+
+.chip.result span {
+
+	position: absolute;
+	top: 28px;
+	left: 100px;
+	font-size: 18px;
+}
+
+.chip.result span label {
+
+	font-size: 12px;
+	position: absolute;
+	width: 200px;
+	left: 000px;
+	top: 23px;
+}
+
+.chip .check {
+	
+	width: 16px;
+	height: 16px;
+	background: url('/images/chips/ok.png') no-repeat;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	display: none;
+}
+
+.chip.active .check {
+	
+	display: block;
+}
+
+
+
+.steps {
+
+	clear: 			both;
+	margin-left: 	0px;
+	padding: 		0px;
+	position: 		relative;
+}
+
+.steps .step {
+ 
+ 	display: 		block;
+ 	width: 			730px;
+ }
+
+.steps .step.hidden {
+ 
+ 	display: 		block;
+}
+ 
+#chipSetResultFooter {
+
+	font-style: italic;
+	width: 650px;
+	position: relative;
+	left: 30px;
+	margin-top: 40px;
+}
+
+.defaultForm .row {
+
+	height: 42px
+}
+
+.defaultForm .row .label,
+.defaultForm .row .text {
+
+	height: 28px;
+	line-height: 32px;
+	font-size: 12px;
+}
+
+.defaultForm .row .label {
+
+	font-size: 16px;
+}
+
+.defaultForm .row .field input {
+
+	font-size: 20px;
+	height: 28px;
+	font-weight: bold;
+	border-width: 			3px;
+	-moz-border-radius: 	5px;
+	-webkit-border-radius: 	5px;
+	border-radius: 			5px;
+	color: #505050;
+}
+
+#chipCalculatorStartStack { width: 80px; }
+#chipCalculatorPlayers { width: 30px; }
+#chipCalculatorGameDuration { width: 60px; }

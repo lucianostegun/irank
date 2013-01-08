@@ -16,11 +16,13 @@ function array_split($array, $arraySize=2){
 	return $eventLivePlayerObjGroup;
 }
 
-function prexit($object){
+function prexit($object, $noExit=false){
 	
 	echo '<pre>';
 	print_r($object);
-	exit;
+	
+	if( !$noExit )
+		exit;
 }
 
 // symfony directories
