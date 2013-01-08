@@ -26,7 +26,7 @@
 				$chipList = array(1,5,10,25,50,100,500,1000,5000,10000);
 				foreach($chipList as $chip):
 			?>
-			<div class="chip" id="chip-<?php echo $chip ?>" onclick="selectChip(this)" style="background-image: url('/images/chips/dimmed/chip<?php echo $chip ?>.png')">
+			<div class="chip" id="chip-<?php echo $chip ?>" onclick="selectChip(this)" style="background-image: url('/images/chips/chip<?php echo $chip ?>.png')">
 				<div class="check"></div>
 			</div>
 			<?php

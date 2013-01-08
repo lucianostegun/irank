@@ -85,7 +85,12 @@ function validateStep(){
 			var chipDivList = document.getElementsByClassName('chip active');
 			if( chipDivList.length < 3 ){
 				
-				alert('Por favor, selecione pelo menos três fichas de valores diferentes!');
+				alert('Por favor, selecione pelo menos 3 fichas de valores diferentes!');
+				return false;
+			}
+			if( chipDivList.length > 5 ){
+				
+				alert('Por favor, selecione no máximo 5 fichas de valores diferentes!');
 				return false;
 			}
 			break;
@@ -122,11 +127,13 @@ function selectChip(Element){
 	if( Element.hasClassName('active') ){
 		
 		Element.removeClassName('active')
-		Element.style.backgroundImage = background.replace('/chips', '/chips/dimmed');
 	}else{
 		
-		Element.addClassName('active');
-		Element.style.backgroundImage = background.replace('/chips/dimmed', '/chips');
+		var chipDivList = document.getElementsByClassName('chip active');
+		if( chipDivList.length==5 )
+			return;
+		
+		Element.addClassName('active');dddd
 	}
 }
 

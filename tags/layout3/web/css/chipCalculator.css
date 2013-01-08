@@ -73,6 +73,11 @@ h1 {
 	display: none;
 }
 
+.chip.active {
+	
+	background-position: 0px -75px;
+}
+
 .chip.active .check {
 	
 	display: block;
