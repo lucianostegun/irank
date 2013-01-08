@@ -1,10 +1,10 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array('Calculadora de fichas'=>null))); ?>
-<div class="moduleIntro">
-	
+<div class="moduleIntro mt10">
+	<?php echo image_tag('chipCalculator', array('align'=>'left', 'style'=>'margin-right: 15px; margin-top: -10px')) ?>
 	Seja bem vindo à calculadora de fichas <b>iRank</b>.<br/>
-	Ela foi criada para facilitar a divisão de fichas em seus torneios baseado nos valores das fichas que você tem disponível<br/> 
+	Ela foi criada para facilitar a divisão de fichas em seus torneios baseado nos valores das fichas que você tem disponível 
 	e também no stack inicial que pretende utilizar em seu evento.<br/><br/>
-	
+	<hr class="mb20"/>
 	O resultado será a distribuição ideal de fichas para cada valor disponível<br/>
 	assim como uma sugestão de configuração de blinds que você pode utilizar com essa distribuição.<br/><br/>
 	
