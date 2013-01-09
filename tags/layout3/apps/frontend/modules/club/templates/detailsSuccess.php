@@ -32,7 +32,7 @@
 						<td valign="top" class="info" rowspan="2">
 							<div class="location">
 								<?php echo $addressName.', '.$addressNumber.($addressQuarter?', <span title="Bairro">'.$addressQuarter.'</span>':'') ?><br/>
-								<span title="Cidade"><?php echo $city ?></span>-<span title="Estado"><?php echo $state ?></span>
+								<span title="Cidade"><?php echo $city ?></span>, <span title="Estado"><?php echo $state ?></span>
 							</div>
 						</td>
 					</tr>
