@@ -35,7 +35,7 @@
 			<div class="profile">
 				<h1><?php echo link_to($clubName, '#goToPage("'.$tagName.'", "", "", "")') ?></h1>
 				<div class="address"><?php echo $addressName ?>, <?php echo $addressNumber ?><?php echo ($addressQuarter?', <span title="Bairro">'.$addressQuarter.'</span>':'') ?></div>
-				<div class="address"><span title="Cidade"><?php echo $city ?></span>, <span title="Estado"><?php echo $initial ?></span> <?php echo $mapsLink ?> <?php echo ($clubSiteLink?link_to($clubSite, $clubSiteLink, array('target'=>$clubSiteTarget)):'') ?></div>
+				<div class="address"><span title="Cidade"><?php echo $city ?></span>, <span title="Estado"><?php echo $initial ?></span> <?php echo $mapsLink ?> <?php echo ($clubSiteLink?link_to($clubSite, $clubSiteLink, array('class'=>'clubSite', 'target'=>$clubSiteTarget)):'') ?></div>
 				<div class="phoneList">
 					<?php foreach($phoneNumberList as $phoneNumber): ?>
 					<div class="phone"><?php echo $phoneNumber ?></div>

@@ -89,7 +89,8 @@
 	clear: 			both;
 	height: 		24px;
 	font-size: 		14px;
-	margin-left: 	20px
+	margin-left: 	20px;
+	position: 		relative;
 }
 
 #houseList .house .info .profile .address a {
@@ -110,6 +111,12 @@
 
 	margin-left: 	10px;	
 	margin-right: 	10px	
+}
+
+#houseList .house .info .profile .address .clubSite {
+
+	position: absolute;
+	top: 2px;
 }
 
 #houseList .house .info .profile .phoneList {
