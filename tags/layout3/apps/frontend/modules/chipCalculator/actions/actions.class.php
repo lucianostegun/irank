@@ -62,10 +62,10 @@ class chipCalculatorActions extends sfActions
 				$convertList[$chip] = $chipList[$key];
 			}
 			
-		if( $chip < 25 && $chip < $startStack/100 ||
-			$chip < 50 && $startStack >= 20000 || 
-			$chip < 100 && $startStack > 20000 || 
-			$chip < 500 && $startStack > 50000 ){
+		if( $chip > 5 && $chip < 25 && $chip < $startStack/100 ||
+			$chip > 5 && $chip < 50 && $startStack >= 20000 || 
+			$chip > 5 && $chip < 100 && $startStack > 20000 || 
+			$chip > 5 && $chip < 500 && $startStack > 50000 ){
 			
 			unset($chipList[$key]);
 			continue;
