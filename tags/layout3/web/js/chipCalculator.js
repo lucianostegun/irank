@@ -175,6 +175,9 @@ function getChipSet(forceRandom){
 		
 		for(chip in chipSetObj){
 			
+			if( chip=='blindSet' )
+				continue;
+			
 			var chips = chipSetObj[chip];
 			if( typeof(chips)=='object' ){
 				
