@@ -151,6 +151,8 @@ function selectChip(Element){
 
 function getChipSet(forceRandom){
 	
+	clearCommonBarMessage();
+	
 	var chipDivList = document.getElementsByClassName('chip active');
 	var chipList = [];
 	
