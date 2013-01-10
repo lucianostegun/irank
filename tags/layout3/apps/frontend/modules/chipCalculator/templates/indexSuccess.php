@@ -24,7 +24,7 @@
 		<div class="defaultForm">
 			<div class="row hidden" id="chipCalculatorStartStackFieldDiv">
 				<div class="label">Stack inicial</div>
-				<div class="field"><?php echo input_tag('startStack', 5000, array('maxlength'=>5, 'class'=>'required', 'id'=>'chipCalculatorStartStack')) ?></div>
+				<div class="field"><?php echo input_tag('startStack', null, array('maxlength'=>5, 'class'=>'required', 'id'=>'chipCalculatorStartStack')) ?></div>
 			</div>
 			
 			<div class="text" id="chipCalculatorStartStackOptionsDiv">
@@ -56,7 +56,7 @@
 		<div class="defaultForm">
 			<div class="chipList">
 				<?php
-					$chipList = array(1,5,10,-25,-50,-100,-500,-1000,5000,10000);
+					$chipList = array(1,5,10,25,50,100,500,1000,5000,10000);
 					foreach($chipList as $chip):
 				?>
 				<div class="chip <?php echo ($chip<0?'active':'') ?>" id="chip-<?php echo abs($chip) ?>" onclick="selectChip(this)" style="background-image: url('/images/chips/chip<?php echo abs($chip) ?>.png')">
