@@ -12,18 +12,20 @@ h1 {
 	
 	width: 500px;
 	position: relative;
-	top: 28px;
+	top: 10px;
 	left: 100px;
 	height: 220px;
 }
 
 #stepPaginator {
 
-	margin: 0px 10px;
+	margin: 0px 0px 0px 0px;
 	position: relative;
-	top: 15px;
-	right: 70px;
+	top: 0px;
+	left: 0px;
 	z-index: 300;
+	border-top: 1px solid #C0C0C0;
+	padding: 15px 15px 0px 0px;
 }
 
 .chip {
@@ -88,9 +90,16 @@ h1 {
 .steps {
 
 	clear: 			both;
+	margin-top: 	20px;
 	margin-left: 	0px;
 	padding: 		0px;
 	position: 		relative;
+	
+    background: 			#FFFFFF;
+    background-image: 		-o-linear-gradient(#FFFFFF, #F0F0F0);
+    background: 			-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);	
 }
 
 .steps .step {
@@ -99,11 +108,87 @@ h1 {
  	width: 			730px;
  }
 
+.steps .step .intro {
+ 
+ 	margin: 20px 20px 20px 50px;
+ 	font-size: 14px;
+ 	line-height: 22px
+ }
+
+.steps .step .intro.note {
+
+	font-size: 12px
+}
+
 .steps .step.hidden {
  
  	display: 		block;
 }
+
+#chipCalculatorStartStackOptionsDiv {
+
+	position: relative;
+	margin-left: 50px;
+	top: -20px
+}
+
+#chipCalculatorStartStackOptionsDiv h2 {
+
+	position: relative;
+	margin: 0px 0px 0px 0px;
+	font-size: 14px;
+	color: #505050;
+	padding: 0px 24px 4px 0px;
+	top: 35px;
+	left: 80px;
+	width: 600px;
+	text-align: right
+}
+
+#chipCalculatorStartStackOptionsDiv h2 span {
+
+	position: absolute;
+	top: 1px;
+	right: 0px;
+	font-size: 11px;
+	font-weight: normal;
+	height: 16px;
+	width: 16px;
+	background: url('/images/icon/help.png') no-repeat;
+	cursor: pointer;
+}
+
+#chipCalculatorStartStackOptionsDiv span.stackOption {
+
+	position: relative;
+	background: none repeat scroll 0% 0% rgb(226, 230, 240);
+	border: 3px solid rgb(157, 172, 204);
+	border-radius: 5px;
+	color: rgb(147, 162, 194);
+	display: block;
+	float: left;
+	height: 26px;
+	line-height: 26px;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 5px 6px 4px 0px;
+	padding: 3px 7px;
+	white-space: nowrap;
+	cursor: pointer;
+	
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none
+}
  
+#chipCalculatorStartStackOptionsDiv span.stackOption.selected {
+
+	color: #47587E;
+	border-color: #47587E;
+	background: rgb(177, 192, 224)
+}
+
 #chipSetResultFooter {
 
 	font-style: italic;
@@ -143,6 +228,13 @@ h1 {
 	color: #505050;
 }
 
+.defaultForm .row .field input[type=checkbox] {
+
+	position: relative;
+	top: 6px
+}
+
 #chipCalculatorStartStack { width: 80px; }
 #chipCalculatorPlayers { width: 30px; }
-#chipCalculatorGameDuration { width: 60px; }
+#chipCalculatorGameDuration { width: 30px; }
+#chipCalculatorBlindDuration { width: 30px; }

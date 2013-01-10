@@ -5,8 +5,8 @@ default:
   metas:
     title:                    iRank - Poker Ranking
     robots:                   index, follow
-    description:              O primeiro site de gerenciamento de torneios e rankings pessoais de poker. Agenda, rankings, estatísticas, bankroll e muito mais.
-    keywords:                 irank, rank, loja, virtual, poker, poquer, ranking, pessoal, classificação, torneio, holdem, amigos, camisetas, jogo, agenda, fotos, etapa, cobertura, estatisticas
+    description:              O primeiro site de gerenciamento de torneios e rankings pessoais de poker. Agenda, rankings, estatísticas, bankroll, casas de poker e muito mais.
+    keywords:                 irank, rank, loja, virtual, poker, poquer, club, clube, casas, ranking, pessoal, classificação, torneio, holdem, amigos, camisetas, jogo, agenda, fotos, etapa, cobertura, estatisticas
     language:                 pt
     viewport:                 width=device-width; initial-scale=0.7; maximum-scale=1; user-scalable=yes
     google-site-verification: rVtMbz421RebCZ23zz8eg6Vap1n2yWEXxLn8jM295nM

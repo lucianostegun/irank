@@ -49,6 +49,8 @@ function showNext(){
 		$('chipCalculatorStartStack').focus();
 	
 	enableButton('navigatorPrevious');
+
+	afterChangeStep();
 }
 
 function showPrevious(){
@@ -76,31 +78,41 @@ function showPrevious(){
 	showDiv('chipSetResultFooter');
 	
 	enableButton('navigatorNext');
+	
+	afterChangeStep();
+}
+
+function afterChangeStep(){
+	
+	if( _currentStep==3 )
+		showButton('ignore');
+	else
+		hideButton('ignore');
 }
 
 function validateStep(){
 
 	switch(_currentStep){
 		case 1:
+			var startStack = $('chipCalculatorStartStack').value;
+			if( !startStack || !startStack.match(/^[0-9]* ?k?$/i) ){
+				
+				alert('Selecione uma das opções para o stack inicial!');
+				$('chipCalculatorStartStack').addClassName('formFieldError');
+				$('chipCalculatorStartStack').focus();
+				return false;
+			}
+			break;
+		case 2:
 			var chipDivList = document.getElementsByClassName('chip active');
 			if( chipDivList.length < 3 ){
 				
 				alert('Por favor, selecione pelo menos 3 fichas de valores diferentes!');
 				return false;
 			}
-			if( chipDivList.length > 5 ){
+			if( chipDivList.length > 6 ){
 				
-				alert('Por favor, selecione no máximo 5 fichas de valores diferentes!');
-				return false;
-			}
-			break;
-		case 2:
-			var startStack = $('chipCalculatorStartStack').value;
-			if( !startStack || !startStack.match(/^[0-9]* ?k?$/i) ){
-				
-				alert('Por favor, informe um valor válido para o stack inicial!');
-				$('chipCalculatorStartStack').addClassName('formFieldError');
-				$('chipCalculatorStartStack').focus();
+				alert('Por favor, selecione no máximo 6 fichas de valores diferentes!');
 				return false;
 			}
 			break;
@@ -130,18 +142,14 @@ function selectChip(Element){
 	}else{
 		
 		var chipDivList = document.getElementsByClassName('chip active');
-		if( chipDivList.length==5 )
+		if( chipDivList.length == 6 )
 			return;
 		
-		Element.addClassName('active');dddd
+		Element.addClassName('active');
 	}
 }
 
 function getChipSet(forceRandom){
-	
-	var startStack   = $('chipCalculatorStartStack').value;
-	var players      = $('chipCalculatorPlayers').value;
-	var gameDuration = $('chipCalculatorGameDuration').value;
 	
 	var chipDivList = document.getElementsByClassName('chip active');
 	var chipList = [];
@@ -180,9 +188,9 @@ function getChipSet(forceRandom){
 			
 			html += '<div class="chip result" style="background-image: url(\'/images/chips/chip'+chipOriginal+'.png\')">';
 			html += '<span>';
-			html += '<b>'+sprintf('%02d', chips)+'</b> ficha'+(chips==1?'':'s')+' de <b>'+chipOriginal+'</b>';
+			html += '<b>'+sprintf('%02d', chips)+'</b> ficha'+(chips==1?'':'s')+' de <b>'+(chipOriginal>=1000?(chipOriginal/1000)+'K':chipOriginal)+'</b>';
 			if( chipOriginal != chip )
-				html += ' <label>(utilizadas com o valor de <b>'+chip+'</b>)</label>';
+				html += ' <label>(utilizadas com o valor de <b>'+(chip>=1000?(chip/1000)+'K':chip)+'</b>)</label>';
 			html += '</span>';
 			html += '</div>';
 //			html += '<div class="clear"></div>';
@@ -199,14 +207,44 @@ function getChipSet(forceRandom){
 
 		hideIndicator();
 		
-		alert('Não foi possível obter a configuração ideal de fichas para os valores/stack selecionado!\nPor favor, tente selecionar uma configuação diferente ou altere o stack inicial.');
+		setCommonBarMessage('Nenhuma distriuição adequada foi encontrada!\nSelecione fichas diferentes ou altere o stack inicial.', 'error', true);
 		resetSteps();
 		
 		if( isDebug() )
 			debug(content);
 	};
 	
-	var urlAjax = _webRoot+'/chipCalculator/getChipSet?startStack='+startStack+'&players='+players+'&gameDuration='+gameDuration+'&chips='+chipList+'&forceRandom='+(forceRandom?'1':'0');
+	$('chipCalculatorChips').value       = chipList;
+	$('chipCalculatorForceRandom').value = (forceRandom?'1':'0');
 	
-	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+	var urlAjax = _webRoot+'/chipCalculator/getChipSet';
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize($('chipCalculatorForm'))});
+}
+
+function selectStartStack(Element, chipList){
+	
+	var stackOptionList = document.getElementsByClassName('stackOption selected');
+	if( stackOptionList.length > 0 )
+		stackOptionList[0].removeClassName('selected');
+
+	var startStack = Element.title*1;
+	
+	Element.addClassName('selected');
+	$('chipCalculatorStartStack').value = startStack;
+	$('startStackLabel').innerHTML      = Element.innerHTML;
+	$('suggestChipLabel').innerHTML     = chipList;
+	
+	location.hash = '#start';
+}
+
+function ignoreStep(){
+	
+	$('chipCalculatorPlayers').value = '';
+	$('chipCalculatorGameDuration').value = '';
+	$('chipCalculatorBlindDuration').value = '';
+	$('chipCalculatorAllowRebuy').checked = false;
+	$('chipCalculatorAllowAddon').checked = false;
+	$('chipCalculatorAllowAnte').checked = false;
+	
+	showNext();
 }
