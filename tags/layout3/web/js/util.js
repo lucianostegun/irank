@@ -11,7 +11,7 @@ function isMobile(){
 function debug( value ){
 	
 	clearDebug();
-	debugAdd( value );
+	console.log( value );
 }
 
 function debugAdd( value ){
@@ -28,8 +28,9 @@ function debugAdd( value ){
 
 function clearDebug(){
 
-	$('debugDiv').innerHTML = '';
-	hideDiv('debugDiv');
+	console.clear();
+//	$('debugDiv').innerHTML = '';
+//	hideDiv('debugDiv');
 }
 
 function showDiv( divId, isTableCell, displayType ){

@@ -45,8 +45,7 @@ class glossaryActions extends sfActions
 		$glossaryObj->setDeleted(false);
 		$glossaryObj->save();
     	
-    	$emailAddress = 'lucianostegun@gmail.com';
-    	Report::sendMail('Pesquisa de termo', $emailAddress, 'O termo "<b>'.$this->term.'</b>" foi pesquisado no glossário do site.', array('emailTemplate'=>'emailTemplateAdmin'));
+    	Report::sendMail('Pesquisa de termo', null, 'O termo "<b>'.$this->term.'</b>" foi pesquisado no glossário do site.', array('emailTemplate'=>'emailTemplateAdmin'));
     	
     	Util::forceError('Termo não encontrado!');
     }

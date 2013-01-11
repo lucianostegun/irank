@@ -37,7 +37,8 @@ class chipCalculatorActions extends sfActions
   	$chipList    = explode(',', $chipList);
   	$convertList = array();
 
-	// Verifica se o stack é muito grande e usa as fichas baixas com valores de milhares
+
+	// Verifica se o stack é muito grande e usa as fichas baixas como se fossem maiores (Ex.: Ficha de 1 sendo utilizada com ficha de 1000)
 	foreach($chipList as $key=>$chip){
 		
 		if( $chip==10 && $startStack > 1000 && !in_array(1000, $chipList) ){
@@ -62,10 +63,10 @@ class chipCalculatorActions extends sfActions
 				$convertList[$chip] = $chipList[$key];
 			}
 			
-		if( $chip > 5 && $chip < 25 && $chip < $startStack/100 && $startStack < 10000 ||
-			$chip > 5 && $chip < 50 && $startStack >= 20000 || 
-			$chip > 5 && $chip < 100 && $startStack > 20000 || 
-			$chip > 5 && $chip < 500 && $startStack > 50000 ){
+		if( !array_key_exists($chip, $convertList) && $chip < 25 && $chip < $startStack/100 ||
+			!array_key_exists($chip, $convertList) && $chip < 50 && $startStack >= 20000 || 
+			!array_key_exists($chip, $convertList) && $chip < 100 && $startStack > 20000 || 
+			!array_key_exists($chip, $convertList) && $chip < 500 && $startStack > 50000 ){
 			
 			unset($chipList[$key]);
 			continue;
@@ -77,14 +78,26 @@ class chipCalculatorActions extends sfActions
 			unset($chipList[$key]);
 	
 	sort($chipList);
+	
+//	prexit($chipList);
+	
 
 	if( $forceRandom )
 		$chipSet = $this->getChipSetRandom($chipList, $startStack);
 	else
 		$chipSet = $this->getChipSet($chipList, $startStack);
 	
-	if( is_null($chipSet) )
+	if( is_null($chipSet) ){
+		
+		$emailContent  = "Distribuição não encontrada para a seguinte configuração:<br/><br/>";
+		$emailContent .= "<b>Stack inicial:</b> $startStack<br/>";
+		$emailContent .= "<b>Fichas selecionadas:</b> ".implode(', ', $chipList)."<br/>";
+		$emailContent .= "<b>Fichas reversíveis:</b> ".implode(', ', $convertList)."<br/>";
+		
+		Report::sendMail('Calculadora de fichas', null, $emailContent, array('emailTemplate'=>'emailTemplateAdmin'));
+		
 		Util::forceError('invalid chipSet');
+	}
 	
 	foreach($chipSet as $chipValue=>$chipTotalValue){
 		
@@ -95,123 +108,8 @@ class chipCalculatorActions extends sfActions
 			unset($chipSet[$chipValue]);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-	$chipList = array_keys($chipSet);
-//	prexit($chipSet);
-//	prexit($chipList);
-
-	// --------------------------------------
-	
-	$blindSetPercentList = array();
-	$blindIncrasePercentList[100]   = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
-	$blindIncrasePercentList[200]   = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
-	$blindIncrasePercentList[300]   = array(6.67,13.33,20,26.67,33.33,40,50,66.67,83.33,100,133.33,166.67,200,266.67,200,400,533.33,666.67,800,933.33,1066.67,1200);
-	$blindIncrasePercentList[400]   = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
-	$blindIncrasePercentList[500]   = array(4,8,12,16,20,24,28,32,36,40,50,60,70,80,100,120,160,200,240,280,320,400,480,560,640,600,1000);
-	$blindIncrasePercentList[600]   = array(6.67,13.33,20,26.67,33.33,40,50,66.67,83.33,100,133.33,166.67,200,266.67,200,400,533.33,666.67,800,933.33,1066.67,1200);
-	$blindIncrasePercentList[800]   = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
-	$blindIncrasePercentList[1000]  = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
-	$blindIncrasePercentList[1500]  = array(3.33,6.66,10,13.33,20,26.66,33.33,40,46.66,53.33,66.66,80,93.33,106.66,133.33,160,186.66,240,266.66,333.33,400,466.66,533.33,666.66,800,1000,1333.33);
-	$blindIncrasePercentList[2000]  = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
-	$blindIncrasePercentList[2500]  = array(2,4,6,8,10,12,14,16,20,24,28,32,40,48,64,80,96,112,144,160,200,240,280,320,400,480,600,800);
-	$blindIncrasePercentList[3000]  = array(1.67,3.33,5,6.66,16.66,20,23.33,26.66,33.33,40,46.66,53.33,66.66,80,93.33,120,133.33,166.66,200,233.33,266.66,333.33,400,500,666.66);
-	$blindIncrasePercentList[4000]  = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
-	$blindIncrasePercentList[5000]  = array(2,3,4,6,8,10,12,16,20,24,32,40,48,56,64,80,100,120,140,160,200,300,400,600);
-	$blindIncrasePercentList[6000]  = array(0.83,1.66,2.5,3.33,5,6.66,8.33,10,11.66,13.33,16.66,20,23.33,26.66,33.33,40,46.66,60,66.66,83.33,100,116.66,133.33,166.66,200,250,333.33);
-	$blindIncrasePercentList[8000]  = array(2,3,4,6,8,10,12,16,20,24,32,40,48,56,64,80,100,120,140,160,200,300,400,600);
-	$blindIncrasePercentList[10000] = array(2,3,4,6,8,10,12,16,20,24,32,40,48,56,64,80,100,120,140,160,200,300,400,600);
-	$blindIncrasePercentList[15000] = array(0.33,0.66,1,1.33,2,2.66,3.33,4,4.66,5.33,6.66,8,9.33,10.66,13.33,16,18.66,24,26.66,33.33,40,46.66,53.33,66.66,80,100,133.33);
-	$blindIncrasePercentList[20000] = array(0.25,0.5,0.75,1,1.5,2,2.5,3,3.5,4,5,6,7,8,10,12,14,18,20,25,30,35,40,50,60,75,100);
-	$blindIncrasePercentList[30000] = array(0.66,1.33,2,2.66,3.33,4,4.66,5.33,6.66,8,9.33,12,13.33,16.66,20,23.33,26.66,33.33,40,50,66.66,100,133.33,166.66,200,266.66,333.33);
-	$blindIncrasePercentList[40000] = array(0.5,0.75,1,1.25,1.5,1.75,2,2.5,3,3.5,4,5,6,7,9,10,12.5,15,17.5,20,25,30,37.5,50,75,100,125,150,200,250);
-	$blindIncrasePercentList[50000] = array(0.4,0.8,1.2,1.6,2,2.4,2.8,3.2,4,4.8,5.6,7.2,8,10,12,14,16,20,24,30,40,60,80,100,120,160,200);
-	$blindIncrasePercentList[100000] = array(2,2.4,2.8,3.6,4,5,6,7,8,10,12,15,20,30,40,50,60,80,100);
-	
-	$smallestChip    = min($chipList);
-	$gameDurationMin = $gameDuration*60;
-	$levels          = $gameDurationMin/$blindDuration;
-	$bigBlind        = $startStack/($startStack > 10000?300:($startStack > 1000?100:($startStack >= 500?25:20)));
-	$smallBlind      = floor($bigBlind/2);
-	
-	if( $smallBlind < $smallestChip ){
-		
-		$smallBlind = $smallestChip;
-		$bigBlind   = $smallBlind*2;
-	}
-
-	if( $smallBlind%$smallestChip!=0 )
-		$smallBlind = $bigBlind-$smallestChip;
-	
-	if( $smallBlind%$smallestChip!=0 ){
-		
-		$smallBlind = $smallestChip;
-		$bigBlind   = $smallBlind*2;
-	}
-	
-//	echo '<pre>';
-//	echo "stack: $startStack\n";
-//	echo "smallestChip: $smallestChip\n";
-//	echo "game duration: $gameDurationMin minutos\n";
-//	echo "levels: $levels\n";
-//	echo "blind duration: $blindDuration\n";
-//	echo "blind: $smallBlind/$bigBlind\n";
-//	echo '<hr>';
-	
-	$timeElapsed = $blindDuration;
-	
-	$blindIncrasePercent = $blindIncrasePercentList[$startStack];
-	$levelIncrase = 0;
-	
-	$blindSet = array();
-	
-	for($level=1; $level <= $levels && $level < count($blindIncrasePercent); $level++, $timeElapsed+=$blindDuration){
-		
-		$percent = ($timeElapsed*100/$gameDurationMin);
-		
-		$ok = ($smallBlind%$smallestChip==0);
-		
-//		echo sprintf('Level #%02d: %d / %d    - %02d min (%02d%%) - %s', $level, $smallBlind, $bigBlind, $blindDuration, $percent, $ok?'OK':'NOK');
-//		echo "\n";
-		$blindSet[] = "$smallBlind,$bigBlind";
-		
-		do{
-			
-			$bigBlindTmp = $startStack*$blindIncrasePercent[$level+$levelIncrase]/100;
-			
-			// Se o nobo blind for menor ou igual ao nivel anterior, usa a proxima sequencia das porcentagens
-			if( $bigBlindTmp <= $bigBlind ){
-				
-				$levelIncrase++;
-				$bigBlindTmp = $startStack*$blindIncrasePercent[$level+$levelIncrase]/100;
-			}
-			
-			$smallBlindTmp = $bigBlindTmp/2;
-			
-			$fit = ($smallBlindTmp%$smallestChip)==0;
-			
-			// Se a configuração das fichas não conseguir pagar um small blind (Ex. a menor ficha sendo 50 não pode haver um small de 75);
-			if( !$fit ){
-	
-				$smallBlindTmp = $smallBlind+$smallestChip;
-				$bigBlindTmp   = $smallBlindTmp*2;
-				break;
-			}
-		}while(!$fit || $bigBlindTmp <= $bigBlind);
-		
-			$bigBlind   = $bigBlindTmp;
-			$smallBlind = $smallBlindTmp;
-	}
-	// --------------------------------------
-
-	$chipSet['blindSet'] = $blindSet;	
+	if( $players )
+		$chipSet['blindSet'] = $this->getBlindSet(array_keys($chipSet), $gameDuration, $blindDuration, $startStack);
 
 	echo Util::parseInfo($chipSet);
 	exit;
@@ -424,5 +322,135 @@ class chipCalculatorActions extends sfActions
 		if( $chipsTmp > ($chips/$availableChips*2) || $chipsTmp > 10 )
 			throw new Exception('INVÁLIDO - Fichas demais '."($chipsTmp > ".($chips/$availableChips*2).")");
 	}
+  }
+  
+  private function getBlindSet($chipList, $gameDuration, $blindDuration, $startStack){
+  	
+//	prexit($chipSet);
+//	prexit($chipList);
+
+	// --------------------------------------
+	
+	$blindSetPercentList = array();
+	$blindIncrasePercentList[100]   = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
+	$blindIncrasePercentList[200]   = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
+	$blindIncrasePercentList[300]   = array(6.67,13.33,20,26.67,33.33,40,50,66.67,83.33,100,133.33,166.67,200,266.67,200,400,533.33,666.67,800,933.33,1066.67,1200);
+	$blindIncrasePercentList[400]   = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
+	$blindIncrasePercentList[500]   = array(4,8,12,16,20,24,28,32,36,40,50,60,70,80,100,120,160,200,240,280,320,400,480,560,640,600,1000);
+	$blindIncrasePercentList[600]   = array(6.67,13.33,20,26.67,33.33,40,50,66.67,83.33,100,133.33,166.67,200,266.67,200,400,533.33,666.67,800,933.33,1066.67,1200);
+	$blindIncrasePercentList[800]   = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
+	$blindIncrasePercentList[1000]  = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
+	$blindIncrasePercentList[1500]  = array(3.33,6.66,10,13.33,20,26.66,33.33,40,46.66,53.33,66.66,80,93.33,106.66,133.33,160,186.66,240,266.66,333.33,400,466.66,533.33,666.66,800,1000,1333.33);
+	$blindIncrasePercentList[2000]  = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
+	$blindIncrasePercentList[2500]  = array(2,4,6,8,10,12,14,16,20,24,28,32,40,48,64,80,96,112,144,160,200,240,280,320,400,480,600,800);
+	$blindIncrasePercentList[3000]  = array(1.67,3.33,5,6.66,16.66,20,23.33,26.66,33.33,40,46.66,53.33,66.66,80,93.33,120,133.33,166.66,200,233.33,266.66,333.33,400,500,666.66);
+	$blindIncrasePercentList[4000]  = array(4,8,12,16,20,24,30,40,50,60,70,80,100,120,150,200,250,300,350,400);
+	$blindIncrasePercentList[5000]  = array(2,3,4,6,8,10,12,16,20,24,32,40,48,56,64,80,100,120,140,160,200,300,400,600);
+	$blindIncrasePercentList[6000]  = array(0.83,1.66,2.5,3.33,5,6.66,8.33,10,11.66,13.33,16.66,20,23.33,26.66,33.33,40,46.66,60,66.66,83.33,100,116.66,133.33,166.66,200,250,333.33);
+	$blindIncrasePercentList[8000]  = array(2,3,4,6,8,10,12,16,20,24,32,40,48,56,64,80,100,120,140,160,200,300,400,600);
+	$blindIncrasePercentList[10000] = array(2,3,4,6,8,10,12,16,20,24,32,40,48,56,64,80,100,120,140,160,200,300,400,600);
+	$blindIncrasePercentList[15000] = array(0.33,0.66,1,1.33,2,2.66,3.33,4,4.66,5.33,6.66,8,9.33,10.66,13.33,16,18.66,24,26.66,33.33,40,46.66,53.33,66.66,80,100,133.33);
+	$blindIncrasePercentList[20000] = array(0.25,0.5,0.75,1,1.5,2,3,4,5,6,7,8,10,12,14,18,20,25,30,35,40,50,60,75,100,125,150,200);
+	$blindIncrasePercentList[30000] = array(0.66,1.33,2,2.66,3.33,4,4.66,5.33,6.66,8,9.33,12,13.33,16.66,20,23.33,26.66,33.33,40,50,66.66,100,133.33,166.66,200,266.66,333.33);
+	$blindIncrasePercentList[40000] = array(0.5,0.75,1,1.25,1.5,1.75,2,2.5,3,3.5,4,5,6,7,9,10,12.5,15,17.5,20,25,30,37.5,50,75,100,125,150,200,250);
+	$blindIncrasePercentList[50000] = array(0.4,0.8,1.2,1.6,2,2.4,2.8,3.2,4,4.8,5.6,7.2,8,10,12,14,16,20,24,30,40,60,80,100,120,160,200);
+	$blindIncrasePercentList[100000] = array(2,2.4,2.8,3.6,4,5,6,7,8,10,12,15,20,30,40,50,60,80,100);
+
+	$blindIncrasePercent = $blindIncrasePercentList[$startStack];
+	
+	$smallestChip    = min($chipList);
+	$gameDurationMin = $gameDuration*60;
+	$bigBlind        = $startStack/($startStack > 10000?300:($startStack > 1000?100:($startStack >= 500?25:20)));
+	$smallBlind      = floor($bigBlind/2);
+	$ante            = 0;
+	
+	
+	if( $gameDurationMin && $blindDuration)
+		$levels = $gameDurationMin/$blindDuration;
+	else{
+		
+		$levels = count($blindIncrasePercent);
+		if( $gameDurationMin && !$blindDuration )
+			$blindDuration = $gameDurationMin/$levels;
+		elseif( !$gameDurationMin && $blindDuration )
+			$gameDurationMin = $blindDuration*$levels;
+	}
+	
+	if( $smallBlind < $smallestChip ){
+		
+		$smallBlind = $smallestChip;
+		$bigBlind   = $smallBlind*2;
+	}
+
+	if( $smallBlind%$smallestChip!=0 )
+		$smallBlind = $bigBlind-$smallestChip;
+	
+	if( $smallBlind%$smallestChip!=0 ){
+		
+		$smallBlind = $smallestChip;
+		$bigBlind   = $smallBlind*2;
+	}
+	
+//	echo '<pre>';
+//	echo "stack: $startStack\n";
+//	echo "smallestChip: $smallestChip\n";
+//	echo "game duration: $gameDurationMin minutos\n";
+//	echo "levels: $levels\n";
+//	echo "blind duration: $blindDuration\n";
+//	echo "blind: $smallBlind/$bigBlind\n";
+//	echo '<hr>';
+//	exit;
+	
+	$timeElapsed  = $blindDuration;
+	$levelIncrase = 0;
+	
+	$blindSet = array();
+	
+	for($level=1; $level <= $levels && $level < count($blindIncrasePercent); $level++, $timeElapsed+=$blindDuration*60){
+		
+		$percent = ($timeElapsed*100/$gameDurationMin);
+		
+		$ok = ($smallBlind%$smallestChip==0);
+		
+//		echo sprintf('Level #%02d: %d / %d    - %02d min (%02d%%) - %s', $level, $smallBlind, $bigBlind, $blindDuration, $percent, $ok?'OK':'NOK');
+//		echo "\n";
+		$blindSet[] = sprintf('#%02d,%d,%d,%d,%02d,%s', $level, $smallBlind, $bigBlind, $ante, $blindDuration, Util::formatTimeString($timeElapsed+($blindDuration*60), 'h:m'));
+		
+		do{
+			
+			if( !array_key_exists($level+$levelIncrase, $blindIncrasePercent) ){
+				
+				$smallBlindTmp = $smallBlind*1.5;
+				$bigBlindTmp   = $smallBlindTmp*2;
+				break;
+			}
+			
+			$bigBlindTmp = $startStack*$blindIncrasePercent[$level+$levelIncrase]/100;
+			
+			// Se o nobo blind for menor ou igual ao nivel anterior, usa a proxima sequencia das porcentagens
+			if( $bigBlindTmp <= $bigBlind ){
+				
+				$levelIncrase++;
+				$bigBlindTmp = $startStack*$blindIncrasePercent[$level+$levelIncrase]/100;
+			}
+			
+			$smallBlindTmp = $bigBlindTmp/2;
+			
+			$fit = ($smallBlindTmp%$smallestChip)==0;
+			
+			// Se a configuração das fichas não conseguir pagar um small blind (Ex. a menor ficha sendo 50 não pode haver um small de 75);
+			if( !$fit ){
+	
+				$smallBlindTmp = $smallBlind+$smallestChip;
+				$bigBlindTmp   = $smallBlindTmp*2;
+				break;
+			}
+		}while(!$fit || $bigBlindTmp <= $bigBlind);
+		
+		$bigBlind   = $bigBlindTmp;
+		$smallBlind = $smallBlindTmp;
+	}
+	
+	return $blindSet;
   }
 }

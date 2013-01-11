@@ -1,4 +1,4 @@
-<?php include_partial('home/component/commonBar', array('pathList'=>array('Calculadora de fichas'=>null))); ?>
+<?php include_partial('home/component/commonBar', array('pathList'=>array('Calculadora de fichas <span class="beta">[beta]</span>'=>null))); ?>
 <div class="moduleIntro mt10">
 	<?php echo image_tag('chipCalculator', array('align'=>'left', 'style'=>'margin-right: 15px; margin-top: -10px')) ?>
 	Seja bem vindo à calculadora de fichas <b>iRank</b>.<br/>
@@ -16,6 +16,13 @@
 ?>
 <div class="steps" id="start">
 	<br/>
+<div class="stepPaginator">
+	<?php
+		echo button_tag('navigatorNext', 'Próximo', array('image'=>'next.png', 'onclick'=>'showNext(true)', 'class'=>'right'));
+		echo button_tag('navigatorPrevious', 'Anterior', array('image'=>'previous.png', 'onclick'=>'showPrevious()', 'visible'=>false, 'disabled'=>true, 'class'=>'right'));
+		echo button_tag('ignore', 'Ignorar', array('image'=>'nok.png', 'onclick'=>'ignoreStep()', 'class'=>'right', 'visible'=>false, 'style'=>'margin-right: 20px'));
+	?>
+</div>
 	<div class="step hidden" id="step-001">
 		<h1>Início</h1>
 		<div class="intro">
@@ -47,34 +54,11 @@
 			<div class="intro note"><b>DICA:</b> As fichas de 1 e 5 podem ser utilizadas como 1000 e 5000 no caso de <a href="javascript:void(0)" class="dictionary" title="Clique para saber a definição de &quot;deep stack&quot;">deep stacks</a></div>
 		</div>
 	</div>
-	<div class="step" id="step-002">
-		<h1>Fichas disponíveis</h1>
-		<div class="intro">
-			Selecione entre 3 e 6 fichas que você tem disponíveis.<br/>
-			Para o stack inicial de <b><span id="startStackLabel">5000</span></b> recomenda-se utilizar fichas de <b><span id="suggestChipLabel"></span></b></b>
-		</div>
-		<div class="defaultForm">
-			<div class="chipList">
-				<?php
-					$chipList = array(1,5,10,25,50,100,500,1000,5000,10000);
-					foreach($chipList as $chip):
-				?>
-				<div class="chip <?php echo ($chip<0?'active':'') ?>" id="chip-<?php echo abs($chip) ?>" onclick="selectChip(this)" style="background-image: url('/images/chips/chip<?php echo abs($chip) ?>.png')">
-					<div class="check"></div>
-				</div>
-				<?php
-					endforeach;
-				?>
-			</div>
-		
-			<div class="intro note" id="deepStackExchangeChipsTip"><b>Lembrete:</b> As fichas de 1 e 5 podem ser utilizadas como 1000 e 5000 caso seja necessário.</div>
-		</div>
-	</div>
-	<div class="step hidden" id="step-003">
+	<div class="step hidden" id="step-002">
 		<h1>Opções avançadas</h1>
 		<div class="intro">
 			Os campos abaixo irão definir a melhor estrutura de blinds para seu evento.<br/>
-			Caso queira apenas calcular a divisão de fichas, clique em "Ignorar opções"
+			Caso queira apenas calcular a divisão de fichas, clique em "Ignorar"
 		</div>
 		<div class="defaultForm">
 			<div class="row">
@@ -108,10 +92,36 @@
 			</div>
 		</div>
 	</div>
-	<div class="step hidden" id="step-004">
+	<div class="step" id="step-003">
+		<h1>Fichas disponíveis</h1>
+		<div class="intro">
+			Selecione entre 3 e 6 fichas que você tem disponíveis.<br/>
+			Para o stack inicial de <b><span id="startStackLabel">5000</span></b> recomenda-se utilizar fichas de <b><span id="suggestChipLabel"></span></b></b>
+		</div>
+		<div class="defaultForm">
+			<div class="chipList">
+				<?php
+					$chipList = array(1,5,10,25,50,100,500,1000,5000,10000);
+					foreach($chipList as $chip):
+				?>
+				<div class="chip <?php echo ($chip<0?'active':'') ?>" id="chip-<?php echo abs($chip) ?>" onclick="selectChip(this)" style="background-image: url('/images/chips/chip<?php echo abs($chip) ?>.png')">
+					<div class="check"></div>
+				</div>
+				<?php
+					endforeach;
+				?>
+			</div>
+		
+			<div class="intro note" id="deepStackExchangeChipsTip"><b>Lembrete:</b> As fichas de 1 e 5 podem ser utilizadas como 1000 e 5000 caso seja necessário.</div>
+		</div>
+	</div>
+	<div class="step hidden pb40" id="step-004">
 		<h1>Resultado</h1>
 		<div id="loadingResult"></div>
 		<div id="chipSetResult"></div>
+		
+		<div id="blindSetResult" class="hidden"></div>
+		
 		<div id="chipSetResultFooter">
 			Não gostou da distribuição? <?php echo link_to('Clique aqui', '#getChipSet(true)') ?> para obter uma nova configuração aleatória.<br/>
 			<hr/>
@@ -119,14 +129,32 @@
 			Isso pode ocorrer porque em alguns é feito cálculo de distribuição aleatória.<br/><br/>
 		</div>
 	</div>
+	
+	<div class="step" id="calculateError">
+		<h1 class="error">Resultado não encontrado</h1>
+		<div class="intro">
+			Nenhuma distribuição adequada foi encontrada para o stack selecionado 
+			com as fichas escolhidas.<br/><br/>
+			Veja abaixo os possíveis motivos:
+			
+			<ul>
+				<li><b>Quantidade de fichas insuficientes;</b></li>
+				<li><b>Valores das fichas incompatíveis com o stack escolhido;</b></li>
+				<li><b>Nem todas as fichas poderiam ser utilizadas;</b></li>
+				<li><b>Haveriam poucas fichas para blinds baixos.</b></li>
+			</ul> 
+			
+			Verifique os stacks compatíveis com as fichas que você possui disponível e tente novamente.
+			<br/><br/>
+			
+		</div>
+	</div>
 	<div class="clear"></div>
-</div>
-<div id="stepPaginator">
+	<div class="stepPaginator bottom hidden" id="stepPaginatorBottom">
 	<?php
-		echo button_tag('navigatorNext', 'Próximo', array('image'=>'next.png', 'onclick'=>'showNext()', 'class'=>'right'));
-		echo button_tag('navigatorPrevious', 'Anterior', array('image'=>'previous.png', 'onclick'=>'showPrevious()', 'disabled'=>true, 'class'=>'right'));
-		echo button_tag('ignore', 'Ignorar', array('image'=>'nok.png', 'onclick'=>'ignoreStep()', 'class'=>'right', 'visible'=>false, 'style'=>'margin-right: 20px'));
+		echo button_tag('resetSteps', 'Reiniciar', array('image'=>'reload.png', 'onclick'=>'resetSteps()', 'class'=>'right'));
 	?>
+	</div>
 </div>
 </form>
 <script>

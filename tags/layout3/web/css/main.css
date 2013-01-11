@@ -375,11 +375,12 @@ a:hover {
 	font-size: 		12px;
 }
 
-#contentArea #mainContent #innerContent .rightContent .separator {
+#contentArea #mainContent #innerContent .rightContent hr.separator {
 
 	width: 100%;
 	height: 5px;
 	background: #F0F0F0;
+	border: none;
 }
 
 #contentArea #mainContent #innerContent .rightContent .moduleFooter {

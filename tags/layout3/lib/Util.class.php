@@ -411,6 +411,7 @@ class Util {
 				case '%hh %mm %ss':
 					return sprintf('%02d', ($hours+($days*24))).'h '.$minutes.'m '.$seconds.'s';
 				case '%h:%m':
+				case 'h:m':
 					return sprintf('%02d', ($hours+($days*24))).':'.$minutes;
 			}
 				

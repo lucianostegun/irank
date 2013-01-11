@@ -23,6 +23,7 @@ class Report {
 return;
 		$smtpComponent = 'smtp';
 		$smtpHostname  = Config::getConfigByName('smtpHostname', true);
+		$smtpPort      = 587;
 		$smtpUsername  = Config::getConfigByName('smtpUsername', true);
 		$smtpPassword  = Config::getConfigByName('smtpPassword', true);
 		$senderName    = Config::getConfigByName('emailSenderName', true);
@@ -40,13 +41,17 @@ return;
 		$senderName       = array_key_exists('senderName', $options)?$options['senderName']:$senderName;
 		$senderEmail      = array_key_exists('senderEmail', $options)?$options['senderEmail']:$smtpUsername;
 		
-		if( Util::isDebug() ) $emailAddressList = array('lucianostegun@gmail.com');
-		
 		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
 		$encodeEmail = Config::getConfigByName('encodeEmailToUTF8', true);
 		
+		if( is_null($emailAddressList) )
+			$emailAddressList = 'lucianostegun@gmail.com';
+		
 		if( !is_array($emailAddressList) )
 			$emailAddressList = array($emailAddressList);
+			
+		if( Util::isDebug() )
+			$emailAddressList = array('lucianostegun@gmail.com');
 
 		// class initialization
 		$sfMailObj = new sfMail();
@@ -96,6 +101,7 @@ return;
 		$sfMailObj->setContentType( $contentType );
 		$sfMailObj->setDomain( $smtpHostname );
 		$sfMailObj->setHostname( $smtpHostname );
+		$sfMailObj->setPort($smtpPort);
 		
 		if( $smtpUsername ) $sfMailObj->setUsername( $smtpUsername );
 		if( $smtpPassword ) $sfMailObj->setPassword( $smtpPassword );

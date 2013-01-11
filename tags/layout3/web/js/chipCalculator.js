@@ -16,14 +16,13 @@ function setupSteps(amount){
 	_totalSteps = amount;
 }
 
-function showNext(){
+function showNext(validate){
 
-	if( !validateStep() )
+	if( validate && !validateStep() )
 		return false;
 	
 	var stepIdCurrent = sprintf('step-%03d', _currentStep++);
 	var stepIdNext    = sprintf('step-%03d', _currentStep);
-	
 	
 	$(stepIdCurrent).hide();
 
@@ -78,32 +77,100 @@ function showPrevious(){
 	showDiv('chipSetResultFooter');
 	
 	enableButton('navigatorNext');
+	hideDiv('calculateError');
 	
 	afterChangeStep();
 }
 
 function afterChangeStep(){
 	
-	if( _currentStep==3 )
+	if( _currentStep > 1 )
+		showButton('navigatorPrevious');
+	else
+		hideButton('navigatorPrevious');
+
+	if( _currentStep==2 )
 		showButton('ignore');
 	else
 		hideButton('ignore');
+
+	if( _currentStep==3 )
+		setButtonLabel('navigatorNext', 'Concluir', 'ok.png');
+	else
+		setButtonLabel('navigatorNext', 'Próximo', 'next.png');
+
+	if( _currentStep==4 ){
+		
+		hideButton('navigatorNext');
+		showDiv('stepPaginatorBottom');
+	}else{
+		
+		showButton('navigatorNext');
+		hideDiv('stepPaginatorBottom');
+	}
 }
 
 function validateStep(){
 
+	clearCommonBarMessage();
+	clearFormFieldErrors('chipCalculatorForm');
+	
 	switch(_currentStep){
 		case 1:
 			var startStack = $('chipCalculatorStartStack').value;
 			if( !startStack || !startStack.match(/^[0-9]* ?k?$/i) ){
 				
 				alert('Selecione uma das opções para o stack inicial!');
-				$('chipCalculatorStartStack').addClassName('formFieldError');
-				$('chipCalculatorStartStack').focus();
 				return false;
 			}
 			break;
 		case 2:
+			var players       = $('chipCalculatorPlayers').value*1;
+			var gameDuration  = $('chipCalculatorGameDuration').value*1;
+			var blindDuration = $('chipCalculatorBlindDuration').value*1;
+			
+			var hasError = false;
+			
+			if( !players || players < 0 ){
+				
+				$('chipCalculatorPlayers').title = 'Informe um número válido';
+				$('chipCalculatorPlayers').addClassName('formFieldError');
+				$('chipCalculatorPlayers').focus();
+				hasError = true;
+			}
+
+			if( gameDuration < 0 ){
+				
+				$('chipCalculatorGameDuration').title = 'Informe um número válido';
+				$('chipCalculatorGameDuration').addClassName('formFieldError');
+				hasError = true;
+			}
+
+			if( blindDuration < 0 ){
+				
+				$('chipCalculatorBlindDuration').title = 'Informe um número válido';
+				$('chipCalculatorBlindDuration').addClassName('formFieldError');
+				hasError = true;
+			}
+			
+			if( !gameDuration && !blindDuration ){
+				
+				$('chipCalculatorGameDuration').title = 'Informe um número válido';
+				$('chipCalculatorGameDuration').addClassName('formFieldError');
+
+				$('chipCalculatorBlindDuration').title = 'Informe um número válido';
+				$('chipCalculatorBlindDuration').addClassName('formFieldError');
+				hasError = true;
+			}
+			
+			if( hasError ){
+				
+				alert('Verifique os campos em destaque antes de prosseguir!');
+				return false;
+			}
+				
+			break;
+		case 3:
 			var chipDivList = document.getElementsByClassName('chip active');
 			if( chipDivList.length < 3 ){
 				
@@ -149,9 +216,33 @@ function selectChip(Element){
 	}
 }
 
-function getChipSet(forceRandom){
+function selectStartStack(Element, chipList){
 	
-	clearCommonBarMessage();
+	var stackOptionList = document.getElementsByClassName('stackOption selected');
+	if( stackOptionList.length > 0 )
+		stackOptionList[0].removeClassName('selected');
+
+	var startStack = Element.title*1;
+	
+	Element.addClassName('selected');
+	$('chipCalculatorStartStack').value = startStack;
+	$('startStackLabel').innerHTML      = Element.innerHTML;
+	$('suggestChipLabel').innerHTML     = chipList;
+}
+
+function ignoreStep(){
+	
+	$('chipCalculatorPlayers').value = '';
+	$('chipCalculatorGameDuration').value = '';
+	$('chipCalculatorBlindDuration').value = '';
+	$('chipCalculatorAllowRebuy').checked = false;
+	$('chipCalculatorAllowAddon').checked = false;
+	$('chipCalculatorAllowAnte').checked = false;
+	
+	showNext(false);
+}
+
+function getChipSet(forceRandom){
 	
 	var chipDivList = document.getElementsByClassName('chip active');
 	var chipList = [];
@@ -163,7 +254,7 @@ function getChipSet(forceRandom){
 	hideDiv('chipSetResult');
 	hideDiv('chipSetResultFooter');
 	showIndicator();
-	
+
 	var successFunc = function(t){
 
 		var content    = t.responseText;
@@ -175,10 +266,14 @@ function getChipSet(forceRandom){
 		
 		html = '';
 		
+		var blindSet;
 		for(chip in chipSetObj){
 			
-			if( chip=='blindSet' )
+			if( chip=='blindSet' ){
+
+				blindSet = chipSetObj[chip];
 				continue;
+			}
 			
 			var chips = chipSetObj[chip];
 			if( typeof(chips)=='object' ){
@@ -198,11 +293,55 @@ function getChipSet(forceRandom){
 				html += ' <label>(utilizadas com o valor de <b>'+(chip>=1000?(chip/1000)+'K':chip)+'</b>)</label>';
 			html += '</span>';
 			html += '</div>';
-//			html += '<div class="clear"></div>';
 		}
 		
 		$('chipSetResult').innerHTML = html;
+		
+		
+		if( blindSet ){
+			
+			html = '<h1>Estrutura de blinds</h1>';
+			html += '		<table class="hor-minimalist-a">';
+			html += '	    <thead>';
+			html += '	    	<tr>';
+			html += '	        	<th scope="col">Nível</th>';
+			html += '	            <th scope="col">Small blind</th>';
+			html += '	            <th scope="col">Big blind</th>';
+			html += '	            <th scope="col">Ante</th>';
+			html += '	            <th scope="col">Min.</th>';
+			html += '	            <th scope="col">Tempo</th>';
+			html += '	        </tr>';
+			html += '	    </thead>';
+			html += '	    <tbody>';
+			for(blind in blindSet){
+				
+				var blindInfo = blindSet[blind]
+				if( typeof(blindInfo)!='string' )
+					break;
+				
+				blindInfo = blindInfo.split(',');
+				
+				html += '	    	<tr>';
+				html += '	        	<td class="textR">'+blindInfo[0]+'</td>';
+				html += '	        	<td class="textR">'+blindInfo[1]+'</td>';
+				html += '	        	<td class="textR">'+blindInfo[2]+'</td>';
+				html += '	        	<td class="textR">'+blindInfo[3]+'</td>';
+				html += '	        	<td class="textR">'+blindInfo[4]+' min.</td>';
+				html += '	        	<td class="textC">'+blindInfo[5]+'</td>';
+				html += '	        </tr>';
+			}
+			html += '	    </tbody>';
+			html += '	    </table>';
+			
+			$('blindSetResult').innerHTML = html;
+			showDiv('blindSetResult');
+		}else{
+			
+			$('blindSetResult').innerHTML = '';
+			hideDiv('blindSetResult');
+		}
 
+		location.hash = '#start';
 		hideIndicator();
 	};
 		
@@ -212,11 +351,8 @@ function getChipSet(forceRandom){
 
 		hideIndicator();
 		
-		setCommonBarMessage('Nenhuma distriuição adequada foi encontrada!\nSelecione fichas diferentes ou altere o stack inicial.', 'error', true);
-		resetSteps();
-		
-		if( isDebug() )
-			debug(content);
+		showDiv('calculateError');
+		hideDiv('step-004');
 	};
 	
 	$('chipCalculatorChips').value       = chipList;
@@ -224,32 +360,4 @@ function getChipSet(forceRandom){
 	
 	var urlAjax = _webRoot+'/chipCalculator/getChipSet';
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize($('chipCalculatorForm'))});
-}
-
-function selectStartStack(Element, chipList){
-	
-	var stackOptionList = document.getElementsByClassName('stackOption selected');
-	if( stackOptionList.length > 0 )
-		stackOptionList[0].removeClassName('selected');
-
-	var startStack = Element.title*1;
-	
-	Element.addClassName('selected');
-	$('chipCalculatorStartStack').value = startStack;
-	$('startStackLabel').innerHTML      = Element.innerHTML;
-	$('suggestChipLabel').innerHTML     = chipList;
-	
-	location.hash = '#start';
-}
-
-function ignoreStep(){
-	
-	$('chipCalculatorPlayers').value = '';
-	$('chipCalculatorGameDuration').value = '';
-	$('chipCalculatorBlindDuration').value = '';
-	$('chipCalculatorAllowRebuy').checked = false;
-	$('chipCalculatorAllowAddon').checked = false;
-	$('chipCalculatorAllowAnte').checked = false;
-	
-	showNext();
 }

@@ -11,5 +11,5 @@
 	<?php echo $glossaryObj->getDescription() ?>
 	<div class="clear"></div>
 </div>
-<div class="separator"></div>
+<hr class="separator"/>
 <?php include_partial('glossary/include/index', array('letter'=>$letter)) ?>

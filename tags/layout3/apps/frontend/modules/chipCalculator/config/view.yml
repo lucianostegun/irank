@@ -1,4 +1,4 @@
 all:
   
-  stylesheets:    [form, chipCalculator]
+  stylesheets:    [form, table, chipCalculator]
   javascripts:    [chipCalculator, /sf/prototype/js/scriptaculous, mask]

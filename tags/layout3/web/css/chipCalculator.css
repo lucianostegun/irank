@@ -8,6 +8,11 @@ h1 {
 	color: #5486B4
 }
 
+h1.error {
+
+	color: #B45426
+}
+
 .chipList {
 	
 	width: 500px;
@@ -17,15 +22,28 @@ h1 {
 	height: 220px;
 }
 
-#stepPaginator {
+.stepPaginator {
 
 	margin: 0px 0px 0px 0px;
 	position: relative;
 	top: 0px;
-	left: 0px;
+	right: 65px;
 	z-index: 300;
+	padding: 0px 15px 10px 0px;
+}
+
+.stepPaginator.bottom {
+
+	top: 15px;
+	left: 0px;
+	right: 0px;
 	border-top: 1px solid #C0C0C0;
-	padding: 15px 15px 0px 0px;
+	padding: 14px 15px 0px 0px;
+}
+
+.stepPaginator.bottom .actionButton {
+
+	right: 65px
 }
 
 .chip {
@@ -75,7 +93,8 @@ h1 {
 	display: none;
 }
 
-.chip.active {
+.chip.active,
+.chip.result {
 	
 	background-position: 0px -75px;
 }
@@ -125,6 +144,24 @@ h1 {
  	display: 		block;
 }
 
+.steps .step #loadingResult {
+ 
+ 	margin-top: 30px;
+}
+
+.steps .step#calculateError {
+
+	display: none
+}
+
+.steps .step.calculateError .intro {
+
+	width: 620px;
+	padding-left: 100px;
+	background: url('/images/exclamation.png') no-repeat 10px top;
+	margin-left: 30px;
+}
+
 #chipCalculatorStartStackOptionsDiv {
 
 	position: relative;
@@ -139,7 +176,7 @@ h1 {
 	font-size: 14px;
 	color: #505050;
 	padding: 0px 24px 4px 0px;
-	top: 35px;
+	top: 37px;
 	left: 80px;
 	width: 600px;
 	text-align: right
@@ -198,6 +235,11 @@ h1 {
 	margin-top: 40px;
 }
 
+#blindSetResult {
+
+	margin-top: 30px
+}
+
 .defaultForm .row {
 
 	height: 42px
@@ -238,3 +280,9 @@ h1 {
 #chipCalculatorPlayers { width: 30px; }
 #chipCalculatorGameDuration { width: 30px; }
 #chipCalculatorBlindDuration { width: 30px; }
+
+
+.hor-minimalist-a {
+
+	margin: 20px 30px
+}
