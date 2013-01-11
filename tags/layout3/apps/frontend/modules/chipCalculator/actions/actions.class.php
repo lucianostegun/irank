@@ -109,7 +109,7 @@ class chipCalculatorActions extends sfActions
 	}
 	
 	if( $players )
-		$chipSet['blindSet'] = $this->getBlindSet(array_keys($chipSet), $gameDuration, $blindDuration, $startStack);
+		$chipSet['blindSet'] = $this->getBlindSet(array_keys($chipSet), $gameDuration, $blindDuration, $startStack, $allowAnte);
 
 	echo Util::parseInfo($chipSet);
 	exit;
@@ -324,7 +324,7 @@ class chipCalculatorActions extends sfActions
 	}
   }
   
-  private function getBlindSet($chipList, $gameDuration, $blindDuration, $startStack){
+  private function getBlindSet($chipList, $gameDuration, $blindDuration, $startStack, $allowAnte){
   	
 //	prexit($chipSet);
 //	prexit($chipList);
@@ -445,6 +445,15 @@ class chipCalculatorActions extends sfActions
 				$bigBlindTmp   = $smallBlindTmp*2;
 				break;
 			}
+			
+			// Cálculo do ANTE
+			if( $allowAnte && $level > $levels/10 ){
+				
+				$ante = $smallestChip*round($level/4);
+				if( $ante > 100 )
+					$ante = ceil($ante/100)*100;
+			}
+			
 		}while(!$fit || $bigBlindTmp <= $bigBlind);
 		
 		$bigBlind   = $bigBlindTmp;
