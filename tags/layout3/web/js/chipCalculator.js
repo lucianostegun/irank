@@ -89,9 +89,11 @@ function afterChangeStep(){
 	else
 		hideButton('navigatorPrevious');
 
-	if( _currentStep==2 )
+	if( _currentStep==2 ){
+		
 		showButton('ignore');
-	else
+		$('chipCalculatorPlayers').focus();
+	}else
 		hideButton('ignore');
 
 	if( _currentStep==3 )
