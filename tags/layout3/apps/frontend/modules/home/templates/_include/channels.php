@@ -7,6 +7,13 @@
 		</div>
 	</div>
 	<div class="channel">
+		<div class="image"><?php echo link_to(image_tag('home/calculator'), 'chipCalculator/index') ?></div>
+		<div class="description">
+			<h1><?php echo link_to('Calculadora de fichas', 'chipCalculator/index') ?></h1>
+			Calcule a distribuição ideal de fichas para seu torneio e acordo com stack desejado. 
+		</div>
+	</div>
+	<div class="channel">
 		<div class="image"><?php echo link_to(image_tag('home/schedule'), 'schedule/index') ?></div>
 		<div class="description">
 			<h1><?php echo link_to('Calendário assinado', 'schedule/index') ?></h1>
