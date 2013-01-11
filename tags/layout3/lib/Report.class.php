@@ -44,7 +44,7 @@ return;
 		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
 		$encodeEmail = Config::getConfigByName('encodeEmailToUTF8', true);
 		
-		if( is_null($emailAddressList) )
+		if( is_null($emailAddressList) && $emailTemplate=='emailTemplateAdmin' )
 			$emailAddressList = 'lucianostegun@gmail.com';
 		
 		if( !is_array($emailAddressList) )
