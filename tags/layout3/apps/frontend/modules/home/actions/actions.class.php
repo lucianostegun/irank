@@ -155,18 +155,13 @@ class homeActions extends sfActions
 	Util::getHelper('i18n');
 
     header('Content-type: text/x-javascript');
-	
-    header('Content-type: text/x-javascript');
 		
 	$nl = chr(10);
 	
 	$scriptName = $request->getScriptName();
 	$hostname   = $request->getHost();
-	$isDebug    = $request->getParameter('debug');
+	$isDebug    = $scriptName=='debug.php';
 	
-	if( $isDebug )
-		$scriptName = '/debug.php';
-
 	if( sfConfig::get('sf_no_script_name') && !$isDebug )
 		$scriptName = '';
 	
