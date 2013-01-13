@@ -28,9 +28,9 @@
 ?>
 <tr class="boxcontent">
 	<td colspan="7">
-		<div class="p20">
+		<div class="p10">
 			Nenhum evento foi encontrado para os parâmetros pesquisados.<br/>
-			<?php echo link_to('Clique aqui', 'event/new') ?> para criar um novo evento.
+			<b><?php echo link_to('Clique aqui', 'event/new') ?></b> para criar um novo evento.
 		</div>
 	</td>
 </tr>

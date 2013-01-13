@@ -48,7 +48,7 @@ class Log extends BaseLog
         $logObj->save();
         
         if( $severity >= self::LOG_ERROR )
-        	Report::sendMail('iRank Log', 'lucianostegun@gmail.com', $logObj->toString(), array('emailTemplate'=>'emailTemplateAdmin'));
+        	Report::sendMail('iRank Log', null, $logObj->toString(), array('emailTemplate'=>'emailTemplateAdmin'));
         
         $logId = $logObj->getId();
         
@@ -272,6 +272,7 @@ class Log extends BaseLog
 		$string .= '<b>Pagina: </b>'.$this->getActionName().$nl;
 		$string .= '<b>IP: </b>'.$_SERVER['REMOTE_ADDR'].$nl;
 		$string .= '<b>URI: </b>'.$_SERVER['REQUEST_URI'].$nl;
+		$string .= '<b>Referência: </b>'.$_SERVER['HTTP_REFERER'].$nl;
 		$string .= '<b>Mensagem: </b><br/><div style="padding: 25px 10px; margin: 10px 0px; border-top: 1px solid #909090; border-bottom: 1px solid #909090">'.$this->getMessage().'</div><b>iRank Admin</b>';
 		$string .= '</div>';
     	

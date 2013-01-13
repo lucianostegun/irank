@@ -1,4 +1,4 @@
-h1 {
+.steps h1 {
 
 	font-size: 14px;
 	font-weight; bold;
@@ -8,7 +8,7 @@ h1 {
 	color: #5486B4
 }
 
-h1.error {
+.steps h1.error {
 
 	color: #B45426
 }

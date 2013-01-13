@@ -29,6 +29,14 @@ class chipCalculatorActions extends sfActions
   	$allowAddon    = $request->getParameter('allowAddon');
   	$allowAnte     = $request->getParameter('allowAnte');
   	$forceRandom   = $request->getParameter('forceRandom');
+  	$httpReferer   = $_SERVER['HTTP_REFERER'];
+  	
+  	if( !preg_match('/https?:\/\/(www\.)*irank\.com\.br\/((debug|index)\.php\/)?chipCalculator.*/', $httpReferer) &&
+  		!preg_match('/http:\/\/irank\/((debug|index)\.php\/)?chipCalculator.*/', $httpReferer) ){
+  		
+  		Log::doLog('Tentativa de acesso a calculadora por página sem referência', false, array(), Log::LOG_CRITICAL);
+  		throw new Exception('Invalid reference page request');
+  	}
   	
   	$startStack = str_replace(' ', '', $startStack);
   	if( preg_match('/^[0-9]* ?k$/i', $startStack) )

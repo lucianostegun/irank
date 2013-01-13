@@ -13,11 +13,14 @@
 			classificações e estatísticas dos torneios entre seus amigos.</p>
 		</div>
 		
-		<div class="contentItem <?php echo ($activeHighlight==2?'active':'') ?>" id="homeHighlight2" style="background: url('/images/home/highlight/chipCalculator.jpg') left center no-repeat"></div>
-		<div class="contentItem <?php echo ($activeHighlight==3?'active':'') ?>" id="homeHighlight3" style="background: url('/images/home/highlight/facebook.jpg') left center no-repeat"></div>
-		<div class="contentItem <?php echo ($activeHighlight==4?'active':'') ?>" id="homeHighlight4" style="background: url('/images/home/highlight/calendar.jpg') left center no-repeat"></div>
+		<a href="<?php echo url_for('chipCalculator/index') ?>"><div class="contentItem <?php echo ($activeHighlight==2?'active':'') ?>" id="homeHighlight2" style="background: url('/images/home/highlight/chipCalculator.jpg') left center no-repeat"></div></a>
+		<a href="https://www.facebook.com/irankpoker" target="_blank"><div class="contentItem <?php echo ($activeHighlight==3?'active':'') ?>" id="homeHighlight3" style="background: url('/images/home/highlight/facebook.jpg') left center no-repeat"></div></a>
+		<a href="<?php echo url_for('schedule/index') ?>"><div class="contentItem <?php echo ($activeHighlight==4?'active':'') ?>" id="homeHighlight4" style="background: url('/images/home/highlight/calendar.jpg') left center no-repeat"></div></a>
 		<div class="contentItem <?php echo ($activeHighlight==5?'active':'') ?>" id="homeHighlight5" style="background: url('/images/temp/math.jpg') left center no-repeat"></div>
-		<div class="contentItem <?php echo ($activeHighlight==6?'active':'') ?>" id="homeHighlight6" style="background: url('/images/home/highlight/newApp.jpg') left center no-repeat"></div>
+		<a href="http://itunes.apple.com/br/app/irank/id481129223" target="_blank"><div class="contentItem <?php echo ($activeHighlight==6?'active':'') ?>" id="homeHighlight6" style="background: url('/images/home/highlight/newApp.jpg') left center no-repeat"></div></a>
+	
+	
+	
 		<div class="descriptionBorder">
 			<div class="descriptionArea"></div>
 			<div class="descriptionText">

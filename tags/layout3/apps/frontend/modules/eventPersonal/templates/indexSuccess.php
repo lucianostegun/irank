@@ -2,7 +2,7 @@
 	$messageList = array();
 	
 	if( $userSiteObj->getEventPersonalCount()==0 )
-		$messageList = array('!'.__('eventPersonal.noEvents').' '.__('eventPersonal.newEventInvite', array('%clickHere%'=>link_to(__('ClickHere'), 'eventPersonal/new'))));
+		$messageList = array('!'.__('eventPersonal.noEvents').'. '.__('eventPersonal.newEventInvite', array('%clickHere%'=>link_to(__('ClickHere'), 'eventPersonal/new'))));
 	
 	include_partial('home/component/commonBar', array('pathList'=>array(__('eventPersonal.title')=>'eventPersonal/index'), 'messageList'=>$messageList));
 ?>

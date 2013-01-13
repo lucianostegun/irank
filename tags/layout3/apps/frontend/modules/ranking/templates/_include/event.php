@@ -23,7 +23,7 @@
 		if( !count($eventObjList) && !$readOnly ):
 	?>
 	<tr>
-		<td colspan="4">
+		<td colspan="4" class="p10">
 			<?php echo __('ranking.eventsTab.noEvents', array('%link%'=>link_to(__('ClickHere'), 'event/new'))) ?>
 		</td>
 	</tr>

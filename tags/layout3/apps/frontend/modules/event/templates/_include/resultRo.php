@@ -46,7 +46,7 @@
   	if( $players==0 ):
   ?>
   <tr>
-    <td colspan="7" class="footer"><?php echo __('event.resultTab.noPlayer') ?></td>
+    <td colspan="7" class="p10"><?php echo __('event.resultTab.noPlayer') ?></td>
   </tr>
   <?php endif; ?>
 </table>

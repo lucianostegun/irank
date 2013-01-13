@@ -25,7 +25,7 @@
 		
 		$players = 0;
 		foreach($rankingPlayerObjList as $rankingPlayerObj):
-  		
+//  		prexit($rankingPlayerObj);
 			$peopleObj = $rankingPlayerObj->getPeople();
 			$peopleId  = $peopleObj->getId();
 			

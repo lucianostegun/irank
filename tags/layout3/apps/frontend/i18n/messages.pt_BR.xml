@@ -32,7 +32,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>eventPersonal.newEventInvite</source>
-				<target>&lt;b&gt;%clickHere%&lt;/b&gt; para cadastrar seu primeiro evento</target>
+				<target>&lt;b&gt;%clickHere%&lt;/b&gt; para cadastrar seu primeiro evento.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>eventPersonal.title</source>
@@ -828,8 +828,8 @@
 			<trans-unit>
 				<source>ranking.eventsTab.noEvents</source>
 				<target>
-				&lt;br/&gt;Este ranking ainda não possui eventos cadastrados.&lt;br/&gt;
-				&lt;b&gt;%link%&lt;/b&gt; para cadastrar um novo evento.&lt;br/&gt;&lt;br/&gt;
+				Este ranking ainda não possui eventos cadastrados.&lt;br/&gt;
+				&lt;b&gt;%link%&lt;/b&gt; para cadastrar um novo evento.
 				</target>
 			</trans-unit>
 			

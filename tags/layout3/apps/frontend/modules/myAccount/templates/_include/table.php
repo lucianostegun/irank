@@ -84,7 +84,7 @@
 	</tr>
 <?php endforeach; ?>
 	<tr class="<?php echo (count($eventLiveObjList)==0?'':'hidden') ?>" id="pendingInviteRowEmpty">
-		<td colspan="8" class="textC">
+		<td colspan="8" class="textL p10">
 			Você não possui nenhum convite pendente!<br/>
 			<?php echo link_to('Clique aqui', 'eventLive/index') ?> para ver a agenda de eventos.
 		</td>

@@ -880,7 +880,7 @@ class Util {
 				$scriptName = preg_replace('/[^a-zA-Z]/', '', $scriptName);
 				$scriptName = preg_replace('/(dev)?php$/', '', $scriptName);
 				
-				$scriptName = ($scriptName=='index'?'frontend':$scriptName);
+				$scriptName = ($scriptName=='index' || $scriptName=='debug'?'frontend':$scriptName);
 				return $scriptName;
 				break;
 		}

@@ -79,5 +79,5 @@
 </div>
 <!-- I18N -->
 <?php
-	DhtmlxWindows::createWindow('photoCutter', 'Recorte de imagem', 500, 300, 'myAccount/dialog/photoCutter');
+	//DhtmlxWindows::createWindow('photoCutter', 'Recorte de imagem', 500, 300, 'myAccount/dialog/photoCutter');
 ?>

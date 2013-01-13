@@ -2,6 +2,7 @@
 	<?php
 		echo form_tag('ranking/search', array('id'=>'rankingSearchForm', 'onsubmit'=>'doRankingSearch(); return false'));
 		echo input_hidden_tag('isIE', null);
+		echo input_hidden_tag('filter', true);
 	?>
 	<table cellspacing="0" cellpadding="0">
 		<tr>

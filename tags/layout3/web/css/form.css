@@ -368,14 +368,6 @@
 }
 
 
-::-webkit-input-placeholder	{ color:#808080; }
-input:-moz-placeholder { color:#808080; }
-
-input:-ms-placeholder { color:#808080; }
-::-ms-input-placeholder	{ color:#808080; }
-:-ms-input-placeholder	{ color:#808080; }
-
-
 .defaultForm .checkbox, .windowForm .checkbox {
 
 	margin: 	0px;
@@ -396,8 +388,7 @@ input:-ms-placeholder { color:#808080; }
 .defaultForm .rowTextArea,
 .windowForm .rowTextArea {
 
-	height: 		73px;
-	height: 		73px !ie;
+	height: 		80px;
 	clear: 			both;
 	margin-top: 	3px;
 	whitespace: 	nowrap;
@@ -408,7 +399,7 @@ input:-ms-placeholder { color:#808080; }
 .defaultForm .rowTextArea .labelHalf,
 .windowForm .rowTextArea .labelHalf {
 
-	width: 			160px;
+	width: 			170px;
 	float: 			left;
 	padding: 		3px 0px 0px 0px;
 	height: 		75px;
@@ -726,3 +717,24 @@ input:-ms-placeholder { color:#808080; }
 	color: 			#CC3300;
 	background: 	none;
 }
+
+
+
+
+
+
+
+::-webkit-input-placeholder	{ color:#808080; }
+input:-moz-placeholder { color:#808080; }
+
+input:-ms-placeholder { color:#808080; }
+::-ms-input-placeholder	{ color:#808080; }
+:-ms-input-placeholder	{ color:#808080; }
+
+
+::-webkit-input-placeholder:focus	{ color:#808080; }
+input:-moz-placeholder:focus { color:#808080; }
+
+input:-ms-placeholder:focus { color:#808080; }
+::-ms-input-placeholder:focus	{ color:#808080; }
+:-ms-input-placeholder:focus	{ color:#808080; }

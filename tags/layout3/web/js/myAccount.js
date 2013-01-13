@@ -292,3 +292,17 @@ function updateChartResume(year){
 	var urlAjax = _webRoot+'/myAccount/getChartResume?year='+year;
 	new Ajax.Updater('bankrollChartResume', urlAjax, {asynchronous:true, evalScripts:false});
 }
+
+function onSelectTabMyAccount(tabId){
+	
+	switch(tabId){
+		case 'main':
+			showDiv('noRankingTutorial');
+			break;
+		default:
+			hideDiv('noRankingTutorial');
+			break;
+	}
+
+	return true;
+}

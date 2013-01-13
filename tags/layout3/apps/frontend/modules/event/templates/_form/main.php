@@ -88,9 +88,9 @@
 	</div>
 	
 	
-	<div id="prizeConfigDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>" class="clean">
-		<h1 style="margin-top: 41px; text-align: right; border: none"><?php echo __('event.prizeConfig') ?></h1>
-		<div class="row">
+	<fieldset id="prizeConfigDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>">
+		<legend>Configuração da premiação</legend>
+		<div class="row clean">
 			<div class="label"><?php echo __('event.rankingAvailableCredit') ?></div>
 			<div class="textFlex" id="eventRankingAvailableCredit"><?php echo Util::formatFloat($eventObj->getRanking(true)->getCredit(), true) ?></div>
 		</div>
@@ -100,7 +100,7 @@
 			<div class="error" id="eventPrizePotError" onclick="showFormErrorDetails('event', 'buyin')"></div>
 		</div>
 		
-		<div id="prizeShareListDiv">
+		<div id="prizeShareListDiv" class="mt20">
 			<?php
 				if( $eventObj->getIsFreeroll() ):
 					foreach($eventObj->getPrizeConfigList() as $eventPrizeConfigObj):
@@ -117,5 +117,5 @@
 				endif;
 			?>
 		</div>
-	</div>
+	</fieldset>
 </div>

@@ -126,7 +126,7 @@ class rankingActions extends sfActions
 	$rankingObj->setFinishDate( Util::formatDate($finishDate) );
 	$rankingObj->setBuyin( Util::formatFloat($buyin) );
 	$rankingObj->setEntranceFee( Util::formatFloat($entranceFee) );
-	$rankingObj->setStartTime( $startTime );
+	$rankingObj->setStartTime( nvl($startTime) );
 	$rankingObj->setIsPrivate( ($isPrivate?true:false) );
 	$rankingObj->setRankingTypeId( $rankingTypeId );
 	$rankingObj->setScoreSchema( $scoreSchema );
@@ -280,12 +280,13 @@ class rankingActions extends sfActions
   public function executeGetClassifyList($request){
 
 	$rankingDate = $request->getParameter('rankingDate', null);
+	$readOnly    = $request->getParameter('readOnly');
 	$rankingObj  = $this->rankingObj;
 	
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-	return $this->renderText(get_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$rankingDate)));
+	return $this->renderText(get_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$rankingDate, 'readOnly'=>$readOnly)));
   }
 
   public function executeGetOptionsList($request){

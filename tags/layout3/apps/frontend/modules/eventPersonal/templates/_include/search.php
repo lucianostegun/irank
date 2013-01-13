@@ -28,9 +28,9 @@
 ?>
 <tr class="boxcontent">
 	<td colspan="7">
-		<div class="p20">
+		<div class="p10">
 		Você ainda não cadastrou nenhum evento pessoal em seu histórico.<br/>
-		<?php echo link_to('Clique aqui', 'eventPersonal/new') ?> para criar um novo evento.
+		<b><?php echo link_to('Clique aqui', 'eventPersonal/new') ?></b> para criar um novo evento.
 		</div>
 	</td>
 </tr>

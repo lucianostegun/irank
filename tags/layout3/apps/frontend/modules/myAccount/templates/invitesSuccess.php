@@ -2,7 +2,7 @@
 	include_partial('home/component/commonBar', array('pathList'=>array('Minha conta'=>$moduleName.'/index', 'Convites'=>null)));
 ?>
 <div class="moduleIntro">
-	Confira abaixo todos os eventos para os quais você foi convidado via e-mail ou SMS. 
+	Abaixo estão listados todos os eventos para os quais você foi convidado via e-mail ou SMS. 
 </div>
 
 <div class="eventDetailsList">

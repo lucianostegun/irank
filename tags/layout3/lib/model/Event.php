@@ -50,7 +50,9 @@ class Event extends BaseEvent
 		$this->save();
 		
 		$rankingObj->decraseEvents();
+		$rankingObj->updatePlayerEvents();
 		$rankingObj->updateScores();
+		$rankingObj->updateHistory($this->getEventDate('d/m/Y'));
 		
 		/**
 		 * Envia a notificação nas seguintes condições:
