@@ -14,6 +14,7 @@ class chipCalculatorActions extends sfActions
   	
   	$this->facebookMetaList = array();
 	$this->facebookMetaList['image'] = array('http://[host]/images/chipCalculator/logoChipCalculator.png');
+	$this->facebookMetaList['url']         = 'http://www.irank.com.br/chipCalculator';
   }
   
   public function executeIndex($request){
