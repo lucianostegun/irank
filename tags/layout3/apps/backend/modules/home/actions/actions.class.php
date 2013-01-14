@@ -39,7 +39,7 @@ class homeActions extends sfActions
 	
 	$scriptName = $request->getScriptName();
 	$hostname   = $request->getHost();
-	$isDebug    = $request->getParameter('debug');
+	$isDebug    = ($scriptName=='/backend_dev.php');
 	
 	if( $isDebug )
 		$scriptName = '/backend_dev.php';

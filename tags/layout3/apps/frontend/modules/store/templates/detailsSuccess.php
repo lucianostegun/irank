@@ -55,46 +55,56 @@
 			<span class="value price">R$ <?php echo Util::formatFloat($defaultPrice, true) ?></span>
 			<div class="clear"></div>
 
+			<?php
+				$productOptionColorList = ProductOption::getList(null, 'color', $productObj->getId());
+				$productOptionSizeList  = ProductOption::getList(null, 'size', $productObj->getId());
+
+				$productOptionIdColor = (empty($productOptionColorList)?0:(count($productOptionColorList)==1?$productOptionColorList[0]->getId():null));
+				$productOptionIdSize  = (empty($productOptionSizeList)?0:(count($productOptionSizeList)==1?$productOptionSizeList[0]->getId():null));
+
+				echo input_hidden_tag('productOptionIdColor', $productOptionIdColor); 
+				echo input_hidden_tag('productOptionIdSize', $productOptionIdSize);
+			?>
+			
 			<div class="productOptions">
 				<div class="productOption">
 					<label>Qtd.:</label> <?php echo input_tag('quantity', 1, array('size'=>2, 'maxlength'=>2)) ?> 
 				</div>
+				
+				<?php if( !empty($productOptionColorList) ): ?>
 				<div class="productOption color" id="productOptionColors">
 					<label>Cor:</label>
 					<?php
-						$productOptionList = ProductOption::getList(null, 'color', $productObj->getId());
-						foreach($productOptionList as $key=>$productOptionObj){
+						foreach($productOptionColorList as $key=>$productOptionObj){
 							
 							$productOptionId = $productOptionObj->getId();
 							
-							echo '<div class="productOptionOption color" onclick="selectProductOption(\'color\', '.$productOptionId.')" id="productOptionColor-'.$productOptionId.'">';
+							echo '<div class="productOptionOption color'.($productOptionIdColor==$productOptionId?' selected':'').'" onclick="selectProductOption(\'color\', '.$productOptionId.')" id="productOptionColor-'.$productOptionId.'">';
 							echo '	<div class="color" style="background: '.$productOptionObj->getDescription().'"></div>';
 							echo '</div>';
 						}
-						
-						echo input_hidden_tag('productOptionIdColor', null); 
 					?>
 				</div>
-
+				<?php endif; ?>
+				
+				<?php if( !empty($productOptionSizeList) ): ?>
 				<div class="productOption" id="productOptionSizes">
 					<label>Tam.:</label>
 					<?php
-						$productOptionList = ProductOption::getList(null, 'size', $productObj->getId());
 						
-						foreach($productOptionList as $key=>$productOptionObj){
+						foreach($productOptionSizeList as $key=>$productOptionObj){
 							
 							$productOptionId = $productOptionObj->getId();
 							
-							echo '<div class="productOptionOption size disabled" onclick="selectProductOption(\'size\', '.$productOptionId.')" id="productOptionSize-'.$productOptionId.'">';
+							echo '<div class="productOptionOption size '.($productOptionIdSize==$productOptionId?'selected':'disabled').'" onclick="selectProductOption(\'size\', '.$productOptionId.')" id="productOptionSize-'.$productOptionId.'">';
 							echo $productOptionObj->getOptionName();
 							echo '</div>';
 						}
-						
-						echo input_hidden_tag('productOptionIdSize', null);
 
 						if( $tagName=='tshirt' )
 							echo link_to(image_tag('icon/help'), '#showTshirtSizeHelp()', array('class'=>'sizeHelpButton', 'title'=>'Consulte a tabela de medidas de cada tamanho')); ?>
 				</div>
+				<?php endif; ?>
 			</div>
 			<div class="buttons">
 				<?php echo link_to(image_tag('store/buy', array('class'=>'buyButton')), '#addProductToCart()'); ?><br/>

@@ -1,47 +1,47 @@
 <div style="margin-top: 5px" class="defaultForm">
 	<div class="row">
 		<div class="label" id="eventRankingIdLabel">Ranking</div>
-		<div class="textFlex"><?php echo $eventObj->getRanking()->getRankingName() ?></div>
+		<div class="text flex"><?php echo $eventObj->getRanking()->getRankingName() ?></div>
 		<?php echo input_hidden_tag('rankingId', $eventObj->getRankingId(), array('id'=>'eventRankingId')) ?>
 	</div>
 	<div class="row">
 		<div class="label"><?php echo __('event.eventName') ?></div>
-		<div class="textFlex"><?php echo $eventObj->getEventName() ?></div>
+		<div class="text flex"><?php echo $eventObj->getEventName() ?></div>
 	</div>
 	<div class="row">
 		<div class="label">Permalink</div>
-		<div class="textFlex"><?php echo link_to($eventObj->getPermalink(true), $eventObj->getPermalink(true)) ?></div>
+		<div class="text flex"><?php echo link_to($eventObj->getPermalink(true), $eventObj->getPermalink(true)) ?></div>
 	</div>
 	<div class="row">
 		<div class="label"><?php echo __('event.eventPlace') ?></div>
-		<div class="textFlex"><?php echo $eventObj->getEventPlace() ?></div>
+		<div class="text flex"><?php echo $eventObj->getEventPlace() ?></div>
 	</div>
 	<div class="row">
 		<div class="label"><?php echo __('event.date') ?></div>
-		<div class="textFlex"><?php echo $eventObj->getEventDate('d/m/Y') ?></div>
+		<div class="text flex"><?php echo $eventObj->getEventDate('d/m/Y') ?></div>
 	</div>
 	<div class="row">
 		<div class="label"><?php echo __('event.startTime') ?></div>
-		<div class="textFlex"><?php echo $eventObj->getStartTime('H:i') ?></div>
+		<div class="text flex"><?php echo $eventObj->getStartTime('H:i') ?></div>
 	</div>
 	<div class="row">
 		<div class="label"><?php echo __('event.paidPlaces') ?></div>
-		<div class="textFlex"><?php echo $eventObj->getPaidPlaces() ?></div>
+		<div class="text flex"><?php echo $eventObj->getPaidPlaces() ?></div>
 	</div>
 	<?php echo input_hidden_tag('buyin', Util::formatFloat($eventObj->getBuyin(), true), array('id'=>'eventBuyin')) ?>
 	<?php if( !$eventObj->getIsFreeroll() ): ?>
 	<div class="row">
 		<div class="label">Buy-in</div>
-		<div class="textFlex"><?php echo __('currency') ?> <?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></div>
+		<div class="text flex"><?php echo __('currency') ?> <?php echo Util::formatFloat($eventObj->getBuyin(), true) ?></div>
 	</div>
 	<div class="row">
 		<div class="label"><?php echo __('event.entranceFee') ?></div>
-		<div class="textFlex"><?php echo __('currency') ?> <?php echo Util::formatFloat($eventObj->getEntranceFee(), true) ?></div>
+		<div class="text flex"><?php echo __('currency') ?> <?php echo Util::formatFloat($eventObj->getEntranceFee(), true) ?></div>
 	</div>
 	<?php endif; ?>
 	<div class="rowTextArea">
 		<div class="label"><?php echo __('event.comments') ?></div>
-		<div class="textFlex" style="width: 260px"><?php echo $eventObj->getComments() ?></div>
+		<div class="text flex" style="width: 260px"><?php echo $eventObj->getComments() ?></div>
 	</div>
 	
 	
@@ -51,7 +51,7 @@
 		<h1 style="margin-top: 41px; text-align: right; border: none"><?php echo __('event.prizeConfig') ?></h1>
 		<div class="row">
 			<div class="label" id="eventPrizePotLabel"><?php echo __('event.prizePot') ?></div>
-			<div class="textFlex"><?php echo Util::formatFloat($eventObj->getPrizePot(), true) ?></div>
+			<div class="text flex"><?php echo Util::formatFloat($eventObj->getPrizePot(), true) ?></div>
 		</div>
 		
 		<div id="prizeShareListDiv">
@@ -64,7 +64,7 @@
 			?>
 			<div class="row">
 				<div class="label"><?php echo $eventPosition.Util::getOrdinalSufix($eventPosition).' '.__('event.place') ?></div>
-				<div class="textFlex"><?php echo Util::formatFloat($eventPrizeConfigObj->getPrizeValue(), true).($isPercent?'%':'') ?></div>
+				<div class="text flex"><?php echo Util::formatFloat($eventPrizeConfigObj->getPrizeValue(), true).($isPercent?'%':'') ?></div>
 			</div>
 			<?php
 					endforeach;

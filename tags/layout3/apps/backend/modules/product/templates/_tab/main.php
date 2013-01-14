@@ -85,6 +85,24 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+
+	<div class="formRow">
+		<label>Produto ativo</label>
+		<div class="formRight">
+			<?php echo checkbox_tag('enabled', true, $productObj->getEnabled(), array('id'=>'productEnabled')) ?>
+			<div class="formNote error" id="productFormErrorEnabled"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
+		<label>Produto visível</label>
+		<div class="formRight">
+			<?php echo checkbox_tag('isNew', true, $productObj->getVisible(), array('id'=>'productVisible')) ?>
+			<div class="formNote error" id="productFormErrorVisible"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
 	
 	<div class="formRow">
 		<label>Descrição</label>

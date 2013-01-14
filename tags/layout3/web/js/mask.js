@@ -52,7 +52,7 @@ function maskPhoneNoDDD( evt ) {
 
 	var obj;
     
-    if( navigator.appName.indexOf("Netscape") != -1 )
+    if( navigator.appName.indexOf('Netscape') != -1 )
     	obj = evt.target;
     else
     	obj = evt.srcElement;
@@ -69,24 +69,19 @@ function maskPhoneNoDDD( evt ) {
 		return false;
 	}
     
-    qtd = obj.value.length;
+	var phoneNumber = obj.value.replace(/[^0-9]/g, '');
+    var length      = phoneNumber.length;
 
-    if( qtd == 4 )
-    	obj.value = obj.value+"-";
-    
-    if( qtd == 9 && evt.keyCode == 8 ){
-
-	    character = replaceChar(obj.value, "-");
-        obj.value = character.substring( 0, 8 )+"-"+character.substring( 8, 13 );
-    }
-    
-    if( qtd == 8 ){
-
-	    character = obj.value.replace('-', '');
-    	obj.value = character.substring( 0, 4 )+"-"+character.substring( 4, 8 );
-	}
+    if( length >= 9 && evt.keyCode == 8 )
+	    phoneNumber = phoneNumber.substring( 0, 8 )+'-'+phoneNumber.substring( 8, 13 );
+    else if( length == 8 )
+    	phoneNumber = phoneNumber.substring(0, 4)+'-'+phoneNumber.substring( 4, 8 );
+    else if( length == 9 )
+    	phoneNumber = phoneNumber.substring(0, 5)+'-'+phoneNumber.substring( 5, 9 );
+    else if( length >= 4 )
+    	phoneNumber = phoneNumber.substring(0, 4)+'-'+phoneNumber.substring( 4, length );
 	
-    obj.value = obj.value.replace( '--', '-' );
+    obj.value = phoneNumber;
 }
 
 function maskFreePhone( evt ) {

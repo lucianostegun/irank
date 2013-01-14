@@ -5,13 +5,13 @@ fields:
       callback:      [ProductItemPeer, validateProductItem]
       invalid_error: nullError
        
-  productOptionIdColor:
-    required:
-      msg:       form.error.requiredField
+#  productOptionIdColor:
+#    required:
+#      msg:       form.error.requiredField
       
-  productOptionIdSize:
-    required:
-      msg:       form.error.requiredField
+#  productOptionIdSize:
+#    required:
+#      msg:       form.error.requiredField
       
   price:
     required:

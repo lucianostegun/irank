@@ -749,10 +749,10 @@ class Ranking extends BaseRanking
 		}
 	}
 	
-	public function incraseEvents(){
+	public function incraseEvents($con=null){
 		
 		$this->setEvents($this->getEvents()+1);
-		$this->save();
+		$this->save($con);
 	}
 	
 	public function decraseEvents(){

@@ -20,7 +20,7 @@
 				<div class="row">
 					<div class="label" id="rankingPlaceMapsLinkLabel"><?php echo __('ranking.mapsLink') ?></div>
 					<div class="field"><?php echo input_tag('mapsLink', null, array('size'=>45, 'onblur'=>'parseMapsLinkInfo(this.value)', 'id'=>'rankingPlaceMapsLink')) ?></div>
-					<div class="textFlex" id="rankingPlaceMapsLinkLoader"><?php echo image_tag('ajaxLoaderForm.gif') ?></div>
+					<div class="text flex" id="rankingPlaceMapsLinkLoader"><?php echo image_tag('ajaxLoaderForm.gif') ?></div>
 				</div>
 				<div class="row">
 					<div class="label" id="rankingPlaceStateIdLabel">Estado</div>

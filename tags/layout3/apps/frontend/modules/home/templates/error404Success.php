@@ -37,11 +37,12 @@
 </style>
 <h1 class="error404">404</h1>
 <h1 class="error404NotFound">Ooops... Página não encontrada</h1>
-<div align="center">
-	<table border="0" cellspacing="0" cellpadding="0" class="formTable" style="width: 550px; margin-top: 20px">
+<hr class="separator mt40"/>
+<div align="center" class="moduleIntro">
+	<table border="0" cellspacing="0" cellpadding="0" class="" style="width: 650px; margin-top: 10px">
 		<tr>
 			<td align="left" valign="top" rowspan="2" align="center" class="icon">
-				<?php echo image_tag('error404', array('align'=>'left')) ?>
+				<?php #echo image_tag('error404', array('align'=>'left')) ?>
 			</td>
 			<td align="left" valign="top" class="message">
 				A página que você está tentando acessar não existe ou foi alterada para outro endereço!<br/><br/>
@@ -50,11 +51,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="left" valign="top" class="link">
-				<div class="separator"></div>
-				<?php echo link_to(__('ClickHere'), '/contact', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> para nos contas como chegou até essa página.<br/>
-				<?php echo link_to(__('ClickHere'), '#history.back()', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> para voltar à página anterior.<br/>
-				<?php echo link_to(__('ClickHere'), '/home', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> <?php echo __('homeLink') ?>.<br/>
+			<td align="left" valign="top" class="link" style="line-height: 20px">
+				<hr class="mt10 mb10"/>
+				<?php echo link_to('Entre em contato', '/contact', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?> para nos contar como chegou até essa página<br/>
+				<?php echo link_to('Voltar à página anterior', '#history.back()', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?><br/>
+				<?php echo link_to('Ir para a página inicial', '/home', array('style'=>'padding-bottom: 5px; background: url(\'/sf/sf_default/images/icons/linkOut16.png\') no-repeat; padding-left: 25px; font-weight: bold')) ?><br/>
 			</td>
 		</tr>
 	</table>

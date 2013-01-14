@@ -221,9 +221,9 @@ class Event extends BaseEvent
 		return $this->getPeopleList(false, $orderByList, $criteria);
 	}
 	
-	public function addPlayer($peopleId, $confirm=false, $sendNotify=true){
+	public function addPlayer($peopleId, $confirm=false, $sendNotify=true, $con=null){
 		
-		$this->togglePresence( $peopleId, ($confirm?'yes':'none'), $sendNotify );
+		$this->togglePresence( $peopleId, ($confirm?'yes':'none'), $sendNotify, null, $con);
 	}
 	
 	public function deletePlayer($peopleId){
@@ -267,7 +267,7 @@ class Event extends BaseEvent
 		}
 	}
 	
-	public function importPlayers(){
+	public function importPlayers($con=null){
 
 		$rankingPlayerObjList = $this->getRanking()->getPlayerList();
 		
@@ -276,12 +276,12 @@ class Event extends BaseEvent
 
 		$this->setInvites( count($rankingPlayerObjList) );
 		
-		$this->adjustEventPlayers();
+		$this->adjustEventPlayers($con);
 	}
 	
-	public function adjustEventPlayers(){
+	public function adjustEventPlayers($con=null){
 		
-		Util::executeQuery('SELECT adjust_event_players('.$this->getId().')');
+		Util::executeQuery('SELECT adjust_event_players('.$this->getId().')', $con);
 	}
 	
 	public function isPastDate(){
@@ -360,7 +360,7 @@ class Event extends BaseEvent
 	  	return array_merge($eventPlayerObjList, $lastList);
 	}
 	
-	public function notify(){
+	public function notify($con=null){
 
 		Util::getHelper('I18N');
 		
@@ -405,6 +405,7 @@ class Event extends BaseEvent
 		foreach($this->getEventPlayerList() as $eventPlayerObj){
 			
 			$peopleObj    = $eventPlayerObj->getPeople();
+			$userSiteObj  = $peopleObj->getUserSite();
 			$emailAddress = $peopleObj->getEmailAddress();
 			$culture      = $peopleObj->getDefaultLanguage();
 			$emailContent = $emailContentList[$culture];
@@ -413,9 +414,28 @@ class Event extends BaseEvent
 			$emailContent = str_replace('[peopleName]', $peopleObj->getFirstName(), $emailContent);
 			$emailContent = str_replace('[confirmCode]', $eventPlayerObj->getConfirmCode(), $emailContent);
 
+			// Envio de notificação por email
 			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
+			
+			if( is_object($userSiteObj) && $userSiteObj->getSmsCredit() > 0 ){
+				
+				if( !SmsOption::checkOption($peopleObj->getId(), $templateName) )
+					continue;
+				
+				echo 'SIM';
+				
+			  	$phoneNumber = $peopleObj->getPhoneDdd().$peopleObj->getPhoneNumber();
+			  	$phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
+			  	
+		  		$smsObj = new Sms();
+		  		$smsObj->setPhoneNumber();
+			  	$result = $smsObj->send();
+	  	
+			  	if( $result=='000' )
+			  		$userSiteObj->decraseSmsCredit();
+			}
 		}
- 
+		
 		unlink($iCalFile);
 		
 		$this->setSentEmail(true);
@@ -665,14 +685,14 @@ class Event extends BaseEvent
 		return ($eventCount==0);
 	}
 	
-	public function togglePresence($peopleId, $choice, $forceNotify=null){
+	public function togglePresence($peopleId, $choice, $forceNotify=null, $con=null){
 		
 		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
 		if( $this->getRanking()->isShared($peopleId) )
 			$eventPlayerObj->share(false);
 			
-		$eventPlayerObj->togglePresence($choice, $forceNotify);
+		$eventPlayerObj->togglePresence($choice, $forceNotify, $con);
 	}
 	
 	public function saveResult($request){

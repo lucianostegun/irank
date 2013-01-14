@@ -9,7 +9,7 @@
 			<div class="rowTextArea">
 				<div class="label" id="rankingScoreFormulaScoreformulaLabel"><?php echo __('ranking.scoreFormula') ?></div>
 				<div class="field"><?php echo textarea_tag('scoreFormula', $scoreFormula, array('class'=>'required', 'style'=>'width: 250px; height: 50px', 'id'=>'rankingScoreFormulaFormula')) ?></div>
-				<div class="textFlex" id="rankingFormulaSuccessDiv"><?php echo image_tag('icon/success20', array('align'=>'absmiddle')) ?> Fórmula válida</div>
+				<div class="text flex" id="rankingFormulaSuccessDiv"><?php echo image_tag('icon/success20', array('align'=>'absmiddle')) ?> Fórmula válida</div>
 			</div>
 			
 			<div class="rowTextArea" style="height: 120px">

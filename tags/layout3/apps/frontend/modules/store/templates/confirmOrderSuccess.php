@@ -70,8 +70,10 @@
 		    <td width="40" class="productImage"><?php echo image_tag($productItemObj->getImageCover('thumb')) ?></td>
 		    <td class="textL productInfo">
 		    	<span class="productName"><?php echo link_to("$categoryShortName: $productName", 'store/details?'.$productCode.'=') ?></span>
+		    	<?php if( $color && $size ): ?>
 		    	<div class="clear"></div>
 		    	<span class="productOption"><?php echo $color ?> | <?php echo $size ?></span>
+		    	<?php endif; ?>
 		    </td>
 		    <td class="textC quantity"><?php echo $quantity ?></td>
 		    <td class="textR productPrice">R$ <?php echo Util::formatFloat($price, true) ?></td>

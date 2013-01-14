@@ -370,6 +370,7 @@ class storeActions extends sfActions
   	$shippingValue = $cartSessionObj->shippingValue;
   	$orderValue    = $cartSessionObj->orderValue;
   	$totalValue    = $cartSessionObj->totalValue;
+  	$totalWeight   = $cartSessionObj->totalWeight;
   	$ipAddress     = $_SERVER['REMOTE_ADDR'];
   	
   	$peopleObj = People::getCurrentPeople();
@@ -384,6 +385,7 @@ class storeActions extends sfActions
 	$purchaseObj->setItens($cartSessionObj->itens);
 	$purchaseObj->setShippingValue($shippingValue);
 	$purchaseObj->setTotalValue($totalValue);
+	$purchaseObj->setTotalWeight($totalWeight);
 	$purchaseObj->setDiscountCouponId($cartSessionObj->discountCouponId);
 	$purchaseObj->setDiscountValue($cartSessionObj->discountValue);
 	$purchaseObj->setPaymethod($paymethod);
@@ -735,6 +737,7 @@ class storeActions extends sfActions
   	$cartSessionObj->itens            = 0;
   	$cartSessionObj->orderValue       = 0;
   	$cartSessionObj->totalValue       = 0;
+  	$cartSessionObj->totalWeight      = 0;
   	$cartSessionObj->zipcode          = null;
   	$cartSessionObj->shippingValue    = 0;
   	$cartSessionObj->discountCouponId = null;
@@ -809,8 +812,10 @@ class storeActions extends sfActions
 	$cartSessionObj = $this->getCartSession();
   	$productId      = Product::getIdByCode($productCode);
   	
-  	$productItemObj = ProductItemPeer::retrieveByOptions($productId, $productOptionIdColor, $productOptionIdSize);
+  	$productOptionIdColor = ($productOptionIdColor?$productOptionIdColor:null);
+	$productOptionIdSize  = ($productOptionIdSize?$productOptionIdSize:null);
   	
+  	$productItemObj = ProductItemPeer::retrieveByOptions($productId, $productOptionIdColor, $productOptionIdSize);
   	$quantity = (int)$quantity;
   	
   	if( !is_object($productItemObj) || $quantity <= 0 || $quantity > 99 )
@@ -826,8 +831,8 @@ class storeActions extends sfActions
 	 	$productItem->price      = $price;
 	 	$productItem->quantity   = 0;
 	 	$productItem->totalValue = $totalValue = ($price*$quantity);
-	 	$productItem->color      = ProductOptionPeer::retrieveByPK($productOptionIdColor)->getOptionName();
-	 	$productItem->size       = ProductOptionPeer::retrieveByPK($productOptionIdSize)->getDescription();
+	 	$productItem->color      = $productItemObj->getProductOptionColor()->getOptionName();
+	 	$productItem->size       = $productItemObj->getProductOptionSize()->getDescription();
   	}else{
   		
   		$productItem = $cartSessionObj->productItemList[$productItemId];
@@ -915,48 +920,55 @@ class storeActions extends sfActions
 		  		}
 		  	}
 		  	
-		  	$storeShippingZipcode = Config::getConfigByName('storeShippingZipcode', true);
-		  	
-			$webserviceUrl = 'http://webservice.uni5.net/web_frete.php';
-			$shippingValue = 0;
-		  	foreach($productWeightList as $productWeight){
+		  	// Para o caso de compras apenas de produtos virtuais como créditos SMS não é necessário pagar frete
+		  	if( array_sum($productWeightList)==0 ){
 		  		
-				$webserviceQuery = array(
-				    'auth'=>'d2444763f5fd6f8f616b4b4dce37752e',		//Chave de autenticação do WebService - Consultar seu painel de controle
-				    'formato'=>'query_string',						//Valores possíveis: xml, query_string ou javascript
-				    'tipo'=>'sedex',								//Tipo de pesquisa: sedex, carta, pac,
-				    'cep_origem'=>$storeShippingZipcode,			//CEP de Origem - CEP que irá postar a encomenda
-				    'cep_destino'=>$zipcode,						//CEP de Destino - CEP que irá receber a encomenda
-				    'mao_propria'=>'0',								//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
-				    'aviso_de_recebimento'=>'0',					//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
-				    'peso'=> $productWeight,						//em gr
-				    'cep'=>$zipcode,								//CEP que será pesquisado
-				);
-				
-				//Forma URL
-				$webserviceUrl .= '?';
-				foreach($webserviceQuery as $key=>$value)
-				    $webserviceUrl .= $key.'='.urlencode($value).'&';
-				
-				$result = null;
-				parse_str(file_get_contents($webserviceUrl), $result);
-				
-				if( !isset($result['resultado']) || $result['resultado']!='1' && !$suppressException ){
+		  		$shippingValue = 0;
+		  	}else{
+		  		
+			  	$storeShippingZipcode = Config::getConfigByName('storeShippingZipcode', true);
+			  	
+				$webserviceUrl = 'http://webservice.uni5.net/web_frete.php';
+				$shippingValue = 0;
+			  	foreach($productWeightList as $productWeight){
+			  		
+					$webserviceQuery = array(
+					    'auth'=>'d2444763f5fd6f8f616b4b4dce37752e',		//Chave de autenticação do WebService - Consultar seu painel de controle
+					    'formato'=>'query_string',						//Valores possíveis: xml, query_string ou javascript
+					    'tipo'=>'sedex',								//Tipo de pesquisa: sedex, carta, pac,
+					    'cep_origem'=>$storeShippingZipcode,			//CEP de Origem - CEP que irá postar a encomenda
+					    'cep_destino'=>$zipcode,						//CEP de Destino - CEP que irá receber a encomenda
+					    'mao_propria'=>'0',								//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
+					    'aviso_de_recebimento'=>'0',					//Serviço adicional - Mão própria (MP), para utilizar valor "S" ou "1"
+					    'peso'=> $productWeight,						//em gr
+					    'cep'=>$zipcode,								//CEP que será pesquisado
+					);
 					
-					Util::forceError('Erro ao calcular o valor do frete!'.chr(10).$result['resultado_txt'], false);
-					continue;
-				}
+					//Forma URL
+					$webserviceUrl .= '?';
+					foreach($webserviceQuery as $key=>$value)
+					    $webserviceUrl .= $key.'='.urlencode($value).'&';
 					
-				$shippingValue += $result['valor'];
+					$result = null;
+					parse_str(file_get_contents($webserviceUrl), $result);
+					
+					if( !isset($result['resultado']) || $result['resultado']!='1' && !$suppressException ){
+						
+						Util::forceError('Erro ao calcular o valor do frete!'.chr(10).$result['resultado_txt'], false);
+						continue;
+					}
+						
+					$shippingValue += $result['valor'];
+			  	}
 		  	}
 	  	}else{
-	  		
 	  		
 		  	$shippingValue = 0;
 	  	}
   	}
   	
   	
+  	$cartSessionObj->totalWeight   = $totalWeight;
   	$cartSessionObj->shippingValue = $shippingValue; // Producao
 //	$cartSessionObj->shippingValue = 0; // Debug
   	$cartSessionObj->zipcode       = $zipcode;

@@ -16,7 +16,7 @@
 			<div class="error" id="eventRankingIdError" onclick="showFormErrorDetails('event', 'rankingId')"></div>
 		<?php else: ?>
 			<?php echo input_hidden_tag('rankingId', $eventObj->getRankingId(), array('id'=>'eventRankingId')) ?>
-			<div class="textFlex"><?php echo link_to($eventObj->getRanking()->getRankingName(), '#goModule("ranking", "edit", "rankingId", '.$eventObj->getRankingId().')') ?></div>
+			<div class="text flex"><?php echo link_to($eventObj->getRanking()->getRankingName(), '#goModule("ranking", "edit", "rankingId", '.$eventObj->getRankingId().')') ?></div>
 		<?php endif; ?>
 	</div>
 	<div class="row">
@@ -32,12 +32,12 @@
 	</div>
 	<div class="row" style="display: <?php echo ($permalink?'block':'none') ?>" id="rankingPermalinkRowDiv">
 		<div class="label">Permalink</div>
-		<div class="textFlex" id="rankingPermalinkDiv"><?php echo $permalink ?></div>
+		<div class="text flex" id="rankingPermalinkDiv"><?php echo $permalink ?></div>
 	</div>
 	<div class="row">
 		<div class="label" id="eventRankingPlaceIdLabel"><?php echo __('event.eventPlace') ?></div>
 		<div class="field" id="eventRankingPlaceIdDiv"><?php echo select_tag('rankingPlaceId', RankingPlace::getOptionsForSelect($eventObj->getRankingId(), $eventObj->getRankingPlaceId()), array('class'=>'required', 'onchange'=>'checkRankingPlace(this.value)', 'id'=>'eventRankingPlaceId')) ?></div>
-		<div class="textFlex <?php echo $eventObj->isNew()?'hidden':'block' ?>" id="eventRankingPlaceIdEditDiv"><?php echo link_to('Editar', '#editRankingPlace($(\'eventRankingPlaceId\').value, $(\'eventRankingId\').value)') ?></div>
+		<div class="text flex <?php echo $eventObj->isNew()?'hidden':'block' ?>" id="eventRankingPlaceIdEditDiv"><?php echo link_to('Editar', '#editRankingPlace($(\'eventRankingPlaceId\').value, $(\'eventRankingId\').value)') ?></div>
 		<div class="error" id="eventRankingPlaceIdError" onclick="showFormErrorDetails('event', 'rankingPlaceId')"></div>
 	</div>
 	<div class="row">
@@ -54,7 +54,7 @@
 		<div class="label" id="eventPaidPlacesLabel"><?php echo __('event.paidPlaces') ?></div>
 		<div class="field"><?php echo input_tag('paidPlaces', $eventObj->getPaidPlaces(), array('size'=>2, 'maxlength'=>2, 'class'=>'required', 'id'=>'eventPaidPlaces')) ?></div>
 		<div class="error" id="eventPaidPlacesError" onclick="showFormErrorDetails('event', 'paidPlaces')"></div>
-		<div class="textFlex" id="eventFreerollLinkDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>"><?php echo link_to(__('event.configurePrize'), '#configurePrize(true)') ?></div>
+		<div class="text flex" id="eventFreerollLinkDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>"><?php echo link_to(__('event.configurePrize'), '#configurePrize(true)') ?></div>
 	</div>
 	<div class="row">
 		<div class="label"><?php echo __('event.allowRebuy') ?></div>
@@ -68,13 +68,13 @@
 		<div class="label" id="eventEntranceFeeLabel"><?php echo __('event.entranceFee') ?></div>
 		<div class="field"><?php echo input_tag('entranceFee', Util::formatFloat($eventObj->getEntranceFee(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventEntranceFee')) ?></div>
 		<div class="error" id="eventEntranceFeeError" onclick="showFormErrorDetails('event', 'entranceFee')"></div>
-		<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
+		<div class="text flex">Ex: <?php echo __('zero.zeroZero') ?></div>
 	</div>
 	<div class="row" id="eventBuyinRow" style="display: <?php echo ($eventObj->getIsFreeroll()?'none':'block') ?>">
 		<div class="label" id="eventBuyinLabel">Buy-in</div>
 		<div class="field"><?php echo input_tag('buyin', Util::formatFloat($eventObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'eventBuyin')) ?></div>
 		<div class="error" id="eventBuyinError" onclick="showFormErrorDetails('event', 'buyin')"></div>
-		<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
+		<div class="text flex">Ex: <?php echo __('zero.zeroZero') ?></div>
 	</div>
 	<div class="rowTextArea">
 		<div class="label" id="eventCommentsLabel"><?php echo __('event.comments') ?></div>
@@ -82,9 +82,9 @@
 		<div class="error" id="eventCommentsError" onclick="showFormErrorDetails('event', 'comments')"></div>
 	</div>
 	<div class="row">
-		<div class="label"><?php echo __('event.emailNotify') ?></div>
+		<div class="label">Enviar notificação</div>
 		<div class="field"><?php echo checkbox_tag('sendEmail', true, (!$eventObj->getSentEmail() && !$isClone), array('id'=>'eventSendEmail')) ?></div>
-		<div class="textFlex" style="display: <?php echo ($eventObj->getSentEmail()?'block':'none') ?>" id="sentEmailDiv"><?php echo __('event.sentNotify') ?></div>
+		<div class="text flex" style="display: <?php echo ($eventObj->getSentEmail()?'block':'none') ?>" id="sentEmailDiv"><?php echo __('event.sentNotify') ?></div>
 	</div>
 	
 	
@@ -92,7 +92,7 @@
 		<legend>Configuração da premiação</legend>
 		<div class="row clean">
 			<div class="label"><?php echo __('event.rankingAvailableCredit') ?></div>
-			<div class="textFlex" id="eventRankingAvailableCredit"><?php echo Util::formatFloat($eventObj->getRanking(true)->getCredit(), true) ?></div>
+			<div class="text flex" id="eventRankingAvailableCredit"><?php echo Util::formatFloat($eventObj->getRanking(true)->getCredit(), true) ?></div>
 		</div>
 		<div class="row">
 			<div class="label" id="eventPrizePotLabel"><?php echo __('event.prizePot') ?></div>

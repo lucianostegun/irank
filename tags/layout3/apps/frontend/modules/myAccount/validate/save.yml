@@ -44,3 +44,21 @@ fields:
       msg:       form.error.requiredField
     sfNumberValidator:
       nan_error: form.error.invalidNumber
+      
+  phoneDdd:
+    sfNumberValidator:
+      min: 10
+      min_error: Informe um DDD válido
+      nan_error: form.error.invalidNumber
+    sfCallbackValidator:
+      callback:      [UserSitePeer, validatePhoneNumber]
+      invalid_error: nullError
+      
+  phoneNumber:
+    sfRegexValidator:
+      match:        Yes
+      match_error:  Informe um número de telefone válido
+      pattern:      /^9?[2-9][0-9]{3}\-[0-9]{4}$/si
+    sfCallbackValidator:
+      callback:      [UserSitePeer, validatePhoneNumber]
+      invalid_error: nullError

@@ -19,6 +19,8 @@ class UserSite extends BaseUserSite
 	  	$password        = $request->getParameter('password');
 	  	$defaultLanguage = $request->getParameter('defaultLanguage');
 	  	$startBankroll   = $request->getParameter('startBankroll');
+	  	$phoneDdd        = $request->getParameter('phoneDdd');
+	  	$phoneNumber     = $request->getParameter('phoneNumber');
 	  	
 	  	$con = Propel::getConnection();
 	  	$con->begin();
@@ -40,6 +42,8 @@ class UserSite extends BaseUserSite
 	  	$this->setStartBankroll(nvl(Util::formatFloat($startBankroll), 0));
 	  	$this->save($con);
 	  	
+	  	$peopleObj->setPhoneDdd(nvl($phoneDdd));
+	  	$peopleObj->setPhoneNumber(nvl($phoneNumber));
 	  	$peopleObj->save($con);
 	  	
 	  	$con->commit();
@@ -65,7 +69,7 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('quickResume', $quickResume);
 		$this->setOptionValue('quickResumePeriod', $quickResumePeriod);
 	}
-	
+
 	public function saveScheduleOptions($request){
 		
 		$scheduleStateId   = $request->getParameter('scheduleStateId');
@@ -444,6 +448,12 @@ class UserSite extends BaseUserSite
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		
 		return Util::executeOne("SELECT get_pending_purchases($userSiteId)"); 
+	}
+	
+	public function decraseSmsCredit(){
+		
+		$this->setSmsCredit( $this->getSmsCredit()-1 );
+		$this->save();
 	}
 	
 	public function getInfo($replaceNull=false, $withBalance=true, $formatFloat=true){

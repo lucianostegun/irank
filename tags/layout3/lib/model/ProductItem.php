@@ -151,12 +151,22 @@ class ProductItem extends BaseProductItem
 	
 	public function getProductOptionColor(){
 		
-		return $this->getProductOptionRelatedByProductOptionIdColor();
+		$productOptionObj = $this->getProductOptionRelatedByProductOptionIdColor();
+		
+		if( !is_object($productOptionObj) )
+			$productOptionObj = new ProductOption();
+			
+		return $productOptionObj;
 	}
 	
 	public function getProductOptionSize(){
 		
-		return $this->getProductOptionRelatedByProductOptionIdSize();
+		$productOptionObj = $this->getProductOptionRelatedByProductOptionIdSize();
+		
+		if( !is_object($productOptionObj) )
+			$productOptionObj = new ProductOption();
+			
+		return $productOptionObj;
 	}
 	
 	public function decraseStock($decraseAmount, $con){

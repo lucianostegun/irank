@@ -121,4 +121,18 @@ class UserSitePeer extends BaseUserSitePeer
 
 		return is_object( $userSiteObj );
 	}
+	
+	public static function validatePhoneNumber($phone){
+		
+		$phoneDdd    = MyTools::getRequestParameter('phoneDdd');
+		$phoneNumber = MyTools::getRequestParameter('phoneNumber');
+		
+		if( $phoneDdd && !$phoneNumber )
+			MyTools::setError('phoneNumber', 'form.error.requiredField');
+		
+		if( !$phoneDdd && $phoneNumber )
+			MyTools::setError('phoneDdd', 'form.error.requiredField');
+		
+		return !MyTools::getRequest()->hasErrors();
+	}
 }

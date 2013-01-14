@@ -67,8 +67,6 @@ class eventActions extends sfActions
   
   public function executeSave($request){
 
-	Util::getHelper('I18N');
-	
 	$eventId         = $request->getParameter('eventId');
 	$rankingId       = $request->getParameter('rankingId');
 	$eventName       = $request->getParameter('eventName');
@@ -87,55 +85,69 @@ class eventActions extends sfActions
 	$allowRebuy      = $request->getParameter('allowRebuy');
 	$allowAddon      = $request->getParameter('allowAddon');
 
-	if( $eventId )		
-		$eventObj  = EventPeer::retrieveByPK( $eventId );
-	else
-		$eventObj = new Event();
-	
-	$isNew = $eventObj->isNew();
-	
-	if( !$eventObj->isEditable() )
-		Util::forceError('!'.__('event.lockedEvent'), true);
+	try{
 		
-	$isClone = ($isClone && !$eventObj->getEnabled());
-
-	$eventObj->setRankingId( $rankingId );
-	$eventObj->setEventName( $eventName );
-	$eventObj->setRankingPlaceId( $rankingPlaceId );
-	$eventObj->setEventDate( Util::formatDate($eventDate) );
-	$eventObj->setStartTime( $startTime );
-	$eventObj->setPaidPlaces(nvl($paidPlaces));
-	$eventObj->setBuyin( Util::formatFloat($buyin) );
-	$eventObj->setEntranceFee( Util::formatFloat($entranceFee) );
-	$eventObj->setIsFreeroll( ($isFreeroll?true:false) );
-	$eventObj->setPrizePot( Util::formatFloat($prizePot) );
-	$eventObj->setComments(nvl($comments));
-	$eventObj->setAllowRebuy(($allowRebuy?true:false));
-	$eventObj->setAllowAddon(($allowAddon?true:false));
-	$eventObj->setVisible(true);
-	$eventObj->setEnabled(true);
-	$eventObj->buildPermalink();
-	$eventObj->save();
+		Util::getHelper('I18N');
+		
+		$con = Propel::getConnection();
+		$con->begin();
+		
+		if( $eventId )		
+			$eventObj  = EventPeer::retrieveByPK( $eventId );
+		else
+			$eventObj = new Event();
+		
+		$isNew = $eventObj->isNew();
+		
+		if( !$eventObj->isEditable() )
+			Util::forceError('!'.__('event.lockedEvent'), true);
+			
+		$isClone = ($isClone && !$eventObj->getEnabled());
 	
-	if( $isFreeroll )
-		$eventObj->savePrizeConfig($request);
-	else
-		$eventObj->deletePrizeConfig();
+		$eventObj->setRankingId( $rankingId );
+		$eventObj->setEventName( $eventName );
+		$eventObj->setRankingPlaceId( $rankingPlaceId );
+		$eventObj->setEventDate( Util::formatDate($eventDate) );
+		$eventObj->setStartTime( $startTime );
+		$eventObj->setPaidPlaces(nvl($paidPlaces));
+		$eventObj->setBuyin( Util::formatFloat($buyin) );
+		$eventObj->setEntranceFee( Util::formatFloat($entranceFee) );
+		$eventObj->setIsFreeroll( ($isFreeroll?true:false) );
+		$eventObj->setPrizePot( Util::formatFloat($prizePot) );
+		$eventObj->setComments(nvl($comments));
+		$eventObj->setAllowRebuy(($allowRebuy?true:false));
+		$eventObj->setAllowAddon(($allowAddon?true:false));
+		$eventObj->setVisible(true);
+		$eventObj->setEnabled(true);
+		$eventObj->buildPermalink();
+		$eventObj->save($con);
+		
+		if( $isFreeroll )
+			$eventObj->savePrizeConfig($request);
+		else
+			$eventObj->deletePrizeConfig();
+		
+		$rankingObj = $eventObj->getRanking();
+		
+		if( $isNew || $isClone )		
+			$rankingObj->incraseEvents($con);
+		
+		$eventObj->importPlayers($con);
 	
-	$rankingObj = $eventObj->getRanking();
+		if( $confirmPresence )
+			$eventObj->addPlayer($this->peopleId, true, true, $con);
 	
-	if( $isNew || $isClone )		
-		$rankingObj->incraseEvents();
-	
-	$eventObj->importPlayers();
-
-	if( $confirmPresence )
-		$eventObj->addPlayer( $this->peopleId, true );
-
-	if( $sendEmail )
-		$eventObj->notify();
-	else
-		$eventObj->save();
+		if( $sendEmail )
+			$eventObj->notify($con);
+		else
+			$eventObj->save($con);
+			
+		$con->commit();
+	}catch(Exception $e){
+		
+		Util::forceError($e->getMessage());
+		$con->rollback();
+	}
 	
     echo Util::parseInfo($eventObj->getInfo());
     exit;

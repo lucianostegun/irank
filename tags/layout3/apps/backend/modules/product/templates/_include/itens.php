@@ -17,8 +17,8 @@
 				$criteria = new Criteria();
 				$criteria->add( ProductItemPeer::PRODUCT_ID, $productId );
 				
-				$criteria->addJoin( ProductItemPeer::PRODUCT_OPTION_ID_COLOR, ProductOptionPeer::ID, Criteria::INNER_JOIN );
-				$criteria->addJoin( ProductItemPeer::PRODUCT_OPTION_ID_SIZE, 'product_option_size.ID', Criteria::INNER_JOIN );
+				$criteria->addJoin( ProductItemPeer::PRODUCT_OPTION_ID_COLOR, ProductOptionPeer::ID, Criteria::LEFT_JOIN );
+				$criteria->addJoin( ProductItemPeer::PRODUCT_OPTION_ID_SIZE, 'product_option_size.ID', Criteria::LEFT_JOIN );
 				
 				$criteria->addAscendingOrderByColumn( ProductOptionPeer::OPTION_NAME );
 				$criteria->addAscendingOrderByColumn( 'product_option_size.DESCRIPTION' );

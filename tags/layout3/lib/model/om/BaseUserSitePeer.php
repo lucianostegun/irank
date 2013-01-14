@@ -13,7 +13,7 @@ abstract class BaseUserSitePeer {
 	const CLASS_DEFAULT = 'lib.model.UserSite';
 
 	
-	const NUM_COLUMNS = 19;
+	const NUM_COLUMNS = 20;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -45,6 +45,9 @@ abstract class BaseUserSitePeer {
 
 	
 	const START_BANKROLL = 'user_site.START_BANKROLL';
+
+	
+	const SMS_CREDIT = 'user_site.SMS_CREDIT';
 
 	
 	const DEVICEUDID = 'user_site.DEVICEUDID';
@@ -82,19 +85,19 @@ abstract class BaseUserSitePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'Username', 'Password', 'HtpasswdLine', 'ImagePath', 'SignedSchedule', 'ScheduleStartDate', 'StartBankroll', 'Deviceudid', 'MobileToken', 'Active', 'Enabled', 'Visible', 'Deleted', 'Locked', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID, UserSitePeer::PEOPLE_ID, UserSitePeer::USERNAME, UserSitePeer::PASSWORD, UserSitePeer::HTPASSWD_LINE, UserSitePeer::IMAGE_PATH, UserSitePeer::SIGNED_SCHEDULE, UserSitePeer::SCHEDULE_START_DATE, UserSitePeer::START_BANKROLL, UserSitePeer::DEVICEUDID, UserSitePeer::MOBILE_TOKEN, UserSitePeer::ACTIVE, UserSitePeer::ENABLED, UserSitePeer::VISIBLE, UserSitePeer::DELETED, UserSitePeer::LOCKED, UserSitePeer::LAST_ACCESS_DATE, UserSitePeer::CREATED_AT, UserSitePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'username', 'password', 'htpasswd_line', 'image_path', 'signed_schedule', 'schedule_start_date', 'start_bankroll', 'deviceUDID', 'mobile_token', 'active', 'enabled', 'visible', 'deleted', 'locked', 'last_access_date', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'', 'PASSWORD'=>'', 'HTPASSWD_LINE'=>'', 'IMAGE_PATH'=>'', 'SIGNED_SCHEDULE'=>'', 'SCHEDULE_START_DATE'=>'', 'START_BANKROLL'=>'', 'DEVICEUDID'=>'', 'MOBILE_TOKEN'=>'', 'ACTIVE'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'LAST_ACCESS_DATE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'Username', 'Password', 'HtpasswdLine', 'ImagePath', 'SignedSchedule', 'ScheduleStartDate', 'StartBankroll', 'SmsCredit', 'Deviceudid', 'MobileToken', 'Active', 'Enabled', 'Visible', 'Deleted', 'Locked', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID, UserSitePeer::PEOPLE_ID, UserSitePeer::USERNAME, UserSitePeer::PASSWORD, UserSitePeer::HTPASSWD_LINE, UserSitePeer::IMAGE_PATH, UserSitePeer::SIGNED_SCHEDULE, UserSitePeer::SCHEDULE_START_DATE, UserSitePeer::START_BANKROLL, UserSitePeer::SMS_CREDIT, UserSitePeer::DEVICEUDID, UserSitePeer::MOBILE_TOKEN, UserSitePeer::ACTIVE, UserSitePeer::ENABLED, UserSitePeer::VISIBLE, UserSitePeer::DELETED, UserSitePeer::LOCKED, UserSitePeer::LAST_ACCESS_DATE, UserSitePeer::CREATED_AT, UserSitePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'username', 'password', 'htpasswd_line', 'image_path', 'signed_schedule', 'schedule_start_date', 'start_bankroll', 'sms_credit', 'deviceUDID', 'mobile_token', 'active', 'enabled', 'visible', 'deleted', 'locked', 'last_access_date', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'', 'PASSWORD'=>'', 'HTPASSWD_LINE'=>'', 'IMAGE_PATH'=>'', 'SIGNED_SCHEDULE'=>'', 'SCHEDULE_START_DATE'=>'', 'START_BANKROLL'=>'', 'SMS_CREDIT'=>'', 'DEVICEUDID'=>'', 'MOBILE_TOKEN'=>'', 'ACTIVE'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'LAST_ACCESS_DATE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'Username'=>2, 'Password'=>3, 'HtpasswdLine'=>4, 'ImagePath'=>5, 'SignedSchedule'=>6, 'ScheduleStartDate'=>7, 'StartBankroll'=>8, 'Deviceudid'=>9, 'MobileToken'=>10, 'Active'=>11, 'Enabled'=>12, 'Visible'=>13, 'Deleted'=>14, 'Locked'=>15, 'LastAccessDate'=>16, 'CreatedAt'=>17, 'UpdatedAt'=>18, ),
-		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID=>0, UserSitePeer::PEOPLE_ID=>1, UserSitePeer::USERNAME=>2, UserSitePeer::PASSWORD=>3, UserSitePeer::HTPASSWD_LINE=>4, UserSitePeer::IMAGE_PATH=>5, UserSitePeer::SIGNED_SCHEDULE=>6, UserSitePeer::SCHEDULE_START_DATE=>7, UserSitePeer::START_BANKROLL=>8, UserSitePeer::DEVICEUDID=>9, UserSitePeer::MOBILE_TOKEN=>10, UserSitePeer::ACTIVE=>11, UserSitePeer::ENABLED=>12, UserSitePeer::VISIBLE=>13, UserSitePeer::DELETED=>14, UserSitePeer::LOCKED=>15, UserSitePeer::LAST_ACCESS_DATE=>16, UserSitePeer::CREATED_AT=>17, UserSitePeer::UPDATED_AT=>18, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'username'=>2, 'password'=>3, 'htpasswd_line'=>4, 'image_path'=>5, 'signed_schedule'=>6, 'schedule_start_date'=>7, 'start_bankroll'=>8, 'deviceUDID'=>9, 'mobile_token'=>10, 'active'=>11, 'enabled'=>12, 'visible'=>13, 'deleted'=>14, 'locked'=>15, 'last_access_date'=>16, 'created_at'=>17, 'updated_at'=>18, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'Username'=>2, 'Password'=>3, 'HtpasswdLine'=>4, 'ImagePath'=>5, 'SignedSchedule'=>6, 'ScheduleStartDate'=>7, 'StartBankroll'=>8, 'SmsCredit'=>9, 'Deviceudid'=>10, 'MobileToken'=>11, 'Active'=>12, 'Enabled'=>13, 'Visible'=>14, 'Deleted'=>15, 'Locked'=>16, 'LastAccessDate'=>17, 'CreatedAt'=>18, 'UpdatedAt'=>19, ),
+		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID=>0, UserSitePeer::PEOPLE_ID=>1, UserSitePeer::USERNAME=>2, UserSitePeer::PASSWORD=>3, UserSitePeer::HTPASSWD_LINE=>4, UserSitePeer::IMAGE_PATH=>5, UserSitePeer::SIGNED_SCHEDULE=>6, UserSitePeer::SCHEDULE_START_DATE=>7, UserSitePeer::START_BANKROLL=>8, UserSitePeer::SMS_CREDIT=>9, UserSitePeer::DEVICEUDID=>10, UserSitePeer::MOBILE_TOKEN=>11, UserSitePeer::ACTIVE=>12, UserSitePeer::ENABLED=>13, UserSitePeer::VISIBLE=>14, UserSitePeer::DELETED=>15, UserSitePeer::LOCKED=>16, UserSitePeer::LAST_ACCESS_DATE=>17, UserSitePeer::CREATED_AT=>18, UserSitePeer::UPDATED_AT=>19, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'username'=>2, 'password'=>3, 'htpasswd_line'=>4, 'image_path'=>5, 'signed_schedule'=>6, 'schedule_start_date'=>7, 'start_bankroll'=>8, 'sms_credit'=>9, 'deviceUDID'=>10, 'mobile_token'=>11, 'active'=>12, 'enabled'=>13, 'visible'=>14, 'deleted'=>15, 'locked'=>16, 'last_access_date'=>17, 'created_at'=>18, 'updated_at'=>19, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
 	);
 
 	
@@ -165,6 +168,8 @@ abstract class BaseUserSitePeer {
 		$criteria->addSelectColumn(UserSitePeer::SCHEDULE_START_DATE);
 
 		$criteria->addSelectColumn(UserSitePeer::START_BANKROLL);
+
+		$criteria->addSelectColumn(UserSitePeer::SMS_CREDIT);
 
 		$criteria->addSelectColumn(UserSitePeer::DEVICEUDID);
 

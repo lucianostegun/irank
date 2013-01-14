@@ -25,7 +25,7 @@
 	<div class="row">
 		<div class="label" id="timerWizardcConfirmLevelLabel">Confirmar nível</div>
 		<div class="field"><?php echo checkbox_tag('confirmLevel', true, $timerSession->confirmLevel, array('id'=>'timerWizardConfirmLevel')) ?></div>
-		<div class="textFlex">Aguarda a confirmação do usuário antes de mudar o nível</div>
+		<div class="text flex">Aguarda a confirmação do usuário antes de mudar o nível</div>
 	</div>
 	
 	</form>

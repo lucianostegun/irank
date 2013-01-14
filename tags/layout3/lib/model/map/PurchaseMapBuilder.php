@@ -62,6 +62,8 @@ class PurchaseMapBuilder {
 
 		$tMap->addColumn('TOTAL_VALUE', 'TotalValue', 'double', CreoleTypes::NUMERIC, false, 10);
 
+		$tMap->addColumn('TOTAL_WEIGHT', 'TotalWeight', 'double', CreoleTypes::NUMERIC, false, 10);
+
 		$tMap->addColumn('PAYMETHOD', 'Paymethod', 'string', CreoleTypes::VARCHAR, false, 20);
 
 		$tMap->addColumn('IP_ADDRESS', 'IpAddress', 'string', CreoleTypes::VARCHAR, false, null);

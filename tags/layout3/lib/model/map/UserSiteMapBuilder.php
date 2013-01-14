@@ -52,6 +52,8 @@ class UserSiteMapBuilder {
 
 		$tMap->addColumn('START_BANKROLL', 'StartBankroll', 'double', CreoleTypes::NUMERIC, false, 10);
 
+		$tMap->addColumn('SMS_CREDIT', 'SmsCredit', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('DEVICEUDID', 'Deviceudid', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('MOBILE_TOKEN', 'MobileToken', 'string', CreoleTypes::VARCHAR, false, null);

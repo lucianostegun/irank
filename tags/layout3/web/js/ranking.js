@@ -699,7 +699,7 @@ function lockRankingTag(){
 	if( $('rankingRankingTagField')==null )
 		return;
 	
-	$('rankingRankingTagField').className = 'textFlex';
+	$('rankingRankingTagField').className = 'text flex';
 	$('rankingRankingTagField').innerHTML = $('rankingRankingTag').value+'@irank.com.br';
 	
 	$('rankingBuildEmailGroupHelp').remove();

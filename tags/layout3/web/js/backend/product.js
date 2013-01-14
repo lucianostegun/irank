@@ -9,7 +9,7 @@ function handleSuccessProduct(content){
 }
 
 function handleFailureProduct(content){
-	
+	alert(content);
 	handleFormFieldError(content, 'product');
 }
 

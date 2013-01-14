@@ -273,17 +273,15 @@ abstract class BaseState extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(StatePeer::DATABASE_NAME);
-		}
 
 		$tableName = StatePeer::TABLE_NAME;
 		
-		try {
+		try{
 			
 			if( !preg_match('/log$/', $tableName) )
 				$columnModifiedList = Log::getModifiedColumnList($this);
@@ -304,7 +302,7 @@ abstract class BaseState extends BaseObject  implements Persistent {
 			$con->commit();
 			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
 			
 			$con->rollback();
 			if( !preg_match('/log$/', $tableName) )

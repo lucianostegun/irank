@@ -74,7 +74,7 @@ class Purchase extends BasePurchase
 	
 	public function validateOrder(){
 		
-		if( !$this->getShippingValue() || $this->getShippingValue() <=0 )
+		if( (!$this->getShippingValue() || $this->getShippingValue() <=0) && $this->getTotalWeight() > 0 )
 			throw new PurchaseException('O valor do frete não pode ser menor ou igual a R$ 0,00');
 		
 		if( !$this->getTotalValue() || $this->getTotalValue() <=0 )

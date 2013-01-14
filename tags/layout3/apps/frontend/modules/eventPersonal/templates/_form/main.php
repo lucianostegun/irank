@@ -20,7 +20,7 @@
 				<div class="label" id="eventPersonalBuyinLabel">Buy-in</div>
 				<div class="field"><?php echo input_tag('buyin', Util::formatFloat($eventPersonalObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalBuyin')) ?></div>
 				<div class="error" id="eventPersonalBuyinError" onclick="showFormErrorDetails('eventPersonal', 'buyin')"></div>
-				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
+				<div class="text flex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalRebuyLabel">Rebuy</div>

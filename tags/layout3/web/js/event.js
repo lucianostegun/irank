@@ -400,7 +400,7 @@ function lockRanking(){
 	var rankingName = getSelectText('eventRankingId');
 
 	$('rankinkIdFieldDiv').innerHTML = linkToFunction(rankingName, 'ranking', 'edit', 'rankingId', rankingId);
-	$('rankinkIdFieldDiv').className = 'textFlex';
+	$('rankinkIdFieldDiv').className = 'text flex';
 	$('rankinkIdFieldDiv').id        = 'rankinkIdFieldDivOld';
 	
 	var rankingIdField   = document.createElement('input');

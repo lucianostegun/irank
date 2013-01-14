@@ -39,6 +39,8 @@ class Product extends BaseProduct
 		$defaultPrice      = $request->getParameter('defaultPrice');
 		$defaultWeight     = $request->getParameter('defaultWeight');
 		$isNew             = $request->getParameter('isNew');
+		$enabled           = $request->getParameter('enabled');
+		$visible           = $request->getParameter('visible');
 		$description       = $request->getParameter('description');
 		
 		$this->setProductCode( $productCode );
@@ -48,9 +50,9 @@ class Product extends BaseProduct
 		$this->setDefaultPrice( Util::formatFloat($defaultPrice) );
 		$this->setDefaultWeight( Util::formatFloat($defaultWeight) );
 		$this->setIsNew( ($isNew?true:false) );
+		$this->setEnabled( ($enabled?true:false) );
+		$this->setVisible( ($visible?true:false) );
 		$this->setDescription( $description );
-		$this->setVisible( true );
-		$this->setEnabled( true );
 		$this->save();
 	}
 	

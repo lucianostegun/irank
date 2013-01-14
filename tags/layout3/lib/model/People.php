@@ -387,9 +387,9 @@ class People extends BasePeople
 		return $this->getName();
 	}
 	
-	public static function saveEmailOption($request, $inverse=false){
+	public function saveEmailOption($request, $inverse=false){
 		
-		$emailAddress = $request->getParameter('emailAddress');
+		$emailAddress = $this->getEmailAddress();
 		
 		$criteria = new Criteria();
 		$criteria->add( EmailTemplatePeer::IS_OPTION, true );
@@ -410,6 +410,35 @@ class People extends BasePeople
 				$emailOptionObj = EmailOptionPeer::retrieveByPK($emailAddress, $emailTemplateObj->getId());
 				$emailOptionObj->setLockSend(($checked?true:false));
 				$emailOptionObj->save($con);
+			}
+			
+			$con->commit();
+		}catch(Exception $e){
+			
+			$con->rollback();
+			throw $e;
+		}
+	}
+
+	public function saveSmsOption($request, $inverse=false){
+		
+		$smsTemplateObjList = SmsTemplate::getList();
+	
+		try{
+			
+			$con = Propel::getConnection();
+			$con->begin();
+			
+			foreach($smsTemplateObjList as $smsTemplateObj){
+				
+				$checked = $request->getParameter('smsOption-'.$smsTemplateObj->getId());
+				
+				if( $inverse )
+					$checked = !$checked;
+				
+				$smsOptionObj = SmsOptionPeer::retrieveByPK($this->getId(), $smsTemplateObj->getId());
+				$smsOptionObj->setLockSend(($checked?true:false));
+				$smsOptionObj->save($con);
 			}
 			
 			$con->commit();

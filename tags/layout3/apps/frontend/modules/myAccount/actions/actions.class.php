@@ -53,7 +53,11 @@ class myAccountActions extends sfActions
   	$userSiteObj->saveEmailOptions($request);
   	$userSiteObj->saveScheduleOptions($request);
   	$userSiteObj->updateEmailGroups();
-  	People::saveEmailOption($request, true);
+  	
+  	$peopleObj = $userSiteObj->getPeople();
+  	
+  	$peopleObj->saveEmailOption($request, true);
+  	$peopleObj->saveSmsOption($request, true);
   	
   	echo Util::parseInfo($userSiteObj->getInfo(false, true, false));
   	exit;

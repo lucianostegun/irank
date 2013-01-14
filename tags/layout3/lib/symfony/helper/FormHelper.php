@@ -1186,7 +1186,7 @@ function text_button_tag( $buttonId, $text, $options=array() ){
 	$html = $nl;
 	$html .= '<div class="textButton'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).'">'.$nl;
 	$html .= '	<div class="image">'.image_tag($image).'</div>'.$nl;
-	$html .= '	<div class="textFlex">'.$text.'</div>'.$nl;
+	$html .= '	<div class="text flex">'.$text.'</div>'.$nl;
 	$html .= '</div>';
 	return $html;
 }

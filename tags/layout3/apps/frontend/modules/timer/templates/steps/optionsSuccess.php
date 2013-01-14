@@ -15,14 +15,14 @@
 	<div class="row">
 		<div class="label" id="timerWizardDurationLabel">Duração padrão</div>
 		<div class="field"><?php echo input_tag('duration', $timerSession->duration, array('size'=>2, 'maxlength'=>3, 'class'=>'required', 'id'=>'timerWizardDuration')) ?></div>
-		<div class="textFlex">minutos</div>
+		<div class="text flex">minutos</div>
 		<div class="error" id="timerWizardDurationError" onclick="showFormErrorDetails('timerWizard', 'duration')"></div>
 	</div>
 	
 	<div class="row">
 		<div class="label" id="timerWizardLevelsLabel">Níveis</div>
 		<div class="field"><?php echo input_tag('levels', $timerSession->levels, array('size'=>2, 'maxlength'=>2, 'class'=>'required', 'id'=>'timerWizardLevels')) ?></div>
-		<div class="textFlex">Quantos níveis de blinds deseja em sua configuração</div>
+		<div class="text flex">Quantos níveis de blinds deseja em sua configuração</div>
 		<div class="error" id="timerWizardLevelsError" onclick="showFormErrorDetails('timerWizard', 'levels')"></div>
 	</div>
 	

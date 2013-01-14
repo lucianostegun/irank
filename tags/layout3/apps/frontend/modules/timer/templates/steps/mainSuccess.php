@@ -21,7 +21,7 @@
 	<div class="row">
 		<div class="label" id="timerWizardChipStackLabel">Stack inicial</div>
 		<div class="field"><?php echo input_tag('chipStack', $timerSession->chipStack, array('size'=>4, 'maxlength'=>5, 'id'=>'timerWizardChipStack')) ?></div>
-		<div class="textFlex">fichas</div>
+		<div class="text flex">fichas</div>
 		<div class="error" id="timerWizardChipStackError" onclick="showFormErrorDetails('timerWizard', 'chipStack')"></div>
 	</div>
 	

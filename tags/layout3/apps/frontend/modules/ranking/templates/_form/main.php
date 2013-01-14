@@ -16,7 +16,7 @@
 			<?php else: ?>
 			<div class="row">
 				<div class="label" id="rankingRankingTagLabel">Tag</div>
-				<div class="textFlex"><?php echo $rankingObj->getRankingTag() ?>@irank.com.br</div>
+				<div class="text flex"><?php echo $rankingObj->getRankingTag() ?>@irank.com.br</div>
 				<div class="help" id="rankingRankingTagHelp" title="As mensagens enviadas ao endereço <?php echo $rankingObj->getRankingTag() ?>@irank.com.br serão automaticamente enviadas a todos os participantes do ranking"><?php echo link_to(image_tag('icon/help'), '#showFormHelp("rankingRankingTag")') ?></div>
 				<?php echo input_hidden_tag('rankingTag', $rankingObj->getRankingTag(), array('id'=>'rankingRankingTag')) ?>
 			</div>
@@ -36,13 +36,13 @@
 				<div class="label" id="rankingStartDateLabel"><?php echo __('ranking.start') ?></div>
 				<div class="field"><?php echo input_date_tag('startDate', $rankingObj->getStartDate(), array('size'=>10, 'maxlength'=>10, 'class'=>'required', 'id'=>'rankingStartDate')) ?></div>
 				<div class="error" id="rankingStartDateError" onclick="showFormErrorDetails('ranking', 'startDate')"></div>
-				<div class="textFlex">Ex: <?php echo __('dateFormat') ?></div>
+				<div class="text flex">Ex: <?php echo __('dateFormat') ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="rankingFinishDateLabel"><?php echo __('ranking.finish') ?></div>
 				<div class="field"><?php echo input_date_tag('finishDate', $rankingObj->getFinishDate(), array('size'=>10, 'maxlength'=>10, 'id'=>'rankingFinishDate')) ?></div>
 				<div class="error" id="rankingFinishDateError" onclick="showFormErrorDetails('ranking', 'finishDate')"></div>
-				<div class="textFlex">Ex: <?php echo __('dateFormat') ?></div>
+				<div class="text flex">Ex: <?php echo __('dateFormat') ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="rankingIsPrivateLabel"><?php echo __('ranking.display') ?></div>
@@ -63,13 +63,13 @@
 				<div class="label" id="rankingEntranceFeeLabel"><?php echo __('ranking.entranceFee') ?></div>
 				<div class="field"><?php echo input_tag('entranceFee', Util::formatFloat($rankingObj->getEntranceFee(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'class'=>'textR', 'id'=>'rankingEntranceFee')) ?></div>
 				<div class="error" id="rankingEntranceFeeError" onclick="showFormErrorDetails('ranking', 'entranceFee')"></div>
-				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
+				<div class="text flex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="rankingBuyinLabel"><?php echo __('ranking.buyin') ?></div>
 				<div class="field"><?php echo input_tag('buyin', Util::formatFloat($rankingObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'class'=>'textR', 'id'=>'rankingBuyin')) ?></div>
 				<div class="error" id="rankingBuyinError" onclick="showFormErrorDetails('ranking', 'buyin')"></div>
-				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
+				<div class="text flex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="rankingScoreSchemaLabel"><?php echo __('ranking.scoreSchema') ?></div>
@@ -78,8 +78,8 @@
 			</div>
 			<div class="row" id="rankingScoreFormulaRowDiv" style="display: <?php echo ($rankingObj->getScoreSchema()=='custom'?'block':'none')?>">
 				<div class="label" id="rankingScoreFormulaLabel"><?php echo __('ranking.scoreFormula') ?></div>
-				<div class="textFlex" id="rankingScoreFormulaDiv"><?php echo $rankingObj->getScoreFormula(true) ?></div>
-				<div class="textFlex"><?php echo link_to(image_tag('icon/edit'), '#windowRankingScoreFormulaShow()', array('title'=>'Editar fórmula')) ?></div>
+				<div class="text flex" id="rankingScoreFormulaDiv"><?php echo $rankingObj->getScoreFormula(true) ?></div>
+				<div class="text flex"><?php echo link_to(image_tag('icon/edit'), '#windowRankingScoreFormulaShow()', array('title'=>'Editar fórmula')) ?></div>
 			</div>
 		</td>
 		<td valign="top">

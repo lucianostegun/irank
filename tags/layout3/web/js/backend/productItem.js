@@ -34,7 +34,7 @@ function handleSuccessProductItem(content){
 }
 
 function handleFailureProductItem(content){
-	
+alert(content);	
 	handleFormFieldError(content, 'productItem');
 }
 

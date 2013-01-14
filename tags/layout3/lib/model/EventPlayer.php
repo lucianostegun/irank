@@ -75,7 +75,7 @@ class EventPlayer extends BaseEventPlayer
 		$this->togglePresence('yes', true);
 	}
 	
-	public function togglePresence($choice, $forceNotify=null){
+	public function togglePresence($choice, $forceNotify=null, $con=null){
 	
 		$eventObj   = $this->getEvent();
 		$sendNotify = false;
@@ -94,7 +94,7 @@ class EventPlayer extends BaseEventPlayer
 			$this->setEnabled(true);
 			
 			$eventObj->setPlayers( $eventObj->getPlayers()+1 );
-			$eventObj->save();
+			$eventObj->save($con);
 		}
 		
 		if( $choice=='no' && $this->getEnabled() ){
@@ -109,7 +109,7 @@ class EventPlayer extends BaseEventPlayer
 			$this->setEnabled(false);
 			
 			$eventObj->setPlayers( $eventObj->getPlayers()-1 );
-			$eventObj->save();
+			$eventObj->save($con);
 		}
 		
 		if( $choice=='maybe' ){
@@ -119,7 +119,7 @@ class EventPlayer extends BaseEventPlayer
 			if( $this->getEnabled() ){
 				
 				$eventObj->setPlayers( $eventObj->getPlayers()-1 );
-				$eventObj->save();
+				$eventObj->save($con);
 			}
 			
 			$this->setEventPosition(0);
@@ -128,7 +128,6 @@ class EventPlayer extends BaseEventPlayer
 			$this->setAddon(0);
 			$this->setBuyin(0);
 			$this->setEnabled(false);
-			
 		}
 		
 		if($choice=='none' && !$this->isNew()){
@@ -137,13 +136,13 @@ class EventPlayer extends BaseEventPlayer
 			$choice     = $this->getInviteStatus();
 			
 			$eventObj->setPlayers( $eventObj->getPlayers()-1 );
-			$eventObj->save();
+			$eventObj->save($con);
 		} 
 		
 		$this->setDeleted(false);
 		$this->setConfirmCode( $this->getConfirmCode() );
 		$this->setInviteStatus($choice);
-		$this->save();
+		$this->save($con);
 		
 		if( $sendNotify && $forceNotify!==false )
 			$this->notifyConfirm();

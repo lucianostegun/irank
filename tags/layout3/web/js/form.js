@@ -161,7 +161,7 @@ function clearFormFieldErrors( formId ){
 	
 	var formObj = $( formId );
 	
-	var classNameList = ['formFieldError', 'fieldErrorDiv', 'textError', 'textFlexError', 'tableListError'];
+	var classNameList = ['formFieldError', 'fieldErrorDiv', 'textError', 'text flex error', 'tableListError'];
 	
 	for(var i=0; i < classNameList.length; i++){
 		
