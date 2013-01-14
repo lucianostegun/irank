@@ -288,7 +288,7 @@ function getChipSet(forceRandom){
 				chips        = chipSetObj[chip]/chip;
 			}
 			
-			html += '<div class="chip result" style="background-image: url(\'/images/chips/chip'+chipOriginal+'.png\')">';
+			html += '<div class="chip result" style="background-image: url(\'/images/chipCalculator/chip'+chipOriginal+'.png\')">';
 			html += '<span>';
 			html += '<b>'+sprintf('%02d', chips)+'</b> ficha'+(chips==1?'':'s')+' de <b>'+(chipOriginal>=1000?(chipOriginal/1000)+'K':chipOriginal)+'</b>';
 			if( chipOriginal != chip )

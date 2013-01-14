@@ -17,7 +17,7 @@ class blogActions extends sfActions
     
     $this->showStoreBar = (time() >= strtotime('2012-10-02 20:30') || Util::isDebug());
     $this->facebookMetaList = array();
-	$this->facebookMetaList['image'] = array('http://[host]/images/blog/logoBlog.png');
+	$this->facebookMetaList['image'] = array('http://[host]/images/blog/logo.png');
   }
   
   public function executeIndex($request){

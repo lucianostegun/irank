@@ -104,7 +104,7 @@
 					$chipList = array(1,5,10,25,50,100,500,1000,5000,10000);
 					foreach($chipList as $chip):
 				?>
-				<div class="chip <?php echo ($chip<0?'active':'') ?>" id="chip-<?php echo abs($chip) ?>" onclick="selectChip(this)" style="background-image: url('/images/chips/chip<?php echo abs($chip) ?>.png')">
+				<div class="chip <?php echo ($chip<0?'active':'') ?>" id="chip-<?php echo abs($chip) ?>" onclick="selectChip(this)" style="background-image: url('/images/chipCalculator/chip<?php echo abs($chip) ?>.png')">
 					<div class="check"></div>
 				</div>
 				<?php
