@@ -56,14 +56,14 @@
 #quickResume.home .pendingInviteList .pendingInvite .eventDate {}
 
 #quickResume.home .pendingInviteList a { color: #303030 }
-#quickResume.home .pendingInviteList a:hover { color: #C91E1E }
+#quickResume.home .pendingInviteList a:hover { color: #C91E1E; text-decoration: none }
 
 #quickResume h1,
 #quickResume h2 {
 	position: 		relative;
 	font-size: 		13px;
 	font-weight: 	bold;
-	padding: 		0px;
+	padding: 		0px 0px 0px 0px;
 	margin: 		5px 0px 0px 11px
 }
 
@@ -83,9 +83,11 @@
 
 	position: 		relative;
 	width: 			100%;
-	background: 	#F0F0F0;
 	margin: 		-4px 0px -6px 0px;
-	padding: 		5px 0px 5px 11px
+	padding: 		5px 0px 5px 11px;
+	text-indent: 	20px;
+	line-height: 	14px;
+	background: 	#F0F0F0 url('/images/icon/notify.png') no-repeat 7px 5px
 }
 
 #quickResume h2 a.seeAll {

@@ -450,10 +450,27 @@ class UserSite extends BaseUserSite
 		return Util::executeOne("SELECT get_pending_purchases($userSiteId)"); 
 	}
 	
-	public function decraseSmsCredit(){
+	public function decraseSmsCredit($attempt=1){
 		
-		$this->setSmsCredit( $this->getSmsCredit()-1 );
-		$this->save();
+		try{
+			
+			$con = Propel::getConnection();
+			$con->begin();
+			
+			$this->setSmsCredit( $this->getSmsCredit()-1 );
+			$this->save($con);
+			
+			Util::executeQuery('SELECT decrase_admin_sms_credit()', $con);
+			$con->commit();
+		}catch(Exception $e){
+			
+			$con->rollback();
+			
+			Log::doLog('Não conseguiu decrementar os créditos do usuário '.$this->toString().'. Tentativa '.$attempt, 'Sms', false, $attempt-1);
+			
+			if( $attempt < 5 )
+				$this->decraseSmsCredit($attempt+1);
+		}
 	}
 	
 	public function getInfo($replaceNull=false, $withBalance=true, $formatFloat=true){

@@ -234,7 +234,7 @@
 
 	float: 			left;
 	text-align: 	left;
-	padding: 		2px 2px 0px 2px;
+	padding: 		3px 2px 0px 0px;
 }
 
 .defaultForm .row .fieldRadio, .windowForm .row .fieldRadio {
@@ -253,7 +253,7 @@
 	width: 			auto;
 	width: 			135px !ie;
 	min-width: 		135px;
-	padding: 		2px 3px 2px 1px;
+	padding: 		1px 3px 2px 1px;
 	height: 		15px;
 	text-align: 	left;
 	color: 			#333333;

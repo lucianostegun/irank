@@ -20,6 +20,7 @@ function prexit($object, $noExit=false){
 	
 	echo '<pre>';
 	print_r($object);
+	echo '</pre>';
 	
 	if( !$noExit )
 		exit;

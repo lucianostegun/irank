@@ -61,6 +61,18 @@ class EmailTemplate extends BaseEmailTemplate
 			$this->renameFile();
 	}
 	
+	public static function getIdByTagName( $tagName ){
+		
+		$criteria = new Criteria();
+		$criteria->add( EmailTemplatePeer::TAG_NAME, $tagName );
+		$emailTemplateObj = EmailTemplatePeer::doSelectOne( $criteria );
+		
+		if( is_object($emailTemplateObj) )
+			return $emailTemplateObj->getId();
+		else
+			return null;
+	}
+	
 	public function updateTagNameParent(){
 		
 		$tagName = $this->getEmailTemplate()->getTagName();

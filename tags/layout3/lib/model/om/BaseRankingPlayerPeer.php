@@ -13,7 +13,7 @@ abstract class BaseRankingPlayerPeer {
 	const CLASS_DEFAULT = 'lib.model.RankingPlayer';
 
 	
-	const NUM_COLUMNS = 12;
+	const NUM_COLUMNS = 14;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -47,6 +47,12 @@ abstract class BaseRankingPlayerPeer {
 	const ALLOW_EDIT = 'ranking_player.ALLOW_EDIT';
 
 	
+	const SUPPRESS_EMAIL_NOTIFY = 'ranking_player.SUPPRESS_EMAIL_NOTIFY';
+
+	
+	const SUPPRESS_SMS_NOTIFY = 'ranking_player.SUPPRESS_SMS_NOTIFY';
+
+	
 	const ENABLED = 'ranking_player.ENABLED';
 
 	
@@ -61,19 +67,19 @@ abstract class BaseRankingPlayerPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('RankingId', 'PeopleId', 'TotalEvents', 'TotalScore', 'TotalPaid', 'TotalPrize', 'TotalBalance', 'TotalAverage', 'AllowEdit', 'Enabled', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (RankingPlayerPeer::RANKING_ID, RankingPlayerPeer::PEOPLE_ID, RankingPlayerPeer::TOTAL_EVENTS, RankingPlayerPeer::TOTAL_SCORE, RankingPlayerPeer::TOTAL_PAID, RankingPlayerPeer::TOTAL_PRIZE, RankingPlayerPeer::TOTAL_BALANCE, RankingPlayerPeer::TOTAL_AVERAGE, RankingPlayerPeer::ALLOW_EDIT, RankingPlayerPeer::ENABLED, RankingPlayerPeer::CREATED_AT, RankingPlayerPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('ranking_id', 'people_id', 'total_events', 'total_score', 'total_paid', 'total_prize', 'total_balance', 'total_average', 'allow_edit', 'enabled', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('RANKING_ID'=>'', 'PEOPLE_ID'=>'', 'TOTAL_EVENTS'=>'', 'TOTAL_SCORE'=>'', 'TOTAL_PAID'=>'', 'TOTAL_PRIZE'=>'', 'TOTAL_BALANCE'=>'', 'TOTAL_AVERAGE'=>'', 'ALLOW_EDIT'=>'', 'ENABLED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME=>array ('RankingId', 'PeopleId', 'TotalEvents', 'TotalScore', 'TotalPaid', 'TotalPrize', 'TotalBalance', 'TotalAverage', 'AllowEdit', 'SuppressEmailNotify', 'SuppressSmsNotify', 'Enabled', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (RankingPlayerPeer::RANKING_ID, RankingPlayerPeer::PEOPLE_ID, RankingPlayerPeer::TOTAL_EVENTS, RankingPlayerPeer::TOTAL_SCORE, RankingPlayerPeer::TOTAL_PAID, RankingPlayerPeer::TOTAL_PRIZE, RankingPlayerPeer::TOTAL_BALANCE, RankingPlayerPeer::TOTAL_AVERAGE, RankingPlayerPeer::ALLOW_EDIT, RankingPlayerPeer::SUPPRESS_EMAIL_NOTIFY, RankingPlayerPeer::SUPPRESS_SMS_NOTIFY, RankingPlayerPeer::ENABLED, RankingPlayerPeer::CREATED_AT, RankingPlayerPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('ranking_id', 'people_id', 'total_events', 'total_score', 'total_paid', 'total_prize', 'total_balance', 'total_average', 'allow_edit', 'suppress_email_notify', 'suppress_sms_notify', 'enabled', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('RANKING_ID'=>'', 'PEOPLE_ID'=>'', 'TOTAL_EVENTS'=>'', 'TOTAL_SCORE'=>'', 'TOTAL_PAID'=>'', 'TOTAL_PRIZE'=>'', 'TOTAL_BALANCE'=>'', 'TOTAL_AVERAGE'=>'', 'ALLOW_EDIT'=>'', 'SUPPRESS_EMAIL_NOTIFY'=>'', 'SUPPRESS_SMS_NOTIFY'=>'', 'ENABLED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('RankingId'=>0, 'PeopleId'=>1, 'TotalEvents'=>2, 'TotalScore'=>3, 'TotalPaid'=>4, 'TotalPrize'=>5, 'TotalBalance'=>6, 'TotalAverage'=>7, 'AllowEdit'=>8, 'Enabled'=>9, 'CreatedAt'=>10, 'UpdatedAt'=>11, ),
-		BasePeer::TYPE_COLNAME=>array (RankingPlayerPeer::RANKING_ID=>0, RankingPlayerPeer::PEOPLE_ID=>1, RankingPlayerPeer::TOTAL_EVENTS=>2, RankingPlayerPeer::TOTAL_SCORE=>3, RankingPlayerPeer::TOTAL_PAID=>4, RankingPlayerPeer::TOTAL_PRIZE=>5, RankingPlayerPeer::TOTAL_BALANCE=>6, RankingPlayerPeer::TOTAL_AVERAGE=>7, RankingPlayerPeer::ALLOW_EDIT=>8, RankingPlayerPeer::ENABLED=>9, RankingPlayerPeer::CREATED_AT=>10, RankingPlayerPeer::UPDATED_AT=>11, ),
-		BasePeer::TYPE_FIELDNAME=>array ('ranking_id'=>0, 'people_id'=>1, 'total_events'=>2, 'total_score'=>3, 'total_paid'=>4, 'total_prize'=>5, 'total_balance'=>6, 'total_average'=>7, 'allow_edit'=>8, 'enabled'=>9, 'created_at'=>10, 'updated_at'=>11, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME=>array ('RankingId'=>0, 'PeopleId'=>1, 'TotalEvents'=>2, 'TotalScore'=>3, 'TotalPaid'=>4, 'TotalPrize'=>5, 'TotalBalance'=>6, 'TotalAverage'=>7, 'AllowEdit'=>8, 'SuppressEmailNotify'=>9, 'SuppressSmsNotify'=>10, 'Enabled'=>11, 'CreatedAt'=>12, 'UpdatedAt'=>13, ),
+		BasePeer::TYPE_COLNAME=>array (RankingPlayerPeer::RANKING_ID=>0, RankingPlayerPeer::PEOPLE_ID=>1, RankingPlayerPeer::TOTAL_EVENTS=>2, RankingPlayerPeer::TOTAL_SCORE=>3, RankingPlayerPeer::TOTAL_PAID=>4, RankingPlayerPeer::TOTAL_PRIZE=>5, RankingPlayerPeer::TOTAL_BALANCE=>6, RankingPlayerPeer::TOTAL_AVERAGE=>7, RankingPlayerPeer::ALLOW_EDIT=>8, RankingPlayerPeer::SUPPRESS_EMAIL_NOTIFY=>9, RankingPlayerPeer::SUPPRESS_SMS_NOTIFY=>10, RankingPlayerPeer::ENABLED=>11, RankingPlayerPeer::CREATED_AT=>12, RankingPlayerPeer::UPDATED_AT=>13, ),
+		BasePeer::TYPE_FIELDNAME=>array ('ranking_id'=>0, 'people_id'=>1, 'total_events'=>2, 'total_score'=>3, 'total_paid'=>4, 'total_prize'=>5, 'total_balance'=>6, 'total_average'=>7, 'allow_edit'=>8, 'suppress_email_notify'=>9, 'suppress_sms_notify'=>10, 'enabled'=>11, 'created_at'=>12, 'updated_at'=>13, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	
@@ -144,6 +150,10 @@ abstract class BaseRankingPlayerPeer {
 		$criteria->addSelectColumn(RankingPlayerPeer::TOTAL_AVERAGE);
 
 		$criteria->addSelectColumn(RankingPlayerPeer::ALLOW_EDIT);
+
+		$criteria->addSelectColumn(RankingPlayerPeer::SUPPRESS_EMAIL_NOTIFY);
+
+		$criteria->addSelectColumn(RankingPlayerPeer::SUPPRESS_SMS_NOTIFY);
 
 		$criteria->addSelectColumn(RankingPlayerPeer::ENABLED);
 

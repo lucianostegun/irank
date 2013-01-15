@@ -52,7 +52,7 @@ class EventPlayer extends BaseEventPlayer
 		$emailSubjectList['pt_BR'] = __('email.subject.presenceConfirm', null, 'messages', 'pt_BR');
 		$emailSubjectList['en_US'] = __('email.subject.presenceConfirm', null, 'messages', 'en_US');
 
-		$emailAddressList = $eventObj->getEmailAddressList('receiveFriendEventConfirmNotify');
+		$emailAddressList = $eventObj->getEmailAddressList('confirmPresenceNotify');
 
 	  	foreach($eventPlayerObjList as $eventPlayerObj){
 		

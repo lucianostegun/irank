@@ -5,9 +5,6 @@
 	$inviteStatus      = ($isNew?'none':$eventObj->getInviteStatus($peopleId));
 	$visibleButtons    = $eventObj->getEnabled();
 
-	if( !$pastDate && $inviteStatus!='deleted' )	
-		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
-
 	$pageAction = ($isClone?__('Cloning'):($eventObj->isNew()?__('Creating'):__('Editing')));
 	
 	if( !$eventObj->getEnabled() || $isClone ):
@@ -39,7 +36,10 @@
 		'success'=>'handleSuccessEvent'.($pastDate?'Result':'').'(request.responseText)',
 		'failure'=>'handleFailureEvent(request.responseText)',
 		'encoding'=>'UTF8',
-		), array( 'id'=>'eventForm' ));
+		), array('id'=>'eventForm'));
+		
+	if( !$pastDate && $inviteStatus!='deleted' )	
+		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
 	
 	echo input_hidden_tag('eventId', $eventId);
 	echo input_hidden_tag('isClone', $isClone);

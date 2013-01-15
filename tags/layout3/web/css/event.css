@@ -1,8 +1,13 @@
+#eventForm {
+
+	position: relative;
+}
+
 .actionBar {
 	
 	position: 			absolute;
 	z-Index: 			2;
-	top: 				38px;
+	top: 				-7px;
 	margin-left: 		453px;
 	top: 				185px !ie;
 	margin-left: 		461px !ie;

@@ -166,7 +166,8 @@ class eventActions extends sfActions
 	if( !$eventObj->isEditable() )
 		Util::forceError('!'.__('event.lockedEvent'), true);
 	
-	$eventObj->delete();
+	$eventObj->notifyReminder(7);
+//	$eventObj->delete();
 	exit;
   }
   

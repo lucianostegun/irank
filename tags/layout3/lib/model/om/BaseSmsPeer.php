@@ -13,7 +13,7 @@ abstract class BaseSmsPeer {
 	const CLASS_DEFAULT = 'lib.model.Sms';
 
 	
-	const NUM_COLUMNS = 11;
+	const NUM_COLUMNS = 8;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -23,31 +23,22 @@ abstract class BaseSmsPeer {
 	const ID = 'sms.ID';
 
 	
-	const CLUB_ID = 'sms.CLUB_ID';
-
-	
 	const PEOPLE_ID = 'sms.PEOPLE_ID';
 
 	
-	const TOKEN = 'sms.TOKEN';
+	const PHONE_NUMBER = 'sms.PHONE_NUMBER';
 
 	
-	const TEXT_MESSAGE = 'sms.TEXT_MESSAGE';
+	const MESSAGE = 'sms.MESSAGE';
 
 	
-	const TOTAL_MESSAGES = 'sms.TOTAL_MESSAGES';
+	const STATUS_CODE = 'sms.STATUS_CODE';
 
 	
-	const SUCCESS_MESSAGES = 'sms.SUCCESS_MESSAGES';
+	const STATUS_MESSAGE = 'sms.STATUS_MESSAGE';
 
 	
-	const ERROR_MESSAGES = 'sms.ERROR_MESSAGES';
-
-	
-	const CLASS_NAME = 'sms.CLASS_NAME';
-
-	
-	const OBJECT_ID = 'sms.OBJECT_ID';
+	const MESSAGE_ID = 'sms.MESSAGE_ID';
 
 	
 	const CREATED_AT = 'sms.CREATED_AT';
@@ -58,19 +49,19 @@ abstract class BaseSmsPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'ClubId', 'PeopleId', 'Token', 'TextMessage', 'TotalMessages', 'SuccessMessages', 'ErrorMessages', 'ClassName', 'ObjectId', 'CreatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (SmsPeer::ID, SmsPeer::CLUB_ID, SmsPeer::PEOPLE_ID, SmsPeer::TOKEN, SmsPeer::TEXT_MESSAGE, SmsPeer::TOTAL_MESSAGES, SmsPeer::SUCCESS_MESSAGES, SmsPeer::ERROR_MESSAGES, SmsPeer::CLASS_NAME, SmsPeer::OBJECT_ID, SmsPeer::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'club_id', 'people_id', 'token', 'text_message', 'total_messages', 'success_messages', 'error_messages', 'class_name', 'object_id', 'created_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'CLUB_ID'=>'', 'PEOPLE_ID'=>'', 'TOKEN'=>'', 'TEXT_MESSAGE'=>'', 'TOTAL_MESSAGES'=>'', 'SUCCESS_MESSAGES'=>'', 'ERROR_MESSAGES'=>'', 'CLASS_NAME'=>'', 'OBJECT_ID'=>'', 'CREATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'PhoneNumber', 'Message', 'StatusCode', 'StatusMessage', 'MessageId', 'CreatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (SmsPeer::ID, SmsPeer::PEOPLE_ID, SmsPeer::PHONE_NUMBER, SmsPeer::MESSAGE, SmsPeer::STATUS_CODE, SmsPeer::STATUS_MESSAGE, SmsPeer::MESSAGE_ID, SmsPeer::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'phone_number', 'message', 'status_code', 'status_message', 'message_id', 'created_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'PHONE_NUMBER'=>'', 'MESSAGE'=>'', 'STATUS_CODE'=>'', 'STATUS_MESSAGE'=>'', 'MESSAGE_ID'=>'', 'CREATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ClubId'=>1, 'PeopleId'=>2, 'Token'=>3, 'TextMessage'=>4, 'TotalMessages'=>5, 'SuccessMessages'=>6, 'ErrorMessages'=>7, 'ClassName'=>8, 'ObjectId'=>9, 'CreatedAt'=>10, ),
-		BasePeer::TYPE_COLNAME=>array (SmsPeer::ID=>0, SmsPeer::CLUB_ID=>1, SmsPeer::PEOPLE_ID=>2, SmsPeer::TOKEN=>3, SmsPeer::TEXT_MESSAGE=>4, SmsPeer::TOTAL_MESSAGES=>5, SmsPeer::SUCCESS_MESSAGES=>6, SmsPeer::ERROR_MESSAGES=>7, SmsPeer::CLASS_NAME=>8, SmsPeer::OBJECT_ID=>9, SmsPeer::CREATED_AT=>10, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'club_id'=>1, 'people_id'=>2, 'token'=>3, 'text_message'=>4, 'total_messages'=>5, 'success_messages'=>6, 'error_messages'=>7, 'class_name'=>8, 'object_id'=>9, 'created_at'=>10, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'PhoneNumber'=>2, 'Message'=>3, 'StatusCode'=>4, 'StatusMessage'=>5, 'MessageId'=>6, 'CreatedAt'=>7, ),
+		BasePeer::TYPE_COLNAME=>array (SmsPeer::ID=>0, SmsPeer::PEOPLE_ID=>1, SmsPeer::PHONE_NUMBER=>2, SmsPeer::MESSAGE=>3, SmsPeer::STATUS_CODE=>4, SmsPeer::STATUS_MESSAGE=>5, SmsPeer::MESSAGE_ID=>6, SmsPeer::CREATED_AT=>7, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'phone_number'=>2, 'message'=>3, 'status_code'=>4, 'status_message'=>5, 'message_id'=>6, 'created_at'=>7, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
@@ -126,23 +117,17 @@ abstract class BaseSmsPeer {
 
 		$criteria->addSelectColumn(SmsPeer::ID);
 
-		$criteria->addSelectColumn(SmsPeer::CLUB_ID);
-
 		$criteria->addSelectColumn(SmsPeer::PEOPLE_ID);
 
-		$criteria->addSelectColumn(SmsPeer::TOKEN);
+		$criteria->addSelectColumn(SmsPeer::PHONE_NUMBER);
 
-		$criteria->addSelectColumn(SmsPeer::TEXT_MESSAGE);
+		$criteria->addSelectColumn(SmsPeer::MESSAGE);
 
-		$criteria->addSelectColumn(SmsPeer::TOTAL_MESSAGES);
+		$criteria->addSelectColumn(SmsPeer::STATUS_CODE);
 
-		$criteria->addSelectColumn(SmsPeer::SUCCESS_MESSAGES);
+		$criteria->addSelectColumn(SmsPeer::STATUS_MESSAGE);
 
-		$criteria->addSelectColumn(SmsPeer::ERROR_MESSAGES);
-
-		$criteria->addSelectColumn(SmsPeer::CLASS_NAME);
-
-		$criteria->addSelectColumn(SmsPeer::OBJECT_ID);
+		$criteria->addSelectColumn(SmsPeer::MESSAGE_ID);
 
 		$criteria->addSelectColumn(SmsPeer::CREATED_AT);
 
@@ -225,34 +210,6 @@ abstract class BaseSmsPeer {
 	}
 
 	
-	public static function doCountJoinClub(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(SmsPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(SmsPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
-
-		$rs = SmsPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
 	public static function doCountJoinPeople(Criteria $criteria, $distinct = false, $con = null)
 	{
 				$criteria = clone $criteria;
@@ -277,53 +234,6 @@ abstract class BaseSmsPeer {
 		} else {
 						return 0;
 		}
-	}
-
-
-	
-	public static function doSelectJoinClub(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-				if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		SmsPeer::addSelectColumns($c);
-		$startcol = (SmsPeer::NUM_COLUMNS - SmsPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-		ClubPeer::addSelectColumns($c);
-
-		$c->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = SmsPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = ClubPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj2 = new $cls();
-			$obj2->hydrate($rs, $startcol);
-
-			$newObject = true;
-			foreach($results as $temp_obj1) {
-				$temp_obj2 = $temp_obj1->getClub(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-										$temp_obj2->addSms($obj1); 					break;
-				}
-			}
-			if ($newObject) {
-				$obj2->initSmsList();
-				$obj2->addSms($obj1); 			}
-			$results[] = $obj1;
-		}
-		return $results;
 	}
 
 
@@ -391,8 +301,6 @@ abstract class BaseSmsPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
-
 		$criteria->addJoin(SmsPeer::PEOPLE_ID, PeoplePeer::ID);
 
 		$rs = SmsPeer::doSelectRS($criteria, $con);
@@ -416,13 +324,8 @@ abstract class BaseSmsPeer {
 		SmsPeer::addSelectColumns($c);
 		$startcol2 = (SmsPeer::NUM_COLUMNS - SmsPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 
-		ClubPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + ClubPeer::NUM_COLUMNS;
-
 		PeoplePeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + PeoplePeer::NUM_COLUMNS;
-
-		$c->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
+		$startcol3 = $startcol2 + PeoplePeer::NUM_COLUMNS;
 
 		$c->addJoin(SmsPeer::PEOPLE_ID, PeoplePeer::ID);
 
@@ -440,7 +343,7 @@ abstract class BaseSmsPeer {
 
 
 					
-			$omClass = ClubPeer::getOMClass();
+			$omClass = PeoplePeer::getOMClass();
 
 
 			$cls = Propel::import($omClass);
@@ -450,202 +353,9 @@ abstract class BaseSmsPeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getClub(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj2->addSms($obj1); 					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj2->initSmsList();
-				$obj2->addSms($obj1);
-			}
-
-
-					
-			$omClass = PeoplePeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj3 = new $cls();
-			$obj3->hydrate($rs, $startcol3);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj3 = $temp_obj1->getPeople(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj3->addSms($obj1); 					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj3->initSmsList();
-				$obj3->addSms($obj1);
-			}
-
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
-	public static function doCountJoinAllExceptClub(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(SmsPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(SmsPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(SmsPeer::PEOPLE_ID, PeoplePeer::ID);
-
-		$rs = SmsPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
-	public static function doCountJoinAllExceptPeople(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(SmsPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(SmsPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
-
-		$rs = SmsPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
-	public static function doSelectJoinAllExceptClub(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		SmsPeer::addSelectColumns($c);
-		$startcol2 = (SmsPeer::NUM_COLUMNS - SmsPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-
-		PeoplePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + PeoplePeer::NUM_COLUMNS;
-
-		$c->addJoin(SmsPeer::PEOPLE_ID, PeoplePeer::ID);
-
-
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = SmsPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = PeoplePeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj2  = new $cls();
-			$obj2->hydrate($rs, $startcol2);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
 				$temp_obj2 = $temp_obj1->getPeople(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
-					$temp_obj2->addSms($obj1);
-					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj2->initSmsList();
-				$obj2->addSms($obj1);
-			}
-
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
-	public static function doSelectJoinAllExceptPeople(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		SmsPeer::addSelectColumns($c);
-		$startcol2 = (SmsPeer::NUM_COLUMNS - SmsPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-
-		ClubPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + ClubPeer::NUM_COLUMNS;
-
-		$c->addJoin(SmsPeer::CLUB_ID, ClubPeer::ID);
-
-
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = SmsPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = ClubPeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj2  = new $cls();
-			$obj2->hydrate($rs, $startcol2);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getClub(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj2->addSms($obj1);
-					break;
+					$temp_obj2->addSms($obj1); 					break;
 				}
 			}
 

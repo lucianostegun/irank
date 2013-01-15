@@ -23,7 +23,7 @@
 				<div class="defaultForm">
 					<div class="row">
 						<div class="label" id="statisticRankingIdLabel">Ranking</div>
-						<div class="field" id="rankingIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect(), array('class'=>'required', 'id'=>'statisticRankingId')) ?></div>
+						<div class="field" id="rankingIdFieldDiv"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect(false, false, true), array('class'=>'required', 'id'=>'statisticRankingId')) ?></div>
 					</div>
 					<div class="row">
 						<div class="label" id="statisticReportTypeLabel"><?php echo __('statistic.reportType') ?></div>

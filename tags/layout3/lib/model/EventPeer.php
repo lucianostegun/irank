@@ -61,6 +61,38 @@ class EventPeer extends BaseEventPeer
 		return EventPeer::doSelectOne($criteria);
 	}
 	
+	public static function search($criteria=null){
+		
+		$request = MyTools::getRequest();
+		$rankingId  = $request->getParameter('rankingId');
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+			
+		$criteria->addJoin( EventPeer::RANKING_PLACE_ID, RankingPlacePeer::ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( EventPeer::RANKING_ID, RankingPeer::ID, Criteria::INNER_JOIN );
+			
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::DELETED, false );
+
+		$criterion = $criteria->getNewCriterion( RankingPeer::ENABLED, true );
+		$criterion->addAnd( $criteria->getNewCriterion( RankingPeer::VISIBLE, true ) );
+		$criterion->addAnd( $criteria->getNewCriterion( RankingPeer::DELETED, false ) );
+		
+		$criterion2 = $criteria->getNewCriterion( EventPeer::RANKING_ID, NULL );
+		$criterion->addOr($criterion2);
+		$criteria->add($criterion);
+		
+		if( $rankingId )
+			$criteria->add( EventPeer::RANKING_ID, $rankingId );
+		
+		$criteria->addDescendingOrderByColumn( EventPeer::EVENT_DATE );
+		$criteria->addAscendingOrderByColumn( EventPeer::START_TIME );
+		
+		return EventPeer::doSelect($criteria);
+	}	
+	
 	public static function uniqueEventName($eventName){
 
 		$rankingId = MyTools::getRequestParameter('rankingId');

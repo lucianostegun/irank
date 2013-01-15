@@ -90,21 +90,22 @@ class rankingActions extends sfActions
   
   public function executeSave($request){
 
-	$rankingId        = $request->getParameter('rankingId');
-	$rankingName      = $request->getParameter('rankingName');
-	$buildEmailGroup  = $request->getParameter('buildEmailGroup');
-	$rankingTag       = $request->getParameter('rankingTag');
-	$gameStyleId      = $request->getParameter('gameStyleId');
-	$startDate        = $request->getParameter('startDate');
-	$finishDate       = $request->getParameter('finishDate');
-	$isPrivate        = $request->getParameter('isPrivate');
-	$rankingTypeId    = $request->getParameter('rankingTypeId');
-	$buyin            = $request->getParameter('buyin');
-	$startTime        = $request->getParameter('startTime');
-	$entranceFee      = $request->getParameter('entranceFee');
-	$scoreSchema      = $request->getParameter('scoreSchema');
-	$scoreFormula     = $request->getParameter('scoreFormula');
-	$recalculateScore = $request->getParameter('recalculateScore');
+	$rankingId           = $request->getParameter('rankingId');
+	$rankingName         = $request->getParameter('rankingName');
+	$buildEmailGroup     = $request->getParameter('buildEmailGroup');
+	$rankingTag          = $request->getParameter('rankingTag');
+	$gameStyleId         = $request->getParameter('gameStyleId');
+	$startDate           = $request->getParameter('startDate');
+	$finishDate          = $request->getParameter('finishDate');
+	$isPrivate           = $request->getParameter('isPrivate');
+	$rankingTypeId       = $request->getParameter('rankingTypeId');
+	$buyin               = $request->getParameter('buyin');
+	$startTime           = $request->getParameter('startTime');
+	$entranceFee         = $request->getParameter('entranceFee');
+	$scoreSchema         = $request->getParameter('scoreSchema');
+	$scoreFormula        = $request->getParameter('scoreFormula');
+	$recalculateScore    = $request->getParameter('recalculateScore');
+	$updateNotifications = $request->getParameter('updateNotifications');
 
 	$rankingObj = $this->rankingObj;
 
@@ -114,56 +115,72 @@ class rankingActions extends sfActions
 		$rankingObj->setUserSiteId($this->userSiteId);
 	}
 	
-	$isNew = $rankingObj->isNew();
+	
+	try{
+		
+		$con = Propel::getConnection();
+		$con->begin();
 
-	$scoreFormula = ($scoreSchema=='custom'?$scoreFormula:null);
-
-	$updateHistory = ($rankingTypeId!=$rankingObj->getRankingTypeId());
-
-	$rankingObj->setRankingName( $rankingName );
-	$rankingObj->setGameStyleId( $gameStyleId );
-	$rankingObj->setStartDate( Util::formatDate($startDate) );
-	$rankingObj->setFinishDate( Util::formatDate($finishDate) );
-	$rankingObj->setBuyin( Util::formatFloat($buyin) );
-	$rankingObj->setEntranceFee( Util::formatFloat($entranceFee) );
-	$rankingObj->setStartTime( nvl($startTime) );
-	$rankingObj->setIsPrivate( ($isPrivate?true:false) );
-	$rankingObj->setRankingTypeId( $rankingTypeId );
-	$rankingObj->setScoreSchema( $scoreSchema );
-	$rankingObj->setScoreFormula( $scoreFormula );
-	$rankingObj->setVisible(true);
-	$rankingObj->setEnabled(true);
+		$isNew = $rankingObj->isNew();
 	
-	$buildEmailGroup = false;
+		$scoreFormula = ($scoreSchema=='custom'?$scoreFormula:null);
 	
-	if( is_null($rankingObj->getRankingTag()) ){
+		$updateHistory = ($rankingTypeId!=$rankingObj->getRankingTypeId());
+	
+		$rankingObj->setRankingName( $rankingName );
+		$rankingObj->setGameStyleId( $gameStyleId );
+		$rankingObj->setStartDate( Util::formatDate($startDate) );
+		$rankingObj->setFinishDate( Util::formatDate($finishDate) );
+		$rankingObj->setBuyin( Util::formatFloat($buyin) );
+		$rankingObj->setEntranceFee( Util::formatFloat($entranceFee) );
+		$rankingObj->setStartTime( nvl($startTime) );
+		$rankingObj->setIsPrivate( ($isPrivate?true:false) );
+		$rankingObj->setRankingTypeId( $rankingTypeId );
+		$rankingObj->setScoreSchema( $scoreSchema );
+		$rankingObj->setScoreFormula( $scoreFormula );
+		$rankingObj->setVisible(true);
+		$rankingObj->setEnabled(true);
 		
-		$rankingObj->setRankingTag($rankingTag);
-		$buildEmailGroup = true;
-	}
+		$buildEmailGroup = false;
 		
-	$rankingObj->save();
-	
-	if( $buildEmailGroup )
-		$rankingObj->createEmailGroup();
-	
-	$rankingObj->addPlayer( $this->peopleId, true );
-	
-	if( $isNew ){
-		
-		$rankingObj->resetOptions();
-	}else{
-		
-		if( $recalculateScore ){
+		if( is_null($rankingObj->getRankingTag()) ){
 			
-			$rankingObj->updateWholeScore();
-			$rankingObj->updateScores();
+			$rankingObj->setRankingTag($rankingTag);
+			$buildEmailGroup = true;
+		}
+			
+		$rankingObj->save($con);
+		
+		if( $buildEmailGroup )
+			$rankingObj->createEmailGroup($con);
+		
+		if( $updateNotifications )
+			$rankingObj->saveNotifications($request, $con);
+		
+		$rankingObj->addPlayer($this->peopleId, true, $con);
+		
+		if( $isNew ){
+			
+			$rankingObj->resetOptions($con);
+		}else{
+			
+			if( $recalculateScore ){
+				
+				$rankingObj->updateWholeScore($con);
+				$rankingObj->updateScores($con);
+			}
+			
+			$rankingObj->saveOptions($request, $con);
+			
+			if( $updateHistory || $recalculateScore )
+				$rankingObj->updateWholeHistory($con);
 		}
 		
-		$rankingObj->saveOptions($request);
+		$con->commit();
+	}catch(Exception $e){
 		
-		if( $updateHistory || $recalculateScore )
-			$rankingObj->updateWholeHistory();
+		$con->rollback();
+		Util::forceError($e->getMessage());
 	}
 	
 	echo $rankingObj->getId();
@@ -554,6 +571,18 @@ class rankingActions extends sfActions
   	}
   	
   	exit;
+  }
+
+  public function executeGetTabContent($request){
+  	
+  	$rankingId = $request->getParameter('id');
+  	$rankingId = $request->getParameter('rankingId', $rankingId);
+  	$tabId  = $request->getParameter('tabId');
+  	$tabId  = strtolower($tabId);
+  	
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
+
+	return $this->renderText(get_partial('ranking/form/'.$tabId, array('rankingId'=>$rankingId)));
   }
   
   public function executeJavascript($request){

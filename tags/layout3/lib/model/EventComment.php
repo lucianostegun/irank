@@ -57,7 +57,7 @@ class EventComment extends BaseEventComment
 		$infoList['peopleEmail'] = $this->getPeople()->getEmailAddress();
 		$infoList['comment']     = $this->getComment();
 		
-		$emailAddressInfoList = $eventObj->getEmailAddressList('receiveEventCommentNotify', false, true);
+		$emailAddressInfoList = $eventObj->getEmailAddressList('eventCommentNotify', false, true);
 
 		$templateName     = 'eventCommentNotify';
 		$emailTemplateObj = EmailTemplatePeer::retrieveByTagName($templateName);

@@ -58,11 +58,11 @@
 	</div>
 	<div class="row">
 		<div class="label"><?php echo __('event.allowRebuy') ?></div>
-		<div class="field"><?php echo checkbox_tag('allowRebuy', true, $eventObj->getAllowRebuy(), array('id'=>'eventAllowRebuy')) ?></div>
+		<div class="fieldCheckbox"><?php echo checkbox_tag('allowRebuy', true, $eventObj->getAllowRebuy(), array('id'=>'eventAllowRebuy')) ?></div>
 	</div>
 	<div class="row">
 		<div class="label"><?php echo __('event.allowAddon') ?></div>
-		<div class="field"><?php echo checkbox_tag('allowAddon', true, $eventObj->getAllowAddon(), array('id'=>'eventAllowAddon')) ?></div>
+		<div class="fieldCheckbox"><?php echo checkbox_tag('allowAddon', true, $eventObj->getAllowAddon(), array('id'=>'eventAllowAddon')) ?></div>
 	</div>
 	<div class="row" id="eventEntranceFeeRow" style="display: <?php echo ($eventObj->getIsFreeroll()?'none':'block') ?>">
 		<div class="label" id="eventEntranceFeeLabel"><?php echo __('event.entranceFee') ?></div>
@@ -83,7 +83,7 @@
 	</div>
 	<div class="row">
 		<div class="label">Enviar notificação</div>
-		<div class="field"><?php echo checkbox_tag('sendEmail', true, (!$eventObj->getSentEmail() && !$isClone), array('id'=>'eventSendEmail')) ?></div>
+		<div class="fieldCheckbox"><?php echo checkbox_tag('sendEmail', true, (!$eventObj->getSentEmail() && !$isClone), array('id'=>'eventSendEmail')) ?></div>
 		<div class="text flex" style="display: <?php echo ($eventObj->getSentEmail()?'block':'none') ?>" id="sentEmailDiv"><?php echo __('event.sentNotify') ?></div>
 	</div>
 	

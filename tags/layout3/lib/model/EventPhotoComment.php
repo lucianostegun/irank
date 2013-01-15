@@ -70,7 +70,7 @@ class EventPhotoComment extends BaseEventPhotoComment
 		$emailContent = str_replace('[startTime]', $eventObj->getStartTime('H:i'), $emailContent);
 		$emailContent = str_replace('[peopleEmail]', $this->getPeople()->getEmailAddress(), $emailContent);
 		
-		$emailAddressList = $eventObj->getEmailAddressList('receiveEventCommentNotify', true);
+		$emailAddressList = $eventObj->getEmailAddressList('eventPhotoCommentNotify', true);
 		
 		$options = array();
 		$options['emailTemplate']  = null;

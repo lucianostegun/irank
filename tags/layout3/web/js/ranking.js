@@ -215,6 +215,9 @@ function onSelectTabRanking(tabId){
 		case 'options':
 			showDiv('rankingMainButtonBar');
 			break;
+		case 'notification':
+			showDiv('rankingMainButtonBar');
+			break;
 	}
 	
 	return true;
@@ -704,4 +707,43 @@ function lockRankingTag(){
 	
 	$('rankingBuildEmailGroupHelp').remove();
 	$('rankingRankingTagError').remove();
+}
+
+function editRankingNotifications(){
+
+	if( $('rankingUpdateNotifications')!=null )
+		return tabBarMainObj.setTabActive('notification');
+		
+		
+	showIndicator();
+	
+	var div = document.createElement('div');
+	div.id = 'mainNotificationObjDiv';
+	
+	$('tabBarMainObjDiv').appendChild(div);
+	
+	var rankingId = $('rankingId').value;
+	
+	var completeFunc = function(t){
+		
+		tabBarMainObj.addTab('notification', 'Notificações', '100px');
+		tabBarMainObj.setContent('notification','mainNotificationObjDiv');
+		tabBarMainObj.setTabActive('notification');
+		
+		hideIndicator();
+	};
+	
+	var failureFunc = function(t){
+		
+		var content = t.responseText;
+		
+		var errorMessage = parseMessage(content, 'Por favor, tente novamente.');
+		alert('Não foi possível carregar as opções de notificação!'+errorMessage);
+		
+		if( isDebug() )
+			console.log(content);
+	};
+	
+	var urlAjax = _webRoot+'/ranking/getTabContent/tabId/notification/rankingId/'+rankingId;
+	new Ajax.Updater('mainNotificationObjDiv', urlAjax, {asynchronous:true, evalScripts:false, onComplete:completeFunc, onFailure:failureFunc});
 }

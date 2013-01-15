@@ -10,22 +10,22 @@
 class RankingHistory extends BaseRankingHistory
 {
 	
-	public function updateScore(){
+	public function updateScore($con=null){
 		
 		$rankingDate = $this->getRankingDate('Y-m-d');
 		
-		$score = Util::executeOne('SELECT SUM(event_player.SCORE) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$score = Util::executeOne('SELECT SUM(event_player.SCORE) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float', $con);
 
 		$this->setTotalScore($this->getTotalScore()+$score);
 		$this->setScore($score);
 	}
 	
-	public function updateBalance(){
+	public function updateBalance($con=null){
 			
 		$rankingDate = $this->getRankingDate('Y-m-d');
 		
-		$paidValue  = Util::executeOne('SELECT SUM(event_player.ENTRANCE_FEE+event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
-		$prizeValue = Util::executeOne('SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$paidValue  = Util::executeOne('SELECT SUM(event_player.ENTRANCE_FEE+event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float', $con);
+		$prizeValue = Util::executeOne('SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float', $con);
 		
 		$balanceValue = $prizeValue-$paidValue;
 		
@@ -41,21 +41,21 @@ class RankingHistory extends BaseRankingHistory
 		$this->setAverage( ($this->getPaidValue()>0?($this->getPrizeValue()/$this->getPaidValue()):0) );
 	}
 	
-	public function updateEvents(){
+	public function updateEvents($con=null){
 		
 		$rankingDate = $this->getRankingDate('Y-m-d');
 		
-		$events = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE AND event.ENABLED AND NOT event.DELETED AND event_player.ENABLED AND event.SAVED_RESULT AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'int');
+		$events = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE AND event.ENABLED AND NOT event.DELETED AND event_player.ENABLED AND event.SAVED_RESULT AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'int', $con);
 		
 		$this->setEvents($events);
 		$this->setTotalEvents($this->getTotalEvents()+$events);
 	}
 	
-	public function updateInfo(){
+	public function updateInfo($con=null){
 
-		$this->updateBalance();
-		$this->updateEvents();
-		$this->updateScore();
+		$this->updateBalance($con);
+		$this->updateEvents($con);
+		$this->updateScore($con);
 	}
 	
 	// Função que atualiza todos as datas do ranking

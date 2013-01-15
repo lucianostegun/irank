@@ -1,4 +1,4 @@
-<div id="userResume" class="<?php echo ($isAuthenticated?'logged':'') ?>">
+<div id="userResume" class="<?php echo ($isAuthenticated?'logged':'') ?>" style="margin-bottom: 40px">
 <?php
 	if( $isAuthenticated ){
 		

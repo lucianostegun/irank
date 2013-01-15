@@ -157,7 +157,7 @@ class DhtmlxTabBar30 {
     	// Este bloco está separado porque senão fica um buraco entre as abas
     	foreach( $this->tabBarObjList as $tabBarObj )
 	    	if( $tabBarObj->getHidden() )
-	    		$html .= '    '.$objectName.'.hideTab(\''.$tabBarObj->getId().'\',true);'.$nl;
+	    		$html .= '    '.$objectName.'.hideTab(\''.$tabBarObj->getId().'\');'.$nl;
     	
     	return $html;
     }
@@ -195,9 +195,9 @@ class DhtmlxTabBar30 {
     			$functionName = $this->getName().'_'.$handler['type'];
     			
     			$html .= 'var '.$functionName.' = function(){'.$handler['function'].';}'.$nl;
-    			$html .= $this->getName() . '.attachEvent("'.$handler['type'].'", '.$functionName.' );'.$nl;
+    			$html .= '	'.$this->getName() . '.attachEvent("'.$handler['type'].'", '.$functionName.' );'.$nl;
     		}else{
-    			$html .= $this->getName() . '.attachEvent("'.$handler['type'].'", '.$handler['function'].' );'.$nl;
+    			$html .= '	'.$this->getName() . '.attachEvent("'.$handler['type'].'", '.$handler['function'].' );'.$nl;
     		}
 
     	return $html;

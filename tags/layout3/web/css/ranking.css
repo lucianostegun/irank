@@ -3,6 +3,11 @@
 	background: 	url(/images/layout/leftMenu/unsubscribe.png) center left no-repeat;
 }
 
+#leftMenu .subitem .label.notification {
+
+	background: 	url(/images/layout/leftMenu/alert.png) center left no-repeat;
+}
+
 .classifyTable a {
 	color: #303030;
 }

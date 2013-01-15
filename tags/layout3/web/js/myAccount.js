@@ -201,14 +201,14 @@ function loadCityField(stateId){
 	new Ajax.Updater('myAccountScheduleStateIdDiv', urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc});
 }
 
-function sortDataTable(sortField, sortDesc){
+function sortDataTable(tableId, sortField, sortDesc){
 
 	showIndicator();
 	
 	var successFunc = function(t){
 		
 		hideIndicator();
-		$('eventLiveTableContent').innerHTML = t.responseText;
+		$(tableId+'TableContent').innerHTML = t.responseText;
 	}
 
 	var failureFunc = function(t){
@@ -220,7 +220,7 @@ function sortDataTable(sortField, sortDesc){
 			debugAdd(t.responseText);
 	}
 	
-	var urlAjax = _webRoot+'/myAccount/getTabContent/tabId/table/sortField/'+sortField+'/sortDesc/'+(sortDesc?'1':'0');
+	var urlAjax = _webRoot+'/myAccount/getTabContent/tabId/'+tableId+'/sortField/'+sortField+'/sortDesc/'+(sortDesc?'1':'0');
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
@@ -234,15 +234,15 @@ function hideQuickConfirmButton(eventLiveId){
 	hideDiv('quickConfirmButton-'+eventLiveId);
 }
 
-function removePendingInvite(eventLiveId){
-	
-	$('pendingInviteRow-'+eventLiveId).removeClassName('pendingInviteRow');
-	$('pendingInviteRow-'+eventLiveId).addClassName('hidden');
+function removePendingInvite(eventType, id){
+
+	$('pendingInvite'+ucfirst(eventType)+'Row-'+id).removeClassName('pendingInviteRow');
+	$('pendingInvite'+ucfirst(eventType)+'Row-'+id).addClassName('hidden');
 	
 	var visibleRows = document.getElementsByClassName('pendingInviteRow');
 	
 	if( visibleRows.length==0 )
-		$('pendingInviteRowEmpty').removeClassName('hidden');
+		$('pendingInvite'+ucfirst(eventType)+'RowEmpty').removeClassName('hidden');
 	
 	var pendingInvites = $('pendingInvitesCount').innerHTML*1;
 	pendingInvites -= 1;
@@ -250,7 +250,7 @@ function removePendingInvite(eventLiveId){
 	
 	$('pendingInvitesCount').innerHTML = pendingInvites;
 	
-	var urlAjax = _webRoot+'/myAccount/deletePendingInvite/eventLiveId/'+eventLiveId;
+	var urlAjax = _webRoot+'/myAccount/deletePendingInvite/id/'+id+'/eventType/'+eventType;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false});
 }
 

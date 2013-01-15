@@ -269,6 +269,12 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastSmsOptionCriteria = null;
 
 	
+	protected $collSmsRankingOptionList;
+
+	
+	protected $lastSmsRankingOptionCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -1199,6 +1205,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collSmsRankingOptionList !== null) {
+				foreach($this->collSmsRankingOptionList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -1458,6 +1472,14 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 				if ($this->collSmsOptionList !== null) {
 					foreach($this->collSmsOptionList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collSmsRankingOptionList !== null) {
+					foreach($this->collSmsRankingOptionList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1923,6 +1945,10 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			foreach($this->getSmsOptionList() as $relObj) {
 				$copyObj->addSmsOption($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getSmsRankingOptionList() as $relObj) {
+				$copyObj->addSmsRankingOption($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -3589,41 +3615,6 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$l->setPeople($this);
 	}
 
-
-	
-	public function getSmsListJoinClub($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseSmsPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSmsList === null) {
-			if ($this->isNew()) {
-				$this->collSmsList = array();
-			} else {
-
-				$criteria->add(SmsPeer::PEOPLE_ID, $this->getId());
-
-				$this->collSmsList = SmsPeer::doSelectJoinClub($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(SmsPeer::PEOPLE_ID, $this->getId());
-
-			if (!isset($this->lastSmsCriteria) || !$this->lastSmsCriteria->equals($criteria)) {
-				$this->collSmsList = SmsPeer::doSelectJoinClub($criteria, $con);
-			}
-		}
-		$this->lastSmsCriteria = $criteria;
-
-		return $this->collSmsList;
-	}
-
 	
 	public function initEventLivePlayerDisclosureSmsList()
 	{
@@ -5197,6 +5188,146 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$this->lastSmsOptionCriteria = $criteria;
 
 		return $this->collSmsOptionList;
+	}
+
+	
+	public function initSmsRankingOptionList()
+	{
+		if ($this->collSmsRankingOptionList === null) {
+			$this->collSmsRankingOptionList = array();
+		}
+	}
+
+	
+	public function getSmsRankingOptionList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsRankingOptionList === null) {
+			if ($this->isNew()) {
+			   $this->collSmsRankingOptionList = array();
+			} else {
+
+				$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+				SmsRankingOptionPeer::addSelectColumns($criteria);
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+				SmsRankingOptionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastSmsRankingOptionCriteria) || !$this->lastSmsRankingOptionCriteria->equals($criteria)) {
+					$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastSmsRankingOptionCriteria = $criteria;
+		return $this->collSmsRankingOptionList;
+	}
+
+	
+	public function countSmsRankingOptionList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+		return SmsRankingOptionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addSmsRankingOption(SmsRankingOption $l)
+	{
+		$this->collSmsRankingOptionList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getSmsRankingOptionListJoinRanking($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsRankingOptionList === null) {
+			if ($this->isNew()) {
+				$this->collSmsRankingOptionList = array();
+			} else {
+
+				$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinRanking($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastSmsRankingOptionCriteria) || !$this->lastSmsRankingOptionCriteria->equals($criteria)) {
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinRanking($criteria, $con);
+			}
+		}
+		$this->lastSmsRankingOptionCriteria = $criteria;
+
+		return $this->collSmsRankingOptionList;
+	}
+
+
+	
+	public function getSmsRankingOptionListJoinSmsTemplate($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsRankingOptionList === null) {
+			if ($this->isNew()) {
+				$this->collSmsRankingOptionList = array();
+			} else {
+
+				$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinSmsTemplate($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastSmsRankingOptionCriteria) || !$this->lastSmsRankingOptionCriteria->equals($criteria)) {
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinSmsTemplate($criteria, $con);
+			}
+		}
+		$this->lastSmsRankingOptionCriteria = $criteria;
+
+		return $this->collSmsRankingOptionList;
 	}
 
 } 

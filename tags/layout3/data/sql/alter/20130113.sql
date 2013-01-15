@@ -23,15 +23,21 @@ CREATE TABLE sms_template (
 );
 
 
+DROP TABLE IF EXISTS sms_option;
 DELETE FROM sms_template;
 INSERT INTO sms_template(template_name, tag_name, description, content, order_seq, created_at, updated_at) VALUES
-    ('Criação de evento', 'eventCreateNotify', 'Criação de novo evento', 'Evento criado: [eventName] - [eventDateTime] @rankingPlace
-Buyin: [buyinValue] #[rankingName]', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('Alteração de evento', 'eventChangeNotify', 'Alteração de evento agendado', 'Evento alterado: [eventName] - [eventDateTime] @rankingPlace
-Buyin: [buyinValue] #[rankingName]', 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('Exclusão de evento', 'eventDeleteNotify', 'Cancelamento de evento agendado', 'Evento cancelado: [eventName] - [eventDateTime] @rankingPlace
-Buyin: [buyinValue] #[rankingName]', 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
+    ('Criação de evento', 'eventCreateNotify', 'Criação de novo evento', 'EVENTO AGENDADO
+[eventName] - [eventDateTime] @[eventPlace]
+Buyin: [buyin]
+#[rankingName]', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('Alteração de evento', 'eventChangeNotify', 'Alteração de evento agendado', 'EVENTO ALTERADO
+[eventName] - [eventDateTime] @[eventPlace]
+Buyin: [buyin]
+#[rankingName]', 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('Exclusão de evento', 'eventDeleteNotify', 'Cancelamento de evento agendado', 'EVENTO CANCELADO
+[eventName] - [eventDateTime] @[eventPlace]
+Buyin: [buyin]
+#[rankingName]', 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 CREATE TABLE sms_option ( 
     people_id INTEGER NOT NULL,

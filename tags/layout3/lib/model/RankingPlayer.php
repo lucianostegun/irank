@@ -10,17 +10,17 @@
 class RankingPlayer extends BaseRankingPlayer
 {
 	
-	public function updateScore(){
+	public function updateScore($con=null){
 		
-		$totalScore = Util::executeOne('SELECT SUM(event_player.SCORE) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$totalScore = Util::executeOne('SELECT SUM(event_player.SCORE) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float', $con);
 		
 		$this->setTotalScore( $totalScore );
 	}
 	
-	public function updateBalance(){
+	public function updateBalance($con=null){
 		
-		$totalPaid  = Util::executeOne('SELECT SUM(event_player.ENTRANCE_FEE+event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
-		$totalPrize = Util::executeOne('SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$totalPaid  = Util::executeOne('SELECT SUM(event_player.ENTRANCE_FEE+event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float', $con);
+		$totalPrize = Util::executeOne('SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float', $con);
 		
 		$balanceValue = $totalPrize-$totalPaid;
 		$this->setTotalPaid(($totalPaid?$totalPaid:0.00));
@@ -29,18 +29,18 @@ class RankingPlayer extends BaseRankingPlayer
 		$this->setTotalAverage(($totalPaid?($totalPrize/$totalPaid):0));
 	}
 	
-	public function updateEvents(){
+	public function updateEvents($con=null){
 		
-		$events = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.ENABLED=TRUE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'int');
+		$events = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.ENABLED=TRUE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'int', $con);
 		$this->setTotalEvents($events);
 	}
 	
-	public function updateInfo(){
+	public function updateInfo($con=null){
 
-		$this->updateBalance();
-		$this->updateEvents();
-		$this->updateScore();
-		$this->save(); 
+		$this->updateBalance($con);
+		$this->updateEvents($con);
+		$this->updateScore($con);
+		$this->save($con); 
 	}
 	
 	public function getLastHistory($eventDate){

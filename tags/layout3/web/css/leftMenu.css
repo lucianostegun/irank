@@ -19,7 +19,7 @@
     position: 			relative;
 }
 
-#leftMenu .item.hover,
+#leftMenu .item:hover,
 #leftMenu .item.active,
 #leftMenu .item.stats {
 
@@ -62,7 +62,7 @@
 	padding: 	7px 7px 7px 6px;
 }
 
-#leftMenu .item.hover .iconRight,
+#leftMenu .item:hover .iconRight,
 #leftMenu .item .iconRight.active {
 
 	display: 	block
@@ -109,7 +109,7 @@
     margin-bottom: 		1px;
 }
 
-#leftMenu .subitem.hover {
+#leftMenu .subitem:hover {
 
     background-image: 	url(/images/layout/leftMenuDistinctBg.png), -moz-linear-gradient(top, #E6E6E6, #D6D6D6);
     background-image: 	url(/images/layout/leftMenuDistinctBg.png), -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#D6D6D6));

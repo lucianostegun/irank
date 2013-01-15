@@ -123,6 +123,8 @@
 		<column name="total_balance" type="NUMERIC" size="10" scale="2" />
 		<column name="total_average" type="NUMERIC" size="10" scale="2" />
 		<column name="allow_edit" type="BOOLEAN" />
+		<column name="suppress_email_notify" type="BOOLEAN" />
+		<column name="suppress_sms_notify" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -212,6 +214,7 @@
 		<column name="confirm_code" type="VARCHAR" />
 		<column name="invite_status" type="VARCHAR" />
 		<column name="allow_edit" type="BOOLEAN" />
+		<column name="suppress_notify" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
@@ -881,19 +884,13 @@
 
 	<table name="sms" phpName="Sms">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
-		<column name="club_id" type="INTEGER" />
 		<column name="people_id" type="INTEGER" />
-		<column name="token" type="VARCHAR" />
-		<column name="text_message" type="VARCHAR" />
-		<column name="total_messages" type="INTEGER" default="0" />
-		<column name="success_messages" type="INTEGER" default="0" />
-		<column name="error_messages" type="INTEGER" default="0" />
-		<column name="class_name" type="VARCHAR" />
-		<column name="object_id" type="INTEGER" />
+		<column name="phone_number" type="VARCHAR" />
+		<column name="message" type="VARCHAR" />
+		<column name="status_code" type="VARCHAR" />
+		<column name="status_message" type="VARCHAR" />
+		<column name="message_id" type="VARCHAR" />
 		<column name="created_at" type="TIMESTAMP" />
-		<foreign-key foreignTable="club">
-			<reference local="club_id" foreign="id" />
-		</foreign-key>
 		<foreign-key foreignTable="people">
 			<reference local="people_id" foreign="id" />
 		</foreign-key>
@@ -1561,6 +1558,24 @@
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="people">
 			<reference local="people_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="sms_template">
+			<reference local="sms_template_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="sms_ranking_option" phpName="SmsRankingOption">
+		<column name="people_id" type="INTEGER" primaryKey="true" />
+		<column name="ranking_id" type="INTEGER" primaryKey="true" />
+		<column name="sms_template_id" type="INTEGER" primaryKey="true" />
+		<column name="lock_send" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="people">
+			<reference local="people_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="ranking">
+			<reference local="ranking_id" foreign="id"/>
 		</foreign-key>
 		<foreign-key foreignTable="sms_template">
 			<reference local="sms_template_id" foreign="id"/>

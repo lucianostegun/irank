@@ -248,15 +248,28 @@ class myAccountActions extends sfActions
   
   public function executeDeletePendingInvite($request){
 
-	$peopleId        = MyTools::getAttribute('peopleId');  	
-  	$eventLiveId     = $request->getParameter('eventLiveId');
-  	$eventLiveIdList = People::getPendingInvites(true);
+	$peopleId    = MyTools::getAttribute('peopleId');  	
+  	$eventId     = $request->getParameter('id');
+  	$eventLiveId = $request->getParameter('id');
+  	$eventType   = $request->getParameter('eventType');
   	
-  	if( !in_array($eventLiveId, $eventLiveIdList) )
+  	
+  	$idList = People::getPendingInviteList(true, ($eventType=='event'?'home':'live'));
+  	
+  	if( !in_array($eventId, $idList) )
   		exit;
   	
-  	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPk($eventLiveId, $peopleId);
-  	$eventLivePlayerObj->save();
+  	if( $eventType=='event' ){
+  		
+	  	$eventPlayerObj = EventPlayerPeer::retrieveByPk($eventId, $peopleId);
+	  	$eventPlayerObj->setSuppressNotify(true);
+	  	$eventPlayerObj->save();
+  	}else{
+  		
+	  	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPk($eventLiveId, $peopleId);
+	  	$eventLivePlayerObj->save();
+  	}
+  	
   	exit;
   }
 
@@ -272,6 +285,8 @@ class myAccountActions extends sfActions
 	$this->throwException = true;
 	
 	$this->userSiteObj = UserSite::getCurrentUser();
+	
+	$this->forceDownload = true;
 	
 	$this->setLayout('pdf');
   }

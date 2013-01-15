@@ -50,6 +50,10 @@ class RankingPlayerMapBuilder {
 
 		$tMap->addColumn('ALLOW_EDIT', 'AllowEdit', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
+		$tMap->addColumn('SUPPRESS_EMAIL_NOTIFY', 'SuppressEmailNotify', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('SUPPRESS_SMS_NOTIFY', 'SuppressSmsNotify', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

@@ -32,6 +32,11 @@ class People extends BasePeople
 	    $this->setFullName($fullName);
 	}
 	
+	public function isMe(){
+		
+		return ($this->getId()==MyTools::getAttribute('peopleId'));
+	}
+	
 	public function getShareName(){
 		
 		$firstName = trim($this->getFirstName());
@@ -327,21 +332,22 @@ class People extends BasePeople
 		return EventPlayerPeer::doCount($criteria);
 	}
 	
-	public static function getPendingInvites($returnIdList=false){
+	public static function getPendingInviteList($returnIdList=false, $eventType){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
+		$eventType = ($eventType=='home'?'':'_'.$eventType);
 		
 		if( $returnIdList ){
 		
-			$eventLiveIdList = Util::executeOne("SELECT get_pending_invite_list($peopleId)", 'string');
-			if( empty($eventLiveIdList) )
+			$eventIdList = Util::executeOne("SELECT get_pending_event{$eventType}_invite_list($peopleId)", 'string');
+			if( empty($eventIdList) )
 				return array();
 			
-			return explode(',', $eventLiveIdList);
+			return explode(',', $eventIdList);
 		}else 
-			return Util::executeOne("SELECT get_pending_invites($peopleId)"); 
+			return Util::executeOne("SELECT get_pending_event{$eventType}_invites($peopleId)"); 
 	}
-	
+
 	public function getPeopleType(){
 		
 		return $this->getVirtualTable();

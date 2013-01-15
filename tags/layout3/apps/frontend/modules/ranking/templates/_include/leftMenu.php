@@ -9,17 +9,19 @@
 	<?php if( $isNew && $actionName=='index' ): ?>
 	<?php else: ?>
 		<?php if( $isMyRanking ): ?>
-		<div onclick="addRankingPlayer()" class="subitem" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon add">Novo jogador</div></div>
-		<div onclick="importRankingData()" class="subitem" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon import">Importar informações</div></div>
+		<div onclick="addRankingPlayer()" class="subitem"><div class="label icon add">Novo jogador</div></div>
+		<div onclick="importRankingData()" class="subitem"><div class="label icon import">Importar informações</div></div>
 		
 		<div class="separator"></div>
 		
-		<div onclick="doUnsubscribeRanking()" class="subitem" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon unsubscribe">Sair do ranking</div></div>
-		<div onclick="doDeleteRanking()" class="subitem" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon delete">Excluir ranking</div></div>
+		<div onclick="editRankingNotifications()" class="subitem"><div class="label icon notification">Editar notificações</div></div>
+		<div onclick="doUnsubscribeRanking()" class="subitem"><div class="label icon unsubscribe">Sair do ranking</div></div>
+		<div onclick="doDeleteRanking()" class="subitem"><div class="label icon delete">Excluir ranking</div></div>
 		<div class="separator"></div>
 		<?php else: ?>
 		<div class="separator"></div>
-		<div onclick="doUnsubscribeRanking()" class="subitem" onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')"><div class="label icon unsubscribe">Sair do ranking</div></div>
+		<div onclick="editRankingNotifications()" class="subitem"><div class="label icon notification">Editar notificações</div></div>
+		<div onclick="doUnsubscribeRanking()" class="subitem"><div class="label icon unsubscribe">Sair do ranking</div></div>
 		<?php endif; ?>
 	<?php endif; ?>
 </div>
