@@ -58,11 +58,13 @@ class Product extends BaseProduct
 	
 	public static function getList(Criteria $criteria=null){
 		
-		if( is_null($criteria) )
+		if( is_null($criteria) ){
+			
 			$criteria = new Criteria();
+			$criteria->add( ProductPeer::VISIBLE, true );
+		}
 			
 		$criteria->add( ProductPeer::ENABLED, true );
-		$criteria->add( ProductPeer::VISIBLE, true );
 		$criteria->add( ProductPeer::DELETED, false );
 		$criteria->addAscendingOrderByColumn( ProductPeer::CREATED_AT );
 		
