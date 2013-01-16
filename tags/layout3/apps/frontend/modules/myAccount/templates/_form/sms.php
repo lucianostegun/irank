@@ -19,7 +19,7 @@
 
 	<div class="row">
 		<div class="label">DDD/Telefone</div>
-		<div class="field"><?php echo input_tag('phoneDdd', $peopleObj->getPhoneDdd(), array('size'=>2, 'maxlength'=>2, 'id'=>'myAccountPhoneDdd')) ?></div>
+		<div class="field"><?php echo input_tag('phoneDdd', $peopleObj->getPhoneDdd(), array('size'=>2, 'maxlength'=>2, 'onkeyup'=>'goToField(this.value, 2, "myAccountPhoneNumber", event )', 'id'=>'myAccountPhoneDdd')) ?></div>
 		<div class="field"><?php echo input_tag('phoneNumber', $peopleObj->getPhoneNumber(), array('size'=>10, 'maxlength'=>10, 'onkeyup'=>'maskPhoneNoDDD(event)', 'id'=>'myAccountPhoneNumber')) ?></div>
 	</div>
 	<div class="row">

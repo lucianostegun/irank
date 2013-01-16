@@ -44,7 +44,7 @@ function loadUserCredit(){
 
 function loadHomeResume(){
 	
-	showDiv('userResume');
+	$('userResume').addClassName('logged');
 	
 	var urlAjax = _webRoot+'/home/getResume';
 	new Ajax.Updater('userResume', urlAjax, {asynchronous:true, evalScripts:false});

@@ -1,15 +1,14 @@
-<div id="userResume" class="<?php echo ($isAuthenticated?'logged':'') ?>" style="margin-bottom: 40px">
+<div id="userResume" class="<?php echo ($isAuthenticated?'logged':'') ?>" style="margin-bottom: 5px">
 <?php
 	if( $isAuthenticated ){
 		
 		include_partial('home/resume/events');
 		include_partial('home/resume/quickResume');
 	}
-	
-	Util::lightbox();
 ?>
-<div class="clear"></div>
 </div>
+<div class="clear"></div>
+<hr class="separator"/>
 <div style="float: left">
 <?php include_partial('home/include/highlight') ?>
 <?php include_partial('blog/include/highlight'); ?>

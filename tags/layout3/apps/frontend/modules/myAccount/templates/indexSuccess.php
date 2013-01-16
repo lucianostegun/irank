@@ -27,8 +27,8 @@
 	$dhtmlxTabBarObj->addTab('main', __('tab.main'), 'myAccount/form/main', array('userSiteObj'=>$userSiteObj));
 //	$dhtmlxTabBarObj->addTab('profile', 'Perfil', 'myAccount/form/profile', array('userSiteObj'=>$userSiteObj));
 //	$dhtmlxTabBarObj->addTab('options', 'Opções', 'myAccount/form/options', array('userSiteObj'=>$userSiteObj));
-	$dhtmlxTabBarObj->addTab('email', 'Notificações', 'myAccount/form/email', array('userSiteObj'=>$userSiteObj));
-	$dhtmlxTabBarObj->addTab('sms', 'SMS', 'myAccount/form/sms', array('userSiteObj'=>$userSiteObj));
+	$dhtmlxTabBarObj->addTab('email', 'Notificações', 'myAccount/form/email', array('userSiteObj'=>$userSiteObj, 'width'=>85));
+	$dhtmlxTabBarObj->addTab('sms', '<span class="new" title="Novidade">SMS </span>', 'myAccount/form/sms', array('userSiteObj'=>$userSiteObj, 'width'=>58));
 	$dhtmlxTabBarObj->addTab('schedule', 'Agenda', 'myAccount/form/schedule', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->setSelectedTabBarId($selectedTab);

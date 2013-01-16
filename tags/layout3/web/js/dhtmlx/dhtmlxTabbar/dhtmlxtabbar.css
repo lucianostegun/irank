@@ -38,6 +38,12 @@
 .dhx_tab_element span{
   white-space: nowrap;
 }
+.dhx_tab_element span.new{
+  color: #af3f22;
+  font-weight: bold;
+  padding-right: 20px;
+  background: url('/images/icon/notify.png') no-repeat right center;
+}
 .dhx_tab_element{
 	cursor:pointer;
 	text-align:center;
