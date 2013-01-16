@@ -1,0 +1,1 @@
+ALTER TABLE user_site ADD COLUMN beta_tester BOOLEAN DEFAULT FALSE;

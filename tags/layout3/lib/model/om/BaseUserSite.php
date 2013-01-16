@@ -57,6 +57,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 
 	
+	protected $beta_tester;
+
+
+	
 	protected $active;
 
 
@@ -235,6 +239,13 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	{
 
 		return $this->mobile_token;
+	}
+
+	
+	public function getBetaTester()
+	{
+
+		return $this->beta_tester;
 	}
 
 	
@@ -506,6 +517,16 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setBetaTester($v)
+	{
+
+		if ($this->beta_tester !== $v) {
+			$this->beta_tester = $v;
+			$this->modifiedColumns[] = UserSitePeer::BETA_TESTER;
+		}
+
+	} 
+	
 	public function setActive($v)
 	{
 
@@ -635,27 +656,29 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			$this->mobile_token = $rs->getString($startcol + 11);
 
-			$this->active = $rs->getBoolean($startcol + 12);
+			$this->beta_tester = $rs->getBoolean($startcol + 12);
 
-			$this->enabled = $rs->getBoolean($startcol + 13);
+			$this->active = $rs->getBoolean($startcol + 13);
 
-			$this->visible = $rs->getBoolean($startcol + 14);
+			$this->enabled = $rs->getBoolean($startcol + 14);
 
-			$this->deleted = $rs->getBoolean($startcol + 15);
+			$this->visible = $rs->getBoolean($startcol + 15);
 
-			$this->locked = $rs->getBoolean($startcol + 16);
+			$this->deleted = $rs->getBoolean($startcol + 16);
 
-			$this->last_access_date = $rs->getTimestamp($startcol + 17, null);
+			$this->locked = $rs->getBoolean($startcol + 17);
 
-			$this->created_at = $rs->getTimestamp($startcol + 18, null);
+			$this->last_access_date = $rs->getTimestamp($startcol + 18, null);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 19, null);
+			$this->created_at = $rs->getTimestamp($startcol + 19, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 20, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 20; 
+						return $startcol + 21; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserSite object", $e);
 		}
@@ -977,27 +1000,30 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				return $this->getMobileToken();
 				break;
 			case 12:
-				return $this->getActive();
+				return $this->getBetaTester();
 				break;
 			case 13:
-				return $this->getEnabled();
+				return $this->getActive();
 				break;
 			case 14:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 15:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 16:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 17:
-				return $this->getLastAccessDate();
+				return $this->getLocked();
 				break;
 			case 18:
-				return $this->getCreatedAt();
+				return $this->getLastAccessDate();
 				break;
 			case 19:
+				return $this->getCreatedAt();
+				break;
+			case 20:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1022,14 +1048,15 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$keys[9]=>$this->getSmsCredit(),
 			$keys[10]=>$this->getDeviceudid(),
 			$keys[11]=>$this->getMobileToken(),
-			$keys[12]=>$this->getActive(),
-			$keys[13]=>$this->getEnabled(),
-			$keys[14]=>$this->getVisible(),
-			$keys[15]=>$this->getDeleted(),
-			$keys[16]=>$this->getLocked(),
-			$keys[17]=>$this->getLastAccessDate(),
-			$keys[18]=>$this->getCreatedAt(),
-			$keys[19]=>$this->getUpdatedAt(),
+			$keys[12]=>$this->getBetaTester(),
+			$keys[13]=>$this->getActive(),
+			$keys[14]=>$this->getEnabled(),
+			$keys[15]=>$this->getVisible(),
+			$keys[16]=>$this->getDeleted(),
+			$keys[17]=>$this->getLocked(),
+			$keys[18]=>$this->getLastAccessDate(),
+			$keys[19]=>$this->getCreatedAt(),
+			$keys[20]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1082,27 +1109,30 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$this->setMobileToken($value);
 				break;
 			case 12:
-				$this->setActive($value);
+				$this->setBetaTester($value);
 				break;
 			case 13:
-				$this->setEnabled($value);
+				$this->setActive($value);
 				break;
 			case 14:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 15:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 16:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 17:
-				$this->setLastAccessDate($value);
+				$this->setLocked($value);
 				break;
 			case 18:
-				$this->setCreatedAt($value);
+				$this->setLastAccessDate($value);
 				break;
 			case 19:
+				$this->setCreatedAt($value);
+				break;
+			case 20:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1124,14 +1154,15 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[9], $arr)) $this->setSmsCredit($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setDeviceudid($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setMobileToken($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setActive($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setEnabled($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setVisible($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setDeleted($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setLocked($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setLastAccessDate($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setCreatedAt($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setUpdatedAt($arr[$keys[19]]);
+		if (array_key_exists($keys[12], $arr)) $this->setBetaTester($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setActive($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setEnabled($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setVisible($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setDeleted($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setLocked($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setLastAccessDate($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setCreatedAt($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setUpdatedAt($arr[$keys[20]]);
 	}
 
 	
@@ -1151,6 +1182,7 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserSitePeer::SMS_CREDIT)) $criteria->add(UserSitePeer::SMS_CREDIT, $this->sms_credit);
 		if ($this->isColumnModified(UserSitePeer::DEVICEUDID)) $criteria->add(UserSitePeer::DEVICEUDID, $this->deviceudid);
 		if ($this->isColumnModified(UserSitePeer::MOBILE_TOKEN)) $criteria->add(UserSitePeer::MOBILE_TOKEN, $this->mobile_token);
+		if ($this->isColumnModified(UserSitePeer::BETA_TESTER)) $criteria->add(UserSitePeer::BETA_TESTER, $this->beta_tester);
 		if ($this->isColumnModified(UserSitePeer::ACTIVE)) $criteria->add(UserSitePeer::ACTIVE, $this->active);
 		if ($this->isColumnModified(UserSitePeer::ENABLED)) $criteria->add(UserSitePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(UserSitePeer::VISIBLE)) $criteria->add(UserSitePeer::VISIBLE, $this->visible);
@@ -1210,6 +1242,8 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		$copyObj->setDeviceudid($this->deviceudid);
 
 		$copyObj->setMobileToken($this->mobile_token);
+
+		$copyObj->setBetaTester($this->beta_tester);
 
 		$copyObj->setActive($this->active);
 

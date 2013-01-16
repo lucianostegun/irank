@@ -1,10 +1,15 @@
+<?php
+	$userSiteObj = UserSite::getCurrentUser();
+	$peopleId    = $userSiteObj->getPeopleId();
+	
+	$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($rankingId, $peopleId);
+?>
 <div class="tabbarIntro">Selecione abaixo as notificações que deseja receber para os eventos criados para este ranking</div>
 <div class="defaultForm">
+	<?php if( $userSiteObj->getBetaTester() ): ?>
 	<h1>Notificações por SMS</h1>
 	<?php
-		$peopleId = $sf_user->getAttribute('peopleId');
 		
-		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($rankingId, $peopleId);
 		
 		$criteria = new Criteria();
 		$criteria->add( SmsRankingOptionPeer::PEOPLE_ID, $peopleId );
@@ -35,6 +40,7 @@
 	<br/>
 	<br/>
 	<h1>Notificações por e-mail</h1>
+	<?php endif; ?>
 	<div class="rowCheckbox mt5">
 		<div class="field"><?php echo checkbox_tag('suppressEmailNotify', true, $rankingPlayerObj->getSuppressEmailNotify(), array('id'=>'rankingSuppressEmailNotify')) ?></div>
 		<div class="label"><label for="rankingSuppressEmailNotify">Não receber notificações via <b>e-mail</b> para este ranking</label></div>

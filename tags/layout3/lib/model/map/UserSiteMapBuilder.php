@@ -58,6 +58,8 @@ class UserSiteMapBuilder {
 
 		$tMap->addColumn('MOBILE_TOKEN', 'MobileToken', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('BETA_TESTER', 'BetaTester', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('ACTIVE', 'Active', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
