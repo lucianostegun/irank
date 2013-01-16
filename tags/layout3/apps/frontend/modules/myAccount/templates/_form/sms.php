@@ -25,7 +25,7 @@
 	<div class="row">
 		<div class="label">Créditos</div>
 		<div class="text flex"><?php echo $userSiteObj->getSmsCredit() ?></div>
-		<div class="text"><?php echo link_to('Obter mais créditos', 'store/details?IRK-SMS=') ?></div>
+		<div class="text"><?php echo link_to('Obter mais créditos', 'store/details?IRK-SMS=', array('target'=>'_blank')) ?></div>
 	</div>
 	
 	<hr/>
