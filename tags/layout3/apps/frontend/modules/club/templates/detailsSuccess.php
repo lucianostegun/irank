@@ -24,6 +24,7 @@
 	$tab = $sf_params->get('tab');
 	
 	$pathList = array('Onde jogar'=>$moduleName.'/index', 
+					  $state=>$moduleName.'?state='.$state, 
 					  $clubName=>null);
 ?>
 <?php include_partial('home/component/commonBar', array('pathList'=>$pathList)); ?>
