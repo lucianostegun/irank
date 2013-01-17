@@ -17,6 +17,10 @@ class clubActions extends sfActions
   	
   	$this->clubObj = ClubPeer::retrieveByPK($this->clubId);
   	$this->clubObj->updateVisitCount();
+  	
+  	$this->facebookMetaList = array();
+	$this->facebookMetaList['image'] = array('http://[host]/images/club/'.$this->clubObj->getFileNameLogo());
+	$this->facebookMetaList['url']         = 'http://www.irank.com.br/'.$this->clubObj->getTagName();
   }
 
   public function executeGetTabContent($request){
@@ -31,5 +35,24 @@ class clubActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
 
 	return $this->renderText(get_partial('club/include/'.$tabId, array('clubObj'=>$clubObj)));
+  }
+
+  public function executeRate($request){
+  	
+  	$peopleId = $this->getUser()->getAttribute('peopleId');
+  	$rating   = $request->getParameter('rating');
+  	
+  	if( !$peopleId )
+  		throw new Exception('user not logged');
+  	
+  	$clubPlayerObj = ClubPlayerPeer::retrieveByPK($this->clubId, $peopleId);
+  	
+  	if( !is_object($clubPlayerObj) )
+  		throw new Exception('club/player not found');
+  	
+  	$clubPlayerObj->setRating($rating);
+  	$clubPlayerObj->save();
+  	
+  	exit;
   }
 }

@@ -13,7 +13,9 @@ function handleSuccessQuickLogin(content){
 	if( getModuleName()=='sign' )
 		return goToPage('myAccount', 'index');
 
-	loadHomeResume();
+	if( getModuleName()=='home' )
+		loadHomeResume();
+	
 	loadUserCredit();
 	hideIndicator();
 }

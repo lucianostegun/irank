@@ -160,7 +160,7 @@ class homeActions extends sfActions
 	
 	$scriptName = $request->getScriptName();
 	$hostname   = $request->getHost();
-	$isDebug    = $scriptName=='debug.php';
+	$isDebug    = $scriptName=='/debug.php';
 	
 	if( sfConfig::get('sf_no_script_name') && !$isDebug )
 		$scriptName = '';

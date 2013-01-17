@@ -1,12 +1,49 @@
-<?php include_partial('home/component/commonBar', array('pathList'=>array('Onde jogar'=>$moduleName.'/index'))); ?>
+<?php
+	$stateId = null;
+	$state   = $sf_params->get('state');
+	
+	$pathList = array('Onde jogar'=>$moduleName.'/index');
+	if( $state )
+		$pathList[$state] = null;
+	
+	include_partial('home/component/commonBar', array('pathList'=>$pathList));
+?>
 <div class="moduleIntro">
+	<?php echo image_tag('club', array('align'=>'left', 'style'=>'margin-right: 15px; margin-top: -10px')) ?>
 	Confira abaixo os melhores lugares para participar de eventos presenciais em sua cidade.<br/><br/>
-	Não encontrou a casa que procurava? <b><?php echo link_to('Clique aqui', 'contact/index') ?></b> e entre em contato conosco.
+	Você também pode ajudar a manter o cadastro de clubes sempre atualizado.<br>
+	<b><?php echo link_to('Entre em contato', 'contact/index') ?></b> para nos informar sobre novos clubes ou para notificar informações dos clubes já cadastrados.
 </div>
-
+<hr class="separator"/>
+<div class="clubStateFilter">
+<?php
+	$initialList = array();
+	foreach(State::getList() as $stateObj)
+		$initialList[] = $stateObj->getInitial();
+	
+	sort($initialList);
+	
+	foreach($initialList as $initial)
+		echo link_to($initial, 'club?state='.$initial, array('class'=>($state==$initial?'selected':'')));
+		
+	$stateObj = StatePeer::retrieveByInitial($state);
+	
+	if( is_object($stateObj) )
+		$stateId = $stateObj->getId();
+?>
+</div>
+<hr class="separator"/>
+<?php if( $stateId ): ?>
+	<div class="ml20 mt10">Filtrando clubes do estado de <b><?php echo $stateObj->getStateName() ?></b></div>
+<?php endif; ?>
 <div id="houseList">
 	<?php
-		$clubObjList = Club::getList();
+		$criteria = new Criteria();
+		$criteria->addJoin( ClubPeer::CITY_ID, CityPeer::ID, Criteria::INNER_JOIN );
+		if( $stateId )
+			$criteria->add( CityPeer::STATE_ID, $stateId );
+		
+		$clubObjList = Club::getList($criteria);
 		foreach($clubObjList as $clubObj):
 		
 			$clubId          = $clubObj->getId();
@@ -26,8 +63,10 @@
 			$clubSiteLink    = str_ireplace('http://http://', 'http://', $clubSiteLink);
 			$phoneNumberList = $clubObj->getPhoneNumberList();
 			
-			if( $mapsLink )
-				$mapsLink = link_to(image_tag('mapsPin', array('align'=>'absmiddle')).'mapa', $mapsLink, array('target'=>'_blank'));
+//			if( $mapsLink )
+//				$mapsLink = link_to(image_tag('mapsPin', array('align'=>'absmiddle')).'mapa', $mapsLink, array('target'=>'_blank'));
+			
+			$clubSite = str_replace('www.', '', $clubSite);
 	?>
 	<div class="house">
 		<div class="logo"><?php echo link_to(image_tag('club/'.$fileNameLogo), '#goToPage("'.$tagName.'", "", "", "")') ?></div>
@@ -35,7 +74,7 @@
 			<div class="profile">
 				<h1><?php echo link_to($clubName, '#goToPage("'.$tagName.'", "", "", "")') ?></h1>
 				<div class="address"><?php echo $addressName ?>, <?php echo $addressNumber ?><?php echo ($addressQuarter?', <span title="Bairro">'.$addressQuarter.'</span>':'') ?></div>
-				<div class="address"><span title="Cidade"><?php echo $city ?></span>, <span title="Estado"><?php echo $initial ?></span> <?php echo $mapsLink ?> <?php echo ($clubSiteLink?link_to($clubSite, $clubSiteLink, array('class'=>'clubSite', 'target'=>$clubSiteTarget)):'') ?></div>
+				<div class="address"><span title="Cidade"><?php echo $city ?></span>, <span title="Estado"><?php echo $initial ?></span> <?php echo ($clubSiteLink?link_to($clubSite, $clubSiteLink, array('class'=>'clubSite', 'target'=>$clubSiteTarget)):'') ?></div>
 				<div class="phoneList">
 					<?php foreach($phoneNumberList as $phoneNumber): ?>
 					<div class="phone"><?php echo $phoneNumber ?></div>
@@ -45,9 +84,19 @@
 			<div class="links">
 				<?php echo button_tag('details', 'DETALHES', array('style'=>'position: relative; top: 60px; left: 20px', 'image'=>'details.png', 'onclick'=>'goToPage("club", "details", "id", '.$clubId.')')) ?>
 				<div class="clear"></div>
-				<?php echo button_tag('events', 'EVENTOS', array('style'=>'position: relative; top: 70px; left: 20px;', 'image'=>'calendar.png', 'onclick'=>'goToPage("eventLive", "index", "clubId", '.$clubId.')')) ?>
+				<?php echo button_tag('location', 'LOCALIZAÇÃO', array('style'=>'position: relative; top: 70px; left: -1px;', 'image'=>'../club/mapsPin.png', 'onclick'=>'goModule("club", "details", "id", '.$clubId.', false, false, "tab", "location")')) ?>
 			</div>
 		</div>
 	</div>
-	<?php endforeach; ?>
+	<?php
+		endforeach;
+		
+		if( empty($clubObjList) ):
+	?>
+	<div class="clubNotFound">
+	Infelizmente não foi encontrado nenhum clube para o estado selecionado!<br/><br/>
+	Conhece algum clube da região que não esteja cadatrado no <b>iRank</b>?<br/>
+	<b><?php echo link_to('Entre em contato', 'contact/index') ?></b> informando o nome, site e endereço do clube para que possamos cadastrá-lo.
+	</div>	
+	<?php endif; ?>
 </div>

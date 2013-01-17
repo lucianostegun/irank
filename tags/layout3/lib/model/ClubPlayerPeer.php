@@ -19,6 +19,8 @@ class ClubPlayerPeer extends BaseClubPlayerPeer
 			$clubPlayerObj = new ClubPlayer();
 			$clubPlayerObj->setClubId($clubId);
 			$clubPlayerObj->setPeopleId($peopleId);
+			
+			// Não pode ter um save aqui porque tem lugares que esperam verificar se é NEW (Detalhes de clubes, por exemplo)
 		}
 		
 		return $clubPlayerObj;

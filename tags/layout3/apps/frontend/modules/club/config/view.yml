@@ -1,4 +1,10 @@
 all:
 
+  metas:
+    robots:          index, follow
+    description:     Quer saber onde é o clube de poker mais perto de sua cidade? O iRank possui o cadastro mais completo e atualizado dos principais clubes espalhados por todo o Brasil.
+    keywords:        clube, casa, poker, brasil, são paulo, rio de janeiro, paraná, onde, jogar, cidade, torneios, etapa, cadastro
+    language:        pt
+
   stylesheets:    [eventLiveCalendar, table, lightbox, club]
   javascripts:    [eventLiveCalendar, /sf/prototype/js/scriptaculous, lightbox, club]

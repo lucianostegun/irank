@@ -13,7 +13,7 @@ abstract class BaseClubPlayerPeer {
 	const CLASS_DEFAULT = 'lib.model.ClubPlayer';
 
 	
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 4;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -26,6 +26,9 @@ abstract class BaseClubPlayerPeer {
 	const PEOPLE_ID = 'club_player.PEOPLE_ID';
 
 	
+	const RATING = 'club_player.RATING';
+
+	
 	const CREATED_AT = 'club_player.CREATED_AT';
 
 	
@@ -34,19 +37,19 @@ abstract class BaseClubPlayerPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('ClubId', 'PeopleId', 'CreatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (ClubPlayerPeer::CLUB_ID, ClubPlayerPeer::PEOPLE_ID, ClubPlayerPeer::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('club_id', 'people_id', 'created_at', ),
-		BasePeer::TYPE_ALIAS=>array ('CLUB_ID'=>'', 'PEOPLE_ID'=>'', 'CREATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME=>array ('ClubId', 'PeopleId', 'Rating', 'CreatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (ClubPlayerPeer::CLUB_ID, ClubPlayerPeer::PEOPLE_ID, ClubPlayerPeer::RATING, ClubPlayerPeer::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('club_id', 'people_id', 'rating', 'created_at', ),
+		BasePeer::TYPE_ALIAS=>array ('CLUB_ID'=>'', 'PEOPLE_ID'=>'', 'RATING'=>'', 'CREATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('ClubId'=>0, 'PeopleId'=>1, 'CreatedAt'=>2, ),
-		BasePeer::TYPE_COLNAME=>array (ClubPlayerPeer::CLUB_ID=>0, ClubPlayerPeer::PEOPLE_ID=>1, ClubPlayerPeer::CREATED_AT=>2, ),
-		BasePeer::TYPE_FIELDNAME=>array ('club_id'=>0, 'people_id'=>1, 'created_at'=>2, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME=>array ('ClubId'=>0, 'PeopleId'=>1, 'Rating'=>2, 'CreatedAt'=>3, ),
+		BasePeer::TYPE_COLNAME=>array (ClubPlayerPeer::CLUB_ID=>0, ClubPlayerPeer::PEOPLE_ID=>1, ClubPlayerPeer::RATING=>2, ClubPlayerPeer::CREATED_AT=>3, ),
+		BasePeer::TYPE_FIELDNAME=>array ('club_id'=>0, 'people_id'=>1, 'rating'=>2, 'created_at'=>3, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, )
 	);
 
 	
@@ -103,6 +106,8 @@ abstract class BaseClubPlayerPeer {
 		$criteria->addSelectColumn(ClubPlayerPeer::CLUB_ID);
 
 		$criteria->addSelectColumn(ClubPlayerPeer::PEOPLE_ID);
+
+		$criteria->addSelectColumn(ClubPlayerPeer::RATING);
 
 		$criteria->addSelectColumn(ClubPlayerPeer::CREATED_AT);
 

@@ -15,7 +15,7 @@ function goModule(module, action, fieldName, fieldValue, newWindow, argumentList
 		if( argumentList.length > 6 )
 			for(var i=6; i < argumentList.length; i++, i++)
 				urlLocation += '/'+argumentList[i]+'/'+argumentList[i+1];
-		
+
 		if( newWindow )
 			window.open(urlLocation);
 		else
