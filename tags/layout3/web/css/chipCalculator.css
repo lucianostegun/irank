@@ -22,6 +22,11 @@
 	height: 220px;
 }
 
+.chipList.amount {
+
+	height: auto;
+}
+
 .stepPaginator {
 
 	margin: 0px 0px 0px 0px;
@@ -65,6 +70,14 @@
 	cursor: default;
 }
 
+.chip.amount {
+
+	display: inline-block;
+	cursor: default;
+	float: left;
+	width: 200px;
+}
+
 .chip.result span {
 
 	position: absolute;
@@ -94,7 +107,8 @@
 }
 
 .chip.active,
-.chip.result {
+.chip.result,
+.chip.amount {
 	
 	background-position: 0px -75px;
 }
@@ -130,7 +144,7 @@
 .steps .step .intro {
  
  	margin: 20px 20px 20px 50px;
- 	font-size: 14px;
+ 	font-size: 12px;
  	line-height: 22px
  }
 
@@ -258,7 +272,8 @@
 	font-size: 16px;
 }
 
-.defaultForm .row .field input {
+.defaultForm .row .field input,
+.chip.amount input {
 
 	font-size: 20px;
 	height: 28px;
@@ -268,6 +283,14 @@
 	-webkit-border-radius: 	5px;
 	border-radius: 			5px;
 	color: #505050;
+}
+
+.chip.amount input {
+
+	position: relative;
+	width: 50px;
+	left: 100px;
+	top: 18px;
 }
 
 .defaultForm .row .field input[type=checkbox] {
@@ -285,4 +308,15 @@
 .hor-minimalist-a {
 
 	margin: 20px 30px
+}
+
+a#advancedChipOptions {
+
+	position: relative;
+	left: 50px;
+	font-size: 12px
+}
+
+#advancedChipOptionsDiv {
+
 }

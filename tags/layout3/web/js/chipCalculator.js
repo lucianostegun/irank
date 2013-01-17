@@ -207,7 +207,8 @@ function selectChip(Element){
 	
 	if( Element.hasClassName('active') ){
 		
-		Element.removeClassName('active')
+		Element.removeClassName('active');
+		hideDiv(Element.id.replace('chip-', 'chipAmount-'));
 	}else{
 		
 		var chipDivList = document.getElementsByClassName('chip active');
@@ -215,6 +216,7 @@ function selectChip(Element){
 			return;
 		
 		Element.addClassName('active');
+		showDiv(Element.id.replace('chip-', 'chipAmount-'));
 	}
 }
 
@@ -362,4 +364,12 @@ function getChipSet(forceRandom){
 	
 	var urlAjax = _webRoot+'/chipCalculator/getChipSet';
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize($('chipCalculatorForm'))});
+}
+
+function showAdvancedChipOptions(){
+	
+	showDiv('advancedChipOptionsDiv');
+	hideDiv('advancedChipOptions');
+	
+	location.hash = '#chips';
 }

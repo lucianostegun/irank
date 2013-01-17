@@ -55,7 +55,7 @@
 		</div>
 	</div>
 	<div class="step hidden" id="step-002">
-		<h1>Opções avançadas</h1>
+		<h1>Opções de blinds</h1>
 		<div class="intro">
 			Os campos abaixo irão definir a melhor estrutura de blinds para seu evento.<br/>
 			Caso queira apenas calcular a divisão de fichas, clique em "Ignorar"
@@ -98,20 +98,42 @@
 			Selecione entre 3 e 6 fichas que você tem disponíveis.<br/>
 			Para o stack inicial de <b><span id="startStackLabel">5000</span></b> recomenda-se utilizar fichas de <b><span id="suggestChipLabel"></span></b></b>
 		</div>
-		<div class="defaultForm">
+		<div class="defaultForm" id="chips">
 			<div class="chipList">
 				<?php
 					$chipList = array(1,5,10,25,50,100,500,1000,5000,10000);
 					foreach($chipList as $chip):
 				?>
-				<div class="chip <?php echo ($chip<0?'active':'') ?>" id="chip-<?php echo abs($chip) ?>" onclick="selectChip(this)" style="background-image: url('/images/chipCalculator/chip<?php echo abs($chip) ?>.png')">
+				<div class="chip" id="chip-<?php echo abs($chip) ?>" onclick="selectChip(this)" style="background-image: url('/images/chipCalculator/chip<?php echo abs($chip) ?>.png')">
 					<div class="check"></div>
 				</div>
 				<?php
 					endforeach;
 				?>
 			</div>
-		
+			<a href="javascript:void(0)" onclick="showAdvancedChipOptions()" id="advancedChipOptions">Exibir opções avançadas</a>
+			<div class="clear"></div>
+		</div>
+		<div class="defaultForm hidden" id="advancedChipOptionsDiv">
+			<h1>Opções avançadas</h1>
+			<div class="intro">
+				Para garantir que a distribuição de fichas será suficiente para todos os jogadores,<br/>
+				informe abaixo a quantidade disponível para cada ficha selecionada.
+			</div>
+			<div class="chipList amount">
+				<?php
+					foreach($chipList as $chip):
+				?>
+				<div class="chip amount" id="chipAmount-<?php echo abs($chip) ?>" style="background-image: url('/images/chipCalculator/chip<?php echo abs($chip) ?>.png'); display: <?php echo ($chip<0?'inline-block':'none') ?>">
+					<?php echo input_tag('chipAmount-'.$chip, null, array('maxlength'=>3, 'id'=>'chipCalculatorChipAmount-'.$chip)) ?>
+				</div>
+				<?php
+					endforeach;
+				?>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="defaultForm">
 			<div class="intro note" id="deepStackExchangeChipsTip"><b>Lembrete:</b> As fichas de 1 e 5 podem ser utilizadas como 1000 e 5000 caso seja necessário.</div>
 		</div>
 	</div>

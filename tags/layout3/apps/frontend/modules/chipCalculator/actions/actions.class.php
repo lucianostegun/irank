@@ -45,17 +45,21 @@ class chipCalculatorActions extends sfActions
   	if( preg_match('/^[0-9]* ?k$/i', $startStack) )
   		$startStack = preg_replace('/k/i', '', $startStack)*1000;
   	
-  	$chipList    = explode(',', $chipList);
-  	$convertList = array();
-
+  	$chipList       = explode(',', $chipList);
+  	$convertList    = array();
+  	$chipAmountList = array();
 
 	// Verifica se o stack é muito grande e usa as fichas baixas como se fossem maiores (Ex.: Ficha de 1 sendo utilizada com ficha de 1000)
 	foreach($chipList as $key=>$chip){
 		
+		$chipAmount            = $request->getParameter('chipAmount-'.$chip);
+		$chipAmountList[$chip] = $chipAmount;
+		
 		if( $chip==10 && $startStack > 1000 && !in_array(1000, $chipList) ){
 			
 			$chipList[$key] *= 100;
-			$convertList[$chip] = $chipList[$key];
+			$convertList[$chip]              = $chipList[$key];
+			$chipAmountList[$chipList[$key]] = $chipAmount;
 			continue;
 		}
 		
@@ -71,7 +75,8 @@ class chipCalculatorActions extends sfActions
 				}
 				
 				$chipList[$key] *= 1000;
-				$convertList[$chip] = $chipList[$key];
+				$convertList[$chip]              = $chipList[$key];
+				$chipAmountList[$chipList[$key]] = $chipAmount;
 			}
 			
 		if( !array_key_exists($chip, $convertList) && $chip < 25 && $chip < $startStack/100 ||
@@ -90,9 +95,6 @@ class chipCalculatorActions extends sfActions
 	
 	sort($chipList);
 	
-//	prexit($chipList);
-	
-
 	if( $forceRandom )
 		$chipSet = $this->getChipSetRandom($chipList, $startStack);
 	else
