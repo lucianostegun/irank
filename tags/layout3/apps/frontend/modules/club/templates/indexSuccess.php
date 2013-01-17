@@ -84,7 +84,7 @@
 			<div class="links">
 				<?php echo button_tag('details', 'DETALHES', array('style'=>'position: relative; top: 60px; left: 20px', 'image'=>'details.png', 'onclick'=>'goToPage("club", "details", "id", '.$clubId.')')) ?>
 				<div class="clear"></div>
-				<?php echo button_tag('location', 'LOCALIZAÇÃO', array('style'=>'position: relative; top: 70px; left: -1px;', 'image'=>'../club/mapsPin.png', 'onclick'=>'goModule("club", "details", "id", '.$clubId.', false, false, "tab", "location")')) ?>
+				<?php echo button_tag('location', 'LOCALIZAÇÃO', array('style'=>'position: relative; top: 70px; left: -1px;', 'image'=>'mapsPin.png', 'onclick'=>'goModule("club", "details", "id", '.$clubId.', false, false, "tab", "location")')) ?>
 			</div>
 		</div>
 	</div>
