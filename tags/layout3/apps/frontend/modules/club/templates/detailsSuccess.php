@@ -63,7 +63,7 @@
 							<ul id="clubRating" class="<?php echo ($clubRating?"rating-$clubRating":'') ?>">
 								<?php
 									foreach($ratingList as $key=>$rating)
-										echo "<li class=\"star\" id=\"star-{$key}\" onclick=\"rateClub($clubId, {$key})\" onmouseover=\"hoverStar({$key}, '$rating')\" onmouseout=\"hoverStar('')\" title=\"Avalie este clube &quot;$rating&quot;\"></li>";
+										echo "<li class=\"star\" id=\"star-{$key}\" onclick=\"rateClub($clubId, {$key})\" onmouseover=\"hoverStar({$key}, '$rating')\" onmouseout=\"hoverStar('')\" title=\"Avalie este clube como &quot;$rating&quot;\"></li>";
 								?>
 								<span id="ratingDescription" title="<?php echo $ratingList[$userRating] ?>"><?php echo ($userRating?'Sua avaliação: <b>'.$ratingList[$userRating].'</b>':'avalie este clube') ?></span>
 							<ul>
