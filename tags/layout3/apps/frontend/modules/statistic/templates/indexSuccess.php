@@ -1,5 +1,5 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array(__('statistic.title')=>null))); ?>
-<?php echo image_tag('statistic', array('logo')) ?>
+<?php echo image_tag('statistic', array('class'=>'logo')) ?>
 <div class="moduleIntro image">
 	A geração de estatísticas ajuda você a conhecer melhor seu próprio jogo através relatórios com o resultado completo de todos os eventos de um determinado ranking.
 	<br/><br/>
@@ -8,6 +8,7 @@
 </div>
 <hr class="separator"/>
 <div align="center">
+<?php if( $sf_user->isAuthenticated() ): ?>
 	<table border="0" cellspacing="0" cellpadding="0" class="formTable" style="width: 600px">
 		<tr>
 			<th><h1>Estatísticas</h1></th>
@@ -59,4 +60,7 @@
 			</td>
   		</tr>
 	</table>
+<?php else: ?>
+	<div class="mt40">Para gerar as estatísticas você precisa estar cadastrado e logado no site.</div>
+<?php endif; ?>
 </div>
