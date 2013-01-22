@@ -26,7 +26,7 @@ class Kinghost
 	private $password = 'iR4nk2012API';
 
 	// internal constant to enable/disable debugging
-	const DEBUG = false;
+	const DEBUG = true;
 
 	// url for the api
 	private $KinghostApiUrl = 'https://api.kinghost.net/';

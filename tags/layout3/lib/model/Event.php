@@ -425,7 +425,7 @@ class Event extends BaseEvent
 			$peopleObj        = $eventPlayerObj->getPeople();
 			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $eventPlayerObj->getPeopleId());
 			
-			if( $peopleObj->isMe() || $rankingPlayerObj->getSuppressEmailNotify() )
+			if( $peopleObj->isMe() )
 				continue;
 			
 			$userSiteObj  = $peopleObj->getUserSite();
@@ -438,16 +438,18 @@ class Event extends BaseEvent
 			$emailContent = str_replace('[confirmCode]', $eventPlayerObj->getConfirmCode(), $emailContent);
 
 			// Envio de notificação por email
-			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
+			if( !$rankingPlayerObj->getSuppressEmailNotify() )
+				Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 			
 			if( is_object($userSiteObj) && $userSiteObj->getSmsCredit() > 0 ){
 				
-				if( !SmsOption::checkOption($peopleObj->getId(), $templateName) ||
-					!SmsRankingOption::checkOption($peopleObj->getId(), $this->getRankingId(), $templateName) )
-					continue;
-				
 			  	$phoneNumber = $peopleObj->getPhoneDdd().$peopleObj->getPhoneNumber();
 			  	
+				if( !SmsOption::checkOption($peopleObj->getId(), $templateName) ||
+					!SmsRankingOption::checkOption($peopleObj->getId(), $this->getRankingId(), $templateName) ||
+					!preg_match('/^[0-9]{2}[0-9]{4,5}\-?[0-9]{4}$/', $phoneNumber) )
+					continue;
+
 		  		$smsObj = new Sms();
 		  		$smsObj->setPeopleId($peopleObj->getId());
 		  		$smsObj->setPhoneNumber($phoneNumber);
@@ -568,11 +570,12 @@ class Event extends BaseEvent
 			
 			if( is_object($userSiteObj) && $userSiteObj->getSmsCredit() > 0 ){
 				
-				if( !SmsOption::checkOption($peopleObj->getId(), $templateName) || 
-					!SmsRankingOption::checkOption($peopleObj->getId(), $this->getRankingId(), $templateName) )
-					continue;
-				
 			  	$phoneNumber = $peopleObj->getPhoneDdd().$peopleObj->getPhoneNumber();
+			  	
+				if( !SmsOption::checkOption($peopleObj->getId(), $templateName) || 
+					!SmsRankingOption::checkOption($peopleObj->getId(), $this->getRankingId(), $templateName) ||
+					!preg_match('/^[0-9]{2}[0-9]{4,5}\-?[0-9]{4}$/', $phoneNumber) )
+					continue;
 			  	
 		  		$smsObj = new Sms();
 		  		$smsObj->setPeopleId($peopleObj->getId());
