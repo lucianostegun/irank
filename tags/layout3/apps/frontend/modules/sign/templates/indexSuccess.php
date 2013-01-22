@@ -1,7 +1,11 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array('Cadastro'=>null))); ?>
-<div class="moduleIntro">
-	<?php echo __('sign.intro') ?>
+<?php echo image_tag('sign', array('class'=>'logo')) ?>
+<div class="moduleIntro image">
+	Crie seu cadastro e tenha acesso agora mesmo a criação de rankings, eventos,<br/>
+	controle de bankroll, geração de estatísticas e muito mais.<br/><br/>
+	É simples, rápido e gratuito. 
 </div>
+<hr class="separator"/>
 <div align="center">
 	<?php
 		echo form_remote_tag(array(
@@ -12,7 +16,6 @@
 			), array( 'id'=>'signForm' ));
 	?>
 	<div class="defaultForm">
-		<h1><?php echo __('sign.signUpForm') ?></h1>
 		<div>
 			<div class="row">
 				<div class="label" id="signUsernameLabel">Username</div>

@@ -1,11 +1,11 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array(__('accessDenied.title')=>null))); ?>
-<div class="moduleIntro">
-<?php echo image_tag('lock', array('align'=>'left', 'style'=>'margin: 0px 15px 15px 15px')) ?>
-			A área que você está tentando acessar é exclusiva a usuários cadastrados!<br/>
-			Se você ainda não é cadastrado <?php echo link_to(__('clickHere'), 'sign', array('style'=>'font-weight: bold')) ?> e cadastre-se gratuitamente.<br/><br/>
-			Caso você já seja um usuário, informe deus dados de acesso no formulário abaixo.
+<?php echo image_tag('lock', array('class'=>'logo')) ?>
+<div class="moduleIntro image">
+	A área que você está tentando acessar é exclusiva para usuários cadastrados!<br/>
+	Se você ainda não é cadastrado <?php echo link_to(__('clickHere'), 'sign', array('style'=>'font-weight: bold')) ?> e cadastre-se gratuitamente.<br/><br/>
+	Caso você já seja um usuário, informe deus dados de acesso no formulário abaixo.
 </div>
-
+<hr class="separator"/>
 <div id="signLoginTable">
 	<table cellpadding="5" cellspacing="0">
 		<thead>
@@ -77,7 +77,7 @@
 			<td valign="top">
 				<table class="quickForm" cellspacing="0" cellpadding="3" style="width: 300px">
 					<tr>
-						<td colspan="2" class="pb10">Ainda não é usuário iRank?<br/>Clique no botão abaixo, cadastre-se gratuitamente e comece agora mesmo a gerenciar seus torneios e seu bankroll.</td>
+						<td colspan="2" class="pb10">Ainda não é usuário?<br/>Clique no botão abaixo, cadastre-se gratuitamente e comece agora mesmo a gerenciar seus torneios e seu bankroll.</td>
 					</tr>
 					<tr>
 						<td colspan="2" class="textC"><?php echo link_to(image_tag('store/signUp'), 'sign/index') ?></td>

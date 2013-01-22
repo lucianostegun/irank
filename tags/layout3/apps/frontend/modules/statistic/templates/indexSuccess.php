@@ -1,8 +1,12 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array(__('statistic.title')=>null))); ?>
-
-<div class="moduleIntro">
-	<?php echo __('statistic.intro') ?>
+<?php echo image_tag('statistic', array('logo')) ?>
+<div class="moduleIntro image">
+	A geração de estatísticas ajuda você a conhecer melhor seu próprio jogo através relatórios com o resultado completo de todos os eventos de um determinado ranking.
+	<br/><br/>
+	Utilize os gráficos para identificar sua melhor fase durante o ano. Compare sua posição no ranking com o primeiro.
+	Você também pode obter um relatório detalhado de seus gastos, ganhos e balanço financeiro.
 </div>
+<hr class="separator"/>
 <div align="center">
 	<table border="0" cellspacing="0" cellpadding="0" class="formTable" style="width: 600px">
 		<tr>

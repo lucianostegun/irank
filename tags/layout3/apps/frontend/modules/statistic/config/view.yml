@@ -1,4 +1,11 @@
 all:
 
+  metas:
+    robots:          index, follow
+    title:           iRank - Estatísticas
+    description:     Gerar gráficos e planilhas com o histórico de resultados de seu grupo e acompanhe seu desempenho nos jogos.
+    keywords:        estatisticas, poker, planilhas, gráficos, resultados, acompanhamento, desempenho, jogos, histórico, melhorar, matemática
+    language:        pt
+    
   stylesheets:    [form, table, statistic]
   javascripts:    [statistic]

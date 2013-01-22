@@ -1,11 +1,11 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array(__('contact.title')=>'contact/index'))); ?>
-<div class="moduleIntro">
-	<?php echo image_tag('email', array('align'=>'left', 'style'=>'margin-right: 10px; position: relative; top: -5px')) ?>
-	Editando as preferências de envio de e-mail para o endereço <b><?php echo $emailAddress ?></b>.<br/>
+<?php echo image_tag('emailOption', array('class'=>'logo')) ?>
+<div class="moduleIntro image">
+	Editando as preferências de envio de e-mail para o endereço <b><?php echo $emailAddress ?></b>.<br/><br/>
 	Selecione os tipos de mensagem que NÃO deseja receber neste endereço.<br/>
 	Você poderá editar suas opções de recebimento sempre que desejar.
 </div>
-<div class="clear"></div>
+<hr class="separator"/>
 <?php
 	echo form_remote_tag(array(
 		'url'=>'emailOption/save',
@@ -28,7 +28,7 @@
 	foreach($emailOptionObjList as $emailOptionObj)
 		$emailTemplateIdList[] = $emailOptionObj->getEmailTemplateId();
 ?>
-<div class="defaultForm" style="margin: 50px 30px 0px 30px; padding: 20px 0px">
+<div class="defaultForm" style="margin: 10px 30px 0px 30px; padding: 0px 0px 20px 0px">
 	<?php
 		$criteria = new Criteria();
 		$criteria->add( EmailTemplatePeer::IS_OPTION, true);

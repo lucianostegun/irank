@@ -11,6 +11,7 @@
 	cadastrando separadamente todos os eventos que participou durante o ano e controlando tudo o que gastou<br/>
 	seus prêmios e mantendo um histórico completo de seu desempenho.
 </div>
+<hr class="separator"/>
 <?php
 	echo form_tag('eventPersonal/search', array('id'=>'eventPersonalSearchForm', 'onsubmit'=>'doEventPersonalSearch(); return false'));
 	echo input_hidden_tag('isIE', null);

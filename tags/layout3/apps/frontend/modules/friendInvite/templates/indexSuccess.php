@@ -2,7 +2,7 @@
 <div class="moduleIntro">
 	<?php echo __('friendInvite.intro') ?>
 </div>
-
+<hr class="separator"/>
 <div class="textC">
 	<table cellspacing="0" cellpadding="0" class="formTable" style="margin-left: 20px; width: 750px">
 		<tr class="header">

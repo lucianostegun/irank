@@ -8,11 +8,11 @@
 	
 	include_partial('home/component/commonBar', array('pathList'=>$pathList));
 ?>
-<div class="moduleIntro">
-	<?php echo image_tag('club', array('align'=>'left', 'style'=>'margin-right: 15px; margin-top: -10px')) ?>
+<?php echo image_tag('club', array('class'=>'logo')) ?>
+<div class="moduleIntro image">
 	Confira abaixo os melhores lugares para participar de eventos presenciais em sua cidade.<br/><br/>
 	Você também pode ajudar a manter o cadastro de clubes sempre atualizado.<br>
-	<b><?php echo link_to('Entre em contato', 'contact/index') ?></b> para nos informar sobre novos clubes ou para notificar informações dos clubes já cadastrados.
+	<b><?php echo link_to('Entre em contato', 'contact/index') ?></b> para informar sobre novos clubes ou notificar informações de clubes já cadastrados.
 </div>
 <hr class="separator"/>
 <div class="clubStateFilter">

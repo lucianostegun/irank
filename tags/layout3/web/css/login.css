@@ -24,7 +24,7 @@
 
 #signLoginTable {
 	
-	margin-top: 50px;
+	margin-top: 20px;
 	width: 500px;
 	position: relative;
 	margin-left: 50%;
@@ -59,6 +59,11 @@
 	
 	text-align: right;
 	padding-right: 7px;	
+}
+
+#signLoginTable td .quickForm td {
+	
+	font-size: 11px	
 }
 
 #signLoginTable td .quickForm input {
