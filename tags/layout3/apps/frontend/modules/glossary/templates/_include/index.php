@@ -3,7 +3,7 @@
 	if( $letter )
 		$letterList = array($letter);
 	else
-		$letterList = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+		$letterList = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','#');
 	
 	foreach($letterList as $letter):
 ?>
@@ -14,7 +14,10 @@
 	$criteria->add( GlossaryPeer::VISIBLE, true );
 	$criteria->add( GlossaryPeer::ENABLED, true );
 	$criteria->add( GlossaryPeer::DELETED, false );
-	$criteria->add( GlossaryPeer::TERM, $letter.'%', Criteria::ILIKE );
+	if( $letter=='#' )
+		$criteria->add( GlossaryPeer::TERM, '^[0-9]', '~*' );
+	else
+		$criteria->add( GlossaryPeer::TERM, $letter.'%', Criteria::ILIKE );
 	$glossaryObjList = GlossaryPeer::doSelect($criteria);
 	
 	foreach($glossaryObjList as $glossaryObj):

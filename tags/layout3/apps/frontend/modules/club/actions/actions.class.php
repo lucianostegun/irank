@@ -7,6 +7,10 @@ class clubActions extends sfActions
   	
   	$this->clubId = $this->getRequestParameter('id');
   	$this->clubId = $this->getRequestParameter('clubId', $this->clubId);
+  	
+  	$this->facebookMetaList = array();
+	$this->facebookMetaList['image'] = array('http://[host]/images/club/logoClub.png');
+	$this->facebookMetaList['url']   = 'http://www.irank.com.br/club';
   }
 
   public function executeIndex($request){
@@ -18,7 +22,6 @@ class clubActions extends sfActions
   	$this->clubObj = ClubPeer::retrieveByPK($this->clubId);
   	$this->clubObj->updateVisitCount();
   	
-  	$this->facebookMetaList = array();
 	$this->facebookMetaList['image'] = array('http://[host]/images/club/'.$this->clubObj->getFileNameLogo());
 	$this->facebookMetaList['url']         = 'http://www.irank.com.br/'.$this->clubObj->getTagName();
   }

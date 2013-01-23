@@ -17,7 +17,7 @@ class SmsRankingOption extends BaseSmsRankingOption
 		$criteria->add( SmsTemplatePeer::TAG_NAME, $tagName, Criteria::ILIKE );
 		$criteria->add( SmsRankingOptionPeer::PEOPLE_ID, $peopleId );
 		$criteria->add( SmsRankingOptionPeer::RANKING_ID, $rankingId );
-		$criteria->add( SmsRankingOptionPeer::LOCK_SEND, false );
-		return is_object(SmsRankingOptionPeer::doSelectOne($criteria));
+		$criteria->add( SmsRankingOptionPeer::LOCK_SEND, true );
+		return !is_object(SmsRankingOptionPeer::doSelectOne($criteria));
 	}
 }

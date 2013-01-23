@@ -22,6 +22,9 @@ foreach($rankingPlayerObjList as $rankingPlayerObj){
 
 $allValues = array_merge($totalPaidList, $totalPrizeList, $balanceList);
 
+if( empty($allValues) )
+	throw new Exception('Invalid data');
+
 $minValue  = min($allValues);
 $maxValue  = max($allValues);
 //$minValue  = round($minValue+($minValue/10));

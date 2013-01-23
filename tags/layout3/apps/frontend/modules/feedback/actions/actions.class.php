@@ -9,10 +9,10 @@ class feedbackActions extends sfActions
 
   public function handleErrorSend(){
 
-  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+	$this->handleFormFieldError( $this->getRequest()->getErrors() );
   }
 
-  public function executeSendFeedback($request){
+  public function executeSend($request){
 
 	$userSiteObj  = UserSite::getCurrentUser();
 	$fullName     = $request->getParameter('fullName');
@@ -32,7 +32,6 @@ class feedbackActions extends sfActions
 	$options      = array();
 	
 	$options['emailTemplate']  = 'emailTemplateAdmin';
-	$options['contentType']    = 'text/plain';
 	$options['entitiesEncode'] = false;
 	
 	Report::sendMail('Feedback iRank', $emailAddress, $emailContent, $options);

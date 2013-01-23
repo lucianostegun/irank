@@ -15,16 +15,16 @@
 	<b><?php echo link_to('Entre em contato', 'contact/index') ?></b> para informar sobre novos clubes ou notificar informações de clubes já cadastrados.
 </div>
 <hr class="separator"/>
-<div class="clubStateFilter">
+<div class="glossaryTermFilter">
 <?php
 	$initialList = array();
 	foreach(State::getList() as $stateObj)
-		$initialList[] = $stateObj->getInitial();
+		$initialList[$stateObj->getInitial()] = $stateObj->getStateName();
 	
-	sort($initialList);
+	ksort($initialList);
 	
-	foreach($initialList as $initial)
-		echo link_to($initial, 'club?state='.$initial, array('class'=>($state==$initial?'selected':'')));
+	foreach($initialList as $initial=>$stateName)
+		echo link_to($initial, 'club?state='.$initial, array('class'=>($state==$initial?'selected':''), 'title'=>$stateName));
 		
 	$stateObj = StatePeer::retrieveByInitial($state);
 	
@@ -40,6 +40,7 @@
 	<?php
 		$criteria = new Criteria();
 		$criteria->addJoin( ClubPeer::CITY_ID, CityPeer::ID, Criteria::INNER_JOIN );
+		$criteria->addAscendingOrderByColumn( date('d') );
 		if( $stateId )
 			$criteria->add( CityPeer::STATE_ID, $stateId );
 		

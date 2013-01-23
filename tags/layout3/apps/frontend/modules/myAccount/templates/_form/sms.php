@@ -48,5 +48,5 @@
 <div class="tabbarFooter">
 	<b>Dica:</b><br/>
 	Você pode optar por receber notificações apenas dos rankings que desejar.<br/>
-	Acesse o ranking que deseja editar e selecione a opção desejada no menu <b>Notificações</b>
+	Acesse o ranking que deseja editar e selecione a opção desejada no menu <b>Editar notificações</b>
 </div>

@@ -1,21 +1,19 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array('Calculadora de fichas <span class="beta">[beta]</span>'=>null))); ?>
-<div class="moduleIntro mt10">
-	<?php echo image_tag('chipCalculator', array('align'=>'left', 'style'=>'margin-right: 15px; margin-top: -10px')) ?>
+<?php echo image_tag('chipCalculator', array('class'=>'logo')) ?>
+<div class="moduleIntro image">
 	Seja bem vindo à calculadora de fichas <b>iRank</b>.<br/>
 	Ela foi criada para facilitar a divisão de fichas em seus torneios baseado nos valores das fichas que você tem disponível 
-	e também no stack inicial que pretende utilizar em seu evento.<br/><br/>
-	<hr class="mb20"/>
-	O resultado será a distribuição ideal de fichas para cada valor disponível<br/>
-	assim como uma sugestão de configuração de blinds que você pode utilizar com essa distribuição.<br/><br/>
+	e também no stack inicial que pretende utilizar em seu evento.
+	<br/><br/>
+	O resultado será a distribuição ideal de fichas para cada valor disponível assim como uma sugestão de configuração de blinds que você pode utilizar com essa distribuição.<br/><br/>
 </div>
-
+<hr class="separator"/>
 <?php
 	echo form_tag('chipCalculator/getChipSet', array('target'=>'_blank', 'id'=>'chipCalculatorForm'));
 	echo input_hidden_tag('chips', null, array('id'=>'chipCalculatorChips'));
 	echo input_hidden_tag('forceRandom', null, array('id'=>'chipCalculatorForceRandom'));
 ?>
 <div class="steps" id="start">
-	<br/>
 <div class="stepPaginator">
 	<?php
 		echo button_tag('navigatorNext', 'Próximo', array('image'=>'next.png', 'onclick'=>'showNext(true)', 'class'=>'right'));

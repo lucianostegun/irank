@@ -1,8 +1,0 @@
-fields:
-       
-  eventId:
-    required:
-      msg:       form.error.requiredField
-    sfCallbackValidator:
-      callback:      [EventPlayerPeer, validateResult]
-      invalid_error: erro

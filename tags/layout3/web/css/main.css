@@ -372,6 +372,8 @@ a:hover {
 	margin-top: 10px;
 	margin-left: 15px;
 	width: 64px;
+	height: 64px;
+	margin-bottom: 20px
 }
 
 #contentArea #mainContent #innerContent .rightContent .moduleIntro {

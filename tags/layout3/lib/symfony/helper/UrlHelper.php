@@ -123,7 +123,10 @@ function link_to($name = '', $internal_uri = '', $options = array())
     }
   }
   
-  if( preg_match('/^#/', $internal_uri) ){
+  if( preg_match('/^##/', $internal_uri) ){
+  	
+  	$html_options['href'] = '#'.str_replace('#', '', $internal_uri);
+  }elseif( preg_match('/^#/', $internal_uri) ){
   	
   	$html_options['href']    = 'javascript:void(0)';
   	$html_options['onclick'] = preg_replace('/^#/', '', $internal_uri);

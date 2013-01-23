@@ -21,7 +21,7 @@
 			</div>
 			<div class="row">
 				<div class="label" id="rankingFinishDateLabel"><?php echo __('ranking.finish') ?></div>
-				<div class="text flex"><?php echo $rankingObj->getFinishDate('d/mY') ?></div>
+				<div class="text flex"><?php echo $rankingObj->getFinishDate('d/m/Y') ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="rankingRankingTypeIdLabel"><?php echo __('ranking.classify') ?></div>

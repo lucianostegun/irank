@@ -14,6 +14,8 @@
 		<tr>
 			<td valign="top">
 			<?php
+				$peopleObj = People::getCurrentPeople();
+				
 				echo form_remote_tag(array(
 					'url'=>'feedback/send',
 					'success'=>'handleSuccessFeedback( request.responseText, true )',
@@ -21,15 +23,18 @@
 					'encoding'=>'utf8',
 					'loading'=>'showIndicator()'
 					), array( 'id'=>'feedbackForm' ));
+					
+					echo input_hidden_tag('emailAddress', $peopleObj->getEmailAddress());
+					echo input_hidden_tag('fullName', $peopleObj->getName());
 			?>
 				<div class="defaultForm">		
 					<div class="row">
 						<div class="labelHalf"><?php echo __('feedback.name') ?></div>
-						<div class="field"><?php echo input_tag('fullName', null, array('id'=>'feedbackFullName', 'size'=>30, 'maxlength'=>50)) ?></div>
+						<div class="text"><?php echo $peopleObj->getName() ?></div>
 					</div>
 					<div class="row">
 						<div class="labelHalf">E-mail</div>
-						<div class="field"><?php echo input_tag('emailAddress', null, array('id'=>'feedbackEmailAddress', 'size'=>40, 'maxlength'=>100)) ?></div>
+						<div class="text"><?php echo $peopleObj->getEmailAddress() ?></div>
 					</div>
 					<div class="row">
 						<div class="labelHalf"><?php echo __('feedback.subject') ?></div>
@@ -37,7 +42,7 @@
 					</div>
 					<div class="rowTextArea" style="height: 120px">
 						<div class="labelHalf"><?php echo __('feedback.message') ?></div>
-						<div class="field"><?php echo textarea_tag('message', null, array('id'=>'feedbackMessage', 'style'=>'width: 400px; height: 100px')) ?></div>
+						<div class="field"><?php echo textarea_tag('message', null, array('id'=>'feedbackMessage', 'style'=>'width: 440px; height: 100px')) ?></div>
 					</div>
 					<div class="separator"></div>
 					<div class="buttonBarForm">

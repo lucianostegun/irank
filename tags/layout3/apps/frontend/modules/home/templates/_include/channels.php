@@ -23,7 +23,7 @@
 	<div class="channel">
 		<div class="image"><?php echo image_tag('home/stats') ?></div>
 		<div class="description">
-			<h1>Estatísticas</h1>
+			<h1><?php echo link_to('Estatísticas', 'statistic/index') ?></h1>
 			Gere gráficos de gastos, lucros, balanço e desempenho dos jogadores.
 		</div>
 	</div>
@@ -41,6 +41,7 @@
 			Histórico de posições, total gastos, prêmios e tudo sobre os rankings nas datas que houveram eventos.
 		</div>
 	</div>
-	
-	<iframe src="http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Firankpoker&amp;width=226&amp;height=395&amp;show_faces=true&amp;colorscheme=light&amp;stream=false&amp;border_color&amp;header=true&amp;appId=173327886080667" scrolling="no" frameborder="0" style="margin-top: 0px; margin-left: 1px; border:none; overflow:hidden; width:226px; height:395px" allowTransparency="true"></iframe>
+	<?php
+		#<iframe src="http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Firankpoker&amp;width=226&amp;height=395&amp;show_faces=true&amp;colorscheme=light&amp;stream=false&amp;border_color&amp;header=true&amp;appId=173327886080667" scrolling="no" frameborder="0" style="margin-top: 0px; margin-left: 1px; border:none; overflow:hidden; width:226px; height:395px" allowTransparency="true"></iframe>
+	?>
 </div>

@@ -20,10 +20,14 @@
 		$criteria->addAscendingOrderByColumn( 'RANDOM()' );
 		$criteria->addGroupByColumn( RankingPeer::ID );
 		$criteria->addGroupByColumn( 'ranking.RANKING_NAME, ranking.RANKING_TAG, ranking.USER_SITE_ID, ranking.RANKING_TYPE_ID, ranking.GAME_STYLE_ID, ranking.START_DATE, ranking.START_TIME, ranking.FINISH_DATE, ranking.IS_PRIVATE, ranking.BUYIN, ranking.ENTRANCE_FEE, ranking.PLAYERS, ranking.EVENTS, ranking.SCORE_SCHEMA, ranking.SCORE_FORMULA, ranking.ENABLED, ranking.VISIBLE, ranking.DELETED, ranking.LOCKED, ranking.CREATED_AT, ranking.UPDATED_AT' );
-		$criteria->setLimit( 5 );
+		$criteria->setLimit( 10 );
 		$rankingObjList = RankingPeer::doSelect($criteria);
 		
+		$count = 0;
 		foreach($rankingObjList as $rankingObj):
+			
+			if( $count == 3 )
+				break;
 			
 			$eventObj = $rankingObj->getNextEvent();
 			if( is_object($eventObj) ){
@@ -33,10 +37,16 @@
 				$eventTitle = 'Data do próximo evento';
 			}else{
 				
+				$eventObj = $rankingObj->getLastEvent();
+				if( !is_object($eventObj) )
+					continue;
+				
 				$eventDate = $rankingObj->getLastEvent()->getEventDate('d/m/Y');
 				$eventLabel = 'últ evt';
 				$eventTitle = 'Data do último evento';
 			}
+			
+			$count++;
 	?>
 	<div class="ranking" onclick="goToPage('ranking', 'share', 'share', '<?php echo Util::encodeId($rankingObj->getId()) ?>')">
 		<h1>

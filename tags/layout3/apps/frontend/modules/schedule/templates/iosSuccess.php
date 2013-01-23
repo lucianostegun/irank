@@ -1,13 +1,14 @@
 <?php
 	include_partial('home/component/commonBar', array('pathList'=>array('Agenda'=>'eventLive/index', 'Sincronização'=>'schedule/index', 'iOS'=>null)));
 ?>
-<div class="moduleIntro">
-	<?php echo image_tag('schedule/ios', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
-	Veja abaixo como sincronizar seu iPhone, iPad ou iPod touch com a agenda <b>iRank</b>.<br/><br/>
+<?php echo image_tag('schedule/ios', array('class'=>'logo')) ?>
+<div class="moduleIntro image">
+	Para sincronizar o calendário de seu iPhone, iPad ou iPod touch com a agenda <b>iRank</b>, siga os passos abaixo.<br/><br/>
 	
+	<?php echo link_to('Entre em contato', 'contact/index') ?> caso esteja encontrando alguma dificuldade na configuração.
 	<!--Saiba também como configurar seu smartphone ou tablet com <?php echo link_to('android', 'schedule/android') ?>.-->
 </div>
-<div class="clear"></div>
+<hr class="separator"/>
 
 <div id="stepPaginator">
 	<?php

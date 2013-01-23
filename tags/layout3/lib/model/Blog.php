@@ -67,7 +67,7 @@ class Blog extends BaseBlog
 		return BlogPeer::doSelect( $criteria );
 	}
 
-	public static function getLastArticle(){
+	public static function getLastArticle($offset=0){
 		
 		$criteria = new Criteria();
 		$criteria->add( BlogPeer::ENABLED, true );
@@ -80,6 +80,7 @@ class Blog extends BaseBlog
 		$criteria->add($criterion);
 		
 		$criteria->addDescendingOrderByColumn( BlogPeer::PUBLISH_DATE );
+		$criteria->setOffset($offset);
 		
 		return BlogPeer::doSelectOne( $criteria );
 	}
