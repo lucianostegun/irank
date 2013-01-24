@@ -85,6 +85,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 
 	
+	protected $bankroll_tutorial_home;
+
+
+	
 	protected $created_at;
 
 
@@ -303,6 +307,13 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		} else {
 			return date($format, $ts);
 		}
+	}
+
+	
+	public function getBankrollTutorialHome()
+	{
+
+		return $this->bankroll_tutorial_home;
 	}
 
 	
@@ -594,6 +605,20 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setBankrollTutorialHome($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->bankroll_tutorial_home !== $v) {
+			$this->bankroll_tutorial_home = $v;
+			$this->modifiedColumns[] = UserSitePeer::BANKROLL_TUTORIAL_HOME;
+		}
+
+	} 
+	
 	public function setCreatedAt($v)
 	{
 
@@ -670,15 +695,17 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			$this->last_access_date = $rs->getTimestamp($startcol + 18, null);
 
-			$this->created_at = $rs->getTimestamp($startcol + 19, null);
+			$this->bankroll_tutorial_home = $rs->getInt($startcol + 19);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 20, null);
+			$this->created_at = $rs->getTimestamp($startcol + 20, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 21, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 21; 
+						return $startcol + 22; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserSite object", $e);
 		}
@@ -1021,9 +1048,12 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				return $this->getLastAccessDate();
 				break;
 			case 19:
-				return $this->getCreatedAt();
+				return $this->getBankrollTutorialHome();
 				break;
 			case 20:
+				return $this->getCreatedAt();
+				break;
+			case 21:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1055,8 +1085,9 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$keys[16]=>$this->getDeleted(),
 			$keys[17]=>$this->getLocked(),
 			$keys[18]=>$this->getLastAccessDate(),
-			$keys[19]=>$this->getCreatedAt(),
-			$keys[20]=>$this->getUpdatedAt(),
+			$keys[19]=>$this->getBankrollTutorialHome(),
+			$keys[20]=>$this->getCreatedAt(),
+			$keys[21]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1130,9 +1161,12 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$this->setLastAccessDate($value);
 				break;
 			case 19:
-				$this->setCreatedAt($value);
+				$this->setBankrollTutorialHome($value);
 				break;
 			case 20:
+				$this->setCreatedAt($value);
+				break;
+			case 21:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1161,8 +1195,9 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[16], $arr)) $this->setDeleted($arr[$keys[16]]);
 		if (array_key_exists($keys[17], $arr)) $this->setLocked($arr[$keys[17]]);
 		if (array_key_exists($keys[18], $arr)) $this->setLastAccessDate($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setCreatedAt($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setUpdatedAt($arr[$keys[20]]);
+		if (array_key_exists($keys[19], $arr)) $this->setBankrollTutorialHome($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setCreatedAt($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setUpdatedAt($arr[$keys[21]]);
 	}
 
 	
@@ -1189,6 +1224,7 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserSitePeer::DELETED)) $criteria->add(UserSitePeer::DELETED, $this->deleted);
 		if ($this->isColumnModified(UserSitePeer::LOCKED)) $criteria->add(UserSitePeer::LOCKED, $this->locked);
 		if ($this->isColumnModified(UserSitePeer::LAST_ACCESS_DATE)) $criteria->add(UserSitePeer::LAST_ACCESS_DATE, $this->last_access_date);
+		if ($this->isColumnModified(UserSitePeer::BANKROLL_TUTORIAL_HOME)) $criteria->add(UserSitePeer::BANKROLL_TUTORIAL_HOME, $this->bankroll_tutorial_home);
 		if ($this->isColumnModified(UserSitePeer::CREATED_AT)) $criteria->add(UserSitePeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(UserSitePeer::UPDATED_AT)) $criteria->add(UserSitePeer::UPDATED_AT, $this->updated_at);
 
@@ -1256,6 +1292,8 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		$copyObj->setLocked($this->locked);
 
 		$copyObj->setLastAccessDate($this->last_access_date);
+
+		$copyObj->setBankrollTutorialHome($this->bankroll_tutorial_home);
 
 		$copyObj->setCreatedAt($this->created_at);
 
