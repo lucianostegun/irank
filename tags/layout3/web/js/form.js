@@ -119,6 +119,13 @@ function addFormStatusError(fieldId, formFieldMessage){
 	objectForm.title     = formFieldMessage;
 }
 
+function removeFormStatusError(fieldId){
+	
+	var objectForm = $(fieldId);
+	objectForm.removeClassName('formFieldError');
+	objectForm.title = '';
+}
+
 function showFormStatusError(formId){
 	
 	var divError = $('formStatusError'+ucfirst(formId)+'Div')
@@ -268,11 +275,43 @@ function hideHelpDescriptions(){
 		hideDiv(helpList[i].id);
 }
 
-function showFormHelp( fieldName ){
+function showFormHelp(Element){
+	
+	form        = Element.id.replace(ucfirst(Element.name), '');
+	var fieldId = Element.id.replace(form, '');
+	
+	if( $(form+ucfirst(fieldId)+'Help')==null )
+		return hideFormHelp(Element);
+		
+	var fieldName    = $(form+ucfirst(fieldId)+'Label').innerHTML;
+	var errorMessage = $(form+ucfirst(fieldId)+'Help').title;
+	
+	errorMessage = errorMessage.replace(/\\n/g, '<br/><br/>');
+	
+	$('formHelperFieldName'+ucfirst(form)).innerHTML   = fieldName;
+	$('formHelperDescription'+ucfirst(form)).innerHTML = errorMessage;
+	
+	var formHeight = $(form).offsetHeight;
+	var top        = (Element.offsetTop-8);
+	var height     = $('formHelp'+ucfirst(form)).getHeight();
+	
+	if( top+height > formHeight ){
+		
+		top -= height-60;
+		$('helpDisclosure'+ucfirst(form)).style.top = (height-48)+'px';
+	}else{
+		
+		$('helpDisclosure'+ucfirst(form)).style.top = '';
+	}
+		
+	$('formHelp'+ucfirst(form)).style.top = top+'px';
+	showDiv('formHelp'+ucfirst(form))
+}
 
-	helpMessage = $(fieldName+'Help').title;
-
-	alert(helpMessage);
+function hideFormHelp(Element){
+	
+	form = Element.id.replace(ucfirst(Element.name), '');
+	hideDiv('formHelp'+ucfirst(form))
 }
 
 function goToField( value, length, fieldId, event ){

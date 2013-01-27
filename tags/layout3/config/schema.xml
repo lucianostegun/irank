@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database name="propel" defaultIdMethod="native" noXsd="true" package="lib.model" schema="public">
-
-	<table name="virtual_table" phpName="VirtualTable" isI18n="true" i18nTable="virtual_table_i18n">
-		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
-		<column name="virtual_table_name" type="VARCHAR" />
-		<column name="description" type="VARCHAR" />
-		<column name="tag_name" type="VARCHAR" />
-		<column name="enabled" type="BOOLEAN" />
-		<column name="visible" type="BOOLEAN" />
-		<column name="deleted" type="BOOLEAN" />
-		<column name="locked" type="BOOLEAN" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
-	</table>
-	
-	<table name="virtual_table_i18n" phpName="VirtualTableI18n">
-		<column name="virtual_table_id" type="INTEGER" primaryKey="true" />
-		<column name="culture" type="CHAR" primaryKey="true" isCulture="true" />
-		<column name="description_i18n" type="VARCHAR" />
-		<foreign-key foreignTable="virtual_table">
-			<reference local="virtual_table_id" foreign="id" />
-		</foreign-key>
-	</table>
 	
 	<table name="people" phpName="People">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
@@ -73,11 +51,32 @@
 		<column name="deleted" type="BOOLEAN" />
 		<column name="locked" type="BOOLEAN" />
 		<column name="last_access_date" type="TIMESTAMP" />
-		<column name="bankroll_tutorial_home" type="INTEGER" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="people">
 			<reference local="people_id" foreign="id" />
+		</foreign-key>
+	</table>
+
+	<table name="virtual_table" phpName="VirtualTable" isI18n="true" i18nTable="virtual_table_i18n">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="virtual_table_name" type="VARCHAR" />
+		<column name="description" type="VARCHAR" />
+		<column name="tag_name" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="virtual_table_i18n" phpName="VirtualTableI18n">
+		<column name="virtual_table_id" type="INTEGER" primaryKey="true" />
+		<column name="culture" type="CHAR" primaryKey="true" isCulture="true" />
+		<column name="description_i18n" type="VARCHAR" />
+		<foreign-key foreignTable="virtual_table">
+			<reference local="virtual_table_id" foreign="id" />
 		</foreign-key>
 	</table>
 
@@ -1582,6 +1581,17 @@
 		</foreign-key>
 		<foreign-key foreignTable="sms_template">
 			<reference local="sms_template_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="user_site_config" phpName="UserSiteConfig">
+		<column name="user_site_id" type="INTEGER" primaryKey="true" />
+		<column name="bankroll_tutorial_home" type="INTEGER" default="0" />
+		<column name="sms_validation_code" type="VARCHAR"/>
+		<column name="sms_validation_attempts" type="INTEGER" default="0" />
+		<column name="agreed_sms_terms" type="BOOLEAN" default="0" />
+		<foreign-key foreignTable="user_site">
+			<reference local="user_site_id" foreign="id" />
 		</foreign-key>
 	</table>
 	

@@ -29,7 +29,7 @@
 //	$dhtmlxTabBarObj->addTab('options', 'Opções', 'myAccount/form/options', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->addTab('email', 'Notificações', 'myAccount/form/email', array('userSiteObj'=>$userSiteObj, 'width'=>85));
 	if( $userSiteObj->getBetaTester() )
-		$dhtmlxTabBarObj->addTab('sms', '<span class="new" title="Novidade">SMS </span>', 'myAccount/form/sms', array('userSiteObj'=>$userSiteObj, 'width'=>58));
+		$dhtmlxTabBarObj->addTab('sms', '<span class="new" title="Beta">SMS </span>', 'myAccount/form/sms', array('userSiteObj'=>$userSiteObj, 'width'=>58));
 	$dhtmlxTabBarObj->addTab('schedule', 'Agenda', 'myAccount/form/schedule', array('userSiteObj'=>$userSiteObj));
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->setSelectedTabBarId($selectedTab);

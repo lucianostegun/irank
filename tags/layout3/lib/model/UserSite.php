@@ -42,8 +42,6 @@ class UserSite extends BaseUserSite
 	  	$this->setStartBankroll(nvl(Util::formatFloat($startBankroll), 0));
 	  	$this->save($con);
 	  	
-	  	$peopleObj->setPhoneDdd(nvl($phoneDdd));
-	  	$peopleObj->setPhoneNumber(nvl($phoneNumber));
 	  	$peopleObj->save($con);
 	  	
 	  	$con->commit();
@@ -471,6 +469,25 @@ class UserSite extends BaseUserSite
 			if( $attempt < 5 )
 				$this->decraseSmsCredit($attempt+1);
 		}
+	}
+	
+	public function getConfig(){
+		
+		$userSiteConfigObj = UserSiteConfigPeer::retrieveByPK($this->getId());
+		
+		if( !is_object($userSiteConfigObj) ){
+			
+			$userSiteConfigObj = new UserSiteConfig();
+			$userSiteConfigObj->setUserSiteId($this->getId());
+			$userSiteConfigObj->save();
+		}
+		
+		return $userSiteConfigObj;
+	}
+	
+	public function enabledSmsNotification(){
+		
+		return $this->getConfig()->getAgreedSmsTerms();
 	}
 	
 	public function getInfo($replaceNull=false, $withBalance=true, $formatFloat=true){

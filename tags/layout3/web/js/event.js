@@ -105,6 +105,7 @@ function handleFailureEvent(content){
 	
 	enableButton('mainSubmit');
 	setButtonBarStatus('eventMain', 'error');
+	setCommonBarMessage('Não foi possível salvar o evento! Verifique os campos em destaque e tente novamente', 'error');
 	handleFormFieldError(content, 'eventForm', 'event', false, 'event', handleErrorEvent)
 }
 

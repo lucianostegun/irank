@@ -306,3 +306,120 @@ function onSelectTabMyAccount(tabId){
 
 	return true;
 }
+
+function sendSmsValidationCode(){
+	
+	var phoneDdd    = $('myAccountPhoneDdd').value;
+	var phoneNumber = $('myAccountPhoneNumber').value;
+	var hasError    = false;
+	
+	removeFormStatusError('myAccountPhoneDdd');
+	removeFormStatusError('myAccountPhoneNumber');
+	
+	if( !phoneDdd || !phoneDdd.match(/^[0-9]{2}$/) ){
+		
+		addFormStatusError('myAccountPhoneDdd', 'Informe corretamente o código de área de seu telefone');
+		hasError = true;
+	}
+
+	if( !phoneNumber || !phoneNumber.match(/^[0-9]{4,5}-?[0-9]{4}$/) ){
+		
+		addFormStatusError('myAccountPhoneNumber', 'Informe corretamente o número de seu telefone');
+		hasError = true;
+	}
+	
+	if( hasError )
+		return setCommonBarMessage('Corrija os campos em destaque para prosseguir com a validação', 'error');
+	
+	clearCommonBarMessage();	
+	showIndicator();
+	
+	var successFunc = function(t){
+		
+		hideIndicator();
+		$('rankingSmsValidationCodeLink').innerHTML = 'Código de validação enviado com sucesso!';
+		showDiv('myAccountSmsValidationCodeRow');
+		showDiv('myAccountAgreeSmsTermsRow');
+		$('myAccountSmsValidationCode').focus();
+		
+		adjustContentTab();
+	}
+
+	var failureFunc = function(t){
+		
+		hideIndicator();
+		alert('Não foi possível enviar o código de validação para o número de telefone informado!\nPor favor, tente novamente.');
+	}
+	
+	var urlAjax = _webRoot+'/myAccount/sendSmsValidationCode/phoneDdd/'+phoneDdd+'/phoneNumber/'+phoneNumber;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}
+
+function validateSmsCode(){
+	
+	var agreeSmsTerms     = $('myAccountAgreeSmsTerms').checked;
+	var smsValidationCode = $('myAccountSmsValidationCode').value;
+	var hasError          = false;
+	
+	removeFormStatusError('myAccountSmsValidationCode');
+	
+	if( !smsValidationCode ){
+		
+		addFormStatusError('myAccountSmsValidationCode', 'Informe o código de validação enviado ao telefone informado');
+		hasError = false;
+	}
+	
+	if( !agreeSmsTerms ){
+		
+		showDiv('myAccountAgreeSmsTermsError');
+		hasError = true;
+	}
+	
+	adjustContentTab();
+	
+	if( hasError )
+		return false;
+	
+	clearCommonBarMessage();
+	hideDiv('myAccountAgreeSmsTermsError');
+	showIndicator();
+	
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		hideIndicator();
+		
+		if( content=='success' ){
+			
+			hideDiv('myAccountAgreeSmsTermsRow');
+			hideDiv('myAccountSmsValidationCodeRow');
+			showDiv('myAccountSmsTemplateOptions');
+			$('rankingSmsValidationCodeLink').innerHTML = 'Número validado';
+			
+			adjustContentTab();
+		}else{
+			
+			addFormStatusError('myAccountSmsValidationCode', 'Código de validação inválido');
+		}
+	}
+	
+	var failureFunc = function(t){
+		
+		hideIndicator();
+		var content = t.responseText;
+
+		if( content=='exceededAttemptsLimit' ){
+			
+			alert('O limite de tentativas de ativar o código de validação doi excedido!\nPara continuar, solicite o envio de um novo código de validação.');
+			$('rankingSmsValidationCodeLink').innerHTML = '<a href="javascript:void(0)" onclick="sendSmsValidationCode()">Validar telefone</a>'
+			hideDiv('myAccountSmsValidationCodeRow');
+			hideDiv('myAccountAgreeSmsTermsRow');
+		}else{
+			
+			alert('Não foi possível confirmar o código de validação informado!\nPor favor, tente novamente.');
+		}
+	}
+	
+	var urlAjax = _webRoot+'/myAccount/validateSmsCode/smsValidationCode/'+smsValidationCode;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}

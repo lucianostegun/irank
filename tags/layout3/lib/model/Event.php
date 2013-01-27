@@ -441,7 +441,7 @@ class Event extends BaseEvent
 			if( !$rankingPlayerObj->getSuppressEmailNotify() )
 				Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 			
-			if( is_object($userSiteObj) && $userSiteObj->getSmsCredit() > 0 ){
+			if( is_object($userSiteObj) && $userSiteObj->getSmsCredit() > 0 && $userSiteObj->enabledSmsNotification() ){
 				
 			  	$phoneNumber = $peopleObj->getPhoneDdd().$peopleObj->getPhoneNumber();
 			  	
@@ -568,7 +568,7 @@ class Event extends BaseEvent
 			
 			$userSiteObj = $peopleObj->getUserSite();
 			
-			if( is_object($userSiteObj) && $userSiteObj->getSmsCredit() > 0 ){
+			if( is_object($userSiteObj) && $userSiteObj->getSmsCredit() > 0 && $userSiteObj->enabledSmsNotification() ){
 				
 			  	$phoneNumber = $peopleObj->getPhoneDdd().$peopleObj->getPhoneNumber();
 			  	
@@ -678,6 +678,19 @@ class Event extends BaseEvent
 	
 	public function getClone(){
 		
+		$eventPlayerObjList = $this->getPlayerList();
+		
+		foreach( $eventPlayerObjList as $key=>$eventPlayerObj ){
+			
+			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $eventPlayerObj->getPeopleId());
+			
+			// Verifica se o jogador foi removido do ranking e pula a inclusão dele no evento durante a clonagem
+			if( !$rankingPlayerObj->getEnabled() )
+				unset($eventPlayerObjList[$key]);
+		}
+		
+		$invites = count($eventPlayerObjList);
+		
 		$eventObj = new Event();
 		$eventObj->setRankingId($this->getRankingId());
 		$eventObj->setEventName($this->getEventName(false));
@@ -685,26 +698,46 @@ class Event extends BaseEvent
 		$eventObj->setEventDate($this->getEventDate());
 		$eventObj->setStartTime($this->getStartTime());
 		$eventObj->setPaidPlaces($this->getPaidPlaces());
-		$eventObj->setInvites($this->getInvites());
+		$eventObj->setInvites( $invites );
 		$eventObj->setPlayers($this->getPlayers());
+		$eventObj->setIsFreeroll($this->getIsFreeroll());
 		$eventObj->setBuyin($this->getBuyin());
 		$eventObj->setEntranceFee($this->getEntranceFee());
 		$eventObj->setComments($this->getComments());
 		$eventObj->setAllowRebuy($this->getAllowRebuy());
 		$eventObj->setAllowAddon($this->getAllowAddon());
+		$eventObj->setSentEmail(null);
+		$eventObj->setSavedResult(false);
 		$eventObj->setVisible(false);
 		$eventObj->setEnabled(false);
 		$eventObj->setLocked(true);
 		$eventObj->save();
 		
-		foreach( $this->getPlayerList() as $eventPlayerObj ){
+		foreach( $eventPlayerObjList as $eventPlayerObj ){
 			
 			$eventPlayerNewObj = new EventPlayer();
 			$eventPlayerNewObj->setEventId( $eventObj->getId() );
 			$eventPlayerNewObj->setPeopleId( $eventPlayerObj->getPeopleId() );
-			$eventPlayerNewObj->setInviteStatus( $eventPlayerObj->getInviteStatus() );
-			$eventPlayerNewObj->setEnabled( $eventPlayerObj->getEnabled() );
+			$eventPlayerNewObj->setAllowEdit( $eventPlayerObj->getAllowEdit() );
+			$eventPlayerNewObj->setSuppressNotify( $eventPlayerObj->getSuppressNotify() );
+			$eventPlayerNewObj->setInviteStatus( 'none' );
+			$eventPlayerNewObj->setEnabled( false );
 			$eventPlayerNewObj->save();
+		}
+		
+		unset($eventPlayerObjList);
+		
+		if( $this->getIsFreeroll() ){
+			
+			foreach( $this->getEventPrizeConfigList() as $eventPrizeConfigObj ){
+				
+				$eventPrizeConfigNewObj = new EventPrizeConfig();
+				$eventPrizeConfigNewObj->setEventId( $eventObj->getId() );
+				$eventPrizeConfigNewObj->setEventPosition( $eventPrizeConfigObj->getEventPosition() );
+				$eventPrizeConfigNewObj->setPrizeValue( $eventPrizeConfigObj->getPrizeValue() );
+				$eventPrizeConfigNewObj->setIsPercent( $eventPrizeConfigObj->getIsPercent() );
+				$eventPrizeConfigNewObj->save();
+			}
 		}
 
 		return $eventObj;
@@ -714,6 +747,10 @@ class Event extends BaseEvent
 
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$rankingObj = $this->getRanking();
+		
+		// Se for um clone de evento, deixa editar caso seja a primeira vez que tenta salvar
+		if( $this->getIsNew() )
+			return true;
 		
 		if( !$ignorePeople && (!$userSiteId || (!$ignorePeople && is_object($rankingObj) && !$rankingObj->isMyRanking())) )
 			return false;

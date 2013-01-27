@@ -14,19 +14,24 @@
 <div class="tabbarIntro">Selecione as notificações que deseja receber</div>
 <div class="defaultForm">
 	<?php
+		$emailOptionAll = true;
+		
 		$criteria = new Criteria();
 		$criteria->add( EmailTemplatePeer::IS_OPTION, true);
 		$emailTemplateObjList = EmailTemplate::getList($criteria);
 		foreach($emailTemplateObjList as $emailTemplateObj):
+			
 			$emailTemplateId = $emailTemplateObj->getId();
+			$checked         = !in_array($emailTemplateId, $emailTemplateIdList);
+			$emailOptionAll &= $checked;
 	?>
 	<div class="rowCheckbox mt5">
-		<div class="field"><?php echo checkbox_tag('emailOption-'.$emailTemplateId, true, !in_array($emailTemplateId, $emailTemplateIdList), array('onclick'=>'checkEmailOptionAll(this)', 'class'=>'emailOption')) ?></div>
+		<div class="field"><?php echo checkbox_tag('emailOption-'.$emailTemplateId, true, $checked, array('class'=>'emailOption')) ?></div>
 		<div class="label"><label for="emailOption-<?php echo $emailTemplateId ?>"><?php echo $emailTemplateObj->getDescription() ?></label></div>
 	</div>
 	<?php endforeach; ?>
 	<div class="rowCheckbox mt20">
-		<div class="field"><?php echo checkbox_tag('emailOptionAll', true, false, array('onclick'=>'selectAllEmailOption(this.checked)', 'class'=>'emailOptionAll')) ?></div>
+		<div class="field"><?php echo checkbox_tag('emailOptionAll', true, $emailOptionAll, array('onclick'=>'selectAllEmailOption(this.checked)', 'class'=>'emailOptionAll')) ?></div>
 		<div class="label"><label for="emailOptionAll">Selecionar todos (Receber todos os e-mails do iRank)</label></div>
 	</div>			
 </div>

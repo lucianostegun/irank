@@ -1,7 +1,7 @@
 <?php
 	$permalink = $eventObj->getPermalink(true);
 ?>
-<div style="margin-top: 5px" class="defaultForm">
+<div class="defaultForm half" id="event">
 	<?php if( Util::isDebug() ): ?>
 	<div class="row">
 		<div class="label">Cód.</div>
@@ -21,7 +21,9 @@
 	</div>
 	<div class="row">
 		<div class="label" id="eventEventNameLabel"><?php echo __('event.eventName') ?></div>
-		<div class="field"><?php echo input_tag('eventName', $eventObj->getEventName(false), array('size'=>25, 'maxlength'=>25, 'class'=>'required', 'id'=>'eventEventName')) ?></div>
+		<div class="field"><?php echo input_tag('eventName', $eventObj->getEventName(false), array('size'=>25, 'maxlength'=>25, 'class'=>'required', 'onfocus'=>'showFormHelp(this)', 'onblur'=>'hideFormHelp(this)', 'id'=>'eventEventName')) ?></div>
+		<div class="help" id="eventEventNameHelp" title="Nome que será usado na divulgação por e-mail, SMS e em redes sociais junto com o nome do ranking."></div>
+		
 		<div class="error" id="eventEventNameError" onclick="showFormErrorDetails('event', 'eventName')"></div>
 		
 		<?php if( !$eventObj->getRanking(true)->getGameStyle()->isTagName('ring') ): ?>
@@ -83,7 +85,7 @@
 	</div>
 	<div class="row">
 		<div class="label">Enviar notificação</div>
-		<div class="fieldCheckbox"><?php echo checkbox_tag('sendEmail', true, (!$eventObj->getSentEmail() && !$isClone), array('id'=>'eventSendEmail')) ?></div>
+		<div class="fieldCheckbox"><?php echo checkbox_tag('sendEmail', true, (!$eventObj->getSentEmail()), array('id'=>'eventSendEmail')) ?></div>
 		<div class="text flex" style="display: <?php echo ($eventObj->getSentEmail()?'block':'none') ?>" id="sentEmailDiv"><?php echo __('event.sentNotify') ?></div>
 	</div>
 	
@@ -119,3 +121,4 @@
 		</div>
 	</fieldset>
 </div>
+<?php include_partial('util/include/formHelp', array('tagName'=>'event')) ?>

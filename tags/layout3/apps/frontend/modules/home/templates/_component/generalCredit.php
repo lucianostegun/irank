@@ -4,13 +4,14 @@
 
 	$resumeValue = People::getQuickResume($quickResume);
 	
-	$bankrollTutorialHome = $userSiteObj->getBankrollTutorialHome();
+	$userSiteConfigObj    = $userSiteObj->getConfig();
+	$bankrollTutorialHome = $userSiteConfigObj->getBankrollTutorialHome();
 	
 	if( $bankrollTutorialHome <= 3 ){
 		
 		$bankrollTutorialHome++;
-		$userSiteObj->setBankrollTutorialHome($bankrollTutorialHome);
-		$userSiteObj->save();
+		$userSiteConfigObj->setBankrollTutorialHome($bankrollTutorialHome);
+		$userSiteConfigObj->save();
 	}
 ?>
 <a href="<?php echo url_for('myAccount/bankroll#now') ?>">

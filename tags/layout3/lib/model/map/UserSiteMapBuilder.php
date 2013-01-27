@@ -72,8 +72,6 @@ class UserSiteMapBuilder {
 
 		$tMap->addColumn('LAST_ACCESS_DATE', 'LastAccessDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
-		$tMap->addColumn('BANKROLL_TUTORIAL_HOME', 'BankrollTutorialHome', 'int', CreoleTypes::INTEGER, false, null);
-
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);

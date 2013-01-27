@@ -47,8 +47,8 @@
 	
 	
 	
-	<div id="prizeConfigDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>" class="clean">
-		<h1 style="margin-top: 41px; text-align: right; border: none"><?php echo __('event.prizeConfig') ?></h1>
+	<fieldset id="prizeConfigDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>; top: 130px" class="clean">
+		<legend>Premiação</legend>
 		<div class="row">
 			<div class="label" id="eventPrizePotLabel"><?php echo __('event.prizePot') ?></div>
 			<div class="text flex"><?php echo Util::formatFloat($eventObj->getPrizePot(), true) ?></div>
@@ -71,7 +71,7 @@
 				endif;
 			?>
 		</div>
-	</div>
+	</fieldset>
 	
 	
 </div>

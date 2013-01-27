@@ -15,6 +15,10 @@ class eventActions extends sfActions
 	$this->userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
 	$this->criteria    = new Criteria();
 	
+	$criterion = $this->criteria->getNewCriterion( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+	$criterion->addOr( $this->criteria->getNewCriterion( RankingPeer::FINISH_DATE, null ) );
+	$this->criteria->add( $criterion );
+	
 	$this->innerObj = new Event();
   }
   
@@ -360,7 +364,17 @@ class eventActions extends sfActions
   	if( $eventName ) $criteria->addAnd( EventPeer::EVENT_NAME, '%'.str_replace(' ', '%', $eventName).'%', Criteria::ILIKE );
   	if( $eventDateStart ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDateStart), Criteria::GREATER_EQUAL );
   	if( $eventDateEnd ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDateEnd), Criteria::LESS_EQUAL );
-  	if( $rankingId ) $criteria->addAnd( EventPeer::RANKING_ID, $rankingId );
+  	if( $rankingId ){
+  		
+  		if( $rankingId!='all' )
+  			$criteria->addAnd( EventPeer::RANKING_ID, $rankingId );
+  	}else{
+  		
+		$criterion = $criteria->getNewCriterion( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+		$criterion->addOr( $criteria->getNewCriterion( RankingPeer::FINISH_DATE, null ) );
+		$criteria->add( $criterion );	
+  	}
+  	
   	if( $eventPlace ){
   		
   		$criteria->addAnd( RankingPlacePeer::PLACE_NAME, '%'.$eventPlace.'%', Criteria::ILIKE );	

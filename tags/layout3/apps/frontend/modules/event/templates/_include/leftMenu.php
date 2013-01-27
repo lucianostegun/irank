@@ -2,7 +2,7 @@
 	if( in_array($actionName, array('share')) )
 		return;
 		
-	$isNew      = $eventObj->isNew();
+	$isNew      = $eventObj->isNew() || $eventObj->getIsNew();
 	$isEditable = $eventObj->isEditable();
 	$pastDate   = $eventObj->isPastDate();
 	$isMyEvent  = $eventObj->isMyEvent();
@@ -13,8 +13,10 @@
 	<?php if( $isNew && $actionName=='index' ): ?>
 
 	<?php else: ?>
+	<?php if( $isEditable && !$pastDate ): ?>
 	   	<div onclick="getICalFile()" class="subitem"><div class="label icon ical"><?php echo __('button.iCalFile') ?></div></div>
 		<div class="separator"></div>
+	<?php endif; ?>
 		
 	<?php if( $isMyEvent ): ?>
 		<div onclick="cloneEvent()" class="subitem"><div class="label icon clone"><?php echo __('button.cloneEvent') ?></div></div>

@@ -109,7 +109,6 @@
 					endforeach;
 				?>
 			</div>
-			<a href="javascript:void(0)" onclick="showAdvancedChipOptions()" id="advancedChipOptions">Exibir opções avançadas</a>
 			<div class="clear"></div>
 		</div>
 		<div class="defaultForm hidden" id="advancedChipOptionsDiv">

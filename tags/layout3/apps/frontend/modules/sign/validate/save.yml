@@ -52,3 +52,7 @@ fields:
     sfCompareValidator:
       check:    password
       compare_error: form.error.passwordConfirm
+      
+  agreeUserTerms:
+    required:
+      msg:       É preciso ler e aceitar os termos de uso para concluir o cadastro

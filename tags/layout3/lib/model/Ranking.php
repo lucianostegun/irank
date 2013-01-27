@@ -861,7 +861,7 @@ class Ranking extends BaseRanking
 			$emailAddressList[] = $this->getUserSite()->getPeople()->getEmailAddress();
 			
 		$emailAddressList = array_unique($emailAddressList);
-		prexit($emailAddressList, 1);
+		
 		$paramList = array();
 		$paramList['idDominio'] = Config::DOMAIN_ID;
 		$paramList['caixa']     = $rankingTag.'@irank.com.br';

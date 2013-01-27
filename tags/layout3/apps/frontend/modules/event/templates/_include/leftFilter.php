@@ -2,6 +2,12 @@
 	<?php
 		echo form_tag('event/search', array('id'=>'eventSearchForm', 'onsubmit'=>'doEventSearch(); return false'));
 		echo input_hidden_tag('isIE', null);
+		echo input_hidden_tag('filter', true);
+		
+		$rankingOptionList = Ranking::getOptionsForSelect($sf_request->getParameter('rankingId'), true, true, false);
+		$rankingOptionList[''] = 'Rankings ativos';
+		$rankingOptionList['all'] = 'Todos os rankings';
+		ksort($rankingOptionList);
 	?>
 	<table cellspacing="0" cellpadding="0">
 		<tr>
@@ -12,7 +18,7 @@
 			<td colspan="2"><?php echo input_tag('eventName', $sf_request->getParameter('eventName'), array('placeholder'=>'Nome do evento', 'class'=>'double')) ?></td>
 		<tr>
 		<tr>
-			<td colspan="2"><?php echo select_tag('rankingId', Ranking::getOptionsForSelect($sf_request->getParameter('rankingId'), false, false, false, 'Todos os rankings')) ?></td>
+			<td colspan="2"><?php echo select_tag('rankingId', options_for_select($rankingOptionList, 'active')) ?></td>
 		<tr>
 		<tr>
 			<td colspan="2"><?php echo input_tag('eventPlace', $sf_request->getParameter('eventPlace'), array('placeholder'=>'Local do evento', 'class'=>'double')) ?></td>

@@ -85,10 +85,6 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 
 	
-	protected $bankroll_tutorial_home;
-
-
-	
 	protected $created_at;
 
 
@@ -139,6 +135,12 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 	
 	protected $lastTimerCriteria = null;
+
+	
+	protected $collUserSiteConfigList;
+
+	
+	protected $lastUserSiteConfigCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -307,13 +309,6 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		} else {
 			return date($format, $ts);
 		}
-	}
-
-	
-	public function getBankrollTutorialHome()
-	{
-
-		return $this->bankroll_tutorial_home;
 	}
 
 	
@@ -605,20 +600,6 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setBankrollTutorialHome($v)
-	{
-
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->bankroll_tutorial_home !== $v) {
-			$this->bankroll_tutorial_home = $v;
-			$this->modifiedColumns[] = UserSitePeer::BANKROLL_TUTORIAL_HOME;
-		}
-
-	} 
-	
 	public function setCreatedAt($v)
 	{
 
@@ -695,17 +676,15 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			$this->last_access_date = $rs->getTimestamp($startcol + 18, null);
 
-			$this->bankroll_tutorial_home = $rs->getInt($startcol + 19);
+			$this->created_at = $rs->getTimestamp($startcol + 19, null);
 
-			$this->created_at = $rs->getTimestamp($startcol + 20, null);
-
-			$this->updated_at = $rs->getTimestamp($startcol + 21, null);
+			$this->updated_at = $rs->getTimestamp($startcol + 20, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 22; 
+						return $startcol + 21; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserSite object", $e);
 		}
@@ -867,6 +846,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collUserSiteConfigList !== null) {
+				foreach($this->collUserSiteConfigList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -972,6 +959,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collUserSiteConfigList !== null) {
+					foreach($this->collUserSiteConfigList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 
 			$this->alreadyInValidation = false;
 		}
@@ -1048,12 +1043,9 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				return $this->getLastAccessDate();
 				break;
 			case 19:
-				return $this->getBankrollTutorialHome();
-				break;
-			case 20:
 				return $this->getCreatedAt();
 				break;
-			case 21:
+			case 20:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1085,9 +1077,8 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$keys[16]=>$this->getDeleted(),
 			$keys[17]=>$this->getLocked(),
 			$keys[18]=>$this->getLastAccessDate(),
-			$keys[19]=>$this->getBankrollTutorialHome(),
-			$keys[20]=>$this->getCreatedAt(),
-			$keys[21]=>$this->getUpdatedAt(),
+			$keys[19]=>$this->getCreatedAt(),
+			$keys[20]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1161,12 +1152,9 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$this->setLastAccessDate($value);
 				break;
 			case 19:
-				$this->setBankrollTutorialHome($value);
-				break;
-			case 20:
 				$this->setCreatedAt($value);
 				break;
-			case 21:
+			case 20:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1195,9 +1183,8 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[16], $arr)) $this->setDeleted($arr[$keys[16]]);
 		if (array_key_exists($keys[17], $arr)) $this->setLocked($arr[$keys[17]]);
 		if (array_key_exists($keys[18], $arr)) $this->setLastAccessDate($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setBankrollTutorialHome($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setCreatedAt($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setUpdatedAt($arr[$keys[21]]);
+		if (array_key_exists($keys[19], $arr)) $this->setCreatedAt($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setUpdatedAt($arr[$keys[20]]);
 	}
 
 	
@@ -1224,7 +1211,6 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserSitePeer::DELETED)) $criteria->add(UserSitePeer::DELETED, $this->deleted);
 		if ($this->isColumnModified(UserSitePeer::LOCKED)) $criteria->add(UserSitePeer::LOCKED, $this->locked);
 		if ($this->isColumnModified(UserSitePeer::LAST_ACCESS_DATE)) $criteria->add(UserSitePeer::LAST_ACCESS_DATE, $this->last_access_date);
-		if ($this->isColumnModified(UserSitePeer::BANKROLL_TUTORIAL_HOME)) $criteria->add(UserSitePeer::BANKROLL_TUTORIAL_HOME, $this->bankroll_tutorial_home);
 		if ($this->isColumnModified(UserSitePeer::CREATED_AT)) $criteria->add(UserSitePeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(UserSitePeer::UPDATED_AT)) $criteria->add(UserSitePeer::UPDATED_AT, $this->updated_at);
 
@@ -1293,8 +1279,6 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 		$copyObj->setLastAccessDate($this->last_access_date);
 
-		$copyObj->setBankrollTutorialHome($this->bankroll_tutorial_home);
-
 		$copyObj->setCreatedAt($this->created_at);
 
 		$copyObj->setUpdatedAt($this->updated_at);
@@ -1329,6 +1313,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			foreach($this->getTimerList() as $relObj) {
 				$copyObj->addTimer($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getUserSiteConfigList() as $relObj) {
+				$copyObj->addUserSiteConfig($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -2117,6 +2105,76 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	public function addTimer(Timer $l)
 	{
 		$this->collTimerList[] = $l;
+		$l->setUserSite($this);
+	}
+
+	
+	public function initUserSiteConfigList()
+	{
+		if ($this->collUserSiteConfigList === null) {
+			$this->collUserSiteConfigList = array();
+		}
+	}
+
+	
+	public function getUserSiteConfigList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseUserSiteConfigPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collUserSiteConfigList === null) {
+			if ($this->isNew()) {
+			   $this->collUserSiteConfigList = array();
+			} else {
+
+				$criteria->add(UserSiteConfigPeer::USER_SITE_ID, $this->getId());
+
+				UserSiteConfigPeer::addSelectColumns($criteria);
+				$this->collUserSiteConfigList = UserSiteConfigPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(UserSiteConfigPeer::USER_SITE_ID, $this->getId());
+
+				UserSiteConfigPeer::addSelectColumns($criteria);
+				if (!isset($this->lastUserSiteConfigCriteria) || !$this->lastUserSiteConfigCriteria->equals($criteria)) {
+					$this->collUserSiteConfigList = UserSiteConfigPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastUserSiteConfigCriteria = $criteria;
+		return $this->collUserSiteConfigList;
+	}
+
+	
+	public function countUserSiteConfigList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseUserSiteConfigPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(UserSiteConfigPeer::USER_SITE_ID, $this->getId());
+
+		return UserSiteConfigPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addUserSiteConfig(UserSiteConfig $l)
+	{
+		$this->collUserSiteConfigList[] = $l;
 		$l->setUserSite($this);
 	}
 

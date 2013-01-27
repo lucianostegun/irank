@@ -407,8 +407,8 @@ a:hover {
 	top: 			10px;
 	left: 			20px;
 	width: 			700px;
-	margin-bottom: 	20px;
-	font-size: 		10px;
+	margin-bottom: 	0px;
+	font-size: 		11px;
 }
 
 #footer {

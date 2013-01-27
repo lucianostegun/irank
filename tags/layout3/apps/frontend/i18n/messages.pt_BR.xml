@@ -1439,11 +1439,11 @@
 	
 			<trans-unit>
 				<source>form.error.expiredDate</source>
-				<target>A data informada não pode mais ser utilizada para eventos</target>
+				<target>A data informada não pode mais ser utilizada para criação de eventos</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.takenEventName</source>
-				<target>Já existe um evento cadastrado com este nome para esta mesma data</target>
+				<target>Já existe um evento cadastrado com este nome para esta data</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.invalidTime</source>

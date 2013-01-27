@@ -7,6 +7,11 @@
 	position: 		relative;
 }
 
+.defaultForm.half {
+
+	width: 60%
+}
+
 .defaultForm blockquote {
 
 	font-size: 	12px;
@@ -276,8 +281,7 @@
 
 .defaultForm .row .help {
 
-	width: auto;
-	min-width: 0px;
+	display: none;
 }
 
 
@@ -344,7 +348,8 @@
 	color: 			#333333;
 }
 
-.defaultForm input.required, .windowForm input.required {
+.defaultForm input.required, .windowForm input.required,
+.defaultForm select.required, .windowForm select.required {
 
 	padding-left: 	5px;
 	background: 	#FFFFFF url('/images/form/formRequired.png') left top repeat-y;
@@ -526,6 +531,14 @@
 	display: 				none;
 	margin-left: 			2px;
 }
+
+.defaultForm .row .errorHelp {
+
+	color: #973030;
+	display: none;
+}
+
+
 
 
 
@@ -718,6 +731,62 @@
 
 
 
+
+
+
+
+.formHelpBubbleWrap {
+	
+	position: absolute;
+	top: 10px;
+	right: 35px;
+	width: 280px;
+	display: none;
+}
+
+.formHelpBubbleWrap .formHelpBubbleArea {
+	
+	display: inline-block;
+	position: relative;
+	border: 3px solid #D0D0D0;
+	background-color: #FAFAFA;
+	border-radius: 8px;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	z-index: 1;
+	left: 21px;
+}
+
+.formHelpBubbleWrap .formHelpBubbleArea .formHelperFieldName {
+	
+	font-weight: bold;
+	position: relative;
+	left: 7px;
+	padding-left: 22px;
+	height: 20px;
+	line-height: 20px;
+	background: url('/images/icon/info.png') no-repeat left center;
+}
+
+.formHelpBubbleWrap .formHelpBubbleArea .formHelperDescription {
+	
+	padding: 8px 5px 0px 10px;
+	width: 230px;
+}
+
+.formHelpBubbleWrap img {
+	
+	position: absolute;
+	left: 6px;
+	top: 15px;
+	z-index: 2;
+}
+
+
+.defaultForm .row .field.textR {
+
+	text-align: right
+}
 
 
 ::-webkit-input-placeholder	{ color:#808080; }
