@@ -22,8 +22,8 @@ function handleFormFieldError( content, formId, prefix, alertMessage, indicatorI
 		content = content.replace(/^formError:/, '');
 	
 		var formErrorObj    = parseInfo(content);
-		var fieldNameList   = formErrorObj._fieldNameList
-		var fieldErrorCount = formErrorObj._fieldErrorCount
+		var fieldNameList   = formErrorObj._fieldNameList;
+		var fieldErrorCount = formErrorObj._fieldErrorCount;
 		
 		for(var i=0; i < fieldErrorCount; i++){
 
@@ -128,7 +128,7 @@ function removeFormStatusError(fieldId){
 
 function showFormStatusError(formId){
 	
-	var divError = $('formStatusError'+ucfirst(formId)+'Div')
+	var divError = $('formStatusError'+ucfirst(formId)+'Div');
 
 	if( divError==null )
 		formId = false;
@@ -305,13 +305,13 @@ function showFormHelp(Element){
 	}
 		
 	$('formHelp'+ucfirst(form)).style.top = top+'px';
-	showDiv('formHelp'+ucfirst(form))
+	showDiv('formHelp'+ucfirst(form));
 }
 
 function hideFormHelp(Element){
 	
 	form = Element.id.replace(ucfirst(Element.name), '');
-	hideDiv('formHelp'+ucfirst(form))
+	hideDiv('formHelp'+ucfirst(form));
 }
 
 function goToField( value, length, fieldId, event ){
