@@ -267,12 +267,12 @@ function isIE(){
 	return (navigator.appName.indexOf("Microsoft")!= -1)
 }
 
-function Trim( value, char ){
+function Trim(value, text){
 	
-	if( char ){
+	if( text ){
 		
-		eval('value = value.replace(/^'+char+'*/g, \'\');');
-		eval('value = value.replace(/'+char+'*$/g, \'\');')
+		eval('value = value.replace(/^'+text+'*/g, \'\');');
+		eval('value = value.replace(/'+text+'*$/g, \'\');')
 	}else{
 		
 		value = value.replace(/^ */g, '');
@@ -286,11 +286,11 @@ function Trim( value, char ){
 	return value;
 }
 
-function replaceChar( value, char, newChar) {
+function replaceChar( value, text, newChar) {
 
     for (i=0; i < value.length; i++)
-    	if (value.substring(i, i+1) == char)
-            value = value.replace(char, newChar);
+    	if (value.substring(i, i+1) == text)
+            value = value.replace(text, newChar);
     
     return value;
 }
