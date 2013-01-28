@@ -5,11 +5,11 @@ var defaultDuration = 0;
 var currentLevels   = 0;
 var totalLevels     = 0;
 
-const WIZARD_STEP_MAIN    = 1;
-const WIZARD_STEP_OPTIONS = 2;
-const WIZARD_STEP_LEVELS  = 3;
-const WIZARD_STEP_EXTRA   = 4;
-const WIZARD_STEP_SUCCESS = 5;
+var WIZARD_STEP_MAIN    = 1;
+var WIZARD_STEP_OPTIONS = 2;
+var WIZARD_STEP_LEVELS  = 3;
+var WIZARD_STEP_EXTRA   = 4;
+var WIZARD_STEP_SUCCESS = 5;
 
 function startTimerWizard(){
 	

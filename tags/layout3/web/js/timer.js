@@ -6,14 +6,14 @@ var levelSeconds   = 0;
 var timerInterval  = 1000;
 var currentLevel   = 0;
 
-const CELL_BLIND_ID = 0;
-const CELL_BLIND_MARK = 1;
-const CELL_BLIND_LEVEL = 2;
-const CELL_BLIND_SMALL = 3;
-const CELL_BLIND_BIG = 4;
-const CELL_BLIND_ANTE = 5;
-const CELL_BLIND_DURATION = 6;
-const CELL_BLIND_PAUSE = 8;
+var CELL_BLIND_ID = 0;
+var CELL_BLIND_MARK = 1;
+var CELL_BLIND_LEVEL = 2;
+var CELL_BLIND_SMALL = 3;
+var CELL_BLIND_BIG = 4;
+var CELL_BLIND_ANTE = 5;
+var CELL_BLIND_DURATION = 6;
+var CELL_BLIND_PAUSE = 8;
 
 function nextLevel(pause){
 	
