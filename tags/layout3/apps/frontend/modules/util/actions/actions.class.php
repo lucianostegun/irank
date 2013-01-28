@@ -27,129 +27,119 @@ class utilActions extends sfActions
   }
   
   public function executeObfuscate($request){
-    
-	$url = 'http://www.javascriptobfuscator.com/';
-	$content = file_get_contents(Util::getFilePath('/js/form.js'));
-	$content = str_replace(chr(10), ' ', $content);
 	
-	$content = '
-var a="Hello World!";
-function MsgBox(msg)
-{
-    alert(msg+"\n"+a);
-}
-MsgBox("OK");
-                        ';
-                        
-	$params = array ('TextBox1'=>$content,
-					 '__VIEWSTATE'=>'/wEPDwUKLTI0MDAwODAzNmQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgYFCGNiTGluZUJSBQhjYkluZGVudAULY2JFbmNvZGVTdHIFDmNiRW5jb2RlTnVtYmVyBQljYk1vdmVTdHIFDmNiUmVwbGFjZU5hbWVzWLIp5tAwfSlSb8/BzsrwTkYZR5udtjW4j8qra0WjWoA=',
-					 '__EVENTVALIDATION'=>'/wEdAAvIDxFYarFOOv3KxLmnMoo9ESCFkFW/RuhzY1oLb/NUVB2nXP6dhZn6mKtmTGNHd3PN+DvxnwFeFeJ9MIBWR693/0+kJGcigziRf+JnyYP3ngWOnPKUhxuCfOKb0tlvVuly5juiFHJSf6q9cXRA/+LsCzkidEk0Y8qCyJLcOKXNoEywswNt0lfddYqrIj/HYv1fNaBSlQ4gCFEJtbofwBY37hv76BH8vu7iM4tkb8en1TRZcG/LhGcaihQKad6qZJWA4OxV8j/dbOIvemVtCa3p',
-					 'TextBox3'=>'
-^_get_
-^_set_
-^_mtd_',
-					 'Button1'=>'Obfuscate',
-					 'cbEncodeStr'=>'on',
-					 'cbEncodeNumber'=>'on',
-					 'cbReplaceNames'=>'on');
-
-	$content = $this->post_request($url, $params);
-	echo $content;
-	exit;
-
-
-
-
-
-
-
-
-
-	$url = 'http://www.phpblog.com.br/exemplos/encodejavascript/index.php';
-	$content = file_get_contents(Util::getFilePath('/js/form.js'));
-	$params = array ('src'=>$content,
-					 '__VIEWSTATE'=>'/wEPDwUKLTI0MDAwODAzNmQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgYFCGNiTGluZUJSBQhjYkluZGVudAULY2JFbmNvZGVTdHIFDmNiRW5jb2RlTnVtYmVyBQljYk1vdmVTdHIFDmNiUmVwbGFjZU5hbWVzWLIp5tAwfSlSb8/BzsrwTkYZR5udtjW4j8qra0WjWoA=',
-					 '__EVENTVALIDATION'=>'/wEdAAvIDxFYarFOOv3KxLmnMoo9ESCFkFW/RuhzY1oLb/NUVB2nXP6dhZn6mKtmTGNHd3PN+DvxnwFeFeJ9MIBWR693/0+kJGcigziRf+JnyYP3ngWOnPKUhxuCfOKb0tlvVuly5juiFHJSf6q9cXRA/+LsCzkidEk0Y8qCyJLcOKXNoEywswNt0lfddYqrIj/HYv1fNaBSlQ4gCFEJtbofwBY37hv76BH8vu7iM4tkb8en1TRZcG/LhGcaihQKad6qZJWA4OxV8j/dbOIvemVtCa3p',
-					 'TextBox3'=>'^_get_
-^_set_
-^_mtd_',
-					 'fast_decode'=>'on',
-					 'ascii_encoding'=>'95',
-					 'cbEncodeNumber'=>'on',
-					 'cbMoveStr'=>'on',
-					 'cbReplaceNames'=>'on');
-
-	$content = $this->post_request($url, $params);
-	preg_match('/<textarea id="packed" class="result" rows="10" cols="80" readonly="readonly">(.*)<\/textarea>/', $content, $matches);
-	echo $matches[1];
+	$fileList = array();
+	
+	// create a handler for the directory
+	$handler = opendir(Util::getFilePath('/js'));
+	
+	// open directory and walk through the filenames
+	while($file = readdir($handler))
+		if( preg_match('/.js$/', $file) )
+			$fileList[] = $file;
+	
+	// tidy up: close the handler
+	closedir($handler);
+	
+	foreach($fileList as $file){
+		
+		ob_start();
+		ignore_user_abort(true);
+		
+		$microtimeStart = microtime(true);
+		$script = $this->obfuscate($file);
+		$filePath = Util::getFilePath('/js/'.$file);
+		$fp = fopen($filePath, 'w');
+		fwrite($fp, $script);
+		fclose($fp);
+		$microtimeStop = microtime(true);
+		
+		echo 'OK - '.$filePath.' - '.number_format($microtimeStop*1000-$microtimeStart*1000, 5).'ms<br/>';
+		
+		$content = ob_get_contents();
+		ob_end_clean();
+		$len = strlen($content);             // Get the length
+//		header('Connection: close');         // Tell the client to close connection
+//		header("Content-Length: $size");
+		echo $content;                       // Output content
+		flush();
+	}
+	
 	exit;
   }
   
-  
+  private function obfuscate($file){
+    
+	$url = 'http://closure-compiler.appspot.com/compile';
+	$code_url = 'http://www.irank.com.br/js/'.$file;
+	$compilation_level = 'SIMPLE_OPTIMIZATIONS';
+	$output_format = 'text';
+	$output_info = 'compiled_code';
 
-public function post_request($url, $data, $referer='') {
- 
-    // Convert the data array into URL Parameters like a=b&foo=bar etc.
-    $data = http_build_query($data);
- 
-    // parse the given URL
-    $url = parse_url($url);
- 
-    if ($url['scheme'] != 'http') { 
-        die('Error: Only HTTP request are supported !');
-    }
- 
-    // extract host and path:
-    $host = $url['host'];
-    $path = $url['path'];
- 
-    // open a socket connection on port 80 - timeout: 30 sec
-    $fp = fsockopen($host, 80, $errno, $errstr, 30);
- 
-    if ($fp){
- 
-        // send the request headers:
-        fputs($fp, "POST $path HTTP/1.1\r\n");
-        fputs($fp, "Host: $host\r\n");
- 
-        if ($referer != '')
-            fputs($fp, "Referer: $referer\r\n");
- 
-        fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
-        fputs($fp, "Content-length: ". strlen($data) ."\r\n");
-        fputs($fp, "Connection: close\r\n\r\n");
-        fputs($fp, $data);
- 
-        $result = ''; 
-        while(!feof($fp)) {
-            // receive the results of the request
-            $result .= fgets($fp, 128);
-        }
-    }
-    else { 
-        return array(
-            'status' => 'err', 
-            'error' => "$errstr ($errno)"
-        );
-    }
- 
-    // close the socket connection:
-    fclose($fp);
- 
-    // split the result header from the content
-    $result = explode("\r\n\r\n", $result, 2);
- 
-    $header = isset($result[0]) ? $result[0] : '';
-    $content = isset($result[1]) ? $result[1] : '';
- 
- return $content;
-    // return as structured array:
-    return array(
-        'status' => 'ok',
-        'header' => $header,
-        'content' => $content
-    );
-}
+	$params = array('code_url'=>$code_url,
+				    'compilation_level'=>$compilation_level,
+				    'output_format'=>$output_format,
+				    'output_info'=>$output_info);
+    
+	$string = '';
+	$first = true;
+	foreach($params as $field=>$param){
+  	
+		$param = ($param);
+		
+		if( !$first )
+			$string .= '&';
+		
+		$string .= $field.'='.$param;
+		$first = false;
+	}
 
-  
+	$curl = curl_init($url);
+	curl_setopt($curl, CURLOPT_POST, 1);
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $string);
+	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$script = curl_exec($curl);
+	curl_close($curl);
+	
+	
+	
+	
+	
+	
+	
+	
+	$url = 'http://www.phpblog.com.br/exemplos/encodejavascript/index.php';
+	$params = array ('src'=>urlencode($script),
+					 'ascii_encoding'=>10);
+					 
+	$string = '';
+	$first = true;
+	foreach($params as $field=>$param){
+  	
+		$param = ($param);
+		
+		if( !$first )
+			$string .= '&';
+		
+		$string .= $field.'='.$param;
+		$first = false;
+	}
+
+	$curl = curl_init($url);
+	curl_setopt($curl, CURLOPT_POST, 1);
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $string);
+	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_HEADER, false);
+	curl_setopt($curl, CURLOPT_TIMEOUT, 20);
+	$content = curl_exec($curl);
+	curl_close($curl);
+
+	preg_match('/<textarea id="packed" class="result" rows="10" cols="80" readonly="readonly">(.*)/im', $content, $matches);
+	$script = $matches[1];
+	$script = html_entity_decode($script);
+	
+	return $script;
+  }
 }

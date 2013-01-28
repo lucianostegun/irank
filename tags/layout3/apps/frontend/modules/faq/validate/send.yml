@@ -1,8 +1,0 @@
-fields:
-       
-  question:
-    required:
-      msg:       form.error.requiredField
-    sfStringValidator:
-      max:       140
-      max_error: form.error.max140
