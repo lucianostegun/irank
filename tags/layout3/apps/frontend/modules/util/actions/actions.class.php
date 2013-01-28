@@ -43,26 +43,28 @@ class utilActions extends sfActions
 	
 	foreach($fileList as $file){
 		
-		ob_start();
-		ignore_user_abort(true);
-		
 		$microtimeStart = microtime(true);
-		$script = $this->obfuscate($file);
+		$status = null;
 		$filePath = Util::getFilePath('/js/'.$file);
-		$fp = fopen($filePath, 'w');
-		fwrite($fp, $script);
-		fclose($fp);
+		
+		$fileObj = file($filePath);
+		if( count($fileObj)==1 || preg_match('/^eval\(/', $fileObj[0]) )
+			continue;
+		
+		try{
+			
+			$script = $this->obfuscate($file);
+			$fp = fopen($filePath, 'w');
+			fwrite($fp, $script);
+			fclose($fp);
+			$status = 'OK';
+		}catch(Exception $e){
+			
+			$status = 'ERRO '.$e->getMessage();
+		}
+		
 		$microtimeStop = microtime(true);
-		
-		echo 'OK - '.$filePath.' - '.number_format($microtimeStop*1000-$microtimeStart*1000, 5).'ms<br/>';
-		
-		$content = ob_get_contents();
-		ob_end_clean();
-		$len = strlen($content);             // Get the length
-//		header('Connection: close');         // Tell the client to close connection
-//		header("Content-Length: $size");
-		echo $content;                       // Output content
-		flush();
+		echo $status.' - '.$filePath.' - '.number_format($microtimeStop*1000-$microtimeStart*1000, 5).'ms<br/>';
 	}
 	
 	exit;
@@ -71,10 +73,13 @@ class utilActions extends sfActions
   private function obfuscate($file){
     
 	$url = 'http://closure-compiler.appspot.com/compile';
-	$code_url = 'http://www.irank.com.br/js/'.$file;
+	$code_url = 'http://www.irank.com.br/js/'.$file.'?time='.time();
+	
 	$compilation_level = 'SIMPLE_OPTIMIZATIONS';
 	$output_format = 'text';
+//	$output_format = 'json';
 	$output_info = 'compiled_code';
+//	$output_info = 'errors';
 
 	$params = array('code_url'=>$code_url,
 				    'compilation_level'=>$compilation_level,
@@ -102,12 +107,13 @@ class utilActions extends sfActions
 	$script = curl_exec($curl);
 	curl_close($curl);
 	
+	if( !$script )
+		throw new Exception('LEVEL_1_ERROR');
+	if( preg_match('/Error\(([0-9]*)\): (.*)/', $script, $matches) )
+		throw new Exception('ERROR '.$matches[1]);
 	
-	
-	
-	
-	
-	
+//	echo "<hr>";
+//	echo $script;
 	
 	$url = 'http://www.phpblog.com.br/exemplos/encodejavascript/index.php';
 	$params = array ('src'=>urlencode($script),
@@ -138,7 +144,11 @@ class utilActions extends sfActions
 
 	preg_match('/<textarea id="packed" class="result" rows="10" cols="80" readonly="readonly">(.*)/im', $content, $matches);
 	$script = $matches[1];
+	$script = preg_replace('/<\/textarea>$/', '', $script);
+	
 	$script = html_entity_decode($script);
+	if( !$script )
+		throw new Exception('EMPTY');
 	
 	return $script;
   }
