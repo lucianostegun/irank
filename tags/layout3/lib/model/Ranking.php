@@ -930,7 +930,7 @@ class Ranking extends BaseRanking
 			
 		list($percentList, $paidPlaces) = explode(';', $info);
 		
-		$percentList = ereg_replace('[^0-9,]', '', $percentList);
+		$percentList = preg_replace('/[^0-9,]/', '', $percentList);
 		
 		$infoList = array('percentList'=>$percentList,
 						  'paidPlaces'=>$paidPlaces);

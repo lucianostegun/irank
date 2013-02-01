@@ -27,3 +27,7 @@ fields:
   addressState:
     required:
       msg:       form.error.requiredField
+      
+  agreeUserTerms:
+    required:
+      msg:       É preciso ler e aceitar os termos de uso para concluir o cadastro

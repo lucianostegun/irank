@@ -50,7 +50,7 @@
 			
 			<div class="row">
 				<div class="field textR" style="width: 168px"><?php echo checkbox_tag('agreeUserTerms', true, false, array('id'=>'signAgreeUserTerms')) ?></div>
-				<div class="textCheckbox"><label for="myAccountAgreeSmsTerms">Li e concordo com os <?php echo link_to('termos de uso do site', 'sign/userTerms', array('target'=>'_blank')) ?></label></div>
+				<div class="textCheckbox"><label for="signAgreeUserTerms">Li e concordo com os <?php echo link_to('termos de uso do site', 'sign/userTerms', array('target'=>'_blank')) ?></label></div>
 				<div class="clear errorHelp" style="margin-left: -95px" id="signAgreeUserTermsError">É preciso ler e aceitar os termos de uso para concluir o cadastro</div>
 			</div>
 		</div>
