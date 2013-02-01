@@ -1223,6 +1223,8 @@ class Event extends BaseEvent
 			}
 		}
 		
+		$count = 0;
+		
 		foreach($playerList as $peopleId=>$playerInfo){
 			
 			$fontColor = ($peopleIdCurrent==$peopleId?$colorRed:$colorBlack);
@@ -1243,6 +1245,12 @@ class Event extends BaseEvent
 			
 			$length3 = imagettfbbox(8, 0, $verdana, $eventPosition);
 			$length3 = $length3[2]-$length3[0];
+			
+			if( $count++ > 7 ){
+				
+				imagettftext($newImg, 8, 0, $width-$length3-355, 85+$positionY-5, $fontColor, $verdana, '...');
+				break;
+			}
 			
 			imagettftext($newImg, 8, 0, $width-$length3-390, 85+$positionY, $fontColor, $verdana, $eventPosition);
 			imagettftext($newImg, 8, 0, 37, 85+$positionY, $fontColor, $verdana, $playerName);

@@ -60,3 +60,5 @@
 {2012/09/28 00:31:55} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089005,     SenderEmail=ivanaperia@gmail.com)) - end {1}3B5E4D777373ED8884D32FB2C0070872 
 {2012/11/19 20:03:32} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089001,     SenderEmail=ivanaperia@gmail.com)) - begin 
 {2012/11/19 20:03:33} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2089001,     SenderEmail=ivanaperia@gmail.com)) - end {1}A3BE4E3D555541C114F71F9D42C8B79F 
+{2013/01/29 09:36:21} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2701001,     SenderEmail=jaquesbrilhante@uol.com.br)) - begin 
+{2013/01/29 09:36:22} [Info] PagSeguroPaymentService.Register(PagSeguroPaymentRequest(Reference=2701001,     SenderEmail=jaquesbrilhante@uol.com.br)) - end {1}F5338CA1DEDE60D1145B1FACD351CD96 
