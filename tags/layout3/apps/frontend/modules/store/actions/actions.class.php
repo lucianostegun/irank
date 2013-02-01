@@ -558,7 +558,7 @@ class storeActions extends sfActions
   	}catch(Exception $e){
   		
   		echo $e->getMessage();
-  		Log::doLog('Não encontrou o pedido. notificationCode '.$notificationCode, 'PagSeguro');
+  		Log::doLog('Não encontrou o pedido. notificationCode: "'.$notificationCode.'"', 'PagSeguro');
   	}
   	
   	unset($xmlObj);

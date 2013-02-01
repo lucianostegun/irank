@@ -54,7 +54,7 @@ email_log:
 
 rss:
   url:    blog/rss
-  param:  { module: blog, action: rss }
+  param:  { module: blog, action: feed }
   
 blog_by_title:
   url:    blog/:permalink
@@ -117,6 +117,70 @@ club_72off:
 club_ases:
   url:    /ases
   param:  { module: club, action: details, clubId: 7 }
+
+club_sierrapoker:
+  url:    /sierrapoker
+  param:  { module: club, action: details, clubId: 9 }
+
+club_royalclub:
+  url:    /royalclub
+  param:  { module: club, action: details, clubId: 10 }
+
+club_nltexasclub:
+  url:    /nltexasclub
+  param:  { module: club, action: details, clubId: 11 }
+
+club_bsb:
+  url:    /bsb
+  param:  { module: club, action: details, clubId: 12 }
+
+club_lol:
+  url:    /lol
+  param:  { module: club, action: details, clubId: 13 }
+
+club_cwb:
+  url:    /cwb
+  param:  { module: club, action: details, clubId: 15 }
+
+club_allin:
+  url:    /allin
+  param:  { module: club, action: details, clubId: 16 }
+
+club_riverclub:
+  url:    /riverclub
+  param:  { module: club, action: details, clubId: 17 }
+
+club_cataratas:
+  url:    /cataratas
+  param:  { module: club, action: details, clubId: 18 }
+
+club_nit:
+  url:    /nit
+  param:  { module: club, action: details, clubId: 19 }
+
+club_rivertexas:
+  url:    /rivertexas
+  param:  { module: club, action: details, clubId: 20 }
+
+club_blackriver:
+  url:    /blackriver
+  param:  { module: club, action: details, clubId: 1 }
+
+club_fgp:
+  url:    /fgp
+  param:  { module: club, action: details, clubId: 22 }
+
+club_prudentepoker:
+  url:    /prudentepoker
+  param:  { module: club, action: details, clubId: 23 }
+
+club_maceioholdem:
+  url:    /maceioholdem
+  param:  { module: club, action: details, clubId: 24 }
+
+club_hitz:
+  url:    /hitz
+  param:  { module: club, action: details, clubId: 25 }
 
 #CLUB ROUTING END
   

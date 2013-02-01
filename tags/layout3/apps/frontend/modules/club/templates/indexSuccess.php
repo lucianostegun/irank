@@ -40,7 +40,7 @@
 	<?php
 		$criteria = new Criteria();
 		$criteria->addJoin( ClubPeer::CITY_ID, CityPeer::ID, Criteria::INNER_JOIN );
-		$criteria->addAscendingOrderByColumn( date('d') );
+		$criteria->addAscendingOrderByColumn( 'RANDOM()' );
 		if( $stateId )
 			$criteria->add( CityPeer::STATE_ID, $stateId );
 		

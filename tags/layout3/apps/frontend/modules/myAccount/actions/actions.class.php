@@ -372,7 +372,7 @@ class myAccountActions extends sfActions
 	$smsObj->setPeopleId($userSiteObj->getPeopleId());
 	$smsObj->setPhoneNumber($phoneDdd.$phoneNumber);
 	$smsObj->setMessage($message);
-//	$smsObj->send($userSiteObj);
+	$smsObj->send($userSiteObj);
 	exit;
   }
 

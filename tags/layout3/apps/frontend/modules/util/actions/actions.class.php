@@ -65,21 +65,24 @@ class utilActions extends sfActions
 		
 		$microtimeStop = microtime(true);
 		echo $status.' - '.$filePath.' - '.number_format($microtimeStop*1000-$microtimeStart*1000, 5).'ms<br/>';
+		
+		exit;
 	}
 	
 	exit;
   }
   
   private function obfuscate($file){
-    
+
+	set_time_limit(15);    
 	$url = 'http://closure-compiler.appspot.com/compile';
 	$code_url = 'http://www.irank.com.br/js/'.$file.'?time='.time();
 	
 	$compilation_level = 'SIMPLE_OPTIMIZATIONS';
 	$output_format = 'text';
-//	$output_format = 'json';
+	$output_format = 'json';
 	$output_info = 'compiled_code';
-//	$output_info = 'errors';
+	$output_info = 'errors';
 
 	$params = array('code_url'=>$code_url,
 				    'compilation_level'=>$compilation_level,
@@ -102,7 +105,7 @@ class utilActions extends sfActions
 	$curl = curl_init($url);
 	curl_setopt($curl, CURLOPT_POST, 1);
 	curl_setopt($curl, CURLOPT_POSTFIELDS, $string);
-	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+//	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$script = curl_exec($curl);
 	curl_close($curl);
@@ -112,8 +115,8 @@ class utilActions extends sfActions
 	if( preg_match('/Error\(([0-9]*)\): (.*)/', $script, $matches) )
 		throw new Exception('ERROR '.$matches[1]);
 	
-//	echo "<hr>";
-//	echo $script;
+	echo "<hr>";
+	echo $script;
 	
 	$url = 'http://www.phpblog.com.br/exemplos/encodejavascript/index.php';
 	$params = array ('src'=>urlencode($script),
@@ -135,7 +138,7 @@ class utilActions extends sfActions
 	$curl = curl_init($url);
 	curl_setopt($curl, CURLOPT_POST, 1);
 	curl_setopt($curl, CURLOPT_POSTFIELDS, $string);
-	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+//	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($curl, CURLOPT_HEADER, false);
 	curl_setopt($curl, CURLOPT_TIMEOUT, 20);
