@@ -2,12 +2,12 @@ all:
   propel:
     class:          sfPropelDatabase
     param:
-      dsn:                pgsql://postgres:unidunite@localhost/irank
+      dsn:                pgsql://irank:ir4nkc0mbr13@189.38.95.105/irank
       phptype:            pgsql
       port:               5432
       encoding:           utf8
-      persistent:         false
+      persistent:         true
   log:
     class:          sfPropelDatabase
     param:
-      dsn:                pgsql://postgres:unidunite@localhost/irank_log
+      dsn:                pgsql://irank1:ir4nkc0mbr13@189.38.95.105/irank1
