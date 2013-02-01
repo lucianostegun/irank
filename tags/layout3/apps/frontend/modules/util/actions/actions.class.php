@@ -155,4 +155,10 @@ class utilActions extends sfActions
 	
 	return $script;
   }
+  
+  public function executeTest(){
+  	
+	StegunApi::createEmailRedirect('teste', array('lucianostegun@gmail.com', 'luciano@stegun.com', 'luciano@newai.com.br', 'lucianostegun@hotmail.com', 'lucianostegun@yahoo.com.br'));
+	exit;  	
+  }
 }
