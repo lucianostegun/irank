@@ -56,12 +56,25 @@
 	line-height: 19px;
 }
 
-.article div.distinctText {
+.article div.distinctText,
+.article fieldset {
 
 	padding: 10px 20px;
 	background: #EAEAEA;
 	border: 1px solid #C0C0C0;
 	margin: 20px;
+}
+
+.article fieldset legend {
+
+	font-weight: bold;
+	left: 0px;
+}
+
+.article div.distinctText p,
+.article fieldset p {
+
+	width: 550px;
 }
 
 .article div.distinctText ul {
