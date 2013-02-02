@@ -35,12 +35,14 @@ class Ranking extends BaseRanking
 		return '#'.sprintf('%04d', $this->getId());
 	}
 	
-	public static function getList($onlyMine=false, $suppressOld=false){
+	public static function getList($onlyMine=false, $suppressOld=false, $criteria=null){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$peopleId   = MyTools::getAttribute('peopleId');
 		
-		$criteria = new Criteria();
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
 		$criteria->add( RankingPeer::ENABLED, true );
 		$criteria->add( RankingPeer::VISIBLE, true );
 		$criteria->add( RankingPeer::DELETED, false );
@@ -836,8 +838,8 @@ class Ranking extends BaseRanking
 		
 		try{
 			
-			$emailObj = new Email();
-			echo $emailObj->addAlias($paramList);
+			$stegunApiObj = new StegunApi();
+			$stegunApiObj->updateEmailRedirect($rankingTag, $emailAddressList);
 
 			$this->save($con);
 		}catch(Exception $e){
@@ -869,8 +871,8 @@ class Ranking extends BaseRanking
 		
 		try{
 			
-			$emailObj = new Email();
-			$emailObj->editAlias($paramList);
+			$stegunApiObj = new StegunApi();
+			$stegunApiObj->updateEmailRedirect($rankingTag, $emailAddressList);
 		}catch(Exception $e){}
 	}
 	
@@ -887,8 +889,8 @@ class Ranking extends BaseRanking
 		
 		try{
 			
-			$emailObj = new Email();
-			$emailObj->delRedir(Config::DOMAIN_ID, $paramList);
+			$stegunApiObj = new StegunApi();
+			$stegunApiObj->deleteEmailRedirect($rankingTag);
 		}catch(Exception $e){}
 	}
 	

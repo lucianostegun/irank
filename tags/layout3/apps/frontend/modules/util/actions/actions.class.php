@@ -156,9 +156,31 @@ class utilActions extends sfActions
 	return $script;
   }
   
+  public function executeReimport(){
+  	
+  	$criteria = new Criteria();
+  	$criteria->setDistinct( RankingPeer::ID );
+  	$criteria->add( RankingPeer::RANKING_TAG, null, Criteria::NOT_EQUAL );
+  	$criteria->addAnd( RankingPeer::RANKING_TAG, '', Criteria::NOT_EQUAL );
+  	
+  	$rankingObjList = Ranking::getList(false, false, $criteria);
+
+  	foreach($rankingObjList as $rankingObj){
+  		
+  		$rankingTag = $rankingObj->getRankingTag();
+  		$rankingObj->updateEmailGroup();
+  		echo 'Grupo '.$rankingTag.' criado com sucesso<br/>';
+  	}
+  	
+	exit;  	
+  }
+  
   public function executeTest(){
   	
-	StegunApi::createEmailRedirect('teste', array('lucianostegun@gmail.com', 'luciano@stegun.com', 'luciano@newai.com.br', 'lucianostegun@hotmail.com', 'lucianostegun@yahoo.com.br'));
+	$stegunApiObj = new StegunApi();
+//	echo $stegunApiObj->updateEmailRedirect('teste', array('lucianostegun@gmail.com', 'luciano@stegun.com'));
+// 	echo $stegunApiObj->deleteEmailRedirect('teste');
+  	
 	exit;  	
   }
 }
