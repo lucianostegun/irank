@@ -831,15 +831,10 @@ class Ranking extends BaseRanking
 		$emailAddressList[] = $this->getUserSite()->getPeople()->getEmailAddress();
 		$emailAddressList   = array_unique($emailAddressList);
 		
-		$paramList = array();
-		$paramList['idDominio'] = Config::DOMAIN_ID;
-		$paramList['caixa']     = $rankingTag.'@irank.com.br';
-		$paramList['destino']   = implode(',', $emailAddressList);
-		
 		try{
 			
 			$stegunApiObj = new StegunApi();
-			$stegunApiObj->updateEmailRedirect($rankingTag, $emailAddressList);
+			$stegunApiObj->createEmailRedirect($rankingTag, $emailAddressList);
 
 			$this->save($con);
 		}catch(Exception $e){
@@ -864,16 +859,16 @@ class Ranking extends BaseRanking
 			
 		$emailAddressList = array_unique($emailAddressList);
 		
-		$paramList = array();
-		$paramList['idDominio'] = Config::DOMAIN_ID;
-		$paramList['caixa']     = $rankingTag.'@irank.com.br';
-		$paramList['destino']   = implode(',', $emailAddressList);
-		
 		try{
 			
 			$stegunApiObj = new StegunApi();
 			$stegunApiObj->updateEmailRedirect($rankingTag, $emailAddressList);
-		}catch(Exception $e){}
+		}catch(Exception $e){
+			
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public function deleteEmailGroup(){
@@ -882,10 +877,6 @@ class Ranking extends BaseRanking
 
 		if( !$rankingTag )
 			return false;
-		
-		$paramList = array();
-		$paramList['idDominio'] = Config::DOMAIN_ID;
-		$paramList['caixa']     = $rankingTag.'@irank.com.br';
 		
 		try{
 			

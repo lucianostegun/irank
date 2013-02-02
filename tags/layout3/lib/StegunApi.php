@@ -34,7 +34,7 @@ class StegunApi {
 		}else{
 				
 			$resultObj = json_decode($result);
-				
+			
 			if( is_object($resultObj) && property_exists($resultObj, 'errorMessage') )
 				throw new StegunApiException($resultObj->errorMessage);
 			else
@@ -42,6 +42,15 @@ class StegunApi {
 		}
 		
 		return $result;
+	}
+	
+	public function createEmailRedirect($mailbox, $emailAddressList){
+		
+		$this->addParameter('action', 'create');
+		$this->addParameter('mailbox', $mailbox);
+		$this->addParameter('emailAddressList', implode(';', $emailAddressList));
+						 
+		return self::call('mailbox');
 	}
 	
 	public function updateEmailRedirect($mailbox, $emailAddressList){

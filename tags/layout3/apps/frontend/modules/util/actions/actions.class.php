@@ -168,8 +168,11 @@ class utilActions extends sfActions
   	foreach($rankingObjList as $rankingObj){
   		
   		$rankingTag = $rankingObj->getRankingTag();
-  		$rankingObj->updateEmailGroup();
-  		echo 'Grupo '.$rankingTag.' criado com sucesso<br/>';
+  		
+	 	if( $rankingObj->updateEmailGroup() )
+			echo 'Grupo '.$rankingTag.' criado com sucesso<br/>';
+		else
+			echo 'Erro ao criar o grupo '.$rankingTag.'<br/>';
   	}
   	
 	exit;  	
@@ -178,7 +181,7 @@ class utilActions extends sfActions
   public function executeTest(){
   	
 	$stegunApiObj = new StegunApi();
-//	echo $stegunApiObj->updateEmailRedirect('teste', array('lucianostegun@gmail.com', 'luciano@stegun.com'));
+	echo $stegunApiObj->updateEmailRedirect('teste', array('lucianostegun@gmail.com', 'luciano@stegun.com'));
 // 	echo $stegunApiObj->deleteEmailRedirect('teste');
   	
 	exit;  	
