@@ -1,7 +1,12 @@
-#AuthUserFile /home/irank/beta/.htpasswd
-#AuthType Basic
-#AuthName "Acesso a versao beta iRank 3.0"
-#Require valid-user
+AuthUserFile /home/irank.com.br/.htpasswd
+AuthName "Agenda iRank"
+AuthType Basic
+Require valid-user
+SetEnvIf Host agenda.irank.com.br secure_content
+Order Allow,Deny
+Allow from all
+Deny from env=secure_content
+Satisfy Any
 
 Options +FollowSymLinks +ExecCGI
 
@@ -10,7 +15,11 @@ Options +FollowSymLinks +ExecCGI
 
   # uncomment the following line, if you are having trouble
   # getting no_script_name to work
-  RewriteBase /
+  # RewriteBase /
+
+  # Se estiver acessando a agenda, redireciona para a action que faz o download do arquivo .ics  
+  RewriteCond %{HTTP_HOST} ^agenda(\.irank\.com\.br) [NC]
+  RewriteRule ^(.*)$ http://www.irank.com.br/index.php/schedule/sync [L,R=301]
 
   # we skip all files with .something
   # comment the following 3 lines to allow periods in routes
@@ -30,8 +39,6 @@ Options +FollowSymLinks +ExecCGI
   # no, so we redirect to our front web controller
   RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
-
-php_value memory_limit 1024M
 
 # big crash from our front web controller
 ErrorDocument 500 "<h2>Internal Error</h2>iRank application failed to start properly"

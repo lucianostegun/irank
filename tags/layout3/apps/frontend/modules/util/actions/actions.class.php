@@ -186,4 +186,14 @@ class utilActions extends sfActions
   	
 	exit;  	
   }
+  
+  public function executeEmail(){
+  	
+  	$emailSubject     = 'Mensagem de teste';
+  	$emailAddressList = 'lucianostegun@gmail.com';
+  	$emailContent     = 'Mensagem de teste enviada pelo novo servidor do site';
+	Report::sendMail($emailSubject, $emailAddressList, $emailContent);
+  	
+	exit;  	
+  }
 }

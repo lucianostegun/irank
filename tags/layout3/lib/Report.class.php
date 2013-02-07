@@ -20,10 +20,10 @@ class Report {
 	 * @param      Array: Array de opções gerais do módulo
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
-return;
+//return;
 		$smtpComponent = 'smtp';
 		$smtpHostname  = Config::getConfigByName('smtpHostname', true);
-		$smtpPort      = 587;
+		$smtpPort      = 25;
 		$smtpUsername  = Config::getConfigByName('smtpUsername', true);
 		$smtpPassword  = Config::getConfigByName('smtpPassword', true);
 		$senderName    = Config::getConfigByName('emailSenderName', true);

@@ -191,18 +191,18 @@ club_hitz:
   
 homepage:
   url:   /
-  param: { module: home, action: index }
-#  param: { module: maintenance, action: index }
+#  param: { module: home, action: index }
+  param: { module: maintenance, action: index }
 
 default_symfony:
   url:   /symfony/:action/*
   param: { module: default }
 
 default_index:
-  url:   /:module
-#  url:   /maintenance
+#  url:   /:module
+  url:   /maintenance
   param: { action: index }
 
 default:
-  url:   /:module/:action/*
-#  url:   /maintenance/index/*
+#  url:   /:module/:action/*
+  url:   /maintenance/index/*
