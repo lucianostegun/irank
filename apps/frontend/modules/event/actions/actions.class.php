@@ -13,8 +13,6 @@ class eventActions extends sfActions
 
 	$this->userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
 	$this->criteria    = new Criteria();
-	
-	$this->innerObj = new Event();
   }
   
   public function executeNew($request){
@@ -44,14 +42,15 @@ class eventActions extends sfActions
 		$this->eventObj = new Event();
   	}
 	  	
-  	$this->innerObj = $this->eventObj;
+  	$this->innerMenu = 'event/include/mainMenu';
+  	$this->innerObj  = $this->eventObj;
   }
   
   public function executeShow($request){
   	
   	$eventId = $request->getParameter('eventId');
   	
-	$this->eventObj = $this->innerObj = EventPeer::retrieveByPK( $eventId );
+	$this->eventObj = EventPeer::retrieveByPK( $eventId );
 
 	if( !is_object($this->eventObj) )
 		return $this->redirect('event/index');
@@ -101,12 +100,12 @@ class eventActions extends sfActions
 	$eventObj->setRankingPlaceId( $rankingPlaceId );
 	$eventObj->setEventDate( Util::formatDate($eventDate) );
 	$eventObj->setStartTime( $startTime );
-	$eventObj->setPaidPlaces(nvl($paidPlaces));
+	$eventObj->setPaidPlaces( ($paidPlaces?$paidPlaces:null) );
 	$eventObj->setBuyin( Util::formatFloat($buyin) );
 	$eventObj->setEntranceFee( Util::formatFloat($entranceFee) );
 	$eventObj->setIsFreeroll( ($isFreeroll?true:false) );
 	$eventObj->setPrizePot( Util::formatFloat($prizePot) );
-	$eventObj->setComments(nvl($comments));
+	$eventObj->setComments( ($comments?$comments:null) );
 	$eventObj->setAllowRebuy(($allowRebuy?true:false));
 	$eventObj->setAllowAddon(($allowAddon?true:false));
 	$eventObj->setVisible(true);
@@ -156,11 +155,10 @@ class eventActions extends sfActions
   
   public function executeChoosePresence($request){
 
-	Util::getHelper('I18N');
+	Util::getHelper('i18n');
 	
-	$eventId     = $request->getParameter('eventId');
-	$choice      = $request->getParameter('choice');
-	$quickChoice = $request->getParameter('qc');
+	$eventId = $request->getParameter('eventId');
+	$choice  = $request->getParameter('choice');
 
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	
@@ -168,9 +166,6 @@ class eventActions extends sfActions
 //		Util::forceError('!'.__('event.lockedEvent'), true);
 
 	$eventObj->togglePresence( $this->peopleId, $choice );
-	
-	if( $quickChoice )
-		exit;
     return $this->forward('event', 'getPlayerList');
   }
 
@@ -221,24 +216,14 @@ class eventActions extends sfActions
 
 	$eventId  = $request->getParameter('eventId');
 	$result   = $request->getParameter('result');
-	$import   = $request->getParameter('import');
 	$eventObj = EventPeer::retrieveByPK( $eventId );
 	$pastDate = $eventObj->isPastDate();
 	
-	$path = ($pastDate && !$result?'show':'form');
-	
-	if( $import ){
-		
-		$path = ($pastDate && !$result?'show':'form');
-		$result = false;
-	}
-	
-	if( $pastDate && $result && !$import )
-		$path = 'include';
+	$path = ($pastDate && !$result?'show':'include');
 
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/'.$path.'/player'.($result && ($path=='show' || $pastDate)?'Result':''), array('eventObj'=>$eventObj)));
+	return $this->renderText(get_partial('event/'.$path.'/player'.($result?'Result':''), array('eventObj'=>$eventObj)));
   }
 
   public function executeGetResult($request){
@@ -329,20 +314,18 @@ class eventActions extends sfActions
   
   public function executeSearch($request){
   	
-  	$renderize      = $request->getParameter('isIE');
-  	$eventName      = $request->getParameter('eventName');
-  	$eventPlace     = $request->getParameter('eventPlace');
-  	$eventDateStart = $request->getParameter('dateStart');
-  	$eventDateEnd   = $request->getParameter('dateEnd');
-  	$rankingId      = $request->getParameter('rankingId');
+  	$renderize  = $request->getParameter('isIE');
+  	$eventName  = $request->getParameter('eventName');
+  	$eventPlace = $request->getParameter('eventPlace');
+  	$eventDate  = $request->getParameter('eventDate');
+  	$rankingId  = $request->getParameter('rankingId');
   	
-  	if( !Validate::validateDate($eventDateStart) ) $eventDateStart = null;
-  	if( !Validate::validateDate($eventDateEnd) ) $eventDateEnd = null;
+  	if( !Validate::validateDate($eventDate) )
+  		$eventDate = null;
 
   	$criteria = new Criteria();
-  	if( $eventName ) $criteria->addAnd( EventPeer::EVENT_NAME, '%'.str_replace(' ', '%', $eventName).'%', Criteria::ILIKE );
-  	if( $eventDateStart ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDateStart), Criteria::GREATER_EQUAL );
-  	if( $eventDateEnd ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDateEnd), Criteria::LESS_EQUAL );
+  	if( $eventName ) $criteria->addAnd( EventPeer::EVENT_NAME, '%'.$eventName.'%', Criteria::ILIKE );
+  	if( $eventDate ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
   	if( $rankingId ) $criteria->addAnd( EventPeer::RANKING_ID, $rankingId );
   	if( $eventPlace ){
   		
@@ -364,7 +347,7 @@ class eventActions extends sfActions
   
   public function executeConfirmPresence($request){
   	
-	$this->eventObj = $this->innerObj = Event::confirmPresence($request);
+	$this->eventObj = Event::confirmPresence($request);
 	
 	if( !is_object($this->eventObj) )
 		return $this->redirect('event/index');

@@ -8,7 +8,7 @@ DTSTART:<dtStart>
 DTEND:<dtEnd>
 DTSTAMP:<currentTimestamp>
 ORGANIZER;CN=<organizerName>:mailto:<organizerEmailAddress>
-UID:noreply@irank.com.br
+UID:8c8el9j0sfjetinr9kvc0tqeak@google.com
 <playerList>
 CREATED:<createdAt>
 DESCRIPTION:<eventDescription>

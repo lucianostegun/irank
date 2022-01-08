@@ -5,9 +5,8 @@
 	$br = '<br/>';
 	if( !$isBackend ):
 		$br = '<br/><br/>';
-		
-	include_partial('home/component/commonBar', array('pathList'=>array('Página não encontrada'=>null)));
 ?>
+<div class="commonBar"><span>Página não encontrada</span></div>
 <?php endif; ?>
 <div class="sfTMessageContainer sfTAlert"> 
   <?php echo image_tag('/sf/sf_default/images/icons/cancel48.png', array('alt'=>'page not found', 'class'=>'sfTMessageIcon', 'size'=>'48x48')) ?>

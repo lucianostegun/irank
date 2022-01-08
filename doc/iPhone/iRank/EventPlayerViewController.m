@@ -48,7 +48,7 @@
     doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouchUp:)];
     addButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTouchUp:)];
     
-    [self setTitle:NSLocalizedString(@"Players", @"eventPlayer")];
+    [self setTitle:@"Convidados"];
 }
 
 - (void)viewDidUnload
@@ -104,7 +104,7 @@
 
 - (void)updatePlayerList {
 
-    [appDelegate showLoadingView:NSLocalizedString(@"Loading player list...", @"eventPlayer")];
+    [appDelegate showLoadingView:@"carregando lista de jogadores..."];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePlayerList:) name:kEventPlayerListLoadSuccess object:nil];
     [self performSelector:@selector(updateEventPlayerList) withObject:nil afterDelay:0.1];
 }
@@ -161,10 +161,8 @@
     
     eventResultSaveViewController.event           = event;
     eventResultSaveViewController.eventPlayerList = eventPlayerList;
-
-    [self.navigationController pushViewController:eventResultSaveViewController animated:YES];
     
-//    [eventResultSaveViewController release];
+    [self.navigationController pushViewController:eventResultSaveViewController animated:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -255,6 +253,8 @@
     EventPlayer *eventPlayer = [eventPlayerList objectAtIndex:button.tag];
     
     NSString *inviteStatus = eventPlayer.inviteStatus;
+    
+    NSLog(@"clicou no botão: %@", inviteStatus);
     
     if( [inviteStatus isEqualToString:@"yes"] ){
         

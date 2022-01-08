@@ -61,7 +61,7 @@ class RankingHistory extends BaseRankingHistory
 		
 		$rankingDate = $this->getRankingDate('Y-m-d');
 		
-		$events = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE AND event.ENABLED AND NOT event.DELETED AND event_player.ENABLED AND event.SAVED_RESULT AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'int');
+		$events = Util::executeOne('SELECT COUNT(1) FROM event_player, event WHERE event.EVENT_DATE = \''.$rankingDate.'\' AND event.VISIBLE=TRUE AND event.DELETED=FALSE AND event_player.ENABLED=TRUE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'int');
 		
 		$this->setEvents($events);
 		$this->setTotalEvents($this->getTotalEvents()+$events);

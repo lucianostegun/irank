@@ -399,10 +399,6 @@ class Kinghost
 
 	public function doCall( $url = null, $aParameters, $verb = 'GET')
 	{
-		
-		if( Util::isDebug() )
-			return true;
-		
 		if($url !== null)
 		{			
 			$this->setUrl( $this->getKinghostApiUrl() . $url );

@@ -1,8 +1,0 @@
-fields:
-
-  prizeSplit:
-    required:
-      msg:       form.error.requiredField
-    sfCallbackValidator:
-      callback:      [RankingLivePeer, validatePrizeSplit]
-      invalid_error: A divisão padrão de prêmios deve somar 100%

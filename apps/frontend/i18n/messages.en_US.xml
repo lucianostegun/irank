@@ -678,7 +678,7 @@
 				<target>Display</target>
 			</trans-unit>
 			<trans-unit>
-				<source>ranking.buyin</source>
+				<source>ranking.defaultBuyin</source>
 				<target>Default buy-in</target>
 			</trans-unit>
 			<trans-unit>

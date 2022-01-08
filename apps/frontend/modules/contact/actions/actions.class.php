@@ -20,14 +20,14 @@ class contactActions extends sfActions
 	$subject      = $request->getParameter('subject');
 	$message      = $request->getParameter('message');
 	
-	$emailContent = EmailTemplate::getContentByTagName('contactMessage', false, 'pt_BR');
-	$emailContent = str_replace('[fullName]', $fullName, $emailContent);
-	$emailContent = str_replace('[emailAddress]', $emailAddress, $emailContent);
-	$emailContent = str_replace('[subject]', $subject, $emailContent);
-	$emailContent = str_replace('[message]', $message, $emailContent);
+	$emailContent = AuxiliarText::getContentByTagName('contactMessage', false, 'pt_BR');
+	$emailContent = str_replace('<fullName>', $fullName, $emailContent);
+	$emailContent = str_replace('<emailAddress>', $emailAddress, $emailContent);
+	$emailContent = str_replace('<subject>', $subject, $emailContent);
+	$emailContent = str_replace('<message>', $message, $emailContent);
 	
 	if( is_object($userSiteObj))
-		$emailContent = str_replace('[username]', $userSiteObj->getUserName(), $emailContent);
+		$emailContent = str_replace('<username>', $userSiteObj->getUserName(), $emailContent);
 	
 	$emailAddress = 'lucianostegun@gmail.com';
 	$options      = array();

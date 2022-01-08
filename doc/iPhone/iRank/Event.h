@@ -14,6 +14,7 @@
     BOOL sentEmail;
     int invites;
     int players;
+    BOOL isFreeroll;
     float prizePot;
 }
 
@@ -28,16 +29,12 @@
 @property (nonatomic, retain) NSString *inviteStatus;
 @property (nonatomic, retain) NSString *gameStyle;
 @property (nonatomic, readwrite) float buyin;
-@property (nonatomic, readwrite) float rankingBuyin;
 @property (nonatomic, readwrite) float entranceFee;
 @property (nonatomic, readwrite) int paidPlaces;
 @property (nonatomic, readwrite) BOOL savedResult;
 @property (nonatomic, readwrite) BOOL isMyEvent;
-@property (nonatomic, readwrite) BOOL isFreeroll;
 @property (nonatomic, readwrite) BOOL isPastDate;
 @property (nonatomic, readwrite) BOOL isEditable;
-@property (nonatomic, readwrite) BOOL allowRebuy;
-@property (nonatomic, readwrite) BOOL allowAddon;
 @property (nonatomic, readwrite) BOOL hasOfflineResult;
 @property (nonatomic, retain) NSMutableArray *eventPlayerList;
 @property (nonatomic, retain) NSMutableArray *eventPlayerListFiltered;
@@ -47,10 +44,7 @@
 
 - (void)reloadPlayerList:(id)sender;// filter:(BOOL)filter;
 - (NSMutableArray *)getFilteredPlayerList;
-- (float)totalBuyin;
-- (float)totalRebuy;
-- (float)totalAddon;
-- (float)totalBuyins:(BOOL)returnValue;
+- (float)totalBuyins;
 
 - (void)saveResult:(id)sender saveOffline:(BOOL)saveResultOffline;
 - (void)loadArchivedEventPlayerList;

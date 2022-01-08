@@ -30,12 +30,9 @@ class RankingPeer extends BaseRankingPeer
 			
 			if( !$criteria->isNoFilter() ){
 
-				$criterion1 = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
-				$criterion1->addAnd( $criteria->getNewCriterion( RankingPlayerPeer::ENABLED, true ) );
-				$criterion2 = $criteria->getNewCriterion( self::USER_SITE_ID, $userSiteId );
-				
-				$criterion1->addOr($criterion2);
-				$criteria->add($criterion1);
+				$criterion = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
+				$criterion->addOr( $criteria->getNewCriterion( self::USER_SITE_ID, $userSiteId ) );
+				$criteria->add($criterion);
 				
 				$criteria->addAnd( self::DELETED, false );
 			}else{
@@ -119,7 +116,7 @@ class RankingPeer extends BaseRankingPeer
 		$prize        = 1;
 		$players      = 1;
 		$totalBuyins  = 1;
-		$buyin        = 1;
+		$buyin = 1;
 		$itm          = 1;
 		
 		$formula = strtolower($formula);
@@ -143,12 +140,5 @@ class RankingPeer extends BaseRankingPeer
 		}
 		
 		return true;
-	}
-	
-	public static function validateHasEvent($rankingId){
-		
-		$eventCount = Util::executeOne("SELECT COUNT(1) FROM event WHERE ranking_id = $rankingId AND visible AND enabled AND NOT deleted AND saved_result");
-		
-		return $eventCount > 0;
 	}
 }

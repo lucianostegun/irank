@@ -13,24 +13,27 @@
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalBuyinLabel">Buy-in</div>
-				<div class="field"><?php echo input_tag('buyin', Util::formatFloat($eventPersonalObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalBuyin')) ?></div>
+				<div class="field"><?php echo input_tag('buyin', Util::formatFloat($eventPersonalObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalBuyin')) ?></div>
 				<div class="error" id="eventPersonalBuyinError" onclick="showFormErrorDetails('eventPersonal', 'buyin')"></div>
 				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalRebuyLabel">Rebuy</div>
-				<div class="field"><?php echo input_tag('rebuy', Util::formatFloat($eventPersonalObj->getRebuy(), true), array('size'=>6, 'maxlength'=>6, 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalRebuy')) ?></div>
+				<div class="field"><?php echo input_tag('rebuy', Util::formatFloat($eventPersonalObj->getRebuy(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalRebuy')) ?></div>
 				<div class="error" id="eventPersonalRebuyError" onclick="showFormErrorDetails('eventPersonal', 'rebuy')"></div>
+				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalAddonLabel">Add-on</div>
-				<div class="field"><?php echo input_tag('addon', Util::formatFloat($eventPersonalObj->getAddon(), true), array('size'=>6, 'maxlength'=>6, 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalAddon')) ?></div>
+				<div class="field"><?php echo input_tag('addon', Util::formatFloat($eventPersonalObj->getAddon(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalAddon')) ?></div>
 				<div class="error" id="eventPersonalAddonError" onclick="showFormErrorDetails('eventPersonal', 'addon')"></div>
+				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalPrizeLabel"><?php echo __('Prize') ?></div>
-				<div class="field"><?php echo input_tag('prize', Util::formatFloat($eventPersonalObj->getPrize(), true), array('size'=>7, 'maxlength'=>7, 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalPrize')) ?></div>
+				<div class="field"><?php echo input_tag('prize', Util::formatFloat($eventPersonalObj->getPrize(), true), array('size'=>7, 'maxlength'=>7, 'onkeyup'=>'maskCurrency(event)', 'class'=>'required', 'style'=>'text-align: right', 'id'=>'eventPersonalPrize')) ?></div>
 				<div class="error" id="eventPersonalPrizeError" onclick="showFormErrorDetails('eventPersonal', 'prize')"></div>
+				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 			
 			<h1><?php echo __('event.eventDetails') ?></h1>
@@ -46,12 +49,12 @@
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalPaidPlacesLabel"><?php echo __('event.paidPlaces') ?></div>
-				<div class="field"><?php echo input_tag('paidPlaces', $eventPersonalObj->getPaidPlaces(), array('size'=>2, 'maxlength'=>3, 'class'=>'required', 'id'=>'eventPersonalPaidPlaces')) ?></div>
+				<div class="field"><?php echo input_tag('paidPlaces', $eventPersonalObj->getPaidPlaces(), array('size'=>2, 'maxlength'=>1, 'class'=>'required', 'id'=>'eventPersonalPaidPlaces')) ?></div>
 				<div class="error" id="eventPersonalPaidPlacesError" onclick="showFormErrorDetails('eventPersonal', 'paidPlaces')"></div>
 			</div>
 			<div class="row">
 				<div class="label" id="eventPersonalEventPositionLabel"><?php echo __('Position') ?></div>
-				<div class="field"><?php echo input_tag('eventPosition', $eventPersonalObj->getEventPosition(), array('size'=>2, 'maxlength'=>3, 'class'=>'required', 'id'=>'eventPersonalEventPosition')) ?></div>
+				<div class="field"><?php echo input_tag('eventPosition', $eventPersonalObj->getEventPosition(), array('size'=>2, 'maxlength'=>1, 'class'=>'required', 'id'=>'eventPersonalEventPosition')) ?></div>
 				<div class="error" id="eventPersonalEventPositionError" onclick="showFormErrorDetails('eventPersonal', 'eventPosition')"></div>
 			</div>
 			<div class="row">

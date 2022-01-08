@@ -5,30 +5,20 @@
 
 	$pageAction = ($isClone?__('Cloning'):($eventPersonalObj->isNew()?__('Creating'):__('Editing')));
 	
-	$pathList = array(__('eventPersonal.title')=>'eventPersonal/index');
-	
-	if( $isNew )
-		$pathList['Novo evento'] = '';
-	else{
-
-		$eventName = $eventPersonalObj->getEventName();		
-		$pathList[$eventName] = '';
-	}
-	
-	include_partial('home/component/commonBar', array('pathList'=>$pathList));
-	
 	if( !$eventPersonalObj->getEnabled() || $isClone ):
 ?>
 <script>setRecordSaved(false);</script>
 <?php
 	endif;
-
+?>
+<div class="commonBar"><span><?php echo __('eventPersonal.title') ?>/<?php echo $pageAction ?></span></div>
+<?php
 	$eventPersonalId  = $eventPersonalObj->getId();
 	
 	echo form_remote_tag(array(
 		'url'=>'eventPersonal/save',
-		'success'=>'handleSuccessEventPersonal(request.responseText)',
-		'failure'=>'handleFailureEventPersonal(request.responseText)',
+		'success'=>'handleSuccessEventPersonal( request.responseText )',
+		'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "eventPersonalForm", "eventPersonal", false, "eventPersonal" )',
 		'encoding'=>'utf8',
 		'loading'=>'showIndicator()'
 		), array( 'id'=>'eventPersonalForm' ));

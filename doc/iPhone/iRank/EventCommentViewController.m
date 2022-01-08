@@ -42,7 +42,7 @@
      addObserver:self selector:@selector
      (keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:self.view.window];
     
-    [self setTitle:NSLocalizedString(@"Comments", nil)];
+    [self setTitle:@"Comentários"];
     
     if( eventId!=lastEventId ){
         
@@ -74,9 +74,7 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"update", @"button") style:UIBarButtonItemStyleBordered target:self action:@selector(refreshWebView:)];
-    
-    appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
+//    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithTitle:@"Atualizar" style:UIBarButtonItemStyleBordered target:self action:@selector(refreshWebView:)];
     
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [activityIndicator setHidesWhenStopped:YES];
@@ -87,9 +85,7 @@
     self.navigationItem.rightBarButtonItem = barButton;
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    self.navigationItem.rightBarButtonItem = refreshButton;
-    
-    [btnSend setTitle:NSLocalizedString(@"send", @"eventComments")];
+//    self.navigationItem.rightBarButtonItem = refreshButton;
     
     [self doRefreshWebView:YES];
 }
@@ -98,7 +94,7 @@
 
     if( fullRefresh ){
         
-        NSString *urlAddress = [NSString stringWithFormat:@"http://%@/ios.php/event/comments/eventId/%i/language/%@#footer", serverAddress, eventId, appDelegate.currentLanguage];
+        NSString *urlAddress = [NSString stringWithFormat:@"http://%@/ios.php/event/comments/eventId/%i#footer", serverAddress, eventId];
         NSURL *url = [NSURL URLWithString:urlAddress];
     
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -226,7 +222,7 @@
 
 //    NSLog(@"Enviando mensagem");
     
-    int userSiteId = [appDelegate userSiteId];
+    int userSiteId = [(iRankAppDelegate *)[[UIApplication sharedApplication] delegate] userSiteId];
     
     NSString *post = [[NSString alloc] initWithFormat:@"eventId=%i&userSiteId=%i&comment=%@", eventId, userSiteId, txtMessage.text];
     
@@ -234,7 +230,7 @@
     
     NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];  
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/saveComment/language/%@", serverAddress, appDelegate.currentLanguage]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ios.php/event/saveComment", serverAddress]];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
     [theRequest setHTTPMethod:@"POST"];  
     [theRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];  
@@ -249,19 +245,19 @@
 
 - (void)connection: (NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     
-//    NSLog(@"didReceiveResponse");
+    NSLog(@"didReceiveResponse");
 //    [activityIndicator setHidden:YES];
 }
 
 - (void)connection: (NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-//    NSLog(@"didReceiveData");
+    NSLog(@"didReceiveData");
     
     NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     
     
     
-//    NSLog(@"result: %@", result);
+    NSLog(@"result: %@", result);
     
     [result release];
     
@@ -269,7 +265,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
 
-//    NSLog(@"connectionDidFinishLoading");
+    NSLog(@"connectionDidFinishLoading");
     btnSend.enabled    = NO;
     txtMessage.enabled = YES;
     txtMessage.text    = nil;
@@ -283,7 +279,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     
-//    NSLog(@"Ocorreu um erro ao carregar a página: %@", error);
+    NSLog(@"Ocorreu um erro ao carregar a página: %@", error);
 }
 
 @end

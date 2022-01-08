@@ -1,1 +1,0 @@
-ALTER TABLE club ALTER COLUMN file_name_logo TYPE VARCHAR(50);

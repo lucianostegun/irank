@@ -44,20 +44,9 @@ fields:
       callback:      [Validate, validateDate]
       invalid_error: form.error.invalidDate
        
-  startTime:
-    sfCallbackValidator:
-      callback:      [Validate, validateTime]
-      invalid_error: form.error.invalidDate
-       
   rankingTypeId:
     required:
       msg:       form.error.requiredField
-       
-  entranceFee:
-    sfNumberValidator:
-      min:       0
-      min_error: form.error.greaterEqual0
-      nan_error: form.error.invalidNumber
        
   buyin:
     required:

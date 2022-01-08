@@ -53,7 +53,7 @@ class DhtmlxTabBar30 {
 		$html .= '    '.$objectName.' = new dhtmlXTabBar("'.$objectName.'Div", "top");'.$nl;
 
     	$html .= '    '.$objectName.'.setHrefMode("ajax-html");'.$nl;
-    	$html .= '    '.$objectName.'.setSkin("silver");'.$nl;
+    	$html .= '    '.$objectName.'.setSkin("dhx_skyblue");'.$nl;
 		$html .= '    '.$objectName.'.setImagePath("/js/dhtmlx/dhtmlxTabbar/imgs/");'.$nl;
 
 		$html .= $this->getTabBarListScript();

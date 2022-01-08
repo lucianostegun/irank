@@ -1,1 +1,0 @@
-ALTER TABLE email_marketing_people ADD COLUMN random_code VARCHAR(32);

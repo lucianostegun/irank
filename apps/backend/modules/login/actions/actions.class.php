@@ -1,46 +1,26 @@
 <?php
 
-/**
- * login actions.
- *
- * @package    iRank
- * @subpackage backend
- * @author     Luciano Stegun
- */
 class loginActions extends sfActions
 {
 
-  public function checkIsAuthenticated(){
-  	
-  	$actionName = $this->getContext()->getActionName();
-  	
-  	if( $actionName!='logout' && $this->getUser()->isAuthenticated() && $this->getUser()->hasCredential('iRankAdmin') )
-  		return $this->redirect('home/index');
+  public function executeIndex($request){
+	
+	if ( $this->getContext()->getUser()->isAuthenticated() && $this->getUser()->hasCredential('irankAdmin'))
+	  return $this->redirect( 'home/index' );
+	
+	$pathInfo = $this->getRequest()->getPathInfo();
+	$triedUrl = $this->getRequest()->getUri();
+	$this->triedUrl = ($pathInfo=='/'?'':$triedUrl);
+    
+	$this->setLayout('clean');
   }
   
-  public function preExecute(){
-  	
-  	$this->checkIsAuthenticated();
-  	
-  	$this->pathList = array('Acesso negado'=>null);
-  }
-
-  public function executeIndex($request){
-  	
-  	$this->checkIsAuthenticated();
-  }
-
-  public function executeAccessDenied($request){
-  	
-  }
-
   public function executeLogin($request){
-  	
-	$username  = $request->getParameter('username');
-	$password  = $request->getParameter('password');
-	$keepLogin = $request->getParameter('keepLogin');
+
+	$username = $request->getParameter('username');
+	$password = $request->getParameter('password');
 	
-	$errorMessage = false;
+	$statusMessage = false;
 	
 	if( $username && $password ){
 		
@@ -59,26 +39,50 @@ class loginActions extends sfActions
 		$userAdminObj = UserAdminPeer::doSelectOne( $criteria );
 		
 		if( is_object($userAdminObj) )
-	        $userAdminObj->login($keepLogin);
+	        $userAdminObj->login();
 		else
-			$errorMessage = '<b>ACESSO NEGADO!</b> - O usuário/senha não são válidos';
+			throw new Exception('<b>ACESSO NEGADO!</b> - O usuário/senha não são válidos');
 	}else{
 		
-		$errorMessage = '<b>ACESSO NEGADO!</b> - Informe seu username/email e senha de acesso';
+		throw new Exception('<b>ACESSO NEGADO!</b> - Informe seu username/email e senha de acesso');
 	}
 	
-	if( $errorMessage )
-		Util::forceError($errorMessage);
-	
-	echo 'success';
 	exit;
   }
 
-  public function executeLogout($request)
-  {
+  public function executeLogout(){
+    
+    UserAdmin::doLogout();
+   
+    return $this->redirect('login/index');
+  }
+  
+  public function executeIsLogged(){
   	
-  	UserAdmin::logout();
+  	$isAuthenticated = $this->getUser()->isAuthenticated();
+  	echo ($isAuthenticated?'1':'0');
+  	exit;
+  }
+  
+  public function executePasswordRetrieveForm(){
   	
-  	return $this->redirect('login/index');
+	$this->setLayout(false);
+  }
+
+  public function handleErrorRetrievePassword(){
+
+  	$this->handleFormFieldError( $this->getRequest()->getErrors() );
+  }
+  
+  public function executeRetrievePassword($request){
+	
+	$username     = $request->getParameter( 'username' );
+	$emailAddress = $this->emailAddress = $request->getParameter( 'emailAddress' );
+	
+	$userAdminObj = UserAdminPeer::retrieveByUsername($username);
+	$userAdminObj->resetPassword($emailAddress);
+	
+	sfConfig::set('sf_web_debug', false);
+	$this->setLayout(false);
   }
 }

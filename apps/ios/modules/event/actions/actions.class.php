@@ -87,14 +87,6 @@ class eventActions extends sfActions
 	echo 'uploadSuccess';
   	exit;
   }
-
-  public function executeThumbnail($request){
-  	
-  	$fileObj = FilePeer::retrieveByPK(185);
-	$fileObj->resizeMax(800,600);
-
-  	exit;
-  }
   
   public function executeComments($request){
   	
@@ -161,7 +153,7 @@ class eventActions extends sfActions
   
   public function executeTogglePresence($request){
 
-	Util::getHelper('i18n');
+	Util::getHelper('I18N');
 	
 	$eventId  = $request->getParameter('eventId');
 	$peopleId = $request->getParameter('peopleId');
@@ -188,7 +180,7 @@ class eventActions extends sfActions
 	
 	$eventObj     = EventPeer::retrieveByPK($eventId);
 	$isPercent    = true;
-	$buyin        = $eventObj->getBuyin();
+	$buyin = $eventObj->getBuyin();
 	
 	if( $eventObj->getIsFreeroll() ){
 		
@@ -202,7 +194,7 @@ class eventActions extends sfActions
 			$isPercent = false;
 		}
 		
-		$buyin        = $eventObj->getRanking()->getBuyin();
+		$buyin = $eventObj->getRanking()->getBuyin();
 		
 		$prizeConfigList = explode(';', $prizeConfig);
 		$infoList = array('percentList'=>implode(',', $prizeConfigList), 'paidPlaces'=>count($prizeConfigList));
@@ -345,7 +337,6 @@ class eventActions extends sfActions
 				$eventNode['rankingName']  = $eventObj->getRanking()->getRankingName();
 				$eventNode['eventPlace']   = $eventObj->getRankingPlace()->getPlaceName();
 				$eventNode['paidPlaces']   = $eventObj->getPaidPlaces();
-				$eventNode['players']      = $eventObj->getPlayers();
 				$eventNode['entranceFee']  = $eventObj->getEntranceFee();
 				$eventNode['buyin']        = $eventObj->getBuyin();
 				$eventNode['rankingBuyin'] = $eventObj->getRanking()->getBuyin();
@@ -392,34 +383,26 @@ class eventActions extends sfActions
 			echo EventPlayer::getXml($eventPlayerList);
 			break;
 		case 'eventPhoto':
-		case 'photo':
 
-			$appVersion = $request->getParameter('appVersion');
-			$eventObj   = EventPeer::retrieveByPK($eventId);
-			$host       = $request->getHost();
-			
-			$tagName = ($appVersion?'photo':'eventPhoto');
+			$eventObj = EventPeer::retrieveByPK($eventId);
+			$host = $request->getHost();
 
-			$photoList = array();
+			$eventPhotoList = array();
 			foreach($eventObj->getPhotoList() as $eventPhotoObj){
 				
 				$fileObj  = $eventPhotoObj->getFile();
 				$imageUrl = 'http://'.$host.'/'.$fileObj->getFilePath();
 				$fileName = Util::getFileName($imageUrl);
 				
-				$width  = $eventPhotoObj->getWidth();
-				$height = $eventPhotoObj->getHeight();
-				$orientation = ($width > $height?'landscape':'portrait');
-				
 				$eventPhotoNode = array();
-				$eventPhotoNode['@attributes'] = array($tagName.'Id'=>$eventPhotoObj->getId(), 'fileId'=>$eventPhotoObj->getFileId(), 'width'=>$width, 'height'=>$height, 'orientation'=>$orientation);
+				$eventPhotoNode['@attributes'] = array('eventPhotoId'=>$eventPhotoObj->getId(), 'fileId'=>$eventPhotoObj->getFileId());
 				$eventPhotoNode['imageUrl']    = 'http://'.$host.'/ios.php/event/imageThumb/eventPhotoId/'.$eventPhotoObj->getId().'/thumb/1';
 				$eventPhotoNode['thumbUrl']    = str_replace($fileName, 'thumb/'.$fileName, $imageUrl);
 				
-				$photoList[] = $eventPhotoNode;
+				$eventPhotoList[] = $eventPhotoNode;
 			}
 			
-			echo EventPhoto::getXml($photoList, $tagName);
+			echo EventPhoto::getXml($eventPhotoList);
 			break;
 	}
 	exit;

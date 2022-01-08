@@ -19,7 +19,6 @@
 @synthesize rankingId;
 @synthesize comments;
 @synthesize buyin;
-@synthesize rankingBuyin;
 @synthesize entranceFee;
 @synthesize paidPlaces;
 @synthesize savedResult;
@@ -27,13 +26,10 @@
 @synthesize eventPlayerListFiltered;
 @synthesize inviteStatus;
 @synthesize isMyEvent;
-@synthesize isFreeroll;
 @synthesize isPastDate;
 @synthesize isEditable;
 @synthesize hasOfflineResult;
 @synthesize gameStyle;
-@synthesize allowRebuy;
-@synthesize allowAddon;
 //@synthesize filteredPlayerList;
 
 - (id)init {
@@ -87,12 +83,10 @@
     [encoder encodeBool:savedResult forKey:@"savedResult"];
     [encoder encodeBool:isMyEvent forKey:@"isMyEvent"];
     [encoder encodeBool:isPastDate forKey:@"isPastDate"];
-    [encoder encodeBool:allowRebuy forKey:@"allowRebuy"];
-    [encoder encodeBool:allowAddon forKey:@"allowAddon"];
+    [encoder encodeBool:isEditable forKey:@"isEditable"];
 
     [encoder encodeFloat:prizePot forKey:@"prizePot"];
     [encoder encodeFloat:buyin forKey:@"buyin"];
-    [encoder encodeFloat:rankingBuyin forKey:@"rankingBuyin"];
     [encoder encodeFloat:entranceFee forKey:@"entranceFee"];
     [encoder encodeFloat:paidPlaces forKey:@"paidPlaces"];
 }
@@ -113,11 +107,9 @@
     [self setGameStyle:    [decoder decodeObjectForKey:@"gameStyle"]];
     [self setSavedResult:  [decoder decodeBoolForKey:@"savedResult"]];
     [self setIsMyEvent:    [decoder decodeBoolForKey:@"isMyEvent"]];
-    [self setIsFreeroll:   [decoder decodeBoolForKey:@"isFreeroll"]];
     [self setIsPastDate:   [decoder decodeBoolForKey:@"isPastDate"]];
     [self setIsEditable:   [decoder decodeBoolForKey:@"isEditable"]];
     [self setBuyin:        [decoder decodeFloatForKey:@"buyin"]];
-    [self setRankingBuyin: [decoder decodeFloatForKey:@"rankingBuyin"]];
     [self setEntranceFee:  [decoder decodeFloatForKey:@"entranceFee"]];
     [self setPaidPlaces:   [decoder decodeFloatForKey:@"paidPlaces"]];
 
@@ -126,8 +118,6 @@
     players        = [decoder decodeIntForKey:@"players"];
     sentEmail      = [decoder decodeBoolForKey:@"sentEmail"];
     isFreeroll     = [decoder decodeBoolForKey:@"isFreeroll"];
-    allowRebuy     = [decoder decodeBoolForKey:@"allowRebuy"];
-    allowAddon     = [decoder decodeBoolForKey:@"allowAddon"];
     prizePot       = [decoder decodeFloatForKey:@"prizePot"];
     
     return self;
@@ -226,37 +216,7 @@
     return eventPlayerListFiltered;
 }
 
-- (float)totalBuyin {
-    
-    float buyins = 0;
-    
-    for (EventPlayer *eventPlayer in eventPlayerList)
-        buyins += eventPlayer.buyin;
-    
-    return buyins;
-}
-
-- (float)totalRebuy {
-    
-    float rebuys = 0;
-    
-    for (EventPlayer *eventPlayer in eventPlayerList)
-        rebuys += eventPlayer.rebuy;
-    
-    return rebuys;
-}
-
-- (float)totalAddon {
-    
-    float addons = 0;
-    
-    for (EventPlayer *eventPlayer in eventPlayerList)
-        addons += eventPlayer.addon;
-    
-    return addons;
-}
-
-- (float)totalBuyins:(BOOL)returnValue {
+- (float)totalBuyins {
     
     float buyins = 0;
     float rebuys = 0;
@@ -269,10 +229,7 @@
         addons += eventPlayer.addon;
     }
     
-    if( returnValue )
-        return (buyins+rebuys+addons);
-    else
-        return ((buyins+rebuys+addons)/self.buyin);
+    return ((buyins+rebuys+addons)/self.buyin);
 }
 
 -(void)saveResult:(id)sender saveOffline:(BOOL)saveResultOffline {
@@ -310,7 +267,7 @@
         return;
     }
     
-//    NSLog(@"stringData: %@", stringData);
+    NSLog(@"stringData: %@", stringData);
     
     const char *bytes = [[NSString stringWithFormat:@"eventResultXml=%@", stringData] UTF8String];
     
@@ -336,16 +293,10 @@
             NSString *eventResultPath = [Event eventArrayPath:[NSString stringWithFormat:@"result-%i", eventId]];
             
             [[NSFileManager defaultManager] removeItemAtPath:eventResultPath error:nil];
-        }else{
-            
-            NSLog(@"result: %@", result);
+        }else
             [sender performSelector:@selector(concludeSaveResultWithError) withObject:nil afterDelay:0];
-        }
-        
 	} else {
         
-        NSString *result = [[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding];
-        NSLog(@"resultError: %@", result);
         [sender performSelector:@selector(concludeSaveResultWithError) withObject:nil afterDelay:0];
 	}
 }

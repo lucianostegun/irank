@@ -109,11 +109,6 @@ class MyTools
     {
         sfContext::getInstance()->getUser()->setAttribute($name, $value, $ns);
     }
-
-    public static function hasAttribute($name, $ns = 'iRank')
-    {
-        return sfContext::getInstance()->getUser()->hasAttribute($name, $ns);
-    }
  
     public static function removeAttribute($name, $ns = 'iRank')
     {
@@ -206,9 +201,7 @@ class MyTools
     
     public static function getCulture()
     {
-    	$culture = sfContext::getInstance()->getUser()->getCulture();
-    	$culture = ($culture?$culture:'pt_BR');
-    	return $culture;
+        return sfContext::getInstance()->getUser()->getCulture();
     }
  
     public static function setError( $errorName, $errorMessage )

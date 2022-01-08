@@ -6,28 +6,20 @@
 <script>setRecordSaved(false);</script>
 <?php
 	endif;
-
-	$rankingId = $rankingObj->getId();
-	$isNew     = $rankingObj->isNew();
-	
-	$pathList = array('Rankings'=>'ranking/index');
-	
-	$rankingName = $rankingObj->getRankingName();
-	
-	if( $isNew )
-		$pathList['Novo ranking'] = '';
-	else
-		$pathList[$rankingName] = '';
-		
-	include_partial('home/component/commonBar', array('pathList'=>$pathList));
+?>
+<div class="commonBar"><span>Rankings/<?php echo $pageAction ?></span></div>
+<?php
 	
 	echo form_remote_tag(array(
 		'url'=>'ranking/save',
 		'success'=>'handleSuccessRanking( request.responseText )',
-		'failure'=>'handleFailureRanking( request.responseText )',
-		'encoding'=>'UTF8',
+		'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "rankingForm", "ranking", false, "ranking" )',
+		'encoding'=>'utf8',
+		'loading'=>'showIndicator()'
 		), array( 'id'=>'rankingForm' ));
 	
+	$rankingId = $rankingObj->getId();
+	$isNew     = $rankingObj->isNew();
 	
 	echo input_hidden_tag('rankingId', $rankingId);
 	echo input_hidden_tag('scoreFormula', ($scoreFormula=$rankingObj->getScoreFormula()), array('id'=>'rankingScoreFormula'));
@@ -48,7 +40,7 @@
 	<div class="buttonTabBar" id="rankingMainButtonBar">
 		<?php echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitRanking()')); ?>
 		<?php echo getFormLoading('ranking') ?>
-		<?php echo getFormStatus(null, false, 'Erro ao salvar o ranking!', 'Ranking salvo com sucesso!'); ?>
+		<?php echo getFormStatus(); ?>
 	</div>
 	<div class="buttonTabBar" id="rankingPlayerButtonBar" style="display: none">
 		<?php echo button_tag('addRankingPlayer', __('button.newPlayer'), array('onclick'=>'addRankingPlayer()')) ?>

@@ -1,9 +1,10 @@
 <?php
 
-class quickGuideActions extends sfActions
+class qiuckGuideActions extends sfActions
 {
 
   public function executeIndex($request){
+  	
   	
   }
 }

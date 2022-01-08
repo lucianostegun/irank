@@ -14,8 +14,10 @@
 			<string>IBProxyObject</string>
 			<string>IBUILabel</string>
 			<string>IBUISwitch</string>
-			<string>IBUITextView</string>
+			<string>IBUINavigationBar</string>
+			<string>IBUINavigationItem</string>
 			<string>IBUISegmentedControl</string>
+			<string>IBUITextView</string>
 			<string>IBUISlider</string>
 			<string>IBUIView</string>
 		</array>
@@ -42,7 +44,7 @@
 					<object class="IBUISegmentedControl" id="947589658">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 49}, {280, 30}}</string>
+						<string key="NSFrame">{{20, 88}, {280, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="226378913"/>
@@ -86,7 +88,7 @@
 					<object class="IBUILabel" id="778549166">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 20}, {280, 21}}</string>
+						<string key="NSFrame">{{20, 59}, {280, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="947589658"/>
@@ -118,7 +120,7 @@
 					<object class="IBUILabel" id="226378913">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 99}, {146, 21}}</string>
+						<string key="NSFrame">{{20, 138}, {146, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="585625589"/>
@@ -140,7 +142,7 @@
 					<object class="IBUILabel" id="67771886">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 180}, {280, 21}}</string>
+						<string key="NSFrame">{{20, 219}, {180, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="542065178"/>
@@ -162,7 +164,7 @@
 					<object class="IBUILabel" id="1062818985">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{262, 207}, {38, 21}}</string>
+						<string key="NSFrame">{{262, 246}, {38, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:328</string>
@@ -180,10 +182,28 @@
 						<reference key="IBUIFontDescription" ref="1070435840"/>
 						<reference key="IBUIFont" ref="674199350"/>
 					</object>
+					<object class="IBUINavigationBar" id="531763069">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">290</int>
+						<string key="NSFrameSize">{320, 44}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="778549166"/>
+						<string key="NSReuseIdentifierKey">_NS:260</string>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIBarStyle">1</int>
+						<array key="IBUIItems">
+							<object class="IBUINavigationItem" id="850306325">
+								<reference key="IBUINavigationBar" ref="531763069"/>
+								<string key="IBUITitle">Opções</string>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+							</object>
+						</array>
+					</object>
 					<object class="IBUISwitch" id="585625589">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{206, 96}, {94, 27}}</string>
+						<string key="NSFrame">{{206, 135}, {94, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="227957335"/>
@@ -197,7 +217,7 @@
 					<object class="IBUITextView" id="227957335">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 128}, {280, 42}}</string>
+						<string key="NSFrame">{{20, 167}, {280, 42}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="67771886"/>
@@ -228,7 +248,7 @@
 					<object class="IBUISlider" id="542065178">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{18, 207}, {238, 23}}</string>
+						<string key="NSFrame">{{18, 246}, {238, 23}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1062818985"/>
@@ -244,6 +264,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView" ref="531763069"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">10</int>
 					<object class="NSImage" key="NSImage">
@@ -350,38 +371,6 @@ AAgACAAIAAEAAQABAAE</bytes>
 					<int key="connectionID">62</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">lblCompressPhoto</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="67771886"/>
-					</object>
-					<int key="connectionID">66</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">lblSaveOffline</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="226378913"/>
-					</object>
-					<int key="connectionID">67</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">lblSaveOfflineInfo</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="227957335"/>
-					</object>
-					<int key="connectionID">68</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">lblHomeEvents</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="778549166"/>
-					</object>
-					<int key="connectionID">69</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">didSelectEventCount:</string>
 						<reference key="source" ref="947589658"/>
@@ -421,14 +410,15 @@ AAgACAAIAAEAAQABAAE</bytes>
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
+							<reference ref="531763069"/>
 							<reference ref="947589658"/>
 							<reference ref="778549166"/>
-							<reference ref="226378913"/>
-							<reference ref="67771886"/>
-							<reference ref="1062818985"/>
 							<reference ref="585625589"/>
+							<reference ref="226378913"/>
 							<reference ref="227957335"/>
 							<reference ref="542065178"/>
+							<reference ref="1062818985"/>
+							<reference ref="67771886"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -452,6 +442,20 @@ AAgACAAIAAEAAQABAAE</bytes>
 						<int key="objectID">20</int>
 						<reference key="object" ref="778549166"/>
 						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">23</int>
+						<reference key="object" ref="531763069"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="850306325"/>
+						</array>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">24</int>
+						<reference key="object" ref="850306325"/>
+						<array class="NSMutableArray" key="children"/>
+						<reference key="parent" ref="531763069"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">49</int>
@@ -493,6 +497,8 @@ AAgACAAIAAEAAQABAAE</bytes>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="49.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="50.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="52.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -504,7 +510,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">69</int>
+			<int key="maxID">63</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -532,11 +538,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="homeEventsSegmendetControl">UISegmentedControl</string>
-						<string key="lblCompressPhoto">UILabel</string>
-						<string key="lblHomeEvents">UILabel</string>
 						<string key="lblPhotoCompress">UILabel</string>
-						<string key="lblSaveOffline">UILabel</string>
-						<string key="lblSaveOfflineInfo">UITextView</string>
 						<string key="photoCompressSlider">UISlider</string>
 						<string key="saveResultOfflineSwitch">UISwitch</string>
 					</dictionary>
@@ -545,25 +547,9 @@ AAgACAAIAAEAAQABAAE</bytes>
 							<string key="name">homeEventsSegmendetControl</string>
 							<string key="candidateClassName">UISegmentedControl</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="lblCompressPhoto">
-							<string key="name">lblCompressPhoto</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="lblHomeEvents">
-							<string key="name">lblHomeEvents</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="lblPhotoCompress">
 							<string key="name">lblPhotoCompress</string>
 							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="lblSaveOffline">
-							<string key="name">lblSaveOffline</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="lblSaveOfflineInfo">
-							<string key="name">lblSaveOfflineInfo</string>
-							<string key="candidateClassName">UITextView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="photoCompressSlider">
 							<string key="name">photoCompressSlider</string>

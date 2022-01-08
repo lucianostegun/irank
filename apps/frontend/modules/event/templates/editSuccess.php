@@ -15,30 +15,17 @@
 <script>setRecordSaved(false);</script>
 <?php
 	endif;
-
-	$pathList = array('Eventos'=>'event/index');
-	
-	if( $isNew ){
-		
-		$pathList['Novo evento'] = '';
-	}else{
-		
-		$eventName   = $eventObj->getName();
-		$rankingName = $eventObj->getRanking()->getName();
-		$rankingId   = $eventObj->getRankingId();
-		$pathList[$rankingName] = '#goToPage("ranking", "edit", "rankingId", '.$rankingId.', true)';
-		$pathList[$eventName]   = '';
-	}
-		
-	include_partial('home/component/commonBar', array('pathList'=>$pathList));
-
+?>
+<div class="commonBar"><span><?php echo __('event.title') ?>/<?php echo $pageAction ?></span></div>
+<?php
 	$eventId  = $eventObj->getId();
 	
 	echo form_remote_tag(array(
 		'url'=>'event/save'.($pastDate?'Result':''),
-		'success'=>'handleSuccessEvent'.($pastDate?'Result':'').'(request.responseText)',
-		'failure'=>'handleFailureEvent(request.responseText)',
-		'encoding'=>'UTF8',
+		'success'=>'handleSuccessEvent'.($pastDate?'Result':'').'( request.responseText )',
+		'failure'=>'enableButton("mainSubmit"); handleFormFieldError( request.responseText, "eventForm", "event", false, "event", handleErrorEvent )',
+		'encoding'=>'utf8',
+		'loading'=>'showIndicator()'
 		), array( 'id'=>'eventForm' ));
 	
 	echo input_hidden_tag('eventId', $eventId);
@@ -55,7 +42,12 @@
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 	$dhtmlxTabBarObj->addTab('main', __('Event'), 'event/'.$mode.'/main', array('eventObj'=>$eventObj, 'isClone'=>$isClone, 'pastDate'=>$pastDate, 'confirmedPresence'=>$confirmedPresence));
 	$dhtmlxTabBarObj->addTab('player', __('Guests'), 'event/'.$mode.'/player', array('eventObj'=>$eventObj, 'hidden'=>$isNew));
-	$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj, 'hidden'=>(!$pastDate)));
+	if( $pastDate )
+		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj));
+	else
+		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj, 'hidden'=>true));
+//	else
+//		$dhtmlxTabBarObj->addTab('result', __('Result'), null, array('hidden'=>true));
 
 	$dhtmlxTabBarObj->addTab('comments', __('Comments'), 'event/form/comments', array('eventObj'=>$eventObj, 'hidden'=>!$eventObj->getVisible()));
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabEvent');
@@ -68,13 +60,15 @@
 ?>
 	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php
+//			if( $pastDate )
 				echo button_tag('mainSubmitResult', __('button.launchResult'), array('onclick'=>'openEventResult()', 'visible'=>$pastDate));
+//			else				
 				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()', 'visible'=>!$pastDate));
 				
 				echo $facebookButton;
 			
 			echo getFormLoading('event');
-			echo getFormStatus('Evento salvo com sucesso!', 'Erro ao salvar as informações do evento!');
+			echo getFormStatus();
 		?>
 	</div>
 <?php else: ?>
@@ -86,9 +80,10 @@
 <?php endif; ?>
 </form>
 <?php
+	DhtmlxWindows::createWindow('eventPhotoView', '', 380, 125, 'event/dialog/photoView', array());
 	DhtmlxWindows::createWindow('rankingPlaceAdd', __('event.gamePlaceRegister'), 550, 125, 'ranking/dialog/placeAdd', array());
 	DhtmlxWindows::createWindow('rankingPlayerAdd', __('ranking.playerRegister'), 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$eventObj->getRankingId()));
 	
 	if( ($isEditable || $isMyEvent) )
-		DhtmlxWindows::createWindow('eventResult', __('event.resultTab.intro'), 680, 550, 'event/dialog/result', array('eventObj'=>$eventObj, 'ajax'=>(!$pastDate)));
+		DhtmlxWindows::createWindow('eventResult', __('event.resultTab.intro'), 680, 400, 'event/dialog/result', array('eventObj'=>$eventObj, 'ajax'=>(!$pastDate)));
 ?>

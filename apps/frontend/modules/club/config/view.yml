@@ -1,4 +1,0 @@
-all:
-
-  stylesheets:    [eventLiveCalendar, table, lightbox, club]
-  javascripts:    [eventLiveCalendar, /sf/prototype/js/scriptaculous, lightbox, club]

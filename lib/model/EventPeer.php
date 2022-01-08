@@ -74,9 +74,6 @@ class EventPeer extends BaseEventPeer
 	public static function validateEventDate($eventDate){
 		
 		$rankingId = MyTools::getRequestParameter('rankingId');
-		
-		if( !$rankingId )
-			return true;
 
 		$criteria = new Criteria();
 		$criteria->add( EventPeer::RANKING_ID, $rankingId );

@@ -46,13 +46,13 @@ class EventPersonalMapBuilder {
 
 		$tMap->addColumn('EVENT_POSITION', 'EventPosition', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('REBUY', 'Rebuy', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('REBUY', 'Rebuy', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('ADDON', 'Addon', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('ADDON', 'Addon', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('PRIZE', 'Prize', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('PRIZE', 'Prize', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('PAID_PLACES', 'PaidPlaces', 'int', CreoleTypes::INTEGER, false, null);
 

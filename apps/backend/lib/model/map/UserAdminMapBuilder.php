@@ -38,8 +38,6 @@ class UserAdminMapBuilder {
 
 		$tMap->addForeignKey('PEOPLE_ID', 'PeopleId', 'int', CreoleTypes::INTEGER, 'people', 'ID', false, null);
 
-		$tMap->addForeignKey('CLUB_ID', 'ClubId', 'int', CreoleTypes::INTEGER, 'club', 'ID', false, null);
-
 		$tMap->addColumn('USERNAME', 'Username', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('PASSWORD', 'Password', 'string', CreoleTypes::VARCHAR, false, null);

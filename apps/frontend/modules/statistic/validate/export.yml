@@ -3,9 +3,6 @@ fields:
   rankingId:
     required:
       msg:       form.error.requiredField
-    sfCallbackValidator:
-      callback:      [RankingPeer, validateHasEvent]
-      invalid_error: Este ranking ainda não possui nenhum evento realizado
        
   format:
     required:

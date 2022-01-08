@@ -39,15 +39,6 @@
 {
     [super viewDidLoad];
     appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    [txtUsername setPlaceholder: NSLocalizedString(@"Username/E-mail", @"login")];
-    [txtPassword setPlaceholder: NSLocalizedString(@"Password", @"login")];
-    
-    [btnRecoveryPassword setTitle: NSLocalizedString(@"recovery password", @"login") forState:UIControlStateNormal];
-    [btnSign setTitle: NSLocalizedString(@"free register", @"login") forState:UIControlStateNormal];
-    
-    [developerCredit setText: NSLocalizedString(@"developed by", @"login")];
-    [about setText: NSLocalizedString(@"about", @"login")];
 }
 
 - (void)viewDidUnload
@@ -94,7 +85,7 @@
     [txtUsername setEnabled:NO];
     [txtPassword setEnabled:NO];
     
-    NSString *urlString  = [NSString stringWithFormat:@"http://%@/ios.php/login/doLogin/username/%@/password/%@/language/%@", serverAddress, txtUsername.text, txtPassword.text, appDelegate.currentLanguage];
+    NSString *urlString  = [NSString stringWithFormat:@"http://%@/ios.php/login/doLogin/username/%@/password/%@", serverAddress, txtUsername.text, txtPassword.text];
     
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -119,10 +110,10 @@
     NSLog(@"result: %@", result);
     
     if( [result isEqualToString:@"denied"] ) 
-        return [appDelegate showAlert:NSLocalizedString(@"Access denied", @"alert") message:NSLocalizedString(@"Invalid Username/Password!\nPlease, try again", @"login")];
+        return [appDelegate showAlert:@"Acesso negado" message:@"Usuário/Senha inválidos!\nPor favor, tente novamente."];
 
     if( [result isEqualToString:@"error"] ) 
-        return [appDelegate showAlert:NSLocalizedString(@"Error", @"alert") message:NSLocalizedString(@"Login error!\nPlease, try again.", @"login")];
+        return [appDelegate showAlert:@"Erro" message:@"Ocorreu um erro na identificação!\nPor favor, tente novamente."];
     
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     
@@ -191,48 +182,6 @@
         signViewController = [[SignViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
     [self.navigationController pushViewController:signViewController animated:YES];
-}
-
--(void)recoverPassword:(id)sender {
-    
-    if( [txtUsername.text isEqualToString:@""] ){
-     
-        [appDelegate showAlert:NSLocalizedString(@"Error", @"alert") message:NSLocalizedString(@"Type your username or e-mail to recover your password!", @"login")];
-        return;
-    }
-    
-    [self.view endEditing:YES];
-    
-    [activityIndicator setHidden:NO];
-    [activityIndicator startAnimating];
-    
-    [self performSelector:@selector(doRecoverPassword) withObject:nil afterDelay:0.1];
-}
-
-
--(void)doRecoverPassword {
-    
-    NSURL *url                   = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ios.php/login/recoveryPassword/username/%@/language/%@", serverAddress, txtUsername.text, appDelegate.currentLanguage]];
-    NSLog(@"url: %@", url);
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:45];
-  	NSError *requestError        = nil;
-    NSData *response             = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&requestError]; 
-    
-    if( requestError==nil ){
-        
-        NSString *result = [[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding];
-        
-        if( [result isEqualToString:@"recoverySuccess"] )
-            [appDelegate showAlert:NSLocalizedString(@"Success", @"alert") message:NSLocalizedString(@"A new password was sent to your e-mail address.", @"login")];
-        else
-            [appDelegate showAlert:NSLocalizedString(@"Error", @"alert") message:NSLocalizedString(@"Username/E-mail not found", @"login")];
-    }else{
-     
-        [appDelegate showAlert:NSLocalizedString(@"Fail", @"alert") message:NSLocalizedString(@"We could not recovery your password!\nPlease, try again", @"login")];
-    }
-    
-    [activityIndicator stopAnimating];
-    [activityIndicator setHidden:YES];
 }
 
 -(void)dealloc {

@@ -8,9 +8,6 @@
  */
 class Util {
 
-	const AUTO_COMPLETE_SUGGEST_NEW = 1;
-	const AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY = 2;
-
 	/**
 	 * Método responsável por criar e retornar um nobo objeto de uma
 	 * determinada classe de acordo com o parâmetro.
@@ -36,8 +33,6 @@ class Util {
 		eval('$criteria->add( '.$classNamePeer.'::CREATED_AT, time()-86400, Criteria::LESS_EQUAL );');
 		eval('$criteria->addAscendingOrderByColumn( '.$classNamePeer.'::CREATED_AT );');
 		eval('$newObj = '.$classNamePeer.'::doSelectOne( $criteria );');
-		
-		$newObj = null;
 		
 		if( is_object($newObj) ){
 			
@@ -77,7 +72,7 @@ class Util {
 	 * @param      String: Mensagem a ser exibida no erro
 	 * @param      Boolean: Define se o processamento deve ser interrompido assim que a mensagem for enviada
 	 */
-	public static function forceError( $errorDescription=null, $exit=true ){
+	public static function forceError( $errorDescription=null, $exit=false ){
 	
 		header( 'HTTP/1.1 500 Internal Server Error' );
 		
@@ -96,12 +91,10 @@ class Util {
 	 * @param      String: Comando SQL a ser executado na base de dados, deve ser um comando único
 	 * @return     Object: ResultSet
 	 */
-	public static function executeQuery($query, $con=null, $connectionName=null){
+	public static function executeQuery( $query ){
 		
-		if( is_null($con) )
-			$con = Propel::getConnection($connectionName);
-		
-    	$statement  = $con->prepareStatement( $query );
+		$connection = Propel::getConnection();
+    	$statement  = $connection->prepareStatement( $query );
     	$resultset  = $statement->executeQuery($query, ResultSet::FETCHMODE_NUM);
     	
     	return $resultset;
@@ -141,55 +134,24 @@ class Util {
 	 * 				consultas autocomplete retornarem registros com o mesmo ID
 	 * @return     String
 	 */
-	public static function getAutoCompleteResults( $table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName, $options=array() ){
+	public static function getAutoCompleteResults( $table, $fieldId, $fieldName, $condition, $fieldOrder, $instanceName ){
 		
-		$suggestNew = array_key_exists('suggestNew', $options)?$options['suggestNew']:false;
-		$quickName  = array_key_exists('quickName', $options)?$options['quickName']:null;
-		$jquery     = array_key_exists('jquery', $options)?$options['jquery']:false;
-		$fieldValue = array_key_exists('fieldValue', $options)?$options['fieldValue']:$fieldName;
-		
-		$sql = "SELECT $fieldId, $fieldName, $fieldValue FROM $table WHERE $condition ORDER BY $fieldOrder";
-		
+		$sql = 'SELECT '.$fieldId.', '.$fieldName.' FROM '.$table.' WHERE '.$condition.' ORDER BY '.$fieldOrder;
+
 	    $resultSet = self::executeQuery( $sql );
 	    
-	    if( $jquery ){
-	    	
-		   header('content-type: application/json; charset=UTF-8');
-		   $resultList = array();
-		   
-			while( $resultSet->next() ){
-		
-				$id    = $resultSet->getInt(1);
-				$label = $resultSet->getString(2);
-				$value = $resultSet->getString(3);
-				$resultList[] = '{"id":"'.$id.'", "label": "'.$label.'", "value": "'.$value.'"}';    	
-		    }
-
-			if( ($suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW && $quickName) ||
-				($suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY && $resultSet->getRecordCount()==0 && $quickName) )
-				$resultList[] = '{"id":"quickNew", "label": "Criar novo: '.$quickName.'", "value": "'.$quickName.'"}';
-		
-			return '['.implode(', ', $resultList).']';
-	    }else{
+	    $li = chr(10);
 	    
-		    $li = chr(10);
-		    
-		    $result = '<ul>'.$li;
-			
-			while( $resultSet->next() ){
+	    $result = '<ul>'.$li;
 		
-				$id   = $resultSet->getInt(1);
-				$name = $resultSet->getString(2);
-				$result .= '	<li id="'.$instanceName.$id.'">'.$name.'</li>'.$li;    	
-		    }
-			
-			if( $suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW && $quickName )
-				$result .= '	<li id="quickNew"><b>Criar novo: </b>'.$quickName.'</li>'.$li;
-			else if( $suggestNew==self::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY && $resultSet->getRecordCount()==0 && $quickName )
-				$result .= '	<li id="quickNew"><b>Criar novo: </b>'.$quickName.'</li>'.$li;
-				    	
-		    $result .= '</ul>';
+		while( $resultSet->next() ){
+	
+			$id   = $resultSet->getInt(1);
+			$name = $resultSet->getString(2);
+			$result .= '	<li id="'.$instanceName.$id.'">'.$name.'</li>'.$li;    	
 	    }
+	
+	    $result .= '</ul>';
 	    
 	    return $result;
 	}
@@ -201,15 +163,13 @@ class Util {
 	 * @author     Luciano Stegun
 	 * @return     Boolean 
 	 */
-	public static function isDebug($returnString=false){
+	public static function isDebug(){
 		
 		$request  = MyTools::getRequest();
 		$isDebug1 = (sfConfig::get('sf_environment')=='dev');
 		$isDebug2 = ($request->getParameter('debug')=='1');
 		
-		$isDebug = ($isDebug1 || $isDebug2);
-		
-		return ($returnString?($isDebug?'1':'0'):$isDebug);
+		return ($isDebug1 || $isDebug2);
 	}
 	
 	/**
@@ -225,6 +185,8 @@ class Util {
 	public static function formatDate( $date, $destination='database', $format='Y-m-d' ){
 		
 		$date = substr( $date, 0, 10 );
+		
+		
 		
 		if( $destination=='database' ){
 			
@@ -406,8 +368,6 @@ class Util {
 			switch( $format ){
 				case '%h:%m:%s':
 					return sprintf('%02d', ($hours+($days*24))).':'.$minutes.':'.$seconds;
-				case '%hh %mm %ss':
-					return sprintf('%02d', ($hours+($days*24))).'h '.$minutes.'m '.$seconds.'s';
 				case '%h:%m':
 					return sprintf('%02d', ($hours+($days*24))).':'.$minutes;
 			}
@@ -473,13 +433,9 @@ class Util {
 	 * @author     Luciano Stegun
 	 * @param      String: Nome do arquivo que será gerado para download
 	 */
-	public static function forceDownload( $fileName, $mimeType=null ){
+	public static function forceDownload( $fileName ){
 		
 		header('Content-type: application/force-download');
-		
-		if( $mimeType )
-			header('Content-type: '.$mimeType);
-			
 		header('Content-Disposition: attachment; filename='.$fileName);
 		header('Pragma: no-cache');
 	}
@@ -497,26 +453,6 @@ class Util {
 			return ($browserMatch==$browser);
 			
 		return $browser;
-	}
-	
-	public static function getDate($dateIncrase){
-		
-		$dateIncrase = strtolower($dateIncrase);
-		$dateIncrase = preg_replace('/[^-0-9dwmy]/', '', $dateIncrase);
-		$daysIncrase = 0;
-		
-		if( preg_match('/^-?[0-9]*d$/', $dateIncrase) )
-			$daysIncrase = str_replace('d', '', $dateIncrase);
-		elseif( preg_match('/^-?[0-9]*w$/', $dateIncrase) )
-			$daysIncrase = str_replace('w', '', $dateIncrase)*7;
-		elseif( preg_match('/^-?[0-9]*m$/', $dateIncrase) )
-			$daysIncrase = str_replace('m', '', $dateIncrase)*30;
-		elseif( preg_match('/^-?[0-9]*y$/', $dateIncrase) )
-			$daysIncrase = str_replace('y', '', $dateIncrase)*35;
-		else
-			throw new Exception('Parâmetro "'.$dateIncrase.'" inválido para o método Util::getDate()');
-		
-		return date('Y-m-d', mktime(0,0,0,date('m'),date('d')+$daysIncrase,date('Y')));
 	}
 	
 	/**
@@ -604,16 +540,6 @@ class Util {
 	 */
 	public static function getMonthName($month, $short=false){
 		
-		$monthList = self::getMonthNames();
-		
-		if( $short )
-			return substr($monthList[$month*1], 0, 3);
-		else
-			return $monthList[$month*1];
-	}
-
-	public static function getMonthNames($lowercase=false){
-		
 		$monthList     = array();
 		$monthList[1]  = 'Janeiro';
 		$monthList[2]  = 'Fevereiro';
@@ -628,11 +554,10 @@ class Util {
 		$monthList[11] = 'Novembro';
 		$monthList[12] = 'Dezembro';
 		
-		if( $lowercase )
-			foreach($monthList as &$month)
-				$month = strtolower($month);
-		
-		return $monthList;
+		if( $short )
+			return substr($monthList[$month*1], 0, 3);
+		else
+			return $monthList[$month*1];
 	}
 	
 	/**
@@ -713,15 +638,13 @@ class Util {
 	 * 
 	 * @author		Luciano Stegun
 	 */
-	public static function getFilePath($subPath, $rootDir=null){
+	public static function getFilePath( $subPath ){
 		
-		$subPath = ereg_replace('[\\\\/]', DIRECTORY_SEPARATOR, $subPath);
-		$subPath = ereg_replace('^[\\\\/]?', '', $subPath);
+		$subPath  = ereg_replace('[\\\\/]', DIRECTORY_SEPARATOR, $subPath);
+		$subPath  = ereg_replace('^[\\\\/]?', '', $subPath);
+		$rootPath = sfConfig::get('sf_web_dir');
 		
-		if( !$rootDir )
-			$rootDir = sfConfig::get('sf_web_dir');
-		
-		$path = $rootDir . DIRECTORY_SEPARATOR . $subPath;
+		$path = $rootPath . DIRECTORY_SEPARATOR . $subPath;
 		return $path;
 	}
 	
@@ -925,78 +848,6 @@ class Util {
 			default:
 				return 'pt_BR';
 		}
-	}
-	
-	public static function getWeekDay($date){
-	
-		$date = Util::formatDate($date);
-		$weekDay = date('w', strtotime($date));
-	
-		$weekDayList   = array();
-		$weekDayList[] = 'Domingo';
-		$weekDayList[] = 'Segunda-feira';
-		$weekDayList[] = 'Terça-feira';
-		$weekDayList[] = 'Quarta-feira';
-		$weekDayList[] = 'Quinta-feira';
-		$weekDayList[] = 'Sexta-feira';
-		$weekDayList[] = 'Sábado';
-		
-		return $weekDayList[$weekDay];
-	}
-	
-	public static function getDirectUrlId($pattern){
-		
-		$pattern = str_replace('/', '\\/', $pattern);
-		
-		$pathInfo = $_SERVER['PATH_INFO'];
-  		$objectId = preg_replace('/^\/'.$pattern.'\//', '', $pathInfo);
-  		$objectId = preg_replace('/\/.*$/', '', $objectId);
-  		$objectId = base64_decode($objectId);
-  		
-  		if( !is_numeric($objectId) )
-  			$objectId = null;
-  		
-  		return $objectId;
-	}
-	
-	public static function getOptionsForJquerySelect($optionList){
-		
-		$returnOptionList = array();
-		foreach($optionList as $optionValue=>$optionDisplay)
-			$returnOptionList[] = array('optionValue'=>$optionValue, 'optionDisplay'=>$optionDisplay);
-		
-		return $returnOptionList;
-	}
-	
-	public static function encodeId($id){
-		
-		return strrev(base64_encode($id));
-	}
-	
-	public static function decodeId($id){
-		
-		return base64_decode(strrev($id));
-	}
-	
-	public static function differenceDays($date1, $date2){
-		
-//		$date1 = "2007-03-24";
-//		$date2 = "2009-06-26";
-		
-		$diff = abs(strtotime($date2) - strtotime($date1));
-		
-		$years  = floor($diff / (365*60*60*24));
-		$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-		$days   = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-		
-		return $days;
-	}
-	
-	public static function lightbox(){
-
-		sfContext::getInstance()->getResponse()->addStylesheet('lightbox');
-		sfContext::getInstance()->getResponse()->addJavascript('/sf/prototype/js/scriptaculous');
-		sfContext::getInstance()->getResponse()->addJavascript('lightbox');
 	}
 }
 ?>

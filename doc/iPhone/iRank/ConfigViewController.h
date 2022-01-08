@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "iRankAppDelegate.h"
-#import "AccountViewController.h"
 
 @interface ConfigViewController : UIViewController {
     
@@ -16,17 +15,9 @@
     IBOutlet UISwitch *saveResultOfflineSwitch;
     IBOutlet UISlider *photoCompressSlider;
     IBOutlet UILabel *lblPhotoCompress;
-    
-    IBOutlet UILabel *lblHomeEvents;
-    IBOutlet UILabel *lblSaveOffline;
-    IBOutlet UITextView *lblSaveOfflineInfo;
-    IBOutlet UILabel *lblCompressPhoto;    
-    
     iRankAppDelegate *appDelegate;
-    AccountViewController *accountViewController;
+    
 }
-
--(void)accountButtonTouchUp:(id)sender;
 
 -(IBAction)didSelectEventCount:(id)sender;
 -(IBAction)changeSaveResultOffline:(id)sender;

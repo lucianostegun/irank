@@ -1,4 +1,4 @@
 all:
-  
-  stylesheets:    [form, table]
-  javascripts:    [contact]
+
+  stylesheets:    [frontend/table, frontend/form]
+  javascripts:    [frontend/contact]

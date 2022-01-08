@@ -5,12 +5,12 @@ class signActions extends sfActions
 
   public function preExecute(){
 
-	if( $this->getUser()->isAuthenticated() )
-		return $this->forward('myAccount', 'index');
   }
 
   public function executeIndex($request){
 	
+	if( $this->getUser()->isAuthenticated() )
+		return $this->forward('myAccount', 'index');
   }
 
   public function handleErrorSave(){

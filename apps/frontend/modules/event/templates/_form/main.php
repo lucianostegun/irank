@@ -46,7 +46,7 @@
 			</div>
 			<div class="row" id="eventPaidPlacesRow">
 				<div class="label" id="eventPaidPlacesLabel"><?php echo __('event.paidPlaces') ?></div>
-				<div class="field"><?php echo input_tag('paidPlaces', $eventObj->getPaidPlaces(), array('size'=>2, 'maxlength'=>2, 'class'=>'required', 'id'=>'eventPaidPlaces')) ?></div>
+				<div class="field"><?php echo input_tag('paidPlaces', $eventObj->getPaidPlaces(), array('size'=>2, 'maxlength'=>1, 'class'=>'required', 'id'=>'eventPaidPlaces')) ?></div>
 				<div class="error" id="eventPaidPlacesError" onclick="showFormErrorDetails('event', 'paidPlaces')"></div>
 				<div class="textFlex" id="eventFreerollLinkDiv" style="display: <?php echo ($eventObj->getIsFreeroll()?'block':'none') ?>"><?php echo link_to(__('event.configurePrize'), '#configurePrize(true)') ?></div>
 			</div>

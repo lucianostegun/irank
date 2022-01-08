@@ -41,18 +41,6 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 
 	
-	protected $contest_runs;
-
-
-	
-	protected $contest_wins;
-
-
-	
-	protected $contest_ratio;
-
-
-	
 	protected $deleted;
 
 
@@ -77,24 +65,6 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 	
 	protected $lastEventPhotoCommentCriteria = null;
-
-	
-	protected $collEventPhotoContestListRelatedByEventPhotoIdLeft;
-
-	
-	protected $lastEventPhotoContestRelatedByEventPhotoIdLeftCriteria = null;
-
-	
-	protected $collEventPhotoContestListRelatedByEventPhotoIdRight;
-
-	
-	protected $lastEventPhotoContestRelatedByEventPhotoIdRightCriteria = null;
-
-	
-	protected $collEventPhotoContestListRelatedByEventPhotoIdWinner;
-
-	
-	protected $lastEventPhotoContestRelatedByEventPhotoIdWinnerCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -156,27 +126,6 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 	{
 
 		return $this->orientation;
-	}
-
-	
-	public function getContestRuns()
-	{
-
-		return $this->contest_runs;
-	}
-
-	
-	public function getContestWins()
-	{
-
-		return $this->contest_wins;
-	}
-
-	
-	public function getContestRatio()
-	{
-
-		return $this->contest_ratio;
 	}
 
 	
@@ -351,44 +300,6 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setContestRuns($v)
-	{
-
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->contest_runs !== $v) {
-			$this->contest_runs = $v;
-			$this->modifiedColumns[] = EventPhotoPeer::CONTEST_RUNS;
-		}
-
-	} 
-	
-	public function setContestWins($v)
-	{
-
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->contest_wins !== $v) {
-			$this->contest_wins = $v;
-			$this->modifiedColumns[] = EventPhotoPeer::CONTEST_WINS;
-		}
-
-	} 
-	
-	public function setContestRatio($v)
-	{
-
-		if ($this->contest_ratio !== $v) {
-			$this->contest_ratio = $v;
-			$this->modifiedColumns[] = EventPhotoPeer::CONTEST_RATIO;
-		}
-
-	} 
-	
 	public function setDeleted($v)
 	{
 
@@ -453,23 +364,17 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 			$this->orientation = $rs->getString($startcol + 7);
 
-			$this->contest_runs = $rs->getInt($startcol + 8);
+			$this->deleted = $rs->getBoolean($startcol + 8);
 
-			$this->contest_wins = $rs->getInt($startcol + 9);
+			$this->created_at = $rs->getTimestamp($startcol + 9, null);
 
-			$this->contest_ratio = $rs->getFloat($startcol + 10);
-
-			$this->deleted = $rs->getBoolean($startcol + 11);
-
-			$this->created_at = $rs->getTimestamp($startcol + 12, null);
-
-			$this->updated_at = $rs->getTimestamp($startcol + 13, null);
+			$this->updated_at = $rs->getTimestamp($startcol + 10, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 14; 
+						return $startcol + 11; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventPhoto object", $e);
 		}
@@ -578,30 +483,6 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collEventPhotoContestListRelatedByEventPhotoIdLeft !== null) {
-				foreach($this->collEventPhotoContestListRelatedByEventPhotoIdLeft as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collEventPhotoContestListRelatedByEventPhotoIdRight !== null) {
-				foreach($this->collEventPhotoContestListRelatedByEventPhotoIdRight as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collEventPhotoContestListRelatedByEventPhotoIdWinner !== null) {
-				foreach($this->collEventPhotoContestListRelatedByEventPhotoIdWinner as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -671,30 +552,6 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collEventPhotoContestListRelatedByEventPhotoIdLeft !== null) {
-					foreach($this->collEventPhotoContestListRelatedByEventPhotoIdLeft as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collEventPhotoContestListRelatedByEventPhotoIdRight !== null) {
-					foreach($this->collEventPhotoContestListRelatedByEventPhotoIdRight as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collEventPhotoContestListRelatedByEventPhotoIdWinner !== null) {
-					foreach($this->collEventPhotoContestListRelatedByEventPhotoIdWinner as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
 
 			$this->alreadyInValidation = false;
 		}
@@ -738,21 +595,12 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 				return $this->getOrientation();
 				break;
 			case 8:
-				return $this->getContestRuns();
-				break;
-			case 9:
-				return $this->getContestWins();
-				break;
-			case 10:
-				return $this->getContestRatio();
-				break;
-			case 11:
 				return $this->getDeleted();
 				break;
-			case 12:
+			case 9:
 				return $this->getCreatedAt();
 				break;
-			case 13:
+			case 10:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -773,12 +621,9 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 			$keys[5]=>$this->getWidth(),
 			$keys[6]=>$this->getHeight(),
 			$keys[7]=>$this->getOrientation(),
-			$keys[8]=>$this->getContestRuns(),
-			$keys[9]=>$this->getContestWins(),
-			$keys[10]=>$this->getContestRatio(),
-			$keys[11]=>$this->getDeleted(),
-			$keys[12]=>$this->getCreatedAt(),
-			$keys[13]=>$this->getUpdatedAt(),
+			$keys[8]=>$this->getDeleted(),
+			$keys[9]=>$this->getCreatedAt(),
+			$keys[10]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -819,21 +664,12 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 				$this->setOrientation($value);
 				break;
 			case 8:
-				$this->setContestRuns($value);
-				break;
-			case 9:
-				$this->setContestWins($value);
-				break;
-			case 10:
-				$this->setContestRatio($value);
-				break;
-			case 11:
 				$this->setDeleted($value);
 				break;
-			case 12:
+			case 9:
 				$this->setCreatedAt($value);
 				break;
-			case 13:
+			case 10:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -851,12 +687,9 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setWidth($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setHeight($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setOrientation($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setContestRuns($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setContestWins($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setContestRatio($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setCreatedAt($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setUpdatedAt($arr[$keys[13]]);
+		if (array_key_exists($keys[8], $arr)) $this->setDeleted($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
 	}
 
 	
@@ -872,9 +705,6 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPhotoPeer::WIDTH)) $criteria->add(EventPhotoPeer::WIDTH, $this->width);
 		if ($this->isColumnModified(EventPhotoPeer::HEIGHT)) $criteria->add(EventPhotoPeer::HEIGHT, $this->height);
 		if ($this->isColumnModified(EventPhotoPeer::ORIENTATION)) $criteria->add(EventPhotoPeer::ORIENTATION, $this->orientation);
-		if ($this->isColumnModified(EventPhotoPeer::CONTEST_RUNS)) $criteria->add(EventPhotoPeer::CONTEST_RUNS, $this->contest_runs);
-		if ($this->isColumnModified(EventPhotoPeer::CONTEST_WINS)) $criteria->add(EventPhotoPeer::CONTEST_WINS, $this->contest_wins);
-		if ($this->isColumnModified(EventPhotoPeer::CONTEST_RATIO)) $criteria->add(EventPhotoPeer::CONTEST_RATIO, $this->contest_ratio);
 		if ($this->isColumnModified(EventPhotoPeer::DELETED)) $criteria->add(EventPhotoPeer::DELETED, $this->deleted);
 		if ($this->isColumnModified(EventPhotoPeer::CREATED_AT)) $criteria->add(EventPhotoPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EventPhotoPeer::UPDATED_AT)) $criteria->add(EventPhotoPeer::UPDATED_AT, $this->updated_at);
@@ -922,12 +752,6 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 		$copyObj->setOrientation($this->orientation);
 
-		$copyObj->setContestRuns($this->contest_runs);
-
-		$copyObj->setContestWins($this->contest_wins);
-
-		$copyObj->setContestRatio($this->contest_ratio);
-
 		$copyObj->setDeleted($this->deleted);
 
 		$copyObj->setCreatedAt($this->created_at);
@@ -940,18 +764,6 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 
 			foreach($this->getEventPhotoCommentList() as $relObj) {
 				$copyObj->addEventPhotoComment($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getEventPhotoContestListRelatedByEventPhotoIdLeft() as $relObj) {
-				$copyObj->addEventPhotoContestRelatedByEventPhotoIdLeft($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getEventPhotoContestListRelatedByEventPhotoIdRight() as $relObj) {
-				$copyObj->addEventPhotoContestRelatedByEventPhotoIdRight($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getEventPhotoContestListRelatedByEventPhotoIdWinner() as $relObj) {
-				$copyObj->addEventPhotoContestRelatedByEventPhotoIdWinner($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1169,216 +981,6 @@ abstract class BaseEventPhoto extends BaseObject  implements Persistent {
 		$this->lastEventPhotoCommentCriteria = $criteria;
 
 		return $this->collEventPhotoCommentList;
-	}
-
-	
-	public function initEventPhotoContestListRelatedByEventPhotoIdLeft()
-	{
-		if ($this->collEventPhotoContestListRelatedByEventPhotoIdLeft === null) {
-			$this->collEventPhotoContestListRelatedByEventPhotoIdLeft = array();
-		}
-	}
-
-	
-	public function getEventPhotoContestListRelatedByEventPhotoIdLeft($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPhotoContestPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventPhotoContestListRelatedByEventPhotoIdLeft === null) {
-			if ($this->isNew()) {
-			   $this->collEventPhotoContestListRelatedByEventPhotoIdLeft = array();
-			} else {
-
-				$criteria->add(EventPhotoContestPeer::EVENT_PHOTO_ID_LEFT, $this->getId());
-
-				EventPhotoContestPeer::addSelectColumns($criteria);
-				$this->collEventPhotoContestListRelatedByEventPhotoIdLeft = EventPhotoContestPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(EventPhotoContestPeer::EVENT_PHOTO_ID_LEFT, $this->getId());
-
-				EventPhotoContestPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventPhotoContestRelatedByEventPhotoIdLeftCriteria) || !$this->lastEventPhotoContestRelatedByEventPhotoIdLeftCriteria->equals($criteria)) {
-					$this->collEventPhotoContestListRelatedByEventPhotoIdLeft = EventPhotoContestPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastEventPhotoContestRelatedByEventPhotoIdLeftCriteria = $criteria;
-		return $this->collEventPhotoContestListRelatedByEventPhotoIdLeft;
-	}
-
-	
-	public function countEventPhotoContestListRelatedByEventPhotoIdLeft($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPhotoContestPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(EventPhotoContestPeer::EVENT_PHOTO_ID_LEFT, $this->getId());
-
-		return EventPhotoContestPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addEventPhotoContestRelatedByEventPhotoIdLeft(EventPhotoContest $l)
-	{
-		$this->collEventPhotoContestListRelatedByEventPhotoIdLeft[] = $l;
-		$l->setEventPhotoRelatedByEventPhotoIdLeft($this);
-	}
-
-	
-	public function initEventPhotoContestListRelatedByEventPhotoIdRight()
-	{
-		if ($this->collEventPhotoContestListRelatedByEventPhotoIdRight === null) {
-			$this->collEventPhotoContestListRelatedByEventPhotoIdRight = array();
-		}
-	}
-
-	
-	public function getEventPhotoContestListRelatedByEventPhotoIdRight($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPhotoContestPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventPhotoContestListRelatedByEventPhotoIdRight === null) {
-			if ($this->isNew()) {
-			   $this->collEventPhotoContestListRelatedByEventPhotoIdRight = array();
-			} else {
-
-				$criteria->add(EventPhotoContestPeer::EVENT_PHOTO_ID_RIGHT, $this->getId());
-
-				EventPhotoContestPeer::addSelectColumns($criteria);
-				$this->collEventPhotoContestListRelatedByEventPhotoIdRight = EventPhotoContestPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(EventPhotoContestPeer::EVENT_PHOTO_ID_RIGHT, $this->getId());
-
-				EventPhotoContestPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventPhotoContestRelatedByEventPhotoIdRightCriteria) || !$this->lastEventPhotoContestRelatedByEventPhotoIdRightCriteria->equals($criteria)) {
-					$this->collEventPhotoContestListRelatedByEventPhotoIdRight = EventPhotoContestPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastEventPhotoContestRelatedByEventPhotoIdRightCriteria = $criteria;
-		return $this->collEventPhotoContestListRelatedByEventPhotoIdRight;
-	}
-
-	
-	public function countEventPhotoContestListRelatedByEventPhotoIdRight($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPhotoContestPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(EventPhotoContestPeer::EVENT_PHOTO_ID_RIGHT, $this->getId());
-
-		return EventPhotoContestPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addEventPhotoContestRelatedByEventPhotoIdRight(EventPhotoContest $l)
-	{
-		$this->collEventPhotoContestListRelatedByEventPhotoIdRight[] = $l;
-		$l->setEventPhotoRelatedByEventPhotoIdRight($this);
-	}
-
-	
-	public function initEventPhotoContestListRelatedByEventPhotoIdWinner()
-	{
-		if ($this->collEventPhotoContestListRelatedByEventPhotoIdWinner === null) {
-			$this->collEventPhotoContestListRelatedByEventPhotoIdWinner = array();
-		}
-	}
-
-	
-	public function getEventPhotoContestListRelatedByEventPhotoIdWinner($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPhotoContestPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventPhotoContestListRelatedByEventPhotoIdWinner === null) {
-			if ($this->isNew()) {
-			   $this->collEventPhotoContestListRelatedByEventPhotoIdWinner = array();
-			} else {
-
-				$criteria->add(EventPhotoContestPeer::EVENT_PHOTO_ID_WINNER, $this->getId());
-
-				EventPhotoContestPeer::addSelectColumns($criteria);
-				$this->collEventPhotoContestListRelatedByEventPhotoIdWinner = EventPhotoContestPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(EventPhotoContestPeer::EVENT_PHOTO_ID_WINNER, $this->getId());
-
-				EventPhotoContestPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventPhotoContestRelatedByEventPhotoIdWinnerCriteria) || !$this->lastEventPhotoContestRelatedByEventPhotoIdWinnerCriteria->equals($criteria)) {
-					$this->collEventPhotoContestListRelatedByEventPhotoIdWinner = EventPhotoContestPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastEventPhotoContestRelatedByEventPhotoIdWinnerCriteria = $criteria;
-		return $this->collEventPhotoContestListRelatedByEventPhotoIdWinner;
-	}
-
-	
-	public function countEventPhotoContestListRelatedByEventPhotoIdWinner($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPhotoContestPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(EventPhotoContestPeer::EVENT_PHOTO_ID_WINNER, $this->getId());
-
-		return EventPhotoContestPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addEventPhotoContestRelatedByEventPhotoIdWinner(EventPhotoContest $l)
-	{
-		$this->collEventPhotoContestListRelatedByEventPhotoIdWinner[] = $l;
-		$l->setEventPhotoRelatedByEventPhotoIdWinner($this);
 	}
 
 } 

@@ -25,14 +25,14 @@
     self = [super initWithStyle:style];
     if (self) {
 
-        self.labels = [NSArray arrayWithObjects:NSLocalizedString(@"First name", @"addPlayer"), 
-                       NSLocalizedString(@"Last name", @"addPlayer"), 
-                       NSLocalizedString(@"E-mail", @"addPlayer"),
+        self.labels = [NSArray arrayWithObjects:@"Nome", 
+                       @"Sobrenome", 
+                       @"E-mail",
                        nil];
         
-        self.placeholders = [NSArray arrayWithObjects:NSLocalizedString(@"required", @"addPlayer"), 
-                             NSLocalizedString(@"optional", @"addPlayer"), 
-                             NSLocalizedString(@"required", @"addPlayer"),
+        self.placeholders = [NSArray arrayWithObjects:@"obrigatório", 
+                             @"opcional", 
+                             @"obrigatório",
                              nil];
         
         firstName    = @"";
@@ -56,7 +56,7 @@
 {
     [super viewDidLoad];
 
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"save", @"button") style:UIBarButtonItemStyleDone target:self action:@selector(savePlayer:)];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"salvar" style:UIBarButtonItemStyleDone target:self action:@selector(savePlayer:)];
     
     self.navigationItem.rightBarButtonItem = saveButton;
     
@@ -69,16 +69,16 @@
     
     if( [firstName isEqualToString:@""] || [emailAddress isEqualToString:@""] ){
         
-        return [appDelegate showAlert:NSLocalizedString(@"Error", @"addPlayer") message:NSLocalizedString(@"Please fill all required fields", @"addPlayer")];
+        return [appDelegate showAlert:@"Erro" message:@"Favor preencher todos os campos."];   
     }
     
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     
     if( ![emailTest evaluateWithObject:emailAddress] )
-        return [appDelegate showAlert:NSLocalizedString(@"Error", @"alert") message:NSLocalizedString(@"The e-mail address is invalid", @"addPlayer")];
+        return [appDelegate showAlert:@"Erro" message:@"O e-mail informado não é válido."];
     
-    [appDelegate showLoadingView:NSLocalizedString(@"adding new player...", @"addPlayer")];
+    [appDelegate showLoadingView:@"adicionando novo jogador..."];
     [self performSelector:@selector(doSavePlayer) withObject:nil afterDelay:0.1];
 }
 
@@ -96,7 +96,7 @@
     
     const char *bytes = [[NSString stringWithFormat:@"playerXml=%@", stringData] UTF8String];
     
-    NSURL *url                   = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ios.php/ranking/savePlayer/rankingId/%i/eventId/%i/language/%@", serverAddress, rankingId, eventId, appDelegate.currentLanguage]];
+    NSURL *url                   = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ios.php/ranking/savePlayer/rankingId/%i/eventId/%i", serverAddress, rankingId, eventId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:241];
 	NSError *requestError = nil;
     
@@ -117,7 +117,7 @@
         
         if( [saveStatus isEqualToString:@"saveSuccess"] || [saveStatus isEqualToString:@"playerExists"] ){
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", @"alert") message:NSLocalizedString(@"The player was added to the ranking.\nDo you want to add a new player?", @"addPlayer") delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sucesso" message:@"O novo jogador foi incluído ao ranking.\nDeseja incluir um novo jogador?" delegate:self cancelButtonTitle:@"Não" otherButtonTitles:@"Sim", nil];
             
             int playerId = [[jsonObjects objectForKey:@"id"] intValue];
             
@@ -141,16 +141,16 @@
             [alert release];
 
         }else if( [result length] < 100 )
-            [appDelegate showAlert:NSLocalizedString(@"Error", nil) message:result];
+            [appDelegate showAlert:@"Erro" message:result];
         
 //        jsonObjects = nil;
 //        jsonParser = nil;
 //        [saveStatus release];
 	} else {
         
-//        NSLog(@"Passou por aqui porque deu erro");
+        NSLog(@"Passou por aqui porque deu erro");
         [appDelegate hideLoadingView];
-        [appDelegate showAlert:NSLocalizedString(@"Fail", nil) message:NSLocalizedString(@"It was unable to save a new player.\nPlease, try again.", @"addPlayer")];
+        [appDelegate showAlert:@"Falha" message:@"Não foi possível salvar o jogador.\nPor favor, tente novamente."];
 	}
 }
 

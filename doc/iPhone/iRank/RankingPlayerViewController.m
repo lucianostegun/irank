@@ -47,6 +47,9 @@
     
     appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
     addButton   = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTouchUp:)];
+    
+    if( ranking.isMyRanking )
+        self.navigationItem.rightBarButtonItem = addButton;
 }
 
 - (void)viewDidUnload
@@ -62,7 +65,7 @@
     
     if( ranking.rankingPlayerList==nil ){
         
-        [appDelegate showLoadingView:NSLocalizedString(@"loading player list...", @"rankingPlayer")];
+        [appDelegate showLoadingView:@"carregando lista de jogadores..."];
         [self performSelector:@selector(updateRankingPlayerList) withObject:nil afterDelay:0.1];        
     }else{
         
@@ -72,15 +75,10 @@
             rankingPlayerList = ranking.rankingPlayerList;
     }
     
-    if( ranking.isMyRanking && !sortByPosition )
-        self.navigationItem.rightBarButtonItem = addButton;
-    else
-        self.navigationItem.rightBarButtonItem = nil;
-    
     if( sortByPosition )
-        self.title = NSLocalizedString(@"Ranking", @"rankingPlayer");
+        self.title = @"Classificação";
     else
-        self.title = NSLocalizedString(@"Players", @"rankingPlayer");
+        self.title = @"Jogadores";
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -154,7 +152,7 @@
     
     NSString *label;
     NSString *description;
-    NSString *pluralEvents = ([rankingPlayer totalEvents]==1?@"":NSLocalizedString(@"pluralEvents", @"rankingPlayer"));
+    NSString *pluralEvents = ([rankingPlayer totalEvents]==1?@"":@"s");
     
     if( sortByPosition ){
         
@@ -166,11 +164,11 @@
         [numberFormatter setMinimumFractionDigits:3];
         
         label       = [NSString stringWithFormat:@"#%i %@", (indexPath.row+1), [[rankingPlayer player] fullName]];
-        description = [NSString stringWithFormat:@"%i %@%@, %@ %@. %@: %@", [rankingPlayer totalEvents], NSLocalizedString(@"event", @"rankingPlayer"), pluralEvents, [numberFormatter stringFromNumber:[NSNumber numberWithFloat:rankingPlayer.totalScore]], NSLocalizedString(@"score", @"rankingPlayer"), NSLocalizedString(@"Average", @"rankingPlayer"), [numberFormatter stringFromNumber:[NSNumber numberWithFloat:rankingPlayer.totalAverage]]];
+        description = [NSString stringWithFormat:@"%i evento%@, %@ pontos. Média: %@", [rankingPlayer totalEvents], pluralEvents, [numberFormatter stringFromNumber:[NSNumber numberWithFloat:rankingPlayer.totalScore]], [numberFormatter stringFromNumber:[NSNumber numberWithFloat:rankingPlayer.totalAverage]]];
     }else{
         
         label       = [NSString stringWithFormat:@"%@", [[rankingPlayer player] fullName]];
-        description = [NSString stringWithFormat:@"%@, %i %@%@", [[rankingPlayer player] emailAddress], [rankingPlayer totalEvents], NSLocalizedString(@"event", @"rankingPlayer"), pluralEvents];
+        description = [NSString stringWithFormat:@"%@, %i evento%@", [[rankingPlayer player] emailAddress], [rankingPlayer totalEvents], pluralEvents];
     }
     
     cell.textLabel.text       = label;

@@ -1,4 +1,0 @@
-all:
-
-  stylesheets:    [backend/emailMarketing]
-  javascripts:    [backend/plugins/jquery.textarea.js, backend/emailMarketing, backend/emailMarketingEmail]

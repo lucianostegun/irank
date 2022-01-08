@@ -17,10 +17,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 
 
 	
-	protected $club_id;
-
-
-	
 	protected $username;
 
 
@@ -67,33 +63,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 	protected $aPeople;
 
 	
-	protected $aClub;
-
-	
-	protected $collAccessAdminLogList;
-
-	
-	protected $lastAccessAdminLogCriteria = null;
-
-	
-	protected $collUserAdminSettingsList;
-
-	
-	protected $lastUserAdminSettingsCriteria = null;
-
-	
-	protected $collCashTableSessionListRelatedByUserAdminIdOpen;
-
-	
-	protected $lastCashTableSessionRelatedByUserAdminIdOpenCriteria = null;
-
-	
-	protected $collCashTableSessionListRelatedByUserAdminIdClose;
-
-	
-	protected $lastCashTableSessionRelatedByUserAdminIdCloseCriteria = null;
-
-	
 	protected $alreadyInSave = false;
 
 	
@@ -111,13 +80,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 	{
 
 		return $this->people_id;
-	}
-
-	
-	public function getClubId()
-	{
-
-		return $this->club_id;
 	}
 
 	
@@ -275,24 +237,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setClubId($v)
-	{
-
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->club_id !== $v) {
-			$this->club_id = $v;
-			$this->modifiedColumns[] = UserAdminPeer::CLUB_ID;
-		}
-
-		if ($this->aClub !== null && $this->aClub->getId() !== $v) {
-			$this->aClub = null;
-		}
-
-	} 
-	
 	public function setUsername($v)
 	{
 
@@ -440,35 +384,33 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 
 			$this->people_id = $rs->getInt($startcol + 1);
 
-			$this->club_id = $rs->getInt($startcol + 2);
+			$this->username = $rs->getString($startcol + 2);
 
-			$this->username = $rs->getString($startcol + 3);
+			$this->password = $rs->getString($startcol + 3);
 
-			$this->password = $rs->getString($startcol + 4);
+			$this->active = $rs->getBoolean($startcol + 4);
 
-			$this->active = $rs->getBoolean($startcol + 5);
+			$this->master = $rs->getBoolean($startcol + 5);
 
-			$this->master = $rs->getBoolean($startcol + 6);
+			$this->enabled = $rs->getBoolean($startcol + 6);
 
-			$this->enabled = $rs->getBoolean($startcol + 7);
+			$this->visible = $rs->getBoolean($startcol + 7);
 
-			$this->visible = $rs->getBoolean($startcol + 8);
+			$this->deleted = $rs->getBoolean($startcol + 8);
 
-			$this->deleted = $rs->getBoolean($startcol + 9);
+			$this->locked = $rs->getBoolean($startcol + 9);
 
-			$this->locked = $rs->getBoolean($startcol + 10);
+			$this->last_access_date = $rs->getTimestamp($startcol + 10, null);
 
-			$this->last_access_date = $rs->getTimestamp($startcol + 11, null);
+			$this->created_at = $rs->getTimestamp($startcol + 11, null);
 
-			$this->created_at = $rs->getTimestamp($startcol + 12, null);
-
-			$this->updated_at = $rs->getTimestamp($startcol + 13, null);
+			$this->updated_at = $rs->getTimestamp($startcol + 12, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 14; 
+						return $startcol + 13; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserAdmin object", $e);
 		}
@@ -543,13 +485,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 				$this->setPeople($this->aPeople);
 			}
 
-			if ($this->aClub !== null) {
-				if ($this->aClub->isModified()) {
-					$affectedRows += $this->aClub->save($con);
-				}
-				$this->setClub($this->aClub);
-			}
-
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
@@ -561,38 +496,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 					$affectedRows += UserAdminPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); 			}
-
-			if ($this->collAccessAdminLogList !== null) {
-				foreach($this->collAccessAdminLogList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collUserAdminSettingsList !== null) {
-				foreach($this->collUserAdminSettingsList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collCashTableSessionListRelatedByUserAdminIdOpen !== null) {
-				foreach($this->collCashTableSessionListRelatedByUserAdminIdOpen as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collCashTableSessionListRelatedByUserAdminIdClose !== null) {
-				foreach($this->collCashTableSessionListRelatedByUserAdminIdClose as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
 
 			$this->alreadyInSave = false;
 		}
@@ -637,49 +540,11 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->aClub !== null) {
-				if (!$this->aClub->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aClub->getValidationFailures());
-				}
-			}
-
 
 			if (($retval = UserAdminPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
-
-				if ($this->collAccessAdminLogList !== null) {
-					foreach($this->collAccessAdminLogList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collUserAdminSettingsList !== null) {
-					foreach($this->collUserAdminSettingsList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collCashTableSessionListRelatedByUserAdminIdOpen !== null) {
-					foreach($this->collCashTableSessionListRelatedByUserAdminIdOpen as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collCashTableSessionListRelatedByUserAdminIdClose !== null) {
-					foreach($this->collCashTableSessionListRelatedByUserAdminIdClose as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
 
 
 			$this->alreadyInValidation = false;
@@ -706,39 +571,36 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 				return $this->getPeopleId();
 				break;
 			case 2:
-				return $this->getClubId();
-				break;
-			case 3:
 				return $this->getUsername();
 				break;
-			case 4:
+			case 3:
 				return $this->getPassword();
 				break;
-			case 5:
+			case 4:
 				return $this->getActive();
 				break;
-			case 6:
+			case 5:
 				return $this->getMaster();
 				break;
-			case 7:
+			case 6:
 				return $this->getEnabled();
 				break;
-			case 8:
+			case 7:
 				return $this->getVisible();
 				break;
-			case 9:
+			case 8:
 				return $this->getDeleted();
 				break;
-			case 10:
+			case 9:
 				return $this->getLocked();
 				break;
-			case 11:
+			case 10:
 				return $this->getLastAccessDate();
 				break;
-			case 12:
+			case 11:
 				return $this->getCreatedAt();
 				break;
-			case 13:
+			case 12:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -753,18 +615,17 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getPeopleId(),
-			$keys[2]=>$this->getClubId(),
-			$keys[3]=>$this->getUsername(),
-			$keys[4]=>$this->getPassword(),
-			$keys[5]=>$this->getActive(),
-			$keys[6]=>$this->getMaster(),
-			$keys[7]=>$this->getEnabled(),
-			$keys[8]=>$this->getVisible(),
-			$keys[9]=>$this->getDeleted(),
-			$keys[10]=>$this->getLocked(),
-			$keys[11]=>$this->getLastAccessDate(),
-			$keys[12]=>$this->getCreatedAt(),
-			$keys[13]=>$this->getUpdatedAt(),
+			$keys[2]=>$this->getUsername(),
+			$keys[3]=>$this->getPassword(),
+			$keys[4]=>$this->getActive(),
+			$keys[5]=>$this->getMaster(),
+			$keys[6]=>$this->getEnabled(),
+			$keys[7]=>$this->getVisible(),
+			$keys[8]=>$this->getDeleted(),
+			$keys[9]=>$this->getLocked(),
+			$keys[10]=>$this->getLastAccessDate(),
+			$keys[11]=>$this->getCreatedAt(),
+			$keys[12]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -787,39 +648,36 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 				$this->setPeopleId($value);
 				break;
 			case 2:
-				$this->setClubId($value);
-				break;
-			case 3:
 				$this->setUsername($value);
 				break;
-			case 4:
+			case 3:
 				$this->setPassword($value);
 				break;
-			case 5:
+			case 4:
 				$this->setActive($value);
 				break;
-			case 6:
+			case 5:
 				$this->setMaster($value);
 				break;
-			case 7:
+			case 6:
 				$this->setEnabled($value);
 				break;
-			case 8:
+			case 7:
 				$this->setVisible($value);
 				break;
-			case 9:
+			case 8:
 				$this->setDeleted($value);
 				break;
-			case 10:
+			case 9:
 				$this->setLocked($value);
 				break;
-			case 11:
+			case 10:
 				$this->setLastAccessDate($value);
 				break;
-			case 12:
+			case 11:
 				$this->setCreatedAt($value);
 				break;
-			case 13:
+			case 12:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -831,18 +689,17 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setClubId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setUsername($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setPassword($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setActive($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setMaster($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setEnabled($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setVisible($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setDeleted($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setLocked($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setLastAccessDate($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setCreatedAt($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setUpdatedAt($arr[$keys[13]]);
+		if (array_key_exists($keys[2], $arr)) $this->setUsername($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setPassword($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setActive($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setMaster($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEnabled($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setVisible($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setDeleted($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setLocked($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setLastAccessDate($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
 	}
 
 	
@@ -852,7 +709,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(UserAdminPeer::ID)) $criteria->add(UserAdminPeer::ID, $this->id);
 		if ($this->isColumnModified(UserAdminPeer::PEOPLE_ID)) $criteria->add(UserAdminPeer::PEOPLE_ID, $this->people_id);
-		if ($this->isColumnModified(UserAdminPeer::CLUB_ID)) $criteria->add(UserAdminPeer::CLUB_ID, $this->club_id);
 		if ($this->isColumnModified(UserAdminPeer::USERNAME)) $criteria->add(UserAdminPeer::USERNAME, $this->username);
 		if ($this->isColumnModified(UserAdminPeer::PASSWORD)) $criteria->add(UserAdminPeer::PASSWORD, $this->password);
 		if ($this->isColumnModified(UserAdminPeer::ACTIVE)) $criteria->add(UserAdminPeer::ACTIVE, $this->active);
@@ -896,8 +752,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 
 		$copyObj->setPeopleId($this->people_id);
 
-		$copyObj->setClubId($this->club_id);
-
 		$copyObj->setUsername($this->username);
 
 		$copyObj->setPassword($this->password);
@@ -920,27 +774,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 
 		$copyObj->setUpdatedAt($this->updated_at);
 
-
-		if ($deepCopy) {
-									$copyObj->setNew(false);
-
-			foreach($this->getAccessAdminLogList() as $relObj) {
-				$copyObj->addAccessAdminLog($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getUserAdminSettingsList() as $relObj) {
-				$copyObj->addUserAdminSettings($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getCashTableSessionListRelatedByUserAdminIdOpen() as $relObj) {
-				$copyObj->addCashTableSessionRelatedByUserAdminIdOpen($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getCashTableSessionListRelatedByUserAdminIdClose() as $relObj) {
-				$copyObj->addCashTableSessionRelatedByUserAdminIdClose($relObj->copy($deepCopy));
-			}
-
-		} 
 
 		$copyObj->setNew(true);
 
@@ -992,420 +825,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aPeople;
-	}
-
-	
-	public function setClub($v)
-	{
-
-
-		if ($v === null) {
-			$this->setClubId(NULL);
-		} else {
-			$this->setClubId($v->getId());
-		}
-
-
-		$this->aClub = $v;
-	}
-
-
-	
-	public function getClub($con = null)
-	{
-		if ($this->aClub === null && ($this->club_id !== null)) {
-						include_once 'lib/model/om/BaseClubPeer.php';
-
-			$this->aClub = ClubPeer::retrieveByPK($this->club_id, $con);
-
-			
-		}
-		return $this->aClub;
-	}
-
-	
-	public function initAccessAdminLogList()
-	{
-		if ($this->collAccessAdminLogList === null) {
-			$this->collAccessAdminLogList = array();
-		}
-	}
-
-	
-	public function getAccessAdminLogList($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseAccessAdminLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collAccessAdminLogList === null) {
-			if ($this->isNew()) {
-			   $this->collAccessAdminLogList = array();
-			} else {
-
-				$criteria->add(AccessAdminLogPeer::USER_ADMIN_ID, $this->getId());
-
-				AccessAdminLogPeer::addSelectColumns($criteria);
-				$this->collAccessAdminLogList = AccessAdminLogPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(AccessAdminLogPeer::USER_ADMIN_ID, $this->getId());
-
-				AccessAdminLogPeer::addSelectColumns($criteria);
-				if (!isset($this->lastAccessAdminLogCriteria) || !$this->lastAccessAdminLogCriteria->equals($criteria)) {
-					$this->collAccessAdminLogList = AccessAdminLogPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastAccessAdminLogCriteria = $criteria;
-		return $this->collAccessAdminLogList;
-	}
-
-	
-	public function countAccessAdminLogList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseAccessAdminLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(AccessAdminLogPeer::USER_ADMIN_ID, $this->getId());
-
-		return AccessAdminLogPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addAccessAdminLog(AccessAdminLog $l)
-	{
-		$this->collAccessAdminLogList[] = $l;
-		$l->setUserAdmin($this);
-	}
-
-	
-	public function initUserAdminSettingsList()
-	{
-		if ($this->collUserAdminSettingsList === null) {
-			$this->collUserAdminSettingsList = array();
-		}
-	}
-
-	
-	public function getUserAdminSettingsList($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseUserAdminSettingsPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUserAdminSettingsList === null) {
-			if ($this->isNew()) {
-			   $this->collUserAdminSettingsList = array();
-			} else {
-
-				$criteria->add(UserAdminSettingsPeer::USER_ADMIN_ID, $this->getId());
-
-				UserAdminSettingsPeer::addSelectColumns($criteria);
-				$this->collUserAdminSettingsList = UserAdminSettingsPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(UserAdminSettingsPeer::USER_ADMIN_ID, $this->getId());
-
-				UserAdminSettingsPeer::addSelectColumns($criteria);
-				if (!isset($this->lastUserAdminSettingsCriteria) || !$this->lastUserAdminSettingsCriteria->equals($criteria)) {
-					$this->collUserAdminSettingsList = UserAdminSettingsPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastUserAdminSettingsCriteria = $criteria;
-		return $this->collUserAdminSettingsList;
-	}
-
-	
-	public function countUserAdminSettingsList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseUserAdminSettingsPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(UserAdminSettingsPeer::USER_ADMIN_ID, $this->getId());
-
-		return UserAdminSettingsPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addUserAdminSettings(UserAdminSettings $l)
-	{
-		$this->collUserAdminSettingsList[] = $l;
-		$l->setUserAdmin($this);
-	}
-
-
-	
-	public function getUserAdminSettingsListJoinSettings($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseUserAdminSettingsPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUserAdminSettingsList === null) {
-			if ($this->isNew()) {
-				$this->collUserAdminSettingsList = array();
-			} else {
-
-				$criteria->add(UserAdminSettingsPeer::USER_ADMIN_ID, $this->getId());
-
-				$this->collUserAdminSettingsList = UserAdminSettingsPeer::doSelectJoinSettings($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(UserAdminSettingsPeer::USER_ADMIN_ID, $this->getId());
-
-			if (!isset($this->lastUserAdminSettingsCriteria) || !$this->lastUserAdminSettingsCriteria->equals($criteria)) {
-				$this->collUserAdminSettingsList = UserAdminSettingsPeer::doSelectJoinSettings($criteria, $con);
-			}
-		}
-		$this->lastUserAdminSettingsCriteria = $criteria;
-
-		return $this->collUserAdminSettingsList;
-	}
-
-	
-	public function initCashTableSessionListRelatedByUserAdminIdOpen()
-	{
-		if ($this->collCashTableSessionListRelatedByUserAdminIdOpen === null) {
-			$this->collCashTableSessionListRelatedByUserAdminIdOpen = array();
-		}
-	}
-
-	
-	public function getCashTableSessionListRelatedByUserAdminIdOpen($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collCashTableSessionListRelatedByUserAdminIdOpen === null) {
-			if ($this->isNew()) {
-			   $this->collCashTableSessionListRelatedByUserAdminIdOpen = array();
-			} else {
-
-				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_OPEN, $this->getId());
-
-				CashTableSessionPeer::addSelectColumns($criteria);
-				$this->collCashTableSessionListRelatedByUserAdminIdOpen = CashTableSessionPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_OPEN, $this->getId());
-
-				CashTableSessionPeer::addSelectColumns($criteria);
-				if (!isset($this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria) || !$this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria->equals($criteria)) {
-					$this->collCashTableSessionListRelatedByUserAdminIdOpen = CashTableSessionPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria = $criteria;
-		return $this->collCashTableSessionListRelatedByUserAdminIdOpen;
-	}
-
-	
-	public function countCashTableSessionListRelatedByUserAdminIdOpen($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_OPEN, $this->getId());
-
-		return CashTableSessionPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addCashTableSessionRelatedByUserAdminIdOpen(CashTableSession $l)
-	{
-		$this->collCashTableSessionListRelatedByUserAdminIdOpen[] = $l;
-		$l->setUserAdminRelatedByUserAdminIdOpen($this);
-	}
-
-
-	
-	public function getCashTableSessionListRelatedByUserAdminIdOpenJoinCashTable($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collCashTableSessionListRelatedByUserAdminIdOpen === null) {
-			if ($this->isNew()) {
-				$this->collCashTableSessionListRelatedByUserAdminIdOpen = array();
-			} else {
-
-				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_OPEN, $this->getId());
-
-				$this->collCashTableSessionListRelatedByUserAdminIdOpen = CashTableSessionPeer::doSelectJoinCashTable($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_OPEN, $this->getId());
-
-			if (!isset($this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria) || !$this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria->equals($criteria)) {
-				$this->collCashTableSessionListRelatedByUserAdminIdOpen = CashTableSessionPeer::doSelectJoinCashTable($criteria, $con);
-			}
-		}
-		$this->lastCashTableSessionRelatedByUserAdminIdOpenCriteria = $criteria;
-
-		return $this->collCashTableSessionListRelatedByUserAdminIdOpen;
-	}
-
-	
-	public function initCashTableSessionListRelatedByUserAdminIdClose()
-	{
-		if ($this->collCashTableSessionListRelatedByUserAdminIdClose === null) {
-			$this->collCashTableSessionListRelatedByUserAdminIdClose = array();
-		}
-	}
-
-	
-	public function getCashTableSessionListRelatedByUserAdminIdClose($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collCashTableSessionListRelatedByUserAdminIdClose === null) {
-			if ($this->isNew()) {
-			   $this->collCashTableSessionListRelatedByUserAdminIdClose = array();
-			} else {
-
-				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_CLOSE, $this->getId());
-
-				CashTableSessionPeer::addSelectColumns($criteria);
-				$this->collCashTableSessionListRelatedByUserAdminIdClose = CashTableSessionPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_CLOSE, $this->getId());
-
-				CashTableSessionPeer::addSelectColumns($criteria);
-				if (!isset($this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria) || !$this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria->equals($criteria)) {
-					$this->collCashTableSessionListRelatedByUserAdminIdClose = CashTableSessionPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria = $criteria;
-		return $this->collCashTableSessionListRelatedByUserAdminIdClose;
-	}
-
-	
-	public function countCashTableSessionListRelatedByUserAdminIdClose($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_CLOSE, $this->getId());
-
-		return CashTableSessionPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addCashTableSessionRelatedByUserAdminIdClose(CashTableSession $l)
-	{
-		$this->collCashTableSessionListRelatedByUserAdminIdClose[] = $l;
-		$l->setUserAdminRelatedByUserAdminIdClose($this);
-	}
-
-
-	
-	public function getCashTableSessionListRelatedByUserAdminIdCloseJoinCashTable($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseCashTableSessionPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collCashTableSessionListRelatedByUserAdminIdClose === null) {
-			if ($this->isNew()) {
-				$this->collCashTableSessionListRelatedByUserAdminIdClose = array();
-			} else {
-
-				$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_CLOSE, $this->getId());
-
-				$this->collCashTableSessionListRelatedByUserAdminIdClose = CashTableSessionPeer::doSelectJoinCashTable($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(CashTableSessionPeer::USER_ADMIN_ID_CLOSE, $this->getId());
-
-			if (!isset($this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria) || !$this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria->equals($criteria)) {
-				$this->collCashTableSessionListRelatedByUserAdminIdClose = CashTableSessionPeer::doSelectJoinCashTable($criteria, $con);
-			}
-		}
-		$this->lastCashTableSessionRelatedByUserAdminIdCloseCriteria = $criteria;
-
-		return $this->collCashTableSessionListRelatedByUserAdminIdClose;
 	}
 
 } 

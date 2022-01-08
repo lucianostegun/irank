@@ -1,1 +1,0 @@
-ALTER TABLE cash_table ADD COLUMN last_opened_at TIMESTAMP;

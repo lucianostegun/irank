@@ -1,4 +1,0 @@
-all:
-
-  stylesheets:    [backend/plugins/elfinder/elfinder.min.css]
-  javascripts:    [backend/plugins/elfinder.min.js, backend/plugins/elfinder.pt_BR.js, backend/fileManager]

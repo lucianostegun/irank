@@ -1,0 +1,247 @@
+#welcomeLogo {
+	
+	color: 			#FFFFFF;
+	background: 	#191919 url('/images/frontend/layout/welcomeBg.png') repeat-x bottom left;
+	padding: 		5px 0px 0px 15px;
+	border-bottom: 	2px solid #999999
+}
+
+#welcomeLogo a {
+	
+	color: 			#E8A014;
+	font-weight: 	bold;
+}
+
+.welcome {
+
+	width: 		778px;
+	border: 	1px solid #606060;
+	margin: 	10px;
+}
+
+.homeDistinct {
+	
+	empty-cells: 	show;
+}
+	
+.homeDistinct td span {
+
+	font-size: 		10pt;
+	font-weight: 	bold;
+	color: 			#344f7C;
+}
+
+.homeDistinct td span a {
+
+	color: 				#344f7C;
+	text-decoration: 	none
+}
+
+.homeDistinct td span a:hover {
+
+	color: 				#E82314;
+	text-decoration: 	underline
+}
+
+.homeDistinct td {
+
+	background: 	#FFFFFF;
+	padding: 		0px;
+	border-top: 	1px solid #FFFFFF;
+	border-right: 	1px solid #FFFFFF;
+	border-bottom: 	1px solid #FFFFFF;
+}
+
+.homeDistinct .separator {
+
+	background: 	#FFFFFF;
+	border: 		0px solid;
+	height: 		3px;
+	width: 			3px;
+	padding: 		0px;
+	empty-cells: 	show;
+}
+
+.homeDistinct th {
+
+	background: 	#FFFFFF;
+	padding: 		5px;
+	border-top: 	1px solid #FFFFFF;
+	border-left: 	1px solid #FFFFFF;
+	border-right: 	1px solid #FFFFFF;
+	border-bottom: 	1px solid #FFFFFF;
+}
+
+
+
+
+
+
+#homeWall {
+
+	float: 			right;
+	width: 			430px;
+	margin: 		-10px 10px 0px 0px;
+}
+
+#homeWall #postList {
+
+	float: 			right;
+	width: 			430px;
+	margin: 		-10px 0px 0px 10px;
+}
+
+#homeWall #postList .post {
+
+	clear: 					both;
+	margin-top: 			2px;
+	border-top: 			1px solid #EAEAEA;
+	background: 			#F9F9F9 url('/images/homeWall/event.png') no-repeat;
+	background-position: 	4px 10px;
+	padding: 				3px 3px 3px 23px;
+	width: 					400px;
+	overflow: 				hidden;
+	color: 					#333333;
+}
+
+#homeWall #postList .post .who {
+
+	font-weight: 	bold;
+}
+
+#homeWall #postList .post .when {
+
+	color: 		#999999
+}
+
+#homeWall h1 {
+
+	margin: 			20px 10px;
+	font-size: 			12pt;
+	font-weight: 		bold;
+	padding-bottom: 	3px;
+	border-bottom: 		1px solid #344f7C;
+	color: 				#344f7C;
+}
+
+.newsList .news {
+	
+	padding: 		2px 0px 2px 0px;
+	border-bottom: 	1px solid #C0C0C0;
+}
+
+.newsList a {
+	
+	outline: 	0px;
+	outline: 	none !ie;
+}
+
+.newsList .news.last {
+	
+	border-bottom: 	none;
+}
+
+.newsList .news .description {
+	
+	border-top: 	1px solid #C0C0C0;
+	display: 		none
+}
+
+.newsList .news span.date {
+	
+	font-weight: 	bold;
+	color: 			#808080;
+	font-size: 		10px;
+}
+
+.mobile {
+
+	background: 	#F5F5F5;
+	border: 		0px;
+	margin: 		10px;
+}
+
+.mobile th {
+
+	background: 	#F5F5F5;
+	border: 		0px;
+	text-align: 	right;
+	font-weight: 	normal
+}
+
+.mobile h1 {
+
+	font-size: 11pt;
+	font-weight: bold;
+	color: #b61515;
+	margin-bottom: 12px;
+}
+
+.mobile td {
+
+	background: 	#F5F5F5;
+	border: 		0px;
+	text-align: 	center;
+	padding-right: 	3px
+}
+
+.distinct {
+	
+	clear: 				both;
+	width: 				280px;
+	height: 			60px;
+	margin-left: 		10px;
+	border-bottom: 		1px solid #F0F0F0;
+	padding-top: 		10px;
+	padding-bottom: 	10px
+}
+
+.distinct .image {
+	
+	width: 			58px;
+	float: 			left;
+	text-align: 	center;
+}
+
+.distinct .description {
+	
+	float: 			left;
+	width: 			222px;
+	text-align: 	left;
+}
+
+.distinct .description span {
+	
+	font-size: 		10pt;
+	font-weight: 	bold;
+	color: 			#344f7C;
+	text-align: 	left;
+}
+
+#photoWall {
+
+	width:			500px;
+	background: 	#FFFFFF;
+}
+
+#photoWall h1 {
+
+	font-size: 		10pt;
+	color: 			#176C37;
+	border-bottom: 	2px solid #176C37;
+	margin: 		0px 7px 0px 7px;
+}
+
+#photoWall .image {
+
+	float: 	left;
+	margin: 	10px 0px -5px 10px;
+}
+
+#photoWall .image img {
+
+	margin: 		0px;
+	border: 		1px solid #999999;
+	padding: 		5px;
+	background: 	#E0E0E0;
+}

@@ -1,20 +1,13 @@
+<div class="commonBar"><span><?php echo __('event.titleShow') ?></span></div>
 <?php
-
-	$pathList = array('Eventos'=>'event/index');
-	
-	$eventName   = $eventObj->getName();
-	$rankingName = $eventObj->getRanking()->getName();
-	$rankingId   = $eventObj->getRankingId();
-	
-	$pathList[$rankingName] = '#goToPage("ranking", "edit", "rankingId", '.$rankingId.', true)';
-	$pathList[$eventName]   = '';
-		
-	include_partial('home/component/commonBar', array('pathList'=>$pathList));
 
 	$pastDate          = $eventObj->isPastDate();
 	$inviteStatus      = $eventObj->getInviteStatus($peopleId);
 	$visibleButtons    = $eventObj->getEnabled();
 	
+	if( !$pastDate )	
+		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
+		
 	$eventId = $eventObj->getId();
 	echo input_hidden_tag('eventId', $eventId);
 	
@@ -31,3 +24,6 @@
 	$dhtmlxTabBarObj->build();
 ?>
 </form>
+<?php
+	DhtmlxWindows::createWindow('eventPhotoView', '', 380, 125, 'event/dialog/photoView', array());
+?>

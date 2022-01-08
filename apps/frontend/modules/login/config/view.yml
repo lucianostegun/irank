@@ -1,9 +1,4 @@
 all:
-  
-  stylesheets:    [form, table, login]
-  javascripts:    [passwordRecovery, login]
-  
-passwordRecoverySuccess:
-  
-  stylesheets:    [form, table, passwordRecovery]
-  javascripts:    [passwordRecovery]
+
+  stylesheets:    [frontend/table, frontend/form]
+  javascripts:    [frontend/passwordRecovery]

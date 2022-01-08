@@ -1,0 +1,198 @@
+.resumeTable {
+	
+	margin: 	5px 5px 5px 5px;	
+}
+
+.resumeEventTable {
+	
+	width: 			782px;
+	border: 		1px solid #AAAAAA;
+}
+
+.resumeEventTable tr {
+	
+	background: 	#E0E0E0 url('/images/layout/commonBar.png');
+}
+
+.resumeEventTable th {
+	
+	font-weight: 	bold;
+	border-bottom: 	1px solid #A9ACB4;
+	padding-left: 	18px;
+	height: 		21px;
+	background: 	url('/images/layout/bullet.png') 6px 7px no-repeat;
+	text-align: 	left;
+}
+
+.resumeEventTable th.icon {
+	
+	font-weight: 		bold;
+	border-bottom: 		1px solid #A9ACB4;
+	padding: 			0px;
+	width: 				30px;
+	padding-top: 		1px;
+	text-align: 		center;
+	background: 		#E0E0E0 url('/images/layout/commonBar.png');
+}
+
+.resumeEventTable td {
+	
+	background: 	#F5F5F5;
+	overflow: 		hidden;
+	white-space: 	nowrap;
+	padding-left: 	5px;
+}
+
+
+
+
+.resumeBankRollTable {
+	
+	width: 			120px;
+	border: 		1px solid #AAAAAA;
+}
+
+.resumeBankRollTable tr {
+	
+	background: 	#E0E0E0 url('/images/layout/commonBar.png');
+}
+
+.resumeBankRollTable th.title {
+	
+	font-weight: 	bold;
+	border-bottom: 	1px solid #a9acb4;
+	padding-left: 	18px;
+	background: 	url('/images/layout/bullet.png') 6px 7px no-repeat;
+	text-align: 	left;
+	height: 		21px;
+}
+
+.resumeBankRollTable th {
+	
+	font-weight: 	bold;
+	background: 	#F5F5F5;
+	overflow: 		hidden;
+	white-space: 	nowrap;
+	padding: 		1px 5px 1px 5px;
+	text-align: 	right;
+}
+
+.resumeBankRollTable td {
+	
+	background: 	#F5F5F5;
+	overflow: 		hidden;
+	white-space: 	nowrap;
+	text-align: 	right;
+}
+
+
+
+
+.resumeNumbersTable {
+	
+	width: 			120px;
+	border: 		1px solid #AAAAAA;
+}
+
+.resumeNumbersTable tr {
+	
+	background: 	#E0E0E0 url('/images/layout/commonBar.png');
+}
+
+.resumeNumbersTable th.title {
+	
+	font-weight: 	bold;
+	border-bottom: 	1px solid #a9acb4;
+	padding-left: 	18px;
+	background: 	url('/images/layout/bullet.png') 6px 7px no-repeat;
+	text-align: 	left;
+	height: 		21px;
+}
+
+.resumeNumbersTable th {
+	
+	font-weight: 	bold;
+	background: 	#F5F5F5;
+	overflow: 		hidden;
+	white-space: 	nowrap;
+	text-align: 	right;
+}
+
+.resumeNumbersTable td {
+	
+	background: 	#F5F5F5;
+	overflow: 		hidden;
+	white-space: 	nowrap;
+	padding: 		1px 5px 1px 5px;
+	text-align: 	right;
+}
+
+
+
+
+.resumeRankingTable {
+	
+	width: 			530px;
+	border: 		1px solid #AAAAAA;
+}
+
+.resumeRankingTable tr {
+	
+	background: 	#E0E0E0 url('/images/layout/commonBar.png');
+}
+
+.resumeRankingTable th.title {
+	
+	font-weight: 	bold;
+	border-bottom: 	1px solid #a9acb4;
+	padding-left: 	18px;
+	background: 	url('/images/layout/bullet.png') 6px 7px no-repeat;
+	text-align: 	left;
+	height: 		21px;
+}
+
+.resumeRankingTable th.icon {
+	
+	padding: 		0px;
+	text-align: 	center;
+	width: 			30px;
+}
+
+.resumeRankingTable th {
+	
+	font-weight: 	bold;
+	background: 	#F5F5F5;
+	overflow: 		hidden;
+	white-space: 	nowrap;
+	text-align: 	right;
+	padding-right: 	10px;
+}
+
+.resumeRankingTable td {
+	
+	background: 	#F5F5F5;
+	overflow: 		hidden;
+	white-space: 	nowrap;
+	padding: 		1px 5px 1px 5px;
+	text-align: 	right;
+}
+
+.resumeRankingTable th.totalLine {
+	
+	font-weight: 	bold;
+	background: 	#F5F5F5;
+	overflow: 		hidden;
+	white-space: 	nowrap;
+	text-align: 	right;
+	border-top: 	1px solid #BBBBBB;
+}
+
+.resumeRankingTable td.totalLine {
+	
+	background: 	#F5F5F5;
+	overflow: 		hidden;
+	white-space: 	nowrap;
+	padding: 		2px 5px 1px 5px;
+	text-align: 	right;
+	border-top: 	1px solid #BBBBBB;
+}

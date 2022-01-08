@@ -105,10 +105,10 @@ header('Pragma: no-cache');
 // Finish the graph
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawLegend($width-135,35,$DataSet->GetDataDescription(),255,255,255);
-$Test->setFontProperties($libDir.'/pChart/Fonts/tahomabd.ttf',11);
+$Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',11);
 $Test->drawTitle(100,30,__('statistic.chart.title.myBalance').' - '.$rankingObj->getRankingName(),50,50,50);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
-$Test->drawCredits();
+$Test->drawCredits($width, $height);
 $Test->Stroke();
    	
 exit;

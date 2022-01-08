@@ -126,22 +126,14 @@ class File extends BaseFile
 		$fileId               = (array_key_exists('fileId', $options)?$options['fileId']:null);
 		$allowedExtensionList = (array_key_exists('allowedExtensionList', $options)?$options['allowedExtensionList']:array());
 		$maxFileSize          = (array_key_exists('maxFileSize', $options)?$options['maxFileSize']:null);
-		$minWidth             = (array_key_exists('minWidth', $options)?$options['minWidth']:null);
-		$maxWidth             = (array_key_exists('maxWidth', $options)?$options['maxWidth']:null);
-		$minHeight            = (array_key_exists('minHeight', $options)?$options['minHeight']:null);
-		$maxHeight            = (array_key_exists('maxHeight', $options)?$options['maxHeight']:null);
 		$destFileName         = (array_key_exists('fileName', $options)?$options['fileName']:null);
 		$noFile               = (array_key_exists('noFile', $options)?$options['noFile']:false);
-		$noLog                = (array_key_exists('noLog', $options)?$options['noLog']:false);
 		
 		$fileName  = $request->getFileName($fieldName);
 		$fileSize  = $request->getFileSize($fieldName);
 		$fileType  = $request->getFileType($fieldName);
 		$extension = explode('.', $fileName);
 		$extension = strtolower(end($extension));
-		
-		if( preg_match('/^[0-9]*[Mm][bB]?$/', $maxFileSize) )
-			$maxFileSize = Util::formatFloat($maxFileSize)*1024*1024;
 
 		if( $fileSize > $maxFileSize )
 			throw new Exception('Tamanho máximo de arquivo excedido');
@@ -157,16 +149,11 @@ class File extends BaseFile
 		$fileName = ($destFileName?$destFileName:$fileName);
 
 		$extensionImageList = array('jpg', 'png', 'jpeg', 'bmp', 'gif');
-		
-		$isImage = in_array($extension, $extensionImageList);
-			
-		if( !preg_match('/^\//', $destinationPath) )
-			$destinationPath = 'uploads/'.$destinationPath;
 
-		$destinationPath = Util::getFilePath($destinationPath); 
+		$destinationPath = Util::getFilePath('uploads/'.$destinationPath); 
 
 		if( !is_dir($destinationPath) )
-			mkdir($destinationPath, 0755, true);
+			mkdir($destinationPath, 0755);
 		
 		if( $isNew )
 			$filePath = $destinationPath.DIRECTORY_SEPARATOR.$fileName;
@@ -174,41 +161,24 @@ class File extends BaseFile
 			$filePath = $fileObj->getFilePath(true);
 
 		$request->moveFile($fieldName, $filePath);
-		
-		if( $isImage ){
-			
-			$dimension = getimagesize($filePath);
 
-			if( ($minWidth && $dimension[0] < $minWidth) ||
-				($maxWidth && $dimension[0] > $maxWidth) ||
-				($minHeight && $dimension[0] < $minHeight) ||
-				($maxHeight && $dimension[0] > $maxHeight) ){
-					
-					unlink($filePath);
-					throw new Exception('Dimensões inválidas. Dimensão requerida:\n\nMin: '.$minWidth.'x'.$minHeight.'\nMax: '.$maxWidth.'x'.$maxHeight);
-				}
-		}
-
-			
-		$fileObj->setFilePath($filePath);
-		$fileObj->setFileSize($fileSize);
-
-		if( in_array($extension, $extensionImageList) )
-			$fileObj->setIsImage(true);
-		
 		if( !$noFile ){
+			
+			$fileObj->setFilePath($filePath);
+			$fileObj->setFileSize($fileSize);
+	
+			if( in_array($extension, $extensionImageList) )
+				$fileObj->setIsImage(true);		
 			
 			$fileObj->save();
 			
-			if( !$noLog )
-				Log::doLog('Upload do arquivo '.$fileObj->getId(), 'File');
+			Log::doLog('Upload do arquivo '.$fileObj->getId(), 'File');
+			
+			return $fileObj;
 		}else{
 			
-			if( !$noLog )
-				Log::doLog('Upload do arquivo '.$fileName, 'File', array('FILE_PATH'=>$filePath));
+			Log::doLog('Upload do arquivo '.$fileName, 'File', array('FILE_PATH'=>$filePath));
 		}
-		
-		return $fileObj;
 	}
 	
 	public function getDimensions(){
@@ -397,20 +367,12 @@ class File extends BaseFile
 		$left = 0;
 	
 		$new = imagecreatetruecolor($minWidth, $minHeight);
-		
-		if( $extension=='png' ){
-			
-			imagealphablending($new, false);
-			imagesavealpha($new,true);
-		}
-		
 		imagecopyresampled($new, $newImg, 0, 0, $left, $top, $minWidth, $newHeight, $srcW, $srcH);
 
-		if( $extension=='png' )
-			imagepng($new, $thumbFilePath);
-		else
-			imagejpeg($new, $thumbFilePath, 100);
+//		header('Content-Type: image/jpeg');
 
+		imagejpeg($new, $thumbFilePath, 100);
+//		imagejpeg($new, ''	, 100);
 		imagedestroy($new);
 		imagedestroy($newImg);
 	}
@@ -457,30 +419,6 @@ class File extends BaseFile
 		$srcW = imagesx($newImg);
 		$srcH = imagesy($newImg);
 	
-//	
-//		$exif = exif_read_data($filePath);
-////		echo '<pre>';print_r($exif);exit;
-//		$ort  = 0;
-//		$ort  = (isset($exif['Orientation'])?$exif['Orientation']:0);
-//		
-//	    switch($ort){
-//	        case 3: // 180 rotate left
-//	            $newImg = imagerotate($newImg, 180, 0);
-//	        break;
-//	                   
-//	        case 1: // 90 rotate right
-//	        
-//				$newImg = imagerotate($newImg, -90, 0);
-//				$tmpWidth = $srcW; 
-//				$srcW = $srcH;
-//				$srcH = $srcW;
-//	        break;
-//	               
-//	        case 8:    // 90 rotate left
-//	            $newImg = imagerotate($newImg, 90, 0);
-//	        break;
-//	    }
-//	
 	
 		$new = imagecreatetruecolor($newWidth, $newHeight);
 		imagecopyresampled($new, $newImg, 0, 0, 0, 0, $newWidth, $newHeight, $srcW, $srcH);
@@ -500,10 +438,7 @@ class File extends BaseFile
 		$extension      = $this->getExtension();
 		$fileDimensions = $this->getDimensions();
 
-		if( $extension=='jpg' || $extension=='jpeg' )
-			$newImg = imagecreatefromjpeg( $filePath );
-		elseif( $extension=='png' )
-			$newImg = imagecreatefrompng( $filePath );
+		$newImg = imagecreatefromjpeg( $filePath );
 			
 		$width  = $fileDimensions['width'];
 		$height = $fileDimensions['height'];
@@ -527,18 +462,13 @@ class File extends BaseFile
 		$srcW = imagesx($newImg);
 		$srcH = imagesy($newImg);
 	
+	
 		$new = imagecreatetruecolor($newWidth, $newHeight);
 		imagecopyresampled($new, $newImg, 0, 0, 0, 0, $newWidth, $newHeight, $srcW, $srcH);
 
-		if( $extension=='jpg' || $extension=='jpeg' ){
-			
-			header('Content-Type: image/jpeg');
-			imagejpeg($new, '', 100);
-		}elseif( $extension=='png' ){
-			
-			header('Content-Type: image/png');
-			imagepng($new);
-		}
+		header('Content-Type: image/jpeg');
+
+		imagejpeg($new, ''	, 100);
 		imagedestroy($new);
 		imagedestroy($newImg);
 	}

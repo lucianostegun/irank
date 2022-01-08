@@ -44,27 +44,27 @@ class RankingHistoryMapBuilder {
 
 		$tMap->addColumn('EVENTS', 'Events', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('AVERAGE', 'Average', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('AVERAGE', 'Average', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('PAID_VALUE', 'PaidValue', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('PAID_VALUE', 'PaidValue', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('PRIZE_VALUE', 'PrizeValue', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('PRIZE_VALUE', 'PrizeValue', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('BALANCE_VALUE', 'BalanceValue', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('BALANCE_VALUE', 'BalanceValue', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('TOTAL_EVENTS', 'TotalEvents', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('TOTAL_SCORE', 'TotalScore', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('TOTAL_SCORE', 'TotalScore', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('TOTAL_PAID', 'TotalPaid', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('TOTAL_PAID', 'TotalPaid', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('TOTAL_PRIZE', 'TotalPrize', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('TOTAL_PRIZE', 'TotalPrize', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('TOTAL_BALANCE', 'TotalBalance', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('TOTAL_BALANCE', 'TotalBalance', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('TOTAL_AVERAGE', 'TotalAverage', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('TOTAL_AVERAGE', 'TotalAverage', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

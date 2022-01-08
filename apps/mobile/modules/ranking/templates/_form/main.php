@@ -32,7 +32,7 @@
 						<td><?php echo $rankingObj->getRankingType()->getDescription() ?></td>
 					</tr>
 					<tr>
-						<th><?php echo __('ranking.buyin') ?></th>
+						<th><?php echo __('ranking.defaultBuyIn') ?></th>
 						<td><?php echo Util::formatFloat($rankingObj->getBuyin(), true) ?></td>
 					</tr>
 					<tr>

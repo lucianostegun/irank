@@ -1,72 +1,102 @@
 <?php
 
-/**
- * home actions.
- *
- * @package    iRank
- * @subpackage backend
- * @author     Luciano Stegun
- */
 class homeActions extends sfActions
 {
 
-  public function preExecute(){
-
-  	$this->pathList = array('Resumo geral'=>'home/index');
-  }
-  
   public function executeIndex($request){
-  	
-  }
-  
-  public function executeOriginal($request){
-  	
+
   }
 
-  public function executeError404($request){
+  public function executeGetNewId($request)
+  {
+
+	$className          = $request->getParameter('className');
+	$requiredField      = $request->getParameter('requiredField');
+	$requiredFieldValue = $request->getParameter('requiredFieldValue');
+	$getObject          = $request->getParameter('getObject');
+	
+	$requiredFieldList = array();
+	
+	if( $requiredField && $requiredFieldValue )
+		$requiredFieldList[$requiredField] = $requiredFieldValue;
+	
+	$newObj = Util::getNewObject( $className, $requiredFieldList );
+	
+	if( $getObject )
+		echo Util::parseInfo($newObj->getInfo());
+	else
+		echo $newObj->getId();
+	
+	exit;
+  }
+  
+  public function executeAccessDenied($request)
+  {
+  }
+  
+  public function executeGetTab($request){
   	
+  	$tabAddress = $request->getParameter('tabAddress');
+  	$options    = $request->getParameter('options');
+  	$options    = unserialize($options);
+
+	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	
+	return $this->renderText(get_partial($tabAddress, $options));
+  }
+  
+  public function executeGetWindow($request){
+  	
+  	$windowAddress = $request->getParameter('windowAddress');
+  	$options       = $request->getParameter('options');
+  	$options       = unserialize($options);
+
+	sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+	
+	return $this->renderText(get_partial($windowAddress, $options));
   }
   
   public function executeJavascript($request){
-	
-	Util::getHelper('i18n');
-	
+  	
     header('Content-type: text/x-javascript');
-		
-	$nl = chr(10);
 	
-	$isAuthenticated = $this->getUser()->isAuthenticated();
-	
-	$scriptName = $request->getScriptName();
-	$hostname   = $request->getHost();
-	$isDebug    = $request->getParameter('debug');
-	
-	if( $isDebug )
-		$scriptName = '/backend_dev.php';
-	else
-		$scriptName = '/backend.php';
-		
-	$scriptNameFrontend = ($isDebug?'/frontend_dev.php':'/index.php');
-
-	$isDebug    = ($isDebug?'true':'false');
-	
-	$peopleId   = $this->getUser()->getAttribute('peopleId');
-	
-	echo 'var _CurrentPeopleId = "'.$peopleId.'";'.$nl.$nl;
-	
-	echo "var _webRoot         = '$scriptName';".$nl;
-	echo "var _webRootFrontend = '$scriptName';".$nl;
-	echo "var _imageRoot       = 'http://$hostname/images';".$nl;
-	echo "var _isDebug         = $isDebug;".$nl;
-	echo "var _isMobile        = false;".$nl;
-	echo "var i18n_culture     = 'pt_BR';".$nl.$nl;
-	
-	if( $isAuthenticated ){
-		
-		$emailDebug = Settings::getValue('emailDebug');
-		echo "var _emailDebug  = '$emailDebug';".$nl.$nl;
-	}
+  	$nl = chr(10);
 	
 	exit;
+  }
+  
+  public function executeStylesheet($request){
+  	
+    header('Content-type: text/stylesheet');
+	
+  	$nl = chr(10);
+	
+	exit;
+  }
+  
+  public function executeGetXml($request){
+    
+    $model = $request->getParameter('model');
+	
+	$data = array();
+	    	
+    switch( $model ){
+    	case 'module':	
+			echo DhtmlxMenu::getXml();
+			break;
+		case 'toolbar':
+			
+			$moduleId            = $request->getParameter('moduleId');
+			$actionName          = $request->getParameter('actionName');
+			$realActionName      = $request->getParameter('realActionName');
+			$toolbarDisabledList = $request->getParameter('toolbarDisabledList');
+			
+			echo DhtmlxToolbar::getXml( $moduleId, $actionName, $realActionName, $toolbarDisabledList );
+			break;
+		}
+        
+    exit;
   }
 }

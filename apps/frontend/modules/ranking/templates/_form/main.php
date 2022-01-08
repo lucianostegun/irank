@@ -62,25 +62,14 @@
 				<div class="error" id="rankingRankingTypeIdError" onclick="showFormErrorDetails('ranking', 'RankingTypeId')"></div>
 			</div>
 			<div class="row">
-				<div class="label" id="rankingStartTimeLabel"><?php echo __('ranking.startTime') ?></div>
-				<div class="field"><?php echo input_tag('startTime', $rankingObj->getStartTime('H:i'), array('size'=>5, 'maxlength'=>5, 'onkeyup'=>'maskTime(event)', 'id'=>'rankingStartTime')) ?></div>
-				<div class="error" id="rankingStartTimeError" onclick="showFormErrorDetails('ranking', 'startTime')"></div>
-			</div>
-			<div class="row" id="rankingEntranceFeeRow">
-				<div class="label" id="rankingEntranceFeeLabel"><?php echo __('ranking.entranceFee') ?></div>
-				<div class="field"><?php echo input_tag('entranceFee', Util::formatFloat($rankingObj->getEntranceFee(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'class'=>'textR', 'id'=>'rankingEntranceFee')) ?></div>
-				<div class="error" id="rankingEntranceFeeError" onclick="showFormErrorDetails('ranking', 'entranceFee')"></div>
-				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
-			</div>
-			<div class="row">
 				<div class="label" id="rankingBuyinLabel"><?php echo __('ranking.buyin') ?></div>
-				<div class="field"><?php echo input_tag('buyin', Util::formatFloat($rankingObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'class'=>'textR', 'id'=>'rankingBuyin')) ?></div>
+				<div class="field"><?php echo input_tag('buyin', Util::formatFloat($rankingObj->getBuyin(), true), array('size'=>6, 'maxlength'=>6, 'onkeyup'=>'maskCurrency(event)', 'style'=>'text-align: right', 'id'=>'rankingBuyin')) ?></div>
 				<div class="error" id="rankingBuyinError" onclick="showFormErrorDetails('ranking', 'buyin')"></div>
 				<div class="textFlex">Ex: <?php echo __('zero.zeroZero') ?></div>
 			</div>
 			<div class="row">
 				<div class="label" id="rankingScoreSchemaLabel"><?php echo __('ranking.scoreSchema') ?></div>
-				<div class="field"><?php echo select_tag('scoreSchema', Ranking::getOptionsForSelectScoreSchema($rankingObj->getScoreSchema(), false), array('onchange'=>'handleRankingScoreSchema(this.value)', 'id'=>'rankingScoreSchema')) ?></div>
+				<div class="field"><?php echo select_tag('scoreSchema', Ranking::getOptionsForSelectScoreSchema($rankingObj->getScoreSchema()), array('onchange'=>'handleRankingFloridaSchema(this.value)', 'id'=>'rankingScoreSchema')) ?></div>
 				<div class="error" id="rankingScoreSchemaError" onclick="showFormErrorDetails('ranking', 'ScoreSchema')"></div>
 			</div>
 			<div class="row" id="rankingScoreFormulaRowDiv" style="display: <?php echo ($rankingObj->getScoreSchema()=='custom'?'block':'none')?>">

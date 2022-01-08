@@ -18,14 +18,8 @@
     IBOutlet UIActivityIndicatorView *activityIndicator;
     IBOutlet UIButton *infoButton;
     IBOutlet UIView *infoView;
-    IBOutlet UIButton *btnRecoveryPassword;
-    IBOutlet UIButton *btnSign;
     SignViewController *signViewController;
     iRankAppDelegate *appDelegate;
-    
-    IBOutlet UITextView *about;
-    IBOutlet UILabel *developerCredit;
-    
 }
 
 @property (nonatomic, retain) IBOutlet UITextField *txtUsername;
@@ -37,7 +31,6 @@
 -(IBAction)hideInfoView:(id)sender;
 -(IBAction)showSignView:(id)sender;
 -(IBAction)switchLogin;
--(IBAction)recoverPassword:(id)sender;
 
 
 @end

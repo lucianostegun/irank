@@ -207,7 +207,7 @@
 			
 			<trans-unit>
 				<source>login.errorMessage</source>
-				<target>&lt;b&gt;ACESSO NEGADO!&lt;/b&gt;&lt;br/&gt;Usuário/Senha inválidos</target>
+				<target>&lt;b&gt;ACESSO NEGADO&lt;/b&gt;&lt;br/&gt;Usuário/Senha inválidos!</target>
 			</trans-unit>
 			<trans-unit>
 				<source>login.password</source>
@@ -384,7 +384,7 @@
 			
 			<trans-unit>
 				<source>topMenu.myiRank</source>
-				<target>MINHA CONTA</target>
+				<target>MEU iRANK</target>
 			</trans-unit>
 			<trans-unit>
 				<source>topMenu.inviteFriends</source>
@@ -405,8 +405,8 @@
 				<target>cadastro</target>
 			</trans-unit>
 			<trans-unit>
-				<source>footerMenu.myiAccount</source>
-				<target>minha conta</target>
+				<source>footerMenu.myiRank</source>
+				<target>meu iRank</target>
 			</trans-unit>
 			<trans-unit>
 				<source>footerMenu.inviteFriends</source>
@@ -445,7 +445,8 @@
 			<trans-unit>
 				<source>contact.intro</source>
 				<target>
-					Entrar em contato conosco preenchendo o&lt;br/&gt;formulário abaixo e nos enviando sua mensagem.
+					Você pode entrar em contato conosco preenchendo o&lt;br/&gt;formulário abaixo e nos enviando sua mensagem.&lt;br/&gt;&lt;br/&gt;
+					Você também pode esclarecer suas dúvidas através de nosso &lt;/b&gt;&lt;/u&gt;%link%&lt;/u&gt;&lt;/b&gt;
 				</target>
 			</trans-unit>
 			<trans-unit>
@@ -478,7 +479,8 @@
 			</trans-unit>
 			<trans-unit>
 				<source>contact.contactForm.successMessage</source>
-				<target>Sua mensagem foi enviada com sucesso!</target>
+				<target>Sua mensagem foi enviada com sucesso!&lt;br/&gt;
+				Assim que possível entraremos em contato para respondê-la.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>contact.contactForm.newMessageLink</source>
@@ -534,7 +536,8 @@
 			<trans-unit>
 				<source>sign.intro</source>
 				<target>
-				Para criar seus rankings, participar e visualizar todas as informações dos eventos&lt;br/&gt;
+				Para criar seus rankings, participar e visualizar&lt;br/&gt;
+				todas as informações dos eventos&lt;br/&gt;
 				é necessário se cadastrar no site.&lt;br/&gt;&lt;br/&gt;
 	
 				O cadastro é simples, rápido e gratuito.
@@ -650,7 +653,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.noRankings</source>
-				<target>Nenhum ranking encontrado para os parâmetros pesquisados</target>
+				<target>Você não está inscrito em nenhum ranking</target>
 			</trans-unit>
 			
 			<trans-unit>
@@ -828,8 +831,8 @@
 			<trans-unit>
 				<source>ranking.eventsTab.noEvents</source>
 				<target>
-				&lt;br/&gt;Este ranking ainda não possui eventos cadastrados.&lt;br/&gt;
-				&lt;b&gt;%link%&lt;/b&gt; para cadastrar um novo evento.&lt;br/&gt;&lt;br/&gt;
+				Este ranking ainda não possui eventos cadastrados.&lt;br/&gt;&lt;br/&gt;
+				&lt;b&gt;%link%&lt;/b&gt; para cadastrar um novo evento.
 				</target>
 			</trans-unit>
 			
@@ -889,7 +892,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.noEvents</source>
-				<target>Nenhum evento encontrado para os parâmetros pesquisados</target>
+				<target>Não existem eventos disponíveis para seus rankings</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.hint.eventComment</source>
@@ -932,14 +935,6 @@
 			<trans-unit>
 				<source>event.startTime</source>
 				<target>Hora</target>
-			</trans-unit>
-			<trans-unit>
-				<source>ranking.startTime</source>
-				<target>Hora de início padrão</target>
-			</trans-unit>
-			<trans-unit>
-				<source>ranking.entranceFee</source>
-				<target>Taxa padrão</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.paidPlaces</source>
@@ -1043,7 +1038,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.commentTab.commentDeleteError</source>
-				<target>Não foi possível excluir o comentário!\nPor favor, tente novamente.</target>
+				<target>Não foi possível excluir o comentário!\nTente novamente mais tarde.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>button.publish</source>
@@ -1083,7 +1078,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.commentsTab.photoDeleteError</source>
-				<target>Erro ao excluir a foto!\nPor favor, tente novamente.</target>
+				<target>Erro ao excluir a foto!\nTente novamente mais tarde.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.commentsTab.photoDeleteConfirm</source>
@@ -1117,7 +1112,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>myAccount.errorMessage</source>
-				<target>Erro ao salvar as informações!</target>
+				<target>Erro ao salvar as informações! Verifique os campos em destaque.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playerListLoadError</source>
@@ -1129,15 +1124,15 @@
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.playersTab.playerDeleteError</source>
-				<target>Não foi possível excluir o jogador do grupo!\nPor favor, tente novamente.</target>
+				<target>Não foi possível excluir o jogador do grupo!\nTente novamente mais tarde.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.classifyTab.logLoadError</source>
-				<target>Não foi possível carregar o histórico de classificação!\nPor favor, tente novamente.</target>
+				<target>Não foi possível carregar o histórico de classificação!\nTente novamente mais tarde.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.classifyTab.shareError</source>
-				<target>Não foi possível habilitar o jogador do grupo para edição do ranking!\nPor favor, tente novamente.</target>
+				<target>Não foi possível habilitar o jogador do grupo para edição do ranking!\nTente novamente mais tarde.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.deleteConfirm</source>
@@ -1149,7 +1144,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>tryAgain</source>
-				<target>Por favor, tente novamente.</target>
+				<target>Tente novamente mais tarde.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>ranking.exception.editionDenied</source>
@@ -1181,7 +1176,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.rankingDelete</source>
-				<target>Exclusão do ranking %rankingName%</target>
+				<target>Exclusão do ranking @ %rankingName%</target>
 			</trans-unit>
 			<trans-unit>
 				<source>disable</source>
@@ -1244,7 +1239,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.saveResultConfirm</source>
-				<target>ATENÇÃO!\n\nOs resultados salvos serão enviados por e-mail a todos os convidados\ne estarão disponíveis para edição até que outro evento posterior seja criado.\n\nDeseja prosseguir?</target>
+				<target>ATENÇÃO!\n\nOs resultados salvos serão enviados por e-mail a todos os convidados e estarão disponíveis para edição até que outro evento posterior seja criado.\n\nDeseja prosseguir?</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.errorSavingMyPresence</source>
@@ -1260,7 +1255,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.playersTab.togglePresenceError</source>
-				<target>Ocorreu um erro ao confirmar a presença!\nPor favor, tente novamente.</target>
+				<target>Ocorreu um erro ao confirmar a presença!\nTente novamente mais tarde.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.playersTab.presenceNotifyConfirm</source>
@@ -1272,7 +1267,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>event.cloneConfirm</source>
-				<target>Ao clonar um evento você será direcionado para a edição do evento clonado\ne deverá editar as informações antes de salvar.\n\nDeseja realmente clonar este evento?</target>
+				<target>Ao clonar um evento você será direcionado para a edição do evento clonado e deverá editar as informações antes de salvar.\n\nDeseja realmente clonar este evento?</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.deleteConfirm</source>
@@ -1316,7 +1311,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.eventResult</source>
-				<target>Resultado do evento %eventName%</target>
+				<target>Resultado de evento @ %eventName%</target>
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.eventChangeNotify</source>
@@ -1328,7 +1323,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.eventDeleteNotify</source>
-				<target>Exclusão do evento %eventName%</target>
+				<target>Exclusão do evento @ %eventName%</target>
 			</trans-unit>
 			<trans-unit>
 				<source>event.congratMessage</source>
@@ -1348,7 +1343,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>email.subject.eventReminder</source>
-				<target>Lembrete de evento %eventName%</target>
+				<target>Lembrete de evento @ %eventName%</target>
 			</trans-unit>
 			
 			
@@ -1527,7 +1522,8 @@
 				<target>
 					Sua senha foi redefinida com sucesso!&lt;br/&gt;
 					Uma mensagem foi enviada ao e-mail informado contendo a nova senha.&lt;br/&gt;&lt;br/&gt;
-					Recomendamos que acesse seu e-mail, faça seu login e altere sua senha clicando em &lt;b&gt;MINHA CONTA&lt;/b&gt; no menu principal.
+					Recomendamos que acesse seu e-mail, faça seu login e altere sua senha&lt;br/&gt;
+					clicando em &lt;b&gt;MY iRANK&lt;/b&gt; no menu principal.
 				</target>
 			</trans-unit>
 			<trans-unit>
@@ -1849,8 +1845,8 @@
 			<trans-unit>
 				<source>feedback.intro</source>
 				<target>
-					Após 18 meses de desenvolvimento o &lt;b&gt;iRank&lt;/b&gt; não está mais em versão &lt;b&gt;&lt;u&gt;%link%&lt;/u&gt;&lt;/b&gt;.&lt;br/&gt;
-					Mas sua avaliação é muito importante para que possamos &lt;br/&gt;corrigir falhas e adicionar melhorias
+					Reparou que &lt;b&gt;iRank&lt;/b&gt; site está em versão &lt;b&gt;&lt;u&gt;%link%&lt;/u&gt;&lt;/b&gt;?&lt;br/&gt;
+					Isso significa que sua avaliação é muito importante para que possamos &lt;br/&gt;corrigir falhas e adicionar melhorias
 					em todas as áreas do site.&lt;br/&gt;&lt;br/&gt;
 					Pedimos que sempre que possível você entre em contato para nos enviar&lt;br/&gt;sugestões ou nos informar sobre um possível erro, falha ou bug
 					que tenha encontrado no site.
@@ -1885,7 +1881,7 @@
 				<target>
 					Seu feedback foi enviado com sucesso!&lt;br/&gt;&lt;br/&gt;
 					Ele será muito importante para que possamos corrigir falhas e melhorar&lt;br/&gt;
-					cada vez mais nossos serviços.
+					os serviços oferecidos.
 				</target>
 			</trans-unit>
 			<trans-unit>
@@ -1924,7 +1920,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>search.memberSince</source>
-				<target>Jogador desde</target>
+				<target>Membro desde</target>
 			</trans-unit>
 			<trans-unit>
 				<source>search.footer</source>
@@ -2216,14 +2212,6 @@
 			<trans-unit>
 				<source>ranking.scoreRecalculateConfirm</source>
 				<target>O modelo de pontuação foi modificado!\nDeseja recalcular o resultado de todos os eventos anteriores para o novo modelo de pontuação?</target>
-			</trans-unit>
-			<trans-unit>
-				<source>ranking.searchError</source>
-				<target>Ocorreu um erro ao pesquisar os rankings.</target>
-			</trans-unit>
-			<trans-unit>
-				<source>event.deleteError</source>
-				<target>Não foi possível excluir o evento.</target>
 			</trans-unit>
 			
 		</body>

@@ -44,6 +44,12 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
+	protected $collAuxiliarTextList;
+
+	
+	protected $lastAuxiliarTextCriteria = null;
+
+	
 	protected $collEventPhotoList;
 
 	
@@ -54,30 +60,6 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 	
 	protected $lastPartnerCriteria = null;
-
-	
-	protected $collEventLivePhotoList;
-
-	
-	protected $lastEventLivePhotoCriteria = null;
-
-	
-	protected $collClubPhotoList;
-
-	
-	protected $lastClubPhotoCriteria = null;
-
-	
-	protected $collEmailTemplateList;
-
-	
-	protected $lastEmailTemplateCriteria = null;
-
-	
-	protected $collEmailMarketingList;
-
-	
-	protected $lastEmailMarketingCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -407,6 +389,14 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collAuxiliarTextList !== null) {
+				foreach($this->collAuxiliarTextList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collEventPhotoList !== null) {
 				foreach($this->collEventPhotoList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -417,38 +407,6 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 			if ($this->collPartnerList !== null) {
 				foreach($this->collPartnerList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collEventLivePhotoList !== null) {
-				foreach($this->collEventLivePhotoList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collClubPhotoList !== null) {
-				foreach($this->collClubPhotoList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collEmailTemplateList !== null) {
-				foreach($this->collEmailTemplateList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collEmailMarketingList !== null) {
-				foreach($this->collEmailMarketingList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -496,6 +454,14 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 			}
 
 
+				if ($this->collAuxiliarTextList !== null) {
+					foreach($this->collAuxiliarTextList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 				if ($this->collEventPhotoList !== null) {
 					foreach($this->collEventPhotoList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
@@ -506,38 +472,6 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 
 				if ($this->collPartnerList !== null) {
 					foreach($this->collPartnerList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collEventLivePhotoList !== null) {
-					foreach($this->collEventLivePhotoList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collClubPhotoList !== null) {
-					foreach($this->collClubPhotoList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collEmailTemplateList !== null) {
-					foreach($this->collEmailTemplateList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collEmailMarketingList !== null) {
-					foreach($this->collEmailMarketingList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -732,28 +666,16 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
+			foreach($this->getAuxiliarTextList() as $relObj) {
+				$copyObj->addAuxiliarText($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getEventPhotoList() as $relObj) {
 				$copyObj->addEventPhoto($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getPartnerList() as $relObj) {
 				$copyObj->addPartner($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getEventLivePhotoList() as $relObj) {
-				$copyObj->addEventLivePhoto($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getClubPhotoList() as $relObj) {
-				$copyObj->addClubPhoto($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getEmailTemplateList() as $relObj) {
-				$copyObj->addEmailTemplate($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getEmailMarketingList() as $relObj) {
-				$copyObj->addEmailMarketing($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -779,6 +701,76 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 			self::$peer = new FilePeer();
 		}
 		return self::$peer;
+	}
+
+	
+	public function initAuxiliarTextList()
+	{
+		if ($this->collAuxiliarTextList === null) {
+			$this->collAuxiliarTextList = array();
+		}
+	}
+
+	
+	public function getAuxiliarTextList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseAuxiliarTextPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAuxiliarTextList === null) {
+			if ($this->isNew()) {
+			   $this->collAuxiliarTextList = array();
+			} else {
+
+				$criteria->add(AuxiliarTextPeer::FILE_ID, $this->getId());
+
+				AuxiliarTextPeer::addSelectColumns($criteria);
+				$this->collAuxiliarTextList = AuxiliarTextPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(AuxiliarTextPeer::FILE_ID, $this->getId());
+
+				AuxiliarTextPeer::addSelectColumns($criteria);
+				if (!isset($this->lastAuxiliarTextCriteria) || !$this->lastAuxiliarTextCriteria->equals($criteria)) {
+					$this->collAuxiliarTextList = AuxiliarTextPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastAuxiliarTextCriteria = $criteria;
+		return $this->collAuxiliarTextList;
+	}
+
+	
+	public function countAuxiliarTextList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseAuxiliarTextPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(AuxiliarTextPeer::FILE_ID, $this->getId());
+
+		return AuxiliarTextPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addAuxiliarText(AuxiliarText $l)
+	{
+		$this->collAuxiliarTextList[] = $l;
+		$l->setFile($this);
 	}
 
 	
@@ -989,496 +981,6 @@ abstract class BaseFile extends BaseObject  implements Persistent {
 	{
 		$this->collPartnerList[] = $l;
 		$l->setFile($this);
-	}
-
-	
-	public function initEventLivePhotoList()
-	{
-		if ($this->collEventLivePhotoList === null) {
-			$this->collEventLivePhotoList = array();
-		}
-	}
-
-	
-	public function getEventLivePhotoList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventLivePhotoPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventLivePhotoList === null) {
-			if ($this->isNew()) {
-			   $this->collEventLivePhotoList = array();
-			} else {
-
-				$criteria->add(EventLivePhotoPeer::FILE_ID, $this->getId());
-
-				EventLivePhotoPeer::addSelectColumns($criteria);
-				$this->collEventLivePhotoList = EventLivePhotoPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(EventLivePhotoPeer::FILE_ID, $this->getId());
-
-				EventLivePhotoPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventLivePhotoCriteria) || !$this->lastEventLivePhotoCriteria->equals($criteria)) {
-					$this->collEventLivePhotoList = EventLivePhotoPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastEventLivePhotoCriteria = $criteria;
-		return $this->collEventLivePhotoList;
-	}
-
-	
-	public function countEventLivePhotoList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventLivePhotoPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(EventLivePhotoPeer::FILE_ID, $this->getId());
-
-		return EventLivePhotoPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addEventLivePhoto(EventLivePhoto $l)
-	{
-		$this->collEventLivePhotoList[] = $l;
-		$l->setFile($this);
-	}
-
-
-	
-	public function getEventLivePhotoListJoinEventLive($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventLivePhotoPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventLivePhotoList === null) {
-			if ($this->isNew()) {
-				$this->collEventLivePhotoList = array();
-			} else {
-
-				$criteria->add(EventLivePhotoPeer::FILE_ID, $this->getId());
-
-				$this->collEventLivePhotoList = EventLivePhotoPeer::doSelectJoinEventLive($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(EventLivePhotoPeer::FILE_ID, $this->getId());
-
-			if (!isset($this->lastEventLivePhotoCriteria) || !$this->lastEventLivePhotoCriteria->equals($criteria)) {
-				$this->collEventLivePhotoList = EventLivePhotoPeer::doSelectJoinEventLive($criteria, $con);
-			}
-		}
-		$this->lastEventLivePhotoCriteria = $criteria;
-
-		return $this->collEventLivePhotoList;
-	}
-
-	
-	public function initClubPhotoList()
-	{
-		if ($this->collClubPhotoList === null) {
-			$this->collClubPhotoList = array();
-		}
-	}
-
-	
-	public function getClubPhotoList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseClubPhotoPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collClubPhotoList === null) {
-			if ($this->isNew()) {
-			   $this->collClubPhotoList = array();
-			} else {
-
-				$criteria->add(ClubPhotoPeer::FILE_ID, $this->getId());
-
-				ClubPhotoPeer::addSelectColumns($criteria);
-				$this->collClubPhotoList = ClubPhotoPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(ClubPhotoPeer::FILE_ID, $this->getId());
-
-				ClubPhotoPeer::addSelectColumns($criteria);
-				if (!isset($this->lastClubPhotoCriteria) || !$this->lastClubPhotoCriteria->equals($criteria)) {
-					$this->collClubPhotoList = ClubPhotoPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastClubPhotoCriteria = $criteria;
-		return $this->collClubPhotoList;
-	}
-
-	
-	public function countClubPhotoList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseClubPhotoPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(ClubPhotoPeer::FILE_ID, $this->getId());
-
-		return ClubPhotoPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addClubPhoto(ClubPhoto $l)
-	{
-		$this->collClubPhotoList[] = $l;
-		$l->setFile($this);
-	}
-
-
-	
-	public function getClubPhotoListJoinClub($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseClubPhotoPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collClubPhotoList === null) {
-			if ($this->isNew()) {
-				$this->collClubPhotoList = array();
-			} else {
-
-				$criteria->add(ClubPhotoPeer::FILE_ID, $this->getId());
-
-				$this->collClubPhotoList = ClubPhotoPeer::doSelectJoinClub($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(ClubPhotoPeer::FILE_ID, $this->getId());
-
-			if (!isset($this->lastClubPhotoCriteria) || !$this->lastClubPhotoCriteria->equals($criteria)) {
-				$this->collClubPhotoList = ClubPhotoPeer::doSelectJoinClub($criteria, $con);
-			}
-		}
-		$this->lastClubPhotoCriteria = $criteria;
-
-		return $this->collClubPhotoList;
-	}
-
-	
-	public function initEmailTemplateList()
-	{
-		if ($this->collEmailTemplateList === null) {
-			$this->collEmailTemplateList = array();
-		}
-	}
-
-	
-	public function getEmailTemplateList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEmailTemplatePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEmailTemplateList === null) {
-			if ($this->isNew()) {
-			   $this->collEmailTemplateList = array();
-			} else {
-
-				$criteria->add(EmailTemplatePeer::FILE_ID, $this->getId());
-
-				EmailTemplatePeer::addSelectColumns($criteria);
-				$this->collEmailTemplateList = EmailTemplatePeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(EmailTemplatePeer::FILE_ID, $this->getId());
-
-				EmailTemplatePeer::addSelectColumns($criteria);
-				if (!isset($this->lastEmailTemplateCriteria) || !$this->lastEmailTemplateCriteria->equals($criteria)) {
-					$this->collEmailTemplateList = EmailTemplatePeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastEmailTemplateCriteria = $criteria;
-		return $this->collEmailTemplateList;
-	}
-
-	
-	public function countEmailTemplateList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseEmailTemplatePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(EmailTemplatePeer::FILE_ID, $this->getId());
-
-		return EmailTemplatePeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addEmailTemplate(EmailTemplate $l)
-	{
-		$this->collEmailTemplateList[] = $l;
-		$l->setFile($this);
-	}
-
-
-	
-	public function getEmailTemplateListJoinClub($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEmailTemplatePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEmailTemplateList === null) {
-			if ($this->isNew()) {
-				$this->collEmailTemplateList = array();
-			} else {
-
-				$criteria->add(EmailTemplatePeer::FILE_ID, $this->getId());
-
-				$this->collEmailTemplateList = EmailTemplatePeer::doSelectJoinClub($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(EmailTemplatePeer::FILE_ID, $this->getId());
-
-			if (!isset($this->lastEmailTemplateCriteria) || !$this->lastEmailTemplateCriteria->equals($criteria)) {
-				$this->collEmailTemplateList = EmailTemplatePeer::doSelectJoinClub($criteria, $con);
-			}
-		}
-		$this->lastEmailTemplateCriteria = $criteria;
-
-		return $this->collEmailTemplateList;
-	}
-
-
-	
-	public function getEmailTemplateListJoinEmailTemplateRelatedByEmailTemplateId($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEmailTemplatePeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEmailTemplateList === null) {
-			if ($this->isNew()) {
-				$this->collEmailTemplateList = array();
-			} else {
-
-				$criteria->add(EmailTemplatePeer::FILE_ID, $this->getId());
-
-				$this->collEmailTemplateList = EmailTemplatePeer::doSelectJoinEmailTemplateRelatedByEmailTemplateId($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(EmailTemplatePeer::FILE_ID, $this->getId());
-
-			if (!isset($this->lastEmailTemplateCriteria) || !$this->lastEmailTemplateCriteria->equals($criteria)) {
-				$this->collEmailTemplateList = EmailTemplatePeer::doSelectJoinEmailTemplateRelatedByEmailTemplateId($criteria, $con);
-			}
-		}
-		$this->lastEmailTemplateCriteria = $criteria;
-
-		return $this->collEmailTemplateList;
-	}
-
-	
-	public function initEmailMarketingList()
-	{
-		if ($this->collEmailMarketingList === null) {
-			$this->collEmailMarketingList = array();
-		}
-	}
-
-	
-	public function getEmailMarketingList($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseEmailMarketingPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEmailMarketingList === null) {
-			if ($this->isNew()) {
-			   $this->collEmailMarketingList = array();
-			} else {
-
-				$criteria->add(EmailMarketingPeer::FILE_ID, $this->getId());
-
-				EmailMarketingPeer::addSelectColumns($criteria);
-				$this->collEmailMarketingList = EmailMarketingPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(EmailMarketingPeer::FILE_ID, $this->getId());
-
-				EmailMarketingPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEmailMarketingCriteria) || !$this->lastEmailMarketingCriteria->equals($criteria)) {
-					$this->collEmailMarketingList = EmailMarketingPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastEmailMarketingCriteria = $criteria;
-		return $this->collEmailMarketingList;
-	}
-
-	
-	public function countEmailMarketingList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseEmailMarketingPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(EmailMarketingPeer::FILE_ID, $this->getId());
-
-		return EmailMarketingPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addEmailMarketing(EmailMarketing $l)
-	{
-		$this->collEmailMarketingList[] = $l;
-		$l->setFile($this);
-	}
-
-
-	
-	public function getEmailMarketingListJoinClub($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseEmailMarketingPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEmailMarketingList === null) {
-			if ($this->isNew()) {
-				$this->collEmailMarketingList = array();
-			} else {
-
-				$criteria->add(EmailMarketingPeer::FILE_ID, $this->getId());
-
-				$this->collEmailMarketingList = EmailMarketingPeer::doSelectJoinClub($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(EmailMarketingPeer::FILE_ID, $this->getId());
-
-			if (!isset($this->lastEmailMarketingCriteria) || !$this->lastEmailMarketingCriteria->equals($criteria)) {
-				$this->collEmailMarketingList = EmailMarketingPeer::doSelectJoinClub($criteria, $con);
-			}
-		}
-		$this->lastEmailMarketingCriteria = $criteria;
-
-		return $this->collEmailMarketingList;
-	}
-
-
-	
-	public function getEmailMarketingListJoinEmailTemplate($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseEmailMarketingPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEmailMarketingList === null) {
-			if ($this->isNew()) {
-				$this->collEmailMarketingList = array();
-			} else {
-
-				$criteria->add(EmailMarketingPeer::FILE_ID, $this->getId());
-
-				$this->collEmailMarketingList = EmailMarketingPeer::doSelectJoinEmailTemplate($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(EmailMarketingPeer::FILE_ID, $this->getId());
-
-			if (!isset($this->lastEmailMarketingCriteria) || !$this->lastEmailMarketingCriteria->equals($criteria)) {
-				$this->collEmailMarketingList = EmailMarketingPeer::doSelectJoinEmailTemplate($criteria, $con);
-			}
-		}
-		$this->lastEmailMarketingCriteria = $criteria;
-
-		return $this->collEmailMarketingList;
 	}
 
 } 

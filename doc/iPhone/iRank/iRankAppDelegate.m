@@ -20,20 +20,14 @@
 @synthesize homeTabBar;
 @synthesize userSiteId;
 @synthesize firstName, lastName;
-@synthesize refreshHome, refreshEventList, refreshRankingList;
+@synthesize refreshHome, refreshHomeEventList;
 @synthesize internetActive, wifiConnection, hostActive;
-@synthesize currentLanguage;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
     userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *userInfo = [userDefaults objectForKey:@"userInfo"];
-    
-    NSArray *languages = [userDefaults objectForKey:@"AppleLanguages"];
-    currentLanguage = [languages objectAtIndex:0]; 
-    
-    NSLog(@"currentLanguage: %@", currentLanguage);
     
     refreshHome = YES;
     
@@ -51,12 +45,10 @@
         self.window.rootViewController = navigationController;
         [loginViewController release];
         loginViewController = nil;
-        
-        refreshHome        = YES;
-        refreshEventList   = YES;
-        refreshRankingList = YES;
+        refreshHomeEventList = NO;
     }else{
         
+        refreshHomeEventList = YES;
         [self switchLogin];
     }
     
@@ -83,19 +75,14 @@
 
 -(void)switchLogin {
     
+    refreshHome = YES;
+    
     userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *userInfo = [userDefaults objectForKey:@"userInfo"];
     
     userSiteId = [[userInfo objectForKey:kUserSiteIdKey] intValue];
     firstName = [userInfo objectForKey:kFirstNameKey];
     lastName = [userInfo objectForKey:kLastNameKey];
-    
-    
-    homeTabBar.title     = NSLocalizedString(@"Home", @"mainTabBar");
-    eventsTabBar.title   = NSLocalizedString(@"Events", @"mainTabBar");
-    rankingsTabBar.title = NSLocalizedString(@"Rankings", @"mainTabBar");
-    configTabBar.title   = NSLocalizedString(@"Config", @"mainTabBar");
-    
     
     self.window.rootViewController = tabBarController;
     
@@ -105,10 +92,6 @@
     
     if( loginViewController==nil )
         loginViewController = [[LoginViewController alloc] init];
-    
-    refreshHome        = YES;
-    refreshEventList   = YES;
-    refreshRankingList = YES;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
     [navigationController setNavigationBarHidden:YES];
@@ -223,7 +206,7 @@
 -(void)showLoadingView:(NSString *)loadingMessage {
     
     if( loadingMessage==nil )
-        loadingMessage = NSLocalizedString(@"loading event list...", @"event");
+        loadingMessage = @"carregando lista de eventos...";
     
     lblLoadingMessage.text = loadingMessage;
     
@@ -292,7 +275,6 @@
     [homeTabBar release];
     [firstName release];
     [lastName release];
-    [currentLanguage release];
     [super dealloc];
 }
 

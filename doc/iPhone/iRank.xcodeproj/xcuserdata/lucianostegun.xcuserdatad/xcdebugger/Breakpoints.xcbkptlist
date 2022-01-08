@@ -79,11 +79,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401329.000028"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "458"
-         endingLineNumber = "458"
+         startingLineNumber = "452"
+         endingLineNumber = "452"
          landmarkName = "@implementation HomeViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -93,11 +93,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401329.000028"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "494"
-         endingLineNumber = "494"
+         startingLineNumber = "488"
+         endingLineNumber = "488"
          landmarkName = "-doLogout:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -107,11 +107,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344646658.029785"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "617"
-         endingLineNumber = "617">
+         startingLineNumber = "611"
+         endingLineNumber = "611">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -119,11 +119,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344646658.029785"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "683"
-         endingLineNumber = "683">
+         startingLineNumber = "677"
+         endingLineNumber = "677">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -145,11 +145,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344646658.029785"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "678"
-         endingLineNumber = "678">
+         startingLineNumber = "672"
+         endingLineNumber = "672">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -235,11 +235,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/LoginViewController.m"
-         timestampString = "349469668.513392"
+         timestampString = "344205845.449039"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "53"
-         endingLineNumber = "53"
+         startingLineNumber = "44"
+         endingLineNumber = "44"
          landmarkName = "-viewDidUnload"
          landmarkType = "5">
       </FileBreakpoint>
@@ -277,11 +277,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventPlayerViewController.m"
-         timestampString = "345691290.38112"
+         timestampString = "344735845.226819"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "197"
-         endingLineNumber = "197"
+         startingLineNumber = "195"
+         endingLineNumber = "195"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -305,11 +305,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventCommentViewController.m"
-         timestampString = "349480194.611561"
+         timestampString = "344205845.449039"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "137"
-         endingLineNumber = "137"
+         startingLineNumber = "133"
+         endingLineNumber = "133"
          landmarkName = "-keyboardWillAppear:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -319,11 +319,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventCommentViewController.h"
-         timestampString = "349479654.167067"
+         timestampString = "342324475.71537"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "24"
-         endingLineNumber = "24"
+         startingLineNumber = "22"
+         endingLineNumber = "22"
          landmarkName = "eventId"
          landmarkType = "19">
       </FileBreakpoint>
@@ -333,11 +333,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventCommentViewController.m"
-         timestampString = "349480194.611561"
+         timestampString = "344205845.449039"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "167"
-         endingLineNumber = "167"
+         startingLineNumber = "163"
+         endingLineNumber = "163"
          landmarkName = "-scrollTheView:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -375,7 +375,7 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventPlayerViewController.m"
-         timestampString = "349463581.068611"
+         timestampString = "344735845.226819"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "329"
@@ -389,11 +389,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventResultSaveViewController.m"
-         timestampString = "349485323.565267"
+         timestampString = "344646075.745889"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "303"
-         endingLineNumber = "303"
+         startingLineNumber = "280"
+         endingLineNumber = "280"
          landmarkName = "-viewDidUnload"
          landmarkType = "5">
       </FileBreakpoint>
@@ -403,11 +403,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventResultSaveViewController.m"
-         timestampString = "349485323.565267"
+         timestampString = "344646075.745889"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "356"
-         endingLineNumber = "356"
+         startingLineNumber = "333"
+         endingLineNumber = "333"
          landmarkName = "-decraseAddonValue:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -417,11 +417,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401205.526707"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "271"
-         endingLineNumber = "271"
+         startingLineNumber = "265"
+         endingLineNumber = "265"
          landmarkName = "-shouldAutorotateToInterfaceOrientation:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -431,11 +431,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventViewController.m"
-         timestampString = "349213774.690051"
+         timestampString = "344713375.644614"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "64"
-         endingLineNumber = "64"
+         startingLineNumber = "56"
+         endingLineNumber = "56"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -445,11 +445,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventViewController.m"
-         timestampString = "349213774.690051"
+         timestampString = "344713375.644614"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "59"
-         endingLineNumber = "59"
+         startingLineNumber = "51"
+         endingLineNumber = "51"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -487,11 +487,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401205.526707"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "307"
-         endingLineNumber = "307"
+         startingLineNumber = "301"
+         endingLineNumber = "301"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -501,11 +501,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Event.m"
-         timestampString = "349196181.961617"
+         timestampString = "344283892.454446"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "100"
-         endingLineNumber = "100"
+         startingLineNumber = "96"
+         endingLineNumber = "96"
          landmarkName = "-initWithCoder:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -515,11 +515,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401205.526707"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "308"
-         endingLineNumber = "308"
+         startingLineNumber = "302"
+         endingLineNumber = "302"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -529,11 +529,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401205.526707"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "128"
-         endingLineNumber = "128"
+         startingLineNumber = "126"
+         endingLineNumber = "126"
          landmarkName = "-updateEventList"
          landmarkType = "5">
       </FileBreakpoint>
@@ -543,11 +543,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Event.m"
-         timestampString = "349196181.961617"
+         timestampString = "344737848.039099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "402"
-         endingLineNumber = "402"
+         startingLineNumber = "356"
+         endingLineNumber = "356"
          landmarkName = "+loadEventList:userSiteId:limit:rankingId:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -557,11 +557,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Event.m"
-         timestampString = "349196181.961617"
+         timestampString = "344737848.039099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "395"
-         endingLineNumber = "395"
+         startingLineNumber = "349"
+         endingLineNumber = "349"
          landmarkName = "+loadEventList:userSiteId:limit:rankingId:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -571,11 +571,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401205.526707"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "241"
-         endingLineNumber = "241"
+         startingLineNumber = "235"
+         endingLineNumber = "235"
          landmarkName = "-viewDidAppear:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -599,11 +599,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/ConfigViewController.m"
-         timestampString = "349481905.281473"
+         timestampString = "344206020.51387"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "131"
-         endingLineNumber = "131"
+         startingLineNumber = "118"
+         endingLineNumber = "118"
          landmarkName = "-changeSaveResultOffline:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -613,11 +613,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventResultSaveViewController.m"
-         timestampString = "349485323.565267"
+         timestampString = "344646075.745889"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "247"
-         endingLineNumber = "247"
+         startingLineNumber = "224"
+         endingLineNumber = "224"
          landmarkName = "-saveEventResult"
          landmarkType = "5">
       </FileBreakpoint>
@@ -627,11 +627,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Event.m"
-         timestampString = "349196181.961617"
+         timestampString = "344283892.454446"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "279"
-         endingLineNumber = "279"
+         startingLineNumber = "239"
+         endingLineNumber = "239"
          landmarkName = "-saveResult:saveOffline:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -641,11 +641,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Event.m"
-         timestampString = "349196181.961617"
+         timestampString = "344283892.454446"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "293"
-         endingLineNumber = "293"
+         startingLineNumber = "253"
+         endingLineNumber = "253"
          landmarkName = "-saveResult:saveOffline:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -655,11 +655,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/iRankAppDelegate.m"
-         timestampString = "349472545.285551"
+         timestampString = "344566173.961909"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "161"
-         endingLineNumber = "161"
+         startingLineNumber = "144"
+         endingLineNumber = "144"
          landmarkName = "-applicationDidBecomeActive:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -753,11 +753,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Event.m"
-         timestampString = "349196181.961617"
+         timestampString = "344283892.454446"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "223"
-         endingLineNumber = "223"
+         startingLineNumber = "216"
+         endingLineNumber = "216"
          landmarkName = "-getFilteredPlayerList"
          landmarkType = "5">
       </FileBreakpoint>
@@ -767,11 +767,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Event.m"
-         timestampString = "349196181.961617"
+         timestampString = "344283892.454446"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "188"
-         endingLineNumber = "188"
+         startingLineNumber = "181"
+         endingLineNumber = "181"
          landmarkName = "-getFilteredPlayerList"
          landmarkType = "5">
       </FileBreakpoint>
@@ -781,11 +781,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventResultSaveViewController.m"
-         timestampString = "349485323.565267"
+         timestampString = "344646075.745889"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "592"
-         endingLineNumber = "592"
+         startingLineNumber = "463"
+         endingLineNumber = "463"
          landmarkName = "-connection:didReceiveData:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -795,11 +795,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventResultSaveViewController.m"
-         timestampString = "349485323.565267"
+         timestampString = "344646075.745889"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "89"
-         endingLineNumber = "89"
+         startingLineNumber = "81"
+         endingLineNumber = "81"
          landmarkName = "-viewDidAppear:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -808,12 +808,40 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         filePath = "iRank/EventResultSaveViewController.m"
+         timestampString = "344646075.745889"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "322"
-         endingLineNumber = "322"
+         startingLineNumber = "199"
+         endingLineNumber = "199"
+         landmarkName = "-doneButtonTouchUp:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "iRank/EventResultSaveViewController.m"
+         timestampString = "344646075.745889"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "203"
+         endingLineNumber = "203"
+         landmarkName = "-doneButtonTouchUp:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "iRank/HomeViewController.m"
+         timestampString = "344401205.526707"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "316"
+         endingLineNumber = "316"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -823,11 +851,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Event.m"
-         timestampString = "349196181.961617"
+         timestampString = "344737848.039099"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "405"
-         endingLineNumber = "405"
+         startingLineNumber = "359"
+         endingLineNumber = "359"
          landmarkName = "+loadEventList:userSiteId:limit:rankingId:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -837,11 +865,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401205.526707"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "137"
-         endingLineNumber = "137"
+         startingLineNumber = "132"
+         endingLineNumber = "132"
          landmarkName = "-updateEventList"
          landmarkType = "5">
       </FileBreakpoint>
@@ -851,11 +879,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401205.526707"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "156"
-         endingLineNumber = "156"
+         startingLineNumber = "151"
+         endingLineNumber = "151"
          landmarkName = "-viewWillAppear:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -865,11 +893,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401205.526707"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "279"
-         endingLineNumber = "279"
+         startingLineNumber = "273"
+         endingLineNumber = "273"
          landmarkName = "-numberOfSectionsInTableView:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -879,11 +907,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
+         timestampString = "344401205.526707"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "287"
-         endingLineNumber = "287"
+         startingLineNumber = "281"
+         endingLineNumber = "281"
          landmarkName = "-tableView:numberOfRowsInSection:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -893,11 +921,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/PhotoViewController.m"
-         timestampString = "349479214.951597"
+         timestampString = "344608050.896529"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "364"
-         endingLineNumber = "364"
+         startingLineNumber = "362"
+         endingLineNumber = "362"
          landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -921,11 +949,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/PhotoViewController.m"
-         timestampString = "349479214.951597"
+         timestampString = "344608050.896529"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "381"
-         endingLineNumber = "381"
+         startingLineNumber = "379"
+         endingLineNumber = "379"
          landmarkName = "-uploadPicture"
          landmarkType = "5">
       </FileBreakpoint>
@@ -949,11 +977,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/EventResultSaveViewController.m"
-         timestampString = "349485323.565267"
+         timestampString = "344646126.773627"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "620"
-         endingLineNumber = "620"
+         startingLineNumber = "491"
+         endingLineNumber = "491"
          landmarkName = "-updateCurrentTextField:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -963,11 +991,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Ranking.m"
-         timestampString = "349473496.242402"
+         timestampString = "344735845.226819"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "87"
-         endingLineNumber = "87"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
          landmarkName = "-loadPlayerList"
          landmarkType = "5">
       </FileBreakpoint>
@@ -977,7 +1005,7 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Ranking.m"
-         timestampString = "349473496.242402"
+         timestampString = "344735845.226819"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "39"
@@ -991,11 +1019,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/RankingPlayerViewController.m"
-         timestampString = "344743266.1374"
+         timestampString = "344737511.791878"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "141"
-         endingLineNumber = "141"
+         startingLineNumber = "139"
+         endingLineNumber = "139"
          landmarkName = "-tableView:numberOfRowsInSection:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1005,11 +1033,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/RankingPlayerViewController.m"
-         timestampString = "344743266.1374"
+         timestampString = "344737511.791878"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "146"
-         endingLineNumber = "146"
+         startingLineNumber = "144"
+         endingLineNumber = "144"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1019,11 +1047,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/RankingPlayerViewController.m"
-         timestampString = "344743266.1374"
+         timestampString = "344737511.791878"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "119"
-         endingLineNumber = "119"
+         startingLineNumber = "117"
+         endingLineNumber = "117"
          landmarkName = "-updateRankingPlayerList"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1033,11 +1061,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/RankingPlayerViewController.m"
-         timestampString = "344743266.1374"
+         timestampString = "344737511.791878"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "118"
-         endingLineNumber = "118"
+         startingLineNumber = "116"
+         endingLineNumber = "116"
          landmarkName = "-updateRankingPlayerList"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1047,11 +1075,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/RankingPlayerViewController.m"
-         timestampString = "344743266.1374"
+         timestampString = "344737511.791878"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "63"
-         endingLineNumber = "63"
+         startingLineNumber = "66"
+         endingLineNumber = "66"
          landmarkName = "-viewWillAppear:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1075,7 +1103,7 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/SignViewController.m"
-         timestampString = "345153838.595066"
+         timestampString = "344728117.058577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "106"
@@ -1145,11 +1173,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Ranking.m"
-         timestampString = "349473496.242402"
+         timestampString = "344740583.847806"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "155"
-         endingLineNumber = "155"
+         startingLineNumber = "153"
+         endingLineNumber = "153"
          landmarkName = "-addPlayer:firstName:lastName:emailAddress:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1159,11 +1187,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Ranking.m"
-         timestampString = "349473496.242402"
+         timestampString = "344740583.847806"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "166"
-         endingLineNumber = "166"
+         startingLineNumber = "164"
+         endingLineNumber = "164"
          landmarkName = "-addPlayer:firstName:lastName:emailAddress:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1201,124 +1229,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "iRank/Ranking.m"
-         timestampString = "349473496.242402"
+         timestampString = "344740368.648448"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
+         startingLineNumber = "113"
+         endingLineNumber = "113"
          landmarkName = "-loadPlayerList"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "iRank/ConfigViewController.m"
-         timestampString = "349481905.281473"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "147"
-         endingLineNumber = "147"
-         landmarkName = "-accountButtonTouchUp:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "iRank/ConfigViewController.m"
-         timestampString = "344823512.048076"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "39"
-         endingLineNumber = "39"
-         landmarkName = "-viewDidLoad"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "iRank/ConfigViewController.m"
-         timestampString = "349481905.281473"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "148"
-         endingLineNumber = "148"
-         landmarkName = "-accountButtonTouchUp:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "iRank/EventResultSaveViewController.m"
-         timestampString = "349485323.565267"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "648"
-         endingLineNumber = "648"
-         landmarkName = "-segmentedControlTouchUp:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "iRank/EventResultSaveViewController.m"
-         timestampString = "349485323.565267"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "691"
-         endingLineNumber = "691"
-         landmarkName = "-resultPreviewViewController"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "iRank/EventResultSaveViewController.m"
-         timestampString = "349485323.565267"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "513"
-         endingLineNumber = "513"
-         landmarkName = "-tableView:titleForFooterInSection:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "iRank/EventResultSaveViewController.m"
-         timestampString = "349485323.565267"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "492"
-         endingLineNumber = "492"
-         landmarkName = "-tableView:titleForHeaderInSection:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "iRank/HomeViewController.m"
-         timestampString = "349472545.285551"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "257"
-         endingLineNumber = "257"
-         landmarkName = "-reloadData:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

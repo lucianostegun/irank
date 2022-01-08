@@ -15,9 +15,6 @@
     
     IBOutlet UITabBarController *tabBarController;
     IBOutlet UITabBarItem *homeTabBar;
-    IBOutlet UITabBarItem *eventsTabBar;
-    IBOutlet UITabBarItem *rankingsTabBar;
-    IBOutlet UITabBarItem *configTabBar;
     LoginViewController *loginViewController;
     NSUserDefaults *userDefaults;
     NSInteger mainBadge;
@@ -38,12 +35,10 @@
 @property (nonatomic, readonly) NSString *firstName;
 @property (nonatomic, readonly) NSString *lastName;
 @property (nonatomic, readwrite) BOOL refreshHome;
-@property (nonatomic, readwrite) BOOL refreshEventList;
-@property (nonatomic, readwrite) BOOL refreshRankingList;
+@property (nonatomic, readwrite) BOOL refreshHomeEventList;
 @property (nonatomic, readonly) BOOL internetActive;
 @property (nonatomic, readonly) BOOL wifiConnection;
 @property (nonatomic, readonly) BOOL hostActive;
-@property (nonatomic, readonly) NSString *currentLanguage;
 
 - (void)switchLogin;
 - (void)showLogin;

@@ -35,17 +35,6 @@
     [super viewDidLoad];
     
     appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-//    UIBarButtonItem *accountButton = [[UIBarButtonItem alloc] initWithTitle:@"conta" style:UIBarButtonItemStylePlain target:self action:@selector(accountButtonTouchUp:)];
-    
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    
-//    self.navigationItem.rightBarButtonItem = accountButton;
-    
-    [lblHomeEvents setText:NSLocalizedString(@"lblHomeEvents", @"config")];
-    [lblSaveOffline setText:NSLocalizedString(@"Save offline", @"config")];
-    [lblSaveOfflineInfo setText:NSLocalizedString(@"lblSaveOfflineInfo", @"config")];
-    [lblCompressPhoto setText:NSLocalizedString(@"lblCompressPhoto", @"config")];
 }
 
 - (void)viewDidUnload
@@ -61,7 +50,7 @@
     BOOL saveResultOffline = [[appDelegate userDefaults] boolForKey:kSaveOfflineKey];
     float photoCompress    = [[appDelegate userDefaults] floatForKey:kPhotoCompressKey];
     
-//    NSLog(@"saveResultOffline: %@", (saveResultOffline?@"YES":@"NO"));
+    NSLog(@"saveResultOffline: %@", (saveResultOffline?@"YES":@"NO"));
     
     switch ([homeEvents intValue]) {
         default:
@@ -85,8 +74,6 @@
     lblPhotoCompress.text = [NSString stringWithFormat:@"%i%%", (int)photoCompress];
     
 //    [homeEvents release];
-    
-    self.title = NSLocalizedString(@"Options", @"config");
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -140,14 +127,6 @@
     
     [[appDelegate userDefaults] setFloat:photoCompress forKey:kPhotoCompressKey];
     [[appDelegate userDefaults] synchronize];
-}
-
--(void)accountButtonTouchUp:(id)sender {
-    
-    if( accountViewController==nil )
-        accountViewController = [[AccountViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    
-    [self.navigationController pushViewController:accountViewController animated:YES];
 }
 
 

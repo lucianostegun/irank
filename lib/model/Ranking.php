@@ -10,11 +10,6 @@
 class Ranking extends BaseRanking
 {
 	
-	public function getName(){
-		
-		return $this->getRankingName();
-	}
-	
 	public function cleanRecord(){
 		
 		Util::executeQuery('DELETE FROM ranking_player WHERE ranking_id = '.$this->getId());
@@ -89,14 +84,12 @@ class Ranking extends BaseRanking
 		return RankingPeer::doSelect( $criteria );
 	}
 
-	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false, $onlyMine=false, $suppressOld=false, $selectLabel=null ){
+	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false, $onlyMine=false, $suppressOld=false ){
 		
 		$rankingObjList = self::getList($onlyMine, $suppressOld);
 
-		if( !$selectLabel )
-			$selectLabel = __('select');
 		$optionList = array();
-		$optionList[''] = $selectLabel;
+		$optionList[''] = __('select');
 		foreach( $rankingObjList as $rankingObj )			
 			$optionList[$rankingObj->getId()] = $rankingObj->getRankingName();
 		
@@ -106,11 +99,9 @@ class Ranking extends BaseRanking
 		return options_for_select( $optionList, $defaultValue );
 	}
 	
-	public function getPeopleList($returnPeople=false, $orderByList=null, $criteria=null){
+	public function getPeopleList($returnPeople=false, $orderByList=null){
 		
-		if( is_null($criteria) )
-			$criteria = new Criteria();
-		
+		$criteria = new Criteria();
 		$criteria->add( RankingPlayerPeer::ENABLED, true );
 		$criteria->add( RankingPlayerPeer::RANKING_ID, $this->getId() );
 		$criteria->addJoin( RankingPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
@@ -134,9 +125,9 @@ class Ranking extends BaseRanking
 			return RankingPlayerPeer::doSelect($criteria);
 	}
 	
-	public function getPlayerList($orderByList=null, $criteria=null){
+	public function getPlayerList($orderByList=null){
 		
-		return $this->getPeopleList(false, $orderByList, $criteria);
+		return $this->getPeopleList(false, $orderByList);
 	}
 	
 	public function addPlayer($peopleId, $allowEdit=false){
@@ -357,7 +348,24 @@ class Ranking extends BaseRanking
 	
 	public function updatePlayerEvents(){
 		
-		Util::executeQuery('SELECT fc_update_ranking_player_events('.$this->getId().')');
+		$sql = 'UPDATE 
+				    ranking_player
+				SET 
+				    total_events = (SELECT 
+				                        COUNT(1) 
+				                    FROM 
+				                        event_player
+				                        INNER JOIN event ON event_player.EVENT_ID=event.ID
+				                    WHERE
+				                        event.RANKING_ID='.$this->getId().'
+				                        AND event_player.ENABLED = true
+				                        AND event.RANKING_ID=ranking_player.RANKING_ID
+				                        AND event_player.PEOPLE_ID=ranking_player.PEOPLE_ID
+				                        AND event.DELETED = FALSE
+				                        AND event.VISIBLE = TRUE
+				                        AND event.ENABLED = TRUE
+				                        AND event.SAVED_RESULT = TRUE)';
+		Util::executeQuery($sql);
 	}
 	
 	public function getClassifyHistory($rankingDate, $save=false){
@@ -405,6 +413,7 @@ class Ranking extends BaseRanking
 		}
 		
 	  	$rankingHistoryObjList = RankingHistoryPeer::doSelect($criteria);
+	  	if($rankingDate=='11/01/2011'){echo '<pre>';print_r($rankingHistoryObjList);exit;}
 
 	  	$lastList = array();
 	  	foreach($rankingHistoryObjList as $key=>$rankingHistoryObj){
@@ -511,7 +520,7 @@ class Ranking extends BaseRanking
 	  	return $rankingHistoryObjListReturn;
 	}
 	
-	public function getClassify($rankingDate=null, $criteria=null){
+	public function getClassify($rankingDate=null){
 		
 		if( $rankingDate )
 			return $this->getRankingHistoryByDate($rankingDate);
@@ -538,7 +547,7 @@ class Ranking extends BaseRanking
 	  	$orderByList[RankingPlayerPeer::TOTAL_AVERAGE] = 'desc';
 	  	$orderByList[RankingPlayerPeer::PEOPLE_ID]     = 'asc';
 	  	
-	  	$rankingPlayerObjList = $this->getPlayerList($orderByList, $criteria);
+	  	$rankingPlayerObjList = $this->getPlayerList($orderByList);
 	  	$lastList = array();
 	  	foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 	  		
@@ -584,14 +593,10 @@ class Ranking extends BaseRanking
 		return $rankingPlayerObj->getAllowEdit();
 	}
 	
-	public function addToOpenEvents($peopleId, $eventId=null){
+	public function addToOpenEvents($peopleId){
 		
 		$criteria = new Criteria();
-		$criterion = $criteria->getNewCriterion( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
-		if( $eventId )
-			$criterion->addOr( $criteria->getNewCriterion( EventPeer::ID, $eventId ) );
-
-		$criteria->add($criterion);
+		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
 		$eventObjList = $this->getEventList($criteria);
 		
 		foreach($eventObjList as $eventObj){
@@ -628,13 +633,8 @@ class Ranking extends BaseRanking
 			if( $tagName )
 				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
 					continue;
-			
-			$emailAddress = $peopleObj->getEmailAddress();
-			
-			if( !$emailAddress )
-				continue;
-			
-			$emailAddressList[] = $emailAddress;
+					
+			$emailAddressList[] = $peopleObj->getEmailAddress();
 		}
 		
 		return $emailAddressList;
@@ -644,58 +644,46 @@ class Ranking extends BaseRanking
 
 		Util::getHelper('i18n');
 
-		$emailContent = EmailTemplate::getContentByTagName('rankingDeleteNotify');
+		$emailContent = AuxiliarText::getContentByTagName('rankingDeleteNotify');
 
 		$peopleObj    = People::getCurrentPeople();
 	  	$classifyList = $this->getEmailClassifyList();
 	  	$rankingOwner = $this->getUserSite()->getPeople()->getFullName();
 		
-		$emailContent = str_replace('[classifyList]', $classifyList, $emailContent);
-		$emailContent = str_replace('[peopleName]', $peopleObj->getName(), $emailContent);
-		$emailContent = str_replace('[rankingName]', $this->getRankingName(), $emailContent);
-		$emailContent = str_replace('[createdAt]', $this->getCreatedAt('d/m/Y'), $emailContent);
-		$emailContent = str_replace('[startDate]', $this->getStartDate('d/m/Y'), $emailContent);
-		$emailContent = str_replace('[rankingType]', $this->getRankingType()->getDescription(), $emailContent);
-		$emailContent = str_replace('[players]', $this->getPlayers(), $emailContent);
-		$emailContent = str_replace('[events]', $this->getEvents(), $emailContent);
-		$emailContent = str_replace('[rankingOwner]', $rankingOwner, $emailContent);
+		$emailContent = str_replace('<classifyList>', $classifyList, $emailContent);
+		$emailContent = str_replace('<peopleName>', $peopleObj->getName(), $emailContent);
+		$emailContent = str_replace('<rankingName>', $this->getRankingName(), $emailContent);
+		$emailContent = str_replace('<createdAt>', $this->getCreatedAt('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<startDate>', $this->getStartDate('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<rankingType>', $this->getRankingType()->getDescription(), $emailContent);
+		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
+		$emailContent = str_replace('<events>', $this->getEvents(), $emailContent);
+		$emailContent = str_replace('<rankingOwner>', $rankingOwner, $emailContent);
 		
 		$emailAddressList = $this->getEmailAddressList();
 		
 		Report::sendMail(__('email.subject.rankingDelete', array('%rankingName%'=>$this->getRankingName())), $emailAddressList, $emailContent);
 	}
 	
-	public function getEmailClassifyList($rankingDate){
+	public function getEmailClassifyList(){
 		
 		$classifyList = '';
 		$nl           = chr(10);
 		$position     = 0;
 		
 		$rankingPlayerObjList = $this->getClassify();
-		$lineBg = '#F0F0F0';
 	  	foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 		
-			if( $rankingPlayerObj->getTotalEvents()==0 )
-				continue;
-			
 			$peopleObj = $rankingPlayerObj->getPeople();
 			
-			$rankingPosition = (($position++)+1);
-			
-			$lastRankingPosition = Util::executeOne('SELECT get_previous_player_position('.$this->getId().', '.$peopleObj->getId().', \''.Util::formatDate($rankingDate).'\')');
-			$positionChangeIcon  = (is_null($lastRankingPosition)?'blank.gif':($rankingPosition < $lastRankingPosition?'up2':($rankingPosition>$lastRankingPosition?'down2':'neutral2')));
-			
-			$lineBg = ($lineBg=='#E0E0E0'?'#FFFFFFF':'#E0E0E0');
-			
-			$classifyList .= '  <tr style="background: '.$lineBg.'">'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right; width: 20px"><img src="http://[host]/images/misc/'.$positionChangeIcon.'.png"/></td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">#'.$rankingPosition.'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0">'.$peopleObj->getFullName().'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
+			$classifyList .= '  <tr class="boxcontent">'.$nl;
+			$classifyList .= '    <td style="background: #606060">#'.(($position++)+1).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060">'.$peopleObj->getFullName().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060" align="right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #606060" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
 			$classifyList .= '  </tr>'.$nl;
 	  	}
 	  	
@@ -959,13 +947,9 @@ class Ranking extends BaseRanking
 		return Util::buildXml($rankingList, 'rankings', 'ranking');
 	}
 	
-	public static function getOptionsForSelectScoreSchema($defaultValue=null, $suppressSelect=true){
+	public static function getOptionsForSelectScoreSchema($defaultValue=null){
 		
 		$optionList = array();
-		
-		if( !$suppressSelect )
-			$optionList[''] = __('select');
-			
 		$optionList['irank1']  = 'Buy-ins / Posição / Valor Buy-in';
 		$optionList['vegas']   = 'Padrão Vegas';
 		$optionList['custom']  = 'Fórmula personalizada';
@@ -998,7 +982,6 @@ class Ranking extends BaseRanking
 		$infoList['rankingType']   = $this->getRankingType()->getDescription();
 		$infoList['startDate']     = $this->getStartDate('d/m/Y');
 		$infoList['finishDate']    = $this->getFinishDate('d/m/Y');
-		$infoList['startTime']     = $this->getStartTime('H:i');
 		$infoList['isPrivate']     = $this->getIsPrivate();
 		$infoList['players']       = $this->getPlayers();
 		$infoList['credit']        = $this->getCredit();
@@ -1007,8 +990,7 @@ class Ranking extends BaseRanking
 		$infoList['visible']       = $this->getVisible();
 		$infoList['locked']        = $this->getLocked();
 		$infoList['deleted']       = $this->getDeleted();
-		$infoList['buyin']         = $this->getBuyin();
-		$infoList['entranceFee']   = $this->getEntranceFee();
+		$infoList['buyin']  = $this->getBuyin();
 		$infoList['gameStyleId']   = $this->getGameStyleId();
 		$infoList['gameStyle']     = $this->getGameStyle()->getDescription();
 		$infoList['gameStyleTag']  = $this->getGameStyle()->getTagName();

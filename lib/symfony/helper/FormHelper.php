@@ -305,50 +305,7 @@ function select_language_tag($name, $selected = null, $options = array())
  */
 function input_tag($name, $value = null, $options = array())
 {
-  
-  $options['autocomplete'] = (array_key_exists('autocomplete', $options)?$options['autocomplete']:'off');
   return tag('input', array_merge(array('type' => 'text', 'name' => $name, 'id' => get_id_from_name($name, $value), 'value' => $value), _convert_options($options)));
-}
-
-function input_autocomplete_tag($name, $value, $searchUrl, $selectedFunction, $options = array())
-{
-	
-//  $value                   = null;
-  $options['id']           = (isset($options['id'])?$options['id']:get_id_from_name($name, $value));
-  $suggestNew              = (isset($options['suggestNew'])?$options['suggestNew']:Util::AUTO_COMPLETE_SUGGEST_NEW_IF_EMPTY);
-  $options['autocomplete'] = 'off';
-  
-  $autoFocus = (isset($options['autofocus'])?$options['autofocus']:true);
-  
-  $parameters  = '?';
-  $parameters .= ($suggestNew?'suggestNew='.$suggestNew:'');
-  
-  $script = '<script>
-				var urlAjax = "'.url_for($searchUrl.$parameters).'";
-				
-			    $("#'.$options['id'].'").autocomplete({
-			        source: function(request, response) {
-						
-			            $.ajax({
-			                url: urlAjax,
-			                data: request,
-			                dataType: "json",
-			                success: function(data) {
-			                    response(data);
-			                },
-			                error: function(data) {
-			                	
-			                },
-			            });
-			        },
-			        autoFocus: '.($autoFocus?'true':'false').', 
-			        select: function(event, ui) { 
-								'.$selectedFunction.'(ui.item.id, ui.item.value, \''.$options['id'].'\');
-			        		},
-			    });
-			</script>';
-  
-  return tag('input', array_merge(array('type' => 'text', 'name' => $name, 'value' => $value), _convert_options($options))).chr(10).$script;
 }
 
 /**
@@ -667,11 +624,10 @@ function input_date_range_tag($name, $value, $options = array())
  */
 function input_date_tag($name, $value = null, $options = array())
 {
-  $options['rich']         = true;
-  $options['format']       = 'dd/MM/Y';
-  $options['onkeyup']      = 'maskDate(event)';
+  $options['rich'] = true;
+  $options['format'] = 'dd/MM/Y';
+  $options['onkeyup'] = 'maskDate(event)';
   $options['autocomplete'] = 'off';
-  $options['maxlength']    = 10;
   $options = _parse_attributes($options);
 
   $context = sfContext::getInstance();
@@ -793,18 +749,9 @@ function input_date_tag($name, $value = null, $options = array())
   }
   $html = input_tag($name, $value, $options);
 
-  $appName = Util::getApp();
-
   if ($calendar_button_type == 'img')
   {
-  	if( $appName=='backend' ){
-  		
-  		$style = 'cursor: pointer; vertical-align: middle; margin-top: -2px; margin-left: 3px';
-  		$calendar_button = 'backend/calendarButton';
-  	}else
-	  	$style = 'cursor: pointer; vertical-align: middle; margin-top: -3px';
-  	
-    $html .= image_tag($calendar_button, array('id'=>$id_calendarButton, 'style'=>$style));
+    $html .= image_tag($calendar_button, array('id'=>$id_calendarButton, 'style'=>'cursor: pointer; vertical-align: middle; margin-top: -3px'));
   }
   else
   {
@@ -1009,7 +956,6 @@ function button_tag( $buttonId, $text, $options=array() ){
 	$image    = array_key_exists('image', $options)?$options['image']:false;
 	$onclick  = array_key_exists('onclick', $options)?$options['onclick']:false;
 	$style    = array_key_exists('style', $options)?$options['style']:'';
-	$class    = array_key_exists('class', $options)?$options['class']:'';
 
 	if( array_key_exists('onclick', $options) && !$noCkeck ){
 		
@@ -1019,21 +965,17 @@ function button_tag( $buttonId, $text, $options=array() ){
 
 
 	unset($options['disabled']);
-	unset($options['style']);
-	unset($options['class']);
+	unset($options['$style']);
 	
 	if( !$visible )
-		$style = 'display: none; '.$style.'';
+		$style = 'style="display: none; '.$style.'"';
 
 	try{
 		
 		unset($options['noCkeck']);
 	}catch(Exception $e){}
 	
-	$app     = Util::getApp();
-	$appPath = ($app!='frontend'?$app.'/':'');
-	
-	$imagePath = $appPath.'button/'.$image;
+	$imagePath = 'button/'.$image;
 	
 	if( $disabled ){
 		
@@ -1048,31 +990,30 @@ function button_tag( $buttonId, $text, $options=array() ){
 		$image = image_tag($imagePath, array('id'=>$buttonId.'Image', 'align'=>'absmiddle'));
 		
 	$submit = link_to(image_tag('blank.gif', array('class'=>'submit')), '#'.$onclick);
-	
-	if( $app=='backend' )
-		$style .= '; float: left';
+//	$text   = link_to($text, '#'.$onclick);
 
+	$app = Util::getApp();
+	
 	$html = $nl;
 	if( $app=='mobile' ){
 		
-		$html .= '<div style="'.$style.'" class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).'>'.$nl;
+		$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).'>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
-		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
+		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 		$html .= '</div>';
 	}else{
 		
-		$html .= '<div style="'.$style.'" class="button'.($disabled?' disabled':'').($class?' '.$class:'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="this.addClassName(\'hover\')" onmouseout="this.removeClassName(\'hover\')">'.$nl;
+		$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
-		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
+		$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 		$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 		$html .= '</div>';
 	}
+	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));
 	
-	if( $text!='Cancelar' && $text!='Fechar' )
-		$html .= submit_image_tag('blank.gif', array('style'=>'position: absolute; top: -1000px; left: -1000px; border: none; background: none', 'onclick'=>$onclick.'; return false')) ;
-	
-	sfContext::getInstance()->getResponse()->addStylesheet( $appPath.'button' );
+	$app = ($app=='mobile'?'mobile/':'');
+	sfContext::getInstance()->getResponse()->addStylesheet( $app.'button' );
 	sfContext::getInstance()->getResponse()->addJavascript( 'button' );
 	
 	return $html;
@@ -1130,7 +1071,7 @@ function button_mobile_tag( $buttonId, $text, $options=array() ){
 	$html = $nl;
 	$html .= '<div '.$style.' class="button'.($disabled?'Disabled':'').'" id="button'.$buttonId.'"'._tag_options($options).' onmouseover="toggleButton(\''.$buttonId.'\', \'over\')" onmouseout="toggleButton(\''.$buttonId.'\', \'out\')">'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Left" class="buttonLeft""></div>'.$nl;
-	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="buttonLabel" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
+	$html .= '	<div id="button'.$buttonId.'Middle" class="buttonMiddle"><div class="label" id="button'.$buttonId.'Label">'.$image.$text.$submit.'</div></div>'.$nl;
 	$html .= '	<div id="button'.$buttonId.'Right" class="buttonRight"></div>'.$nl;
 	$html .= '</div>';
 	$html .= submit_image_tag('blank.gif', array('style'=>'display: none'));
@@ -1240,7 +1181,7 @@ function getFormStatus( $statusId=null, $window=false, $errorMessage=null, $succ
 	echo get_partial( 'home/include/formStatus', array('statusId'=>$statusId, 'window'=>$window, 'errorMessage'=>$errorMessage, 'successMessage'=>$successMessage) );
 }
 
-function imagecopymerge_alpha2($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct, $trans = NULL)
+function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct, $trans = NULL)
 {
   $dst_w = imagesx($dst_im);
   $dst_h = imagesy($dst_im);
@@ -1281,28 +1222,4 @@ function imagecopymerge_alpha2($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y,
       }
     }
   return true;
-}
-
-/**
-* PNG ALPHA CHANNEL SUPPORT for imagecopymerge();
-* This is a function like imagecopymerge but it handle alpha channel well!!!
-**/
-function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct){
-
-	$opacity=$pct;
-	// getting the watermark width
-	$w = imagesx($src_im);
-	// getting the watermark height
-	$h = imagesy($src_im);
-	 
-	// creating a cut resource
-	$cut = imagecreatetruecolor($src_w, $src_h);
-	// copying that section of the background to the cut
-	imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h);
-	// inverting the opacity
-	$opacity = 100 - $opacity;
-	 
-	// placing the watermark now
-	imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h);
-	imagecopymerge($dst_im, $cut, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $opacity);
 }

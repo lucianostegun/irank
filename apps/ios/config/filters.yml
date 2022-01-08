@@ -4,8 +4,6 @@ security:  ~
 
 # generally, you will want to insert your own filters here
 
-mobile:
-    class: MobileAccessFilter
 
 cache:     ~
 common:    ~

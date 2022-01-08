@@ -1,9 +1,10 @@
-<table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable">
+<table border="0" cellspacing="1" cellpadding="2" class="gridTabTable">
 	<tr class="header">
-		<th class="first">Nome</th>
+		<th><?php echo __('FirstName') ?></th>
+		<th><?php echo __('LastName') ?></th>
 		<th>E-mail</th>
 		<th><?php echo __('Events') ?></th>
-		<th class="noBorder" colspan="2">&nbsp;</th>
+		<th colspan="2">&nbsp;</th>
 	</tr>
 	<?php
 		$peopleIdMe    = MyTools::getAttribute('peopleId');
@@ -16,10 +17,11 @@
 			$peopleId  = $peopleObj->getId();
 	?>
 	<tr class="boxcontent" id="rankingPlayer<?php echo $peopleId ?>Tr">
-		<td><?php echo $peopleObj->getFullName() ?></td>
+		<td><?php echo $peopleObj->getFirstName() ?></td>
+		<td><?php echo $peopleObj->getLastName() ?></td>
 		<td><?php echo $peopleObj->getEmailAddress() ?></td>
 		<td align="center"><?php echo sprintf('%02d', $rankingPlayerObj->getTotalEvents()) ?></td>
-		<td align="center" class="icon">
+		<td align="center" style="padding-left: 0; padding-right: 0">
 			<?php 
 				if( $rankingPlayerObj->getTotalEvents()==0 && $peopleId!==$peopleIdMe )
 					echo link_to(image_tag('icon/delete'), '#deleteRankingPlayer('.$peopleId.')', array('title'=>__('ranking.playersTab.hint.removePlayer')));
@@ -27,7 +29,7 @@
 					echo image_tag('icon/disabled/delete', array('title'=>__('ranking.playersTab.hint.removePlayerUnabled')));
 			?>
 		</td>
-		<td align="center" class="icon">
+		<td align="center" style="padding-left: 0; padding-right: 0">
 			<?php
 				$allowEdit    = $rankingPlayerObj->getAllowEdit();
 				$icon         = ($allowEdit?'unlock':'lock');

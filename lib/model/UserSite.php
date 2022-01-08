@@ -45,14 +45,7 @@ class UserSite extends BaseUserSite
 	  		$this->setPeopleId( $peopleObj->getId() );
 		  	$this->setUsername( $username );
 		}
-		
-//		if( strlen($password)!=32 || $this->isNew() ){
-//			if( !$this->getSignedSchedule() )
-//				$password = 'irank';
-//		  	
-//		  	$this->updateHtpasswd($password);
-//		}
-		
+	
 	  	$peopleObj->setEmailAddress( $emailAddress );
 	  	$this->setPassword( (strlen($password)==32?$password:md5($password)) );
 	  	$this->setActive(true);
@@ -82,17 +75,6 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('quickResumePeriod', $quickResumePeriod);
 	}
 	
-	public function saveScheduleOptions($request){
-		
-		$scheduleStateId   = $request->getParameter('scheduleStateId');
-		$scheduleCityId    = $request->getParameter('scheduleCityId');
-		$scheduleAlarmTime = $request->getParameter('scheduleAlarmTime');
-		
-		$this->setOptionValue('scheduleStateId', $scheduleStateId);
-		$this->setOptionValue('scheduleCityId', $scheduleCityId);
-		$this->setOptionValue('scheduleAlarmTime', $scheduleAlarmTime);
-	}
-	
 	public static function getCurrentUser(){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
@@ -102,14 +84,13 @@ class UserSite extends BaseUserSite
 	
 	public function login($keepLogin=false){
 		
-        $peopleObj = $this->getPeople();
-        
 		if( MyTools::getUser()->isAuthenticated() ){
 
 			MyTools::setCulture( $peopleObj->getDefaultLanguage());	
 			return true;
 		}
 		
+        $peopleObj = $this->getPeople();
         
         if( $keepLogin ){
 
@@ -131,8 +112,6 @@ class UserSite extends BaseUserSite
         
         $this->setLastAccessDate(time());
         $this->save();
-        
-        $this->doLog();
 	}
 	
 	public static function logout(){
@@ -146,20 +125,9 @@ class UserSite extends BaseUserSite
 		MyTools::getUser()->getAttributeHolder()->remove('firstName');
 		MyTools::getUser()->getAttributeHolder()->remove('lastName');
 		MyTools::getUser()->removeCredential('iRankSite');
-		
 		MyTools::getUser()->setAuthenticated( false );
 		
         MyTools::getResponse()->sendHttpHeaders();
-	}
-	
-	public function doLog(){
-		
-		$accessLogObj = new AccessLog();
-		$accessLogObj->setUserSiteId($this->getId());
-		$accessLogObj->setIpAddress($_SERVER['REMOTE_ADDR']);
-		$accessLogObj->save();
-		
-		unset($accessLogObj);
 	}
 	
 	public function getRankingList($criteria=null, $con=null, $count=false){
@@ -185,25 +153,15 @@ class UserSite extends BaseUserSite
 		
 		return $this->getRankingList(null, null, true);
 	}
-
-	public function getEventCount(){
-		
-		return Util::executeOne('SELECT get_event_count('.$this->getPeopleId().')');
-	}
-	
-	public function getEventPersonalCount(){
-		
-		return Util::executeOne('SELECT get_event_personal_count('.$this->getId().')');
-	}
 	
 	public function sendWelcomeMail($request, $sufix=null){
 
 		Util::getHelper('I18N');
 		
-		$emailContent = EmailTemplate::getContentByTagName('signWelcome'.ucfirst($sufix));
-		$emailContent = str_replace('[password]', $request->getParameter('password'), $emailContent);
-		$emailContent = str_replace('[username]', $this->getUsername(), $emailContent);
-		$emailContent = str_replace('[peopleName]', $this->getPeople()->getFirstName(), $emailContent); 		
+		$emailContent = AuxiliarText::getContentByTagName('signWelcome'.ucfirst($sufix));
+		$emailContent = str_replace('<password>', $request->getParameter('password'), $emailContent);
+		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
+		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent); 		
 
 		$emailAddress = $this->getPeople()->getEmailAddress();
 		
@@ -214,13 +172,14 @@ class UserSite extends BaseUserSite
 
 		Util::getHelper('I18N');
 		
-		$emailContent  = EmailTemplate::getContentByTagName('passwordRecovery');
+		$emailContent  = AuxiliarText::getContentByTagName('passwordRecovery');
 		
 		$newPassword = String::createRandom(7);
 		
-		$emailContent = str_replace('[password]', $newPassword, $emailContent);
-		$emailContent = str_replace('[username]', $this->getUsername(), $emailContent);
-		$emailContent = str_replace('[peopleName]', $this->getPeople()->getFirstName(), $emailContent);
+		$emailContent = str_replace('<password>', $newPassword, $emailContent);
+		$emailContent = str_replace('<username>', $this->getUsername(), $emailContent);
+		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
+		$emailContent = utf8_encode($emailContent); 		
 		
 		$emailAddress = $this->getPeople()->getEmailAddress();
 		
@@ -236,7 +195,7 @@ class UserSite extends BaseUserSite
 		
 		$userSiteOptionId  = VirtualTable::getIdByTagName('userSiteOption', $tagName);
 		$userSiteOptionObj = UserSiteOptionPeer::retrieveByPK($this->getPeopleId(), $userSiteOptionId);
-		$userSiteOptionObj->setOptionValue(nvl($optionValue));
+		$userSiteOptionObj->setOptionValue($optionValue);
 		$userSiteOptionObj->save();
 	}
 	
@@ -264,7 +223,6 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('receiveAllResults', '1');
 		$this->setOptionValue('quickResume', 'balance');
 		$this->setOptionValue('quickResumePeriod', 'always');
-		$this->setOptionValue('scheduleAlarmTime', '4H');
 	}
 	
 	public function getImagePath($create=false, $thumb=false){
@@ -347,134 +305,16 @@ class UserSite extends BaseUserSite
    			HomeWall::doLog('juntou-se aos jogadores do <b>iRank</b>. Seja bem vindo!', 'userSite', true, $this->getId());
 	}
 	
-	public function getEventListResume($limit, $offset=0, $eventDate=null){
-		
-		$criteria = new Criteria();
-		$criteria->add( EventPeer::SAVED_RESULT, false );
-		if( $eventDate ) $criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
-		$criteria->add( EventPeer::EVENT_DATE_TIME, date('Y-m-d H:i:s'), Criteria::GREATER_EQUAL );
-		$criteria->setOffset($offset);
-		
-		$eventObjList = Event::getList($criteria, $limit, $this->getId());
-		$eventCount   = count($eventObjList);
-		
-		if( $eventCount < $limit ){
-			
-			$criteria = new Criteria();
-			$criteria->add( EventPeer::EVENT_DATE_TIME, date('Y-m-d H:i:s'), Criteria::LESS_THAN );
-			if( $eventDate ) $criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
-			$criteria->setOffset($offset);
-			
-			$eventObjPastList = Event::getList($criteria, $limit-$eventCount, $this->getId());
-			
-			$eventObjList = array_merge($eventObjList, $eventObjPastList);
-		}
-		
-		return $eventObjList;
-	}
-	
-	public static function getCalendarList($startDate, $endDate){
-		
-		$startDate = Util::formatDate($startDate);
-		$endDate   = Util::formatDate($endDate);
-		$peopleId  = MyTools::getAttribute('peopleId', '0');
-		
-		$sql = "SELECT
-					event.EVENT_DATE
-				FROM 
-					event 
-					INNER JOIN ranking ON event.RANKING_ID=ranking.ID
-					INNER JOIN ranking_player ON ranking_player.RANKING_ID=ranking.ID AND ranking_player.PEOPLE_ID = $peopleId AND ranking_player.ENABLED
-				WHERE 
-					event.ENABLED 
-					AND event.VISIBLE 
-					AND NOT event.DELETED 
-					AND ranking.ENABLED 
-					AND ranking.VISIBLE 
-					AND NOT ranking.DELETED 
-					AND event.EVENT_DATE BETWEEN '$startDate' AND '$endDate' 
-				GROUP BY 
-					event.EVENT_DATE";
-
-		$resultSet = Util::executeQuery($sql);
-		
-		$eventDateList = array();
-		
-		while($resultSet->next()){
-			
-			$eventDate = $resultSet->getTimestamp(1);
-			$eventDate = date('Ymd', strtotime($eventDate));
-			
-			$eventDateList[] = $eventDate;
-		}
-		
-		return array_unique($eventDateList);
-	}
-	
-	public function updateHtpasswd($pass){
-		
-		$password     = Htpasswd::non_salted_sha1($pass);
-		$username     = $this->getUsername();
-		$htpasswdLine = $this->getHtpasswdLine();
-		
-		$htpasswdFilePath = Config::getConfigByName('htpasswdFilePath', true);
-		$filePath         = $htpasswdFilePath;
-		
-		$file = file($filePath);
-		
-		$lineContent = $username.':'.$password.chr(10);
-		
-		if( !$htpasswdLine ){
-			
-			$htpasswdLine = count($file);
-			$this->setHtpasswdLine($htpasswdLine);
-		}
-		
-		$file[$htpasswdLine] = $lineContent;
-		
-		$fileContent = implode('', $file);
-		
-		$fp = fopen($filePath, 'w');
-		fwrite($fp, $fileContent);
-		fclose($fp);
-	}
-	
-	public static function isAuthenticated(){
-		
-		$hasCredentials = MyTools::hasCredential('iRankSite');
-		
-		return (MyTools::isAuthenticated() && $hasCredentials);
-	}
-	
-	public function buildMobileToken($deviceUDID){
-		
-		$tokenChars  = $this->getId();
-		$tokenChars .= $deviceUDID;
-		$tokenChars .= $this->getPeopleId();
-		$tokenChars .= $this->getUsername();
-		$tokenChars .= $this->getCreatedAt('dmYHis');
-		
-		$mobileToken = String::createRandom(40, true, $tokenChars);
-		
-		$this->setDeviceUDID($deviceUDID);
-		$this->setMobileToken($mobileToken);
-		$this->save();
-	}
-	
-	public function getInfo($replaceNull=false, $withBalance=true){
+	public function getInfo($replaceNull=false){
 		
 		$infoList = array();
 		$infoList['id']           = $this->getId();
 		$infoList['firstName']    = $this->getPeople()->getFirstName();
 		$infoList['lastName']     = $this->getPeople()->getLastName();
-		$infoList['username']     = $this->getUsername();
 		$infoList['emailAddress'] = $this->getPeople()->getEmailAddress();
 		
-		if( $withBalance ){
-			
-			$resumeList = People::getFullResume($this->getPeopleId(), $this->getId(), true);
-			$infoList = array_merge($infoList, $resumeList);
-		}
+		$resumeList = People::getResumeBalance($this->getPeopleId(), $this->getId(), true);
+		$infoList = array_merge($infoList, $resumeList);
 		
 		if( $replaceNull ){
 			

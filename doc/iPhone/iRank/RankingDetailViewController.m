@@ -96,7 +96,7 @@
             rows = 8;
             break;
         case 1:
-            rows = 3;
+            rows = 4;
             break;
     }
     
@@ -131,35 +131,35 @@
         
         switch (indexPath.row) {
             case 0:
-                label = NSLocalizedString(@"Title", @"rankingDetails");
+                label = @"Nome";
                 description = ranking.rankingName;
                 break;
             case 1:
-                label = NSLocalizedString(@"Credit", @"rankingDetails");
+                label = @"Crédito";
                 description = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:ranking.credit]];
                 break;
             case 2:
-                label = NSLocalizedString(@"Style", @"rankingDetails");
+                label = @"Estilo";
                 description = ranking.gameStyle;
                 break;
             case 3:
-                label = NSLocalizedString(@"Start", @"rankingDetails");
+                label = @"Início";
                 description = ranking.startDate;
                 break;
             case 4:
-                label = NSLocalizedString(@"End", @"rankingDetails");
+                label = @"Término";
                 description = ranking.finishDate;
                 break;
             case 5:
-                label = NSLocalizedString(@"Display", @"rankingDetails");
+                label = @"Exibição";
                 description = (ranking.isPrivate?@"Privado":@"Público");
                 break;
             case 6:
-                label = NSLocalizedString(@"Classify", @"rankingDetails");
+                label = @"Classificação";
                 description = ranking.rankingType;
                 break;
             case 7:
-                label = NSLocalizedString(@"Default buy-in", @"rankingDetails");
+                label = @"Buy-in padrão";
                 description = [numberFormatter stringFromNumber:[NSNumber numberWithFloat:ranking.defaultBuyin]];
                 break;
             default:
@@ -175,16 +175,16 @@
         
         switch (indexPath.row) {
             case 0:
-                label = NSLocalizedString(@"Players", @"rankingDetails");
+                label = @"Jogadores";
                 break;
             case 1:
-                label = NSLocalizedString(@"Events", @"rankingDetails");
+                label = @"Eventos";
                 break;
             case 2:
-                label = NSLocalizedString(@"Ranking list", @"rankingDetails");
+                label = @"Classificação";
                 break;
             case 3:
-                label = NSLocalizedString(@"Options", @"rankingDetails");
+                label = @"Opções";
                 break;
                 
             default:

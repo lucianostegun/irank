@@ -8,7 +8,7 @@
 .dhx_tablist_line{
 	height:1px;
 	width:1px;
-	background-color:#BFBFBF;
+	background-color:#91A7B4;
 	position:absolute;
 	overflow:hidden;
 }
@@ -23,7 +23,7 @@
 	overflow:hidden;
 }
 .dhx_tabcontent_zone{
-	border:1px solid #BABABA;
+	border:1px solid #91A7B4;
 	z-index:2;
 }
 .dhx_tabbar_zone_top .dhx_tab_element{
@@ -91,7 +91,7 @@
 	background-color: #D2E3EA;
 }
 .dhx_tabbar_zone_dhx_black .dhx_tabbar_row{
-	background-color: #F9F9F9;
+	background-color: #E6E6E6;
 }
 .dhx_tabbar_zone_dhx_skyblue .dhx_tabbar_lineA{
 	position:absolute; 
@@ -240,7 +240,7 @@ div.dhxcont_content_blocker {
 	filter: alpha(opacity=0);
 	-moz-opacity: 0;
 	opacity: 0;
-	background: #F9F9F9;
+	background: #E6E6E6;
 	z-index: 1;
 	-moz-user-select: none;
 }
@@ -267,25 +267,4 @@ div.dhxcont_sb_container div.dhxcont_statusbar {
 	font-size: 11px;
 	vertical-align: middle;
 	color: #000000;
-}
-
-
-.tabbarIntro {
-
-	padding: 		18px;
-	margin-bottom: 	5px;
-	border-bottom: 	1px solid #CACACA;
-	background: 	#F5F5F5;
-	text-shadow: 	white -1px 1px;
-	height: 		20px;
-}
-
-.tabbarIntro .row {
-
-	clear: 	both;
-}
-
-.tabbarIntro .row .cell {
-
-	float: 	left;
 }

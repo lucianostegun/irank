@@ -4,7 +4,7 @@
 abstract class BaseLogPeer {
 
 	
-	const DATABASE_NAME = 'log';
+	const DATABASE_NAME = 'propel';
 
 	
 	const TABLE_NAME = 'log';
@@ -13,7 +13,7 @@ abstract class BaseLogPeer {
 	const CLASS_DEFAULT = 'lib.model.Log';
 
 	
-	const NUM_COLUMNS = 11;
+	const NUM_COLUMNS = 10;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -24,9 +24,6 @@ abstract class BaseLogPeer {
 
 	
 	const USER_SITE_ID = 'log.USER_SITE_ID';
-
-	
-	const USER_ADMIN_ID = 'log.USER_ADMIN_ID';
 
 	
 	const APP = 'log.APP';
@@ -58,19 +55,19 @@ abstract class BaseLogPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'UserSiteId', 'UserAdminId', 'App', 'ModuleName', 'ActionName', 'ClassName', 'Severity', 'Message', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (LogPeer::ID, LogPeer::USER_SITE_ID, LogPeer::USER_ADMIN_ID, LogPeer::APP, LogPeer::MODULE_NAME, LogPeer::ACTION_NAME, LogPeer::CLASS_NAME, LogPeer::SEVERITY, LogPeer::MESSAGE, LogPeer::CREATED_AT, LogPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'user_site_id', 'user_admin_id', 'app', 'module_name', 'action_name', 'class_name', 'severity', 'message', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'USER_SITE_ID'=>'', 'USER_ADMIN_ID'=>'', 'APP'=>'', 'MODULE_NAME'=>'', 'ACTION_NAME'=>'', 'CLASS_NAME'=>'', 'SEVERITY'=>'', 'MESSAGE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'UserSiteId', 'App', 'ModuleName', 'ActionName', 'ClassName', 'Severity', 'Message', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (LogPeer::ID, LogPeer::USER_SITE_ID, LogPeer::APP, LogPeer::MODULE_NAME, LogPeer::ACTION_NAME, LogPeer::CLASS_NAME, LogPeer::SEVERITY, LogPeer::MESSAGE, LogPeer::CREATED_AT, LogPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'user_site_id', 'app', 'module_name', 'action_name', 'class_name', 'severity', 'message', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'USER_SITE_ID'=>'', 'APP'=>'', 'MODULE_NAME'=>'', 'ACTION_NAME'=>'', 'CLASS_NAME'=>'', 'SEVERITY'=>'', 'MESSAGE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'UserSiteId'=>1, 'UserAdminId'=>2, 'App'=>3, 'ModuleName'=>4, 'ActionName'=>5, 'ClassName'=>6, 'Severity'=>7, 'Message'=>8, 'CreatedAt'=>9, 'UpdatedAt'=>10, ),
-		BasePeer::TYPE_COLNAME=>array (LogPeer::ID=>0, LogPeer::USER_SITE_ID=>1, LogPeer::USER_ADMIN_ID=>2, LogPeer::APP=>3, LogPeer::MODULE_NAME=>4, LogPeer::ACTION_NAME=>5, LogPeer::CLASS_NAME=>6, LogPeer::SEVERITY=>7, LogPeer::MESSAGE=>8, LogPeer::CREATED_AT=>9, LogPeer::UPDATED_AT=>10, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'user_site_id'=>1, 'user_admin_id'=>2, 'app'=>3, 'module_name'=>4, 'action_name'=>5, 'class_name'=>6, 'severity'=>7, 'message'=>8, 'created_at'=>9, 'updated_at'=>10, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'UserSiteId'=>1, 'App'=>2, 'ModuleName'=>3, 'ActionName'=>4, 'ClassName'=>5, 'Severity'=>6, 'Message'=>7, 'CreatedAt'=>8, 'UpdatedAt'=>9, ),
+		BasePeer::TYPE_COLNAME=>array (LogPeer::ID=>0, LogPeer::USER_SITE_ID=>1, LogPeer::APP=>2, LogPeer::MODULE_NAME=>3, LogPeer::ACTION_NAME=>4, LogPeer::CLASS_NAME=>5, LogPeer::SEVERITY=>6, LogPeer::MESSAGE=>7, LogPeer::CREATED_AT=>8, LogPeer::UPDATED_AT=>9, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'user_site_id'=>1, 'app'=>2, 'module_name'=>3, 'action_name'=>4, 'class_name'=>5, 'severity'=>6, 'message'=>7, 'created_at'=>8, 'updated_at'=>9, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	
@@ -127,8 +124,6 @@ abstract class BaseLogPeer {
 		$criteria->addSelectColumn(LogPeer::ID);
 
 		$criteria->addSelectColumn(LogPeer::USER_SITE_ID);
-
-		$criteria->addSelectColumn(LogPeer::USER_ADMIN_ID);
 
 		$criteria->addSelectColumn(LogPeer::APP);
 
@@ -223,6 +218,167 @@ abstract class BaseLogPeer {
 		}
 		return $results;
 	}
+
+	
+	public static function doCountJoinUserSite(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(LogPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(LogPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(LogPeer::USER_SITE_ID, UserSitePeer::ID);
+
+		$rs = LogPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doSelectJoinUserSite(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		LogPeer::addSelectColumns($c);
+		$startcol = (LogPeer::NUM_COLUMNS - LogPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		UserSitePeer::addSelectColumns($c);
+
+		$c->addJoin(LogPeer::USER_SITE_ID, UserSitePeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = LogPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = UserSitePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getUserSite(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addLog($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initLogList();
+				$obj2->addLog($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
+	{
+		$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(LogPeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(LogPeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(LogPeer::USER_SITE_ID, UserSitePeer::ID);
+
+		$rs = LogPeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doSelectJoinAll(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		LogPeer::addSelectColumns($c);
+		$startcol2 = (LogPeer::NUM_COLUMNS - LogPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		UserSitePeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + UserSitePeer::NUM_COLUMNS;
+
+		$c->addJoin(LogPeer::USER_SITE_ID, UserSitePeer::ID);
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = LogPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+
+					
+			$omClass = UserSitePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getUserSite(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addLog($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initLogList();
+				$obj2->addLog($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
 	
 	public static function getTableMap()
 	{

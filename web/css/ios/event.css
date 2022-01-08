@@ -9,68 +9,17 @@
 
 body, html {
 	
-	background: #cbd2dc;
 }
 
-.commentList {
+.commentArea {
 
+	
+	width: 100%;
+	background: #EAEAEA url('/images/ios/quotesLeft.png') 5px 10px no-repeat;
 	padding-bottom: 10px;
+	padding-top: 10px;
+	border-bottom: 1px solid #FFFFFF
 }
-
-.comment {
-
-	margin: 10px;
-	position: relative;
-	background: #FFFFFF;
-	padding: 1px 1px 20px 1px;
-    border: 1px solid #C0C0C0;
-}
-
-.comment .message {
-
-	background: 			#D0D0D0;
-    background-image: 		-o-linear-gradient(#FAFAFA, #F0F0F0);
-    background: 			-moz-linear-gradient(top, #FAFAFA, #F0F0F0);;
-    background: 			-webkit-gradient(linear, left top, left bottom, from(#FAFAFA), to(#F0F0F0));
-    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FAFAFA', EndColorStr='#F0F0F0', GradientType=0);
-    
-    padding: 5px 8px;
-    font-size: 12px;
-    margin-bottom: 3px;
-    
-    border-bottom: 1px solid #EAEAEA;
-}
-
-.comment .senderName,
-.comment .commentDate {
-
-	font-size: 10px;
-	position: absolute;
-	bottom: 4px;
-	font-style: italic
-}
-
-.comment .senderName {
-
-	left: 5px;
-	color: #292f38;
-}
-
-.comment .commentDate {
-
-	right: 5px;
-	color: #404040
-}
-
-
-
-
-
-
-
-
-
-
 
 .photoList {
 
@@ -79,6 +28,14 @@ body, html {
 	padding-top: 2px;
 	padding-left: 1px;
 	background: url('/images/ios/camera.png') center center no-repeat;
+}
+
+.comment {
+	
+	width: 87%;
+	margin: 5px 35px 5px 35px;
+
+	background: url('/images/ios/quotesRight.png') right bottom no-repeat;
 }
 
 .photoList .photo img {
@@ -99,4 +56,15 @@ body, html {
 	width: 300px;
 	border: 1px solid #000000;
 	margin-top: 8px;
+}
+
+.senderInfo {
+
+	margin-top: 5px	
+}
+
+.senderInfo {
+	
+	font-size: 11px;
+	color: #505050
 }

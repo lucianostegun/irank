@@ -38,7 +38,7 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     
     appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate showLoadingView:NSLocalizedString(@"loading ranking list...", @"ranking")];
+    [appDelegate showLoadingView:@"carregando lista de rankings"];
     [self performSelector:@selector(updateRankingList) withObject:nil afterDelay:0.1];
 }
 
@@ -53,14 +53,7 @@
 {
     [super viewWillAppear:animated];
     
-    if( appDelegate.refreshRankingList ){
-        
-        [appDelegate showLoadingView:NSLocalizedString(@"loading ranking list...", @"ranking")];
-        [self performSelector:@selector(updateRankingList) withObject:nil afterDelay:0.1];
-        appDelegate.refreshRankingList = NO;
-    }
-    
-    self.title = NSLocalizedString(@"Rankings", @"ranking");
+    self.title = @"Rankings";
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -119,11 +112,11 @@
     
     Ranking *ranking = [rankingList objectAtIndex:indexPath.row];
     
-    NSString *pluralEvent = (ranking.events==1?@"":NSLocalizedString(@"pluralEvents", @"ranking"));
-    NSString *pluralPlayer = (ranking.players==1?@"":NSLocalizedString(@"pluralPlayers", @"ranking"));
+    NSString *pluralEvent = (ranking.events>1?@"s":@"");
+    NSString *pluralPlayer = (ranking.players>1?@"s":@"");
     
     cell.textLabel.text       = ranking.rankingName;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %i %@%@, %i %@%@", ranking.gameStyle, ranking.events, NSLocalizedString(@"event", @"ranking"), pluralEvent, ranking.players, NSLocalizedString(@"player", @"ranking"), pluralPlayer];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %i evento%@, %i jogadore%@", ranking.gameStyle, ranking.events, pluralEvent, ranking.players, pluralPlayer];
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     

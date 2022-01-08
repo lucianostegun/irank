@@ -5,7 +5,7 @@ $rankingObj = RankingPeer::retrieveByPK($rankingId);
 $peopleObj  = PeoplePeer::retrieveByPK($peopleId);
 
 $culture        = MyTools::getCulture();
-$inputFilePath  = Util::getFilePath('/templates/rankHistory.xls');
+$inputFilePath  = Util::getFilePath('/templates/'.$culture.'/rankHistory.xls');
 $outputFilePath = Util::getFilePath('/temp/rankHistory-'.microtime().'.xls');
 
 $eventDateList = $rankingObj->getEventDateList();
@@ -44,10 +44,8 @@ $currentLine = 7;
 foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 
 	$phpExcelObj->setActiveSheetIndex(0)
-				->setCellValue('A'.$currentLine, '	'.$rankingPlayerObj->getPeople()->getName())
+				->setCellValue('A'.$currentLine, $rankingPlayerObj->getPeople()->getName())
 				;
-				
-	$phpExcelObj->setActiveSheetIndex(0)->getStyle('A'.$currentLine)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
 	foreach($eventDateList as $key=>$eventDate){
 		
@@ -61,9 +59,8 @@ foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 //			$totalRankingScore = ' - ';
 	
 		$phpExcelObj->setActiveSheetIndex(0)
-					->setCellValue($colName.$currentLine, Util::formatFloat($totalRankingScore, false, 3));
+					->setCellValue($colName.$currentLine, Util::formatFloat($totalRankingScore, true, 0));
 		
-		$phpExcelObj->setActiveSheetIndex(0)->getStyle($colName.$currentLine)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 //		if( $totalRankingScore == ' - ' )
 //			$phpExcelObj->setActiveSheetIndex(0)->getStyle($colName.$currentLine)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 	}
@@ -75,7 +72,7 @@ for($line=7; $line <= 7+$players-1; $line++)
 	$phpExcelObj->setActiveSheetIndex(0)->getStyle('A'.$line.':'.$colName.$line)->getFill()->applyFromArray(
 	    array(
 	        'type'       => PHPExcel_Style_Fill::FILL_SOLID,
-	        'startcolor' => array('rgb' => ($line%2==0?'D0D0D0':'FFFFFF'))
+	        'startcolor' => array('rgb' => ($line%2==0?'A6A6A6':'D0D0D0'))
     	)
 	);
 

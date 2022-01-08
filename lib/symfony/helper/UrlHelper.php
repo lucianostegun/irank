@@ -137,61 +137,6 @@ function link_to($name = '', $internal_uri = '', $options = array())
   return content_tag('a', $name, $html_options);
 }
 
-function link_to_image($name = '', $internal_uri = '', $options = array())
-{
-  $html_options = _parse_attributes($options);
-
-  $html_options = _convert_options_to_javascript($html_options);
-
-  $absolute = false;
-  if (isset($html_options['absolute_url']))
-  {
-    $html_options['absolute'] = $html_options['absolute_url'];
-    unset($html_options['absolute_url']);
-  }
-  if (isset($html_options['absolute']))
-  {
-    $absolute = (boolean) $html_options['absolute'];
-    unset($html_options['absolute']);
-  }
-  
-  if( preg_match('/^\//', $internal_uri) )
-  	$html_options['href'] = $internal_uri;
-  else
-  	$html_options['href'] = '/images/'.$internal_uri;
-
-  if (isset($html_options['query_string']))
-  {
-    $html_options['href'] .= '?'.$html_options['query_string'];
-    unset($html_options['query_string']);
-  }
-
-  if (is_object($name))
-  {
-    if (method_exists($name, '__toString'))
-    {
-      $name = $name->__toString();
-    }
-    else
-    {
-      throw new sfException(sprintf('Object of class "%s" cannot be converted to string (Please create a __toString() method)', get_class($name)));
-    }
-  }
-  
-  if( ereg('^#', $internal_uri) ){
-  	
-  	$html_options['href']    = 'javascript:void(0)';
-  	$html_options['onclick'] = ereg_replace('^#', '', $internal_uri);
-  }
-
-  if (!strlen($name))
-  {
-    $name = $html_options['href'];
-  }
-
-  return content_tag('a', $name, $html_options);
-}
-
 /**
  * If the condition passed as first argument is true,
  * creates a <a> link tag of the given name using a routed URL

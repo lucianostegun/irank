@@ -1,4 +1,4 @@
-indexSuccess:
+all:
 
-  stylesheets:    [backend/reset, backend/fullcalendar, backend/datatable, backend/ui_custom, backend/prettyPhoto, backend/elfinder]
-  javascripts:    [backend/plugins/calendar.min.js, backend/plugins/jquery-date, backend/home, backend/eventLiveCalendar]
+  stylesheets:    []
+  javascripts:    []

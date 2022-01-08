@@ -8,6 +8,8 @@ fields:
       max_error: form.error.max25
        
   emailAddress:
+    required:
+      msg:       form.error.requiredField
     sfStringValidator:
       max:       150
       max_error: form.error.max150

@@ -82,20 +82,20 @@ class EventPhotoComment extends BaseEventPhotoComment
 		Util::getHelper('I18N');
 
 		$eventObj     = $this->getEventPhoto()->getEvent();
-		$emailContent = EmailTemplate::getContentByTagName('eventPhotoCommentNotify');
+		$emailContent = AuxiliarText::getContentByTagName('eventPhotoCommentNotify');
 
-		$emailContent = str_replace('[eventName]', $eventObj->getEventName(), $emailContent);
-		$emailContent = str_replace('[rankingName]', $eventObj->getRanking()->getRankingName(), $emailContent);
-		$emailContent = str_replace('[peopleName]', $this->getPeople()->getFirstName(), $emailContent);
-		$emailContent = str_replace('[comment]', $this->getComment(), $emailContent);
+		$emailContent = str_replace('<eventName>', $eventObj->getEventName(), $emailContent);
+		$emailContent = str_replace('<rankingName>', $eventObj->getRanking()->getRankingName(), $emailContent);
+		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
+		$emailContent = str_replace('<comment>', $this->getComment(), $emailContent);
 		
-		$emailContent = str_replace('[eventId]', $eventObj->getId(), $emailContent);
-		$emailContent = str_replace('[eventPhotoId]', $this->getEventPhotoId(), $emailContent);
-		$emailContent = str_replace('[shareId]', base64_encode($this->getEventPhotoId()), $emailContent);
-		$emailContent = str_replace('[eventPlace]', $eventObj->getEventPlace(), $emailContent);
-		$emailContent = str_replace('[eventDate]', $eventObj->getEventDate('d/m/Y'), $emailContent);
-		$emailContent = str_replace('[startTime]', $eventObj->getStartTime('H:i'), $emailContent);
-		$emailContent = str_replace('[peopleEmail]', $this->getPeople()->getEmailAddress(), $emailContent);
+		$emailContent = str_replace('<eventId>', $eventObj->getId(), $emailContent);
+		$emailContent = str_replace('<eventPhotoId>', $this->getEventPhotoId(), $emailContent);
+		$emailContent = str_replace('<shareId>', base64_encode($this->getEventPhotoId()), $emailContent);
+		$emailContent = str_replace('<eventPlace>', $eventObj->getEventPlace(), $emailContent);
+		$emailContent = str_replace('<eventDate>', $eventObj->getEventDate('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<startTime>', $eventObj->getStartTime('H:i'), $emailContent);
+		$emailContent = str_replace('<peopleEmail>', $this->getPeople()->getEmailAddress(), $emailContent);
 		
 		$emailAddressList = $eventObj->getEmailAddressList('receiveEventCommentNotify', true);
 		

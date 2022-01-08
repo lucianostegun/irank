@@ -63,11 +63,6 @@ class EventPhoto extends BaseEventPhoto
 		return EventPhotoCommentPeer::doSelect($criteria);
 	}
 	
-	public function getCommentsCount(){
-		
-		return Util::executeOne('SELECT COUNT(1) FROM event_photo_comment WHERE event_photo_id = '.$this->getId());
-	}
-	
 	public function getNextPhoto(){
 		
 		$criteria = new Criteria();
@@ -96,9 +91,9 @@ class EventPhoto extends BaseEventPhoto
        	HomeWall::doLog('publicou uma foto do evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPhoto', true);
 	}
 	
-	public static function getXml($photoList, $tagName='photoPhoto'){
+	public static function getXml($eventList){
 		
-		return Util::buildXml($photoList, "{$tagName}s", $tagName);
+		return Util::buildXml($eventList, 'eventPhotos', 'eventPhoto');
 	}
 	
 	public function getInfo(){

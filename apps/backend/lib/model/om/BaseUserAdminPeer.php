@@ -13,7 +13,7 @@ abstract class BaseUserAdminPeer {
 	const CLASS_DEFAULT = '...apps.backend.lib.model.UserAdmin';
 
 	
-	const NUM_COLUMNS = 14;
+	const NUM_COLUMNS = 13;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -24,9 +24,6 @@ abstract class BaseUserAdminPeer {
 
 	
 	const PEOPLE_ID = 'user_admin.PEOPLE_ID';
-
-	
-	const CLUB_ID = 'user_admin.CLUB_ID';
 
 	
 	const USERNAME = 'user_admin.USERNAME';
@@ -67,19 +64,19 @@ abstract class BaseUserAdminPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'ClubId', 'Username', 'Password', 'Active', 'Master', 'Enabled', 'Visible', 'Deleted', 'Locked', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (UserAdminPeer::ID, UserAdminPeer::PEOPLE_ID, UserAdminPeer::CLUB_ID, UserAdminPeer::USERNAME, UserAdminPeer::PASSWORD, UserAdminPeer::ACTIVE, UserAdminPeer::MASTER, UserAdminPeer::ENABLED, UserAdminPeer::VISIBLE, UserAdminPeer::DELETED, UserAdminPeer::LOCKED, UserAdminPeer::LAST_ACCESS_DATE, UserAdminPeer::CREATED_AT, UserAdminPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'club_id', 'username', 'password', 'active', 'master', 'enabled', 'visible', 'deleted', 'locked', 'last_access_date', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'CLUB_ID'=>'', 'USERNAME'=>'', 'PASSWORD'=>'', 'ACTIVE'=>'', 'MASTER'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'LAST_ACCESS_DATE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'Username', 'Password', 'Active', 'Master', 'Enabled', 'Visible', 'Deleted', 'Locked', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (UserAdminPeer::ID, UserAdminPeer::PEOPLE_ID, UserAdminPeer::USERNAME, UserAdminPeer::PASSWORD, UserAdminPeer::ACTIVE, UserAdminPeer::MASTER, UserAdminPeer::ENABLED, UserAdminPeer::VISIBLE, UserAdminPeer::DELETED, UserAdminPeer::LOCKED, UserAdminPeer::LAST_ACCESS_DATE, UserAdminPeer::CREATED_AT, UserAdminPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'username', 'password', 'active', 'master', 'enabled', 'visible', 'deleted', 'locked', 'last_access_date', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'', 'PASSWORD'=>'', 'ACTIVE'=>'', 'MASTER'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'LAST_ACCESS_DATE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'ClubId'=>2, 'Username'=>3, 'Password'=>4, 'Active'=>5, 'Master'=>6, 'Enabled'=>7, 'Visible'=>8, 'Deleted'=>9, 'Locked'=>10, 'LastAccessDate'=>11, 'CreatedAt'=>12, 'UpdatedAt'=>13, ),
-		BasePeer::TYPE_COLNAME=>array (UserAdminPeer::ID=>0, UserAdminPeer::PEOPLE_ID=>1, UserAdminPeer::CLUB_ID=>2, UserAdminPeer::USERNAME=>3, UserAdminPeer::PASSWORD=>4, UserAdminPeer::ACTIVE=>5, UserAdminPeer::MASTER=>6, UserAdminPeer::ENABLED=>7, UserAdminPeer::VISIBLE=>8, UserAdminPeer::DELETED=>9, UserAdminPeer::LOCKED=>10, UserAdminPeer::LAST_ACCESS_DATE=>11, UserAdminPeer::CREATED_AT=>12, UserAdminPeer::UPDATED_AT=>13, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'club_id'=>2, 'username'=>3, 'password'=>4, 'active'=>5, 'master'=>6, 'enabled'=>7, 'visible'=>8, 'deleted'=>9, 'locked'=>10, 'last_access_date'=>11, 'created_at'=>12, 'updated_at'=>13, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'Username'=>2, 'Password'=>3, 'Active'=>4, 'Master'=>5, 'Enabled'=>6, 'Visible'=>7, 'Deleted'=>8, 'Locked'=>9, 'LastAccessDate'=>10, 'CreatedAt'=>11, 'UpdatedAt'=>12, ),
+		BasePeer::TYPE_COLNAME=>array (UserAdminPeer::ID=>0, UserAdminPeer::PEOPLE_ID=>1, UserAdminPeer::USERNAME=>2, UserAdminPeer::PASSWORD=>3, UserAdminPeer::ACTIVE=>4, UserAdminPeer::MASTER=>5, UserAdminPeer::ENABLED=>6, UserAdminPeer::VISIBLE=>7, UserAdminPeer::DELETED=>8, UserAdminPeer::LOCKED=>9, UserAdminPeer::LAST_ACCESS_DATE=>10, UserAdminPeer::CREATED_AT=>11, UserAdminPeer::UPDATED_AT=>12, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'username'=>2, 'password'=>3, 'active'=>4, 'master'=>5, 'enabled'=>6, 'visible'=>7, 'deleted'=>8, 'locked'=>9, 'last_access_date'=>10, 'created_at'=>11, 'updated_at'=>12, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
@@ -136,8 +133,6 @@ abstract class BaseUserAdminPeer {
 		$criteria->addSelectColumn(UserAdminPeer::ID);
 
 		$criteria->addSelectColumn(UserAdminPeer::PEOPLE_ID);
-
-		$criteria->addSelectColumn(UserAdminPeer::CLUB_ID);
 
 		$criteria->addSelectColumn(UserAdminPeer::USERNAME);
 
@@ -268,34 +263,6 @@ abstract class BaseUserAdminPeer {
 
 
 	
-	public static function doCountJoinClub(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(UserAdminPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(UserAdminPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(UserAdminPeer::CLUB_ID, ClubPeer::ID);
-
-		$rs = UserAdminPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
 	public static function doSelectJoinPeople(Criteria $c, $con = null)
 	{
 		$c = clone $c;
@@ -343,53 +310,6 @@ abstract class BaseUserAdminPeer {
 
 
 	
-	public static function doSelectJoinClub(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-				if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		UserAdminPeer::addSelectColumns($c);
-		$startcol = (UserAdminPeer::NUM_COLUMNS - UserAdminPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-		ClubPeer::addSelectColumns($c);
-
-		$c->addJoin(UserAdminPeer::CLUB_ID, ClubPeer::ID);
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = UserAdminPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = ClubPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj2 = new $cls();
-			$obj2->hydrate($rs, $startcol);
-
-			$newObject = true;
-			foreach($results as $temp_obj1) {
-				$temp_obj2 = $temp_obj1->getClub(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-										$temp_obj2->addUserAdmin($obj1); 					break;
-				}
-			}
-			if ($newObject) {
-				$obj2->initUserAdminList();
-				$obj2->addUserAdmin($obj1); 			}
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
 	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
 	{
 		$criteria = clone $criteria;
@@ -407,8 +327,6 @@ abstract class BaseUserAdminPeer {
 		}
 
 		$criteria->addJoin(UserAdminPeer::PEOPLE_ID, PeoplePeer::ID);
-
-		$criteria->addJoin(UserAdminPeer::CLUB_ID, ClubPeer::ID);
 
 		$rs = UserAdminPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -434,12 +352,7 @@ abstract class BaseUserAdminPeer {
 		PeoplePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + PeoplePeer::NUM_COLUMNS;
 
-		ClubPeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + ClubPeer::NUM_COLUMNS;
-
 		$c->addJoin(UserAdminPeer::PEOPLE_ID, PeoplePeer::ID);
-
-		$c->addJoin(UserAdminPeer::CLUB_ID, ClubPeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -468,199 +381,6 @@ abstract class BaseUserAdminPeer {
 				$temp_obj2 = $temp_obj1->getPeople(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
 					$temp_obj2->addUserAdmin($obj1); 					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj2->initUserAdminList();
-				$obj2->addUserAdmin($obj1);
-			}
-
-
-					
-			$omClass = ClubPeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj3 = new $cls();
-			$obj3->hydrate($rs, $startcol3);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj3 = $temp_obj1->getClub(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj3->addUserAdmin($obj1); 					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj3->initUserAdminList();
-				$obj3->addUserAdmin($obj1);
-			}
-
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
-	public static function doCountJoinAllExceptPeople(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(UserAdminPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(UserAdminPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(UserAdminPeer::CLUB_ID, ClubPeer::ID);
-
-		$rs = UserAdminPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
-	public static function doCountJoinAllExceptClub(Criteria $criteria, $distinct = false, $con = null)
-	{
-				$criteria = clone $criteria;
-
-				$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(UserAdminPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(UserAdminPeer::COUNT);
-		}
-
-				foreach($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(UserAdminPeer::PEOPLE_ID, PeoplePeer::ID);
-
-		$rs = UserAdminPeer::doSelectRS($criteria, $con);
-		if ($rs->next()) {
-			return $rs->getInt(1);
-		} else {
-						return 0;
-		}
-	}
-
-
-	
-	public static function doSelectJoinAllExceptPeople(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		UserAdminPeer::addSelectColumns($c);
-		$startcol2 = (UserAdminPeer::NUM_COLUMNS - UserAdminPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-
-		ClubPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + ClubPeer::NUM_COLUMNS;
-
-		$c->addJoin(UserAdminPeer::CLUB_ID, ClubPeer::ID);
-
-
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = UserAdminPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = ClubPeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj2  = new $cls();
-			$obj2->hydrate($rs, $startcol2);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getClub(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj2->addUserAdmin($obj1);
-					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj2->initUserAdminList();
-				$obj2->addUserAdmin($obj1);
-			}
-
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
-	public static function doSelectJoinAllExceptClub(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		UserAdminPeer::addSelectColumns($c);
-		$startcol2 = (UserAdminPeer::NUM_COLUMNS - UserAdminPeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-
-		PeoplePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + PeoplePeer::NUM_COLUMNS;
-
-		$c->addJoin(UserAdminPeer::PEOPLE_ID, PeoplePeer::ID);
-
-
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = UserAdminPeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = PeoplePeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj2  = new $cls();
-			$obj2->hydrate($rs, $startcol2);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getPeople(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj2->addUserAdmin($obj1);
-					break;
 				}
 			}
 

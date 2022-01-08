@@ -1,5 +1,0 @@
-fields:
-       
-  question:
-    required:
-      msg:       form.error.requiredField

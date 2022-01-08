@@ -1,19 +1,18 @@
 <?php
-	$clubId = $sf_user->getAttribute('clubId');
+	$userAdminObj = UserAdmin::getCurrentUser();
 ?>
-    <div class="wrapper">
-        <div class="pageTitle">
-        	<h5>Administração iRank</h5>
-
-        	<span>Seja bem-vindo ao centro de controle e gerenciamento de rankings, eventos e resultados do <b>iRank</b><br/>
-        	Navegue pelo menu ao lado para acessar suas opções ou utilize as opções rápidas abaixo, que representam suas opções mais acessadas.</span>
-    	</div>
-        <div class="clear"></div>
-    </div>
-    <div class="line"></div>    
-    <div class="wrapper">
-    	<!-- Title area -->
-    	<?php include_partial('home/club/resume', array('clubId'=>$clubId)) ?>
-    	<?php include_partial('home/club/calendar', array('clubId'=>$clubId)) ?>
-    	<div class="clear"></div>
-	</div>
+<table cellspacing="0" cellpadding="0">
+	<tr>
+		<td valign="top" style="width: 340px">
+		</td>
+		<td valign="top">
+			<div id="homeRightPanelDiv">
+				<div style="margin-top: 10px">Olá <b><?php echo $sf_user->getAttribute('firstName') ?></b>.</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" style="padding-top: 10px">
+		</td>
+	</tr>
+</table>

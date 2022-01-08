@@ -96,21 +96,10 @@ class EventPersonal extends BaseEventPersonal
 	
 	public function getClone(){
 		
-		$eventName   = $this->getEventName();
-		$eventNumber = preg_replace('/^[^0-9]*/', '', $eventName);
-		
-		if( !$eventNumber )
-			$eventNumber = ' #1';
-		else{
-		
-			$eventName   = preg_replace('/[0-9]*$/', '', $eventName);
-			$eventNumber = $eventNumber+1;
-		}
-		
 		$eventPersonalObj = new EventPersonal();
 		$eventPersonalObj->setUserSiteId($this->getUserSiteId());
 		$eventPersonalObj->setGameStyleId($this->getGameStyleId());
-		$eventPersonalObj->setEventName($eventName.$eventNumber);
+		$eventPersonalObj->setEventName($this->getEventName());
 		$eventPersonalObj->setEventPlace($this->getEventPlace());
 		$eventPersonalObj->setEventDate($this->getEventDate());
 		$eventPersonalObj->setEventPosition($this->getEventPosition());

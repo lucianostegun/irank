@@ -35,11 +35,8 @@ function clearDebug(){
 function showDiv( divId, isTableCell, displayType ){
 
 	var div = $( divId );
-	if( div && div!='undefined' ){
-		
+	if( div && div!='undefined' )
 		div.style.display = (isTableCell?'table-cell':(displayType?displayType:'block'));
-		div.removeClassName('hidden');
-	}
 }
 
 function hideDiv( divId ){
@@ -57,6 +54,7 @@ function showIndicator( indicatorId ){
 		$('indicator').style.top = window.pageYOffset;
 
 	showDiv('indicator'+indicatorId);
+	showDiv('indicator');
 	hideFormStatusError(indicatorId);
 }
 
@@ -191,18 +189,22 @@ function linkToFunction(label, module, action, fieldName, fieldValue){
 	return '<a href="javascript:void(0)" onclick="goModule(\''+module+'\', \''+action+'\', \''+fieldName+'\', \''+fieldValue+'\')">'+label+'</a>';
 }
 
-function toCurrency(value, decimalPlaces){
+function toCurrency(value){
 	
-	decimalPlaces = (typeof(decimalPlaces)!='undefined'?decimalPlaces:2);
-	return toFloat(value, true, decimalPlaces);
+	return toFloat(value, true, 2);
 }
 
 function toFloat(value, display, decimalPlaces){
 
 	decimalPlaces = (typeof(decimalPlaces)=='undefined'?2:decimalPlaces);
 	
-	if( !value )
-		value = 0;
+	if( !value ){
+		
+		if( display )
+			return '0,00';
+		else
+			return 0;
+	}
 	
 	value = value+' ';
 	
@@ -214,7 +216,7 @@ function toFloat(value, display, decimalPlaces){
 	if( (/^[0-9]+[,\.][0-9]{3,} $/).test(value) ){
 		
 		value = value.replace(',', '.');
-		value = number_format(value, decimalPlaces, separator, (separator=='.'?',':'.'));
+		value = number_format(value, decimalPlaces, separator, '');
 	}
 
 	value = value.replace(/[^0-9,-]/ig, '');
@@ -223,7 +225,7 @@ function toFloat(value, display, decimalPlaces){
 	value = parseFloat(value);
 	
 	if( display )
-		value = number_format(value, decimalPlaces, separator, (separator=='.'?',':'.'));
+		value = number_format(value, decimalPlaces, separator, '');
 	
 	return value;
 }
@@ -242,9 +244,9 @@ function parseInfo(infoList){
 
 function parseMessage(errorMessage){
 
-	if( (errorMessage).match(/^!/) ){
-		return errorMessage.replace(/^!/, '\n\n');
-	}else
+	if( (errorMessage).match(/^!/) )
+		return errorMessage.replace('!', '\n\n');
+	else
 		return null;
 }
 
@@ -321,11 +323,6 @@ function isModuleName(moduleName){
 	return (moduleName==_ModuleName);
 }
 
-function getActionName(){
-	
-	return _ActionName;
-}
-
 function getOrdinalSufix(number){
 	
 	if( i18n_culture=='pt_BR' )
@@ -342,24 +339,4 @@ function getOrdinalSufix(number){
 		
 		return sufix;
 	}
-}
-
-function changeClassName(element, className){
-	
-	element.className = className;
-}
-
-function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow, evt){
-	
-	if( evt && (evt.metaKey || evt.altKey) )
-		newWindow = true
-	
-	if( fieldName && fieldValue || newWindow )
-		return goModule(moduleName, actionName, fieldName, fieldValue, newWindow, arguments );
-	
-	var urlLocation = _webRoot+'/'+moduleName+'/'+actionName;
-	urlLocation = urlLocation.replace(/\/\//g, '/');
-	urlLocation = urlLocation.replace(/\/$/g, '');
-
-	location.href = urlLocation;
 }

@@ -1,3 +1,0 @@
-all:
-  stylesheets:    [eventLive, table, lightbox]
-  javascripts:    [eventLive, /sf/prototype/js/scriptaculous, lightbox]

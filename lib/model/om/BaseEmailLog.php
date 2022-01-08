@@ -9,15 +9,7 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 
 
 	
-	protected $id;
-
-
-	
 	protected $email_address;
-
-
-	
-	protected $error_message;
 
 
 	
@@ -33,7 +25,7 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 
 
 	
-	protected $read_at;
+	protected $updated_at;
 
 	
 	protected $alreadyInSave = false;
@@ -42,24 +34,10 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	protected $alreadyInValidation = false;
 
 	
-	public function getId()
-	{
-
-		return $this->id;
-	}
-
-	
 	public function getEmailAddress()
 	{
 
 		return $this->email_address;
-	}
-
-	
-	public function getErrorMessage()
-	{
-
-		return $this->error_message;
 	}
 
 	
@@ -99,17 +77,17 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getReadAt($format = 'Y-m-d H:i:s')
+	public function getUpdatedAt($format = 'Y-m-d H:i:s')
 	{
 
-		if ($this->read_at === null || $this->read_at === '') {
+		if ($this->updated_at === null || $this->updated_at === '') {
 			return null;
-		} elseif (!is_int($this->read_at)) {
-						$ts = strtotime($this->read_at);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [read_at] as date/time value: " . var_export($this->read_at, true));
+		} elseif (!is_int($this->updated_at)) {
+						$ts = strtotime($this->updated_at);
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [updated_at] as date/time value: " . var_export($this->updated_at, true));
 			}
 		} else {
-			$ts = $this->read_at;
+			$ts = $this->updated_at;
 		}
 		if ($format === null) {
 			return $ts;
@@ -121,20 +99,6 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	}
 
 	
-	public function setId($v)
-	{
-
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->id !== $v) {
-			$this->id = $v;
-			$this->modifiedColumns[] = EmailLogPeer::ID;
-		}
-
-	} 
-	
 	public function setEmailAddress($v)
 	{
 
@@ -145,20 +109,6 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 		if ($this->email_address !== $v) {
 			$this->email_address = $v;
 			$this->modifiedColumns[] = EmailLogPeer::EMAIL_ADDRESS;
-		}
-
-	} 
-	
-	public function setErrorMessage($v)
-	{
-
-						if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->error_message !== $v) {
-			$this->error_message = $v;
-			$this->modifiedColumns[] = EmailLogPeer::ERROR_MESSAGE;
 		}
 
 	} 
@@ -208,19 +158,19 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setReadAt($v)
+	public function setUpdatedAt($v)
 	{
 
 		if ($v !== null && !is_int($v)) {
 			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [read_at] from input: " . var_export($v, true));
+			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [updated_at] from input: " . var_export($v, true));
 			}
 		} else {
 			$ts = $v;
 		}
-		if ($this->read_at !== $ts) {
-			$this->read_at = $ts;
-			$this->modifiedColumns[] = EmailLogPeer::READ_AT;
+		if ($this->updated_at !== $ts) {
+			$this->updated_at = $ts;
+			$this->modifiedColumns[] = EmailLogPeer::UPDATED_AT;
 		}
 
 	} 
@@ -229,25 +179,21 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->id = $rs->getInt($startcol + 0);
+			$this->email_address = $rs->getString($startcol + 0);
 
-			$this->email_address = $rs->getString($startcol + 1);
+			$this->email_subject = $rs->getString($startcol + 1);
 
-			$this->error_message = $rs->getString($startcol + 2);
+			$this->sending_status = $rs->getString($startcol + 2);
 
-			$this->email_subject = $rs->getString($startcol + 3);
+			$this->created_at = $rs->getTimestamp($startcol + 3, null);
 
-			$this->sending_status = $rs->getString($startcol + 4);
-
-			$this->created_at = $rs->getTimestamp($startcol + 5, null);
-
-			$this->read_at = $rs->getTimestamp($startcol + 6, null);
+			$this->updated_at = $rs->getTimestamp($startcol + 4, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 7; 
+						return $startcol + 5; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EmailLog object", $e);
 		}
@@ -283,6 +229,11 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
       $this->setCreatedAt(time());
     }
 
+    if ($this->isModified() && !$this->isColumnModified(EmailLogPeer::UPDATED_AT))
+    {
+      $this->setUpdatedAt(time());
+    }
+
 		if ($this->isDeleted()) {
 			throw new PropelException("You cannot save an object that has been deleted.");
 		}
@@ -313,7 +264,6 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 				if ($this->isNew()) {
 					$pk = EmailLogPeer::doInsert($this, $con);
 					$affectedRows += 1; 										 										 
-					$this->setId($pk);  
 					$this->setNew(false);
 				} else {
 					$affectedRows += EmailLogPeer::doUpdate($this, $con);
@@ -380,25 +330,19 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getId();
-				break;
-			case 1:
 				return $this->getEmailAddress();
 				break;
-			case 2:
-				return $this->getErrorMessage();
-				break;
-			case 3:
+			case 1:
 				return $this->getEmailSubject();
 				break;
-			case 4:
+			case 2:
 				return $this->getSendingStatus();
 				break;
-			case 5:
+			case 3:
 				return $this->getCreatedAt();
 				break;
-			case 6:
-				return $this->getReadAt();
+			case 4:
+				return $this->getUpdatedAt();
 				break;
 			default:
 				return null;
@@ -410,13 +354,11 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	{
 		$keys = EmailLogPeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0]=>$this->getId(),
-			$keys[1]=>$this->getEmailAddress(),
-			$keys[2]=>$this->getErrorMessage(),
-			$keys[3]=>$this->getEmailSubject(),
-			$keys[4]=>$this->getSendingStatus(),
-			$keys[5]=>$this->getCreatedAt(),
-			$keys[6]=>$this->getReadAt(),
+			$keys[0]=>$this->getEmailAddress(),
+			$keys[1]=>$this->getEmailSubject(),
+			$keys[2]=>$this->getSendingStatus(),
+			$keys[3]=>$this->getCreatedAt(),
+			$keys[4]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -433,25 +375,19 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setId($value);
-				break;
-			case 1:
 				$this->setEmailAddress($value);
 				break;
-			case 2:
-				$this->setErrorMessage($value);
-				break;
-			case 3:
+			case 1:
 				$this->setEmailSubject($value);
 				break;
-			case 4:
+			case 2:
 				$this->setSendingStatus($value);
 				break;
-			case 5:
+			case 3:
 				$this->setCreatedAt($value);
 				break;
-			case 6:
-				$this->setReadAt($value);
+			case 4:
+				$this->setUpdatedAt($value);
 				break;
 		} 	}
 
@@ -460,13 +396,11 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	{
 		$keys = EmailLogPeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setEmailAddress($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setErrorMessage($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setEmailSubject($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setSendingStatus($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setReadAt($arr[$keys[6]]);
+		if (array_key_exists($keys[0], $arr)) $this->setEmailAddress($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setEmailSubject($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setSendingStatus($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setUpdatedAt($arr[$keys[4]]);
 	}
 
 	
@@ -474,13 +408,11 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(EmailLogPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(EmailLogPeer::ID)) $criteria->add(EmailLogPeer::ID, $this->id);
 		if ($this->isColumnModified(EmailLogPeer::EMAIL_ADDRESS)) $criteria->add(EmailLogPeer::EMAIL_ADDRESS, $this->email_address);
-		if ($this->isColumnModified(EmailLogPeer::ERROR_MESSAGE)) $criteria->add(EmailLogPeer::ERROR_MESSAGE, $this->error_message);
 		if ($this->isColumnModified(EmailLogPeer::EMAIL_SUBJECT)) $criteria->add(EmailLogPeer::EMAIL_SUBJECT, $this->email_subject);
 		if ($this->isColumnModified(EmailLogPeer::SENDING_STATUS)) $criteria->add(EmailLogPeer::SENDING_STATUS, $this->sending_status);
 		if ($this->isColumnModified(EmailLogPeer::CREATED_AT)) $criteria->add(EmailLogPeer::CREATED_AT, $this->created_at);
-		if ($this->isColumnModified(EmailLogPeer::READ_AT)) $criteria->add(EmailLogPeer::READ_AT, $this->read_at);
+		if ($this->isColumnModified(EmailLogPeer::UPDATED_AT)) $criteria->add(EmailLogPeer::UPDATED_AT, $this->updated_at);
 
 		return $criteria;
 	}
@@ -490,7 +422,6 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(EmailLogPeer::DATABASE_NAME);
 
-		$criteria->add(EmailLogPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -498,14 +429,13 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 	
 	public function getPrimaryKey()
 	{
-		return $this->getId();
+		return null;
 	}
 
 	
-	public function setPrimaryKey($key)
-	{
-		$this->setId($key);
-	}
+	 public function setPrimaryKey($pk)
+	 {
+		 	 }
 
 	
 	public function copyInto($copyObj, $deepCopy = false)
@@ -513,20 +443,17 @@ abstract class BaseEmailLog extends BaseObject  implements Persistent {
 
 		$copyObj->setEmailAddress($this->email_address);
 
-		$copyObj->setErrorMessage($this->error_message);
-
 		$copyObj->setEmailSubject($this->email_subject);
 
 		$copyObj->setSendingStatus($this->sending_status);
 
 		$copyObj->setCreatedAt($this->created_at);
 
-		$copyObj->setReadAt($this->read_at);
+		$copyObj->setUpdatedAt($this->updated_at);
 
 
 		$copyObj->setNew(true);
 
-		$copyObj->setId(NULL); 
 	}
 
 	

@@ -1,19 +1,17 @@
 <?php
 	$eventObjList = Event::getList($criteria);
   	
-	foreach($eventObjList as $key=>$eventObj):
+	foreach($eventObjList as $eventObj):
+		$isMyEvent = $eventObj->isMyEvent();
 		
 		$eventId = $eventObj->getId();
-		$link = 'goModule(\'event\', \'edit\', \'eventId\', '.$eventId.')';
+		$link = 'goModule(\'event\', \'edit\', \'eventId\', '.$eventId.', true)';
 		
 		$comments = Util::executeOne('SELECT COUNT(1) FROM event_comment WHERE event_id = '.$eventId.' AND deleted = false');
 		$photos   = Util::executeOne('SELECT COUNT(1) FROM event_photo WHERE event_id = '.$eventId.' AND deleted = false');
-		
-		$className = ($key%2==0?'':'odd');
-		$className .= ($key==0?' first':'');
 ?>
-<tr onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')" class="<?php echo $className ?>">
-	<td onclick="<?php echo $link ?>" align="left"><?php echo $eventObj->getEventName() ?></td>
+<tr onmouseover="this.className='recordRowOver'" onmouseout="this.className=''">
+	<td onclick="<?php echo $link ?>" align="left"><?php echo $eventObj->getEventName().($isMyEvent?'*':'') ?></td>
 	<td onclick="<?php echo $link ?>" align="left"><?php echo $eventObj->getRanking()->getRankingName() ?></td>
 	<td onclick="<?php echo $link ?>" align="center"><?php echo $eventObj->getEventDate('d/m/Y').' '.$eventObj->getStartTime('H:i') ?></td>
 	<td onclick="<?php echo $link ?>" align="left"><?php echo $eventObj->getEventPlace() ?></td>
@@ -27,9 +25,6 @@
 	if( count($eventObjList)==0 ):
 ?>
 <tr class="boxcontent">
-	<td colspan="7">
-		Nenhum evento foi encontrado para os parâmetros pesquisados.<br/>
-		<?php echo link_to('Clique aqui', 'event/new') ?> para criar um novo evento.
-	</td>
+	<td colspan="7"><?php echo __('event.noEvents') ?></td>
 </tr>
 <?php endif; ?>

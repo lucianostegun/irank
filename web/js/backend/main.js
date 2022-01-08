@@ -1,235 +1,151 @@
-$(function() {
+var _ModuleName    = null;
+var _LockedToolbar = true;
+
+function isReadOnly(){
 	
-	//===== Alerta padrão =====//
-	$('#mainAlertDialog').dialog({
-		autoOpen: false,
-		modal: true,
-		resizable: false,
-		width: 550,
-		height: 150,
-		buttons: {
-			Ok: function() {
-				$('#mainAlertDialog').dialog('close');
-			}
-		}
-	});
+	return _isReadOnly;
+}
+
+function setReadOnly( readOnly ){
 	
-	//===== Collapsible elements management =====//
+	_isReadOnly = readOnly;
+}
+
+function checkIsLogged( content ){
+
+	if( content!='1' )	
+		top.location = _webRoot+'/login/logout';
+}
+
+function showIndicator( indicatorId ){
 	
-	$('.exp').collapsible({
-		defaultOpen: 'current',
-		cookieName: 'navAct',
-		cssOpen: 'active',
-		cssClose: 'inactive',
-		speed: 200
-	});
+	indicatorId = (indicatorId?ucfirst(indicatorId):'');
 	
-	//===== Tabs =====//
+	if( !indicatorId ){
+
+		hideDiv('toolbarActionDiv');
+		hideDiv('formStatusErrorDiv');
+		hideDiv('formStatusSuccessDiv');
+		showDiv('indicator');
+	}else{
 	
-	$.fn.contentTabs = function(){ 
+		hideDiv('formStatusSuccess'+ucfirst(indicatorId)+'Div');
+		hideDiv('formStatusError'+ucfirst(indicatorId)+'Div');
 	
-		$(this).find(".tab_content").hide(); //Hide all content
-		$(this).find("ul.tabs li:first").addClass("activeTab").show(); //Activate first tab
-		$(this).find(".tab_content:first").show(); //Show first tab content
-	
-		$("ul.tabs li").click(function() {
-			return false;
-		});
+		showDiv('indicator'+indicatorId);
 		
-		$("ul.tabs li").mousedown(function() {
-			$(this).parent().parent().find("ul.tabs li").removeClass("activeTab"); //Remove any "active" class
-			$(this).addClass("activeTab"); //Add "active" class to selected tab
-			$(this).parent().parent().find(".tab_content").hide(); //Hide all tab content
-			var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-			$(activeTab).show(); //Fade in the active content
+		if( (buttonBar = $('buttonBar'+ucfirst(indicatorId)))!=null ){
 			
-			return false;
-		});
-	};
-	$("div[class^='widget']").contentTabs(); //Run function on any div with class name of "Content Tabs"
-	
-
-
-	//===== Form elements styling =====//
-	
-	$("select, input:checkbox, input:radio, input:file").uniform({
-		maxSelectChars: 3
-	});
-	
-	
-	/* Tables
-	================================================== */
-
-
-		//===== Check all checbboxes =====//
-		
-		buildCheckboxTable(1);
-		
-		
-		
-		//===== Resizable columns =====//
-		
-		$("#res, #res1").colResizable({
-			liveDrag:true,
-			draggingClass:"dragging" 
-		});
-		  
-		  
-		  
-		//===== Sortable columns =====//
-		
-		$("table").tablesorter();
-		
-		
-		
-		//===== Dynamic data table =====//
-		
-		oTable = $('.dTable').dataTable({
-			"bJQueryUI": true,
-			"iDisplayLength": 15,
-			"sPaginationType": "full_numbers",
-			"sDom": '<""l>t<"F"fp>',
-			"aaSorting": [],
-		});
-		
-		$(".datepicker").datepicker({ 
-			defaultDate: +0,
-			autoSize: false,
-			appendText: '(dd/mm/aaaa)',
-			dateFormat: 'dd/mm/yy'
-			});
-
-		$(".datepickerClean").datepicker({ 
-			defaultDate: +0,
-			autoSize: true,
-			dateFormat: 'dd/mm/yy',
-		});
-		
-		//===== Masked input =====//
-		
-		updateFieldMasks = function(){
-			
-			$.mask.definitions['~'] = "[+-]";
-			$(".maskDate").mask("99/99/9999");
-			$(".maskPhone").mask("(99) 9999-9999");
+			buttonBar.className = buttonBar.className.replace('Error', '');
+			buttonBar.className = buttonBar.className.replace('Success', '');
 		}
-		
-		updateFieldMasks();
-});
+	}
+}
 
-function updateMainBalance(mainBalanceValue){
+function hideIndicator( indicatorId ){
 	
-	if( mainBalanceValue > 10000 )
-		$('#mainBalanceCode').addClass('small');
+	indicatorId = (indicatorId?ucfirst(indicatorId):'');
+	
+	if( !indicatorId ){
+
+		hideDiv('formStatusErrorDiv');
+		hideDiv('formStatusSuccessDiv');
+		hideDiv('indicator');
+		showDiv('toolbarActionDiv');
+	}else{
+
+		hideDiv('indicator'+indicatorId);
+	}
+}
+
+function goToModule( moduleName, actionName, newWindow ){
+	
+	if( newWindow )
+		window.open( _webRoot+'/'+moduleName+'/'+actionName );
 	else
-		$('#mainBalanceCode').removeClass('small');
-	
-	$('#mainBalanceAmount').html(toCurrency(mainBalanceValue));
+		window.location = _webRoot+'/'+moduleName+'/'+actionName;
 }
 
-function updateMainBalanceChanges(percent){
+function selectAutoCompleteItem( id, description, instanceName, fieldName, nextFieldId ){
 	
-	$('#mainBalanceChanges').attr('class', (percent>0?'sPositive':(percent<0?'sNegative':'sZero')));
-	$('#mainBalanceChanges').html(toCurrency(Math.abs(percent), 0)+'%');
+	hideDiv(instanceName+ucfirst(fieldName)+'FieldDiv');
+	showDiv(instanceName+ucfirst(fieldName)+'RoDiv');
+	showDiv(instanceName+ucfirst(fieldName)+'AutoComplete');
+
+	id = id.replace(fieldName, '');
+	
+	$(instanceName+ucfirst(fieldName)).value           = id;
+	$(instanceName+ucfirst(fieldName)+'Div').innerHTML = description;
+	if( nextFieldId )
+		$(nextFieldId).focus();
 }
 
-function doSaveMain(){
+function openAutoComplete(instanceName, fieldName, fieldSearch, reset ){
 	
-	$('#'+getModuleName()+'Form').submit();
-}
-
-function doGetNew(){
+	showDiv(instanceName+ucfirst(fieldName)+'FieldDiv');
+	hideDiv(instanceName+ucfirst(fieldName)+'RoDiv');
+	hideDiv(instanceName+ucfirst(fieldName)+'AutoComplete');
 	
-	location.href = _webRoot+'/'+getModuleName()+'/new';
-}
-
-function getTabIndicator(){
-	
-	var html = '<div class="tabIndicator">';
-	html += '<img src="'+_imageRoot+'/backend/loaders/loader9.gif" /> <span class="mt10">Carregando informações, por favor aguarde...</span>';
-	html += '</div>';
-	
-	return html;
-}
-
-function loadTabContent(tabId, urlAjax, force, successHandler){
-	
-	if( !force && $('#'+tabId).hasClass('loaded') )
-		return;
-	
-	var successFunc = function(content){
+	if( reset ){
 		
-		$('#'+tabId).html(content);
-		$('#'+tabId).addClass('loaded');
-		
-		if( typeof(successHandler)=='function' )
-			successHandler();
-	}
-
-	var failureFunc = function(t){
-		
-		$('#'+tabId).html('<div class="tabContentError">Não foi possível carregar as informações da aba selecionada!\nPor favor, tente novamente.</div>');
-		
-		if( isDebug() )
-			debug(t.responseText);
+		$(instanceName+ucfirst(fieldName)).value = '';
+		$(fieldSearch).value                     = '';
 	}
 	
-	urlAjax = _webRoot+urlAjax;
-	AjaxRequest(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+	$(fieldSearch).focus();
 }
 
-function buildCheckboxTable(){
+function closeAutoComplete(instanceName, fieldName, fieldSearch ){
 	
-	$(".titleIcon input:checkbox").click(function() {
-		var checkedStatus = this.checked;
-		
-		$("#checkAll tbody tr td:first-child input").each(function() {
-			this.checked = checkedStatus;
-				if (checkedStatus == this.checked) {
-					$(this).closest('.checker > span').removeClass('checked');
-				}
-				if (this.checked) {
-					$(this).closest('.checker > span').addClass('checked');
-				}
-		});
-	});
-
-	$(".titleIcon.titleIcon2 input:checkbox").click(function() {
-		var checkedStatus = this.checked;
-		
-		$("#checkAll2 tbody tr td:first-child input:checkbox").each(function() {
-			this.checked = checkedStatus;
-			if (checkedStatus == this.checked) {
-				$(this).closest('.checker > span').removeClass('checked');
-			}
-			if (this.checked) {
-				$(this).closest('.checker > span').addClass('checked');
-			}
-		});
-	});
-		
-	$('#checkAll tbody tr td:first-child').next('td').css('border-left-color', '#CBCBCB');
-	$('#checkAll2 tbody tr td:first-child').next('td').css('border-left-color', '#CBCBCB');
+	hideDiv(instanceName+ucfirst(fieldName)+'FieldDiv');
+	showDiv(instanceName+ucfirst(fieldName)+'RoDiv');
+	hideDiv(instanceName+ucfirst(fieldName)+'AutoComplete');
 }
 
-function updateProgressBar( percent, progressBarId ){
+function toggleButton(buttonId, type){
+
+	buttonId = ucfirst(buttonId);
 	
-	// jQuery UI progress bar
-	$("#"+progressBarId).progressbar({
-		value: percent
-	});
+	if( !checkButton(buttonId) )
+		return false;
+	
+	if( type=='over' ){
+
+		$('button'+buttonId+'Left').style.backgroundPosition   = '0 -22';
+		$('button'+buttonId+'Middle').style.backgroundPosition = '0 -22';
+		$('button'+buttonId+'Right').style.backgroundPosition  = '0 -22';
+	}else{
+		
+		$('button'+buttonId+'Left').style.backgroundPosition   = '0 0';
+		$('button'+buttonId+'Middle').style.backgroundPosition = '0 0';
+		$('button'+buttonId+'Right').style.backgroundPosition  = '0 0';
+	}
 }
 
-function showAlert(message, title){
+function showQuickSearchHint(){
 	
-	title = (title?title:'Alerta interno');
+	hideDiv('taskControlDiv');
 	
-	message = message.replace(/\n/g, '<br/>');
+	if( isVisible('quickSearchHint') )
+		hideDiv('quickSearchHint');
+	else
+		showDiv('quickSearchHint');
+}
+
+function adjustTabHeight(){
 	
-	$('#mainAlertMessage').html(message);
-	$('#mainAlertDialog').dialog({
-        title: title
-    });
+}
+
+function adjustGridboxHeight(){
+
+}
+
+function lockedToolbar(){
 	
-	$('#mainAlertDialog').dialog('open');
+	return _LockedToolbar;
+}
+
+function releaseToolbar(){
+	
+	_LockedToolbar = false;
 }

@@ -37,8 +37,6 @@
     
     rankingId = theRankingId;
 //    NSLog(@"rankingId: %i", rankingId);
-
-    appDelegate = (iRankAppDelegate*)[[UIApplication sharedApplication] delegate];
     
 //    NSString *eventResultPath = [Event eventArrayPath:[NSString stringWithFormat:@"result-%i", eventId]];
 //    
@@ -84,7 +82,7 @@
 
 - (void)loadPlayerList {
     
-    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/ranking/getXml/model/rankingPlayer/rankingId/%i/language/%@", serverAddress, rankingId, appDelegate.currentLanguage]];
+    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/ranking/getXml/model/rankingPlayer/rankingId/%i", serverAddress, rankingId]];
     
 //    NSLog(@"url: %@", url.relativeString);
     
@@ -172,11 +170,9 @@
     
     NSMutableArray *rankingList;
     
-    iRankAppDelegate *appDelegate = (iRankAppDelegate*)[[UIApplication sharedApplication] delegate];
+    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/ranking/getXml/model/list/userSiteId/%i", serverAddress, userSiteId]];
     
-    NSURL *url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@/ios.php/ranking/getXml/model/list/userSiteId/%i/language/%@", serverAddress, userSiteId, appDelegate.currentLanguage]];
-    
-    NSLog(@"url: %@", url.relativeString);
+//    NSLog(@"url: %@", url.relativeString);
     
     XMLRankingParser *rankingParser = [[XMLRankingParser alloc] initXMLParser];
     

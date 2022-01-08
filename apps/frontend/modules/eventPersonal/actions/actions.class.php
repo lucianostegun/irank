@@ -19,7 +19,6 @@ class eventPersonalActions extends sfActions
 	$this->userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
 	$this->criteria    = new Criteria();
   	$this->innerMenu   = 'eventPersonal/include/mainMenuIndex';
-  	$this->innerObj    = new EventPersonal();
   }
 
   public function executeNew($request){
@@ -49,7 +48,8 @@ class eventPersonalActions extends sfActions
 		$this->eventPersonalObj = new EventPersonal();
   	}
 	  	
-  	$this->innerObj = $this->eventPersonalObj;
+  	$this->innerMenu = 'eventPersonal/include/mainMenu';
+  	$this->innerObj  = $this->eventPersonalObj;
   }
   
   public function handleErrorSave(){
@@ -102,7 +102,7 @@ class eventPersonalActions extends sfActions
 	$eventPersonalObj->setRebuy( Util::formatFloat($rebuy) );
 	$eventPersonalObj->setAddon( Util::formatFloat($addon) );
 	$eventPersonalObj->setPrize( Util::formatFloat($prize) );
-	$eventPersonalObj->setComments(nvl($comments));
+	$eventPersonalObj->setComments( ($comments?$comments:null) );
 	$eventPersonalObj->setVisible(true);
 	$eventPersonalObj->setEnabled(true);
 	$eventPersonalObj->save();

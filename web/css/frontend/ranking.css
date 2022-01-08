@@ -1,0 +1,25 @@
+#searchOptions {
+
+	margin: 		10px 0px -8px 12px;
+	padding-left: 	5px;
+}
+
+#searchOptions a {
+
+	color: #800000;
+}
+
+#searchOptions a:hover {
+
+	color: #FF0000;
+}
+
+#rankingFormulaSuccessDiv {
+
+	display: 	none;
+}
+
+#rankingFormulaSuccessDiv img {
+
+	margin-right: 	5px
+}

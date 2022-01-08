@@ -10,13 +10,13 @@
 #define kFirstNameKey @"firstName"
 #define kLastNameKey @"lastName"
 
-#define kBuyinsWord NSLocalizedString(@"Buy-ins", @"home")
-#define kFeeWord NSLocalizedString(@"Rakes", @"home")
-#define kRebuysWord NSLocalizedString(@"Rebuys", @"home")
-#define kAddonsWord NSLocalizedString(@"Add-ons", @"home")
-#define kPrizesWord NSLocalizedString(@"Prizes", @"home")
-#define kScoreWord NSLocalizedString(@"Score", @"home")
-#define kBalanceWord NSLocalizedString(@"CREDIT", @"home")
+#define kBuyinsWord @"Buy-ins"
+#define kFeeWord @"Entradas"
+#define kRebuysWord @"Rebuys"
+#define kAddonsWord @"Addons"
+#define kPrizesWord @"Prêmios"
+#define kScoreWord @"Pontos"
+#define kBalanceWord @"SALDO"
 
 
 #define kSelectKey      @"selection"
@@ -29,9 +29,9 @@
 
 #define kEventPlayerListLoadSuccess @"eventPlayerListLoadSuccess"
 
-//#define serverAddress   @"irank"
+#define serverAddress   @"irank"
 //#define serverAddress   @"alpha.irank.com.br"
-#define serverAddress   @"www.irank.com.br"
+//#define serverAddress   @"www.irank.com.br"
 //#define serverAddress   @"beta.irank.com.br"
 
 #define kForceOfflineSaving NO;

@@ -44,19 +44,15 @@ class RankingMapBuilder {
 
 		$tMap->addForeignKey('RANKING_TYPE_ID', 'RankingTypeId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
 
-		$tMap->addForeignKey('GAME_STYLE_ID', 'GameStyleId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', false, null);
+		$tMap->addForeignKey('GAME_STYLE_ID', 'GameStyleId', 'int', CreoleTypes::INTEGER, 'virtual_table', 'ID', true, null);
 
 		$tMap->addColumn('START_DATE', 'StartDate', 'int', CreoleTypes::DATE, false, null);
-
-		$tMap->addColumn('START_TIME', 'StartTime', 'int', CreoleTypes::TIME, false, null);
 
 		$tMap->addColumn('FINISH_DATE', 'FinishDate', 'int', CreoleTypes::DATE, false, null);
 
 		$tMap->addColumn('IS_PRIVATE', 'IsPrivate', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
-		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::NUMERIC, false, 10);
-
-		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('PLAYERS', 'Players', 'int', CreoleTypes::INTEGER, false, null);
 

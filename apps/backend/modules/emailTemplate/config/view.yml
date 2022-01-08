@@ -1,4 +1,0 @@
-all:
-
-  stylesheets:    [backend/emailTemplate]
-  javascripts:    [backend/plugins/jquery.textarea.js, backend/emailTemplate]

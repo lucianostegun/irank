@@ -13,7 +13,7 @@ abstract class BaseUserSitePeer {
 	const CLASS_DEFAULT = 'lib.model.UserSite';
 
 	
-	const NUM_COLUMNS = 18;
+	const NUM_COLUMNS = 13;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -32,22 +32,7 @@ abstract class BaseUserSitePeer {
 	const PASSWORD = 'user_site.PASSWORD';
 
 	
-	const HTPASSWD_LINE = 'user_site.HTPASSWD_LINE';
-
-	
 	const IMAGE_PATH = 'user_site.IMAGE_PATH';
-
-	
-	const SIGNED_SCHEDULE = 'user_site.SIGNED_SCHEDULE';
-
-	
-	const SCHEDULE_START_DATE = 'user_site.SCHEDULE_START_DATE';
-
-	
-	const DEVICEUDID = 'user_site.DEVICEUDID';
-
-	
-	const MOBILE_TOKEN = 'user_site.MOBILE_TOKEN';
 
 	
 	const ACTIVE = 'user_site.ACTIVE';
@@ -79,19 +64,19 @@ abstract class BaseUserSitePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'Username', 'Password', 'HtpasswdLine', 'ImagePath', 'SignedSchedule', 'ScheduleStartDate', 'Deviceudid', 'MobileToken', 'Active', 'Enabled', 'Visible', 'Deleted', 'Locked', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID, UserSitePeer::PEOPLE_ID, UserSitePeer::USERNAME, UserSitePeer::PASSWORD, UserSitePeer::HTPASSWD_LINE, UserSitePeer::IMAGE_PATH, UserSitePeer::SIGNED_SCHEDULE, UserSitePeer::SCHEDULE_START_DATE, UserSitePeer::DEVICEUDID, UserSitePeer::MOBILE_TOKEN, UserSitePeer::ACTIVE, UserSitePeer::ENABLED, UserSitePeer::VISIBLE, UserSitePeer::DELETED, UserSitePeer::LOCKED, UserSitePeer::LAST_ACCESS_DATE, UserSitePeer::CREATED_AT, UserSitePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'username', 'password', 'htpasswd_line', 'image_path', 'signed_schedule', 'schedule_start_date', 'deviceUDID', 'mobile_token', 'active', 'enabled', 'visible', 'deleted', 'locked', 'last_access_date', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'', 'PASSWORD'=>'', 'HTPASSWD_LINE'=>'', 'IMAGE_PATH'=>'', 'SIGNED_SCHEDULE'=>'', 'SCHEDULE_START_DATE'=>'', 'DEVICEUDID'=>'', 'MOBILE_TOKEN'=>'', 'ACTIVE'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'LAST_ACCESS_DATE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleId', 'Username', 'Password', 'ImagePath', 'Active', 'Enabled', 'Visible', 'Deleted', 'Locked', 'LastAccessDate', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID, UserSitePeer::PEOPLE_ID, UserSitePeer::USERNAME, UserSitePeer::PASSWORD, UserSitePeer::IMAGE_PATH, UserSitePeer::ACTIVE, UserSitePeer::ENABLED, UserSitePeer::VISIBLE, UserSitePeer::DELETED, UserSitePeer::LOCKED, UserSitePeer::LAST_ACCESS_DATE, UserSitePeer::CREATED_AT, UserSitePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_id', 'username', 'password', 'image_path', 'active', 'enabled', 'visible', 'deleted', 'locked', 'last_access_date', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_ID'=>'', 'USERNAME'=>'Username', 'PASSWORD'=>'', 'IMAGE_PATH'=>'', 'ACTIVE'=>'Ativo', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'LAST_ACCESS_DATE'=>'Último acesso', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'Username'=>2, 'Password'=>3, 'HtpasswdLine'=>4, 'ImagePath'=>5, 'SignedSchedule'=>6, 'ScheduleStartDate'=>7, 'Deviceudid'=>8, 'MobileToken'=>9, 'Active'=>10, 'Enabled'=>11, 'Visible'=>12, 'Deleted'=>13, 'Locked'=>14, 'LastAccessDate'=>15, 'CreatedAt'=>16, 'UpdatedAt'=>17, ),
-		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID=>0, UserSitePeer::PEOPLE_ID=>1, UserSitePeer::USERNAME=>2, UserSitePeer::PASSWORD=>3, UserSitePeer::HTPASSWD_LINE=>4, UserSitePeer::IMAGE_PATH=>5, UserSitePeer::SIGNED_SCHEDULE=>6, UserSitePeer::SCHEDULE_START_DATE=>7, UserSitePeer::DEVICEUDID=>8, UserSitePeer::MOBILE_TOKEN=>9, UserSitePeer::ACTIVE=>10, UserSitePeer::ENABLED=>11, UserSitePeer::VISIBLE=>12, UserSitePeer::DELETED=>13, UserSitePeer::LOCKED=>14, UserSitePeer::LAST_ACCESS_DATE=>15, UserSitePeer::CREATED_AT=>16, UserSitePeer::UPDATED_AT=>17, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'username'=>2, 'password'=>3, 'htpasswd_line'=>4, 'image_path'=>5, 'signed_schedule'=>6, 'schedule_start_date'=>7, 'deviceUDID'=>8, 'mobile_token'=>9, 'active'=>10, 'enabled'=>11, 'visible'=>12, 'deleted'=>13, 'locked'=>14, 'last_access_date'=>15, 'created_at'=>16, 'updated_at'=>17, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleId'=>1, 'Username'=>2, 'Password'=>3, 'ImagePath'=>4, 'Active'=>5, 'Enabled'=>6, 'Visible'=>7, 'Deleted'=>8, 'Locked'=>9, 'LastAccessDate'=>10, 'CreatedAt'=>11, 'UpdatedAt'=>12, ),
+		BasePeer::TYPE_COLNAME=>array (UserSitePeer::ID=>0, UserSitePeer::PEOPLE_ID=>1, UserSitePeer::USERNAME=>2, UserSitePeer::PASSWORD=>3, UserSitePeer::IMAGE_PATH=>4, UserSitePeer::ACTIVE=>5, UserSitePeer::ENABLED=>6, UserSitePeer::VISIBLE=>7, UserSitePeer::DELETED=>8, UserSitePeer::LOCKED=>9, UserSitePeer::LAST_ACCESS_DATE=>10, UserSitePeer::CREATED_AT=>11, UserSitePeer::UPDATED_AT=>12, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_id'=>1, 'username'=>2, 'password'=>3, 'image_path'=>4, 'active'=>5, 'enabled'=>6, 'visible'=>7, 'deleted'=>8, 'locked'=>9, 'last_access_date'=>10, 'created_at'=>11, 'updated_at'=>12, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
@@ -153,17 +138,7 @@ abstract class BaseUserSitePeer {
 
 		$criteria->addSelectColumn(UserSitePeer::PASSWORD);
 
-		$criteria->addSelectColumn(UserSitePeer::HTPASSWD_LINE);
-
 		$criteria->addSelectColumn(UserSitePeer::IMAGE_PATH);
-
-		$criteria->addSelectColumn(UserSitePeer::SIGNED_SCHEDULE);
-
-		$criteria->addSelectColumn(UserSitePeer::SCHEDULE_START_DATE);
-
-		$criteria->addSelectColumn(UserSitePeer::DEVICEUDID);
-
-		$criteria->addSelectColumn(UserSitePeer::MOBILE_TOKEN);
 
 		$criteria->addSelectColumn(UserSitePeer::ACTIVE);
 

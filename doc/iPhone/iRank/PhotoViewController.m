@@ -40,7 +40,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     
-    [self setTitle:NSLocalizedString(@"Photos", @"photo")];
+    [self setTitle:@"Fotos"];
     
     if( eventId!=lastEventId ){
         
@@ -268,7 +268,7 @@
         NSString *plural  = (eventPhotoCount>1?@"s":@"");
         NSString *message = [NSString stringWithFormat:@"Existem %i foto%@ ainda não salva%@.\nDeseja fazer o upload da%@ foto%@ agora?", eventPhotoCount, plural, plural, plural, plural];
         ;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Load pictures", @"photo") message:message delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Carregar fotos" message:message delegate:self cancelButtonTitle:@"Não" otherButtonTitles:@"Sim", nil];
         [alert show];
         [alert release];
     }
@@ -287,8 +287,6 @@
     self.navigationItem.rightBarButtonItem = btnCamera;
     
     appDelegate = (iRankAppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    lblNoPhoto.text = NSLocalizedString(@"This event has no photos", @"photo");
     
     refreshesImageList = YES;
     askForUpload       = YES;
@@ -319,10 +317,10 @@
     
     if (buttonIndex == 0) {
         
-
+        NSLog(@"Clicou em NÃO");
     }else{
         
-        [appDelegate showLoadingView:NSLocalizedString(@"loading picture...", @"photo")];
+        [appDelegate showLoadingView:@"carregando foto..."];
         [self performSelector:@selector(uploadCachedPictures) withObject:nil afterDelay:0.1];
     }
 }
@@ -369,7 +367,7 @@
     // Take image picker off the screen
     // you must call this dismiss method
     [self dismissModalViewControllerAnimated:YES];
-    [appDelegate showLoadingView:NSLocalizedString(@"loading picture...", @"photo")];
+    [appDelegate showLoadingView:@"carregando foto..."];
     [self performSelector:@selector(uploadPicture) withObject:nil afterDelay:0.1];
 }
 

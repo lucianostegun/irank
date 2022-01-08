@@ -1,4 +1,4 @@
 all:
-  
-  stylesheets:    [table]
+
+  stylesheets:    [frontend/table]
   javascripts:    []

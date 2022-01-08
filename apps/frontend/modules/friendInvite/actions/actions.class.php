@@ -31,7 +31,7 @@ class friendInviteActions extends sfActions
   	$peopleName   = $request->getParameter('peopleName');
   	$emailAddress = $request->getParameter('emailAddress');
   	
-	$emailContent = EmailTemplate::getContentByTagName('friendInvite');
+	$emailContent = AuxiliarText::getContentByTagName('friendInvite');
   	
   	$resultList = array();
   	for($i=1; $i<=10; $i++){
@@ -54,9 +54,9 @@ class friendInviteActions extends sfActions
 	  	}
 	  	
 	  	$emailContentTmp = $emailContent;
-	  	$emailContentTmp = str_replace('[peopleName]', $peopleName, $emailContentTmp);
-	  	$emailContentTmp = str_replace('[friendName]', $friendName, $emailContentTmp);
-	  	$emailContentTmp = str_replace('[emailAddress]', $emailAddress, $emailContentTmp);
+	  	$emailContentTmp = str_replace('<peopleName>', $peopleName, $emailContentTmp);
+	  	$emailContentTmp = str_replace('<friendName>', $friendName, $emailContentTmp);
+	  	$emailContentTmp = str_replace('<emailAddress>', $emailAddress, $emailContentTmp);
 	  	
 	  	$invite = Report::sendMail(__('email.subject.friendInvite'), $friendEmailAddress, $emailContentTmp);
 	  	if($invite)

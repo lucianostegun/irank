@@ -43,7 +43,7 @@ abstract class BaseConfigPeer {
 		BasePeer::TYPE_PHPNAME=>array ('ConfigName', 'Description', 'ConfigValue', 'CreatedAt', 'UpdatedAt', ),
 		BasePeer::TYPE_COLNAME=>array (ConfigPeer::CONFIG_NAME, ConfigPeer::DESCRIPTION, ConfigPeer::CONFIG_VALUE, ConfigPeer::CREATED_AT, ConfigPeer::UPDATED_AT, ),
 		BasePeer::TYPE_FIELDNAME=>array ('config_name', 'description', 'config_value', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('CONFIG_NAME'=>'', 'DESCRIPTION'=>'', 'CONFIG_VALUE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_ALIAS=>array ('CONFIG_NAME'=>'Configuração', 'DESCRIPTION'=>'Descrição', 'CONFIG_VALUE'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
 		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, )
 	);
 
