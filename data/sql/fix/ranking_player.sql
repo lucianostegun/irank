@@ -1,5 +1,3 @@
-UPDATE ranking SET players = (SELECT COUNT(1) FROM ranking_player WHERE enabled);
-
 UPDATE 
     ranking_player
 SET 
@@ -45,17 +43,6 @@ SET
                     AND event_player.DELETED = FALSE);
 
 UPDATE
-    event
-SET
-    invites = (SELECT
-                    COUNT(1)
-               FROM
-                    event_player
-               WHERE
-                    event_player.EVENT_ID = event.ID
-                    AND event_player.DELETED = FALSE);
-
-UPDATE
     event_player
 SET
     score = (SELECT SUM(buyin+rebuy+addon) FROM event_player ep WHERE ep.EVENT_ID = event_player.EVENT_ID) / event_position / buyin
@@ -94,4 +81,4 @@ SET
                       AND event.RANKING_ID = ranking_history.RANKING_ID
                       AND event.EVENT_DATE <= ranking_history.RANKING_DATE);
 
-//UPDATE ranking_player SET total_score = (SELECT SUM(score) FROM ranking_history WHERE ranking_id = ranking_player.RANKING_ID AND people_id = ranking_player.PEOPLE_ID);
+UPDATE ranking_player SET total_score = (SELECT SUM(score) FROM ranking_history WHERE ranking_id = ranking_player.RANKING_ID AND people_id = ranking_player.PEOPLE_ID);

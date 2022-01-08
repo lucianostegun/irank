@@ -25,7 +25,7 @@ class LogMapBuilder {
 	
 	public function doBuild()
 	{
-		$this->dbMap = Propel::getDatabaseMap('log');
+		$this->dbMap = Propel::getDatabaseMap('propel');
 
 		$tMap = $this->dbMap->addTable('log');
 		$tMap->setPhpName('Log');
@@ -36,21 +36,19 @@ class LogMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('USER_SITE_ID', 'UserSiteId', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addForeignKey('USER_SITE_ID', 'UserSiteId', 'int', CreoleTypes::INTEGER, 'user_site', 'ID', true, null);
 
-		$tMap->addColumn('USER_ADMIN_ID', 'UserAdminId', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addColumn('APP', 'App', 'string', CreoleTypes::VARCHAR, false, 10);
 
-		$tMap->addColumn('APP', 'App', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('MODULE_NAME', 'ModuleName', 'string', CreoleTypes::VARCHAR, false, 30);
 
-		$tMap->addColumn('MODULE_NAME', 'ModuleName', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('ACTION_NAME', 'ActionName', 'string', CreoleTypes::VARCHAR, false, 20);
 
-		$tMap->addColumn('ACTION_NAME', 'ActionName', 'string', CreoleTypes::VARCHAR, false, null);
-
-		$tMap->addColumn('CLASS_NAME', 'ClassName', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('CLASS_NAME', 'ClassName', 'string', CreoleTypes::VARCHAR, false, 30);
 
 		$tMap->addColumn('SEVERITY', 'Severity', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('MESSAGE', 'Message', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('MESSAGE', 'Message', 'string', CreoleTypes::VARCHAR, false, 255);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 

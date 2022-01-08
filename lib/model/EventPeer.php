@@ -35,21 +35,10 @@ class EventPeer extends BaseEventPeer
 		
 		$eventObj = parent::retrieveByPK($pk, $con);
 		
-		if( !is_object($eventObj) ){
-		
-			Util::getHelper('i18n');	
-			throw new Exception(__('eventNotFound'));
-		}else
+		if( !is_object($eventObj) )
+			throw new Exception('Evento não encontrado!');
+		else
 			return $eventObj;
-	}
-	
-	public static function retrieveByShareId($shareId){
-		
-		$criteria = new Criteria();
-		$criteria->add( EventPlayerPeer::SHARE_ID, $shareId);
-		$criteria->addJoin( EventPeer::ID, EventPlayerPeer::EVENT_ID, Criteria::INNER_JOIN );
-		
-		return EventPeer::doSelectOne($criteria);
 	}
 	
 	public static function uniqueEventName($eventName){
@@ -74,9 +63,6 @@ class EventPeer extends BaseEventPeer
 	public static function validateEventDate($eventDate){
 		
 		$rankingId = MyTools::getRequestParameter('rankingId');
-		
-		if( !$rankingId )
-			return true;
 
 		$criteria = new Criteria();
 		$criteria->add( EventPeer::RANKING_ID, $rankingId );
@@ -88,46 +74,5 @@ class EventPeer extends BaseEventPeer
 		$eventCount = EventPeer::doCount($criteria);
 
 		return ($eventCount==0);
-	}
-	
-	public static function validatePrizeShare($prizePot){
-		
-		$prizePot   = Util::formatFloat($prizePot);
-		$paidPlaces = MyTools::getRequestParameter('paidPlaces');
-		$isFreeroll = MyTools::getRequestParameter('isFreeroll');
-		$hasShare   = MyTools::getRequestParameter('hasShare');
-		
-		if( is_nan($prizePot) || !$paidPlaces )
-			return true;
-			
-		if( $isFreeroll && !$prizePot )
-			MyTools::setError('prizePot', 'form.error.greaterThan0');
-			
-		if( $isFreeroll && !$hasShare ){
-			
-			MyTools::setError('paidPlaces', 'form.error.configurePrizeError');
-			return false;
-		}
-		
-		if( $hasShare ){
-			
-			$totalPrize = 0;
-			for($i=1; $i<=$paidPlaces; $i++)
-				$totalPrize += Util::formatFloat(MyTools::getRequestParameter('paidPlace'.$i));
-			
-			$totalPercent = 0;	
-			for($i=1; $i<=$paidPlaces; $i++){
-				
-				$prizeConfig = MyTools::getRequestParameter('paidPlace'.$i);
-				$prizeConfig = str_replace('%', '', $prizeConfig);
-				$totalPercent += Util::formatFloat($prizeConfig);
-			}
-
-			if( $totalPrize!=$prizePot && $totalPercent!=100.00 )
-				for($i=1; $i<=$paidPlaces; $i++)
-					MyTools::setError('paidPlace'.$i, 'form.error.prizeShareError');
-		}
-		
-		return !MyTools::getRequest()->hasErrors();
 	}
 }

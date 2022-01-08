@@ -36,11 +36,11 @@ class RankingPlaceMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, 'ranking', 'ID', false, null);
+		$tMap->addForeignKey('RANKING_ID', 'RankingId', 'int', CreoleTypes::INTEGER, 'ranking', 'ID', true, null);
 
-		$tMap->addColumn('PLACE_NAME', 'PlaceName', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('PLACE_NAME', 'PlaceName', 'string', CreoleTypes::VARCHAR, false, 20);
 
-		$tMap->addColumn('MAPS_LINK', 'MapsLink', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('MAPS_LINK', 'MapsLink', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

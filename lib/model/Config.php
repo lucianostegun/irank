@@ -9,8 +9,6 @@
  */ 
 class Config extends BaseConfig
 {
-
-	const DOMAIN_ID = '200080';
 	
 	/**
 	 * Método que retorna um objeto da class Config referente a um registro

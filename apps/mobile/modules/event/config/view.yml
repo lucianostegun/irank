@@ -1,4 +1,4 @@
 all:
 
-  stylesheets:    [mobile/event, mobile/eventComment]
-  javascripts:    [mobile/event, mobile/eventComment, /mobile.php/event/javascript/js]
+  stylesheets:    [mobile/eventComment]
+  javascripts:    [mobile/event, mobile/eventComment]

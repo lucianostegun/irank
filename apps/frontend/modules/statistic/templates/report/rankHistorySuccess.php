@@ -1,10 +1,7 @@
 <?php
-Util::getHelper('I18N');
-
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
 $peopleObj  = PeoplePeer::retrieveByPK($peopleId);
 
-$culture        = MyTools::getCulture();
 $inputFilePath  = Util::getFilePath('/templates/rankHistory.xls');
 $outputFilePath = Util::getFilePath('/temp/rankHistory-'.microtime().'.xls');
 
@@ -24,8 +21,7 @@ if( $events > 5 )
 
 $phpExcelObj->setActiveSheetIndex(0)->insertNewRowBefore(8, $players-2);
 
-$orderByList = array(RankingPlayerPeer::TOTAL_SCORE=>'desc');
-$rankingPlayerObjList = $rankingObj->getPlayerList($orderByList);
+$rankingPlayerObjList = $rankingObj->getPlayerList();
 
 $eventDateList = array_merge(array(), $eventDateList);
 
@@ -44,10 +40,8 @@ $currentLine = 7;
 foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 
 	$phpExcelObj->setActiveSheetIndex(0)
-				->setCellValue('A'.$currentLine, '	'.$rankingPlayerObj->getPeople()->getName())
+				->setCellValue('A'.$currentLine, $rankingPlayerObj->getPeople()->getName())
 				;
-				
-	$phpExcelObj->setActiveSheetIndex(0)->getStyle('A'.$currentLine)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
 	foreach($eventDateList as $key=>$eventDate){
 		
@@ -56,16 +50,15 @@ foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 		$rankingHistoryObj = RankingHistoryPeer::retrieveByPK($rankingObj->getId(), $rankingPlayerObj->getPeopleId(), Util::formatDate($eventDate));
 	
 		if( is_object($rankingHistoryObj) )
-			$totalRankingScore = $rankingHistoryObj->getTotalScore();
-//		else
-//			$totalRankingScore = ' - ';
+			$totalRankingPosition = $rankingHistoryObj->getRankingPosition();
+		else
+			$totalRankingPosition = ' - ';
 	
 		$phpExcelObj->setActiveSheetIndex(0)
-					->setCellValue($colName.$currentLine, Util::formatFloat($totalRankingScore, false, 3));
+					->setCellValue($colName.$currentLine, $totalRankingPosition);
 		
-		$phpExcelObj->setActiveSheetIndex(0)->getStyle($colName.$currentLine)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-//		if( $totalRankingScore == ' - ' )
-//			$phpExcelObj->setActiveSheetIndex(0)->getStyle($colName.$currentLine)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		if( $totalRankingPosition == ' - ' )
+		$phpExcelObj->setActiveSheetIndex(0)->getStyle($colName.$currentLine)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 	}
 	
 	$currentLine++;
@@ -75,7 +68,7 @@ for($line=7; $line <= 7+$players-1; $line++)
 	$phpExcelObj->setActiveSheetIndex(0)->getStyle('A'.$line.':'.$colName.$line)->getFill()->applyFromArray(
 	    array(
 	        'type'       => PHPExcel_Style_Fill::FILL_SOLID,
-	        'startcolor' => array('rgb' => ($line%2==0?'D0D0D0':'FFFFFF'))
+	        'startcolor' => array('rgb' => ($line%2==0?'A6A6A6':'D0D0D0'))
     	)
 	);
 
@@ -87,7 +80,7 @@ $phpExcelObj->setActiveSheetIndex(0)
 			;
 
 
-Util::headerExcel(__('statistic.fileName.rankingLog').'.xls');
+Util::headerExcel('historico_classificacao.xls');
 $objWriter = PHPExcel_IOFactory::createWriter($phpExcelObj, 'Excel5');
 $objWriter->save( $outputFilePath );
 

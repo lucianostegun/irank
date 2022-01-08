@@ -49,25 +49,16 @@ class RankingPlace extends BaseRankingPlace
 		$rankingPlaceObjList = self::getList($rankingId);
 
 		$optionList = array();
-		$optionList[''] = __('select');
+		$optionList[''] = 'Selecione';
 		foreach( $rankingPlaceObjList as $rankingPlaceObj )			
 			$optionList[$rankingPlaceObj->getId()] = $rankingPlaceObj->getPlaceName();
 			
 		if( $rankingId )
-			$optionList['new'] = __('event.createNewPlace');
+			$optionList['new'] = 'Cadastrar novo local';
 		
 		if( $returnArray )
 			return $optionList;
 
 		return options_for_select( $optionList, $defaultValue );
-	}
-	
-	public function getClone(){
-		
-		$rankingPlaceObj = new RankingPlace();
-		$rankingPlaceObj->setPlaceName( $this->getPlaceName() );
-		$rankingPlaceObj->setMapsLink( $this->getMapsLink() );
-		
-		return $rankingPlaceObj;
 	}
 }

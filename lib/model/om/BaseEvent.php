@@ -29,10 +29,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	
-	protected $entrance_fee;
-
-
-	
 	protected $paid_places;
 
 
@@ -42,10 +38,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	
 	protected $start_time;
-
-
-	
-	protected $event_date_time;
 
 
 	
@@ -66,22 +58,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	
 	protected $saved_result;
-
-
-	
-	protected $is_freeroll;
-
-
-	
-	protected $prize_pot;
-
-
-	
-	protected $allow_rebuy;
-
-
-	
-	protected $allow_addon;
 
 
 	
@@ -132,12 +108,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	protected $lastEventPhotoCriteria = null;
 
 	
-	protected $collEventPrizeConfigList;
-
-	
-	protected $lastEventPrizeConfigCriteria = null;
-
-	
 	protected $alreadyInSave = false;
 
 	
@@ -176,13 +146,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	{
 
 		return $this->buyin;
-	}
-
-	
-	public function getEntranceFee()
-	{
-
-		return $this->entrance_fee;
 	}
 
 	
@@ -237,28 +200,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getEventDateTime($format = 'Y-m-d H:i:s')
-	{
-
-		if ($this->event_date_time === null || $this->event_date_time === '') {
-			return null;
-		} elseif (!is_int($this->event_date_time)) {
-						$ts = strtotime($this->event_date_time);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [event_date_time] as date/time value: " . var_export($this->event_date_time, true));
-			}
-		} else {
-			$ts = $this->event_date_time;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
-	}
-
-	
 	public function getComments()
 	{
 
@@ -291,34 +232,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	{
 
 		return $this->saved_result;
-	}
-
-	
-	public function getIsFreeroll()
-	{
-
-		return $this->is_freeroll;
-	}
-
-	
-	public function getPrizePot()
-	{
-
-		return $this->prize_pot;
-	}
-
-	
-	public function getAllowRebuy()
-	{
-
-		return $this->allow_rebuy;
-	}
-
-	
-	public function getAllowAddon()
-	{
-
-		return $this->allow_addon;
 	}
 
 	
@@ -397,7 +310,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -411,7 +326,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setRankingId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -429,7 +346,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setEventName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -443,7 +362,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setRankingPlaceId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -468,20 +389,12 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setEntranceFee($v)
-	{
-
-		if ($this->entrance_fee !== $v) {
-			$this->entrance_fee = $v;
-			$this->modifiedColumns[] = EventPeer::ENTRANCE_FEE;
-		}
-
-	} 
-	
 	public function setPaidPlaces($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -526,27 +439,12 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setEventDateTime($v)
-	{
-
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [event_date_time] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->event_date_time !== $ts) {
-			$this->event_date_time = $ts;
-			$this->modifiedColumns[] = EventPeer::EVENT_DATE_TIME;
-		}
-
-	} 
-	
 	public function setComments($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -570,7 +468,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setInvites($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -584,7 +484,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	public function setPlayers($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -601,46 +503,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if ($this->saved_result !== $v) {
 			$this->saved_result = $v;
 			$this->modifiedColumns[] = EventPeer::SAVED_RESULT;
-		}
-
-	} 
-	
-	public function setIsFreeroll($v)
-	{
-
-		if ($this->is_freeroll !== $v) {
-			$this->is_freeroll = $v;
-			$this->modifiedColumns[] = EventPeer::IS_FREEROLL;
-		}
-
-	} 
-	
-	public function setPrizePot($v)
-	{
-
-		if ($this->prize_pot !== $v) {
-			$this->prize_pot = $v;
-			$this->modifiedColumns[] = EventPeer::PRIZE_POT;
-		}
-
-	} 
-	
-	public function setAllowRebuy($v)
-	{
-
-		if ($this->allow_rebuy !== $v) {
-			$this->allow_rebuy = $v;
-			$this->modifiedColumns[] = EventPeer::ALLOW_REBUY;
-		}
-
-	} 
-	
-	public function setAllowAddon($v)
-	{
-
-		if ($this->allow_addon !== $v) {
-			$this->allow_addon = $v;
-			$this->modifiedColumns[] = EventPeer::ALLOW_ADDON;
 		}
 
 	} 
@@ -733,51 +595,39 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 			$this->buyin = $rs->getFloat($startcol + 4);
 
-			$this->entrance_fee = $rs->getFloat($startcol + 5);
+			$this->paid_places = $rs->getInt($startcol + 5);
 
-			$this->paid_places = $rs->getInt($startcol + 6);
+			$this->event_date = $rs->getDate($startcol + 6, null);
 
-			$this->event_date = $rs->getDate($startcol + 7, null);
+			$this->start_time = $rs->getTime($startcol + 7, null);
 
-			$this->start_time = $rs->getTime($startcol + 8, null);
+			$this->comments = $rs->getString($startcol + 8);
 
-			$this->event_date_time = $rs->getTimestamp($startcol + 9, null);
+			$this->sent_email = $rs->getBoolean($startcol + 9);
 
-			$this->comments = $rs->getString($startcol + 10);
+			$this->invites = $rs->getInt($startcol + 10);
 
-			$this->sent_email = $rs->getBoolean($startcol + 11);
+			$this->players = $rs->getInt($startcol + 11);
 
-			$this->invites = $rs->getInt($startcol + 12);
+			$this->saved_result = $rs->getBoolean($startcol + 12);
 
-			$this->players = $rs->getInt($startcol + 13);
+			$this->enabled = $rs->getBoolean($startcol + 13);
 
-			$this->saved_result = $rs->getBoolean($startcol + 14);
+			$this->visible = $rs->getBoolean($startcol + 14);
 
-			$this->is_freeroll = $rs->getBoolean($startcol + 15);
+			$this->deleted = $rs->getBoolean($startcol + 15);
 
-			$this->prize_pot = $rs->getFloat($startcol + 16);
+			$this->locked = $rs->getBoolean($startcol + 16);
 
-			$this->allow_rebuy = $rs->getBoolean($startcol + 17);
+			$this->created_at = $rs->getTimestamp($startcol + 17, null);
 
-			$this->allow_addon = $rs->getBoolean($startcol + 18);
-
-			$this->enabled = $rs->getBoolean($startcol + 19);
-
-			$this->visible = $rs->getBoolean($startcol + 20);
-
-			$this->deleted = $rs->getBoolean($startcol + 21);
-
-			$this->locked = $rs->getBoolean($startcol + 22);
-
-			$this->created_at = $rs->getTimestamp($startcol + 23, null);
-
-			$this->updated_at = $rs->getTimestamp($startcol + 24, null);
+			$this->updated_at = $rs->getTimestamp($startcol + 18, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 25; 
+						return $startcol + 19; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Event object", $e);
 		}
@@ -895,14 +745,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collEventPrizeConfigList !== null) {
-				foreach($this->collEventPrizeConfigList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -982,14 +824,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collEventPrizeConfigList !== null) {
-					foreach($this->collEventPrizeConfigList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
 
 			$this->alreadyInValidation = false;
 		}
@@ -1024,63 +858,45 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				return $this->getBuyin();
 				break;
 			case 5:
-				return $this->getEntranceFee();
-				break;
-			case 6:
 				return $this->getPaidPlaces();
 				break;
-			case 7:
+			case 6:
 				return $this->getEventDate();
 				break;
-			case 8:
+			case 7:
 				return $this->getStartTime();
 				break;
-			case 9:
-				return $this->getEventDateTime();
-				break;
-			case 10:
+			case 8:
 				return $this->getComments();
 				break;
-			case 11:
+			case 9:
 				return $this->getSentEmail();
 				break;
-			case 12:
+			case 10:
 				return $this->getInvites();
 				break;
-			case 13:
+			case 11:
 				return $this->getPlayers();
 				break;
-			case 14:
+			case 12:
 				return $this->getSavedResult();
 				break;
-			case 15:
-				return $this->getIsFreeroll();
-				break;
-			case 16:
-				return $this->getPrizePot();
-				break;
-			case 17:
-				return $this->getAllowRebuy();
-				break;
-			case 18:
-				return $this->getAllowAddon();
-				break;
-			case 19:
+			case 13:
 				return $this->getEnabled();
 				break;
-			case 20:
+			case 14:
 				return $this->getVisible();
 				break;
-			case 21:
+			case 15:
 				return $this->getDeleted();
 				break;
-			case 22:
+			case 16:
 				return $this->getLocked();
 				break;
-			case 23:
+			case 17:
 				return $this->getCreatedAt();
 				break;
-			case 24:
+			case 18:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1098,26 +914,20 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$keys[2]=>$this->getEventName(),
 			$keys[3]=>$this->getRankingPlaceId(),
 			$keys[4]=>$this->getBuyin(),
-			$keys[5]=>$this->getEntranceFee(),
-			$keys[6]=>$this->getPaidPlaces(),
-			$keys[7]=>$this->getEventDate(),
-			$keys[8]=>$this->getStartTime(),
-			$keys[9]=>$this->getEventDateTime(),
-			$keys[10]=>$this->getComments(),
-			$keys[11]=>$this->getSentEmail(),
-			$keys[12]=>$this->getInvites(),
-			$keys[13]=>$this->getPlayers(),
-			$keys[14]=>$this->getSavedResult(),
-			$keys[15]=>$this->getIsFreeroll(),
-			$keys[16]=>$this->getPrizePot(),
-			$keys[17]=>$this->getAllowRebuy(),
-			$keys[18]=>$this->getAllowAddon(),
-			$keys[19]=>$this->getEnabled(),
-			$keys[20]=>$this->getVisible(),
-			$keys[21]=>$this->getDeleted(),
-			$keys[22]=>$this->getLocked(),
-			$keys[23]=>$this->getCreatedAt(),
-			$keys[24]=>$this->getUpdatedAt(),
+			$keys[5]=>$this->getPaidPlaces(),
+			$keys[6]=>$this->getEventDate(),
+			$keys[7]=>$this->getStartTime(),
+			$keys[8]=>$this->getComments(),
+			$keys[9]=>$this->getSentEmail(),
+			$keys[10]=>$this->getInvites(),
+			$keys[11]=>$this->getPlayers(),
+			$keys[12]=>$this->getSavedResult(),
+			$keys[13]=>$this->getEnabled(),
+			$keys[14]=>$this->getVisible(),
+			$keys[15]=>$this->getDeleted(),
+			$keys[16]=>$this->getLocked(),
+			$keys[17]=>$this->getCreatedAt(),
+			$keys[18]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1149,63 +959,45 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				$this->setBuyin($value);
 				break;
 			case 5:
-				$this->setEntranceFee($value);
-				break;
-			case 6:
 				$this->setPaidPlaces($value);
 				break;
-			case 7:
+			case 6:
 				$this->setEventDate($value);
 				break;
-			case 8:
+			case 7:
 				$this->setStartTime($value);
 				break;
-			case 9:
-				$this->setEventDateTime($value);
-				break;
-			case 10:
+			case 8:
 				$this->setComments($value);
 				break;
-			case 11:
+			case 9:
 				$this->setSentEmail($value);
 				break;
-			case 12:
+			case 10:
 				$this->setInvites($value);
 				break;
-			case 13:
+			case 11:
 				$this->setPlayers($value);
 				break;
-			case 14:
+			case 12:
 				$this->setSavedResult($value);
 				break;
-			case 15:
-				$this->setIsFreeroll($value);
-				break;
-			case 16:
-				$this->setPrizePot($value);
-				break;
-			case 17:
-				$this->setAllowRebuy($value);
-				break;
-			case 18:
-				$this->setAllowAddon($value);
-				break;
-			case 19:
+			case 13:
 				$this->setEnabled($value);
 				break;
-			case 20:
+			case 14:
 				$this->setVisible($value);
 				break;
-			case 21:
+			case 15:
 				$this->setDeleted($value);
 				break;
-			case 22:
+			case 16:
 				$this->setLocked($value);
 				break;
-			case 23:
+			case 17:
 				$this->setCreatedAt($value);
 				break;
-			case 24:
+			case 18:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1220,26 +1012,20 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setEventName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setRankingPlaceId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setBuyin($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setEntranceFee($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setPaidPlaces($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setEventDate($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setStartTime($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setEventDateTime($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setComments($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setSentEmail($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setInvites($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setPlayers($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setSavedResult($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setIsFreeroll($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setPrizePot($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setAllowRebuy($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setAllowAddon($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setEnabled($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setVisible($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setDeleted($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setLocked($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setCreatedAt($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setUpdatedAt($arr[$keys[24]]);
+		if (array_key_exists($keys[5], $arr)) $this->setPaidPlaces($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEventDate($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setStartTime($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setComments($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setSentEmail($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setInvites($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setPlayers($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setSavedResult($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setEnabled($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setVisible($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setDeleted($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setLocked($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setCreatedAt($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setUpdatedAt($arr[$keys[18]]);
 	}
 
 	
@@ -1252,20 +1038,14 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPeer::EVENT_NAME)) $criteria->add(EventPeer::EVENT_NAME, $this->event_name);
 		if ($this->isColumnModified(EventPeer::RANKING_PLACE_ID)) $criteria->add(EventPeer::RANKING_PLACE_ID, $this->ranking_place_id);
 		if ($this->isColumnModified(EventPeer::BUYIN)) $criteria->add(EventPeer::BUYIN, $this->buyin);
-		if ($this->isColumnModified(EventPeer::ENTRANCE_FEE)) $criteria->add(EventPeer::ENTRANCE_FEE, $this->entrance_fee);
 		if ($this->isColumnModified(EventPeer::PAID_PLACES)) $criteria->add(EventPeer::PAID_PLACES, $this->paid_places);
 		if ($this->isColumnModified(EventPeer::EVENT_DATE)) $criteria->add(EventPeer::EVENT_DATE, $this->event_date);
 		if ($this->isColumnModified(EventPeer::START_TIME)) $criteria->add(EventPeer::START_TIME, $this->start_time);
-		if ($this->isColumnModified(EventPeer::EVENT_DATE_TIME)) $criteria->add(EventPeer::EVENT_DATE_TIME, $this->event_date_time);
 		if ($this->isColumnModified(EventPeer::COMMENTS)) $criteria->add(EventPeer::COMMENTS, $this->comments);
 		if ($this->isColumnModified(EventPeer::SENT_EMAIL)) $criteria->add(EventPeer::SENT_EMAIL, $this->sent_email);
 		if ($this->isColumnModified(EventPeer::INVITES)) $criteria->add(EventPeer::INVITES, $this->invites);
 		if ($this->isColumnModified(EventPeer::PLAYERS)) $criteria->add(EventPeer::PLAYERS, $this->players);
 		if ($this->isColumnModified(EventPeer::SAVED_RESULT)) $criteria->add(EventPeer::SAVED_RESULT, $this->saved_result);
-		if ($this->isColumnModified(EventPeer::IS_FREEROLL)) $criteria->add(EventPeer::IS_FREEROLL, $this->is_freeroll);
-		if ($this->isColumnModified(EventPeer::PRIZE_POT)) $criteria->add(EventPeer::PRIZE_POT, $this->prize_pot);
-		if ($this->isColumnModified(EventPeer::ALLOW_REBUY)) $criteria->add(EventPeer::ALLOW_REBUY, $this->allow_rebuy);
-		if ($this->isColumnModified(EventPeer::ALLOW_ADDON)) $criteria->add(EventPeer::ALLOW_ADDON, $this->allow_addon);
 		if ($this->isColumnModified(EventPeer::ENABLED)) $criteria->add(EventPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventPeer::VISIBLE)) $criteria->add(EventPeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(EventPeer::DELETED)) $criteria->add(EventPeer::DELETED, $this->deleted);
@@ -1310,15 +1090,11 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		$copyObj->setBuyin($this->buyin);
 
-		$copyObj->setEntranceFee($this->entrance_fee);
-
 		$copyObj->setPaidPlaces($this->paid_places);
 
 		$copyObj->setEventDate($this->event_date);
 
 		$copyObj->setStartTime($this->start_time);
-
-		$copyObj->setEventDateTime($this->event_date_time);
 
 		$copyObj->setComments($this->comments);
 
@@ -1329,14 +1105,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		$copyObj->setPlayers($this->players);
 
 		$copyObj->setSavedResult($this->saved_result);
-
-		$copyObj->setIsFreeroll($this->is_freeroll);
-
-		$copyObj->setPrizePot($this->prize_pot);
-
-		$copyObj->setAllowRebuy($this->allow_rebuy);
-
-		$copyObj->setAllowAddon($this->allow_addon);
 
 		$copyObj->setEnabled($this->enabled);
 
@@ -1364,10 +1132,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 			foreach($this->getEventPhotoList() as $relObj) {
 				$copyObj->addEventPhoto($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getEventPrizeConfigList() as $relObj) {
-				$copyObj->addEventPrizeConfig($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1801,76 +1565,6 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		$this->lastEventPhotoCriteria = $criteria;
 
 		return $this->collEventPhotoList;
-	}
-
-	
-	public function initEventPrizeConfigList()
-	{
-		if ($this->collEventPrizeConfigList === null) {
-			$this->collEventPrizeConfigList = array();
-		}
-	}
-
-	
-	public function getEventPrizeConfigList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPrizeConfigPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventPrizeConfigList === null) {
-			if ($this->isNew()) {
-			   $this->collEventPrizeConfigList = array();
-			} else {
-
-				$criteria->add(EventPrizeConfigPeer::EVENT_ID, $this->getId());
-
-				EventPrizeConfigPeer::addSelectColumns($criteria);
-				$this->collEventPrizeConfigList = EventPrizeConfigPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(EventPrizeConfigPeer::EVENT_ID, $this->getId());
-
-				EventPrizeConfigPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventPrizeConfigCriteria) || !$this->lastEventPrizeConfigCriteria->equals($criteria)) {
-					$this->collEventPrizeConfigList = EventPrizeConfigPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastEventPrizeConfigCriteria = $criteria;
-		return $this->collEventPrizeConfigList;
-	}
-
-	
-	public function countEventPrizeConfigList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPrizeConfigPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(EventPrizeConfigPeer::EVENT_ID, $this->getId());
-
-		return EventPrizeConfigPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addEventPrizeConfig(EventPrizeConfig $l)
-	{
-		$this->collEventPrizeConfigList[] = $l;
-		$l->setEvent($this);
 	}
 
 } 

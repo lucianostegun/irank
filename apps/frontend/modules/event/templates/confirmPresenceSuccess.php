@@ -1,36 +1,18 @@
-<?php
-	$pathList = array('Eventos'=>'event/index');
+<table width="500" border="0" cellspacing="0" cellpadding="0" class="onlinepokerrooms_bg2">
+  <tr>
+	<td colspan="2" align="left" valign="middle" class="poker_heading" style="color: #5a5aFF"><?php echo image_tag('frontend/layout/bullet.gif') ?>Presença confirmada</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" style="padding:15px 0px 0px 20px">
+		<?php echo image_tag('frontend/success', array('align'=>'left', 'style'=>'margin: 0 15 15 15')) ?>
+	</td>
+    <td align="left" valign="top" style="padding:15px 23px 16px 0px; color: #333333">
+	Sua presença foi confirmada no evento <b><?php echo $eventObj->getEventName() ?></b>!<br/><br/>
+	Um e-mail foi enviado a todos os convidados do evento informando sobre a sua confirmação.<br/><br/>
 	
-	$eventName   = $eventObj->getName();
-	$rankingName = $eventObj->getRanking()->getName();
-	$rankingId   = $eventObj->getRankingId();
+	Você pode cancelar sua presença ou ainda informar que sua presença não está 100% confirmada.<br/><br/>
 	
-	$pathList[$rankingName]              = '#goToPage("ranking", "edit", "rankingId", '.$rankingId.', true)';
-	$pathList[$eventName]                = '#goToPage("event", "edit", "eventId", '.$eventObj->getId().', true)';
-	$pathList['Confirmação de presença'] = null;
-		
-	include_partial('home/component/commonBar', array('pathList'=>$pathList));
-?>
-
-
-<div align="center">
-	<table border="0" cellspacing="0" cellpadding="0" class="formTable" style="width: 550px; margin-top: 20px">
-		<tr class="header">
-			<th colspan="2"><h1>Presença confirmada!</h1></th>
-		</tr>
-		<tr>
-			<td align="left" valign="top" rowspan="2" align="center" class="icon">
-				<?php echo image_tag('success', array('align'=>'left', 'style'=>'margin: 0px 0px 0px 15px')) ?>
-			</td>
-			<td align="left" valign="top" class="message">
-				<?php echo __('event.confirmPresence.successMessage', array('%eventName%'=>$eventObj->getEventName())) ?><br/><br/>
-			</td>
-		</tr>
-		<tr>
-			<td align="left" valign="top" class="link">
-				<div class="separator"></div>
-				<?php echo __('event.confirmPresence.link', array('%link%'=>link_to(__('ClickHere'), '#goModule(\'event\', \'edit\', \'eventId\', '.$eventObj->getId().')'))) ?>	
-			</td>
-		</tr>
-	</table>
-</div>
+	<b><?php echo link_to('Clique aqui', '#goModule(\'event\', \'show\', \'eventId\', '.$eventObj->getId().')') ?></b> aqui para visualizar os detalhes do evento. 	
+	</td>
+  </tr>
+</table>

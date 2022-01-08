@@ -2,22 +2,23 @@
 
 	<?php if( !$eventObj->getSavedResult() ): ?>
 		<div class="text">
-			<?php echo __('event.result.notSaved') ?>
+			O resultado deste evento ainda não foi salvo.<br/><br/>
+			Aguarde até que as informações sejam atualizadas pelos responsáveis do evento.
 		</div>
 		<br/>
 	<?php else: ?>
 	
 		<div class="text">
-			<?php echo __('event.show.result.intro') ?>
+			Resultado do evento
 		</div>
 		<br/>
 	
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="gridTable">
 		  <tr>
-		    <th><?php echo __('event.result.playerName') ?></th>
+		    <th>Nome</th>
 		    <th class="hiddenColumn">Buy-in</th>
-		    <th><?php echo __('event.result.legend.position') ?></th>
-		    <th><?php echo __('event.result.legend.prize') ?></th>
+		    <th>Posição</th>
+		    <th>Prêmio</th>
 		    <th class="hiddenColumn">Rebuy</th>
 		    <th class="hiddenColumn">Add-on</th>
 		  </tr>
@@ -39,7 +40,7 @@
 		  <tr>
 		    <td><?php echo $peopleObj->getFullName() ?></td>
 		    <td class="hiddenColumn" align="right"><?php echo Util::formatFloat($buyin, true) ?></td>
-		    <td align="right">#<?php echo $eventPlayerObj->getEventPosition() ?></td>
+		    <td>#<?php echo $eventPlayerObj->getEventPosition() ?></td>
 		    <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getPrize(), true) ?></td>
 		    <td class="hiddenColumn" align="right"><?php echo Util::formatFloat($eventPlayerObj->getRebuy(), true) ?></td>
 		    <td class="hiddenColumn" align="right"><?php echo Util::formatFloat($eventPlayerObj->getAddon(), true) ?></td>
@@ -50,7 +51,7 @@
 		  	if( count($eventPlayerObjList)==0 ):
 		  ?>
 		  <tr>
-		    <td colspan="6"><?php echo __('event.noPlayers') ?></td>
+		    <td colspan="6">Este ranking não possui convidados para compor os resultados</td>
 		  </tr>
 		  <?php endif; ?>
 		</table>

@@ -1,17 +1,4 @@
 all:
-  
-  metas:
-    og|title:        iRank - Poker Ranking
-    og|description:  iRank - O primeiro site de gerenciamento de rankings de poker para você e seus amigos
-    
-  stylesheets:    [home, quickResume, eventResume, eventLiveResume]
-  javascripts:    [home, highlight]
-  
-indexSuccess:
-  stylesheets:    [quickResume]
-  javascripts:    [] 
-  
-error404Success:
-  stylesheets:    [table]
-  javascripts:    [] 
-  
+
+  stylesheets:    [frontend/home]
+  javascripts:    []

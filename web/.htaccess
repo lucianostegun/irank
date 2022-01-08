@@ -1,8 +1,3 @@
-#AuthUserFile /Users/lucianostegun/Sites/iRank/.htpasswd
-#AuthType Basic
-#AuthName "Acesso a versao beta iRank 3.0"
-#Require valid-user
-
 Options +FollowSymLinks +ExecCGI
 
 <IfModule mod_rewrite.c>
@@ -10,16 +5,12 @@ Options +FollowSymLinks +ExecCGI
 
   # uncomment the following line, if you are having trouble
   # getting no_script_name to work
-  RewriteBase /
+  #RewriteBase /
 
   # we skip all files with .something
   # comment the following 3 lines to allow periods in routes
   RewriteCond %{REQUEST_URI} \..+$
   RewriteCond %{REQUEST_URI} !\.html$
-  RewriteCond %{REQUEST_URI} !\.[0-9]*$
-  
-  # Hack para que as urls de imagem com código de e-mail funcionem
-  RewriteCond %{REQUEST_URI} !\.png$
   RewriteRule .* - [L]
 
   # we check if the .html version is here (caching)

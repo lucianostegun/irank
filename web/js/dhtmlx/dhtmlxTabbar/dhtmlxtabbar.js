@@ -59,7 +59,7 @@ function dhtmlXTabBar(parentObject, mode, height) {
 			margin :1,
 			offset :5,
 			tab_color :"#333333",
-			data_color :"#E6E6E6"
+			data_color :"#d9d8d9"
 		},
 		"winbiscarf" : {
 			left :18,
@@ -85,7 +85,7 @@ function dhtmlXTabBar(parentObject, mode, height) {
 			margin :1,
 			offset :5,
 			tab_color :"#333333",
-			data_color :"#E6E6E6"
+			data_color :"#d9d8d9"
 		},
 		"silver" : {
 			left :7,
@@ -95,7 +95,7 @@ function dhtmlXTabBar(parentObject, mode, height) {
 			margin :1,
 			offset :5,
 			tab_color :"#333333",
-			data_color :"#E6E6E6"
+			data_color :"#d9d8d9"
 		},
 		"dark_blue" : {
 			left :2,
@@ -130,7 +130,7 @@ function dhtmlXTabBar(parentObject, mode, height) {
 			margin :1,
 			offset :5,
 			tab_color :"#333333",
-			data_color :"#E6E6E6"
+			data_color :"#d9d8d9"
 		},
 		"dhx_skyblue" : {
 			left :3,
@@ -139,7 +139,7 @@ function dhtmlXTabBar(parentObject, mode, height) {
 			select_top :0,
 			margin :-1,
 			offset :5,
-			data_color :"#E6E6E6",
+			data_color :"white",
 			hover :true
 		}
 	};
@@ -964,11 +964,6 @@ dhtmlXTabBar.prototype = {
 		if (tab == this._lastActive)
 			this.goToNextTab();
 		this._setTabSizes(tab.parentNode)
-	},
-
-	isVisible : function(id) {
-		var tab = this._tabs[id];
-		return tab.style.display!='none';
 	},
 
 	getActiveTab : function() {

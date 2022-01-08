@@ -1,10 +1,7 @@
-<?php
-	$culture = MyTools::getCulture();
-?>
 <div id="commentsDiv" align="center" style="display: none">
 	
 	<div class="text">
-		<?php echo __('event.comments.intro') ?>
+		Comentários dos convidados para o evento
 	</div>
 	<br/>
 	
@@ -20,7 +17,7 @@
 					if( $commentCount > 5 ):
 				?>
 				<div style="margin-bottom: 25px;">
-					<?php echo link_to(image_tag('mobile/event/'.$culture.'/showAllComments'), '#showAllComments()') ?>
+					<?php echo link_to(image_tag('mobile/event/showAllComments'), '#showAllComments()') ?>
 				</div>
 				<?php
 					endif;

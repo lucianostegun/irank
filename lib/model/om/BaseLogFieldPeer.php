@@ -4,7 +4,7 @@
 abstract class BaseLogFieldPeer {
 
 	
-	const DATABASE_NAME = 'log';
+	const DATABASE_NAME = 'propel';
 
 	
 	const TABLE_NAME = 'log_field';

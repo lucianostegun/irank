@@ -25,8 +25,6 @@ class EventComment extends BaseEventComment
 			$isNew              = $this->isNew();
 			$columnModifiedList = Log::getModifiedColumnList($this);
 
-    		$this->postOnWall();
-
 			parent::save();
 			
        		Log::quickLog('event_comment', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
@@ -51,7 +49,45 @@ class EventComment extends BaseEventComment
     
     public function getTimeAgo(){
     	
-    	return Util::getTimeAgo($this->getCreatedAt(null));
+    	$minutes = 60;
+    	$hours   = $minutes*60;
+    	$days    = $hours*24;
+    	$weeks   = $days*7;
+    	$months  = $days*30;
+    	$years   = $months*12;
+    	
+    	$timeAgo = time()-$this->getCreatedAt(null);
+    	
+    	if( $timeAgo >= $years ){
+    		
+    		$timeAgo = ceil($timeAgo/$years);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'ano':'anos');
+    	}elseif( $timeAgo >= $months ){
+    		
+    		$timeAgo = ceil($timeAgo/$months);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'mês':'meses');
+    	}elseif( $timeAgo >= $weeks ){
+    		
+    		$timeAgo = ceil($timeAgo/$weeks);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'semana':'semanas');
+    	}elseif( $timeAgo >= $days ){
+    		
+    		$timeAgo = ceil($timeAgo/$days);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'dia':'dias');
+    	}elseif( $timeAgo >= $hours ){
+    		
+    		$timeAgo = ceil($timeAgo/$hours);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'hora':'horas');
+    	}elseif( $timeAgo >= $minutes ){
+    		
+    		$timeAgo = ceil($timeAgo/$minutes);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'minuto':'minutos');
+    	}else{
+    		
+    		$timeAgo = 'menos de 1 minuto';
+    	}
+    	
+    	return $timeAgo;
     }
 	
 	public function isMyComment(){
@@ -61,48 +97,25 @@ class EventComment extends BaseEventComment
 		return ($this->getPeopleId()==$peopleId);
 	}
 	
-	public function postOnWall(){
-		
-		if( !$this->isNew() )
-			return false;
-			
-       	HomeWall::doLog('postou um comentário no evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventComment', true);
-	}
-	
 	public function notify(){
 
-		Util::getHelper('I18N');
-
+		$eventCommentId = $this->getId();
+		$eventCommentId = (1985+$eventCommentId);
+		
 		$eventObj     = $this->getEvent();
-		$emailSubject = 'email.subject.eventComment';
-			
-		$infoList['eventName']   = $eventObj->getEventName();
-		$infoList['eventPlace']  = $eventObj->getEventPlace();
-		$infoList['eventDate']   = $eventObj->getEventDate('d/m/Y');
-		$infoList['startTime']   = $eventObj->getStartTime('H:i');
-		$infoList['rankingName'] = $eventObj->getRanking()->getRankingName();
-		$infoList['peopleName']  = $this->getPeople()->getFirstName();
-		$infoList['peopleEmail'] = $this->getPeople()->getEmailAddress();
-		$infoList['comment']     = $this->getComment();
-		
-		$emailAddressInfoList = $eventObj->getEmailAddressList('receiveEventCommentNotify', false, true);
+		$emailContent = AuxiliarText::getContentByTagName('eventCommentNotify');
 
-		$emailTemplateObj = EmailTemplatePeer::retrieveByTagName('eventCommentNotify');
-
-		$emailContent = $emailTemplateObj->getContent();
-		$emailContent = Report::replace($emailContent, $infoList);
-		$emailSubject = __($emailSubject, array('%eventCode%'=>$eventObj->getCode()), 'messages', 'pt_BR');
+		$emailContent = str_replace('<eventName>', $eventObj->getEventName(), $emailContent);
+		$emailContent = str_replace('<rankingName>', $eventObj->getRanking()->getRankingName(), $emailContent);
+		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
+		$emailContent = str_replace('<comment>', $this->getComment(), $emailContent);
 		
-		$optionList = array();
-		$optionList['emailTemplateObj'] = $emailTemplateObj;
-		$optionList['replyTo']          = 'event_comment@irank.com.br';
+		$emailAddressList = $eventObj->getEmailAddressList('receiveEventCommentNotify', true);
 		
-		foreach($emailAddressInfoList as $emailAddressInfo){
-
-			$emailAddress = $emailAddressInfo['emailAddress'];
-			$culture      = $emailAddressInfo['culture'];
-			
-			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
-		}
+		$options = array();
+		$options['emailTemplate'] = null;
+		$options['replyTo']       = 'event_comment@irank.com.br';
+		
+		Report::sendMail('Comentários do evento #'.$eventObj->getCode(), $emailAddressList, $emailContent, $options);
 	}
 }

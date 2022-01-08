@@ -17,10 +17,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 
 	
-	protected $ranking_tag;
-
-
-	
 	protected $user_site_id;
 
 
@@ -37,10 +33,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 
 	
-	protected $start_time;
-
-
-	
 	protected $finish_date;
 
 
@@ -49,11 +41,7 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 
 	
-	protected $buyin;
-
-
-	
-	protected $entrance_fee;
+	protected $default_buyin;
 
 
 	
@@ -62,14 +50,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 	
 	protected $events;
-
-
-	
-	protected $score_schema;
-
-
-	
-	protected $score_formula;
 
 
 	
@@ -129,24 +109,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	protected $lastRankingPlaceCriteria = null;
 
 	
-	protected $collRankingImportLogListRelatedByRankingId;
-
-	
-	protected $lastRankingImportLogRelatedByRankingIdCriteria = null;
-
-	
-	protected $collRankingImportLogListRelatedByRankingIdFrom;
-
-	
-	protected $lastRankingImportLogRelatedByRankingIdFromCriteria = null;
-
-	
-	protected $collRankingPrizeSplitList;
-
-	
-	protected $lastRankingPrizeSplitCriteria = null;
-
-	
 	protected $alreadyInSave = false;
 
 	
@@ -164,13 +126,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	{
 
 		return $this->ranking_name;
-	}
-
-	
-	public function getRankingTag()
-	{
-
-		return $this->ranking_tag;
 	}
 
 	
@@ -217,28 +172,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getStartTime($format = 'H:i:s')
-	{
-
-		if ($this->start_time === null || $this->start_time === '') {
-			return null;
-		} elseif (!is_int($this->start_time)) {
-						$ts = strtotime($this->start_time);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [start_time] as date/time value: " . var_export($this->start_time, true));
-			}
-		} else {
-			$ts = $this->start_time;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
-	}
-
-	
 	public function getFinishDate($format = 'Y-m-d')
 	{
 
@@ -268,17 +201,10 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getBuyin()
+	public function getDefaultBuyin()
 	{
 
-		return $this->buyin;
-	}
-
-	
-	public function getEntranceFee()
-	{
-
-		return $this->entrance_fee;
+		return $this->default_buyin;
 	}
 
 	
@@ -293,20 +219,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	{
 
 		return $this->events;
-	}
-
-	
-	public function getScoreSchema()
-	{
-
-		return $this->score_schema;
-	}
-
-	
-	public function getScoreFormula()
-	{
-
-		return $this->score_formula;
 	}
 
 	
@@ -385,7 +297,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -399,7 +313,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setRankingName($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -410,24 +326,12 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setRankingTag($v)
-	{
-
-						if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->ranking_tag !== $v) {
-			$this->ranking_tag = $v;
-			$this->modifiedColumns[] = RankingPeer::RANKING_TAG;
-		}
-
-	} 
-	
 	public function setUserSiteId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -445,7 +349,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setRankingTypeId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -463,7 +369,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setGameStyleId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -495,23 +403,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setStartTime($v)
-	{
-
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [start_time] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->start_time !== $ts) {
-			$this->start_time = $ts;
-			$this->modifiedColumns[] = RankingPeer::START_TIME;
-		}
-
-	} 
-	
 	public function setFinishDate($v)
 	{
 
@@ -539,22 +430,12 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setBuyin($v)
+	public function setDefaultBuyin($v)
 	{
 
-		if ($this->buyin !== $v) {
-			$this->buyin = $v;
-			$this->modifiedColumns[] = RankingPeer::BUYIN;
-		}
-
-	} 
-	
-	public function setEntranceFee($v)
-	{
-
-		if ($this->entrance_fee !== $v) {
-			$this->entrance_fee = $v;
-			$this->modifiedColumns[] = RankingPeer::ENTRANCE_FEE;
+		if ($this->default_buyin !== $v) {
+			$this->default_buyin = $v;
+			$this->modifiedColumns[] = RankingPeer::DEFAULT_BUYIN;
 		}
 
 	} 
@@ -562,7 +443,9 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setPlayers($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -576,41 +459,15 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function setEvents($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
 		if ($this->events !== $v) {
 			$this->events = $v;
 			$this->modifiedColumns[] = RankingPeer::EVENTS;
-		}
-
-	} 
-	
-	public function setScoreSchema($v)
-	{
-
-						if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->score_schema !== $v) {
-			$this->score_schema = $v;
-			$this->modifiedColumns[] = RankingPeer::SCORE_SCHEMA;
-		}
-
-	} 
-	
-	public function setScoreFormula($v)
-	{
-
-						if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->score_formula !== $v) {
-			$this->score_formula = $v;
-			$this->modifiedColumns[] = RankingPeer::SCORE_FORMULA;
 		}
 
 	} 
@@ -697,51 +554,41 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 			$this->ranking_name = $rs->getString($startcol + 1);
 
-			$this->ranking_tag = $rs->getString($startcol + 2);
+			$this->user_site_id = $rs->getInt($startcol + 2);
 
-			$this->user_site_id = $rs->getInt($startcol + 3);
+			$this->ranking_type_id = $rs->getInt($startcol + 3);
 
-			$this->ranking_type_id = $rs->getInt($startcol + 4);
+			$this->game_style_id = $rs->getInt($startcol + 4);
 
-			$this->game_style_id = $rs->getInt($startcol + 5);
+			$this->start_date = $rs->getDate($startcol + 5, null);
 
-			$this->start_date = $rs->getDate($startcol + 6, null);
+			$this->finish_date = $rs->getDate($startcol + 6, null);
 
-			$this->start_time = $rs->getTime($startcol + 7, null);
+			$this->is_private = $rs->getBoolean($startcol + 7);
 
-			$this->finish_date = $rs->getDate($startcol + 8, null);
+			$this->default_buyin = $rs->getFloat($startcol + 8);
 
-			$this->is_private = $rs->getBoolean($startcol + 9);
+			$this->players = $rs->getInt($startcol + 9);
 
-			$this->buyin = $rs->getFloat($startcol + 10);
+			$this->events = $rs->getInt($startcol + 10);
 
-			$this->entrance_fee = $rs->getFloat($startcol + 11);
+			$this->enabled = $rs->getBoolean($startcol + 11);
 
-			$this->players = $rs->getInt($startcol + 12);
+			$this->visible = $rs->getBoolean($startcol + 12);
 
-			$this->events = $rs->getInt($startcol + 13);
+			$this->deleted = $rs->getBoolean($startcol + 13);
 
-			$this->score_schema = $rs->getString($startcol + 14);
+			$this->locked = $rs->getBoolean($startcol + 14);
 
-			$this->score_formula = $rs->getString($startcol + 15);
+			$this->created_at = $rs->getTimestamp($startcol + 15, null);
 
-			$this->enabled = $rs->getBoolean($startcol + 16);
-
-			$this->visible = $rs->getBoolean($startcol + 17);
-
-			$this->deleted = $rs->getBoolean($startcol + 18);
-
-			$this->locked = $rs->getBoolean($startcol + 19);
-
-			$this->created_at = $rs->getTimestamp($startcol + 20, null);
-
-			$this->updated_at = $rs->getTimestamp($startcol + 21, null);
+			$this->updated_at = $rs->getTimestamp($startcol + 16, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 22; 
+						return $startcol + 17; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Ranking object", $e);
 		}
@@ -817,14 +664,14 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 			}
 
 			if ($this->aVirtualTableRelatedByRankingTypeId !== null) {
-				if ($this->aVirtualTableRelatedByRankingTypeId->isModified() || $this->aVirtualTableRelatedByRankingTypeId->getCurrentVirtualTableI18n()->isModified()) {
+				if ($this->aVirtualTableRelatedByRankingTypeId->isModified()) {
 					$affectedRows += $this->aVirtualTableRelatedByRankingTypeId->save($con);
 				}
 				$this->setVirtualTableRelatedByRankingTypeId($this->aVirtualTableRelatedByRankingTypeId);
 			}
 
 			if ($this->aVirtualTableRelatedByGameStyleId !== null) {
-				if ($this->aVirtualTableRelatedByGameStyleId->isModified() || $this->aVirtualTableRelatedByGameStyleId->getCurrentVirtualTableI18n()->isModified()) {
+				if ($this->aVirtualTableRelatedByGameStyleId->isModified()) {
 					$affectedRows += $this->aVirtualTableRelatedByGameStyleId->save($con);
 				}
 				$this->setVirtualTableRelatedByGameStyleId($this->aVirtualTableRelatedByGameStyleId);
@@ -868,30 +715,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 			if ($this->collRankingPlaceList !== null) {
 				foreach($this->collRankingPlaceList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collRankingImportLogListRelatedByRankingId !== null) {
-				foreach($this->collRankingImportLogListRelatedByRankingId as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collRankingImportLogListRelatedByRankingIdFrom !== null) {
-				foreach($this->collRankingImportLogListRelatedByRankingIdFrom as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collRankingPrizeSplitList !== null) {
-				foreach($this->collRankingPrizeSplitList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -991,30 +814,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collRankingImportLogListRelatedByRankingId !== null) {
-					foreach($this->collRankingImportLogListRelatedByRankingId as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collRankingImportLogListRelatedByRankingIdFrom !== null) {
-					foreach($this->collRankingImportLogListRelatedByRankingIdFrom as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collRankingPrizeSplitList !== null) {
-					foreach($this->collRankingPrizeSplitList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
 
 			$this->alreadyInValidation = false;
 		}
@@ -1040,63 +839,48 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				return $this->getRankingName();
 				break;
 			case 2:
-				return $this->getRankingTag();
-				break;
-			case 3:
 				return $this->getUserSiteId();
 				break;
-			case 4:
+			case 3:
 				return $this->getRankingTypeId();
 				break;
-			case 5:
+			case 4:
 				return $this->getGameStyleId();
 				break;
-			case 6:
+			case 5:
 				return $this->getStartDate();
 				break;
-			case 7:
-				return $this->getStartTime();
-				break;
-			case 8:
+			case 6:
 				return $this->getFinishDate();
 				break;
-			case 9:
+			case 7:
 				return $this->getIsPrivate();
 				break;
-			case 10:
-				return $this->getBuyin();
+			case 8:
+				return $this->getDefaultBuyin();
 				break;
-			case 11:
-				return $this->getEntranceFee();
-				break;
-			case 12:
+			case 9:
 				return $this->getPlayers();
 				break;
-			case 13:
+			case 10:
 				return $this->getEvents();
 				break;
-			case 14:
-				return $this->getScoreSchema();
-				break;
-			case 15:
-				return $this->getScoreFormula();
-				break;
-			case 16:
+			case 11:
 				return $this->getEnabled();
 				break;
-			case 17:
+			case 12:
 				return $this->getVisible();
 				break;
-			case 18:
+			case 13:
 				return $this->getDeleted();
 				break;
-			case 19:
+			case 14:
 				return $this->getLocked();
 				break;
-			case 20:
+			case 15:
 				return $this->getCreatedAt();
 				break;
-			case 21:
+			case 16:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1111,26 +895,21 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getId(),
 			$keys[1]=>$this->getRankingName(),
-			$keys[2]=>$this->getRankingTag(),
-			$keys[3]=>$this->getUserSiteId(),
-			$keys[4]=>$this->getRankingTypeId(),
-			$keys[5]=>$this->getGameStyleId(),
-			$keys[6]=>$this->getStartDate(),
-			$keys[7]=>$this->getStartTime(),
-			$keys[8]=>$this->getFinishDate(),
-			$keys[9]=>$this->getIsPrivate(),
-			$keys[10]=>$this->getBuyin(),
-			$keys[11]=>$this->getEntranceFee(),
-			$keys[12]=>$this->getPlayers(),
-			$keys[13]=>$this->getEvents(),
-			$keys[14]=>$this->getScoreSchema(),
-			$keys[15]=>$this->getScoreFormula(),
-			$keys[16]=>$this->getEnabled(),
-			$keys[17]=>$this->getVisible(),
-			$keys[18]=>$this->getDeleted(),
-			$keys[19]=>$this->getLocked(),
-			$keys[20]=>$this->getCreatedAt(),
-			$keys[21]=>$this->getUpdatedAt(),
+			$keys[2]=>$this->getUserSiteId(),
+			$keys[3]=>$this->getRankingTypeId(),
+			$keys[4]=>$this->getGameStyleId(),
+			$keys[5]=>$this->getStartDate(),
+			$keys[6]=>$this->getFinishDate(),
+			$keys[7]=>$this->getIsPrivate(),
+			$keys[8]=>$this->getDefaultBuyin(),
+			$keys[9]=>$this->getPlayers(),
+			$keys[10]=>$this->getEvents(),
+			$keys[11]=>$this->getEnabled(),
+			$keys[12]=>$this->getVisible(),
+			$keys[13]=>$this->getDeleted(),
+			$keys[14]=>$this->getLocked(),
+			$keys[15]=>$this->getCreatedAt(),
+			$keys[16]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1153,63 +932,48 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				$this->setRankingName($value);
 				break;
 			case 2:
-				$this->setRankingTag($value);
-				break;
-			case 3:
 				$this->setUserSiteId($value);
 				break;
-			case 4:
+			case 3:
 				$this->setRankingTypeId($value);
 				break;
-			case 5:
+			case 4:
 				$this->setGameStyleId($value);
 				break;
-			case 6:
+			case 5:
 				$this->setStartDate($value);
 				break;
-			case 7:
-				$this->setStartTime($value);
-				break;
-			case 8:
+			case 6:
 				$this->setFinishDate($value);
 				break;
-			case 9:
+			case 7:
 				$this->setIsPrivate($value);
 				break;
-			case 10:
-				$this->setBuyin($value);
+			case 8:
+				$this->setDefaultBuyin($value);
 				break;
-			case 11:
-				$this->setEntranceFee($value);
-				break;
-			case 12:
+			case 9:
 				$this->setPlayers($value);
 				break;
-			case 13:
+			case 10:
 				$this->setEvents($value);
 				break;
-			case 14:
-				$this->setScoreSchema($value);
-				break;
-			case 15:
-				$this->setScoreFormula($value);
-				break;
-			case 16:
+			case 11:
 				$this->setEnabled($value);
 				break;
-			case 17:
+			case 12:
 				$this->setVisible($value);
 				break;
-			case 18:
+			case 13:
 				$this->setDeleted($value);
 				break;
-			case 19:
+			case 14:
 				$this->setLocked($value);
 				break;
-			case 20:
+			case 15:
 				$this->setCreatedAt($value);
 				break;
-			case 21:
+			case 16:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1221,26 +985,21 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setRankingName($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setRankingTag($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setUserSiteId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setRankingTypeId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setGameStyleId($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setStartDate($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setStartTime($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setFinishDate($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setIsPrivate($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setBuyin($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setEntranceFee($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setPlayers($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setEvents($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setScoreSchema($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setScoreFormula($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setEnabled($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setVisible($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setDeleted($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setLocked($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setCreatedAt($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setUpdatedAt($arr[$keys[21]]);
+		if (array_key_exists($keys[2], $arr)) $this->setUserSiteId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRankingTypeId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setGameStyleId($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setStartDate($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setFinishDate($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setIsPrivate($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setDefaultBuyin($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setPlayers($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setEvents($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setEnabled($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setVisible($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setDeleted($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setLocked($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setCreatedAt($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setUpdatedAt($arr[$keys[16]]);
 	}
 
 	
@@ -1250,20 +1009,15 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(RankingPeer::ID)) $criteria->add(RankingPeer::ID, $this->id);
 		if ($this->isColumnModified(RankingPeer::RANKING_NAME)) $criteria->add(RankingPeer::RANKING_NAME, $this->ranking_name);
-		if ($this->isColumnModified(RankingPeer::RANKING_TAG)) $criteria->add(RankingPeer::RANKING_TAG, $this->ranking_tag);
 		if ($this->isColumnModified(RankingPeer::USER_SITE_ID)) $criteria->add(RankingPeer::USER_SITE_ID, $this->user_site_id);
 		if ($this->isColumnModified(RankingPeer::RANKING_TYPE_ID)) $criteria->add(RankingPeer::RANKING_TYPE_ID, $this->ranking_type_id);
 		if ($this->isColumnModified(RankingPeer::GAME_STYLE_ID)) $criteria->add(RankingPeer::GAME_STYLE_ID, $this->game_style_id);
 		if ($this->isColumnModified(RankingPeer::START_DATE)) $criteria->add(RankingPeer::START_DATE, $this->start_date);
-		if ($this->isColumnModified(RankingPeer::START_TIME)) $criteria->add(RankingPeer::START_TIME, $this->start_time);
 		if ($this->isColumnModified(RankingPeer::FINISH_DATE)) $criteria->add(RankingPeer::FINISH_DATE, $this->finish_date);
 		if ($this->isColumnModified(RankingPeer::IS_PRIVATE)) $criteria->add(RankingPeer::IS_PRIVATE, $this->is_private);
-		if ($this->isColumnModified(RankingPeer::BUYIN)) $criteria->add(RankingPeer::BUYIN, $this->buyin);
-		if ($this->isColumnModified(RankingPeer::ENTRANCE_FEE)) $criteria->add(RankingPeer::ENTRANCE_FEE, $this->entrance_fee);
+		if ($this->isColumnModified(RankingPeer::DEFAULT_BUYIN)) $criteria->add(RankingPeer::DEFAULT_BUYIN, $this->default_buyin);
 		if ($this->isColumnModified(RankingPeer::PLAYERS)) $criteria->add(RankingPeer::PLAYERS, $this->players);
 		if ($this->isColumnModified(RankingPeer::EVENTS)) $criteria->add(RankingPeer::EVENTS, $this->events);
-		if ($this->isColumnModified(RankingPeer::SCORE_SCHEMA)) $criteria->add(RankingPeer::SCORE_SCHEMA, $this->score_schema);
-		if ($this->isColumnModified(RankingPeer::SCORE_FORMULA)) $criteria->add(RankingPeer::SCORE_FORMULA, $this->score_formula);
 		if ($this->isColumnModified(RankingPeer::ENABLED)) $criteria->add(RankingPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(RankingPeer::VISIBLE)) $criteria->add(RankingPeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(RankingPeer::DELETED)) $criteria->add(RankingPeer::DELETED, $this->deleted);
@@ -1302,8 +1056,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 		$copyObj->setRankingName($this->ranking_name);
 
-		$copyObj->setRankingTag($this->ranking_tag);
-
 		$copyObj->setUserSiteId($this->user_site_id);
 
 		$copyObj->setRankingTypeId($this->ranking_type_id);
@@ -1312,23 +1064,15 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 		$copyObj->setStartDate($this->start_date);
 
-		$copyObj->setStartTime($this->start_time);
-
 		$copyObj->setFinishDate($this->finish_date);
 
 		$copyObj->setIsPrivate($this->is_private);
 
-		$copyObj->setBuyin($this->buyin);
-
-		$copyObj->setEntranceFee($this->entrance_fee);
+		$copyObj->setDefaultBuyin($this->default_buyin);
 
 		$copyObj->setPlayers($this->players);
 
 		$copyObj->setEvents($this->events);
-
-		$copyObj->setScoreSchema($this->score_schema);
-
-		$copyObj->setScoreFormula($this->score_formula);
 
 		$copyObj->setEnabled($this->enabled);
 
@@ -1360,18 +1104,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 
 			foreach($this->getRankingPlaceList() as $relObj) {
 				$copyObj->addRankingPlace($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getRankingImportLogListRelatedByRankingId() as $relObj) {
-				$copyObj->addRankingImportLogRelatedByRankingId($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getRankingImportLogListRelatedByRankingIdFrom() as $relObj) {
-				$copyObj->addRankingImportLogRelatedByRankingIdFrom($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getRankingPrizeSplitList() as $relObj) {
-				$copyObj->addRankingPrizeSplit($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1868,216 +1600,6 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	public function addRankingPlace(RankingPlace $l)
 	{
 		$this->collRankingPlaceList[] = $l;
-		$l->setRanking($this);
-	}
-
-	
-	public function initRankingImportLogListRelatedByRankingId()
-	{
-		if ($this->collRankingImportLogListRelatedByRankingId === null) {
-			$this->collRankingImportLogListRelatedByRankingId = array();
-		}
-	}
-
-	
-	public function getRankingImportLogListRelatedByRankingId($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collRankingImportLogListRelatedByRankingId === null) {
-			if ($this->isNew()) {
-			   $this->collRankingImportLogListRelatedByRankingId = array();
-			} else {
-
-				$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				$this->collRankingImportLogListRelatedByRankingId = RankingImportLogPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRankingImportLogRelatedByRankingIdCriteria) || !$this->lastRankingImportLogRelatedByRankingIdCriteria->equals($criteria)) {
-					$this->collRankingImportLogListRelatedByRankingId = RankingImportLogPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastRankingImportLogRelatedByRankingIdCriteria = $criteria;
-		return $this->collRankingImportLogListRelatedByRankingId;
-	}
-
-	
-	public function countRankingImportLogListRelatedByRankingId($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
-
-		return RankingImportLogPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addRankingImportLogRelatedByRankingId(RankingImportLog $l)
-	{
-		$this->collRankingImportLogListRelatedByRankingId[] = $l;
-		$l->setRankingRelatedByRankingId($this);
-	}
-
-	
-	public function initRankingImportLogListRelatedByRankingIdFrom()
-	{
-		if ($this->collRankingImportLogListRelatedByRankingIdFrom === null) {
-			$this->collRankingImportLogListRelatedByRankingIdFrom = array();
-		}
-	}
-
-	
-	public function getRankingImportLogListRelatedByRankingIdFrom($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collRankingImportLogListRelatedByRankingIdFrom === null) {
-			if ($this->isNew()) {
-			   $this->collRankingImportLogListRelatedByRankingIdFrom = array();
-			} else {
-
-				$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				$this->collRankingImportLogListRelatedByRankingIdFrom = RankingImportLogPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRankingImportLogRelatedByRankingIdFromCriteria) || !$this->lastRankingImportLogRelatedByRankingIdFromCriteria->equals($criteria)) {
-					$this->collRankingImportLogListRelatedByRankingIdFrom = RankingImportLogPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastRankingImportLogRelatedByRankingIdFromCriteria = $criteria;
-		return $this->collRankingImportLogListRelatedByRankingIdFrom;
-	}
-
-	
-	public function countRankingImportLogListRelatedByRankingIdFrom($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
-
-		return RankingImportLogPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addRankingImportLogRelatedByRankingIdFrom(RankingImportLog $l)
-	{
-		$this->collRankingImportLogListRelatedByRankingIdFrom[] = $l;
-		$l->setRankingRelatedByRankingIdFrom($this);
-	}
-
-	
-	public function initRankingPrizeSplitList()
-	{
-		if ($this->collRankingPrizeSplitList === null) {
-			$this->collRankingPrizeSplitList = array();
-		}
-	}
-
-	
-	public function getRankingPrizeSplitList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingPrizeSplitPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collRankingPrizeSplitList === null) {
-			if ($this->isNew()) {
-			   $this->collRankingPrizeSplitList = array();
-			} else {
-
-				$criteria->add(RankingPrizeSplitPeer::RANKING_ID, $this->getId());
-
-				RankingPrizeSplitPeer::addSelectColumns($criteria);
-				$this->collRankingPrizeSplitList = RankingPrizeSplitPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(RankingPrizeSplitPeer::RANKING_ID, $this->getId());
-
-				RankingPrizeSplitPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRankingPrizeSplitCriteria) || !$this->lastRankingPrizeSplitCriteria->equals($criteria)) {
-					$this->collRankingPrizeSplitList = RankingPrizeSplitPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastRankingPrizeSplitCriteria = $criteria;
-		return $this->collRankingPrizeSplitList;
-	}
-
-	
-	public function countRankingPrizeSplitList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingPrizeSplitPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(RankingPrizeSplitPeer::RANKING_ID, $this->getId());
-
-		return RankingPrizeSplitPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addRankingPrizeSplit(RankingPrizeSplit $l)
-	{
-		$this->collRankingPrizeSplitList[] = $l;
 		$l->setRanking($this);
 	}
 

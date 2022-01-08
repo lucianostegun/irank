@@ -9,12 +9,23 @@ body
   background-color: #F5F5F5;
   color: #222222;
   text-align: center;
-  
-  
-  
-	font: 					11px/15px Tahoma, Arial, Helvetica, sans-serif;
-	color: 					#333333;
-	text-align: 			center;
+}
+
+img
+{
+  border: none;
+}
+
+a
+{
+  color: #F32126;
+  text-decoration: underline;
+}
+
+a:hover
+{
+  color: #000000;
+  text-decoration: none;
 }
 
 code
@@ -26,33 +37,18 @@ code
 {
   position: relative;
   text-align: left;
-  width: 577px;
+  width: 515px;
   margin: 0 auto;
   padding: 0;
-  margin-top: 125px;
-  background: #F0F0F0;
-  background: 		#F0F0F0;
-  background-image: 		-o-linear-gradient(#F0F0F0, #AFAFAF);
-  background: 		-moz-linear-gradient(top, #F0F0F0, #AFAFAF);;
-  background: 		-webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#AFAFAF));
-  filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#F0F0F0', EndColorStr='#AFAFAF', GradientType=0);
-  border: 7px solid #D0D0D0
-}
-
-.clear {
-
-	clear: both;
-	width: 100%
+  margin-top: 115px;
 }
 
 .sfTMessageContainer
 {
   padding: 5px;
   margin-top: 25px;
-  margin-left: 15px;
   float: left;
-  width: 535px;
-  height: 	27px;
+  width: 515px;
 }
 
 .sfTMessage
@@ -89,35 +85,23 @@ code
 {
   float: left;
   width: 440px;
-  position: relative;
-  left: 10px
-}
-
-.sfTMessageContainer .sfTMessageWrap h4
-{
-  margin-top: 	18px;
-  font-size: 14px;
 }
 
 .sfTLogo {
 
-	position: relative;
-	left: 20px;
-	margin-top: -40px;
-	margin-bottom: -15px	
+	margin-top: -50px;
+	margin-bottom: -10px	
 }
 
 .sfTMessageContainer .sfTMessageWrap h1
 {
   color: #FFFFFF;
-  font-weight: bold;
-  font-size: 18px;
+  font-weight: normal;
+  font-size: 165%;
   padding: 0;
   margin: 0;
   line-height: 100%;
   padding-top: 5px;
-  font-family: Verdana;
-  text-shadow: #303030 1px 1px;
 }
 
 .sfTMessageContainer .sfTMessageWrap h5
@@ -130,25 +114,20 @@ code
 
 .sfTMessageContainer img.sfTMessageIcon
 {
+  width: 48px;
   height: 48px;
   float: left;
-  margin-right: 2px;
-  margin-left: 0px;
-}
-
-.sfTMessageContainer img.sfTMessageIcon.maintenance
-{
-  margin-right: 2px;
-  margin-left: 4px;
+  margin-right: 12px;
+  margin-left: 5px;
 }
 
 .sfTMessageInfo
 {
-  margin: 40px 0px 10px 25px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
+  margin-top: 15px;
   float: left;
   width: 440px;
-  font-size: 	9pt;
 }
 
 .sfTMessageInfo dt
@@ -162,7 +141,6 @@ code
 {
   margin: 0;
   padding: 0;
-  line-height: 20px
 }
 
 .sfTIconList
@@ -194,12 +172,6 @@ code
   background: url(../images/icons/linkOut16.png) no-repeat top left;
 }
 
-.sfTIconList li.sfTLinkMessage a
-{
-  color: #C91E1E;
-  text-shadow: #CACACA 1px 1px;
-}
-
 .sfTIconList li.sfTDirectoryMessage
 {
   background: url(../images/icons/folder16.png) no-repeat top left;
@@ -213,22 +185,4 @@ code
 .sfTIconList li.sfTReloadMessage
 {
   background: url(../images/icons/reload16.png) no-repeat top left;
-}
-
-
-a {
-	
-	color: 				#E82314;
-	text-decoration: 	none;
-}
-
-img {
-	
-	border: 	0px;
-}
-
-.maintenanceDate {
-
-	font-weight: normal;
-	font-size: 12px;
 }

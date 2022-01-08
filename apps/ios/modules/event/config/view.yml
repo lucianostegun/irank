@@ -1,3 +1,0 @@
-all:
-  stylesheets:    [ios/event]
-  javascripts:    []

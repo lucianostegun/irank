@@ -2,27 +2,27 @@ fields:
        
   peopleName:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
        
   emailAddress:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
     sfStringValidator:
       max:       150
-      max_error: form.error.max150
+      max_error: Informe um valor de até 150 caracteres
     sfEmailValidator:
       strict:       true
-      email_error:  form.error.invalidEmail
+      email_error:  O e-mail informado não é um e-mail válido
       
 
        
   emailAddress1:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
     sfCallbackValidator:
       callback:      [UserSitePeer, validateEmailList]
       invalid_error: nullError
 
   friendName1:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido

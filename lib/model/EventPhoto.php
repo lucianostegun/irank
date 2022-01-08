@@ -9,26 +9,6 @@
  */ 
 class EventPhoto extends BaseEventPhoto
 {
-
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-			
-			$this->updateInfo();
-
-    		$this->postOnWall();
-
-			parent::save();
-			
-       		Log::quickLog('event_photo', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_photo', $this->getPrimaryKey(), $e);
-        }
-    }
 	
 	public function delete($con=null){
 		
@@ -36,16 +16,6 @@ class EventPhoto extends BaseEventPhoto
 		$this->save();
 		
 		Log::quickLogDelete('event_photo', $this->getPrimaryKey());
-	}
-	
-	public function updateInfo(){
-		
-		$filePath  = $this->getFile()->getFilePath(true);
-  		$dimension = File::getFileDimension($filePath);
-  		
-  		$this->setWidth($dimension['width']);
-  		$this->setHeight($dimension['height']);
-  		$this->setOrientation(($dimension['width']>$dimension['height']?'L':'P'));
 	}
 	
 	public function getCommentList($limit=null){
@@ -61,11 +31,6 @@ class EventPhoto extends BaseEventPhoto
 			$criteria->setLimit($limit);
 		
 		return EventPhotoCommentPeer::doSelect($criteria);
-	}
-	
-	public function getCommentsCount(){
-		
-		return Util::executeOne('SELECT COUNT(1) FROM event_photo_comment WHERE event_photo_id = '.$this->getId());
 	}
 	
 	public function getNextPhoto(){
@@ -86,19 +51,6 @@ class EventPhoto extends BaseEventPhoto
 		$criteria->add( EventPhotoPeer::DELETED, false );
 		$criteria->addDescendingOrderByColumn( EventPhotoPeer::ID );
 		return EventPhotoPeer::doSelectOne($criteria);
-	}
-	
-	public function postOnWall(){
-		
-		if( !$this->isNew() )
-			return false;
-			
-       	HomeWall::doLog('publicou uma foto do evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPhoto', true);
-	}
-	
-	public static function getXml($photoList, $tagName='photoPhoto'){
-		
-		return Util::buildXml($photoList, "{$tagName}s", $tagName);
 	}
 	
 	public function getInfo(){

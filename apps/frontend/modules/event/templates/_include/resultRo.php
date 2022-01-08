@@ -1,16 +1,15 @@
-<table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable">
-  <tr class="header">
-    <th><?php echo __('Position') ?></th>
-    <th class="first"><?php echo __('Player') ?></th>
-    <th>Buy-in</th>
-    <th>Rebuy</th>
-    <th>Add-on</th>
-    <th><?php echo __('Prize') ?></th>
-    <th><?php echo __('Score') ?></th>
+<table width="100%" border="0" cellspacing="1" cellpadding="0">
+  <tr class="rank_heading">
+    <td>Nome</td>
+    <td>Buy-in</td>
+    <td>Posição</td>
+    <td>Prêmio</td>
+    <td>Rebuy</td>
+    <td>Add-on</td>
+    <td>Pontos</td>
   </tr>
   <?php
-  	$buyin       = $eventObj->getBuyin();
-  	$entranceFee = $eventObj->getEntranceFee();
+  	$buyin = $eventObj->getBuyin();
   	
   	$orderByList = array(EventPlayerPeer::ENABLED=>'desc',
   						 EventPlayerPeer::EVENT_POSITION=>'asc');
@@ -24,13 +23,13 @@
   			
   		$peopleObj = $eventPlayerObj->getPeople();
   ?>
-  <tr>
-    <td>#<?php echo $eventPlayerObj->getEventPosition() ?></td>
+  <tr class="boxcontent">
     <td><?php echo $peopleObj->getFullName() ?></td>
-    <td align="right"><?php echo ($entranceFee?Util::formatFloat($entranceFee, true).'+':'') . Util::formatFloat($buyin, true) ?></td>
+    <td align="right"><?php echo Util::formatFloat($buyin, true) ?></td>
+    <td>#<?php echo $eventPlayerObj->getEventPosition() ?></td>
+    <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getPrize(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getRebuy(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getAddon(), true) ?></td>
-    <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getPrize(), true) ?></td>
     <td align="right"><?php echo Util::formatFloat($eventPlayerObj->getScore(), true, 3) ?></td>
   </tr>
   <?php
@@ -38,8 +37,8 @@
   	
   	if( count($eventPlayerObjList)==0 ):
   ?>
-  <tr>
-    <td colspan="7" class="footer"><?php echo __('event.resultTab.noPlayer') ?></td>
+  <tr class="boxcontent">
+    <td colspan="6">Este ranking não possui convidados para compor os resultados</td>
   </tr>
   <?php endif; ?>
 </table>

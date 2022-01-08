@@ -3,73 +3,60 @@ validators:
     class:           sfCallbackValidator
     param:
       callback:      [Validate, validateDate]
-      invalid_error: form.error.invalidDate
+      invalid_error: A data informada não é uma data válida
   validateEventDate:
     class:           sfCallbackValidator
     param:
       callback:      [EventPeer, validateEventDate]
-      invalid_error: form.error.expiredDate
+      invalid_error: A data informada não pode mais ser utilizada para eventos
       
 fields:
        
   rankingId:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
        
   eventName:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
     sfCallbackValidator:
       callback:      [EventPeer, uniqueEventName]
-      invalid_error: form.error.takenEventName
+      invalid_error: Já existe um evento cadastrado com este nome para esta mesma data
        
   rankingPlaceId:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
        
   eventDate:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
     validateDate:
     validateEventDate:
        
   startTime:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
     sfCallbackValidator:
       callback:      [Validate, validateTime]
-      invalid_error: form.error.invalidTime
+      invalid_error: A hora informada não é uma data válida
        
   paidPlaces:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
     sfNumberValidator:
-      min: 0
-      max: 9
-      min_error: form.error.greaterEqual0
-      max_error: form.error.lessEqual9
-      nan_error: form.error.invalidNumber
+      min_error: 1
+      min_error: Informe um valor maior que 0
+      nan_error: O valor informado não é um número válido
        
   buyin:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
     sfNumberValidator:
       min:       0
-      min_error: form.error.greaterEqual0
-      nan_error: form.error.greaterEqual0
+      min_error: Informe um valor maior ou igual a 0
+      nan_error: Informe um número válido maior ou igual a 0
        
   comments:
     sfStringValidator:
       max:       140
-      max_error: form.error.max140
-       
-  prizePot:
-    required:
-      msg:       form.error.requiredField
-    sfNumberValidator:
-      min:       0
-      min_error: form.error.greaterEqual0
-      nan_error: form.error.greaterEqual0
-    sfCallbackValidator:
-      callback:      [EventPeer, validatePrizeShare]
-      invalid_error: nullError
+      max_error: Informe um valor de até 140 caracteres

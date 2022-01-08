@@ -7,14 +7,14 @@ function toggleButton(buttonId, type){
 	
 	if( type=='over' ){
 
-		$('button'+buttonId+'Left').style.backgroundPosition   = '0px -22px';
-		$('button'+buttonId+'Middle').style.backgroundPosition = '0px -22px';
-		$('button'+buttonId+'Right').style.backgroundPosition  = '0px -22px';
+		$('button'+buttonId+'Left').style.backgroundPosition   = '0 -22';
+		$('button'+buttonId+'Middle').style.backgroundPosition = '0 -22';
+		$('button'+buttonId+'Right').style.backgroundPosition  = '0 -22';
 	}else{
 		
-		$('button'+buttonId+'Left').style.backgroundPosition   = '0px 0px';
-		$('button'+buttonId+'Middle').style.backgroundPosition = '0px 0px';
-		$('button'+buttonId+'Right').style.backgroundPosition  = '0px 0px';
+		$('button'+buttonId+'Left').style.backgroundPosition   = '0 0';
+		$('button'+buttonId+'Middle').style.backgroundPosition = '0 0';
+		$('button'+buttonId+'Right').style.backgroundPosition  = '0 0';
 	}
 }
 
@@ -25,7 +25,7 @@ function checkButton( buttonId ){
 	if( $('button'+buttonId)==null )
 		return false;
 	
-	var disabled = $('button'+buttonId).hasClassName('buttonDisabled');
+	var disabled = $('button'+buttonId).className == 'buttonDisabled';
 
 	return !disabled;
 }
@@ -36,7 +36,7 @@ function enableButton( buttonId ){
 	
 	if( $('button'+buttonId)!=null ){
 		
-		$('button'+buttonId).removeClassName('disabled');
+		$('button'+buttonId).className = 'button';
 		$('button'+buttonId).disabled  = false;
 	}
 	
@@ -51,7 +51,7 @@ function disableButton( buttonId ){
 	
 	if( $('button'+buttonId)!=null ){
 		
-		$('button'+buttonId).addClassName('disabled');
+		$('button'+buttonId).className = 'buttonDisabled';
 		$('button'+buttonId).disabled  = false;
 	}
 
@@ -94,15 +94,4 @@ function setButtonLabel( buttonId, label, icon ){
 	}
 	
 	
-}
-
-function setButtonBarStatus(buttonBarId, className){
-	
-	if( $(buttonBarId+'ButtonBar')==null )
-		return false;
-	
-	$(buttonBarId+'ButtonBar').className = $(buttonBarId+'ButtonBar').className.replace(/ .*/gi, '');
-	
-	if( className )
-		$(buttonBarId+'ButtonBar').className += ' '+className;
 }

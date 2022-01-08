@@ -1,7 +1,7 @@
 * {
 
 	font-family: 	Verdana, Arial, sans-serif;
-	font-size: 		8pt;
+	font-size: 		14pt;
 }
 
 html, body {
@@ -14,23 +14,17 @@ html, body {
 
 .text {
 
-	font-size: 		9pt;
+	font-size: 		18pt;
 	text-shadow: 	white 1px 1px;
-	padding: 		10px 10px 0px 10px;
-}
-
-.text a {
-
-	font-size: 		9pt;
-	text-shadow: 	white 1px 1px;
+	padding: 		20 20 0 20;
 }
 
 h1 {
 
 	text-align: 	left;
-	font-size: 		10pt;
+	font-size: 		20pt;
 	text-shadow: 	white 1px 1px;
-	padding: 		10 10 0 10;
+	padding: 		20 20 0 20;
 	color: 			#4c566c;
 }
 
@@ -43,7 +37,7 @@ form {
 a {
 
 	text-decoration: 	underline;
-	font-size: 			7pt;
+	font-size: 			14pt;
 	text-shadow: 		white 1px 1px;
 	color: 				#81571F
 }
@@ -60,9 +54,9 @@ img {
 
 .header {
 
-	height: 		43px;
+	height: 		86px;
 	background: 	url('/images/mobile/layout/headerBg.png') repeat-x;
-	border-bottom: 	1px solid #2D3033;
+	border-bottom: 	2px solid #2D3033;
 }
 
 
@@ -70,58 +64,48 @@ img {
 
 	margin: 		-20 -20 0 -10;
 	border-bottom: 	2px solid #2D3033;
-	height: 		44px;
+	height: 		88px;
 	background: 	url('/images/mobile/buttonBarBg.png') repeat-x;
 	text-align: 	right;
 }
 
 .titleBar {
 
-	border-bottom: 	1px solid #2D3033;
-	height: 		24px;
+	border-bottom: 	2px solid #2D3033;
+	height: 		47px;
 	background: 	url('/images/mobile/title/mainBg.png') repeat-x;
-}
-
-#pageTitle {
-	
-	padding: 		3 0 0 5;
-	color: 			#FFFFFF;
-	font-size: 		10pt;
-	font-weight: 	bold;
-	text-shadow: 	#555555 1px -1px;
 }
 
 
 .footer {
 
-	border-top: 	1px solid #2D3033;
-	height: 		43px;
+	border-top: 	2px solid #2D3033;
+	height: 		86px;
 	background: 	url('/images/mobile/layout/footerBg.png') repeat-x;
 	text-align: 	right;
 }
 
 .footer a {
 
-	font-size: 			9pt;
+	font-size: 			18pt;
 	text-decoration: 	none;
 	color: 				#333;
 }
 
 .footerBack {
 
-	border-top: 	1px solid #2D3033;
-	height: 		15px;
+	border-top: 	2px solid #2D3033;
+	height: 		30px;
 	background: 	url('/images/mobile/layout/footerBg.png') repeat-x;
 }
 
 .rank_heading td{
-	
-	padding: 		3px 0px 3px 10px ;
-	font-size: 		6px;
-	line-height: 	14px;
-	color: 			#F0F0F0;
-	font-weight: 	bold;
-	background: 	#5A5A5A;	 
+	padding:3px 0 3px 10px ;
+	font-size:12px;
+	line-height:27px;
+	color:#F0F0F0;
+	font-weight:bold;
+	background:#5a5a5a;	 
 	}
 	
 .boxcontent td{
@@ -131,41 +115,10 @@ img {
 }
 
 .poker_heading{
-	padding: 			6px 0px 19px 0px;
-	color: 				#d21d24;
-	font-size: 			7px;
-	font-weight: 		bold;
-	text-transform: 	uppercase;
-	border-bottom: 		#999999 1px solid;
-}
-
-#flagList {
-
-	padding: 70px 20px 20px 20px;
-}
-
-#flagList img {
-
-	margin-right: 	17px;
-}
-
-.warning {
-
-	border: 				1px solid #873A38;
-	color: 					#5B1D1B;
-	background: 			#EBBCBB;
-	padding: 				7px;
-	margin: 				10px;
-	-moz-border-radius: 	5px;/* para funcionar no Firefox*/
-	-webkit-border-radius: 	5px;/* para funcionar no Chrome ou no Safari */
-	border-radius: 			5px;/* É bom colocar caso haja alguma compatibilidade no futuro */
-}
-
-.warning A {
-
-	color: 				#5B1D1B;
-	text-decoration: 	none;
-	font-size: 			8pt;
-	text-shadow: 		none;
-	font-weight: 		bold;
+	padding:6px 0px 19px 0px;
+	color:#d21d24;
+	font-size:13px;
+	font-weight:bold;
+	text-transform:uppercase;
+	border-bottom:#999999 2px solid;
 }

@@ -1,4 +1,0 @@
-all:
-  
-  stylesheets:    [schedule]
-  javascripts:    [schedule, /sf/prototype/js/scriptaculous]

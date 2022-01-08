@@ -108,7 +108,9 @@ abstract class BaseUserSiteOption extends BaseObject  implements Persistent {
 	public function setPeopleId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -126,7 +128,9 @@ abstract class BaseUserSiteOption extends BaseObject  implements Persistent {
 	public function setUserSiteOptionId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -144,7 +148,9 @@ abstract class BaseUserSiteOption extends BaseObject  implements Persistent {
 	public function setOptionValue($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -283,7 +289,7 @@ abstract class BaseUserSiteOption extends BaseObject  implements Persistent {
 			}
 
 			if ($this->aVirtualTable !== null) {
-				if ($this->aVirtualTable->isModified() || $this->aVirtualTable->getCurrentVirtualTableI18n()->isModified()) {
+				if ($this->aVirtualTable->isModified()) {
 					$affectedRows += $this->aVirtualTable->save($con);
 				}
 				$this->setVirtualTable($this->aVirtualTable);

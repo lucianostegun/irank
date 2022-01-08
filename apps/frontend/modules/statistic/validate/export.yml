@@ -2,15 +2,12 @@ fields:
        
   rankingId:
     required:
-      msg:       form.error.requiredField
-    sfCallbackValidator:
-      callback:      [RankingPeer, validateHasEvent]
-      invalid_error: Este ranking ainda não possui nenhum evento realizado
+      msg:       Este campo é obrigatório e não foi preenchido
        
   format:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
        
   reportType:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido

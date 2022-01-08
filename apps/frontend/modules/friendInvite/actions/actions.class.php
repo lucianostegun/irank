@@ -26,12 +26,10 @@ class friendInviteActions extends sfActions
   
   public function executeSendInvite($request){
   	
-  	Util::getHelper('I18N');
-  	
   	$peopleName   = $request->getParameter('peopleName');
   	$emailAddress = $request->getParameter('emailAddress');
   	
-	$emailContent = EmailTemplate::getContentByTagName('friendInvite');
+	$emailContent = AuxiliarText::getContentByTagName('friendInvite');
   	
   	$resultList = array();
   	for($i=1; $i<=10; $i++){
@@ -54,11 +52,11 @@ class friendInviteActions extends sfActions
 	  	}
 	  	
 	  	$emailContentTmp = $emailContent;
-	  	$emailContentTmp = str_replace('[peopleName]', $peopleName, $emailContentTmp);
-	  	$emailContentTmp = str_replace('[friendName]', $friendName, $emailContentTmp);
-	  	$emailContentTmp = str_replace('[emailAddress]', $emailAddress, $emailContentTmp);
+	  	$emailContentTmp = str_replace('<peopleName>', $peopleName, $emailContentTmp);
+	  	$emailContentTmp = str_replace('<friendName>', $friendName, $emailContentTmp);
+	  	$emailContentTmp = str_replace('<emailAddress>', $emailAddress, $emailContentTmp);
 	  	
-	  	$invite = Report::sendMail(__('email.subject.friendInvite'), $friendEmailAddress, $emailContentTmp);
+	  	$invite = Report::sendMail('Convite especial iRank', $friendEmailAddress, $emailContentTmp);
 	  	if($invite)
 	  		$resultList[] = 'ok';
 	  	else
@@ -66,24 +64,6 @@ class friendInviteActions extends sfActions
   	}
   	
   	echo implode('<info>', $resultList);
-  	exit;
-  }
-  
-  public function executeJavascript($request){
-  	
-  	Util::getHelper('i18n');
-  	
-    header('Content-type: text/x-javascript');
-	
-  	$nl = chr(10);
-  	
-  	echo 'var i18n_friendInvite_inviteError        = "'.__('friendInvite.inviteError').'";'.$nl;
-  	echo 'var i18n_friendInvite_status_inviteSent  = "'.__('friendInvite.status.inviteSent').'";'.$nl;
-  	echo 'var i18n_friendInvite_status_inviteError = "'.__('friendInvite.status.inviteError').'";'.$nl;
-  	echo 'var i18n_friendInvite_status_alreadyUser = "'.__('friendInvite.status.alreadyUser').'";'.$nl;
-  	echo 'var i18n_friendInvite_warningMessage     = "'.__('friendInvite.warningMessage').'";'.$nl;
-  	echo 'var i18n_friendInvite_successMessage     = "'.__('friendInvite.successMessage').'";'.$nl;
-  	
   	exit;
   }
 }

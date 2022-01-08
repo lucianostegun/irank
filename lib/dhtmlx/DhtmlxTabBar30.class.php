@@ -47,13 +47,13 @@ class DhtmlxTabBar30 {
     	
     	$objectName = $this->getName();
     	
-    	$html  = '<div id="'.$objectName.'Div" style="margin: 7px; height: '.$this->getHeight().'px;"></div>'.$nl;
+    	$html  = '<div id="'.$objectName.'Div" style="margin-top: 1px; height: '.$this->getHeight().'px;"></div>'.$nl;
     	$html .= $this->getTabBarListContent();
     	$html .= '<script>'.$nl;
 		$html .= '    '.$objectName.' = new dhtmlXTabBar("'.$objectName.'Div", "top");'.$nl;
 
     	$html .= '    '.$objectName.'.setHrefMode("ajax-html");'.$nl;
-    	$html .= '    '.$objectName.'.setSkin("silver");'.$nl;
+    	$html .= '    '.$objectName.'.setSkin("dhx_black");'.$nl;
 		$html .= '    '.$objectName.'.setImagePath("/js/dhtmlx/dhtmlxTabbar/imgs/");'.$nl;
 
 		$html .= $this->getTabBarListScript();
@@ -152,12 +152,10 @@ class DhtmlxTabBar30 {
 	    		$html .= '    '.$objectName.'.setContentHref(\''.$tabBarObj->getId().'\',\''.$tabBarObj->getContent().'\');'.$nl;
 	    	else
 	    		$html .= '    '.$objectName.'.setContent(\''.$tabBarObj->getId().'\',\''.$this->getId().$tabBarObj->getName().'Div\');'.$nl;
-    	}
-    	
-    	// Este bloco está separado porque senão fica um buraco entre as abas
-    	foreach( $this->tabBarObjList as $tabBarObj )
+	    	
 	    	if( $tabBarObj->getHidden() )
 	    		$html .= '    '.$objectName.'.hideTab(\''.$tabBarObj->getId().'\',true);'.$nl;
+    	}
     	
     	return $html;
     }
@@ -226,7 +224,7 @@ class DhtmlxTabBar30 {
         
     /* SETTERS */
 	
-	public function setSelectedTabBarId( $selectedTabBarId ){
+	private function setSelectedTabBarId( $selectedTabBarId ){
 		
 		if( !$selectedTabBarId )
 			return false;
@@ -398,14 +396,11 @@ class TabBar {
 		
 		$scriptName = MyTools::getRequest()->getScriptName();
 		
-		if( $content ){
+		if( !$this->isAjax() )
+			$content = get_partial($content, $options);
+		else
+			$content = $scriptName.'/home/getTab?tabAddress='.$content.'&options='.serialize($options);
 			
-			if( !$this->isAjax() )
-				$content = get_partial($content, $options);
-			else
-				$content = $scriptName.'/home/getTab?tabAddress='.$content.'&options='.serialize($options);
-		}
-		
 		$this->content = $content;
 	}
 	

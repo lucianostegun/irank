@@ -162,7 +162,7 @@ function stylesheet_tag()
   foreach ($sources as $source)
   {
     $source  = stylesheet_path($source);
-    $options = array_merge(array('rel' => 'stylesheet', 'type' => 'text/css', 'media' => 'screen, print', 'href' => $source.'?time='.time()), $sourceOptions);
+    $options = array_merge(array('rel' => 'stylesheet', 'type' => 'text/css', 'media' => 'screen, print', 'href' => $source), $sourceOptions);
     $html   .= tag('link', $options)."\n";
   }
 
@@ -226,9 +226,9 @@ function decorate_with($layout)
  * @return string file path to the image file
  * @see    image_tag  
  */
-function image_path($source, $absolute = false, $noExtension=false)
+function image_path($source, $absolute = false)
 {
-  return _compute_public_path($source, 'images', ($noExtension?'':'png'), $absolute);
+  return _compute_public_path($source, 'images', 'png', $absolute);
 }
 
 /**
@@ -259,9 +259,6 @@ function image_tag($source, $options = array())
     return '';
   }
 
-  $culture = MyTools::getCulture();
-  $source  = str_replace('/culture/', '/'.$culture.'/', $source);
-
   $options = _parse_attributes($options);
 
   $absolute = false;
@@ -271,14 +268,16 @@ function image_tag($source, $options = array())
     $absolute = true;
   }
 
-  $noExtension = false;
-  if (isset($options['noExtension']))
-  {
-    unset($options['noExtension']);
-    $noExtension = true;
-  }
+  $options['src'] = image_path($source, $absolute);
 
-  $options['src'] = image_path($source, $absolute, $noExtension);
+  if (!isset($options['alt']))
+  {
+    $path_pos = strrpos($source, '/');
+    $dot_pos = strrpos($source, '.');
+    $begin = $path_pos ? $path_pos + 1 : 0;
+    $nb_str = ($dot_pos ? $dot_pos : strlen($source)) - $begin;
+    $options['alt'] = ucfirst(substr($source, $begin, $nb_str));
+  }
 
   if (isset($options['size']))
   {
@@ -312,7 +311,7 @@ function _compute_public_path($source, $dir, $ext, $absolute = false)
 
   if (false === strpos(basename($source), '.'))
   {
-    $source .= ($ext?'.'.$ext:'');
+    $source .= '.'.$ext;
   }
 
   if ($sf_relative_url_root && 0 !== strpos($source, $sf_relative_url_root))
@@ -351,29 +350,8 @@ function include_metas()
 {
   foreach (sfContext::getInstance()->getResponse()->getMetas() as $name => $content)
   {
-  	$nameList  = explode('|', $name);
-  	$attribute = 'name';
-  	
-  	if( count($nameList)==2 ){
-  		
-  		$nameList[1] = ereg_replace('\*[0-9]*$', '', $nameList[1]);
-  		$attribute   = 'property';
-  	}
-  		
-    	echo tag('meta', array($attribute => implode(':', $nameList), 'content' => $content))."\n";
+    echo tag('meta', array('name' => $name, 'content' => $content))."\n";
   }
-}
-
-function include_facebook_metas($facbookMetaList)
-{
-	
-	if( !array_key_exists('image', $facbookMetaList) )
-		$facbookMetaList['image'] = 'http://'.MyTools::getRequest()->getHost().'/images/layout/mediaLogo.png';
-	else
-		$facbookMetaList['image2'] = 'http://'.MyTools::getRequest()->getHost().'/images/layout/mediaLogo.png';
-
-	foreach($facbookMetaList as $property=>$content)
-		echo "<meta property=\"og:$property\" content=\"$content\" />\n";
 }
 
 /**

@@ -1,6 +1,4 @@
 <?php
-Util::getHelper('I18N');
-
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
 $peopleObj  = PeoplePeer::retrieveByPK($peopleId);
 
@@ -41,16 +39,14 @@ foreach($eventDateList as $key=>$eventDate){
 	$rankingHistoryObj     = RankingHistoryPeer::retrieveByPK($rankingObj->getId(), $peopleId, $eventDate);	
 	
 	$position      = $rankingHistoryObj->getRankingPosition();
-	$events        = $rankingHistoryObj->getEvents();
 	$totalPosition = $rankingHistoryObj->getTotalRankingPosition();
-	$myPositionByDayList[] = ($events && $position?$position:null);
+	$myPositionByDayList[] = ($position?$position:null);
 	$myPositionProgressList[] = ($totalPosition?$totalPosition:null);
 	
 	$rankingHistoryObj = RankingHistoryPeer::retrieveByPK($rankingObj->getId(), $peopleIdOther, $eventDate);
 	$position          = $rankingHistoryObj->getRankingPosition();
-	$events            = $rankingHistoryObj->getEvents();
 	$totalPosition     = $rankingHistoryObj->getTotalRankingPosition();
-	$otherPlaceByDayList[] = ($events && $position?$position:null);
+	$otherPlaceByDayList[] = ($position?$position:null);
 	$otherPlaceProgressList[] = ($totalPosition?$totalPosition:null);
 }
 
@@ -66,31 +62,22 @@ $DataSet->AddPoint($otherPlaceProgressList,'otherPlaceProgress');
 $DataSet->AddPoint($eventDateList,'eventDateList');
 $DataSet->SetAbsciseLabelSerie('eventDateList');
 
-$sufix = 'th';
-if( ereg('1$', $otherPlace) ) $sufix = 'st';
-elseif( ereg('2$', $otherPlace) ) $sufix = 'nd';
-
 $peopleName = $peopleObj->getFirstName();
-$DataSet->SetSerieName($peopleName.' ('.__('statistic.chart.byDate').')','myPositionByDay');
-$DataSet->SetSerieName($peopleName.' ('.__('statistic.chart.progressive').')','myPositionProgress');
-$DataSet->SetSerieName($otherPlace.__('statistic.chart.place', array('%sufix%'=>$sufix)).' ('.__('statistic.chart.byDate').')','otherPlaceByDay');
-$DataSet->SetSerieName($otherPlace.__('statistic.chart.place', array('%sufix%'=>$sufix)).' ('.__('statistic.chart.progressive').')','otherPlaceProgress');
+$DataSet->SetSerieName($peopleName.' (por data)','myPositionByDay');
+$DataSet->SetSerieName($peopleName.' (progressivo)','myPositionProgress');
+$DataSet->SetSerieName($otherPlace.'º colocado (por data)','otherPlaceByDay');
+$DataSet->SetSerieName($otherPlace.'º colocado (progressivo)','otherPlaceProgress');
 
-$DataSet->SetYAxisName(__('statistic.chart.rating'));
+$DataSet->SetYAxisName('Classificação');
 $DataSet->SetYAxisFormat('int');
 
 $width=1150;
 $height=350;
 
-$allPositions = array_merge($myPositionByDayList, $otherPlaceByDayList, $myPositionProgressList, $otherPlaceProgressList);
-$min = min($allPositions)-1;
-$max = max($allPositions)+1;
-
-$min = ($min<=1?1:$min);
 
 // Initialise the graph   
 $Test = new pChart($width,$height+60);
-$Test->setFixedScale($max, $min, $max-1);
+$Test->setFixedScale($players, 0, $players);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->setGraphArea(85,45,$width-170,$height-20);
 $Test->drawFilledRoundedRectangle(7,7,$width-7,$height+50,5,240,240,240);
@@ -122,18 +109,18 @@ $DataSet->RemoveSerie('myPositionProgress');
 $Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
 $Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255);
 
-header('Content-Type: image/png');
-header('Content-Disposition: attachment; filename='.__('statistic.fileName.myPerformance').'.png');
+header('Content-Type: image/jpeg');
+header('Content-Disposition: attachment; filename=meu_desempenho.png');
 header('Expires: 0');
 header('Pragma: no-cache');
 
 // Finish the graph
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
 $Test->drawLegend($width-160,35,$DataSet->GetDataDescription(),255,255,255);
-$Test->setFontProperties($libDir.'/pChart/Fonts/tahomabd.ttf',11);
-$Test->drawTitle(100,30,__('statistic.chart.title.rankingLog').' - '.$rankingObj->getRankingName(),50,50,50);
+$Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',11);
+$Test->drawTitle(100,30,'Histórico de classificação - '.$rankingObj->getRankingName(),50,50,50);
 $Test->setFontProperties($libDir.'/pChart/Fonts/tahoma.ttf',8);
-$Test->drawCredits();
+$Test->drawCredits($width, $height);
 $Test->Stroke();
    	
 exit;

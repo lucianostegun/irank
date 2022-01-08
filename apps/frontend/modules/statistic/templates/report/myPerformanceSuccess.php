@@ -1,6 +1,4 @@
 <?php
-Util::getHelper('I18N');
-
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
 $peopleObj  = PeoplePeer::retrieveByPK($peopleId);
 
@@ -21,7 +19,6 @@ if( $peopleIdOther==$peopleId ){
 	}
 }
 
-$culture        = MyTools::getCulture();
 $inputFilePath  = Util::getFilePath('/templates/myPerformance.xls');
 $outputFilePath = Util::getFilePath('/temp/myPerformance-'.microtime().'.xls');
 
@@ -41,14 +38,14 @@ for($line=7; $line <= 7+$events-1; $line++)
 	);
 
 $phpExcelObj->setActiveSheetIndex(0)
-			->setCellValue('D2', $rankingObj->getRankingName())
-			->setCellValue('D3', $rankingObj->getPlayers())
-			->setCellValue('D4', $rankingObj->getEvents())
-			->setCellValue('F4', $rankingObj->getRankingType()->getDescription())
+			->setCellValue('C2', $rankingObj->getRankingName())
+			->setCellValue('C3', $rankingObj->getPlayers())
+			->setCellValue('C4', $rankingObj->getEvents())
+			->setCellValue('E4', $rankingObj->getRankingType()->getDescription())
 			->setCellValue('B6', $peopleObj->getName().' (por data)')
-			->setCellValue('C6', $otherPlace.'º colocado (por data)')
-			->setCellValue('D6', $peopleObj->getName().' (progressivo)')
-			->setCellValue('E6', $otherPlace.'º colocado (progressivo)')
+			->setCellValue('D6', $otherPlace.' (por data)')
+			->setCellValue('C6', $peopleObj->getName().' (progressivo)')
+			->setCellValue('C6', $otherPlace.' (progressivo)')
 			;
 						
 $currentLine = 7;
@@ -64,15 +61,15 @@ foreach($eventDateList as $key=>$eventDate){
 
 	$phpExcelObj->setActiveSheetIndex(0)
 				->setCellValue('A'.$currentLine, $eventDate)
-				->setCellValue('B'.$currentLine, '#'.$position)
-				->setCellValue('C'.$currentLine, '#'.$totalPosition)
-				->setCellValue('D'.$currentLine, '#'.$positionOther)
-				->setCellValue('E'.$currentLine, '#'.$totalPositionOther);
+				->setCellValue('B'.$currentLine, $position)
+				->setCellValue('C'.$currentLine, $totalPosition)
+				->setCellValue('D'.$currentLine, $positionOther)
+				->setCellValue('E'.$currentLine, $totalPositionOther);
 
 	$currentLine++;
 }
 
-Util::headerExcel(__('statistic.fileName.myPerformance').'.xls');
+Util::headerExcel('meu_desempenho.xls');
 $objWriter = PHPExcel_IOFactory::createWriter($phpExcelObj, 'Excel5');
 $objWriter->save( $outputFilePath );
 

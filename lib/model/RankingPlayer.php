@@ -17,8 +17,6 @@ class RankingPlayer extends BaseRankingPlayer
 			$isNew              = $this->isNew();
 			$columnModifiedList = Log::getModifiedColumnList($this);
 
-			$this->postOnWall();
-
 			parent::save();
 			
        		Log::quickLog('ranking_player', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
@@ -37,7 +35,7 @@ class RankingPlayer extends BaseRankingPlayer
 	
 	public function updateBalance(){
 		
-		$totalPaid  = Util::executeOne('SELECT SUM(event_player.ENTRANCE_FEE+event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
+		$totalPaid  = Util::executeOne('SELECT SUM(event_player.BUYIN+event_player.REBUY+event_player.ADDON) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
 		$totalPrize = Util::executeOne('SELECT SUM(event_player.PRIZE) FROM event_player, event WHERE event.VISIBLE=TRUE AND event.DELETED=FALSE AND event.SAVED_RESULT=TRUE AND event_player.EVENT_ID=event.ID AND event.RANKING_ID='.$this->getRankingId().' AND event_player.PEOPLE_ID='.$this->getPeopleId(), 'float');
 		
 		$balanceValue = $totalPrize-$totalPaid;
@@ -84,37 +82,5 @@ class RankingPlayer extends BaseRankingPlayer
 	public function setTotalAverage($totalAverage){
 		
 		parent::setTotalAverage( Util::formatFloat($totalAverage, false, 3) );
-	}
-	
-	public function getPosition($peopleId=null){
-		
-		if( !$peopleId )
-			$peopleId = MyTools::getAttribute('peopleId');
-			
-		return Util::executeOne('SELECT total_ranking_position FROM ranking_history WHERE ranking_id = '.$this->getRankingId().' AND people_id = '.$this->getPeopleId().' ORDER BY ranking_date DESC LIMIT 1', 'int');
-	}
-	
-	public function getClone(){
-		
-		$rankingPlayerObj = new RankingPlayer();
-		$rankingPlayerObj->setPeopleId( $this->getPeopleId() );
-		$rankingPlayerObj->setEnabled( $this->getEnabled() );
-		$rankingPlayerObj->setAllowEdit( $this->getAllowEdit() );
-		
-		return $rankingPlayerObj;
-	}
-	
-	public static function getXml($rankingPlayerList){
-		
-		return Util::buildXml($rankingPlayerList, 'rankingPlayers', 'rankingPlayer');
-	}
-	
-	public function postOnWall(){
-		
-		$isNew    = $this->isNew();
-		$peopleId = MyTools::getAttribute('peopleId');
-		
-		if( $isNew && $peopleId!=$this->getPeopleId() )
-        	HomeWall::doLog('agora é jogador do ranking <b>'.$this->getRanking()->getRankingName().'</b>', 'rankingPlayer', true, false, $this->getPeople()->getFirstName());		
 	}
 }

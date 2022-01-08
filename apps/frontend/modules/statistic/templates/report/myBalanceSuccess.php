@@ -1,6 +1,4 @@
 <?php
-Util::getHelper('I18N');
-
 $rankingObj = RankingPeer::retrieveByPK($rankingId);
 $peopleObj  = PeoplePeer::retrieveByPK($peopleId);
 
@@ -21,7 +19,6 @@ if( $peopleIdOther==$peopleId ){
 	}
 }
 
-$culture        = MyTools::getCulture();
 $inputFilePath  = Util::getFilePath('/templates/myBalance.xls');
 $outputFilePath = Util::getFilePath('/temp/myBalance-'.microtime().'.xls');
 
@@ -36,7 +33,7 @@ for($line=7; $line <= 7+$events-1; $line++)
 	$phpExcelObj->setActiveSheetIndex(0)->getStyle('A'.$line.':G'.$line)->getFill()->applyFromArray(
 	    array(
 	        'type'       => PHPExcel_Style_Fill::FILL_SOLID,
-	        'startcolor' => array('rgb' => ($line%2==0?'D0D0D0':'FFFFFF'))
+	        'startcolor' => array('rgb' => ($line%2==0?'A6A6A6':'D0D0D0'))
     	)
 	);
 
@@ -65,7 +62,7 @@ foreach($eventDateList as $key=>$eventDate){
 	$currentLine++;
 }
 
-Util::headerExcel(__('statistic.fileName.myBalance').'.xls');
+Util::headerExcel('meu_balanco.xls');
 $objWriter = PHPExcel_IOFactory::createWriter($phpExcelObj, 'Excel5');
 $objWriter->save( $outputFilePath );
 

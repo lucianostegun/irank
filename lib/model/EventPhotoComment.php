@@ -25,8 +25,6 @@ class EventPhotoComment extends BaseEventPhotoComment
 			$isNew              = $this->isNew();
 			$columnModifiedList = Log::getModifiedColumnList($this);
 
-    		$this->postOnWall();
-
 			parent::save();
 			
        		Log::quickLog('event_photo_comment', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
@@ -34,14 +32,6 @@ class EventPhotoComment extends BaseEventPhotoComment
         	
             Log::quickLogError('event_photo_comment', $this->getPrimaryKey(), $e);
         }
-    }
-    
-    public function getCode(){
-    	
-    	$eventPhotoCommentId = $this->getId();
-		$eventPhotoCommentId = (1983+$eventPhotoCommentId);
-		
-		return '#'.sprintf('%04d', $eventPhotoCommentId);
     }
     
     public function getComment($format=false){
@@ -59,50 +49,73 @@ class EventPhotoComment extends BaseEventPhotoComment
     
     public function getTimeAgo(){
     	
-    	return Util::getTimeAgo($this->getCreatedAt(null));
+    	$minutes = 60;
+    	$hours   = $minutes*60;
+    	$days    = $hours*24;
+    	$weeks   = $days*7;
+    	$months  = $days*30;
+    	$years   = $months*12;
+    	
+    	$timeAgo = time()-$this->getCreatedAt(null);
+    	
+    	if( $timeAgo >= $years ){
+    		
+    		$timeAgo = ceil($timeAgo/$years);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'ano':'anos');
+    	}elseif( $timeAgo >= $months ){
+    		
+    		$timeAgo = ceil($timeAgo/$months);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'mês':'meses');
+    	}elseif( $timeAgo >= $weeks ){
+    		
+    		$timeAgo = ceil($timeAgo/$weeks);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'semana':'semanas');
+    	}elseif( $timeAgo >= $days ){
+    		
+    		$timeAgo = ceil($timeAgo/$days);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'dia':'dias');
+    	}elseif( $timeAgo >= $hours ){
+    		
+    		$timeAgo = ceil($timeAgo/$hours);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'hora':'horas');
+    	}elseif( $timeAgo >= $minutes ){
+    		
+    		$timeAgo = ceil($timeAgo/$minutes);
+    		$timeAgo = $timeAgo.' '.($timeAgo==1?'minuto':'minutos');
+    	}else{
+    		
+    		$timeAgo = 'menos de 1 minuto';
+    	}
+    	
+    	return $timeAgo;
     }
 	
 	public function isMyComment(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
-
-		return ($this->getPeopleId()==$peopleId);
-	}
-	
-	public function postOnWall(){
-		
-		if( !$this->isNew() )
-			return false;
 			
-       	HomeWall::doLog('postou um comentário na foto do evento <b>'.$this->getEventPhoto()->getEvent()->getEventName().'</b>', 'eventPhotoComment', true);
+		return ($this->getPeopleId()==$peopleId);
 	}
 	
 	public function notify(){
 
-		Util::getHelper('I18N');
-
-		$eventObj     = $this->getEventPhoto()->getEvent();
-		$emailContent = EmailTemplate::getContentByTagName('eventPhotoCommentNotify');
-
-		$emailContent = str_replace('[eventName]', $eventObj->getEventName(), $emailContent);
-		$emailContent = str_replace('[rankingName]', $eventObj->getRanking()->getRankingName(), $emailContent);
-		$emailContent = str_replace('[peopleName]', $this->getPeople()->getFirstName(), $emailContent);
-		$emailContent = str_replace('[comment]', $this->getComment(), $emailContent);
+		$eventCommentId = $this->getId();
+		$eventCommentId = (1983+$eventCommentId);
 		
-		$emailContent = str_replace('[eventId]', $eventObj->getId(), $emailContent);
-		$emailContent = str_replace('[eventPhotoId]', $this->getEventPhotoId(), $emailContent);
-		$emailContent = str_replace('[shareId]', base64_encode($this->getEventPhotoId()), $emailContent);
-		$emailContent = str_replace('[eventPlace]', $eventObj->getEventPlace(), $emailContent);
-		$emailContent = str_replace('[eventDate]', $eventObj->getEventDate('d/m/Y'), $emailContent);
-		$emailContent = str_replace('[startTime]', $eventObj->getStartTime('H:i'), $emailContent);
-		$emailContent = str_replace('[peopleEmail]', $this->getPeople()->getEmailAddress(), $emailContent);
+		$eventObj     = $this->getEventPhoto()->getEvent();
+		$emailContent = AuxiliarText::getContentByTagName('eventPhotoCommentNotify');
+
+		$emailContent = str_replace('<eventName>', $eventObj->getEventName(), $emailContent);
+		$emailContent = str_replace('<rankingName>', $eventObj->getRanking()->getRankingName(), $emailContent);
+		$emailContent = str_replace('<peopleName>', $this->getPeople()->getFirstName(), $emailContent);
+		$emailContent = str_replace('<comment>', $this->getComment(), $emailContent);
 		
 		$emailAddressList = $eventObj->getEmailAddressList('receiveEventCommentNotify', true);
 		
 		$options = array();
-		$options['emailTemplate']  = null;
-		$options['replyTo']        = 'event_photo_comment@irank.com.br';
+		$options['emailTemplate'] = null;
+		$options['replyTo']       = 'event_photo_comment@irank.com.br';
 		
-		Report::sendMail(__('email.subject.eventPhotoComment', array('%eventName%'=>$eventObj->getEventName(), '%eventPhotoCommentCode%'=>$this->getCode())), $emailAddressList, $emailContent, $options);
+		Report::sendMail('Comentários em foto do evento #'.$eventObj->getCode(), $emailAddressList, $emailContent, $options);
 	}
 }

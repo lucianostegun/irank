@@ -1,3 +1,0 @@
-INSERT INTO file(file_name, file_path, file_size, description, is_image, deleted, created_at, updated_at)
-    VALUES('odds.png', 'images/partners/odds.png', null, 'Banner de parceria com o site Odds Brasil', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO partner VALUES(2, 'Odds Brasil', 'http://www.oddsbrasil.com', (SELECT MAX(id) FROM file), true, true, false, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

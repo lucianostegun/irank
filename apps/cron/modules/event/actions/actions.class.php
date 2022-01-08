@@ -6,7 +6,6 @@ class eventActions extends sfActions
   public function preExecute(){
 
 	$this->getUser()->setAttribute('cron', true);
-	$this->getUser()->setCulture('pt_BR');
   }
   
   public function executeReminder($request){
@@ -23,19 +22,20 @@ class eventActions extends sfActions
 	$criteria->add( EventPeer::EVENT_DATE, $eventDate );
 	$criteria->add( EventPeer::CREATED_AT, $createdAt, Criteria::LESS_EQUAL );
 	$eventObjList = EventPeer::doSelect($criteria);
-
+	
 	foreach($eventObjList as $eventObj)
 		$eventObj->notifyReminder($days);
 	
 	$this->getUser()->getAttributeHolder()->remove('cron');
 	
-	echo date('Y-m-d H:i:s').' - Notificacoes enviadas com sucesso para '.count($eventObjList).' evento(s)'.chr(10);
+	echo 'Notificações enviadas com sucesso para '.count($eventObjList).' evento(s)';
 	exit;
   }
   
   public function executeImportEmailComments($request){
 
-		$emailAddress = 'event_comment@irank.com.br';
+		$isPhoto      = $request->getParameter('photo');
+		$emailAddress = 'event_'.($isPhoto?'photo_':'').'comment@irank.com.br';
 		$password     = 'K33p0utme';
 		$server       = 'imap.irank.com.br';
 		$port         = 993;
@@ -71,60 +71,37 @@ class eventActions extends sfActions
 			if( strtoupper($encoding)!='UTF-8' )
 				$comment  = utf8_encode($comment);
 				
-			$eventId = ereg_replace('^.*#', '', $subject);
-			$eventId = ($eventId>1985?$eventId-1985:$eventId);
+			$eventCommentId      = ereg_replace('^.*#', '', $subject);
+			$eventCommentId      = $eventCommentId-1985;
+			$eventPhotoCommentId = $eventCommentId-1983;
 			
-			$error = false;
-			
-			try{
-			
-				$eventObj = EventPeer::retrieveByPK($eventId);
-					
-			}catch(Exception $e){
-				
-				$error = true;
-			}
+			if( $isPhoto )
+				$eventCommentObj = EventPhotoCommentPeer::retrieveByPK($eventPhotoCommentId);
+			else
+				$eventCommentObj = EventCommentPeer::retrieveByPK($eventCommentId);
 				
 			$peopleObj = PeoplePeer::retrieveByEmailAddress($emailAddress);
 
-
-			/* VALIDAÇÃO DE ERROS */
-			if( !is_object($eventObj) || !is_object($peopleObj) )
-				$error = true;
+			if( !is_object($eventCommentObj) || !is_object($peopleObj) )
+				continue;
 			
-			if( !$error && !$eventObj->isInvited($peopleObj->getId()) )
-				$error = true;
-				
-			if( strlen($comment) > 32 && !ereg(' ', $comment) )
-				$error = true;
-				
+			if( $isPhoto )
+				$eventPhotoObj = $eventCommentObj->getEventPhoto();
+			else
+				$eventObj = $eventCommentObj->getEvent();
 			
-			if( !$error ){
-				
-				$criteria = new Criteria();
-				$criteria->add( EventCommentPeer::CREATED_AT, $createdAt );
-				$criteria->add( EventCommentPeer::PEOPLE_ID, $peopleObj->getId() );
-				$criteria->add( EventCommentPeer::EVENT_ID, $eventObj->getId() );
-				$eventCommentObj = EventCommentPeer::doSelectOne($criteria);
-				
-				if( is_object($eventCommentObj) )
-					$error = true;
-			}
-				
-			if( $error ){
-				
-		  	    $messageObj->move('INBOX.Antigos');
-//		  	    $messageObj->delete();
-		  	    continue;
-			}
-			/* FIM VALIDAÇÃO ERROS */
+			if( !$eventObj->isInvited($peopleObj->getId()) )
+				continue;
 				
 			$eventCommentObj = new EventComment();
 			$eventCommentObj->setPeopleId( $peopleObj->getId() );
 			
-			$eventCommentObj->setEventId( $eventObj->getId() );
+			if( $isPhoto )
+				$eventCommentObj->setEventPhotoId( $eventPhotoObj->getId() );
+			else
+				$eventCommentObj->setEventId( $eventObj->getId() );
 				
-			$eventCommentObj->setComment( utf8_encode($comment) );
+			$eventCommentObj->setComment( $comment );
 			$eventCommentObj->setCreatedAt( $createdAt );
 			
 			try{
@@ -143,47 +120,14 @@ class eventActions extends sfActions
 				}
 			}
 			
-	  	    $messageObj->move('INBOX.Antigos');
-//	  	    $messageObj->delete();
+//	  	    $messageObj->move('INBOX.Antigos');
+	  	    $messageObj->delete();
 	  	    
 	  	    $successCount++;
 		}
 		
-		echo date('Y-m-d H:i:s').' - Importacao concluida com sucesso! E-mails importados: '.$successCount.chr(10);
+		echo 'Importação concluída com sucesso! E-mails importados: '.$successCount;
 		
 		exit;
-  }
-  
-  public function executePatchEventPhoto(){
-  	
-  	$criteria = new Criteria();
-  	$criteria->add (EventPhotoPeer::DELETED, false);
-  	$eventPhotoObjList = EventPhotoPeer::doSelect($criteria);
-  	
-  	foreach($eventPhotoObjList as $eventPhotoObj){
-  		
-  		$filePath  = $eventPhotoObj->getFile()->getFilePath(true);
-  		
-  		echo $filePath.' - ';
-  		
-  		if( file_exists($filePath) ){
-	  		
-	  		$dimension = File::getFileDimension($filePath);
-	  		$eventPhotoObj->setWidth($dimension['width']);
-	  		$eventPhotoObj->setHeight($dimension['height']);
-	  		$eventPhotoObj->setOrientation(($dimension['width']>$dimension['height']?'L':'P'));
-	  		$eventPhotoObj->save();
-
-	  		echo $dimension['width'].'x'.$dimension['height'];
-	  		echo ' - OK';
-  		}else{
-  			
-	  		echo ' - ERRO';
-  		}
-  		echo '<br/>';
-  	}
-  	
-  	echo 'Processo finalizado com sucesso!';
-  	exit;
   }
 }

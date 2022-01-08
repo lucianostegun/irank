@@ -1,4 +1,0 @@
-all:
-  
-  stylesheets:    [form, table, eventPersonal]
-  javascripts:    [eventPersonal, mask, /index.php/event/javascript/js]

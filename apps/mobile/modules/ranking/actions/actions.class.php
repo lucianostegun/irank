@@ -5,9 +5,7 @@ class rankingActions extends sfActions
 
   public function preExecute(){
 	
-	Util::getHelper('I18N');
-	
-	$this->title = __('ranking.title');
+	$this->title = 'Meus rankings';
 	
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
   }
@@ -20,7 +18,7 @@ class rankingActions extends sfActions
   public function executeEdit($request){
   	
   	$rankingId = $request->getParameter('rankingId');
-  	$this->title .= '/'.__('ranking.title.viewing');
+  	$this->title .= '/Visualização';
   	
   	if( $rankingId ){
   		

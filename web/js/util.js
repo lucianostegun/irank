@@ -32,14 +32,11 @@ function clearDebug(){
 	hideDiv('debugDiv');
 }
 
-function showDiv( divId, isTableCell, displayType ){
+function showDiv( divId, tableCell ){
 
 	var div = $( divId );
-	if( div && div!='undefined' ){
-		
-		div.style.display = (isTableCell?'table-cell':(displayType?displayType:'block'));
-		div.removeClassName('hidden');
-	}
+	if( div && div!='undefined' )
+		div.style.display = (tableCell?'table-cell':'block');
 }
 
 function hideDiv( divId ){
@@ -57,6 +54,7 @@ function showIndicator( indicatorId ){
 		$('indicator').style.top = window.pageYOffset;
 
 	showDiv('indicator'+indicatorId);
+	showDiv('indicator');
 	hideFormStatusError(indicatorId);
 }
 
@@ -78,7 +76,7 @@ function isVisible( divId ){
 function putLoading(divId, message, mobile){
 	
 	if( !message )
-		message = i18n_innerLoading;
+		message = 'Carregando,'+(mobile?' ':'<br/>')+'aguarde...';
 	
 	var html = '';
 	
@@ -107,7 +105,6 @@ function isBlank(val){
 
 	if(val==null)
 		return true;
-	
 	if(val=='')
 		return true;
 	
@@ -116,34 +113,25 @@ function isBlank(val){
 
 function isDigit(num) {
 
-	if( num.length>1 )
-		return false;
-	
+	if (num.length>1){return false;}
 	var string="1234567890";
-	
-	if( string.indexOf(num)!=-1 )
-		return true;
-	
+	if (string.indexOf(num)!=-1){return true;}
 	return false;
 }
 
 function isInteger(val){
 
 	val = val+'';
-	
-	if( isBlank(val) )
-		return false;
-	
-	for(var i=0;i<val.length;i++)
-		if( !isDigit(val.charAt(i)) )
-			return false;
-
+	if (isBlank(val)){return false;}
+	for(var i=0;i<val.length;i++){
+		if(!isDigit(val.charAt(i))){return false;}
+		}
 	return true;
 }
 
 function isNumeric(val){
 
-	return (parseFloat(val,10)==(val*1));
+	return(parseFloat(val,10)==(val*1));
 }
 
 function getWaitSelect(fieldName, fieldId, onchange){
@@ -191,61 +179,36 @@ function linkToFunction(label, module, action, fieldName, fieldValue){
 	return '<a href="javascript:void(0)" onclick="goModule(\''+module+'\', \''+action+'\', \''+fieldName+'\', \''+fieldValue+'\')">'+label+'</a>';
 }
 
-function toCurrency(value, decimalPlaces){
-	
-	decimalPlaces = (typeof(decimalPlaces)!='undefined'?decimalPlaces:2);
-	return toFloat(value, true, decimalPlaces);
-}
+function toFloat( value ){
 
-function toFloat(value, display, decimalPlaces){
-
-	decimalPlaces = (typeof(decimalPlaces)=='undefined'?2:decimalPlaces);
-	
 	if( !value )
-		value = 0;
+		return 0;
 	
 	value = value+' ';
 	
-	var separator = (i18n_culture=='pt_BR'?',':'.');
-	
 	if( (/^[0-9]+\.[0-9]{1,2} $/).test(value) )		
 		value = value.replace('.', ',');
-	
-	if( (/^[0-9]+[,\.][0-9]{3,} $/).test(value) ){
-		
-		value = value.replace(',', '.');
-		value = number_format(value, decimalPlaces, separator, (separator=='.'?',':'.'));
-	}
 
 	value = value.replace(/[^0-9,-]/ig, '');
 	value = value.replace(',', '.');
 	
 	value = parseFloat(value);
 	
-	if( display )
-		value = number_format(value, decimalPlaces, separator, (separator=='.'?',':'.'));
-	
-	return value;
+	return parseFloat(value);
 }
 
 function parseInfo(infoList){
 
-	try{
-		
-		eval('var obj = '+infoList+';');
-		return obj;
-	}catch(error){
-		
-		return null;
-	}
+	eval('var obj = '+infoList+';');
+	return obj;
 }
 
 function parseMessage(errorMessage){
 
-	if( (errorMessage).match(/^!/) ){
-		return errorMessage.replace(/^!/, '\n\n');
-	}else
-		return null;
+	if( (errorMessage).match(/^!/) )
+		return errorMessage.replace('!', '');
+	else
+		return false;
 }
 
 function getScreenWidth(){
@@ -284,9 +247,13 @@ function Trim( value, char ){
 
 function replaceChar( value, char, newChar) {
 
-    for (i=0; i < value.length; i++)
-    	if (value.substring(i, i+1) == char)
+    for (i=0; i < value.length; i++) {
+    
+    	if (value.substring(i, i+1) == char){
+
             value = value.replace(char, newChar);
+        }
+    }
     
     return value;
 }
@@ -309,57 +276,4 @@ function getEmptySelect(fieldName, fieldId){
 	selectEmpty = selectEmpty.replace('fieldId', fieldId);
 	
 	return selectEmpty;
-}
-
-function getModuleName(){
-	
-	return _ModuleName;
-}
-
-function isModuleName(moduleName){
-	
-	return (moduleName==_ModuleName);
-}
-
-function getActionName(){
-	
-	return _ActionName;
-}
-
-function getOrdinalSufix(number){
-	
-	if( i18n_culture=='pt_BR' )
-		return 'º';
-	
-	number = number+'';
-	
-	var sufix = '';
-	if( i18n_culture=='en_US' ){
-		if( number.match(/1$/) ) sufix = 'st';
-		else if( number.match(/2$/) ) sufix = 'nd';
-		else if( number.match(/3$/) ) sufix = 'rd';
-		else sufix = 'th';
-		
-		return sufix;
-	}
-}
-
-function changeClassName(element, className){
-	
-	element.className = className;
-}
-
-function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow, evt){
-	
-	if( evt && (evt.metaKey || evt.altKey) )
-		newWindow = true
-	
-	if( fieldName && fieldValue || newWindow )
-		return goModule(moduleName, actionName, fieldName, fieldValue, newWindow, arguments );
-	
-	var urlLocation = _webRoot+'/'+moduleName+'/'+actionName;
-	urlLocation = urlLocation.replace(/\/\//g, '/');
-	urlLocation = urlLocation.replace(/\/$/g, '');
-
-	location.href = urlLocation;
 }

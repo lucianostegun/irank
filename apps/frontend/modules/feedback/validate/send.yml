@@ -2,15 +2,15 @@ fields:
        
   fullName:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
        
   emailAddress:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
     sfEmailValidator:
       strict:       true
-      email_error:  form.error.invalidEmail
+      email_error:  O e-mail informado não é um e-mail válido
        
   message:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido

@@ -1,1 +1,0 @@
-ALTER TABLE log ADD COLUMN user_admin_id INTEGER;

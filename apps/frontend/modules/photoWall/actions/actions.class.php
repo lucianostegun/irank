@@ -10,10 +10,6 @@ class photoWallActions extends sfActions
   public function executeIndex($request){
 
   }
-
-  public function executeRanking($request){
-
-  }
   
   public function executeGetPhotoInfo($request){
 
@@ -23,21 +19,6 @@ class photoWallActions extends sfActions
 	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
 	
 	echo Util::parseInfo($eventPhotoObj->getInfo());
-		
-	exit;
-  }
-  
-  public function executeGetLastPhoto($request){
-
-	$offset = $request->getParameter('offset');
-	
-	$criteria = new Criteria();
-	$criteria->add( EventPhotoPeer::IS_SHARED, true );
-	$criteria->setOffset($offset);
-	$criteria->addDescendingOrderByColumn( EventPhotoPeer::CREATED_AT );
-	$eventPhotoObj = EventPhotoPeer::doSelectOne($criteria);
-	
-	$eventPhotoObj->getFile()->getResized(300);
 		
 	exit;
   }

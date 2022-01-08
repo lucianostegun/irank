@@ -1,7 +1,4 @@
 all:
-  
-  stylesheets:    [form, table, eventComment, eventPhoto, lightbox, event]
-  javascripts:    [event, eventComment, eventPhoto, rankingPlace, ranking, mask, /sf/prototype/js/scriptaculous, lightbox, /index.php/event/javascript/js]
-  
-editSuccess:
-  javascripts:    [tableReorder/header, tableReorder/redips-drag-min, tableReorder]
+
+  stylesheets:    [frontend/event, frontend/eventComment, frontend/eventPhoto]
+  javascripts:    [frontend/event, frontend/eventComment, frontend/eventPhoto, frontend/rankingPlace]

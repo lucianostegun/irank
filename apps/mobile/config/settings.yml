@@ -1,21 +1,19 @@
 prod:
   .settings:
     no_script_name:         off
-    standard_helpers:       [Partial, Cache, Form, Javascript, I18N]
+    standard_helpers:       [Partial, Cache, Form, Javascript]
     timeout:                1800       # Session timeout, in seconds
-    i18n:                     on
 
 dev:
   .settings:
     error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
-    web_debug:              off
+    web_debug:              on
     cache:                  off
     no_script_name:         off
     etag:                   off
-    standard_helpers:       [Partial, Cache, Form, Javascript, I18N]
+    standard_helpers:       [Partial, Cache, Form, Javascript]
     timeout:                1800       # Session timeout, in seconds
     rich_text_js_dir:       js/tinyMce
-    i18n:                     on
 
 test:
   .settings:

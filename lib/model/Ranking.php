@@ -10,11 +10,6 @@
 class Ranking extends BaseRanking
 {
 	
-	public function getName(){
-		
-		return $this->getRankingName();
-	}
-	
 	public function cleanRecord(){
 		
 		Util::executeQuery('DELETE FROM ranking_player WHERE ranking_id = '.$this->getId());
@@ -26,14 +21,13 @@ class Ranking extends BaseRanking
     	
     	try{
 			
-			$isNew              = $this->isNew();
+			$isNew              = $this->isColumnModified( RankingPeer::VISIBLE );
 			$columnModifiedList = Log::getModifiedColumnList($this);
 
-    		$this->postOnWall();
-    		
 			parent::save();
 			
-       		Log::quickLog('ranking', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+			if( $this->getVisible() )
+        		Log::quickLog('ranking', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
         } catch ( Exception $e ) {
         	
             Log::quickLogError('ranking', $this->getPrimaryKey(), $e);
@@ -55,7 +49,7 @@ class Ranking extends BaseRanking
 		return '#'.sprintf('%04d', $this->getId());
 	}
 	
-	public static function getList($onlyMine=false, $suppressOld=false){
+	public static function getList($onlyMine=false){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$peopleId   = MyTools::getAttribute('peopleId');
@@ -64,13 +58,6 @@ class Ranking extends BaseRanking
 		$criteria->add( RankingPeer::ENABLED, true );
 		$criteria->add( RankingPeer::VISIBLE, true );
 		$criteria->add( RankingPeer::DELETED, false );
-		
-		if( $suppressOld ){
-			
-			$criterion = $criteria->getNewCriterion( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
-			$criterion->addOr( $criteria->getNewCriterion( RankingPeer::FINISH_DATE, null ) );
-			$criteria->add($criterion);
-		}
 		
 		if( $onlyMine ){
 		
@@ -89,14 +76,12 @@ class Ranking extends BaseRanking
 		return RankingPeer::doSelect( $criteria );
 	}
 
-	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false, $onlyMine=false, $suppressOld=false, $selectLabel=null ){
+	public static function getOptionsForSelect( $defaultValue=false, $returnArray=false, $onlyMine=false ){
 		
-		$rankingObjList = self::getList($onlyMine, $suppressOld);
+		$rankingObjList = self::getList($onlyMine);
 
-		if( !$selectLabel )
-			$selectLabel = __('select');
 		$optionList = array();
-		$optionList[''] = $selectLabel;
+		$optionList[''] = 'Selecione';
 		foreach( $rankingObjList as $rankingObj )			
 			$optionList[$rankingObj->getId()] = $rankingObj->getRankingName();
 		
@@ -106,11 +91,9 @@ class Ranking extends BaseRanking
 		return options_for_select( $optionList, $defaultValue );
 	}
 	
-	public function getPeopleList($returnPeople=false, $orderByList=null, $criteria=null){
+	public function getPeopleList($returnPeople=false, $orderByList=null){
 		
-		if( is_null($criteria) )
-			$criteria = new Criteria();
-		
+		$criteria = new Criteria();
 		$criteria->add( RankingPlayerPeer::ENABLED, true );
 		$criteria->add( RankingPlayerPeer::RANKING_ID, $this->getId() );
 		$criteria->addJoin( RankingPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
@@ -134,12 +117,12 @@ class Ranking extends BaseRanking
 			return RankingPlayerPeer::doSelect($criteria);
 	}
 	
-	public function getPlayerList($orderByList=null, $criteria=null){
+	public function getPlayerList($orderByList=null){
 		
-		return $this->getPeopleList(false, $orderByList, $criteria);
+		return $this->getPeopleList(false, $orderByList);
 	}
 	
-	public function addPlayer($peopleId, $allowEdit=false){
+	public function addPlayer($peopleId){
 		
 		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
@@ -151,7 +134,6 @@ class Ranking extends BaseRanking
 			$rankingPlayerObj->setTotalPaid( 0.00 );
 			$rankingPlayerObj->setTotalPrize( 0.00 );
 			$rankingPlayerObj->setTotalBalance( 0.00 );
-			$rankingPlayerObj->setAllowEdit( $allowEdit );
 		}
 
 		if( !$rankingPlayerObj->getEnabled() ){
@@ -164,45 +146,23 @@ class Ranking extends BaseRanking
 		
 		$rankingPlayerObj->setEnabled( true );
 		$rankingPlayerObj->save();
-			
-		Ranking::adjustPlayers();
-		
-		$this->updateEmailGroup();
 	}
 	
 	public function deletePlayer($peopleId){
 
 		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
-		if( is_object($rankingPlayerObj) && $rankingPlayerObj->getEnabled() ){
+		if( is_object($rankingPlayerObj) ){
 			
 			$rankingPlayerObj->setEnabled( false );
 			$rankingPlayerObj->save();
 			
 			$this->setPlayers( $this->getPlayers()-1 );
 			$this->save();
-			
-			$this->updateEmailGroup();
 		}else{
 			
-			Util::getHelper('i18n');
-			throw new Exception(__('playerNotFound'));
+			throw new Exception('Membro não encontrado');
 		}
-	}
-	
-	public static function adjustPlayers(){
-		
-		Util::executeQuery('SELECT adjust_ranking_players()');
-	}
-	
-	public static function adjustEvents(){
-
-		Util::executeQuery('SELECT adjust_ranking_events()');
-	}
-	
-	public function adjustPlayerEvents(){
-		
-		Util::executeQuery('SELECT adjust_ranking_player_events()');
 	}
 	
 	public function getEventList($criteria=null, $con=null){
@@ -290,37 +250,8 @@ class Ranking extends BaseRanking
 	
 	public function updateWholeHistory(){
 
-		foreach($this->getEventDateList() as $eventDate){
-			
-			echo $eventDate.'<br>';
+		foreach($this->getEventDateList() as $eventDate)
 			$this->getClassifyHistory($eventDate, true);
-		}
-	}
-
-	public function updateWholeScore(){
-
-		set_time_limit(60);
-
-		foreach($this->getEventDateList() as $eventDate){
-			
-			$eventObjList = $this->getEventListByDate($eventDate);
-			foreach($eventObjList as $eventObj)
-				$eventObj->updateResult();
-		}
-		
-		echo 'Resultados dos eventos atualizados com sucesso!';
-		exit;
-	}
-	
-	public function getEventListByDate($eventDate){
-		
-		$criteria = new Criteria();
-		$criteria->add( EventPeer::EVENT_DATE, Util::formatDate($eventDate) );
-		$criteria->add( EventPeer::RANKING_ID, $this->getId() );
-		$criteria->add( EventPeer::ENABLED, true );
-		$criteria->add( EventPeer::VISIBLE, true );
-		$criteria->add( EventPeer::DELETED, false );
-		return EventPeer::doSelect($criteria);
 	}
 	
 	public function updateHistory($rankingDate){
@@ -357,7 +288,24 @@ class Ranking extends BaseRanking
 	
 	public function updatePlayerEvents(){
 		
-		Util::executeQuery('SELECT fc_update_ranking_player_events('.$this->getId().')');
+		$sql = 'UPDATE 
+				    ranking_player
+				SET 
+				    total_events = (SELECT 
+				                        COUNT(1) 
+				                    FROM 
+				                        event_player
+				                        INNER JOIN event ON event_player.EVENT_ID=event.ID
+				                    WHERE
+				                        event.RANKING_ID='.$this->getId().'
+				                        AND event_player.ENABLED = true
+				                        AND event.RANKING_ID=ranking_player.RANKING_ID
+				                        AND event_player.PEOPLE_ID=ranking_player.PEOPLE_ID
+				                        AND event.DELETED = FALSE
+				                        AND event.VISIBLE = TRUE
+				                        AND event.ENABLED = TRUE
+				                        AND event.SAVED_RESULT = TRUE)';
+		Util::executeQuery($sql);
 	}
 	
 	public function getClassifyHistory($rankingDate, $save=false){
@@ -506,12 +454,11 @@ class Ranking extends BaseRanking
 	  			$rankingHistoryObj->setRankingPosition($players);
 	  			$rankingHistoryObj->save();
 	  		}
-	  	}
-	  	
+	  	}	  	
 	  	return $rankingHistoryObjListReturn;
 	}
 	
-	public function getClassify($rankingDate=null, $criteria=null){
+	public function getClassify($rankingDate=null){
 		
 		if( $rankingDate )
 			return $this->getRankingHistoryByDate($rankingDate);
@@ -538,7 +485,7 @@ class Ranking extends BaseRanking
 	  	$orderByList[RankingPlayerPeer::TOTAL_AVERAGE] = 'desc';
 	  	$orderByList[RankingPlayerPeer::PEOPLE_ID]     = 'asc';
 	  	
-	  	$rankingPlayerObjList = $this->getPlayerList($orderByList, $criteria);
+	  	$rankingPlayerObjList = $this->getPlayerList($orderByList);
 	  	$lastList = array();
 	  	foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 	  		
@@ -560,11 +507,9 @@ class Ranking extends BaseRanking
 		$criteria->addAscendingOrderByColumn( RankingHistoryPeer::TOTAL_RANKING_POSITION );
 		$rankingHistoryObjList = RankingHistoryPeer::doSelect($criteria);
 		
-		if( count($rankingHistoryObjList)==0 ){
-		
-			Util::getHelper('i18n');
-			throw new Exception(__('ranking.noRankingLog', array('%date%'=>$rankingDate)));
-		}else
+		if( count($rankingHistoryObjList)==0 )
+			throw new Exception('Não existe histórico para este ranking na data '.$rankingDate);
+		else
 			return $rankingHistoryObjList;
 	}
 	
@@ -572,7 +517,7 @@ class Ranking extends BaseRanking
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		
-		return ($userSiteId && ($this->getUserSiteId()==$userSiteId || $this->isAllowEdit()));
+		return ($this->getUserSiteId()==$userSiteId || $this->isAllowEdit());
 	}
 	
 	public function isAllowEdit(){
@@ -584,21 +529,14 @@ class Ranking extends BaseRanking
 		return $rankingPlayerObj->getAllowEdit();
 	}
 	
-	public function addToOpenEvents($peopleId, $eventId=null){
+	public function addToOpenEvents($peopleId){
 		
 		$criteria = new Criteria();
-		$criterion = $criteria->getNewCriterion( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
-		if( $eventId )
-			$criterion->addOr( $criteria->getNewCriterion( EventPeer::ID, $eventId ) );
-
-		$criteria->add($criterion);
+		$criteria->add( EventPeer::EVENT_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
 		$eventObjList = $this->getEventList($criteria);
 		
-		foreach($eventObjList as $eventObj){
-			
+		foreach($eventObjList as $eventObj)
 			$eventObj->addPlayer($peopleId);
-			$eventObj->updateInvites();
-		}
 	}
 	
 	public function getByPlace($place){
@@ -628,13 +566,8 @@ class Ranking extends BaseRanking
 			if( $tagName )
 				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
 					continue;
-			
-			$emailAddress = $peopleObj->getEmailAddress();
-			
-			if( !$emailAddress )
-				continue;
-			
-			$emailAddressList[] = $emailAddress;
+					
+			$emailAddressList[] = $peopleObj->getEmailAddress();
 		}
 		
 		return $emailAddressList;
@@ -642,380 +575,49 @@ class Ranking extends BaseRanking
 	
 	public function notifyDelete(){
 
-		Util::getHelper('i18n');
-
-		$emailContent = EmailTemplate::getContentByTagName('rankingDeleteNotify');
+		$emailContent = AuxiliarText::getContentByTagName('rankingDeleteNotify');
 
 		$peopleObj    = People::getCurrentPeople();
 	  	$classifyList = $this->getEmailClassifyList();
 	  	$rankingOwner = $this->getUserSite()->getPeople()->getFullName();
 		
-		$emailContent = str_replace('[classifyList]', $classifyList, $emailContent);
-		$emailContent = str_replace('[peopleName]', $peopleObj->getName(), $emailContent);
-		$emailContent = str_replace('[rankingName]', $this->getRankingName(), $emailContent);
-		$emailContent = str_replace('[createdAt]', $this->getCreatedAt('d/m/Y'), $emailContent);
-		$emailContent = str_replace('[startDate]', $this->getStartDate('d/m/Y'), $emailContent);
-		$emailContent = str_replace('[rankingType]', $this->getRankingType()->getDescription(), $emailContent);
-		$emailContent = str_replace('[players]', $this->getPlayers(), $emailContent);
-		$emailContent = str_replace('[events]', $this->getEvents(), $emailContent);
-		$emailContent = str_replace('[rankingOwner]', $rankingOwner, $emailContent);
+		$emailContent = str_replace('<classifyList>', $classifyList, $emailContent);
+		$emailContent = str_replace('<peopleName>', $peopleObj->getName(), $emailContent);
+		$emailContent = str_replace('<rankingName>', $this->getRankingName(), $emailContent);
+		$emailContent = str_replace('<createdAt>', $this->getCreatedAt('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<startDate>', $this->getStartDate('d/m/Y'), $emailContent);
+		$emailContent = str_replace('<rankingType>', $this->getRankingType()->getDescription(), $emailContent);
+		$emailContent = str_replace('<players>', $this->getPlayers(), $emailContent);
+		$emailContent = str_replace('<events>', $this->getEvents(), $emailContent);
+		$emailContent = str_replace('<rankingOwner>', $rankingOwner, $emailContent);
 		
 		$emailAddressList = $this->getEmailAddressList();
 		
-		Report::sendMail(__('email.subject.rankingDelete', array('%rankingName%'=>$this->getRankingName())), $emailAddressList, $emailContent);
+		Report::sendMail('Exclusão do ranking @ '.$this->getRankingName(), $emailAddressList, $emailContent);
 	}
 	
-	public function getEmailClassifyList($rankingDate){
+	public function getEmailClassifyList(){
 		
 		$classifyList = '';
 		$nl           = chr(10);
 		$position     = 0;
 		
 		$rankingPlayerObjList = $this->getClassify();
-		$lineBg = '#F0F0F0';
 	  	foreach($rankingPlayerObjList as $key=>$rankingPlayerObj){
 		
-			if( $rankingPlayerObj->getTotalEvents()==0 )
-				continue;
-			
 			$peopleObj = $rankingPlayerObj->getPeople();
 			
-			$rankingPosition = (($position++)+1);
-			
-			$lastRankingPosition = Util::executeOne('SELECT get_previous_player_position('.$this->getId().', '.$peopleObj->getId().', \''.Util::formatDate($rankingDate).'\')');
-			$positionChangeIcon  = (is_null($lastRankingPosition)?'blank.gif':($rankingPosition < $lastRankingPosition?'up2':($rankingPosition>$lastRankingPosition?'down2':'neutral2')));
-			
-			$lineBg = ($lineBg=='#E0E0E0'?'#FFFFFFF':'#E0E0E0');
-			
-			$classifyList .= '  <tr style="background: '.$lineBg.'">'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right; width: 20px"><img src="http://[host]/images/misc/'.$positionChangeIcon.'.png"/></td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">#'.$rankingPosition.'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0">'.$peopleObj->getFullName().'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
-			$classifyList .= '    <td style="height: 30px; padding: 5px 3px; vertical-align: middle; font-size: 12px; color: #303030; border-bottom: 1px solid #C0C0C0; text-align: right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
+			$classifyList .= '  <tr class="boxcontent">'.$nl;
+			$classifyList .= '    <td style="background: #1B4315">#'.(($position++)+1).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315">'.$peopleObj->getFullName().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.$rankingPlayerObj->getTotalEvents().'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalScore(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPaid(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalPrize(), true).'</td>'.$nl;
+			$classifyList .= '    <td style="background: #1B4315" align="right">'.Util::formatFloat($rankingPlayerObj->getTotalBalance(), true).'</td>'.$nl;
 			$classifyList .= '  </tr>'.$nl;
 	  	}
 	  	
 	  	return $classifyList;
-	}
-	
-	public function isShared($peopleId){
-		
-		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
-		
-		return (is_object($rankingPlayerObj) && $rankingPlayerObj->getAllowEdit());
-	}
-	
-	public function importData($request){
-		
-		$rankingId      = $request->getParameter('rankingIdImport');
-		$rankingPlaces  = $request->getParameter('rankingPlaces');
-		$rankingPlayers = $request->getParameter('rankingPlayers');
-		
-		$rankingObj = RankingPeer::retrieveByPK($rankingId);
-		
-		if( $rankingPlaces ){
-			
-			foreach($rankingObj->getRankingPlaceList() as $rankingPlaceObj){
-				
-				if( !RankingImportLog::check($this->getId(), $rankingId, 'ranking_place', $rankingPlaceObj->getId()) )
-					continue;
-				
-				$rankingPlaceObjNew = $rankingPlaceObj->getClone();
-				$rankingPlaceObjNew->setRankingId( $this->getId() );
-				$rankingPlaceObjNew->save();
-				
-				RankingImportLog::doLog($this->getId(), $rankingId, 'ranking_place', $rankingPlaceObj->getId());
-			}
-		}
-		
-		if( $rankingPlayers ){
-			
-			foreach($rankingObj->getRankingPlayerList() as $rankingPlayerObj){
-				
-				if( !RankingImportLog::check($this->getId(), $rankingId, 'ranking_player', $rankingPlayerObj->getPeopleId()) )
-					continue;
-				
-				if( is_object(RankingPlayerPeer::retrieveByPK($this->getId(), $rankingPlayerObj->getPeopleId())) )
-					continue;
-				
-				$this->addPlayer($rankingPlayerObj->getPeopleId());
-				
-				RankingImportLog::doLog($this->getId(), $rankingId, 'ranking_player', $rankingPlayerObj->getPeopleId());
-			}
-		}
-	}
-	
-	public function incraseEvents(){
-		
-		$this->setEvents($this->getEvents()+1);
-		$this->save();
-	}
-	
-	public function decraseEvents(){
-		
-		$this->setEvents($this->getEvents()-1);
-		$this->save();
-	}
-	
-	public function getPrizeSplitList($serialize=false){
-		
-		$criteria = new Criteria();
-		$criteria->add( RankingPrizeSplitPeer::RANKING_ID, $this->getId() );
-		$criteria->addAscendingOrderByColumn( RankingPrizeSplitPeer::PAID_PLACES );
-		return RankingPrizeSplitPeer::doSelect($criteria);
-	}
-	
-	public function resetOptions(){
-		
-		Util::executeQuery('DELETE FROM ranking_prize_split WHERE ranking_id='.$this->getId());
-		
-		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 10, 2, \'65%, 35%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)');
-		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 14, 3, \'50%, 30%, 20%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)');
-		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 18, 4, \'40%, 30%, 20%, 10%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)');
-	}
-	
-	public function saveOptions($request){
-		
-		foreach($this->getPrizeSplitList() as $rankingPrizeSplitObj){
-			
-			$paidPlaces = $rankingPrizeSplitObj->getPaidPlaces();
-			
-			$buyins      = $request->getParameter('buyins'.$paidPlaces);
-			$percentList = $request->getParameter('percentList'.$paidPlaces);
-			
-			$rankingPrizeSplitObj->setBuyins($buyins);
-			$rankingPrizeSplitObj->setPercentList($percentList);
-			$rankingPrizeSplitObj->save();
-		}
-	}
-	
-	public function getCredit(){
-		
-		$rankingId = $this->getId();
-		if( !$rankingId )
-			return 0;
-		else
-			return Util::executeOne('SELECT get_ranking_balance('.$rankingId.')', 'float');
-	}
-	
-	public function getTotalFreerollPrize(){
-		
-		$rankingId = $this->getId();
-		if( !$rankingId )
-			return 0;
-		else
-			return Util::executeOne('SELECT get_total_freeroll_prize('.$rankingId.')', 'float');
-	}
-	
-	public function getTotalEntranceFee(){
-		
-		$rankingId = $this->getId();
-		if( !$rankingId )
-			return 0;
-		else
-			return Util::executeOne('SELECT get_total_freeroll_entrance_fee('.$rankingId.')', 'float');
-	}
-	
-	public function createEmailGroup(){
-
-		$rankingTag = $this->getRankingTag();
-		
-		$emailAddressList   = $this->getEmailAddressList();
-		$emailAddressList[] = $this->getUserSite()->getPeople()->getEmailAddress();
-		$emailAddressList   = array_unique($emailAddressList);
-		
-		$paramList = array();
-		$paramList['idDominio'] = Config::DOMAIN_ID;
-		$paramList['caixa']     = $rankingTag.'@irank.com.br';
-		$paramList['destino']   = implode(',', $emailAddressList);
-		
-		try{
-			
-			$emailObj = new Email();
-			$emailObj->addAlias($paramList);
-			
-			$this->save();
-		}catch(Exception $e){}
-	}
-	
-	public function updateEmailGroup(){
-
-		$rankingTag = $this->getRankingTag();
-		
-		if( !$rankingTag )
-			return false;
-		
-		$emailAddressList   = $this->getEmailAddressList();
-		$emailAddressList[] = $this->getUserSite()->getPeople()->getEmailAddress();
-		$emailAddressList   = array_unique($emailAddressList);
-		
-		$paramList = array();
-		$paramList['idDominio'] = Config::DOMAIN_ID;
-		$paramList['caixa']     = $rankingTag.'@irank.com.br';
-		$paramList['destino']   = implode(',', $emailAddressList);
-		
-		try{
-			
-			$emailObj = new Email();
-			$emailObj->editAlias($paramList);
-		}catch(Exception $e){}
-	}
-	
-	public function deleteEmailGroup(){
-
-		$rankingTag = $this->getRankingTag();
-
-		if( !$rankingTag )
-			return false;
-		
-		$paramList = array();
-		$paramList['idDominio'] = Config::DOMAIN_ID;
-		$paramList['caixa']     = $rankingTag.'@irank.com.br';
-		
-		try{
-			
-			$emailObj = new Email();
-			$emailObj->delRedir(Config::DOMAIN_ID, $paramList);
-		}catch(Exception $e){}
-	}
-	
-	public function postOnWall(){
-		
-		if( $this->getDeleted() || !$this->getVisible() )
-			return false;
-			
-		$isNew     = $this->isNew();
-		$classify  = $this->isColumnModified( RankingPeer::RANKING_TYPE_ID );
-		$gameStyle = $this->isColumnModified( RankingPeer::GAME_STYLE_ID );
-		
-		if( $isNew )
-    		HomeWall::doLog('criado novo ranking <b>'.$this->getRankingName().'</b>', 'ranking');
-		
-		if( !$isNew && $classify )
-    		HomeWall::doLog('classificação do ranking <b>'.$this->getRankingName().'</b> alterada para <b>'.$this->getRankingType()->getDescription().'</b>', 'ranking');
-		
-		if( !$isNew && $gameStyle )
-    		HomeWall::doLog('estilo do ranking <b>'.$this->getRankingName().'</b> alterado para <b>'.$this->getGameStyle()->getDescription().'</b>', 'ranking');
-	}
-	
-	public static function getPaidPlaces($eventId, $buyins){
-		
-		$sql = 'SELECT
-				    ranking_prize_split.PERCENT_LIST||\';\'||ranking_prize_split.PAID_PLACES
-				FROM 
-				    ranking_prize_split
-				    INNER JOIN event ON ranking_prize_split.RANKING_ID = event.RANKING_ID
-				WHERE
-				    event.ID = '.$eventId.'
-				    AND ranking_prize_split.BUYINS >= '.$buyins.'
-				ORDER BY
-				    ranking_prize_split.BUYINS
-				LIMIT 1;';
-	
-		$info = Util::executeOne($sql, 'string');
-		
-		if( !$info ){
-		
-			$sql = 'SELECT
-					    ranking_prize_split.PERCENT_LIST||\';\'||ranking_prize_split.PAID_PLACES
-					FROM 
-					    ranking_prize_split
-					    INNER JOIN event ON ranking_prize_split.RANKING_ID = event.RANKING_ID
-					WHERE
-					    event.ID = '.$eventId.'
-					ORDER BY
-					    ranking_prize_split.BUYINS DESC
-					LIMIT 1;';
-		
-			$info = Util::executeOne($sql, 'string');			
-		}
-		
-		
-		if( !$info )
-			Util::forceError('event.calculatePrize.rangeError', true);
-			
-		list($percentList, $paidPlaces) = explode(';', $info);
-		
-		$percentList = ereg_replace('[^0-9,]', '', $percentList);
-		
-		$infoList = array('percentList'=>$percentList,
-						  'paidPlaces'=>$paidPlaces);
-		
-		return $infoList;
-	}
-	
-	public function updatePlayers(){
-		
-		Util::executeQuery('SELECT adjust_ranking_players('.$this->getId().')');
-		$this->updateEmailGroup();
-	}
-	
-	public static function getXml($rankingList){
-		
-		return Util::buildXml($rankingList, 'rankings', 'ranking');
-	}
-	
-	public static function getOptionsForSelectScoreSchema($defaultValue=null, $suppressSelect=true){
-		
-		$optionList = array();
-		
-		if( !$suppressSelect )
-			$optionList[''] = __('select');
-			
-		$optionList['irank1']  = 'Buy-ins / Posição / Valor Buy-in';
-		$optionList['vegas']   = 'Padrão Vegas';
-		$optionList['custom']  = 'Fórmula personalizada';
-		
-		return options_for_select($optionList, $defaultValue);
-	}
-	
-	public function getScoreFormula($returnMessage=false){
-		
-		$scoreFormula = parent::getScoreFormula();
-		
-		if( !$scoreFormula && $returnMessage )
-			$scoreFormula = 'Fórmula não definida';
-		
-		return $scoreFormula;
-	}
-	
-	public function getInfo(){
-		
-		$peopleId = MyTools::getAttribute('peopleId');
-		
-		$rankingType = $this->getRankingType()->getDescription();
-		
-	
-		$infoList = array();
-		$infoList['id']            = $this->getId();
-		$infoList['rankingName']   = $this->getRankingName();
-		$infoList['userSiteId']    = $this->getUserSiteId();
-		$infoList['rankingTypeId'] = $this->getRankingTypeId();
-		$infoList['rankingType']   = $this->getRankingType()->getDescription();
-		$infoList['startDate']     = $this->getStartDate('d/m/Y');
-		$infoList['finishDate']    = $this->getFinishDate('d/m/Y');
-		$infoList['startTime']     = $this->getStartTime('H:i');
-		$infoList['isPrivate']     = $this->getIsPrivate();
-		$infoList['players']       = $this->getPlayers();
-		$infoList['credit']        = $this->getCredit();
-		$infoList['events']        = $this->getEvents();
-		$infoList['enabled']       = $this->getEnabled();
-		$infoList['visible']       = $this->getVisible();
-		$infoList['locked']        = $this->getLocked();
-		$infoList['deleted']       = $this->getDeleted();
-		$infoList['buyin']         = $this->getBuyin();
-		$infoList['entranceFee']   = $this->getEntranceFee();
-		$infoList['gameStyleId']   = $this->getGameStyleId();
-		$infoList['gameStyle']     = $this->getGameStyle()->getDescription();
-		$infoList['gameStyleTag']  = $this->getGameStyle()->getTagName();
-		$infoList['rankingTag']    = $this->getRankingTag();
-		$infoList['createdAt']     = $this->getCreatedAt('d/m/Y H:i:s');
-		$infoList['updatedAt']     = $this->getUpdatedAt('d/m/Y H:i:s');
-		
-		return $infoList;
-	}
+	}		
 }

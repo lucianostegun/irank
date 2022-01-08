@@ -135,39 +135,15 @@ div.dhxcont_content_blocker {
 
 .windowButtonBar {
 
-	height: 		22px;
-	padding: 		7px 5px 7px 5px;
-	margin: 		1px 0px 1px 0px;
-	background: 	#E6E6E6;
-	border: 		1px solid #AAAAAA;
-}
-
-.windowButtonBar.success {
-
-	background: 	#CADDEC;
-	border: 		1px solid #7FA6CA;
-}
-
-.windowButtonBar.error {
-
-	background: 	#EECFCA;
-	border: 		1px solid #CE9080;
+	border-top: 	2px solid #444444;
+	background: 	#E0E0E0;
+	text-align: 	right;
+	height: 		40;
+	padding-right: 	10px;
 }
 
 .windowButtonBar .button {
 
 	float: 		right;
 	margin: 	9 2 9 4;
-}
-
-.windowButtonBar .buttonDisabled {
-
-	float: 		right;
-	margin: 	9 2 9 4;
-}
-
-.formLoadingWindow {
-
-	display: 	none;
-	float: 		left;
 }

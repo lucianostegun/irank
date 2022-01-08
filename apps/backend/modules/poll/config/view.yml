@@ -1,4 +1,0 @@
-all:
-
-  stylesheets:    [backend/poll]
-  javascripts:    [backend/poll]

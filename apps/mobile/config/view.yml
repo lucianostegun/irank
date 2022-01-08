@@ -3,13 +3,12 @@ default:
     content-type: text/html
 
   metas:
-    title:        iRank - Poker Ranking
-    language:     en
-    viewport:     width=device-width; initial-scale=1; maximum-scale=1; user-scalable=no
+    title:        iRank
+    language:     pt
+    viewport:     width=device-width; initial-scale=0.5; maximum-scale=0.5; user-scalable=no
 
   stylesheets:    [button, mobile/main, mobile/menu, mobile/loading, mobile/form]
-  javascripts:    [phpEquivalents, mobile/main, mobile/mobile, /sf/prototype/js/prototype, button, mobile/record, util, frontend/form, /mobile.php/home/javascript/js]
+  javascripts:    [phpEquivalents, mobile/main, mobile/mobile, /sf/prototype/js/prototype, button, mobile/record, util, frontend/form]
 
   has_layout:     on
   layout:         layout
-  culture:        pt_BR

@@ -39,36 +39,14 @@ abstract class sfActions extends sfAction
 	$this->moduleName     = $moduleName     = MyTools::getRequest()->getParameterHolder()->get('module');
 	$this->realModuleName = $realModuleName = $this->getModuleName();
 	
-	$userSiteId      = MyTools::getCookie('userSiteId');
-	$userAdminId     = MyTools::getCookie('userAdminId');
-	$isAuthenticated = $this->getUser()->isAuthenticated();
-	
-	$PHP_AUTH_USER = isset($PHP_AUTH_USER)?$_SERVER['PHP_AUTH_USER']:null;
-	if( !$isAuthenticated && $PHP_AUTH_USER ){
+	$userSiteId = MyTools::getCookie('userSiteId');
+	if( $userSiteId && $moduleName!=='login' ){
 		
-		$userSiteObj = UserSitePeer::retrieveByUsername($PHP_AUTH_USER);
-		if( is_object($userSiteObj) )
-			$userSiteObj->login();
-	}
-
-	// Autentica o usuário do site se ele tiver o cookie de autenticação
-	if( $userSiteId && $moduleName!=='login' && !$isAuthenticated ){
-
 		$userSiteId = unserialize(base64_decode($userSiteId));
 		$userSiteId = $userSiteId[0];
-
+		
 		$userSiteObj = UserSitePeer::retrieveByPK( $userSiteId );
 		$userSiteObj->login();
-	}
-
-	// Autentica o usuário da administração se ele tiver o cookie de autenticação
-	if( $userAdminId && $moduleName!=='login' && !$isAuthenticated ){
-
-		$userAdminId = unserialize(base64_decode($userAdminId));
-		$userAdminId = $userAdminId[0];
-
-		$userAdminObj = UserAdminPeer::retrieveByPK( $userAdminId );
-		$userAdminObj->login(true);
 	}
 
     // dispatch action
@@ -103,26 +81,14 @@ abstract class sfActions extends sfAction
   
   public function handleFormFieldError( $formErrors ){
 
-	Util::forceError(null, false);
-	Util::getHelper('I18N');
-
-	$formErrorList = array();
-	$fieldNameList = array();
-
-	foreach($formErrors as $fieldName=>$formError ){
-
-		if( $formError=='nullError' )
-			continue;
-			
-		$formErrorList[$fieldName] = __($formError);
-		$fieldNameList[] = $fieldName;
-	}
-
-	$formErrorList['_fieldErrorCount'] = count($formErrors);
-	$formErrorList['_fieldNameList']   = $fieldNameList;
+  	Util::forceError();
+  	
+  	$formErrorList = array();
 	
-	echo 'formError:'.Util::parseInfo($formErrorList);
-	exit;
+	foreach( $formErrors as $keyField=>$formError )
+  		$formErrorList[] = $keyField.'|'.$formError;
+  	
+  	echo 'formError;'.implode(';', $formErrorList);
+  	exit;
   }
-  
 }

@@ -1,107 +1,135 @@
-<div id="userResume" class="<?php echo ($isAuthenticated?'logged':'') ?>">
 <?php
-	if( $isAuthenticated ){
+	$isLogged = true;
+?>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" valign="top" id="homeResumeDiv" class="<?php echo ($isLogged?'':'welcome_bg') ?>">
+    
+		<?php
+			if( MyTools::isAuthenticated() )
+				include_partial('home/component/resume');
+			else
+				include_partial('home/component/welcome');
+		?>
+		    
+    </td>
+  </tr>
+  <tr>
+    <td height="22" align="left" valign="top">
+    
+    
+    
+    
+    
+    
+    
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 20px">
+              <tr>
+                <td width="13" align="left" valign="top" class="gray_border">
+                <img src="/images/frontend/layout/spacer.gif" alt="" width="13" height="1" /></td>
+                <td width="353" align="left" valign="top" style="padding-right:12px">
+	                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	                  <tr>
+	                    <td align="left" valign="top">
+	                    	<img src="/images/frontend/layout/bullet2.png" alt="" width="38" height="25" />
+	                    	<img src="/images/frontend/layout/mainFeatures.gif" alt="" width="272" height="25" /></td>
+	
+	                  </tr>
+	                  <tr>
+	                    <td height="15" align="left" valign="top"></td>
+	                  </tr>
+	                  <tr>
+	                    <td align="left" valign="top">
+		                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		                      <tr>
+		                        <td width="122" height="105" align="left" valign="top">
+		                        <img src="/images/frontend/layout/stats.jpg" alt="" width="111" height="86" /></td>
+		                        <td align="left" valign="top"><p style="font-weight: bold">Estatísticas</p>
 		
-		include_partial('home/resume/events');
-		include_partial('home/resume/quickResume');
-	}
-	
-	Util::lightbox();
-?>
-<div class="clear"></div>
-</div>
-
-<?php include_partial('home/include/highlight') ?>
-
-<div class="channels">
-	<div class="channel">
-		<div class="image"><?php echo link_to(image_tag('home/schedule'), 'schedule/index') ?></div>
-		<div class="description">
-			<h1><?php echo link_to('Calendário assinado', 'schedule/index') ?></h1>
-			Sincronize o calendário de seu tablet ou smartphone com nossa agenda de eventos. 
-		</div>
-	</div>
-	<div class="channel">
-		<div class="image"><?php echo image_tag('home/stats') ?></div>
-		<div class="description">
-			<h1>Estatísticas</h1>
-			Gere gráficos de gastos, lucros, balanço e desempenho dos jogadores.
-		</div>
-	</div>
-	<div class="channel">
-		<div class="image"><?php echo image_tag('home/eventReminder') ?></div>
-		<div class="description">
-			<h1>Notificação de eventos</h1>
-			Notificação instantânea da criação/edição dos eventos e lembrete dos jogos agendados.
-		</div>
-	</div>
-	<div class="channel" style="height: 88px">
-		<div class="image"><?php echo image_tag('home/rankingHistory') ?></div>
-		<div class="description">
-			<h1>Histórico</h1>
-			Histórico de posições, total gastos, prêmios e tudo sobre os rankings nas datas que houveram eventos.
-		</div>
-	</div>
-</div>
-
-<div class="clear"></div>
-<?php
-$eventPhotoContestObj = EventPhotoContest::getPhotoPair();
-
-$eventPhotoIdLeft  = $eventPhotoContestObj->getEventPhotoIdLeft();
-$eventPhotoIdRight = $eventPhotoContestObj->getEventPhotoIdRight();
-
-$zoomLeft  = 'home/eventPhoto?id='.$eventPhotoIdLeft.'&zoom=1';
-$zoomRight = 'home/eventPhoto?id='.$eventPhotoIdRight.'&zoom=1';
-?>
-
-<div style="position: relative">
-<div class="eventLiveResumeArea">
-	<?php include_partial('home/resume/eventLive', array('limit'=>3, 'offset'=>0, 'includeTitle'=>true)); ?>
-</div>
-
-<div class="eventLiveResumeArea" style="position: absolute; top: 3px; left: 393px">
-	<?php include_partial('home/resume/eventLive', array('limit'=>3, 'offset'=>3, 'includeTitle'=>false)); ?>
-</div>
-</div>
-
-<div id="photoVote">
-	<h1>Concurso de fotos</h1>
-	<div class="intro">Escolha a melhor entre duas fotos postadas pelos jogadores</div>
-	<div class="photoOption" onmouseover="showOptionBar('left')" onmouseout="hideOptionBar('left')">
-		<div class="photo" id="eventPhotoContestPhotoLeft" onclick="selectPhotoContest('left')" title="Clique para votar nesta foto" style="background: url('/index.php/home/eventPhoto/id/<?php echo $eventPhotoIdLeft ?>') center center no-repeat"></div>
-		<div class="optionBar" id="optionBarLeft">
-			<div class="option zoom" title="aumentar foto" onmouseover="changeClassName(this, 'option zoom hover')" onclick="" onmouseout="changeClassName(this, 'option zoom')">
-				<?php echo link_to(image_tag('blank.gif', array('width'=>32)), $zoomLeft, array('id'=>'eventPhotoContestLinkLeft', 'rel'=>'lightbox')) ?>
-			</div>
-			<div class="option reported" id="photoContestReportLeft">Foto denunciada!</div>
-			<div class="option report" title="denunciar foto" onclick="selectPhotoContest('left', true)" onmouseover="changeClassName(this, 'option report hover')" onmouseout="changeClassName(this, 'option report')"></div>
-		</div>
-	</div>
-	
-	
-	<div class="photoOption" onmouseover="showOptionBar('right')" onmouseout="hideOptionBar('right')">
-		<div class="photo" id="eventPhotoContestPhotoRight" onclick="selectPhotoContest('right')" title="Clique para votar nesta foto" style="background: url('/index.php/home/eventPhoto/id/<?php echo $eventPhotoIdRight ?>') center center no-repeat"></div>
-		<div class="optionBar" id="optionBarRight">
-			<div class="option zoom" title="aumentar foto" onmouseover="changeClassName(this, 'option zoom hover')" onclick="" onmouseout="changeClassName(this, 'option zoom')">
-				<?php echo link_to(image_tag('blank.gif', array('width'=>32)), $zoomRight, array('id'=>'eventPhotoContestLinkRight', 'rel'=>'lightbox')) ?>
-			</div>
-			<div class="option reported" id="photoContestReportRight">Foto denunciada!</div>
-			<div class="option report" title="denunciar foto" onclick="selectPhotoContest('right')" onmouseover="changeClassName(this, 'option report hover')" onmouseout="changeClassName(this, 'option report')"></div>
-		</div>
-	</div>
+		                          <p>Após as realizações de seus jogos é possível obter um relatório com o total gasto, total ganho, balanço e desempenho dos jogadores</p>
+		                          </td>
+		                      </tr>
+		                      <tr>
+		                        <td width="122" align="left" valign="top">
+		                        <img src="/images/frontend/layout/event.jpg" alt="" width="111" height="96" /></td>
+		                        <td align="left" valign="top"><p style="font-weight: bold">Notificação/Alerta de eventos</p>
+		
+		                          <p>Notificação instantânea da criação/edição dos eventos a todos os jogadores do ranking e lembrete dos jogos agendados.</p>
+		                          </td>
+		                      </tr>
+			                  <tr>
+			                    <td height="15" align="left" valign="top"></td>
+			                  </tr>
+		                    </table>
+	                    </td>
+	                  </tr>
+	                </table>
+                </td>
+                <td width="289" align="left" valign="top" style="padding-left:16px;" class="gray_border">
+	                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	                  <tr>
+	                    <td align="left" valign="top"><img src="/images/frontend/layout/bullet2.png" alt="" width="38" height="25" />
+	                    <img src="/images/frontend/layout/news.gif" alt="" height="25" /></td>
+	                  </tr>
+	                  <tr>
+	                    <td height="15" align="left" valign="top"></td>
+	                  </tr>
+	                  <tr>
+	                    <td width="254" align="left" valign="top" >
+		                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		                      <tr>
+		                        <td width="121" align="left" valign="top" class="">
 	
 	
 	
-	<div class="clear"></div>
-	<div class="links">
-		<?php echo link_to('ver todas as fotos', 'photoWall/index') ?> | <?php echo link_to('classificação atual', 'photoWall/ranking') ?>
-	</div>
-</div>
-
-<div class="clear"></div>
-
-
-
-
-<br/>
+		                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		                      <!-- Begin 
+		                      <tr>
+		                        <td width="122" height="105" align="left" valign="top">
+		                        <img src="/images/frontend/news/multiClassify.jpg" alt="" width="111" height="86" style="border: 1px solid #999999" /></td>
+		                        <td align="left" valign="top"><p style="font-weight: bold">Critérios de desempate</p>
+		
+		                          <p>Agora além da classificação principal é possível definir os critérios de desempate entre os jogadores com os resultados empatados.</p>
+		                          </td>
+		                      </tr>
+		                      -->
+		                      
+		                      <tr>
+		                        <td width="122" height="105" align="left" valign="top">
+		                        <img src="/images/frontend/news/photo.png" alt="" width="111" height="86" /></td>
+		                        <td align="left" valign="top"><p style="font-weight: bold"><?php echo link_to('Mural de fotos', '/photoWall') ?></p>
+		
+		                          <p>Agora você pode compartilhar os melhores momentos dos eventos postando suas fotos em nosso mural.</p>
+		                          </td>
+		                      </tr>
+		                      
+		                      <tr>
+		                        <td width="122" height="105" align="left" valign="top">
+		                        <img src="/images/frontend/layout/rankingHistory.jpg" alt="" width="111" height="96" /></td>
+		                        <td align="left" valign="top"><p style="font-weight: bold">Histórico de classificação</p>
+		
+		                          <p>Histórico de posições, total gasto, total de prêmios, eventos, balanço e todas as informações em todas as datas que houveram eventos.</p>
+		                          </td>
+		                      </tr>
+		                    </table>	                        
+		                        
+		                        
+		                        
+		                        </td>
+		                      </tr>
+		                    </table>
+	                    </td>
+	                  </tr>
+	                </table>
+	             </td>
+              </tr>
+            </table>
+    
+    
+    
+    
+    
+    
+    </td>
+  </tr>
+</table>

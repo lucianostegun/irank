@@ -2,16 +2,16 @@ fields:
        
   placeName:
     required:
-      msg:       form.error.requiredField
+      msg:       Este campo é obrigatório e não foi preenchido
     sfStringValidator:
       max:       20
-      max_error: form.error.max20
+      max_error: Informe um valor de até 20 caracteres
     sfCallbackValidator:
       callback:      [RankingPlacePeer, uniquePlaceName]
-      invalid_error: form.error.takenRankingPlace
+      invalid_error: Já existe um local cadastrado com esse nome
        
-#  mapsLink:
-#    required:
-#      msg:       form.error.requiredField
-#    sfUrlValidator:
-#      url_error: form.error.invalidUrl
+  mapsLink:
+    required:
+      msg:       Este campo é obrigatório e não foi preenchido
+    sfUrlValidator:
+      url_error: A URL informada não é válida

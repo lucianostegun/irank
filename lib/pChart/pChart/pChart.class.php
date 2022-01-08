@@ -194,19 +194,16 @@
    var $MapID            = NULL;
 
    /* This function create the background picture */
-   function pChart($XSize,$YSize, $transparentBackground=false)
+   function pChart($XSize,$YSize)
     {
      $this->XSize   = $XSize;
      $this->YSize   = $YSize;
      $this->Picture = imagecreatetruecolor($XSize,$YSize);
 
-     $C_White       = $this->AllocateColor($this->Picture,255,255,255);
-     $C_Transparent = $this->AllocateColor($this->Picture,254,254,254);
-     imagefilledrectangle($this->Picture,0,0,$XSize,$YSize,$C_Transparent);
+     $C_White =$this->AllocateColor($this->Picture,255,255,255);
+     imagefilledrectangle($this->Picture,0,0,$XSize,$YSize,$C_White);
      
-     // Modificado por Luciano Stegun em 30/04/2012
-     if( $transparentBackground )
-     	imagecolortransparent($this->Picture, $C_Transparent);
+//     imagecolortransparent($this->Picture,$C_White);
 
      $this->setFontProperties("tahoma.ttf",8);
     }
@@ -1028,16 +1025,11 @@
       }
     }
     
-    function drawCredits(){
+    function drawCredits($width, $height){
     	
-    	
-		$filePath = Util::getFilePath('/images/backgrounds/chart.png');
-	
-		$newImg = imagecreatefrompng( $filePath );
-		imagealphablending($newImg, true);
-		imagesavealpha($newImg, true);
-		
-		imagecopymerge_alpha($this->Picture, $newImg, $this->XSize-146, $this->YSize-199, 0, 0, 140, 190, 70); //cordenas
+    	$C_TextColor =$this->AllocateColor($this->Picture,100,100,100);
+
+    	imagettftext($this->Picture,$this->FontSize,90,$width-20,$height-10,$C_TextColor,$this->FontName,'iRank - Todos os direitos reservados');
     }
 
    /* Draw the data legends */

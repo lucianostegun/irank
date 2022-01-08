@@ -394,6 +394,7 @@ class BasePeer
 				}
 
 				$sql = substr($sql, 0, -1) . " WHERE " . $sqlSnippet;
+
 				Propel::log($sql, Propel::LOG_DEBUG);
 
 				$stmt = $con->prepareStatement($sql);

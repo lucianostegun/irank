@@ -25,30 +25,6 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 
 	
-	protected $htpasswd_line;
-
-
-	
-	protected $image_path;
-
-
-	
-	protected $signed_schedule;
-
-
-	
-	protected $schedule_start_date;
-
-
-	
-	protected $deviceudid;
-
-
-	
-	protected $mobile_token;
-
-
-	
 	protected $active;
 
 
@@ -89,22 +65,10 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	protected $lastRankingCriteria = null;
 
 	
-	protected $collHomeWallList;
+	protected $collLogList;
 
 	
-	protected $lastHomeWallCriteria = null;
-
-	
-	protected $collEventPersonalList;
-
-	
-	protected $lastEventPersonalCriteria = null;
-
-	
-	protected $collAccessLogList;
-
-	
-	protected $lastAccessLogCriteria = null;
+	protected $lastLogCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -138,63 +102,6 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	{
 
 		return $this->password;
-	}
-
-	
-	public function getHtpasswdLine()
-	{
-
-		return $this->htpasswd_line;
-	}
-
-	
-	public function getImagePath()
-	{
-
-		return $this->image_path;
-	}
-
-	
-	public function getSignedSchedule()
-	{
-
-		return $this->signed_schedule;
-	}
-
-	
-	public function getScheduleStartDate($format = 'Y-m-d')
-	{
-
-		if ($this->schedule_start_date === null || $this->schedule_start_date === '') {
-			return null;
-		} elseif (!is_int($this->schedule_start_date)) {
-						$ts = strtotime($this->schedule_start_date);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [schedule_start_date] as date/time value: " . var_export($this->schedule_start_date, true));
-			}
-		} else {
-			$ts = $this->schedule_start_date;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
-	}
-
-	
-	public function getDeviceudid()
-	{
-
-		return $this->deviceudid;
-	}
-
-	
-	public function getMobileToken()
-	{
-
-		return $this->mobile_token;
 	}
 
 	
@@ -302,7 +209,9 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	public function setId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -316,7 +225,9 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	public function setPeopleId($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
+		
+		
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
 			$v = (int) $v;
 		}
 
@@ -334,7 +245,9 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	public function setUsername($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
@@ -348,96 +261,15 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	public function setPassword($v)
 	{
 
-						if ($v !== null && !is_string($v)) {
+		
+		
+		if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
 		if ($this->password !== $v) {
 			$this->password = $v;
 			$this->modifiedColumns[] = UserSitePeer::PASSWORD;
-		}
-
-	} 
-	
-	public function setHtpasswdLine($v)
-	{
-
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->htpasswd_line !== $v) {
-			$this->htpasswd_line = $v;
-			$this->modifiedColumns[] = UserSitePeer::HTPASSWD_LINE;
-		}
-
-	} 
-	
-	public function setImagePath($v)
-	{
-
-						if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->image_path !== $v) {
-			$this->image_path = $v;
-			$this->modifiedColumns[] = UserSitePeer::IMAGE_PATH;
-		}
-
-	} 
-	
-	public function setSignedSchedule($v)
-	{
-
-		if ($this->signed_schedule !== $v) {
-			$this->signed_schedule = $v;
-			$this->modifiedColumns[] = UserSitePeer::SIGNED_SCHEDULE;
-		}
-
-	} 
-	
-	public function setScheduleStartDate($v)
-	{
-
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [schedule_start_date] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->schedule_start_date !== $ts) {
-			$this->schedule_start_date = $ts;
-			$this->modifiedColumns[] = UserSitePeer::SCHEDULE_START_DATE;
-		}
-
-	} 
-	
-	public function setDeviceudid($v)
-	{
-
-						if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->deviceudid !== $v) {
-			$this->deviceudid = $v;
-			$this->modifiedColumns[] = UserSitePeer::DEVICEUDID;
-		}
-
-	} 
-	
-	public function setMobileToken($v)
-	{
-
-						if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->mobile_token !== $v) {
-			$this->mobile_token = $v;
-			$this->modifiedColumns[] = UserSitePeer::MOBILE_TOKEN;
 		}
 
 	} 
@@ -555,39 +387,27 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			$this->password = $rs->getString($startcol + 3);
 
-			$this->htpasswd_line = $rs->getInt($startcol + 4);
+			$this->active = $rs->getBoolean($startcol + 4);
 
-			$this->image_path = $rs->getString($startcol + 5);
+			$this->enabled = $rs->getBoolean($startcol + 5);
 
-			$this->signed_schedule = $rs->getBoolean($startcol + 6);
+			$this->visible = $rs->getBoolean($startcol + 6);
 
-			$this->schedule_start_date = $rs->getDate($startcol + 7, null);
+			$this->deleted = $rs->getBoolean($startcol + 7);
 
-			$this->deviceudid = $rs->getString($startcol + 8);
+			$this->locked = $rs->getBoolean($startcol + 8);
 
-			$this->mobile_token = $rs->getString($startcol + 9);
+			$this->last_access_date = $rs->getTimestamp($startcol + 9, null);
 
-			$this->active = $rs->getBoolean($startcol + 10);
+			$this->created_at = $rs->getTimestamp($startcol + 10, null);
 
-			$this->enabled = $rs->getBoolean($startcol + 11);
-
-			$this->visible = $rs->getBoolean($startcol + 12);
-
-			$this->deleted = $rs->getBoolean($startcol + 13);
-
-			$this->locked = $rs->getBoolean($startcol + 14);
-
-			$this->last_access_date = $rs->getTimestamp($startcol + 15, null);
-
-			$this->created_at = $rs->getTimestamp($startcol + 16, null);
-
-			$this->updated_at = $rs->getTimestamp($startcol + 17, null);
+			$this->updated_at = $rs->getTimestamp($startcol + 11, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 18; 
+						return $startcol + 12; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserSite object", $e);
 		}
@@ -682,24 +502,8 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collHomeWallList !== null) {
-				foreach($this->collHomeWallList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collEventPersonalList !== null) {
-				foreach($this->collEventPersonalList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collAccessLogList !== null) {
-				foreach($this->collAccessLogList as $referrerFK) {
+			if ($this->collLogList !== null) {
+				foreach($this->collLogList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -763,24 +567,8 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collHomeWallList !== null) {
-					foreach($this->collHomeWallList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collEventPersonalList !== null) {
-					foreach($this->collEventPersonalList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collAccessLogList !== null) {
-					foreach($this->collAccessLogList as $referrerFK) {
+				if ($this->collLogList !== null) {
+					foreach($this->collLogList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -818,45 +606,27 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				return $this->getPassword();
 				break;
 			case 4:
-				return $this->getHtpasswdLine();
-				break;
-			case 5:
-				return $this->getImagePath();
-				break;
-			case 6:
-				return $this->getSignedSchedule();
-				break;
-			case 7:
-				return $this->getScheduleStartDate();
-				break;
-			case 8:
-				return $this->getDeviceudid();
-				break;
-			case 9:
-				return $this->getMobileToken();
-				break;
-			case 10:
 				return $this->getActive();
 				break;
-			case 11:
+			case 5:
 				return $this->getEnabled();
 				break;
-			case 12:
+			case 6:
 				return $this->getVisible();
 				break;
-			case 13:
+			case 7:
 				return $this->getDeleted();
 				break;
-			case 14:
+			case 8:
 				return $this->getLocked();
 				break;
-			case 15:
+			case 9:
 				return $this->getLastAccessDate();
 				break;
-			case 16:
+			case 10:
 				return $this->getCreatedAt();
 				break;
-			case 17:
+			case 11:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -873,20 +643,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$keys[1]=>$this->getPeopleId(),
 			$keys[2]=>$this->getUsername(),
 			$keys[3]=>$this->getPassword(),
-			$keys[4]=>$this->getHtpasswdLine(),
-			$keys[5]=>$this->getImagePath(),
-			$keys[6]=>$this->getSignedSchedule(),
-			$keys[7]=>$this->getScheduleStartDate(),
-			$keys[8]=>$this->getDeviceudid(),
-			$keys[9]=>$this->getMobileToken(),
-			$keys[10]=>$this->getActive(),
-			$keys[11]=>$this->getEnabled(),
-			$keys[12]=>$this->getVisible(),
-			$keys[13]=>$this->getDeleted(),
-			$keys[14]=>$this->getLocked(),
-			$keys[15]=>$this->getLastAccessDate(),
-			$keys[16]=>$this->getCreatedAt(),
-			$keys[17]=>$this->getUpdatedAt(),
+			$keys[4]=>$this->getActive(),
+			$keys[5]=>$this->getEnabled(),
+			$keys[6]=>$this->getVisible(),
+			$keys[7]=>$this->getDeleted(),
+			$keys[8]=>$this->getLocked(),
+			$keys[9]=>$this->getLastAccessDate(),
+			$keys[10]=>$this->getCreatedAt(),
+			$keys[11]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -915,45 +679,27 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$this->setPassword($value);
 				break;
 			case 4:
-				$this->setHtpasswdLine($value);
-				break;
-			case 5:
-				$this->setImagePath($value);
-				break;
-			case 6:
-				$this->setSignedSchedule($value);
-				break;
-			case 7:
-				$this->setScheduleStartDate($value);
-				break;
-			case 8:
-				$this->setDeviceudid($value);
-				break;
-			case 9:
-				$this->setMobileToken($value);
-				break;
-			case 10:
 				$this->setActive($value);
 				break;
-			case 11:
+			case 5:
 				$this->setEnabled($value);
 				break;
-			case 12:
+			case 6:
 				$this->setVisible($value);
 				break;
-			case 13:
+			case 7:
 				$this->setDeleted($value);
 				break;
-			case 14:
+			case 8:
 				$this->setLocked($value);
 				break;
-			case 15:
+			case 9:
 				$this->setLastAccessDate($value);
 				break;
-			case 16:
+			case 10:
 				$this->setCreatedAt($value);
 				break;
-			case 17:
+			case 11:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -967,20 +713,14 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setUsername($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPassword($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setHtpasswdLine($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setImagePath($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setSignedSchedule($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setScheduleStartDate($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setDeviceudid($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setMobileToken($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setActive($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setEnabled($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setVisible($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setDeleted($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setLocked($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setLastAccessDate($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setCreatedAt($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setUpdatedAt($arr[$keys[17]]);
+		if (array_key_exists($keys[4], $arr)) $this->setActive($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setEnabled($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setVisible($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setDeleted($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setLocked($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setLastAccessDate($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setUpdatedAt($arr[$keys[11]]);
 	}
 
 	
@@ -992,12 +732,6 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserSitePeer::PEOPLE_ID)) $criteria->add(UserSitePeer::PEOPLE_ID, $this->people_id);
 		if ($this->isColumnModified(UserSitePeer::USERNAME)) $criteria->add(UserSitePeer::USERNAME, $this->username);
 		if ($this->isColumnModified(UserSitePeer::PASSWORD)) $criteria->add(UserSitePeer::PASSWORD, $this->password);
-		if ($this->isColumnModified(UserSitePeer::HTPASSWD_LINE)) $criteria->add(UserSitePeer::HTPASSWD_LINE, $this->htpasswd_line);
-		if ($this->isColumnModified(UserSitePeer::IMAGE_PATH)) $criteria->add(UserSitePeer::IMAGE_PATH, $this->image_path);
-		if ($this->isColumnModified(UserSitePeer::SIGNED_SCHEDULE)) $criteria->add(UserSitePeer::SIGNED_SCHEDULE, $this->signed_schedule);
-		if ($this->isColumnModified(UserSitePeer::SCHEDULE_START_DATE)) $criteria->add(UserSitePeer::SCHEDULE_START_DATE, $this->schedule_start_date);
-		if ($this->isColumnModified(UserSitePeer::DEVICEUDID)) $criteria->add(UserSitePeer::DEVICEUDID, $this->deviceudid);
-		if ($this->isColumnModified(UserSitePeer::MOBILE_TOKEN)) $criteria->add(UserSitePeer::MOBILE_TOKEN, $this->mobile_token);
 		if ($this->isColumnModified(UserSitePeer::ACTIVE)) $criteria->add(UserSitePeer::ACTIVE, $this->active);
 		if ($this->isColumnModified(UserSitePeer::ENABLED)) $criteria->add(UserSitePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(UserSitePeer::VISIBLE)) $criteria->add(UserSitePeer::VISIBLE, $this->visible);
@@ -1042,18 +776,6 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 		$copyObj->setPassword($this->password);
 
-		$copyObj->setHtpasswdLine($this->htpasswd_line);
-
-		$copyObj->setImagePath($this->image_path);
-
-		$copyObj->setSignedSchedule($this->signed_schedule);
-
-		$copyObj->setScheduleStartDate($this->schedule_start_date);
-
-		$copyObj->setDeviceudid($this->deviceudid);
-
-		$copyObj->setMobileToken($this->mobile_token);
-
 		$copyObj->setActive($this->active);
 
 		$copyObj->setEnabled($this->enabled);
@@ -1078,16 +800,8 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$copyObj->addRanking($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getHomeWallList() as $relObj) {
-				$copyObj->addHomeWall($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getEventPersonalList() as $relObj) {
-				$copyObj->addEventPersonal($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getAccessLogList() as $relObj) {
-				$copyObj->addAccessLog($relObj->copy($deepCopy));
+			foreach($this->getLogList() as $relObj) {
+				$copyObj->addLog($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1285,17 +999,17 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initHomeWallList()
+	public function initLogList()
 	{
-		if ($this->collHomeWallList === null) {
-			$this->collHomeWallList = array();
+		if ($this->collLogList === null) {
+			$this->collLogList = array();
 		}
 	}
 
 	
-	public function getHomeWallList($criteria = null, $con = null)
+	public function getLogList($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseHomeWallPeer.php';
+				include_once 'lib/model/om/BaseLogPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1304,36 +1018,36 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collHomeWallList === null) {
+		if ($this->collLogList === null) {
 			if ($this->isNew()) {
-			   $this->collHomeWallList = array();
+			   $this->collLogList = array();
 			} else {
 
-				$criteria->add(HomeWallPeer::USER_SITE_ID, $this->getId());
+				$criteria->add(LogPeer::USER_SITE_ID, $this->getId());
 
-				HomeWallPeer::addSelectColumns($criteria);
-				$this->collHomeWallList = HomeWallPeer::doSelect($criteria, $con);
+				LogPeer::addSelectColumns($criteria);
+				$this->collLogList = LogPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(HomeWallPeer::USER_SITE_ID, $this->getId());
+				$criteria->add(LogPeer::USER_SITE_ID, $this->getId());
 
-				HomeWallPeer::addSelectColumns($criteria);
-				if (!isset($this->lastHomeWallCriteria) || !$this->lastHomeWallCriteria->equals($criteria)) {
-					$this->collHomeWallList = HomeWallPeer::doSelect($criteria, $con);
+				LogPeer::addSelectColumns($criteria);
+				if (!isset($this->lastLogCriteria) || !$this->lastLogCriteria->equals($criteria)) {
+					$this->collLogList = LogPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastHomeWallCriteria = $criteria;
-		return $this->collHomeWallList;
+		$this->lastLogCriteria = $criteria;
+		return $this->collLogList;
 	}
 
 	
-	public function countHomeWallList($criteria = null, $distinct = false, $con = null)
+	public function countLogList($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseHomeWallPeer.php';
+				include_once 'lib/model/om/BaseLogPeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1342,190 +1056,15 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(HomeWallPeer::USER_SITE_ID, $this->getId());
+		$criteria->add(LogPeer::USER_SITE_ID, $this->getId());
 
-		return HomeWallPeer::doCount($criteria, $distinct, $con);
+		return LogPeer::doCount($criteria, $distinct, $con);
 	}
 
 	
-	public function addHomeWall(HomeWall $l)
+	public function addLog(Log $l)
 	{
-		$this->collHomeWallList[] = $l;
-		$l->setUserSite($this);
-	}
-
-	
-	public function initEventPersonalList()
-	{
-		if ($this->collEventPersonalList === null) {
-			$this->collEventPersonalList = array();
-		}
-	}
-
-	
-	public function getEventPersonalList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPersonalPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventPersonalList === null) {
-			if ($this->isNew()) {
-			   $this->collEventPersonalList = array();
-			} else {
-
-				$criteria->add(EventPersonalPeer::USER_SITE_ID, $this->getId());
-
-				EventPersonalPeer::addSelectColumns($criteria);
-				$this->collEventPersonalList = EventPersonalPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(EventPersonalPeer::USER_SITE_ID, $this->getId());
-
-				EventPersonalPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEventPersonalCriteria) || !$this->lastEventPersonalCriteria->equals($criteria)) {
-					$this->collEventPersonalList = EventPersonalPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastEventPersonalCriteria = $criteria;
-		return $this->collEventPersonalList;
-	}
-
-	
-	public function countEventPersonalList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPersonalPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(EventPersonalPeer::USER_SITE_ID, $this->getId());
-
-		return EventPersonalPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addEventPersonal(EventPersonal $l)
-	{
-		$this->collEventPersonalList[] = $l;
-		$l->setUserSite($this);
-	}
-
-
-	
-	public function getEventPersonalListJoinVirtualTable($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseEventPersonalPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEventPersonalList === null) {
-			if ($this->isNew()) {
-				$this->collEventPersonalList = array();
-			} else {
-
-				$criteria->add(EventPersonalPeer::USER_SITE_ID, $this->getId());
-
-				$this->collEventPersonalList = EventPersonalPeer::doSelectJoinVirtualTable($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(EventPersonalPeer::USER_SITE_ID, $this->getId());
-
-			if (!isset($this->lastEventPersonalCriteria) || !$this->lastEventPersonalCriteria->equals($criteria)) {
-				$this->collEventPersonalList = EventPersonalPeer::doSelectJoinVirtualTable($criteria, $con);
-			}
-		}
-		$this->lastEventPersonalCriteria = $criteria;
-
-		return $this->collEventPersonalList;
-	}
-
-	
-	public function initAccessLogList()
-	{
-		if ($this->collAccessLogList === null) {
-			$this->collAccessLogList = array();
-		}
-	}
-
-	
-	public function getAccessLogList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseAccessLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collAccessLogList === null) {
-			if ($this->isNew()) {
-			   $this->collAccessLogList = array();
-			} else {
-
-				$criteria->add(AccessLogPeer::USER_SITE_ID, $this->getId());
-
-				AccessLogPeer::addSelectColumns($criteria);
-				$this->collAccessLogList = AccessLogPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(AccessLogPeer::USER_SITE_ID, $this->getId());
-
-				AccessLogPeer::addSelectColumns($criteria);
-				if (!isset($this->lastAccessLogCriteria) || !$this->lastAccessLogCriteria->equals($criteria)) {
-					$this->collAccessLogList = AccessLogPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastAccessLogCriteria = $criteria;
-		return $this->collAccessLogList;
-	}
-
-	
-	public function countAccessLogList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseAccessLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(AccessLogPeer::USER_SITE_ID, $this->getId());
-
-		return AccessLogPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addAccessLog(AccessLog $l)
-	{
-		$this->collAccessLogList[] = $l;
+		$this->collLogList[] = $l;
 		$l->setUserSite($this);
 	}
 

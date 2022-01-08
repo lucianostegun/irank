@@ -95,7 +95,7 @@ class DhtmlxWindows30 {
 
 	    	$id      = $idList[$i];
 	    	$content = $contentList[$i];
-	    	$ajax    = $ajaxList[$i];
+	    	$ajax    = false;//$ajaxList[$i];
 	    	
 	    	$html .= '<div id="window'.ucfirst($id).'Div">'.($ajax?'':$content).'</div>'.$nl;
     	}

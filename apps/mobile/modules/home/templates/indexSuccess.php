@@ -1,47 +1,31 @@
-<?php
-	$isAuthenticated = MyTools::isAuthenticated();
-	$firstName       = MyTools::getAttribute('firstName');
-?>
 <div class="text">
-<?php echo __('home.welcome', array('%firstName%'=>($firstName?' '.$firstName:''))) ?>
+Olá, seja bem vindo ao modo <i>mobile</i> do site <b>iRank</b>.
 </div>
 <br/>
 <div align="center">
 <table width="95%" cellpadding="0" cellspacing="0" class="menu">
 	<tr onclick="goModule('ranking', 'index')">
-		<td>&nbsp;</td>
-		<th><?php echo image_tag('mobile/home/ranking', array('align'=>'middle')) ?><?php echo __('home.myRankings') ?></th>
-		<td>&nbsp;</td>
+		<td width="20" class="topLeft">&nbsp;</td>
+		<td class="middle label"><?php echo image_tag('mobile/home/ranking', array('align'=>'middle')) ?>Meus rankings</td>
+		<td width="20" class="topRight">&nbsp;</td>
 	</tr>
 	<tr onclick="goModule('event', 'index')">
-		<td>&nbsp;</td>
-		<th><?php echo image_tag('mobile/home/event', array('align'=>'middle')) ?><?php echo __('home.myEvents') ?></th>
-		<td>&nbsp;</td>
+		<td width="20" class="left">&nbsp;</td>
+		<td class="middle label"><?php echo image_tag('mobile/home/event', array('align'=>'middle')) ?>Meus eventos</td>
+		<td width="20" class="right">&nbsp;</td>
 	</tr>
-	<?php if( $isAuthenticated ): ?>
-	<tr onclick="goModule('login', 'logout')" class="last">
-		<td>&nbsp;</td>
-		<th><?php echo image_tag('mobile/home/close', array('align'=>'middle')) ?><?php echo __('home.logout') ?></th>
-		<td>&nbsp;</td>
+	<?php if( MyTools::isAuthenticated() ): ?>
+	<tr onclick="goModule('login', 'logout')">
+		<td width="20" class="baseLeft">&nbsp;</td>
+		<td class="base label"><?php echo image_tag('mobile/home/close', array('align'=>'middle')) ?>Desconectar</td>
+		<td width="20" class="baseRight">&nbsp;</td>
 	</tr>
 	<?php else: ?>
-	<tr onclick="goModule('login', 'index')" class="last">
-		<td>&nbsp;</td>
-		<th><?php echo image_tag('mobile/home/login', array('align'=>'middle')) ?><?php echo __('home.login') ?></th>
-		<td>&nbsp;</td>
+	<tr onclick="goModule('login', 'index')">
+		<td width="20" class="baseLeft">&nbsp;</td>
+		<td class="base label"><?php echo image_tag('mobile/home/login', array('align'=>'middle')) ?>Login</td>
+		<td width="20" class="baseRight">&nbsp;</td>
 	</tr>
 	<?php endif; ?>
 </table>
-
-<?php
-	if( $isAuthenticated ){
-	
-		$resumeList       = People::getResumeBalance();
-		$eventObjListNext = Event::getNextList(null, 3);
-		$eventObjListPrev = Event::getPreviousList(null, 5);
-		
-		include_partial('home/include/bankRoll', $resumeList);
-		include_partial('home/include/nextEvents', array('eventObjList'=>$eventObjListNext));
-		include_partial('home/include/previousEvents', array('eventObjList'=>$eventObjListPrev));
-	}
-?>
+</div>

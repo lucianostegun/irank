@@ -36,25 +36,13 @@ class EventPhotoMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addForeignKey('EVENT_ID', 'EventId', 'int', CreoleTypes::INTEGER, 'event', 'ID', false, null);
+		$tMap->addForeignKey('EVENT_ID', 'EventId', 'int', CreoleTypes::INTEGER, 'event', 'ID', true, null);
 
-		$tMap->addForeignKey('FILE_ID', 'FileId', 'int', CreoleTypes::INTEGER, 'file', 'ID', false, null);
+		$tMap->addForeignKey('FILE_ID', 'FileId', 'int', CreoleTypes::INTEGER, 'file', 'ID', true, null);
 
-		$tMap->addForeignKey('PEOPLE_ID', 'PeopleId', 'int', CreoleTypes::INTEGER, 'people', 'ID', false, null);
+		$tMap->addForeignKey('PEOPLE_ID', 'PeopleId', 'int', CreoleTypes::INTEGER, 'people', 'ID', true, null);
 
 		$tMap->addColumn('IS_SHARED', 'IsShared', 'boolean', CreoleTypes::BOOLEAN, false, null);
-
-		$tMap->addColumn('WIDTH', 'Width', 'int', CreoleTypes::INTEGER, false, null);
-
-		$tMap->addColumn('HEIGHT', 'Height', 'int', CreoleTypes::INTEGER, false, null);
-
-		$tMap->addColumn('ORIENTATION', 'Orientation', 'string', CreoleTypes::VARCHAR, false, null);
-
-		$tMap->addColumn('CONTEST_RUNS', 'ContestRuns', 'int', CreoleTypes::INTEGER, false, null);
-
-		$tMap->addColumn('CONTEST_WINS', 'ContestWins', 'int', CreoleTypes::INTEGER, false, null);
-
-		$tMap->addColumn('CONTEST_RATIO', 'ContestRatio', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('DELETED', 'Deleted', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

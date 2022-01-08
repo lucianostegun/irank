@@ -14,9 +14,7 @@ class loginActions extends sfActions
 
   public function preExecute(){
 	
-	Util::getHelper('I18N');
-	
-	$this->title = __('login.title');
+	$this->title = 'Login';
 	
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
   }
@@ -30,8 +28,8 @@ class loginActions extends sfActions
   public function executeLogin($request)
   {
 
-	$username = $request->getParameter('username');
-	$password = $request->getParameter('password');
+	$username = $request->getParameter( 'username' );
+	$password = $request->getParameter( 'password' );
 	
 	$statusMessage = false;
 	
@@ -42,17 +40,20 @@ class loginActions extends sfActions
 		$criteria->add( UserSitePeer::ENABLED, true );
 		$criteria->add( UserSitePeer::VISIBLE, true );
 		$criteria->add( UserSitePeer::DELETED, false );
-		$criterion = $criteria->getNewCriterion( UserSitePeer::USERNAME, $username, Criteria::ILIKE );
-		$criterion->addOr( $criteria->getNewCriterion( PeoplePeer::EMAIL_ADDRESS, $username, Criteria::ILIKE ) );
+		$criterion = $criteria->getNewCriterion( UserSitePeer::USERNAME, $username );
+		$criterion->addOr( $criteria->getNewCriterion( PeoplePeer::EMAIL_ADDRESS, $username ) );
 		$criteria->add($criterion);
 		$criteria->add( UserSitePeer::PASSWORD, md5($password) );
 		$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		$userSiteObj = UserSitePeer::doSelectOne( $criteria );
 		
-		if( is_object($userSiteObj) )	        
-	        $userSiteObj->login(true);
-		else
+		if( is_object($userSiteObj) ){
+	        
+	        $userSiteObj->login();
+		}else{
+			
 			$statusMessage = '<b>ACESSO NEGADO!</b><br />O login e/ou senha não são válidos';
+		}
 	}else{
 		
 		$statusMessage = '<b>ACESSO NEGADO!</b><br />Informe se login e senha de acesso';

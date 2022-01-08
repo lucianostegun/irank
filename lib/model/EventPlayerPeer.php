@@ -26,14 +26,18 @@ class EventPlayerPeer extends BaseEventPlayerPeer
 		return $eventPlayerObj;
 	}
 	
+	public static function doSelectRS(Criteria $criteria, $con = null){
+		
+		$criteria->addAnd( self::DELETED, false );
+		
+		return parent::doSelectRS($criteria, $con);
+	}
+	
 	public static function validateResult($eventId){
 		
-		Util::getHelper('I18N');
+		$eventObj = EventPeer::retrieveByPK($eventId);
+		$request  = MyTools::getRequest();
 		
-		$eventObj   = EventPeer::retrieveByPK($eventId);
-		$request    = MyTools::getRequest();
-		$isFreeroll = $eventObj->getIsFreeroll();
-
 		$eventPositionList = array();
 		
 		$eventPlayerObjList = $eventObj->getPlayerList();
@@ -48,36 +52,36 @@ class EventPlayerPeer extends BaseEventPlayerPeer
 			$prize    = $request->getParameter('prize'.$peopleId);
 			
 			if( !$buyin && $buyin!=='0' )
-				MyTools::setError('buyin'.$peopleId, __('form.error.requiredField'));
+				MyTools::setError('buyin'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
 			elseif( !Validate::isFloat($buyin) || $buyin < 0 )
-				MyTools::setError('buyin'.$peopleId, __('form.error.invalidNumber'));
-			elseif( $eventPosition && $buyin <= 0 && !$isFreeroll )
-				MyTools::setError('buyin'.$peopleId, __('form.error.numberGraterThan0'));
+				MyTools::setError('buyin'.$peopleId, 'O valor informado não é um número válido');
+			elseif( $eventPosition && $buyin <= 0 )
+				MyTools::setError('buyin'.$peopleId, 'Informe um valor maior que 0,00');
 			
 			if( !$rebuy && $rebuy!=='0' )
-				MyTools::setError('rebuy'.$peopleId, __('form.error.requiredField'));
+				MyTools::setError('rebuy'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
 			elseif( !Validate::isFloat($rebuy) || $rebuy < 0 )
-				MyTools::setError('rebuy'.$peopleId, __('form.error.invalidNumber'));
+				MyTools::setError('rebuy'.$peopleId, 'O valor informado não é um número válido');
 				
 			if( !$addon && $addon!=='0' )
-				MyTools::setError('addon'.$peopleId, __('form.error.requiredField'));
+				MyTools::setError('addon'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
 			elseif( !Validate::isFloat($addon) || $addon < 0 )
-				MyTools::setError('addon'.$peopleId, __('form.error.invalidNumber'));
+				MyTools::setError('addon'.$peopleId, 'O valor informado não é um número válido');
 				
 			if( !$eventPosition && $eventPosition!=='0' )
-				MyTools::setError('eventPosition'.$peopleId, __('form.error.requiredField'));
+				MyTools::setError('eventPosition'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
 			elseif( !Validate::isInteger($eventPosition) || $eventPosition < 0 )
-				MyTools::setError('eventPosition'.$peopleId, __('form.error.invalidInteger'));
+				MyTools::setError('eventPosition'.$peopleId, 'O valor informado não é um número inteiro válido');
 			
 			if( !$prize && $prize!=='0' )
-				MyTools::setError('prize'.$peopleId, __('form.error.requiredField'));
+				MyTools::setError('prize'.$peopleId, 'Este campo é obrigatório e não foi preenchido');
 			elseif( !Validate::isFloat($prize) || $prize < 0 )
-				MyTools::setError('prize'.$peopleId, __('form.error.invalidNumber'));
+				MyTools::setError('prize'.$peopleId, 'O valor informado não é um número válido');
 			
 			if( $eventPosition!=-'0' && $peopleIdConflict = array_search($eventPosition, $eventPositionList) ){
 				
-				MyTools::setError('eventPosition'.$peopleId, __('form.error.positionConflict', array('%position%'=>$eventPosition)));
-				MyTools::setError('eventPosition'.$peopleIdConflict, __('form.error.positionConflict', array('%position%'=>$eventPosition)));
+				MyTools::setError('eventPosition'.$peopleId, 'Ocorreu um conflito de posições para a posição '.$eventPosition);
+				MyTools::setError('eventPosition'.$peopleIdConflict, 'Ocorreu um conflito de posições para a posição '.$eventPosition);
 			}else{
 				
 				if( Validate::isInteger($eventPosition) && $eventPosition!='0' )
@@ -93,7 +97,7 @@ class EventPlayerPeer extends BaseEventPlayerPeer
   			
   			$peopleId = array_search($eventPosition, $eventPositionList);
   			if( $eventPosition!=$position++ )
-  				MyTools::setError('eventPosition'.$peopleId, __('form.error.sequencePosition'));
+  				MyTools::setError('eventPosition'.$peopleId, 'As posições informadas devem ser sequenciais e sem cortes');
   		}
   		
 		return !$request->hasErrors();
@@ -103,15 +107,6 @@ class EventPlayerPeer extends BaseEventPlayerPeer
 
 		$criteria = new Criteria();
 		$criteria->add( EventPlayerPeer::CONFIRM_CODE, $confirmCode );
-		return EventPlayerPeer::doSelectOne($criteria);
-	}
-	
-	public static function retrieveByShareId($shareId){
-		
-		$criteria = new Criteria();
-		$criteria->add( EventPlayerPeer::SHARE_ID, $shareId);
-		$criteria->addJoin( EventPlayerPeer::EVENT_ID, EventPeer::ID, Criteria::INNER_JOIN );
-		
 		return EventPlayerPeer::doSelectOne($criteria);
 	}
 }

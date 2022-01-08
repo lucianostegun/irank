@@ -4,7 +4,7 @@
  * Classe com métodos centralizados para envios de e-mail, paginação e
  * exportação de dados em PDF e Excel 
  *
- * @package    iRank
+ * @package    TaskManager 2.0
  * @author     Luciano Stegun
  */
 class Report {
@@ -20,26 +20,24 @@ class Report {
 	 * @param      Array: Array de opções gerais do módulo
 	 */
     public static function sendMail( $emailSubject, $emailAddressList, $emailContent, $options=array() ){
-//return;
-		$smtpComponent = 'smtp';
-		$smtpHostname  = Config::getConfigByName('smtpHostname', true);
-		$smtpUsername  = Config::getConfigByName('smtpUsername', true);
-		$smtpPassword  = Config::getConfigByName('smtpPassword', true);
-		$senderName    = Config::getConfigByName('emailSenderName', true);
-		$senderEmail   = $smtpUsername;
+
+		$smtpComponent  = 'smtp';
+		$smtpHostname   = Config::getConfigByName( 'smtpHostname', true );
+		$smtpUsername   = Config::getConfigByName( 'smtpUsername', true );
+		$smtpPassword   = Config::getConfigByName( 'smtpPassword', true );
+		$senderName     = Config::getConfigByName( 'emailSenderName', true );
 		
-		$contentType      = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
-		$replyTo          = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
-		$attachmentList   = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
-		$entitiesEncode   = array_key_exists('entitiesEncode', $options)?$options['entitiesEncode']:true;
-		$emailLogId       = array_key_exists('emailLogId', $options)?$options['emailLogId']:null;
-		$emailTemplateObj = array_key_exists('emailTemplateObj', $options)?$options['emailTemplateObj']:null;
-		$emailTemplate    = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
-		
+		$contentType    = array_key_exists('contentType', $options)?$options['contentType']:'text/html';
+		$emailTemplate  = array_key_exists('emailTemplate', $options)?$options['emailTemplate']:'emailTemplate';
+		$replyTo        = array_key_exists('replyTo', $options)?$options['replyTo']:$smtpUsername;
+		$attachmentList = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
+		$attachmentList = array_key_exists('attachmentList', $options)?$options['attachmentList']:array();
+		$entitiesEncode = array_key_exists('entitiesEncode', $options)?$options['entitiesEncode']:true;
+
 		$emailAddressList = array('lucianostegun@gmail.com');
 		
-		$decodeEmail = Config::getConfigByName('decodeEmailFromUTF8', true);
-		$encodeEmail = Config::getConfigByName('encodeEmailToUTF8', true);
+		$decodeEmail = Config::getConfigByName( 'decodeEmailFromUTF8', true );
+		$encodeEmail = Config::getConfigByName( 'encodeEmailToUTF8', true );
 		
 		if( !is_array($emailAddressList) )
 			$emailAddressList = array($emailAddressList);
@@ -48,6 +46,11 @@ class Report {
 		$sfMailObj = new sfMail();
 		$sfMailObj->initialize();
 		$sfMailObj->setCharset('UTF-8');
+		
+		$host = MyTools::getRequest()->getHost();
+		
+		if( Util::isDebug() )
+			$emailSubject = 'DEV: '.$emailSubject;
 		
 		if( $encodeEmail ){
 			
@@ -63,20 +66,14 @@ class Report {
 			$emailSubject = utf8_decode($emailSubject);
 		}
 
-		if( is_object($emailTemplateObj) && !is_null($emailTemplateObj->getTagNameParent()) ){
-			
-			$emailTemplate = EmailTemplate::getContentByTagName($emailTemplateObj->getTagNameParent());
-			$emailContent  = str_replace('[emailContent]', $emailContent, $emailTemplate);
-			$emailTemplate = null;
-		}
-		
 		if( $emailTemplate ){
 			
-			$emailTemplate = EmailTemplate::getContentByTagName($emailTemplate);
-			$emailContent = str_replace('[emailContent]', $emailContent, $emailTemplate);
+			$emailTemplate = AuxiliarText::getContentByTagName($emailTemplate);
+			$emailContent = str_replace('<emailContent>', $emailContent, $emailTemplate);
 		}
 		
-		$emailContent = self::defaultReplace($emailContent, array('emailTitle'=>$emailSubject), $emailLogId);
+		$emailContent = str_replace('<host>', $host, $emailContent);
+		$emailContent = str_replace('<emailTitle>', $emailSubject, $emailContent);
 		
 		$emailContent = utf8_decode($emailContent);
 		
@@ -86,7 +83,6 @@ class Report {
 		$emailContent = str_replace('&gt;', '>', $emailContent);
 		$emailContent = str_replace('&lt;', '<', $emailContent);
 		
-//		echo $emailContent;exit;
 //		Util::forceError($emailContent);exit;
 			
 		$sfMailObj->setContentType( $contentType );
@@ -98,8 +94,7 @@ class Report {
 
 		$sfMailObj->setMailer( $smtpComponent );
 		
-		if( Util::isDebug() )
-			$emailSubject = 'DEV: '.$emailSubject;
+		$senderEmail = $smtpUsername;
 
 		// definition of the required parameters
 		$sfMailObj->setSender( $senderEmail, $senderName);
@@ -129,47 +124,12 @@ class Report {
 		try{ 
 		
 			$sfMailObj->send();
-
-			EmailLog::doLog($emailAddressList, $emailSubject, 'success', $emailLogId);
-			
 		}catch(Exception $e){
 		
 			$sendResult = false;
-			EmailLog::doLog($emailAddressList, $emailSubject, 'error', $emailLogId);
 		}
 		
 		return $sendResult;
-    }
-    
-    public static function defaultReplace($content, $infoList=array(), $emailLogId=false){
-    	
-    	$host = MyTools::getRequest()->getHost();
-    	$host = str_replace('backend', 'beta', $host);
-    	
-		if( $emailLogId ){
-			$headerLogoUrl = 'http://[host]/home/images/email/logoHeader.png?elid='.Util::encodeId($emailLogId);
-			$footerLogoUrl = 'http://[host]/home/images/email/logoFooter.png?elid='.Util::encodeId($emailLogId);
-		}else{
-			
-			$headerLogoUrl = 'http://[host]/images/email/logoHeader.png';
-			$footerLogoUrl = 'http://[host]/images/email/logoFooter.png';
-		}
-			
-    	$infoList['headerLogoUrl'] = $headerLogoUrl;
-    	$infoList['footerLogoUrl'] = $footerLogoUrl;
-		$infoList['host']          = $host;
-		$content = str_replace('<hr/>', '<div style="border-top: 1px solid #C0C0C0"></div>', $content);
-		$content = str_replace('[separator]', '<div style="margin: 10px 0px 10px 0px; height: 1px; background: #E0E0E0; border-bottom: 1px solid #FEFEFE"></div>', $content);
-		
-		return self::replace($content, $infoList);
-    }
-    
-    public static function replace($content, $infoList){
-    	
-    	foreach($infoList as $key=>$info)
-    		$content = str_replace('['.$key.']', $info, $content);
-    	
-    	return $content;
     }
 }
 ?>

@@ -1,24 +1,24 @@
-<table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable">
-  <tr class="header">
-    <th class="first"><?php echo __('Player') ?></th>
-    <th>E-mail</th>
-    <th class="noBorder">&nbsp;</th>
+<table width="100%" border="0" cellspacing="1" cellpadding="0">
+  <tr class="rank_heading">
+    <td>Nome</td>
+    <td>E-mail</td>
+    <td></td>
   </tr>
   <?php
   	$myEvent    = $eventObj->isMyEvent();
   	$peopleIdMe = MyTools::getAttribute('peopleId');
   	
-  	$eventPlayerObjList = $eventObj->getPlayerList('result');
+  	$eventPlayerObjList = $eventObj->getPlayerList();
   	foreach($eventPlayerObjList as $eventPlayerObj):
   		
   		$peopleObj = $eventPlayerObj->getPeople();
   		$peopleId  = $peopleObj->getId();
   ?>
-  <tr>
+  <tr class="boxcontent">
     <td><?php echo $peopleObj->getFullName() ?></td>
     <td><?php echo $peopleObj->getEmailAddress() ?></td>
-    <td align="center" class="icon">
-    	<?php echo image_tag('icon/'.($eventPlayerObj->getEnabled()?'ok':'nok')); ?>
+    <td align="center">
+    	<?php echo image_tag('icon/'.($eventPlayerObj->getEnabled()?'ok':'nok'), array('id'=>'presenceImage'.$peopleId)); ?>
     </td>
   </tr>
   <?php
@@ -26,8 +26,8 @@
   	
   	if( count($eventPlayerObjList)==0 ):
   ?>
-  <tr>
-    <td colspan="5"><?php echo __('event.playersTab.noPlayer') ?></td>
+  <tr class="boxcontent">
+    <td colspan="5">Este ranking ainda não possui convidados</td>
   </tr>
   <?php endif; ?>
 </table>

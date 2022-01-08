@@ -36,25 +36,21 @@ class EventPlayerMapBuilder {
 
 		$tMap->addForeignPrimaryKey('PEOPLE_ID', 'PeopleId', 'int' , CreoleTypes::INTEGER, 'people', 'ID', true, null);
 
-		$tMap->addColumn('SHARE_ID', 'ShareId', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('ENTRANCE_FEE', 'EntranceFee', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('REBUY', 'Rebuy', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('BUYIN', 'Buyin', 'double', CreoleTypes::NUMERIC, false, 10);
-
-		$tMap->addColumn('REBUY', 'Rebuy', 'double', CreoleTypes::NUMERIC, false, 10);
-
-		$tMap->addColumn('ADDON', 'Addon', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('ADDON', 'Addon', 'double', CreoleTypes::FLOAT, false, null);
 
 		$tMap->addColumn('EVENT_POSITION', 'EventPosition', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('SCORE', 'Score', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('PRIZE', 'Prize', 'double', CreoleTypes::NUMERIC, false, 10);
+		$tMap->addColumn('PRIZE', 'Prize', 'double', CreoleTypes::FLOAT, false, null);
 
-		$tMap->addColumn('CONFIRM_CODE', 'ConfirmCode', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('CONFIRM_CODE', 'ConfirmCode', 'string', CreoleTypes::VARCHAR, false, 50);
 
-		$tMap->addColumn('INVITE_STATUS', 'InviteStatus', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('INVITE_STATUS', 'InviteStatus', 'string', CreoleTypes::VARCHAR, false, 5);
 
 		$tMap->addColumn('ALLOW_EDIT', 'AllowEdit', 'boolean', CreoleTypes::BOOLEAN, false, null);
 

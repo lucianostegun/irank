@@ -5,9 +5,7 @@ class eventActions extends sfActions
 
   public function preExecute(){
 	
-	Util::getHelper('I18N');
-	
-	$this->title = __('event.title');
+	$this->title = 'Eventos';
 	
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
 	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
@@ -34,21 +32,13 @@ class eventActions extends sfActions
 		$this->eventObj = Util::getNewObject('event');
   	}
   }
-  
-  public function executeConfirmPresence($request){
-  	
-	$this->eventObj = Event::confirmPresence($request);
-	
-	if( !is_object($this->eventObj) )
-		return $this->redirect('event/index');
-  }
 
   public function executeSearch($request){
 
   	$rankingId        = $request->getParameter('rankingId');
   	$this->rankingObj = RankingPeer::retrieveByPK($rankingId);
   	
-  	$this->title = __('event.title').' > '.$this->rankingObj->getRankingName();
+  	$this->title = 'Eventos > '.$this->rankingObj->getRankingName();
   }
   
   public function executeEdit($request){
@@ -63,7 +53,7 @@ class eventActions extends sfActions
 		if( !is_object($this->eventObj) )
 			return $this->redirect('event/index');
 		
-		if( !$this->eventObj->isMyEvent() || !$this->eventObj->isEditable() || $this->eventObj->getIsFreeroll() )
+		if( !$this->eventObj->isMyEvent() )
 			$this->setTemplate('show');
   	}
   }
@@ -79,7 +69,7 @@ class eventActions extends sfActions
 	$eventObj = EventPeer::retrieveByPK($eventId);
 	
 	if( !$eventObj->isEditable() )
-		Util::forceError(__('event.exception.lockedEvent'), true);
+		Util::forceError('!Este evento está bloqueado para edição', true);
 		
 	$eventObj->saveResult($request);
 	
@@ -115,7 +105,7 @@ class eventActions extends sfActions
 	$eventCommentObj = EventCommentPeer::retrieveByPK($eventCommentId);
 	
 	if( !$eventCommentObj->isMyComment() )
-		throw new Exception(__('event.exception.notYourComment'));
+		throw new Exception('Este comentário não foi escrito por você!');
 	
 	$eventCommentObj->delete();
 	exit;
@@ -138,69 +128,10 @@ class eventActions extends sfActions
 	exit;
   }
   
-  public function executeTogglePresence($request){
-
-	Util::getHelper('I18N');
-	
-	$eventId  = $request->getParameter('eventId');
-	$peopleId = $request->getParameter('peopleId');
-	$notify   = false;
-	
-	$eventObj = EventPeer::retrieveByPK( $eventId );
-	
-	if( !$eventObj->isMyEvent() )
-		throw new Exception(__('event.exception.editionDenied'));
-	
-	if( !$eventObj->isConfirmed($peopleId) )
-		$eventObj->togglePresence($peopleId, 'yes', $notify);
-	else
-		$eventObj->togglePresence($peopleId, 'no', $notify);
-    
-    exit;
-  }
-  
-  public function executeGetICal($request){
-
-	$eventId  = $request->getParameter('eventId');
-	$eventObj = EventPeer::retrieveByPK( $eventId );
-	
-	echo $eventObj->getICal('update', true);
-	exit;
-  }
-  
-  public function executeGetPaidPlaces($request){
-
-	$eventId = $request->getParameter('eventId');
-	$buyins  = $request->getParameter('buyins');
-	
-	$infoList = Ranking::getPaidPlaces($eventId, $buyins);
-	
-	echo Util::parseInfo($infoList);
-	
-	exit;
-  }
-  
   public function executeJavascript($request){
   	
     header('Content-type: text/x-javascript');
 		
   	$nl = chr(10);
-  	
-  	echo 'var i18n_event_result_successMessage = "'.__('event.result.successMessage').'";'.$nl;
-  	echo 'var i18n_event_result_errorMessage   = "'.__('event.result.errorMessage').'";'.$nl;
-  	echo 'var i18n_event_result_waitMessage    = "'.__('event.result.waitMessage').'";'.$nl;
-  	echo 'var i18n_event_result_saveConfirm    = "'.__('event.result.saveConfirm').'";'.$nl;
-  	echo 'var i18n_event_comment_waitMessage   = "'.__('event.comment.waitMessage').'";'.$nl;
-  	echo 'var i18n_event_comment_fieldMessage  = "'.__('event.comment.fieldMessage').'";'.$nl;
-  	echo 'var i18n_event_comment_publishing    = "'.__('event.comment.publishing').'";'.$nl;
-  	echo 'var i18n_event_comment_published     = "'.__('event.comment.published').'";'.$nl;
-  	echo 'var i18n_event_comment_errorMessage  = "'.__('event.comment.errorMessage').'";'.$nl;
-  	echo 'var i18n_event_comment_deleteError   = "'.__('event.comment.deleteError').'";'.$nl;
-  	echo 'var i18n_event_comment_typeSomething = "'.__('event.comment.typeSomething').'";'.$nl;
-  	echo 'var i18n_leftChar                    = "'.__('leftChar').'";'.$nl;
-  	echo 'var i18n_leftChars                   = "'.__('leftChars').'";'.$nl;
-	echo 'var i18n_event_calculatePrizeError   = "'.__('event.calculatePrizeError').'";'.$nl;
-  	
-  	exit;
   }
 }
