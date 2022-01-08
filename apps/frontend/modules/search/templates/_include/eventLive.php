@@ -2,6 +2,8 @@
 	$whereList = array('true');
 	$nl = chr(10);
 	
+	$dateOffset = Util::getDate('-30d');
+	
 	foreach($keyWordList as $keyWord){
 		
 		$where = '';
@@ -65,6 +67,19 @@
 				$where  = "($where OR no_accent(event_name) ILIKE '%freeroll%' $nl";
 				$where .= "OR no_accent(event_short_name) ILIKE '%freeroll%') $nl";
 			}
+		}elseif( preg_match('/antigos?/i', $keyWord) ){
+			
+			$dateStart = date('Y-m-d');
+			$where = "event_date < '$dateStart'$nl";
+			
+		}elseif( preg_match('/!?sett?[eé]ll?ite?/i', $keyWord) ){
+			
+			$where = (preg_match('/!/', $keyWord)?'NOT ':'').'is_satellite'.$nl;
+			if( !strstr('!', $keyWord) ){
+				
+				$where  = "($where OR no_accent(event_name) ILIKE '%sat%lite%' $nl";
+				$where .= "OR no_accent(event_short_name) ILIKE '%sat%lite%') $nl";
+			}
 		}else{
 			
 			$keyWord = preg_replace('/[^a-zA-Z0-9\.]/', '%', $keyWord);
@@ -84,6 +99,9 @@
 		$whereList[] = $where;
 	}
 	
+	if( !preg_match('/event_date/', $where) )
+		$whereList[] = "event_date > '$dateOffset'$nl";
+		
 	$whereClause = implode(chr(10).chr(9).'AND ', $whereList);
 	
 	$sql = "SELECT$nl id, event_live_schedule_id, step_number, event_name, step_day, event_date_time, buyin, entrance_fee, is_freeroll, club_name, city_name, initial$nl FROM$nl event_live_search$nl WHERE$nl $whereClause$nl ORDER BY event_date_time ASC";

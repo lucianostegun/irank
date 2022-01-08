@@ -27,6 +27,7 @@ class sfFileLogger
    */
   public function initialize($options = array())
   {
+  	return;
     if (!isset($options['file']))
     {
       throw new sfConfigurationException('File option is mandatory for a file logger');
@@ -61,6 +62,7 @@ class sfFileLogger
    */
   public function log($message, $priority, $priorityName)
   {
+	return;
     $line = sprintf("%s %s [%s] %s%s", strftime('%b %d %H:%M:%S'), 'symfony', $priorityName, $message, DIRECTORY_SEPARATOR == '\\' ? "\r\n" : "\n");
 
     flock($this->fp, LOCK_EX);
@@ -73,6 +75,7 @@ class sfFileLogger
    */
   public function shutdown()
   {
+  	return;
     if (is_resource($this->fp))
     {
       fclose($this->fp);

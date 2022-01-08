@@ -11,11 +11,29 @@ uploadPhoto:
 facebookResult:
   is_secure: off
 
+resultShare:
+  is_secure: off
+
+facebookResultShare:
+  is_secure: off
+
+share:
+  is_secure: off
+
+permalink:
+  is_secure: off
+
 facebookResultImage:
   is_secure: off
 
 getPhoto:
   is_secure: off
-  
+
 getiPhoneAppXml:
+  is_secure: off
+  
+javascript:
+  is_secure: off
+  
+getPhotoCommentList:
   is_secure: off

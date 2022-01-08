@@ -20,6 +20,11 @@ fields:
       max:       25
       max_error: form.error.max25
        
+  nickname:
+    sfCallbackValidator:
+      callback:      [PeoplePeer, uniqueNickname]
+      invalid_error: Este apelido já está em uso por outro usuário
+       
   phoneNumber:
     sfPhoneValidator:
       strict:       true

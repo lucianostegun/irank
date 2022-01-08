@@ -116,9 +116,9 @@ class Util {
 	 * @param      String: Comando SQL a ser executado na base de dados, deve ser um comando único
 	 * @return     Object: ResultSet
 	 */
-	public static function executeOne( $query, $returnType='int' ){
+	public static function executeOne( $query, $returnType='int', $con=null, $connectionName=null ){
 
-		$resultset  = self::executeQuery($query);
+		$resultset  = self::executeQuery($query, $con, $connectionName );
     	
     	$function = 'get'.ucfirst($returnType);
     	
@@ -228,7 +228,7 @@ class Util {
 		
 		if( $destination=='database' ){
 			
-			if( ereg('^[0-9]{2}-[0-9]{2}-[0-9]{4}$', $date) )
+			if( preg_match('/^[0-9]{2}-[0-9]{2}-[0-9]{4}$/', $date) )
 				return $date;
 				
 			$dateArray = explode( '/', $date );
@@ -272,8 +272,8 @@ class Util {
 	 */	
 	public static function formatDateTime( $dateTime, $format='database', $dateFormat='Y-m-d' ){
 
-		if( !ereg('^[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}(:[0-9]{2})?$', $dateTime) )
-			if( !ereg('^[0-9]{2}/[0-9]{2}/[0-9]{4} ?$', $dateTime) )
+		if( !preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{2}:[0-9]{2}(:[0-9]{2})?$/', $dateTime) )
+			if( !preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4} ?$/', $dateTime) )
 				return null;
 			else
 				$dateTime = trim($dateTime).' 00:00:00';
@@ -327,7 +327,7 @@ class Util {
 	 * @param      Boolean: Define se a conversão será feita para exibição de dados 
 	 * @return     String/Float: Valor formatado no formato desejado
 	 */	
-	public static function formatFloat( $value, $display=false, $decimalPlaces=2 ){
+	public static function formatFloat( $value, $display=false, $decimalPlaces=2, $cleanRightZeros=false ){
 	
 		$culture = MyTools::getCulture();
 		
@@ -339,11 +339,13 @@ class Util {
 				$value = number_format($value, $decimalPlaces, ',', '.');
 			else
 				$value = number_format($value, $decimalPlaces, '.', ',');
+			
+			if( $cleanRightZeros )
+				$value = preg_replace('/,0*$/', '', $value);
 		}else{
 			
-			if( ereg('^[0-9]+\.[0-9]{1,2}$', $value) )		
+			if( preg_match('/^[0-9]+\.[0-9]{1,2}$/', $value) )		
 				$value = str_replace( '.', ',', $value );
-		
 		
 			if( !is_float($value) ){
 				
@@ -409,6 +411,7 @@ class Util {
 				case '%hh %mm %ss':
 					return sprintf('%02d', ($hours+($days*24))).'h '.$minutes.'m '.$seconds.'s';
 				case '%h:%m':
+				case 'h:m':
 					return sprintf('%02d', ($hours+($days*24))).':'.$minutes;
 			}
 				
@@ -673,7 +676,7 @@ class Util {
 	
 	public static function getSeconds($dateTime){
 		
-		if( ereg('^[0-9]{1,2}:[0-9]{1,2}$', $dateTime) ){
+		if( preg_match('/^[0-9]{1,2}:[0-9]{1,2}$/', $dateTime) ){
 			
 			list($hours, $minutes) = explode(':', $dateTime);
 			
@@ -704,7 +707,7 @@ class Util {
 	 */
 	public static function getFileName( $filePath ){
 		
-		$filePath = split('[\\\\/]', $filePath);
+		$filePath = preg_split('/[\\\\\/]/', $filePath);
 		return end($filePath);
 	}
 	
@@ -715,13 +718,18 @@ class Util {
 	 */
 	public static function getFilePath($subPath, $rootDir=null){
 		
-		$subPath = ereg_replace('[\\\\/]', DIRECTORY_SEPARATOR, $subPath);
-		$subPath = ereg_replace('^[\\\\/]?', '', $subPath);
-		
 		if( !$rootDir )
 			$rootDir = sfConfig::get('sf_web_dir');
 		
 		$path = $rootDir . DIRECTORY_SEPARATOR . $subPath;
+		return self::fixFilePath($path);
+	}
+
+	public static function fixFilePath($path){
+		
+		$path = str_replace('\\\\', DIRECTORY_SEPARATOR, $path);
+		$path = str_replace('//', DIRECTORY_SEPARATOR, $path);
+		
 		return $path;
 	}
 	
@@ -748,7 +756,7 @@ class Util {
 	 
 	 public static function convertTimeToSeconds( $time ){
 	 	
-	 	if( !ereg('^[0-9]{1,2}:[0-9]{1,2}(:[0-9]{1,2})?$', $time) )
+	 	if( !ereg('/^[0-9]{1,2}:[0-9]{1,2}(:[0-9]{1,2})?$/', $time) )
 	 		return 0;
 	 		
 	 	list($hours, $minutes, $seconds) = explode(':', $time);
@@ -823,9 +831,9 @@ class Util {
 			return 'º';
 		
 		if( $culture=='en_US' ){
-			if( ereg('1$', $place) ) $sufix = 'st';
-			elseif( ereg('2$', $place) ) $sufix = 'nd';
-			elseif( ereg('3$', $place) ) $sufix = 'rd';
+			if( preg_match('/1$/', $place) ) $sufix = 'st';
+			elseif( preg_match('/2$/', $place) ) $sufix = 'nd';
+			elseif( preg_match('/3$/', $place) ) $sufix = 'rd';
 			else $sufix = 'th';
 			
 			return $sufix;
@@ -851,12 +859,33 @@ class Util {
 	
 	public static function getApp(){
 		
-		$scriptName = MyTools::getRequest()->getScriptName();
-		$scriptName = ereg_replace('[^a-zA-Z]', '', $scriptName);
-		$scriptName = ereg_replace('(dev)?php$', '', $scriptName);
+		$httpHost = $_SERVER['HTTP_HOST'];
+		$httpHost = preg_replace('/\..*$/', '', $httpHost);
 		
-		$scriptName = ($scriptName=='index'?'frontend':$scriptName);
-		return $scriptName;
+		switch($httpHost){
+			case 'www':
+				$httpHost = 'frontend';
+				break;
+			case 'backend':
+				$httpHost = 'backend';
+				break;
+			case 'ios':
+				$httpHost = 'ios';
+				break;
+			case 'm':
+				$httpHost = 'mobile';
+				break;
+			default:
+				$scriptName = MyTools::getRequest()->getScriptName();
+				$scriptName = preg_replace('/[^a-zA-Z]/', '', $scriptName);
+				$scriptName = preg_replace('/(dev)?php$/', '', $scriptName);
+				
+				$scriptName = ($scriptName=='index' || $scriptName=='debug'?'frontend':$scriptName);
+				return $scriptName;
+				break;
+		}
+		
+		return $httpHost;
 	}
 	
 	public static function isApp($app){
@@ -997,6 +1026,56 @@ class Util {
 		sfContext::getInstance()->getResponse()->addStylesheet('lightbox');
 		sfContext::getInstance()->getResponse()->addJavascript('/sf/prototype/js/scriptaculous');
 		sfContext::getInstance()->getResponse()->addJavascript('lightbox');
+	}
+
+	public static function addJavascript($javascript){
+
+		sfContext::getInstance()->getResponse()->addJavascript($javascript);
+	}
+
+	public static function addStylesheet($stylesheet){
+
+		sfContext::getInstance()->getResponse()->addStylesheet($stylesheet);
+	}
+	
+	public static function getAddressByZipcode($zipcode, $jsonDecode=true){
+		
+		$webserviceUrl   = 'http://webservice.uni5.net/web_cep.php';
+		$webserviceQuery = array(
+		    'auth'=>'d2444763f5fd6f8f616b4b4dce37752e', //Chave de autenticação do WebService - Consultar seu painel de controle
+		    'formato'=>'json', //Valores possíveis: xml, query_string ou javascript
+		    'cep'=>$zipcode //CEP que será pesquisado
+		);
+		
+		//Forma URL
+		$webserviceUrl .= '?';
+		foreach($webserviceQuery as $key => $value)
+		    $webserviceUrl .= $key.'='.urlencode($value).'&';
+		
+		$result = @file_get_contents($webserviceUrl);
+		
+		if( !$result )
+			throw new Exception('addressConnectionError');
+		
+		if( $jsonDecode )
+			$result = json_decode($result);
+		
+		return $result;
+	}
+	
+	public static function getToken($string){
+		
+		$stringList = preg_split('//', trim($string));
+		unset($stringList[0]);
+		unset($stringList[count($stringList)]);
+		
+		sort($stringList);
+		
+		$token = implode('', $stringList);
+		$token = base64_encode($token);
+		$token = md5($token);
+		
+		return $token;
 	}
 }
 ?>

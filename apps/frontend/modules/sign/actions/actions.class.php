@@ -13,6 +13,10 @@ class signActions extends sfActions
 	
   }
 
+  public function executeUserTerms($request){
+	
+  }
+
   public function handleErrorSave(){
 
   	$this->handleFormFieldError( $this->getRequest()->getErrors() );
@@ -34,7 +38,7 @@ class signActions extends sfActions
   	$userSiteObj->quickSave($request);
   	$userSiteObj->login();
 
-	$userSiteObj->resetOptions();
+//	$userSiteObj->resetOptions();
 	$userSiteObj->sendWelcomeMail($request);
 	$userSiteObj->getImagePath(true);
   	exit;

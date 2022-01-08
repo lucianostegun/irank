@@ -5,14 +5,19 @@ class eventActions extends sfActions
 
   public function preExecute(){
 
-	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
-	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
+	$this->userSiteId      = $this->getUser()->getAttribute('userSiteId');
+	$this->peopleId        = $this->getUser()->getAttribute('peopleId');
+	$this->isAuthenticated = $this->getUser()->isAuthenticated();
   }
 
   public function executeIndex($request){
 
 	$this->userSiteObj = UserSitePeer::retrieveByPK( $this->userSiteId );
 	$this->criteria    = new Criteria();
+	
+	$criterion = $this->criteria->getNewCriterion( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+	$criterion->addOr( $this->criteria->getNewCriterion( RankingPeer::FINISH_DATE, null ) );
+	$this->criteria->add( $criterion );
 	
 	$this->innerObj = new Event();
   }
@@ -27,7 +32,8 @@ class eventActions extends sfActions
   	$viewComment = $request->getParameter('viewComment');
   	$viewComment = base64_decode(strrev($viewComment));
   	
-  	$eventId       = $request->getParameter('eventId', $viewComment);
+  	$eventId       = $request->getParameter('id', $viewComment);
+  	$eventId       = $request->getParameter('eventId', $eventId);
   	$this->isClone = $request->getParameter('isClone');
   	
   	if( $eventId ){
@@ -49,7 +55,8 @@ class eventActions extends sfActions
   
   public function executeShow($request){
   	
-  	$eventId = $request->getParameter('eventId');
+  	$eventId = $request->getParameter('id');
+  	$eventId = $request->getParameter('eventId', $eventId);
   	
 	$this->eventObj = $this->innerObj = EventPeer::retrieveByPK( $eventId );
 
@@ -64,8 +71,6 @@ class eventActions extends sfActions
   
   public function executeSave($request){
 
-	Util::getHelper('I18N');
-	
 	$eventId         = $request->getParameter('eventId');
 	$rankingId       = $request->getParameter('rankingId');
 	$eventName       = $request->getParameter('eventName');
@@ -84,54 +89,69 @@ class eventActions extends sfActions
 	$allowRebuy      = $request->getParameter('allowRebuy');
 	$allowAddon      = $request->getParameter('allowAddon');
 
-	if( $eventId )		
-		$eventObj  = EventPeer::retrieveByPK( $eventId );
-	else
-		$eventObj = new Event();
-	
-	$isNew = $eventObj->isNew();
-	
-	if( !$eventObj->isEditable() )
-		Util::forceError('!'.__('event.lockedEvent'), true);
+	try{
 		
-	$isClone = ($isClone && !$eventObj->getEnabled());
-
-	$eventObj->setRankingId( $rankingId );
-	$eventObj->setEventName( $eventName );
-	$eventObj->setRankingPlaceId( $rankingPlaceId );
-	$eventObj->setEventDate( Util::formatDate($eventDate) );
-	$eventObj->setStartTime( $startTime );
-	$eventObj->setPaidPlaces(nvl($paidPlaces));
-	$eventObj->setBuyin( Util::formatFloat($buyin) );
-	$eventObj->setEntranceFee( Util::formatFloat($entranceFee) );
-	$eventObj->setIsFreeroll( ($isFreeroll?true:false) );
-	$eventObj->setPrizePot( Util::formatFloat($prizePot) );
-	$eventObj->setComments(nvl($comments));
-	$eventObj->setAllowRebuy(($allowRebuy?true:false));
-	$eventObj->setAllowAddon(($allowAddon?true:false));
-	$eventObj->setVisible(true);
-	$eventObj->setEnabled(true);
-	$eventObj->save();
+		Util::getHelper('I18N');
+		
+		$con = Propel::getConnection();
+		$con->begin();
+		
+		if( $eventId )		
+			$eventObj  = EventPeer::retrieveByPK( $eventId );
+		else
+			$eventObj = new Event();
+		
+		$isNew = $eventObj->isNew();
+		
+		if( !$eventObj->isEditable() )
+			Util::forceError('!'.__('event.lockedEvent'), true);
+			
+		$isClone = ($isClone && !$eventObj->getEnabled());
 	
-	if( $isFreeroll )
-		$eventObj->savePrizeConfig($request);
-	else
-		$eventObj->deletePrizeConfig();
+		$eventObj->setRankingId( $rankingId );
+		$eventObj->setEventName( $eventName );
+		$eventObj->setRankingPlaceId( $rankingPlaceId );
+		$eventObj->setEventDate( Util::formatDate($eventDate) );
+		$eventObj->setStartTime( $startTime );
+		$eventObj->setPaidPlaces(nvl($paidPlaces));
+		$eventObj->setBuyin( Util::formatFloat($buyin) );
+		$eventObj->setEntranceFee( Util::formatFloat($entranceFee) );
+		$eventObj->setIsFreeroll( ($isFreeroll?true:false) );
+		$eventObj->setPrizePot( Util::formatFloat($prizePot) );
+		$eventObj->setComments(nvl($comments));
+		$eventObj->setAllowRebuy(($allowRebuy?true:false));
+		$eventObj->setAllowAddon(($allowAddon?true:false));
+		$eventObj->setVisible(true);
+		$eventObj->setEnabled(true);
+		$eventObj->buildPermalink();
+		$eventObj->save($con);
+		
+		if( $isFreeroll )
+			$eventObj->savePrizeConfig($request);
+		else
+			$eventObj->deletePrizeConfig();
+		
+		$rankingObj = $eventObj->getRanking();
+		
+		if( $isNew || $isClone )		
+			$rankingObj->incraseEvents($con);
+		
+		$eventObj->importPlayers($con);
 	
-	$rankingObj = $eventObj->getRanking();
+		if( $confirmPresence )
+			$eventObj->addPlayer($this->peopleId, true, true, $con);
 	
-	if( $isNew || $isClone )		
-		$rankingObj->incraseEvents();
-	
-	$eventObj->importPlayers();
-
-	if( $confirmPresence )
-		$eventObj->addPlayer( $this->peopleId, true );
-
-	if( $sendEmail )
-		$eventObj->notify();
-	else
-		$eventObj->save();
+		if( $sendEmail )
+			$eventObj->notify($con);
+		else
+			$eventObj->save($con);
+			
+		$con->commit();
+	}catch(Exception $e){
+		
+		Util::forceError($e->getMessage());
+		$con->rollback();
+	}
 	
     echo Util::parseInfo($eventObj->getInfo());
     exit;
@@ -150,7 +170,8 @@ class eventActions extends sfActions
 	if( !$eventObj->isEditable() )
 		Util::forceError('!'.__('event.lockedEvent'), true);
 	
-	$eventObj->delete();
+	$eventObj->notifyReminder(7);
+//	$eventObj->delete();
 	exit;
   }
   
@@ -249,7 +270,7 @@ class eventActions extends sfActions
 	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/include/result'.($readOnly?'Ro':''), array('eventObj'=>$eventObj)));
+	return $this->renderText(get_partial('event/include/result'.($readOnly?'Ro':''), array('eventObj'=>$eventObj, 'showPrize'=>true)));
   }
   
   public function executeGetResultWindow($request){
@@ -343,7 +364,17 @@ class eventActions extends sfActions
   	if( $eventName ) $criteria->addAnd( EventPeer::EVENT_NAME, '%'.str_replace(' ', '%', $eventName).'%', Criteria::ILIKE );
   	if( $eventDateStart ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDateStart), Criteria::GREATER_EQUAL );
   	if( $eventDateEnd ) $criteria->addAnd( EventPeer::EVENT_DATE, Util::formatDate($eventDateEnd), Criteria::LESS_EQUAL );
-  	if( $rankingId ) $criteria->addAnd( EventPeer::RANKING_ID, $rankingId );
+  	if( $rankingId ){
+  		
+  		if( $rankingId!='all' )
+  			$criteria->addAnd( EventPeer::RANKING_ID, $rankingId );
+  	}else{
+  		
+		$criterion = $criteria->getNewCriterion( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+		$criterion->addOr( $criteria->getNewCriterion( RankingPeer::FINISH_DATE, null ) );
+		$criteria->add( $criterion );	
+  	}
+  	
   	if( $eventPlace ){
   		
   		$criteria->addAnd( RankingPlacePeer::PLACE_NAME, '%'.$eventPlace.'%', Criteria::ILIKE );	
@@ -393,8 +424,10 @@ class eventActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text', 'I18n');
 	
 	$eventCommentObj->notify();
+	
+	$readOnly = (!$this->isAuthenticated || !$eventCommentObj->getEvent()->isMyEvent());
 
-	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false)));
+	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false, 'readOnly'=>$readOnly)));
   }
   
   public function executeDeleteComment($request){
@@ -423,8 +456,10 @@ class eventActions extends sfActions
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	
+	$readOnly = (!$this->isAuthenticated || !$eventObj->isMyEvent());
+	
 	foreach($eventCommentObjList as $eventCommentObj)
-		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false)));
+		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false, 'readOnly'=>$readOnly)));
 		
 	exit;
   }
@@ -471,9 +506,11 @@ class eventActions extends sfActions
 	
 	$eventPhotoCommentObj->notify();
 	
+	$readOnly = (!$this->isAuthenticated || !$eventPhotoCommentObj->getEventPhoto()->getEvent()->isMyEvent());
+	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
-	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj, 'isPhoto'=>true)));
+	return $this->renderText(get_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj, 'isPhoto'=>true, 'readOnly'=>$readOnly)));
 	exit;
   }
   
@@ -495,16 +532,23 @@ class eventActions extends sfActions
   public function executeGetPhotoCommentList($request){
 
 	$eventPhotoId = $request->getParameter('eventPhotoId');
-
+	
 	$eventPhotoObj = EventPhotoPeer::retrieveByPK($eventPhotoId);
+	$rankingObj    = $eventPhotoObj->getEvent()->getRanking();
+	
+	if( !$this->isAuthenticated && $rankingObj->getIsPrivate() )
+		throw new Exception('Os comentários deste evento não disponíveis para visualização');
+		
 	$eventPhotoCommentObjList = $eventPhotoObj->getCommentList();
 	$eventPhotoCommentObjList = array_reverse($eventPhotoCommentObjList);
 	
   	sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 	
+	$readOnly = (!$this->isAuthenticated || !$eventPhotoObj->getEvent()->isMyEvent());
+	
 	foreach($eventPhotoCommentObjList as $eventPhotoCommentObj)
-		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj, 'isPhoto'=>true)));
+		$this->renderText(include_partial('event/include/comment', array('eventCommentObj'=>$eventPhotoCommentObj, 'isPhoto'=>true, 'readOnly'=>$readOnly)));
 		
 	exit;
   }
@@ -644,19 +688,106 @@ class eventActions extends sfActions
   public function executeFacebookShareUrl($request){
 
   	$eventId  = $request->getParameter('eventId');
-  	$peopleId = $this->getUser()->getAttribute('peopleId');
+  	$eventObj = EventPeer::retrieveByPK($eventId);
   	
-  	$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
-  	$shareId        = base64_encode($eventPlayerObj->getShareId());
-  	
-  	$url = 'http://'.$request->getHost().'/index.php/event/facebookResult/shareId/'.$shareId;
+  	$url = $eventObj->getPermalink(true);
   	$url = 'http://www.facebook.com/sharer/sharer.php?u='.urlencode($url);
 
   	header('location: '.$url);
   	exit;
   }
+
+  public function executeFacebookResultShareUrl($request){
+
+  	$eventId  = $request->getParameter('eventId');
+  	$peopleId = $this->getUser()->getAttribute('peopleId');
+  	
+  	$eventPlayerObj = EventPlayerPeer::retrieveByPK($eventId, $peopleId);
+  	$shareId        = base64_encode($eventPlayerObj->getShareId());
+  	
+  	$url = 'http://'.$request->getHost().'/event/resultShare/'.$shareId;
+  	$url = 'http://www.facebook.com/sharer/sharer.php?u='.urlencode($url);
+
+  	header('location: '.$url);
+  	exit;
+  }
+
+  public function executePermalink($request){
+
+  	$rankingTag = $request->getParameter('rankingTag');
+  	$eventDate  = $request->getParameter('eventDate');
+  	$eventName  = $request->getParameter('eventName');
+  	$permalink  = sprintf('%s/%s/%s', $rankingTag, $eventDate, $eventName);
+
+  	$this->eventObj = EventPeer::retrieveByPermalink($permalink);
+  	
+  	if( !is_object($this->eventObj) )
+  		return $this->redirect('event/index');
+  	
+  	$eventId = $this->eventObj->getId();
+  	
+  	$request->setParameter('eventId', $eventId);
+
+  	if( $this->isAuthenticated && $this->eventObj->isMyEvent() )
+		$this->forward('event', 'edit');
+	else
+		$this->forward('event', 'share');
+  }
+
+  public function executeShare($request){
+
+  	$shareId = $request->getParameter('shareId');
+  	$eventId = Util::decodeId($shareId);
+  	$eventId = $request->getParameter('id', $eventId);
+  	$eventId = $request->getParameter('eventId', $eventId);
+
+	$this->eventObj = EventPeer::retrieveByPK($eventId);
+	
+	if( !is_object($this->eventObj) )
+		return $this->redirect('home/index');
+
+	$rankingObj = $this->eventObj->getRanking();
+	
+	if( !$this->eventObj->isMyEvent() && $rankingObj->getIsPrivate() )
+		return $this->redirect('home/index');
+	
+	$uri = $request->getUri();
+	$uri = str_replace('facebookResult', 'facebookResultImage', $uri);
+	
+	$host = $request->getHost();
+	
+	$rankingPlaceObj = $this->eventObj->getRankingPlace();
+	
+	$eventName     = $this->eventObj->getEventName();
+	$eventPlace    = $rankingPlaceObj->getPlaceName();
+	$rankingName   = $this->eventObj->getRanking()->getRankingName();
+	$eventDateTime = $this->eventObj->getEventDateTime('d/m/Y H:i');
+	$buyinInfo     = $this->eventObj->getBuyinInfo();
+	$allowRebuy    = $this->eventObj->getAllowRebuy();
+	$allowAddon    = $this->eventObj->getAllowAddon();
+	
+	$cityName = $rankingPlaceObj->updatePlaceInfo();
+	$cityName = $rankingPlaceObj->getCityName();
+	$quarter  = $rankingPlaceObj->getQuarter();
+	$state    = $rankingPlaceObj->getState()->getInitial();
+	$cityName = ($cityName?", $cityName":'');
+	$state    = ($state?", $state":'');
+
+	$description  = "Evento valendo pelo ranking $rankingName";
+	$description .= "\nData/hora: $eventDateTime";
+	$description .= "\n{$quarter}{$cityName}{$state}";
+	$description .= "\nBuy-in: $buyinInfo";
+	$description .= ($allowRebuy || $allowAddon)?"\n".(($allowRebuy && $allowAddon)?'(Rebuy/Add-on)':($allowRebuy?'(Rebuy)':'(Add-on)')):"";
+
+	$this->facebookMetaList = array('title'=>$eventName.' @'.$eventPlace,
+									'description'=>$description,
+									'url'=>$this->eventObj->getPermalink(true));
+	
+	if( $this->isAuthenticated && $this->eventObj->isMyEvent() )
+		$this->setTemplate('edit');
+  }
   
-  public function executeFacebookResult($request){
+  public function executeFacebookResultShare($request){
 
   	$shareId = $request->getParameter('shareId');
   	$shareId = base64_decode($shareId);
@@ -664,16 +795,18 @@ class eventActions extends sfActions
 	$eventPlayerObj = EventPlayerPeer::retrieveByShareId($shareId);
 	$peopleId = $eventPlayerObj->getPeopleId();
 	$eventObj = $eventPlayerObj->getEvent();
+  	
+  	$shareId = base64_encode($shareId);
 	
-	$uri = $request->getUri();
-	$uri = eregi_replace('facebookResult', 'facebookResultImage', $uri);
-	
-	$this->metaTitle       = 'Resultados iRank';
-	$this->metaDescription = 'Fiquei em '.$eventPlayerObj->getEventPosition().'º lugar no evento '.$eventObj->getEventName().' realizado em '.$eventObj->getEventDate('d/m/Y').' valendo pelo ranking '.$eventObj->getRanking()->getRankingName();
-	$this->metaImage       = $uri.'/thumb/1';
-	$this->shareLink       = 'event/facebookResultImage/shareId/'.base64_encode($shareId);
-	
-	sfConfig::set('sf_web_debug', false);
+	$host           = $request->getHost();
+	$url            = 'http://'.$host.'/event/resultShare/'.$shareId;
+	$this->imageUrl = 'http://'.$host.'/event/facebookResultImage/shareId/'.$shareId;
+
+	$this->facebookMetaList = array('url'=>$url,
+									'title'=>'Resultados iRank',
+									'description'=>'Fiquei em '.$eventPlayerObj->getEventPosition().'º lugar no evento '.$eventObj->getEventName().' realizado em '.$eventObj->getEventDate('d/m/Y').' valendo pelo ranking '.$eventObj->getRanking()->getRankingName(),
+									'image'=>$this->imageUrl,
+									);
 
 	$this->setLayout('facebookShare');
 	$this->setTemplate('none');

@@ -8,7 +8,7 @@
 			<?php if( $rankingObj->getRankingTag() ): ?>
 			<div class="row" id="rankingRankingTagRow" style="display: none">
 				<div class="label" id="rankingRankingTagLabel"><?php echo __('ranking.rankingTag') ?></div>
-				<div class="textFlex" id="rankingRankingTagText"><?php echo $rankingObj->getRankingTag() ?>@irank.com.br</div>
+				<div class="text flex" id="rankingRankingTagText"><?php echo $rankingObj->getRankingTag() ?>@irank.com.br</div>
 			</div>
 			<?php endif; ?>
 			<div class="row">

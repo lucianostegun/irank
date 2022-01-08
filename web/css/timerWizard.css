@@ -1,0 +1,23 @@
+#timerWizard {
+
+	position: relative;
+	margin: 20px;
+}
+
+#timerWizard .gridTable#timerWizardLevelTable {
+
+	position: relative;
+	left: -20px;
+	width: auto;
+}
+
+#timerWizard .gridTable#timerWizardLevelTable tbody tr td {
+
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+span.minuteLabel {
+
+	margin-left: 15px
+}

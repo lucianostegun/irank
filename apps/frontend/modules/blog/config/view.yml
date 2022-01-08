@@ -1,0 +1,12 @@
+all:
+
+  metas:
+    title:           iRank Blog - Poker Ranking
+    robots:          index, follow
+    description:     Dicas, notícias e novidades sobre o mundo do poker. Saiba tudo o que você precisa para ter sucesso nesse esporte.  
+    keywords:        blog, poker, artigos, novidades, notícias, dicas, home game
+    language:        pt
+    viewport:        width=device-width; initial-scale=0.7; maximum-scale=1; user-scalable=yes
+  
+  stylesheets:    [blog]
+  javascripts:    []

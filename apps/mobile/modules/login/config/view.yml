@@ -1,3 +1,0 @@
-all:
-  stylesheets:    [mobile/login]
-  javascripts:    [mobile/login]

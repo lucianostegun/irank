@@ -8,12 +8,13 @@
 		'success'=>'handleSuccessQuickLogin(request.responseText)',
 		'failure'=>'handleFailureQuickLogin(request.responseText)',
 		'encoding'=>'UTF8',
-		), array('id'=>'loginForm'));
+		), array('id'=>'quickLoginForm'));
 ?>
 <div id="login">
 	<h1>Login</h1>
 	<div style="margin-top: 17px"></div>
 	<div id="loginErrorMessage"><b>Acesso negado!</b><br/>Usuário/Senha inválidos</div>
+	<div id="loginIndicator">Processando, aguarde...</div>
 	<div class="row">
 		<div class="field"><?php echo input_tag('username', null, array('id'=>'loginUsername', 'placeholder'=>'Usuário/E-mail')) ?></div>
 	</div>

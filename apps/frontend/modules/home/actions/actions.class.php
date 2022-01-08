@@ -4,7 +4,7 @@ class homeActions extends sfActions
 {
 
   public function preExecute(){
-
+  	
 	$hasCredentials        = MyTools::hasCredential('iRankSite');
 	$this->isAuthenticated = ($this->getUser()->isAuthenticated() && $hasCredentials);
   }
@@ -39,6 +39,23 @@ class homeActions extends sfActions
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
 	return $this->renderText(get_partial('home/resume/events').get_partial('home/resume/quickResume'));
+  }
+
+  public function executeGetMenu($request){
+
+    sfConfig::set('sf_web_debug', false);
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
+
+	$userSiteObj = UserSite::getCurrentUser();
+	
+	$options                    = array();
+    $options['username']        = $userSiteObj->getUsername();
+    $options['firstName']       = $userSiteObj->getPeople()->getFirstName();
+    $options['isAuthenticated'] = true;
+    $options['innerMenu']       = false;
+    $options['innerObj']        = false;
+	        
+	return $this->renderText(get_partial('home/include/leftMenu').get_partial('home/include/quickResume', $options));
   }
 
   public function executeGetResumeChart($request){
@@ -136,23 +153,20 @@ class homeActions extends sfActions
   public function executeJavascript($request){
 	
 	Util::getHelper('i18n');
-	
+
     header('Content-type: text/x-javascript');
 		
 	$nl = chr(10);
 	
 	$scriptName = $request->getScriptName();
 	$hostname   = $request->getHost();
-	$isDebug    = $request->getParameter('debug');
-	
-	if( $isDebug )
-		$scriptName = '/frontend_dev.php';
-	
-	$isDebug    = ($isDebug?'true':'false');
-	$peopleId   = $this->getUser()->getAttribute('peopleId');
+	$isDebug    = $scriptName=='/debug.php';
 	
 	if( sfConfig::get('sf_no_script_name') && !$isDebug )
 		$scriptName = '';
+	
+	$isDebug    = ($isDebug?'true':'false');
+	$peopleId   = $this->getUser()->getAttribute('peopleId');
 	
 	echo 'var _CurrentPeopleId = "'.$peopleId.'";'.$nl.$nl;
 	
@@ -189,11 +203,27 @@ class homeActions extends sfActions
   		$pollAnswerObj->setUserResponse(($userResponse+1));
   		$pollAnswerObj->save();
   		
+  		$pollObj = $pollAnswerObj->getPoll();
+  		
   		$pollIdList   = MyTools::getAttribute('answeredPollIdList');
   		$pollIdList   = explode(',', $pollIdList);
   		$pollIdList[] = $pollId;
   		
   		MyTools::setAttribute('answeredPollIdList', implode(',', $pollIdList) );
+  		
+  		$totalAnswers = $pollObj->getTotalAnswers();
+  		foreach($pollObj->getPollAnswerList() as $pollAnswerObj){
+  			
+  			$percentAnswer = (100*$pollAnswerObj->getUserResponse())/$totalAnswers;
+  			$percentAnswer = Util::formatFloat($percentAnswer, true);
+  			
+  			$position = ($percentAnswer*145)/100;
+  			$position = $position-145;
+  			
+ 			echo '<div class="optionReport">'.$pollAnswerObj->getAnswer().' '.$percentAnswer.'%';
+ 			echo '	<div class="optionReportBar" style="background-position: '.$position.'px"></div>';
+ 			echo '</div>';
+	  	}
   	}
   	
   	exit;
@@ -201,9 +231,10 @@ class homeActions extends sfActions
   
   public function executeImages($request){
 	
-	$email       = $request->getParameter('email');
-	$code        = $request->getParameter('elid');
-	$emailLogId  = Util::decodeId($code);
+	$fileName   = $request->getParameter('fileName');
+	$emailLogId = $request->getParameter('emailLogId');
+	$emailLogId = Util::decodeId($emailLogId);
+	
 	$emailLogObj = EmailLogPeer::retrieveByPK($emailLogId);
 	
 	if(is_object($emailLogObj)){
@@ -215,7 +246,7 @@ class homeActions extends sfActions
 	header('Content-Type: image/png');
 	header('Expires: 0');
 	header('Pragma: no-cache');
-	print_r(file_get_contents(Util::getFilePath('images/email/'.$email)));
+	print_r(file_get_contents(Util::getFilePath('images/email/'.$fileName)));
 	
 	exit;
   }

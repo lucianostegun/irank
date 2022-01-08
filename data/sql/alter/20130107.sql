@@ -1,0 +1,2 @@
+CREATE OR REPLACE VIEW recent_users AS 
+SELECT * FROM user_site ORDER BY id DESC LIMIT 20

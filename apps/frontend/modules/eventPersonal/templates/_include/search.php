@@ -5,14 +5,33 @@
 		
 		$eventPersonalId = $eventPersonalObj->getId();
 		$link = 'goModule(\'eventPersonal\', \'edit\', \'eventPersonalId\', '.$eventPersonalId.')';
+		
+		$players       = $eventPersonalObj->getPlayers();
+		$eventPosition = $eventPersonalObj->getEventPosition();
+
+		$players       = ($players?sprintf('%02d', $players):'-');
+		$eventPosition = ($eventPosition?sprintf('#%02d', $eventPosition):'-');
 ?>
-<tr onmouseover="this.addClassName('hover')" onmouseout="this.removeClassName('hover')">
-	<td onclick="<?php echo $link ?>" align="left"><?php echo $eventPersonalObj->getEventName() ?></td>
-	<td onclick="<?php echo $link ?>" align="center"><?php echo $eventPersonalObj->getEventDate('d/m/Y') ?></td>
-	<td onclick="<?php echo $link ?>" align="left"><?php echo $eventPersonalObj->getEventPlace() ?></td>
-	<td onclick="<?php echo $link ?>" align="center"><?php echo sprintf('%02d', $eventPersonalObj->getPlayers()) ?></td>
-	<td onclick="<?php echo $link ?>" align="center">#<?php echo sprintf('%02d', $eventPersonalObj->getEventPosition()) ?></td>
-	<td onclick="<?php echo $link ?>" align="center"><?php echo Util::formatFloat($eventPersonalObj->getBRA(), true) ?></td>
-	<td onclick="<?php echo $link ?>" align="center"><?php echo Util::formatFloat($eventPersonalObj->getPrize(), true) ?></td>
+<tr onclick="<?php echo $link ?>" class="hoverable">
+	<td class="textL"><?php echo $eventPersonalObj->getEventName() ?></td>
+	<td class="textC"><?php echo $eventPersonalObj->getEventDate('d/m/Y') ?></td>
+	<td class="textL"><?php echo $eventPersonalObj->getEventPlace() ?></td>
+	<td class="textC"><?php echo $players ?></td>
+	<td class="textC"><?php echo $eventPosition ?></td>
+	<td class="textR"><?php echo Util::formatFloat($eventPersonalObj->getBRA(), true) ?></td>
+	<td class="textR"><?php echo Util::formatFloat($eventPersonalObj->getPrize(), true) ?></td>
 </tr>
-<?php endforeach; ?>
+<?php
+	endforeach;
+
+	if( count($eventPersonalObjList)==0 ):
+?>
+<tr class="boxcontent">
+	<td colspan="7">
+		<div class="p10">
+		Você ainda não cadastrou nenhum evento pessoal em seu histórico.<br/>
+		<b><?php echo link_to('Clique aqui', 'eventPersonal/new') ?></b> para criar um novo evento.
+		</div>
+	</td>
+</tr>
+<?php endif; ?>

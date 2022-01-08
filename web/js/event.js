@@ -28,8 +28,12 @@ function handleSuccessEvent(content){
 
 	updatePlayerContent(eventObj.eventId);
 	
-	if( pastDate )
+	if( pastDate ){
+		
 		updateResultContent(eventObj.eventId);
+		hideButton('facebookShare');
+	}else
+		showButton('facebookShare');
 	
 	setRecordSaved(true);
 	setButtonBarStatus('eventMain', 'success');
@@ -88,6 +92,9 @@ function handleSuccessEvent(content){
 	if( pastDate )
 		tabBarMainObj.showTab('result');
 	
+	showDiv('rankingPermalinkRowDiv');
+	$('rankingPermalinkDiv').innerHTML = eventObj.permalink;
+	
 	adjustContentTab();
 	
 	enableButton('mainSubmit');
@@ -98,6 +105,7 @@ function handleFailureEvent(content){
 	
 	enableButton('mainSubmit');
 	setButtonBarStatus('eventMain', 'error');
+	setCommonBarMessage('Não foi possível salvar o evento! Verifique os campos em destaque e tente novamente', 'error');
 	handleFormFieldError(content, 'eventForm', 'event', false, 'event', handleErrorEvent)
 }
 
@@ -109,13 +117,14 @@ function handleSuccessEventResult(content){
 	clearFormFieldErrors('eventResultForm');
 	showFormStatusSuccess();
 	
-	windowEventResultHide();
+	closeEventResult();
 	
 	updateResultContent(eventId);
 
 	enableButton('eventResultSubmit');
 	enableButton('calculatePrize');
-	showButton('facebookResultResult');
+	showButton('facebookShareResult');
+	hideButton('facebookShare');
 	hideIndicator('eventResult');
 }
 
@@ -392,7 +401,7 @@ function lockRanking(){
 	var rankingName = getSelectText('eventRankingId');
 
 	$('rankinkIdFieldDiv').innerHTML = linkToFunction(rankingName, 'ranking', 'edit', 'rankingId', rankingId);
-	$('rankinkIdFieldDiv').className = 'textFlex';
+	$('rankinkIdFieldDiv').className = 'text flex';
 	$('rankinkIdFieldDiv').id        = 'rankinkIdFieldDivOld';
 	
 	var rankingIdField   = document.createElement('input');
@@ -495,15 +504,53 @@ function loadRankingPlaceList(rankingId, rankingPlaceId){
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});	
 }
 
-function checkRankingPlace(rankingPlaceId){
+function checkRankingPlace(rankingPlaceId, attemp){
 	
 	var rankingId = $('eventRankingId').value;
+	
+	if( !rankingPlaceId ){
+		
+		hideDiv('eventRankingPlaceIdEditDiv')
+		clearCommonBarMessage();
+		return;
+	}
 	
 	if( rankingPlaceId=='new' ){
 		
 		_RankingPlaceSuccessFunc = function(rankingPlaceId){ loadRankingPlaceList(rankingId, rankingPlaceId); }
-		addRankingPlace(rankingId);
+		return addRankingPlace(rankingId);
 	}
+	
+	
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		
+		showDiv('eventRankingPlaceIdEditDiv');
+		
+		_RankingPlaceSuccessFunc = function(rankingPlaceId){ checkRankingPlace(rankingPlaceId, 0); }
+		
+		if( content=='complete' )
+			return clearCommonBarMessage();
+		
+		if( content=='incomplete' )
+			setCommonBarMessage('As informações do local não estão completas para divulgação do evento. Clique em <b>Editar</b> para atualizar as informações.');
+	};
+	
+	var failureFunc = function(t){
+		
+		if( attemp < 7 )
+			return checkRankingPlace(rankingPlaceId, ++attemp);
+			
+		$('eventRankingPlaceId').value = '';
+		return alert('Não foi possível validar o local do evento selecionado!\nPor favor, selecione o local novamente.');
+	};
+	
+	if( attemp > 7 )
+		failureFunc();
+		
+	var urlAjax = _webRoot+'/ranking/checkRankingPlace/rankingPlaceId/'+rankingPlaceId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
 }
 
 function cloneEvent(){
@@ -1006,6 +1053,9 @@ function isFreeroll(){
 
 function openEventResult(){
 	
+	window.scrollTo(0,0)
+	disableScroll();
+	
 	enableButton('eventResultSubmit');
 
 	if( isFreeroll() )
@@ -1014,6 +1064,12 @@ function openEventResult(){
 		enableButton('calculatePrize');
 	
 	windowEventResultShow();
+}
+
+function closeEventResult(){
+	
+	windowEventResultHide();
+	enableScroll();
 }
 
 function toggleEventResultView(showResult){
@@ -1060,9 +1116,17 @@ function lockEvent(eventId){
 	new Ajax.Updater('mainMainObjDiv', urlAjax, {asynchronous:true, evalScripts:false});
 }
 
-function shareFacebook(eventId){
-
+function shareEventFacebook(){
+	
+	var eventId = $('eventId').value;
+	
 	var urlShare = _webRoot+'/event/facebookShareUrl/eventId/'+eventId;
+	window.open(urlShare,'irankFacebookShare', 'toolbar=0, status=0, width=650, height=450');
+}
+
+function shareResultFacebook(eventId){
+
+	var urlShare = _webRoot+'/event/facebookResultShareUrl/eventId/'+eventId;
 	window.open(urlShare,'irankFacebookShare', 'toolbar=0, status=0, width=650, height=450');
 }
 
@@ -1126,4 +1190,27 @@ function configurePrize(){
 function getSelectedResultPlayers(){
 	
 	return document.getElementsByClassName('selectedPlayer').length;
+}
+
+function checkRankingTag(){
+	
+	var rankingId = $('eventRankingId').value;
+	
+	if( !rankingId )
+		return clearCommonBarMessage();
+	
+	var successFunc = function(t){
+
+		clearCommonBarMessage();
+	}
+	
+	var failureFunc = function(t){
+
+		var rankingName = getSelectText('eventRankingId');
+		var link        = '<b><a href="javascript:void(0)" onclick="goToPage(\'ranking\', \'edit\', \'id\', '+rankingId+', true)">Clique aqui</a></b>';
+		setCommonBarMessage('O ranking <b>'+rankingName+'</b> ainda não possui uma tag de e-mail. '+link+' para editar o ranking antes de salvar o evento')
+	}
+	
+	var urlAjax = _webRoot+'/ranking/checkRankingTag/rankingId/'+rankingId;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }

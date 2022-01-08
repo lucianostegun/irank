@@ -48,16 +48,16 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
-	protected $collVirtualTableI18nList;
-
-	
-	protected $lastVirtualTableI18nCriteria = null;
-
-	
 	protected $collPeopleList;
 
 	
 	protected $lastPeopleCriteria = null;
+
+	
+	protected $collVirtualTableI18nList;
+
+	
+	protected $lastVirtualTableI18nCriteria = null;
 
 	
 	protected $collRankingListRelatedByRankingTypeId;
@@ -118,6 +118,12 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 	
 	protected $lastCashTablePlayerBuyinCriteria = null;
+
+	
+	protected $collBlogList;
+
+	
+	protected $lastBlogCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -428,21 +434,40 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(VirtualTablePeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = VirtualTablePeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -465,16 +490,16 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
-			if ($this->collVirtualTableI18nList !== null) {
-				foreach($this->collVirtualTableI18nList as $referrerFK) {
+			if ($this->collPeopleList !== null) {
+				foreach($this->collPeopleList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
 				}
 			}
 
-			if ($this->collPeopleList !== null) {
-				foreach($this->collPeopleList as $referrerFK) {
+			if ($this->collVirtualTableI18nList !== null) {
+				foreach($this->collVirtualTableI18nList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -561,6 +586,14 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collBlogList !== null) {
+				foreach($this->collBlogList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -602,16 +635,16 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collVirtualTableI18nList !== null) {
-					foreach($this->collVirtualTableI18nList as $referrerFK) {
+				if ($this->collPeopleList !== null) {
+					foreach($this->collPeopleList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
 					}
 				}
 
-				if ($this->collPeopleList !== null) {
-					foreach($this->collPeopleList as $referrerFK) {
+				if ($this->collVirtualTableI18nList !== null) {
+					foreach($this->collVirtualTableI18nList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -692,6 +725,14 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 
 				if ($this->collCashTablePlayerBuyinList !== null) {
 					foreach($this->collCashTablePlayerBuyinList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collBlogList !== null) {
+					foreach($this->collBlogList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -897,12 +938,12 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach($this->getVirtualTableI18nList() as $relObj) {
-				$copyObj->addVirtualTableI18n($relObj->copy($deepCopy));
-			}
-
 			foreach($this->getPeopleList() as $relObj) {
 				$copyObj->addPeople($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getVirtualTableI18nList() as $relObj) {
+				$copyObj->addVirtualTableI18n($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getRankingListRelatedByRankingTypeId() as $relObj) {
@@ -945,6 +986,10 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 				$copyObj->addCashTablePlayerBuyin($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getBlogList() as $relObj) {
+				$copyObj->addBlog($relObj->copy($deepCopy));
+			}
+
 		} 
 
 		$copyObj->setNew(true);
@@ -968,76 +1013,6 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 			self::$peer = new VirtualTablePeer();
 		}
 		return self::$peer;
-	}
-
-	
-	public function initVirtualTableI18nList()
-	{
-		if ($this->collVirtualTableI18nList === null) {
-			$this->collVirtualTableI18nList = array();
-		}
-	}
-
-	
-	public function getVirtualTableI18nList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseVirtualTableI18nPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collVirtualTableI18nList === null) {
-			if ($this->isNew()) {
-			   $this->collVirtualTableI18nList = array();
-			} else {
-
-				$criteria->add(VirtualTableI18nPeer::VIRTUAL_TABLE_ID, $this->getId());
-
-				VirtualTableI18nPeer::addSelectColumns($criteria);
-				$this->collVirtualTableI18nList = VirtualTableI18nPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(VirtualTableI18nPeer::VIRTUAL_TABLE_ID, $this->getId());
-
-				VirtualTableI18nPeer::addSelectColumns($criteria);
-				if (!isset($this->lastVirtualTableI18nCriteria) || !$this->lastVirtualTableI18nCriteria->equals($criteria)) {
-					$this->collVirtualTableI18nList = VirtualTableI18nPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastVirtualTableI18nCriteria = $criteria;
-		return $this->collVirtualTableI18nList;
-	}
-
-	
-	public function countVirtualTableI18nList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseVirtualTableI18nPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(VirtualTableI18nPeer::VIRTUAL_TABLE_ID, $this->getId());
-
-		return VirtualTableI18nPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addVirtualTableI18n(VirtualTableI18n $l)
-	{
-		$this->collVirtualTableI18nList[] = $l;
-		$l->setVirtualTable($this);
 	}
 
 	
@@ -1107,6 +1082,76 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 	public function addPeople(People $l)
 	{
 		$this->collPeopleList[] = $l;
+		$l->setVirtualTable($this);
+	}
+
+	
+	public function initVirtualTableI18nList()
+	{
+		if ($this->collVirtualTableI18nList === null) {
+			$this->collVirtualTableI18nList = array();
+		}
+	}
+
+	
+	public function getVirtualTableI18nList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseVirtualTableI18nPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collVirtualTableI18nList === null) {
+			if ($this->isNew()) {
+			   $this->collVirtualTableI18nList = array();
+			} else {
+
+				$criteria->add(VirtualTableI18nPeer::VIRTUAL_TABLE_ID, $this->getId());
+
+				VirtualTableI18nPeer::addSelectColumns($criteria);
+				$this->collVirtualTableI18nList = VirtualTableI18nPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(VirtualTableI18nPeer::VIRTUAL_TABLE_ID, $this->getId());
+
+				VirtualTableI18nPeer::addSelectColumns($criteria);
+				if (!isset($this->lastVirtualTableI18nCriteria) || !$this->lastVirtualTableI18nCriteria->equals($criteria)) {
+					$this->collVirtualTableI18nList = VirtualTableI18nPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastVirtualTableI18nCriteria = $criteria;
+		return $this->collVirtualTableI18nList;
+	}
+
+	
+	public function countVirtualTableI18nList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseVirtualTableI18nPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(VirtualTableI18nPeer::VIRTUAL_TABLE_ID, $this->getId());
+
+		return VirtualTableI18nPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addVirtualTableI18n(VirtualTableI18n $l)
+	{
+		$this->collVirtualTableI18nList[] = $l;
 		$l->setVirtualTable($this);
 	}
 
@@ -2438,6 +2483,111 @@ abstract class BaseVirtualTable extends BaseObject  implements Persistent {
 		$this->lastCashTablePlayerBuyinCriteria = $criteria;
 
 		return $this->collCashTablePlayerBuyinList;
+	}
+
+	
+	public function initBlogList()
+	{
+		if ($this->collBlogList === null) {
+			$this->collBlogList = array();
+		}
+	}
+
+	
+	public function getBlogList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseBlogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collBlogList === null) {
+			if ($this->isNew()) {
+			   $this->collBlogList = array();
+			} else {
+
+				$criteria->add(BlogPeer::BLOG_CATEGORY_ID, $this->getId());
+
+				BlogPeer::addSelectColumns($criteria);
+				$this->collBlogList = BlogPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(BlogPeer::BLOG_CATEGORY_ID, $this->getId());
+
+				BlogPeer::addSelectColumns($criteria);
+				if (!isset($this->lastBlogCriteria) || !$this->lastBlogCriteria->equals($criteria)) {
+					$this->collBlogList = BlogPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastBlogCriteria = $criteria;
+		return $this->collBlogList;
+	}
+
+	
+	public function countBlogList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseBlogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(BlogPeer::BLOG_CATEGORY_ID, $this->getId());
+
+		return BlogPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addBlog(Blog $l)
+	{
+		$this->collBlogList[] = $l;
+		$l->setVirtualTable($this);
+	}
+
+
+	
+	public function getBlogListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseBlogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collBlogList === null) {
+			if ($this->isNew()) {
+				$this->collBlogList = array();
+			} else {
+
+				$criteria->add(BlogPeer::BLOG_CATEGORY_ID, $this->getId());
+
+				$this->collBlogList = BlogPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(BlogPeer::BLOG_CATEGORY_ID, $this->getId());
+
+			if (!isset($this->lastBlogCriteria) || !$this->lastBlogCriteria->equals($criteria)) {
+				$this->collBlogList = BlogPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastBlogCriteria = $criteria;
+
+		return $this->collBlogList;
 	}
 
   public function getCulture()

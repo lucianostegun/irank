@@ -1,9 +1,40 @@
 all:
+
+  metas:
+    title:           iRank Store - Poker Ranking
+    robots:          index, follow
+    description:     Confira os produtos exclusivos que só a iRank Store traz a você. São camisetas, acessórios e artigos voltados ao mundo do poker! 
+    keywords:        irank, store, camisetas, artigos, acessórios, poker, botão delaer
+    language:        pt
+    viewport:        width=device-width; initial-scale=0.7; maximum-scale=1; user-scalable=yes
   
-  stylesheets:    [table, store]
+  stylesheets:    [quickResume, table, store]
   javascripts:    [store]
+
+indexSuccess:
   
-paymentSuccess:
+  stylesheets:    [-store, highlight, store]
+  javascripts:    [/sf/prototype/js/scriptaculous, highlight]
   
-  stylesheets:    [form]
-  javascripts:    [form]
+cartSuccess:
+  
+  stylesheets:    []
+  javascripts:    [mask]
+  
+checkoutSuccess:
+  
+  stylesheets:    [-store, form, store]
+  javascripts:    [form, mask]
+  
+orderDetailsSuccess:
+  
+  stylesheets:    [si]
+  javascripts:    [si]
+  
+billetSuccess:
+  
+  stylesheets:    [-*, store]
+  javascripts:    [-*]
+  
+  has_layout:     on
+  layout:         clean

@@ -5,7 +5,7 @@
 		
 			<trans-unit>
 				<source>form.error.requiredField</source>
-				<target>Este campo é obrigatório e não foi preenchido</target>
+				<target>Este campo é obrigatório</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.invalidEmail</source>

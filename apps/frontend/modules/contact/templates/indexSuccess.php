@@ -1,10 +1,10 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array(__('contact.title')=>'contact/index'))); ?>
-<div class="moduleIntro">
-	<?php echo image_tag('at', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
+<?php echo image_tag('contact', array('class'=>'logo')) ?>
+<div class="moduleIntro image">
 	<?php echo __('contact.intro') ?><br/><br/>
 	Você também pode enviar uma mensagem para o endereço <a href="mailto:contato@irank.com.br">contato@irank.com.br</a>.
 </div>
-<div class="clear"></div>
+<hr class="separator"/>
 <div id="contactFormDiv" align="center">
 	<table cellspacing="0" cellpadding="0" class="formTable" style="width: 600px">
 		<tr>

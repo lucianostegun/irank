@@ -7,6 +7,10 @@ class statisticActions extends sfActions
 	
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
 	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
+
+  	$this->facebookMetaList = array();
+	$this->facebookMetaList['image'] = array('http://[host]/images/statistic/logo.png');
+	$this->facebookMetaList['url']         = 'http://www.irank.com.br/statistic';
   }
 
   public function executeIndex($request){

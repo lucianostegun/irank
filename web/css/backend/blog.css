@@ -1,0 +1,86 @@
+.widget.blogEditor .cleditorGroup #blogContent h1 {
+
+	margin: 0px 0px 0px 1px;
+	font-size: 14px;
+	color: #707070;
+	padding: 0px;
+	text-transform: uppercase;
+}
+
+#blogContent h1.imageFooter {
+
+	margin: 4px 5px 0px 5px;
+	font-size: 12px;
+	color: #707070;
+	padding: 0px;
+	text-transform: none;
+	width: 600px;
+	font-weight: normal;
+	color: #F00
+}
+
+.widget.blogEditor .cleditorGroup #blogContent h2 {
+
+	margin: 3px 0px;
+	padding: 0px;
+	font-size: 20px;
+}
+
+.widget.blogEditor .cleditorGroup #blogContent h3 {
+
+	float: left;
+	font-size: 12px;
+	color: #909090;
+	margin-top: 3px;
+	font-weight: normal;
+	font-family: Calibri, Arial
+}
+
+.widget.blogEditor .cleditorGroup #blogContent h4 {
+
+	margin: 20px 0px -8px 0px;
+	padding: 0px;
+	font-size: 14px;
+	color: #4040404
+}
+
+.widget.blogEditor .cleditorGroup #blogContent p {
+
+	font-family: Verdana, Arial, Sans Serif, "Microsoft Sans serif", "Ms Sans serif";
+	margin-bottom: 10px;
+	width: 650px
+}
+
+.widget.blogEditor .cleditorGroup #blogContent div.distinctText {
+
+	padding: 10px 20px;
+	background: #EAEAEA;
+	border: 1px solid #C0C0C0;
+	margin: 20px;
+}
+
+.widget.blogEditor .cleditorGroup #blogContent div.distinctText ul {
+
+	margin: 0px;
+	padding: 0px
+}
+
+.widget.blogEditor .cleditorGroup #blogContent li {
+
+	line-height: 25px;
+}
+
+.widget.blogEditor .cleditorGroup #blogContent div.distinctText li {
+
+	list-style-type: none
+}
+
+#blogPublishDate { width: 70px!important; }
+
+
+
+
+.widget.blogEditor .cleditorMain .cleditorToolbar .cleditorGroup #blogContent h4 {
+
+	color: #F00
+}

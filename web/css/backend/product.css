@@ -1,0 +1,68 @@
+.productImageArea {
+
+	position: 		relative;
+	float: 			left;
+	margin-right: 	10px;
+}
+
+.SI-FILES-STYLIZED .cabinet.productImage {
+
+	position: 			relative;
+	width: 				180px;
+	height: 			180px;
+	border: 			1px solid #C0C0C0;
+	text-align: 		center;
+	vertical-align: 	middle;
+	background: 		#F0F0F0;
+
+    display: 	block;
+    overflow: 	hidden;
+    cursor: 	pointer;
+}
+
+.SI-FILES-STYLIZED .cabinet.productImage:hover {
+	
+	cursor: 		pointer;
+	background: 	#FFFFFF;
+	border: 		1px solid #C91E1E;
+}
+
+.SI-FILES-STYLIZED .cabinet.productImage span {
+	
+	position: 	relative;
+	top: 		80px;
+	z-index: 	1;
+}
+
+.productImage img {
+	
+	position: 	absolute;
+	top: 		0px;
+	left: 		0px;
+	z-index: 	3;
+	width: 		180px;
+	height: 	180px;
+}
+
+.productImageArea.empty .deleteImageLink {
+	
+	display: 	none;
+}
+
+.productImageArea:hover .productImageDelete {
+	
+	display: 	block;
+}
+
+.SI-FILES-STYLIZED .cabinet input[type=file],
+.SI-FILES-STYLIZED .cabinet .fileUpload {
+
+    position: 		relative;
+    z-index: 		1000;
+    height: 		100%;
+    width: 			auto;
+    opacity: 		0;
+    -moz-opacity: 	0;
+    filter: 		progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+    cursor: 		pointer;
+}

@@ -36,6 +36,11 @@
 	color: 	#C91E1E;
 }
 
+.commonBar .path span.beta {
+	
+	color: 	#C91E1E;
+}
+
 .commonBar .path.last {
 	
 	background: 	none;
@@ -72,6 +77,11 @@
 #topSystemMessage .message.info {
 
 	background: 	#FFF7D6 url('/images/icon/info.png') 5px center no-repeat;	
+}
+
+#topSystemMessage .message.error {
+
+	background: 	#fcded8 url('/images/icon/close.png') 5px center no-repeat;	
 }
 
 #topSystemMessage .message.help {

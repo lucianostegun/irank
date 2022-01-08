@@ -20,9 +20,6 @@ abstract class BaseAccessLog extends BaseObject  implements Persistent {
 	protected $ip_address;
 
 	
-	protected $aUserSite;
-
-	
 	protected $alreadyInSave = false;
 
 	
@@ -75,10 +72,6 @@ abstract class BaseAccessLog extends BaseObject  implements Persistent {
 		if ($this->user_site_id !== $v) {
 			$this->user_site_id = $v;
 			$this->modifiedColumns[] = AccessLogPeer::USER_SITE_ID;
-		}
-
-		if ($this->aUserSite !== null && $this->aUserSite->getId() !== $v) {
-			$this->aUserSite = null;
 		}
 
 	} 
@@ -164,21 +157,40 @@ abstract class BaseAccessLog extends BaseObject  implements Persistent {
       $this->setCreatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(AccessLogPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = AccessLogPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -188,15 +200,6 @@ abstract class BaseAccessLog extends BaseObject  implements Persistent {
 	{
 		$affectedRows = 0; 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
-
-
-												
-			if ($this->aUserSite !== null) {
-				if ($this->aUserSite->isModified()) {
-					$affectedRows += $this->aUserSite->save($con);
-				}
-				$this->setUserSite($this->aUserSite);
-			}
 
 
 						if ($this->isModified()) {
@@ -243,14 +246,6 @@ abstract class BaseAccessLog extends BaseObject  implements Persistent {
 			$retval = null;
 
 			$failureMap = array();
-
-
-												
-			if ($this->aUserSite !== null) {
-				if (!$this->aUserSite->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aUserSite->getValidationFailures());
-				}
-			}
 
 
 			if (($retval = AccessLogPeer::doValidate($this, $columns)) !== true) {
@@ -398,35 +393,6 @@ abstract class BaseAccessLog extends BaseObject  implements Persistent {
 			self::$peer = new AccessLogPeer();
 		}
 		return self::$peer;
-	}
-
-	
-	public function setUserSite($v)
-	{
-
-
-		if ($v === null) {
-			$this->setUserSiteId(NULL);
-		} else {
-			$this->setUserSiteId($v->getId());
-		}
-
-
-		$this->aUserSite = $v;
-	}
-
-
-	
-	public function getUserSite($con = null)
-	{
-		if ($this->aUserSite === null && ($this->user_site_id !== null)) {
-						include_once 'lib/model/om/BaseUserSitePeer.php';
-
-			$this->aUserSite = UserSitePeer::retrieveByPK($this->user_site_id, $con);
-
-			
-		}
-		return $this->aUserSite;
 	}
 
 } 

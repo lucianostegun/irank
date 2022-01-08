@@ -92,9 +92,21 @@
 	</div>
 
 	<div class="formRow">
-		<label>Observações</label>
+		<label>Configurável pelo usuário</label>
 		<div class="formRight">
-			<?php echo textarea_tag('description', $emailTemplateObj->getDescription(), array('style'=>'height: 150px', 'id'=>'emailTemplateDescription')) ?>
+			<?php echo checkbox_tag('isOption', true, $emailTemplateObj->getIsOption(), array('id'=>'emailTemplateIsOption')) ?>
+			<label for="emailTemplateIsOption">Os usuários do site podem selecionar se desejam NÃO receber essas mensagens</label>
+			<div class="formNote error" id="emailTemplateFormErrorIsOption"></div>
+			<div class="formNote error" id="emailTemplateFormErrorIsOption"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+	<div class="formRow">
+		<label>Descrição</label>
+		<div class="formRight">
+			<?php echo input_tag('description', $emailTemplateObj->getDescription(), array('size'=>50, 'maxlength'=>50, 'id'=>'emailTemplateDescription')) ?>
+			<div class="formNote">Texto visível pelo usuário</div>
 			<div class="formNote error" id="emailTemplateFormErrorDescription"></div>
 		</div>
 		<div class="clear"></div>

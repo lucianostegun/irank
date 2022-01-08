@@ -52,7 +52,7 @@ DECLARE
   result DATE;
 BEGIN
 	
-    optionValue := (SELECT get_user_option(peopleId, ''quickResumePeriod'', ''aways''));
+    optionValue := (SELECT get_user_option(peopleId, ''quickResumePeriod'', ''always''));
 
     IF optionValue = ''always'' THEN
         result := ''2009-01-01'';

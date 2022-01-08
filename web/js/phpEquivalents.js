@@ -11,6 +11,24 @@ function ucfirst( str ) {
     return f + str.substr(1);
 }
 
+function ucwords(str) {
+    // Uppercase the first character of every word in a string  
+    // 
+    // version: 1109.2015
+    // discuss at: http://phpjs.org/functions/ucwords    // +   original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+    // +   improved by: Waldo Malqui Silva
+    // +   bugfixed by: Onno Marsman
+    // +   improved by: Robin
+    // +      input by: James (http://www.james-bell.co.uk/)    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // *     example 1: ucwords('kevin van  zonneveld');
+    // *     returns 1: 'Kevin Van  Zonneveld'
+    // *     example 2: ucwords('HELLO WORLD');
+    // *     returns 2: 'HELLO WORLD'    
+	return (str + '').replace(/^([a-z])|\s+([a-z])/g, function ($1) {
+        return $1.toUpperCase();
+    });
+}
+
 function sprintf( ) {
     // http://kevin.vanzonneveld.net
     // + original by: Ash Searle (http://hexmen.com/blog/)
@@ -1303,52 +1321,56 @@ function utf8_encode ( argString ) {
 }
 
 function base64_encode (data) {
-    // Encodes string using MIME base64 algorithm  
-    // 
-    // version: 1009.2513
-    // discuss at: http://phpjs.org/functions/base64_encode    // +   original by: Tyler Akins (http://rumkin.com)
-    // +   improved by: Bayron Guevara
-    // +   improved by: Thunder.m
-    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-    // +   bugfixed by: Pellentesque Malesuada    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-    // -    depends on: utf8_encode
-    // *     example 1: base64_encode('Kevin van Zonneveld');
-    // *     returns 1: 'S2V2aW4gdmFuIFpvbm5ldmVsZA=='
-    // mozilla has this native    // - but breaks in 2.0.0.12!
-    //if (typeof this.window['atob'] == 'function') {
-    //    return atob(data);
-    //}
-            var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-    var o1, o2, o3, h1, h2, h3, h4, bits, i = 0, ac = 0, enc="", tmp_arr = [];
- 
-    if (!data) {
-        return data;    }
- 
-    data = this.utf8_encode(data+'');
-    
-    do { // pack three octets into four hexets        o1 = data.charCodeAt(i++);
-        o2 = data.charCodeAt(i++);
-        o3 = data.charCodeAt(i++);
- 
-        bits = o1<<16 | o2<<8 | o3; 
-        h1 = bits>>18 & 0x3f;
-        h2 = bits>>12 & 0x3f;
-        h3 = bits>>6 & 0x3f;
-        h4 = bits & 0x3f; 
-        // use hexets to index into b64, and append result to encoded string
-        tmp_arr[ac++] = b64.charAt(h1) + b64.charAt(h2) + b64.charAt(h3) + b64.charAt(h4);
-    } while (i < data.length);
-        enc = tmp_arr.join('');
-    
-    switch (data.length % 3) {
-        case 1:
-            enc = enc.slice(0, -2) + '==';        break;
-        case 2:
-            enc = enc.slice(0, -1) + '=';
-        break;
-    } 
-    return enc;
-}
+	  // http://kevin.vanzonneveld.net
+	  // +   original by: Tyler Akins (http://rumkin.com)
+	  // +   improved by: Bayron Guevara
+	  // +   improved by: Thunder.m
+	  // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+	  // +   bugfixed by: Pellentesque Malesuada
+	  // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+	  // +   improved by: Rafał Kukawski (http://kukawski.pl)
+	  // *     example 1: base64_encode('Kevin van Zonneveld');
+	  // *     returns 1: 'S2V2aW4gdmFuIFpvbm5ldmVsZA=='
+	  // mozilla has this native
+	  // - but breaks in 2.0.0.12!
+	  //if (typeof this.window['btoa'] == 'function') {
+	  //    return btoa(data);
+	  //}
+	  data += '';
+	  var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+	  var o1, o2, o3, h1, h2, h3, h4, bits, i = 0,
+	    ac = 0,
+	    enc = "",
+	    tmp_arr = [];
+
+	  if (!data) {
+	    return data;
+	  }
+
+	  do { // pack three octets into four hexets
+	    o1 = data.charCodeAt(i++);
+	    o2 = data.charCodeAt(i++);
+	    o3 = data.charCodeAt(i++);
+
+	    bits = o1 << 16 | o2 << 8 | o3;
+
+	    h1 = bits >> 18 & 0x3f;
+	    h2 = bits >> 12 & 0x3f;
+	    h3 = bits >> 6 & 0x3f;
+	    h4 = bits & 0x3f;
+
+	    // use hexets to index into b64, and append result to encoded string
+	    tmp_arr[ac++] = b64.charAt(h1) + b64.charAt(h2) + b64.charAt(h3) + b64.charAt(h4);
+	  } while (i < data.length);
+
+	  enc = tmp_arr.join('');
+
+	  var r = data.length % 3;
+
+	  return (r ? enc.slice(0, r - 3) : enc) + '==='.slice(r || 3);
+
+	}
+
 
 function urlencode (str) {
     // URL-encodes string  
@@ -1540,4 +1562,69 @@ function strtotime (str, now) {
     }
  
     return (now.getTime() / 1000);
+}
+
+function formatTimeString(seconds){
+	
+	seconds = (seconds?seconds:0);
+	
+	days = Math.ceil(seconds/86400);
+	hours = Math.ceil(seconds/86400);
+	
+	days = Math.floor(seconds/86400);
+	seconds = seconds - (days*86400);
+
+	hours = Math.floor(seconds/3600);
+	seconds = seconds - (hours*3600);
+
+	minutes = Math.floor(seconds/60);
+	seconds = Math.floor(seconds - (minutes*60));
+	
+	days    = sprintf('%02d', days);
+	hours   = sprintf('%02d', hours);
+	minutes = sprintf('%02d', minutes);
+	seconds = sprintf('%02d', seconds);
+	
+	return sprintf('%02d:%02d:%02d', hours, minutes, seconds);
+}
+
+function strip_tags (input, allowed) {
+  // http://kevin.vanzonneveld.net
+  // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // +   improved by: Luke Godfrey
+  // +      input by: Pul
+  // +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // +   bugfixed by: Onno Marsman
+  // +      input by: Alex
+  // +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // +      input by: Marc Palau
+  // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // +      input by: Brett Zamir (http://brett-zamir.me)
+  // +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // +   bugfixed by: Eric Nagel
+  // +      input by: Bobby Drake
+  // +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // +   bugfixed by: Tomasz Wesolowski
+  // +      input by: Evertjan Garretsen
+  // +    revised by: Rafał Kukawski (http://blog.kukawski.pl/)
+  // *     example 1: strip_tags('<p>Kevin</p> <br /><b>van</b> <i>Zonneveld</i>', '<i><b>');
+  // *     returns 1: 'Kevin <b>van</b> <i>Zonneveld</i>'
+  // *     example 2: strip_tags('<p>Kevin <img src="someimage.png" onmouseover="someFunction()">van <i>Zonneveld</i></p>', '<p>');
+  // *     returns 2: '<p>Kevin van Zonneveld</p>'
+  // *     example 3: strip_tags("<a href='http://kevin.vanzonneveld.net'>Kevin van Zonneveld</a>", "<a>");
+  // *     returns 3: '<a href='http://kevin.vanzonneveld.net'>Kevin van Zonneveld</a>'
+  // *     example 4: strip_tags('1 < 5 5 > 1');
+  // *     returns 4: '1 < 5 5 > 1'
+  // *     example 5: strip_tags('1 <br/> 1');
+  // *     returns 5: '1  1'
+  // *     example 6: strip_tags('1 <br/> 1', '<br>');
+  // *     returns 6: '1  1'
+  // *     example 7: strip_tags('1 <br/> 1', '<br><br/>');
+  // *     returns 7: '1 <br/> 1'
+  allowed = (((allowed || "") + "").toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join(''); // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
+  var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
+    commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
+  return input.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
+    return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
+  });
 }

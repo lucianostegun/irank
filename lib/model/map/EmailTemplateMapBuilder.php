@@ -54,6 +54,8 @@ class EmailTemplateMapBuilder {
 
 		$tMap->addColumn('TAG_NAME_PARENT', 'TagNameParent', 'string', CreoleTypes::VARCHAR, false, null);
 
+		$tMap->addColumn('IS_OPTION', 'IsOption', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

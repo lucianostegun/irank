@@ -10,25 +10,6 @@
 class UserSite extends BaseUserSite
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-			if( $this->getVisible() )				
-        		Log::quickLog('userSite', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        		
-        	$this->postOnWall($isNew);
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('userSite', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function quickSave($request){
 		
 		$username        = $request->getParameter('username');
@@ -37,8 +18,14 @@ class UserSite extends BaseUserSite
 	  	$lastName        = $request->getParameter('lastName');
 	  	$password        = $request->getParameter('password');
 	  	$defaultLanguage = $request->getParameter('defaultLanguage');
+	  	$startBankroll   = $request->getParameter('startBankroll');
+	  	$phoneDdd        = $request->getParameter('phoneDdd');
+	  	$phoneNumber     = $request->getParameter('phoneNumber');
 	  	
-  		$peopleObj = People::getQuickPeople($firstName, $lastName, 'userSite', $this->getPeopleId(), $defaultLanguage);
+	  	$con = Propel::getConnection();
+	  	$con->begin();
+	  	 
+  		$peopleObj = People::getQuickPeople($firstName, $lastName, 'userSite', $this->getPeopleId(), $defaultLanguage, $con);
   		
 	  	if( !$this->getActive() ){
 	  		
@@ -46,19 +33,18 @@ class UserSite extends BaseUserSite
 		  	$this->setUsername( $username );
 		}
 		
-//		if( strlen($password)!=32 || $this->isNew() ){
-//			if( !$this->getSignedSchedule() )
-//				$password = 'irank';
-//		  	
-//		  	$this->updateHtpasswd($password);
-//		}
+		if( $this->isNew() )
+		  	$this->updateHtpasswd('irank');
 		
 	  	$peopleObj->setEmailAddress( $emailAddress );
 	  	$this->setPassword( (strlen($password)==32?$password:md5($password)) );
 	  	$this->setActive(true);
-	  	$this->save();
+	  	$this->setStartBankroll(nvl(Util::formatFloat($startBankroll), 0));
+	  	$this->save($con);
 	  	
-	  	$peopleObj->save();
+	  	$peopleObj->save($con);
+	  	
+	  	$con->commit();
 	}
 	
 	public function saveEmailOptions($request){
@@ -81,7 +67,7 @@ class UserSite extends BaseUserSite
 		$this->setOptionValue('quickResume', $quickResume);
 		$this->setOptionValue('quickResumePeriod', $quickResumePeriod);
 	}
-	
+
 	public function saveScheduleOptions($request){
 		
 		$scheduleStateId   = $request->getParameter('scheduleStateId');
@@ -341,12 +327,6 @@ class UserSite extends BaseUserSite
 			$rankingObj->updateEmailGroup();
 	}
 	
-	public function postOnWall($isNew){
-		
-		if( $isNew )
-   			HomeWall::doLog('juntou-se aos jogadores do <b>iRank</b>. Seja bem vindo!', 'userSite', true, $this->getId());
-	}
-	
 	public function getEventListResume($limit, $offset=0, $eventDate=null){
 		
 		$criteria = new Criteria();
@@ -460,19 +440,68 @@ class UserSite extends BaseUserSite
 		$this->setMobileToken($mobileToken);
 		$this->save();
 	}
+
+	public static function getPendingPurchases(){
+		
+		$userSiteId = MyTools::getAttribute('userSiteId');
+		
+		return Util::executeOne("SELECT get_pending_purchases($userSiteId)"); 
+	}
 	
-	public function getInfo($replaceNull=false, $withBalance=true){
+	public function decraseSmsCredit($attempt=1){
+		
+		try{
+			
+			$con = Propel::getConnection();
+			$con->begin();
+			
+			$this->setSmsCredit( $this->getSmsCredit()-1 );
+			$this->save($con);
+			
+			Util::executeQuery('SELECT decrase_admin_sms_credit()', $con);
+			$con->commit();
+		}catch(Exception $e){
+			
+			$con->rollback();
+			
+			Log::doLog('Não conseguiu decrementar os créditos do usuário '.$this->toString().'. Tentativa '.$attempt, 'Sms', false, $attempt-1);
+			
+			if( $attempt < 5 )
+				$this->decraseSmsCredit($attempt+1);
+		}
+	}
+	
+	public function getConfig(){
+		
+		$userSiteConfigObj = UserSiteConfigPeer::retrieveByPK($this->getId());
+		
+		if( !is_object($userSiteConfigObj) ){
+			
+			$userSiteConfigObj = new UserSiteConfig();
+			$userSiteConfigObj->setUserSiteId($this->getId());
+			$userSiteConfigObj->save();
+		}
+		
+		return $userSiteConfigObj;
+	}
+	
+	public function enabledSmsNotification(){
+		
+		return $this->getConfig()->getAgreedSmsTerms();
+	}
+	
+	public function getInfo($replaceNull=false, $withBalance=true, $formatFloat=true){
 		
 		$infoList = array();
-		$infoList['id']           = $this->getId();
-		$infoList['firstName']    = $this->getPeople()->getFirstName();
-		$infoList['lastName']     = $this->getPeople()->getLastName();
-		$infoList['username']     = $this->getUsername();
-		$infoList['emailAddress'] = $this->getPeople()->getEmailAddress();
+		$infoList['id']            = $this->getId();
+		$infoList['firstName']     = $this->getPeople()->getFirstName();
+		$infoList['lastName']      = $this->getPeople()->getLastName();
+		$infoList['username']      = $this->getUsername();
+		$infoList['emailAddress']  = $this->getPeople()->getEmailAddress();
 		
 		if( $withBalance ){
 			
-			$resumeList = People::getFullResume($this->getPeopleId(), $this->getId(), true);
+			$resumeList = People::getFullResume($this->getPeopleId(), $this->getId(), $formatFloat);
 			$infoList = array_merge($infoList, $resumeList);
 		}
 		

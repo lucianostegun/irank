@@ -26,6 +26,20 @@ class VirtualTable extends BaseVirtualTable
 //		return $this->getDescriptionI18n();
 //	}
 	
+	public function quickSave($request){
+		
+		$description = $request->getParameter('description');
+		$tagName     = $request->getParameter('tagName');
+		
+		$this->setDescription($description);
+		$this->setTagName($tagName);
+		
+		$this->setEnabled(true);
+		$this->setVisible(true);
+		$this->setDeleted(false);
+		$this->save();
+	}
+	
 	public static function getList( $virtualTableName, $orderBy=null ){
 		
 		if( $orderBy==null )

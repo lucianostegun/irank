@@ -12,7 +12,6 @@
 		<column name="severity" type="INTEGER"/>
 		<column name="message" type="VARCHAR"/>
 		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
 	</table>
 
 	<table name="log_field" phpName="LogField"> 
@@ -20,7 +19,6 @@
 		<column name="field_name" type="VARCHAR"/>
 		<column name="field_value" type="VARCHAR"/>
 		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="log">
 			<reference local="log_id" foreign="id" />
 		</foreign-key>
@@ -32,6 +30,8 @@
 		<column name="error_message" type="VARCHAR" />
 		<column name="email_subject" type="VARCHAR" />
 		<column name="sending_status" type="VARCHAR" />
+		<column name="class_name" type="VARCHAR" />
+		<column name="object_id" type="INTEGER" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="read_at" type="TIMESTAMP" />
 	</table>
@@ -43,6 +43,66 @@
 		<column name="phone_number" type="VARCHAR" />
 		<column name="sending_status" type="VARCHAR" />
 		<column name="created_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="purchase_transaction_log" phpName="PurchaseTransactionLog">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="purchase_id" type="INTEGER" />
+		<column name="transaction_code" type="CHAR" />
+		<column name="transaction_type" type="INTEGER" />
+		<column name="transaction_status" type="INTEGER" />
+		<column name="paymethod_type" type="INTEGER" />
+		<column name="paymethod_code" type="INTEGER" />
+		<column name="gross_amount" type="NUMERIC" size="10" scale="2" />
+		<column name="fee_amount" type="NUMERIC" size="10" scale="2" />
+		<column name="net_amount" type="NUMERIC" size="10" scale="2" />
+		<column name="escrow_end_date" type="DATE" />
+		<column name="extra_amount" type="NUMERIC" size="10" scale="2" />
+		<column name="installment_count" type="INTEGER" />
+		<column name="created_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="purchase_status_log" phpName="PurchaseStatusLog">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="purchase_id" type="INTEGER" />
+		<column name="transaction_date" type="TIMESTAMP" />
+		<column name="transaction_code" type="CHAR" />
+		<column name="transaction_status" type="VARCHAR" />
+		<column name="order_status" type="VARCHAR" />
+		<column name="paymethod_type" type="VARCHAR" />
+		<column name="extra_amount" type="NUMERIC" size="10" scale="2" />
+		<column name="installment_count" type="INTEGER" />
+		<column name="change_source" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+	</table>
+
+	<table name="product_item_stock_log" phpName="ProductItemStockLog">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="product_item_id" type="INTEGER" />
+		<column name="stock" type="INTEGER" />
+		<column name="comments" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+	</table>
+
+	<table name="access_log" phpName="AccessLog">
+		<column name="user_site_id" type="INTEGER" primaryKey="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="ip_address" type="VARCHAR" />
+	</table>
+
+	<table name="access_admin_log" phpName="AccessAdminLog" package="...apps.backend.lib.model">
+		<column name="user_admin_id" type="INTEGER" primaryKey="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="ip_address" type="VARCHAR" />
+	</table>
+
+	<table name="ranking_import_log" phpName="RankingImportLog">
+		<column name="ranking_id" type="INTEGER" primaryKey="true" />
+		<column name="ranking_id_from" type="INTEGER" primaryKey="true" />
+		<column name="import_table" type="VARCHAR" primaryKey="true"  />
+		<column name="object_id" type="INTEGER" primaryKey="true" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
 	</table>
 	
 </database>

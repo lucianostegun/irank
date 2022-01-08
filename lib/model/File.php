@@ -10,22 +10,6 @@
 class File extends BaseFile
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-       		Log::quickLog('file', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('file', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function toString(){
 		
 		return $this->getFileName();
@@ -35,8 +19,6 @@ class File extends BaseFile
 
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('file', $this->getPrimaryKey());
 	}
     
 	public function getFilePath($full=false){
@@ -46,7 +28,8 @@ class File extends BaseFile
 		if( $full )
 			$filePath = Util::getFilePath($filePath);
 			
-		$filePath = ereg_replace('[\\/]', DIRECTORY_SEPARATOR, $filePath);
+		$filePath = str_replace('/', DIRECTORY_SEPARATOR, $filePath);
+		$filePath = str_replace('\\', DIRECTORY_SEPARATOR, $filePath);
 		
 	    if( !file_exists($filePath) )
 	    	$filePath = str_replace('TaskManager', 'TaskManagerOld', $filePath);
@@ -131,8 +114,16 @@ class File extends BaseFile
 		$minHeight            = (array_key_exists('minHeight', $options)?$options['minHeight']:null);
 		$maxHeight            = (array_key_exists('maxHeight', $options)?$options['maxHeight']:null);
 		$destFileName         = (array_key_exists('fileName', $options)?$options['fileName']:null);
+		$filePathName         = (array_key_exists('filePathName', $options)?$options['filePathName']:null);
 		$noFile               = (array_key_exists('noFile', $options)?$options['noFile']:false);
 		$noLog                = (array_key_exists('noLog', $options)?$options['noLog']:false);
+		$forceNewFile         = (array_key_exists('forceNewFile', $options)?$options['forceNewFile']:false);
+		
+		$maxFileSizeIni = ini_get('upload_max_filesize');
+		$maxFileSizeIni = ((int)$maxFileSizeIni)*1024*1024;
+		
+		if( !$maxFileSize || $maxFileSizeIni < $maxFileSize )
+			$maxFileSize = $maxFileSizeIni;
 		
 		$fileName  = $request->getFileName($fieldName);
 		$fileSize  = $request->getFileSize($fieldName);
@@ -144,17 +135,30 @@ class File extends BaseFile
 			$maxFileSize = Util::formatFloat($maxFileSize)*1024*1024;
 
 		if( $fileSize > $maxFileSize )
-			throw new Exception('Tamanho máximo de arquivo excedido');
+			throw new FileException('Tamanho máximo de arquivo excedido');
 		
 		if( count($allowedExtensionList) > 0 && !in_array($extension, $allowedExtensionList) )
-			throw new Exception('Formato de arquivo inválido. Formatos permitidos: '.implode(', ', $allowedExtensionList));
+			throw new FileException('Formato de arquivo inválido. Formatos permitidos: '.implode(', ', $allowedExtensionList));
 
 		$fileObj = ($fileId?FilePeer::retrieveByPK($fileId):new File());
-		$fileObj->setFileName($fileName);
-		$isNew   = $fileObj->isNew();		
 		
-		$fileName = ereg_replace('[^0-9]', '', microtime()).'.'.$extension;
-		$fileName = ($destFileName?$destFileName:$fileName);
+		$isNew = $fileObj->isNew();		
+		
+		if( $filePathName=='temp' )
+			$filePathName = preg_replace('/[^0-9]/', '', microtime()).'.'.$extension;
+		elseif( $destFileName && preg_match('/\.[^\.]*$/', $destFileName) )
+			$filePathName = $destFileName;
+		elseif( $destFileName )
+			$filePathName = $destFileName.'.'.$extension;
+		else
+			$filePathName = $fileName;
+
+		$fileName = ($destFileName?$destFileName:$filePathName);
+		
+		if( !preg_match('/\.[a-z]*$/i', $fileName) )
+			$fileName = "$fileName.$extension";
+			
+		$fileObj->setFileName($fileName);
 
 		$extensionImageList = array('jpg', 'png', 'jpeg', 'bmp', 'gif');
 		
@@ -168,9 +172,13 @@ class File extends BaseFile
 		if( !is_dir($destinationPath) )
 			mkdir($destinationPath, 0755, true);
 		
-		if( $isNew )
-			$filePath = $destinationPath.DIRECTORY_SEPARATOR.$fileName;
-		else
+		if( $isNew || $forceNewFile ){
+		
+			$filePath = $destinationPath.DIRECTORY_SEPARATOR.$filePathName;
+			
+			if( file_exists($filePath) )
+				unlink($filePath);
+		}else
 			$filePath = $fileObj->getFilePath(true);
 
 		$request->moveFile($fieldName, $filePath);
@@ -185,7 +193,7 @@ class File extends BaseFile
 				($maxHeight && $dimension[0] > $maxHeight) ){
 					
 					unlink($filePath);
-					throw new Exception('Dimensões inválidas. Dimensão requerida:\n\nMin: '.$minWidth.'x'.$minHeight.'\nMax: '.$maxWidth.'x'.$maxHeight);
+					throw new FileException('Dimensões inválidas. Dimensão requerida:\n\nMin: '.$minWidth.'x'.$minHeight.'\nMax: '.$maxWidth.'x'.$maxHeight);
 				}
 		}
 
@@ -355,7 +363,7 @@ class File extends BaseFile
 		return ($extension=='pdf');
 	}
 	
-	public function createThumbnail($destinationPath, $minWidth=false, $minHeight=false){
+	public function createThumbnail($destinationPath, $minWidth=false, $minHeight=false, $quality=100){
 		
 		$filePath        = $this->getFilePath(true);
 		$fileName        = Util::getFileName($filePath);
@@ -406,10 +414,13 @@ class File extends BaseFile
 		
 		imagecopyresampled($new, $newImg, 0, 0, $left, $top, $minWidth, $newHeight, $srcW, $srcH);
 
+		if( file_exists($thumbFilePath) )
+			unlink($thumbFilePath);
+		
 		if( $extension=='png' )
 			imagepng($new, $thumbFilePath);
 		else
-			imagejpeg($new, $thumbFilePath, 100);
+			imagejpeg($new, $thumbFilePath, $quality);
 
 		imagedestroy($new);
 		imagedestroy($newImg);
@@ -542,4 +553,9 @@ class File extends BaseFile
 		imagedestroy($new);
 		imagedestroy($newImg);
 	}
+}
+
+class FileException extends Exception 
+{
+    
 }

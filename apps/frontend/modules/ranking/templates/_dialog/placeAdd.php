@@ -1,11 +1,11 @@
 <?php
 	echo form_remote_tag(array(
 		'url'=>'ranking/savePlace',
-		'success'=>'handleSuccessRankingPlace( request.responseText )',
-		'failure'=>'enableButton("rankingPlaceSubmit"); handleFormFieldError( request.responseText, "rankingPlaceForm", "rankingPlace", false, "rankingPlace" )',
+		'success'=>'handleSuccessRankingPlace(request.responseText)',
+		'failure'=>'handleFailureRankingPlace(request.responseText)',
 		'encoding'=>'utf8',
 		'loading'=>'showIndicator("rankingPlace")'
-		), array( 'id'=>'rankingPlaceForm' ));
+		), array('id'=>'rankingPlaceForm'));
 	
 	echo input_hidden_tag('rankingPlaceId', null, array('id'=>'rankingPlaceRankingPlaceId'));
 	echo input_hidden_tag('rankingId', null, array('id'=>'rankingPlaceRankingId'));
@@ -19,7 +19,20 @@
 				</div>
 				<div class="row">
 					<div class="label" id="rankingPlaceMapsLinkLabel"><?php echo __('ranking.mapsLink') ?></div>
-					<div class="field"><?php echo input_tag('mapsLink', null, array('size'=>50, 'id'=>'rankingPlaceMapsLink')) ?></div>
+					<div class="field"><?php echo input_tag('mapsLink', null, array('size'=>45, 'onblur'=>'parseMapsLinkInfo(this.value)', 'id'=>'rankingPlaceMapsLink')) ?></div>
+					<div class="text flex" id="rankingPlaceMapsLinkLoader"><?php echo image_tag('ajaxLoaderForm.gif') ?></div>
+				</div>
+				<div class="row">
+					<div class="label" id="rankingPlaceStateIdLabel">Estado</div>
+					<div class="field"><?php echo select_tag('stateId', State::getOptionsForSelect(), array('id'=>'rankingPlaceStateId')) ?></div>
+				</div>
+				<div class="row">
+					<div class="label" id="rankingPlaceCityNameLabel">Cidade</div>
+					<div class="field"><?php echo input_tag('cityName', null, array('size'=>25, 'maxlength'=>32, 'id'=>'rankingPlaceCityName')) ?></div>
+				</div>
+				<div class="row">
+					<div class="label" id="rankingPlaceQuarterLabel">Bairro</div>
+					<div class="field"><?php echo input_tag('quarter', null, array('size'=>20, 'maxlength'=>32, 'id'=>'rankingPlaceQuarter')) ?></div>
 				</div>
 			</td>
 		</tr>

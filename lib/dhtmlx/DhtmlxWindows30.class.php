@@ -215,7 +215,7 @@ class DhtmlxWindows30 {
 
 		sfContext::getInstance()->getResponse()->addJavascript( 'dhtmlx/dhtmlxcommon' );
 		sfContext::getInstance()->getResponse()->addJavascript( 'dhtmlx/dhtmlxWindows/dhtmlxwindows' ); 
-		sfContext::getInstance()->getResponse()->addJavascript( 'dhtmlx/dhtmlxWindows/dhtmlxcontainer' );
+		sfContext::getInstance()->getResponse()->addJavascript( 'dhtmlx/dhtmlxcontainer' );
 	}
 }
 ?>

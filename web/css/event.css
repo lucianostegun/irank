@@ -1,9 +1,14 @@
+#eventForm {
+
+	position: relative;
+}
+
 .actionBar {
 	
 	position: 			absolute;
 	z-Index: 			2;
-	top: 				38px;
-	margin-left: 		461px;
+	top: 				-7px;
+	margin-left: 		453px;
 	top: 				185px !ie;
 	margin-left: 		461px !ie;
 	width: 				450px;
@@ -62,4 +67,44 @@
 .dragRow {
 
 	padding: 0px;
+}
+
+.subscribeBar {
+	
+	position: 				relative;
+	background: 			#E5E5E5;
+    background-image: 		-o-linear-gradient(#F0F0F0, #E5E5E5);
+    background: 			-moz-linear-gradient(top, #F0F0F0, #E5E5E5);;
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#E5E5E5));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#F0F0F0', EndColorStr='#E5E5E5', GradientType=0);
+	border: 				1px solid #CACACA;
+	padding: 				9px 10px 10px 10px;
+	margin: 				0px 0px 00px 0px;
+	top: 					-5px;
+	font-size: 				12px;
+	text-shadow: 			#FFFFFF 1px 1px;
+}
+
+.subscribeBar .actionButton {
+	
+	box-shadow: 0px 0px 3px #909090;
+}
+
+#prizeConfigDiv {
+
+	position: absolute;
+	top: 95px;
+	right: -300px;
+	background: #FFFFFF;
+	border: 3px solid #C0C0C0;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+
+#prizeConfigDiv legend {
+
+	background: none;
+	color: #303030;
+	border: none;
+	text-transform: uppercase
 }

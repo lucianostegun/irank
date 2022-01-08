@@ -12,30 +12,15 @@ class EventPhoto extends BaseEventPhoto
 
     public function save($con=null){
     	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-			
-			$this->updateInfo();
+		$this->updateInfo();
 
-    		$this->postOnWall();
-
-			parent::save();
-			
-       		Log::quickLog('event_photo', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_photo', $this->getPrimaryKey(), $e);
-        }
+		parent::save();
     }
 	
 	public function delete($con=null){
 		
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('event_photo', $this->getPrimaryKey());
 	}
 	
 	public function updateInfo(){
@@ -86,14 +71,6 @@ class EventPhoto extends BaseEventPhoto
 		$criteria->add( EventPhotoPeer::DELETED, false );
 		$criteria->addDescendingOrderByColumn( EventPhotoPeer::ID );
 		return EventPhotoPeer::doSelectOne($criteria);
-	}
-	
-	public function postOnWall(){
-		
-		if( !$this->isNew() )
-			return false;
-			
-       	HomeWall::doLog('publicou uma foto do evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPhoto', true);
 	}
 	
 	public static function getXml($photoList, $tagName='photoPhoto'){

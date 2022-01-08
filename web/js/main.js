@@ -71,3 +71,23 @@ function getTabLoader(){
 	
 	return html;
 }
+
+function clearCommonBarMessage(){
+	
+	$('topSystemMessage').innerHTML = '';
+}
+
+function setCommonBarMessage(message, className, scroll){
+	
+	className = (className?className:'info');
+	
+	var div = document.createElement('div');
+	div.className = 'message '+className;
+	div.innerHTML = message;
+	
+	clearCommonBarMessage();
+	$('topSystemMessage').appendChild(div);
+	
+	if( scroll )
+		location.hash = '#topAlert';
+}

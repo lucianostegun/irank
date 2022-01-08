@@ -120,6 +120,10 @@
 			
 			if( count($eventPlayerObjList) > 0 ):
 		  ?>
+		  
+		<tr style="display: none">
+			<td colspan="7">sss</td>
+		</tr>
 		</tbody>
 		<tr class="resultTotal mark">
 			<td class="mark" colspan="2">TOTAL</td>

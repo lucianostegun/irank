@@ -41,11 +41,23 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 
 	
+	protected $start_bankroll;
+
+
+	
+	protected $sms_credit;
+
+
+	
 	protected $deviceudid;
 
 
 	
 	protected $mobile_token;
+
+
+	
+	protected $beta_tester;
 
 
 	
@@ -101,10 +113,34 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	protected $lastEventPersonalCriteria = null;
 
 	
-	protected $collAccessLogList;
+	protected $collPurchaseList;
 
 	
-	protected $lastAccessLogCriteria = null;
+	protected $lastPurchaseCriteria = null;
+
+	
+	protected $collRankingSubscriptionRequestListRelatedByUserSiteId;
+
+	
+	protected $lastRankingSubscriptionRequestRelatedByUserSiteIdCriteria = null;
+
+	
+	protected $collRankingSubscriptionRequestListRelatedByUserSiteIdOwner;
+
+	
+	protected $lastRankingSubscriptionRequestRelatedByUserSiteIdOwnerCriteria = null;
+
+	
+	protected $collTimerList;
+
+	
+	protected $lastTimerCriteria = null;
+
+	
+	protected $collUserSiteConfigList;
+
+	
+	protected $lastUserSiteConfigCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -184,6 +220,20 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getStartBankroll()
+	{
+
+		return $this->start_bankroll;
+	}
+
+	
+	public function getSmsCredit()
+	{
+
+		return $this->sms_credit;
+	}
+
+	
 	public function getDeviceudid()
 	{
 
@@ -195,6 +245,13 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	{
 
 		return $this->mobile_token;
+	}
+
+	
+	public function getBetaTester()
+	{
+
+		return $this->beta_tester;
 	}
 
 	
@@ -414,6 +471,30 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setStartBankroll($v)
+	{
+
+		if ($this->start_bankroll !== $v) {
+			$this->start_bankroll = $v;
+			$this->modifiedColumns[] = UserSitePeer::START_BANKROLL;
+		}
+
+	} 
+	
+	public function setSmsCredit($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->sms_credit !== $v) {
+			$this->sms_credit = $v;
+			$this->modifiedColumns[] = UserSitePeer::SMS_CREDIT;
+		}
+
+	} 
+	
 	public function setDeviceudid($v)
 	{
 
@@ -438,6 +519,16 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->mobile_token !== $v) {
 			$this->mobile_token = $v;
 			$this->modifiedColumns[] = UserSitePeer::MOBILE_TOKEN;
+		}
+
+	} 
+	
+	public function setBetaTester($v)
+	{
+
+		if ($this->beta_tester !== $v) {
+			$this->beta_tester = $v;
+			$this->modifiedColumns[] = UserSitePeer::BETA_TESTER;
 		}
 
 	} 
@@ -563,31 +654,37 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 			$this->schedule_start_date = $rs->getDate($startcol + 7, null);
 
-			$this->deviceudid = $rs->getString($startcol + 8);
+			$this->start_bankroll = $rs->getFloat($startcol + 8);
 
-			$this->mobile_token = $rs->getString($startcol + 9);
+			$this->sms_credit = $rs->getInt($startcol + 9);
 
-			$this->active = $rs->getBoolean($startcol + 10);
+			$this->deviceudid = $rs->getString($startcol + 10);
 
-			$this->enabled = $rs->getBoolean($startcol + 11);
+			$this->mobile_token = $rs->getString($startcol + 11);
 
-			$this->visible = $rs->getBoolean($startcol + 12);
+			$this->beta_tester = $rs->getBoolean($startcol + 12);
 
-			$this->deleted = $rs->getBoolean($startcol + 13);
+			$this->active = $rs->getBoolean($startcol + 13);
 
-			$this->locked = $rs->getBoolean($startcol + 14);
+			$this->enabled = $rs->getBoolean($startcol + 14);
 
-			$this->last_access_date = $rs->getTimestamp($startcol + 15, null);
+			$this->visible = $rs->getBoolean($startcol + 15);
 
-			$this->created_at = $rs->getTimestamp($startcol + 16, null);
+			$this->deleted = $rs->getBoolean($startcol + 16);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 17, null);
+			$this->locked = $rs->getBoolean($startcol + 17);
+
+			$this->last_access_date = $rs->getTimestamp($startcol + 18, null);
+
+			$this->created_at = $rs->getTimestamp($startcol + 19, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 20, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 18; 
+						return $startcol + 21; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserSite object", $e);
 		}
@@ -628,21 +725,40 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(UserSitePeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = UserSitePeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -698,8 +814,40 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collAccessLogList !== null) {
-				foreach($this->collAccessLogList as $referrerFK) {
+			if ($this->collPurchaseList !== null) {
+				foreach($this->collPurchaseList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collRankingSubscriptionRequestListRelatedByUserSiteId !== null) {
+				foreach($this->collRankingSubscriptionRequestListRelatedByUserSiteId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner !== null) {
+				foreach($this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collTimerList !== null) {
+				foreach($this->collTimerList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collUserSiteConfigList !== null) {
+				foreach($this->collUserSiteConfigList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -779,8 +927,40 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collAccessLogList !== null) {
-					foreach($this->collAccessLogList as $referrerFK) {
+				if ($this->collPurchaseList !== null) {
+					foreach($this->collPurchaseList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingSubscriptionRequestListRelatedByUserSiteId !== null) {
+					foreach($this->collRankingSubscriptionRequestListRelatedByUserSiteId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner !== null) {
+					foreach($this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collTimerList !== null) {
+					foreach($this->collTimerList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collUserSiteConfigList !== null) {
+					foreach($this->collUserSiteConfigList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -830,33 +1010,42 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				return $this->getScheduleStartDate();
 				break;
 			case 8:
-				return $this->getDeviceudid();
+				return $this->getStartBankroll();
 				break;
 			case 9:
-				return $this->getMobileToken();
+				return $this->getSmsCredit();
 				break;
 			case 10:
-				return $this->getActive();
+				return $this->getDeviceudid();
 				break;
 			case 11:
-				return $this->getEnabled();
+				return $this->getMobileToken();
 				break;
 			case 12:
-				return $this->getVisible();
+				return $this->getBetaTester();
 				break;
 			case 13:
-				return $this->getDeleted();
+				return $this->getActive();
 				break;
 			case 14:
-				return $this->getLocked();
+				return $this->getEnabled();
 				break;
 			case 15:
-				return $this->getLastAccessDate();
+				return $this->getVisible();
 				break;
 			case 16:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 17:
+				return $this->getLocked();
+				break;
+			case 18:
+				return $this->getLastAccessDate();
+				break;
+			case 19:
+				return $this->getCreatedAt();
+				break;
+			case 20:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -877,16 +1066,19 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$keys[5]=>$this->getImagePath(),
 			$keys[6]=>$this->getSignedSchedule(),
 			$keys[7]=>$this->getScheduleStartDate(),
-			$keys[8]=>$this->getDeviceudid(),
-			$keys[9]=>$this->getMobileToken(),
-			$keys[10]=>$this->getActive(),
-			$keys[11]=>$this->getEnabled(),
-			$keys[12]=>$this->getVisible(),
-			$keys[13]=>$this->getDeleted(),
-			$keys[14]=>$this->getLocked(),
-			$keys[15]=>$this->getLastAccessDate(),
-			$keys[16]=>$this->getCreatedAt(),
-			$keys[17]=>$this->getUpdatedAt(),
+			$keys[8]=>$this->getStartBankroll(),
+			$keys[9]=>$this->getSmsCredit(),
+			$keys[10]=>$this->getDeviceudid(),
+			$keys[11]=>$this->getMobileToken(),
+			$keys[12]=>$this->getBetaTester(),
+			$keys[13]=>$this->getActive(),
+			$keys[14]=>$this->getEnabled(),
+			$keys[15]=>$this->getVisible(),
+			$keys[16]=>$this->getDeleted(),
+			$keys[17]=>$this->getLocked(),
+			$keys[18]=>$this->getLastAccessDate(),
+			$keys[19]=>$this->getCreatedAt(),
+			$keys[20]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -927,33 +1119,42 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$this->setScheduleStartDate($value);
 				break;
 			case 8:
-				$this->setDeviceudid($value);
+				$this->setStartBankroll($value);
 				break;
 			case 9:
-				$this->setMobileToken($value);
+				$this->setSmsCredit($value);
 				break;
 			case 10:
-				$this->setActive($value);
+				$this->setDeviceudid($value);
 				break;
 			case 11:
-				$this->setEnabled($value);
+				$this->setMobileToken($value);
 				break;
 			case 12:
-				$this->setVisible($value);
+				$this->setBetaTester($value);
 				break;
 			case 13:
-				$this->setDeleted($value);
+				$this->setActive($value);
 				break;
 			case 14:
-				$this->setLocked($value);
+				$this->setEnabled($value);
 				break;
 			case 15:
-				$this->setLastAccessDate($value);
+				$this->setVisible($value);
 				break;
 			case 16:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 17:
+				$this->setLocked($value);
+				break;
+			case 18:
+				$this->setLastAccessDate($value);
+				break;
+			case 19:
+				$this->setCreatedAt($value);
+				break;
+			case 20:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -971,16 +1172,19 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setImagePath($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setSignedSchedule($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setScheduleStartDate($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setDeviceudid($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setMobileToken($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setActive($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setEnabled($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setVisible($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setDeleted($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setLocked($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setLastAccessDate($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setCreatedAt($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setUpdatedAt($arr[$keys[17]]);
+		if (array_key_exists($keys[8], $arr)) $this->setStartBankroll($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setSmsCredit($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setDeviceudid($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setMobileToken($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setBetaTester($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setActive($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setEnabled($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setVisible($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setDeleted($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setLocked($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setLastAccessDate($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setCreatedAt($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setUpdatedAt($arr[$keys[20]]);
 	}
 
 	
@@ -996,8 +1200,11 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserSitePeer::IMAGE_PATH)) $criteria->add(UserSitePeer::IMAGE_PATH, $this->image_path);
 		if ($this->isColumnModified(UserSitePeer::SIGNED_SCHEDULE)) $criteria->add(UserSitePeer::SIGNED_SCHEDULE, $this->signed_schedule);
 		if ($this->isColumnModified(UserSitePeer::SCHEDULE_START_DATE)) $criteria->add(UserSitePeer::SCHEDULE_START_DATE, $this->schedule_start_date);
+		if ($this->isColumnModified(UserSitePeer::START_BANKROLL)) $criteria->add(UserSitePeer::START_BANKROLL, $this->start_bankroll);
+		if ($this->isColumnModified(UserSitePeer::SMS_CREDIT)) $criteria->add(UserSitePeer::SMS_CREDIT, $this->sms_credit);
 		if ($this->isColumnModified(UserSitePeer::DEVICEUDID)) $criteria->add(UserSitePeer::DEVICEUDID, $this->deviceudid);
 		if ($this->isColumnModified(UserSitePeer::MOBILE_TOKEN)) $criteria->add(UserSitePeer::MOBILE_TOKEN, $this->mobile_token);
+		if ($this->isColumnModified(UserSitePeer::BETA_TESTER)) $criteria->add(UserSitePeer::BETA_TESTER, $this->beta_tester);
 		if ($this->isColumnModified(UserSitePeer::ACTIVE)) $criteria->add(UserSitePeer::ACTIVE, $this->active);
 		if ($this->isColumnModified(UserSitePeer::ENABLED)) $criteria->add(UserSitePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(UserSitePeer::VISIBLE)) $criteria->add(UserSitePeer::VISIBLE, $this->visible);
@@ -1050,9 +1257,15 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 
 		$copyObj->setScheduleStartDate($this->schedule_start_date);
 
+		$copyObj->setStartBankroll($this->start_bankroll);
+
+		$copyObj->setSmsCredit($this->sms_credit);
+
 		$copyObj->setDeviceudid($this->deviceudid);
 
 		$copyObj->setMobileToken($this->mobile_token);
+
+		$copyObj->setBetaTester($this->beta_tester);
 
 		$copyObj->setActive($this->active);
 
@@ -1086,8 +1299,24 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 				$copyObj->addEventPersonal($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getAccessLogList() as $relObj) {
-				$copyObj->addAccessLog($relObj->copy($deepCopy));
+			foreach($this->getPurchaseList() as $relObj) {
+				$copyObj->addPurchase($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingSubscriptionRequestListRelatedByUserSiteId() as $relObj) {
+				$copyObj->addRankingSubscriptionRequestRelatedByUserSiteId($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingSubscriptionRequestListRelatedByUserSiteIdOwner() as $relObj) {
+				$copyObj->addRankingSubscriptionRequestRelatedByUserSiteIdOwner($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getTimerList() as $relObj) {
+				$copyObj->addTimer($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getUserSiteConfigList() as $relObj) {
+				$copyObj->addUserSiteConfig($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1460,17 +1689,17 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initAccessLogList()
+	public function initPurchaseList()
 	{
-		if ($this->collAccessLogList === null) {
-			$this->collAccessLogList = array();
+		if ($this->collPurchaseList === null) {
+			$this->collPurchaseList = array();
 		}
 	}
 
 	
-	public function getAccessLogList($criteria = null, $con = null)
+	public function getPurchaseList($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseAccessLogPeer.php';
+				include_once 'lib/model/om/BasePurchasePeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1479,36 +1708,36 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collAccessLogList === null) {
+		if ($this->collPurchaseList === null) {
 			if ($this->isNew()) {
-			   $this->collAccessLogList = array();
+			   $this->collPurchaseList = array();
 			} else {
 
-				$criteria->add(AccessLogPeer::USER_SITE_ID, $this->getId());
+				$criteria->add(PurchasePeer::USER_SITE_ID, $this->getId());
 
-				AccessLogPeer::addSelectColumns($criteria);
-				$this->collAccessLogList = AccessLogPeer::doSelect($criteria, $con);
+				PurchasePeer::addSelectColumns($criteria);
+				$this->collPurchaseList = PurchasePeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(AccessLogPeer::USER_SITE_ID, $this->getId());
+				$criteria->add(PurchasePeer::USER_SITE_ID, $this->getId());
 
-				AccessLogPeer::addSelectColumns($criteria);
-				if (!isset($this->lastAccessLogCriteria) || !$this->lastAccessLogCriteria->equals($criteria)) {
-					$this->collAccessLogList = AccessLogPeer::doSelect($criteria, $con);
+				PurchasePeer::addSelectColumns($criteria);
+				if (!isset($this->lastPurchaseCriteria) || !$this->lastPurchaseCriteria->equals($criteria)) {
+					$this->collPurchaseList = PurchasePeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastAccessLogCriteria = $criteria;
-		return $this->collAccessLogList;
+		$this->lastPurchaseCriteria = $criteria;
+		return $this->collPurchaseList;
 	}
 
 	
-	public function countAccessLogList($criteria = null, $distinct = false, $con = null)
+	public function countPurchaseList($criteria = null, $distinct = false, $con = null)
 	{
-				include_once 'lib/model/om/BaseAccessLogPeer.php';
+				include_once 'lib/model/om/BasePurchasePeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1517,15 +1746,435 @@ abstract class BaseUserSite extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(AccessLogPeer::USER_SITE_ID, $this->getId());
+		$criteria->add(PurchasePeer::USER_SITE_ID, $this->getId());
 
-		return AccessLogPeer::doCount($criteria, $distinct, $con);
+		return PurchasePeer::doCount($criteria, $distinct, $con);
 	}
 
 	
-	public function addAccessLog(AccessLog $l)
+	public function addPurchase(Purchase $l)
 	{
-		$this->collAccessLogList[] = $l;
+		$this->collPurchaseList[] = $l;
+		$l->setUserSite($this);
+	}
+
+
+	
+	public function getPurchaseListJoinFile($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchasePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPurchaseList === null) {
+			if ($this->isNew()) {
+				$this->collPurchaseList = array();
+			} else {
+
+				$criteria->add(PurchasePeer::USER_SITE_ID, $this->getId());
+
+				$this->collPurchaseList = PurchasePeer::doSelectJoinFile($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(PurchasePeer::USER_SITE_ID, $this->getId());
+
+			if (!isset($this->lastPurchaseCriteria) || !$this->lastPurchaseCriteria->equals($criteria)) {
+				$this->collPurchaseList = PurchasePeer::doSelectJoinFile($criteria, $con);
+			}
+		}
+		$this->lastPurchaseCriteria = $criteria;
+
+		return $this->collPurchaseList;
+	}
+
+
+	
+	public function getPurchaseListJoinDiscountCoupon($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BasePurchasePeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPurchaseList === null) {
+			if ($this->isNew()) {
+				$this->collPurchaseList = array();
+			} else {
+
+				$criteria->add(PurchasePeer::USER_SITE_ID, $this->getId());
+
+				$this->collPurchaseList = PurchasePeer::doSelectJoinDiscountCoupon($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(PurchasePeer::USER_SITE_ID, $this->getId());
+
+			if (!isset($this->lastPurchaseCriteria) || !$this->lastPurchaseCriteria->equals($criteria)) {
+				$this->collPurchaseList = PurchasePeer::doSelectJoinDiscountCoupon($criteria, $con);
+			}
+		}
+		$this->lastPurchaseCriteria = $criteria;
+
+		return $this->collPurchaseList;
+	}
+
+	
+	public function initRankingSubscriptionRequestListRelatedByUserSiteId()
+	{
+		if ($this->collRankingSubscriptionRequestListRelatedByUserSiteId === null) {
+			$this->collRankingSubscriptionRequestListRelatedByUserSiteId = array();
+		}
+	}
+
+	
+	public function getRankingSubscriptionRequestListRelatedByUserSiteId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscriptionRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscriptionRequestListRelatedByUserSiteId === null) {
+			if ($this->isNew()) {
+			   $this->collRankingSubscriptionRequestListRelatedByUserSiteId = array();
+			} else {
+
+				$criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID, $this->getId());
+
+				RankingSubscriptionRequestPeer::addSelectColumns($criteria);
+				$this->collRankingSubscriptionRequestListRelatedByUserSiteId = RankingSubscriptionRequestPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID, $this->getId());
+
+				RankingSubscriptionRequestPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingSubscriptionRequestRelatedByUserSiteIdCriteria) || !$this->lastRankingSubscriptionRequestRelatedByUserSiteIdCriteria->equals($criteria)) {
+					$this->collRankingSubscriptionRequestListRelatedByUserSiteId = RankingSubscriptionRequestPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingSubscriptionRequestRelatedByUserSiteIdCriteria = $criteria;
+		return $this->collRankingSubscriptionRequestListRelatedByUserSiteId;
+	}
+
+	
+	public function countRankingSubscriptionRequestListRelatedByUserSiteId($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscriptionRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID, $this->getId());
+
+		return RankingSubscriptionRequestPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingSubscriptionRequestRelatedByUserSiteId(RankingSubscriptionRequest $l)
+	{
+		$this->collRankingSubscriptionRequestListRelatedByUserSiteId[] = $l;
+		$l->setUserSiteRelatedByUserSiteId($this);
+	}
+
+
+	
+	public function getRankingSubscriptionRequestListRelatedByUserSiteIdJoinRanking($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscriptionRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscriptionRequestListRelatedByUserSiteId === null) {
+			if ($this->isNew()) {
+				$this->collRankingSubscriptionRequestListRelatedByUserSiteId = array();
+			} else {
+
+				$criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID, $this->getId());
+
+				$this->collRankingSubscriptionRequestListRelatedByUserSiteId = RankingSubscriptionRequestPeer::doSelectJoinRanking($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID, $this->getId());
+
+			if (!isset($this->lastRankingSubscriptionRequestRelatedByUserSiteIdCriteria) || !$this->lastRankingSubscriptionRequestRelatedByUserSiteIdCriteria->equals($criteria)) {
+				$this->collRankingSubscriptionRequestListRelatedByUserSiteId = RankingSubscriptionRequestPeer::doSelectJoinRanking($criteria, $con);
+			}
+		}
+		$this->lastRankingSubscriptionRequestRelatedByUserSiteIdCriteria = $criteria;
+
+		return $this->collRankingSubscriptionRequestListRelatedByUserSiteId;
+	}
+
+	
+	public function initRankingSubscriptionRequestListRelatedByUserSiteIdOwner()
+	{
+		if ($this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner === null) {
+			$this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner = array();
+		}
+	}
+
+	
+	public function getRankingSubscriptionRequestListRelatedByUserSiteIdOwner($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscriptionRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner === null) {
+			if ($this->isNew()) {
+			   $this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner = array();
+			} else {
+
+				$criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID_OWNER, $this->getId());
+
+				RankingSubscriptionRequestPeer::addSelectColumns($criteria);
+				$this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner = RankingSubscriptionRequestPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID_OWNER, $this->getId());
+
+				RankingSubscriptionRequestPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingSubscriptionRequestRelatedByUserSiteIdOwnerCriteria) || !$this->lastRankingSubscriptionRequestRelatedByUserSiteIdOwnerCriteria->equals($criteria)) {
+					$this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner = RankingSubscriptionRequestPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingSubscriptionRequestRelatedByUserSiteIdOwnerCriteria = $criteria;
+		return $this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner;
+	}
+
+	
+	public function countRankingSubscriptionRequestListRelatedByUserSiteIdOwner($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscriptionRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID_OWNER, $this->getId());
+
+		return RankingSubscriptionRequestPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingSubscriptionRequestRelatedByUserSiteIdOwner(RankingSubscriptionRequest $l)
+	{
+		$this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner[] = $l;
+		$l->setUserSiteRelatedByUserSiteIdOwner($this);
+	}
+
+
+	
+	public function getRankingSubscriptionRequestListRelatedByUserSiteIdOwnerJoinRanking($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscriptionRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner === null) {
+			if ($this->isNew()) {
+				$this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner = array();
+			} else {
+
+				$criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID_OWNER, $this->getId());
+
+				$this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner = RankingSubscriptionRequestPeer::doSelectJoinRanking($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingSubscriptionRequestPeer::USER_SITE_ID_OWNER, $this->getId());
+
+			if (!isset($this->lastRankingSubscriptionRequestRelatedByUserSiteIdOwnerCriteria) || !$this->lastRankingSubscriptionRequestRelatedByUserSiteIdOwnerCriteria->equals($criteria)) {
+				$this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner = RankingSubscriptionRequestPeer::doSelectJoinRanking($criteria, $con);
+			}
+		}
+		$this->lastRankingSubscriptionRequestRelatedByUserSiteIdOwnerCriteria = $criteria;
+
+		return $this->collRankingSubscriptionRequestListRelatedByUserSiteIdOwner;
+	}
+
+	
+	public function initTimerList()
+	{
+		if ($this->collTimerList === null) {
+			$this->collTimerList = array();
+		}
+	}
+
+	
+	public function getTimerList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseTimerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collTimerList === null) {
+			if ($this->isNew()) {
+			   $this->collTimerList = array();
+			} else {
+
+				$criteria->add(TimerPeer::USER_SITE_ID, $this->getId());
+
+				TimerPeer::addSelectColumns($criteria);
+				$this->collTimerList = TimerPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(TimerPeer::USER_SITE_ID, $this->getId());
+
+				TimerPeer::addSelectColumns($criteria);
+				if (!isset($this->lastTimerCriteria) || !$this->lastTimerCriteria->equals($criteria)) {
+					$this->collTimerList = TimerPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastTimerCriteria = $criteria;
+		return $this->collTimerList;
+	}
+
+	
+	public function countTimerList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseTimerPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(TimerPeer::USER_SITE_ID, $this->getId());
+
+		return TimerPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addTimer(Timer $l)
+	{
+		$this->collTimerList[] = $l;
+		$l->setUserSite($this);
+	}
+
+	
+	public function initUserSiteConfigList()
+	{
+		if ($this->collUserSiteConfigList === null) {
+			$this->collUserSiteConfigList = array();
+		}
+	}
+
+	
+	public function getUserSiteConfigList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseUserSiteConfigPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collUserSiteConfigList === null) {
+			if ($this->isNew()) {
+			   $this->collUserSiteConfigList = array();
+			} else {
+
+				$criteria->add(UserSiteConfigPeer::USER_SITE_ID, $this->getId());
+
+				UserSiteConfigPeer::addSelectColumns($criteria);
+				$this->collUserSiteConfigList = UserSiteConfigPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(UserSiteConfigPeer::USER_SITE_ID, $this->getId());
+
+				UserSiteConfigPeer::addSelectColumns($criteria);
+				if (!isset($this->lastUserSiteConfigCriteria) || !$this->lastUserSiteConfigCriteria->equals($criteria)) {
+					$this->collUserSiteConfigList = UserSiteConfigPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastUserSiteConfigCriteria = $criteria;
+		return $this->collUserSiteConfigList;
+	}
+
+	
+	public function countUserSiteConfigList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseUserSiteConfigPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(UserSiteConfigPeer::USER_SITE_ID, $this->getId());
+
+		return UserSiteConfigPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addUserSiteConfig(UserSiteConfig $l)
+	{
+		$this->collUserSiteConfigList[] = $l;
 		$l->setUserSite($this);
 	}
 

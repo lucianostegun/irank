@@ -28,24 +28,6 @@ class RankingLive extends BaseRankingLive
 		return $id;
 	}
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-//    		$this->postOnWall();
-    		
-			parent::save($con);
-			
-       		Log::quickLog('ranking_live', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('ranking_live', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function delete($con=null){
 		
 		$this->setVisible(false);
@@ -335,7 +317,7 @@ class RankingLive extends BaseRankingLive
 		if( $returnArray )
 			return $optionList;
 
-		return options_for_select( $optionList, $defaultValue );
+		return options_for_select($optionList, $defaultValue);
 	}
 	
 	public function cleanRecord(){

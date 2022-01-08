@@ -29,10 +29,8 @@ class eventPersonalActions extends sfActions
   
   public function executeEdit($request){
   	
-  	$viewComment   = $request->getParameter('viewComment');
-  	$viewComment   = base64_decode(strrev($viewComment));
-  	
-  	$eventPersonalId = $request->getParameter('eventPersonalId', $viewComment);
+  	$eventPersonalId = $request->getParameter('id');
+  	$eventPersonalId = $request->getParameter('eventPersonalId', $eventPersonalId);
   	$this->isClone   = $request->getParameter('isClone');
   	
   	if( $eventPersonalId ){
@@ -43,7 +41,7 @@ class eventPersonalActions extends sfActions
 			return $this->redirect('eventPersonal/index');
 		
 		if( !$this->eventPersonalObj->isMyEvent() )
-			$this->setTemplate('show');
+			return $this->redirect('eventPersonal/index');
   	}else{
 		
 		$this->eventPersonalObj = new EventPersonal();
@@ -92,12 +90,12 @@ class eventPersonalActions extends sfActions
 		$eventPersonalObj->setUserSiteId( $this->userSiteId );
 		
 	$eventPersonalObj->setEventName( $eventName );
-	$eventPersonalObj->setGameStyleId( $gameStyleId );
 	$eventPersonalObj->setEventPlace( $eventPlace );
 	$eventPersonalObj->setEventDate( Util::formatDate($eventDate) );
-	$eventPersonalObj->setEventPosition( $eventPosition );
-	$eventPersonalObj->setPaidPlaces( ($paidPlaces?$paidPlaces:0) );
-	$eventPersonalObj->setPlayers( ($players?$players:0) );
+	$eventPersonalObj->setEventPosition( nvl($eventPosition) );
+	$eventPersonalObj->setGameStyleId( nvl($gameStyleId) );
+	$eventPersonalObj->setPaidPlaces( nvl($paidPlaces, 0) );
+	$eventPersonalObj->setPlayers( nvl($players, 0) );
 	$eventPersonalObj->setBuyin( Util::formatFloat($buyin) );
 	$eventPersonalObj->setRebuy( Util::formatFloat($rebuy) );
 	$eventPersonalObj->setAddon( Util::formatFloat($addon) );

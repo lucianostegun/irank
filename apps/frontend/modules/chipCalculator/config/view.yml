@@ -1,0 +1,10 @@
+all:
+
+  metas:
+    robots:          index, follow
+    description:     A calculadora de fichas iRank ajuda você a calcular a distribuição de fichas ideal para seus jogos de poker, além de também mostrar qual a melhor estrutura de blinds.
+    keywords:        calculadora, fichas, poker, distribuição, estrutura, blinds, poker
+    language:        pt
+  
+  stylesheets:    [form, table, chipCalculator]
+  javascripts:    [chipCalculator, /sf/prototype/js/scriptaculous, mask]

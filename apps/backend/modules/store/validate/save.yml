@@ -1,0 +1,9 @@
+fields:
+       
+  storeShippingZipcode:
+    required:
+      msg:       form.error.requiredField
+    sfRegexValidator:
+      match:        Yes
+      match_error:  CEP inválido
+      pattern:      /^[0-9]{5}-[0-9]{3}$/si

@@ -1,0 +1,4 @@
+all:
+
+  stylesheets:    [backend/product]
+  javascripts:    [backend/product, backend/productItem, si]

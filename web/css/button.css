@@ -1,150 +1,112 @@
-.button {
+.actionButton {
 
-	z-index: 			500;
-	cursor: 			pointer;
-	-moz-user-select: 	none;
-	line-height:		16px;
-}
-
-.button .buttonLeft {
+	position: 				relative;
+	top: 					-1px;
+	float: 					left;
+	margin: 				0px 2px;
+	padding: 				0px 10px;
+	border-top: 			1px solid #BFBFBF;
+	border-left: 			1px solid #BFBFBF;
+	border-right: 			1px solid #A0A0A0;
+	border-bottom: 			1px solid #A0A0A0;
+	-moz-border-radius: 	3px;
+	-webkit-border-radius: 	3px;
+	border-radius: 			3px;
 	
-	float: 			left;
-	height: 		22px;
-	width: 			7px;
-	background: 	url('/images/button/bgLeft.png') 0px 0px repeat-x;
-}
-
-.button .buttonMiddle {
-
-	float: 			left;
-	font-size: 		8pt;
-	height: 		22px;
-	font-weight: 	bold;
-	text-align: 	center;
-	color: 			#000000;
-	background: 	url('/images/button/bgMiddle.png') 0px 0px repeat-x;
-}
-
-.button .buttonRight {
-
-	margin-right: 	10px;
-	float: 			left;
-	height: 		22px;
-	width: 			7px;
-	background: 	url('/images/button/bgRight.png') 0px 0px repeat-x;
-}
-
-.button.hover .buttonLeft,
-.button.hover .buttonMiddle,
-.button.hover .buttonRight {
-
-	background-position: 	0px -22px;
-}
-
-
-
-
-.button .buttonMiddle .buttonLabel {
-
-	margin-top: 	3px;
-	margin-top: 	3px !ie;
-	color: 			#000000;
-	text-align: 	center;
-	padding: 		0px; 				
-}
-
-.button .buttonMiddle .buttonLabel img {
-
-	margin-top: 	-2px;
-	margin-top: 	0px !ie;
-	margin-right: 	5px
-}
-
-.button .buttonMiddle .buttonLabel a {
-
-	position: 			absolute;
-	left: 				-1px;
-	top: 				-1px;
-	border: 			0px transparent;
-	z-index: 			-100;
-	background: 		none;
-	color: 				#333333;
-	padding-top: 		3px;
-	padding-bottom: 	5px;
-}
-
-.button .buttonMiddle .buttonLabel .submit {
-
-	position: 		absolute;
-	left: 			-1px;
-	top: 			-1px;
-	border: 		0px transparent;
-	background: 	transparent;
-	width: 			0px;
-	height: 		0px;
-	z-index: 		-100;
-}
-
-.button .buttonMiddle .buttonLabel a:hover {
-
-	text-decoration: 	none;
-	color: 				#333333;
-}
-
-
-
-
-
-
-
-
-
-
-
-.button.disabled .buttonLeft {
+	background: 			url('/images/button/buttonBg.png') repeat-x;
+	background-position: 	left top;
 	
-	background: 	url('/images/button/bgLeftDisabled.png') 0px 0px repeat-x;
+	color: 					#505050;
+	font-weight: 			bold;
+	font-family: 			Verdana;
+	font-size: 				10px;
+	display: 				inline-block;
+	height: 				22px;
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
-.button.disabled .buttonMiddle {
+.actionButton.hidden {
 
-	background: 	url('/images/button/bgMiddleDisabled.png') 0px 0px repeat-x;
+	display: none
 }
 
-.button.disabled .buttonMiddle .buttonLabel {
+.windowButtonBar .actionButton {
 
-	color: 			#AAAAAA;
+	float: right;
 }
 
-.button.disabled .buttonMiddle .buttonLabel a {
+.windowButtonBar .actionButton.left {
 
-	color: 			#999999;
-	position: 		absolute;
-	left: 			-1px;
-	top: 			-1px;
-	border: 		0px transparent;
-	z-index: 		-100;
+	float: left;
 }
 
-.button.disabled .buttonMiddle .buttonLabel a:hover {
+.actionButton:hover {
 
-	color: 	#999999;
+	border-top: 			1px solid #AFAFAF;
+	border-left: 			1px solid #AFAFAF;
+	border-right: 			1px solid #909090;
+	border-bottom: 			1px solid #909090;
+	background-position: 	left -22px;
+	cursor: 				pointer;
+	color: 					#303030
 }
 
-.button.disabled .buttonRight {
+.actionButton span {
 
-	background: 	url('/images/button/bgRightDisabled.png') 0px 0px repeat-x;
+	position: 				relative;
+	top: 					2px;
+	height: 				16px;
+	padding: 				0px;
+	margin: 				0px;
+	font-weight: 			bold;
+	font-size: 				10px;
+	padding-top: 			1px;
+	display: 				block;
+	
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
-/* -------------- CLASSES PERSONALIZADAS  -------------- */
-.buttonPresenceYes,
-.buttonPresenceNo {
+.actionButton.image {
 
-	position: relative;
-	left: 47px;
+	padding-left: 	7px;
 }
 
-.buttonPresenceNo .buttonMiddle .buttonLabel {
+.actionButton.image span {
 
-	color: 	#4A4A4A
+	padding-left: 			22px;
+	background-position: 	left 1px;
+	background-repeat: 		no-repeat;
+}
+
+
+.actionButton.disabled,
+.actionButton.disabled:hover {
+
+	border-top: 			1px solid #DFDFDF;
+	border-left: 			1px solid #DFDFDF;
+	border-right: 			1px solid #C0C0C0;
+	border-bottom: 			1px solid #C0C0C0;
+	background-position: 	left top;
+	color: 					#909090;
+}
+
+.actionButton.right {
+
+	float: right
+}
+
+.actionButton.white {
+
+	background: #FFFFFF
 }

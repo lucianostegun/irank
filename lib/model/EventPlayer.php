@@ -10,30 +10,10 @@
 class EventPlayer extends BaseEventPlayer
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			$this->postOnWall();
-			
-			parent::save();
-			
-       		Log::quickLog('event_player', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_player', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function delete($con=null){
 		
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('event_player', $this->getPrimaryKey());
 	}
 	
 	public function notifyConfirm(){
@@ -59,17 +39,20 @@ class EventPlayer extends BaseEventPlayer
 			$playerList .= '  </tr>'.$nl;
 	  	}
 	  	
+	  	$templateName = 'confirmPresenceNotify';
+	  	
+	  	$optionList = array('templateName'=>$templateName);
 	  	
 		$infoList = $eventObj->getInfo();
 		$infoList['playerList'] = $playerList;
 		$infoList['peopleName'] = $this->getPeople()->getFirstName();
 
-		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName('confirmPresenceNotify', false, 'pt_BR'), $infoList);
-		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName('confirmPresenceNotify', false, 'en_US'), $infoList);
+		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
+		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
 		$emailSubjectList['pt_BR'] = __('email.subject.presenceConfirm', null, 'messages', 'pt_BR');
 		$emailSubjectList['en_US'] = __('email.subject.presenceConfirm', null, 'messages', 'en_US');
 
-		$emailAddressList = $eventObj->getEmailAddressList('receiveFriendEventConfirmNotify');
+		$emailAddressList = $eventObj->getEmailAddressList('confirmPresenceNotify');
 
 	  	foreach($eventPlayerObjList as $eventPlayerObj){
 		
@@ -83,7 +66,7 @@ class EventPlayer extends BaseEventPlayer
 			$emailContent    = $emailContentList[$defaultLanguage];
 			$emailSubject    = $emailSubjectList[$defaultLanguage];
 			
-			Report::sendMail($emailSubject, $emailAddress, $emailContent);
+			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 	  	}
 	}
 	
@@ -92,7 +75,7 @@ class EventPlayer extends BaseEventPlayer
 		$this->togglePresence('yes', true);
 	}
 	
-	public function togglePresence($choice, $forceNotify=null){
+	public function togglePresence($choice, $forceNotify=null, $con=null){
 	
 		$eventObj   = $this->getEvent();
 		$sendNotify = false;
@@ -111,7 +94,7 @@ class EventPlayer extends BaseEventPlayer
 			$this->setEnabled(true);
 			
 			$eventObj->setPlayers( $eventObj->getPlayers()+1 );
-			$eventObj->save();
+			$eventObj->save($con);
 		}
 		
 		if( $choice=='no' && $this->getEnabled() ){
@@ -126,7 +109,7 @@ class EventPlayer extends BaseEventPlayer
 			$this->setEnabled(false);
 			
 			$eventObj->setPlayers( $eventObj->getPlayers()-1 );
-			$eventObj->save();
+			$eventObj->save($con);
 		}
 		
 		if( $choice=='maybe' ){
@@ -136,7 +119,7 @@ class EventPlayer extends BaseEventPlayer
 			if( $this->getEnabled() ){
 				
 				$eventObj->setPlayers( $eventObj->getPlayers()-1 );
-				$eventObj->save();
+				$eventObj->save($con);
 			}
 			
 			$this->setEventPosition(0);
@@ -145,7 +128,6 @@ class EventPlayer extends BaseEventPlayer
 			$this->setAddon(0);
 			$this->setBuyin(0);
 			$this->setEnabled(false);
-			
 		}
 		
 		if($choice=='none' && !$this->isNew()){
@@ -154,13 +136,13 @@ class EventPlayer extends BaseEventPlayer
 			$choice     = $this->getInviteStatus();
 			
 			$eventObj->setPlayers( $eventObj->getPlayers()-1 );
-			$eventObj->save();
+			$eventObj->save($con);
 		} 
 		
 		$this->setDeleted(false);
 		$this->setConfirmCode( $this->getConfirmCode() );
 		$this->setInviteStatus($choice);
-		$this->save();
+		$this->save($con);
 		
 		if( $sendNotify && $forceNotify!==false )
 			$this->notifyConfirm();
@@ -174,17 +156,6 @@ class EventPlayer extends BaseEventPlayer
 			$confirmCode = base64_encode(strrev(md5($this->getEvent()->getRankingId().'.'.$this->getEventId().'.'.$this->getPeopleId())));
 		
 		return $confirmCode;
-	}
-	
-	public function postOnWall(){
-
-		$inviteStatus = $this->isColumnModified( EventPlayerPeer::INVITE_STATUS );
-		
-		if( $inviteStatus && $this->getEnabled() )
-       		HomeWall::doLog('confirmou presença no evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', true, null, $this->getPeople()->getFirstName());
-
-		if( $inviteStatus && $this->getInviteStatus()=='no' )
-       		HomeWall::doLog('não vai ao evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventPlayer', true, null, $this->getPeople()->getFirstName());
 	}
 	
 	public function share($save=true){

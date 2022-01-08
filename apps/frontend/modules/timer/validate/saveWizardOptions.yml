@@ -1,0 +1,17 @@
+fields:
+       
+  levels:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       1
+      min_error: form.error.greaterEqual1
+      nan_error: form.error.invalidNumber
+       
+  duration:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       1
+      min_error: form.error.greaterEqual1
+      nan_error: form.error.invalidNumber

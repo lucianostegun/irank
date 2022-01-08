@@ -9,38 +9,119 @@
 	$productCode        = $productObj->getProductCode();
 	$shortName          = $productObj->getShortName();
 	$defaultPrice       = $productObj->getDefaultPrice();
+	$unavailable        = !$productObj->getStock();
+	
+	sfContext::getInstance()->getResponse()->setTitle('iRank Store :: '.$productObj->toString());
 	
 	include_partial('home/component/commonBar', array('pathList'=>array('Loja virtual'=>'store/index', $categoryName=>"store?category=$tagName", $shortName=>null)));
-	include_partial('store/include/cart');
+	
+	echo form_tag('store/addItem', array('id'=>'storeProductForm'));
+	echo input_hidden_tag('productCode', $productCode);
 ?>
 	<div class="productDetail">
-		<a href="/images/<?php echo $productObj->getImageCover('full') ?>" rel="lightbox" id="productImageZoom"><?php echo image_tag($productObj->getImageCover(true), array('id'=>'productImagePreview', 'class'=>'productImage')) ?></a>
-		<div class="extraImageList">
-			<?php
-				for($imageIndex=1; $imageIndex <= 5; $imageIndex++){
-					
-					$function = "getImage$imageIndex";
-					$fileName = $productObj->$function();
-					if( is_null($fileName) )
-						continue;
-					
-					echo link_to(image_tag("store/product/thumb/$fileName", array('class'=>'productImage extra')), '#loadProductPreview("'.$fileName.'")');
-				}
-			?>
+		<div class="productImages">
+			<a href="/images/<?php echo $productObj->getImageCover('full') ?>" rel="lightbox-product" id="productImageZoom"><?php echo image_tag($productObj->getImageCover(true), array('id'=>'productImagePreview', 'class'=>'productImage')) ?></a>
+			<div id="gallery" class="extraImageList gallery">
+				<?php
+					for($imageIndex=1; $imageIndex <= 5; $imageIndex++){
+						
+						$function = "getImage$imageIndex";
+						$fileName = $productObj->$function();
+						if( is_null($fileName) )
+							continue;
+						
+						echo '<a href="/images/store/product/full/'.$fileName.'" rel="lightbox-product">'.image_tag("store/product/thumb/$fileName", array('class'=>'productImage extra')).'</a>';
+					}
+				?>
+			</div>
+			<div class="clear"></div>
+			<!-- AddThis Button BEGIN -->
+			<div class="share addthis_default_style" style="height: 30px;">
+				<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+				<a class="addthis_button_tweet" style="position: relative; left: -10px"></a>
+				<a class="addthis_counter addthis_pill_style" style="position: absolute; margin-left: 182px"></a>
+			</div>
+			<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-501b327e1cbc0097"></script>
+			<!-- AddThis Button END -->
 		</div>
-		
-		<span class="tshirt name"><?php echo "$categoryShortName: $productName" ?></span>
-		<span class="tshirt size"><b>Tamanhos:</b> M/G/GG</span>
-		<span class="tshirt color"><b>Cores:</b> Preta/Branca</span>
-		<span class="tshirt description"><?php echo $productObj->getDescription() ?></span>
-		<span class="tshirt prizeLabel">Vl. unit.</span>
-		<span class="tshirt prize">R$ <?php echo Util::formatFloat($defaultPrice, true) ?></span>
-		<?php echo link_to(image_tag('store/buy', array('class'=>'buyButton')), "store/addItem?$productCode="); ?>
-	</div>
+		<div class="productInfo">
+			<h1 class="name"><?php echo "$categoryShortName: $productName" ?></h1>
 
-<div class="clear"></div>
+			<div class="mt10"></div>
+			<span class="label availability">Disponibilidade:</span>
+			<span class="value availability <?php echo ($unavailable?'unavailable':'available') ?>"><?php echo ($unavailable?'Produto indisponível':'Em estoque') ?></span>
+			
+			<span class="label price">Valor unit.</span>
+			<span class="value price">R$ <?php echo Util::formatFloat($defaultPrice, true) ?></span>
+			<div class="clear"></div>
+
+			<?php
+				$productOptionColorList = ProductOption::getList(null, 'color', $productObj->getId());
+				$productOptionSizeList  = ProductOption::getList(null, 'size', $productObj->getId());
+
+				$productOptionIdColor = (empty($productOptionColorList)?0:(count($productOptionColorList)==1?$productOptionColorList[0]->getId():null));
+				$productOptionIdSize  = (empty($productOptionSizeList)?0:(count($productOptionSizeList)==1?$productOptionSizeList[0]->getId():null));
+
+				echo input_hidden_tag('productOptionIdColor', $productOptionIdColor); 
+				echo input_hidden_tag('productOptionIdSize', $productOptionIdSize);
+			?>
+			
+			<div class="productOptions">
+				<div class="productOption">
+					<label>Qtd.:</label> <?php echo input_tag('quantity', 1, array('size'=>2, 'maxlength'=>2)) ?> 
+				</div>
+				
+				<?php if( !empty($productOptionColorList) ): ?>
+				<div class="productOption color" id="productOptionColors">
+					<label>Cor:</label>
+					<?php
+						foreach($productOptionColorList as $key=>$productOptionObj){
+							
+							$productOptionId = $productOptionObj->getId();
+							
+							echo '<div class="productOptionOption color'.($productOptionIdColor==$productOptionId?' selected':'').'" onclick="selectProductOption(\'color\', '.$productOptionId.')" id="productOptionColor-'.$productOptionId.'">';
+							echo '	<div class="color" style="background: '.$productOptionObj->getDescription().'"></div>';
+							echo '</div>';
+						}
+					?>
+				</div>
+				<?php endif; ?>
+				
+				<?php if( !empty($productOptionSizeList) ): ?>
+				<div class="productOption" id="productOptionSizes">
+					<label>Tam.:</label>
+					<?php
+						
+						foreach($productOptionSizeList as $key=>$productOptionObj){
+							
+							$productOptionId = $productOptionObj->getId();
+							
+							echo '<div class="productOptionOption size '.($productOptionIdSize==$productOptionId?'selected':'disabled').'" onclick="selectProductOption(\'size\', '.$productOptionId.')" id="productOptionSize-'.$productOptionId.'">';
+							echo $productOptionObj->getOptionName();
+							echo '</div>';
+						}
+
+						if( $tagName=='tshirt' )
+							echo link_to(image_tag('icon/help'), '#showTshirtSizeHelp()', array('class'=>'sizeHelpButton', 'title'=>'Consulte a tabela de medidas de cada tamanho')); ?>
+				</div>
+				<?php endif; ?>
+			</div>
+			<div class="buttons">
+				<?php echo link_to(image_tag('store/buy', array('class'=>'buyButton')), '#addProductToCart()'); ?><br/>
+				<?php echo link_to(image_tag('store/bookmark').'Adicionar aos favoritos', '#addProductToBookmarks()', array('class'=>'bookmarkButton')); ?>
+			</div>
+			<div class="clear"></div>
+
+			<span class="description">
+				<?php echo $productObj->getDescription() ?>
+			</span>
+			
+		</div>
+		<div class="clear"></div>
+	</div>
+</form>
 
 <?php
-	include_partial('store/include/paymethods');
 	include_partial('store/include/offer');
+	include_partial('store/include/paymethods');
 ?>

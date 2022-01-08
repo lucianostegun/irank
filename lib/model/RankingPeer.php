@@ -21,7 +21,8 @@ class RankingPeer extends BaseRankingPeer
 		$app        = Util::getApp();
 
 		$allowSearch     = false;
-		$allowedPageList = array('event'=>array('facebookResultImage', 'facebookResult'));
+		$allowedPageList = array('event'=>array('facebookResultImage', 'share', 'facebookResult', 'getPhotoCommentList', 'resultShare', 'facebookResultShare'),
+								 'ranking'=>array('share', 'requestSubscription'));
 		
 		if( array_key_exists($moduleName, $allowedPageList) && in_array($actionName, $allowedPageList[$moduleName]))
 			$allowSearch = true;
@@ -32,8 +33,12 @@ class RankingPeer extends BaseRankingPeer
 
 				$criterion1 = $criteria->getNewCriterion( RankingPlayerPeer::PEOPLE_ID, $peopleId );
 				$criterion1->addAnd( $criteria->getNewCriterion( RankingPlayerPeer::ENABLED, true ) );
+				
 				$criterion2 = $criteria->getNewCriterion( self::USER_SITE_ID, $userSiteId );
 				
+				$criterion3 = $criteria->getNewCriterion( self::IS_PRIVATE, false );
+				
+				$criterion2->addOr($criterion3);
 				$criterion1->addOr($criterion2);
 				$criteria->add($criterion1);
 				
@@ -47,7 +52,8 @@ class RankingPeer extends BaseRankingPeer
 			
 //			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
 		}
-			$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
+		
+		$criteria->addJoin( RankingPeer::ID, RankingPlayerPeer::RANKING_ID, Criteria::LEFT_JOIN );
 		
 		return parent::doSelectRS($criteria, $con);
 	}
@@ -132,6 +138,8 @@ class RankingPeer extends BaseRankingPeer
 		$formula = preg_replace('/buyin/', '$buyin', $formula);
 		$formula = preg_replace('/itm/', '$itm', $formula);
 		
+		$formula = preg_replace('/raiz\(/', 'sqrt(', $formula);
+		
 		$formulaResult = null;
 		
 		@eval('$formulaResult = '.$formula.';');
@@ -150,5 +158,11 @@ class RankingPeer extends BaseRankingPeer
 		$eventCount = Util::executeOne("SELECT COUNT(1) FROM event WHERE ranking_id = $rankingId AND visible AND enabled AND NOT deleted AND saved_result");
 		
 		return $eventCount > 0;
+	}
+	
+	public static function checkRankingTag($rankingId){
+		
+		$rankingObj = RankingPeer::retrieveByPK($rankingId);
+		return !is_null($rankingObj->getRankingTag());
 	}
 }

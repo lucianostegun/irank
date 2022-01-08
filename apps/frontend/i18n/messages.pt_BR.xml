@@ -32,7 +32,7 @@
 			</trans-unit>
 			<trans-unit>
 				<source>eventPersonal.newEventInvite</source>
-				<target>&lt;b&gt;%clickHere%&lt;/b&gt; para cadastrar seu primeiro evento</target>
+				<target>&lt;b&gt;%clickHere%&lt;/b&gt; para cadastrar seu primeiro evento.</target>
 			</trans-unit>
 			<trans-unit>
 				<source>eventPersonal.title</source>
@@ -130,8 +130,8 @@
 				<target>Informe um valor de até 25 caracteres</target>
 			</trans-unit>
 			<trans-unit>
-				<source>form.error.between5and15</source>
-				<target>Informe um valor entre 5 e 15 caracteres</target>
+				<source>form.error.between6and15</source>
+				<target>Informe um valor entre 6 e 15 caracteres</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.passwordConfirm</source>
@@ -828,8 +828,8 @@
 			<trans-unit>
 				<source>ranking.eventsTab.noEvents</source>
 				<target>
-				&lt;br/&gt;Este ranking ainda não possui eventos cadastrados.&lt;br/&gt;
-				&lt;b&gt;%link%&lt;/b&gt; para cadastrar um novo evento.&lt;br/&gt;&lt;br/&gt;
+				Este ranking ainda não possui eventos cadastrados.&lt;br/&gt;
+				&lt;b&gt;%link%&lt;/b&gt; para cadastrar um novo evento.
 				</target>
 			</trans-unit>
 			
@@ -1439,11 +1439,11 @@
 	
 			<trans-unit>
 				<source>form.error.expiredDate</source>
-				<target>A data informada não pode mais ser utilizada para eventos</target>
+				<target>A data informada não pode mais ser utilizada para criação de eventos</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.takenEventName</source>
-				<target>Já existe um evento cadastrado com este nome para esta mesma data</target>
+				<target>Já existe um evento cadastrado com este nome para esta data</target>
 			</trans-unit>
 			<trans-unit>
 				<source>form.error.invalidTime</source>

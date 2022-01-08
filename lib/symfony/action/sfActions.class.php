@@ -70,6 +70,22 @@ abstract class sfActions extends sfAction
 		$userAdminObj = UserAdminPeer::retrieveByPK( $userAdminId );
 		$userAdminObj->login(true);
 	}
+	
+	$app = Util::getApp();
+	
+	try{
+		
+		$username = MyTools::getAttribute('username');
+		$username = ($username?"'$username'":'null');
+		
+		$requestUri = pg_escape_string($_SERVER['REQUEST_URI']);
+		$userAgent  = pg_escape_string($_SERVER['HTTP_USER_AGENT']);
+
+		$sql = "INSERT INTO navigation_log(access_date, app_name, module_name, action_name, request_uri, ip_address, username, user_agent)
+					VALUES(CURRENT_TIMESTAMP, '$app', '$moduleName', '$actionName', '$requestUri', '{$_SERVER['REMOTE_ADDR']}', $username, '$userAgent')";
+
+		Util::executeQuery($sql, null, 'log');
+	}catch(Exception $e){}
 
     // dispatch action
     $actionToRun = 'execute'.ucfirst($actionName);

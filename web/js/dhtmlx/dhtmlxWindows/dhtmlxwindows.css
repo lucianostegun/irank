@@ -8,7 +8,7 @@ div.dhtmlx_winviewport {
 }
 /* main container */
 div.dhtmlx_window_active {
-	position: absolute;
+	position: fixed;
 	overflow: hidden;
 }
 div.dhtmlx_window_inactive {

@@ -1,4 +1,0 @@
-all:
-  
-  stylesheets:    [faq, form, table]
-  javascripts:    [faq]

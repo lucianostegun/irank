@@ -2,7 +2,8 @@
 	sfContext::getInstance()->getResponse()->addStylesheet('quickResume');
 	
 	$resumeInfo      = People::getFullResume();
-	$eventLiveIdList = People::getPendingInvites(true);
+	$eventIdList     = People::getPendingInviteList(true, 'home');
+	$eventLiveIdList = People::getPendingInviteList(true, 'live');
 ?>
 <div id="quickResume" class="home">
 	<h1>Bankroll</h1>
@@ -26,15 +27,15 @@
 	<div class="mt15"></div>
 	<div class="separator"></div>
 	<h2>
-		Convites pendentes
+		Convites pendentes: <?php echo count($eventIdList)+count($eventLiveIdList) ?>
 		<?php
-			if( !empty($eventLiveIdList) )
+			if( !empty($eventLiveIdList) ||  !empty($eventIdList) )
 				echo link_to('ver todos', 'myAccount/invites', array('class'=>'seeAll'));
 		?>
 	</h2>
 	<div class="separator"></div>
 	<div class="pendingInviteList">
-		<?php if( empty($eventLiveIdList) ): ?>
+		<?php if( empty($eventLiveIdList) && empty($eventIdList) ): ?>
 		Você não possui eventos com convites pendentes.
 		<?php
 			else:
@@ -52,6 +53,24 @@
 				<span class="eventDate"><?php echo $eventLiveObj->getEventDate('d/m') ?></span> - 
 				<span class="eventName"><?php echo $eventLiveObj->getEventName() ?></span>
 				<span class="eventPlace">@<?php echo $eventLiveObj->getClub()->toString() ?></span>
+			</div>
+			</a>
+		<?php
+			endforeach;
+			
+			$criteria = new Criteria();
+			$criteria->add( EventPeer::ID, $eventIdList, Criteria::IN );
+			$criteria->addAscendingOrderByColumn( EventPeer::EVENT_DATE_TIME );
+			$criteria->setLimit(5);
+			$eventObjList = Event::getList($criteria);
+			
+			foreach($eventObjList as $key=>$eventObj):
+		?>
+			<a href="javascript:void(0)" onclick="goToPage('event', 'show', 'id', <?php echo $eventObj->getId() ?>)">
+			<div class="pendingInvite <?php echo ($key==0?'first':'') ?>">
+				<span class="eventDate"><?php echo $eventObj->getEventDate('d/m') ?></span> - 
+				<span class="eventName"><?php echo $eventObj->getEventName() ?></span>
+				<span class="eventPlace">@<?php echo $eventObj->getRankingPlace()->getPlaceName() ?></span>
 			</div>
 			</a>
 		<?php

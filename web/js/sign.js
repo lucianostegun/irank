@@ -14,7 +14,8 @@ function handleFailureSign(content){
 	
 	enableButton('mainSubmit');
 	setButtonBarStatus('signMain', 'error');
-	handleFormFieldError(content, 'signForm', 'sign', false, 'sign')
+	
+	handleFormFieldError(content, 'signForm', 'sign', false, 'sign', false)
 }
 
 function doSubmitSign(){

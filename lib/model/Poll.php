@@ -9,21 +9,6 @@
  */ 
 class Poll extends BasePoll
 {
-	public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-       		Log::quickLog('poll', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('poll', $this->getPrimaryKey(), $e);
-        }
-    }
 	
 	public function delete($con=null){
 		
@@ -62,5 +47,10 @@ class Poll extends BasePoll
 		$criteria->addAscendingOrderByColumn( PollPeer::CREATED_AT );
 		
 		return PollPeer::doSelect( $criteria );
+	}
+	
+	public function getTotalAnswers(){
+		
+		return Util::executeOne('SELECT SUM(user_response) FROM poll_answer WHERE poll_id='.$this->getId().' AND user_response IS NOT NULL');
 	}
 }

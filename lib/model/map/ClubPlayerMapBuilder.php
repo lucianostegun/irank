@@ -36,6 +36,8 @@ class ClubPlayerMapBuilder {
 
 		$tMap->addForeignPrimaryKey('PEOPLE_ID', 'PeopleId', 'int' , CreoleTypes::INTEGER, 'people', 'ID', true, null);
 
+		$tMap->addColumn('RATING', 'Rating', 'int', CreoleTypes::INTEGER, false, null);
+
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 	} 

@@ -1,96 +1,94 @@
-function toggleButton(buttonId, type){
-
-	buttonId = ucfirst(buttonId);
-	
-	if( !checkButton(buttonId) )
-		return false;
-	
-	if( type=='over' ){
-
-		$('button'+buttonId+'Left').style.backgroundPosition   = '0px -22px';
-		$('button'+buttonId+'Middle').style.backgroundPosition = '0px -22px';
-		$('button'+buttonId+'Right').style.backgroundPosition  = '0px -22px';
-	}else{
-		
-		$('button'+buttonId+'Left').style.backgroundPosition   = '0px 0px';
-		$('button'+buttonId+'Middle').style.backgroundPosition = '0px 0px';
-		$('button'+buttonId+'Right').style.backgroundPosition  = '0px 0px';
-	}
-}
-
 function checkButton( buttonId ){
 
-	buttonId = ucfirst(buttonId);
-	
-	if( $('button'+buttonId)==null )
+	if( $(buttonId+'Button')==null )
 		return false;
 	
-	var disabled = $('button'+buttonId).hasClassName('buttonDisabled');
+	var disabled = $(buttonId+'Button').hasClassName('disabled');
 
 	return !disabled;
 }
 
 function enableButton( buttonId ){
 
-	buttonId = ucfirst(buttonId);
+	buttonId = buttonId.replace(/Button$/, '');
 	
-	if( $('button'+buttonId)!=null ){
-		
-		$('button'+buttonId).removeClassName('disabled');
-		$('button'+buttonId).disabled  = false;
-	}
+	if( $(buttonId+'Button')==null )
+		return false;
 	
-	image = $(buttonId+'Image');
-	if( image!=null )
-		image.src = image.src.replace('/disabled', '');
+	$(buttonId+'Button').removeClassName('disabled');
+	
+	var backgroundImage = $(buttonId+'Label').style.backgroundImage;
+	$(buttonId+'Label').style.backgroundImage = backgroundImage.replace('/disabled', '');
 }
 
 function disableButton( buttonId ){
 	
-	buttonId = ucfirst(buttonId);
+	buttonId = buttonId.replace(/Button$/, '');
 	
-	if( $('button'+buttonId)!=null ){
+	if( $(buttonId+'Button')==null )
+		return false;
+	
+		$(buttonId+'Button').addClassName('disabled');
+	
+	var backgroundImage = $(buttonId+'Label').style.backgroundImage;
+
+	backgroundImage = backgroundImage.replace(/\/disabled/g, '');
+	backgroundImage = backgroundImage.replace(/\/button\//g, '/button/disabled/');
+	$(buttonId+'Label').style.backgroundImage = backgroundImage;
+	
+	return backgroundImage;
+}
+
+function showButton( buttonId, effect ){
+
+	if( effect && !$(buttonId+'Button').visible() ){
+
+		$(buttonId+'Button').setStyle({opacity: 0.0});
+		$(buttonId+'Button').style.visibility = 'visible';
+		$(buttonId+'Button').show();
+		$(buttonId+'Button').fade({ duration: 0.3, from: 0, to: 1 });
+	}
+	
+	showDiv(buttonId+'Button');
+}
+
+function hideButton( buttonId, effect ){
+	
+	if( effect && $(buttonId+'Button').visible() ){
 		
-		$('button'+buttonId).addClassName('disabled');
-		$('button'+buttonId).disabled  = false;
+		$(buttonId+'Button').style.visibility = 'visible';
+		$(buttonId+'Button').show();
+		$(buttonId+'Button').fade({ duration: 0.3, from: 1, to: 0 });
+	}else{
+		
+		hideDiv(buttonId+'Button');
 	}
-
-	image = $(buttonId+'Image');
-	if( image!=null ){
-
-		var imagePath = image.src.replace(/\/disabled/g, '');
-
-		var lastPath = imagePath.match(/\/[a-zA-Z0-9-_\.]+$/);
-		imagePath = imagePath.replace(lastPath, '/disabled'+lastPath);
-		image.src = imagePath;
-	}
-}
-
-function showButton( buttonId ){
-
-	buttonId = ucfirst(buttonId);
-	showDiv('button'+buttonId);
-}
-
-function hideButton( buttonId ){
-	
-	buttonId = ucfirst(buttonId);
-	hideDiv('button'+buttonId);
 }
 
 
 
 function setButtonLabel( buttonId, label, icon ){
 
-	buttonId = ucfirst(buttonId);
-	
-	if( $('button'+buttonId)!=null ){
+	if( $(buttonId+'Label')!=null ){
 		
 		var button = '';
-		if( icon )
-			button = '<img id="EventFilterSubmitImage" align="absmiddle" style="margin-top: -2px; margin-right: 5px" src="/images/button/'+icon+'" alt="AjaxLoader" />';
+		if( icon ){
+			
+			if( !(/.[a-z]{3}$/).test(icon) )
+				icon += '.png';
+			
+			icon = 'url(/images/button/'+icon+')';
+			
+			if( !checkButton(buttonId) ){
+				
+				icon = icon.replace('button/', 'button/disabled/');
+				icon = icon.replace('disabled/disabled/', 'disabled/');
+			}
+			
+			$(buttonId+'Label').style.backgroundImage = icon;
+		}
 		
-		$('button'+buttonId+'Label').innerHTML = button+label;
+		$(buttonId+'Label').innerHTML = label;
 	}
 	
 	

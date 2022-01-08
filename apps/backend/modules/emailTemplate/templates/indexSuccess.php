@@ -8,6 +8,7 @@
 				<th>Template</th> 
 				<th>Template global</th> 
 				<th>Arquivo</th> 
+				<th>Opção</th> 
 			</tr> 
 		</thead> 
 		<tbody id="emailTemplateTbody"> 
@@ -22,6 +23,7 @@
 				<td onclick="<?php echo $onclick ?>"><?php echo $emailTemplateObj->getTemplateName() ?></td> 
 				<td onclick="<?php echo $onclick ?>"><?php echo $emailTemplateObj->getEmailTemplate()->getTemplateName() ?></td> 
 				<td><?php echo link_to($emailTemplateObj->getFile()->getFileName(), '#goToPage("emailTemplate", "downloadFile", "emailTemplateId", '.$emailTemplateObj->getId().')') ?></td> 
+				<td><?php echo $emailTemplateObj->getIsOption()?'Sim':'Não' ?></td> 
 			</tr> 
 			<?php endforeach; ?>
 		</tbody> 

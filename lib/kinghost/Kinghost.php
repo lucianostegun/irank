@@ -23,7 +23,7 @@ class Kinghost
 	* @var	string
 	* @access private
 	*/
-	private $password = 'iR4nk2011API';
+	private $password = 'iR4nk2012API';
 
 	// internal constant to enable/disable debugging
 	const DEBUG = false;
@@ -217,7 +217,7 @@ class Kinghost
                     $this->executeDelete($ch);
                     break;
                 default:
-                    throw new InvalidArgumentException('O verb (' . $this->verb . ') � invalido para a chamada REST.');
+                    throw new InvalidArgumentException('O verb (' . $this->verb . ') é invalido para a chamada REST.');
             }
         }
         catch (InvalidArgumentException $e)
@@ -400,7 +400,7 @@ class Kinghost
 	public function doCall( $url = null, $aParameters, $verb = 'GET')
 	{
 		
-		if( Util::isDebug() )
+		if( self::DEBUG )
 			return true;
 		
 		if($url !== null)
@@ -609,7 +609,7 @@ class Kinghost
 	
 	// remUtf8() {{{
 	/** 
-	* Chama o metodo que remove codifica��o utf8
+	* Chama o metodo que remove codificação utf8
 	* 
 	* Example:
 	* <code>
@@ -628,7 +628,7 @@ class Kinghost
 
 	// getResponseInfo() {{{
 	/** 
-	* Chama o metodo que retorna informa��es da requisi��o feita a API
+	* Chama o metodo que retorna informações da requisição feita a API
 	* 
 	* Example:
 	* <code>
@@ -771,7 +771,7 @@ class Kinghost
 
 	// getUserAgent() {{{
 	/**
-	* Chama o metodo que retorna o user-agent da sua aplica��o
+	* Chama o metodo que retorna o user-agent da sua aplicação
 	*
 	* @access public
 	* @return string
@@ -784,7 +784,7 @@ class Kinghost
 
 	// setUserAgent() {{{
 	/**
-	* Seta o user-agent para sua aplica��o
+	* Seta o user-agent para sua aplicação
 	*
 	* @param	string $userAgent
 	* @return	void
@@ -797,7 +797,7 @@ class Kinghost
 
 	// getTimeOut() {{{
 	/**
-	* Chama o metodo que retorna o timeOut da sua aplica��o
+	* Chama o metodo que retorna o timeOut da sua aplicação
 	*
 	* @access public
 	* @return int 
@@ -810,7 +810,7 @@ class Kinghost
 
 	// setTimeOut() {{{
 	/**
-	* Seta o user-agent para sua aplica��o
+	* Seta o user-agent para sua aplicação
 	*
 	* @param	int $seconds
 	* @return	void
@@ -823,7 +823,7 @@ class Kinghost
 
 	// getTypeAuth() {{{
 	/**
-	* Chama o metodo que retorna o typeAuth da sua aplica��o
+	* Chama o metodo que retorna o typeAuth da sua aplicação
 	*
 	* @access public
 	* @return string	 
@@ -836,7 +836,7 @@ class Kinghost
 	
 	// setTypeAuth() {{{	
 	/**
-	* Seta o typeAuth para sua aplica��o
+	* Seta o typeAuth para sua aplicação
 	*
 	* @param	string $typeAuth
 	* @return	void

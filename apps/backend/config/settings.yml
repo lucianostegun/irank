@@ -3,15 +3,19 @@ prod:
     no_script_name:         on
     cache:                  off
     i18n:                   on
+    logging_enabled:        off
+    charset                 utf-8
 
 dev:
   .settings:
-    error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
+    error_reporting:        <?php echo (E_ALL | E_STRICT & ~E_DEPRECATED)."\n" ?>
     web_debug:              on
     cache:                  off
     no_script_name:         off
     etag:                   off
     i18n:                   on
+    logging_enabled:        off
+    charset                 utf-8
 
 test:
   .settings:
@@ -20,6 +24,7 @@ test:
     web_debug:              off
     no_script_name:         off
     etag:                   off
+    log:                    off
 
 all:
   .settings:

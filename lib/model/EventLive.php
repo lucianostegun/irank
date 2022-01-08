@@ -20,23 +20,10 @@ class EventLive extends BaseEventLive
 	
     public function save($con=null){
     	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
+		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
+		$this->setEnrollmentStartDate(nvl($this->getEnrollmentStartDate(), '2012-01-01'));
 
-//    		$this->postOnWall();
-    		
-    		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
-    		$this->setEnrollmentStartDate(nvl($this->getEnrollmentStartDate(), '2012-01-01'));
-
-			parent::save($con);
-			
-        	Log::quickLog('event_live', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_live', $this->getPrimaryKey(), $e);
-        }
+		parent::save($con);
     }
 	
 	public function delete($con=null){
@@ -241,7 +228,6 @@ class EventLive extends BaseEventLive
 				$eventLiveObj->setTablesNumber($rankingLiveObj->getTablesNumberSatellite());
 				$eventLiveObj->setIsIlimitedRebuys($rankingLiveObj->getIsIlimitedRebuysSatellite());
 				$eventLiveObj->setIsSatellite(true);
-				$eventLiveObj->setSuppressRanking(true);
 				$eventLiveObj->setIsMultiday(false);
 				$eventLiveObj->save($con);
 			}
@@ -612,8 +598,8 @@ class EventLive extends BaseEventLive
 		if( $peopleId ){
 			
 			$orderSeq = 0;
-			foreach($scoreList as $label=>$score)
-				EventLivePlayerScore::quickSave($eventLiveId, $peopleId, $score, $label, ++$orderSeq);
+			//foreach($scoreList as $label=>$score)
+			//	EventLivePlayerScore::quickSave($eventLiveId, $peopleId, $score, $label, ++$orderSeq);
 			
 			return $scoreList;
 		}
@@ -968,8 +954,8 @@ class EventLive extends BaseEventLive
   		$emailContent = $this->getDisclosureEmailTemplate($peopleObj);
   		$emailSubject = $this->getDisclosureEmailSubject();
   		
-  		$options = array('emailLogId'=>$emailLogId);
-	  	Report::sendMail($emailSubject, $emailAddress, $emailContent, $options);
+  		$optionList = array('emailLogId'=>$emailLogId);
+	  	Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 	  	
 	  	echo $emailLogObj->getCreatedAt('d/m/Y H:i');
 	}

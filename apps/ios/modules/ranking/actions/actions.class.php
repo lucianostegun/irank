@@ -94,6 +94,7 @@ class rankingActions extends sfActions
   	
   	$userSiteId  = $request->getParameter('userSiteId');
   	$model       = $request->getParameter('model');
+  	$deviceUDID  = $request->hasParameter('deviceUDID');
   	$userSiteObj = $this->userSiteObj;
 	
 	switch( $model ){
@@ -101,7 +102,10 @@ class rankingActions extends sfActions
 			
 			$rankingList = array();
 			
-			foreach($userSiteObj->getRankingList() as $rankingObj){
+			$criteria = new Criteria();
+			$criteria->addDescendingOrderByColumn( RankingPeer::START_DATE );
+			
+			foreach($userSiteObj->getRankingList($criteria) as $rankingObj){
 				
 				$rankingNode = array();
 				
@@ -113,7 +117,9 @@ class rankingActions extends sfActions
 				$rankingNode['finishDate']   = $rankingObj->getFinishDate('d/m/Y');
 				$rankingNode['isPrivate']    = $rankingObj->getIsPrivate()?'true':'false';
 				$rankingNode['rankingType']  = $rankingObj->getRankingType()->getDescription();
-				$rankingNode['buyin'] = $rankingObj->getBuyin();
+				
+				$buyinTagName = ($deviceUDID?'buyin':'defaultBuyin');
+				$rankingNode[$buyinTagName]  = $rankingObj->getBuyin();
 				$rankingNode['isMyRanking']  = $rankingObj->isMyRanking();
 				
 				$rankingList[] = $rankingNode;

@@ -13,7 +13,7 @@ abstract class BaseProductPeer {
 	const CLASS_DEFAULT = 'lib.model.Product';
 
 	
-	const NUM_COLUMNS = 20;
+	const NUM_COLUMNS = 21;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -45,6 +45,9 @@ abstract class BaseProductPeer {
 
 	
 	const IS_NEW = 'product.IS_NEW';
+
+	
+	const STOCK = 'product.STOCK';
 
 	
 	const IMAGE_1 = 'product.IMAGE_1';
@@ -85,19 +88,19 @@ abstract class BaseProductPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'ProductCode', 'ProductCategoryId', 'ProductName', 'ShortName', 'Description', 'DefaultPrice', 'DefaultWeight', 'IsNew', 'Image1', 'Image2', 'Image3', 'Image4', 'Image5', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (ProductPeer::ID, ProductPeer::PRODUCT_CODE, ProductPeer::PRODUCT_CATEGORY_ID, ProductPeer::PRODUCT_NAME, ProductPeer::SHORT_NAME, ProductPeer::DESCRIPTION, ProductPeer::DEFAULT_PRICE, ProductPeer::DEFAULT_WEIGHT, ProductPeer::IS_NEW, ProductPeer::IMAGE_1, ProductPeer::IMAGE_2, ProductPeer::IMAGE_3, ProductPeer::IMAGE_4, ProductPeer::IMAGE_5, ProductPeer::ENABLED, ProductPeer::VISIBLE, ProductPeer::DELETED, ProductPeer::LOCKED, ProductPeer::CREATED_AT, ProductPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'product_code', 'product_category_id', 'product_name', 'short_name', 'description', 'default_price', 'default_weight', 'is_new', 'image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PRODUCT_CODE'=>'', 'PRODUCT_CATEGORY_ID'=>'', 'PRODUCT_NAME'=>'', 'SHORT_NAME'=>'', 'DESCRIPTION'=>'', 'DEFAULT_PRICE'=>'', 'DEFAULT_WEIGHT'=>'', 'IS_NEW'=>'', 'IMAGE_1'=>'', 'IMAGE_2'=>'', 'IMAGE_3'=>'', 'IMAGE_4'=>'', 'IMAGE_5'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'ProductCode', 'ProductCategoryId', 'ProductName', 'ShortName', 'Description', 'DefaultPrice', 'DefaultWeight', 'IsNew', 'Stock', 'Image1', 'Image2', 'Image3', 'Image4', 'Image5', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (ProductPeer::ID, ProductPeer::PRODUCT_CODE, ProductPeer::PRODUCT_CATEGORY_ID, ProductPeer::PRODUCT_NAME, ProductPeer::SHORT_NAME, ProductPeer::DESCRIPTION, ProductPeer::DEFAULT_PRICE, ProductPeer::DEFAULT_WEIGHT, ProductPeer::IS_NEW, ProductPeer::STOCK, ProductPeer::IMAGE_1, ProductPeer::IMAGE_2, ProductPeer::IMAGE_3, ProductPeer::IMAGE_4, ProductPeer::IMAGE_5, ProductPeer::ENABLED, ProductPeer::VISIBLE, ProductPeer::DELETED, ProductPeer::LOCKED, ProductPeer::CREATED_AT, ProductPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'product_code', 'product_category_id', 'product_name', 'short_name', 'description', 'default_price', 'default_weight', 'is_new', 'stock', 'image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PRODUCT_CODE'=>'', 'PRODUCT_CATEGORY_ID'=>'', 'PRODUCT_NAME'=>'', 'SHORT_NAME'=>'', 'DESCRIPTION'=>'', 'DEFAULT_PRICE'=>'', 'DEFAULT_WEIGHT'=>'', 'IS_NEW'=>'', 'STOCK'=>'', 'IMAGE_1'=>'', 'IMAGE_2'=>'', 'IMAGE_3'=>'', 'IMAGE_4'=>'', 'IMAGE_5'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ProductCode'=>1, 'ProductCategoryId'=>2, 'ProductName'=>3, 'ShortName'=>4, 'Description'=>5, 'DefaultPrice'=>6, 'DefaultWeight'=>7, 'IsNew'=>8, 'Image1'=>9, 'Image2'=>10, 'Image3'=>11, 'Image4'=>12, 'Image5'=>13, 'Enabled'=>14, 'Visible'=>15, 'Deleted'=>16, 'Locked'=>17, 'CreatedAt'=>18, 'UpdatedAt'=>19, ),
-		BasePeer::TYPE_COLNAME=>array (ProductPeer::ID=>0, ProductPeer::PRODUCT_CODE=>1, ProductPeer::PRODUCT_CATEGORY_ID=>2, ProductPeer::PRODUCT_NAME=>3, ProductPeer::SHORT_NAME=>4, ProductPeer::DESCRIPTION=>5, ProductPeer::DEFAULT_PRICE=>6, ProductPeer::DEFAULT_WEIGHT=>7, ProductPeer::IS_NEW=>8, ProductPeer::IMAGE_1=>9, ProductPeer::IMAGE_2=>10, ProductPeer::IMAGE_3=>11, ProductPeer::IMAGE_4=>12, ProductPeer::IMAGE_5=>13, ProductPeer::ENABLED=>14, ProductPeer::VISIBLE=>15, ProductPeer::DELETED=>16, ProductPeer::LOCKED=>17, ProductPeer::CREATED_AT=>18, ProductPeer::UPDATED_AT=>19, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'product_code'=>1, 'product_category_id'=>2, 'product_name'=>3, 'short_name'=>4, 'description'=>5, 'default_price'=>6, 'default_weight'=>7, 'is_new'=>8, 'image_1'=>9, 'image_2'=>10, 'image_3'=>11, 'image_4'=>12, 'image_5'=>13, 'enabled'=>14, 'visible'=>15, 'deleted'=>16, 'locked'=>17, 'created_at'=>18, 'updated_at'=>19, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'ProductCode'=>1, 'ProductCategoryId'=>2, 'ProductName'=>3, 'ShortName'=>4, 'Description'=>5, 'DefaultPrice'=>6, 'DefaultWeight'=>7, 'IsNew'=>8, 'Stock'=>9, 'Image1'=>10, 'Image2'=>11, 'Image3'=>12, 'Image4'=>13, 'Image5'=>14, 'Enabled'=>15, 'Visible'=>16, 'Deleted'=>17, 'Locked'=>18, 'CreatedAt'=>19, 'UpdatedAt'=>20, ),
+		BasePeer::TYPE_COLNAME=>array (ProductPeer::ID=>0, ProductPeer::PRODUCT_CODE=>1, ProductPeer::PRODUCT_CATEGORY_ID=>2, ProductPeer::PRODUCT_NAME=>3, ProductPeer::SHORT_NAME=>4, ProductPeer::DESCRIPTION=>5, ProductPeer::DEFAULT_PRICE=>6, ProductPeer::DEFAULT_WEIGHT=>7, ProductPeer::IS_NEW=>8, ProductPeer::STOCK=>9, ProductPeer::IMAGE_1=>10, ProductPeer::IMAGE_2=>11, ProductPeer::IMAGE_3=>12, ProductPeer::IMAGE_4=>13, ProductPeer::IMAGE_5=>14, ProductPeer::ENABLED=>15, ProductPeer::VISIBLE=>16, ProductPeer::DELETED=>17, ProductPeer::LOCKED=>18, ProductPeer::CREATED_AT=>19, ProductPeer::UPDATED_AT=>20, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'product_code'=>1, 'product_category_id'=>2, 'product_name'=>3, 'short_name'=>4, 'description'=>5, 'default_price'=>6, 'default_weight'=>7, 'is_new'=>8, 'stock'=>9, 'image_1'=>10, 'image_2'=>11, 'image_3'=>12, 'image_4'=>13, 'image_5'=>14, 'enabled'=>15, 'visible'=>16, 'deleted'=>17, 'locked'=>18, 'created_at'=>19, 'updated_at'=>20, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
 	);
 
 	
@@ -168,6 +171,8 @@ abstract class BaseProductPeer {
 		$criteria->addSelectColumn(ProductPeer::DEFAULT_WEIGHT);
 
 		$criteria->addSelectColumn(ProductPeer::IS_NEW);
+
+		$criteria->addSelectColumn(ProductPeer::STOCK);
 
 		$criteria->addSelectColumn(ProductPeer::IMAGE_1);
 

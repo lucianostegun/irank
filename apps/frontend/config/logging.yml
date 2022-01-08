@@ -4,8 +4,8 @@ prod:
   rotate:  on
   purge:   off
 
-#all:
-#  enabled: on
+all:
+  enabled: on
 #  level:   debug
 #  rotate:  off
 #  period:  7

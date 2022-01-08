@@ -3,12 +3,31 @@
 	$quickResume = $userSiteObj->getOptionValue('quickResume');
 
 	$resumeValue = People::getQuickResume($quickResume);
+	
+	$userSiteConfigObj    = $userSiteObj->getConfig();
+	$bankrollTutorialHome = $userSiteConfigObj->getBankrollTutorialHome();
+	
+	if( $bankrollTutorialHome <= 3 ){
+		
+		$bankrollTutorialHome++;
+		$userSiteConfigObj->setBankrollTutorialHome($bankrollTutorialHome);
+		$userSiteConfigObj->save();
+	}
 ?>
-<div class="generalCredit">
-	<span class="label">
-		<?php echo __('generalCredit.'.$quickResume) ?>:
-	</span>
-	<span class="credit <?php echo ($resumeValue<0?'negative':'positive') ?>">
-		<?php echo Util::formatFloat($resumeValue, true) ?>
-	</span>
+<a href="<?php echo url_for('myAccount/bankroll#now') ?>">
+	<div class="generalCredit">
+		<span class="label">
+			Bankroll:
+		</span>
+		<span class="credit <?php echo ($resumeValue<0?'negative':'positive') ?>">
+			<?php echo Util::formatFloat($resumeValue, true) ?>
+		</span>
+	</div>
+</a>
+
+<?php if( $bankrollTutorialHome <= 3 ): ?>
+<div id="bankrollTutorial" style="position: absolute">
+	<div style="position: absolute; top: -87px; left: 170px; z-index: 1"><?php echo image_tag('tutorial/arrowLeftDown') ?></div>
+	<div style="position: absolute; top: -95px; left: 275px; z-index: 1"><?php echo image_tag('tutorial/bankroll') ?></div>
 </div>
+<?php endif; ?>

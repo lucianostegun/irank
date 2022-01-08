@@ -3,7 +3,7 @@ function doLogin(){
 	$('#indicator').show();
 	$('#loginErrorPanel').hide();
 	
-	var successFunc = function(t){
+	var successFunc = function(content){
 		
 		window.location = _webRoot+'/home';
 		$("#loginErrorPanel").hide("fade", 50);

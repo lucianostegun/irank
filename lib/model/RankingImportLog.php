@@ -22,7 +22,7 @@ class RankingImportLog extends BaseRankingImportLog
 					AND import_table = '$importTable'
 					AND object_id = $objectId";
 					
-		return (Util::executeOne($sql, 'int')==0);
+		return (Util::executeOne($sql, 'int', null, 'log')==0);
 	}
 
 	public static function doLog($rankingId, $rankingIdFrom, $importTable, $objectId){

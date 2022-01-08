@@ -52,6 +52,8 @@ class EmailMarketingMapBuilder {
 
 		$tMap->addColumn('LAST_SENT_DATE', 'LastSentDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
+		$tMap->addColumn('CLASS_NAME', 'ClassName', 'string', CreoleTypes::VARCHAR, false, null);
+
 		$tMap->addColumn('ENABLED', 'Enabled', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('VISIBLE', 'Visible', 'boolean', CreoleTypes::BOOLEAN, false, null);

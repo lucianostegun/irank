@@ -13,7 +13,7 @@ abstract class BaseRankingPlacePeer {
 	const CLASS_DEFAULT = 'lib.model.RankingPlace';
 
 	
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 10;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -32,6 +32,15 @@ abstract class BaseRankingPlacePeer {
 	const MAPS_LINK = 'ranking_place.MAPS_LINK';
 
 	
+	const STATE_ID = 'ranking_place.STATE_ID';
+
+	
+	const CITY_NAME = 'ranking_place.CITY_NAME';
+
+	
+	const QUARTER = 'ranking_place.QUARTER';
+
+	
 	const DELETED = 'ranking_place.DELETED';
 
 	
@@ -46,19 +55,19 @@ abstract class BaseRankingPlacePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'PlaceName', 'MapsLink', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (RankingPlacePeer::ID, RankingPlacePeer::RANKING_ID, RankingPlacePeer::PLACE_NAME, RankingPlacePeer::MAPS_LINK, RankingPlacePeer::DELETED, RankingPlacePeer::CREATED_AT, RankingPlacePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'place_name', 'maps_link', 'deleted', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'PLACE_NAME'=>'', 'MAPS_LINK'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'RankingId', 'PlaceName', 'MapsLink', 'StateId', 'CityName', 'Quarter', 'Deleted', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (RankingPlacePeer::ID, RankingPlacePeer::RANKING_ID, RankingPlacePeer::PLACE_NAME, RankingPlacePeer::MAPS_LINK, RankingPlacePeer::STATE_ID, RankingPlacePeer::CITY_NAME, RankingPlacePeer::QUARTER, RankingPlacePeer::DELETED, RankingPlacePeer::CREATED_AT, RankingPlacePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'ranking_id', 'place_name', 'maps_link', 'state_id', 'city_name', 'quarter', 'deleted', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'RANKING_ID'=>'', 'PLACE_NAME'=>'', 'MAPS_LINK'=>'', 'STATE_ID'=>'', 'CITY_NAME'=>'', 'QUARTER'=>'', 'DELETED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'PlaceName'=>2, 'MapsLink'=>3, 'Deleted'=>4, 'CreatedAt'=>5, 'UpdatedAt'=>6, ),
-		BasePeer::TYPE_COLNAME=>array (RankingPlacePeer::ID=>0, RankingPlacePeer::RANKING_ID=>1, RankingPlacePeer::PLACE_NAME=>2, RankingPlacePeer::MAPS_LINK=>3, RankingPlacePeer::DELETED=>4, RankingPlacePeer::CREATED_AT=>5, RankingPlacePeer::UPDATED_AT=>6, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'place_name'=>2, 'maps_link'=>3, 'deleted'=>4, 'created_at'=>5, 'updated_at'=>6, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'RankingId'=>1, 'PlaceName'=>2, 'MapsLink'=>3, 'StateId'=>4, 'CityName'=>5, 'Quarter'=>6, 'Deleted'=>7, 'CreatedAt'=>8, 'UpdatedAt'=>9, ),
+		BasePeer::TYPE_COLNAME=>array (RankingPlacePeer::ID=>0, RankingPlacePeer::RANKING_ID=>1, RankingPlacePeer::PLACE_NAME=>2, RankingPlacePeer::MAPS_LINK=>3, RankingPlacePeer::STATE_ID=>4, RankingPlacePeer::CITY_NAME=>5, RankingPlacePeer::QUARTER=>6, RankingPlacePeer::DELETED=>7, RankingPlacePeer::CREATED_AT=>8, RankingPlacePeer::UPDATED_AT=>9, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'ranking_id'=>1, 'place_name'=>2, 'maps_link'=>3, 'state_id'=>4, 'city_name'=>5, 'quarter'=>6, 'deleted'=>7, 'created_at'=>8, 'updated_at'=>9, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	
@@ -119,6 +128,12 @@ abstract class BaseRankingPlacePeer {
 		$criteria->addSelectColumn(RankingPlacePeer::PLACE_NAME);
 
 		$criteria->addSelectColumn(RankingPlacePeer::MAPS_LINK);
+
+		$criteria->addSelectColumn(RankingPlacePeer::STATE_ID);
+
+		$criteria->addSelectColumn(RankingPlacePeer::CITY_NAME);
+
+		$criteria->addSelectColumn(RankingPlacePeer::QUARTER);
 
 		$criteria->addSelectColumn(RankingPlacePeer::DELETED);
 
@@ -233,6 +248,34 @@ abstract class BaseRankingPlacePeer {
 
 
 	
+	public static function doCountJoinState(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(RankingPlacePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(RankingPlacePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(RankingPlacePeer::STATE_ID, StatePeer::ID);
+
+		$rs = RankingPlacePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
 	public static function doSelectJoinRanking(Criteria $c, $con = null)
 	{
 		$c = clone $c;
@@ -280,6 +323,53 @@ abstract class BaseRankingPlacePeer {
 
 
 	
+	public static function doSelectJoinState(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		RankingPlacePeer::addSelectColumns($c);
+		$startcol = (RankingPlacePeer::NUM_COLUMNS - RankingPlacePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		StatePeer::addSelectColumns($c);
+
+		$c->addJoin(RankingPlacePeer::STATE_ID, StatePeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = RankingPlacePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = StatePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getState(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addRankingPlace($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initRankingPlaceList();
+				$obj2->addRankingPlace($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
 	public static function doCountJoinAll(Criteria $criteria, $distinct = false, $con = null)
 	{
 		$criteria = clone $criteria;
@@ -297,6 +387,8 @@ abstract class BaseRankingPlacePeer {
 		}
 
 		$criteria->addJoin(RankingPlacePeer::RANKING_ID, RankingPeer::ID);
+
+		$criteria->addJoin(RankingPlacePeer::STATE_ID, StatePeer::ID);
 
 		$rs = RankingPlacePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
@@ -322,7 +414,12 @@ abstract class BaseRankingPlacePeer {
 		RankingPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + RankingPeer::NUM_COLUMNS;
 
+		StatePeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + StatePeer::NUM_COLUMNS;
+
 		$c->addJoin(RankingPlacePeer::RANKING_ID, RankingPeer::ID);
+
+		$c->addJoin(RankingPlacePeer::STATE_ID, StatePeer::ID);
 
 		$rs = BasePeer::doSelect($c, $con);
 		$results = array();
@@ -351,6 +448,199 @@ abstract class BaseRankingPlacePeer {
 				$temp_obj2 = $temp_obj1->getRanking(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
 					$temp_obj2->addRankingPlace($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initRankingPlaceList();
+				$obj2->addRankingPlace($obj1);
+			}
+
+
+					
+			$omClass = StatePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3 = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getState(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addRankingPlace($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initRankingPlaceList();
+				$obj3->addRankingPlace($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doCountJoinAllExceptRanking(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(RankingPlacePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(RankingPlacePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(RankingPlacePeer::STATE_ID, StatePeer::ID);
+
+		$rs = RankingPlacePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doCountJoinAllExceptState(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(RankingPlacePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(RankingPlacePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(RankingPlacePeer::RANKING_ID, RankingPeer::ID);
+
+		$rs = RankingPlacePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
+	public static function doSelectJoinAllExceptRanking(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		RankingPlacePeer::addSelectColumns($c);
+		$startcol2 = (RankingPlacePeer::NUM_COLUMNS - RankingPlacePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		StatePeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + StatePeer::NUM_COLUMNS;
+
+		$c->addJoin(RankingPlacePeer::STATE_ID, StatePeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = RankingPlacePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = StatePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getState(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addRankingPlace($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initRankingPlaceList();
+				$obj2->addRankingPlace($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptState(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		RankingPlacePeer::addSelectColumns($c);
+		$startcol2 = (RankingPlacePeer::NUM_COLUMNS - RankingPlacePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		RankingPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + RankingPeer::NUM_COLUMNS;
+
+		$c->addJoin(RankingPlacePeer::RANKING_ID, RankingPeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = RankingPlacePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = RankingPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getRanking(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addRankingPlace($obj1);
+					break;
 				}
 			}
 

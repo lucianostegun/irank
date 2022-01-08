@@ -36,6 +36,19 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+	
+	<div class="formRow">
+		<label>Classe de anexo</label>
+		<div class="formRight">
+			<?php
+				$optionList = array(''=>'Selecione', 'Bankroll'=>'Relatório de bankroll');
+				echo select_tag('className', options_for_select($optionList, $emailMarketingObj->getClassName()), array('id'=>'emailMarketingClassName'));
+			?>
+			<div class="clear"></div>
+			<div class="formNote error" id="emailMarketingFormErrorClassName"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
 
 	<?php
 		$fileObj  = $emailMarketingObj->getFile();

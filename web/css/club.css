@@ -81,14 +81,16 @@
 #houseList .house .info .profile h1 a {
 
 	color: 	#101010;
+	text-shadow: #C0C0C0 2px 2px 
 }
 
 #houseList .house .info .profile .address {
 
 	clear: 			both;
 	height: 		24px;
-	font-size: 		18px;
-	margin-left: 	20px
+	font-size: 		14px;
+	margin-left: 	20px;
+	position: 		relative;
 }
 
 #houseList .house .info .profile .address a {
@@ -109,6 +111,13 @@
 
 	margin-left: 	10px;	
 	margin-right: 	10px	
+}
+
+#houseList .house .info .profile .address .clubSite {
+
+	position: absolute;
+	top: 1px;
+	right: 0px
 }
 
 #houseList .house .info .profile .phoneList {
@@ -217,6 +226,7 @@
 
 .clubDetails th.phones {
 
+	position: 		relative;
 	padding: 		10px 10px 5px 10px;
 	font-size: 		13px;
 	font-weight: 	bold;
@@ -280,7 +290,7 @@
 .clubDetailsArea .channel .clubTab.location {
 
 	background: 	url('/images/mapsPin.png') 10px 10px no-repeat;
-	text-indent: 	18px;
+	text-indent: 	22px;
 }
 
 .clubDetailsArea .clubTabContent {
@@ -304,4 +314,91 @@
 .clubDetailsArea #clubEventsContent {
 	
 	margin: 		0px;
+}
+
+.clubStateFilter {
+
+	padding-left: 20px;
+}
+
+.clubStateFilter a {
+
+	margin-right: 15px;
+}
+
+.clubStateFilter a.selected {
+
+	font-weight: bold
+}
+
+.clubNotFound {
+
+	background: url('/images/club/map.png') no-repeat;
+	padding-left: 140px;
+	height: 180px;
+	padding-top: 30px;
+}
+
+#clubRating {
+
+	position: absolute;
+	right: 15px;
+	margin-top: -2px;
+}
+
+#clubRating li.star {
+
+	display: inline-block;
+	width: 26px;
+	height: 24px;
+	background: url('/images/star.png') no-repeat center top;
+	list-style: none;
+}
+
+#clubRating li.star:hover {
+
+	background-position: center -24px
+}
+
+#clubRating.hover.star-1 li.star#star-1, #clubRating.rating-1 li.star#star-1 { background-position: center -24px }
+#clubRating.hover.star-1 li.star#star-2,
+#clubRating.hover.star-1 li.star#star-3,
+#clubRating.hover.star-1 li.star#star-4,
+#clubRating.hover.star-1 li.star#star-5 { background-position: center top }
+
+#clubRating.hover.star-2 li.star#star-1, #clubRating.rating-2 li.star#star-1,
+#clubRating.hover.star-2 li.star#star-2, #clubRating.rating-2 li.star#star-2 { background-position: center -24px }
+#clubRating.hover.star-2 li.star#star-3,
+#clubRating.hover.star-3 li.star#star-4,
+#clubRating.hover.star-4 li.star#star-5 { background-position: center top }
+
+#clubRating.hover.star-3 li.star#star-1, #clubRating.rating-3 li.star#star-1,
+#clubRating.hover.star-3 li.star#star-2, #clubRating.rating-3 li.star#star-2,
+#clubRating.hover.star-3 li.star#star-3, #clubRating.rating-3 li.star#star-3 { background-position: center -24px }
+#clubRating.hover.star-3 li.star#star-4,
+#clubRating.hover.star-3 li.star#star-5 { background-position: center top }
+
+#clubRating.hover.star-4 li.star#star-1, #clubRating.rating-4 li.star#star-1,
+#clubRating.hover.star-4 li.star#star-2, #clubRating.rating-4 li.star#star-2,
+#clubRating.hover.star-4 li.star#star-3, #clubRating.rating-4 li.star#star-3,
+#clubRating.hover.star-4 li.star#star-4, #clubRating.rating-4 li.star#star-4 { background-position: center -24px }
+#clubRating.hover.star-4 li.star#star-5 { background-position: center top }
+
+#clubRating.hover.star-5 li.star#star-1, #clubRating.rating-5 li.star#star-1,
+#clubRating.hover.star-5 li.star#star-2, #clubRating.rating-5 li.star#star-2,
+#clubRating.hover.star-5 li.star#star-3, #clubRating.rating-5 li.star#star-3,
+#clubRating.hover.star-5 li.star#star-4, #clubRating.rating-5 li.star#star-4,
+#clubRating.hover.star-5 li.star#star-5, #clubRating.rating-5 li.star#star-5 { background-position: center -24px }
+
+#clubRating span {
+
+	position: absolute;
+	white-space: nowrap;
+	left: 40px;
+	top: 25px;
+	font-weight: normal;
+	font-size: 11px;
+	text-align: center;
+	display: block;
+	width: 130px;
 }

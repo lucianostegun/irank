@@ -9,32 +9,12 @@
  */ 
 class EventPhotoComment extends BaseEventPhotoComment
 {
-	
+
 	public function delete($con=null){
 		
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('event_photo_comment', $this->getPrimaryKey());
 	}
-
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-    		$this->postOnWall();
-
-			parent::save();
-			
-       		Log::quickLog('event_photo_comment', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_photo_comment', $this->getPrimaryKey(), $e);
-        }
-    }
     
     public function getCode(){
     	
@@ -69,20 +49,13 @@ class EventPhotoComment extends BaseEventPhotoComment
 		return ($this->getPeopleId()==$peopleId);
 	}
 	
-	public function postOnWall(){
-		
-		if( !$this->isNew() )
-			return false;
-			
-       	HomeWall::doLog('postou um comentário na foto do evento <b>'.$this->getEventPhoto()->getEvent()->getEventName().'</b>', 'eventPhotoComment', true);
-	}
-	
 	public function notify(){
 
 		Util::getHelper('I18N');
 
+		$templateName = 'eventPhotoCommentNotify';
 		$eventObj     = $this->getEventPhoto()->getEvent();
-		$emailContent = EmailTemplate::getContentByTagName('eventPhotoCommentNotify');
+		$emailContent = EmailTemplate::getContentByTagName($templateName);
 
 		$emailContent = str_replace('[eventName]', $eventObj->getEventName(), $emailContent);
 		$emailContent = str_replace('[rankingName]', $eventObj->getRanking()->getRankingName(), $emailContent);
@@ -97,11 +70,12 @@ class EventPhotoComment extends BaseEventPhotoComment
 		$emailContent = str_replace('[startTime]', $eventObj->getStartTime('H:i'), $emailContent);
 		$emailContent = str_replace('[peopleEmail]', $this->getPeople()->getEmailAddress(), $emailContent);
 		
-		$emailAddressList = $eventObj->getEmailAddressList('receiveEventCommentNotify', true);
+		$emailAddressList = $eventObj->getEmailAddressList('eventPhotoCommentNotify', true);
 		
 		$options = array();
 		$options['emailTemplate']  = null;
 		$options['replyTo']        = 'event_photo_comment@irank.com.br';
+		$options['templateName']   = $templateName;
 		
 		Report::sendMail(__('email.subject.eventPhotoComment', array('%eventName%'=>$eventObj->getEventName(), '%eventPhotoCommentCode%'=>$this->getCode())), $emailAddressList, $emailContent, $options);
 	}

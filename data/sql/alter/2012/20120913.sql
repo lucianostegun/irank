@@ -1,0 +1,1 @@
+ALTER TABLE blog ADD COLUMN image_share VARCHAR(32);

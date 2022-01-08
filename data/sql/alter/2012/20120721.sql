@@ -1,0 +1,22 @@
+ALTER TABLE purchase ADD COLUMN file_id INTEGER;
+ALTER TABLE purchase ADD CONSTRAINT purchase_FK_2 FOREIGN KEY (file_id) REFERENCES file (id);
+
+ALTER TABLE product_category ALTER COLUMN category_name DROP NOT NULL;
+ALTER TABLE product_category ALTER COLUMN short_name DROP NOT NULL;
+
+ALTER TABLE product ALTER COLUMN product_category_id DROP NOT NULL;
+ALTER TABLE product ALTER COLUMN product_code DROP NOT NULL;
+ALTER TABLE product ALTER COLUMN product_name DROP NOT NULL;
+ALTER TABLE product ALTER COLUMN short_name DROP NOT NULL;
+ALTER TABLE product ALTER COLUMN image_1 DROP NOT NULL;
+
+ALTER TABLE product ADD COLUMN stock INTEGER DEFAULT 0;
+ALTER TABLE product_item ADD COLUMN stock INTEGER DEFAULT 0;
+
+ALTER TABLE product_option ADD COLUMN enabled BOOLEAN DEFAULT FALSE;
+ALTER TABLE product_option ADD COLUMN visible BOOLEAN DEFAULT FALSE;
+ALTER TABLE product_option ADD COLUMN deleted BOOLEAN DEFAULT FALSE;
+ALTER TABLE product_option ADD COLUMN locked BOOLEAN DEFAULT FALSE;
+
+UPDATE product_option SET enabled = TRUE;
+UPDATE product_option SET visible = TRUE;

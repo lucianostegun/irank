@@ -1,0 +1,34 @@
+fields:
+      
+  productItemId:
+    sfCallbackValidator:
+      callback:      [ProductItemPeer, validateProductItem]
+      invalid_error: nullError
+       
+#  productOptionIdColor:
+#    required:
+#      msg:       form.error.requiredField
+      
+#  productOptionIdSize:
+#    required:
+#      msg:       form.error.requiredField
+      
+  price:
+    required:
+      msg:       form.error.requiredField
+       
+  weight:
+    required:
+      msg:       form.error.requiredField
+       
+  stock:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      min_error: Informe um valor maior ou igual a 0
+      nan_error: Informe um valor numérico
+      
+  image1:
+    required:
+      msg:       A primeira imagem do produto é obrigatória

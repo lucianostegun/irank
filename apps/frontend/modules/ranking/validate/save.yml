@@ -26,7 +26,7 @@ fields:
     sfRegexValidator:
       match:        Yes
       match_error:  form.error.invalidRankingTag
-      pattern:      /^[a-z]+[a-z0-9_]*$/si
+      pattern:      /^[a-z]+[a-z0-9_]*$/s
        
   gameStyleId:
     required:

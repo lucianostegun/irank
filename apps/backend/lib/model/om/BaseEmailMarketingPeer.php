@@ -13,7 +13,7 @@ abstract class BaseEmailMarketingPeer {
 	const CLASS_DEFAULT = '...apps.backend.lib.model.EmailMarketing';
 
 	
-	const NUM_COLUMNS = 15;
+	const NUM_COLUMNS = 16;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -47,6 +47,9 @@ abstract class BaseEmailMarketingPeer {
 	const LAST_SENT_DATE = 'email_marketing.LAST_SENT_DATE';
 
 	
+	const CLASS_NAME = 'email_marketing.CLASS_NAME';
+
+	
 	const ENABLED = 'email_marketing.ENABLED';
 
 	
@@ -70,19 +73,19 @@ abstract class BaseEmailMarketingPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'Description', 'FileId', 'ClubId', 'EmailTemplateId', 'EmailSubject', 'ScheduleDate', 'SendingStatus', 'LastSentDate', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (EmailMarketingPeer::ID, EmailMarketingPeer::DESCRIPTION, EmailMarketingPeer::FILE_ID, EmailMarketingPeer::CLUB_ID, EmailMarketingPeer::EMAIL_TEMPLATE_ID, EmailMarketingPeer::EMAIL_SUBJECT, EmailMarketingPeer::SCHEDULE_DATE, EmailMarketingPeer::SENDING_STATUS, EmailMarketingPeer::LAST_SENT_DATE, EmailMarketingPeer::ENABLED, EmailMarketingPeer::VISIBLE, EmailMarketingPeer::DELETED, EmailMarketingPeer::LOCKED, EmailMarketingPeer::CREATED_AT, EmailMarketingPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'description', 'file_id', 'club_id', 'email_template_id', 'email_subject', 'schedule_date', 'sending_status', 'last_sent_date', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'DESCRIPTION'=>'', 'FILE_ID'=>'', 'CLUB_ID'=>'', 'EMAIL_TEMPLATE_ID'=>'', 'EMAIL_SUBJECT'=>'', 'SCHEDULE_DATE'=>'', 'SENDING_STATUS'=>'', 'LAST_SENT_DATE'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'Description', 'FileId', 'ClubId', 'EmailTemplateId', 'EmailSubject', 'ScheduleDate', 'SendingStatus', 'LastSentDate', 'ClassName', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (EmailMarketingPeer::ID, EmailMarketingPeer::DESCRIPTION, EmailMarketingPeer::FILE_ID, EmailMarketingPeer::CLUB_ID, EmailMarketingPeer::EMAIL_TEMPLATE_ID, EmailMarketingPeer::EMAIL_SUBJECT, EmailMarketingPeer::SCHEDULE_DATE, EmailMarketingPeer::SENDING_STATUS, EmailMarketingPeer::LAST_SENT_DATE, EmailMarketingPeer::CLASS_NAME, EmailMarketingPeer::ENABLED, EmailMarketingPeer::VISIBLE, EmailMarketingPeer::DELETED, EmailMarketingPeer::LOCKED, EmailMarketingPeer::CREATED_AT, EmailMarketingPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'description', 'file_id', 'club_id', 'email_template_id', 'email_subject', 'schedule_date', 'sending_status', 'last_sent_date', 'class_name', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'DESCRIPTION'=>'', 'FILE_ID'=>'', 'CLUB_ID'=>'', 'EMAIL_TEMPLATE_ID'=>'', 'EMAIL_SUBJECT'=>'', 'SCHEDULE_DATE'=>'', 'SENDING_STATUS'=>'', 'LAST_SENT_DATE'=>'', 'CLASS_NAME'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'Description'=>1, 'FileId'=>2, 'ClubId'=>3, 'EmailTemplateId'=>4, 'EmailSubject'=>5, 'ScheduleDate'=>6, 'SendingStatus'=>7, 'LastSentDate'=>8, 'Enabled'=>9, 'Visible'=>10, 'Deleted'=>11, 'Locked'=>12, 'CreatedAt'=>13, 'UpdatedAt'=>14, ),
-		BasePeer::TYPE_COLNAME=>array (EmailMarketingPeer::ID=>0, EmailMarketingPeer::DESCRIPTION=>1, EmailMarketingPeer::FILE_ID=>2, EmailMarketingPeer::CLUB_ID=>3, EmailMarketingPeer::EMAIL_TEMPLATE_ID=>4, EmailMarketingPeer::EMAIL_SUBJECT=>5, EmailMarketingPeer::SCHEDULE_DATE=>6, EmailMarketingPeer::SENDING_STATUS=>7, EmailMarketingPeer::LAST_SENT_DATE=>8, EmailMarketingPeer::ENABLED=>9, EmailMarketingPeer::VISIBLE=>10, EmailMarketingPeer::DELETED=>11, EmailMarketingPeer::LOCKED=>12, EmailMarketingPeer::CREATED_AT=>13, EmailMarketingPeer::UPDATED_AT=>14, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'description'=>1, 'file_id'=>2, 'club_id'=>3, 'email_template_id'=>4, 'email_subject'=>5, 'schedule_date'=>6, 'sending_status'=>7, 'last_sent_date'=>8, 'enabled'=>9, 'visible'=>10, 'deleted'=>11, 'locked'=>12, 'created_at'=>13, 'updated_at'=>14, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'Description'=>1, 'FileId'=>2, 'ClubId'=>3, 'EmailTemplateId'=>4, 'EmailSubject'=>5, 'ScheduleDate'=>6, 'SendingStatus'=>7, 'LastSentDate'=>8, 'ClassName'=>9, 'Enabled'=>10, 'Visible'=>11, 'Deleted'=>12, 'Locked'=>13, 'CreatedAt'=>14, 'UpdatedAt'=>15, ),
+		BasePeer::TYPE_COLNAME=>array (EmailMarketingPeer::ID=>0, EmailMarketingPeer::DESCRIPTION=>1, EmailMarketingPeer::FILE_ID=>2, EmailMarketingPeer::CLUB_ID=>3, EmailMarketingPeer::EMAIL_TEMPLATE_ID=>4, EmailMarketingPeer::EMAIL_SUBJECT=>5, EmailMarketingPeer::SCHEDULE_DATE=>6, EmailMarketingPeer::SENDING_STATUS=>7, EmailMarketingPeer::LAST_SENT_DATE=>8, EmailMarketingPeer::CLASS_NAME=>9, EmailMarketingPeer::ENABLED=>10, EmailMarketingPeer::VISIBLE=>11, EmailMarketingPeer::DELETED=>12, EmailMarketingPeer::LOCKED=>13, EmailMarketingPeer::CREATED_AT=>14, EmailMarketingPeer::UPDATED_AT=>15, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'description'=>1, 'file_id'=>2, 'club_id'=>3, 'email_template_id'=>4, 'email_subject'=>5, 'schedule_date'=>6, 'sending_status'=>7, 'last_sent_date'=>8, 'class_name'=>9, 'enabled'=>10, 'visible'=>11, 'deleted'=>12, 'locked'=>13, 'created_at'=>14, 'updated_at'=>15, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 
 	
@@ -153,6 +156,8 @@ abstract class BaseEmailMarketingPeer {
 		$criteria->addSelectColumn(EmailMarketingPeer::SENDING_STATUS);
 
 		$criteria->addSelectColumn(EmailMarketingPeer::LAST_SENT_DATE);
+
+		$criteria->addSelectColumn(EmailMarketingPeer::CLASS_NAME);
 
 		$criteria->addSelectColumn(EmailMarketingPeer::ENABLED);
 

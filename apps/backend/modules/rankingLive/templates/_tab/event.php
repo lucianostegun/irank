@@ -1,8 +1,8 @@
-	<div id="quickAddEventsLinkDiv" style="position: absolute">
-		<?php echo link_to(image_tag('backend/icons/light/add', array('class'=>'icon')).'<span>Adicionar etapas</span>', '#showAddEventForm(true)', array('class'=>'button greyishB', 'id'=>'showAddEventLink')) ?>
-		<?php echo link_to('<span>Voltar</span>', '#showAddEventForm(false)', array('class'=>'button greyishB', 'style'=>'display: none', 'id'=>'hideAddEventLink')) ?>
-	</div>
-	<div class="mt40"></div>
+<div id="quickAddEventsLinkDiv" style="position: absolute">
+	<?php echo link_to(image_tag('backend/icons/light/add', array('class'=>'icon')).'<span>Adicionar etapas</span>', '#showAddEventForm(true)', array('class'=>'button greyishB', 'id'=>'showAddEventLink')) ?>
+	<?php echo link_to('<span>Voltar</span>', '#showAddEventForm(false)', array('class'=>'button greyishB', 'style'=>'display: none', 'id'=>'hideAddEventLink')) ?>
+</div>
+<div class="mt40"></div>
 <div class="widget" id="eventListDiv">
 	
 	<table cellpadding="0" cellspacing="0" width="100%" class="display dTableCustom" id="eventLiveTable">

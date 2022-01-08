@@ -1915,7 +1915,7 @@ Element._purgeElement = function(element) {
 
 Element.Methods = {
   visible: function(element) {
-    return $(element).style.display != 'none';
+    return $(element).style.display != 'none' && !$(element).hasClassName('hidden');
   },
 
   toggle: function(element) {

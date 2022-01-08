@@ -10,6 +10,11 @@
 class Event extends BaseEvent
 {
 	
+	public function getIsNew(){
+		
+		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
+	}
+	
 	public function getName(){
 		
 		return $this->getEventName();
@@ -29,22 +34,9 @@ class Event extends BaseEvent
 	
     public function save($con=null){
     	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
+		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
 
-    		$this->postOnWall();
-    		
-    		$this->setEventDateTime($this->getEventDate('Y-m-d').' '.$this->getStartTime());
-
-			parent::save();
-			
-        	Log::quickLog('event', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event', $this->getPrimaryKey(), $e);
-        }
+		parent::save();
     }
 	
 	public function delete($con=null){
@@ -54,12 +46,13 @@ class Event extends BaseEvent
 		$deleted = $this->getDeleted();
 		
 		$this->setDeleted(true);
+		$this->setPermalink(null);
 		$this->save();
 		
-		Log::quickLogDelete('event', $this->getPrimaryKey());
-		
 		$rankingObj->decraseEvents();
+		$rankingObj->updatePlayerEvents();
 		$rankingObj->updateScores();
+		$rankingObj->updateHistory($this->getEventDate('d/m/Y'));
 		
 		/**
 		 * Envia a notificação nas seguintes condições:
@@ -166,12 +159,16 @@ class Event extends BaseEvent
 		return array_merge($eventObjListNext, $eventObjListPrevious);
 	}
 	
-	public function getPeopleList($returnPeople=false, $orderByList=null){
+	public function getPeopleList($returnPeople=false, $orderByList=null, Criteria $criteria=null){
 		
-		$criteria = new Criteria();
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
+		if( !$criteria->hasJoin(EventPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN) )
+			$criteria->addJoin( EventPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		
 		$criteria->add( EventPlayerPeer::EVENT_ID, $this->getId() );
 		$criteria->addAnd( EventPlayerPeer::DELETED, false );
-		$criteria->addJoin( EventPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 		
 		if( is_array($orderByList) ){
 
@@ -217,18 +214,18 @@ class Event extends BaseEvent
 		return EventCommentPeer::doCount($criteria);
 	}
 	
-	public function getPlayerList($orderByList=null){
+	public function getPlayerList($orderByList=null, Criteria $criteria=null){
 		
 		if( $orderByList=='result' )
 		  	$orderByList = array(EventPlayerPeer::ENABLED=>'desc',
 					 			 EventPlayerPeer::EVENT_POSITION=>'asc');
 
-		return $this->getPeopleList(false, $orderByList);
+		return $this->getPeopleList(false, $orderByList, $criteria);
 	}
 	
-	public function addPlayer($peopleId, $confirm=false, $sendNotify=true){
+	public function addPlayer($peopleId, $confirm=false, $sendNotify=true, $con=null){
 		
-		$this->togglePresence( $peopleId, ($confirm?'yes':'none'), $sendNotify );
+		$this->togglePresence( $peopleId, ($confirm?'yes':'none'), $sendNotify, null, $con);
 	}
 	
 	public function deletePlayer($peopleId){
@@ -272,7 +269,7 @@ class Event extends BaseEvent
 		}
 	}
 	
-	public function importPlayers(){
+	public function importPlayers($con=null){
 
 		$rankingPlayerObjList = $this->getRanking()->getPlayerList();
 		
@@ -281,12 +278,12 @@ class Event extends BaseEvent
 
 		$this->setInvites( count($rankingPlayerObjList) );
 		
-		$this->adjustEventPlayers();
+		$this->adjustEventPlayers($con);
 	}
 	
-	public function adjustEventPlayers(){
+	public function adjustEventPlayers($con=null){
 		
-		Util::executeQuery('SELECT adjust_event_players('.$this->getId().')');
+		Util::executeQuery('SELECT adjust_event_players('.$this->getId().')', $con);
 	}
 	
 	public function isPastDate(){
@@ -329,22 +326,29 @@ class Event extends BaseEvent
 		$emailAddressList = array();
 		
 		if( $tagName )
-			$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', $tagName);
+			$emailTemplateId = EmailTemplate::getIdByTagName($tagName);
 		
-		foreach( $this->getPeopleList(true) as $peopleObj ){
+		$criteria = new Criteria();
+		$criteria->addJoin( EventPlayerPeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( EventPlayerPeer::PEOPLE_ID, RankingPlayerPeer::PEOPLE_ID, Criteria::INNER_JOIN );
+		$criteria->addJoin( PeoplePeer::EMAIL_ADDRESS, EmailOptionPeer::EMAIL_ADDRESS, Criteria::LEFT_JOIN );
+		$criteria->add( RankingPlayerPeer::RANKING_ID, $this->getRankingId() );
+		$criteria->add( RankingPlayerPeer::SUPPRESS_EMAIL_NOTIFY, false );
+		
+		$criterion = $criteria->getNewCriterion( EmailOptionPeer::LOCK_SEND, false );
+		$criterion->addAnd( $criteria->getNewCriterion( EmailOptionPeer::EMAIL_TEMPLATE_ID, $emailTemplateId ) );
+		$criterion->addOr( $criteria->getNewCriterion( EmailOptionPeer::EMAIL_TEMPLATE_ID, null ) );
+		$criteria->add( $criterion );
+		
+		foreach( $this->getPeopleList(true, null, $criteria) as $peopleObj ){
 			
 			if( $supressMe && $peopleId==$peopleObj->getId() )
 				continue;
 
-			if( $tagName )
-				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
-					continue;
-			
 			if( $returnCulture )
-				$emailAddressList[] = array('emailAddress'=>$peopleObj->getEmailAddress(),
-											'culture'=>$peopleObj->getDefaultLanguage());
+				$emailAddressList[] = array('emailAddress'=>$peopleObj->getEmailAddress(), 'culture'=>$peopleObj->getDefaultLanguage());
 			else
-			$emailAddressList[] = $peopleObj->getEmailAddress();
+				$emailAddressList[] = $peopleObj->getEmailAddress();
 		}
 		
 		return $emailAddressList;
@@ -370,7 +374,7 @@ class Event extends BaseEvent
 	  	return array_merge($eventPlayerObjList, $lastList);
 	}
 	
-	public function notify(){
+	public function notify($con=null){
 
 		Util::getHelper('I18N');
 		
@@ -388,32 +392,43 @@ class Event extends BaseEvent
 		$buyin       = $this->getBuyin();
 		
 		$infoList = array();
-		$infoList['eventName']   = $this->getEventName();
-		$infoList['rankingName'] = $this->getRanking()->getRankingName();
-		$infoList['gameStyle']   = $this->getGameStyle()->getDescription();
-		$infoList['eventPlace']  = $this->getEventPlace();
-		$infoList['mapsLink']    = $this->getRankingPlace()->getMapsLink();
-		$infoList['eventDate']   = $this->getEventDate('d/m/Y');
-		$infoList['startTime']   = $this->getStartTime('H:i');
-		$infoList['paidPlaces']  = $this->getPaidPlaces();
-		$infoList['entranceFee'] = Util::formatFloat($entranceFee, true);
-		$infoList['buyin']       = Util::formatFloat($buyin, true).($entranceFee?'+'.$infoList['entranceFee']:'');
-		$infoList['comments']    = $this->getComments();
-		$infoList['invites']     = $this->getInvites();
-		$infoList['players']     = $this->getPlayers();
+		$infoList['eventName']     = $this->getEventName();
+		$infoList['rankingName']   = $this->getRanking()->getRankingName();
+		$infoList['gameStyle']     = $this->getGameStyle()->getDescription();
+		$infoList['eventPlace']    = $this->getEventPlace();
+		$infoList['mapsLink']      = $this->getRankingPlace()->getMapsLink();
+		$infoList['eventDate']     = $this->getEventDate('d/m/Y');
+		$infoList['startTime']     = $this->getStartTime('H:i');
+		$infoList['eventDateTime'] = $this->getEventDateTime('d/m/Y H:i');
+		$infoList['paidPlaces']    = $this->getPaidPlaces();
+		$infoList['entranceFee']   = Util::formatFloat($entranceFee, true);
+		$infoList['buyin']         = Util::formatFloat($buyin, true).($entranceFee?'+'.$infoList['entranceFee']:'');
+		$infoList['comments']      = $this->getComments();
+		$infoList['invites']       = $this->getInvites();
+		$infoList['players']       = $this->getPlayers();
+		$infoList['permalink']     = $this->getPermalink(true);
 		
 		$iCalFile = $this->getICal('update');
 		$attachmentList  = array('invite.ics'=>$iCalFile);
-		$optionList      = array('attachmentList'=>$attachmentList);
+		$optionList      = array('templateName'=>$templateName, 'attachmentList'=>$attachmentList);
 
 		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
 		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
 		$emailSubjectList['pt_BR'] = __($emailSubject, null, 'messages', 'pt_BR');
 		$emailSubjectList['en_US'] = __($emailSubject, null, 'messages', 'en_US');
+		
+	  	$smsContent = SmsTemplatePeer::getContentByTagName($templateName);
+		$smsContent = Report::replace($smsContent, $infoList);
 
 		foreach($this->getEventPlayerList() as $eventPlayerObj){
 			
-			$peopleObj    = $eventPlayerObj->getPeople();
+			$peopleObj        = $eventPlayerObj->getPeople();
+			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $eventPlayerObj->getPeopleId());
+			
+			if( $peopleObj->isMe() )
+				continue;
+			
+			$userSiteObj  = $peopleObj->getUserSite();
 			$emailAddress = $peopleObj->getEmailAddress();
 			$culture      = $peopleObj->getDefaultLanguage();
 			$emailContent = $emailContentList[$culture];
@@ -422,13 +437,31 @@ class Event extends BaseEvent
 			$emailContent = str_replace('[peopleName]', $peopleObj->getFirstName(), $emailContent);
 			$emailContent = str_replace('[confirmCode]', $eventPlayerObj->getConfirmCode(), $emailContent);
 
-			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
+			// Envio de notificação por email
+			if( !$rankingPlayerObj->getSuppressEmailNotify() )
+				Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
+			
+			if( is_object($userSiteObj) && $userSiteObj->getSmsCredit() > 0 && $userSiteObj->enabledSmsNotification() ){
+				
+			  	$phoneNumber = $peopleObj->getPhoneDdd().$peopleObj->getPhoneNumber();
+			  	
+				if( !SmsOption::checkOption($peopleObj->getId(), $templateName) ||
+					!SmsRankingOption::checkOption($peopleObj->getId(), $this->getRankingId(), $templateName) ||
+					!preg_match('/^[0-9]{2}[0-9]{4,5}\-?[0-9]{4}$/', $phoneNumber) )
+					continue;
+
+		  		$smsObj = new Sms();
+		  		$smsObj->setPeopleId($peopleObj->getId());
+		  		$smsObj->setPhoneNumber($phoneNumber);
+		  		$smsObj->setMessage($smsContent);
+			  	$smsObj->send($userSiteObj, $con);
+			}
 		}
- 
+		
 		unlink($iCalFile);
 		
 		$this->setSentEmail(true);
-		$this->save();
+		$this->save($con);
 	}
 	
 	public function notifyResult(){
@@ -442,7 +475,10 @@ class Event extends BaseEvent
 		
 		$emailSubject = 'email.subject.eventResult';
 		
-		$emailContent = Report::replace(EmailTemplate::getContentByTagName('eventResult'), $infoList);
+		$templateName = 'eventResult';
+		$optionList   = array('templateName'=>$templateName);
+		
+		$emailContent = Report::replace(EmailTemplate::getContentByTagName($templateName), $infoList);
 		$emailSubject = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
 		
 		$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', 'receiveAllResults');
@@ -455,8 +491,9 @@ class Event extends BaseEvent
 			$eventPosition = $eventPlayerObj->getEventPosition();
 			
 			$receiveAllResults = $eventPlayerObj->getPeople()->getOptionValue($userSiteOptionId);
+			$rankingPlayerObj  = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $eventPlayerObj->getPeopleId());
 			
-			if( $eventPosition==0 && !$receiveAllResults )
+			if( $eventPosition==0 && !$receiveAllResults || $rankingPlayerObj->getSuppressEmailNotify() )
 				continue;
 			
 			$peopleObj    = $eventPlayerObj->getPeople();
@@ -480,7 +517,7 @@ class Event extends BaseEvent
 
 			$emailContentTmp = str_replace('[congratsMessage]', $congratsMessage, $emailContentTmp);
 			
-			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp);
+			Report::sendMail($emailSubject, $emailAddress, $emailContentTmp, $optionList);
 		}
 	}
 	
@@ -494,8 +531,9 @@ class Event extends BaseEvent
 	  	$classifyList = $this->getEmailClassifyList();
 	  	$peopleName   = People::getCurrentPeople()->getName();
 		
-		$infoList['classifyList'] = $classifyList;
-		$infoList                 = array_merge($infoList, $this->getInfo());
+		$infoList['classifyList']  = $classifyList;
+		$infoList['eventDateTime'] = $this->getEventDateTime('d/m/Y H:i');
+		$infoList                  = array_merge($infoList, $this->getInfo());
 		
 		$emailContentList['pt_BR'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), $infoList);
 		$emailContentList['en_US'] = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), $infoList);
@@ -506,7 +544,7 @@ class Event extends BaseEvent
 		
 		$iCalFile = $this->getICal('delete');
 		$attachmentList  = array('invite.ics'=>$iCalFile);
-		$optionList      = array('attachmentList'=>$attachmentList);
+		$optionList      = array('templateName'=>$templateName, 'attachmentList'=>$attachmentList);
 		
 		foreach($emailAddressInfoList as $emailAddressInfo){
 			
@@ -516,6 +554,35 @@ class Event extends BaseEvent
 			$emailSubject = $emailSubjectList[$culture];
 			
 			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
+		}
+		
+	  	$smsContent = SmsTemplatePeer::getContentByTagName($templateName);
+		$smsContent = Report::replace($smsContent, $infoList);
+
+		foreach($this->getEventPlayerList() as $eventPlayerObj){
+			
+			$peopleObj = $eventPlayerObj->getPeople();
+			
+			if( $peopleObj->isMe() )
+				continue;
+			
+			$userSiteObj = $peopleObj->getUserSite();
+			
+			if( is_object($userSiteObj) && $userSiteObj->getSmsCredit() > 0 && $userSiteObj->enabledSmsNotification() ){
+				
+			  	$phoneNumber = $peopleObj->getPhoneDdd().$peopleObj->getPhoneNumber();
+			  	
+				if( !SmsOption::checkOption($peopleObj->getId(), $templateName) || 
+					!SmsRankingOption::checkOption($peopleObj->getId(), $this->getRankingId(), $templateName) ||
+					!preg_match('/^[0-9]{2}[0-9]{4,5}\-?[0-9]{4}$/', $phoneNumber) )
+					continue;
+			  	
+		  		$smsObj = new Sms();
+		  		$smsObj->setPeopleId($peopleObj->getId());
+		  		$smsObj->setPhoneNumber($phoneNumber);
+		  		$smsObj->setMessage($smsContent);
+			  	$smsObj->send($userSiteObj);
+			}
 		}
 		
 		unlink($iCalFile);
@@ -536,12 +603,14 @@ class Event extends BaseEvent
 		
 		$infoList = $this->getInfo();
 		
+		$optionList = array('templateName'=>$templateName);
+		
 		$emailContentList['pt_BR']  = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'pt_BR'), array_merge($infoList, array('eventSchedule'=>$eventScheduleList['pt_BR'])));
 		$emailContentList['en_US']  = Report::replace(EmailTemplate::getContentByTagName($templateName, false, 'en_US'), array_merge($infoList, array('eventSchedule'=>$eventScheduleList['en_US'])));
 		$emailSubjectList['pt_BR']  = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'pt_BR');
 		$emailSubjectList['en_US']  = __($emailSubject, array('%eventName%'=>$this->getEventName()), 'messages', 'en_US');
 
-		$emailAddressInfoList = $this->getEmailAddressList('receiveEventReminder'.$days, false, true);
+		$emailAddressInfoList = $this->getEmailAddressList('eventReminder', false, true);
 
 		foreach($emailAddressInfoList as $emailAddressInfo){
 
@@ -551,7 +620,7 @@ class Event extends BaseEvent
 			$emailSubject  = $emailSubjectList[$culture];
 			$eventSchedule = $eventScheduleList[$culture];
 			
-			Report::sendMail($emailSubject, $emailAddress, $emailContent);
+			Report::sendMail($emailSubject, $emailAddress, $emailContent, $optionList);
 		}
 	}
 	
@@ -609,33 +678,66 @@ class Event extends BaseEvent
 	
 	public function getClone(){
 		
+		$eventPlayerObjList = $this->getPlayerList();
+		
+		foreach( $eventPlayerObjList as $key=>$eventPlayerObj ){
+			
+			$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getRankingId(), $eventPlayerObj->getPeopleId());
+			
+			// Verifica se o jogador foi removido do ranking e pula a inclusão dele no evento durante a clonagem
+			if( !$rankingPlayerObj->getEnabled() )
+				unset($eventPlayerObjList[$key]);
+		}
+		
+		$invites = count($eventPlayerObjList);
+		
 		$eventObj = new Event();
 		$eventObj->setRankingId($this->getRankingId());
-		$eventObj->setEventName($this->getEventName());
+		$eventObj->setEventName($this->getEventName(false));
 		$eventObj->setRankingPlaceId($this->getRankingPlaceId());
 		$eventObj->setEventDate($this->getEventDate());
 		$eventObj->setStartTime($this->getStartTime());
 		$eventObj->setPaidPlaces($this->getPaidPlaces());
-		$eventObj->setInvites($this->getInvites());
+		$eventObj->setInvites( $invites );
 		$eventObj->setPlayers($this->getPlayers());
+		$eventObj->setIsFreeroll($this->getIsFreeroll());
 		$eventObj->setBuyin($this->getBuyin());
 		$eventObj->setEntranceFee($this->getEntranceFee());
 		$eventObj->setComments($this->getComments());
 		$eventObj->setAllowRebuy($this->getAllowRebuy());
 		$eventObj->setAllowAddon($this->getAllowAddon());
+		$eventObj->setSentEmail(null);
+		$eventObj->setSavedResult(false);
 		$eventObj->setVisible(false);
 		$eventObj->setEnabled(false);
 		$eventObj->setLocked(true);
 		$eventObj->save();
 		
-		foreach( $this->getPlayerList() as $eventPlayerObj ){
+		foreach( $eventPlayerObjList as $eventPlayerObj ){
 			
 			$eventPlayerNewObj = new EventPlayer();
 			$eventPlayerNewObj->setEventId( $eventObj->getId() );
 			$eventPlayerNewObj->setPeopleId( $eventPlayerObj->getPeopleId() );
-			$eventPlayerNewObj->setInviteStatus( $eventPlayerObj->getInviteStatus() );
-			$eventPlayerNewObj->setEnabled( $eventPlayerObj->getEnabled() );
+			$eventPlayerNewObj->setAllowEdit( $eventPlayerObj->getAllowEdit() );
+			$eventPlayerNewObj->setSuppressNotify( $eventPlayerObj->getSuppressNotify() );
+			$eventPlayerNewObj->setInviteStatus( 'none' );
+			$eventPlayerNewObj->setEnabled( false );
 			$eventPlayerNewObj->save();
+		}
+		
+		unset($eventPlayerObjList);
+		
+		if( $this->getIsFreeroll() ){
+			
+			foreach( $this->getEventPrizeConfigList() as $eventPrizeConfigObj ){
+				
+				$eventPrizeConfigNewObj = new EventPrizeConfig();
+				$eventPrizeConfigNewObj->setEventId( $eventObj->getId() );
+				$eventPrizeConfigNewObj->setEventPosition( $eventPrizeConfigObj->getEventPosition() );
+				$eventPrizeConfigNewObj->setPrizeValue( $eventPrizeConfigObj->getPrizeValue() );
+				$eventPrizeConfigNewObj->setIsPercent( $eventPrizeConfigObj->getIsPercent() );
+				$eventPrizeConfigNewObj->save();
+			}
 		}
 
 		return $eventObj;
@@ -645,6 +747,10 @@ class Event extends BaseEvent
 
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$rankingObj = $this->getRanking();
+		
+		// Se for um clone de evento, deixa editar caso seja a primeira vez que tenta salvar
+		if( $this->getIsNew() )
+			return true;
 		
 		if( !$ignorePeople && (!$userSiteId || (!$ignorePeople && is_object($rankingObj) && !$rankingObj->isMyRanking())) )
 			return false;
@@ -669,14 +775,14 @@ class Event extends BaseEvent
 		return ($eventCount==0);
 	}
 	
-	public function togglePresence($peopleId, $choice, $forceNotify=null){
+	public function togglePresence($peopleId, $choice, $forceNotify=null, $con=null){
 		
 		$eventPlayerObj = EventPlayerPeer::retrieveByPK($this->getId(), $peopleId);
 		
 		if( $this->getRanking()->isShared($peopleId) )
 			$eventPlayerObj->share(false);
 			
-		$eventPlayerObj->togglePresence($choice, $forceNotify);
+		$eventPlayerObj->togglePresence($choice, $forceNotify, $con);
 	}
 	
 	public function saveResult($request){
@@ -813,6 +919,8 @@ class Event extends BaseEvent
 				$formula = preg_replace('/buyin/', '$buyin', $formula);
 				$formula = preg_replace('/itm/', '$itm', $formula);
 				
+				$formula = preg_replace('/raiz\(/', 'sqrt(', $formula);
+				
 				$score = null;
 				
 				@eval('$score = '.$formula.';');
@@ -825,7 +933,7 @@ class Event extends BaseEvent
 		return number_format($score, 3);
 	}
 	
-	public function updateResult(){
+	public function updateResult($con=null){
 		
 		$rankingObj = $this->getRanking();
 
@@ -874,12 +982,12 @@ class Event extends BaseEvent
 				$score = 0;
 			
 			$eventPlayerObj->setScore( $score );
-			$eventPlayerObj->save();
+			$eventPlayerObj->save($con);
 		}
 
-		$rankingObj->updateScores();
-		$rankingObj->updatePlayerEvents();
-		$rankingObj->updateHistory($this->getEventDate('d/m/Y'));
+		$rankingObj->updateScores($con);
+		$rankingObj->updatePlayerEvents($con);
+		$rankingObj->updateHistory($this->getEventDate('d/m/Y'), $con);
 	}
 	
 	public function isInvited($peopleId){
@@ -907,21 +1015,6 @@ class Event extends BaseEvent
 			return null;
 		
 		return $rankingPlaceObj->getPlaceName();
-	}
-	
-	public function postOnWall(){
-		
-		if( $this->getDeleted() || !$this->getVisible() )
-			return false;
-			
-		$isNew       = $this->isNew();
-		$savedResult = $this->isColumnModified( EventPeer::SAVED_RESULT );
-		
-		if( $isNew )
-        	HomeWall::doLog('criado novo evento <b>'.$this->getEventName().'</b>', 'event');
-		
-		if( $savedResult && $this->getSavedResult() )
-    		HomeWall::doLog('o resultado do evento <b>'.$this->getEventName().'</b> foi atualizado', 'event');
 	}
 	
 	public function isShared($peopleIdException){
@@ -1130,6 +1223,8 @@ class Event extends BaseEvent
 			}
 		}
 		
+		$count = 0;
+		
 		foreach($playerList as $peopleId=>$playerInfo){
 			
 			$fontColor = ($peopleIdCurrent==$peopleId?$colorRed:$colorBlack);
@@ -1150,6 +1245,12 @@ class Event extends BaseEvent
 			
 			$length3 = imagettfbbox(8, 0, $verdana, $eventPosition);
 			$length3 = $length3[2]-$length3[0];
+			
+			if( $count++ > 7 ){
+				
+				imagettftext($newImg, 8, 0, $width-$length3-355, 85+$positionY-5, $fontColor, $verdana, '...');
+				break;
+			}
 			
 			imagettftext($newImg, 8, 0, $width-$length3-390, 85+$positionY, $fontColor, $verdana, $eventPosition);
 			imagettftext($newImg, 8, 0, 37, 85+$positionY, $fontColor, $verdana, $playerName);
@@ -1343,6 +1444,63 @@ class Event extends BaseEvent
 		return $eventPosition;
 	}
 	
+	public function getBuyinInfo(){
+		
+		if( $this->getIsFreeroll() )
+			return 'Freeroll';
+			
+		$buyin       = $this->getBuyin();
+		$entranceFee = $this->getEntranceFee();
+		
+		$buyin = Util::formatFloat($buyin, true);
+//		$buyin = str_replace(',00', '', $buyin);
+		
+		$buyinInfo = '';
+		$buyinInfo = ($buyin?$buyin.($entranceFee?'+':''):'');
+		$buyinInfo = $buyinInfo.($entranceFee?Util::formatFloat($entranceFee, true):'');
+		
+		return $buyinInfo;
+	}
+	
+	public function buildPermalink(){
+		
+		$rankingTag = $this->getRanking()->getRankingTag();
+		$eventDate  = $this->getEventDate('Y-m-d');
+		$eventName  = $this->getEventName();
+		$eventName  = String::removeAccents($eventName);
+		$eventName  = strtolower($eventName);
+		$eventName  = trim($eventName);
+		$eventName  = str_replace('&', 'n', $eventName);
+		$eventName  = preg_replace('/[^a-z0-9\-\._]/', '-', $eventName);
+		$eventName  = preg_replace('/-{2,}/', '-', $eventName);
+		$eventName  = preg_replace('/-{2,}/', '-', $eventName);
+		
+		$eventName  = preg_replace('/\/[^a-z0-9]*/', '/', $eventName);
+		$eventName  = preg_replace('/[^a-z0-9]*\//', '/', $eventName);
+		$eventName  = preg_replace('/[^a-z0-9]*$/', '', $eventName);
+		
+		$permalink = sprintf('%s/%s/%s', $rankingTag, $eventDate, $eventName);
+		$this->setPermalink($permalink);
+	}
+	
+	public function getPermalink($full=false){
+		
+		$permalink = parent::getPermalink();
+		
+		if( is_null($permalink) )
+			return null;
+		
+		$permalink = 'event/'.$permalink;
+		
+		if( $full ){
+		
+			$host      = 'www.irank.com.br';
+			$permalink = sprintf('http://%s/%s', $host, $permalink);	
+		}
+		
+		return $permalink;
+	}
+	
 	public function getInfo(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
@@ -1374,6 +1532,7 @@ class Event extends BaseEvent
 		$infoList['comments']    = $this->getComments();
 		$infoList['invites']     = $this->getInvites();
 		$infoList['players']     = $this->getPlayers();
+		$infoList['permalink']   = $this->getPermalink(true);
 		$infoList['rankingType'] = $rankingType;
 		
 		return $infoList;

@@ -14,28 +14,8 @@ class EventComment extends BaseEventComment
 		
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('event_comment', $this->getPrimaryKey());
 	}
 
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-    		$this->postOnWall();
-
-			parent::save();
-			
-       		Log::quickLog('event_comment', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_comment', $this->getPrimaryKey(), $e);
-        }
-    }
-    
     public function getComment($format=false){
     	
     	$comment = parent::getComment();
@@ -61,14 +41,6 @@ class EventComment extends BaseEventComment
 		return ($this->getPeopleId()==$peopleId);
 	}
 	
-	public function postOnWall(){
-		
-		if( !$this->isNew() )
-			return false;
-			
-       	HomeWall::doLog('postou um comentário no evento <b>'.$this->getEvent()->getEventName().'</b>', 'eventComment', true);
-	}
-	
 	public function notify(){
 
 		Util::getHelper('I18N');
@@ -85,9 +57,10 @@ class EventComment extends BaseEventComment
 		$infoList['peopleEmail'] = $this->getPeople()->getEmailAddress();
 		$infoList['comment']     = $this->getComment();
 		
-		$emailAddressInfoList = $eventObj->getEmailAddressList('receiveEventCommentNotify', false, true);
+		$emailAddressInfoList = $eventObj->getEmailAddressList('eventCommentNotify', false, true);
 
-		$emailTemplateObj = EmailTemplatePeer::retrieveByTagName('eventCommentNotify');
+		$templateName     = 'eventCommentNotify';
+		$emailTemplateObj = EmailTemplatePeer::retrieveByTagName($templateName);
 
 		$emailContent = $emailTemplateObj->getContent();
 		$emailContent = Report::replace($emailContent, $infoList);
@@ -96,6 +69,7 @@ class EventComment extends BaseEventComment
 		$optionList = array();
 		$optionList['emailTemplateObj'] = $emailTemplateObj;
 		$optionList['replyTo']          = 'event_comment@irank.com.br';
+		$optionList['templateName']     = $templateName;
 		
 		foreach($emailAddressInfoList as $emailAddressInfo){
 

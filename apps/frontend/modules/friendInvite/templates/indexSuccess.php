@@ -2,7 +2,7 @@
 <div class="moduleIntro">
 	<?php echo __('friendInvite.intro') ?>
 </div>
-
+<hr class="separator"/>
 <div class="textC">
 	<table cellspacing="0" cellpadding="0" class="formTable" style="margin-left: 20px; width: 750px">
 		<tr class="header">
@@ -38,7 +38,7 @@
 						<div class="labelHalf">E-mail</div>
 						<div class="field"><?php echo input_tag('emailAddress'.$i, null, array('size'=>25, 'autocomplete'=>'off', 'id'=>'friendInviteEmailAddress'.$i)) ?></div>
 						<div class="image" id="friendInviteImage<?php echo $i ?>Div"></div>
-						<div class="textFlex" id="friendInviteStatus<?php echo $i ?>Div"></div>
+						<div class="text flex" id="friendInviteStatus<?php echo $i ?>Div"></div>
 					</div>
 				    <?php endfor; ?>
 					<div class="separator"></div>

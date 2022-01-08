@@ -49,6 +49,10 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 
 	
+	protected $is_option;
+
+
+	
 	protected $enabled;
 
 
@@ -103,6 +107,12 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 	
 	protected $lastEmailMarketingCriteria = null;
+
+	
+	protected $collEmailOptionList;
+
+	
+	protected $lastEmailOptionCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -178,6 +188,13 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 	{
 
 		return $this->tag_name_parent;
+	}
+
+	
+	public function getIsOption()
+	{
+
+		return $this->is_option;
 	}
 
 	
@@ -397,6 +414,16 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setIsOption($v)
+	{
+
+		if ($this->is_option !== $v) {
+			$this->is_option = $v;
+			$this->modifiedColumns[] = EmailTemplatePeer::IS_OPTION;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -495,23 +522,25 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 			$this->tag_name_parent = $rs->getString($startcol + 9);
 
-			$this->enabled = $rs->getBoolean($startcol + 10);
+			$this->is_option = $rs->getBoolean($startcol + 10);
 
-			$this->visible = $rs->getBoolean($startcol + 11);
+			$this->enabled = $rs->getBoolean($startcol + 11);
 
-			$this->deleted = $rs->getBoolean($startcol + 12);
+			$this->visible = $rs->getBoolean($startcol + 12);
 
-			$this->locked = $rs->getBoolean($startcol + 13);
+			$this->deleted = $rs->getBoolean($startcol + 13);
 
-			$this->created_at = $rs->getTimestamp($startcol + 14, null);
+			$this->locked = $rs->getBoolean($startcol + 14);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 15, null);
+			$this->created_at = $rs->getTimestamp($startcol + 15, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 16, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 16; 
+						return $startcol + 17; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EmailTemplate object", $e);
 		}
@@ -552,21 +581,40 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(EmailTemplatePeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = EmailTemplatePeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -638,6 +686,14 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 			if ($this->collEmailMarketingList !== null) {
 				foreach($this->collEmailMarketingList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collEmailOptionList !== null) {
+				foreach($this->collEmailOptionList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -729,6 +785,14 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collEmailOptionList !== null) {
+					foreach($this->collEmailOptionList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 
 			$this->alreadyInValidation = false;
 		}
@@ -778,21 +842,24 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 				return $this->getTagNameParent();
 				break;
 			case 10:
-				return $this->getEnabled();
+				return $this->getIsOption();
 				break;
 			case 11:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 12:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 13:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 14:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 15:
+				return $this->getCreatedAt();
+				break;
+			case 16:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -815,12 +882,13 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 			$keys[7]=>$this->getIsAvailableForSale(),
 			$keys[8]=>$this->getTagName(),
 			$keys[9]=>$this->getTagNameParent(),
-			$keys[10]=>$this->getEnabled(),
-			$keys[11]=>$this->getVisible(),
-			$keys[12]=>$this->getDeleted(),
-			$keys[13]=>$this->getLocked(),
-			$keys[14]=>$this->getCreatedAt(),
-			$keys[15]=>$this->getUpdatedAt(),
+			$keys[10]=>$this->getIsOption(),
+			$keys[11]=>$this->getEnabled(),
+			$keys[12]=>$this->getVisible(),
+			$keys[13]=>$this->getDeleted(),
+			$keys[14]=>$this->getLocked(),
+			$keys[15]=>$this->getCreatedAt(),
+			$keys[16]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -867,21 +935,24 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 				$this->setTagNameParent($value);
 				break;
 			case 10:
-				$this->setEnabled($value);
+				$this->setIsOption($value);
 				break;
 			case 11:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 12:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 13:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 14:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 15:
+				$this->setCreatedAt($value);
+				break;
+			case 16:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -901,12 +972,13 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[7], $arr)) $this->setIsAvailableForSale($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setTagName($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setTagNameParent($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setEnabled($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setVisible($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setDeleted($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setLocked($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setCreatedAt($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setUpdatedAt($arr[$keys[15]]);
+		if (array_key_exists($keys[10], $arr)) $this->setIsOption($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setEnabled($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setVisible($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setDeleted($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setLocked($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setCreatedAt($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setUpdatedAt($arr[$keys[16]]);
 	}
 
 	
@@ -924,6 +996,7 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EmailTemplatePeer::IS_AVAILABLE_FOR_SALE)) $criteria->add(EmailTemplatePeer::IS_AVAILABLE_FOR_SALE, $this->is_available_for_sale);
 		if ($this->isColumnModified(EmailTemplatePeer::TAG_NAME)) $criteria->add(EmailTemplatePeer::TAG_NAME, $this->tag_name);
 		if ($this->isColumnModified(EmailTemplatePeer::TAG_NAME_PARENT)) $criteria->add(EmailTemplatePeer::TAG_NAME_PARENT, $this->tag_name_parent);
+		if ($this->isColumnModified(EmailTemplatePeer::IS_OPTION)) $criteria->add(EmailTemplatePeer::IS_OPTION, $this->is_option);
 		if ($this->isColumnModified(EmailTemplatePeer::ENABLED)) $criteria->add(EmailTemplatePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EmailTemplatePeer::VISIBLE)) $criteria->add(EmailTemplatePeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(EmailTemplatePeer::DELETED)) $criteria->add(EmailTemplatePeer::DELETED, $this->deleted);
@@ -978,6 +1051,8 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 		$copyObj->setTagNameParent($this->tag_name_parent);
 
+		$copyObj->setIsOption($this->is_option);
+
 		$copyObj->setEnabled($this->enabled);
 
 		$copyObj->setVisible($this->visible);
@@ -1012,6 +1087,10 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 
 			foreach($this->getEmailMarketingList() as $relObj) {
 				$copyObj->addEmailMarketing($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEmailOptionList() as $relObj) {
+				$copyObj->addEmailOption($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1719,6 +1798,111 @@ abstract class BaseEmailTemplate extends BaseObject  implements Persistent {
 		$this->lastEmailMarketingCriteria = $criteria;
 
 		return $this->collEmailMarketingList;
+	}
+
+	
+	public function initEmailOptionList()
+	{
+		if ($this->collEmailOptionList === null) {
+			$this->collEmailOptionList = array();
+		}
+	}
+
+	
+	public function getEmailOptionList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEmailOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEmailOptionList === null) {
+			if ($this->isNew()) {
+			   $this->collEmailOptionList = array();
+			} else {
+
+				$criteria->add(EmailOptionPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				EmailOptionPeer::addSelectColumns($criteria);
+				$this->collEmailOptionList = EmailOptionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EmailOptionPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				EmailOptionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEmailOptionCriteria) || !$this->lastEmailOptionCriteria->equals($criteria)) {
+					$this->collEmailOptionList = EmailOptionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEmailOptionCriteria = $criteria;
+		return $this->collEmailOptionList;
+	}
+
+	
+	public function countEmailOptionList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEmailOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EmailOptionPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+		return EmailOptionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEmailOption(EmailOption $l)
+	{
+		$this->collEmailOptionList[] = $l;
+		$l->setEmailTemplate($this);
+	}
+
+
+	
+	public function getEmailOptionListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEmailOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEmailOptionList === null) {
+			if ($this->isNew()) {
+				$this->collEmailOptionList = array();
+			} else {
+
+				$criteria->add(EmailOptionPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+				$this->collEmailOptionList = EmailOptionPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EmailOptionPeer::EMAIL_TEMPLATE_ID, $this->getId());
+
+			if (!isset($this->lastEmailOptionCriteria) || !$this->lastEmailOptionCriteria->equals($criteria)) {
+				$this->collEmailOptionList = EmailOptionPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastEmailOptionCriteria = $criteria;
+
+		return $this->collEmailOptionList;
 	}
 
 } 

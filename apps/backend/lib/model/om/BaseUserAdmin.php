@@ -70,12 +70,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 	protected $aClub;
 
 	
-	protected $collAccessAdminLogList;
-
-	
-	protected $lastAccessAdminLogCriteria = null;
-
-	
 	protected $collUserAdminSettingsList;
 
 	
@@ -509,21 +503,40 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(UserAdminPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = UserAdminPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -561,14 +574,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 					$affectedRows += UserAdminPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); 			}
-
-			if ($this->collAccessAdminLogList !== null) {
-				foreach($this->collAccessAdminLogList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
 
 			if ($this->collUserAdminSettingsList !== null) {
 				foreach($this->collUserAdminSettingsList as $referrerFK) {
@@ -648,14 +653,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
-
-				if ($this->collAccessAdminLogList !== null) {
-					foreach($this->collAccessAdminLogList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
 
 				if ($this->collUserAdminSettingsList !== null) {
 					foreach($this->collUserAdminSettingsList as $referrerFK) {
@@ -924,10 +921,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach($this->getAccessAdminLogList() as $relObj) {
-				$copyObj->addAccessAdminLog($relObj->copy($deepCopy));
-			}
-
 			foreach($this->getUserAdminSettingsList() as $relObj) {
 				$copyObj->addUserAdminSettings($relObj->copy($deepCopy));
 			}
@@ -1021,76 +1014,6 @@ abstract class BaseUserAdmin extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aClub;
-	}
-
-	
-	public function initAccessAdminLogList()
-	{
-		if ($this->collAccessAdminLogList === null) {
-			$this->collAccessAdminLogList = array();
-		}
-	}
-
-	
-	public function getAccessAdminLogList($criteria = null, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseAccessAdminLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collAccessAdminLogList === null) {
-			if ($this->isNew()) {
-			   $this->collAccessAdminLogList = array();
-			} else {
-
-				$criteria->add(AccessAdminLogPeer::USER_ADMIN_ID, $this->getId());
-
-				AccessAdminLogPeer::addSelectColumns($criteria);
-				$this->collAccessAdminLogList = AccessAdminLogPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(AccessAdminLogPeer::USER_ADMIN_ID, $this->getId());
-
-				AccessAdminLogPeer::addSelectColumns($criteria);
-				if (!isset($this->lastAccessAdminLogCriteria) || !$this->lastAccessAdminLogCriteria->equals($criteria)) {
-					$this->collAccessAdminLogList = AccessAdminLogPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastAccessAdminLogCriteria = $criteria;
-		return $this->collAccessAdminLogList;
-	}
-
-	
-	public function countAccessAdminLogList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'apps/backend/lib/model/om/BaseAccessAdminLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(AccessAdminLogPeer::USER_ADMIN_ID, $this->getId());
-
-		return AccessAdminLogPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addAccessAdminLog(AccessAdminLog $l)
-	{
-		$this->collAccessAdminLogList[] = $l;
-		$l->setUserAdmin($this);
 	}
 
 	

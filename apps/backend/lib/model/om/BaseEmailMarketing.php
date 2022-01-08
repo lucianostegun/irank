@@ -45,6 +45,10 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
 
 
 	
+	protected $class_name;
+
+
+	
 	protected $enabled;
 
 
@@ -179,6 +183,13 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
 		} else {
 			return date($format, $ts);
 		}
+	}
+
+	
+	public function getClassName()
+	{
+
+		return $this->class_name;
 	}
 
 	
@@ -398,6 +409,20 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setClassName($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->class_name !== $v) {
+			$this->class_name = $v;
+			$this->modifiedColumns[] = EmailMarketingPeer::CLASS_NAME;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -494,23 +519,25 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
 
 			$this->last_sent_date = $rs->getTimestamp($startcol + 8, null);
 
-			$this->enabled = $rs->getBoolean($startcol + 9);
+			$this->class_name = $rs->getString($startcol + 9);
 
-			$this->visible = $rs->getBoolean($startcol + 10);
+			$this->enabled = $rs->getBoolean($startcol + 10);
 
-			$this->deleted = $rs->getBoolean($startcol + 11);
+			$this->visible = $rs->getBoolean($startcol + 11);
 
-			$this->locked = $rs->getBoolean($startcol + 12);
+			$this->deleted = $rs->getBoolean($startcol + 12);
 
-			$this->created_at = $rs->getTimestamp($startcol + 13, null);
+			$this->locked = $rs->getBoolean($startcol + 13);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 14, null);
+			$this->created_at = $rs->getTimestamp($startcol + 14, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 15, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 15; 
+						return $startcol + 16; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EmailMarketing object", $e);
 		}
@@ -551,21 +578,40 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(EmailMarketingPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = EmailMarketingPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -734,21 +780,24 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
 				return $this->getLastSentDate();
 				break;
 			case 9:
-				return $this->getEnabled();
+				return $this->getClassName();
 				break;
 			case 10:
-				return $this->getVisible();
+				return $this->getEnabled();
 				break;
 			case 11:
-				return $this->getDeleted();
+				return $this->getVisible();
 				break;
 			case 12:
-				return $this->getLocked();
+				return $this->getDeleted();
 				break;
 			case 13:
-				return $this->getCreatedAt();
+				return $this->getLocked();
 				break;
 			case 14:
+				return $this->getCreatedAt();
+				break;
+			case 15:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -770,12 +819,13 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
 			$keys[6]=>$this->getScheduleDate(),
 			$keys[7]=>$this->getSendingStatus(),
 			$keys[8]=>$this->getLastSentDate(),
-			$keys[9]=>$this->getEnabled(),
-			$keys[10]=>$this->getVisible(),
-			$keys[11]=>$this->getDeleted(),
-			$keys[12]=>$this->getLocked(),
-			$keys[13]=>$this->getCreatedAt(),
-			$keys[14]=>$this->getUpdatedAt(),
+			$keys[9]=>$this->getClassName(),
+			$keys[10]=>$this->getEnabled(),
+			$keys[11]=>$this->getVisible(),
+			$keys[12]=>$this->getDeleted(),
+			$keys[13]=>$this->getLocked(),
+			$keys[14]=>$this->getCreatedAt(),
+			$keys[15]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -819,21 +869,24 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
 				$this->setLastSentDate($value);
 				break;
 			case 9:
-				$this->setEnabled($value);
+				$this->setClassName($value);
 				break;
 			case 10:
-				$this->setVisible($value);
+				$this->setEnabled($value);
 				break;
 			case 11:
-				$this->setDeleted($value);
+				$this->setVisible($value);
 				break;
 			case 12:
-				$this->setLocked($value);
+				$this->setDeleted($value);
 				break;
 			case 13:
-				$this->setCreatedAt($value);
+				$this->setLocked($value);
 				break;
 			case 14:
+				$this->setCreatedAt($value);
+				break;
+			case 15:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -852,12 +905,13 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setScheduleDate($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setSendingStatus($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setLastSentDate($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setEnabled($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setVisible($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setLocked($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
+		if (array_key_exists($keys[9], $arr)) $this->setClassName($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setEnabled($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setVisible($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setDeleted($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setLocked($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setCreatedAt($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setUpdatedAt($arr[$keys[15]]);
 	}
 
 	
@@ -874,6 +928,7 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EmailMarketingPeer::SCHEDULE_DATE)) $criteria->add(EmailMarketingPeer::SCHEDULE_DATE, $this->schedule_date);
 		if ($this->isColumnModified(EmailMarketingPeer::SENDING_STATUS)) $criteria->add(EmailMarketingPeer::SENDING_STATUS, $this->sending_status);
 		if ($this->isColumnModified(EmailMarketingPeer::LAST_SENT_DATE)) $criteria->add(EmailMarketingPeer::LAST_SENT_DATE, $this->last_sent_date);
+		if ($this->isColumnModified(EmailMarketingPeer::CLASS_NAME)) $criteria->add(EmailMarketingPeer::CLASS_NAME, $this->class_name);
 		if ($this->isColumnModified(EmailMarketingPeer::ENABLED)) $criteria->add(EmailMarketingPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EmailMarketingPeer::VISIBLE)) $criteria->add(EmailMarketingPeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(EmailMarketingPeer::DELETED)) $criteria->add(EmailMarketingPeer::DELETED, $this->deleted);
@@ -925,6 +980,8 @@ abstract class BaseEmailMarketing extends BaseObject  implements Persistent {
 		$copyObj->setSendingStatus($this->sending_status);
 
 		$copyObj->setLastSentDate($this->last_sent_date);
+
+		$copyObj->setClassName($this->class_name);
 
 		$copyObj->setEnabled($this->enabled);
 

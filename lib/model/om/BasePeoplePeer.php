@@ -13,7 +13,7 @@ abstract class BasePeoplePeer {
 	const CLASS_DEFAULT = 'lib.model.People';
 
 	
-	const NUM_COLUMNS = 15;
+	const NUM_COLUMNS = 24;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,7 +35,13 @@ abstract class BasePeoplePeer {
 	const FULL_NAME = 'people.FULL_NAME';
 
 	
+	const NICKNAME = 'people.NICKNAME';
+
+	
 	const EMAIL_ADDRESS = 'people.EMAIL_ADDRESS';
+
+	
+	const PHONE_DDD = 'people.PHONE_DDD';
 
 	
 	const PHONE_NUMBER = 'people.PHONE_NUMBER';
@@ -45,6 +51,27 @@ abstract class BasePeoplePeer {
 
 	
 	const DEFAULT_LANGUAGE = 'people.DEFAULT_LANGUAGE';
+
+	
+	const ADDRESS_NAME = 'people.ADDRESS_NAME';
+
+	
+	const ADDRESS_NUMBER = 'people.ADDRESS_NUMBER';
+
+	
+	const ADDRESS_QUARTER = 'people.ADDRESS_QUARTER';
+
+	
+	const ADDRESS_COMPLEMENT = 'people.ADDRESS_COMPLEMENT';
+
+	
+	const ADDRESS_CITY = 'people.ADDRESS_CITY';
+
+	
+	const ADDRESS_STATE = 'people.ADDRESS_STATE';
+
+	
+	const ADDRESS_ZIPCODE = 'people.ADDRESS_ZIPCODE';
 
 	
 	const ENABLED = 'people.ENABLED';
@@ -70,19 +97,19 @@ abstract class BasePeoplePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleTypeId', 'FirstName', 'LastName', 'FullName', 'EmailAddress', 'PhoneNumber', 'Birthday', 'DefaultLanguage', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME=>array (PeoplePeer::ID, PeoplePeer::PEOPLE_TYPE_ID, PeoplePeer::FIRST_NAME, PeoplePeer::LAST_NAME, PeoplePeer::FULL_NAME, PeoplePeer::EMAIL_ADDRESS, PeoplePeer::PHONE_NUMBER, PeoplePeer::BIRTHDAY, PeoplePeer::DEFAULT_LANGUAGE, PeoplePeer::ENABLED, PeoplePeer::VISIBLE, PeoplePeer::DELETED, PeoplePeer::LOCKED, PeoplePeer::CREATED_AT, PeoplePeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_type_id', 'first_name', 'last_name', 'full_name', 'email_address', 'phone_number', 'birthday', 'default_language', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_TYPE_ID'=>'', 'FIRST_NAME'=>'', 'LAST_NAME'=>'', 'FULL_NAME'=>'', 'EMAIL_ADDRESS'=>'', 'PHONE_NUMBER'=>'', 'BIRTHDAY'=>'', 'DEFAULT_LANGUAGE'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id', 'PeopleTypeId', 'FirstName', 'LastName', 'FullName', 'Nickname', 'EmailAddress', 'PhoneDdd', 'PhoneNumber', 'Birthday', 'DefaultLanguage', 'AddressName', 'AddressNumber', 'AddressQuarter', 'AddressComplement', 'AddressCity', 'AddressState', 'AddressZipcode', 'Enabled', 'Visible', 'Deleted', 'Locked', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME=>array (PeoplePeer::ID, PeoplePeer::PEOPLE_TYPE_ID, PeoplePeer::FIRST_NAME, PeoplePeer::LAST_NAME, PeoplePeer::FULL_NAME, PeoplePeer::NICKNAME, PeoplePeer::EMAIL_ADDRESS, PeoplePeer::PHONE_DDD, PeoplePeer::PHONE_NUMBER, PeoplePeer::BIRTHDAY, PeoplePeer::DEFAULT_LANGUAGE, PeoplePeer::ADDRESS_NAME, PeoplePeer::ADDRESS_NUMBER, PeoplePeer::ADDRESS_QUARTER, PeoplePeer::ADDRESS_COMPLEMENT, PeoplePeer::ADDRESS_CITY, PeoplePeer::ADDRESS_STATE, PeoplePeer::ADDRESS_ZIPCODE, PeoplePeer::ENABLED, PeoplePeer::VISIBLE, PeoplePeer::DELETED, PeoplePeer::LOCKED, PeoplePeer::CREATED_AT, PeoplePeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id', 'people_type_id', 'first_name', 'last_name', 'full_name', 'nickname', 'email_address', 'phone_ddd', 'phone_number', 'birthday', 'default_language', 'address_name', 'address_number', 'address_quarter', 'address_complement', 'address_city', 'address_state', 'address_zipcode', 'enabled', 'visible', 'deleted', 'locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_ALIAS=>array ('ID'=>'', 'PEOPLE_TYPE_ID'=>'', 'FIRST_NAME'=>'', 'LAST_NAME'=>'', 'FULL_NAME'=>'', 'NICKNAME'=>'', 'EMAIL_ADDRESS'=>'', 'PHONE_DDD'=>'', 'PHONE_NUMBER'=>'', 'BIRTHDAY'=>'', 'DEFAULT_LANGUAGE'=>'', 'ADDRESS_NAME'=>'', 'ADDRESS_NUMBER'=>'', 'ADDRESS_QUARTER'=>'', 'ADDRESS_COMPLEMENT'=>'', 'ADDRESS_CITY'=>'', 'ADDRESS_STATE'=>'', 'ADDRESS_ZIPCODE'=>'', 'ENABLED'=>'', 'VISIBLE'=>'', 'DELETED'=>'', 'LOCKED'=>'', 'CREATED_AT'=>'', 'UPDATED_AT'=>'', ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleTypeId'=>1, 'FirstName'=>2, 'LastName'=>3, 'FullName'=>4, 'EmailAddress'=>5, 'PhoneNumber'=>6, 'Birthday'=>7, 'DefaultLanguage'=>8, 'Enabled'=>9, 'Visible'=>10, 'Deleted'=>11, 'Locked'=>12, 'CreatedAt'=>13, 'UpdatedAt'=>14, ),
-		BasePeer::TYPE_COLNAME=>array (PeoplePeer::ID=>0, PeoplePeer::PEOPLE_TYPE_ID=>1, PeoplePeer::FIRST_NAME=>2, PeoplePeer::LAST_NAME=>3, PeoplePeer::FULL_NAME=>4, PeoplePeer::EMAIL_ADDRESS=>5, PeoplePeer::PHONE_NUMBER=>6, PeoplePeer::BIRTHDAY=>7, PeoplePeer::DEFAULT_LANGUAGE=>8, PeoplePeer::ENABLED=>9, PeoplePeer::VISIBLE=>10, PeoplePeer::DELETED=>11, PeoplePeer::LOCKED=>12, PeoplePeer::CREATED_AT=>13, PeoplePeer::UPDATED_AT=>14, ),
-		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_type_id'=>1, 'first_name'=>2, 'last_name'=>3, 'full_name'=>4, 'email_address'=>5, 'phone_number'=>6, 'birthday'=>7, 'default_language'=>8, 'enabled'=>9, 'visible'=>10, 'deleted'=>11, 'locked'=>12, 'created_at'=>13, 'updated_at'=>14, ),
-		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME=>array ('Id'=>0, 'PeopleTypeId'=>1, 'FirstName'=>2, 'LastName'=>3, 'FullName'=>4, 'Nickname'=>5, 'EmailAddress'=>6, 'PhoneDdd'=>7, 'PhoneNumber'=>8, 'Birthday'=>9, 'DefaultLanguage'=>10, 'AddressName'=>11, 'AddressNumber'=>12, 'AddressQuarter'=>13, 'AddressComplement'=>14, 'AddressCity'=>15, 'AddressState'=>16, 'AddressZipcode'=>17, 'Enabled'=>18, 'Visible'=>19, 'Deleted'=>20, 'Locked'=>21, 'CreatedAt'=>22, 'UpdatedAt'=>23, ),
+		BasePeer::TYPE_COLNAME=>array (PeoplePeer::ID=>0, PeoplePeer::PEOPLE_TYPE_ID=>1, PeoplePeer::FIRST_NAME=>2, PeoplePeer::LAST_NAME=>3, PeoplePeer::FULL_NAME=>4, PeoplePeer::NICKNAME=>5, PeoplePeer::EMAIL_ADDRESS=>6, PeoplePeer::PHONE_DDD=>7, PeoplePeer::PHONE_NUMBER=>8, PeoplePeer::BIRTHDAY=>9, PeoplePeer::DEFAULT_LANGUAGE=>10, PeoplePeer::ADDRESS_NAME=>11, PeoplePeer::ADDRESS_NUMBER=>12, PeoplePeer::ADDRESS_QUARTER=>13, PeoplePeer::ADDRESS_COMPLEMENT=>14, PeoplePeer::ADDRESS_CITY=>15, PeoplePeer::ADDRESS_STATE=>16, PeoplePeer::ADDRESS_ZIPCODE=>17, PeoplePeer::ENABLED=>18, PeoplePeer::VISIBLE=>19, PeoplePeer::DELETED=>20, PeoplePeer::LOCKED=>21, PeoplePeer::CREATED_AT=>22, PeoplePeer::UPDATED_AT=>23, ),
+		BasePeer::TYPE_FIELDNAME=>array ('id'=>0, 'people_type_id'=>1, 'first_name'=>2, 'last_name'=>3, 'full_name'=>4, 'nickname'=>5, 'email_address'=>6, 'phone_ddd'=>7, 'phone_number'=>8, 'birthday'=>9, 'default_language'=>10, 'address_name'=>11, 'address_number'=>12, 'address_quarter'=>13, 'address_complement'=>14, 'address_city'=>15, 'address_state'=>16, 'address_zipcode'=>17, 'enabled'=>18, 'visible'=>19, 'deleted'=>20, 'locked'=>21, 'created_at'=>22, 'updated_at'=>23, ),
+		BasePeer::TYPE_NUM=>array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, )
 	);
 
 	
@@ -146,13 +173,31 @@ abstract class BasePeoplePeer {
 
 		$criteria->addSelectColumn(PeoplePeer::FULL_NAME);
 
+		$criteria->addSelectColumn(PeoplePeer::NICKNAME);
+
 		$criteria->addSelectColumn(PeoplePeer::EMAIL_ADDRESS);
+
+		$criteria->addSelectColumn(PeoplePeer::PHONE_DDD);
 
 		$criteria->addSelectColumn(PeoplePeer::PHONE_NUMBER);
 
 		$criteria->addSelectColumn(PeoplePeer::BIRTHDAY);
 
 		$criteria->addSelectColumn(PeoplePeer::DEFAULT_LANGUAGE);
+
+		$criteria->addSelectColumn(PeoplePeer::ADDRESS_NAME);
+
+		$criteria->addSelectColumn(PeoplePeer::ADDRESS_NUMBER);
+
+		$criteria->addSelectColumn(PeoplePeer::ADDRESS_QUARTER);
+
+		$criteria->addSelectColumn(PeoplePeer::ADDRESS_COMPLEMENT);
+
+		$criteria->addSelectColumn(PeoplePeer::ADDRESS_CITY);
+
+		$criteria->addSelectColumn(PeoplePeer::ADDRESS_STATE);
+
+		$criteria->addSelectColumn(PeoplePeer::ADDRESS_ZIPCODE);
 
 		$criteria->addSelectColumn(PeoplePeer::ENABLED);
 

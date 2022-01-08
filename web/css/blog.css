@@ -1,0 +1,245 @@
+.article h1 {
+
+	margin: 0px 0px 0px 1px;
+	font-size: 14px;
+	color: #707070;
+	padding: 0px;
+	text-transform: uppercase;
+}
+
+.article h1.imageFooter {
+
+	margin: 4px 5px 0px 5px;
+	font-size: 12px;
+	color: #707070;
+	padding: 0px;
+	text-transform: none;
+	width: 600px;
+	font-weight: normal
+}
+
+.article h2 {
+
+	margin: 3px 0px;
+	padding: 0px;
+	font-size: 20px;
+}
+
+.article h3 {
+
+	float: left;
+	font-size: 12px;
+	color: #909090;
+	margin-top: 3px;
+	font-weight: normal;
+	font-family: Calibri, Arial
+}
+
+.article h3.tags {
+
+	margin-left: 3px
+}
+
+.article h4 {
+
+	margin: 20px 0px -8px 0px;
+	padding: 0px;
+	font-size: 14px;
+	color: #4040404
+}
+
+.article p {
+
+	font-family: Verdana, Arial, Sans Serif, "Microsoft Sans serif", "Ms Sans serif";
+	margin-bottom: 10px;
+	width: 650px;
+	line-height: 19px;
+}
+
+.article div.distinctText,
+.article fieldset {
+
+	padding: 10px 20px;
+	background: #EAEAEA;
+	border: 1px solid #C0C0C0;
+	margin: 20px;
+}
+
+.article fieldset legend {
+
+	font-weight: bold;
+	left: 0px;
+}
+
+.article div.distinctText p,
+.article fieldset p {
+
+	width: 550px;
+}
+
+.article div.distinctText ul {
+
+	margin: 0px;
+	padding: 0px
+}
+
+.article li {
+
+	line-height: 25px;
+}
+
+div.distinctText li {
+
+	list-style-type: none
+}
+
+.dictionary {
+
+	color: #076497;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.moduleIntro.index h1 {
+
+	font-weight: bold;
+	font-size: 22px;
+	font-family: calibri, Arial, Sans serif;
+	text-transform: none;
+	color: #202020
+}
+
+.moduleIntro.index h1 a {
+
+	color: #202020;
+}
+
+.moduleIntro.index h1 a:hover {
+
+	color: #C91E1E;
+	text-decoration: none
+}
+
+.moduleIntro.index h2 {
+
+	font-weight: normal;
+	font-size: 13px;
+	font-family: calibri, Arial, Sans serif;
+	text-transform: none;
+	color: #707070;
+	border-top: 1px solid #E5E5E5;
+	border-bottom: 1px solid #E5E5E5;
+	margin: 10px 0px;
+	padding: 2px 5px 2px 25px;
+	background: #FFFFFF url('/images/blog/info.gif') 4px center no-repeat;
+}
+
+.moduleIntro.index h2 span {
+
+	font-weight: normal;
+	float: right;
+	text-transform: lowercase
+}
+
+.moduleIntro.index hr {
+
+	margin: 25px 0px;
+}
+
+.blog.suggest {
+
+	margin-top: 30px;
+	margin-left: 30px
+}
+
+.blog.suggest h3.header {
+
+	clear: both;
+	width: 90%;
+	color: #234c62;
+	border-bottom: 1px solid #909090;
+	margin-bottom: 15px;
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 3px
+}
+
+.blog.suggest h1 {
+
+	clear: both;
+	float: left;
+	font-size: 12px;
+	color: #909090;
+	font-weight: normal;
+	position: relative;
+	padding: 0px;
+	margin: 0px;
+	top: 1px
+}
+
+.blog.suggest a:hover h1 {
+
+	color: #808080;
+}
+
+.blog.suggest h2 {
+
+	float: left;
+	border: none;
+	padding: 0px;
+	margin: 0px 0px 0px 10px;
+	background: none;
+	color: #101010;
+	font-weight: bold;
+	top: 0px;
+	font-size: 16px;
+	text-transform: none;
+}
+
+.blog.suggest a:hover h2 {
+
+	color: #C91E1E;
+}
+
+.blog.suggest h3 {
+
+	clear: both;
+	color: #404040;
+	font-weight: normal;
+	width: 650px;
+	padding-top: 3px;
+	font-family: calibri, Arial, Sans serif;
+	font-size: 13px;
+}
+
+.blog.suggest a:hover {
+
+	text-decoration: none;
+}
+
+.share.addthis_default_style {
+
+	float: right;
+	position: relative;
+	right: 40px;
+}
+
+.share.addthis_default_style.header {
+
+	right: 112px;
+	font-weight: normal;
+	font-size: 12px;
+	margin: 0px 0px 20px 0px;
+	padding-top: 2px
+}
+
+ul.description li {
+	font-weight: bold
+}
+
+ul.description li p {
+	line-height: 16px;
+	margin-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal
+}

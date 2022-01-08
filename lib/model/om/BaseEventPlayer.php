@@ -61,6 +61,10 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 
 
 	
+	protected $suppress_notify;
+
+
+	
 	protected $enabled;
 
 
@@ -176,6 +180,13 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 	{
 
 		return $this->allow_edit;
+	}
+
+	
+	public function getSuppressNotify()
+	{
+
+		return $this->suppress_notify;
 	}
 
 	
@@ -399,6 +410,16 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setSuppressNotify($v)
+	{
+
+		if ($this->suppress_notify !== $v) {
+			$this->suppress_notify = $v;
+			$this->modifiedColumns[] = EventPlayerPeer::SUPPRESS_NOTIFY;
+		}
+
+	} 
+	
 	public function setEnabled($v)
 	{
 
@@ -483,19 +504,21 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 
 			$this->allow_edit = $rs->getBoolean($startcol + 12);
 
-			$this->enabled = $rs->getBoolean($startcol + 13);
+			$this->suppress_notify = $rs->getBoolean($startcol + 13);
 
-			$this->deleted = $rs->getBoolean($startcol + 14);
+			$this->enabled = $rs->getBoolean($startcol + 14);
 
-			$this->created_at = $rs->getTimestamp($startcol + 15, null);
+			$this->deleted = $rs->getBoolean($startcol + 15);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 16, null);
+			$this->created_at = $rs->getTimestamp($startcol + 16, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 17, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 17; 
+						return $startcol + 18; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating EventPlayer object", $e);
 		}
@@ -536,21 +559,40 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(EventPlayerPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = EventPlayerPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -701,15 +743,18 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 				return $this->getAllowEdit();
 				break;
 			case 13:
-				return $this->getEnabled();
+				return $this->getSuppressNotify();
 				break;
 			case 14:
-				return $this->getDeleted();
+				return $this->getEnabled();
 				break;
 			case 15:
-				return $this->getCreatedAt();
+				return $this->getDeleted();
 				break;
 			case 16:
+				return $this->getCreatedAt();
+				break;
+			case 17:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -735,10 +780,11 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 			$keys[10]=>$this->getConfirmCode(),
 			$keys[11]=>$this->getInviteStatus(),
 			$keys[12]=>$this->getAllowEdit(),
-			$keys[13]=>$this->getEnabled(),
-			$keys[14]=>$this->getDeleted(),
-			$keys[15]=>$this->getCreatedAt(),
-			$keys[16]=>$this->getUpdatedAt(),
+			$keys[13]=>$this->getSuppressNotify(),
+			$keys[14]=>$this->getEnabled(),
+			$keys[15]=>$this->getDeleted(),
+			$keys[16]=>$this->getCreatedAt(),
+			$keys[17]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -794,15 +840,18 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 				$this->setAllowEdit($value);
 				break;
 			case 13:
-				$this->setEnabled($value);
+				$this->setSuppressNotify($value);
 				break;
 			case 14:
-				$this->setDeleted($value);
+				$this->setEnabled($value);
 				break;
 			case 15:
-				$this->setCreatedAt($value);
+				$this->setDeleted($value);
 				break;
 			case 16:
+				$this->setCreatedAt($value);
+				break;
+			case 17:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -825,10 +874,11 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[10], $arr)) $this->setConfirmCode($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setInviteStatus($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setAllowEdit($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setEnabled($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setDeleted($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setCreatedAt($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setUpdatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[13], $arr)) $this->setSuppressNotify($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setEnabled($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setDeleted($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setCreatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setUpdatedAt($arr[$keys[17]]);
 	}
 
 	
@@ -849,6 +899,7 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPlayerPeer::CONFIRM_CODE)) $criteria->add(EventPlayerPeer::CONFIRM_CODE, $this->confirm_code);
 		if ($this->isColumnModified(EventPlayerPeer::INVITE_STATUS)) $criteria->add(EventPlayerPeer::INVITE_STATUS, $this->invite_status);
 		if ($this->isColumnModified(EventPlayerPeer::ALLOW_EDIT)) $criteria->add(EventPlayerPeer::ALLOW_EDIT, $this->allow_edit);
+		if ($this->isColumnModified(EventPlayerPeer::SUPPRESS_NOTIFY)) $criteria->add(EventPlayerPeer::SUPPRESS_NOTIFY, $this->suppress_notify);
 		if ($this->isColumnModified(EventPlayerPeer::ENABLED)) $criteria->add(EventPlayerPeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(EventPlayerPeer::DELETED)) $criteria->add(EventPlayerPeer::DELETED, $this->deleted);
 		if ($this->isColumnModified(EventPlayerPeer::CREATED_AT)) $criteria->add(EventPlayerPeer::CREATED_AT, $this->created_at);
@@ -915,6 +966,8 @@ abstract class BaseEventPlayer extends BaseObject  implements Persistent {
 		$copyObj->setInviteStatus($this->invite_status);
 
 		$copyObj->setAllowEdit($this->allow_edit);
+
+		$copyObj->setSuppressNotify($this->suppress_notify);
 
 		$copyObj->setEnabled($this->enabled);
 

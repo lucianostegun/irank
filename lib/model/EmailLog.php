@@ -34,4 +34,14 @@ class EmailLog extends BaseEmailLog
 		
 		return $this->getSendingStatus()=='success';
 	}
+	
+	public static function getList(Criteria $criteria=null){
+		
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+			
+		$criteria->addDescendingOrderByColumn( EmailLogPeer::CREATED_AT );
+		
+		return EmailLogPeer::doSelect($criteria);
+	}
 }

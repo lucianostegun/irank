@@ -11,7 +11,7 @@ function isMobile(){
 function debug( value ){
 	
 	clearDebug();
-	debugAdd( value );
+	console.log( value );
 }
 
 function debugAdd( value ){
@@ -28,8 +28,9 @@ function debugAdd( value ){
 
 function clearDebug(){
 
-	$('debugDiv').innerHTML = '';
-	hideDiv('debugDiv');
+	console.clear();
+//	$('debugDiv').innerHTML = '';
+//	hideDiv('debugDiv');
 }
 
 function showDiv( divId, isTableCell, displayType ){
@@ -75,25 +76,26 @@ function isVisible( divId ){
 		return (div.style.display != 'none' || div.style.display == '' || div.style.display == 'block');
 }
 
-function putLoading(divId, message, mobile){
+function putLoading(divId, message, mobile, indicatorId){
 	
 	if( !message )
 		message = i18n_innerLoading;
 	
-	var html = '';
+	var html = '<div id="'+indicatorId+'">';
 	
 	var fontSize = (mobile?'16':'10');
 	
-	html += '<center>\n';
-	html += '<br/>\n';
-	html += '	<table>\n';
-	html += '		<tr>\n';
+	html += '	<center>\n';
+	html += '		<br/>\n';
+	html += '		<table>\n';
+	html += '			<tr>\n';
 	if( !mobile )
-	html += '			<td><img src="'+_imageRoot+'/ajaxLoader32.gif"></td>\n';
-	html += '			<td style="font-weight: bold; font-size: '+fontSize+'pt; padding-left: 15px">'+message+'</td>\n';
-	html += '		</tr>\n';
-	html += '	</table>\n';
-	html += '<center>\n';
+	html += '				<td><img src="'+_imageRoot+'/ajaxLoader32.gif"></td>\n';
+	html += '				<td style="font-weight: bold; font-size: '+fontSize+'pt; padding-left: 15px">'+message+'</td>\n';
+	html += '			</tr>\n';
+	html += '		</table>\n';
+	html += '	</center>\n';
+	html += '</div>\n';
 
 	$(divId).innerHTML = html;
 }
@@ -208,7 +210,7 @@ function toFloat(value, display, decimalPlaces){
 	
 	var separator = (i18n_culture=='pt_BR'?',':'.');
 	
-	if( (/^[0-9]+\.[0-9]{1,2} $/).test(value) )		
+	if( (/^-?[0-9]+\.[0-9]{1,2} $/).test(value) )		
 		value = value.replace('.', ',');
 	
 	if( (/^[0-9]+[,\.][0-9]{3,} $/).test(value) ){
@@ -240,22 +242,24 @@ function parseInfo(infoList){
 	}
 }
 
-function parseMessage(errorMessage){
+function parseMessage(errorMessage, defaultMessage){
 
+	defaultMessage = (defaultMessage?defaultMessage:null)
+	
 	if( (errorMessage).match(/^!/) ){
 		return errorMessage.replace(/^!/, '\n\n');
 	}else
-		return null;
+		return (defaultMessage?'\n\n'+defaultMessage:null);
 }
 
 function getScreenWidth(){
 
-	return document.body.offsetWidth;
+	return window.innerWidth;
 }
 
 function getScreenHeight(){
 	
-	return document.body.offsetHeight;
+	return window.innerHeight;
 }
 
 function isIE(){
@@ -263,12 +267,12 @@ function isIE(){
 	return (navigator.appName.indexOf("Microsoft")!= -1)
 }
 
-function Trim( value, char ){
+function Trim(value, text){
 	
-	if( char ){
+	if( text ){
 		
-		eval('value = value.replace(/^'+char+'*/g, \'\');');
-		eval('value = value.replace(/'+char+'*$/g, \'\');')
+		eval('value = value.replace(/^'+text+'*/g, \'\');');
+		eval('value = value.replace(/'+text+'*$/g, \'\');')
 	}else{
 		
 		value = value.replace(/^ */g, '');
@@ -282,11 +286,11 @@ function Trim( value, char ){
 	return value;
 }
 
-function replaceChar( value, char, newChar) {
+function replaceChar( value, text, newChar) {
 
     for (i=0; i < value.length; i++)
-    	if (value.substring(i, i+1) == char)
-            value = value.replace(char, newChar);
+    	if (value.substring(i, i+1) == text)
+            value = value.replace(text, newChar);
     
     return value;
 }
@@ -362,4 +366,52 @@ function goToPage(moduleName, actionName, fieldName, fieldValue, newWindow, evt)
 	urlLocation = urlLocation.replace(/\/$/g, '');
 
 	location.href = urlLocation;
+}
+
+function hideMessage(messageId){
+	
+	hideDiv('message-'+messageId);
+}
+
+
+
+
+
+//left: 37, up: 38, right: 39, down: 40,
+//spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+var keys = [37, 38, 39, 40];
+
+function preventDefault(e) {
+e = e || window.event;
+if (e.preventDefault)
+   e.preventDefault();
+e.returnValue = false;  
+}
+
+function keydown(e) {
+ for (var i = keys.length; i--;) {
+     if (e.keyCode === keys[i]) {
+         preventDefault(e);
+         return;
+     }
+ }
+}
+
+function wheel(e) {
+preventDefault(e);
+}
+
+function disableScroll() {
+if (window.addEventListener) {
+   window.addEventListener('DOMMouseScroll', wheel, false);
+}
+window.onmousewheel = document.onmousewheel = wheel;
+document.onkeydown = keydown;
+}
+
+function enableScroll() {
+ if (window.removeEventListener) {
+     window.removeEventListener('DOMMouseScroll', wheel, false);
+ }
+ window.onmousewheel = document.onmousewheel = document.onkeydown = null;  
 }

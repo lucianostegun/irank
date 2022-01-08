@@ -1,5 +1,5 @@
 <?php 
-//define("DOMPDF_TEMP_DIR", "/tmp");
+//define("DOMPDF_TEMP_DIR", Util::getFilePath('/temp/dynamic'));
 //define("DOMPDF_CHROOT", DOMPDF_DIR);
 //define("DOMPDF_UNICODE_ENABLED", false);
 //define("DOMPDF_PDF_BACKEND", "PDFLib");
@@ -8,7 +8,8 @@
 //define("DOMPDF_DEFAULT_FONT", "serif");
 //define("DOMPDF_DPI", 72);
 //define("DOMPDF_ENABLE_PHP", true);
-//define("DOMPDF_ENABLE_REMOTE", true);
+define("DOMPDF_ENABLE_REMOTE", true);
+define("DOMPDF_DYNAMIC_IMAGES_LINKS", true);
 //define("DOMPDF_ENABLE_CSS_FLOAT", true);
 //define("DOMPDF_ENABLE_JAVASCRIPT", false);
 //define("DEBUGPNG", true);

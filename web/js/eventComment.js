@@ -45,7 +45,7 @@ function sendComment(eventCommentId){
 		
 		var commentDiv = document.createElement('div');
 		commentDiv.id = 'event'+(isPhoto?'Photo':'')+'Comment'+eventCommentIdNew+'TmpDiv';
-		alert(content)
+		
 		commentDiv.innerHTML = content;		
 		
 		$('comment'+(isPhoto?'Photo':'')+'ListDiv').appendChild(commentDiv);
@@ -125,6 +125,11 @@ function resetCommentForm(eventCommentId){
 	enableButton('postComment');
 	hideDiv('commentsCharCount');
 	hideDiv('commentsPostButton');
+	
+	// O campo vai ser null quando estiver vendo pela página /event/share
+	if( $('commentsCharCount'+eventCommentId)==null )
+		return;
+	
 	$('commentsCharCount'+eventCommentId).innerHTML  = '140 '+i18n_leftChars;
 	$('eventCommentComment'+eventCommentId).disabled = false;
 	$('eventCommentComment'+eventCommentId).value    = i18n_event_commentTab_commentText;

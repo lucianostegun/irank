@@ -3,6 +3,35 @@
 	background: 	url(/images/layout/leftMenu/unsubscribe.png) center left no-repeat;
 }
 
+#leftMenu .subitem .label.notification {
+
+	background: 	url(/images/layout/leftMenu/alert.png) center left no-repeat;
+}
+
 .classifyTable a {
 	color: #303030;
+}
+
+.subscribeBar {
+	
+	position: 				relative;
+	background: 			#E5E5E5;
+    background-image: 		-o-linear-gradient(#FAFAFA, #E5E5E5);
+    background: 			-moz-linear-gradient(top, #FAFAFA, #E5E5E5);;
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#FAFAFA), to(#E5E5E5));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FAFAFA', EndColorStr='#E5E5E5', GradientType=0);
+	border-bottom: 				5px solid #E0E0E0;
+	padding: 				9px 10px 10px 10px;
+	margin: 				0px 0px -5px 0px;
+	top: 					-5px;
+}
+
+#rankingSubscriptionRequestDiv table.gridTable.gridTabTable tr.boxcontent td.agreed {
+
+	color: #7B933A
+}
+
+#rankingSubscriptionRequestDiv table.gridTable.gridTabTable tr.boxcontent td.declined {
+
+	color: #935A3A
 }

@@ -51,6 +51,11 @@ function handleSuccessRanking(rankingId){
 		
 		reloadClassifyTab();
 	}
+
+	if( typeof(window.opener)!='undefined' && typeof(window.opener.checkRankingTag)=='function' )
+		window.opener.checkRankingTag();
+		
+	lockRankingTag();
 	
 	setLastBarPath($('rankingRankingName').value);
 	
@@ -210,6 +215,9 @@ function onSelectTabRanking(tabId){
 		case 'options':
 			showDiv('rankingMainButtonBar');
 			break;
+		case 'notification':
+			showDiv('rankingMainButtonBar');
+			break;
 	}
 	
 	return true;
@@ -329,14 +337,14 @@ function importRankingData(){
 
 function doImportRankingData(){
 	
-	showIndicator('ranking');
+	showIndicator();
 	disableButton('importRankingData');
 	
 	var rankingPlayers = $('rankingImportRankingPlayers').checked;
 	
 	var successFunc = function(t){
 
-		hideIndicator('ranking');
+		hideIndicator();
 		enableButton('importRankingData');
 		
 		if( rankingPlayers ){
@@ -352,7 +360,7 @@ function doImportRankingData(){
 
 		var content = t.responseText;
 		
-		hideIndicator('ranking');
+		hideIndicator();
 		
 		enableButton('importRankingData');
 
@@ -529,6 +537,8 @@ function checkRankingScoreFormula(){
 	formula = formula.replace(/buyin/gi, 'buyin');
 	formula = formula.replace(/itm/gi, 'itm');
 	
+	formula = formula.replace(/raiz\(/gi, 'Math.sqrt(');
+	
 	var formulaResult = null;
 	
 	try{
@@ -546,7 +556,7 @@ function checkRankingScoreFormula(){
 function setInvalidFormula(){
 	
 	$('rankingScoreFormulaFormula').className = 'formFieldError';
-	$('rankingScoreFormulaFormula').title     = 'Invalid formula';
+	$('rankingScoreFormulaFormula').title     = 'A fórmula digitada não é válida';
 	disableButton('rankingScoreFormulaSave');
 	hideDiv('rankingFormulaSuccessDiv')
 }
@@ -587,4 +597,153 @@ function doRankingSearch(){
 
 	var urlAjax = _webRoot+'/ranking/search';
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc, parameters:Form.serialize(form)});
+}
+
+function sendSubscribeRequest(rankingId, cancel){
+	
+	if( cancel && !confirm('Deseja realmente cancelar o pedido de inscrição para este ranking?') )
+		return false;
+	
+	showIndicator();
+	
+	disableButton('subscribeRequest');
+
+	var successFunc = function(t){
+
+		var content = t.responseText;
+		
+		if( content!='success' )
+			return failureFunc(t);
+		
+
+		if( cancel )
+			setButtonLabel('subscribeRequest', 'Enviar pedido', 'arrowRight.png');
+		else
+			setButtonLabel('subscribeRequest', 'Pedido já enviado', 'ok.png');
+		
+		$('subscribeRequestButton').onclick = function(){ sendSubscribeRequest(rankingId, !cancel) };
+			
+		enableButton('subscribeRequest');
+		
+		hideIndicator();
+	};
+		
+	var failureFunc = function(t){
+
+		var content = t.responseText;
+
+		enableButton('subscribeRequest');
+		hideIndicator();
+		
+		var errorMessage = parseMessage(content, 'Por favor, tente novamente.');
+		alert('Não foi possível enviar sua requisição de inscrição ao ranking!'+errorMessage);
+		
+		console.log(content);
+	};
+	
+	var urlAjax = _webRoot+'/ranking/requestSubscription/rankingId/'+rankingId+'/cancel/'+(cancel?'1':'0');
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function toggleSubscriptionRequest(userSiteId, toggleAction){
+	
+	showIndicator();
+	
+	disableButton('subscriptionRequestAgree-'+userSiteId);
+	disableButton('subscriptionRequestDecline-'+userSiteId);
+	
+	var rankingId = $('rankingId').value;
+	
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		
+		if( content!='success' )
+			return failureFunc(t);
+		
+		if( toggleAction=='agree' )
+			reloadPlayerTab();
+		
+		var tabLabel        = tabBarMainObj.getLabel('subscriptionRequest');
+		var matches         = tabLabel.match(/^.* \(([0-9])\)$/);
+		var pendingRequests = (matches[1]*1)-1;
+		
+		tabBarMainObj.setLabel('subscriptionRequest', 'Solicitações'+(pendingRequests > 0?' ('+pendingRequests+')':''));
+		
+		$('rankingSubscriptionRequestDecline-'+userSiteId).remove()
+		$('rankingSubscriptionRequestAgree-'+userSiteId).innerHTML = 'Pedido '+(toggleAction=='agree'?'aceito':'recusado');
+		$('rankingSubscriptionRequestAgree-'+userSiteId).addClassName(toggleAction+'d');
+		$('rankingSubscriptionRequestAgree-'+userSiteId).colspan   = '2';
+		
+		hideIndicator();
+	};
+	
+	var failureFunc = function(t){
+		
+		var content = t.responseText;
+		
+		enableButton('subscriptionRequestAgree-'+userSiteId);
+		enableButton('subscriptionRequestDecline-'+userSiteId);
+		
+		hideIndicator();
+		
+		var errorMessage = parseMessage(content, 'Por favor, tente novamente.');
+		alert('Não foi possível aceitar/recusar o pedido de inscrição ao ranking!'+errorMessage);
+		
+		console.log(content);
+	};
+	
+	var urlAjax = _webRoot+'/ranking/toggleSubscriptionRequest/rankingId/'+rankingId+'/userSiteId/'+userSiteId+'/toggleAction/'+toggleAction;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onSuccess:successFunc, onFailure:failureFunc});
+}
+
+function lockRankingTag(){
+	
+	if( $('rankingRankingTagField')==null )
+		return;
+	
+	$('rankingRankingTagField').className = 'text flex';
+	$('rankingRankingTagField').innerHTML = $('rankingRankingTag').value+'@irank.com.br';
+	
+	$('rankingBuildEmailGroupHelp').remove();
+	$('rankingRankingTagError').remove();
+}
+
+function editRankingNotifications(){
+
+	if( $('rankingUpdateNotifications')!=null )
+		return tabBarMainObj.setTabActive('notification');
+		
+		
+	showIndicator();
+	
+	var div = document.createElement('div');
+	div.id = 'mainNotificationObjDiv';
+	
+	$('tabBarMainObjDiv').appendChild(div);
+	
+	var rankingId = $('rankingId').value;
+	
+	var completeFunc = function(t){
+		
+		tabBarMainObj.addTab('notification', 'Notificações', '100px');
+		tabBarMainObj.setContent('notification','mainNotificationObjDiv');
+		tabBarMainObj.setTabActive('notification');
+		
+		hideIndicator();
+	};
+	
+	var failureFunc = function(t){
+		
+		var content = t.responseText;
+		
+		var errorMessage = parseMessage(content, 'Por favor, tente novamente.');
+		alert('Não foi possível carregar as opções de notificação!'+errorMessage);
+		
+		if( isDebug() )
+			console.log(content);
+	};
+	
+	var urlAjax = _webRoot+'/ranking/getTabContent/tabId/notification/rankingId/'+rankingId;
+	new Ajax.Updater('mainNotificationObjDiv', urlAjax, {asynchronous:true, evalScripts:false, onComplete:completeFunc, onFailure:failureFunc});
 }

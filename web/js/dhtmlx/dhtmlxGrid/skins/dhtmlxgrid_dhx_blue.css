@@ -1,13 +1,13 @@
 /*light*/
 div.gridbox_dhx_blue {
-  border:1px solid  #D1D1D1;
+  border:1px solid  #c2d5dc;
 }
 div.gridbox_dhx_blue .xhdr{
 	background-image:url(../imgs/dhxgrid_dhx_blue/hdr.png);
 }
 div.gridbox_dhx_blue .xhdr_last{
 	border: 1px solid;
-	border-color : #FDFDFD #AAAAAA #AAAAAA #FDFDFD;
+	border-color : #FDFDFD #93AFBA #93AFBA #FDFDFD;
 }
 div.gridbox_dhx_blue table.hdr{
 	background-image:url(../imgs/dhxgrid_dhx_blue/hdr.png);
@@ -15,7 +15,7 @@ div.gridbox_dhx_blue table.hdr{
 
 div.gridbox_dhx_blue table.hdr td {
 	border: 1px solid;
-	border-color : #FDFDFD #AAAAAA #AAAAAA #FDFDFD;
+	border-color : #FDFDFD #93AFBA #93AFBA #FDFDFD;
 	background-color:transparent;
 	font-family:Tahoma;
 	font-size:11px;
@@ -54,8 +54,7 @@ div.gridbox_dhx_blue .dhx_combo_edit{
 	font-size:11px;
 }
 div.gridbox_dhx_blue table.obj tr.rowselected td{
-	background-color:#FFF1CC;
-	background-image:url(../imgs/sky_blue_sel.png);
+	background-color:#ededed;
 	color:black;
 	}
 div.gridbox_dhx_blue table.obj tr.rowselected td.cellselected, div.gridbox_dhx_blue table.obj td.cellselected {

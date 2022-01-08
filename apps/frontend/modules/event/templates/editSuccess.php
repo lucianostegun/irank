@@ -5,9 +5,6 @@
 	$inviteStatus      = ($isNew?'none':$eventObj->getInviteStatus($peopleId));
 	$visibleButtons    = $eventObj->getEnabled();
 
-	if( !$pastDate && $inviteStatus!='deleted' )	
-		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
-
 	$pageAction = ($isClone?__('Cloning'):($eventObj->isNew()?__('Creating'):__('Editing')));
 	
 	if( !$eventObj->getEnabled() || $isClone ):
@@ -39,7 +36,10 @@
 		'success'=>'handleSuccessEvent'.($pastDate?'Result':'').'(request.responseText)',
 		'failure'=>'handleFailureEvent(request.responseText)',
 		'encoding'=>'UTF8',
-		), array( 'id'=>'eventForm' ));
+		), array('id'=>'eventForm'));
+		
+	if( !$pastDate && $inviteStatus!='deleted' )	
+		include_partial('event/include/presenceBar', array('inviteStatus'=>$inviteStatus, 'visibleButtons'=>$visibleButtons));
 	
 	echo input_hidden_tag('eventId', $eventId);
 	echo input_hidden_tag('isClone', $isClone);
@@ -50,6 +50,7 @@
 	
 	$isEditable = $eventObj->isEditable();
 	$isMyEvent  = $eventObj->isMyEvent();
+	$isPastDate = $eventObj->isPastDate();
 	$mode       = ($pastDate && !$isClone?'show':'form');
 	
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
@@ -62,7 +63,8 @@
 	$dhtmlxTabBarObj->setHeight(250);
 	$dhtmlxTabBarObj->build();
 	
-	$facebookButton = button_tag('facebookResultResult', __('button.share'), array('image'=>'facebook.png', 'onclick'=>'shareFacebook('.$eventId.')', 'visible'=>$eventObj->getSavedResult()));
+	$facebookShareButton  = button_tag('facebookShare', 'Divulgar evento', array('image'=>'facebook.png', 'onclick'=>'shareEventFacebook()', 'visible'=>($eventObj->getIsNew() || $isPastDate?false:true)));
+	$facebookResultButton = button_tag('facebookShareResult', 'Compartilhar resultado', array('image'=>'facebook.png', 'onclick'=>'shareResultFacebook('.$eventId.')', 'visible'=>($eventObj->getSavedResult()?true:false)));
 	
 	if( $isEditable ):
 ?>
@@ -71,7 +73,8 @@
 				echo button_tag('mainSubmitResult', __('button.launchResult'), array('onclick'=>'openEventResult()', 'visible'=>$pastDate));
 				echo button_tag('mainSubmit', __('button.save'), array('onclick'=>'doSubmitEvent()', 'visible'=>!$pastDate));
 				
-				echo $facebookButton;
+				echo $facebookShareButton;
+				echo $facebookResultButton;
 			
 			echo getFormLoading('event');
 			echo getFormStatus('Evento salvo com sucesso!', 'Erro ao salvar as informações do evento!');
@@ -80,13 +83,13 @@
 <?php else: ?>
 	<div class="buttonTabBar" id="eventMainButtonBar">
 		<?php
-			echo $facebookButton;
+			echo $facebookResultButton;
 		?>
 	</div>
 <?php endif; ?>
 </form>
 <?php
-	DhtmlxWindows::createWindow('rankingPlaceAdd', __('event.gamePlaceRegister'), 550, 125, 'ranking/dialog/placeAdd', array());
+	DhtmlxWindows::createWindow('rankingPlaceAdd', __('event.gamePlaceRegister'), 550, 185, 'ranking/dialog/placeAdd', array());
 	DhtmlxWindows::createWindow('rankingPlayerAdd', __('ranking.playerRegister'), 380, 125, 'ranking/dialog/playerAdd', array('rankingId'=>$eventObj->getRankingId()));
 	
 	if( ($isEditable || $isMyEvent) )

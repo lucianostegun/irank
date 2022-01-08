@@ -162,7 +162,7 @@
     background: 		-moz-linear-gradient(top, #FFFFFF, #EAEAEA);
     background: 		-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#EAEAEA));
     filter: 			progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#EAEAEA', GradientType=0);
-	position: 			absolute;
+	position: 			fixed;
 	margin: 			auto 130px;
 	width: 				500px;
 	height: 			125px;

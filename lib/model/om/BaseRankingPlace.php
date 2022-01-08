@@ -25,6 +25,18 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 
 
 	
+	protected $state_id;
+
+
+	
+	protected $city_name;
+
+
+	
+	protected $quarter;
+
+
+	
 	protected $deleted;
 
 
@@ -37,6 +49,9 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 
 	
 	protected $aRanking;
+
+	
+	protected $aState;
 
 	
 	protected $collEventList;
@@ -76,6 +91,27 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 	{
 
 		return $this->maps_link;
+	}
+
+	
+	public function getStateId()
+	{
+
+		return $this->state_id;
+	}
+
+	
+	public function getCityName()
+	{
+
+		return $this->city_name;
+	}
+
+	
+	public function getQuarter()
+	{
+
+		return $this->quarter;
 	}
 
 	
@@ -190,6 +226,52 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setStateId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->state_id !== $v) {
+			$this->state_id = $v;
+			$this->modifiedColumns[] = RankingPlacePeer::STATE_ID;
+		}
+
+		if ($this->aState !== null && $this->aState->getId() !== $v) {
+			$this->aState = null;
+		}
+
+	} 
+	
+	public function setCityName($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->city_name !== $v) {
+			$this->city_name = $v;
+			$this->modifiedColumns[] = RankingPlacePeer::CITY_NAME;
+		}
+
+	} 
+	
+	public function setQuarter($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->quarter !== $v) {
+			$this->quarter = $v;
+			$this->modifiedColumns[] = RankingPlacePeer::QUARTER;
+		}
+
+	} 
+	
 	public function setDeleted($v)
 	{
 
@@ -246,17 +328,23 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 
 			$this->maps_link = $rs->getString($startcol + 3);
 
-			$this->deleted = $rs->getBoolean($startcol + 4);
+			$this->state_id = $rs->getInt($startcol + 4);
 
-			$this->created_at = $rs->getTimestamp($startcol + 5, null);
+			$this->city_name = $rs->getString($startcol + 5);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 6, null);
+			$this->quarter = $rs->getString($startcol + 6);
+
+			$this->deleted = $rs->getBoolean($startcol + 7);
+
+			$this->created_at = $rs->getTimestamp($startcol + 8, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 9, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 7; 
+						return $startcol + 10; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating RankingPlace object", $e);
 		}
@@ -297,21 +385,40 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(RankingPlacePeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = RankingPlacePeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -329,6 +436,13 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 					$affectedRows += $this->aRanking->save($con);
 				}
 				$this->setRanking($this->aRanking);
+			}
+
+			if ($this->aState !== null) {
+				if ($this->aState->isModified()) {
+					$affectedRows += $this->aState->save($con);
+				}
+				$this->setState($this->aState);
 			}
 
 
@@ -394,6 +508,12 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aState !== null) {
+				if (!$this->aState->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aState->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = RankingPlacePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -439,12 +559,21 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 				return $this->getMapsLink();
 				break;
 			case 4:
-				return $this->getDeleted();
+				return $this->getStateId();
 				break;
 			case 5:
-				return $this->getCreatedAt();
+				return $this->getCityName();
 				break;
 			case 6:
+				return $this->getQuarter();
+				break;
+			case 7:
+				return $this->getDeleted();
+				break;
+			case 8:
+				return $this->getCreatedAt();
+				break;
+			case 9:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -461,9 +590,12 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 			$keys[1]=>$this->getRankingId(),
 			$keys[2]=>$this->getPlaceName(),
 			$keys[3]=>$this->getMapsLink(),
-			$keys[4]=>$this->getDeleted(),
-			$keys[5]=>$this->getCreatedAt(),
-			$keys[6]=>$this->getUpdatedAt(),
+			$keys[4]=>$this->getStateId(),
+			$keys[5]=>$this->getCityName(),
+			$keys[6]=>$this->getQuarter(),
+			$keys[7]=>$this->getDeleted(),
+			$keys[8]=>$this->getCreatedAt(),
+			$keys[9]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -492,12 +624,21 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 				$this->setMapsLink($value);
 				break;
 			case 4:
-				$this->setDeleted($value);
+				$this->setStateId($value);
 				break;
 			case 5:
-				$this->setCreatedAt($value);
+				$this->setCityName($value);
 				break;
 			case 6:
+				$this->setQuarter($value);
+				break;
+			case 7:
+				$this->setDeleted($value);
+				break;
+			case 8:
+				$this->setCreatedAt($value);
+				break;
+			case 9:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -511,9 +652,12 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setRankingId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setPlaceName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setMapsLink($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setDeleted($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[4], $arr)) $this->setStateId($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setCityName($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setQuarter($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setDeleted($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setCreatedAt($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setUpdatedAt($arr[$keys[9]]);
 	}
 
 	
@@ -525,6 +669,9 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RankingPlacePeer::RANKING_ID)) $criteria->add(RankingPlacePeer::RANKING_ID, $this->ranking_id);
 		if ($this->isColumnModified(RankingPlacePeer::PLACE_NAME)) $criteria->add(RankingPlacePeer::PLACE_NAME, $this->place_name);
 		if ($this->isColumnModified(RankingPlacePeer::MAPS_LINK)) $criteria->add(RankingPlacePeer::MAPS_LINK, $this->maps_link);
+		if ($this->isColumnModified(RankingPlacePeer::STATE_ID)) $criteria->add(RankingPlacePeer::STATE_ID, $this->state_id);
+		if ($this->isColumnModified(RankingPlacePeer::CITY_NAME)) $criteria->add(RankingPlacePeer::CITY_NAME, $this->city_name);
+		if ($this->isColumnModified(RankingPlacePeer::QUARTER)) $criteria->add(RankingPlacePeer::QUARTER, $this->quarter);
 		if ($this->isColumnModified(RankingPlacePeer::DELETED)) $criteria->add(RankingPlacePeer::DELETED, $this->deleted);
 		if ($this->isColumnModified(RankingPlacePeer::CREATED_AT)) $criteria->add(RankingPlacePeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(RankingPlacePeer::UPDATED_AT)) $criteria->add(RankingPlacePeer::UPDATED_AT, $this->updated_at);
@@ -563,6 +710,12 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 		$copyObj->setPlaceName($this->place_name);
 
 		$copyObj->setMapsLink($this->maps_link);
+
+		$copyObj->setStateId($this->state_id);
+
+		$copyObj->setCityName($this->city_name);
+
+		$copyObj->setQuarter($this->quarter);
 
 		$copyObj->setDeleted($this->deleted);
 
@@ -630,6 +783,35 @@ abstract class BaseRankingPlace extends BaseObject  implements Persistent {
 			
 		}
 		return $this->aRanking;
+	}
+
+	
+	public function setState($v)
+	{
+
+
+		if ($v === null) {
+			$this->setStateId(NULL);
+		} else {
+			$this->setStateId($v->getId());
+		}
+
+
+		$this->aState = $v;
+	}
+
+
+	
+	public function getState($con = null)
+	{
+		if ($this->aState === null && ($this->state_id !== null)) {
+						include_once 'lib/model/om/BaseStatePeer.php';
+
+			$this->aState = StatePeer::retrieveByPK($this->state_id, $con);
+
+			
+		}
+		return $this->aState;
 	}
 
 	

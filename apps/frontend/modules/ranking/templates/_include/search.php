@@ -19,6 +19,13 @@
 	if( count($rankingObjList)==0 ):
 ?>
 <tr>
-	<td colspan="7"><?php echo __('ranking.noRankings') ?></td>
+	<td colspan="7" class="p10">
+		<?php
+			if( !$sf_params->get('filter') )
+				echo 'Você ainda não está participando de nenhum ranking.<br/><b>'.link_to('Clique aqui', 'ranking/new').'</b> para criar seu primeiro ranking';
+			else
+				echo __('ranking.noRankings');
+		?>
+	</td>
 </tr>
 <?php endif; ?>

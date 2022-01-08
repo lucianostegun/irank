@@ -53,13 +53,13 @@ class DhtmlxTabBar30 {
 		$html .= '    '.$objectName.' = new dhtmlXTabBar("'.$objectName.'Div", "top");'.$nl;
 
     	$html .= '    '.$objectName.'.setHrefMode("ajax-html");'.$nl;
-    	$html .= '    '.$objectName.'.setSkin("silver");'.$nl;
+    	$html .= '    '.$objectName.'.setSkin("default");'.$nl;
 		$html .= '    '.$objectName.'.setImagePath("/js/dhtmlx/dhtmlxTabbar/imgs/");'.$nl;
 
 		$html .= $this->getTabBarListScript();
 		$html .= $this->getHandlerList();
 
-		$html .= '    '.$objectName.'.enableAutoSize(true, true);'.$nl;
+		$html .= '    '.$objectName.'.enableAutoSize(false, true);'.$nl;
 //		$html .= '    '.$objectName.'.attachEvent("onTabContentLoaded", onTabContentLoaded);'.$nl;
     
     	$html .= '    '.$objectName.'.setTabActive(\''.$this->getSelectedTabBarId().'\');'.$nl.$nl;
@@ -95,6 +95,7 @@ class DhtmlxTabBar30 {
 		if( $this->getTabBarCount()==0 )
 			$this->setSelectedTabBarId($id);
 
+		$description = str_replace('"', '\\"', $description);
 		$tabBarObj = new TabBar();
 		$tabBarObj->setId( $id );
 		$tabBarObj->setAjax( $ajax );
@@ -157,7 +158,7 @@ class DhtmlxTabBar30 {
     	// Este bloco está separado porque senão fica um buraco entre as abas
     	foreach( $this->tabBarObjList as $tabBarObj )
 	    	if( $tabBarObj->getHidden() )
-	    		$html .= '    '.$objectName.'.hideTab(\''.$tabBarObj->getId().'\',true);'.$nl;
+	    		$html .= '    '.$objectName.'.hideTab(\''.$tabBarObj->getId().'\');'.$nl;
     	
     	return $html;
     }
@@ -195,9 +196,9 @@ class DhtmlxTabBar30 {
     			$functionName = $this->getName().'_'.$handler['type'];
     			
     			$html .= 'var '.$functionName.' = function(){'.$handler['function'].';}'.$nl;
-    			$html .= $this->getName() . '.attachEvent("'.$handler['type'].'", '.$functionName.' );'.$nl;
+    			$html .= '	'.$this->getName() . '.attachEvent("'.$handler['type'].'", '.$functionName.' );'.$nl;
     		}else{
-    			$html .= $this->getName() . '.attachEvent("'.$handler['type'].'", '.$handler['function'].' );'.$nl;
+    			$html .= '	'.$this->getName() . '.attachEvent("'.$handler['type'].'", '.$handler['function'].' );'.$nl;
     		}
 
     	return $html;
@@ -231,9 +232,6 @@ class DhtmlxTabBar30 {
 		if( !$selectedTabBarId )
 			return false;
 			
-		if( $this->selectedTabBarId )
-			return false;
-
 		$selectedTabBarId = str_replace('Obj', '', $selectedTabBarId);
 		
 		$this->selectedTabBarId = $selectedTabBarId;
@@ -330,8 +328,8 @@ class TabBar {
 		
 		$description = $this->getDescription();
 		$description = String::removeAccents( $description );
-		
-		$map = array(	'a'=>8, 'b'=>8, 'c'=>8, 'd'=>8, 'e'=>8, 'f'=>8, 'g'=>8, 'h'=>8, 'i'=>8, 'j'=>8, 'k'=>8, 'l'=>8, 'm'=>8, 'n'=>8, 'o'=>8, 'p'=>8, 'q'=>8, 'r'=>8, 's'=>8, 't'=>8, 'u'=>8, 'v'=>8, 'w'=>8, 'x'=>8, 'y'=>8, 'z'=>8, 
+		$description = strip_tags($description);
+		$map = array(	'a'=>7.5, 'b'=>7.5, 'c'=>7.5, 'd'=>7.5, 'e'=>7.5, 'f'=>7.5, 'g'=>7.5, 'h'=>7.5, 'i'=>7.5, 'j'=>7.5, 'k'=>7.5, 'l'=>7.5, 'm'=>7.5, 'n'=>7.5, 'o'=>7.5, 'p'=>7.5, 'q'=>7.5, 'r'=>7.5, 's'=>7.5, 't'=>7.5, 'u'=>7.5, 'v'=>7.5, 'w'=>7.5, 'x'=>7.5, 'y'=>7.5, 'z'=>7.5, 
 						'A'=>11, 'B'=>11, 'C'=>11, 'D'=>11, 'E'=>11, 'F'=>11, 'G'=>11, 'H'=>11, 'I'=>11, 'J'=>11, 'K'=>11, 'L'=>11, 'M'=>11, 'N'=>11, 'O'=>11, 'P'=>11, 'Q'=>11, 'R'=>11, 'S'=>11, 'T'=>11, 'U'=>11, 'V'=>11, 'W'=>11, 'X'=>11, 'Y'=>11, 'Z'=>11, 
 						'0'=>8, '1'=>6, '2'=>7, '3'=>7, '4'=>9, '5'=>8, '6'=>9, '7'=>9, '8'=>9, '9'=>9, ' '=>4);
 		

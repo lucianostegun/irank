@@ -1,0 +1,143 @@
+fields:
+       
+  couponCode:
+    required:
+      msg:       form.error.requiredField
+    sfStringValidator:
+      min:       8
+      max:       16
+      min_error: Informe um código alfanumérico de 8 posições
+      max_error: Informe um código alfanumérico de 16 posições
+    sfRegexValidator:
+      match:        Yes
+      match_error:  O código do cupom não atendo ao formato exigido
+      pattern:      /^[A-Z]+[A-Z0-9]{8,14}[A-Z0-9]+$/si
+    sfCallbackValidator:
+      callback:      [DiscountCouponPeer, uniqueCode]
+      invalid_error: Esta código já está sendo utilizado por outro cupom
+      
+  shippingPercent:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  shippingValue:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  orderPercent:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  orderValue:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  totalPercent:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  totalValue:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  cheaperItemPercent:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  cheaperItemValue:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  cheaperProductPercent:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  cheaperProductValue:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  mostExpensiveItemPercent:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  mostExpensiveItemValue:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  mostExpensiveProductPercent:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100
+      
+  mostExpensiveProductValue:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       0
+      max:       100
+      min_error: Informe um valor maior ou igual a 0
+      max_error: Informe um valor menor ou igual a 100

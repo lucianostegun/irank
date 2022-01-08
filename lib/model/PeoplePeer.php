@@ -60,4 +60,16 @@ class PeoplePeer extends BasePeoplePeer
     		return PeoplePeer::doSelect( $criteria );
     	}
     }
+    
+    public static function uniqueNickname($nickname){
+		
+		$peopleId = MyTools::getAttribute('peopleId');
+		
+		$criteria = new Criteria();
+		$criteria->add( PeoplePeer::ID, $peopleId, Criteria::NOT_EQUAL );
+		$criteria->add( PeoplePeer::NICKNAME, $nickname, Criteria::LIKE );
+		$peopleObj = PeoplePeer::doSelectOne( $criteria );
+
+		return !is_object( $peopleObj );
+	}
 }

@@ -15,23 +15,7 @@ class EmailTemplate extends BaseEmailTemplate
 		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
 	}
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-        	Log::quickLog('email_template', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('email_template', $this->getPrimaryKey(), $e);
-        }
-    }
-	
-	public function delete($con=null){
+    public function delete($con=null){
 		
 		$this->setVisible(false);
 		$this->setDeleted(true);
@@ -46,6 +30,7 @@ class EmailTemplate extends BaseEmailTemplate
 		$tagName            = $request->getParameter('tagName');
 		$isAvailableForUse  = $request->getParameter('isAvailableForUse');
 		$isAvailableForSale = $request->getParameter('isAvailableForSale');
+		$isOption           = $request->getParameter('isOption');
 		$description        = $request->getParameter('description');
 		$content            = $request->getParameter('content');
 		
@@ -59,6 +44,7 @@ class EmailTemplate extends BaseEmailTemplate
 		$this->setDescription(nvl($description));
 		$this->setIsAvailableForUse(($isAvailableForUse?true:false));
 		$this->setIsAvailableForSale(($isAvailableForSale?true:false));
+		$this->setIsOption(($isOption?true:false));
 		$this->setEnabled(true);
 		$this->setVisible(true);
 		$this->setDeleted(false);
@@ -73,6 +59,18 @@ class EmailTemplate extends BaseEmailTemplate
 		
 		if( $isNew || ($tagNameOld!=$tagName) )
 			$this->renameFile();
+	}
+	
+	public static function getIdByTagName( $tagName ){
+		
+		$criteria = new Criteria();
+		$criteria->add( EmailTemplatePeer::TAG_NAME, $tagName );
+		$emailTemplateObj = EmailTemplatePeer::doSelectOne( $criteria );
+		
+		if( is_object($emailTemplateObj) )
+			return $emailTemplateObj->getId();
+		else
+			return null;
 	}
 	
 	public function updateTagNameParent(){
@@ -176,6 +174,10 @@ class EmailTemplate extends BaseEmailTemplate
 	public static function getContentByTagName($tagName, $encodeUTF8=false, $culture=false){
 		
 		$filePath = Util::getFilePath('/templates/email/'.$tagName.'.htm');
+		
+		if( !file_exists($filePath) )
+			throw new Exception('Template de e-mail não encontrado');
+		
 		$content = file_get_contents($filePath);
 		
 		if( $encodeUTF8 )

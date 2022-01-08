@@ -206,6 +206,24 @@ END
 '
 LANGUAGE 'plpgsql';
 
+CREATE OR REPLACE FUNCTION get_player_start_bankroll(peopleId INTEGER) RETURNS DECIMAL AS
+'
+DECLARE
+  result DECIMAL;
+BEGIN
+	
+    SELECT
+        COALESCE(start_bankroll, 0) INTO result
+    FROM
+        user_site
+    WHERE
+        people_id = peopleId;
+
+   RETURN result;
+END
+'
+LANGUAGE 'plpgsql';
+
 
 DROP FUNCTION get_player_position(p_ranking_id INTEGER, p_people_id INTEGER, p_ranking_date DATE);
 CREATE OR REPLACE FUNCTION get_player_position(rankingId INTEGER, peopleId INTEGER, rankingDate DATE) RETURNS INTEGER AS'

@@ -29,12 +29,13 @@ class contactActions extends sfActions
 	if( is_object($userSiteObj))
 		$emailContent = str_replace('[username]', $userSiteObj->getUserName(), $emailContent);
 	
-	$emailAddress = 'lucianostegun@gmail.com';
-	$options      = array();
-	
+	$options = array();
 	$options['emailTemplate']  = 'emailTemplateAdmin';
-	$options['contentType']    = 'text/plain';
-	$options['entitiesEncode'] = false;
+	$options['replyTo']        = $emailAddress;
+//	$options['contentType']    = 'text/plain';
+//	$options['entitiesEncode'] = false;
+	
+	$emailAddress = 'contato@irank.com.br';
 	
 	Report::sendMail('Contato iRank', $emailAddress, $emailContent, $options);
 	exit;

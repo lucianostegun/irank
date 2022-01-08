@@ -8,7 +8,10 @@ class rankingActions extends sfActions
 	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
 	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
 	
-	$freeActionList = array('edit', 'getBuyin', 'getRankingHistory', 'validateUnsubscribe', 'unsubscribe', 'saveMobile');
+	$this->rankingId = $this->getRequestParameter('id');
+	$this->rankingId = $this->getRequestParameter('rankingId', $this->rankingId);
+	
+	$freeActionList = array('edit', 'getBuyin', 'getRankingHistory', 'validateUnsubscribe', 'unsubscribe', 'saveMobile', 'share', 'requestSubscription');
 	$actionName     = sfContext::getInstance()->getActionName();
 		
 	$rankingId = $this->getRequestParameter('rankingId');
@@ -31,7 +34,9 @@ class rankingActions extends sfActions
   	$this->innerObj    = new Ranking();
   	
 	$this->criteria = new Criteria();
-	$this->criteria->addAnd( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL );
+	$criterion = $this->criteria->getNewCriterion( RankingPeer::FINISH_DATE, null );
+	$criterion->addOr( $this->criteria->getNewCriterion( RankingPeer::FINISH_DATE, date('Y-m-d'), Criteria::GREATER_EQUAL ) );
+	$this->criteria->addAnd($criterion);
   }
   
   public function executeNew($request){
@@ -41,7 +46,8 @@ class rankingActions extends sfActions
   
   public function executeEdit($request){
   	
-  	$rankingId = $request->getParameter('rankingId');
+  	$rankingId = $request->getParameter('id');
+  	$rankingId = $request->getParameter('rankingId', $rankingId);
   	
   	if( $rankingId ){
   		
@@ -63,6 +69,19 @@ class rankingActions extends sfActions
 	  
   	$this->innerObj  = $this->rankingObj;
   }
+  
+  public function executeShare($request){
+  	
+  	$shareId   = $request->getParameter('share');
+  	$rankingId = Util::decodeId($shareId);
+  	$rankingId = $request->getParameter('id', $rankingId);
+  	$rankingId = $request->getParameter('rankingId', $rankingId);
+  	
+	$this->rankingObj = RankingPeer::retrieveByPK( $rankingId );
+
+	if( !is_object($this->rankingObj) )
+		return $this->redirect('ranking/index');
+  }
 
   public function handleErrorSave(){
 
@@ -71,21 +90,22 @@ class rankingActions extends sfActions
   
   public function executeSave($request){
 
-	$rankingId        = $request->getParameter('rankingId');
-	$rankingName      = $request->getParameter('rankingName');
-	$buildEmailGroup  = $request->getParameter('buildEmailGroup');
-	$rankingTag       = $request->getParameter('rankingTag');
-	$gameStyleId      = $request->getParameter('gameStyleId');
-	$startDate        = $request->getParameter('startDate');
-	$finishDate       = $request->getParameter('finishDate');
-	$isPrivate        = $request->getParameter('isPrivate');
-	$rankingTypeId    = $request->getParameter('rankingTypeId');
-	$buyin            = $request->getParameter('buyin');
-	$startTime        = $request->getParameter('startTime');
-	$entranceFee      = $request->getParameter('entranceFee');
-	$scoreSchema      = $request->getParameter('scoreSchema');
-	$scoreFormula     = $request->getParameter('scoreFormula');
-	$recalculateScore = $request->getParameter('recalculateScore');
+	$rankingId           = $request->getParameter('rankingId');
+	$rankingName         = $request->getParameter('rankingName');
+	$buildEmailGroup     = $request->getParameter('buildEmailGroup');
+	$rankingTag          = $request->getParameter('rankingTag');
+	$gameStyleId         = $request->getParameter('gameStyleId');
+	$startDate           = $request->getParameter('startDate');
+	$finishDate          = $request->getParameter('finishDate');
+	$isPrivate           = $request->getParameter('isPrivate');
+	$rankingTypeId       = $request->getParameter('rankingTypeId');
+	$buyin               = $request->getParameter('buyin');
+	$startTime           = $request->getParameter('startTime');
+	$entranceFee         = $request->getParameter('entranceFee');
+	$scoreSchema         = $request->getParameter('scoreSchema');
+	$scoreFormula        = $request->getParameter('scoreFormula');
+	$recalculateScore    = $request->getParameter('recalculateScore');
+	$updateNotifications = $request->getParameter('updateNotifications');
 
 	$rankingObj = $this->rankingObj;
 
@@ -95,54 +115,72 @@ class rankingActions extends sfActions
 		$rankingObj->setUserSiteId($this->userSiteId);
 	}
 	
-	$isNew = $rankingObj->isNew();
-
-	$scoreFormula = ($scoreSchema=='custom'?$scoreFormula:null);
-
-	$updateHistory = ($rankingTypeId!=$rankingObj->getRankingTypeId());
-
-	$rankingObj->setRankingName( $rankingName );
-	$rankingObj->setGameStyleId( $gameStyleId );
-	$rankingObj->setStartDate( Util::formatDate($startDate) );
-	$rankingObj->setFinishDate( Util::formatDate($finishDate) );
-	$rankingObj->setBuyin( Util::formatFloat($buyin) );
-	$rankingObj->setEntranceFee( Util::formatFloat($entranceFee) );
-	$rankingObj->setStartTime( $startTime );
-	$rankingObj->setIsPrivate( ($isPrivate?true:false) );
-	$rankingObj->setRankingTypeId( $rankingTypeId );
-	$rankingObj->setScoreSchema( $scoreSchema );
-	$rankingObj->setScoreFormula( $scoreFormula );
-	$rankingObj->setVisible(true);
-	$rankingObj->setEnabled(true);
 	
-	if( !$buildEmailGroup || !$rankingTag || $rankingObj->getRankingTag()!==null )
+	try{
+		
+		$con = Propel::getConnection();
+		$con->begin();
+
+		$isNew = $rankingObj->isNew();
+	
+		$scoreFormula = ($scoreSchema=='custom'?$scoreFormula:null);
+	
+		$updateHistory = ($rankingTypeId!=$rankingObj->getRankingTypeId());
+	
+		$rankingObj->setRankingName( $rankingName );
+		$rankingObj->setGameStyleId( $gameStyleId );
+		$rankingObj->setStartDate( Util::formatDate($startDate) );
+		$rankingObj->setFinishDate( Util::formatDate($finishDate) );
+		$rankingObj->setBuyin( Util::formatFloat($buyin) );
+		$rankingObj->setEntranceFee( Util::formatFloat($entranceFee) );
+		$rankingObj->setStartTime( nvl($startTime) );
+		$rankingObj->setIsPrivate( ($isPrivate?true:false) );
+		$rankingObj->setRankingTypeId( $rankingTypeId );
+		$rankingObj->setScoreSchema( $scoreSchema );
+		$rankingObj->setScoreFormula( $scoreFormula );
+		$rankingObj->setVisible(true);
+		$rankingObj->setEnabled(true);
+		
 		$buildEmailGroup = false;
 		
-	$rankingObj->save();
-	
-	if( $buildEmailGroup ){
-		
-		$rankingObj->setRankingTag($rankingTag);
-		$rankingObj->createEmailGroup();
-	}
-	
-	$rankingObj->addPlayer( $this->peopleId, true );
-	
-	if( $isNew ){
-		
-		$rankingObj->resetOptions();
-	}else{
-		
-		if( $recalculateScore ){
+		if( is_null($rankingObj->getRankingTag()) ){
 			
-			$rankingObj->updateWholeScore();
-			$rankingObj->updateScores();
+			$rankingObj->setRankingTag($rankingTag);
+			$buildEmailGroup = true;
+		}
+			
+		$rankingObj->save($con);
+		
+		if( $buildEmailGroup )
+			$rankingObj->createEmailGroup($con);
+		
+		if( $updateNotifications )
+			$rankingObj->saveNotifications($request, $con);
+		
+		$rankingObj->addPlayer($this->peopleId, true, $con);
+		
+		if( $isNew ){
+			
+			$rankingObj->resetOptions($con);
+		}else{
+			
+			if( $recalculateScore ){
+				
+				$rankingObj->updateWholeScore($con);
+				$rankingObj->updateScores($con);
+			}
+			
+			$rankingObj->saveOptions($request, $con);
+			
+			if( $updateHistory || $recalculateScore )
+				$rankingObj->updateWholeHistory($con);
 		}
 		
-		$rankingObj->saveOptions($request);
+		$con->commit();
+	}catch(Exception $e){
 		
-		if( $updateHistory || $recalculateScore )
-			$rankingObj->updateWholeHistory();
+		$con->rollback();
+		Util::forceError($e->getMessage());
 	}
 	
 	echo $rankingObj->getId();
@@ -227,7 +265,7 @@ class rankingActions extends sfActions
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
+	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj, 'readOnly'=>false)));
   }
   
   public function executeDeletePlayer($request){
@@ -253,18 +291,19 @@ class rankingActions extends sfActions
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj)));
+	return $this->renderText(get_partial('ranking/include/player', array('rankingObj'=>$rankingObj, 'readOnly'=>false)));
   }
 
   public function executeGetClassifyList($request){
 
 	$rankingDate = $request->getParameter('rankingDate', null);
+	$readOnly    = $request->getParameter('readOnly');
 	$rankingObj  = $this->rankingObj;
 	
     sfConfig::set('sf_web_debug', false);
 	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 
-	return $this->renderText(get_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$rankingDate)));
+	return $this->renderText(get_partial('ranking/include/classify', array('rankingObj'=>$rankingObj, 'rankingDate'=>$rankingDate, 'readOnly'=>$readOnly)));
   }
 
   public function executeGetOptionsList($request){
@@ -285,22 +324,13 @@ class rankingActions extends sfActions
   public function executeSavePlace($request){
 
   	$rankingPlaceId = $request->getParameter('rankingPlaceId');
-  	$rankingId      = $request->getParameter('rankingId');
-  	$placeName      = $request->getParameter('placeName');
-  	$mapsLink       = $request->getParameter('mapsLink');
 	
-	if( $rankingPlaceId ){
-		
+	if( $rankingPlaceId )
 		$rankingPlaceObj = RankingPlacePeer::retrieveByPK($rankingPlaceId);
-	}else{
-		
+	else
 		$rankingPlaceObj = new RankingPlace();
-		$rankingPlaceObj->setRankingId( $rankingId );
-	}
-		
-	$rankingPlaceObj->setPlaceName( $placeName );
-	$rankingPlaceObj->setMapsLink( $mapsLink );
-	$rankingPlaceObj->save();
+	
+	$rankingPlaceObj->quickSave($request);
 	
 	echo $rankingPlaceObj->getId();
 	exit;	
@@ -455,6 +485,104 @@ class rankingActions extends sfActions
 		sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag', 'Javascript', 'Form', 'Text');
 		return $this->renderText(get_partial('ranking/include/search', array('criteria'=>$criteria, 'userSiteObj'=>$userSiteObj)));
 	}  	
+  }
+  
+  public function executeRequestSubscription($request){
+  	
+  	if( !$this->getUser()->isAuthenticated() )
+  		Util::forceError('!É necessário estar logado para enviar seu pedido de inscrição.');
+  	
+  	$rankingId  = $request->getParameter('rankingId');
+  	$cancel     = $request->getParameter('cancel');
+  	$userSiteId = $this->getUser()->getAttribute('userSiteId');
+  	
+  	$rankingObj = RankingPeer::retrieveByPK($rankingId);
+  	
+  	if( $rankingObj->getIsPrivate() )
+  		Util::forceError('!Este ranking não aceita pedidos de inscrição.');
+  	
+  	if( $cancel )
+  		$rankingObj->cancelSubscriptionRequest($userSiteId);
+  	else
+  		$rankingObj->addSubscriptionRequest($userSiteId);
+  	
+  	echo 'success';
+  	
+  	exit;
+  }
+  
+  public function executeToggleSubscriptionRequest($request){
+  	
+  	$userSiteId      = $request->getParameter('userSiteId');
+  	$toggleAction    = $request->getParameter('toggleAction');
+  	$userSiteIdOwner = $this->getUser()->getAttribute('userSiteId');
+  	
+  	$rankingSubscriptionRequestObj = $this->rankingObj->hasPendingSubscriptionRequest($userSiteId, true);
+  	$rankingSubscriptionRequestObj->$toggleAction($userSiteIdOwner);
+  	
+  	echo 'success';
+  	
+  	exit;
+  }
+  
+  public function executeCheckRankingTag($request){
+  	
+  	$rankingTag = RankingPeer::checkRankingTag($this->rankingId);
+  	
+  	if( !$rankingTag )
+  		Util::forceError('noRankingTag');
+  	
+  	exit;
+  }
+
+  public function executeGetRankingPlace($request){
+  	
+  	$rankingPlaceId  = $request->getParameter('rankingPlaceId');
+  	$rankingPlaceObj = RankingPlacePeer::retrieveByPK($rankingPlaceId);
+  	
+  	echo Util::parseInfo($rankingPlaceObj->getInfo());
+  	
+  	exit;
+  }
+
+  public function executeCheckRankingPlace($request){
+  	
+  	$rankingPlaceId  = $request->getParameter('rankingPlaceId');
+  	$rankingPlaceObj = RankingPlacePeer::retrieveByPK($rankingPlaceId);
+  	
+  	if( $rankingPlaceObj->getStateId() && $rankingPlaceObj->getCityName() && $rankingPlaceObj->getQuarter() )
+  		exit('complete');
+  	else
+  		exit('incomplete');
+  	
+  	exit;
+  }
+
+  public function executeParseMapsInfo($request){
+  	
+  	$mapsLink = $request->getParameter('mapsLink');
+  	
+  	try{
+  		
+  		echo Util::parseInfo( RankingPlace::parseMapsLink($mapsLink) );
+  	}catch(Exception $e){
+  		
+  		Util::forceError($e->getMessage());
+  	}
+  	
+  	exit;
+  }
+
+  public function executeGetTabContent($request){
+  	
+  	$rankingId = $request->getParameter('id');
+  	$rankingId = $request->getParameter('rankingId', $rankingId);
+  	$tabId  = $request->getParameter('tabId');
+  	$tabId  = strtolower($tabId);
+  	
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
+
+	return $this->renderText(get_partial('ranking/form/'.$tabId, array('rankingId'=>$rankingId)));
   }
   
   public function executeJavascript($request){

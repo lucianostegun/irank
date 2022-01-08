@@ -1,43 +1,40 @@
 <?php
-	$receiveFriendEventConfirmNotify = $userSiteObj->getOptionValue('receiveFriendEventConfirmNotify');
-	$receiveEventReminder0           = $userSiteObj->getOptionValue('receiveEventReminder0');
-	$receiveEventReminder3           = $userSiteObj->getOptionValue('receiveEventReminder3');
-	$receiveEventReminder5           = $userSiteObj->getOptionValue('receiveEventReminder5');
-	$receiveEventCommentNotify       = $userSiteObj->getOptionValue('receiveEventCommentNotify');
-	$receiveAllResults               = $userSiteObj->getOptionValue('receiveAllResults');
+	$emailAddress = $userSiteObj->getPeople()->getEmailAddress();
+	
+	$criteria = new Criteria();
+	$criteria->add( EmailOptionPeer::EMAIL_ADDRESS, $emailAddress );
+	$criteria->add( EmailOptionPeer::LOCK_SEND, true );
+	$criteria->setIgnoreCase(true);
+	$emailOptionObjList = EmailOptionPeer::doSelect($criteria);
+	
+	$emailTemplateIdList = array();
+	foreach($emailOptionObjList as $emailOptionObj)
+		$emailTemplateIdList[] = $emailOptionObj->getEmailTemplateId();
 ?>
-
-<table width="100%" cellspacing="1" cellpadding="0" style="margin-top: 5px">
-	<tr>
-		<td valign="top" style="padding: 5px 5px 5px 15px"><?php echo __('myAccount.email.intro') ?></td>
-	</tr>
-	<tr>
-		<td valign="top" class="defaultForm">
-			<div class="rowCheckbox">
-				<div class="field"><?php echo checkbox_tag('receiveFriendEventConfirmNotify', true, $receiveFriendEventConfirmNotify) ?></div>
-				<div class="label"><label for="receiveFriendEventConfirmNotify"><?php echo __('myAccount.email.receiveFriendEventConfirmNotify') ?></label></div>
-			</div>
-			<div class="rowCheckbox">
-				<div class="field"><?php echo checkbox_tag('receiveEventReminder0', true, $receiveEventReminder0) ?></div>
-				<div class="label"><label for="receiveEventReminder0"><?php echo __('myAccount.email.receiveEventReminder0') ?></label></div>
-			</div>
-			<div class="rowCheckbox">
-				<div class="field"><?php echo checkbox_tag('receiveEventReminder3', true, $receiveEventReminder3) ?></div>
-				<div class="label"><label for="receiveEventReminder3"><?php echo __('myAccount.email.receiveEventReminder3') ?></label></div>
-			</div>
-			<div class="rowCheckbox">
-				<div class="field"><?php echo checkbox_tag('receiveEventReminder5', true, $receiveEventReminder5) ?></div>
-				<div class="label"><label for="receiveEventReminder5"><?php echo __('myAccount.email.receiveEventReminder5') ?></label></div>
-			</div>
-			<div class="rowCheckbox">
-				<div class="field"><?php echo checkbox_tag('receiveEventCommentNotify', true, $receiveEventCommentNotify) ?></div>
-				<div class="label"><label for="receiveEventCommentNotify"><?php echo __('myAccount.email.receiveEventCommentNotify') ?></label></div>
-			</div>
-			<div class="rowCheckbox">
-				<div class="field"><?php echo checkbox_tag('receiveAllResults', true, $receiveAllResults) ?></div>
-				<div class="label"><label for="receiveAllResults"><?php echo __('myAccount.email.receiveAllResults') ?></label></div>
-			</div>
+<div class="tabbarIntro">Selecione as notificações que deseja receber</div>
+<div class="defaultForm">
+	<?php
+		$emailOptionAll = true;
+		
+		$criteria = new Criteria();
+		$criteria->add( EmailTemplatePeer::IS_OPTION, true);
+		$emailTemplateObjList = EmailTemplate::getList($criteria);
+		foreach($emailTemplateObjList as $emailTemplateObj):
 			
-		</td>
-	</tr>
-</table>
+			$emailTemplateId = $emailTemplateObj->getId();
+			$checked         = !in_array($emailTemplateId, $emailTemplateIdList);
+			$emailOptionAll &= $checked;
+	?>
+	<div class="rowCheckbox mt5">
+		<div class="field"><?php echo checkbox_tag('emailOption-'.$emailTemplateId, true, $checked, array('class'=>'emailOption')) ?></div>
+		<div class="label"><label for="emailOption-<?php echo $emailTemplateId ?>"><?php echo $emailTemplateObj->getDescription() ?></label></div>
+	</div>
+	<?php endforeach; ?>
+	<div class="rowCheckbox mt20">
+		<div class="field"><?php echo checkbox_tag('emailOptionAll', true, $emailOptionAll, array('onclick'=>'selectAllEmailOption(this.checked)', 'class'=>'emailOptionAll')) ?></div>
+		<div class="label"><label for="emailOptionAll">Selecionar todos (Receber todos os e-mails do iRank)</label></div>
+	</div>			
+</div>
+<div class="tabbarFooter">
+	Caso não esteja recebendo as mensagens, configure sua caixa de entrada para aceitar mensagens de endereços <b>@irank.com.br</b> 
+</div>

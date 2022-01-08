@@ -29,7 +29,15 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 
 	
+	protected $nickname;
+
+
+	
 	protected $email_address;
+
+
+	
+	protected $phone_ddd;
 
 
 	
@@ -42,6 +50,34 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 	
 	protected $default_language;
+
+
+	
+	protected $address_name;
+
+
+	
+	protected $address_number;
+
+
+	
+	protected $address_quarter;
+
+
+	
+	protected $address_complement;
+
+
+	
+	protected $address_city;
+
+
+	
+	protected $address_state;
+
+
+	
+	protected $address_zipcode;
 
 
 	
@@ -215,6 +251,30 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	protected $lastClubCheckCriteria = null;
 
 	
+	protected $collBlogList;
+
+	
+	protected $lastBlogCriteria = null;
+
+	
+	protected $collEmailOptionList;
+
+	
+	protected $lastEmailOptionCriteria = null;
+
+	
+	protected $collSmsOptionList;
+
+	
+	protected $lastSmsOptionCriteria = null;
+
+	
+	protected $collSmsRankingOptionList;
+
+	
+	protected $lastSmsRankingOptionCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -256,10 +316,24 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getNickname()
+	{
+
+		return $this->nickname;
+	}
+
+	
 	public function getEmailAddress()
 	{
 
 		return $this->email_address;
+	}
+
+	
+	public function getPhoneDdd()
+	{
+
+		return $this->phone_ddd;
 	}
 
 	
@@ -296,6 +370,55 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 	{
 
 		return $this->default_language;
+	}
+
+	
+	public function getAddressName()
+	{
+
+		return $this->address_name;
+	}
+
+	
+	public function getAddressNumber()
+	{
+
+		return $this->address_number;
+	}
+
+	
+	public function getAddressQuarter()
+	{
+
+		return $this->address_quarter;
+	}
+
+	
+	public function getAddressComplement()
+	{
+
+		return $this->address_complement;
+	}
+
+	
+	public function getAddressCity()
+	{
+
+		return $this->address_city;
+	}
+
+	
+	public function getAddressState()
+	{
+
+		return $this->address_state;
+	}
+
+	
+	public function getAddressZipcode()
+	{
+
+		return $this->address_zipcode;
 	}
 
 	
@@ -445,6 +568,20 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setNickname($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->nickname !== $v) {
+			$this->nickname = $v;
+			$this->modifiedColumns[] = PeoplePeer::NICKNAME;
+		}
+
+	} 
+	
 	public function setEmailAddress($v)
 	{
 
@@ -455,6 +592,20 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if ($this->email_address !== $v) {
 			$this->email_address = $v;
 			$this->modifiedColumns[] = PeoplePeer::EMAIL_ADDRESS;
+		}
+
+	} 
+	
+	public function setPhoneDdd($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->phone_ddd !== $v) {
+			$this->phone_ddd = $v;
+			$this->modifiedColumns[] = PeoplePeer::PHONE_DDD;
 		}
 
 	} 
@@ -500,6 +651,104 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if ($this->default_language !== $v) {
 			$this->default_language = $v;
 			$this->modifiedColumns[] = PeoplePeer::DEFAULT_LANGUAGE;
+		}
+
+	} 
+	
+	public function setAddressName($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_name !== $v) {
+			$this->address_name = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_NAME;
+		}
+
+	} 
+	
+	public function setAddressNumber($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_number !== $v) {
+			$this->address_number = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_NUMBER;
+		}
+
+	} 
+	
+	public function setAddressQuarter($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_quarter !== $v) {
+			$this->address_quarter = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_QUARTER;
+		}
+
+	} 
+	
+	public function setAddressComplement($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_complement !== $v) {
+			$this->address_complement = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_COMPLEMENT;
+		}
+
+	} 
+	
+	public function setAddressCity($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_city !== $v) {
+			$this->address_city = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_CITY;
+		}
+
+	} 
+	
+	public function setAddressState($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_state !== $v) {
+			$this->address_state = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_STATE;
+		}
+
+	} 
+	
+	public function setAddressZipcode($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->address_zipcode !== $v) {
+			$this->address_zipcode = $v;
+			$this->modifiedColumns[] = PeoplePeer::ADDRESS_ZIPCODE;
 		}
 
 	} 
@@ -592,31 +841,49 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			$this->full_name = $rs->getString($startcol + 4);
 
-			$this->email_address = $rs->getString($startcol + 5);
+			$this->nickname = $rs->getString($startcol + 5);
 
-			$this->phone_number = $rs->getString($startcol + 6);
+			$this->email_address = $rs->getString($startcol + 6);
 
-			$this->birthday = $rs->getDate($startcol + 7, null);
+			$this->phone_ddd = $rs->getString($startcol + 7);
 
-			$this->default_language = $rs->getString($startcol + 8);
+			$this->phone_number = $rs->getString($startcol + 8);
 
-			$this->enabled = $rs->getBoolean($startcol + 9);
+			$this->birthday = $rs->getDate($startcol + 9, null);
 
-			$this->visible = $rs->getBoolean($startcol + 10);
+			$this->default_language = $rs->getString($startcol + 10);
 
-			$this->deleted = $rs->getBoolean($startcol + 11);
+			$this->address_name = $rs->getString($startcol + 11);
 
-			$this->locked = $rs->getBoolean($startcol + 12);
+			$this->address_number = $rs->getString($startcol + 12);
 
-			$this->created_at = $rs->getTimestamp($startcol + 13, null);
+			$this->address_quarter = $rs->getString($startcol + 13);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 14, null);
+			$this->address_complement = $rs->getString($startcol + 14);
+
+			$this->address_city = $rs->getString($startcol + 15);
+
+			$this->address_state = $rs->getString($startcol + 16);
+
+			$this->address_zipcode = $rs->getString($startcol + 17);
+
+			$this->enabled = $rs->getBoolean($startcol + 18);
+
+			$this->visible = $rs->getBoolean($startcol + 19);
+
+			$this->deleted = $rs->getBoolean($startcol + 20);
+
+			$this->locked = $rs->getBoolean($startcol + 21);
+
+			$this->created_at = $rs->getTimestamp($startcol + 22, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 23, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 15; 
+						return $startcol + 24; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating People object", $e);
 		}
@@ -657,21 +924,40 @@ abstract class BasePeople extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(PeoplePeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = PeoplePeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -889,6 +1175,38 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			if ($this->collClubCheckList !== null) {
 				foreach($this->collClubCheckList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collBlogList !== null) {
+				foreach($this->collBlogList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collEmailOptionList !== null) {
+				foreach($this->collEmailOptionList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collSmsOptionList !== null) {
+				foreach($this->collSmsOptionList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collSmsRankingOptionList !== null) {
+				foreach($this->collSmsRankingOptionList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1136,6 +1454,38 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collBlogList !== null) {
+					foreach($this->collBlogList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collEmailOptionList !== null) {
+					foreach($this->collEmailOptionList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collSmsOptionList !== null) {
+					foreach($this->collSmsOptionList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collSmsRankingOptionList !== null) {
+					foreach($this->collSmsRankingOptionList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 
 			$this->alreadyInValidation = false;
 		}
@@ -1170,33 +1520,60 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				return $this->getFullName();
 				break;
 			case 5:
-				return $this->getEmailAddress();
+				return $this->getNickname();
 				break;
 			case 6:
-				return $this->getPhoneNumber();
+				return $this->getEmailAddress();
 				break;
 			case 7:
-				return $this->getBirthday();
+				return $this->getPhoneDdd();
 				break;
 			case 8:
-				return $this->getDefaultLanguage();
+				return $this->getPhoneNumber();
 				break;
 			case 9:
-				return $this->getEnabled();
+				return $this->getBirthday();
 				break;
 			case 10:
-				return $this->getVisible();
+				return $this->getDefaultLanguage();
 				break;
 			case 11:
-				return $this->getDeleted();
+				return $this->getAddressName();
 				break;
 			case 12:
-				return $this->getLocked();
+				return $this->getAddressNumber();
 				break;
 			case 13:
-				return $this->getCreatedAt();
+				return $this->getAddressQuarter();
 				break;
 			case 14:
+				return $this->getAddressComplement();
+				break;
+			case 15:
+				return $this->getAddressCity();
+				break;
+			case 16:
+				return $this->getAddressState();
+				break;
+			case 17:
+				return $this->getAddressZipcode();
+				break;
+			case 18:
+				return $this->getEnabled();
+				break;
+			case 19:
+				return $this->getVisible();
+				break;
+			case 20:
+				return $this->getDeleted();
+				break;
+			case 21:
+				return $this->getLocked();
+				break;
+			case 22:
+				return $this->getCreatedAt();
+				break;
+			case 23:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1214,16 +1591,25 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 			$keys[2]=>$this->getFirstName(),
 			$keys[3]=>$this->getLastName(),
 			$keys[4]=>$this->getFullName(),
-			$keys[5]=>$this->getEmailAddress(),
-			$keys[6]=>$this->getPhoneNumber(),
-			$keys[7]=>$this->getBirthday(),
-			$keys[8]=>$this->getDefaultLanguage(),
-			$keys[9]=>$this->getEnabled(),
-			$keys[10]=>$this->getVisible(),
-			$keys[11]=>$this->getDeleted(),
-			$keys[12]=>$this->getLocked(),
-			$keys[13]=>$this->getCreatedAt(),
-			$keys[14]=>$this->getUpdatedAt(),
+			$keys[5]=>$this->getNickname(),
+			$keys[6]=>$this->getEmailAddress(),
+			$keys[7]=>$this->getPhoneDdd(),
+			$keys[8]=>$this->getPhoneNumber(),
+			$keys[9]=>$this->getBirthday(),
+			$keys[10]=>$this->getDefaultLanguage(),
+			$keys[11]=>$this->getAddressName(),
+			$keys[12]=>$this->getAddressNumber(),
+			$keys[13]=>$this->getAddressQuarter(),
+			$keys[14]=>$this->getAddressComplement(),
+			$keys[15]=>$this->getAddressCity(),
+			$keys[16]=>$this->getAddressState(),
+			$keys[17]=>$this->getAddressZipcode(),
+			$keys[18]=>$this->getEnabled(),
+			$keys[19]=>$this->getVisible(),
+			$keys[20]=>$this->getDeleted(),
+			$keys[21]=>$this->getLocked(),
+			$keys[22]=>$this->getCreatedAt(),
+			$keys[23]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1255,33 +1641,60 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 				$this->setFullName($value);
 				break;
 			case 5:
-				$this->setEmailAddress($value);
+				$this->setNickname($value);
 				break;
 			case 6:
-				$this->setPhoneNumber($value);
+				$this->setEmailAddress($value);
 				break;
 			case 7:
-				$this->setBirthday($value);
+				$this->setPhoneDdd($value);
 				break;
 			case 8:
-				$this->setDefaultLanguage($value);
+				$this->setPhoneNumber($value);
 				break;
 			case 9:
-				$this->setEnabled($value);
+				$this->setBirthday($value);
 				break;
 			case 10:
-				$this->setVisible($value);
+				$this->setDefaultLanguage($value);
 				break;
 			case 11:
-				$this->setDeleted($value);
+				$this->setAddressName($value);
 				break;
 			case 12:
-				$this->setLocked($value);
+				$this->setAddressNumber($value);
 				break;
 			case 13:
-				$this->setCreatedAt($value);
+				$this->setAddressQuarter($value);
 				break;
 			case 14:
+				$this->setAddressComplement($value);
+				break;
+			case 15:
+				$this->setAddressCity($value);
+				break;
+			case 16:
+				$this->setAddressState($value);
+				break;
+			case 17:
+				$this->setAddressZipcode($value);
+				break;
+			case 18:
+				$this->setEnabled($value);
+				break;
+			case 19:
+				$this->setVisible($value);
+				break;
+			case 20:
+				$this->setDeleted($value);
+				break;
+			case 21:
+				$this->setLocked($value);
+				break;
+			case 22:
+				$this->setCreatedAt($value);
+				break;
+			case 23:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -1296,16 +1709,25 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setFirstName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setLastName($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setFullName($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setEmailAddress($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setPhoneNumber($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setBirthday($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setDefaultLanguage($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setEnabled($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setVisible($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDeleted($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setLocked($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
+		if (array_key_exists($keys[5], $arr)) $this->setNickname($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEmailAddress($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setPhoneDdd($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setPhoneNumber($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setBirthday($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setDefaultLanguage($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setAddressName($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setAddressNumber($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setAddressQuarter($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setAddressComplement($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setAddressCity($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setAddressState($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setAddressZipcode($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setEnabled($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setVisible($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setDeleted($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setLocked($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setCreatedAt($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setUpdatedAt($arr[$keys[23]]);
 	}
 
 	
@@ -1318,10 +1740,19 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PeoplePeer::FIRST_NAME)) $criteria->add(PeoplePeer::FIRST_NAME, $this->first_name);
 		if ($this->isColumnModified(PeoplePeer::LAST_NAME)) $criteria->add(PeoplePeer::LAST_NAME, $this->last_name);
 		if ($this->isColumnModified(PeoplePeer::FULL_NAME)) $criteria->add(PeoplePeer::FULL_NAME, $this->full_name);
+		if ($this->isColumnModified(PeoplePeer::NICKNAME)) $criteria->add(PeoplePeer::NICKNAME, $this->nickname);
 		if ($this->isColumnModified(PeoplePeer::EMAIL_ADDRESS)) $criteria->add(PeoplePeer::EMAIL_ADDRESS, $this->email_address);
+		if ($this->isColumnModified(PeoplePeer::PHONE_DDD)) $criteria->add(PeoplePeer::PHONE_DDD, $this->phone_ddd);
 		if ($this->isColumnModified(PeoplePeer::PHONE_NUMBER)) $criteria->add(PeoplePeer::PHONE_NUMBER, $this->phone_number);
 		if ($this->isColumnModified(PeoplePeer::BIRTHDAY)) $criteria->add(PeoplePeer::BIRTHDAY, $this->birthday);
 		if ($this->isColumnModified(PeoplePeer::DEFAULT_LANGUAGE)) $criteria->add(PeoplePeer::DEFAULT_LANGUAGE, $this->default_language);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_NAME)) $criteria->add(PeoplePeer::ADDRESS_NAME, $this->address_name);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_NUMBER)) $criteria->add(PeoplePeer::ADDRESS_NUMBER, $this->address_number);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_QUARTER)) $criteria->add(PeoplePeer::ADDRESS_QUARTER, $this->address_quarter);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_COMPLEMENT)) $criteria->add(PeoplePeer::ADDRESS_COMPLEMENT, $this->address_complement);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_CITY)) $criteria->add(PeoplePeer::ADDRESS_CITY, $this->address_city);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_STATE)) $criteria->add(PeoplePeer::ADDRESS_STATE, $this->address_state);
+		if ($this->isColumnModified(PeoplePeer::ADDRESS_ZIPCODE)) $criteria->add(PeoplePeer::ADDRESS_ZIPCODE, $this->address_zipcode);
 		if ($this->isColumnModified(PeoplePeer::ENABLED)) $criteria->add(PeoplePeer::ENABLED, $this->enabled);
 		if ($this->isColumnModified(PeoplePeer::VISIBLE)) $criteria->add(PeoplePeer::VISIBLE, $this->visible);
 		if ($this->isColumnModified(PeoplePeer::DELETED)) $criteria->add(PeoplePeer::DELETED, $this->deleted);
@@ -1366,13 +1797,31 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 		$copyObj->setFullName($this->full_name);
 
+		$copyObj->setNickname($this->nickname);
+
 		$copyObj->setEmailAddress($this->email_address);
+
+		$copyObj->setPhoneDdd($this->phone_ddd);
 
 		$copyObj->setPhoneNumber($this->phone_number);
 
 		$copyObj->setBirthday($this->birthday);
 
 		$copyObj->setDefaultLanguage($this->default_language);
+
+		$copyObj->setAddressName($this->address_name);
+
+		$copyObj->setAddressNumber($this->address_number);
+
+		$copyObj->setAddressQuarter($this->address_quarter);
+
+		$copyObj->setAddressComplement($this->address_complement);
+
+		$copyObj->setAddressCity($this->address_city);
+
+		$copyObj->setAddressState($this->address_state);
+
+		$copyObj->setAddressZipcode($this->address_zipcode);
 
 		$copyObj->setEnabled($this->enabled);
 
@@ -1484,6 +1933,22 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 
 			foreach($this->getClubCheckList() as $relObj) {
 				$copyObj->addClubCheck($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getBlogList() as $relObj) {
+				$copyObj->addBlog($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getEmailOptionList() as $relObj) {
+				$copyObj->addEmailOption($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getSmsOptionList() as $relObj) {
+				$copyObj->addSmsOption($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getSmsRankingOptionList() as $relObj) {
+				$copyObj->addSmsRankingOption($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -3150,41 +3615,6 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$l->setPeople($this);
 	}
 
-
-	
-	public function getSmsListJoinClub($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseSmsPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSmsList === null) {
-			if ($this->isNew()) {
-				$this->collSmsList = array();
-			} else {
-
-				$criteria->add(SmsPeer::PEOPLE_ID, $this->getId());
-
-				$this->collSmsList = SmsPeer::doSelectJoinClub($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(SmsPeer::PEOPLE_ID, $this->getId());
-
-			if (!isset($this->lastSmsCriteria) || !$this->lastSmsCriteria->equals($criteria)) {
-				$this->collSmsList = SmsPeer::doSelectJoinClub($criteria, $con);
-			}
-		}
-		$this->lastSmsCriteria = $criteria;
-
-		return $this->collSmsList;
-	}
-
 	
 	public function initEventLivePlayerDisclosureSmsList()
 	{
@@ -4443,6 +4873,461 @@ abstract class BasePeople extends BaseObject  implements Persistent {
 		$this->lastClubCheckCriteria = $criteria;
 
 		return $this->collClubCheckList;
+	}
+
+	
+	public function initBlogList()
+	{
+		if ($this->collBlogList === null) {
+			$this->collBlogList = array();
+		}
+	}
+
+	
+	public function getBlogList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseBlogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collBlogList === null) {
+			if ($this->isNew()) {
+			   $this->collBlogList = array();
+			} else {
+
+				$criteria->add(BlogPeer::PEOPLE_ID, $this->getId());
+
+				BlogPeer::addSelectColumns($criteria);
+				$this->collBlogList = BlogPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(BlogPeer::PEOPLE_ID, $this->getId());
+
+				BlogPeer::addSelectColumns($criteria);
+				if (!isset($this->lastBlogCriteria) || !$this->lastBlogCriteria->equals($criteria)) {
+					$this->collBlogList = BlogPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastBlogCriteria = $criteria;
+		return $this->collBlogList;
+	}
+
+	
+	public function countBlogList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseBlogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(BlogPeer::PEOPLE_ID, $this->getId());
+
+		return BlogPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addBlog(Blog $l)
+	{
+		$this->collBlogList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getBlogListJoinVirtualTable($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseBlogPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collBlogList === null) {
+			if ($this->isNew()) {
+				$this->collBlogList = array();
+			} else {
+
+				$criteria->add(BlogPeer::PEOPLE_ID, $this->getId());
+
+				$this->collBlogList = BlogPeer::doSelectJoinVirtualTable($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(BlogPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastBlogCriteria) || !$this->lastBlogCriteria->equals($criteria)) {
+				$this->collBlogList = BlogPeer::doSelectJoinVirtualTable($criteria, $con);
+			}
+		}
+		$this->lastBlogCriteria = $criteria;
+
+		return $this->collBlogList;
+	}
+
+	
+	public function initEmailOptionList()
+	{
+		if ($this->collEmailOptionList === null) {
+			$this->collEmailOptionList = array();
+		}
+	}
+
+	
+	public function getEmailOptionList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEmailOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEmailOptionList === null) {
+			if ($this->isNew()) {
+			   $this->collEmailOptionList = array();
+			} else {
+
+				$criteria->add(EmailOptionPeer::EMAIL_ADDRESS, $this->getEmailAddress());
+
+				EmailOptionPeer::addSelectColumns($criteria);
+				$this->collEmailOptionList = EmailOptionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(EmailOptionPeer::EMAIL_ADDRESS, $this->getEmailAddress());
+
+				EmailOptionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastEmailOptionCriteria) || !$this->lastEmailOptionCriteria->equals($criteria)) {
+					$this->collEmailOptionList = EmailOptionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastEmailOptionCriteria = $criteria;
+		return $this->collEmailOptionList;
+	}
+
+	
+	public function countEmailOptionList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseEmailOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(EmailOptionPeer::EMAIL_ADDRESS, $this->getEmailAddress());
+
+		return EmailOptionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addEmailOption(EmailOption $l)
+	{
+		$this->collEmailOptionList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getEmailOptionListJoinEmailTemplate($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseEmailOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collEmailOptionList === null) {
+			if ($this->isNew()) {
+				$this->collEmailOptionList = array();
+			} else {
+
+				$criteria->add(EmailOptionPeer::EMAIL_ADDRESS, $this->getEmailAddress());
+
+				$this->collEmailOptionList = EmailOptionPeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(EmailOptionPeer::EMAIL_ADDRESS, $this->getEmailAddress());
+
+			if (!isset($this->lastEmailOptionCriteria) || !$this->lastEmailOptionCriteria->equals($criteria)) {
+				$this->collEmailOptionList = EmailOptionPeer::doSelectJoinEmailTemplate($criteria, $con);
+			}
+		}
+		$this->lastEmailOptionCriteria = $criteria;
+
+		return $this->collEmailOptionList;
+	}
+
+	
+	public function initSmsOptionList()
+	{
+		if ($this->collSmsOptionList === null) {
+			$this->collSmsOptionList = array();
+		}
+	}
+
+	
+	public function getSmsOptionList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsOptionList === null) {
+			if ($this->isNew()) {
+			   $this->collSmsOptionList = array();
+			} else {
+
+				$criteria->add(SmsOptionPeer::PEOPLE_ID, $this->getId());
+
+				SmsOptionPeer::addSelectColumns($criteria);
+				$this->collSmsOptionList = SmsOptionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(SmsOptionPeer::PEOPLE_ID, $this->getId());
+
+				SmsOptionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastSmsOptionCriteria) || !$this->lastSmsOptionCriteria->equals($criteria)) {
+					$this->collSmsOptionList = SmsOptionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastSmsOptionCriteria = $criteria;
+		return $this->collSmsOptionList;
+	}
+
+	
+	public function countSmsOptionList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(SmsOptionPeer::PEOPLE_ID, $this->getId());
+
+		return SmsOptionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addSmsOption(SmsOption $l)
+	{
+		$this->collSmsOptionList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getSmsOptionListJoinSmsTemplate($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsOptionList === null) {
+			if ($this->isNew()) {
+				$this->collSmsOptionList = array();
+			} else {
+
+				$criteria->add(SmsOptionPeer::PEOPLE_ID, $this->getId());
+
+				$this->collSmsOptionList = SmsOptionPeer::doSelectJoinSmsTemplate($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(SmsOptionPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastSmsOptionCriteria) || !$this->lastSmsOptionCriteria->equals($criteria)) {
+				$this->collSmsOptionList = SmsOptionPeer::doSelectJoinSmsTemplate($criteria, $con);
+			}
+		}
+		$this->lastSmsOptionCriteria = $criteria;
+
+		return $this->collSmsOptionList;
+	}
+
+	
+	public function initSmsRankingOptionList()
+	{
+		if ($this->collSmsRankingOptionList === null) {
+			$this->collSmsRankingOptionList = array();
+		}
+	}
+
+	
+	public function getSmsRankingOptionList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsRankingOptionList === null) {
+			if ($this->isNew()) {
+			   $this->collSmsRankingOptionList = array();
+			} else {
+
+				$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+				SmsRankingOptionPeer::addSelectColumns($criteria);
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+				SmsRankingOptionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastSmsRankingOptionCriteria) || !$this->lastSmsRankingOptionCriteria->equals($criteria)) {
+					$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastSmsRankingOptionCriteria = $criteria;
+		return $this->collSmsRankingOptionList;
+	}
+
+	
+	public function countSmsRankingOptionList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+		return SmsRankingOptionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addSmsRankingOption(SmsRankingOption $l)
+	{
+		$this->collSmsRankingOptionList[] = $l;
+		$l->setPeople($this);
+	}
+
+
+	
+	public function getSmsRankingOptionListJoinRanking($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsRankingOptionList === null) {
+			if ($this->isNew()) {
+				$this->collSmsRankingOptionList = array();
+			} else {
+
+				$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinRanking($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastSmsRankingOptionCriteria) || !$this->lastSmsRankingOptionCriteria->equals($criteria)) {
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinRanking($criteria, $con);
+			}
+		}
+		$this->lastSmsRankingOptionCriteria = $criteria;
+
+		return $this->collSmsRankingOptionList;
+	}
+
+
+	
+	public function getSmsRankingOptionListJoinSmsTemplate($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsRankingOptionList === null) {
+			if ($this->isNew()) {
+				$this->collSmsRankingOptionList = array();
+			} else {
+
+				$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinSmsTemplate($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(SmsRankingOptionPeer::PEOPLE_ID, $this->getId());
+
+			if (!isset($this->lastSmsRankingOptionCriteria) || !$this->lastSmsRankingOptionCriteria->equals($criteria)) {
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinSmsTemplate($criteria, $con);
+			}
+		}
+		$this->lastSmsRankingOptionCriteria = $criteria;
+
+		return $this->collSmsRankingOptionList;
 	}
 
 } 

@@ -3,34 +3,38 @@
 	position: relative;
 	float: left;
 	margin-left: 30px;
-	margin-right: 20px;
+	margin-right: 0px;
 	margin-top: 20px;
-	width: 202px;
-	height: 250px;
-	background: #F0F0F0;
-	border: 1px solid #D5D5D5;
+	width: 222px;
+	height: 255px;
+	background: #E0E0E0;
+	border: 1px solid #D0D0D0;
 	-moz-border-radius: 	9px;
 	-webkit-border-radius: 	9px;
 	border-radius: 			9px;
+	overflow: hidden;
+}
+
+.product:hover {
+
+	border: 1px solid #B0B0B0;
 }
 
 .product img.productImage {
 
 	position: absolute;
-	padding: 5px;
+	padding: 0px;
 	background: #FFFFFF;
-	border: 1px solid #D5D5D5;
-	-moz-border-radius: 	9px;
-	-webkit-border-radius: 	9px;
-	border-radius: 			9px;
-	width: 					180px;
-	top: 5px;
-	left: 5px 
+	border-bottom: 1px solid #FFF;
+	width: 225px;
+	height: 225px;
+	top: -1px;
+	left: -1px; 
 }
 
 .product img.productImage:hover {
 
-	border: 1px solid #C91E1E;
+	border-bottom: 1px solid #909090;
 }
 
 .product .distinct.new {
@@ -39,6 +43,23 @@
 	top: 0px;
 	left: 0px;
 	z-index: 1
+}
+
+.infoBar {
+
+	width: 225px;
+	height: 68px;
+	border-top: #FFFFFF;
+	background: #000000;
+	border-top: 1px solid #FFFFFF;
+	filter: 				alpha(opacity=60);
+	-moz-opacity: 			0.60;
+	-khtml-opacity: 		0.60;
+	opacity: 				0.60;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	z-index: 0;
 }
 
 
@@ -55,31 +76,53 @@
 	bottom: 5px; 
 }
 
-.product .tshirt.name,
-.product .tshirt.name a {
+.product .productName {
 
-	left: 	8px;
-	bottom: 30px;
+	position: absolute;
+	left: 	5px;
+	top: 	190px;
+	width: 210px;
 	font-weight: bold;
 	font-size: 12px;
-	color: #425d95 
+	color: #FFFFFF;
+	text-shadow: 1px 1px #000000;
 }
 
 .product .tshirt.size {
 
+	position: absolute;
 	left: 	8px;
 	bottom: 5px;
 	font-size: 10px;
+	color: #F0F0F0
 }
 
 .product .tshirt.prize {
 
-	right: 	8px;
-	bottom: 8px;
-	font-size: 15px;
+	font-size: 16px;
 	font-weight: bold;
 	color: #C91E1E;
-	text-align: right; 
+	color: rgb(232, 160, 20);
+	position: absolute;
+	right: 12px;
+	bottom: 10px;
+	text-shadow: 2px 2px #000000;
+}
+
+.productSeparator {
+
+	clear: both;
+	width: 90%;
+	margin-left: 5%;
+	margin-bottom: 0px;
+	padding-top: 15px
+}
+
+.productSeparator hr {
+
+	border-top: 1px solid #C0C0C0;
+	height: 2px;
+	background: #F0F0F0
 }
 
 
@@ -91,22 +134,28 @@
 
 
 /* DETALHES */
+
 .productDetail {
 	
 	position: relative;
 	margin: 15px;
-	height: 300px;
-	margin-top: 35px;
+}
+
+.productDetail .productImages {
+
+	float: 	left;
+	width: 250px;
 }
 
 .productDetail .extraImageList {
 
-	position: absolute;
-	padding-top: 8px;
+	position: relative;
+	padding-top: 4px;
 	border-top: 1px solid #DADADA;
-	top: 250px;
-	left: 0px;
-	padding-right: 2px
+	width: 240px;
+	margin-top: 4px;
+	left: 5px;
+	padding-right: 2px;
 }
 
 .productDetail .productImage.extra {
@@ -138,77 +187,318 @@
 	margin-left: 0px;
 }
 
-.productDetail .distinct.new {
+.productDetail .share {
 
-	position: absolute;
-	top: -10px;
-	left: -10px;
-	z-index: 1
+	clear: both;
+	width: 280px;
+	margin-top: 10px;
+	position: relative;
+	left: -5px
 }
 
-.productDetail .tshirt {
+.productDetail .productInfo {
 
-	position: absolute;
-	left: 285px;
+	float: left;
+	width: 490px;
+	padding: 0px;
+	position: relative;
+	left: 25px;
 }
 
-.productDetail .tshirt.name {
+.productDetail .productInfo h1.name {
 
 	color: #425d95;
-	font-size: 22px;
+	font-size: 20px;
+	line-height: 23px;
 	font-weight: bold;
+	margin-bottom: 0px;
+	white-space: normal;
+	padding: 0px;
+	position: relative;
+	top: -15px
+}
+
+.productDetail .productInfo span.label {
+
+	position: relative;
+	clear: both;
+	display: block;
+	float: left;
+	font-size: 12px;
+	font-weight: bold;
+	margin-top: 5px;
+	margin-right: 5px;
+	width: 100px;
+	text-align: right;
+	color: #505050;
+}
+
+.productDetail .productInfo span.value {
+
+	position: relative;
+	display: block;
+	float: left;
+	font-size: 12px;
+	margin-top: 5px;
+	color: #505050;
+}
+
+.productDetail .productInfo span.availability {
+
+	position: relative;
 	top: -5px;
-	left: 285px;
+	left: 17px;
 }
 
-.productDetail .tshirt.size {
+.productDetail .productInfo span.value.availability.available {
 
-	top: 25px;
-	font-size: 12px;
+	color: #299700
 }
 
-.productDetail .tshirt.color {
+.productDetail .productInfo span.value.availability.unavailable {
 
-	top: 25px;
-	left: 285px;
-	font-size: 12px;
-	margin-left: 140px
+	color: #C91A1A
 }
 
-.productDetail .tshirt.description {
+.productDetail .productInfo span.label.price {
 
-	top: 55px;
-	left: 300px;
-	width: 400px;
-	font-size: 12px;
+	clear: both;
 	font-weight: normal;
-	color: #101010;
+	text-align: left;
+	left: 20px;
+	margin-top: 12px;
 }
 
-.productDetail .tshirt.prizeLabel {
+.productDetail .productInfo span.value.price {
 
-	bottom: 100px;
-	font-size: 13px;
-	left: 300px;
+	clear: both;
 	font-weight: normal;
-	color: #000000;
-}
-
-.productDetail .tshirt.prize {
-
-	bottom: 75px;
 	font-size: 25px;
-	left: 300px;
+	left: 20px;
 	font-weight: bold;
 	color: #C91E1E;
 }
 
-.productDetail .buyButton {
+
+
+
+
+
+
+
+
+
+.productDetail .productInfo .productOptions {
+
+	float: left;
+	margin-top: 25px;
+	left: 20px;
+	position: relative;
+	height: 70px;
+	width: 250px;
+}
+
+.productDetail .productInfo .productOptions .productOption {
+
+	margin-top: 3px;
+	width: 200px;
+	height: 20px;
+	background: #F0F0F0;
+	padding: 4px 4px;
+	border: 1px solid #DCDCDC;
+	border-radius: 3px;
+	position: relative;
+}
+
+.productDetail .productInfo .productOptions .productOption .sizeHelpButton {
 
 	position: absolute;
-	bottom: 15px;
-	left: 300px
+	float: left;
+	top: 6px;
+	right: 7px;
 }
+
+.productDetail .productInfo .productOptions .productOption input {
+
+	position: 	relative;
+	height: 	10px;
+	padding: 	2px;
+	left: 		3px;
+}
+
+.productDetail .productInfo .productOptions .productOption select {
+
+	margin-top: 1px
+}
+
+.productDetail .productInfo .productOptions .productOption label {
+
+	clear: both;
+	display: block;
+	float: left;
+	width: 50px;
+	height: 20px;
+	margin-top: 1px;
+	padding-right: 5px;
+	text-align: right;
+	font-weight: bold;
+}
+
+.productDetail .productInfo .productOptions .productOption .productOptionOption {
+
+	float: left;
+	margin-left: 3px;
+	width: 18px;
+	height: 18px;
+	border: 1px solid #D0D0D0;
+}
+
+.productDetail .productInfo .productOptions .productOption .productOptionOption.size {
+
+	background: #E9E9E9;
+	text-align: center;
+	font-weight: bold;
+	color: #222222;
+	width: auto;
+	min-width: 15px;
+	padding: 0px 3px
+}
+
+.productDetail .productInfo .productOptions .productOption .productOptionOption.size.disabled {
+
+	background: #FAFAFA;
+	color: #AAAAAA;
+	border: 1px solid #CACACA;
+}
+
+.productDetail .productInfo .productOptions .productOption .productOptionOption:hover {
+
+	border: 1px solid #505050;
+	cursor: pointer;
+}
+
+.productDetail .productInfo .productOptions .productOption .productOptionOption.size.disabled:hover {
+
+	border: 1px solid #C0C0C0;
+}
+
+
+
+.productDetail .productInfo .productOptions .productOption .productOptionOption.selected,
+.productDetail .productInfo .productOptions .productOption .productOptionOption.selected:hover {
+
+	border: 1px solid #000000;
+}
+
+.productDetail .productInfo .productOptions .productOption .productOptionOption .color {
+
+	width: 16px;
+	height: 16px;
+	margin-left: 1px;
+	margin-top: 1px;
+}
+
+.productDetail .productInfo .buttons {
+
+	float: left;
+	position: relative;
+	top: 28px;
+}
+
+.productDetail .productInfo .bookmarkButton {
+
+	position: 	relative;
+	left: 		7px;
+	top:		33px;
+}
+
+.productDetail .productInfo .bookmarkButton img {
+
+	position: relative;
+	top: 3px;
+	left: -7px;
+}
+
+.productDetail .productInfo span.description {
+
+	display: block;
+	margin: 50px 15px 15px 20px;
+	width: 450px;
+	font-size: 12px;
+	text-indent: 10px;
+	line-height: 20px;
+	color: 	#5F5F5F
+}
+
+
+
+
+
+
+
+table.storeFooter {
+
+	background: #FFFFFF;
+	width: 780px;
+	bottom: 0px;
+	right: 0px;
+}
+
+
+table.storeFooter tr:first-child td {
+
+	text-align: center;
+}
+
+table.storeFooter td hr {
+
+	width: 90%;
+	height: 0px;
+	border: none;
+	border-top: 1px solid #DADADA
+}
+
+table.storeFooter th {
+
+	color: 	#505050;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-family: Calibri, Arial, Verdana;
+	padding: 	4px 10px 4px 5px;
+}
+
+table.storeFooter tr td.wrapper {
+
+	border-left: 1px solid #EAEAEA;
+	width: 130px;
+	padding-left: 10px;
+	vertical-align: top
+}
+
+table.storeFooter tr td.wrapper:first-child {
+
+	border-left: none
+}
+
+table.storeFooter tr td.wrapper table tr td {
+
+	padding-top: 5px;
+	padding-left: 5px;
+	color: #707070
+}
+
+table.storeFooter tr td.wrapper table tr td a {
+
+	color: #707070
+}
+
+table.storeFooter tr td.wrapper table tr td a:hover {
+
+	color: #303030;
+	text-decoration: none
+}
+
+
 
 
 
@@ -220,23 +510,39 @@
 	border-top: 4px solid #EAEAEA;
 	border-bottom: 4px solid #EAEAEA;
 	text-align: right;
-	padding-top: 10px
+	position: relative;
+	padding: 5px;
+	height: 50px;
+	margin-top: 100px;
 }
 
 .paymethods img {
 
-	margin-right: 20px
+	margin: 0px;
+	position: relative;
+	margin-right: 20px;
+	top: 8px;
 }
+
+.paymethods img.sslStamp {
+
+	position: absolute;
+	left: 10px;
+	top: 5px;
+	border: 1px solid #CACACA
+}
+
 
 h3 {
 
-	margin-top: 10px;
-	margin-left: 10px;
-	color: #425d95;
-	border-bottom: 1px solid #425d95;
-	padding-bottom: 3px;
-	padding-left: 10px;
-	width: 90%;
+	color: #505050;
+	text-shadow: #FAFAFA 1px 1px;
+	border-bottom: 1px solid #BABABA;
+	border-top: 1px solid #BABABA;
+	background: #DADADA;
+	margin: 0px;
+	padding: 5px 0px 5px 10px;
+	font-size: 15px;
 }
 
 
@@ -257,26 +563,71 @@ div.cartBar {
     filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FAFAFA', EndColorStr='#E5E5E5', GradientType=0);
 	border: 				1px solid #CACACA;
 	padding: 				10px 10px;
-	margin-top: 			-5px;
+	margin: 				0px 0px -5px 0px;
+	top: 					-5px;
+	height: 				22px;
+}
+
+div.cartResume {
+	
+	position: 				relative;
+	background: 			#E5E5E5;
+    background-image: 		-o-linear-gradient(#FAFAFA, #E5E5E5);
+    background: 			-moz-linear-gradient(top, #FAFAFA, #E5E5E5);;
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#FAFAFA), to(#E5E5E5));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FAFAFA', EndColorStr='#E5E5E5', GradientType=0);
+	border: 				1px solid #CACACA;
+	padding: 				10px 10px;
+	margin: 				0px;
+	height: 				20px;
 }
 
 div.cartIcon {
 
 	position: 	absolute;
-	top: 		6px;
-	left: 		5px;
+	top: 		-5px;
+	left: 		-1px;
 }
 
 div.cartInfo {
 	
-	position: 		absolute;
-	background: 	url('/.png') right top no-repeat;
-	height: 		32px;
-	right: 			15px;
-	top: 			3px;
-	padding-top: 	0px;
-	text-align: 	right;
+	clear: 			both;
+	position: 		relative;
+	margin: 		7px 7px -20px 7px;
+	text-align: 	left;
 	line-height: 	18px;
+}
+
+div.cartInfo label {
+	
+	display: block;
+	float: left;
+	width: 110px;
+	padding-right: 5px;
+	font-weight: normal;
+}
+
+div.cartInfo span {
+	
+	font-weight: bold;
+	text-align: right;
+	display: block;
+	float: right;
+}
+
+div.cartInfo #storeCartSideBarProducts,
+div.cartInfo #storeCartSideBarProductLabel {
+	
+	font-weight: normal;
+	clear: both;
+	text-align: left;
+	display: inline;
+	float: none;
+}
+
+div.cartInfo #storeCartSideBarProducts {
+	
+	font-weight: bold;
 }
 
 div.cartInfo a {
@@ -290,83 +641,169 @@ div.cartInfo a:hover {
 	color: 				#C91E1E
 }
 
-.finishOrderButton,
+.actionButton.finishOrderButton,
 .goToCartButton {
 	
 	float: right;
-	margin-right: -12px
 }
 
-.gridTable.store.cart td {
 
-	font-size: 	13px;
+
+
+
+
+
+
+
+
+
+
+
+table.store.cart {
+
+	background: #F0F0F0;
+	width: 775px;
+	
+	width: 100%;
+	margin: 0px;
+	border-left: 1px solid #DADADA;
+	border-right: 1px solid #DADADA;
 }
 
-.gridTable.store.cart .productImage {
+table.store.cart.resume {
+
+	background: #F0F0F0;
+	width: 785px;
+	border: none;
+	border-top: 1px solid #EAEAEA
+}
+
+table.store.cart,
+table.store.cart th,
+table.store.cart td {
+
+	font-family: Calibri;
+	font-size: 13px;
+}
+
+table.store.cart tr.header th {
+
+	background: #DADADA;
+	padding: 	5px 5px 8px 5px;
+	border-bottom: 1px solid #CACACA;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+table.store.cart td {
+
+	border-bottom: 1px solid #FDFDFD;
+	padding: 3px 5px;
+}
+
+table.store.cart td.emptyCart {
+
+	background: #FAFAFA;
+	padding: 20px 0px;
+	text-align: center;
+	font-size: 14px;
+}
+
+table.store.cart tr.odd td {
+
+	background: #F8F8F8
+}
+
+table.store.cart td.productInfo {
+
+	position: relative;
+}
+
+table.store.cart td.productImage {
+
+	padding: 5px 10px
+}
+
+table.store.cart td .productName {
+
+	font-weight: bold
+}
+
+table.store.cart td .productName a {
+
+	color: #1e62c9
+}
+
+table.store.cart td .productOption {
+
+	padding: 0px;
+	margin: 0px 15px 0px 0px;
+	color: #5F5F5F;
+}
+
+table.store.cart td span.removeLink {
+
+	position: absolute;
+	left: 400px;
+}
+
+table.store.cart input {
+
+	border: 1px solid #C0C0C0;
+	padding: 2px;
+	width: 30px;
+	height: 14px;
+	text-align: center;
+	color: #5F5F5F
+}
+
+table.store.cart .footer th {
+
+	padding: 	5px 0px;
+}
+
+table.store.cart .footer th {
 
 	padding: 	5px;
 }
 
-.gridTable.store.cart .productName {
+table.store.cart .footer.shipping th,
+table.store.cart .footer.discount th,
+table.store.cart .footer.subtotal th {
 
-	font-size: 	13px;
+	border-top: 1px solid #FBFBFB;
 }
 
-.gridTable.store.cart .emptyCart {
+table.store.cart .footer.subtotal th {
 
-	font-size: 	11px;
-	text-align: center;
-	padding: 	10px 0px;
+	border-bottom: 1px solid #DADADA;
 }
 
-.gridTable.store.cart .productDetail {
+table.store.cart .footer th input {
 
-	margin: 	0px;
-	padding: 	0px;
-	position: 	relative;
-	left: 		0px;
-	font-size: 	12px;
-	text-align: left;
-	color: 		#707070;
-	margin-right: 	20px
+	width: 75px
 }
 
-.gridTable.store.cart .quantity input {
+table.store.cart .footer#storeCartDiscountRow th input {
 
-	border: 		1px solid #909090;
-	width: 			20px;
-	height: 		20px;
-	font-weight: 	normal;
-	font-size: 		12px;
-	padding: 		1px 6px;
-	text-align: 	center;
+	text-transform: uppercase
 }
 
-.gridTable.store.cart .productPrice,
-.gridTable.store.cart .totalValue {
+table.store.cart .footer.total th {
 
-	font-weight: 	normal;
-	font-size: 		13px;
-}
-
-.gridTable.store.cart .totalValue {
-
-	font-weight: 	bold;
+	padding: 20px 5px;
+	font-size: 20px
 }
 
 
-.gridTable.store.cart .shipping #shippingValue,
-.gridTable.store.cart .shipping #orderTotalValue {
 
-	font-weight: 	bold;
-	font-size: 		13px;
-	padding-right: 	3px;
-}
+table.store.cart.resume td.totalValue,
+table.store.cart.resume .footer.shipping th,
+table.store.cart.resume .footer.discount th,
+table.store.cart.resume .footer.subtotal th,
+table.store.cart.resume .footer.total th {
 
-.gridTable.store.cart .shipping #orderTotalValue {
-
-	font-size: 		16px;
-	white-space: 	nowrap
+	padding-right: 8px;
 }
 
 
@@ -377,6 +814,25 @@ div.cartInfo a:hover {
 
 
 
+
+
+
+
+
+.storeCart #cartMessage.success {
+
+	margin: 1px 0px;
+	color: #49721b;
+	border: 1px solid #626d23;
+	background: #d2dfc6 url('/images/icon/ok.png') 8px center no-repeat;
+	padding: 8px 5px 8px 35px
+}
+
+
+.storeCartResume {
+
+	position: relative;
+}
 
 /* Formulário de cadastro de endereço */
 
@@ -417,10 +873,15 @@ div.cartInfo a:hover {
 	border-top: 		none;
 }
 
+.storeCartResume .addressInfo {
+
+	font-size: 12px
+}
+
 .storeCartResume .finishOrderButton {
 
 	margin-left: 30px;
-	margin-top: 30px;
+	margin-top: 10px;
 	clear: both;
 	float: left;
 	margin-right: -12px
@@ -437,4 +898,508 @@ div.cartInfo a:hover {
 .storeCartOrder .formTable {
 
 	background: 			#F7F7F7 url('/images/tableLightBg.png') repeat-x;
+}
+
+.storeCartResume .gridTable.store.cart td {
+
+	padding: 	5px 10px;
+}
+
+.storeCartResume .separator {
+
+	border-bottom: 5px solid #F0F0F0;
+}
+
+.buttonBarForm {
+
+	background: #F0F0F0;
+	padding-left: 10px;
+	border: none;
+	border-top: 1px solid #CACACA;
+}
+
+.defaultForm .row .error,
+.storeCartResume .error {
+
+	clear: 					both;
+	width: 					auto;
+	height: 				18px;
+	background: 			none;
+	cursor: 				default;
+	margin-top: 			3px;
+	margin-bottom: 			3px;
+	margin-left: 			112px;
+	color: 					#a44949;
+}
+
+.storeCartResume .error {
+
+	clear: 					both;
+	width: 					auto;
+	height: 				18px;
+	background: 			none;
+	cursor: 				default;
+	margin-top: 			3px;
+	margin-bottom: 			3px;
+	margin-left: 			10px;
+	color: 					#a44949;
+}
+
+#signMainButtonBar.error {
+
+	margin-top: 20px
+}
+
+
+
+
+
+
+
+
+
+
+/* Página de pagamento */
+
+#signLoginTable {
+	
+	margin-top: 15px;
+	width: 500px;
+	position: relative;
+	margin-left: 50%;
+	left: -300px;
+}
+
+#signLoginTable thead th {
+	
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 16px;
+	color: #4978a4
+}
+
+#signLoginTable th.border,
+#signLoginTable td.border {
+	
+	border-right: 1px solid #E0E0E0
+}
+
+#signLoginTable td {
+	
+	width: 250px;
+}
+
+#signLoginTable td .quickForm {
+
+	margin: 0px 10px;	
+}
+
+#signLoginTable td .quickForm th {
+	
+	text-align: right;
+	padding-right: 7px;	
+}
+
+#signLoginTable td .quickForm input {
+	
+	border: 1px solid #C0C0C0;
+	width: 150px;
+	height: 16px;
+	padding: 1px 3px;	
+}
+
+
+#signLoginTable #storeLoginErrorMessage {
+
+	position: 		relative;
+	left: 			0px;
+	top: 			10px;
+	margin-bottom: 	5px;
+	font-size: 		12px;
+	color: 			#C91E1E;
+	text-shadow: 	#FFFFFF 1px 1px;
+	display: 		none;
+}
+
+
+
+
+body.billet { color: #000000; background: #ffffff; margin: 10px; font-family: Arial, Sans Serif, Verdana }
+body.billet .cp { font: bold 10px Arial; color: black}
+body.billet .ti { font: 9px Arial, Helvetica, sans-serif}
+body.billet .ld { font: bold 15px Arial; color: #000000}
+body.billet .ct { FONT: 9px "Arial Narrow"; COLOR: #000033}
+body.billet .cn { FONT: 9px Arial; COLOR: black }
+body.billet .bc { font: bold 20px Arial; color: #000000 }
+body.billet .ld2 { font: bold 12px Arial; color: #000000 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.storeOrderHeader {
+	
+	width: 765px;
+	height: 60px;
+	position: relative;
+	border-bottom: 1px solid #C0C0C0;
+	margin: 0px 10px;
+	font-family: Calibri;
+}
+
+.storeOrderHeader .orderNumber,
+.storeOrderHeader .orderStatus {
+	
+	position: relative;
+	float: left;
+	font-size: 14px;
+	margin-left: 10px;
+	font-weight: bold;
+	height: 20px
+}
+
+.storeOrderHeader .shippingDate,
+.storeOrderHeader .tracingCode {
+	
+	float: right;
+	left: -10px
+}
+
+.storeOrderHeader .orderNumber,
+.storeOrderHeader .orderStatus {
+	
+	font-size: 22px;
+	font-weight: bold;
+	position: relative;
+	top: 10px;
+	left: 10px;
+	height: 40px;
+	margin-left: 0px
+}
+
+.storeOrderHeader .orderStatus {
+	
+	float: right;
+	left: -10px
+}
+
+.storeOrderHeader .orderNumber span,
+.storeOrderHeader .orderStatus span {
+	
+	color: #3B5998;
+	font-weight: bold;
+}
+
+.storeOrderHeader .orderStatus span {
+	
+	color: #70983B;
+	font-weight: bold;
+}
+
+.storeOrderHeader .productsLabel {
+	
+	clear: both;
+	font-size: 18px;
+	font-weight: bold;
+	position: absolute;
+	width: 120px;
+	left: 0px;
+	bottom: -10px;
+	padding: 5px 5px 5px 10px;
+	background: #FFFFFF;
+}
+
+.purchaseInfo,
+.shippingInfo {
+	
+	float: right;
+	font-family: Calibri, Verdana, Tahoma;
+	font-size: 12px;
+	margin-left: 20px;
+	margin-top: 20px;
+	padding-left: 80px;
+	background: url('/images/store/mail.png') left 35px no-repeat
+}
+
+.shippingInfo {
+
+	position: relative;
+	left: -20px;
+	width: 250px	
+}
+
+.purchaseInfo {
+	
+	float: left;
+	margin-left: 20px;
+	margin-top: 20px;
+	padding-left: 0px;
+	background: none;
+}
+
+.purchaseInfo div.info {
+
+	clear: both;
+	font-size: 13px;
+	height: 22px;
+	font-family: Calibri
+}
+
+.purchaseInfo div.info label{
+
+	font-size: 13px;
+}
+
+.purchaseInfo div a#payTicketUploadLink {
+
+	color: #3B5998;
+	font-weight: bold;
+	font-size: 12px;
+	font-family: Calibri
+}
+
+.purchaseInfo label {
+
+	display: block;
+	float: left;
+	font-weight: bold;
+	padding-right: 5px;
+	text-align: left;
+	width: 120px;
+	font-family: Calibri
+}
+
+.purchaseInfo .orderNumber span,
+.purchaseInfo .orderStatus span,
+.purchaseInfo .purchaseDate span,
+.purchaseInfo .paymethod span,
+.purchaseInfo .shippingDate span,
+.purchaseInfo .tracingCode span {
+	
+	font-weight: normal
+}
+
+.purchaseInfo b,
+.shippingInfo b {
+
+	font-size: 14px;	
+}
+
+.purchaseInfo h1,
+.shippingInfo h1 {
+
+	font-size: 	20px;	
+}
+
+
+
+#storePurchaseFileUploadDiv {
+
+	display: none;
+	border: 1px solid #C0C0C0;
+	width: 350px;
+	padding: 10px;
+	background: #F0F0F0
+}
+
+.sizeBoard {
+
+	margin: 0px 5px 30px 5px;
+}
+ 
+.sizeBoard th {
+
+	text-align: center;
+	text-transform: uppercase
+}
+
+.sizeBoard td {
+
+	padding: 0px 10px
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.homeHighlight {
+
+	width: 		454px;
+	height: 	304px;
+	left: 		30px;
+	margin-top: 	10px;
+	position: relative;
+}
+
+.homeHighlight .content {
+	
+	width: 		450px;
+	height: 	300px;
+}
+
+.homeHighlight .info {
+	
+	position: absolute;
+	top: -15px;
+	left: 475px;
+	width: 300px;
+}
+
+.homeHighlight .info h1 {
+	
+	color: rgb(227, 106, 18);
+}
+
+.homeHighlight .info p {
+	
+	width: 260px;
+	font-size: 13px;
+	font-family: Calibri
+}
+
+.homeHighlight .content .descriptionArea {
+	
+	position: 				absolute;
+	left: 					0px;
+	bottom: 				0px;
+	width: 					500px;
+	height: 				70px;
+	
+	width: 					500px;
+	border-top: 			1px solid #FFF
+}
+
+.homeHighlight .content .descriptionText {
+	
+	position: 				absolute;
+	top: 					230px;
+	left: 					-30px;
+	width: 					500px;
+	height: 				70px;
+	color: 					#CACACA;
+	padding: 				0px;
+	font-size: 				12px;
+	line-height: 			18px;
+}
+
+.homeHighlight .content .descriptionText h1 {
+	
+	position: 		relative;
+	font-size: 		16px;
+	top: 			-8px;
+	margin-bottom: 	-15px;
+	color: 			#E9AE0F;
+	text-shadow: 	black -1px -1px;
+}
+
+.homeHighlight .content .contentItem {
+
+	position: relative;
+	width: 			500px;
+	height: 		300px;
+	margin-top: 	0px;
+	top: 			-10px;
+}
+
+
+
+
+
+
+.homeHighlight .content ul.selector {
+	
+	position: 				absolute;
+	top: 					230px;
+	left: 					330px;
+	list-style-type: 		none;
+	z-index: 				30;
+}
+
+.homeHighlight .content ul.selector li.active {
+	
+	background: 	url('/images/highlight/circleSelected.png') no-repeat;
+}
+
+.homeHighlight .info .priceInfo {
+	
+	position: relative;
+	width: 265px;
+}
+
+.homeHighlight .info .priceInfo label.price {
+	
+	position: absolute;
+	font-weight: bold;
+	top: 5px;
+}
+
+.homeHighlight .info .priceInfo span.price {
+	
+	position: absolute;
+	font-weight: normal;
+	top: 25px;
+	left: 0px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #629206;
+}
+
+.homeHighlight .info a {
+	
+	position: absolute;
+	right: 0px;
+	top: 10px;
 }

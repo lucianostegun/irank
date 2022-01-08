@@ -13,46 +13,31 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 
 
 	
-	protected $club_id;
-
-
-	
 	protected $people_id;
 
 
 	
-	protected $token;
+	protected $phone_number;
 
 
 	
-	protected $text_message;
+	protected $message;
 
 
 	
-	protected $total_messages = 0;
+	protected $status_code;
 
 
 	
-	protected $success_messages = 0;
+	protected $status_message;
 
 
 	
-	protected $error_messages = 0;
-
-
-	
-	protected $class_name;
-
-
-	
-	protected $object_id;
+	protected $message_id;
 
 
 	
 	protected $created_at;
-
-	
-	protected $aClub;
 
 	
 	protected $aPeople;
@@ -77,13 +62,6 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getClubId()
-	{
-
-		return $this->club_id;
-	}
-
-	
 	public function getPeopleId()
 	{
 
@@ -91,52 +69,38 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getToken()
+	public function getPhoneNumber()
 	{
 
-		return $this->token;
+		return $this->phone_number;
 	}
 
 	
-	public function getTextMessage()
+	public function getMessage()
 	{
 
-		return $this->text_message;
+		return $this->message;
 	}
 
 	
-	public function getTotalMessages()
+	public function getStatusCode()
 	{
 
-		return $this->total_messages;
+		return $this->status_code;
 	}
 
 	
-	public function getSuccessMessages()
+	public function getStatusMessage()
 	{
 
-		return $this->success_messages;
+		return $this->status_message;
 	}
 
 	
-	public function getErrorMessages()
+	public function getMessageId()
 	{
 
-		return $this->error_messages;
-	}
-
-	
-	public function getClassName()
-	{
-
-		return $this->class_name;
-	}
-
-	
-	public function getObjectId()
-	{
-
-		return $this->object_id;
+		return $this->message_id;
 	}
 
 	
@@ -176,24 +140,6 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setClubId($v)
-	{
-
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->club_id !== $v) {
-			$this->club_id = $v;
-			$this->modifiedColumns[] = SmsPeer::CLUB_ID;
-		}
-
-		if ($this->aClub !== null && $this->aClub->getId() !== $v) {
-			$this->aClub = null;
-		}
-
-	} 
-	
 	public function setPeopleId($v)
 	{
 
@@ -212,100 +158,72 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setToken($v)
+	public function setPhoneNumber($v)
 	{
 
 						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
-		if ($this->token !== $v) {
-			$this->token = $v;
-			$this->modifiedColumns[] = SmsPeer::TOKEN;
+		if ($this->phone_number !== $v) {
+			$this->phone_number = $v;
+			$this->modifiedColumns[] = SmsPeer::PHONE_NUMBER;
 		}
 
 	} 
 	
-	public function setTextMessage($v)
+	public function setMessage($v)
 	{
 
 						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
-		if ($this->text_message !== $v) {
-			$this->text_message = $v;
-			$this->modifiedColumns[] = SmsPeer::TEXT_MESSAGE;
+		if ($this->message !== $v) {
+			$this->message = $v;
+			$this->modifiedColumns[] = SmsPeer::MESSAGE;
 		}
 
 	} 
 	
-	public function setTotalMessages($v)
-	{
-
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->total_messages !== $v || $v === 0) {
-			$this->total_messages = $v;
-			$this->modifiedColumns[] = SmsPeer::TOTAL_MESSAGES;
-		}
-
-	} 
-	
-	public function setSuccessMessages($v)
-	{
-
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->success_messages !== $v || $v === 0) {
-			$this->success_messages = $v;
-			$this->modifiedColumns[] = SmsPeer::SUCCESS_MESSAGES;
-		}
-
-	} 
-	
-	public function setErrorMessages($v)
-	{
-
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->error_messages !== $v || $v === 0) {
-			$this->error_messages = $v;
-			$this->modifiedColumns[] = SmsPeer::ERROR_MESSAGES;
-		}
-
-	} 
-	
-	public function setClassName($v)
+	public function setStatusCode($v)
 	{
 
 						if ($v !== null && !is_string($v)) {
 			$v = (string) $v; 
 		}
 
-		if ($this->class_name !== $v) {
-			$this->class_name = $v;
-			$this->modifiedColumns[] = SmsPeer::CLASS_NAME;
+		if ($this->status_code !== $v) {
+			$this->status_code = $v;
+			$this->modifiedColumns[] = SmsPeer::STATUS_CODE;
 		}
 
 	} 
 	
-	public function setObjectId($v)
+	public function setStatusMessage($v)
 	{
 
-						if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
 		}
 
-		if ($this->object_id !== $v) {
-			$this->object_id = $v;
-			$this->modifiedColumns[] = SmsPeer::OBJECT_ID;
+		if ($this->status_message !== $v) {
+			$this->status_message = $v;
+			$this->modifiedColumns[] = SmsPeer::STATUS_MESSAGE;
+		}
+
+	} 
+	
+	public function setMessageId($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->message_id !== $v) {
+			$this->message_id = $v;
+			$this->modifiedColumns[] = SmsPeer::MESSAGE_ID;
 		}
 
 	} 
@@ -333,31 +251,25 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 
 			$this->id = $rs->getInt($startcol + 0);
 
-			$this->club_id = $rs->getInt($startcol + 1);
+			$this->people_id = $rs->getInt($startcol + 1);
 
-			$this->people_id = $rs->getInt($startcol + 2);
+			$this->phone_number = $rs->getString($startcol + 2);
 
-			$this->token = $rs->getString($startcol + 3);
+			$this->message = $rs->getString($startcol + 3);
 
-			$this->text_message = $rs->getString($startcol + 4);
+			$this->status_code = $rs->getString($startcol + 4);
 
-			$this->total_messages = $rs->getInt($startcol + 5);
+			$this->status_message = $rs->getString($startcol + 5);
 
-			$this->success_messages = $rs->getInt($startcol + 6);
+			$this->message_id = $rs->getString($startcol + 6);
 
-			$this->error_messages = $rs->getInt($startcol + 7);
-
-			$this->class_name = $rs->getString($startcol + 8);
-
-			$this->object_id = $rs->getInt($startcol + 9);
-
-			$this->created_at = $rs->getTimestamp($startcol + 10, null);
+			$this->created_at = $rs->getTimestamp($startcol + 7, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 11; 
+						return $startcol + 8; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Sms object", $e);
 		}
@@ -393,21 +305,40 @@ abstract class BaseSms extends BaseObject  implements Persistent {
       $this->setCreatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(SmsPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = SmsPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -420,13 +351,6 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 
 
 												
-			if ($this->aClub !== null) {
-				if ($this->aClub->isModified()) {
-					$affectedRows += $this->aClub->save($con);
-				}
-				$this->setClub($this->aClub);
-			}
-
 			if ($this->aPeople !== null) {
 				if ($this->aPeople->isModified()) {
 					$affectedRows += $this->aPeople->save($con);
@@ -491,12 +415,6 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 
 
 												
-			if ($this->aClub !== null) {
-				if (!$this->aClub->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aClub->getValidationFailures());
-				}
-			}
-
 			if ($this->aPeople !== null) {
 				if (!$this->aPeople->validate($columns)) {
 					$failureMap = array_merge($failureMap, $this->aPeople->getValidationFailures());
@@ -539,33 +457,24 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getClubId();
-				break;
-			case 2:
 				return $this->getPeopleId();
 				break;
+			case 2:
+				return $this->getPhoneNumber();
+				break;
 			case 3:
-				return $this->getToken();
+				return $this->getMessage();
 				break;
 			case 4:
-				return $this->getTextMessage();
+				return $this->getStatusCode();
 				break;
 			case 5:
-				return $this->getTotalMessages();
+				return $this->getStatusMessage();
 				break;
 			case 6:
-				return $this->getSuccessMessages();
+				return $this->getMessageId();
 				break;
 			case 7:
-				return $this->getErrorMessages();
-				break;
-			case 8:
-				return $this->getClassName();
-				break;
-			case 9:
-				return $this->getObjectId();
-				break;
-			case 10:
 				return $this->getCreatedAt();
 				break;
 			default:
@@ -579,16 +488,13 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 		$keys = SmsPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0]=>$this->getId(),
-			$keys[1]=>$this->getClubId(),
-			$keys[2]=>$this->getPeopleId(),
-			$keys[3]=>$this->getToken(),
-			$keys[4]=>$this->getTextMessage(),
-			$keys[5]=>$this->getTotalMessages(),
-			$keys[6]=>$this->getSuccessMessages(),
-			$keys[7]=>$this->getErrorMessages(),
-			$keys[8]=>$this->getClassName(),
-			$keys[9]=>$this->getObjectId(),
-			$keys[10]=>$this->getCreatedAt(),
+			$keys[1]=>$this->getPeopleId(),
+			$keys[2]=>$this->getPhoneNumber(),
+			$keys[3]=>$this->getMessage(),
+			$keys[4]=>$this->getStatusCode(),
+			$keys[5]=>$this->getStatusMessage(),
+			$keys[6]=>$this->getMessageId(),
+			$keys[7]=>$this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -608,33 +514,24 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setClubId($value);
-				break;
-			case 2:
 				$this->setPeopleId($value);
 				break;
+			case 2:
+				$this->setPhoneNumber($value);
+				break;
 			case 3:
-				$this->setToken($value);
+				$this->setMessage($value);
 				break;
 			case 4:
-				$this->setTextMessage($value);
+				$this->setStatusCode($value);
 				break;
 			case 5:
-				$this->setTotalMessages($value);
+				$this->setStatusMessage($value);
 				break;
 			case 6:
-				$this->setSuccessMessages($value);
+				$this->setMessageId($value);
 				break;
 			case 7:
-				$this->setErrorMessages($value);
-				break;
-			case 8:
-				$this->setClassName($value);
-				break;
-			case 9:
-				$this->setObjectId($value);
-				break;
-			case 10:
 				$this->setCreatedAt($value);
 				break;
 		} 	}
@@ -645,16 +542,13 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 		$keys = SmsPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setClubId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setPeopleId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setToken($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setTextMessage($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setTotalMessages($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setSuccessMessages($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setErrorMessages($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setClassName($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setObjectId($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
+		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setPhoneNumber($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setMessage($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setStatusCode($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setStatusMessage($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setMessageId($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
 	}
 
 	
@@ -663,15 +557,12 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 		$criteria = new Criteria(SmsPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(SmsPeer::ID)) $criteria->add(SmsPeer::ID, $this->id);
-		if ($this->isColumnModified(SmsPeer::CLUB_ID)) $criteria->add(SmsPeer::CLUB_ID, $this->club_id);
 		if ($this->isColumnModified(SmsPeer::PEOPLE_ID)) $criteria->add(SmsPeer::PEOPLE_ID, $this->people_id);
-		if ($this->isColumnModified(SmsPeer::TOKEN)) $criteria->add(SmsPeer::TOKEN, $this->token);
-		if ($this->isColumnModified(SmsPeer::TEXT_MESSAGE)) $criteria->add(SmsPeer::TEXT_MESSAGE, $this->text_message);
-		if ($this->isColumnModified(SmsPeer::TOTAL_MESSAGES)) $criteria->add(SmsPeer::TOTAL_MESSAGES, $this->total_messages);
-		if ($this->isColumnModified(SmsPeer::SUCCESS_MESSAGES)) $criteria->add(SmsPeer::SUCCESS_MESSAGES, $this->success_messages);
-		if ($this->isColumnModified(SmsPeer::ERROR_MESSAGES)) $criteria->add(SmsPeer::ERROR_MESSAGES, $this->error_messages);
-		if ($this->isColumnModified(SmsPeer::CLASS_NAME)) $criteria->add(SmsPeer::CLASS_NAME, $this->class_name);
-		if ($this->isColumnModified(SmsPeer::OBJECT_ID)) $criteria->add(SmsPeer::OBJECT_ID, $this->object_id);
+		if ($this->isColumnModified(SmsPeer::PHONE_NUMBER)) $criteria->add(SmsPeer::PHONE_NUMBER, $this->phone_number);
+		if ($this->isColumnModified(SmsPeer::MESSAGE)) $criteria->add(SmsPeer::MESSAGE, $this->message);
+		if ($this->isColumnModified(SmsPeer::STATUS_CODE)) $criteria->add(SmsPeer::STATUS_CODE, $this->status_code);
+		if ($this->isColumnModified(SmsPeer::STATUS_MESSAGE)) $criteria->add(SmsPeer::STATUS_MESSAGE, $this->status_message);
+		if ($this->isColumnModified(SmsPeer::MESSAGE_ID)) $criteria->add(SmsPeer::MESSAGE_ID, $this->message_id);
 		if ($this->isColumnModified(SmsPeer::CREATED_AT)) $criteria->add(SmsPeer::CREATED_AT, $this->created_at);
 
 		return $criteria;
@@ -703,23 +594,17 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setClubId($this->club_id);
-
 		$copyObj->setPeopleId($this->people_id);
 
-		$copyObj->setToken($this->token);
+		$copyObj->setPhoneNumber($this->phone_number);
 
-		$copyObj->setTextMessage($this->text_message);
+		$copyObj->setMessage($this->message);
 
-		$copyObj->setTotalMessages($this->total_messages);
+		$copyObj->setStatusCode($this->status_code);
 
-		$copyObj->setSuccessMessages($this->success_messages);
+		$copyObj->setStatusMessage($this->status_message);
 
-		$copyObj->setErrorMessages($this->error_messages);
-
-		$copyObj->setClassName($this->class_name);
-
-		$copyObj->setObjectId($this->object_id);
+		$copyObj->setMessageId($this->message_id);
 
 		$copyObj->setCreatedAt($this->created_at);
 
@@ -754,35 +639,6 @@ abstract class BaseSms extends BaseObject  implements Persistent {
 			self::$peer = new SmsPeer();
 		}
 		return self::$peer;
-	}
-
-	
-	public function setClub($v)
-	{
-
-
-		if ($v === null) {
-			$this->setClubId(NULL);
-		} else {
-			$this->setClubId($v->getId());
-		}
-
-
-		$this->aClub = $v;
-	}
-
-
-	
-	public function getClub($con = null)
-	{
-		if ($this->aClub === null && ($this->club_id !== null)) {
-						include_once 'lib/model/om/BaseClubPeer.php';
-
-			$this->aClub = ClubPeer::retrieveByPK($this->club_id, $con);
-
-			
-		}
-		return $this->aClub;
 	}
 
 	

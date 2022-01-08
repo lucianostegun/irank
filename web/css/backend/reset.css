@@ -41,6 +41,7 @@ a { text-decoration: none; color: #2b6893; }
 
 
 /* ==========  Correction classes ========== */
+.mt-1 { margin-top: -1px; }
 .mt10 { margin-top: 10px; }
 .mt20 { margin-top: 20px; }
 .mt30 { margin-top: 30px; }
@@ -82,6 +83,7 @@ a { text-decoration: none; color: #2b6893; }
 .mt0 { margin-top: 0!important; }
 .mt2 { margin-top: 2px!important; }
 .mt3 { margin-top: 3px!important; }
+.mt4 { margin-top: 4px; }
 .mt5 { margin-top: 5px; }
 .mt6 { margin-top: 6px; }
 .mt7 { margin-top: 7px; }
@@ -131,6 +133,9 @@ a { text-decoration: none; color: #2b6893; }
 .pt25 { padding-top: 25px; }
 .pt30 { padding-top: 30px; }
 
+.pl10 { padding-left: 10px; }
+
+.pr10 { padding-right: 10px; }
 
 input::-moz-focus-inner /*Remove button padding in FF*/
 { 

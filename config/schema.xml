@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database name="propel" defaultIdMethod="native" noXsd="true" package="lib.model" schema="public">
-
-	<table name="virtual_table" phpName="VirtualTable" isI18n="true" i18nTable="virtual_table_i18n">
-		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
-		<column name="virtual_table_name" type="VARCHAR" />
-		<column name="description" type="VARCHAR" />
-		<column name="tag_name" type="VARCHAR" />
-		<column name="enabled" type="BOOLEAN" />
-		<column name="visible" type="BOOLEAN" />
-		<column name="deleted" type="BOOLEAN" />
-		<column name="locked" type="BOOLEAN" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
-	</table>
-	
-	<table name="virtual_table_i18n" phpName="VirtualTableI18n">
-		<column name="virtual_table_id" type="INTEGER" primaryKey="true" />
-		<column name="culture" type="CHAR" primaryKey="true" isCulture="true" />
-		<column name="description_i18n" type="VARCHAR" />
-		<foreign-key foreignTable="virtual_table">
-			<reference local="virtual_table_id" foreign="id" />
-		</foreign-key>
-	</table>
 	
 	<table name="people" phpName="People">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
@@ -29,10 +7,19 @@
 		<column name="first_name" type="VARCHAR" />
 		<column name="last_name" type="VARCHAR" />
 		<column name="full_name" type="VARCHAR" />
+		<column name="nickname" type="VARCHAR" />
 		<column name="email_address" type="VARCHAR" />
+		<column name="phone_ddd" type="VARCHAR" />
 		<column name="phone_number" type="VARCHAR" />
 		<column name="birthday" type="DATE" />
 		<column name="default_language" type="CHAR" />
+		<column name="address_name" type="VARCHAR" />
+		<column name="address_number" type="VARCHAR" />
+		<column name="address_quarter" type="VARCHAR" />
+		<column name="address_complement" type="VARCHAR" />
+		<column name="address_city" type="VARCHAR" />
+		<column name="address_state" type="CHAR" />
+		<column name="address_zipcode" type="VARCHAR" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -53,8 +40,11 @@
 		<column name="image_path" type="VARCHAR" />
 		<column name="signed_schedule" type="BOOLEAN" />
 		<column name="schedule_start_date" type="DATE" />
+		<column name="start_bankroll" type="NUMERIC" size="10" scale="2" />
+		<column name="sms_credit" type="INTEGER" />
 		<column name="deviceUDID" type="VARCHAR" />
 		<column name="mobile_token" type="VARCHAR" />
+		<column name="beta_tester" type="BOOLEAN" />
 		<column name="active" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
@@ -65,6 +55,28 @@
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="people">
 			<reference local="people_id" foreign="id" />
+		</foreign-key>
+	</table>
+
+	<table name="virtual_table" phpName="VirtualTable" isI18n="true" i18nTable="virtual_table_i18n">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="virtual_table_name" type="VARCHAR" />
+		<column name="description" type="VARCHAR" />
+		<column name="tag_name" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="virtual_table_i18n" phpName="VirtualTableI18n">
+		<column name="virtual_table_id" type="INTEGER" primaryKey="true" />
+		<column name="culture" type="CHAR" primaryKey="true" isCulture="true" />
+		<column name="description_i18n" type="VARCHAR" />
+		<foreign-key foreignTable="virtual_table">
+			<reference local="virtual_table_id" foreign="id" />
 		</foreign-key>
 	</table>
 
@@ -112,6 +124,8 @@
 		<column name="total_balance" type="NUMERIC" size="10" scale="2" />
 		<column name="total_average" type="NUMERIC" size="10" scale="2" />
 		<column name="allow_edit" type="BOOLEAN" />
+		<column name="suppress_email_notify" type="BOOLEAN" />
+		<column name="suppress_sms_notify" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
@@ -156,6 +170,7 @@
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
 		<column name="ranking_id" type="INTEGER" />
 		<column name="event_name" type="VARCHAR" />
+		<column name="permalink" type="VARCHAR" />
 		<column name="ranking_place_id" type="INTEGER" />
 		<column name="buyin" type="NUMERIC" size="10" scale="2" />
 		<column name="entrance_fee" type="NUMERIC" size="10" scale="2" />
@@ -200,6 +215,7 @@
 		<column name="confirm_code" type="VARCHAR" />
 		<column name="invite_status" type="VARCHAR" />
 		<column name="allow_edit" type="BOOLEAN" />
+		<column name="suppress_notify" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
@@ -331,11 +347,17 @@
 		<column name="ranking_id" type="INTEGER" />
 		<column name="place_name" type="VARCHAR" />
 		<column name="maps_link" type="VARCHAR" />
+		<column name="state_id" type="INTEGER" />
+		<column name="city_name" type="VARCHAR" />
+		<column name="quarter" type="VARCHAR" />
 		<column name="deleted" type="BOOLEAN" />
 		<column name="created_at" type="TIMESTAMP" />
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="ranking">
 			<reference local="ranking_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="state">
+			<reference local="state_id" foreign="id" />
 		</foreign-key>
 	</table>
 
@@ -351,21 +373,6 @@
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="user_site">
 			<reference local="user_site_id" foreign="id" />
-		</foreign-key>
-	</table>
-
-	<table name="ranking_import_log" phpName="RankingImportLog">
-		<column name="ranking_id" type="INTEGER" primaryKey="true" />
-		<column name="ranking_id_from" type="INTEGER" primaryKey="true" />
-		<column name="import_table" type="VARCHAR" primaryKey="true"  />
-		<column name="object_id" type="INTEGER" primaryKey="true" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="updated_at" type="TIMESTAMP" />
-		<foreign-key foreignTable="ranking">
-			<reference local="ranking_id" foreign="id" />
-		</foreign-key>
-		<foreign-key foreignTable="ranking">
-			<reference local="ranking_id_from" foreign="id" />
 		</foreign-key>
 	</table>
 
@@ -825,24 +832,6 @@
 		</foreign-key>
 	</table>
 
-	<table name="access_log" phpName="AccessLog">
-		<column name="user_site_id" type="INTEGER" primaryKey="true" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="ip_address" type="VARCHAR" />
-		<foreign-key foreignTable="user_site">
-			<reference local="user_site_id" foreign="id" />
-		</foreign-key>
-	</table>
-
-	<table name="access_admin_log" phpName="AccessAdminLog" package="...apps.backend.lib.model">
-		<column name="user_admin_id" type="INTEGER" primaryKey="true" />
-		<column name="created_at" type="TIMESTAMP" />
-		<column name="ip_address" type="VARCHAR" />
-		<foreign-key foreignTable="user_admin">
-			<reference local="user_admin_id" foreign="id" />
-		</foreign-key>
-	</table>
-
 	<table name="settings" phpName="Settings">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
 		<column name="tag_name" type="VARCHAR" />
@@ -896,19 +885,13 @@
 
 	<table name="sms" phpName="Sms">
 		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
-		<column name="club_id" type="INTEGER" />
 		<column name="people_id" type="INTEGER" />
-		<column name="token" type="VARCHAR" />
-		<column name="text_message" type="VARCHAR" />
-		<column name="total_messages" type="INTEGER" default="0" />
-		<column name="success_messages" type="INTEGER" default="0" />
-		<column name="error_messages" type="INTEGER" default="0" />
-		<column name="class_name" type="VARCHAR" />
-		<column name="object_id" type="INTEGER" />
+		<column name="phone_number" type="VARCHAR" />
+		<column name="message" type="VARCHAR" />
+		<column name="status_code" type="VARCHAR" />
+		<column name="status_message" type="VARCHAR" />
+		<column name="message_id" type="VARCHAR" />
 		<column name="created_at" type="TIMESTAMP" />
-		<foreign-key foreignTable="club">
-			<reference local="club_id" foreign="id" />
-		</foreign-key>
 		<foreign-key foreignTable="people">
 			<reference local="people_id" foreign="id" />
 		</foreign-key>
@@ -1006,6 +989,7 @@
 		<column name="is_available_for_sale" type="BOOLEAN" />
 		<column name="tag_name" type="VARCHAR" />
 		<column name="tag_name_parent" type="VARCHAR" />
+		<column name="is_option" type="BOOLEAN" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -1033,6 +1017,7 @@
 		<column name="schedule_date" type="DATE" />
 		<column name="sending_status" type="VARCHAR" default="pending" />
 		<column name="last_sent_date" type="TIMESTAMP" />
+		<column name="class_name" type="VARCHAR" />
 		<column name="enabled" type="BOOLEAN" />
 		<column name="visible" type="BOOLEAN" />
 		<column name="deleted" type="BOOLEAN" />
@@ -1170,6 +1155,7 @@
 	<table name="club_player" phpName="ClubPlayer">
 		<column name="club_id" type="INTEGER" primaryKey="true" />
 		<column name="people_id" type="INTEGER" primaryKey="true" />
+		<column name="rating" type="INTEGER" />
 		<column name="created_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="club">
 			<reference local="club_id" foreign="id" />
@@ -1296,6 +1282,7 @@
 		<column name="default_price" type="NUMERIC" size="10" scale="2" />
 		<column name="default_weight" type="FLOAT" />
 		<column name="is_new" type="BOOLEAN" />
+		<column name="stock" type="INTEGER" default="0" />
 		<column name="image_1" type="VARCHAR" />
 		<column name="image_2" type="VARCHAR" />
 		<column name="image_3" type="VARCHAR" />
@@ -1309,6 +1296,302 @@
 		<column name="updated_at" type="TIMESTAMP" />
 		<foreign-key foreignTable="product_category">
 			<reference local="product_category_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="product_option" phpName="ProductOption">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="product_category_id" type="INTEGER" />
+		<column name="option_type" type="VARCHAR" />
+		<column name="option_name" type="VARCHAR" />
+		<column name="description" type="VARCHAR" />
+		<column name="tag_name" type="VARCHAR" />
+		<column name="is_default" type="BOOLEAN" />
+		<column name="order_seq" type="INTEGER" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="product_category">
+			<reference local="product_category_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="product_item" phpName="ProductItem">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="product_id" type="INTEGER" />
+		<column name="product_option_id_color" type="INTEGER" />
+		<column name="product_option_id_size" type="INTEGER" />
+		<column name="price" type="NUMERIC" size="10" scale="2" />
+		<column name="weight" type="FLOAT" />
+		<column name="stock" type="INTEGER" />
+		<column name="locked_stock" type="BOOLEAN" />
+		<column name="image_1" type="VARCHAR" />
+		<column name="image_2" type="VARCHAR" />
+		<column name="image_3" type="VARCHAR" />
+		<column name="image_4" type="VARCHAR" />
+		<column name="image_5" type="VARCHAR" />
+		<column name="unavailable" type="BOOLEAN" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="product">
+			<reference local="product_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="product_option">
+			<reference local="product_option_id_color" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="product_option">
+			<reference local="product_option_id_size" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="purchase" phpName="Purchase">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="file_id" type="INTEGER" />
+		<column name="pagseguro_url" type="VARCHAR" />
+		<column name="order_number" type="VARCHAR" />
+		<column name="order_status" type="VARCHAR" />
+		<column name="has_new_status" type="BOOLEAN" />
+		<column name="order_value" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="products" type="INTEGER" default="0" />
+		<column name="itens" type="INTEGER" default="0" />
+		<column name="discount_coupon_id" type="INTEGER" />
+		<column name="shipping_value" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="discount_value" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="total_value" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="total_weight" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="paymethod" type="VARCHAR" size="20" />
+		<column name="ip_address" type="VARCHAR" />
+		<column name="approval_date" type="TIMESTAMP" />
+		<column name="refusal_date" type="TIMESTAMP" />
+		<column name="refusal_reason" type="VARCHAR" />
+		<column name="shipping_date" type="TIMESTAMP" />
+		<column name="tracing_code" type="VARCHAR" />
+		<column name="customer_name" type="VARCHAR" />
+		<column name="address_name" type="VARCHAR" />
+		<column name="address_number" type="VARCHAR" />
+		<column name="address_quarter" type="VARCHAR" />
+		<column name="address_complement" type="VARCHAR" />
+		<column name="address_city" type="VARCHAR" />
+		<column name="address_state" type="CHAR" />
+		<column name="address_zipcode" type="CHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="finished_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="user_site">
+			<reference local="user_site_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="file">
+			<reference local="file_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="discount_coupon">
+			<reference local="discount_coupon_id" foreign="id"/>
+		</foreign-key>
+	</table>
+
+	<table name="purchase_product_item" phpName="PurchaseProductItem">
+		<column name="purchase_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="product_item_id" type="INTEGER" required="true" primaryKey="true" />
+		<column name="price" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="weight" type="FLOAT" />
+		<column name="quantity" type="INTEGER" />
+		<column name="total_value" type="NUMERIC" size="10" scale="2" default="0" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="purchase">
+			<reference local="purchase_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="product_item">
+			<reference local="product_item_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="discount_coupon" phpName="DiscountCoupon">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="coupon_code" type="VARCHAR" />
+		<column name="discount_rule" type="VARCHAR" default="{}" />
+		<column name="purchase_id" type="INTEGER" />
+		<column name="is_active" type="BOOLEAN" />
+		<column name="has_used" type="BOOLEAN" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="purchase">
+			<reference local="purchase_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="blog" phpName="Blog">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="title" type="VARCHAR" />
+		<column name="short_title" type="VARCHAR" />
+		<column name="caption" type="VARCHAR" />
+		<column name="blog_category_id" type="INTEGER" />
+		<column name="permalink" type="VARCHAR" />
+		<column name="tags" type="VARCHAR" />
+		<column name="people_id" type="INTEGER" />
+		<column name="content" type="VARCHAR" />
+		<column name="glossary" type="VARCHAR" />
+		<column name="is_draft" type="BOOLEAN" default="TRUE" />
+		<column name="publish_date" type="TIMESTAMP" />
+		<column name="image_share" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="virtual_table">
+			<reference local="blog_category_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="people">
+			<reference local="people_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="glossary" phpName="Glossary">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="term" type="VARCHAR" />
+		<column name="description" type="VARCHAR" />
+		<column name="tags" type="VARCHAR" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="ranking_subscription_request" phpName="RankingSubscriptionRequest">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="user_site_id_owner" type="INTEGER" />
+		<column name="ranking_id" type="INTEGER" />
+		<column name="request_status" type="VARCHAR" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="user_site">
+			<reference local="user_site_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="user_site">
+			<reference local="user_site_id_owner" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="ranking">
+			<reference local="ranking_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="email_option" phpName="EmailOption">
+		<column name="email_address" type="VARCHAR" primaryKey="true" />
+		<column name="email_template_id" type="INTEGER" primaryKey="true" />
+		<column name="lock_send" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="people">
+			<reference local="email_address" foreign="email_address"/>
+		</foreign-key>
+		<foreign-key foreignTable="email_template">
+			<reference local="email_template_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="timer" phpName="Timer">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="user_site_id" type="INTEGER" />
+		<column name="timer_name" type="VARCHAR" />
+		<column name="default_duration" type="INTEGER" />
+		<column name="levels" type="INTEGER" />
+		<column name="play_sound" type="BOOLEAN" />
+		<column name="minute_alert" type="BOOLEAN" />
+		<column name="confirm_level" type="BOOLEAN" />
+		<column name="has_ante" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="user_site">
+			<reference local="user_site_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="timer_level" phpName="TimerLevel">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="timer_id" type="INTEGER" />
+		<column name="small_blind" type="INTEGER" />
+		<column name="big_blind" type="INTEGER" />
+		<column name="ante" type="INTEGER" />
+		<column name="duration" type="INTEGER" />
+		<column name="is_pause" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="timer">
+			<reference local="timer_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="sms_template" phpName="SmsTemplate">
+		<column name="id" type="INTEGER" autoIncrement="true" primaryKey="true" />
+		<column name="template_name" type="VARCHAR" />
+		<column name="description" type="VARCHAR" />
+		<column name="content" type="VARCHAR" />
+		<column name="tag_name" type="VARCHAR" />
+		<column name="order_seq" type="INTEGER" />
+		<column name="enabled" type="BOOLEAN" />
+		<column name="visible" type="BOOLEAN" />
+		<column name="deleted" type="BOOLEAN" />
+		<column name="locked" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+	</table>
+	
+	<table name="sms_option" phpName="SmsOption">
+		<column name="people_id" type="INTEGER" primaryKey="true" />
+		<column name="sms_template_id" type="INTEGER" primaryKey="true" />
+		<column name="lock_send" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="people">
+			<reference local="people_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="sms_template">
+			<reference local="sms_template_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="sms_ranking_option" phpName="SmsRankingOption">
+		<column name="people_id" type="INTEGER" primaryKey="true" />
+		<column name="ranking_id" type="INTEGER" primaryKey="true" />
+		<column name="sms_template_id" type="INTEGER" primaryKey="true" />
+		<column name="lock_send" type="BOOLEAN" />
+		<column name="created_at" type="TIMESTAMP" />
+		<column name="updated_at" type="TIMESTAMP" />
+		<foreign-key foreignTable="people">
+			<reference local="people_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="ranking">
+			<reference local="ranking_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="sms_template">
+			<reference local="sms_template_id" foreign="id"/>
+		</foreign-key>
+	</table>
+	
+	<table name="user_site_config" phpName="UserSiteConfig">
+		<column name="user_site_id" type="INTEGER" primaryKey="true" />
+		<column name="bankroll_tutorial_home" type="INTEGER" default="0" />
+		<column name="sms_validation_code" type="VARCHAR"/>
+		<column name="sms_validation_attempts" type="INTEGER" default="0" />
+		<column name="agreed_sms_terms" type="BOOLEAN" default="0" />
+		<foreign-key foreignTable="user_site">
+			<reference local="user_site_id" foreign="id" />
 		</foreign-key>
 	</table>
 	

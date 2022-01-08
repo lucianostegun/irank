@@ -5,6 +5,7 @@ class loginActions extends sfActions
 
   public function executeIndex($request){
   	
+  	$this->passwordRecovery = false;
   }
 
   public function executeLogin($request){
@@ -81,6 +82,8 @@ class loginActions extends sfActions
 
   public function executePasswordRecovery($request){
 	
+	$this->passwordRecovery = true;
+	$this->setTemplate('index');
   }
 
   public function handleErrorResetPassword(){
@@ -90,11 +93,9 @@ class loginActions extends sfActions
   
   public function executeResetPassword($request){
 
-	$username     = $request->getParameter('username');
 	$emailAddress = $request->getParameter('emailAddress');
 	
 	$criteria = new Criteria();
-	$criteria->add( UserSitePeer::USERNAME, $username, Criteria::ILIKE );
 	$criteria->add( PeoplePeer::EMAIL_ADDRESS, $emailAddress, Criteria::ILIKE );
 	$criteria->addJoin( UserSitePeer::PEOPLE_ID, PeoplePeer::ID, Criteria::INNER_JOIN );
 	$criteria->add( UserSitePeer::ACTIVE, true );

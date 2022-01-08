@@ -23,10 +23,6 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 	
 	protected $created_at;
 
-
-	
-	protected $updated_at;
-
 	
 	protected $aLog;
 
@@ -69,28 +65,6 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 			}
 		} else {
 			$ts = $this->created_at;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
-	}
-
-	
-	public function getUpdatedAt($format = 'Y-m-d H:i:s')
-	{
-
-		if ($this->updated_at === null || $this->updated_at === '') {
-			return null;
-		} elseif (!is_int($this->updated_at)) {
-						$ts = strtotime($this->updated_at);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse value of [updated_at] as date/time value: " . var_export($this->updated_at, true));
-			}
-		} else {
-			$ts = $this->updated_at;
 		}
 		if ($format === null) {
 			return $ts;
@@ -165,23 +139,6 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 
 	} 
 	
-	public function setUpdatedAt($v)
-	{
-
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { 				throw new PropelException("Unable to parse date/time value for [updated_at] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->updated_at !== $ts) {
-			$this->updated_at = $ts;
-			$this->modifiedColumns[] = LogFieldPeer::UPDATED_AT;
-		}
-
-	} 
-	
 	public function hydrate(ResultSet $rs, $startcol = 1)
 	{
 		try {
@@ -194,13 +151,11 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 
 			$this->created_at = $rs->getTimestamp($startcol + 3, null);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 4, null);
-
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 5; 
+						return $startcol + 4; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating LogField object", $e);
 		}
@@ -236,26 +191,40 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
       $this->setCreatedAt(time());
     }
 
-    if ($this->isModified() && !$this->isColumnModified(LogFieldPeer::UPDATED_AT))
-    {
-      $this->setUpdatedAt(time());
-    }
-
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(LogFieldPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = LogFieldPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -365,9 +334,6 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getCreatedAt();
 				break;
-			case 4:
-				return $this->getUpdatedAt();
-				break;
 			default:
 				return null;
 				break;
@@ -382,7 +348,6 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 			$keys[1]=>$this->getFieldName(),
 			$keys[2]=>$this->getFieldValue(),
 			$keys[3]=>$this->getCreatedAt(),
-			$keys[4]=>$this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -410,9 +375,6 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 			case 3:
 				$this->setCreatedAt($value);
 				break;
-			case 4:
-				$this->setUpdatedAt($value);
-				break;
 		} 	}
 
 	
@@ -424,7 +386,6 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setFieldName($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setFieldValue($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setUpdatedAt($arr[$keys[4]]);
 	}
 
 	
@@ -436,7 +397,6 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(LogFieldPeer::FIELD_NAME)) $criteria->add(LogFieldPeer::FIELD_NAME, $this->field_name);
 		if ($this->isColumnModified(LogFieldPeer::FIELD_VALUE)) $criteria->add(LogFieldPeer::FIELD_VALUE, $this->field_value);
 		if ($this->isColumnModified(LogFieldPeer::CREATED_AT)) $criteria->add(LogFieldPeer::CREATED_AT, $this->created_at);
-		if ($this->isColumnModified(LogFieldPeer::UPDATED_AT)) $criteria->add(LogFieldPeer::UPDATED_AT, $this->updated_at);
 
 		return $criteria;
 	}
@@ -472,8 +432,6 @@ abstract class BaseLogField extends BaseObject  implements Persistent {
 		$copyObj->setFieldValue($this->field_value);
 
 		$copyObj->setCreatedAt($this->created_at);
-
-		$copyObj->setUpdatedAt($this->updated_at);
 
 
 		$copyObj->setNew(true);

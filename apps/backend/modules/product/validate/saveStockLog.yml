@@ -1,0 +1,13 @@
+fields:
+      
+  stock:
+    required:
+      msg:       form.error.requiredField
+    sfNumberValidator:
+      min:       1
+      min_error: Informe um valor maior ou igual a 1
+      nan_error: Informe um valor numérico
+      
+  stockAction:
+    required:
+      msg:       form.error.requiredField

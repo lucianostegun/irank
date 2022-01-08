@@ -10,7 +10,7 @@
 			140 <?php echo __('leftChars'); ?>
 		</td>
 		<td valign="top" id="commentsPostButton<?php echo $eventCommentId ?>" style="padding-top: 5px; display: none">
-			<?php echo button_tag('postComment'.$eventCommentId, __('button.publish'), array('onclick'=>'sendComment("'.$eventCommentId.'")', 'style'=>'float: right; margin-right: -10px')) ?>
+			<?php echo button_tag('postComment'.$eventCommentId, __('button.publish'), array('onclick'=>'sendComment("'.$eventCommentId.'")', 'style'=>'float: right')) ?>
 		</td>
 	</tr>
 </table>

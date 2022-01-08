@@ -121,4 +121,40 @@ class UserSitePeer extends BaseUserSitePeer
 
 		return is_object( $userSiteObj );
 	}
+	
+	public static function validatePhoneNumber($phone){
+		
+		$phoneDdd    = MyTools::getRequestParameter('phoneDdd');
+		$phoneNumber = MyTools::getRequestParameter('phoneNumber');
+		
+		if( $phoneDdd && !$phoneNumber )
+			MyTools::setError('phoneNumber', 'form.error.requiredField');
+		
+		if( !$phoneDdd && $phoneNumber )
+			MyTools::setError('phoneDdd', 'form.error.requiredField');
+		
+		return !MyTools::getRequest()->hasErrors();
+	}
+	
+	public static function validateSmsValidationCode($smsValidationCode){
+		
+		$userSiteId  = MyTools::getAttribute('userSiteId');
+		$userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+		
+		$agreeSmsTerms = MyTools::getRequestParameter('agreeSmsTerms');
+		
+		if( $userSiteObj->getSmsValidationCode()=='0000' )
+			return true;
+		
+		if( $userSiteObj->getSmsValidationCode()!=strtoupper($smsValidationCode) )
+			return false;
+		
+		if( !$agreeSmsTerms ){
+			
+			MyTools::setError('smsValidationCode', 'É preciso aceitar os termos de utilização do SMS para validar o telefone');
+			return false;
+		}
+		
+		return true;
+	}
 }

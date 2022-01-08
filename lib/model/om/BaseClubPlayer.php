@@ -17,6 +17,10 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 
 
 	
+	protected $rating;
+
+
+	
 	protected $created_at;
 
 	
@@ -43,6 +47,13 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 	{
 
 		return $this->people_id;
+	}
+
+	
+	public function getRating()
+	{
+
+		return $this->rating;
 	}
 
 	
@@ -104,6 +115,20 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setRating($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->rating !== $v) {
+			$this->rating = $v;
+			$this->modifiedColumns[] = ClubPlayerPeer::RATING;
+		}
+
+	} 
+	
 	public function setCreatedAt($v)
 	{
 
@@ -129,13 +154,15 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 
 			$this->people_id = $rs->getInt($startcol + 1);
 
-			$this->created_at = $rs->getTimestamp($startcol + 2, null);
+			$this->rating = $rs->getInt($startcol + 2);
+
+			$this->created_at = $rs->getTimestamp($startcol + 3, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 3; 
+						return $startcol + 4; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ClubPlayer object", $e);
 		}
@@ -171,21 +198,40 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
       $this->setCreatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(ClubPlayerPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = ClubPlayerPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -303,6 +349,9 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 				return $this->getPeopleId();
 				break;
 			case 2:
+				return $this->getRating();
+				break;
+			case 3:
 				return $this->getCreatedAt();
 				break;
 			default:
@@ -317,7 +366,8 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0]=>$this->getClubId(),
 			$keys[1]=>$this->getPeopleId(),
-			$keys[2]=>$this->getCreatedAt(),
+			$keys[2]=>$this->getRating(),
+			$keys[3]=>$this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -340,6 +390,9 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 				$this->setPeopleId($value);
 				break;
 			case 2:
+				$this->setRating($value);
+				break;
+			case 3:
 				$this->setCreatedAt($value);
 				break;
 		} 	}
@@ -351,7 +404,8 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setClubId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setPeopleId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setCreatedAt($arr[$keys[2]]);
+		if (array_key_exists($keys[2], $arr)) $this->setRating($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
 	}
 
 	
@@ -361,6 +415,7 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(ClubPlayerPeer::CLUB_ID)) $criteria->add(ClubPlayerPeer::CLUB_ID, $this->club_id);
 		if ($this->isColumnModified(ClubPlayerPeer::PEOPLE_ID)) $criteria->add(ClubPlayerPeer::PEOPLE_ID, $this->people_id);
+		if ($this->isColumnModified(ClubPlayerPeer::RATING)) $criteria->add(ClubPlayerPeer::RATING, $this->rating);
 		if ($this->isColumnModified(ClubPlayerPeer::CREATED_AT)) $criteria->add(ClubPlayerPeer::CREATED_AT, $this->created_at);
 
 		return $criteria;
@@ -402,6 +457,8 @@ abstract class BaseClubPlayer extends BaseObject  implements Persistent {
 	
 	public function copyInto($copyObj, $deepCopy = false)
 	{
+
+		$copyObj->setRating($this->rating);
 
 		$copyObj->setCreatedAt($this->created_at);
 

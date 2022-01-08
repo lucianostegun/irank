@@ -12,5 +12,13 @@
 				endif;
 				
 				foreach($eventCommentObjList as $eventCommentObj)
-					include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false))
+					include_partial('event/include/comment', array('eventCommentObj'=>$eventCommentObj, 'isPhoto'=>false, 'readOnly'=>$readOnly));
+				
+				if( !$commentCount ):
 			?>
+			<div class="commentArea mt20">
+				<div class="comment">
+					<div class="message">Nenhum comentário foi postado para este evento</div>
+				</div>
+			</div>
+			<?php endif; ?>

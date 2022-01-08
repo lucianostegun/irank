@@ -1,13 +1,17 @@
 <table border="0" cellspacing="0" cellpadding="0" class="gridTable gridTabTable classifyTable">
 	<tr class="header">
-		<th class="first" ></th>
-		<th >#</th>
+		<?php if( !$readOnly ): ?>
+		<th></th>
+		<?php endif; ?>
+		<th>#</th>
 		<th><?php echo __('Player') ?></th>
 		<th><?php echo __('Events') ?></th>
 		<th><?php echo __('Score') ?></th>
+		<?php if( !$readOnly ): ?>
 		<th>B+R+A</th>
 		<th><?php echo __('Profit') ?></th>
 		<th><?php echo __('Balance') ?></th>
+		<?php endif; ?>
 		<th><?php echo __('Average') ?></th>
 	</tr>
 	<?php
@@ -21,7 +25,7 @@
 		
 		$players = 0;
 		foreach($rankingPlayerObjList as $rankingPlayerObj):
-  		
+//  		prexit($rankingPlayerObj);
 			$peopleObj = $rankingPlayerObj->getPeople();
 			$peopleId  = $peopleObj->getId();
 			
@@ -41,15 +45,19 @@
 			}
 	?>
 	<tr class="<?php echo $class ?>">
-		<td style="width: 20px; text-align: center"><?php echo image_tag($positionChangeIcon, array('title'=>$positionChangeTitle)) ?></td>
-		<td style="width: 25px; text-align: right">#<?php echo $rankingPosition ?></td>
+		<?php if( !$readOnly ): ?>
+		<td style="width: 20px" class="textC"><?php echo image_tag($positionChangeIcon, array('title'=>$positionChangeTitle)) ?></td>
+		<?php endif; ?>
+		<td style="width: 25px" class="textR">#<?php echo $rankingPosition ?></td>
 		<td><?php echo mail_to($peopleObj->getEmailAddress(), $peopleObj->getFullName()) ?></td>
-		<td style="width: 60px" align="right"><?php echo $rankingPlayerObj->getTotalEvents() ?></td>
-		<td style="width: 60px" align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalScore(), true, 3) ?></td>
-		<td style="width: 60px" align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPaid(), true) ?></td>
-		<td style="width: 60px" align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPrize(), true) ?></td>
-		<td style="width: 60px" align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalBalance(), true) ?></td>
-		<td style="width: 60px" align="right"><?php echo Util::formatFloat($rankingPlayerObj->getTotalAverage(), true, 3) ?></td>
+		<td style="width: 60px" class="textR"><?php echo $rankingPlayerObj->getTotalEvents() ?></td>
+		<td style="width: 60px" class="textR"><?php echo Util::formatFloat($rankingPlayerObj->getTotalScore(), true, 3) ?></td>
+		<?php if( !$readOnly ): ?>
+		<td style="width: 60px" class="textR"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPaid(), true) ?></td>
+		<td style="width: 60px" class="textR"><?php echo Util::formatFloat($rankingPlayerObj->getTotalPrize(), true) ?></td>
+		<td style="width: 60px" class="textR"><?php echo Util::formatFloat($rankingPlayerObj->getTotalBalance(), true) ?></td>
+		<?php endif; ?>
+		<td style="width: 60px" class="textR"><?php echo Util::formatFloat($rankingPlayerObj->getTotalAverage(), true, 3) ?></td>
 	</tr>
 	<?php
 		endforeach;

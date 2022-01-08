@@ -1,0 +1,14 @@
+fields:
+       
+  orderStatus:
+    required:
+      msg:       form.error.requiredField
+    sfCallbackValidator:
+      callback:      [PurchasePeer, validateOrderStatus]
+      invalid_error: nullError
+       
+  shippingDate:
+    sfCallbackValidator:
+      callback:      [Validate, validateDate]
+      invalid_error: form.error.invalidDate
+      

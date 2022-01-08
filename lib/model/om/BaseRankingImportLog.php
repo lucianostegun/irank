@@ -32,12 +32,6 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
-	protected $aRankingRelatedByRankingId;
-
-	
-	protected $aRankingRelatedByRankingIdFrom;
-
-	
 	protected $alreadyInSave = false;
 
 	
@@ -128,10 +122,6 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = RankingImportLogPeer::RANKING_ID;
 		}
 
-		if ($this->aRankingRelatedByRankingId !== null && $this->aRankingRelatedByRankingId->getId() !== $v) {
-			$this->aRankingRelatedByRankingId = null;
-		}
-
 	} 
 	
 	public function setRankingIdFrom($v)
@@ -144,10 +134,6 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
 		if ($this->ranking_id_from !== $v) {
 			$this->ranking_id_from = $v;
 			$this->modifiedColumns[] = RankingImportLogPeer::RANKING_ID_FROM;
-		}
-
-		if ($this->aRankingRelatedByRankingIdFrom !== null && $this->aRankingRelatedByRankingIdFrom->getId() !== $v) {
-			$this->aRankingRelatedByRankingIdFrom = null;
 		}
 
 	} 
@@ -275,21 +261,40 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(RankingImportLogPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = RankingImportLogPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -299,22 +304,6 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
 	{
 		$affectedRows = 0; 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
-
-
-												
-			if ($this->aRankingRelatedByRankingId !== null) {
-				if ($this->aRankingRelatedByRankingId->isModified()) {
-					$affectedRows += $this->aRankingRelatedByRankingId->save($con);
-				}
-				$this->setRankingRelatedByRankingId($this->aRankingRelatedByRankingId);
-			}
-
-			if ($this->aRankingRelatedByRankingIdFrom !== null) {
-				if ($this->aRankingRelatedByRankingIdFrom->isModified()) {
-					$affectedRows += $this->aRankingRelatedByRankingIdFrom->save($con);
-				}
-				$this->setRankingRelatedByRankingIdFrom($this->aRankingRelatedByRankingIdFrom);
-			}
 
 
 						if ($this->isModified()) {
@@ -361,20 +350,6 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
 			$retval = null;
 
 			$failureMap = array();
-
-
-												
-			if ($this->aRankingRelatedByRankingId !== null) {
-				if (!$this->aRankingRelatedByRankingId->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aRankingRelatedByRankingId->getValidationFailures());
-				}
-			}
-
-			if ($this->aRankingRelatedByRankingIdFrom !== null) {
-				if (!$this->aRankingRelatedByRankingIdFrom->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aRankingRelatedByRankingIdFrom->getValidationFailures());
-				}
-			}
 
 
 			if (($retval = RankingImportLogPeer::doValidate($this, $columns)) !== true) {
@@ -573,64 +548,6 @@ abstract class BaseRankingImportLog extends BaseObject  implements Persistent {
 			self::$peer = new RankingImportLogPeer();
 		}
 		return self::$peer;
-	}
-
-	
-	public function setRankingRelatedByRankingId($v)
-	{
-
-
-		if ($v === null) {
-			$this->setRankingId(NULL);
-		} else {
-			$this->setRankingId($v->getId());
-		}
-
-
-		$this->aRankingRelatedByRankingId = $v;
-	}
-
-
-	
-	public function getRankingRelatedByRankingId($con = null)
-	{
-		if ($this->aRankingRelatedByRankingId === null && ($this->ranking_id !== null)) {
-						include_once 'lib/model/om/BaseRankingPeer.php';
-
-			$this->aRankingRelatedByRankingId = RankingPeer::retrieveByPK($this->ranking_id, $con);
-
-			
-		}
-		return $this->aRankingRelatedByRankingId;
-	}
-
-	
-	public function setRankingRelatedByRankingIdFrom($v)
-	{
-
-
-		if ($v === null) {
-			$this->setRankingIdFrom(NULL);
-		} else {
-			$this->setRankingIdFrom($v->getId());
-		}
-
-
-		$this->aRankingRelatedByRankingIdFrom = $v;
-	}
-
-
-	
-	public function getRankingRelatedByRankingIdFrom($con = null)
-	{
-		if ($this->aRankingRelatedByRankingIdFrom === null && ($this->ranking_id_from !== null)) {
-						include_once 'lib/model/om/BaseRankingPeer.php';
-
-			$this->aRankingRelatedByRankingIdFrom = RankingPeer::retrieveByPK($this->ranking_id_from, $con);
-
-			
-		}
-		return $this->aRankingRelatedByRankingIdFrom;
 	}
 
 } 

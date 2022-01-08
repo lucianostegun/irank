@@ -137,12 +137,6 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 	protected $lastClubSettingsCriteria = null;
 
 	
-	protected $collSmsList;
-
-	
-	protected $lastSmsCriteria = null;
-
-	
 	protected $collCashTableList;
 
 	
@@ -802,21 +796,40 @@ abstract class BaseClub extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(ClubPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = ClubPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -882,14 +895,6 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			if ($this->collClubSettingsList !== null) {
 				foreach($this->collClubSettingsList as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collSmsList !== null) {
-				foreach($this->collSmsList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1027,14 +1032,6 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 				if ($this->collClubSettingsList !== null) {
 					foreach($this->collClubSettingsList as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collSmsList !== null) {
-					foreach($this->collSmsList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1460,10 +1457,6 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 
 			foreach($this->getClubSettingsList() as $relObj) {
 				$copyObj->addClubSettings($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getSmsList() as $relObj) {
-				$copyObj->addSms($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getCashTableList() as $relObj) {
@@ -2102,111 +2095,6 @@ abstract class BaseClub extends BaseObject  implements Persistent {
 		$this->lastClubSettingsCriteria = $criteria;
 
 		return $this->collClubSettingsList;
-	}
-
-	
-	public function initSmsList()
-	{
-		if ($this->collSmsList === null) {
-			$this->collSmsList = array();
-		}
-	}
-
-	
-	public function getSmsList($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseSmsPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSmsList === null) {
-			if ($this->isNew()) {
-			   $this->collSmsList = array();
-			} else {
-
-				$criteria->add(SmsPeer::CLUB_ID, $this->getId());
-
-				SmsPeer::addSelectColumns($criteria);
-				$this->collSmsList = SmsPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(SmsPeer::CLUB_ID, $this->getId());
-
-				SmsPeer::addSelectColumns($criteria);
-				if (!isset($this->lastSmsCriteria) || !$this->lastSmsCriteria->equals($criteria)) {
-					$this->collSmsList = SmsPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastSmsCriteria = $criteria;
-		return $this->collSmsList;
-	}
-
-	
-	public function countSmsList($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseSmsPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(SmsPeer::CLUB_ID, $this->getId());
-
-		return SmsPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addSms(Sms $l)
-	{
-		$this->collSmsList[] = $l;
-		$l->setClub($this);
-	}
-
-
-	
-	public function getSmsListJoinPeople($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseSmsPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSmsList === null) {
-			if ($this->isNew()) {
-				$this->collSmsList = array();
-			} else {
-
-				$criteria->add(SmsPeer::CLUB_ID, $this->getId());
-
-				$this->collSmsList = SmsPeer::doSelectJoinPeople($criteria, $con);
-			}
-		} else {
-									
-			$criteria->add(SmsPeer::CLUB_ID, $this->getId());
-
-			if (!isset($this->lastSmsCriteria) || !$this->lastSmsCriteria->equals($criteria)) {
-				$this->collSmsList = SmsPeer::doSelectJoinPeople($criteria, $con);
-			}
-		}
-		$this->lastSmsCriteria = $criteria;
-
-		return $this->collSmsList;
 	}
 
 	

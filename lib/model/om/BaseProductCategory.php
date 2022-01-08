@@ -58,6 +58,12 @@ abstract class BaseProductCategory extends BaseObject  implements Persistent {
 	protected $lastProductCriteria = null;
 
 	
+	protected $collProductOptionList;
+
+	
+	protected $lastProductOptionCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -386,21 +392,40 @@ abstract class BaseProductCategory extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(ProductCategoryPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = ProductCategoryPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -425,6 +450,14 @@ abstract class BaseProductCategory extends BaseObject  implements Persistent {
 
 			if ($this->collProductList !== null) {
 				foreach($this->collProductList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collProductOptionList !== null) {
+				foreach($this->collProductOptionList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -474,6 +507,14 @@ abstract class BaseProductCategory extends BaseObject  implements Persistent {
 
 				if ($this->collProductList !== null) {
 					foreach($this->collProductList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collProductOptionList !== null) {
+					foreach($this->collProductOptionList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -694,6 +735,10 @@ abstract class BaseProductCategory extends BaseObject  implements Persistent {
 				$copyObj->addProduct($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getProductOptionList() as $relObj) {
+				$copyObj->addProductOption($relObj->copy($deepCopy));
+			}
+
 		} 
 
 		$copyObj->setNew(true);
@@ -786,6 +831,76 @@ abstract class BaseProductCategory extends BaseObject  implements Persistent {
 	public function addProduct(Product $l)
 	{
 		$this->collProductList[] = $l;
+		$l->setProductCategory($this);
+	}
+
+	
+	public function initProductOptionList()
+	{
+		if ($this->collProductOptionList === null) {
+			$this->collProductOptionList = array();
+		}
+	}
+
+	
+	public function getProductOptionList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseProductOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProductOptionList === null) {
+			if ($this->isNew()) {
+			   $this->collProductOptionList = array();
+			} else {
+
+				$criteria->add(ProductOptionPeer::PRODUCT_CATEGORY_ID, $this->getId());
+
+				ProductOptionPeer::addSelectColumns($criteria);
+				$this->collProductOptionList = ProductOptionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ProductOptionPeer::PRODUCT_CATEGORY_ID, $this->getId());
+
+				ProductOptionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastProductOptionCriteria) || !$this->lastProductOptionCriteria->equals($criteria)) {
+					$this->collProductOptionList = ProductOptionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastProductOptionCriteria = $criteria;
+		return $this->collProductOptionList;
+	}
+
+	
+	public function countProductOptionList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseProductOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ProductOptionPeer::PRODUCT_CATEGORY_ID, $this->getId());
+
+		return ProductOptionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addProductOption(ProductOption $l)
+	{
+		$this->collProductOptionList[] = $l;
 		$l->setProductCategory($this);
 	}
 

@@ -1,11 +1,11 @@
 <?php include_partial('home/component/commonBar', array('pathList'=>array(__('photoWall.title')=>'photoWall/index'))); ?>
-
-<div class="moduleIntro">
-	<?php echo image_tag('photos', array('align'=>'left', 'style'=>'margin-right: 10px')) ?>
-	<?php echo __('photoWall.intro') ?><br/>
+<?php echo image_tag('photos', array('class'=>'logo')) ?>
+<div class="moduleIntro image">
+	Você pode enviar e compartilha fotos de seus jogos no mural de fotos do site.<br/>
+	Clique sobre as minuaturas abaixo para visualizar as fotos compartilhadas pelos jogadores.<br/><br/>
 	Confira também o <?php echo link_to('Ranking do concurso', 'photoWall/ranking') ?> de fotos <b>iRank</b>
 </div>
-<div class="clear"></div>
+<hr class="separator"/>
 <div align="center">
 	<table cellspacing="15" cellpadding="0" border="0">
 		<tr>

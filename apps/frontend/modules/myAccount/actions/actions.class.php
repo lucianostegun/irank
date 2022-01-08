@@ -5,18 +5,23 @@ class myAccountActions extends sfActions
 
   public function preExecute(){
 
+	$this->peopleId   = $this->getUser()->getAttribute('peopleId');
+	$this->userSiteId = $this->getUser()->getAttribute('userSiteId');
   }
+
   public function executeUploadTest(){
 
   }
 
   public function executeIndex($request){
 
-	$userSiteId = MyTools::getAttribute('userSiteId');
-	
-	$this->userSiteObj = UserSitePeer::retrieveByPK($userSiteId);
+	$this->userSiteObj = UserSitePeer::retrieveByPK($this->userSiteId);
 	$this->showSuccess = $this->getFlash('showSuccess');
 	$this->selectedTab = $request->getParameter('tab', 'main');
+  }
+
+  public function executeSmsTerm(){
+
   }
 
   public function executeGetAppUpdatedData($request){
@@ -50,6 +55,13 @@ class myAccountActions extends sfActions
   	$userSiteObj->saveEmailOptions($request);
   	$userSiteObj->saveScheduleOptions($request);
   	$userSiteObj->updateEmailGroups();
+  	
+  	$peopleObj = $userSiteObj->getPeople();
+  	
+  	$peopleObj->saveEmailOption($request, true);
+  	$peopleObj->saveSmsOption($request, true);
+  	
+  	echo Util::parseInfo($userSiteObj->getInfo(false, true, false));
   	exit;
   }
 
@@ -238,16 +250,169 @@ class myAccountActions extends sfActions
   
   public function executeDeletePendingInvite($request){
 
-	$peopleId        = MyTools::getAttribute('peopleId');  	
-  	$eventLiveId     = $request->getParameter('eventLiveId');
-  	$eventLiveIdList = People::getPendingInvites(true);
+	$peopleId    = MyTools::getAttribute('peopleId');  	
+  	$eventId     = $request->getParameter('id');
+  	$eventLiveId = $request->getParameter('id');
+  	$eventType   = $request->getParameter('eventType');
   	
-  	if( !in_array($eventLiveId, $eventLiveIdList) )
+  	
+  	$idList = People::getPendingInviteList(true, ($eventType=='event'?'home':'live'));
+  	
+  	if( !in_array($eventId, $idList) )
   		exit;
   	
-  	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPk($eventLiveId, $peopleId);
-  	$eventLivePlayerObj->save();
+  	if( $eventType=='event' ){
+  		
+	  	$eventPlayerObj = EventPlayerPeer::retrieveByPk($eventId, $peopleId);
+	  	$eventPlayerObj->setSuppressNotify(true);
+	  	$eventPlayerObj->save();
+  	}else{
+  		
+	  	$eventLivePlayerObj = EventLivePlayerPeer::retrieveByPk($eventLiveId, $peopleId);
+	  	$eventLivePlayerObj->save();
+  	}
+  	
   	exit;
+  }
+
+  public function executeBankroll($request){
+
+  }
+
+  public function executeExportBankroll($request){
+
+	$this->peopleId       = $this->getUser()->getAttribute('peopleId');
+	$this->userSiteId     = $this->getUser()->getAttribute('userSiteId');
+	$this->fileName       = 'bankroll.pdf';
+	$this->throwException = true;
+	
+	$this->userSiteObj = UserSite::getCurrentUser();
+	
+	$this->forceDownload = true;
+	
+	$this->setLayout('pdf');
+  }
+
+  public function executeExportBankrollBatch($request){
+
+	$peopleId = $request->getParameter('peopleId');
+	$peopleId = Util::decodeId($peopleId);
+	
+	$peopleObj            = PeoplePeer::retrieveByPK($peopleId);
+	$this->userSiteObj    = $peopleObj->getUserSite();
+	$this->peopleId       = $peopleId;
+	$this->userSiteId     = $this->userSiteObj->getId();
+	$this->throwException = true;
+	$this->setLayout('pdf');
+	$this->setTemplate('exportBankroll');
+  }
+
+  public function executeGetTopResume($request){
+
+	$year = $request->getParameter('year');
+	
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
+	return $this->renderText(get_partial('myAccount/bankroll/topResume', array('peopleId'=>$this->peopleId, 'userSiteId'=>$this->userSiteId, 'year'=>$year)));
+  }
+
+  public function executeGetChartResume($request){
+
+	$year = $request->getParameter('year');
+	
+	sfLoader::loadHelpers('Partial', 'Object', 'Asset', 'Tag');
+	return $this->renderText(get_partial('myAccount/bankroll/chartResume', array('peopleId'=>$this->peopleId, 'userSiteId'=>$this->userSiteId, 'year'=>$year, 'pdf'=>false)));
+  }
+
+  public function executeBankrollChart($request){
+
+	$this->peopleId = $request->getParameter('peopleId');
+	$this->peopleId = $this->getUser()->getAttribute('peopleId', $this->peopleId);
+	
+	$this->userSiteId = $request->getParameter('userSiteId');
+	$this->userSiteId = $this->getUser()->getAttribute('userSiteId', $this->userSiteId);
+	$this->setTemplate('chart/bankroll');
+  }
+
+  public function executeResumeChart($request){
+
+	$this->peopleId = $request->getParameter('peopleId');
+	$this->peopleId = $this->getUser()->getAttribute('peopleId', $this->peopleId);
+	
+	$this->userSiteId = $request->getParameter('userSiteId');
+	$this->userSiteId = $this->getUser()->getAttribute('userSiteId', $this->userSiteId);
+	
+	$this->setTemplate('chart/resume');
+  }
+
+  public function executeSendSmsValidationCode($request){
+
+	$phoneDdd    = $request->getParameter('phoneDdd');
+	$phoneNumber = $request->getParameter('phoneNumber');
+
+	$userSiteObj       = UserSitePeer::retrieveByPK($this->userSiteId);
+	$userSiteConfigObj = $userSiteObj->getConfig();
+	
+	do{
+	
+		$smsValidationCode = String::createRandom(4);	
+	}while($smsValidationCode=='0000');
+	
+	$userSiteConfigObj->setSmsValidationCode($smsValidationCode);
+	$userSiteConfigObj->setSmsValidationAttempts(0);
+	$userSiteConfigObj->save();
+	
+	$peopleObj = $userSiteObj->getPeople();
+	$peopleObj->setPhoneDdd(nvl($phoneDdd));
+  	$peopleObj->setPhoneNumber(nvl($phoneNumber));
+  	$peopleObj->save();
+	
+	$message = "Código de validação de seu cadastro iRank: $smsValidationCode";
+	
+	$smsObj = new Sms();
+	$smsObj->setPeopleId($userSiteObj->getPeopleId());
+	$smsObj->setPhoneNumber($phoneDdd.$phoneNumber);
+	$smsObj->setMessage($message);
+	$smsObj->send($userSiteObj);
+	exit;
+  }
+
+  public function executeValidateSmsCode($request){
+
+	$smsValidationCode = $request->getParameter('smsValidationCode');
+
+	$userSiteConfigObj = UserSiteConfigPeer::retrieveByPK($this->userSiteId);
+	
+	if( !is_object($userSiteConfigObj) )
+		throw new Exception('user not found');
+	
+	if( !$userSiteConfigObj->getSmsValidationCode() )
+		throw new Exception('Undefined SMS validation code');
+		
+	if( $userSiteConfigObj->getSmsValidationCode()!=strtoupper($smsValidationCode) ){
+		
+		$userSiteConfigObj->setSmsValidationAttempts( $userSiteConfigObj->getSmsValidationAttempts()+1 );
+		$userSiteConfigObj->save();
+		
+		if( $userSiteConfigObj->getSmsValidationAttempts() >= 5 ){
+			
+			$userSiteConfigObj->setSmsValidationAttempts(0);
+			$userSiteConfigObj->setSmsValidationCode(null);
+			$userSiteConfigObj->save();
+			
+			Log::doLog("Excedido limite de tentativas de ativar código SMS para o usuário {$this->userSiteId}", 'UserSiteConfig', array(), Log::LOG_EMERGENCY);
+			
+			Util::forceError('exceededAttemptsLimit');
+		}
+	
+		die('error');
+	}
+	
+	$userSiteConfigObj->setSmsValidationCode('0000');
+	$userSiteConfigObj->setAgreedSmsTerms('0000');
+	$userSiteConfigObj->save();
+	
+	echo 'success';
+	exit;
   }
   
   public function executeJavascript($request){

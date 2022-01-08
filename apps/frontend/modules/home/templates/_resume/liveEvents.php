@@ -2,7 +2,7 @@
 		<div id="eventLiveList">
 			<h1>Agenda em destaque</h1>
 			<div id="eventLiveResumeList">
-				<?php include_partial('home/resume/eventLive/eventList', array('offset'=>0, 'eventDate'=>null)) ?>
+				<?php include_partial('home/resume/eventLive/eventList', array('limit'=>5, 'offset'=>0, 'eventDate'=>null)) ?>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -11,3 +11,4 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+	<?php MyTools::addStylesheet('eventLiveResume') ?>

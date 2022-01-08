@@ -15,7 +15,7 @@
                 <table cellpadding="0" cellspacing="0" width="100%" class="display sTable">
                     <thead>
                         <tr>
-							<td widtd="16"></td> 
+							<td width="16"></td> 
 							<td>Nome</td> 
 							<td>Ranking</td> 
 							<?php if($iRankAdmin || !$clubId): ?>
@@ -34,6 +34,7 @@
 								$criteria->add( EventLivePeer::CLUB_ID, $clubId );
 							$criteria->add( EventLivePeer::EVENT_DATE, date('Y-m-d'), Criteria::LESS_THAN );
 							$criteria->add( EventLivePeer::SAVED_RESULT, false );
+							$criteria->add( RankingLivePeer::NO_RANKING, false );
 							
 							$eventLiveIdList = array();
 							foreach(EventLive::getList($criteria, $clubId) as $eventLiveObj):

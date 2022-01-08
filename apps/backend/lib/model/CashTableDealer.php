@@ -10,22 +10,6 @@
 class CashTableDealer extends BaseCashTableDealer
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-        	Log::quickLog('cash_table_dealer', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('cash_table_dealer', $this->getPrimaryKey(), $e);
-        }
-    }
-
 	public function cashout($cashoutValue, $con=null){
 		
 		if( !is_null($this->getCheckoutAt()) )

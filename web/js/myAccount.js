@@ -8,6 +8,12 @@ function handleSuccessMyAccount(content, isNew){
 	showFormStatusSuccess();
 	hideIndicator('myAccount');
 	enableButton('mainSubmit');
+	
+	var userSiteObj   = parseInfo(content);
+	var startBankroll = userSiteObj.startBankroll+1;
+	
+	if( startBankroll!=0 )
+		hideMessage('startBankroll')
 }
 
 function handleFailureMyAccount(content){
@@ -195,14 +201,14 @@ function loadCityField(stateId){
 	new Ajax.Updater('myAccountScheduleStateIdDiv', urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc});
 }
 
-function sortDataTable(sortField, sortDesc){
+function sortDataTable(tableId, sortField, sortDesc){
 
 	showIndicator();
 	
 	var successFunc = function(t){
 		
 		hideIndicator();
-		$('eventLiveTableContent').innerHTML = t.responseText;
+		$(tableId+'TableContent').innerHTML = t.responseText;
 	}
 
 	var failureFunc = function(t){
@@ -214,7 +220,7 @@ function sortDataTable(sortField, sortDesc){
 			debugAdd(t.responseText);
 	}
 	
-	var urlAjax = _webRoot+'/myAccount/getTabContent/tabId/table/sortField/'+sortField+'/sortDesc/'+(sortDesc?'1':'0');
+	var urlAjax = _webRoot+'/myAccount/getTabContent/tabId/'+tableId+'/sortField/'+sortField+'/sortDesc/'+(sortDesc?'1':'0');
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }
 
@@ -228,15 +234,15 @@ function hideQuickConfirmButton(eventLiveId){
 	hideDiv('quickConfirmButton-'+eventLiveId);
 }
 
-function removePendingInvite(eventLiveId){
-	
-	$('pendingInviteRow-'+eventLiveId).removeClassName('pendingInviteRow');
-	$('pendingInviteRow-'+eventLiveId).addClassName('hidden');
+function removePendingInvite(eventType, id){
+
+	$('pendingInvite'+ucfirst(eventType)+'Row-'+id).removeClassName('pendingInviteRow');
+	$('pendingInvite'+ucfirst(eventType)+'Row-'+id).addClassName('hidden');
 	
 	var visibleRows = document.getElementsByClassName('pendingInviteRow');
 	
 	if( visibleRows.length==0 )
-		$('pendingInviteRowEmpty').removeClassName('hidden');
+		$('pendingInvite'+ucfirst(eventType)+'RowEmpty').removeClassName('hidden');
 	
 	var pendingInvites = $('pendingInvitesCount').innerHTML*1;
 	pendingInvites -= 1;
@@ -244,6 +250,176 @@ function removePendingInvite(eventLiveId){
 	
 	$('pendingInvitesCount').innerHTML = pendingInvites;
 	
-	var urlAjax = _webRoot+'/myAccount/deletePendingInvite/eventLiveId/'+eventLiveId;
+	var urlAjax = _webRoot+'/myAccount/deletePendingInvite/id/'+id+'/eventType/'+eventType;
 	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function toggleBankroll(year){
+	
+	var rowList = document.getElementsByClassName('year-'+year);
+	var action  = $('togglerLink-'+year).className;
+	
+	for(var i=0; i < rowList.length; i++)
+		rowList[i].toggleClassName('hidden', 'visible');
+	
+	$('togglerLink-'+year).className = (action=='expand'?'collapse':'expand');
+	$('togglerLink-'+year).innerHTML = (action=='expand'?'ocultar':'detalhes');
+	
+	location.hash = year;
+}
+
+function exportBankroll(exportType){
+	
+	window.location = _webRoot+'/myAccount/exportBankroll/exportType/'+exportType;
+}
+
+function updateBankroll(){
+	
+	var year = $('bankrollYear').value;
+	
+	updateTopResume(year);
+	updateChartResume(year);
+}
+
+function updateTopResume(year){
+	
+	var urlAjax = _webRoot+'/myAccount/getTopResume?year='+year;
+	new Ajax.Updater('bankrollTopResume', urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function updateChartResume(year){
+	
+	var urlAjax = _webRoot+'/myAccount/getChartResume?year='+year;
+	new Ajax.Updater('bankrollChartResume', urlAjax, {asynchronous:true, evalScripts:false});
+}
+
+function onSelectTabMyAccount(tabId){
+	
+	switch(tabId){
+		case 'main':
+			showDiv('noRankingTutorial');
+			break;
+		default:
+			hideDiv('noRankingTutorial');
+			break;
+	}
+
+	return true;
+}
+
+function sendSmsValidationCode(){
+	
+	var phoneDdd    = $('myAccountPhoneDdd').value;
+	var phoneNumber = $('myAccountPhoneNumber').value;
+	var hasError    = false;
+	
+	removeFormStatusError('myAccountPhoneDdd');
+	removeFormStatusError('myAccountPhoneNumber');
+	
+	if( !phoneDdd || !phoneDdd.match(/^[0-9]{2}$/) ){
+		
+		addFormStatusError('myAccountPhoneDdd', 'Informe corretamente o código de área de seu telefone');
+		hasError = true;
+	}
+
+	if( !phoneNumber || !phoneNumber.match(/^[0-9]{4,5}-?[0-9]{4}$/) ){
+		
+		addFormStatusError('myAccountPhoneNumber', 'Informe corretamente o número de seu telefone');
+		hasError = true;
+	}
+	
+	if( hasError )
+		return setCommonBarMessage('Corrija os campos em destaque para prosseguir com a validação', 'error');
+	
+	clearCommonBarMessage();	
+	showIndicator();
+	
+	var successFunc = function(t){
+		
+		hideIndicator();
+		$('rankingSmsValidationCodeLink').innerHTML = 'Código de validação enviado com sucesso!';
+		showDiv('myAccountSmsValidationCodeRow');
+		showDiv('myAccountAgreeSmsTermsRow');
+		$('myAccountSmsValidationCode').focus();
+		
+		adjustContentTab();
+	}
+
+	var failureFunc = function(t){
+		
+		hideIndicator();
+		alert('Não foi possível enviar o código de validação para o número de telefone informado!\nPor favor, tente novamente.');
+	}
+	
+	var urlAjax = _webRoot+'/myAccount/sendSmsValidationCode/phoneDdd/'+phoneDdd+'/phoneNumber/'+phoneNumber;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
+}
+
+function validateSmsCode(){
+	
+	var agreeSmsTerms     = $('myAccountAgreeSmsTerms').checked;
+	var smsValidationCode = $('myAccountSmsValidationCode').value;
+	var hasError          = false;
+	
+	removeFormStatusError('myAccountSmsValidationCode');
+	
+	if( !smsValidationCode ){
+		
+		addFormStatusError('myAccountSmsValidationCode', 'Informe o código de validação enviado ao telefone informado');
+		hasError = false;
+	}
+	
+	if( !agreeSmsTerms ){
+		
+		showDiv('myAccountAgreeSmsTermsError');
+		hasError = true;
+	}
+	
+	adjustContentTab();
+	
+	if( hasError )
+		return false;
+	
+	clearCommonBarMessage();
+	hideDiv('myAccountAgreeSmsTermsError');
+	showIndicator();
+	
+	var successFunc = function(t){
+		
+		var content = t.responseText;
+		hideIndicator();
+		
+		if( content=='success' ){
+			
+			hideDiv('myAccountAgreeSmsTermsRow');
+			hideDiv('myAccountSmsValidationCodeRow');
+			showDiv('myAccountSmsTemplateOptions');
+			$('rankingSmsValidationCodeLink').innerHTML = 'Número validado';
+			
+			adjustContentTab();
+		}else{
+			
+			addFormStatusError('myAccountSmsValidationCode', 'Código de validação inválido');
+		}
+	}
+	
+	var failureFunc = function(t){
+		
+		hideIndicator();
+		var content = t.responseText;
+
+		if( content=='exceededAttemptsLimit' ){
+			
+			alert('O limite de tentativas de ativar o código de validação doi excedido!\nPara continuar, solicite o envio de um novo código de validação.');
+			$('rankingSmsValidationCodeLink').innerHTML = '<a href="javascript:void(0)" onclick="sendSmsValidationCode()">Validar telefone</a>'
+			hideDiv('myAccountSmsValidationCodeRow');
+			hideDiv('myAccountAgreeSmsTermsRow');
+		}else{
+			
+			alert('Não foi possível confirmar o código de validação informado!\nPor favor, tente novamente.');
+		}
+	}
+	
+	var urlAjax = _webRoot+'/myAccount/validateSmsCode/smsValidationCode/'+smsValidationCode;
+	new Ajax.Request(urlAjax, {asynchronous:true, evalScripts:false, onFailure:failureFunc, onSuccess:successFunc});
 }

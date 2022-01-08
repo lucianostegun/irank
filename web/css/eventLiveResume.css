@@ -1,7 +1,7 @@
 .eventLiveResumeArea {
 	
 	position: 		relative;
-	width: 			385px;
+	width: 			545px;
 	margin-top: 	20px;
 	left: 			2px;
 }
@@ -27,7 +27,7 @@
 
 .eventLiveResumeArea .eventLiveResume .eventLiveList h1 {
 
-	width: 								190px;
+	width: 								350px;
 	font-size: 							15px;
 	text-align: 						center;
 	color: 								#337495;
@@ -50,7 +50,7 @@
 .eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive {
 
 	position: 		relative;
-	width: 			370px;
+	width: 			530px;
 	height: 		81px;
 	margin-bottom: 	8px;
 	border: 		1px solid #b5ccd6;
@@ -78,7 +78,7 @@
 	text-shadow: 	#FFFFFF 1px 1px;
 	white-space: 	nowrap;
 	overflow: 		hidden;
-	width: 			280px;
+	width: 			440px;
 }
 
 .eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .image {
@@ -101,7 +101,8 @@
 	height: 	50px;
 	top: 		21px;
 	left: 		88px;
-	width: 		282px;
+	width: 		442px;
+	
 }
 
 .eventLiveResumeArea .eventLiveResume .eventLiveList .eventLive .when {
@@ -147,7 +148,7 @@
 	right: 			8px;
 	top: 			0px;
 	font-size: 		12px;
-	width: 			100px;
+	width: 			200px;
 	overflow: 		hidden;
 	white-space: 	nowrap
 }
@@ -240,7 +241,7 @@
 	position: 		relative;
 	top: 			0px;
 	left: 			4px;
-	width: 			363px;
+	width: 			523px;
 	padding: 		2px 10px 2px 5px;
 	cursor: 		pointer;
 	text-align: 	right;

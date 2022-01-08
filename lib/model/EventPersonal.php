@@ -10,31 +10,12 @@
 class EventPersonal extends BaseEventPersonal
 {
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-			parent::save();
-			
-        	Log::quickLog('event_personal', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('event_personal', $this->getPrimaryKey(), $e);
-        }
-        
-    }
-	
-	public function delete($con=null){
+    public function delete($con=null){
 		
 		$deleted = $this->getDeleted();
 		
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('event_personal', $this->getPrimaryKey());
 	}
 	
 	public function getCode(){

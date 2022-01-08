@@ -592,6 +592,16 @@ class Criteria implements IteratorAggregate {
 		return $this;
 	}
 
+	public function hasJoin($left, $right, $operator = null)
+	{
+		
+		foreach($this->getJoins() as $join)
+			if( $join->getLeftColumn()==$left && $join->getRightColumn()==$right && $join->getJoinType()==$operator )
+				return true;
+
+		return false;
+	}
+
 	/**
 	 * Get the array of Joins.  This method is meant to
 	 * be called by BasePeer.

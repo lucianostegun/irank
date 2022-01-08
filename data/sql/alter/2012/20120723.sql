@@ -1,0 +1,1 @@
+ALTER TABLE purchase ADD COLUMN pagseguro_url VARCHAR(200);

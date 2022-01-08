@@ -22,30 +22,10 @@ class Ranking extends BaseRanking
 		Util::executeQuery('UPDATE ranking SET players=0, events=0 WHERE id = '.$this->getId());
 	}
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-    		$this->postOnWall();
-    		
-			parent::save();
-			
-       		Log::quickLog('ranking', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('ranking', $this->getPrimaryKey(), $e);
-        }
-    }
-	
 	public function delete($con=null){
 		
 		$this->setDeleted(true);
 		$this->save();
-		
-		Log::quickLogDelete('ranking', $this->getPrimaryKey());
 		
 		$this->notifyDelete();
 	}
@@ -55,12 +35,14 @@ class Ranking extends BaseRanking
 		return '#'.sprintf('%04d', $this->getId());
 	}
 	
-	public static function getList($onlyMine=false, $suppressOld=false){
+	public static function getList($onlyMine=false, $suppressOld=false, $criteria=null){
 		
 		$userSiteId = MyTools::getAttribute('userSiteId');
 		$peopleId   = MyTools::getAttribute('peopleId');
 		
-		$criteria = new Criteria();
+		if( is_null($criteria) )
+			$criteria = new Criteria();
+		
 		$criteria->add( RankingPeer::ENABLED, true );
 		$criteria->add( RankingPeer::VISIBLE, true );
 		$criteria->add( RankingPeer::DELETED, false );
@@ -138,10 +120,17 @@ class Ranking extends BaseRanking
 		
 		return $this->getPeopleList(false, $orderByList, $criteria);
 	}
-	
-	public function addPlayer($peopleId, $allowEdit=false){
+
+	public function getOwnerList(){
 		
-		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
+		$criteria = new Criteria();
+		$criteria->add( RankingPlayerPeer::ALLOW_EDIT, true );
+		return $this->getPeopleList(true, null, $criteria);
+	}
+	
+	public function addPlayer($peopleId, $allowEdit=false, $con=null){
+		
+		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId, $con);
 		
 		if( !is_object($rankingPlayerObj) ){
 			
@@ -157,17 +146,15 @@ class Ranking extends BaseRanking
 		if( !$rankingPlayerObj->getEnabled() ){
 			
 			$rankingPlayerObj->getPeople()->sendPlayerNotify($this);
+			$rankingPlayerObj->setEnabled( true );
+			$rankingPlayerObj->save($con);
 			
 			$this->setPlayers( $this->getPlayers()+1 );
-			$this->save();
-		}
-		
-		$rankingPlayerObj->setEnabled( true );
-		$rankingPlayerObj->save();
+			$this->save($con);
 			
-		Ranking::adjustPlayers();
-		
-		$this->updateEmailGroup();
+			$this->updateEmailGroup();
+			Ranking::adjustPlayers($con);
+		}
 	}
 	
 	public function deletePlayer($peopleId){
@@ -190,9 +177,9 @@ class Ranking extends BaseRanking
 		}
 	}
 	
-	public static function adjustPlayers(){
+	public static function adjustPlayers($con=null){
 		
-		Util::executeQuery('SELECT adjust_ranking_players()');
+		Util::executeQuery('SELECT adjust_ranking_players()', $con);
 	}
 	
 	public static function adjustEvents(){
@@ -263,12 +250,12 @@ class Ranking extends BaseRanking
 		$rankingPlayerObj->updateInfo($dateStart, $dateFinish);
 	}
 	
-	public function updateScores(){
+	public function updateScores($con=null){
 
 	  	$rankingPlayerObjList = $this->getPlayerList(null);
 
 	  	foreach( $rankingPlayerObjList as $rankingPlayerObj )
-	  		$rankingPlayerObj->updateInfo();
+	  		$rankingPlayerObj->updateInfo($con);
 	}
 	
 	public function getEventDateList($format='d/m/Y', $saved=true, $orderByList=array()){
@@ -288,16 +275,16 @@ class Ranking extends BaseRanking
 		return array_unique($eventDateList);
 	}
 	
-	public function updateWholeHistory(){
+	public function updateWholeHistory($con=null){
 
 		foreach($this->getEventDateList() as $eventDate){
 			
 			echo $eventDate.'<br>';
-			$this->getClassifyHistory($eventDate, true);
+			$this->getClassifyHistory($eventDate, true, $con);
 		}
 	}
 
-	public function updateWholeScore(){
+	public function updateWholeScore($con=null){
 
 		set_time_limit(60);
 
@@ -305,7 +292,7 @@ class Ranking extends BaseRanking
 			
 			$eventObjList = $this->getEventListByDate($eventDate);
 			foreach($eventObjList as $eventObj)
-				$eventObj->updateResult();
+				$eventObj->updateResult($con);
 		}
 		
 		echo 'Resultados dos eventos atualizados com sucesso!';
@@ -323,10 +310,10 @@ class Ranking extends BaseRanking
 		return EventPeer::doSelect($criteria);
 	}
 	
-	public function updateHistory($rankingDate){
+	public function updateHistory($rankingDate, $con=null){
 
 		$rankingDate = Util::formatDate($rankingDate);
-		Util::executeQuery('DELETE FROM ranking_history WHERE ranking_id = '.$this->getId().' AND ranking_date = \''.$rankingDate.'\'');
+		Util::executeQuery('DELETE FROM ranking_history WHERE ranking_id = '.$this->getId().' AND ranking_date = \''.$rankingDate.'\'', $con);
 		
 		foreach($this->getPlayerList() as $rankingPlayerObj){
 			
@@ -348,19 +335,19 @@ class Ranking extends BaseRanking
 			$rankingHistoryObj->setBalanceValue(0);
 			$rankingHistoryObj->setPrizeValue(0);
 			$rankingHistoryObj->setPaidValue(0);
-			$rankingHistoryObj->updateInfo();
-			$rankingHistoryObj->save();
+			$rankingHistoryObj->updateInfo($con);
+			$rankingHistoryObj->save($con);
 		}
 		
-		$this->getClassifyHistory($rankingDate, true);
+		$this->getClassifyHistory($rankingDate, true, $con);
 	}
 	
-	public function updatePlayerEvents(){
+	public function updatePlayerEvents($con=null){
 		
-		Util::executeQuery('SELECT fc_update_ranking_player_events('.$this->getId().')');
+		Util::executeQuery('SELECT fc_update_ranking_player_events('.$this->getId().')', $con);
 	}
 	
-	public function getClassifyHistory($rankingDate, $save=false){
+	public function getClassifyHistory($rankingDate, $save=false, $con=null){
 
 	  	$defaultOrderByList = array();
 	  	$defaultOrderByList[RankingHistoryPeer::TOTAL_PRIZE]   = 'desc';
@@ -425,13 +412,13 @@ class Ranking extends BaseRanking
 	  		foreach($rankingHistoryObjList as $rankingHistoryObj){
 
 	  			$rankingHistoryObj->setTotalRankingPosition($rankingPosition++);
-	  			$rankingHistoryObj->save();
+	  			$rankingHistoryObj->save($con);
 	  		}
 	  		
 	  		foreach($lastList as $rankingHistoryObj){
 
 	  			$rankingHistoryObj->setTotalRankingPosition($players);
-	  			$rankingHistoryObj->save();
+	  			$rankingHistoryObj->save($con);
 	  		}
 
 	
@@ -498,13 +485,13 @@ class Ranking extends BaseRanking
 	  		foreach($rankingHistoryObjList as $rankingHistoryObj){
 
 	  			$rankingHistoryObj->setRankingPosition($rankingPosition++);
-	  			$rankingHistoryObj->save();
+	  			$rankingHistoryObj->save($con);
 	  		}
 	  		
 	  		foreach($lastList as $rankingHistoryObj){
 
 	  			$rankingHistoryObj->setRankingPosition($players);
-	  			$rankingHistoryObj->save();
+	  			$rankingHistoryObj->save($con);
 	  		}
 	  	}
 	  	
@@ -575,11 +562,29 @@ class Ranking extends BaseRanking
 		return ($userSiteId && ($this->getUserSiteId()==$userSiteId || $this->isAllowEdit()));
 	}
 	
+	public function isPlayer(){
+		
+		$peopleId         = MyTools::getAttribute('peopleId');
+		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK( $this->getId(), $peopleId );
+		
+		if( !is_object($rankingPlayerObj) || !$rankingPlayerObj->getEnabled() )
+			return false;
+		
+		return true;
+	}
+	
 	public function isAllowEdit(){
 		
 		$peopleId = MyTools::getAttribute('peopleId');
 		
 		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK( $this->getId(), $peopleId );
+		
+		// Não retornará um objeto caso o usuário esteja logado, não seja do ranking e esteja na página /share de eventos ou rankings
+		if( !is_object($rankingPlayerObj) )
+			return false;
+			
+		if( !$rankingPlayerObj->getEnabled() )
+			return false;
 		
 		return $rankingPlayerObj->getAllowEdit();
 	}
@@ -617,18 +622,14 @@ class Ranking extends BaseRanking
 		
 		$emailAddressList = array();
 		
-		if( $tagName )
-			$userSiteOptionId = VirtualTable::getIdByTagName('userSiteOption', $tagName);
+		$criteria = new Criteria();
+		$criteria->add( RankingPlayerPeer::SUPPRESS_EMAIL_NOTIFY, false );
 		
-		foreach( $this->getPeopleList(true) as $peopleObj ){
+		foreach( $this->getPeopleList(true, null, $criteria) as $peopleObj ){
 			
 			if( $supressMe && $peopleId==$peopleObj->getId() )
 				continue;
 
-			if( $tagName )
-				if( !$peopleObj->getOptionValue($userSiteOptionId, true) )
-					continue;
-			
 			$emailAddress = $peopleObj->getEmailAddress();
 			
 			if( !$emailAddress )
@@ -644,7 +645,8 @@ class Ranking extends BaseRanking
 
 		Util::getHelper('i18n');
 
-		$emailContent = EmailTemplate::getContentByTagName('rankingDeleteNotify');
+		$templateName = 'rankingDeleteNotify';
+		$emailContent = EmailTemplate::getContentByTagName($templateName);
 
 		$peopleObj    = People::getCurrentPeople();
 	  	$classifyList = $this->getEmailClassifyList();
@@ -661,8 +663,9 @@ class Ranking extends BaseRanking
 		$emailContent = str_replace('[rankingOwner]', $rankingOwner, $emailContent);
 		
 		$emailAddressList = $this->getEmailAddressList();
+		$optionList = array('templateName'=>$templateName);
 		
-		Report::sendMail(__('email.subject.rankingDelete', array('%rankingName%'=>$this->getRankingName())), $emailAddressList, $emailContent);
+		Report::sendMail(__('email.subject.rankingDelete', array('%rankingName%'=>$this->getRankingName())), $emailAddressList, $emailContent, $optionList);
 	}
 	
 	public function getEmailClassifyList($rankingDate){
@@ -749,10 +752,10 @@ class Ranking extends BaseRanking
 		}
 	}
 	
-	public function incraseEvents(){
+	public function incraseEvents($con=null){
 		
 		$this->setEvents($this->getEvents()+1);
-		$this->save();
+		$this->save($con);
 	}
 	
 	public function decraseEvents(){
@@ -769,16 +772,16 @@ class Ranking extends BaseRanking
 		return RankingPrizeSplitPeer::doSelect($criteria);
 	}
 	
-	public function resetOptions(){
+	public function resetOptions($con=null){
 		
-		Util::executeQuery('DELETE FROM ranking_prize_split WHERE ranking_id='.$this->getId());
+		Util::executeQuery('DELETE FROM ranking_prize_split WHERE ranking_id='.$this->getId(), $con);
 		
-		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 10, 2, \'65%, 35%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)');
-		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 14, 3, \'50%, 30%, 20%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)');
-		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 18, 4, \'40%, 30%, 20%, 10%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)');
+		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 10, 2, \'65%, 35%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)', $con);
+		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 14, 3, \'50%, 30%, 20%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)', $con);
+		Util::executeQuery('INSERT INTO ranking_prize_split(ranking_id, buyins, paid_places, percent_list, created_at, updated_at) VALUES('.$this->getId().', 18, 4, \'40%, 30%, 20%, 10%\', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)', $con);
 	}
 	
-	public function saveOptions($request){
+	public function saveOptions($request, $con=null){
 		
 		foreach($this->getPrizeSplitList() as $rankingPrizeSplitObj){
 			
@@ -789,7 +792,7 @@ class Ranking extends BaseRanking
 			
 			$rankingPrizeSplitObj->setBuyins($buyins);
 			$rankingPrizeSplitObj->setPercentList($percentList);
-			$rankingPrizeSplitObj->save();
+			$rankingPrizeSplitObj->save($con);
 		}
 	}
 	
@@ -820,7 +823,7 @@ class Ranking extends BaseRanking
 			return Util::executeOne('SELECT get_total_freeroll_entrance_fee('.$rankingId.')', 'float');
 	}
 	
-	public function createEmailGroup(){
+	public function createEmailGroup($con=null){
 
 		$rankingTag = $this->getRankingTag();
 		
@@ -828,18 +831,16 @@ class Ranking extends BaseRanking
 		$emailAddressList[] = $this->getUserSite()->getPeople()->getEmailAddress();
 		$emailAddressList   = array_unique($emailAddressList);
 		
-		$paramList = array();
-		$paramList['idDominio'] = Config::DOMAIN_ID;
-		$paramList['caixa']     = $rankingTag.'@irank.com.br';
-		$paramList['destino']   = implode(',', $emailAddressList);
-		
 		try{
 			
-			$emailObj = new Email();
-			$emailObj->addAlias($paramList);
+			$stegunApiObj = new StegunApi();
+			$stegunApiObj->createEmailRedirect($rankingTag, $emailAddressList);
+
+			$this->save($con);
+		}catch(Exception $e){
 			
-			$this->save();
-		}catch(Exception $e){}
+			echo 'ok';
+		}
 	}
 	
 	public function updateEmailGroup(){
@@ -848,21 +849,26 @@ class Ranking extends BaseRanking
 		
 		if( !$rankingTag )
 			return false;
+			
+		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $this->getUserSite()->getPeopleId());
 		
-		$emailAddressList   = $this->getEmailAddressList();
-		$emailAddressList[] = $this->getUserSite()->getPeople()->getEmailAddress();
-		$emailAddressList   = array_unique($emailAddressList);
+		$emailAddressList = $this->getEmailAddressList();
 		
-		$paramList = array();
-		$paramList['idDominio'] = Config::DOMAIN_ID;
-		$paramList['caixa']     = $rankingTag.'@irank.com.br';
-		$paramList['destino']   = implode(',', $emailAddressList);
+		if( !$rankingPlayerObj->getSuppressEmailNotify() )
+			$emailAddressList[] = $this->getUserSite()->getPeople()->getEmailAddress();
+			
+		$emailAddressList = array_unique($emailAddressList);
 		
 		try{
 			
-			$emailObj = new Email();
-			$emailObj->editAlias($paramList);
-		}catch(Exception $e){}
+			$stegunApiObj = new StegunApi();
+			$stegunApiObj->updateEmailRedirect($rankingTag, $emailAddressList);
+		}catch(Exception $e){
+			
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public function deleteEmailGroup(){
@@ -872,34 +878,11 @@ class Ranking extends BaseRanking
 		if( !$rankingTag )
 			return false;
 		
-		$paramList = array();
-		$paramList['idDominio'] = Config::DOMAIN_ID;
-		$paramList['caixa']     = $rankingTag.'@irank.com.br';
-		
 		try{
 			
-			$emailObj = new Email();
-			$emailObj->delRedir(Config::DOMAIN_ID, $paramList);
+			$stegunApiObj = new StegunApi();
+			$stegunApiObj->deleteEmailRedirect($rankingTag);
 		}catch(Exception $e){}
-	}
-	
-	public function postOnWall(){
-		
-		if( $this->getDeleted() || !$this->getVisible() )
-			return false;
-			
-		$isNew     = $this->isNew();
-		$classify  = $this->isColumnModified( RankingPeer::RANKING_TYPE_ID );
-		$gameStyle = $this->isColumnModified( RankingPeer::GAME_STYLE_ID );
-		
-		if( $isNew )
-    		HomeWall::doLog('criado novo ranking <b>'.$this->getRankingName().'</b>', 'ranking');
-		
-		if( !$isNew && $classify )
-    		HomeWall::doLog('classificação do ranking <b>'.$this->getRankingName().'</b> alterada para <b>'.$this->getRankingType()->getDescription().'</b>', 'ranking');
-		
-		if( !$isNew && $gameStyle )
-    		HomeWall::doLog('estilo do ranking <b>'.$this->getRankingName().'</b> alterado para <b>'.$this->getGameStyle()->getDescription().'</b>', 'ranking');
 	}
 	
 	public static function getPaidPlaces($eventId, $buyins){
@@ -940,7 +923,7 @@ class Ranking extends BaseRanking
 			
 		list($percentList, $paidPlaces) = explode(';', $info);
 		
-		$percentList = ereg_replace('[^0-9,]', '', $percentList);
+		$percentList = preg_replace('/[^0-9,]/', '', $percentList);
 		
 		$infoList = array('percentList'=>$percentList,
 						  'paidPlaces'=>$paidPlaces);
@@ -959,7 +942,7 @@ class Ranking extends BaseRanking
 		return Util::buildXml($rankingList, 'rankings', 'ranking');
 	}
 	
-	public static function getOptionsForSelectScoreSchema($defaultValue=null, $suppressSelect=true){
+	public static function getOptionsForSelectScoreSchema($defaultValue=null, $suppressSelect=true, $returnArray=false){
 		
 		$optionList = array();
 		
@@ -969,6 +952,9 @@ class Ranking extends BaseRanking
 		$optionList['irank1']  = 'Buy-ins / Posição / Valor Buy-in';
 		$optionList['vegas']   = 'Padrão Vegas';
 		$optionList['custom']  = 'Fórmula personalizada';
+		
+		if( $returnArray )
+			return $optionList;
 		
 		return options_for_select($optionList, $defaultValue);
 	}
@@ -981,6 +967,122 @@ class Ranking extends BaseRanking
 			$scoreFormula = 'Fórmula não definida';
 		
 		return $scoreFormula;
+	}
+	
+	public function getScoreSchema($description=false){
+		
+		$scoreSchema = parent::getScoreSchema();
+		
+		if( $description ){
+			
+			$scoreSchemaList = Ranking::getOptionsForSelectScoreSchema(false, true, true);
+			$scoreSchema     = $scoreSchemaList[$scoreSchema];
+		}
+		
+		return $scoreSchema;
+	}
+	
+	public function hasPendingSubscriptionRequest($userSiteId=null, $returnObject=false, $count=false){
+		
+		$criteria = new Criteria();
+		$criteria->add( RankingSubscriptionRequestPeer::RANKING_ID, $this->getId() );
+		$criteria->add( RankingSubscriptionRequestPeer::REQUEST_STATUS, 'pending' );
+		
+		if( $userSiteId )
+			$criteria->add( RankingSubscriptionRequestPeer::USER_SITE_ID, $userSiteId );
+		
+		if( $returnObject )
+			return RankingSubscriptionRequestPeer::doSelectOne($criteria);
+		elseif( $count )
+			return RankingSubscriptionRequestPeer::doCount($criteria);
+		else
+			return RankingSubscriptionRequestPeer::doCount($criteria) > 0;
+	}
+	
+	public function cancelSubscriptionRequest($userSiteId){
+		
+		$rankingSubscriptionRequestObj = $this->hasPendingSubscriptionRequest($userSiteId, true);
+		$rankingSubscriptionRequestObj->setRequestStatus('canceled');
+		$rankingSubscriptionRequestObj->save();
+	}
+	
+	public function addSubscriptionRequest($userSiteId){
+		
+		$hasPendingRequest = $this->hasPendingSubscriptionRequest($userSiteId);
+		if( $hasPendingRequest )
+			return true;
+		
+		$rankingSubscriptionRequestObj = new RankingSubscriptionRequest();
+		$rankingSubscriptionRequestObj->setRankingId($this->getId());
+		$rankingSubscriptionRequestObj->setUserSiteId($userSiteId);
+		$rankingSubscriptionRequestObj->setRequestStatus('pending');
+		$rankingSubscriptionRequestObj->save();
+		
+		$rankingSubscriptionRequestObj->notify();
+	}
+	
+	public function getNextEvent(){
+		
+		$criteria = new Criteria();
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::DELETED, false );
+		$criteria->add( EventPeer::RANKING_ID, $this->getId() );
+		$criteria->add( EventPeer::EVENT_DATE, time(), Criteria::GREATER_THAN );
+		$criteria->addAscendingOrderByColumn( EventPeer::EVENT_DATE );
+		return EventPeer::doSelectOne($criteria);
+	}
+
+	public function getLastEvent(){
+		
+		$criteria = new Criteria();
+		$criteria->setNoFilter(true);
+		$criteria->add( EventPeer::VISIBLE, true );
+		$criteria->add( EventPeer::ENABLED, true );
+		$criteria->add( EventPeer::DELETED, false );
+		$criteria->add( EventPeer::RANKING_ID, $this->getId() );
+		$criteria->add( EventPeer::EVENT_DATE, time(), Criteria::LESS_THAN );
+		$criteria->addDescendingOrderByColumn( EventPeer::EVENT_DATE );
+		
+		return EventPeer::doSelectOne($criteria);
+	}
+	
+	public function saveNotifications($request, $con=null){
+		
+		$peopleId            = MyTools::getAttribute('peopleId');
+		$suppressEmailNotify = $request->getParameter('suppressEmailNotify');
+		$suppressSmsNotify   = $request->getParameter('suppressSmsNotify');
+		
+		$smsTemplateObjList = SmsTemplate::getList();
+	
+		foreach($smsTemplateObjList as $smsTemplateObj){
+			
+			$checked = $request->getParameter('smsRankingOption-'.$smsTemplateObj->getId());
+			
+			$smsRankingOptionObj = SmsRankingOptionPeer::retrieveByPK($peopleId, $this->getId(), $smsTemplateObj->getId());
+			$smsRankingOptionObj->setLockSend(($checked && !$suppressSmsNotify?false:true));
+			$smsRankingOptionObj->save($con);
+			
+			$smsOptionObj = SmsOptionPeer::retrieveByPK($peopleId, $smsTemplateObj->getId());
+			if( $smsOptionObj->getLockSend() && $checked ){
+				
+				$smsOptionObj->setLockSend(false);
+				$smsOptionObj->save($con);
+			}
+		}
+		
+		$rankingPlayerObj = RankingPlayerPeer::retrieveByPK($this->getId(), $peopleId);
+		$updateEmailGroup = false;
+		
+		if( $suppressEmailNotify!=$rankingPlayerObj->getSuppressEmailNotify() )
+			$updateEmailGroup = true;
+		
+		$rankingPlayerObj->setSuppressEmailNotify(($suppressEmailNotify?true:false));
+		$rankingPlayerObj->setSuppressSmsNotify(($suppressSmsNotify?true:false));
+		$rankingPlayerObj->save($con);
+		
+		if( $updateEmailGroup )
+			$this->updateEmailGroup();
 	}
 	
 	public function getInfo(){

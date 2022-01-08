@@ -4,6 +4,12 @@
 	margin: 		5px -2px 0px 0px;
 	background: 	#E6E6E6;
 	color: 			#333333;
+	position: 		relative;
+}
+
+.defaultForm.half {
+
+	width: 60%
 }
 
 .defaultForm blockquote {
@@ -35,6 +41,8 @@
 	border-bottom: 			1px solid #666666;
 	color: 					#444444;
 	font-size: 				10pt;
+	text-align: 			left;
+	margin: 				0 10px 10px 10px
 }
 
 .defaultForm h1 a {
@@ -89,6 +97,16 @@
 	background: 	#DFDFDF url('/images/tableSeparator.png') left top repeat-x;
 	border: 		1px solid #AAAAAA;
 	border-top: 	none;
+}
+
+.buttonBar {
+
+	position: 		relative;
+	z-index: 		200;
+	height: 		22px;
+	padding: 		9px 5px 9px 7px;
+	background: 	#E0E0E0;
+	border-top: 	1px solid #C0C0C0
 }
 
 .buttonTabBar.success {
@@ -221,7 +239,7 @@
 
 	float: 			left;
 	text-align: 	left;
-	padding: 		2px 2px 0px 2px;
+	padding: 		3px 2px 0px 0px;
 }
 
 .defaultForm .row .fieldRadio, .windowForm .row .fieldRadio {
@@ -240,32 +258,30 @@
 	width: 			auto;
 	width: 			135px !ie;
 	min-width: 		135px;
-	padding: 		2px 3px 2px 3px;
+	padding: 		1px 3px 2px 1px;
 	height: 		15px;
-	height: 		19px !ie;
 	text-align: 	left;
 	color: 			#333333;
-	margin: 		0px 10px 0px 1px;
+	margin: 		1px 2px 0px 2px;
 	border:			1px solid transparent;
 }
 
-.defaultForm .row .textFlex, .windowForm .row .textFlex,
-.defaultForm .row .textFlexError, .windowForm .row .textFlexError {
+.defaultForm .row .text.flex, .windowForm .row .text.flex,
+.defaultForm .row .text.flex.error, .windowForm .row .text.flex.error {
 
-	float: 			left;
-	padding: 		1px 3px 2px 3px;
-	height: 		15px;
-	height: 		19px !ie;
-	text-align: 	left;
-	color: 			#333333;
-	margin: 		0px 10px 0px 0px;
-	border:			1px solid transparent;
+	width: auto;
+	min-width: auto
 }
 
-.defaultForm .row .textFlexError, .windowForm .row .textFlexError {
+.defaultForm .row .text.flex.error, .windowForm .row .text.flex.error {
 
 	background: 	#F1AFA4;
-	border:			1px solid #333333;
+	border-color:	#333333;
+}
+
+.defaultForm .row .help {
+
+	display: none;
 }
 
 
@@ -310,44 +326,49 @@
 
 
 
-.defaultForm input, .windowForm input {
+.defaultForm input, .windowForm input, input {
 
 	color: 			#1A1A1A;
 	font-size: 		11px;
-	height: 		16px;
-	padding: 		1px 4px 2px 4px;
-	border:			1px solid #8A8A8A;
+	height: 		14px;
+	padding: 		2px 4px 2px 4px;
 	background: 	#FFFFFF;
+
+	border:			2px solid #AFAFAF;
+	-moz-border-radius: 	3px;
+	-webkit-border-radius: 	3px;
+	border-radius: 			3px;	
 }
 
 .defaultForm input.disabled, .windowForm input.disabled,
 .defaultForm input.disabled:focus, .windowForm input.disabled:focus {
 
-	border: 		1px solid #E6E6E6;
-	background: 	#CADBE6;
+	background: 	#F0F0F0;
 	cursor: 		default;
 	color: 			#333333;
 }
 
-.defaultForm input.required, .windowForm input.required {
+.defaultForm input.required, .windowForm input.required,
+.defaultForm select.required, .windowForm select.required {
 
-	background: 	#FFFFFF url('/images/form/formRequired.png') right top no-repeat;
+	padding-left: 	5px;
+	background: 	#FFFFFF url('/images/form/formRequired.png') left top repeat-y;
 }
+
+.defaultForm input.required:focus, .windowForm input.required:focus {
+
+	background-image: 		url('/images/form/formRequired.png');
+	background-position: 	left top;
+	background-repeat: 		repeat-y;
+}
+
 
 .defaultForm input:focus, .windowForm input:focus {
 
 	background: 	#CADBE6;
-	border: 		1px solid #666666;
+	border-color: 	#666666;
 	color: 			#000000;
 }
-
-
-::-webkit-input-placeholder	{ color:#808080; }
-input:-moz-placeholder { color:#808080; }
-
-input:-ms-placeholder { color:#808080; }
-::-ms-input-placeholder	{ color:#808080; }
-:-ms-input-placeholder	{ color:#808080; }
 
 
 .defaultForm .checkbox, .windowForm .checkbox {
@@ -365,13 +386,17 @@ input:-ms-placeholder { color:#808080; }
 	padding-left: 	0px;
 	text-align: 	left;
 	border:			1px solid #8A8A8A;
+	
+	border:			2px solid #AFAFAF;
+	-moz-border-radius: 	3px;
+	-webkit-border-radius: 	3px;
+	border-radius: 			3px;
 }
 
 .defaultForm .rowTextArea,
 .windowForm .rowTextArea {
 
-	height: 		73px;
-	height: 		73px !ie;
+	height: 		80px;
 	clear: 			both;
 	margin-top: 	3px;
 	whitespace: 	nowrap;
@@ -382,7 +407,7 @@ input:-ms-placeholder { color:#808080; }
 .defaultForm .rowTextArea .labelHalf,
 .windowForm .rowTextArea .labelHalf {
 
-	width: 			160px;
+	width: 			170px;
 	float: 			left;
 	padding: 		3px 0px 0px 0px;
 	height: 		75px;
@@ -438,20 +463,13 @@ input:-ms-placeholder { color:#808080; }
 	color: 			#333333;
 }
 
-.defaultForm .rowTextArea .textFlex,
-.windowForm .rowTextArea .textFlex {
+.defaultForm .rowTextArea .text.flex,
+.windowForm .rowTextArea .text.flex {
 
-	float: 			left;
-	padding: 		0px;
-	margin-right: 	2px;
-	padding: 		4px;
-	text-align: 	left;
-	border: 		0px solid #D5D5D5;
-	overflow: 		auto;
-	color: 			#333333;
+	width: auto
 }
 
-.defaultForm .rowTextArea .textFlex {
+.defaultForm .rowTextArea .text.flex {
 
 	width: 			330px;
 }
@@ -492,24 +510,32 @@ input:-ms-placeholder { color:#808080; }
 
 .defaultForm .rowTextArea .field textarea.required {
 
-	background: 	#333333 url('/images/form/formRequired.png') right top no-repeat;
+	padding-left: 	5px;
+	background: 	#333333 url('/images/form/formRequired.png') left top repeat-y;
 }
 
 .defaultForm .rowTextArea .field textarea.required:focus {
 
-	background: 	#666666 url('/images/form/formRequired.png') right top no-repeat;
+	padding-left: 	5px;
+	background: 	#666666 url('/images/form/formRequired.png') left top repeat-y;
 }
 
 .defaultForm .row .error {
 
 	float: 					left;
 	width: 					16px;
-	height: 				18px;
-	height: 				20px !ie;
+	height: 				24px;
 	background: 			url('/images/form/formError.png') no-repeat;
-	background-position: 	0px 2px;
+	background-position: 	0px center;
 	cursor: 				pointer;
 	display: 				none;
+	margin-left: 			2px;
+}
+
+.defaultForm .row .errorHelp {
+
+	color: #973030;
+	display: none;
 }
 
 
@@ -517,43 +543,29 @@ input:-ms-placeholder { color:#808080; }
 
 
 
-.defaultForm .formFieldError, .windowForm .formFieldError {
 
-	font-size: 		11px;
-	height: 		16px;
-	padding: 		1px 4px 2px 4px;
-	background: 	#F1AFA4;
+
+.defaultForm .formFieldError, .defaultForm input.formFieldError, .windowForm .formFieldError {
+
+	background-color: 	#F1AFA4;
 	color: 			#000000;
 }
 
 .defaultForm .formFieldError:focus, .windowForm .formFieldError:focus {
 
-	font-size: 		11px;
-	height: 		16px;
-	padding: 		1px 4px 2px 4px;
-	background: 	#D88D82;
+	background-color: 	#D88D82;
 	color: 			#000000;
 }
 
 .defaultForm select.formFieldError, .windowForm select.formFieldError {
 
-	font-size: 		11px;
-	height: 		21px;
-	padding: 		2px 1px 1px 1px;
-	padding-left: 	0px;
-	text-align: 	left;
-	background: 	#F1AFA4;
+	background-color: 	#F1AFA4;
 	color: 			#000000;
 }
 
 .defaultForm select.formFieldError:focus, .windowForm select.formFieldError:focus {
 
-	font-size: 		11px;
-	height: 		21px;
-	padding: 		2px 1px 1px 1px;
-	padding-left: 	0px;
-	text-align: 	left;
-	background: 	#D88D82;
+	background-color: 	#D88D82;
 	color: 			#000000;
 }
 
@@ -641,3 +653,153 @@ input:-ms-placeholder { color:#808080; }
 	margin-left: 		-1px;
 	margin-left: 		-3px !ie;
 }
+
+
+
+
+
+.defaultForm {
+
+	padding: 		10px 0px 10px 0px;
+	margin: 		5px -2px 0px 0px;
+	background: 	none;
+	color: 			#333333;
+	position: 		relative;
+}
+
+.defaultForm h1 {
+	
+	font-weight: 			bold;
+	padding: 				5px 0px 4px 8px;
+	border-bottom: 			1px solid #666666;
+	color: 					#444444;
+	font-size: 				10pt;
+	text-align: 			left;
+	margin: 				0 15px 10px 15px
+}
+
+.defaultForm .row {
+
+	margin-left: 		10px;
+	width: 				97%;
+	border-top: 		1px solid #DADADA;
+}
+
+.defaultForm .row,
+.defaultForm .rowTextArea {
+
+	border-top: 		1px solid #DADADA;
+	padding-top: 		8px;
+	padding-bottom: 	3px;
+}
+
+.defaultForm .row.clean {
+
+	border-top: 	none
+}
+
+.defaultForm .row:first-child,
+.defaultForm .clean .row {
+
+	border-top: 		none;
+}
+
+.defaultForm hr {
+
+	margin: 10px 7px 10px 15px;
+	border: none;
+	border-top: 1px solid #B5B5B5;
+	background: #FFF
+}
+
+.buttonBarForm {
+
+	height: 		22px;
+	padding: 		7px 5px 7px 15px;
+	margin: 		-5px 12px 7px 12px;
+	background: 	#FFFFFF;
+	border: 		none;
+}
+
+.buttonBarForm.error {
+
+	color: 			#CC3300;
+	background: 	none;
+}
+
+
+
+
+
+
+
+
+
+.formHelpBubbleWrap {
+	
+	position: absolute;
+	top: 10px;
+	right: 35px;
+	width: 280px;
+	display: none;
+}
+
+.formHelpBubbleWrap .formHelpBubbleArea {
+	
+	display: inline-block;
+	position: relative;
+	border: 3px solid #D0D0D0;
+	background-color: #FAFAFA;
+	border-radius: 8px;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	z-index: 1;
+	left: 21px;
+}
+
+.formHelpBubbleWrap .formHelpBubbleArea .formHelperFieldName {
+	
+	font-weight: bold;
+	position: relative;
+	left: 7px;
+	padding-left: 22px;
+	height: 20px;
+	line-height: 20px;
+	background: url('/images/icon/info.png') no-repeat left center;
+}
+
+.formHelpBubbleWrap .formHelpBubbleArea .formHelperDescription {
+	
+	padding: 8px 5px 0px 10px;
+	width: 230px;
+}
+
+.formHelpBubbleWrap img {
+	
+	position: absolute;
+	left: 6px;
+	top: 15px;
+	z-index: 2;
+}
+
+
+.defaultForm .row .field.textR {
+
+	text-align: right
+}
+
+
+::-webkit-input-placeholder	{ color:#808080; }
+input:-moz-placeholder { color:#808080; }
+
+input:-ms-placeholder { color:#808080; }
+::-ms-input-placeholder	{ color:#808080; }
+:-ms-input-placeholder	{ color:#808080; }
+
+
+::-webkit-input-placeholder:focus	{ color:#808080; }
+input:-moz-placeholder:focus { color:#808080; }
+
+input:-ms-placeholder:focus { color:#808080; }
+::-ms-input-placeholder:focus	{ color:#808080; }
+:-ms-input-placeholder:focus	{ color:#808080; }

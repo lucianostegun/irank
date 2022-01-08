@@ -30,7 +30,7 @@ class RankingPrizeSplitPeer extends BaseRankingPrizeSplitPeer
 			if( !is_numeric($buyins) )
 				MyTools::setError('splitPrizeBuyins'.$paidPlaces, 'erro');
 			
-			if( !ereg('^[0-9]+%?([,;] ?[0-9]+%?)*$', $percentList) )
+			if( !preg_match('/^[0-9]+%?([,;] ?[0-9]+%?)*$/', $percentList) )
 				MyTools::setError('splitPrizePercentList'.$paidPlaces, 'erro');
 		}
 

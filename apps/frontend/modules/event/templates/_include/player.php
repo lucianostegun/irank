@@ -44,7 +44,7 @@
     	<?php
     		$allowEdit    = $eventPlayerObj->getAllowEdit();
     		$icon         = ($allowEdit?'unlock':'lock');
-    		$shareMessage = ($allowEdit?__('Disable'):__('Enable'));
+    		$shareMessage = ($allowEdit?'Desabilitar':'Habilitar');
     		
     		if( $peopleId==$peopleIdMe || $peopleId==$peopleIdOwner )
 				echo image_tag('icon/disabled/unlock', array('title'=>__('event.playersTab.unableToShare')));

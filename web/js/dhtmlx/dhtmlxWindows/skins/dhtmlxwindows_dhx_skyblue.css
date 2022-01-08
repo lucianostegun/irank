@@ -24,16 +24,18 @@
 	
 	background-color: #ebebeb !important;
 	border: #ebebeb 2px solid !important;
-	
-	background-color: #FFFFFF;
 }
 .dhtmlx_skin_dhx_skyblue div.dhtmlx_window_active .dhtmlx_wins_no_header { /* will added to div.dhtmlx_wins_body_inner in case of no header */
 	border-top: #c2d5dc 6px solid !important;
 }
 .dhtmlx_skin_dhx_skyblue div.dhtmlx_window_active div.dhtmlx_wins_title {
 	position: absolute;
-	top: 9px;
-	left: 28px;
+	top: 0px;
+	height: 29px;
+	line-height: 29px;
+	vertical-align: middle;
+	padding-left: 28px;
+	left: 0px;
 	color: #000000;
 	font-family: Tahoma;
 	font-size: 11px;
@@ -41,13 +43,16 @@
 	cursor: default;
 	white-space: nowrap;
 	overflow: hidden;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
 	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 /* active progress */
 .dhtmlx_skin_dhx_skyblue div.dhtmlx_window_active div.dhtmlx_wins_progress {
 	background-image: url("../imgs/dhxwins_dhx_skyblue/active/progress.gif");
 }
-
 
 /* active buttons */
 /* close */
@@ -182,8 +187,12 @@
 }
 .dhtmlx_skin_dhx_skyblue div.dhtmlx_window_inactive div.dhtmlx_wins_title {
 	position: absolute;
-	top: 9px;
-	left: 28px;
+	top: 0px;
+	height: 29px;
+	line-height: 29px;
+	vertical-align: middle;
+	padding-left: 28px;
+	left: 0px;
 	color: #686868;
 	font-family: Tahoma;
 	font-size: 11px;
@@ -191,7 +200,11 @@
 	cursor: default;
 	white-space: nowrap;
 	overflow: hidden;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
 	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 /* inactive progress */
 .dhtmlx_skin_dhx_skyblue div.dhtmlx_window_inactive div.dhtmlx_wins_progress {
@@ -317,7 +330,11 @@
 	opacity: 0;
 	background: #FFFFFF;
 	z-index: 1;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
 	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 */
 /* window icon */
@@ -329,7 +346,11 @@
 	height: 16px;
 	border: none;
 	z-index: 1;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
 	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 	background-repeat: no-repeat;
 	font-size: 1px;
 }
@@ -341,8 +362,7 @@
 	font-size: 1px;
 }
 .dhtmlx_skin_dhx_skyblue div.dhtmlx_wins_btns div.dhtmlx_wins_btns_button {
-	position: relative;
-	float: right;
+	float: left;
 	width: 16px;
 	height: 16px;
 	background-image: url("../imgs/dhxwins_dhx_skyblue/buttons.gif");
@@ -368,7 +388,11 @@
 	filter: alpha(opacity=0);
 	-moz-opacity: 0;
 	opacity: 0;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
 	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 .dhtmlx_skin_dhx_skyblue div.dhtmlx_wins_resizer_l {
 	position: absolute;
@@ -382,7 +406,11 @@
 	filter: alpha(opacity=0);
 	-moz-opacity: 0;
 	opacity: 0;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
 	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 .dhtmlx_skin_dhx_skyblue div.dhtmlx_wins_resizer_r {
 	position: absolute;
@@ -396,7 +424,11 @@
 	filter: alpha(opacity=0);
 	-moz-opacity: 0;
 	opacity: 0;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
 	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 .dhtmlx_skin_dhx_skyblue div.dhtmlx_wins_resizer_b {
 	position: absolute;
@@ -410,7 +442,11 @@
 	filter: alpha(opacity=0);
 	-moz-opacity: 0;
 	opacity: 0;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
 	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 /* progress */
 .dhtmlx_skin_dhx_skyblue div.dhtmlx_wins_progress {
@@ -461,7 +497,11 @@
 	font-size: 11px;
 	vertical-align: middle;
 	line-height: 17px;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
 	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 	cursor: default;
 	padding-left: 4px;
 	color: #7393ae;
@@ -478,7 +518,7 @@
 .dhtmlx_skin_dhx_skyblue div.white_line2 {
 	position: absolute;
 	bottom: 0px;
-	height: 1px;
+	height: 10px;
 	width: 100%;
 	border-bottom: #FFFFFF 1px solid;
 	font-size: 1px;
@@ -488,4 +528,5 @@
 	aborder-bottom: #cedce8 1px solid;
 	border-bottom: #a4bed4 1px solid;
 }
+
 

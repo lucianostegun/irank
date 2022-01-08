@@ -15,25 +15,7 @@ class Club extends BaseClub
 		return ($this->isNew() || (!$this->getVisible() && !$this->getEnabled() && !$this->getDeleted()));
 	}
 	
-    public function save($con=null){
-    	
-    	try{
-			
-			$isNew              = $this->isNew();
-			$columnModifiedList = Log::getModifiedColumnList($this);
-
-//    		$this->postOnWall();
-    		
-			parent::save();
-			
-       		Log::quickLog('club', $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
-        } catch ( Exception $e ) {
-        	
-            Log::quickLogError('club', $this->getPrimaryKey(), $e);
-        }
-    }
-	
-	public function delete($con=null){
+    public function delete($con=null){
 		
 		$tagName = $this->getTagName();
 		
@@ -177,12 +159,17 @@ class Club extends BaseClub
 		return $fileNameLogo;
 	}
 	
-	public static function customizeLogo($fileName){
+	public function customizeLogo(){
 		
-		$fileExtension = File::getFileExtension($fileName);
-		$filePath      = Util::getFilePath('/images/club/'.$fileName);
+		$fileName         = $this->getFileNameLogo();
+		$fileExtension    = File::getFileExtension($fileName);
+//		$filePathOriginal = Util::getFilePath('/images/club/original/'.$fileName);
+		$filePath         = Util::getFilePath('/images/club/'.$fileName);
 		
-		copy($filePath, str_replace('images/club', 'images/club/original', $filePath));
+		$filePathDestination = str_replace('images/club', 'images/club/original', $filePath);
+		$filePathDestination = Util::fixFilePath($filePathDestination);
+//		echo "copy($filePath, $filePathDestination);";exit;
+		copy($filePath, $filePathDestination);
 	
 		if( $fileExtension=='jpg' )
 			$originalImg = imagecreatefromjpeg( $filePath );

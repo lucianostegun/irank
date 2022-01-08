@@ -1,7 +1,12 @@
-#AuthUserFile /Users/lucianostegun/Sites/iRank/.htpasswd
-#AuthType Basic
-#AuthName "Acesso a versao beta iRank 3.0"
-#Require valid-user
+AuthUserFile /home/irank.com.br/.htpasswd
+AuthName "Agenda iRank"
+AuthType Basic
+Require valid-user
+SetEnvIf Host agenda.irank.com.br secure_content
+Order Allow,Deny
+Allow from all
+Deny from env=secure_content
+Satisfy Any
 
 Options +FollowSymLinks +ExecCGI
 
@@ -10,7 +15,11 @@ Options +FollowSymLinks +ExecCGI
 
   # uncomment the following line, if you are having trouble
   # getting no_script_name to work
-  RewriteBase /
+  # RewriteBase /
+
+  # Se estiver acessando a agenda, redireciona para a action que faz o download do arquivo .ics  
+  RewriteCond %{HTTP_HOST} ^agenda(\.irank\.com\.br) [NC]
+  RewriteRule ^(.*)$ http://www.irank.com.br/index.php/schedule/sync [L,R=301]
 
   # we skip all files with .something
   # comment the following 3 lines to allow periods in routes
@@ -19,8 +28,8 @@ Options +FollowSymLinks +ExecCGI
   RewriteCond %{REQUEST_URI} !\.[0-9]*$
   
   # Hack para que as urls de imagem com código de e-mail funcionem
-  RewriteCond %{REQUEST_URI} !\.png$
-  RewriteRule .* - [L]
+  #RewriteCond %{REQUEST_URI} !\.png$
+  #RewriteRule .* - [L]
 
   # we check if the .html version is here (caching)
   RewriteRule ^$ index.html [QSA]
@@ -32,4 +41,4 @@ Options +FollowSymLinks +ExecCGI
 </IfModule>
 
 # big crash from our front web controller
-ErrorDocument 500 "<h2>Application error</h2>symfony application failed to start properly"
+ErrorDocument 500 "<h2>Internal Error</h2>iRank application failed to start properly"

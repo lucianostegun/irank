@@ -1,5 +1,4 @@
 <?php
-
 	$pathList = array('Eventos'=>'event/index');
 	
 	$eventName   = $eventObj->getName();
@@ -23,7 +22,7 @@
 	$dhtmlxTabBarObj = new DhtmlxTabBar('main');
 	$dhtmlxTabBarObj->addTab('main', __('Event'), 'event/show/main', array('eventObj'=>$eventObj));
 	$dhtmlxTabBarObj->addTab('player', __('Guests'), 'event/show/player', array('eventObj'=>$eventObj));
-	if( $pastDate )
+	if( $pastDate && $eventObj->getSavedResult() )
 		$dhtmlxTabBarObj->addTab('result', __('Result'), 'event/show/result', array('eventObj'=>$eventObj));
 	$dhtmlxTabBarObj->addTab('comments', __('Comments'), 'event/form/comments', array('eventObj'=>$eventObj));
 	$dhtmlxTabBarObj->addHandler('onSelect', 'onSelectTabEvent');

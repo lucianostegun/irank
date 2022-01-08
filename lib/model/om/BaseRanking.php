@@ -129,22 +129,22 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	protected $lastRankingPlaceCriteria = null;
 
 	
-	protected $collRankingImportLogListRelatedByRankingId;
-
-	
-	protected $lastRankingImportLogRelatedByRankingIdCriteria = null;
-
-	
-	protected $collRankingImportLogListRelatedByRankingIdFrom;
-
-	
-	protected $lastRankingImportLogRelatedByRankingIdFromCriteria = null;
-
-	
 	protected $collRankingPrizeSplitList;
 
 	
 	protected $lastRankingPrizeSplitCriteria = null;
+
+	
+	protected $collRankingSubscriptionRequestList;
+
+	
+	protected $lastRankingSubscriptionRequestCriteria = null;
+
+	
+	protected $collSmsRankingOptionList;
+
+	
+	protected $lastSmsRankingOptionCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -782,21 +782,40 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
       $this->setUpdatedAt(time());
     }
 
-		if ($this->isDeleted()) {
+		if( $this->isDeleted() )
 			throw new PropelException("You cannot save an object that has been deleted.");
-		}
 
-		if ($con === null) {
+		if( $con === null )
 			$con = Propel::getConnection(RankingPeer::DATABASE_NAME);
-		}
 
-		try {
+		$tableName = RankingPeer::TABLE_NAME;
+		
+		try{
+			
+			if( !preg_match('/log$/', $tableName) )
+				$columnModifiedList = Log::getModifiedColumnList($this);
+			
+			$isNew = $this->isNew();
+			
 			$con->begin();
 			$affectedRows = $this->doSave($con);
+			
+			if( !preg_match('/log$/', $tableName) ){
+			
+				if( method_exists($this, 'getDeleted') && $this->getDeleted() )
+	        		Log::quickLogDelete($tableName, $this->getPrimaryKey(), get_class($this));
+	        	else
+	        		Log::quickLog($tableName, $this->getPrimaryKey(), $isNew, $columnModifiedList, get_class($this));
+		   }
+	   
 			$con->commit();
+			
 			return $affectedRows;
-		} catch (PropelException $e) {
+		}catch(PropelException $e) {
+			
 			$con->rollback();
+			if( !preg_match('/log$/', $tableName) )
+				Log::quickLogError($tableName, $this->getPrimaryKey(), $e);
 			throw $e;
 		}
 	}
@@ -874,24 +893,24 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collRankingImportLogListRelatedByRankingId !== null) {
-				foreach($this->collRankingImportLogListRelatedByRankingId as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collRankingImportLogListRelatedByRankingIdFrom !== null) {
-				foreach($this->collRankingImportLogListRelatedByRankingIdFrom as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			if ($this->collRankingPrizeSplitList !== null) {
 				foreach($this->collRankingPrizeSplitList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collRankingSubscriptionRequestList !== null) {
+				foreach($this->collRankingSubscriptionRequestList as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collSmsRankingOptionList !== null) {
+				foreach($this->collSmsRankingOptionList as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -991,24 +1010,24 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collRankingImportLogListRelatedByRankingId !== null) {
-					foreach($this->collRankingImportLogListRelatedByRankingId as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collRankingImportLogListRelatedByRankingIdFrom !== null) {
-					foreach($this->collRankingImportLogListRelatedByRankingIdFrom as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
 				if ($this->collRankingPrizeSplitList !== null) {
 					foreach($this->collRankingPrizeSplitList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collRankingSubscriptionRequestList !== null) {
+					foreach($this->collRankingSubscriptionRequestList as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collSmsRankingOptionList !== null) {
+					foreach($this->collSmsRankingOptionList as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1362,16 +1381,16 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 				$copyObj->addRankingPlace($relObj->copy($deepCopy));
 			}
 
-			foreach($this->getRankingImportLogListRelatedByRankingId() as $relObj) {
-				$copyObj->addRankingImportLogRelatedByRankingId($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getRankingImportLogListRelatedByRankingIdFrom() as $relObj) {
-				$copyObj->addRankingImportLogRelatedByRankingIdFrom($relObj->copy($deepCopy));
-			}
-
 			foreach($this->getRankingPrizeSplitList() as $relObj) {
 				$copyObj->addRankingPrizeSplit($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getRankingSubscriptionRequestList() as $relObj) {
+				$copyObj->addRankingSubscriptionRequest($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getSmsRankingOptionList() as $relObj) {
+				$copyObj->addSmsRankingOption($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -1871,18 +1890,11 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 		$l->setRanking($this);
 	}
 
-	
-	public function initRankingImportLogListRelatedByRankingId()
-	{
-		if ($this->collRankingImportLogListRelatedByRankingId === null) {
-			$this->collRankingImportLogListRelatedByRankingId = array();
-		}
-	}
 
 	
-	public function getRankingImportLogListRelatedByRankingId($criteria = null, $con = null)
+	public function getRankingPlaceListJoinState($criteria = null, $con = null)
 	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
+				include_once 'lib/model/om/BaseRankingPlacePeer.php';
 		if ($criteria === null) {
 			$criteria = new Criteria();
 		}
@@ -1891,124 +1903,26 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collRankingImportLogListRelatedByRankingId === null) {
+		if ($this->collRankingPlaceList === null) {
 			if ($this->isNew()) {
-			   $this->collRankingImportLogListRelatedByRankingId = array();
+				$this->collRankingPlaceList = array();
 			} else {
 
-				$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
+				$criteria->add(RankingPlacePeer::RANKING_ID, $this->getId());
 
-				RankingImportLogPeer::addSelectColumns($criteria);
-				$this->collRankingImportLogListRelatedByRankingId = RankingImportLogPeer::doSelect($criteria, $con);
+				$this->collRankingPlaceList = RankingPlacePeer::doSelectJoinState($criteria, $con);
 			}
 		} else {
-						if (!$this->isNew()) {
-												
+									
+			$criteria->add(RankingPlacePeer::RANKING_ID, $this->getId());
 
-				$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRankingImportLogRelatedByRankingIdCriteria) || !$this->lastRankingImportLogRelatedByRankingIdCriteria->equals($criteria)) {
-					$this->collRankingImportLogListRelatedByRankingId = RankingImportLogPeer::doSelect($criteria, $con);
-				}
+			if (!isset($this->lastRankingPlaceCriteria) || !$this->lastRankingPlaceCriteria->equals($criteria)) {
+				$this->collRankingPlaceList = RankingPlacePeer::doSelectJoinState($criteria, $con);
 			}
 		}
-		$this->lastRankingImportLogRelatedByRankingIdCriteria = $criteria;
-		return $this->collRankingImportLogListRelatedByRankingId;
-	}
+		$this->lastRankingPlaceCriteria = $criteria;
 
-	
-	public function countRankingImportLogListRelatedByRankingId($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(RankingImportLogPeer::RANKING_ID, $this->getId());
-
-		return RankingImportLogPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addRankingImportLogRelatedByRankingId(RankingImportLog $l)
-	{
-		$this->collRankingImportLogListRelatedByRankingId[] = $l;
-		$l->setRankingRelatedByRankingId($this);
-	}
-
-	
-	public function initRankingImportLogListRelatedByRankingIdFrom()
-	{
-		if ($this->collRankingImportLogListRelatedByRankingIdFrom === null) {
-			$this->collRankingImportLogListRelatedByRankingIdFrom = array();
-		}
-	}
-
-	
-	public function getRankingImportLogListRelatedByRankingIdFrom($criteria = null, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collRankingImportLogListRelatedByRankingIdFrom === null) {
-			if ($this->isNew()) {
-			   $this->collRankingImportLogListRelatedByRankingIdFrom = array();
-			} else {
-
-				$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				$this->collRankingImportLogListRelatedByRankingIdFrom = RankingImportLogPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
-
-				RankingImportLogPeer::addSelectColumns($criteria);
-				if (!isset($this->lastRankingImportLogRelatedByRankingIdFromCriteria) || !$this->lastRankingImportLogRelatedByRankingIdFromCriteria->equals($criteria)) {
-					$this->collRankingImportLogListRelatedByRankingIdFrom = RankingImportLogPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastRankingImportLogRelatedByRankingIdFromCriteria = $criteria;
-		return $this->collRankingImportLogListRelatedByRankingIdFrom;
-	}
-
-	
-	public function countRankingImportLogListRelatedByRankingIdFrom($criteria = null, $distinct = false, $con = null)
-	{
-				include_once 'lib/model/om/BaseRankingImportLogPeer.php';
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(RankingImportLogPeer::RANKING_ID_FROM, $this->getId());
-
-		return RankingImportLogPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addRankingImportLogRelatedByRankingIdFrom(RankingImportLog $l)
-	{
-		$this->collRankingImportLogListRelatedByRankingIdFrom[] = $l;
-		$l->setRankingRelatedByRankingIdFrom($this);
+		return $this->collRankingPlaceList;
 	}
 
 	
@@ -2079,6 +1993,286 @@ abstract class BaseRanking extends BaseObject  implements Persistent {
 	{
 		$this->collRankingPrizeSplitList[] = $l;
 		$l->setRanking($this);
+	}
+
+	
+	public function initRankingSubscriptionRequestList()
+	{
+		if ($this->collRankingSubscriptionRequestList === null) {
+			$this->collRankingSubscriptionRequestList = array();
+		}
+	}
+
+	
+	public function getRankingSubscriptionRequestList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscriptionRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscriptionRequestList === null) {
+			if ($this->isNew()) {
+			   $this->collRankingSubscriptionRequestList = array();
+			} else {
+
+				$criteria->add(RankingSubscriptionRequestPeer::RANKING_ID, $this->getId());
+
+				RankingSubscriptionRequestPeer::addSelectColumns($criteria);
+				$this->collRankingSubscriptionRequestList = RankingSubscriptionRequestPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(RankingSubscriptionRequestPeer::RANKING_ID, $this->getId());
+
+				RankingSubscriptionRequestPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRankingSubscriptionRequestCriteria) || !$this->lastRankingSubscriptionRequestCriteria->equals($criteria)) {
+					$this->collRankingSubscriptionRequestList = RankingSubscriptionRequestPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRankingSubscriptionRequestCriteria = $criteria;
+		return $this->collRankingSubscriptionRequestList;
+	}
+
+	
+	public function countRankingSubscriptionRequestList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscriptionRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(RankingSubscriptionRequestPeer::RANKING_ID, $this->getId());
+
+		return RankingSubscriptionRequestPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addRankingSubscriptionRequest(RankingSubscriptionRequest $l)
+	{
+		$this->collRankingSubscriptionRequestList[] = $l;
+		$l->setRanking($this);
+	}
+
+
+	
+	public function getRankingSubscriptionRequestListJoinUserSiteRelatedByUserSiteId($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscriptionRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscriptionRequestList === null) {
+			if ($this->isNew()) {
+				$this->collRankingSubscriptionRequestList = array();
+			} else {
+
+				$criteria->add(RankingSubscriptionRequestPeer::RANKING_ID, $this->getId());
+
+				$this->collRankingSubscriptionRequestList = RankingSubscriptionRequestPeer::doSelectJoinUserSiteRelatedByUserSiteId($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingSubscriptionRequestPeer::RANKING_ID, $this->getId());
+
+			if (!isset($this->lastRankingSubscriptionRequestCriteria) || !$this->lastRankingSubscriptionRequestCriteria->equals($criteria)) {
+				$this->collRankingSubscriptionRequestList = RankingSubscriptionRequestPeer::doSelectJoinUserSiteRelatedByUserSiteId($criteria, $con);
+			}
+		}
+		$this->lastRankingSubscriptionRequestCriteria = $criteria;
+
+		return $this->collRankingSubscriptionRequestList;
+	}
+
+
+	
+	public function getRankingSubscriptionRequestListJoinUserSiteRelatedByUserSiteIdOwner($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseRankingSubscriptionRequestPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRankingSubscriptionRequestList === null) {
+			if ($this->isNew()) {
+				$this->collRankingSubscriptionRequestList = array();
+			} else {
+
+				$criteria->add(RankingSubscriptionRequestPeer::RANKING_ID, $this->getId());
+
+				$this->collRankingSubscriptionRequestList = RankingSubscriptionRequestPeer::doSelectJoinUserSiteRelatedByUserSiteIdOwner($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(RankingSubscriptionRequestPeer::RANKING_ID, $this->getId());
+
+			if (!isset($this->lastRankingSubscriptionRequestCriteria) || !$this->lastRankingSubscriptionRequestCriteria->equals($criteria)) {
+				$this->collRankingSubscriptionRequestList = RankingSubscriptionRequestPeer::doSelectJoinUserSiteRelatedByUserSiteIdOwner($criteria, $con);
+			}
+		}
+		$this->lastRankingSubscriptionRequestCriteria = $criteria;
+
+		return $this->collRankingSubscriptionRequestList;
+	}
+
+	
+	public function initSmsRankingOptionList()
+	{
+		if ($this->collSmsRankingOptionList === null) {
+			$this->collSmsRankingOptionList = array();
+		}
+	}
+
+	
+	public function getSmsRankingOptionList($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsRankingOptionList === null) {
+			if ($this->isNew()) {
+			   $this->collSmsRankingOptionList = array();
+			} else {
+
+				$criteria->add(SmsRankingOptionPeer::RANKING_ID, $this->getId());
+
+				SmsRankingOptionPeer::addSelectColumns($criteria);
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(SmsRankingOptionPeer::RANKING_ID, $this->getId());
+
+				SmsRankingOptionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastSmsRankingOptionCriteria) || !$this->lastSmsRankingOptionCriteria->equals($criteria)) {
+					$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastSmsRankingOptionCriteria = $criteria;
+		return $this->collSmsRankingOptionList;
+	}
+
+	
+	public function countSmsRankingOptionList($criteria = null, $distinct = false, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(SmsRankingOptionPeer::RANKING_ID, $this->getId());
+
+		return SmsRankingOptionPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addSmsRankingOption(SmsRankingOption $l)
+	{
+		$this->collSmsRankingOptionList[] = $l;
+		$l->setRanking($this);
+	}
+
+
+	
+	public function getSmsRankingOptionListJoinPeople($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsRankingOptionList === null) {
+			if ($this->isNew()) {
+				$this->collSmsRankingOptionList = array();
+			} else {
+
+				$criteria->add(SmsRankingOptionPeer::RANKING_ID, $this->getId());
+
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinPeople($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(SmsRankingOptionPeer::RANKING_ID, $this->getId());
+
+			if (!isset($this->lastSmsRankingOptionCriteria) || !$this->lastSmsRankingOptionCriteria->equals($criteria)) {
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinPeople($criteria, $con);
+			}
+		}
+		$this->lastSmsRankingOptionCriteria = $criteria;
+
+		return $this->collSmsRankingOptionList;
+	}
+
+
+	
+	public function getSmsRankingOptionListJoinSmsTemplate($criteria = null, $con = null)
+	{
+				include_once 'lib/model/om/BaseSmsRankingOptionPeer.php';
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSmsRankingOptionList === null) {
+			if ($this->isNew()) {
+				$this->collSmsRankingOptionList = array();
+			} else {
+
+				$criteria->add(SmsRankingOptionPeer::RANKING_ID, $this->getId());
+
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinSmsTemplate($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(SmsRankingOptionPeer::RANKING_ID, $this->getId());
+
+			if (!isset($this->lastSmsRankingOptionCriteria) || !$this->lastSmsRankingOptionCriteria->equals($criteria)) {
+				$this->collSmsRankingOptionList = SmsRankingOptionPeer::doSelectJoinSmsTemplate($criteria, $con);
+			}
+		}
+		$this->lastSmsRankingOptionCriteria = $criteria;
+
+		return $this->collSmsRankingOptionList;
 	}
 
 } 

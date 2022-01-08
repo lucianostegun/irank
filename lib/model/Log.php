@@ -36,7 +36,7 @@ class Log extends BaseLog
         
         $message = str_replace('\\', '/', $message);
         
-        $logObj = new Log;
+        $logObj = new Log();
         $logObj->setUserSiteId(nvl($userSiteId)); // Logs sem usuários são logs do sistema
         $logObj->setUserAdminId(nvl($userAdminId)); // Logs sem usuários são logs do sistema
         $logObj->setApp( $app );
@@ -48,7 +48,7 @@ class Log extends BaseLog
         $logObj->save();
         
         if( $severity >= self::LOG_ERROR )
-        	Report::sendMail('iRank Log', 'lucianostegun@gmail.com', $logObj->toString(), array('emailTemplate'=>'emailTemplateAdmin'));
+        	Report::sendMail('iRank Log', null, $logObj->toString(), array('emailTemplate'=>'emailTemplateAdmin'));
         
         $logId = $logObj->getId();
         
@@ -68,7 +68,7 @@ class Log extends BaseLog
 			foreach($columnModifiedList as $fieldName=>$fieldValue){
 			
 				$fieldValue = substr($fieldValue,0,255);
-				$sqlList[]  = "($logId, '$fieldName', '".str_replace("'", "''", $fieldValue)."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";	    	
+				$sqlList[]  = "($logId, '$fieldName', '".str_replace("'", "''", $fieldValue)."', CURRENT_TIMESTAMP)";	    	
 			}
 			
 		    $sql .= chr(10).chr(9).implode(','.chr(10).chr(9), $sqlList);
@@ -100,12 +100,12 @@ class Log extends BaseLog
     	throw new LogException('Erro ao salvar o registro '.$primaryKey.' na tabela '.$tableName.'. [' . $e->getMessage() . ']');
     }
     
-    public static function quickLogDelete($tableName, $primaryKey){
+    public static function quickLogDelete($tableName, $primaryKey, $className=null){
     	
     	if( is_array($primaryKey) )    		
     		$primaryKey = implode(' e ', $primaryKey);
     	
-    	self::doLog('Excluiu o registro '.$primaryKey.' na tabela '.$tableName);
+    	self::doLog('Excluiu o registro '.$primaryKey.' na tabela '.$tableName, $className);
     }
     
     public function getMessage( $handle=false ){
@@ -231,7 +231,7 @@ class Log extends BaseLog
 //					 
 //				}
 				
-				$fieldName                      = ereg_replace('^[a-zA-Z_]*\.', '', $fieldName);
+				$fieldName                      = preg_replace('/^[a-zA-Z_]*\./', '', $fieldName);
 				$fieldDescription               = $fieldName;
 				$modifiedColumnList[$fieldName] = $value;
 			}
@@ -272,6 +272,7 @@ class Log extends BaseLog
 		$string .= '<b>Pagina: </b>'.$this->getActionName().$nl;
 		$string .= '<b>IP: </b>'.$_SERVER['REMOTE_ADDR'].$nl;
 		$string .= '<b>URI: </b>'.$_SERVER['REQUEST_URI'].$nl;
+		$string .= '<b>Referência: </b>'.$_SERVER['HTTP_REFERER'].$nl;
 		$string .= '<b>Mensagem: </b><br/><div style="padding: 25px 10px; margin: 10px 0px; border-top: 1px solid #909090; border-bottom: 1px solid #909090">'.$this->getMessage().'</div><b>iRank Admin</b>';
 		$string .= '</div>';
     	

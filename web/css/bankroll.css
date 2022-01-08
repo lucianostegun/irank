@@ -1,0 +1,287 @@
+.positive,
+h1.startBankroll span.positive,
+table.dashboard td.positive {
+	
+	color: #5A5ADD;
+}
+
+table.bankroll td.negative,
+h1.startBankroll span.negative,
+table.dashboard td.negative {
+	
+	color: #DD5A5A;
+}
+
+h1.startBankroll {
+
+	padding: 7px 15px 9px 15px;
+	margin: -5px 0px 0px 0px;
+	font-size: 14px;
+	background: #E5E5E5;
+	border-top: 1px solid #BABABA;
+	border-bottom: 1px solid #BABABA;
+}
+
+h1.startBankroll > span {
+
+	position: relative;
+	left: 10px;
+	top: 2px;
+	font-size: 18px;
+	display: inline-block;
+	width: 100px;
+	text-align: right;
+}
+
+h1.startBankroll span.a {
+
+	position: relative;
+	left: 20px;
+	top: -1px;
+	font-size: 10px;
+	font-weight: normal;
+	width: auto
+}
+
+h1.startBankroll.filter {
+
+	position: relative;
+	margin-top: 1px;
+	font-size: 12px;
+	font-weight: normal;
+	text-shadow: #FAFAFA 1px 1px;
+	height: 22px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+h1.startBankroll.filter label {
+
+	position: relative;
+	top: 2px;
+	display: inline-block;
+	padding-right: 5px;
+}
+
+h1.startBankroll.filter input[type=text] {
+
+	border: 1px solid #C0C0C0;
+	width: 70px;
+	height: 14px;
+	position: relative;
+	top: 2px
+}
+
+h1.startBankroll.filter select {
+
+	position: relative;
+	top: 2px
+}
+
+h1.startBankroll.filter img {
+
+	position: relative;
+	top: 4px;
+}
+
+h1.startBankroll.filter span.fieldSeparator {
+
+	display: inline-block;
+	width: 20px;
+	text-align: center;
+	padding: 0px;
+	margin: 0px;
+	font-size: 12px;
+	position: relative;
+	top: 3px;
+	left: 0px
+}
+
+table.dashboard {
+
+	padding: 5px;
+	margin-left: 10px;
+	margin-right: 30px;
+	width: 765px;
+}
+
+table.dashboard tr th {
+
+	text-align: right;
+	padding: 5px 0px 5px 5px;
+	border-bottom: 1px solid #C0C0C0;
+	font-weight: normal;
+	color: #505050;
+	white-space: nowrap
+}
+
+table.dashboard tr td {
+
+	padding-left: 10px;
+	padding-right: 50px;
+	border-bottom: 1px solid #C0C0C0;
+	font-weight: bold;
+	color: #505050
+}
+
+table.dashboard tr.bigger th,
+table.dashboard tr.bigger td {
+
+	font-size: 15px;
+	padding-top: 10px;
+	padding-bottom: 10px
+}
+
+table.dashboard.chart tr th,
+table.dashboard.chart tr td {
+
+	border: none;
+	text-align: left;
+	padding: 0px;
+	white-space: normal
+}
+
+table.dashboard.chart tr th h1 {
+
+	font-size: 12px;
+	font-weight; bold;
+	padding: 3px 20px 1px 0px;
+	margin: 0px 0px 2px 0px;
+	border-bottom: 1px solid #C0C0C0
+}
+
+table.dashboard.chart tr th h1.up {
+
+	background: url('/images/icon/thumbUp.png') right top no-repeat;
+}
+
+table.dashboard.chart tr th h1.down {
+
+	background: url('/images/icon/thumbDown.png') right top no-repeat;
+}
+
+table.dashboard.chart tr th hr {
+
+	border: none;
+	height: 1px;
+	border-bottom: 1px solid #C0C0C0;
+}
+
+table.dashboard.chart tr span {
+
+	display: inline-block;
+	width: 70px;
+	padding-right: 5px;
+	text-align: right
+}
+
+table.bankroll {
+	
+	margin: 10px 20px;
+	width: 745px;
+}
+
+table.bankroll th {
+	
+	padding: 0px 4px 2px 4px;
+	border-bottom: 1px solid #909090
+}
+
+table.bankroll th.value {
+	
+	width: 50px
+}
+
+table.bankroll td {
+	
+	padding: 2px 4px;
+	background: #FFFFFF;
+}
+
+table.bankroll tr.year td {
+	
+	border: none;
+	font-size: 26px;
+	line-height: 26px;
+	font-weight: bold;
+	text-align: left;
+	padding: 30px 0px 15px 10px;
+	text-shadow: 2px 2px #BABABA;
+}
+
+table.bankroll tr.year td.expand {
+
+	text-align: right
+}
+
+table.bankroll tr.year td.expand a {
+	
+	border: none;
+	font-size: 12px;
+	line-height: 12px;
+	font-weight: normal;
+	text-align: right;
+	text-shadow: none;
+	padding: 0px 20px 0px 0px;
+}
+
+table.bankroll tr.year td.expand a.expand {
+	
+	background: url('/images/icon/plus.png') right center no-repeat;
+}
+
+table.bankroll tr.year td.expand a.collapse {
+	
+	background: url('/images/icon/less.png') right center no-repeat;
+}
+
+table.bankroll tr.year:first-child td {
+	
+	padding-top: 0px;
+}
+
+table.bankroll tr.odd td {
+	
+	background: #F0F0F0;
+}
+
+table.bankroll tr.hoverable:hover td {
+	
+	background-color: #D0D0D0;
+	cursor: pointer;
+}
+
+table.bankroll tr.final {
+	
+	font-weight: bold;
+	font-size: 12px;
+}
+
+table.bankroll tr.final td {
+	
+	border-top: 1px solid #909090;
+	padding: 4px 4px 4px 6px;
+}
+
+table.bankroll tr.final td:first-child {
+	
+	padding-left: 14px;
+}
+
+table.bankroll tr.final.last td {
+	
+	border-top: 4px solid #FFFFFF;
+	font-size: 14px;
+}
+
+table.bankroll tr.final.collapsed td {
+	
+	cursor: pointer;
+	border-right: 1px solid #909090;
+}
+
+table.bankroll tr.final.collapsed td:first-child {
+	
+	border-left: 1px solid #909090;
+	border-right: none;
+}

@@ -1,0 +1,322 @@
+.steps h1 {
+
+	font-size: 14px;
+	font-weight; bold;
+	padding: 3px 20px 1px 0px;
+	margin: 0px 20px 2px 20px;
+	border-bottom: 1px solid #C0C0C0;
+	color: #5486B4
+}
+
+.steps h1.error {
+
+	color: #B45426
+}
+
+.chipList {
+	
+	width: 500px;
+	position: relative;
+	top: 10px;
+	left: 100px;
+	height: 220px;
+}
+
+.chipList.amount {
+
+	height: auto;
+}
+
+.stepPaginator {
+
+	margin: 0px 0px 0px 0px;
+	position: relative;
+	top: 0px;
+	right: 65px;
+	z-index: 300;
+	padding: 0px 15px 10px 0px;
+}
+
+.stepPaginator.bottom {
+
+	top: 15px;
+	left: 0px;
+	right: 0px;
+	border-top: 1px solid #C0C0C0;
+	padding: 14px 15px 0px 0px;
+}
+
+.stepPaginator.bottom .actionButton {
+
+	right: 65px
+}
+
+.chip {
+	
+	width: 75px;
+	height: 75px;
+	background-repeat: no-repeat;
+	margin-left: 20px;
+	margin-bottom: 20px;
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+}
+
+.chip.result {
+
+	margin: 20px 0px 0px 50px;
+	width: 300px;
+	cursor: default;
+}
+
+.chip.amount {
+
+	display: inline-block;
+	cursor: default;
+	float: left;
+	width: 200px;
+}
+
+.chip.result span {
+
+	position: absolute;
+	top: 28px;
+	left: 100px;
+	font-size: 18px;
+}
+
+.chip.result span label {
+
+	font-size: 12px;
+	position: absolute;
+	width: 200px;
+	left: 000px;
+	top: 23px;
+}
+
+.chip .check {
+	
+	width: 16px;
+	height: 16px;
+	background: url('/images/chipCalculator/ok.png') no-repeat;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	display: none;
+}
+
+.chip.active,
+.chip.result,
+.chip.amount {
+	
+	background-position: 0px -75px;
+}
+
+.chip.active .check {
+	
+	display: block;
+}
+
+
+
+.steps {
+
+	clear: 			both;
+	margin-top: 	20px;
+	margin-left: 	0px;
+	padding: 		0px;
+	position: 		relative;
+	
+    background: 			#FFFFFF;
+    background-image: 		-o-linear-gradient(#FFFFFF, #F0F0F0);
+    background: 			-moz-linear-gradient(top, #FFFFFF, #F0F0F0);;
+    background: 			-webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    filter: 				progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#FFFFFF', EndColorStr='#F0F0F0', GradientType=0);	
+}
+
+.steps .step {
+ 
+ 	display: 		block;
+ 	width: 			730px;
+ }
+
+.steps .step .intro {
+ 
+ 	margin: 20px 20px 20px 50px;
+ 	font-size: 12px;
+ 	line-height: 22px
+ }
+
+.steps .step .intro.note {
+
+	font-size: 12px
+}
+
+.steps .step.hidden {
+ 
+ 	display: 		block;
+}
+
+.steps .step #loadingResult {
+ 
+ 	margin-top: 30px;
+}
+
+.steps .step#calculateError {
+
+	display: none
+}
+
+.steps .step.calculateError .intro {
+
+	width: 620px;
+	padding-left: 100px;
+	background: url('/images/exclamation.png') no-repeat 10px top;
+	margin-left: 30px;
+}
+
+#chipCalculatorStartStackOptionsDiv {
+
+	position: relative;
+	margin-left: 50px;
+	top: -20px
+}
+
+#chipCalculatorStartStackOptionsDiv h2 {
+
+	position: relative;
+	margin: 0px 0px 0px 0px;
+	font-size: 14px;
+	color: #505050;
+	padding: 0px 24px 4px 0px;
+	top: 37px;
+	left: 80px;
+	width: 600px;
+	text-align: right
+}
+
+#chipCalculatorStartStackOptionsDiv h2 span {
+
+	position: absolute;
+	top: 1px;
+	right: 0px;
+	font-size: 11px;
+	font-weight: normal;
+	height: 16px;
+	width: 16px;
+	background: url('/images/icon/help.png') no-repeat;
+	cursor: pointer;
+}
+
+#chipCalculatorStartStackOptionsDiv span.stackOption {
+
+	position: relative;
+	background: none repeat scroll 0% 0% rgb(226, 230, 240);
+	border: 3px solid rgb(157, 172, 204);
+	border-radius: 5px;
+	color: rgb(147, 162, 194);
+	display: block;
+	float: left;
+	height: 26px;
+	line-height: 26px;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 5px 6px 4px 0px;
+	padding: 3px 7px;
+	white-space: nowrap;
+	cursor: pointer;
+	
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none
+}
+ 
+#chipCalculatorStartStackOptionsDiv span.stackOption.selected {
+
+	color: #47587E;
+	border-color: #47587E;
+	background: rgb(177, 192, 224)
+}
+
+#chipSetResultFooter {
+
+	font-style: italic;
+	width: 650px;
+	position: relative;
+	left: 30px;
+	margin-top: 40px;
+}
+
+#blindSetResult {
+
+	margin-top: 30px
+}
+
+.defaultForm .row {
+
+	height: 42px
+}
+
+.defaultForm .row .label,
+.defaultForm .row .text {
+
+	height: 28px;
+	line-height: 32px;
+	font-size: 12px;
+}
+
+.defaultForm .row .label {
+
+	font-size: 16px;
+}
+
+.defaultForm .row .field input,
+.chip.amount input {
+
+	font-size: 20px;
+	height: 28px;
+	font-weight: bold;
+	border-width: 			3px;
+	-moz-border-radius: 	5px;
+	-webkit-border-radius: 	5px;
+	border-radius: 			5px;
+	color: #505050;
+}
+
+.chip.amount input {
+
+	position: relative;
+	width: 50px;
+	left: 100px;
+	top: 18px;
+}
+
+.defaultForm .row .field input[type=checkbox] {
+
+	position: relative;
+	top: 6px
+}
+
+#chipCalculatorStartStack { width: 80px; }
+#chipCalculatorPlayers { width: 30px; }
+#chipCalculatorGameDuration { width: 30px; }
+#chipCalculatorBlindDuration { width: 30px; }
+
+
+.hor-minimalist-a {
+
+	margin: 20px 30px
+}
+
+a#advancedChipOptions {
+
+	position: relative;
+	left: 50px;
+	font-size: 12px
+}
+
+#advancedChipOptionsDiv {
+
+}

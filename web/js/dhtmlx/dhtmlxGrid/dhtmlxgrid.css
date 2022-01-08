@@ -10,15 +10,11 @@ div.gridbox .xhdr{
 	background-color:#D4D0C8;
 }
 
-div.gridbox .xhdr input {
-	max-width: 		100px !important;
+div.gridbox table.obj{
+	height:1px;
 }
-
-div.gridbox .xhdr select {
-	max-width: 		100px !important;
-}
-
 div.gridbox table.hdr td {
+	line-height:normal;
 	font-family:arial;
 	font-size:12px;
 	background-Color:#D4D0C8;
@@ -47,9 +43,6 @@ div.gridbox table.obj td {
     padding-top:0px;
     padding-bottom:0px;
     empty-cells:show;
-    vertical-align:middle;
-    padding-top: 	4px;
-    padding-bottom: 3px;
 	}
 div.gridbox table.obj th, div.gridbox table.hdr th{
 	padding:0px 0px 0px 0px ;
@@ -64,7 +57,8 @@ div.gridbox table.row20px tr  td{
 div.gridbox .objbox {
 	background-color:white;
 	position:relative;
-	}
+    -webkit-overflow-scrolling: touch;
+}
 div.gridbox table.obj td span.space, div.gridbox table.obj td img.space{
 	width:18px;
 	}
@@ -207,13 +201,12 @@ div.gridbox_xp table.obj td {
     overflow:hidden;
     padding-top:0px;
     padding-bottom:0px;
-	vertical-align:middle;
 	}
 div.gridbox_xp table.obj tr.rowselected td{
 	background-color:whitesmoke;
 	color:black;
 	}
-div.gridbox_xp table.obj tr.rowselected td.cellselected, div.gridbox table.obj td.cellselected {
+div.gridbox_xp table.obj tr.rowselected td.cellselected, div.gridbox_xp table.obj td.cellselected {
 	background-color:whitesmoke;
 	}
 div.gridbox_xp table.row20px tr  td{
@@ -275,13 +268,12 @@ div.gridbox_mt table.obj td {
     overflow:hidden;
     padding-top:0px;
     padding-bottom:0px;
-	vertical-align:middle;
 	}
 div.gridbox_mt table.obj tr.rowselected td{
 	background-color:#D6D3FA;
 	color:black;
 	}
-div.gridbox_mt table.obj tr.rowselected td.cellselected, div.gridbox table.obj td.cellselected {
+div.gridbox_mt table.obj tr.rowselected td.cellselected, div.gridbox_mt table.obj td.cellselected {
 	background-color:#D6D3FA;
 	}
 div.gridbox_mt table.row20px tr  td{
@@ -342,7 +334,7 @@ div.gridbox table.hdr td.columnTargetL div.hdrcell{
 
 /*light*/
 div.gridbox_light {
-  border:1px solid  #D1D1D1;
+  border:1px solid  #c2d5dc;
 }
 div.gridbox_light .xhdr{
 	background-image:url(imgs/skin_light_header.png);
@@ -400,7 +392,7 @@ div.gridbox_light table.obj tr.rowselected td{
 	background-color:#ededed;
 	color:black;
 	}
-div.gridbox_light table.obj tr.rowselected td.cellselected, div.gridbox table.obj td.cellselected {
+div.gridbox_light table.obj tr.rowselected td.cellselected, div.gridbox_light table.obj td.cellselected {
 	background-color:#ededed;
 	}
 div.gridbox_light .odd_light{
@@ -472,7 +464,7 @@ div.gridbox_modern table.obj tr.rowselected td{
 	background-color:#9ac2e5;
 	color:black;
 	}
-div.gridbox_modern table.obj tr.rowselected td.cellselected, div.gridbox table.obj td.cellselected {
+div.gridbox_modern table.obj tr.rowselected td.cellselected, div.gridbox_modern table.obj td.cellselected {
 	background-color:#9ac2e5;
 	}
 div.gridbox_modern .odd_modern{
@@ -687,19 +679,9 @@ div.gridbox_sbdark .odd_sbdark {
 div.gridbox_dhx_skyblue div.ftr td{
 	text-align:right;
 	background-image:url(./imgs/sky_blue_grid.gif);
-	border-color:#D3D3D3;
+	border-color:#A4BED4;
 }
 
-.gridboxSearchOptionBar {
-
-	margin-bottom: 		-1px;
-	border: 			1px solid #D1D1D1;
-	background: 		url(./imgs/dhxgrid_dhx_blue/hdr.png);
-}
-
-.gridboxPaginatorBar {
-
-	margin-top: 		-1px;
-	border: 			1px solid #D1D1D1;
-	background: 		url(./imgs/dhxgrid_dhx_blue/hdr.png);
+div.gridbox td.filter input, div.gridbox td.filter select{
+	width:90%; font-size:8pt; font-family:Tahoma; -moz-user-select:text;
 }

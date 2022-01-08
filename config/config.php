@@ -16,6 +16,18 @@ function array_split($array, $arraySize=2){
 	return $eventLivePlayerObjGroup;
 }
 
+function prexit($object, $noExit=false){
+	
+	echo '<pre>';
+	print_r($object);
+	echo '</pre>';
+	
+	if( !$noExit )
+		exit;
+}
+
 // symfony directories
 $sf_symfony_lib_dir  = dirname(__FILE__).'/../lib/symfony';
 $sf_symfony_data_dir = dirname(__FILE__).'/../data/symfony';
+
+//ini_set('session.save_path','/home/irank/sessions');
